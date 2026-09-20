@@ -101,11 +101,23 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  * Say it precisely, because the imprecise version was wrong here for two
  * months and three entries still carried it on 2026-09-20: **the scripts are
  * the platform's** — `cat-harness/scripts/audit-wiring.ts` and friends are
- * right here. What is absent is the `content/` tree they read. Two entries
- * said "no such path in the platform", which was false, and a third said the
- * platform "has no `pipeline/`", which was also false. An exemption resting
- * on a false reason is precisely what this table exists to prevent, so the
- * error mattered more here than it would have in prose (bean `52dz`).
+ * right here. Two entries said "no such path in the platform", which was
+ * false, and a third said the platform "has no `pipeline/`", which was also
+ * false. An exemption resting on a false reason is precisely what this table
+ * exists to prevent, so the error mattered more here than it would have in
+ * prose (bean `52dz`).
+ *
+ * **And the corrected version was still wrong, one turn later.** It said what
+ * these steps lack is "the `content/` tree they read" — owner, 2026-09-20:
+ * *"content/ shouldnt be expected anymore. folio/ was renamed as
+ * default/convention."* So `no-folio` here does not mean "a folio tree we
+ * happen not to carry". It means these steps `cd` into `content/`, a root the
+ * convention has moved off. `cat-harness/harness.json` already declares
+ * `folio/` holding the `folio` graph and carries no `content` entry at all.
+ *
+ * Two corrections to one paragraph in one day is the argument for the table
+ * rather than against it: prose drifts silently, an entry here is read by
+ * `check:workflow-paths` and by `gates.test.ts`.
  *
  * The one case where the distinction has teeth: `pipeline/build.ts` runs after
  * `cd content` and names a FOLIO's build, while `cat-harness/content/pipeline/
@@ -113,6 +125,10 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  * the path to the platform's copy would look correct and silently run the
  * wrong program. `check:workflow-paths` records that as a `FOLIO_PATHS`
  * exemption with the same reason, and a test pins it.
+ *
+ * What the rename does NOT yet reach — `scripts/init-folio.ts` still
+ * scaffolds `content/<slug>/`, and these workflows still `cd content` — is
+ * `52dz`'s open half and the owner's call, not this table's to settle.
  *
  * These steps are not broken and not runnable here, and until this table
  * existed nothing could tell either from a real gap.
@@ -205,7 +221,9 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   {
     match: "qa-sweep",
     kind: "no-folio",
-    reason: "sweeps a folio's blocks; preflights on `content/package.json`, which the platform does not carry",
+    reason:
+      "sweeps a folio's blocks from `content/`, a root the convention has " +
+      "retired in favour of `folio/` (owner, 2026-09-20)",
   },
   {
     match: "qa-staleness",
@@ -230,7 +248,9 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   {
     match: "qa-section-title-audit.ts",
     kind: "no-folio",
-    reason: "audits a folio's section titles from a root `content/`; the platform's own content sits under the instance",
+    reason:
+      "audits section titles from a root `content/` — retired; the " +
+      "convention is `folio/`, which this instance declares",
   },
   {
     match: "scripts/audit-wiring.ts",
@@ -252,12 +272,12 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   {
     match: "trivial-skeleton-audit.ts",
     kind: "no-folio",
-    reason: "runs `--cwd content`, a folio's package root",
+    reason: "runs `--cwd content`, a root the convention has retired",
   },
   {
     match: "conditional-class-banner-audit.ts",
     kind: "no-folio",
-    reason: "audits a folio's block banners from a root `content/`",
+    reason: "audits block banners from the retired `content/` root; see `52dz`",
   },
   {
     match: "codemod-leanval.ts",

@@ -97,40 +97,63 @@ export interface FolioPath {
 }
 
 export const FOLIO_PATHS: FolioPath[] = [
+  // ── They name `content/`, and `content/` is NOT the convention ──────
+  //
+  // Owner, 2026-09-20: *"content/ shouldnt be expected anymore. folio/ was
+  // renamed as default/convention."*
+  //
+  // So these are not "waiting for a folio tree we happen not to carry".
+  // They `cd content` — a directory the convention has moved off. The
+  // instance's own declaration already says so: `cat-harness/harness.json`
+  // declares `folio/` holding the `folio` graph, and there is no `content`
+  // entry anywhere in it.
+  //
+  // The rename has NOT reached `scripts/init-folio.ts`, which still
+  // scaffolds `content/<slug>/` and `content/schema/`, nor these workflows.
+  // That gap is bean `52dz`'s open half and the owner's call; it is not
+  // settled by an exemption table.
+  //
+  // They stay exempt rather than becoming failures for one reason: the
+  // verdict here is about whether a PATH RESOLVES, and a retired path in a
+  // workflow nobody dispatches is a filing question, not a broken build.
+  // Recording WHY is the contribution — the previous reasons asserted
+  // `content/` was "where a folio's sources live", which was the old
+  // convention stated as a present fact, and that is the exact failure this
+  // whole module exists to stop.
   {
     match: "pipeline/build.ts",
     reason:
-      "runs from `content/` after `cd content`, so it names the FOLIO's own " +
-      "pipeline — `content/` is where a folio's sources live and the platform " +
-      "carries no folio. `cat-harness/content/pipeline/build.ts` is a " +
-      "different file with the same basename; resolving to it would be wrong, " +
-      "not a fix",
+      "runs after `cd content`, a directory the convention has retired in " +
+      "favour of `folio/`. Note `cat-harness/content/pipeline/build.ts` DOES " +
+      "exist — a different file sharing the basename — so resolving to it " +
+      "would be a wrong fix that looks right",
   },
   {
     match: "pipeline/export-bibtex.ts",
-    reason: "same `cd content` shape as build.ts — a folio's bibliography, not the platform's",
+    reason: "same retired `cd content` root as build.ts",
   },
   {
     match: "pipeline/latex-preflight.ts",
-    reason: "same `cd content` shape — preflights a folio's main.tex",
+    reason: "same retired `cd content` root",
   },
   {
     match: "pipeline/validate.ts",
-    reason: "same `cd content` shape — validates a folio's content tree",
+    reason: "same retired `cd content` root",
   },
   {
     match: "pipeline/trivial-skeleton-audit.ts",
-    reason: "invoked with `--cwd content`, so it audits a folio's blocks",
+    reason: "invoked with `--cwd content`, the retired root",
   },
   {
     match: "pipeline/qa-sweep.ts",
     reason:
-      "`cd content` then a folio argument (`quantum-observable-universe`) — " +
-      "the QA axes run over a folio's blocks, and the platform has none",
+      "`cd content` plus a hardcoded folio argument " +
+      "(`quantum-observable-universe`) — a retired root AND a named folio " +
+      "this repository does not carry",
   },
   {
     match: "pipeline/codemod-leanval.ts",
-    reason: "rewrites Lean validation calls in a folio's blocks",
+    reason: "reads blocks under the retired `content/` root",
   },
 ];
 

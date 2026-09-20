@@ -205,6 +205,11 @@ describe("FOLIO_PATHS", () => {
     // with the same basename. Pointing the workflow at it would be a wrong
     // fix that looks like a right one, so the exemption records why.
     const entry = FOLIO_PATHS.find((f) => f.match === "pipeline/build.ts");
-    expect(entry?.reason).toContain("same basename");
+    // The invariant, not a phrasing: the reason must name the basename trap
+    // and must say `content/` is retired rather than merely absent. Pinning
+    // the exact sentence broke on the first correction, which is the wrong
+    // thing for a test to be sensitive to.
+    expect(entry?.reason).toContain("basename");
+    expect(entry?.reason).toContain("retired");
   });
 });
