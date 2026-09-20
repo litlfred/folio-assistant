@@ -1194,6 +1194,28 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * {@link DependentMaterialisationSchema} for the measurement.
    */
   dependents: DependentMaterialisation;
+
+  /**
+   * What makes this subgraph reachable — a renderer, a documentation entry,
+   * and a governing skill — or the reasons it does not need one.
+   *
+   * OPTIONAL on purpose, unlike {@link dependents} above. An absent field is
+   * exactly the finding `check:subgraph-coverage` exists to raise, so making
+   * it required would both destroy the measurement and bill every concurrent
+   * branch for a field they had no reason to know about — which is what
+   * `dependents` did the day it landed. See {@link SubgraphCoverageSchema}.
+   */
+  coverage?: SubgraphCoverage;
+
+  /**
+   * Which theme this subgraph renders on — one answer for every surface that
+   * renders it (navbar section, board panel, sticky).
+   *
+   * Absent means the instance's own theme. See {@link ContentDirectorySchema}
+   * for why it lives on the directory and why the methodologies take
+   * `analyst`.
+   */
+  theme?: string;
 }
 
 /** An instance's root declaration. */
@@ -1385,8 +1407,93 @@ export const GraphNodeDirectorySchema = z.object({
   ...kgNodeLabelShape,
 });
 
+/**
+ * What makes a declared subgraph REACHABLE — and the reasons it may not need
+ * to be.
+ *
+ * The owner, 2026-09-20: *"everytime an instance names a directory as a
+ * subgraph, it needs (QA valduation) to have visualizer, documenationentry. QA
+ * if no skill, no tools."* Three obligations that fail differently, so they are
+ * three fields rather than one flag:
+ *
+ * - `visualiser` — something renders it. Without one, a reader cannot LOOK.
+ * - `docs` — something says what it is FOR. Without one, a reader who finds it
+ *   cannot tell what belongs in it.
+ * - `skill` — a skill governs it. Without one there is nothing for an agent to
+ *   invoke, so the graph is agent-unreachable even where a human can read it.
+ *   This is the sharpest of the three and the easiest to miss, because the
+ *   directory looks perfectly fine.
+ *
+ * ## Every field is OPTIONAL, and that is deliberate
+ *
+ * `dependents` was made REQUIRED four hours before this was written, and the
+ * bill landed on a sibling branch within the hour: `main` added two directory
+ * entries without it, and CI on the merged tree reported 166 failures and 35
+ * errors. Nothing was wrong with either side. **A required field is a change
+ * every concurrent branch pays for**, and this one does not need to be
+ * required to do its job — an absent field is exactly the finding the axis
+ * exists to raise.
+ *
+ * ## `exempt` carries a REASON, never a bare true
+ *
+ * Not every subgraph wants a viewer: `interaction/` is read by an agent at
+ * session start and a human page for it may be pointless. But an opt-out with
+ * no reason is a silence list, and the next person cannot tell a considered
+ * waiver from a shrug. So the value is the reason, and the axis prints it.
+ */
+export const SubgraphCoverageSchema = z.object({
+  visualiser: z.string().min(1).optional(),
+  docs: z.string().min(1).optional(),
+  skill: z.string().min(1).optional(),
+  exempt: z
+    .object({
+      visualiser: z.string().min(1).optional(),
+      docs: z.string().min(1).optional(),
+      skill: z.string().min(1).optional(),
+    })
+    .optional(),
+});
+export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
+
 export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
   dependents: DependentMaterialisationSchema,
+  coverage: SubgraphCoverageSchema.optional(),
+  /**
+   * Which theme this subgraph renders on.
+   *
+   * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies
+   * (CRDM, MADR, SDLC, etc.)"*, with *"use judgement"* on how.
+   *
+   * ## Why the DIRECTORY carries it
+   *
+   * A theme was previously declarable in two places — a sticky
+   * (`StickyContribution.theme`) and, since bean `5y4b`, a todo. Neither
+   * answers "what does this SUBGRAPH look like", which is the question a
+   * per-instance navbar section and a board panel both ask (`603s`, `6lb8`).
+   * Putting it on the directory means one methodology declares its theme once
+   * and every surface that renders the methodology agrees, instead of each
+   * surface deciding separately and drifting.
+   *
+   * ## Judgement applied: the methodologies take `analyst`, and nothing else does
+   *
+   * `methodologies`, `methodology-crdm`, `methodology-raci` and
+   * `smart-kg-methodologies` — the four directories that hold or index a
+   * methodology. MADR and SDLC are named in the instruction and do not exist
+   * yet; they inherit the answer when they are declared, which is the point of
+   * writing it on the directory rather than per page.
+   *
+   * Not applied to the rest. A theme on every directory would make the field
+   * mean nothing, and this repository's own rule is that a distinction which
+   * fires on every subject is not a distinction.
+   *
+   * ## Open string, like every other theme reference here
+   *
+   * Closing the enum means importing the theme table into the declaration
+   * reader, and that reader is what the site build, the gates and every
+   * consumer of a `harness.json` go through. An unknown theme is a rendering
+   * finding, not a parse error.
+   */
+  theme: z.string().min(1).optional(),
 });
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
@@ -2207,6 +2314,74 @@ export function isPublishedGraphKind(name: string): boolean {
 }
 
 /**
+ * Does an instance declaring a directory of this kind owe a **visualiser**?
+ *
+ * The owner, 2026-09-20: *"if there is active state directory in repo root/
+ * (**not part of the static KG**) like `beans/`, `todos/`, `fsh-guts/` those
+ * have their vuisalizers too as requiement of handler.... needs to render
+ * sometihng for each 'state' dir it declares/inits."*
+ *
+ * So the discriminator is the owner's own parenthetical: **is this the static
+ * knowledge graph, or is it active material about the work?** Authored
+ * subject matter you can read as itself; a record of where something got to
+ * you cannot, which is why it needs something that renders it.
+ *
+ * That is exactly `holds !== "content"`, and the phrasing is not a
+ * coincidence — `content` is defined on {@link GraphLayer} as *"authored
+ * nodes a reader or a tool consumes as the subject matter… It stands on its
+ * own"*. A graph that stands on its own does not need a viewer to be
+ * legible. Everything else does.
+ *
+ * ## The rule this is NOT, and why that matters
+ *
+ * The first derivation was `holds === "state"`, and it was falsified inside
+ * ten minutes: it covers `beans` and `todos` and **misses `fsh-guts`**, which
+ * the owner names in the same sentence. `mhh9` reclassified `fsh-guts` from
+ * `state` to `context` earlier the SAME DAY, on the ground that no running
+ * step writes it — relocating something there is a human-directed act.
+ *
+ * `holds !== "content"` survives that move, because both `state` and
+ * `context` are on the same side of it. That is the test a rule over this
+ * axis has to pass: a kind changing category within the non-content layers
+ * must not silently change what it owes.
+ *
+ * ## `renderable` is the one structural exemption
+ *
+ * A `renderable` kind is its own view — `docs` and `folio` render to pages,
+ * so demanding a separate viewer would be asking for a second rendering of
+ * the same thing. Both are already `holds: "content"`, so this is belt and
+ * braces rather than a second rule; it is stated because a future renderable
+ * kind that is not content would otherwise acquire an obligation it meets by
+ * construction.
+ *
+ * ## Bootstrap is exempt by INSTANCE, not by kind
+ *
+ * `hfkl` carries the owner's ruling that `cat-bootstrap` has no visualiser
+ * *"but it must have its json/jsonld... that is its existence"*. That
+ * exemption lives in the checker as `VISUALISER_EXEMPT_INSTANCES`, keyed on
+ * the instance name, so every other instance declaring the same kind keeps
+ * the obligation. An axis that dropped bootstrap by KIND would stop checking
+ * the one thing bootstrap must have.
+ */
+export function owesVisualiser(
+  kind: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): boolean {
+  const def = registry.get(kind);
+  // An UNKNOWN kind owes one, and that is deliberate rather than a fallback.
+  //
+  // `graphLayer` returns `undefined` here and its doc comment is explicit
+  // that callers must not collapse that into `content`. This one does not:
+  // it collapses the unknown into OWING, which is the opposite direction and
+  // the safe one. A kind nobody has classified must not escape an obligation
+  // by being unmentioned — the same reason `DOCUMENT_BLOCK_KINDS` is a
+  // derived complement rather than a list.
+  if (!def) return true;
+  if (def.renderable) return false;
+  return def.holds !== "content";
+}
+
+/**
  * Is this SKILL allowed into a published graph?
  *
  * The skill that documents an unpublished kind is itself unpublished, and it
@@ -2851,15 +3026,44 @@ export function ownDirectories(
   registry: GraphKindRegistry = defaultGraphKinds,
 ): ResolvedDirectory[] {
   const decl = readDeclaration(link.root, registry);
-  if (!decl) {
-    return DEFAULT_DIRECTORIES.map((dir) => ({
-      ...dir,
-      declaredBy: "(default)",
-      absPath: resolve(link.root, dir.path),
-      own: false,
-    })).filter((d) => existsSync(d.absPath));
+
+  // The conventional set FIRST, existence-filtered, and then declared entries
+  // override it by id — which is `resolveDirectories`' order, and now this
+  // function's too.
+  //
+  // ## The disagreement this closes (bean `rday`)
+  //
+  // These were the same declaration read by two resolvers that answered
+  // differently. `resolveDirectories` seeded `DEFAULT_DIRECTORIES` at the root
+  // link whatever the declaration said; this one applied them ONLY to a root
+  // with no declaration at all. So a declaration's mere EXISTENCE withdrew
+  // every convention from this function's callers, and `directories` defaults
+  // to `[]` in the schema — meaning the minimal honest declaration,
+  // `{ "name": "x" }`, silently emptied the result.
+  //
+  // Measured 2026-09-20: `resolveSkillDirs` over a fixture with a `skills/`
+  // directory on disk went from 3 to 0 the moment the fixture was given a
+  // name. Nothing failed except the tests that happened to assert an overlay;
+  // a consumer would have read it as "this instance has no skills".
+  //
+  // Seeding unconditionally is the smaller of the two fixes the bean named
+  // (the other was teaching the schema to tell an ABSENT `directories` from an
+  // empty one, which is a migration). It is also the one that makes the rule
+  // sayable in a sentence: **a declaration adds and overrides; it does not
+  // withdraw.** An instance that genuinely owns none of the conventional
+  // directories says so by not having them on disk — the existence filter is
+  // what makes that the same answer either way, and it is the same reason
+  // `DEFAULT_DIRECTORIES` carries: a declared-but-absent directory is `dh4f`,
+  // where a consumer scans nothing and reports a clean run over it.
+  const byId = new Map<string, ResolvedDirectory>();
+  for (const dir of DEFAULT_DIRECTORIES) {
+    const absPath = resolve(link.root, dir.path);
+    if (!existsSync(absPath)) continue;
+    byId.set(dir.id, { ...dir, declaredBy: "(default)", absPath, own: false });
   }
-  return decl.directories
+  if (!decl) return [...byId.values()];
+
+  for (const dir of decl.directories
     // A REPOSITORY-scoped entry is not inherited, for the reason
     // `resolveDirectories` gives: a dependency's repository is a different
     // checkout, so inheriting its entry points every consumer at somebody
@@ -2885,7 +3089,14 @@ export function ownDirectories(
       // was harmed, because it is the only kg-only one among them.
       absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
       own: link.own === true,
-    }));
+    }))) {
+    // Override by id, replacing IN PLACE so the conventional order survives a
+    // relocation — the same rule and the same reason as `resolveDirectories`:
+    // a consumer should not have its scan order reshuffled because a
+    // declaration moved one directory.
+    byId.set(dir.id, dir);
+  }
+  return [...byId.values()];
 }
 
 // ── Materialisation ─────────────────────────────────────────────

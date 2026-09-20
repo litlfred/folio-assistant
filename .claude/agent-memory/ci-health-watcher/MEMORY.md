@@ -144,37 +144,42 @@ sorted nothing would pass.
 
 More: `detail/never-assert-on-a-qa-verdict-from-the-published-corpus.md`
 
+## TRAP — Pages deploys are not on the default branch, and cancelled is a third state
+
+`check:ci-health`'s default-branch query **cannot see a Pages deployment**:
+those runs are on the *publish* branch, raised by `github-pages[bot]` on the
+`dynamic` event, in a workflow with no file. Measured 2026-09-20: the
+default-branch page held **zero**, the publish branch 51 cancelled / 49 green.
+
+**`cancelled` is a third state** — stale, not down, nobody owed a fix. Never
+fold it into success or failure. Say **whose** contention it was: one deploy
+pushing twice is fixed, several sessions racing for the ref is not. Report the
+counts, grade no share — only the floor *"deployments happened, none succeeded"*.
+
+**Never cached.** A Pages outcome is a fact GitHub holds about the repo, not
+repository state.
+
+More: `detail/pages-deploys-are-not-on-the-default-branch.md`
+
 ## TRAP — a 404 or a failed fetch is not evidence — read the publish ref
 
 **First check for a deployment or 404 question is the publish ref, not a
 fetch.** `git fetch origin gh-pages && git ls-tree -r --name-only FETCH_HEAD |
-grep <thing>`; staging previews are `STAGING/<branch-slug>/`, the slug being
-the branch with `/` replaced by `-`.
+grep <thing>`; staging previews are `STAGING/<branch-slug>/`.
 
-**A published URL is looked up, never composed.**
-`docs/<stub>/proposals/x.md` publishes to `/proposals/x.html` — the stub
-segment is a source-tree convention Jekyll does not carry into the site, so a
-composed URL 404s on a page that is there. Measured 2026-09-19 on
-`cat-bootstrap.md`.
+**A published URL is looked up, never composed** — the `docs/<stub>/` segment
+does not reach the site, so a composed URL 404s on a page that is there.
 
-**A failed fetch from an agent container is a proxy result.** Outbound HTTPS
-is proxied and `github.io` is blocked: `curl` returns `000` with `CONNECT
-tunnel failed, response 403` whether or not the page exists. "Could not
-determine" is honest, and still the wrong answer when the ref could determine
-it.
+**A failed fetch from an agent container is a proxy result**, not an absence:
+`github.io` is blocked and `curl` returns `000` either way.
 
 **CI state is `get_check_runs`, not `get_status`** — the latter reports
-`{"state":"pending","total_count":0}` on a PR whose checks are green, because
-this repo posts check runs and no legacy statuses. Compare its `head_sha`
-against the PR's current head: `check_suite.completed` routinely names a
-superseded sha, and the staging workflow's own commits are not PR heads.
+`pending, total_count 0` on a green PR. Check its `head_sha` against the PR's
+current head.
 
 Skill: `skills/folio-core/github-state-inspection.md`.
 
-NOT tagged to `platform-boundary-guard`, which wants the compose-not-resolve
-half: measured 2026-09-19 it was already at **201 of its 200 lines**, so a
-14th entry pushes one of its own TRAPs past the harness cut. The skill is the
-source of truth; memory only summarises.
+More: `detail/read-the-ref-not-the-url.md`
 
 ## TRAP — two workflows fail BY DESIGN here; do not "fix" them by dispatching
 

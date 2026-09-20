@@ -25,8 +25,13 @@ import { resolve } from "node:path";
 import {
   assess,
   describeWindow,
+  pagesHealth,
   pushTriggerOf,
   render,
+  renderPages,
+  selfSupersedes,
+  type DeployCommit,
+  type PagesReport,
   type RunSummary,
   type Window,
 } from "../src/workflow/ci-health.js";
@@ -324,7 +329,119 @@ async function fetchWorkflowRuns(file: string): Promise<RunSummary[] | undefined
   }
 }
 
+/**
+ * The Pages deployments, and the publish-branch commits that triggered them.
+ *
+ * **Three properties hid `bm6d` for two months, and the query above trips on
+ * every one.** The deployments run on the PUBLISH branch rather than the
+ * default one; they are raised by `github-pages[bot]` on the `dynamic` event,
+ * so there is no file in `.github/workflows/` for `knownWorkflows` to make a
+ * row out of; and `?branch=<default>` excludes them outright. Measured
+ * 2026-09-20: the default-branch page held **zero** of them while the publish
+ * branch held **52 cancelled and 48 succeeded**.
+ *
+ * ## Why the workflow is discovered rather than named
+ *
+ * GitHub's Pages workflow has no file, so it is addressed by id — and the id
+ * is per-repository. Two alternatives were tried and rejected by measurement:
+ * `GET /repos/{slug}/pages` says the publish branch outright and answers
+ * **403 without admin**, and the `dynamic/pages/pages-build-deployment` path
+ * answers **404** through the by-path runs endpoint. So the workflow list is
+ * read once and the entry is found by its `dynamic/pages/` path prefix.
+ *
+ * That also removes the last assumption: the publish branch is read off the
+ * runs' own `head_branch`, so a repository publishing from `main` or from a
+ * `docs/` folder reports its branch rather than a hardcoded `gh-pages`.
+ *
+ * Costs two requests, and a third for the commits. A repository with no Pages
+ * spends one and stops.
+ */
+const PAGES_WORKFLOW_PATH_PREFIX = "dynamic/pages/";
+
+/** How far back to look. A page, not a period — {@link Window} says which. */
+const PAGES_RUNS_PER_PAGE = 100;
+const PUBLISH_COMMITS_PER_PAGE = 100;
+
+async function api(path: string): Promise<unknown | undefined> {
+  if (!slug) return undefined;
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  const res = await fetch(`https://api.github.com/repos/${slug}/${path}`, {
+    headers: {
+      accept: "application/vnd.github+json",
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+    },
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (!res.ok) throw new Error(`GitHub API returned ${res.status} for ${path.split("?")[0]}`);
+  return res.json();
+}
+
+async function fetchPages(): Promise<PagesReport> {
+  if (!slug) return { unreachable: "no GitHub `origin` remote to ask about." };
+  let id: number | undefined;
+  try {
+    const body = (await api("actions/workflows?per_page=100")) as {
+      workflows?: Array<{ id: number; path: string }>;
+    };
+    id = body.workflows?.find((w) => w.path.startsWith(PAGES_WORKFLOW_PATH_PREFIX))?.id;
+  } catch (e) {
+    return { unreachable: `could not list workflows: ${String(e).slice(0, 100)}` };
+  }
+  if (id === undefined) {
+    // A repository with Pages off, and one whose workflow list came back
+    // without it, are not the same thing — but from here they are, so this
+    // says the weaker of the two.
+    return { unreachable: "no GitHub Pages workflow in this repository's workflow list." };
+  }
+
+  let runs: RunSummary[];
+  let publishBranch: string | undefined;
+  try {
+    const body = (await api(`actions/workflows/${id}/runs?per_page=${PAGES_RUNS_PER_PAGE}`)) as {
+      workflow_runs?: Array<RunSummary & { head_branch?: string }>;
+    };
+    runs = body.workflow_runs ?? [];
+    publishBranch = runs.length > 0 ? (runs[0] as { head_branch?: string }).head_branch : undefined;
+  } catch (e) {
+    return { unreachable: `could not read the Pages deployments: ${String(e).slice(0, 100)}` };
+  }
+
+  const report: PagesReport = { health: pagesHealth(runs), publishBranch };
+  if (runs.length > 0) {
+    report.window = {
+      runs: runs.length,
+      from: runs.map((r) => r.created_at).reduce((a, b) => (a < b ? a : b)),
+      to: runs.map((r) => r.created_at).reduce((a, b) => (a > b ? a : b)),
+    };
+  }
+  if (!publishBranch) {
+    // No runs, so no branch to ask about. Not a failure — `renderPages`
+    // already says an empty window is unjudged rather than clean.
+    return report;
+  }
+  try {
+    const body = (await api(
+      `commits?sha=${encodeURIComponent(publishBranch)}&per_page=${PUBLISH_COMMITS_PER_PAGE}`,
+    )) as Array<{ sha: string; commit: { message: string; committer: { date: string } } }>;
+    const commits: DeployCommit[] = body.map((c) => ({
+      sha: c.sha,
+      message: c.commit.message,
+      date: c.commit.committer.date,
+    }));
+    report.supersedes = selfSupersedes(commits);
+  } catch (e) {
+    // Kept apart from `unreachable`: the deployment counts above are real and
+    // must still be shown. Only the WHOSE-contention split is missing.
+    report.commitsUnreachable = String(e).slice(0, 100);
+  }
+  return report;
+}
+
 const { runs, unreachable } = await fetchRuns();
+// Independent of the default-branch question above, and asked even when that
+// one failed: a repository whose `main` history is unreadable may still be
+// publishing fine, and the reverse. Two facts, never collapsed into one.
+const pages = await fetchPages();
 const headSha = unreachable ? undefined : await fetchHeadSha();
 const changedFiles = headSha ? await fetchChangedFiles(headSha) : undefined;
 const repoRoot = (() => {
@@ -449,10 +566,13 @@ const health = runs
     })
   : [];
 
-if (outFile) writeFileSync(outFile, render(health, { unreachable, branch, window }));
+const report = () =>
+  `${render(health, { unreachable, branch, window })}\n${renderPages(pages)}`;
+
+if (outFile) writeFileSync(outFile, report());
 
 if (markdown) {
-  console.log(render(health, { unreachable, branch, window }));
+  console.log(report());
 } else if (unreachable) {
   console.error(`CI health: NOT CHECKED — ${unreachable}`);
   console.error("Treat this as unknown, not as green.");
@@ -526,6 +646,13 @@ if (markdown) {
     );
   }
 }
+
+// The Pages section reaches the human path too, and reaches it even when the
+// default-branch check above could not look — `unreachable` there says nothing
+// about whether the previews are building. Printed rather than graded: the
+// counts have no calibrated threshold, so `renderPages` states them and the
+// reader judges. See bean `3yi4`.
+if (!markdown) console.log(`\n${renderPages(pages)}`);
 
 const red = health.filter((h) => h.health === "red");
 if (warn || markdown) process.exit(0);

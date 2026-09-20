@@ -11,6 +11,7 @@ import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
 import { registerFolioGraphKind } from "./folio-graph-kind";
+import { THEMES } from "./themes";
 import { BEAN_GRAPH_FILE } from "./bean-graph";
 import { TODO_GRAPH_FILE } from "./todo-graph";
 import {
@@ -36,6 +37,7 @@ import {
   directoriesForGraph,
   resolveDirectories,
   resolveGraphKind,
+  ContentDirectorySchema,
   instanceRootsIn,
   toJsonLd,
   type ResolvedDirectory,
@@ -1107,5 +1109,45 @@ describe("instanceRootsIn — discovered, never listed", () => {
     // deletion plus an addition.
     expect(found).toContain("folio-assistant-core");
     expect(found).toContain(".");
+  });
+});
+
+describe("a directory declares the theme it renders on (owner, 2026-09-20)", () => {
+  it("is optional — absent means the instance's own theme", () => {
+    const r = ContentDirectorySchema.safeParse({
+      id: "x", path: "x/", dependents: "skip", graphs: ["cat-harness"],
+    });
+    expect(r.success).toBe(true);
+    if (r.success) expect(r.data.theme).toBeUndefined();
+  });
+
+  it("refuses an empty theme — absent and blank are different claims", () => {
+    expect(
+      ContentDirectorySchema.safeParse({
+        id: "x", path: "x/", dependents: "skip", graphs: ["cat-harness"], theme: "",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("THE METHODOLOGIES TAKE `analyst`, and the theme id is real", () => {
+    // Against the real declaration and the real theme table, so a typo in
+    // either is caught. Asserting the id exists is the half that matters: a
+    // misspelled theme parses (it is an open string by design) and would fall
+    // back silently at render time.
+    const repo = resolve(import.meta.dir, "..", "..");
+    const decl = readDeclaration(join(repo, "cat-harness"));
+    const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
+    expect(themed.map((d) => d.id).sort()).toEqual([
+      "methodologies", "methodology-crdm", "methodology-raci", "smart-kg-methodologies",
+    ]);
+    for (const d of themed) expect(d.theme).toBe("analyst");
+    expect(THEMES.map((t) => t.id)).toContain("analyst");
+  });
+
+  it("and NOTHING else is themed — a field that fires on every subject means nothing", () => {
+    const repo = resolve(import.meta.dir, "..", "..");
+    const decl = readDeclaration(join(repo, "cat-harness"));
+    const all = decl?.directories ?? [];
+    expect(all.filter((d) => d.theme !== undefined).length).toBeLessThan(all.length);
   });
 });

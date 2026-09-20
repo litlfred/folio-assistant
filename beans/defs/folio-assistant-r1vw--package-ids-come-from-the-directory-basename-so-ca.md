@@ -1,7 +1,7 @@
 ---
 # folio-assistant-r1vw
 title: Package ids come from the DIRECTORY basename, so cat-bootstrap/skills/ mints package/skills and collides
-status: todo
+status: completed
 type: task
 parent: folio-assistant-zzmr
 created_at: 2026-09-20T17:06:00Z
@@ -72,3 +72,43 @@ directories to share a basename.
 - [ ] `corpus-grep`'s membership is whatever it should actually be —
       `src/skills/` has no `package-manifest.json` at all, so "no package" may
       be the honest answer.
+
+## Closed 2026-09-20
+
+`packageIdFor(dir)` in `kg-export.ts` reads the directory's
+`package-manifest.json` `name`, falling back to the basename when no manifest
+declares one. One resolver, used at all three sites that composed the id
+independently: the skill side's `inPackage`, the directory-stub loop, and the
+manifest-backed replacement under `skills/`.
+
+The `seen` Set is gone. It deduped on basename and its `continue` **was** the
+bug: two directories wanting one id was indistinguishable from the same
+directory twice. A second claimant is now a `problems[]` entry naming both
+directories and the remedy; one node is still emitted, because dropping it
+would dangle every `inPackage` edge pointing at it.
+
+Measured, before → after:
+
+```
+SkillPackage nodes      12 → 13
+package/skills          5 members → 1   (corpus-grep only)
+package/cat-bootstrap   absent  → 4     (the four bootstrap skills)
+dangling internal links 0 → 0
+```
+
+Six tests in `kg-export.test.ts` under *"a package's id is declared, not
+derived from its path"*: ids are unique; `cat-bootstrap` is named by its
+manifest; its members are exactly the four; **`corpus-grep` is not among
+them** — the assertion that was false while every signal said healthy; a
+manifest-less directory falls back and reports `hasManifest: false`; and,
+over the whole corpus, every manifested package's id equals its declared name.
+That last one is the mechanism rather than the outcome: `cat-bootstrap/skills`
+and `src/skills` are the only colliding pair here, so an outcome-only test
+would pass over a corpus with nothing left to detect the day one is renamed.
+
+**Left alone deliberately:** `corpus-grep` still sits in `package/skills`,
+named after `src/skills/` because that directory declares nothing. The bean's
+third item asked whether "no package" is the honest answer instead. It may be
+— but that is a decision about `src/skills/`, not about how an id is minted,
+and folding it in here would have hidden the measurement above inside a second
+change.

@@ -578,3 +578,103 @@ describe("a Role comes from the registry as well as from a lane", () => {
     expect(registry.find((r) => r.name === "corpus")!.judgementOnly).toBeUndefined();
   });
 });
+
+/**
+ * A package's id comes from its MANIFEST, and two directories cannot merge
+ * into one node in silence. Bean `r1vw`.
+ *
+ * ## The failure this pins, measured 2026-09-20
+ *
+ * The id was `dir.split("/").pop()` — the directory basename. Eleven of the
+ * twelve packages hid that, because their directory is named after the
+ * package. The twelfth was `cat-bootstrap/skills/`, whose manifest declares
+ * `"name": "cat-bootstrap"` and whose node was `package/skills`, **named
+ * `skills`**.
+ *
+ * `cat-harness/src/skills/` has the same basename, so both wanted
+ * `package/skills`, and a `seen` set dropped whichever arrived second while
+ * its skills went on emitting `inPackage -> package/skills`. The result was a
+ * node with five members: cat-bootstrap's four skills plus `corpus-grep`, a
+ * cat-harness skill from a directory with **no manifest at all**, published as
+ * a member of a package it was never listed in.
+ *
+ * Nothing reported it, and that is the part worth a test rather than a fix.
+ * Both sides resolved. No link dangled. The audit's `skill-servable` criterion
+ * was SATISFIED by the collision — the skill was "served" because a package it
+ * had nothing to do with happened to exist. Every signal said healthy.
+ *
+ * These assert the OUTCOME (the two packages are distinct and carry the right
+ * members) and the MECHANISM (the id tracks the declared name). An outcome
+ * test alone would go on passing if the resolver silently reverted to
+ * basenames, because `cat-bootstrap/skills` and `src/skills` are the only pair
+ * in this corpus that collide — and the day somebody renames one, the outcome
+ * test would pass over a corpus with nothing left to detect.
+ */
+describe("a package's id is declared, not derived from its path", () => {
+  const packages = (): Array<Record<string, unknown>> =>
+    typed("SkillPackage") as Array<Record<string, unknown>>;
+
+  const membersOf = (pkgIri: string): string[] =>
+    EXPORT["@graph"]
+      .filter((n) => {
+        const links = (n as { inPackage?: Array<string | { "@id": string }> }).inPackage ?? [];
+        return links.some((l) => (typeof l === "string" ? l : l["@id"]) === pkgIri);
+      })
+      .map((n) => String(n["@id"]).split("#").pop()!);
+
+  test("no two packages share an @id — a collision is not a merge", () => {
+    const ids = packages().map((p) => String(p["@id"]));
+    expect(ids.length).toBe(new Set(ids).size);
+  });
+
+  test("`cat-bootstrap` is named by its manifest, not by its directory", () => {
+    // Its directory is `cat-bootstrap/skills/`, basename `skills`. The
+    // manifest says `cat-bootstrap`. Exactly the case the basename rule got
+    // wrong, and the only one in this corpus — so it is named here rather
+    // than searched for.
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap"));
+    expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
+    expect(p!["name"]).toBe("cat-bootstrap");
+    expect(String(p!["path"])).toContain("cat-bootstrap/skills");
+  });
+
+  test("its members are cat-bootstrap's four skills and nothing else", () => {
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap"))!;
+    expect(membersOf(String(p["@id"])).sort()).toEqual([
+      "skill/cat-bootstrap-kg-navigation",
+      "skill/confirm-harness",
+      "skill/discussion",
+      "skill/log-message",
+    ]);
+  });
+
+  test("`corpus-grep` is NOT among them — the contamination the merge caused", () => {
+    // The sharpest assertion here, because it is the one that was false and
+    // that every other signal called healthy. `corpus-grep` lives in
+    // `src/skills/`, which declares no package at all.
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap"))!;
+    expect(membersOf(String(p["@id"]))).not.toContain("skill/corpus-grep");
+  });
+
+  test("a directory with NO manifest falls back to its basename, and says so", () => {
+    // The fallback is not a hedge: `src/skills/` carries no manifest, so it
+    // has no declared name and nothing else to be called. What the change
+    // buys is that a name is only INFERRED where none was declared — and
+    // `hasManifest: false` is what lets a reader tell the two apart.
+    const p = packages().find((x) => String(x["path"]) === "src/skills");
+    expect(p, "no package for src/skills").toBeDefined();
+    expect(p!["name"]).toBe("skills");
+    expect(p!["hasManifest"]).toBe(false);
+  });
+
+  test("every package with a manifest is named what that manifest says", () => {
+    // The mechanism, over the whole corpus rather than the one case above.
+    // Without this the resolver could revert to basenames and only
+    // cat-bootstrap would notice.
+    for (const p of packages()) {
+      if (p["hasManifest"] !== true) continue;
+      const id = String(p["@id"]).split("#package/")[1];
+      expect(id, `package at ${String(p["path"])}`).toBe(String(p["name"]));
+    }
+  });
+});

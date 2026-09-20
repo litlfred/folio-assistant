@@ -241,6 +241,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-core": "Platform core (folio-core)",
   workflow: "Workflow & process (workflow)",
   "graph-management": "Graph management (graph-management)",
+  theming: "Theming (theming)",
   "folio-document-adapter": "Document adapter (folio-document-adapter)",
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
