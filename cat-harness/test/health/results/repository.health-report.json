@@ -2,13 +2,13 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "98a2087b18ef"
+    "script_hash": "c44c03bd2e40"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T17:37:39.612Z",
+  "updated_at": "2026-09-20T19:09:15.261Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,13 +34,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 261422211,
+          "value": 214354417,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 5,
+          "value": 4,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
@@ -75,7 +75,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 5,
+          "value": 4,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -84,7 +84,7 @@
     },
     {
       "id": "repository-size",
-      "state": "ok",
+      "state": "finding",
       "summary": "The repository's tracked content, and what a full-history clone of it costs. Two different questions, reported separately.",
       "thresholds": [
         {
@@ -119,36 +119,43 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 91789299,
+          "value": 92127412,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 352769890,
+          "value": 823303667,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 322818048,
+          "value": 819564544,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 57,
+          "value": 9,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 3.84,
+          "value": 8.94,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
-      "findings": []
+      "findings": [
+        {
+          "summary": "`.git` is 785.2 MB against 87.9 MB of tracked content — 8.9x, in 9 pack(s).",
+          "metric": "git-dir-to-tree-ratio",
+          "severity": "minor",
+          "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
+        }
+      ]
     },
     {
       "id": "bean-store",
@@ -177,6 +184,13 @@
           "severity": "minor"
         },
         {
+          "metric": "bean-quiet-claims",
+          "value": 72,
+          "unit": "hours",
+          "basis": "NO EXTERNAL STANDARD; calibrated here, and the number is the weaker half of the rule. What actually settles whether a claim is live is a LIVENESS SIGNAL — an open PR naming the bean, an unmerged branch touching it, a note since. `skills/folio-core/bean-coordination.md` §\"A claim is branch-local\" is why: a claim becomes visible to a sibling when the PR opens, so a claim with no PR and no branch has announced nothing to anybody. **This check computes only the offline half** — time since `updated_at` — so its count is an UPPER BOUND on quiet claims and must be read as one: a bean here may have an open PR this sweep cannot see. 72 hours because a claim is meant to become visible at the FIRST commit (`continual-progress` invariant 1), sessions are container-scoped and reclaimed, and three days spans a weekend without firing on one. It is deliberately far below the 14-day abandonment threshold and answers a different question, so both are reported.",
+          "severity": "minor"
+        },
+        {
           "metric": "bean-resolved-inline",
           "value": 100,
           "unit": "count",
@@ -194,19 +208,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 269,
+          "value": 286,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 167,
+          "value": 181,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 102,
+          "value": 105,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -223,8 +237,20 @@
           "command": "beans/defs/*.md front matter"
         },
         {
+          "metric": "bean-claimed",
+          "value": 74,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-quiet-claims",
+          "value": 0,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        },
+        {
           "metric": "bean-decision-records",
-          "value": 4,
+          "value": 6,
           "unit": "count",
           "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         },
@@ -237,13 +263,13 @@
       ],
       "findings": [
         {
-          "summary": "102 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "105 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
         },
         {
-          "summary": "167 open beans (todo + in-progress), past the 150 calibration point.",
+          "summary": "181 open beans (todo + in-progress), past the 150 calibration point.",
           "metric": "bean-open",
           "severity": "minor",
           "action": "Read `beans roadmap` rather than `beans list` and check the backlog still has a shape. This is a fact about the plan, not about any one item."

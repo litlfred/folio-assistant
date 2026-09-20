@@ -24,6 +24,7 @@ import { fileURLToPath } from "node:url";
 import { defineTool, type ToolDefinition } from "../schemas/tool.js";
 import { toolTypeIri } from "../schemas/tool-types.js";
 import { mcpTools } from "./mcp.js";
+import { sessionTools } from "./sessions.js";
 
 // The INSTANCE root — `<repo>/cat-harness`, where `harness.json` lives.
 //
@@ -1760,6 +1761,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // module because they are a MIGRATION of an existing surface rather than
     // hand-authored nodes: they are regenerable from `bun run mcp:capture`, and
     // mixing them in here would blur which of the two a reader is looking at.
+    // Reading who else is working this repository. Hand-authored and not
+    // served over MCP, so it is a sibling module rather than a row in
+    // `mcp.ts` — see that file's header on why the two are kept apart.
+    ...sessionTools(t),
+
     ...mcpTools(t),
   ];
 }

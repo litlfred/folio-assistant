@@ -835,6 +835,38 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
   },
 
+  // A confirmation the owner gave IN ADVANCE — `skills/folio-core/confirmation-waiver.md`.
+  //
+  // Owner, 2026-09-20: "human can waive confirmation rights (e.g. for session,
+  // for process run)", and "context dependent, should be in memories".
+  //
+  // `context` by exactly the test that settled `memory` above — a running
+  // process READS a waiver before a gate fires and no step writes one; it
+  // changes when a person grants or withdraws permission, which is an act
+  // OUTSIDE any instance. That is why it is declared over the SAME directory:
+  // `memory/` holds both, and the two are told apart by the `$schema` tag
+  // inside each file rather than by where it sits. A directory is a place to
+  // look and may hold more than one part of a graph.
+  //
+  // A kind of its own rather than a fourth memory label, and the reason is
+  // structural: `MemoryNodeSchema` carries NO status by design — "a TRAP is
+  // not open, and marking one done would assert that the failure it records
+  // has stopped being possible". A waiver's whole content is that it EXPIRES.
+  // Labelling one `stable` would assert the opposite of what the node says.
+  waiver: {
+    type: termIri("WaiverGraph"),
+    renderable: false,
+    holds: "context",
+    skill: "confirmation-waiver",
+    schema: "schemas/waiver.ts",
+    // declared-path-literal: as on `health` and `translation-sources` — this
+    // table IS the declaration, so resolving `validator` through one would be
+    // reading it from here. `check:kind-validators` proves it still loads.
+    validator: "schemas/waiver.ts#WaiverNodeSchema",
+    summary:
+      "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
+  },
+
   "fsh-guts": {
     type: termIri("FshGutsGraph"),
     renderable: false,

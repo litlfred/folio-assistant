@@ -1,11 +1,11 @@
 ---
 # folio-assistant-y8as
 title: simulators/ is qou's content sitting in the platform, and qou reaches into the submodule to find it
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T15:03:52Z
-updated_at: 2026-09-19T15:11:36Z
+updated_at: 2026-09-20T20:00:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -141,3 +141,37 @@ VERIFIED: tsc --noEmit exit 0; bun test 2755 pass / 0 fail / 56 skip across 201 
 NOTED, NOT FIXED — ci-health-watcher's MEMORY.md is 206 lines on main, 7 over the budget, and this branch does not touch it. agent-memory.ts reports the overflow is the hand-written tail rather than an entry, so nothing is silently dropped. Pre-existing and someone else's; recorded here rather than widening this PR.
 
 WHAT REMAINS NAMING THE OLD LITERAL, all deliberate: readme-sections.ts's two comments and both memory nodes now read in the PAST tense as the worked example; placement.md says "until it"; two test files describe the regression they guard. These are records of why the rule exists, and rewriting them would erase the evidence for it.
+
+## Evidence
+
+Tagged `ready-to-close` by the `bbbl` sweep, 2026-09-20. **Not closed** — the
+owner confirms the batch (`bun run check:ready-to-close`).
+
+**Both halves landed, and the falsifier is recorded as having been run.** qou
+`#7444` merged at `4827c00fc`; before deleting the platform's copy all 11 files
+were sha256-compared against qou `main` at that commit: **11 SAME, 0 DIFF, 0
+missing**. The bean states this was the stop condition — had any differed, the
+platform would have held an edit qou never received. That is a re-derivation
+the author actually performed and wrote down, which is rarer than the claim.
+
+**Verification it carries**: `tsc --noEmit` exit 0; `bun test` 2755 pass / 0
+fail / 56 skip; `eslint` clean on the three changed `.ts`; `check:declared-paths`,
+`check:declared-assets`, `check:harness-dirs`, `readme:audit` and
+`agent-memory:check` all pass.
+
+**What this session could NOT re-derive**: qou's own content validation, which
+the bean is explicit about and does not claim — *"NOT VERIFIED, and stated on
+the PR rather than implied away"*. Its tooling is in a submodule this clone does
+not carry. Also noted there and not fixed: editing the 11 manifests stales their
+`*.qa.json` sidecars by hash, left for the QA sweep to regenerate.
+
+---
+
+_2026-09-20T20:00Z_ — **CLOSED on the owner's confirmation of the `ready-to-close`
+batch, 2026-09-20.** The evidence above is what was confirmed against; nothing
+new was measured at closing time, and this note says so rather than implying a
+re-derivation that did not happen.
+
+The `ready-to-close` tag is spent and removed: `check:ready-to-close` reports a
+tag on a closed bean as one to take off, so leaving it would make the queue
+report a defect on its own success.

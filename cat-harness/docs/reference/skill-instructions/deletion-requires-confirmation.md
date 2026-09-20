@@ -24,6 +24,23 @@ decided this was no longer needed* and *a person decided it*, and the whole
 point is that the second is cheap to obtain and the first is never recoverable
 from the outside.
 
+**And that is exactly why a WAIVER is not an exception to it.** The owner may
+grant the `deletion` gate in advance — for a session, for a process run, for a
+named artefact class — and a grant of that kind is *the person deciding*, which
+is the side of the gap this rule protects. What is never permitted is the agent
+supplying the decision itself, under any name. A waiver carries the grantor,
+their **verbatim words**, one gate class, a scope and an expiry, and one
+missing field means there is no waiver and this rule stands unchanged:
+[`confirmation-waiver.md`](confirmation-waiver.md).
+
+Two things a `deletion` waiver never reaches, and both are here rather than in
+the waiver skill because this is where a reader looks for them. **It is never
+blanket** — a grant over build artefacts is not a grant over content, and a
+scope that does not plainly cover the case in front of you does not cover it.
+And **it never reaches a bean**, because `AGENTS.md`'s *never delete ANY bean*
+is a prohibition rather than a confirmation anybody is owed; `scrapped`, with
+reasons, is always available, so there is nothing there to give back.
+
 ## Why removing something is not the inverse of creating it
 
 Creating a file and deleting one look symmetric and are not, for three reasons

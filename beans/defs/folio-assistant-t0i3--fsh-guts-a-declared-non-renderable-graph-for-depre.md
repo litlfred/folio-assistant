@@ -1,11 +1,11 @@
 ---
 # folio-assistant-t0i3
 title: 'FSH-GUTS: a declared non-renderable graph for deprecated and throwaway content'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-19T10:48:00Z
-updated_at: 2026-09-19T12:43:12Z
+updated_at: 2026-09-20T20:00:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -150,3 +150,35 @@ Also verified the new tests are not vacuous: with `.passthrough()` removed, two 
 WHAT I DID NOT TOUCH: `UNPUBLISHED_GRAPH_KINDS`, the strip in the main export, `isFshGutsNode`'s contract, the viewer, and anything else of yours. No workflow is wired — `6pfo` still has to decide who writes a staging record and when.
 
 42 gates pass — the whole set. One thing not root-caused and worth your eyes if you see it too: the first `bun run gates` reported `bun test` failing; standalone `bun test` then passed 3014/0 and two later gate runs passed. Not reproduced, no cause.
+
+## Evidence
+
+Tagged `ready-to-close` by the `bbbl` sweep, 2026-09-20. **Not closed** — the
+owner confirms the batch (`bun run check:ready-to-close`).
+
+**What the bean records**: its own section *"What remains on this bean"* reads
+*"Nothing in the store itself. `7vhe` (the dead-fish viewer) now has a document
+to read, which was the blocker."* The one open box is discharged in the body.
+
+**Corroborated from outside the bean**: a second session's note in the same
+body reports three changes to `schemas/fsh-guts.ts` and
+`scripts/fsh-guts-export.ts` with *"42 gates pass — the whole set"*, and
+records the stop condition holding — the log exclusion is still by
+`$schema` declaration, with the existing suite passing unchanged.
+
+**What this session could NOT re-derive**: the 42 gates were not re-run here.
+The same note flags one unreproduced flake (*"the first `bun run gates`
+reported `bun test` failing; standalone `bun test` then passed 3014/0 and two
+later gate runs passed"*) — recorded so the owner sees it before confirming,
+not presented as resolved.
+
+---
+
+_2026-09-20T20:00Z_ — **CLOSED on the owner's confirmation of the `ready-to-close`
+batch, 2026-09-20.** The evidence above is what was confirmed against; nothing
+new was measured at closing time, and this note says so rather than implying a
+re-derivation that did not happen.
+
+The `ready-to-close` tag is spent and removed: `check:ready-to-close` reports a
+tag on a closed bean as one to take off, so leaving it would make the queue
+report a defect on its own success.

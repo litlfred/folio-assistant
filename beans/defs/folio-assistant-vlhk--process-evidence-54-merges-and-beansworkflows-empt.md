@@ -1,13 +1,13 @@
 ---
 # folio-assistant-vlhk
 title: 'PROCESS EVIDENCE: 54 merges and beans/workflows/ empty — "say which process you are in" leaves no trail'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T18:05:19Z
+updated_at: 2026-09-20T19:00:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -22,3 +22,23 @@ Either the processes are not being run (and the rule is aspirational, which shou
 ## Done when
 - [ ] The owner says which it is; the rule's text matches the answer
 - [ ] If instances are expected: the session-start sweep reports "no instance recorded" as a finding, not silence
+
+---
+
+_2026-09-20T19:00Z_ — **The owner settled it: the processes are real, and the
+instance is recorded** (PR #589, issue #588). Not aspirational, and not
+"name it in prose only".
+
+`process-state` §"Naming it is not the same as recording it (STRICT)" carries
+the rule, and `AGENTS.md`'s pointer says it too: naming the process is the
+report, the committed instance is the evidence, and a report with no evidence
+behind it is what produced 54 merges over an empty directory.
+
+The second half is done as well. The session-start sweep now has a **Running
+processes** section that prints "**No instance recorded**" as a finding, with
+"could not check" kept distinct from "none" — a directory that is absent says
+so rather than reading as zero. Deliberately not a failure: plenty of turns are
+legitimately outside any process, and the point is that the sweep asks.
+
+- [x] The owner says which it is; the rule's text matches the answer
+- [x] If instances are expected: the session-start sweep reports "no instance recorded" as a finding, not silence
