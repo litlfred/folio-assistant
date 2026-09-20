@@ -134,29 +134,53 @@ ingest from the corpus view, and materialising an entry into a folio of choice
 — are open work, because the write path is a decision the repository owner has
 not yet made.
 
-## Where they are published — the URL is the directory's path
+## Where they are published — two rules, not three
 
-Owner, 2026-09-20:
+| rule | form | what it is |
+|---|---|---|
+| **1 — a handler renders a kind's assets** | `/<handler>/<kind>/<optional subject>` | `/cat-harness/library/who-iris/` |
+| **2 — an instance presents itself** | `/<instance>/` | `/who-iris/` mocking the IRIS website |
 
-> it `<baseurl>/<path to kind in knowledge graph>` or
-> `<path to dir handled>/<optional subject>`
+The handler is the instance doing the rendering; the kind names what it
+renders; the **subject is optional**, and a page without one is the view over
+every subject.
 
-So a viewer's address **is the repo-relative path of the directory it
-handles**, and `<subject>` is optional — a viewer with no subject is the view
-over all of them. These two handle `cat-harness/schemas/` and
-`cat-harness/library/`, so they sit at `/cat-harness/schemas/` and
-`/cat-harness/library/`.
+A subject page is never published at `/<subject>/<kind>/` — that is rule 2's
+namespace, and a viewer there would squat on the instance's own site.
 
-**That is a resolution, not a composition, and the difference is not
-cosmetic.** An earlier draft composed the address from the rendering
-instance's name plus the graph kind. It gives the right answer for
-`cat-harness/schemas/` by coincidence — that directory happens to sit at
-owner/kind — and the wrong one for every directory that does not:
-`who-iris/library/` would have been addressed as `cat-harness/library`, naming
-the machinery where the rule names the data. Taking the path means the two can
-never disagree, because there is only one of them.
+### The subject pages
 
-Neither generator writes a path down. The rendered-content root is resolved
-from the declaration, the segment is the handled directory's resolved path,
-and the page's link back to its projection is computed from its own depth — so
-moving a directory moves its source, its URL and its data link together.
+| page | shows |
+|---|---|
+| `/cat-harness/library/` | every declared `library/`, and every queue |
+| `/cat-harness/library/who-iris/` | who-iris's three entries and its queue |
+| `/cat-harness/library/agent-skills/` | its two entries |
+| `/cat-harness/library/folio-assistant-sci/` | its one entry |
+| `/cat-harness/schemas/` | every declared `schemas/` |
+| `/cat-harness/schemas/<instance>/` | that instance's modules and declarations |
+
+One projection serves all of them — a scoped page filters client-side.
+A second file per subject would be the same facts written N+1 times, free to
+disagree the moment one is regenerated. **Counts are scoped too**: reporting
+the graph-wide edge total on a page showing nine declarations would claim 512
+edges among those nine.
+
+### `docs/` is the same shape, and its subject means something specific
+
+`/cat-harness/docs/` is where the harness user documentation lives, so
+`/cat-harness/docs/who-iris/` is documentation **about** IRIS — how it is
+ingested, what the handler does with it — and **not IRIS content relocated**.
+The content stays in that instance's own `docs/`, and part of the handler's
+job is to look for those directories.
+
+Measured 2026-09-20: only `cat-harness` has a `docs/` directory today, and its
+declaration carries `dependents: "skip"` — which is exactly what prevents a
+dependent from getting one. Nothing is declared against a directory that does
+not exist.
+
+### Nothing composes a path
+
+The rendered-content root is resolved from the declaration, the handler from
+the instance's declared name, and the page's link back to its projection from
+the page's own depth — so moving a directory moves its source, its URL and its
+data link together.

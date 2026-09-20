@@ -170,27 +170,64 @@ applying to any generated artefact you gate:
 The same reasoning removed the per-module declaration list: a declaration
 already names its module, so the list was one fact written twice.
 
-## Where a viewer publishes
+## Where a viewer publishes — TWO rules, not three
 
-**The URL is the handled directory's repo-relative path**, and a subject
-segment is optional (owner, 2026-09-20: *"`<baseurl>/<path to kind in
-knowledge graph>` or `<path to dir handled>/<optional subject>`"*). A viewer
-with no subject is the view over all of them.
+Owner, 2026-09-20:
+
+> i want two rules.... not three. one is cat-harness handling the `library/`
+> dir which has who-iris assets in it. one is who-iris handler to mock current
+> iris website.
+
+| rule | form | what it is |
+|---|---|---|
+| **1 — a handler renders a kind's assets** | `<base>/<handler>/<kind>/<optional subject>` | cat-harness's machinery over some graph. `<base>/cat-harness/library/who-iris/` |
+| **2 — an instance presents itself** | `<base>/<instance>/` | who-iris mocking the IRIS website |
+
+The handler is the instance doing the rendering, the kind names what it
+renders, and the **subject is optional** — a page with no subject is the view
+over every subject.
+
+**A subject page must NEVER be published at `<base>/<subject>/<kind>/`.** That
+is rule 2's namespace, and a viewer parked there squats on the instance's own
+site. An earlier draft was about to publish `who-iris/library/` exactly there,
+on a misreading of "path to dir handled" as the page's address rather than as
+what the page shows.
 
 `viewerPlacement` in `gen-schema-viz.ts` is the single implementation, shared
-with the library viewer rather than restated — two statements of one placement
-rule are two answers the moment either moves. It also computes the page's link
-back to its projection from the page's own depth, because a literal
-`../assets/...` kept parsing and fetched nothing the first time a page moved a
-level down.
+with the library viewer — two statements of one placement rule are two answers
+the moment either moves. It also computes the page's link back to its
+projection from the page's own depth, because a literal `../assets/…` keeps
+parsing and fetches nothing once a page gains a level.
 
-**Resolve, never compose.** An earlier draft built the address from the
-rendering instance's name plus the graph kind. That is right for
-`cat-harness/schemas/` by coincidence and wrong for anything not sitting at
-owner/kind — `who-iris/library/` would have been addressed as
-`cat-harness/library`, naming the machinery where the rule names the data.
+**One projection serves every page.** A scoped page filters client-side on a
+`SCOPE` constant; a second JSON per subject would be the same facts written
+N+1 times, free to disagree the moment one is regenerated. Counts are scoped
+too — reporting the graph-wide edge total on a page showing nine declarations
+claims 512 edges among those nine.
 
-## Editing a viewer — no backticks
+### `docs/` is the same shape, and its subject means something specific
+
+Owner, same day:
+
+> `<base>/cat-harness/docs/` is where all harness user documentation is... so
+> documentation at `<base>/cat-harness/docs/who-iris/` is more documentation
+> ABOUT iris, how it is ingested etc. **not the iris content**. source content
+> is repo root `who-iris/docs`. part of cat-handler `docs/` handler is to look
+> out for `docs/` directories in harness kinds.
+
+So a subject page under a handler is **about** its subject, rendered by the
+handler — never the subject's own content relocated. The content stays in the
+subject's own `docs/`, and the handler's job includes looking for those
+directories.
+
+**Measured 2026-09-20 and not yet true:** only `cat-harness` has a `docs/`
+directory and only it declares one, with `dependents: "skip"` — which is
+precisely what stops a dependent from getting its own. Nothing was declared
+against an absent directory here, because a declared-but-absent directory is
+the `dh4f` defect. Bean `n0nf` carries the same `skip` finding from the root's
+side.
+
+## Editing a viewer — no backticks## Editing a viewer — no backticks
 
 Both viewers are a whole HTML document inside one TypeScript template literal.
 A backtick **anywhere** inside it — including in a JavaScript comment in the
