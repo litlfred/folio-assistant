@@ -1,11 +1,11 @@
 ---
 # folio-assistant-eu38
 title: 'TOOL 2/13: Task_Formalize — Lean formalisation (33 files, 16 entry points)'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T04:34:12Z
-updated_at: 2026-09-20T04:34:12Z
+updated_at: 2026-09-20T07:41:19Z
 parent: folio-assistant-d308
 ---
 
@@ -49,7 +49,7 @@ uncovered:
 | toolchain | `setup-lean-toolchain`, `setup-elan-symlinks`, `install-lean-atlas`, `lib/lean-env.sh` | `lean-environment-setup` ✅ |
 | build | `lean-build-all`, `-bg`, `-timed`, `lean-closure-orchestrator` | `lean-build-fix` ✅ |
 | cache | `lake-cache`, `lake-cache-fetch{,-multi}`, `lake-cache-produce`, `lean-cache-dump`, `reseed-lean-cache` | `lean-cache-restore` ✅ |
-| audit | `lean-compile-audit`, `lean-audit`, `lean-coverage`, `lean-witness`, `lean-triviality-probe`, `check-no-lean-artifacts` | `proof-verification`, `lean-completeness-audit`, `lean-proof-vacuity-audit` — **open** |
+| audit | `lean-coverage` → completeness; `lean-audit` → vacuity | `lean-completeness-audit` ✅, `lean-proof-vacuity-audit` ✅, `proof-verification` — **see below** |
 
 Three nodes: `lean-build`, `lean-cache`, `lean-toolchain-setup`. Coverage went 29
 → 32 skills with a Tool.
@@ -97,3 +97,48 @@ Exercising them needs a folio. `requires.runtime` says so, which is the posture
 free text on a positional. Read from the script's own usage block rather than
 guessed, which is why `contribute` and `doctor` are members: a list of the four
 obvious verbs would have refused two real ones and looked complete doing it.
+
+---
+
+## The audit half: two nodes, and one skill that cannot be satisfied
+
+`lean-coverage` counts what is proved; `lean-audit` asks whether a proof says
+anything. Siblings, not alternatives — a sorry-free proof can still be vacuous,
+which is precisely why both exist.
+
+### `proof-verification` has a contract and NO mechanism
+
+Not an omission. Its contract requires **`projectRoot`**, and nothing in this
+corpus accepts one. The only root-shaped flag anywhere in the Lean scripts is
+`--content-root`, which names where content BLOCKS live — not the Lean package.
+Typing that as `projectRoot` would be exactly the lie `lean-build` already refused
+to tell, one node earlier in the same file.
+
+So this is the inverse of `covered-is-not-reachable`'s third case: there, a
+mechanism with no skill. Here, **a skill with an I/O contract and no mechanism
+that can meet it.** Closing it needs a Tool that takes a Lean project root, which
+does not exist yet — a gap in the corpus, not in the graph.
+
+### The near-miss worth recording
+
+Both scripts **exit 1 in the platform repo, by design**:
+
+> No paper found under …/cat-harness/content. folio-assistant is the PLATFORM;
+> papers live in a folio. Run this from the content repo, or name a paper
+> explicitly.
+
+That is the script refusing rather than reporting a silent empty result, and it is
+the behaviour to want. **I nearly discarded both nodes as broken on that reading**
+— off a pipeline's exit code (`echo`'s 0) rather than the script's (1). Two
+mistakes in one step: trusting a composed exit status, and reading a correct
+refusal as a failure.
+
+It is now written on the nodes, because the next agent who runs these here will
+see an error and reach the same wrong conclusion.
+
+### `eu38` is done
+
+Three of four concerns noded plus the audit pair — five nodes: `lean-build`,
+`lean-cache`, `lean-toolchain-setup`, `lean-coverage`, `lean-audit`. Coverage went
+29 → 34 skills with a Tool across this bean. `proof-verification` stays open as a
+corpus gap with its reason recorded above, not as unfinished work here.
