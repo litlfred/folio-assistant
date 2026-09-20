@@ -229,7 +229,75 @@ against an absent directory here, because a declared-but-absent directory is
 the `dh4f` defect. Bean `n0nf` carries the same `skip` finding from the root's
 side.
 
-## Editing a viewer — no backticks## Editing a viewer — no backticks
+## The overview panel — a whole-graph picture, and why this one is allowed
+
+[`kg-viewer`](kg-viewer.md) §"Do not draw the whole graph" says the instinct is
+a force-directed node-link diagram of everything and to resist it, measured on
+**1111 nodes and ~2000 edges** rendering as a hairball. This skill said the same
+for a long time, and the viewer carried it as *"there is deliberately no
+whole-corpus class diagram"*.
+
+**The owner asked for one anyway, 2026-09-20, and the rule bends rather than
+breaks — because the measurement behind it does not transfer.** Two differences
+decide it, and both are countable rather than aesthetic:
+
+| | KG viewer | schema overview |
+|---|---|---|
+| nodes | 1111 | **75** (modules) or ≤70 (declarations) |
+| drawn edges | ~2000 | **35** |
+
+The hairball argument is about *density*, and it still governs: what it rules
+out is drawing **812 labelled declarations**, which nothing here does.
+
+### Three rules it obeys, each paid for
+
+- **The layout is STATIC and deterministic.** Computed once from the
+  projection; no simulation, no frame budget, nothing to settle. Ordering ties
+  break on group size, then degree, then id — everything stable, so the picture
+  is *reproducible* rather than merely deterministic-looking. A node the reader
+  found last week is where they left it. Dragging and re-running a layout are
+  deliberately absent and are their own work (bean `whbf`).
+- **Granularity is adaptive, and the threshold is stated.** At or under
+  `OV_DECL_MAX` (70) in-scope declarations it draws declarations; above it,
+  the **modules** holding them, edges aggregated with weight as a real count.
+  This is the hairball rule applied rather than ignored.
+- **It is drawn on first OPEN, not at load.** The panel is `<details>`, closed
+  by default: a reader who never opens it should not pay for a layout over 812
+  declarations, and the local questions the list answers are the ones people
+  arrive with.
+
+### The count that must never go unexplained
+
+Once **modules** are the nodes, an edge inside one module has nowhere to go.
+Measured here: **446 of 512** edges are intra-module — 87 %. Drawing 35 lines
+under a header reading *512 edges* would leave the difference unaccounted for,
+which is the **same defect** the scoped counts already fixed once, when a
+`detangle` page claimed 512 edges among nine declarations.
+
+So an undrawn edge is **counted and reported**, never dropped. The caption says
+how many ran within a module and why they cannot appear. The general rule,
+worth applying to any aggregate view:
+
+> If aggregation makes an edge vanish, the view owes the reader the count it
+> vanished into. A picture that silently loses 87 % of its edges is not a
+> simplification, it is a wrong answer.
+
+The same applies to isolates: **37 of 75** modules neither reference nor are
+referenced, and the panel says so. That is a finding about this corpus, not
+noise to hide — it is visible as an entire unconnected arc.
+
+### Edges are coloured by source, and that was a fix
+
+The first cut drew them in `--line` (`#d9dde2`) and the picture answered
+nothing: a panel whose question is *"how connected is this"* had edges you could
+not see against its own background. They are now coloured by **source** node,
+which also makes a cross-instance reference legible as one.
+
+Canvas size derives from the **longest label**, because labels are drawn
+radially outside the ring — at a fixed 920×560 the bottom of the ring ran past
+the viewBox and names came out clipped.
+
+## Editing a viewer — no backticks
 
 Both viewers are a whole HTML document inside one TypeScript template literal.
 A backtick **anywhere** inside it — including in a JavaScript comment in the

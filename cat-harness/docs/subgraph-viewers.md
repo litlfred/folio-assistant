@@ -48,11 +48,40 @@ every declared `schemas` directory, with the edges between them.
   generalisations above it and its field references below, each labelled with
   the field it goes through.
 
-There is deliberately **no whole-corpus class diagram**. Hundreds of
-declarations and hundreds of edges render as a wall that looks like a data
+- An **overview panel** at the top, collapsible and closed by default: the
+  whole graph as one static picture, for the question the list cannot answer —
+  *how connected is this, and where are the hubs?*
+
+There is still **no whole-corpus class diagram**, and the overview is not one.
+Hundreds of labelled declaration boxes render as a wall that looks like a data
 model and answers no question about one — the same argument the knowledge-graph
-viewer already made and won. The diagram is a *view over the projection*, so
-the projection carries every edge and another view costs nothing to add.
+viewer made and won. The overview obeys it by changing *granularity* instead:
+see below.
+
+### The overview panel
+
+Static, in the strict sense — the layout is computed once and deterministically
+from the projection. No simulation, nothing to settle, and every tie in the
+ordering breaks on something stable, so a node you found last week is where you
+left it. Dragging and alternate arrangements are deliberately absent and are
+tracked separately.
+
+**Granularity adapts, and the threshold is stated on the page.** At or under 70
+in-scope declarations it draws declarations. Above that it draws the **modules**
+holding them, with edges aggregated and line weight carrying a real reference
+count. So `detangle` shows its 9 declarations individually, while the whole
+graph shows 75 modules rather than 812 boxes.
+
+**An edge that aggregation makes vanish is counted, never dropped.** Once
+modules are the nodes, an edge inside one module has nowhere to go — and
+measured here that is **446 of 512** edges, 87 %. Drawing 35 lines under a
+header reading *512 edges* would leave the difference unexplained, which is the
+same defect the scoped counts already fixed once. The caption says how many ran
+within a module and why they cannot appear.
+
+The isolates are reported for the same reason: **37 of 75** modules neither
+reference nor are referenced, which is visible as an entire unconnected arc.
+That is a finding about this corpus, not noise to hide.
 
 ### Reading it
 

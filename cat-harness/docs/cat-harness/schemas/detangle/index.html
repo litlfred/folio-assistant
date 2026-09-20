@@ -79,6 +79,27 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 .empty { color: var(--muted); padding: 24px 16px; }
 .note { background: var(--warn-soft); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: .85rem; margin: 8px 0; }
 .note code { word-break: break-all; }
+/* The overview panel. Collapsible and CLOSED by default: the questions people
+   arrive with are local, so the list is what should meet them. The overview
+   answers a different one — how connected is this, and where are the hubs —
+   and that is worth a deliberate click rather than a scroll past. */
+#overview { border-bottom: 1px solid var(--line); background: var(--panel); }
+#overview > summary { cursor: pointer; padding: 10px 16px; font-weight: 600; font-size: .9rem; list-style: revert; }
+#overview > summary:hover { color: var(--accent); }
+#overview > summary::marker { color: var(--muted); }
+.ov-body { padding: 0 16px 14px; }
+.ov-cap { color: var(--muted); font-size: .8rem; margin: 0 0 8px; }
+#ov-svg { width: 100%; height: auto; display: block; max-height: 78vh; }
+.ov-e { fill: none; }
+.ov-band { fill: none; stroke-width: 3; stroke-opacity: .85; }
+.ov-n { stroke: var(--bg); stroke-width: 1.5; cursor: pointer; }
+.ov-n:hover { stroke: var(--fg); }
+.ov-t { fill: var(--muted); font: 9px ui-sans-serif, system-ui, sans-serif; pointer-events: none; }
+.ov-g { fill: var(--fg); font: 10px ui-sans-serif, system-ui, sans-serif; font-weight: 600; pointer-events: none; }
+.ov-key { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 8px 0 0; font-size: .78rem; color: var(--muted); }
+.ov-key span { display: inline-flex; align-items: center; gap: 5px; }
+.ov-key i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+@media (max-width: 700px) { .ov-t { display: none; } }
 </style>
 </head>
 <body>
@@ -89,6 +110,14 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
     <strong>generalisation</strong>. A reference carried as a string id is not drawn &mdash; it is
     invisible to a syntactic reader, not absent from the model.</p>
 </header>
+<details id="overview">
+  <summary>Overview &mdash; how connected is this graph?</summary>
+  <div class="ov-body">
+    <p class="ov-cap" id="ov-cap">loading&hellip;</p>
+    <svg id="ov-svg" role="img" aria-labelledby="ov-cap"></svg>
+    <div class="ov-key" id="ov-key"></div>
+  </div>
+</details>
 <main>
   <section id="list" aria-label="Declarations">
     <div class="controls">
@@ -267,6 +296,219 @@ function detail(d) {
   $("detail").innerHTML = h;
 }
 
+/* ---- Overview -------------------------------------------------------------
+   A STATIC picture: the layout is computed once, deterministically, from the
+   projection. No simulation, no frame budget, nothing to settle — reload the
+   page and every node is where it was. Dragging and re-running a layout are
+   deliberately NOT here; they are their own work.
+
+   GRANULARITY IS ADAPTIVE, and that is the whole reason this is readable.
+   kg-viewer's skill says not to draw the whole graph, measured on 1111 nodes
+   and ~2000 edges rendering as a hairball. That measurement is about the
+   KNOWLEDGE graph and does not transfer unexamined: scoped to one instance
+   this graph is often nine declarations, where a picture plainly beats a list.
+   So the page draws DECLARATIONS while they are few enough to label, and
+   MODULES once they are not, with edges aggregated between them. Drawing 812
+   labelled boxes would reproduce exactly the hairball that skill warns about. */
+var OV_DECL_MAX = 70;
+
+function ovGroupColor(i) {
+  /* Fixed hues rather than random: a colour that changes between reloads is a
+     legend the reader cannot learn. */
+  var hues = [212, 28, 150, 320, 265, 92, 348, 188];
+  return "hsl(" + hues[i % hues.length] + " 62% 52%)";
+}
+
+function ovModel() {
+  var decls = G.decls.filter(inScope);
+  var byDecl = decls.length <= OV_DECL_MAX;
+  var nodes = [], index = {}, edges = [], internal = 0;
+
+  if (byDecl) {
+    decls.forEach(function (d) {
+      index[d.id] = nodes.length;
+      nodes.push({ id: d.id, label: d.name, group: d.module.split("/").pop(), deg: 0, w: 1 });
+    });
+    G.edges.forEach(function (e) {
+      var a = index[e.from], b = index[e.to];
+      if (a === undefined || b === undefined) return;
+      if (a === b) { internal++; return; }
+      edges.push({ a: a, b: b, w: 1 });
+      nodes[a].deg++; nodes[b].deg++;
+    });
+  } else {
+    /* Module mode. A module's node counts the declarations it holds, and an
+       edge carries how many declaration references it aggregates, so weight
+       is a real count rather than a drawing choice. */
+    var mods = {};
+    decls.forEach(function (d) {
+      var m = d.module;
+      if (mods[m] === undefined) {
+        mods[m] = nodes.length;
+        nodes.push({ id: m, label: m.split("/").pop().replace(/\.ts$/, ""), group: d.instance, deg: 0, w: 0 });
+      }
+      nodes[mods[m]].w++;
+      index[d.id] = mods[m];
+    });
+    var seen = {};
+    G.edges.forEach(function (e) {
+      var a = index[e.from], b = index[e.to];
+      if (a === undefined || b === undefined) return;
+      /* An edge INSIDE one module has nowhere to go once modules are the
+         nodes. It is counted, not dropped: the header says 512 edges and this
+         panel would otherwise show ~35 lines with nothing accounting for the
+         difference — the same unexplained-count defect the scoped counts
+         already fixed once. */
+      if (a === b) { internal++; return; }
+      var k = a + ":" + b;
+      if (seen[k] === undefined) { seen[k] = edges.length; edges.push({ a: a, b: b, w: 0 }); }
+      edges[seen[k]].w++;
+      nodes[a].deg++; nodes[b].deg++;
+    });
+  }
+  return { nodes: nodes, edges: edges, byDecl: byDecl, declCount: decls.length, internal: internal };
+}
+
+function ovLayout(nodes) {
+  /* Grouped ring. Nodes are ordered by group, groups by size then name, and
+     within a group by degree then id — every tie broken by something stable,
+     so the picture is reproducible rather than merely deterministic-looking.
+     Hubs sit on the ring like everything else; a chord crossing the middle is
+     what makes a hub visible, which is the question the panel exists for. */
+  var groups = {}, order = [];
+  nodes.forEach(function (n) {
+    if (!groups[n.group]) { groups[n.group] = []; order.push(n.group); }
+    groups[n.group].push(n);
+  });
+  order.sort(function (x, y) {
+    return groups[y].length - groups[x].length || (x < y ? -1 : x > y ? 1 : 0);
+  });
+  order.forEach(function (g) {
+    groups[g].sort(function (a, b) {
+      return b.deg - a.deg || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+    });
+  });
+
+  var total = nodes.length;
+  var gap = Math.min(0.10, 1.4 / Math.max(1, total));
+  var span = 2 * Math.PI - order.length * gap * 2 * Math.PI;
+  var seq = [], at = -Math.PI / 2, bands = [];
+  order.forEach(function (g, gi) {
+    var members = groups[g];
+    var arc = span * (members.length / total);
+    bands.push({ name: g, from: at, to: at + arc, color: ovGroupColor(gi) });
+    members.forEach(function (n, i) {
+      var t = members.length === 1 ? at + arc / 2 : at + arc * (i / (members.length - 1));
+      n.angle = t; n.color = ovGroupColor(gi);
+      seq.push(n);
+    });
+    at += arc + gap * 2 * Math.PI;
+  });
+  return bands;
+}
+
+function overview() {
+  var svg = $("ov-svg");
+  var m = ovModel();
+  if (!m.nodes.length) {
+    $("ov-cap").textContent = "No declarations in scope, so there is nothing to draw.";
+    svg.innerHTML = ""; $("ov-key").innerHTML = "";
+    return;
+  }
+
+  var bands = ovLayout(m.nodes);
+  /* The canvas leaves room for the LABELS, not just the ring. Labels are drawn
+     radially outside it, so the longest one sets the margin — at 920x560 the
+     bottom of the ring ran past the viewBox and names came out clipped. */
+  var longest = 0;
+  m.nodes.forEach(function (n) { if (n.label.length > longest) longest = n.label.length; });
+  var margin = 28 + Math.min(150, longest * 5.4);
+  var W = 1180, H = 820, cx = W / 2, cy = H / 2;
+  var R = Math.min(W, H) / 2 - margin;
+  var maxDeg = 1, maxW = 1;
+  m.nodes.forEach(function (n) { if (n.deg > maxDeg) maxDeg = n.deg; if (n.w > maxW) maxW = n.w; });
+  m.nodes.forEach(function (n) {
+    n.x = cx + R * Math.cos(n.angle);
+    n.y = cy + R * Math.sin(n.angle);
+    n.r = m.byDecl ? 4 + 5 * Math.sqrt(n.deg / maxDeg) : 4 + 9 * Math.sqrt(n.w / maxW);
+  });
+
+  var maxEW = 1;
+  m.edges.forEach(function (e) { if (e.w > maxEW) maxEW = e.w; });
+
+  var parts = [];
+  /* Edges first, so a node is never hidden behind a line. Each is a quadratic
+     curve bent toward the centre: straight chords at this density read as a
+     filled disc, and the bend is what keeps bundles apart. */
+  m.edges.forEach(function (e) {
+    var a = m.nodes[e.a], b = m.nodes[e.b];
+    var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    var qx = cx + (mx - cx) * 0.34, qy = cy + (my - cy) * 0.34;
+    var sw = m.byDecl ? 1.1 : 0.9 + 3.4 * (e.w / maxEW);
+    var op = m.byDecl ? 0.72 : 0.45 + 0.4 * (e.w / maxEW);
+    /* Coloured by SOURCE, not by the neutral line colour. The first cut drew
+       them in --line (#d9dde2) and the picture answered nothing: a panel whose
+       question is "how connected is this" had edges you could not see. Colour
+       by source also makes a cross-instance reference legible AS one. */
+    parts.push('<path class="ov-e" stroke="' + a.color + '" d="M' + a.x.toFixed(1) + " " + a.y.toFixed(1) +
+      "Q" + qx.toFixed(1) + " " + qy.toFixed(1) + " " + b.x.toFixed(1) + " " + b.y.toFixed(1) +
+      '" stroke-width="' + sw.toFixed(2) + '" stroke-opacity="' + op.toFixed(2) + '"/>');
+  });
+
+  /* Group arcs, labelled outside the ring, so the ordering is legible as
+     grouping rather than as an arbitrary sequence. */
+  bands.forEach(function (b) {
+    var mid = (b.from + b.to) / 2, lr = R + (m.byDecl ? 74 : 52);
+    var lx = cx + lr * Math.cos(mid), ly = cy + lr * Math.sin(mid);
+    var anchor = Math.cos(mid) > 0.15 ? "start" : Math.cos(mid) < -0.15 ? "end" : "middle";
+    parts.push('<path class="ov-band" stroke="' + b.color + '" d="M' +
+      (cx + (R + 12) * Math.cos(b.from)).toFixed(1) + " " + (cy + (R + 12) * Math.sin(b.from)).toFixed(1) +
+      "A" + (R + 12) + " " + (R + 12) + " 0 " + ((b.to - b.from) > Math.PI ? 1 : 0) + " 1 " +
+      (cx + (R + 12) * Math.cos(b.to)).toFixed(1) + " " + (cy + (R + 12) * Math.sin(b.to)).toFixed(1) + '"/>');
+    parts.push('<text class="ov-g" x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) +
+      '" text-anchor="' + anchor + '" dominant-baseline="middle">' + esc(b.name) + "</text>");
+  });
+
+  m.nodes.forEach(function (n) {
+    parts.push('<circle class="ov-n" cx="' + n.x.toFixed(1) + '" cy="' + n.y.toFixed(1) +
+      '" r="' + n.r.toFixed(1) + '" fill="' + n.color + '" data-ov="' + esc(n.id) + '"><title>' +
+      esc(n.label) + " \u2014 " + (m.byDecl ? n.deg + " edge(s)" : n.w + " declaration(s), " + n.deg + " reference(s)") +
+      "</title></circle>");
+    /* Label only what can be read. In module mode everything is labelled; in
+       declaration mode the ring is denser, so the long tail is left to the
+       tooltip rather than overplotted into illegibility. */
+    if (!m.byDecl || n.deg > 0 || m.nodes.length <= 40) {
+      var lr = R + n.r + 6, a = n.angle;
+      var lx = cx + lr * Math.cos(a), ly = cy + lr * Math.sin(a);
+      var flip = Math.cos(a) < 0;
+      var deg = (a * 180) / Math.PI + (flip ? 180 : 0);
+      parts.push('<text class="ov-t" x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) +
+        '" text-anchor="' + (flip ? "end" : "start") + '" dominant-baseline="middle" transform="rotate(' +
+        deg.toFixed(1) + " " + lx.toFixed(1) + " " + ly.toFixed(1) + ')">' + esc(n.label) + "</text>");
+    }
+  });
+
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.innerHTML = parts.join("");
+
+  var orphans = m.nodes.filter(function (n) { return n.deg === 0; }).length;
+  $("ov-cap").innerHTML = m.byDecl
+    ? "<b>" + m.nodes.length + "</b> declarations, <b>" + m.edges.length +
+      "</b> edges between them, grouped by module. Node size is degree." +
+      (m.internal ? " <b>" + m.internal + "</b> self-reference(s) not drawn." : "") +
+      (orphans ? " <b>" + orphans + "</b> reference nothing and are referenced by nothing here." : "")
+    : "<b>" + m.declCount + "</b> declarations are too many to label, so this draws the <b>" + m.nodes.length +
+      "</b> <b>modules</b> holding them, grouped by instance. Node size is declarations held; " +
+      "line weight is how many references the edge aggregates." +
+      (m.internal ? " <b>" + m.internal + "</b> edge(s) run WITHIN a single module and so have nowhere to be drawn — " +
+        "counted here rather than dropped, because the difference from the graph-wide total is otherwise unexplained." : "") +
+      (orphans ? " <b>" + orphans + "</b> module(s) neither reference nor are referenced." : "");
+
+  $("ov-key").innerHTML = bands.map(function (b) {
+    return '<span><i style="background:' + b.color + '"></i>' + esc(b.name) + "</span>";
+  }).join("");
+}
+
 function render() {
   var q = $("q").value.trim().toLowerCase();
   var k = $("kind").value, m = $("mod").value;
@@ -349,6 +591,23 @@ fetch(DATA_HREF).then(function (r) {
   $("items").addEventListener("click", function (e) {
     var b = e.target.closest("button[data-id]");
     if (b) select(b.getAttribute("data-id"));
+  });
+  /* A node navigates; it does not move. In declaration mode it selects, in
+     module mode it filters the list to that module — the overview hands you
+     off to the panel that answers the local question. */
+  $("ov-svg").addEventListener("click", function (e) {
+    var c = e.target.closest("[data-ov]");
+    if (!c) return;
+    var id = c.getAttribute("data-ov");
+    if (byId(id)) { select(id); return; }
+    $("mod").value = id;
+    render();
+    $("list").scrollIntoView({ block: "start" });
+  });
+  $("overview").addEventListener("toggle", function () {
+    /* Drawn on first open rather than at load: a reader who never opens the
+       panel should not pay for a layout over 812 declarations. */
+    if ($("overview").open && !$("ov-svg").childNodes.length) overview();
   });
   $("detail").addEventListener("click", function (e) {
     var a = e.target.closest('a[href^="#"]');
