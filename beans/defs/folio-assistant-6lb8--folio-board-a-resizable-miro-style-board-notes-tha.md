@@ -170,3 +170,42 @@ keyboard-driven — `docs-ui.js` ~2006 records the Pin button as a deliberate
 choice over a drag, and this instance's declared interaction profile is
 low-dexterity. **Drag may be added ON TOP as an accelerator; it must not be the
 only way in.**
+
+### And it lives ON TOP of the notes, not as data WITHIN them
+
+The owner, clarifying the choice immediately:
+
+> 1, it lives on top of notes, not data within notes.
+
+That is sharper than "one file per board" and it is the part to build against,
+because "one file" is satisfied by a file that still owns the notes.
+
+**A note is not modified at all.** It gains no `x`, no `y`, no `board`, no
+`order`. The positions file references notes BY ID and the relation points one
+way: the layer knows about the notes, the notes know nothing about the layer.
+
+Four things follow, and each is a property the per-note alternative could not
+have had:
+
+- **A note is complete with no board.** Every existing consumer — the todo
+  index, the sticky board, `readTodoFiles`, the QA sidecars — is untouched, and
+  a folio that never opens a board has nothing extra in its work plan. The
+  layer is ADDITIVE and REMOVABLE: delete the positions file and every note is
+  exactly what it was.
+- **One note can sit on several boards**, at different places, without the note
+  arbitrating between them. Per-note coordinates make that impossible without a
+  second vocabulary.
+- **The two stores keep their own layers.** A note is `content` or `state`
+  depending on its graph; the positions file is unambiguously `state`, written
+  by a running process. Putting a coordinate on a note would have made a
+  `content` node carry `state`, which
+  `content-context-and-state-graphs` refuses.
+- **It is the same rule the repository already applies to `uses[]`.** The
+  EDITORIAL relation is authored on the block; the formal dependency graph is
+  derived and kept OUT of it, because mixing the two destroys the signal each
+  carries. A rendering coordinate on a work-plan node is that conflation in a
+  new place.
+
+**A position whose note is gone is an orphan in the LAYER**, which is the
+easier direction to handle: the layer is one file and one sweep, and nothing
+has to be edited out of a note that a person owns.
