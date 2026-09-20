@@ -1,6 +1,5 @@
 ---
 name: todo-manager
-roles: [reader, collaborator, owner]
 description: >
   Maintain and display work-in-progress task lists using the `beans` CLI
   issue tracker. Track implementation progress, open tasks, missing
@@ -179,6 +178,65 @@ You can map out sequence blockers using:
 - When starting work: `beans update <id> --status in-progress`
 - When completed: `beans update <id> --status completed`
 - To add notes or discussion: `beans update <id> --body-append "Your note"`
+
+## Archiving — two dispositions, and they answer different questions
+
+`beans archive` moves every `completed` or `scrapped` bean out of the working
+set. It **moves**, never deletes: an archived bean is still resolvable by id,
+which is what makes it a disposal an agent may perform at all
+([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
+
+**There are two ways it can be driven, they are not alternatives, and a
+process author needs to know which one they are reaching for.** Owner,
+2026-09-20: *"outline both options and why used for. that is part of the
+skills to explain in context of larger process."*
+
+| | **a per-activity op** | **a periodic sweep** |
+|---|---|---|
+| what it is | a step inside one process — a fourth `<folio:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
+| the question it answers | *is **this item's** work over?* | *is **the store** still readable?* |
+| what decides | the process reaching a step that means completion | a uniform, process-independent criterion — `completed` or `scrapped` |
+| what the archive then records | **why** — "archived because the release shipped" | **when** — "archived in the sweep of that date" |
+| what it cannot do | reach a bean no process resolved | know that *this* release is what terminated *this* item |
+
+### Why neither replaces the other
+
+**The op cannot cover the store.** A bean resolved by a process with no
+archive step, by hand, or by a sibling session, is never reached. Coverage
+depends on every path having been drawn, and paths are added faster than they
+are wired.
+
+**The sweep cannot carry authority.** It knows only status. It cannot say
+that a requirement was archived *because the stakeholder signed off*, which
+is the fact an audit of the CRDM close would want — and `crdm-close.bpmn` is
+precisely where that authority exists.
+
+So the honest shape is: **the sweep is the floor, the op is the exception.**
+The sweep guarantees the store stays readable whatever anyone forgot; an op
+is worth adding only where a process's completion is *itself* the reason, and
+recording that reason is worth the extra edge on the diagram.
+
+### Where this sits against `resolve` — two layers, not two spellings
+
+`resolve` is the **process** saying *"I am done with this item."* Archiving
+is the **store** saying *"this is no longer in the working set."* They are
+different layers and they are allowed to be far apart in time — which is why
+`resolve` must never imply an archive.
+
+That gap is exactly what produced the backlog. Measured 2026-09-20: every
+process that touches the work plan reaches `resolve` and stops —
+`draft-to-publication` (claim → note → resolve), `crdm-close` (resolve),
+`code-change-review` (claim → resolve). `resolve` sets `completed`, and
+`completed` is what `beans archive` moves. Each of them manufactured the
+condition; none discharged it; **219 beans** accumulated until the owner
+asked for the sweep by hand.
+
+**Neither disposition is built yet**, and the first question is which —
+bean `folio-assistant-m8gz`, analysis in
+`fsh-guts/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
+owner's word and `beans archive`, run deliberately. Note the CLI prints
+`.beans/archive/` but honours `path:` from `.beans.yml`; here that means
+`beans/defs/archive/`.
 
 ## Status Display Format
 

@@ -1,6 +1,5 @@
 ---
 name: q-usage-watcher
-roles: [reader, collaborator, owner]
 user_invocable: true
 inherits: local/integration-watcher
 watch_arg: q-usage

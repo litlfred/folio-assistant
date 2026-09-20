@@ -1,6 +1,6 @@
 # dmn-authoring
 
-> Skill id: `dmn-authoring` · Package: `authoring-who-smart-guidelines` ·
+> Skill id: `dmn-authoring` · Package: `workflow` ·
 > Named by `l2-dak-authoring.bpmn` step **Decision logic · DMN tables**, in the
 > `Business analyst` lane.
 

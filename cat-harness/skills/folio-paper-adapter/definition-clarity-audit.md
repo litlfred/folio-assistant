@@ -1,6 +1,5 @@
 ---
 name: definition-clarity-audit
-roles: [reader, collaborator, owner]
 user_invocable: true
 description: >-
   Definition / statement clarity + concision audit. A content block can

@@ -1,6 +1,5 @@
 ---
 name: lean-witness-audit
-roles: [collaborator, owner]
 description: >
   Audit computation scripts (typically Python) that produce witness statements
   for Lean formalization. Verify witnesses are complete, self-documenting, use

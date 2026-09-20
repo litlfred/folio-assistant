@@ -1,6 +1,6 @@
 # bpmn-authoring
 
-> Skill id: `bpmn-authoring` · Package: `authoring-who-smart-guidelines` ·
+> Skill id: `bpmn-authoring` · Package: `workflow` ·
 > Named by `l2-dak-authoring.bpmn` (**Business processes · BPMN 2.0**,
 > `Business analyst` lane) and `crdm-requirements.bpmn` (**Phase 2: Map current
 > workflow (BPA)**, `Agent` lane).
@@ -56,6 +56,22 @@ is not enabled**. That has consequences for how you author:
 Not a Mermaid fence. Mermaid stays for the things that are *not* processes —
 component maps, lattices, navigation graphs. The audit of which is which is in
 `docs/publication-workflow.md`.
+
+## Why a DAK section sits in a platform package
+
+This skill lived in `authoring-who-smart-guidelines` until 2026-09-20, and it
+never belonged there: its own first line says it covers *both* a DAK's L2
+business processes **and this repository's own `skills/workflows/*.bpmn`*, five
+of its six sections are content-agnostic, and `crdm-requirements.bpmn` — a
+PLATFORM process — names it from the `Agent` lane. A platform process
+depending on a content-type package is the boundary
+the `platform-boundary-guard` subagent exists to keep — measured under bean
+`ugid`, moved under `3g13`.
+
+The section below stayed with it rather than being split out. A generic skill
+naming a domain worked example is ordinary; two skills that must be read
+together to author one diagram are not. If a second content type ever needs
+its own section here, that is the moment to reconsider — not before.
 
 ## For a DAK
 

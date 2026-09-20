@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/bpmn-processes.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/bpmn-processes.md) — do not edit here.
+> Generated from [`skills/workflow/bpmn-processes.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/bpmn-processes.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/bpmn-processes.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/bpmn-processes.md){: .fa-edit-source }
 
 {% raw %}
 # Processes are BPMN, and the diagrams are executable
@@ -30,10 +30,10 @@ Every activity carries **`<folio:skill ref="…">`** naming the skill that
 implements it, and **`<folio:bean …>`** where it touches the work plan. Add both
 when you add an activity; the audit reports an activity that names no skill, and
 the exemptions for the legitimate cases are *declarations*, not silence — see
-[`role-model`](role-model.md).
+[`role-model`](../folio-core/role-model.md).
 
 Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
-the duration. [`role-model`](role-model.md) carries that model.
+the duration. [`role-model`](../folio-core/role-model.md) carries that model.
 
 ## Running one: the engine refuses work claimed out of order
 
@@ -103,6 +103,21 @@ An activity carrying a bean operation **does it** when you complete the step:
 process gets a note instead, because whether work is done is a judgement and a
 bean is never closed on someone else's say-so — the same rule that stops you
 resolving a sibling's.
+
+**There is no fourth op, and `resolve` is NOT the end of the bean's life.**
+`resolve` sets `completed`; `completed` is what `beans archive` moves; and
+nothing in any diagram archives. Measured 2026-09-20: `draft-to-publication`
+does claim → note → resolve, `crdm-close` does resolve, `code-change-review`
+does claim → resolve — every one manufactures the condition and none
+discharges it, which is how **219** beans accumulated.
+
+Before reaching for an `archive` op, read
+[`todo-manager`](todo-manager.md) §"Archiving — two dispositions": an op and
+a periodic sweep answer different questions, and for most processes the
+answer is the sweep. An op is worth an edge on your diagram only where your
+process's completion is *itself* the reason a bean is finished — and then the
+archive records **why**, which a sweep cannot. Bean `folio-assistant-m8gz`
+decides which this instance builds.
 
 Work-plan priming reports every instance's position next to its bean, so the
 plan and the process are one answer rather than two.

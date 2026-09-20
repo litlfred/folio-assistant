@@ -1,6 +1,5 @@
 ---
 name: build-pdf
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   Builds a paper folio's PDF locally in the workspace — the monolithic

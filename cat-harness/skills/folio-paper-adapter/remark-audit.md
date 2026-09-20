@@ -1,6 +1,5 @@
 ---
 name: remark-audit
-roles: [reader, collaborator, owner]
 description: >
   Audit remarks for provable content. Every remark must interpret a
   mathematical statement that can be formalized in Lean. Detects dangling

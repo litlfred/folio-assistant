@@ -1,7 +1,6 @@
 ---
 name: pending-show
 description: Show the current session's pending work — beans list + ledger intent. Read-only.
-roles: [reader, collaborator, owner]
 user_invocable: true
 ---
 

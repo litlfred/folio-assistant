@@ -11,7 +11,7 @@
     <bpmn:participant id="Participant_Process_InitializeHarness" name="Initialize a harness" processRef="Process_InitializeHarness"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_InitializeHarness" name="Initialize a harness" isExecutable="false">
-    <bpmn:documentation>ONE OF TWO PROCESSES IN BOOTSTRAP, and the one an Initiator enters. It was the only one until `discussion.bpmn` was added, which is an exception argued in that diagram: WHICH harness and WHICH repositories are judgements no file holds, so an Initiator that cannot obtain them cannot take this process's first step. The two do not compete for an entry point — this is where an Initiator starts, and it delegates to the other when it needs a fact nobody has written down.
+    <bpmn:documentation>THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS. An Initiator that has read bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces.
 
 PRECONDITION: the Initiator understands tasks, roles, processes, actors and skills, has been told it is an Initiator, and is at the start of this process. BPMN has no precondition element and this schema adds none yet, so it is stated here in the documentation and tracked as bean `lv3j`.
 
@@ -22,9 +22,11 @@ NO folio:bean on any activity: a bean is work-plan machinery and an Initiator ru
         <bpmn:flowNodeRef>A_ListHarnesses</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ListLocations</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_HarnessChosen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_ReadInstructions</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_AlreadyInitialized</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_InstructionsFound</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_LogInstallStart</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Install</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_LogFailure</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Installed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Failed</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -32,6 +34,7 @@ NO folio:bean on any activity: a bean is work-plan machinery and an Initiator ru
         <bpmn:flowNodeRef>A_ConfirmHarness</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store">
+        <bpmn:flowNodeRef>A_ReadLocation</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ReadDeclaration</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -58,17 +61,29 @@ and where">
 
     <bpmn:exclusiveGateway id="GW_HarnessChosen" name="One harness?"/>
 
+    <bpmn:task id="A_ReadLocation" name="Read what each location
+already is">
+      <bpmn:documentation>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `harness.json` present and parsing is the whole test, and `kg-navigation` says what the three answers mean — absent (not an instance yet, which is this process's case), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either.
+
+Before reading the chosen harness rather than after, deliberately: if the location is spoken for there is nothing to learn from the harness, and fetching it first only makes the failure more expensive.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_AlreadyInitialized" name="Already initialized?"/>
+
     <bpmn:task id="A_ReadDeclaration" name="Read the harness's
 declaration and instructions">
       <bpmn:documentation>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `&lt;stub&gt;/docs/bootstrap/initialization.md`, the same for every harness, which is what lets an Initiator be pointed at one nobody has written yet.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:task id="A_ReadInstructions" name="Log the start
-of the install">
-      <bpmn:documentation>Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
-    </bpmn:task>
+    <bpmn:callActivity id="A_LogInstallStart" name="Log the start
+of the install" calledElement="Process_LogMessage">
+      <bpmn:documentation>REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun.
+
+A callActivity rather than a task: `log-message` is an independent sub-process, the second and last diagram in bootstrap. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="log-message"/></bpmn:extensionElements>
+    </bpmn:callActivity>
 
     <bpmn:exclusiveGateway id="GW_InstructionsFound" name="Instructions there?"/>
 
@@ -78,21 +93,34 @@ each location">
       <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
+    <bpmn:callActivity id="A_LogFailure" name="Log the failure" calledElement="Process_LogMessage">
+      <bpmn:documentation>Both failure paths pass through here, so "logged as failed" is a step somebody performs rather than an adjective on an end event. The end event said the process ended logged; nothing said who logged it or with what.
+
+The two ways in are the reason it is ONE call rather than two: what differs between them is the message, which is an input, not the mechanism.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="log-message"/></bpmn:extensionElements>
+    </bpmn:callActivity>
+
     <bpmn:endEvent id="End_Installed" name="Harness installed"/>
-    <bpmn:endEvent id="End_Failed" name="Logged as failed">
-      <bpmn:documentation>Two ways in, and both are logged rather than retried: no harness was chosen, or the instructions were not at the predetermined spot. Guessing a harness produces a repository set up as the wrong thing, which is worse than one not set up at all.</bpmn:documentation>
+    <bpmn:endEvent id="End_Failed" name="Failed">
+      <bpmn:documentation>Three ways in, and all are logged rather than retried: no harness was chosen, a location is ALREADY initialized, or the instructions were not at the predetermined spot. Guessing a harness produces a repository set up as the wrong thing, which is worse than one not set up at all.
+
+"Already initialized" is a failure of THIS process and not a fault in the repository — the usual case is that the work is done. It ends here because the alternative is re-initialising over an instance that already has content, history and dependents, and the damage from that is not recoverable by running anything again. What the Requestor does next — upgrade it, initialise elsewhere, or nothing — is a new decision, and a new decision starts at A_ConfirmHarness rather than being taken by an Initiator that has just been told to stop.</bpmn:documentation>
     </bpmn:endEvent>
 
     <bpmn:sequenceFlow id="SF_IH_1" sourceRef="Start_InitializeHarness" targetRef="A_ListHarnesses"/>
     <bpmn:sequenceFlow id="SF_IH_2" sourceRef="A_ListHarnesses" targetRef="A_ListLocations"/>
     <bpmn:sequenceFlow id="SF_IH_3" sourceRef="A_ListLocations" targetRef="A_ConfirmHarness"/>
     <bpmn:sequenceFlow id="SF_IH_4" sourceRef="A_ConfirmHarness" targetRef="GW_HarnessChosen"/>
-    <bpmn:sequenceFlow id="SF_IH_5" name="none" sourceRef="GW_HarnessChosen" targetRef="End_Failed"/>
-    <bpmn:sequenceFlow id="SF_IH_6" name="one" sourceRef="GW_HarnessChosen" targetRef="A_ReadDeclaration"/>
+    <bpmn:sequenceFlow id="SF_IH_5" name="none" sourceRef="GW_HarnessChosen" targetRef="A_LogFailure"/>
+    <bpmn:sequenceFlow id="SF_IH_6" name="one" sourceRef="GW_HarnessChosen" targetRef="A_ReadLocation"/>
+    <bpmn:sequenceFlow id="SF_IH_13" sourceRef="A_ReadLocation" targetRef="GW_AlreadyInitialized"/>
+    <bpmn:sequenceFlow id="SF_IH_14" name="already an instance" sourceRef="GW_AlreadyInitialized" targetRef="A_LogFailure"/>
+    <bpmn:sequenceFlow id="SF_IH_15" name="not yet" sourceRef="GW_AlreadyInitialized" targetRef="A_ReadDeclaration"/>
     <bpmn:sequenceFlow id="SF_IH_7" sourceRef="A_ReadDeclaration" targetRef="GW_InstructionsFound"/>
-    <bpmn:sequenceFlow id="SF_IH_8" name="no" sourceRef="GW_InstructionsFound" targetRef="End_Failed"/>
-    <bpmn:sequenceFlow id="SF_IH_9" name="yes" sourceRef="GW_InstructionsFound" targetRef="A_ReadInstructions"/>
-    <bpmn:sequenceFlow id="SF_IH_10" sourceRef="A_ReadInstructions" targetRef="A_Install"/>
+    <bpmn:sequenceFlow id="SF_IH_8" name="no" sourceRef="GW_InstructionsFound" targetRef="A_LogFailure"/>
+    <bpmn:sequenceFlow id="SF_IH_9" name="yes" sourceRef="GW_InstructionsFound" targetRef="A_LogInstallStart"/>
+    <bpmn:sequenceFlow id="SF_IH_10" sourceRef="A_LogInstallStart" targetRef="A_Install"/>
     <bpmn:sequenceFlow id="SF_IH_11" sourceRef="A_Install" targetRef="End_Installed"/>
+    <bpmn:sequenceFlow id="SF_IH_12" sourceRef="A_LogFailure" targetRef="End_Failed"/>
   </bpmn:process>
 </bpmn:definitions>

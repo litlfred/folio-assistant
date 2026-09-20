@@ -1,6 +1,5 @@
 ---
 name: role-model
-roles: [reader, collaborator, owner]
 description: >
   Actors, roles and skills — who performs a BPMN task, under which swimlane,
   with which skills. How a role's skill set is resolved through `inherits` and
@@ -30,37 +29,57 @@ Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
 [`schemas/kg-qa.ts`](../../schemas/kg-qa.ts).
 
-### A skill's own `roles:` front matter is NOT this table's Role
+### A skill's `roles:` front matter is GONE — do not bring it back
 
-Measured 2026-09-19, bean `folio-assistant-qif9`. **Look at the top of this
-file**: it declares `roles: [reader, collaborator, owner]`. None of those
-three is a Role in the sense the table above defines, and none is a
-Permission either — they are in neither registry.
+**Removed 2026-09-20**, bean `folio-assistant-qif9`, on the owner's
+instruction. 114 skill files lost it; the full record, with every value every
+file carried, is `fsh-guts/retired/skill-roles-front-matter.md` — a path
+rather than a link, because the trashcan is not published and a link from
+here would break on the site.
 
-Across 178 skill files, 133 carry `roles:`, and the field holds **two
-vocabularies at once**:
+The note here used to say the field was *inert but present* and to be read
+past. It is now absent, and this entry exists for one reason: **the corpus is
+what taught agents to write it.** Copy an adjacent skill's front matter and
+the field comes back — which is exactly how it reached 140 files, six from the
+qou migration and the rest copy-paste, never a decision.
+`bun run check:retired-front-matter` fails if it reappears.
 
-| | uses |
-|---|---|
-| `reader` / `collaborator` / `owner` / `admin` / `auditor` — **in no registry** | 254 |
-| real swimlane roles (`code-reviewer`, `build-pipeline`, …) | 52 |
+Three facts, in case the question comes up again:
 
-They mix inside single files: `library-ingestion.md` declares
-`roles: [ingestion-agent, authoring-agent, collaborator, owner]`.
+- **Nothing read it — with one instructive exception.** 0 of 180 Skill nodes
+  in the exported graph carried any role-ish key; the only 27 carriers were
+  `Actor` nodes, from actor JSON, and `gen-skill-docs` dropped it. The
+  exception was `src/impact/stakeholder-map.ts`, which printed it as
+  *"Roles reached"* — beside real lane-derived roles, with nothing marking
+  which was which. It now derives roles from the **lanes** it already
+  computes, resolved through `roleForLane`, so every value it prints
+  resolves.
+- **`roles:` in a `folio-memory/v1` entry is a DIFFERENT field and stays.**
+  `memoryForRoles` filters on `tags.roles`; the 26 memory entries keep it.
+  The first pass of the excision took all 140 files and `agent-memory.test.ts`
+  caught it — every entry untagged means every lane sees everything. Sharing
+  a key name across graph kinds is not sharing a field, and
+  `check:retired-front-matter` keys its exemption on `$schema`, never on the
+  directory.
+- **It was dangling from its first commit, not from a later rename.** At
+  migration (`2734a70f`, 2026-06-15) the contract read *"Actor IDs (roles)
+  that may invoke this skill"*, pointing at `ActorDefinition.id`. No
+  `reader.json`, `collaborator.json` or `owner.json` has ever been added to
+  `.claude/skills/actors/`, in any commit in the repository's history.
+- **The second vocabulary was a collision.** `Role` was later given to the
+  BPMN swimlane, and authors reading the field by its new name wrote
+  swimlane roles into it. At removal, across the 114 skill files: 288
+  annotations, **260 of them — 90 % — resolving to nothing.**
 
-**And nothing reads the field.** All 168 Skill nodes in the exported graph
-carry zero role-ish keys; `gen-skill-docs` drops it; no check resolves it.
-`SkillDefinitionSchema` in `schemas/skill-package.ts` does require `roles`,
-but that describes a skill *definition object* and nothing parses front
-matter against it.
+To learn who performs a skill, read `skills/roles/roles.json`. The registry is
+the only answer that resolves.
 
-So: **do not read a skill's `roles:` as saying who performs it, and do not
-add a binding on its authority.** To learn who performs a skill, read
-`skills/roles/roles.json` — the registry is the only answer that resolves.
-
-This is recorded rather than fixed because fixing it means deciding what
-the tier words MEAN, and if they are forge permission tiers that is a
-deployment fact belonging to the topology axes rather than to a skill.
+**What the removal did not decide.** Whether a skill *should* declare its
+performer (bean `y1w9`), and what the tier words mean — if
+`reader`/`collaborator`/`owner` are forge permission tiers, that is a
+deployment fact belonging to the topology axes rather than to a skill. Either
+way the field gets **declared before it is written**, which is the step the
+original skipped.
 `qif9` carries the four options; `folio-assistant-y1w9` (110 skills bound
 to no role or process) is blocked on the answer, because the obvious
 evidence for that triage is exactly this field.

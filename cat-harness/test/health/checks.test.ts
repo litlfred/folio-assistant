@@ -80,18 +80,35 @@ function metrics(r: { findings: { metric?: string }[] }): (string | undefined)[]
 }
 
 describe("staging-preview-size", () => {
-  it("fires at `major` on the owner's 100 MB threshold", () => {
-    // Three previews at the size measured on gh-pages 2026-09-19 (36.7–37.6 MB
-    // each) — the case the threshold was chosen for.
+  it("fires at `major` on the owner's 500 MB threshold", () => {
+    // FOURTEEN previews at the size measured on gh-pages (36.7–37.6 MB each).
+    //
+    // It was three, against a 100 MB threshold. The owner raised it to 500 MB
+    // on 2026-09-20 together with `folio-assistant-1feu`, which made a merged
+    // pull request's preview go away automatically. That is what changed the
+    // meaning: the total used to be MONOTONIC, so any threshold was breached
+    // once and stayed breached; now the store drains and what remains is
+    // bounded by concurrent reviews. 500 MB is about thirteen of them, so
+    // fourteen is the first breach.
     const r = stagingSizeCheck(healthyContext({
-      staging: { state: "ok", value: { branch: "present", previews: previews(3, 37 * MB), command: "fixture" } },
+      staging: { state: "ok", value: { branch: "present", previews: previews(14, 37 * MB), command: "fixture" } },
     }));
     expect(r.state).toBe("finding");
     expect(metrics(r)).toEqual(["staging-total-bytes"]);
     expect(r.findings[0].severity).toBe("major");
-    expect(r.findings[0].summary).toContain("111.0 MB");
+    expect(r.findings[0].summary).toContain("518.0 MB");
     // The action never removes anything — it asks.
     expect(r.findings[0].action).toContain("staging:cleanup");
+  });
+
+  it("thirteen concurrent reviews is UNDER the threshold — the number means a concurrency", () => {
+    // The point of the raise. Thirteen at ~37 MB is 481 MB: this repository's
+    // realistic ceiling of simultaneous open reviews should not read as a
+    // finding, or the signal is a permanent verdict again rather than news.
+    const r = stagingSizeCheck(healthyContext({
+      staging: { state: "ok", value: { branch: "present", previews: previews(13, 37 * MB), command: "fixture" } },
+    }));
+    expect(r.state).toBe("ok");
   });
 
   it("escalates to `critical` past three-quarters of the Pages limit, and reports ONE breach not two", () => {

@@ -1,6 +1,5 @@
 ---
 name: compute-audit
-roles: [collaborator, owner]
 description: >
   Audit compute scripts for a catalogue of correctness and performance
   antipatterns extracted from a long review of the project's compute

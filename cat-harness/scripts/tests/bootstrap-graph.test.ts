@@ -4,14 +4,18 @@
  * @module scripts/tests/bootstrap-graph.test
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { buildBootstrapDocument } from "../gen-bootstrap-graph.js";
+import { isSkillMd } from "../known-skills.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
-const OUT = join(repoRootFor(ROOT), "bootstrap", "bootstrap.jsonld");
+// `bootstrap/` is at the REPOSITORY root, not inside this instance — it is
+// the graph read before anything knows which instance it is looking at.
+const BOOTSTRAP = join(repoRootFor(ROOT), "bootstrap");
+const OUT = join(BOOTSTRAP, "bootstrap.jsonld");
 
 describe("the file a cold agent is told to load exists", () => {
   test("`bootstrap/bootstrap.jsonld` is committed, not a build artefact", () => {
@@ -58,33 +62,41 @@ describe("pure, because committed-and-gated demands it", () => {
 });
 
 describe("what it contains, and what it admits it did not look at", () => {
-  test("bootstrap's skills are in the graph, BY NAME", async () => {
-    // Was `toBe(2)`. A bare count is a claim that goes stale the moment the
-    // instance grows a skill — which is exactly what this file's note below
-    // says about pinning a property of a subject still being built. `3jj9`
-    // added `discussion` and the count broke while nothing was wrong.
+  test("every skill bootstrap holds is in the graph", async () => {
+    // DERIVED, not pinned. It asserted `Skill` === 2 until 2026-09-20 and
+    // broke the moment `log-message` landed — a count makes "the export still
+    // works" and "somebody deleted a skill" indistinguishable, and the failure
+    // it produces is on the change that was correct.
     //
-    // Names are the durable assertion: they fail when a skill GOES MISSING,
-    // which is the defect worth catching, and not when one is added.
+    // The property is that the export sees what is on disk. A new skill passes
+    // without an edit here; a skill the scan misses fails, which is the case
+    // worth defending.
     const doc = await buildBootstrapDocument();
-    const names = (doc["@graph"] as Array<Record<string, unknown>>)
-      .filter((n) => String(n["@type"]).endsWith("#Skill"))
-      .map((n) => String(n["name"]))
-      .sort();
-    expect(names).toEqual(["bootstrap-kg-navigation", "confirm-harness", "discussion"]);
+    expect(skillIds(doc)).toEqual(skillFilesOnDisk());
   });
 
   test("bootstrap publishes only the graph kinds it DECLARES", async () => {
-    // Bean `3jj9`. `collectGraphKinds` emitted the universal registry into
+    // Bean `3jj9`. `collectGraphKinds` emitted the UNIVERSAL registry into
     // every instance, so bootstrap — whose premise is that it knows nothing
     // yet — published 16 GraphKind nodes while its declaration names one.
     // It advertised `folio`, `voices` and `library` (core's) and `beans` and
     // `todos` (cat-harness's), none of which it can reach.
+    //
+    // Derived from the declaration rather than pinned to "cat-harness", for
+    // the reason the skill test above gives: a literal breaks on the change
+    // that was correct. What is defended is the RELATION — published is a
+    // subset of declared — not today's contents.
     const doc = await buildBootstrapDocument();
     const kinds = (doc["@graph"] as Array<Record<string, unknown>>)
       .filter((n) => String(n["@type"]).endsWith("#GraphKind"))
       .map((n) => String(n["name"]));
-    expect(kinds).toEqual(["cat-harness"]);
+    const declared = new Set(
+      (JSON.parse(readFileSync(join(BOOTSTRAP, "harness.json"), "utf-8")) as {
+        directories?: Array<{ graphs?: string[] }>;
+      }).directories?.flatMap((d) => d.graphs ?? []) ?? [],
+    );
+    expect(kinds.length).toBeGreaterThan(0); // not vacuous
+    for (const k of kinds) expect([...declared]).toContain(k);
   });
 
   test("the instance-bound collectors are named as NOT looked for", async () => {
@@ -113,18 +125,20 @@ describe("what it contains, and what it admits it did not look at", () => {
     // than about the code.
     //
     // What belongs here is the fact that is now true and worth defending.
+    //
+    // `Process: 1` was pinned here and broke when `log-message.bpmn` landed —
+    // the same count-vs-property failure as the skills above, and the count
+    // was ALSO stating a rule it could not enforce. "One process" was never
+    // the constraint; "one place to START" is. A sub-process is a second
+    // diagram and does not compete for being the thing an Initiator begins.
     const doc = await buildBootstrapDocument();
     const counts = doc["counts"] as Record<string, number>;
     expect({
-      Process: counts["Process"] ?? 0,
+      processes: processIds(doc),
       hasNodes: (counts["ProcessNode"] ?? 0) > 0,
       hasFlows: (counts["SequenceFlow"] ?? 0) > 0,
       hasRoles: (counts["Role"] ?? 0) > 0,
-      // TWO processes since `3jj9`: `initialize-harness`, which an Initiator
-      // enters, and `discussion`, the argued exception — which harness and
-      // which repositories are judgements no file holds, so an Initiator that
-      // cannot obtain them cannot take the first process's first step.
-    }).toEqual({ Process: 2, hasNodes: true, hasFlows: true, hasRoles: true });
+    }).toEqual({ processes: diagramsOnDisk(), hasNodes: true, hasFlows: true, hasRoles: true });
     // And nothing about the diagram is reported as a problem.
     expect((doc["problems"] as string[]).filter((p) => p.includes("bpmn"))).toEqual([]);
   });
@@ -132,4 +146,56 @@ describe("what it contains, and what it admits it did not look at", () => {
 
 function doc_omitted(doc: Record<string, unknown>): string[] {
   return [...(doc["omitted"] as readonly string[])];
+}
+
+/** Node ids of one `@type`, reduced to the fragment stem, sorted. */
+function idsOfType(doc: Record<string, unknown>, type: string): string[] {
+  const graph = (doc["@graph"] ?? []) as Array<Record<string, unknown>>;
+  return graph
+    .filter((n) => {
+      const t = n["@type"];
+      const ts = Array.isArray(t) ? t.map(String) : [String(t)];
+      // `@type` is the full minted IRI — `<base>/bootstrap/ns#Skill` — so the
+      // fragment is what names the class. Matched on the whole fragment
+      // rather than a suffix, so `ProcessNode` does not answer for `Process`.
+      return ts.some((x) => x.split("#")[1] === type);
+    })
+    .map((n) => String(n["@id"]).split("#")[1]!.split("/").slice(1).join("/"))
+    .sort();
+}
+
+function skillIds(doc: Record<string, unknown>): string[] {
+  return idsOfType(doc, "Skill");
+}
+
+function processIds(doc: Record<string, unknown>): string[] {
+  return idsOfType(doc, "Process");
+}
+
+/**
+ * The skill bodies actually sitting in `bootstrap/skills/`.
+ *
+ * Shares `isSkillMd` with the exporter deliberately — a README or a node
+ * declaring `$schema:` is not a skill, and a disk side that disagreed about
+ * THAT would fail on a correct tree. What the two sides do NOT share is which
+ * directory to look in: this one names it, the exporter resolves it from the
+ * declaration. That axis is the one worth defending, because a resolver that
+ * stops finding `bootstrap/skills/` exports an empty section and reports a
+ * clean run over it — the `dh4f` defect, verified by probe to fail here.
+ */
+function skillFilesOnDisk(): string[] {
+  const dir = join(BOOTSTRAP, "skills");
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".md") && isSkillMd(join(dir, f)))
+    .map((f) => f.slice(0, -3))
+    .sort();
+}
+
+/** The processes actually drawn in `bootstrap/workflows/`, by their BPMN id. */
+function diagramsOnDisk(): string[] {
+  const dir = join(BOOTSTRAP, "workflows");
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".bpmn"))
+    .map((f) => /<bpmn:process id="([^"]+)"/.exec(readFileSync(join(dir, f), "utf-8"))?.[1] ?? f)
+    .sort();
 }

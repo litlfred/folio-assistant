@@ -28,13 +28,13 @@
  *
  * @module scripts/check-tools
  */
-import {existsSync, readFileSync} from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
-import { knownSkills } from "./known-skills.js";
+import { knownSkills as knownSkillsIn } from "./known-skills.js";
 import { directoryForGraph } from "../schemas/cat-harness.js";
 
 /**
@@ -53,25 +53,39 @@ function schemasRoot(root: string): string {
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /**
- * Skill names, from the SHARED discoverer.
+ * Skill names, from the ONE definition of where a skill lives.
  *
- * This file carried its own copy, and the copy was wrong in the way
- * `AGENTS.md` names explicitly: it scanned `kgRoots(ROOT)[0]` — the FIRST
- * declared root — while overlay order is deepest-dependency-first. So every
- * skill outside that one root was invisible, and a Tool claiming to exercise
- * one was reported as a dangling `satisfies`.
+ * ## It had its own, and both halves of the disagreement were live
  *
- * Measured, bean `3jj9`: the shared `known-skills.ts` finds 176 skills here,
- * including `bootstrap/skills/`; this copy found none of them. The `discuss`
- * Tool's `satisfies: ["discussion"]` was flagged as naming no skill, and the
- * skill was there the whole time.
+ * This module carried a local scan: the FIRST declared `cat-harness` root, its
+ * immediate subdirectories, and two literal extras. `known-skills.ts` exists
+ * precisely so that no second answer to "does this skill exist" can drift from
+ * the first — its own header says two copies are "how one of them ends up
+ * reporting a wall of false dangling refs" — and this was the second copy.
  *
- * Two discoverers for one fact is the defect, not the arithmetic between
- * them. `known-skills.ts` is the one with the tests and the dot-prefix guard,
- * so this reads it rather than keeping a second opinion — the same move as
- * `REGISTRY_GROUPS` (bean `jcmx`) one layer down.
+ * Measured 2026-09-20, the two sets differed **both ways** at once:
+ *
+ *  - **36 non-skills admitted.** `skills/memory/` then held agent-memory nodes,
+ *    every one a `.md` in a declared directory and none an instruction body.
+ *    {@link isSkillMd} excludes them by their `$schema:` line; a directory
+ *    scan cannot. So `satisfies: ["the-complement"]` would have RESOLVED —
+ *    a Tool claiming to implement a memory entry, checked and passed.
+ *  - **2 real skills missed.** `bootstrap/skills/` holds its skills DIRECTLY
+ *    rather than in packages, and a scan of one root's subdirectories never
+ *    looks at the root itself. `confirm-harness` and `log-message` read as
+ *    dangling — which is how this was found: a Tool naming a skill that is
+ *    there, reported as an error.
+ *
+ * Taking the first root alone is the `dh4f` shape as well: a second declared
+ * root is scanned by nobody and reports clean.
+ *
+ * Zero-argument, because every caller here means THIS repository and the root
+ * is this module's own. The canonical function takes one, since a checker for
+ * another instance is a thing that exists.
  */
-export { knownSkills };
+export function knownSkills(): Set<string> {
+  return knownSkillsIn(ROOT);
+}
 
 /**
  * What a skill's input contract requires, by property name.
@@ -134,7 +148,7 @@ export interface ToolCheck {
 }
 
 export function checkTools(): ToolCheck {
-  const skills = knownSkills(ROOT);
+  const skills = knownSkills();
   const typeNames = new Set(Object.keys(TOOL_TYPES));
   const dangling: Array<{ tool: string; skill: string }> = [];
   const unknownTypes: Array<{ tool: string; port: string; ref: string }> = [];

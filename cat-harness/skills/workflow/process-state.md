@@ -124,7 +124,7 @@ So, as part of recovery, before step 3's confirmation:
   a person who remembers; "everything is fine" is not.
 - **Do not move anything back on your own judgement.** Re-anchoring to undo is
   another unlogged move, and it is a durable change made to cover one — see
-  [`deletion-requires-confirmation.md`](deletion-requires-confirmation.md),
+  [`deletion-requires-confirmation.md`](../folio-core/deletion-requires-confirmation.md),
   which is the same rule about a different verb.
 
 **Considered and rejected: giving the note its own history.** A `movedFrom`
@@ -154,7 +154,7 @@ exactly what it needs to avoid re-deriving the same mistake.
 
 A bean that had been tidied to show only the correct conclusion would read as
 though the work had always been aimed there. That is the failure mode
-[`bean-coordination.md`](bean-coordination.md) names when it says unwanted work
+[`bean-coordination.md`](../folio-core/bean-coordination.md) names when it says unwanted work
 is `scrapped` **with its reasons** rather than deleted: a record that shows only
 outcomes cannot distinguish a dead end somebody ruled out from one nobody tried.
 
@@ -172,7 +172,7 @@ outcomes cannot distinguish a dead end somebody ruled out from one nobody tried.
 
 ## Relationship to the opening brief
 
-The brief you open a turn with ([`turn-reporting.md`](turn-reporting.md))
+The brief you open a turn with ([`turn-reporting.md`](../folio-core/turn-reporting.md))
 is what makes detector 5 usable: without a stated plan there is nothing for the
 current work to have diverged *from*. The two skills are one loop — brief the
 route, notice the divergence, confirm the recovery.

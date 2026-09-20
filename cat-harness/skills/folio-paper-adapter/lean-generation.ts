@@ -13,8 +13,5 @@ export const leanGeneration: SkillDefinition = {
   ],
   mcpServices: ["lean-lsp"],
   routingPatterns: ["extract.*stub", "from\\s+latex", "generate.*lean"],
-  schemas: [
-    { module: "schemas/types", types: ["Block", "LeanRef", "DefinitionBlock"], access: "read" },
-  ],
   tags: ["lean", "generation", "stub"],
 };

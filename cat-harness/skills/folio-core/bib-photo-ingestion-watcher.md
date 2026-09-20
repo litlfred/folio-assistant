@@ -8,7 +8,6 @@ description: >-
   machine + agent bib validation, then set the reference status to `validated`
   and refresh references.review.json. Use when processing a bib-physical-review
   issue that has an attached photo, or when ingesting an uploaded paper.
-roles: [collaborator]
 ---
 
 # bib-photo-ingestion-watcher

@@ -6,7 +6,7 @@ prerequisite.
 
 ## The words, once
 
-Five, and every later sentence uses them rather than re-explaining them.
+Six, and every later sentence uses them rather than re-explaining them.
 
 | | |
 |---|---|
@@ -14,6 +14,7 @@ Five, and every later sentence uses them rather than re-explaining them.
 | **Initiator** | **you**: the agent asked to initialize a harness, knowing only what this page gives you. |
 | **Requestor** | the person who wants one initialized. The only one who can say *which*. |
 | **Knowledge Graph Data Store** | a git repository — where a harness is read from and a new one written to. Reached through the git CLI, or through a forge's API. |
+| **Logger** | where an actor says what it is doing. Records; decides nothing. In bootstrap it is the discussion you are already in. |
 | **Process** | a diagram with lanes, steps and branches. Each lane is a role; you act in yours. |
 
 An Initiator has **no** harness, no server, no tools and no work plan. If a
@@ -24,10 +25,16 @@ step seems to need one, you are reading instructions meant for later.
 > **Open [`workflows/initialize-harness.bpmn`](workflows/initialize-harness.bpmn)
 > and begin at its start event.**
 
-**It is the only process in bootstrap, and that is deliberate** — with one
-diagram you cannot start the wrong one. It is a file you read, not something
-you run: the engine that executes a diagram belongs to the harness you have
-not installed yet.
+**It is the only process you START, and that is deliberate** — you cannot begin
+the wrong one. It is a file you read, not something you run: the engine that
+executes a diagram belongs to the harness you have not installed yet.
+
+There is a second diagram, [`workflows/log-message.bpmn`](workflows/log-message.bpmn),
+and it is **not** an alternative start. It is an independent sub-process:
+something a step *calls*, never somewhere you begin. You may call it from any
+step to say what you are doing, and `initialize-harness` calls it at two steps
+where saying so is required. Its skill is
+[`skills/log-message.md`](skills/log-message.md).
 
 To read it, and anything else here, use
 [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md). It assumes nothing but
@@ -35,6 +42,12 @@ the ability to open a file.
 
 The process ends one of two ways: a harness installed, or a failure logged.
 Both are outcomes. Neither is a reason to improvise.
+
+**The likeliest failure is that the location is already a harness**, and it is
+the one worth recognising early: a repository whose root carries a
+`harness.json` has been initialized, usually because the work is done. That is
+logged and ended rather than redone. Re-initialising over an instance that has
+content, history and dependents is not undone by running anything again.
 
 ## Two things it will send you to
 

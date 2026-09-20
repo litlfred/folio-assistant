@@ -257,7 +257,7 @@ export function viewerHtml(
    * 32px, not the 24px WCAG 2.2 SC 2.5.8 floor.
    *
    * The floor is a floor. This instance's declared interaction profile is
-   * low-dexterity (.harness/interaction.json), so a target that is *barely*
+   * low-dexterity (interaction/interaction.json), so a target that is *barely*
    * legal is a target that is hard to hit. 32px costs eight pixels of density
    * in a column that has room for it.
    */

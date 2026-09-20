@@ -194,7 +194,12 @@ export const TranslationConfigSchema = z.object({
  */
 export const HarnessDirsSchema = z.object({
   /** Per-user interaction preferences, read at session start. */
-  interaction: z.string().default(".harness/interaction.json"),
+  // declared-path-literal: a DEFAULT for a config key, which is read before
+  // — and without — any declaration. Resolving it through `harness.json`
+  // would make the fallback depend on the thing it is the fallback for. The
+  // declaration and this default name the same place on purpose; the
+  // `interaction` directory entry carries the other half of that pairing.
+  interaction: z.string().default("interaction/interaction.json"),
 });
 
 export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;

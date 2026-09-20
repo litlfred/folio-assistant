@@ -50,7 +50,7 @@ const PUBLISHED = join(ROOT, siteDirFor(ROOT), "reference/skill-instructions");
  * Packages under `skills/` that hold at least one SKILL `.md`, read from disk.
  *
  * The `.md` test alone was not enough and was falsified the day it was
- * written: `skills/memory/` holds 25 agent-memory nodes, every one a `.md` and
+ * written: `skills/memory/` then held 25 agent-memory nodes, every one a `.md` and
  * none a skill, so this reported `memory` as a package and the test below
  * demanded 25 published reference pages for it.
  *

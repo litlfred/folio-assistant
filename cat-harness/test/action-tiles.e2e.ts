@@ -27,7 +27,7 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  * that the whole thing is operable by someone who cannot use a mouse.
  *
  * The accessibility half is not decoration. This instance's declared
- * interaction profile is low-dexterity (`.harness/interaction.json`), and the
+ * interaction profile is low-dexterity (`interaction/interaction.json`), and the
  * standing rule is `skills/folio-core/ui-accessibility.md`. A tile that is
  * barely 24px is a tile that is hard to hit, so the floor is checked and the
  * page aims well above it.

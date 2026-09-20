@@ -1,6 +1,5 @@
 ---
 name: proof-simplifier
-roles: [collaborator, owner]
 description: >
   Analyse small clusters (2–4) of connected proofs to find
   simplifications: shared lemmas, redundant constructions, factored

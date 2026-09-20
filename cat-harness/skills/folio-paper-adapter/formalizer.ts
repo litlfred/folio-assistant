@@ -21,8 +21,5 @@ export const formalizer: SkillDefinition = {
     "remove\\s+sorry",
     "formalize",
   ],
-  schemas: [
-    { module: "schemas/types", types: ["Block", "LeanRef", "FormalizationStatus", "DefinitionBlock"], access: "read-write" },
-  ],
   tags: ["lean", "formalization", "proof"],
 };
