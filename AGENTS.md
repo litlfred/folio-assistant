@@ -121,6 +121,8 @@ adapter-scoped tool would be unreachable in exactly the case it exists for.
 
 ```sh
 bun install                 # install deps
+bun run gates               # EVERY fast gate CI runs — run this before you push
+bun run gates --all         # ...plus the browser jobs
 bun run cat-harness/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
 bun test                    # unit tests
 bunx playwright test        # e2e tests   (npm script: test:e2e)
@@ -132,6 +134,15 @@ bun run readme:sync:check           # ...and fail if any is stale (for CI)
 bun run readme:sections             # list the sections a README can opt into
 bun run readme:audit                # verify the README's links still resolve
 ```
+
+**`bun run gates` is the one to run before pushing, and it was missing from this
+list until 2026-09-20.** Its absence has a measured cost: a session ran `bun
+test`, `eslint`, `typecheck` and a dozen named `check:*` scripts, called that
+green, pushed, and CI went red on `docs:harness:check` — a gate nothing in this
+block named. **A subset of the gate set is not the gate set**, and choosing the
+subset by hand means choosing it from memory. `gates.ts` derives its list from
+`.github/workflows/code-quality-gates.yml`, so it cannot drift from what CI
+actually runs, which is the whole reason to prefer it over any list here.
 
 ## Where the harness keeps its state — `beans/` is a graph
 

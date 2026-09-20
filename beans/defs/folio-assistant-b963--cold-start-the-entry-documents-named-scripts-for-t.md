@@ -7,7 +7,7 @@ priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T19:30:00Z
+updated_at: 2026-09-20T20:40:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -64,3 +64,35 @@ tests, each one a false positive the first draft produced over this corpus.
 
 - [x] A check reads every fenced command in the entry documents (AGENTS.md, README.md, the onboarding guide) and fails when a path in it does not resolve
 - [ ] The nine occurrences are confirmed repointed on main — #579 is not merged yet
+
+_2026-09-20T20:40Z_ — **A third class, found by CI going red.** The count is
+now nine plus **thirteen**.
+
+`docs:harness:check` failed on this branch and its own failure message read
+*"Run `bun run scripts/sync-docs-harness.ts`"* — the message CI prints while
+failing, telling a reader to run a path that does not exist. `gen-schema-docs.ts`
+writes the same shape into the banner of every generated schema page.
+
+**Neither is reachable by `check:command-paths`**, and that is the finding
+rather than an oversight: they are **path literals inside strings the program
+PRINTS**, not fenced blocks and not markdown. Three classes now, each invisible
+to the checks that cover the others:
+
+| class | example | read by |
+|---|---|---|
+| a fenced command in a document | `AGENTS.md` line 3 | `check:command-paths` |
+| a `command` field in JSON config | the `SessionStart` hook | `check:command-paths` (hook reader) |
+| **a path inside a printed string** | `Run \`bun run scripts/x.ts\`` | **nothing** |
+
+The third wants its own reader and is deliberately not bolted onto this one: a
+`.ts` string literal is `check:declared-paths`' corpus, which already walks
+every literal in the tree and has a 509-entry unaccounted baseline. The
+question there is not *does this path resolve* but *is this literal a COMMAND
+somebody will type*, and answering it needs the surrounding string, not the
+token. Left as a distinct piece of work rather than guessed at.
+
+**And the reason it reached CI at all is worth more than the fix.** This session
+ran `bun test`, `eslint`, `typecheck` and a dozen named `check:*` scripts and
+called that green. `bun run gates` runs sixty-eight, and it was **not in
+AGENTS.md's Commands block** — so the subset was chosen from memory. Added
+there, with the measurement: a subset of the gate set is not the gate set.
