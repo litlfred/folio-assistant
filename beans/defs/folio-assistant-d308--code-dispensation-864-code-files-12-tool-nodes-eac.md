@@ -1,6 +1,6 @@
 ---
 # folio-assistant-d308
-title: 'CODE DISPENSATION: 864 code files → 12 Tool nodes, each bound to a BPMN task'
+title: 'CODE DISPENSATION: 868 code files → 13 Tool nodes, each bound to a BPMN task'
 status: in-progress
 type: task
 priority: normal
@@ -24,20 +24,26 @@ reached through.** Neither answers the other, and a Tool is where they meet.
 
 ## The headline, and why it is smaller than the file count suggests
 
-**864 code files. 228 of them are loose — and they collapse to 12 groups.**
+**868 code files. 229 of them are loose — and they collapse to 13 groups.**
 
-The 228 are the only ones the owner's rule actually indicts: everything else is
-already a knowledge-graph node (224), already reachable as or through a declared
+The 229 are the only ones the owner's rule actually indicts: everything else is
+already a knowledge-graph node (225), already reachable as or through a declared
 Tool (88), a gate (10), a library with no entry point (25), a test riding with
-its subject (240), a one-shot to scrap (17) or host config that no agent names
+its subject (242), a one-shot to scrap (17) or host config that no agent names
 (32).
 
-And within the 228 there are **71 entry points**, not 228 — a file named by a
+And within the 229 there are **72 entry points**, not 229 — a file named by a
 `package.json` script or carrying mode 755. The other 157 are already library
-code behind one of those. So the dispensation is **12 Tool nodes**, whose
+code behind one of those. So the dispensation is **13 Tool nodes**, whose
 `invoke` names one entry point each and whose siblings become unreachable except
-through it. That is the state the owner asked for, and it is twelve nodes of
+through it. That is the state the owner asked for, and it is thirteen nodes of
 work, not eight hundred files of it.
+
+### These figures were re-derived after merging `main`, not carried over
+
+First measured at 864 / 228 / 12 on the pre-merge branch. Merging 30 commits of
+`main` changed them, and the guard is what said so — see the finding below.
+A count carried across a merge is a count nobody checked.
 
 ## The table
 
@@ -68,6 +74,7 @@ Dispensation codes:
 | Schema & constraint validation | 12 | 3 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assist-core |
 | Bibliography, evidence & glossary | 11 | 3 | **TOOL** | evidence-retrieval · Task_L1Sources [document-intake] | folio-assist-core |
 | FHIR / IG / DAK build | 3 | 0 | **TOOL** | l3-fhir-pipeline · Task_Sushi · Task_Validate; ig-incremental-build · Task_Cone | smart-base |
+| Narrative confirmation queue (human gate) | 1 | 1 | **TOOL** | editing-hci-validation · Task_SmeReview · Task_RecordDecision | folio-assist-core |
 | MCP server / routing / adapters | 43 | 2 | **IS** | — (the Tool projection) | agentic-harness |
 | Scaffolding & environment setup | 13 | 11 | **IS** | authoring-a-paper · Task_Scaffold; getting-started | agentic-harness |
 | Work plan & session coordination | 12 | 12 | **IS** | authoring-a-paper · Task_SeedPlan [todo-manager] | agentic-harness |
@@ -75,14 +82,14 @@ Dispensation codes:
 | BPMN engine | 8 | 0 | **IS** | — (runs every process) | agentic-harness |
 | CI health, gates & upstream pins | 10 | 10 | **GATE** | code-change-review · Task_RunGates · Task_RunCI; upstream-pin-watch · Task_ReadPins | agentic-harness |
 | Doc-page content objects | 133 | 0 | **CARRY** | authoring-a-document · Task_AuthorBlocks | stays — this instance's own folio |
-| Schema carrier (zod → JSON Schema / JSON-LD) | 58 | 0 | **CARRY** | authoring-a-paper · Task_Validate | agentic-harness (harness/tool/role) / core (block/content) |
+| Schema carrier (zod → JSON Schema / JSON-LD) | 59 | 0 | **CARRY** | authoring-a-paper · Task_Validate | agentic-harness (harness/tool/role) / core (block/content) |
 | Skill-adjacent code (in the kg graph) | 23 | 0 | **CARRY** | — (the graph itself) | agentic-harness |
 | Translated content objects | 7 | 0 | **CARRY** | human-translation-workflow · Task_InjectPO | stays — this instance's own folio |
 | Tool node declarations | 3 | 0 | **CARRY** | — (the graph itself) | every instance declares its own |
 | Content-type adapters | 14 | 1 | **LIB** | authoring-a-paper · Task_AuthorBlocks | folio-assist-core |
 | Shared library (no entry point) | 11 | 1 | **LIB** | — (behind every Tool) | follows its callers |
 | One-shot migration / codemod | 17 | 5 | **SCRAP** | — | — |
-| Tests | 240 | 2 | **TEST** | code-change-review · Task_RunGates | follows its subject |
+| Tests | 242 | 2 | **TEST** | code-change-review · Task_RunGates | follows its subject |
 | CI workflow glue | 20 | 1 | **HOST** | code-change-review · Task_RunGates | agentic-harness |
 | Deploy / container build | 5 | 4 | **HOST** | authoring-a-paper · Task_Render | folio-asst-sci |
 | Docs-site browser JS | 4 | 0 | **HOST** | authoring-a-paper · Task_Publish | agentic-harness |
@@ -100,6 +107,16 @@ falsifiable test, and this is what passing it looks like: if a group of code had
 had no task to serve, that code would have had no justification, and the finding
 would have been "scrap it", not "give it a Tool". Measured across 216 activities
 in 34 diagrams, of which 72 are `serviceTask`.
+
+The thirteenth group is the one that arrived by merge, and it is the single best
+piece of evidence on this bean: `main` added `scripts/narratives.ts` on
+2026-09-19 — a numbered-selection review queue, built explicitly for the owner's
+hand function, agent-facing in every respect — and **it is not a Tool node.**
+`grep narrative folio-assistant/tools/*.ts` returns nothing. So this is not
+historical debt being tidied; the habit is live, and it produced a new instance
+of itself the day before the rule was stated. Its task exists and always did:
+`editing-hci-validation · Task_SmeReview` / `Task_RecordDecision`, the human
+confirmation gate.
 
 `authoring-a-paper` alone absorbs six of the twelve — Task_Scaffold,
 Task_AuthorBlocks, Task_Formalize, Task_Validate, Task_Render, Task_Publish —
@@ -134,10 +151,12 @@ argue the BPMN engine out of the only repo it can live in.
 
 `git ls-files` filtered to `.ts .tsx .js .mjs .cjs .py .sh .bash`; every file
 assigned by an ordered rule set with an **UNCATEGORISED hard failure** rather
-than a catch-all bucket — it fired twice during authoring (9 files, then 0) and
-both tails were real gaps in the rules, not noise. Entry points are the union of
-files named by a `package.json` script (56) and mode-755 code files (64), 120
-distinct. BPMN tasks read from the 34 diagrams directly, not from prose.
+than a catch-all bucket. It fired three times: 9 files while the rules were
+being written, then 0, then **1 after merging `main`** — and that third firing
+is the reason the guard is worth its cost. A catch-all bucket would have
+absorbed `scripts/narratives.ts` silently and the thirteenth group would not
+exist. Entry points are the union of files named by a `package.json` script (57)
+and mode-755 code files (64), 121 distinct. BPMN tasks read from the 34 diagrams directly, not from prose.
 
 **No count here should be quoted from this bean into a second place.** That is
 the failure `kg:audit`'s reading rules name, and this bean is exactly the sort of
