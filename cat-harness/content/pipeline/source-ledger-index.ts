@@ -41,7 +41,7 @@
 
 // `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
 // and this module resolves a DECLARED directory. Without it the first
-// `directoryForGraph` throws `unknown graph kind "folio"`. Measured
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
 // 2026-09-20 across the 20 modules that resolve a declared directory: 10
 // threw, including `narratives.ts` and the `translation` MCP tool, while
 // every gate and all 3298 tests passed — nothing covered the path.

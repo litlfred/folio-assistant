@@ -507,6 +507,16 @@ export const RULES: Rule[] = [
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
       "scripts/check-declared-paths.ts",
+      // The external-specification registry — which edition of BPMN, DD or
+      // DCMI Terms this repository conforms to, reconciled against the
+      // namespaces its own diagrams and records actually bind. Harness by
+      // its subject: the things it reconciles are this repository's
+      // knowledge graph and CI processes, not a folio's material.
+      "scripts/external-schemas.ts",
+      // Runs the generators CI invokes from workflow YAML. Harness by
+      // its subject twice over: it reads THIS repository's workflows,
+      // and what it runs are the harness's own generators.
+      "scripts/check-ci-invocations.ts",
       // Which `.github/workflows/*.yml` carry a BPMN diagram — bean `7yvd`.
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
@@ -925,6 +935,12 @@ export const RULES: Rule[] = [
       // wrong-direction edges for the tidiness of one homogeneous list.
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
+      "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
+      // Same test as the three above: it reads a CONTAINER a folio was
+      // given — a zip, a PDF, a saved page — and writes a
+      // `folio-extraction/v1` record beside it. Core material, and its
+      // schema (`folio-assistant-core/schemas/extraction.ts`) is core too.
+      "scripts/extract-assets.ts",          // container → extraction record, metadata by default
       "scripts/narratives.ts",              // the narrative review queue
       // Same test, same answer: it reads `library/<bib-slug>/images.json`,
       // which is a folio's own material, and imports `schemas/attribution.ts`

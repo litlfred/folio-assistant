@@ -200,6 +200,19 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
   // Collided exactly as `todo-manager` did and carried NO banner, so a reader
   // landing on either page could not tell the other existed. Added with the
   // `tdmg` resolution.
+  "kg-navigation": [
+    {
+      published: "kg-navigation",
+      label: "Reading the knowledge graph (tooled)",
+      repoPrefix: "kg-navigation/skills",
+      canonical: true,
+    },
+    {
+      published: "local-kg-navigation",
+      label: "Reading a knowledge graph before you have anything (bootstrap)",
+      repoPrefix: "bootstrap/skills",
+    },
+  ],
   "bean-coordination": [
     {
       published: "bean-coordination",
@@ -265,6 +278,20 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `src/skills` into `cat-harness/src/skills`.
   "cat-bootstrap": "CatBootstrap (read before anything else is known)",
   "cat-harness-src": "Agent skills",
+  // Two top-level named subgraphs, staged ahead of the split (#223) and both
+  // keyed by DECLARED ID for the reason the comment above gives: their paths
+  // will change at the `cat-harness/` move and their ids will not.
+  //
+  // `kg-navigation` shares its name with `bootstrap/skills/kg-navigation.md`
+  // and the two are DIFFERENT DOCUMENTS — the tooled route and the zero-install
+  // floor. Measured 2026-09-20, before this entry existed: the published page
+  // carried bootstrap's body under the tooled one's name, so a reader landing
+  // there got the wrong skill with nothing saying so. That is the same
+  // collision `todo-manager` and `bean-coordination` are listed for below, and
+  // it is resolved the same way.
+  "kg-navigation": "Knowledge-graph navigation (tooled)",
+  "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
+  "who-iris-skills": "WHO IRIS (catalogue instance)",
 };
 
 /**

@@ -16,7 +16,7 @@ const node: TranslationNode = {
   label: "trans:es/kg-viewer",
   locale: "es",
   sourceFile: "scripts/kg-viewer-strings.ts",
-  sourceHash: "e92bfc916780",
+  sourceHash: "c9d38dea48c1",
   potFile: "translations/es/kg-viewer.pot",
   poFile: "translations/es/kg-viewer.po",
   status: {
@@ -24,7 +24,7 @@ const node: TranslationNode = {
     official: false,
     generator: "folio-assistant translate-kg-viewer",
   },
-  coverage: { translated: 0, total: 39, pct: 0 },
+  coverage: { translated: 0, total: 40, pct: 0 },
   title: "Español — knowledge-graph viewer interface",
   description:
     "Interface strings for the knowledge-graph viewer. Not yet translated: the .po carries every msgid with an empty msgstr, awaiting a translator. The page falls back to the English msgid string by string, so nothing renders blank in the meantime.",

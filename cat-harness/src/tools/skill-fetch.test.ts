@@ -55,15 +55,21 @@ describe("the live table", () => {
     // falls out of the declaration like every other — so the old assertion is
     // kept here inverted rather than deleted, because "discovery cannot see
     // it" was a real limitation and this is the record of it ending.
-    expect(LOCAL_PACKAGES["folio-assistant"]).toBeDefined();
-    expect(discoverLocalPackages(ROOT)["folio-assistant"]).toBeDefined();
+    expect(LOCAL_PACKAGES["cat-harness"]).toBeDefined();
+    expect(discoverLocalPackages(ROOT)["cat-harness"]).toBeDefined();
   });
 
   test("a directly-held kg directory is named after its INSTANCE", () => {
     // There is no subdirectory name to take: `src/skills/` holds
     // `corpus-grep.md` at its root. The declaration's `name` is what the
     // package is, because that is whose skills they are.
-    expect(discoverLocalPackages(ROOT)["folio-assistant"]).toContain("src/skills");
+    //
+    // `cat-harness`, not `folio-assistant`, since 2026-09-20: the owner ruled
+    // the three instances distinct, and the harness layer stopped sharing the
+    // repository's name. THE TEST'S CLAIM IS UNCHANGED — the package is named
+    // after whoever declares the directory — which is why this moved with the
+    // declaration rather than being pinned to a string.
+    expect(discoverLocalPackages(ROOT)["cat-harness"]).toContain("src/skills");
   });
 });
 
@@ -174,13 +180,18 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     rmSync(repo, { recursive: true, force: true });
   });
 
-  test("the live table still names src/skills `folio-assistant`", () => {
+  test("the live table still names src/skills after its declaring instance", () => {
     // The falsifier for the change above, stated as its own test because the
     // whole claim is that this is a refactor: the name is now derived from
     // where the skills LIVE rather than from who asked, and for `src/skills/`
     // the nearest enclosing declaration is this instance's, so the answer must
     // be the same one the hand-written table gave. If this goes red the change
     // is a behaviour break, not a refactor.
-    expect(discoverLocalPackages(ROOT)["folio-assistant"]).toContain("src/skills");
+    //
+    // The title said `folio-assistant` until the owner's 2026-09-20 ruling
+    // made the three instances distinct. A title naming the expected STRING
+    // goes stale on a rename that is not a behaviour change; one naming the
+    // RULE does not.
+    expect(discoverLocalPackages(ROOT)["cat-harness"]).toContain("src/skills");
   });
 });

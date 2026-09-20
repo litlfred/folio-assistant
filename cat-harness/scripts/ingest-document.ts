@@ -39,6 +39,12 @@
  *   bun run ingest uploads/FILE.pdf
  *   bun run ingest uploads/FILE.pdf --dry-run
  *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
+ *   bun run ingest uploads/FILE.pdf --library who-iris
+ *
+ * `--library` is required only when the repository declares more than one, and
+ * then it is REQUIRED rather than defaulted: since bean `frs5` there are two,
+ * and a WHO publication filed into the science library reads as ingested while
+ * sitting in the wrong corpus.
  *
  * Exit: 0 ingested (or dry-run reported), 1 ingestion failed, 2 could not probe.
  *
@@ -46,7 +52,7 @@
  */
 // `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
 // and this module resolves a DECLARED directory. Without it the first
-// `directoryForGraph` throws `unknown graph kind "folio"`. Measured
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
 // 2026-09-20 across the 20 modules that resolve a declared directory: 10
 // threw, including `narratives.ts` and the `translation` MCP tool, while
 // every gate and all 3298 tests passed — nothing covered the path.
@@ -62,7 +68,7 @@ import { fileURLToPath } from "node:url";
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
-import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../schemas/cat-harness.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -70,7 +76,7 @@ import { directoryForGraph } from "../schemas/cat-harness.ts";
  * `libraryRoot` defaulted to `resolve(".")`, the CWD, which read as "the
  * instance you are standing in" and was right while the instance and the
  * repository were one directory. After the move (bean `wggr`) the CWD is the
- * REPOSITORY root, which declares nothing, so `directoryForGraph` returned
+ * REPOSITORY root, which declares nothing, so `directoriesForGraph` returned
  * undefined and the ingest refused — correctly, by its own rule, for the wrong
  * reason: "this instance declares no `library` graph" was a true sentence
  * about a directory that is not this instance.
@@ -94,6 +100,18 @@ const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
  *
  * One function so the next relocation is one line, and so that a reader
  * grepping for `.py` finds the resolution rather than three copies of it.
+ *
+ * **It did not reach the RUNG TABLE, and that is how this recurred.** Seven
+ * more call sites spelled `"scripts/<name>.py"` inside the `steps` arrays
+ * below — every rung that actually ingests a document — so the helper existed,
+ * the comment above said the problem was solved, and `bun run ingest` could
+ * not ingest anything. Fixed 2026-09-20, when ingesting the agent-skill
+ * corpus hit it on the first real document.
+ *
+ * These seven failed LOUDLY (`can't open file`, exit 2, "stopping"), unlike
+ * the three above, so nothing was mis-filed. That is luck, not design: the
+ * `steps` runner checks the exit code, and the helpers it invokes are the ones
+ * whose absence the three silent call sites were taught to report honestly.
  */
 function pyHelper(name: string): string {
   return join(dirname(fileURLToPath(import.meta.url)), name);
@@ -105,15 +123,77 @@ function pyHelper(name: string): string {
  * times in this file alone -- and `check:declared-paths` caught exactly that
  * in the first draft, as it did for the bean store an hour earlier.
  */
-export function libraryRoot(root = INSTANCE_ROOT): string {
-  const abs = directoryForGraph(root, "library");
-  if (!abs) {
+export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
+  // A WRITE target, and the one place picking the first was never defensible:
+  // with several declared libraries the first is not an answer to "where does
+  // this document go", it is a coin toss that files it somewhere plausible.
+  //
+  // THREE states, and the middle one arrived with bean `frs5`, which moved the
+  // corpus into `who-iris/` and `folio-assist-sci/`:
+  //
+  //   none declared   -> throw: ingesting into a guessed directory files the
+  //                     document where nothing scans it
+  //   exactly one     -> that one, and `--library` is not needed
+  //   several         -> the CALLER must say, by name. Not a default, not the
+  //                     first: a WHO publication landing in the science
+  //                     library reads as ingested and is in the wrong corpus,
+  //                     and nothing downstream can tell.
+  const declared = directoriesForGraph(root, "library");
+  if (declared.length === 0) {
     throw new Error(
       "this instance declares no `library` graph in harness.json — " +
         "ingesting into a guessed directory would file the document where nothing scans it",
     );
   }
-  return relative(root, abs) || abs;
+
+  const named = (abs: string): string => relative(root, abs) || abs;
+
+  if (declared.length === 1) return named(declared[0]!);
+
+  if (choice === undefined) {
+    throw new Error(
+      `this repository declares ${declared.length} libraries, so the destination must be said ` +
+        `rather than guessed. Pass --library <name>, one of: ` +
+        declared.map((d) => named(d)).join(", "),
+    );
+  }
+
+  // Matched EXACTLY, on either spelling a caller would reasonably use: the
+  // relative path the declaration resolves to (`../who-iris/library`) or the
+  // instance directory holding it (`who-iris`). Both work and neither is a
+  // second vocabulary to learn.
+  //
+  // IT WAS A SUBSTRING MATCH, and that is a guess wearing the clothes of a
+  // match. Measured 2026-09-20: `--library c` matched exactly one declared
+  // library — `../folio-assist-sci/library` is the only one containing a `c`
+  // — so a one-character typo filed a document into the science corpus and
+  // printed success. In the one function whose stated job is refusing to
+  // guess a write target, and directly under a comment saying ambiguity
+  // refuses "the whole point of this function": the ambiguity check was real
+  // and what fed it was not.
+  //
+  // A loose match cannot be rescued by the ambiguity guard, because the
+  // failure is a UNIQUE wrong hit. Exactness is the only form where "matches
+  // one" means what it reads as.
+  const instanceOf = (d: string): string => {
+    const rel = named(d);
+    const parts = rel.split("/").filter((p) => p.length > 0 && p !== "..");
+    // `../who-iris/library` -> `who-iris`; a bare `library` is this instance's.
+    return parts.length > 1 ? parts[parts.length - 2]! : ".";
+  };
+  const hits = declared.filter((d) => named(d) === choice || instanceOf(d) === choice);
+  if (hits.length === 1) return named(hits[0]!);
+  throw new Error(
+    hits.length === 0
+      ? `--library ${choice} matches none of: ${declared.map((d) => named(d)).join(", ")}`
+      : `--library ${choice} is ambiguous between: ${hits.map((d) => named(d)).join(", ")}`,
+  );
+}
+
+/** `--library <name>` from argv, or undefined. */
+export function libraryChoice(argv: string[]): string | undefined {
+  const i = argv.indexOf("--library");
+  return i >= 0 ? argv[i + 1] : undefined;
 }
 
 /** Which rung a document needs, and the evidence that chose it. */
@@ -140,7 +220,14 @@ export function bibSlug(file: string): string {
     "import sys, importlib.util as u\n" +
     `spec = u.spec_from_file_location('d', ${JSON.stringify(pyHelper("_pdf_doc_id.py"))})\n` +
     "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
-    "print(m.derive_doc_id(sys.argv[1]))\n";
+    // `derive_doc_id_from_pdf`, NOT `derive_doc_id`. The latter takes the
+    // extracted front matter as an argument and this call site has none, so it
+    // fell through to the basename slug for every arXiv paper while
+    // `pdf-structure.py` — which DOES have the front matter — named the same
+    // file `arxiv-<id>v<n>`. The two then disagreed about which directory the
+    // document was in, and `--promote` reported the entry incomplete rather
+    // than missing.
+    "print(m.derive_doc_id_from_pdf(sys.argv[1]))\n";
   const r = Bun.spawnSync(["python3", "-c", py, file]);
   const out = new TextDecoder().decode(r.stdout).trim();
   if (r.exitCode !== 0 || !out) {
@@ -356,7 +443,7 @@ export function planFor(
     return {
       rung: "tabular",
       why: `the package declares ${mime} — a workbook, read for its sheets and headers`,
-      steps: [["python3", "scripts/tabular-records.py", "-o", lib, pdf]],
+      steps: [["python3", pyHelper("tabular-records.py"), "-o", lib, pdf]],
     };
   }
 
@@ -368,7 +455,7 @@ export function planFor(
     return {
       rung: "tabular",
       why: "no magic bytes, but the rows split consistently — delimited text",
-      steps: [["python3", "scripts/tabular-records.py", "-o", lib, pdf]],
+      steps: [["python3", pyHelper("tabular-records.py"), "-o", lib, pdf]],
     };
   }
 
@@ -376,7 +463,7 @@ export function planFor(
     return {
       rung: "archive",
       why: `sniffed ${mime} — an archive. Its entries are listed as data, not extracted`,
-      steps: [["python3", "scripts/archive-contents.py", "-o", lib, pdf]],
+      steps: [["python3", pyHelper("archive-contents.py"), "-o", lib, pdf]],
     };
   }
   return planForPdf(pdf, p ?? probe(pdf), lib);
@@ -409,7 +496,7 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
       why:
         `${p.outlineUsable} of ${p.outline} embedded outline entries can carry a ` +
         `chapter — the structure is READ, not inferred`,
-      steps: [["python3", "scripts/pdf-structure.py", "-o", lib, pdf]],
+      steps: [["python3", pyHelper("pdf-structure.py"), "-o", lib, pdf]],
     };
   }
   // The case bean `8shg` exists for. An outline is PRESENT and carries nothing
@@ -429,8 +516,8 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
         `${junkOutline || "no outline, and "}${p.chars} characters over the first pages ` +
         `(< ${OCR_THRESHOLD_CHARS}) — there is no usable text layer`,
       steps: [
-        ["python3", "scripts/pdf-ocr.py", "-o", lib, pdf],
-        ["python3", "scripts/pdf-pages.py", "-o", lib, "--from-ocr", pdf],
+        ["python3", pyHelper("pdf-ocr.py"), "-o", lib, pdf],
+        ["python3", pyHelper("pdf-pages.py"), "-o", lib, "--from-ocr", pdf],
       ],
     };
   }
@@ -439,7 +526,7 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
     why:
       `${junkOutline || "no outline, "}${p.chars} characters of text layer — PAGE granularity. ` +
       `A chapter tree is NOT inferred (bean 6xaz)`,
-    steps: [["python3", "scripts/pdf-pages.py", "-o", lib, pdf]],
+    steps: [["python3", pyHelper("pdf-pages.py"), "-o", lib, pdf]],
   };
 }
 
@@ -460,7 +547,9 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
  */
 export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
   const slug = bibSlug(pdf);
-  const structure = join(resolve(libRoot), slug, "structure.json");
+  // Against INSTANCE_ROOT, same reason as the promote path below: `libraryRoot`
+  // is INSTANCE-relative, and a bare `resolve` reads the CWD.
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, "structure.json");
   if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
   // The indent is READ OFF the file, never chosen here. `pdf-structure.py`
   // writes `indent=1` and `pdf-pages.py` writes `indent=2`, so a refresh that
@@ -520,9 +609,25 @@ export function mayPromote(requirements: readonly Requirement[]): boolean {
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const dry = argv.includes("--dry-run");
-  const pdf = argv.find((a) => !a.startsWith("--"));
+  const chosenLibrary = libraryChoice(argv);
+  // The positional is the first argument that is neither a flag NOR a flag's
+  // VALUE. `argv.find((a) => !a.startsWith("--"))` was enough while every flag
+  // was boolean; `--library who-iris` breaks it, because `who-iris` does not
+  // start with `--` and would be ingested as a filename — producing "who-iris:
+  // not there" while the real argument sat untouched two places along.
+  const takesValue = new Set(["--library"]);
+  let pdf: string | undefined;
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]!;
+    if (a.startsWith("--")) {
+      if (takesValue.has(a)) i++;
+      continue;
+    }
+    pdf = a;
+    break;
+  }
   if (!pdf) {
-    console.error("usage: bun run ingest <uploads/FILE.pdf> [--dry-run]");
+    console.error("usage: bun run ingest <uploads/FILE.pdf> [--dry-run] [--library <name>]");
     process.exit(1);
   }
   if (!existsSync(pdf)) {
@@ -566,7 +671,16 @@ if (import.meta.main) {
   const stagingRoot = join(resolve(INSTANCE_ROOT), "ingest-staging");
   const staging = join(stagingRoot, slug);
   const plan = planFor(pdf, undefined, stagingRoot);
-  console.log(`${basename(pdf)} -> ${libraryRoot()}/${slug}/`);
+  // Resolved ONCE, before anything is written: `libraryRoot()` refuses when
+  // several libraries are declared and none was chosen (bean `a02m`/`frs5`),
+  // and that refusal belongs before the arms run rather than after they have
+  // produced a staging tree nobody can file.
+  //
+  // Note the two are DIFFERENT roots and always were: the arms write beneath
+  // `stagingRoot`, and `destination` is where a passing entry is promoted TO.
+  // Conflating them is the defect the comment above records.
+  const destination = libraryRoot(INSTANCE_ROOT, chosenLibrary);
+  console.log(`${basename(pdf)} -> ${destination}/${slug}/`);
   console.log(`  rung: ${plan.rung}`);
   console.log(`  why:  ${plan.why}`);
   if (plan.rung === "undetermined") {
@@ -620,7 +734,7 @@ if (import.meta.main) {
     for (const r of unmet) console.error(`    ${r.name.padEnd(22)} ${r.detail}`);
     console.error(`\nStaged output is at ${relative(resolve(INSTANCE_ROOT), staging)}/ and was`);
     console.error("left in place. Fix the cause and re-run; nothing was filed under");
-    console.error(`${libraryRoot()}/, so nothing reads as ingested.`);
+    console.error(`${destination}/, so nothing reads as ingested.`);
     // Reported, never acted on: the owner chose reporting-only over opening a
     // bean here (2026-09-20). `beans create` dedupes on nothing and once
     // produced 14,688 duplicates, so a gate that mints one per run against
@@ -629,14 +743,28 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const out = join(resolve(libraryRoot()), slug);
+  // Against INSTANCE_ROOT, never the CWD.
+  //
+  // `libraryRoot` returns an INSTANCE-RELATIVE path — that is its contract, and
+  // it is what every `-o` argument wants. `resolve()` with one argument
+  // resolves against `process.cwd()`, so running this from the repository root
+  // (which is where `bun run` puts you) turned `../who-iris/library` into
+  // `/home/user/who-iris/library` — OUTSIDE THE CHECKOUT. It then copied the
+  // staged tree there, deleted the staging directory, and printed `✓ promoted`.
+  //
+  // Latent before bean `frs5` and load-bearing after it: while the only
+  // library was this instance's own, the relative path was `library` and the
+  // mistake resolved to a wrong directory inside the repo. Once a library
+  // could sit in a SIBLING instance the path gained a `../` and the same line
+  // started escaping the repository altogether.
+  const out = join(resolve(INSTANCE_ROOT, destination), slug);
   mkdirSync(dirname(out), { recursive: true });
   // Only ever INTO the library. `renameSync` would fail across a filesystem
   // boundary, and a staged tree the arms just wrote is small enough that the
   // copy is not worth a fallback path nobody tests.
   cpSync(staging, out, { recursive: true });
   rmSync(staging, { recursive: true, force: true });
-  console.log(`\n${existsSync(out) ? "✓" : "✗"} ${libraryRoot()}/${slug}/  (L1 complete, promoted)`);
+  console.log(`\n${existsSync(out) ? "✓" : "✗"} ${destination}/${slug}/  (L1 complete, promoted)`);
   for (const r of verdict.requirements.filter((r) => r.state === "not-derivable")) {
     console.log(`  · ${r.name}: ${r.detail}`);
   }

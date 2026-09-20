@@ -23,7 +23,7 @@
 
 // `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
 // and this module resolves a DECLARED directory. Without it the first
-// `directoryForGraph` throws `unknown graph kind "folio"`. Measured
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
 // 2026-09-20 across the 20 modules that resolve a declared directory: 10
 // threw, including `narratives.ts` and the `translation` MCP tool, while
 // every gate and all 3298 tests passed — nothing covered the path.
@@ -245,7 +245,7 @@ function main() {
 // Guarded, like the 61 other entry points here. Unguarded, `main()` ran on
 // IMPORT: this script writes four files under `translations/fr/`, so merely
 // importing it mutated the working tree. `declared-directory-resolves.test.ts`
-// imports every module that calls `directoryForGraph` — this one among them —
+// imports every module that calls `directoriesForGraph` — this one among them —
 // so from the commit that added it, a plain `bun test` left `.po`, `.pot`,
 // `agent-onboarding.md` and `status.json` modified, and whoever ran the suite
 // reverted them as somebody else's churn. Bean `07p7`.

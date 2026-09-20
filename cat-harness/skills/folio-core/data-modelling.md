@@ -88,6 +88,61 @@ documentation went inert within weeks; the three examples at the top of this
 page are all of that kind. A field with no consumer is not a model, it is a
 comment with punctuation.
 
+### 7. Model VARIATION as inheritance, and earn a new kind with BEHAVIOUR
+
+Two things are nearly the same. Do they get one type with a discriminator, two
+types, or one type and an override?
+
+> **A new KIND is earned by a BEHAVIOUR difference — a consumer has to DO
+> something different. Everything else is an OVERRIDE on an inherited
+> default.**
+
+Owner's ruling, 2026-09-20: *"WHO should be able to override all theme
+properties, just defaults to inherited. if it needs to name a new kind it
+should if behaviour change."*
+
+So the default posture is **inherit everything, override anything**. A variant
+declares what it CHANGES; every unstated field comes from its parent. A variant
+that states no new behaviour is not a new kind, however different it looks.
+
+**The test is on the consumer, not the values.** Ask: *does any reader of this
+model take a different code path?* Different colours, sizes, labels or
+thresholds are the same behaviour with different inputs — one kind. Different
+FIELDS, different units, or a field whose meaning changes — the reader must
+branch, and that is a kind.
+
+#### Worked, and it is worked because I got it wrong first
+
+`Theme` dresses three surfaces: sticky notes, a website, a print publication.
+
+| variant | kind? | why |
+|---|---|---|
+| `iris-web` vs the default web theme | **no** | different hex values, same fields. Nothing branches. An override. |
+| `publication` vs `sticky` | **yes** | a sticky theme's geometry is `{minWidth, padding, fontScale}` across `laptop \| mobile \| card`; the WHO style guide states `A4 \| A5 \| A5 landscape` with trim size and margin, and no column width anywhere in 66 sections. `minWidth` means "before the grid reflows" — a fixed page does not reflow. A renderer MUST branch. |
+
+The first draft reused `{minWidth, padding, fontScale}` for print, reading
+`minWidth` as trim width. It would have typechecked and meant nothing: a
+reader following the field name would have been told the wrong thing about a
+real publication. **A shape that typechecks is not a shape that models.**
+
+And the palette stays SHARED across all three kinds, which is the other half
+of the rule. `theme.ts` exists because 106 hardcoded hex colours became 22
+named properties; three kinds each with their own palette vocabulary would
+reintroduce that one level up — three spellings of "accent colour", free to
+disagree about what an accent is.
+
+#### What inheritance costs, and what it must not hide
+
+A required field stays required **after resolution**, never before. "All three
+layouts, or invalid" is a property of the RESOLVED variant; a declaration that
+states one and inherits two is complete. Checking requiredness on the
+declaration instead is how inheritance turns into optionality by accident.
+
+And an inherited value is still a fact somebody must be able to trace. A
+variant that overrides a value **cites why**, the same as any other asserted
+fact — otherwise the model records what the value is and loses where it came
+from, which is the failure the `uses[]` rule exists to prevent elsewhere.
+
 ## What falsifies a model
 
 Write these down as you go and check them at the end. A model nobody tried to
@@ -99,6 +154,8 @@ break is a diagram.
 | find a fact you would have to update in two places | it is on the wrong entity, or duplicated |
 | find a relation whose cardinality changes under a plausible future | the model states today's data, not the domain |
 | count the facts nothing reads | the part you modelled for its own sake |
+| find two kinds whose consumers take the SAME code path | one of them is an override wearing a discriminator |
+| find a required field a variant can never state | requiredness is being checked before resolution, not after |
 
 ## What this skill is NOT
 

@@ -136,6 +136,82 @@ export const THEME_LAYOUTS = ["laptop", "mobile", "card"] as const;
 export type ThemeLayout = (typeof THEME_LAYOUTS)[number];
 
 /**
+ * What KIND of surface a theme dresses.
+ *
+ * ## One node, not three, and the reason is the palette
+ *
+ * `schemas/theme.ts` exists because 106 hardcoded hex colours were replaced by
+ * 22 named custom properties. Three separate theme node types would reintroduce
+ * exactly that, one level up: three spellings of "accent colour", free to
+ * disagree about what an accent IS. So the palette vocabulary is shared across
+ * every kind and only the GEOMETRY varies — bean `j66n`, and the owner's
+ * "one node with a kind discriminator rather than three node kinds".
+ *
+ * ## The geometry has to vary, and that was MEASURED rather than assumed
+ *
+ * A sticky theme's three layouts are `laptop | mobile | card`. The WHO
+ * publication style guide (`wpr-rdo-2020-003-eng`, page 18, "Frequently used
+ * formats and specs") states three PRINT formats instead — A4 21×29.7 cm, A5
+ * 14.8×21 cm, A5 landscape 21×14.8 cm — and states **no** column widths and no
+ * page margins anywhere in its 66 sections.
+ *
+ * So a publication theme cannot honestly fill `minWidth` ("before the grid
+ * reflows"), and calling an A4 page a `laptop` would be a name that lies. The
+ * requirement is untouched — three layouts, or invalid — and only their names
+ * and fields follow the medium. Owner's ruling, 2026-09-20: *"Layouts vary by
+ * kind; palette stays shared."*
+ *
+ * `webpage` shares the sticky geometry deliberately: both are screens, and
+ * inventing a third viewport vocabulary for the same three breakpoints is the
+ * duplication this file was written to end.
+ */
+export const THEME_KINDS = ["sticky", "webpage", "publication"] as const;
+export type ThemeKind = (typeof THEME_KINDS)[number];
+
+/**
+ * The three print formats, named as the source names them.
+ *
+ * `a5Landscape` rather than `a5-landscape` because these are object KEYS and
+ * the sticky layouts are camel-free only by luck of being single words.
+ */
+export const PRINT_FORMATS = ["a4", "a5", "a5Landscape"] as const;
+export type PrintFormat = (typeof PRINT_FORMATS)[number];
+
+/**
+ * Geometry for one print format.
+ *
+ * Deliberately NOT {@link ThemeGeometrySchema}. `minWidth` is documented as
+ * "minimum column width before the grid reflows", which a fixed page does not
+ * do; `padding` is card padding. Reusing the shape would have typechecked and
+ * meant nothing — the values are trim size and margin, and a reader following
+ * the field name would be told the wrong thing about a real publication.
+ *
+ * `width` and `height` are CSS lengths so the source's own units survive: the
+ * guide says `21 cm x 29.7 cm`, and rewriting that as millimetres or points
+ * would be a conversion nobody asked for and a chance to be wrong.
+ */
+export const PrintGeometrySchema = z
+  .object({
+    /** Trim width, as a CSS length — `21cm` for A4. */
+    width: z.string().min(1),
+    /** Trim height, as a CSS length — `29.7cm` for A4. */
+    height: z.string().min(1),
+    /**
+     * Page margin, as a CSS length.
+     *
+     * The WHO guide states a 1 cm logo exclusion zone and a 3 cm minimum logo
+     * size, and no page margin. A theme that carries one is stating a fact its
+     * source did not — so where the source is silent this is the exclusion
+     * zone, cited as such, and never a plausible-looking invention.
+     */
+    margin: z.string().min(1),
+    /** Body scale relative to the format, as a unitless multiplier. */
+    fontScale: z.number().positive(),
+  })
+  .strict();
+export type PrintGeometry = z.infer<typeof PrintGeometrySchema>;
+
+/**
  * Geometry for one layout.
  *
  * **Geometry, not colour.** The palette is shared across a theme's three
@@ -169,19 +245,31 @@ export type ThemeGeometry = z.infer<typeof ThemeGeometrySchema>;
  * gradated theme**: a theme declaring one without the other is refused, because
  * a gradient with one stop is a flat fill that claims to be a gradient.
  */
+/**
+ * The palette's fields, before the whole-palette refinement.
+ *
+ * Named so {@link ThemePartialPaletteSchema} can be derived from it. The
+ * gradient rule below is a fact about a COMPLETE palette — a child overriding
+ * `gradientFrom` and inheriting `gradientTo` is legal and the pair is still
+ * whole after resolution, which is `data-modelling` step 7's "requiredness
+ * holds after resolution, never before" applied to a refinement rather than a
+ * field.
+ */
+const themePaletteShape = {
+  /** The card's own background. */
+  surface: z.string().min(1),
+  /** Body text on `surface`. */
+  ink: z.string().min(1),
+  /** Border and rule colour. */
+  edge: z.string().min(1),
+  /** The priority stripe's hue. Width is NOT a theme's to set — see module docs. */
+  accent: z.string().min(1),
+  gradientFrom: z.string().min(1).optional(),
+  gradientTo: z.string().min(1).optional(),
+} as const;
+
 export const ThemePaletteSchema = z
-  .object({
-    /** The card's own background. */
-    surface: z.string().min(1),
-    /** Body text on `surface`. */
-    ink: z.string().min(1),
-    /** Border and rule colour. */
-    edge: z.string().min(1),
-    /** The priority stripe's hue. Width is NOT a theme's to set — see module docs. */
-    accent: z.string().min(1),
-    gradientFrom: z.string().min(1).optional(),
-    gradientTo: z.string().min(1).optional(),
-  })
+  .object(themePaletteShape)
   .strict()
   .refine((p) => (p.gradientFrom === undefined) === (p.gradientTo === undefined), {
     message: "a gradient needs both stops: declare gradientFrom and gradientTo, or neither",
@@ -267,13 +355,99 @@ export type ThemeBackdrop = z.infer<typeof ThemeBackdropSchema>;
 /** The tag every theme node declares, per the `$schema` convention. */
 export const THEME_SCHEMA_TAG = "folio-theme/v1";
 
+/**
+ * A pointer to another theme, possibly in another instance.
+ *
+ * Same shape and same reasoning as `LibraryRef`: an instance NAME, not a path,
+ * because the citing instance cannot know where a sibling's checkout sits. A
+ * bare `themeId` resolves against the citing instance, which is the common
+ * case and the one that must stay cheap to write.
+ *
+ * Owner, 2026-09-20: *"who-iris inherits who-styleguide theme."* The WHO house
+ * style is the authority and the repository site is the deviation, so the
+ * inheritance runs FROM the site TO the style guide and crosses an instance
+ * boundary to do it.
+ */
+/** A palette fragment — what an inheriting theme states when it changes one colour. */
+export const ThemePartialPaletteSchema = z.object(themePaletteShape).strict().partial();
+
+export const ThemeRefSchema = z
+  .object({
+    /** Declared instance name. Absent means the citing instance's own. */
+    instance: z.string().min(1).optional(),
+    themeId: z.string().regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
+  })
+  .strict();
+export type ThemeRef = z.infer<typeof ThemeRefSchema>;
+
+/**
+ * Why a theme states a value its parent already states.
+ *
+ * `data-modelling` step 7: *"an overridden value still cites why"* — otherwise
+ * the model records what a value is and loses where it came from, which is the
+ * failure `uses[]` exists to prevent elsewhere. An override without a reason
+ * is indistinguishable from a copy somebody forgot to delete.
+ */
+export const ThemeOverrideNoteSchema = z
+  .object({
+    /** Dotted path into the theme, e.g. `palette.accent`. */
+    field: z.string().min(1),
+    /** Where the value came from — a CSS custom property, a voice rule, a page. */
+    source: z.string().min(1),
+    /** Why it differs from the inherited value. */
+    reason: z.string().min(1),
+  })
+  .strict();
+export type ThemeOverrideNote = z.infer<typeof ThemeOverrideNoteSchema>;
+
+/** Fields every theme shares, whatever surface it dresses. */
+const themeIdentityShape = {
+  $schema: z.literal(THEME_SCHEMA_TAG),
+  /** Stable id; what a `ThemedTodo` references and what the CSS class is built from. */
+  id: z.string().regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
+} as const;
+
+/**
+ * The DECLARED form of a theme — what an author writes.
+ *
+ * ## Everything is overridable, and everything but identity may be inherited
+ *
+ * Owner, 2026-09-20: *"WHO should be able to override all theme properties,
+ * just defaults to inherited."* So every field below except `id`, `$schema`
+ * and `kind` is OPTIONAL HERE and required in {@link ResolvedThemeSchema}. A
+ * theme that inherits states only what it changes.
+ *
+ * **Requiredness holds after resolution, never before** — `data-modelling`
+ * step 7, and the trap it names: checking the declaration instead is how
+ * inheritance turns into optionality by accident. `ThemeSchema` is deliberately
+ * the LAX one and is never what a renderer consumes.
+ *
+ * `kind` stays required on the declaration rather than inherited, because it
+ * selects which `layouts` shape is legal and a reader cannot validate the rest
+ * of the object without knowing it. A theme that changes kind is restating its
+ * geometry by definition — that is what earns a kind in the first place.
+ */
 export const ThemeSchema = z
   .object({
-    $schema: z.literal(THEME_SCHEMA_TAG),
-    /** Stable id; what a `ThemedTodo` references and what the CSS class is built from. */
-    id: z
-      .string()
-      .regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
+    ...themeIdentityShape,
+    // REQUIRED, with no default — which is what the comment above already
+    // claimed ("`kind` stays required on the declaration rather than
+    // inherited") while the code read `.default("sticky")`.
+    //
+    // The gap was not cosmetic. `resolveTheme` treats a kind change as
+    // resetting the geometry ("there is nothing shared to carry"), so a
+    // `publication` theme inheriting from a `publication` parent and omitting
+    // `kind` was silently parsed as `sticky`, dropped the print geometry it
+    // meant to inherit, and then failed with an error naming
+    // `layouts.laptop` — a message about the wrong field entirely.
+    //
+    // All twelve shipped themes relied on the default and now say `sticky`
+    // outright. That is the cost, and it is paid once: a default that is right
+    // for eleven cases and silently wrong for the twelfth is not a default, it
+    // is a trap with good odds.
+    kind: z.enum(THEME_KINDS),
+    /** The theme this one starts from. Absent means it starts from nothing. */
+    inherits: ThemeRefSchema.optional(),
     /**
      * Display name.
      *
@@ -283,10 +457,20 @@ export const ThemeSchema = z
      * language-dependent, and running one through translation would invite a
      * locale to diverge on a value the CSS has to agree on.
      */
-    name: z.string().min(1),
+    name: z.string().min(1).optional(),
     /** One line for the theme picker. Translatable, same reasoning as `name`. */
     description: z.string().min(1).optional(),
-    palette: ThemePaletteSchema,
+    /**
+     * Shared across every kind, deliberately.
+     *
+     * `theme.ts` exists because 106 hardcoded hex colours became 22 named
+     * properties. A palette per kind would reintroduce that one level up —
+     * three spellings of "accent colour", free to disagree about what an
+     * accent IS. `data-modelling` step 7.
+     *
+     * `.partial()` so a child may override one colour and inherit the rest.
+     */
+    palette: ThemePartialPaletteSchema.optional(),
     /**
      * Artwork behind the ink, when the theme has any.
      *
@@ -298,17 +482,214 @@ export const ThemeSchema = z
      * photograph anyway.
      */
     backdrop: ThemeBackdropSchema.optional(),
-    /** All three, or invalid. See module docs — there is no fallback by design. */
+    /**
+     * Geometry, by kind. All three after resolution, or invalid.
+     *
+     * NOT inherited across a kind change: a `publication`'s formats and a
+     * `sticky`'s viewports share no field, so there is nothing to carry over.
+     * Within a kind it inherits like anything else.
+     */
     layouts: z
-      .object({
-        laptop: ThemeGeometrySchema,
-        mobile: ThemeGeometrySchema,
-        card: ThemeGeometrySchema,
-      })
-      .strict(),
+      .union([
+        z
+          .object({
+            laptop: ThemeGeometrySchema.optional(),
+            mobile: ThemeGeometrySchema.optional(),
+            card: ThemeGeometrySchema.optional(),
+          })
+          .strict(),
+        z
+          .object({
+            a4: PrintGeometrySchema.optional(),
+            a5: PrintGeometrySchema.optional(),
+            a5Landscape: PrintGeometrySchema.optional(),
+          })
+          .strict(),
+      ])
+      .optional(),
+    /** Why each overridden value differs from the inherited one. */
+    overrides: z.array(ThemeOverrideNoteSchema).optional(),
   })
   .strict();
 export type Theme = z.infer<typeof ThemeSchema>;
+
+/**
+ * The RESOLVED form — what a renderer consumes, and where requiredness lives.
+ *
+ * Never stored. `data-modelling` step 5: *"a derived fact stored is a cache,
+ * and an unvalidated cache is worse than no cache."* A resolved theme is
+ * computed from the declaration chain by {@link resolveTheme} every time.
+ */
+export const ResolvedThemeSchema = z
+  .discriminatedUnion("kind", [
+    z
+      .object({
+        ...themeIdentityShape,
+        kind: z.literal("sticky"),
+        name: z.string().min(1),
+        description: z.string().min(1).optional(),
+        palette: ThemePaletteSchema,
+        backdrop: ThemeBackdropSchema.optional(),
+        layouts: z
+          .object({
+            laptop: ThemeGeometrySchema,
+            mobile: ThemeGeometrySchema,
+            card: ThemeGeometrySchema,
+          })
+          .strict(),
+      })
+      .strict(),
+    z
+      .object({
+        ...themeIdentityShape,
+        kind: z.literal("webpage"),
+        name: z.string().min(1),
+        description: z.string().min(1).optional(),
+        palette: ThemePaletteSchema,
+        backdrop: ThemeBackdropSchema.optional(),
+        layouts: z
+          .object({
+            laptop: ThemeGeometrySchema,
+            mobile: ThemeGeometrySchema,
+            card: ThemeGeometrySchema,
+          })
+          .strict(),
+      })
+      .strict(),
+    z
+      .object({
+        ...themeIdentityShape,
+        kind: z.literal("publication"),
+        name: z.string().min(1),
+        description: z.string().min(1).optional(),
+        palette: ThemePaletteSchema,
+        backdrop: ThemeBackdropSchema.optional(),
+        layouts: z
+          .object({
+            a4: PrintGeometrySchema,
+            a5: PrintGeometrySchema,
+            a5Landscape: PrintGeometrySchema,
+          })
+          .strict(),
+      })
+      .strict(),
+  ]);
+export type ResolvedTheme = z.infer<typeof ResolvedThemeSchema>;
+
+/** How a theme is keyed once ids are no longer unique across instances. */
+export function themeKey(instance: string, id: string): string {
+  return `${instance}:${id}`;
+}
+
+/** What went wrong resolving a chain, kept apart because they send a reader elsewhere. */
+export type ThemeResolveFailure =
+  | { kind: "no-such-theme"; ref: ThemeRef; from: string }
+  | { kind: "cycle"; chain: string[] }
+  | { kind: "incomplete"; id: string; problems: string[] };
+
+/**
+ * Resolve a declared theme against its inheritance chain.
+ *
+ * ## What inherits, and what cannot
+ *
+ * `palette` merges field by field, so a child may override one colour and keep
+ * twenty-one. `name`, `description` and `backdrop` are whole-value: half a
+ * backdrop is the state `resolveThemeBackdrop` already refuses wholesale.
+ *
+ * `layouts` inherits ONLY within a kind. A `publication`'s formats and a
+ * `sticky`'s viewports share no field, so a kind change carries nothing over —
+ * which is the same fact that earns a kind in the first place
+ * (`data-modelling` step 7). A `webpage` child of a `publication` parent
+ * therefore inherits the PALETTE, which is the point of the shared vocabulary,
+ * and must state its own three viewports.
+ *
+ * ## Cycles are a failure, not a depth limit
+ *
+ * A depth cap would turn a cycle into "too deep", which sends a reader looking
+ * for a long chain that does not exist. The visited set names the loop.
+ */
+export function resolveTheme(
+  start: { instance: string; theme: Theme },
+  lookup: (ref: ThemeRef, citingInstance: string) => { instance: string; theme: Theme } | undefined,
+): { ok: true; theme: ResolvedTheme } | { ok: false; failure: ThemeResolveFailure } {
+  // Root-first, so each step overwrites what it inherited.
+  const chain: Array<{ instance: string; theme: Theme }> = [];
+  const seen = new Set<string>();
+  let cur: { instance: string; theme: Theme } | undefined = start;
+  while (cur) {
+    const key = themeKey(cur.instance, cur.theme.id);
+    if (seen.has(key)) {
+      return { ok: false, failure: { kind: "cycle", chain: [...seen, key] } };
+    }
+    seen.add(key);
+    chain.unshift(cur);
+    const ref: ThemeRef | undefined = cur.theme.inherits;
+    if (!ref) break;
+    const parent = lookup(ref, cur.instance);
+    if (!parent) {
+      return { ok: false, failure: { kind: "no-such-theme", ref, from: key } };
+    }
+    cur = parent;
+  }
+
+  const merged: Record<string, unknown> = { $schema: THEME_SCHEMA_TAG, id: start.theme.id };
+  let kind: ThemeKind = "sticky";
+  let palette: Record<string, unknown> = {};
+  let layouts: Record<string, unknown> = {};
+  for (const link of chain) {
+    const t = link.theme;
+    // A kind change resets the geometry: there is nothing shared to carry.
+    if (t.kind !== kind) layouts = {};
+    kind = t.kind;
+    if (t.name !== undefined) merged.name = t.name;
+    if (t.description !== undefined) merged.description = t.description;
+    if (t.backdrop !== undefined) merged.backdrop = t.backdrop;
+    if (t.palette) palette = { ...palette, ...t.palette };
+    if (t.layouts) {
+      for (const [k, v] of Object.entries(t.layouts)) {
+        if (v !== undefined) layouts[k] = v;
+      }
+    }
+  }
+  merged.kind = kind;
+  merged.palette = palette;
+  merged.layouts = layouts;
+
+  const parsed = ResolvedThemeSchema.safeParse(merged);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      failure: {
+        kind: "incomplete",
+        id: start.theme.id,
+        // The FIELD PATHS, not zod's prose: "layouts.mobile: Required" tells a
+        // person which layout to supply, which is the whole reason
+        // `missingLayouts` exists beside the schema.
+        problems: parsed.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`),
+      },
+    };
+  }
+  return { ok: true, theme: parsed.data };
+}
+
+/** One actionable line per failure, so a caller need not re-word four cases. */
+export function explainThemeFailure(f: ThemeResolveFailure): string {
+  switch (f.kind) {
+    case "no-such-theme":
+      return (
+        `${f.from} inherits ${f.ref.instance ? `${f.ref.instance}:` : ""}${f.ref.themeId}, ` +
+        `which no instance in this checkout declares. A theme names its parent by DECLARED ` +
+        `INSTANCE NAME, never by path.`
+      );
+    case "cycle":
+      return `theme inheritance forms a cycle: ${f.chain.join(" -> ")}. A theme cannot inherit from itself, transitively or otherwise.`;
+    case "incomplete":
+      return (
+        `${f.id} is incomplete after inheritance — ${f.problems.join("; ")}. ` +
+        `Requiredness holds AFTER resolution: state these, or inherit them from a parent that does.`
+      );
+  }
+}
 
 /**
  * Names the missing layouts, for an error a person can act on.
@@ -324,7 +705,7 @@ export function missingLayouts(value: unknown): ThemeLayout[] {
 }
 
 /** The CSS custom-property block a theme contributes, as `--fa-sticky-*` roles. */
-export function themeCssVars(theme: Theme): string {
+export function themeCssVars(theme: ResolvedTheme): string {
   const p = theme.palette;
   const rows = [
     `--fa-sticky-surface: ${p.surface};`,
@@ -416,7 +797,7 @@ export interface ResolvedBackdrop {
  * conflation `note-anchor.ts` was written to undo.
  */
 export function resolveThemeBackdrop(
-  theme: Theme,
+  theme: ResolvedTheme,
   images: readonly DeclaredImage[] | undefined,
 ): ResolvedBackdrop {
   if (!theme.backdrop) return { art: new Map(), missing: [], none: true };
@@ -478,6 +859,6 @@ export type ThemedTodoFields = z.infer<typeof ThemedTodoFieldsSchema>;
  * running one through translation would invite a locale to diverge on a value
  * the CSS has to agree on across every locale of the same page.
  */
-export function themeTranslatableStrings(theme: Theme): string[] {
+export function themeTranslatableStrings(theme: ResolvedTheme): string[] {
   return theme.description ? [theme.name, theme.description] : [theme.name];
 }

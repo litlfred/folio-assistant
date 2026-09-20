@@ -6,7 +6,7 @@
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
@@ -263,7 +263,7 @@ describe("layering", () => {
 });
 
 describe("graph kinds — the harness declares its own, core adds folio", () => {
-  it("the harness's own vocabulary contains no renderable kind", () => {
+  it("the harness owns exactly one renderable kind — the one it can serve", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
     //
@@ -275,9 +275,15 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     const renderable = Object.entries(BASE_GRAPH_KINDS)
       .filter(([, def]) => def.renderable)
       .map(([name]) => name);
-    expect(renderable).toEqual([]);
-    // ...and the kind that IS renderable is genuinely not here, rather than
-    // here and flagged false. That is the fact the roster was standing in for.
+    // `docs` was added 2026-09-20 and IS renderable, which is why this is no
+    // longer empty. The rule the empty list stood for was "a layer that cannot
+    // render must not own the renderable kind"; the harness now ships a plain
+    // just-the-docs renderer, so the rule reads in its true form — A LAYER OWNS
+    // THE KINDS IT CAN RENDER — and `docs` is the one it can serve.
+    expect(renderable).toEqual(["docs"]);
+    // `folio` is STILL genuinely not here, and that is the same rule applied
+    // rather than an exception to it: it needs block viewers, LaTeX, QA badges
+    // and translation overlays, none of which the harness has.
     expect(Object.keys(BASE_GRAPH_KINDS)).not.toContain("folio");
   });
 
@@ -576,15 +582,51 @@ describe("materialiseDirectories", () => {
     expect(existsSync(join(root, "library"))).toBe(false);
   });
 
-  test("this instance declares uploads and library", () => {
-    // The declaration half of the bean: without these two entries the
+  test("this instance declares uploads, and reaches a library", () => {
+    // The declaration half of the bean: without an entry at each end the
     // materialiser has nothing to create, and the ingestion pipeline's two
     // stages stay described in prose and declared nowhere.
-    const ids = resolveDirectories([
-      { name: "folio-assistant", root: REPO_ROOT, own: true },
-    ]).map((d) => d.id);
-    expect(ids).toContain("uploads");
+    //
+    // The two ends are no longer symmetric. `uploads` is still the platform's
+    // own — the queue is where a file arrives before anything knows what it
+    // is, and that is a platform concern. `library` is NOT: bean `frs5` moved
+    // the corpus into `who-iris/` and `folio-assist-sci/`, and the platform's
+    // own `library` entry was REMOVED rather than left pointing at an emptied
+    // directory, which is the `dh4f` defect.
+    //
+    // So this asserts on the GRAPH rather than on an id. An id is a name
+    // somebody chose; the graph is what the pipeline needs to find, and it
+    // keeps being found however many instances declare one or whatever they
+    // call their entries.
+    const dirs = resolveDirectories([{ name: "folio-assistant", root: REPO_ROOT, own: true }]);
+    expect(dirs.map((d) => d.id)).toContain("uploads");
+    const libraries = dirs.filter((d) => d.graphs.includes("library"));
+    expect(libraries.length, "no library graph reachable from the platform root").toBeGreaterThan(0);
+
+    // SEVERAL, and that is the assertion. The platform declares `library` and
+    // HOLDS NOTHING IN IT: bean `frs5` moved all four entries out, and the
+    // entry came back on the owner's 2026-09-20 ruling because `wwi6` pins
+    // the guarantee that a DEPENDENT folio materialises its own `uploads/`
+    // and `library/`, which it gets by inheriting the convention the harness
+    // declares. Remove it and every downstream folio silently loses a library.
+    //
+    // This asserted `not.toContain("library")` for a few hours — the platform
+    // owning no content, stated as a rule. The rule is not wrong; the entry
+    // is no longer a claim about what this instance HOLDS. What replaces it is
+    // the check that the corpus is reachable and is NOT here: at least two
+    // libraries resolve, and the platform's own is not one of the two that
+    // carry documents.
+    const ids = libraries.map((d) => d.id);
     expect(ids).toContain("library");
+    expect(libraries.length).toBeGreaterThan(1);
+    // The platform's own library EXISTS and is EMPTY. It was absent for a few
+    // hours between `frs5` and the owner's ruling; `harness:dirs:check`
+    // reports a declared-but-missing directory, so re-declaring it required
+    // re-creating it. Emptiness is the assertion — existence is what the
+    // declaration demands, and holding nothing is what the platform rule does.
+    const own = libraries.find((d) => d.id === "library")!.absPath;
+    expect(existsSync(own)).toBe(true);
+    expect(readdirSync(own).filter((f) => !f.startsWith("."))).toEqual([]);
   });
 });
 
@@ -699,7 +741,7 @@ describe("default directories — inherit the convention, declare only the devia
     // quietly replace an explicit declaration.
     const mine = resolveDirectories([{ name: "folio-assistant", root: ROOT, own: true }]);
     expect(mine.length).toBeGreaterThan(0);
-    expect(mine.every((x) => x.declaredBy === "folio-assistant")).toBe(true);
+    expect(mine.every((x) => x.declaredBy === "cat-harness")).toBe(true);
   });
 
   it("no default claims a kind the harness registry does not know", () => {
@@ -1016,15 +1058,39 @@ describe("instanceRootsIn — discovered, never listed", () => {
     rmSync(base, { recursive: true, force: true });
   });
 
-  it("finds all four instances of THIS repository, which is the defect it fixes", () => {
-    // The gates carried `["cat-harness", "cat-bootstrap"]`. Asserting against the
+  it("finds EVERY instance of THIS repository, which is the defect it fixes", () => {
+    // The gates carried `["cat-harness", "bootstrap"]`. Asserting against the
     // real repository is the point: a fixture would have passed for the whole
     // period the literal was wrong. If an instance is added or removed this
     // test SHOULD fail — that is the signal the literal never gave.
+    //
+    // It fired as designed on 2026-09-20 and the list below is the updated
+    // truth, not a widened assertion: seven instances arrived on one branch
+    // (`who-iris`, `who-style-guide`, `folio-assist-sci`, `kg-navigation`,
+    // `detangle`, `large-datasets`, `agent-skills`) and `folio-assist-core`
+    // became `folio-assistant-core` under the owner's ruling that cat-harness,
+    // folio-assistant-core and folio-assistant are three distinct instances.
+    // Four of eleven is what the old literal would have gone on reporting.
     const repo = resolve(import.meta.dir, "..", "..");
     const found = instanceRootsIn(repo).map((r) => r.slice(repo.length + 1) || ".");
-    expect(found).toEqual([".", "cat-bootstrap", "cat-harness", "folio-assist-core"]);
-    expect(found).toContain("folio-assist-core");
+    expect(found).toEqual([
+      ".",
+      "agent-skills",
+      "cat-bootstrap",
+      "cat-harness",
+      "detangle",
+      "folio-assist-sci",
+      "folio-assistant-core",
+      "kg-navigation",
+      "large-datasets",
+      "who-iris",
+      "who-style-guide",
+    ]);
+    // The two the literal named, pinned individually: the repository root is
+    // the entry that was `"."` and then silently stopped resolving, and
+    // `folio-assistant-core` is the rename that would otherwise read as a
+    // deletion plus an addition.
+    expect(found).toContain("folio-assistant-core");
     expect(found).toContain(".");
   });
 });

@@ -5,9 +5,9 @@
  * @module scripts/ensure-landing-sticky
  *
  * The owner's ask, 2026-09-20: *"the sticky note is created dynamically on
- * initailzation by cat-harness cat-bootstrap (as last thing). it creates an empty
+ * initailzation by cat-harness bootstrap (as last thing). it creates an empty
  * folio (if none exists) and attaches to the folio a sticky note."* And on who
- * runs it: *"cat-harness initaton craetes the folio/ (called by cat-bootstrap)."*
+ * runs it: *"cat-harness initaton craetes the folio/ (called by bootstrap)."*
  *
  * ## Why this is not `init-folio`
  *
@@ -22,17 +22,17 @@
  * `harness.config.json` and a builder shim. Reaching for it here would scaffold
  * a folio *repository* where the ruling asks for a folio *graph*.
  *
- * ## Why it stays out of `cat-bootstrap/`
+ * ## Why it stays out of `bootstrap/`
  *
- * The owner: *"i want the grumpy cat moved out of cat-bootstrap and into cat
- * harness."* CatBootstrap's last activity `A_Install` is the **hand-off** to the
- * chosen harness, and `cat-bootstrap/harness.json` declares an instance that may
- * not import from the layer composed on top of it. A bare cat-bootstrap instance
+ * The owner: *"i want the grumpy cat moved out of bootstrap and into cat
+ * harness."* Bootstrap's last activity `A_Install` is the **hand-off** to the
+ * chosen harness, and `bootstrap/harness.json` declares an instance that may
+ * not import from the layer composed on top of it. A bare bootstrap instance
  * gets no folio and no cat; this script is cat-harness's, and runs after the
  * hand-off.
  *
  * Measured 2026-09-20, so nobody hunts for a file to move: there is no grumpy
- * cat in `cat-bootstrap/` today — `grep -rin "grumpy\|cat-mark\|landing" cat-bootstrap/`
+ * cat in `bootstrap/` today — `grep -rin "grumpy\|cat-mark\|landing" bootstrap/`
  * returns one false positive. The ruling is a constraint on new work, not a
  * relocation.
  *
@@ -99,7 +99,7 @@ export const FOLIO_DIR_ID = "folio";
 // This script's whole job is to CREATE the folio graph and then declare it, so
 // there is no declaration to read at the only moment this value is used — the
 // same write-target case `adapters/document/paths.ts` and `src/workflow/gate.ts`
-// mark, and for the same reason: `directoryForGraph` returns undefined for a
+// mark, and for the same reason: `directoriesForGraph` returns undefined for a
 // directory that is not there, which would make the first run impossible rather
 // than merely empty. Once declared, every later run reads `folioDirPath` off the
 // declaration and never reaches this.
@@ -304,11 +304,11 @@ export function readExistingSticky(path: string): LandingSticky | undefined {
 /**
  * Every layer that contributes to this instance's board, in read order.
  *
- * Two sources, and the second is what makes cat-bootstrap's card possible:
+ * Two sources, and the second is what makes bootstrap's card possible:
  *
  * 1. **the instance itself** — its own `harness.json`;
  * 2. **every NESTED instance** — a declared directory that belongs to another
- *    instance in this checkout. `cat-bootstrap/` is exactly that.
+ *    instance in this checkout. `bootstrap/` is exactly that.
  *
  * Nested instances are the PRE-SPLIT shape (issue #223). After the split they
  * become dependencies and arrive through the dependency chain instead, which is
@@ -317,7 +317,7 @@ export function readExistingSticky(path: string): LandingSticky | undefined {
  * takes a `chain` rather than walking one so that *"this module does not depend on
  * the dependency resolver"*.
  *
- * **Discovered rather than hardcoded.** Naming `cat-bootstrap/` here would put the
+ * **Discovered rather than hardcoded.** Naming `bootstrap/` here would put the
  * layer list back in the layer above — the ownership inversion this whole change
  * is undoing — and would go stale the moment the split happens.
  *
@@ -329,11 +329,11 @@ export function readExistingSticky(path: string): LandingSticky | undefined {
  *
  * | | why a naive `join(root, dir.path)` misses it |
  * |---|---|
- * | **`scope`** | `cat-bootstrap` is declared `repository`-scoped, so its path resolves against the REPOSITORY root, not the instance. `rootForScope` is what knows that. |
- * | **the declared path is not the instance root** | the entry is `cat-bootstrap/skills/` — the graph directory — and `harness.json` sits one level up, in `cat-bootstrap/`. `findInstanceRoot` walks up to the instance that OWNS a directory. |
+ * | **`scope`** | `bootstrap` is declared `repository`-scoped, so its path resolves against the REPOSITORY root, not the instance. `rootForScope` is what knows that. |
+ * | **the declared path is not the instance root** | the entry is `bootstrap/skills/` — the graph directory — and `harness.json` sits one level up, in `bootstrap/`. `findInstanceRoot` walks up to the instance that OWNS a directory. |
  *
  * Looking for `harness.json` inside the declared directory finds nothing here,
- * and the failure is silent: the board renders, cat-bootstrap's card is simply not on
+ * and the failure is silent: the board renders, bootstrap's card is simply not on
  * it. That is the same shape as the CSS selector that matched nothing — no error,
  * no output, and only a count says so.
  */
@@ -355,15 +355,15 @@ export function contributingRoots(root: string): string[] {
   // tidier way of writing the second.
   //
   // The walk above finds a layer only when THIS instance declares a directory
-  // inside it — which is how `cat-bootstrap/` is found, since cat-harness declares
-  // `cat-bootstrap/skills/`. `folio-assist-core/` is declared by nobody: it is a
+  // inside it — which is how `bootstrap/` is found, since cat-harness declares
+  // `bootstrap/skills/`. `folio-assistant-core/` is declared by nobody: it is a
   // sibling directory that declares itself, and under the rule everywhere else
   // here — an instance is a directory holding its own `harness.json` — it is an
   // instance the moment it exists.
   //
   // Without this, adding a layer meant ALSO editing the layer above to mention
   // it, which is the ownership inversion the whole contribution design undoes.
-  // Measured: `folio-assist-core/` declared its card and the board did not show
+  // Measured: `folio-assistant-core/` declared its card and the board did not show
   // it.
   // GUARDED ON `.git`, and the guard is not belt-and-braces — without it this
   // scan is actively wrong. `repoRootFor` is just `instanceRoot/..`, so for a
@@ -396,7 +396,7 @@ export function contributingRoots(root: string): string[] {
  *
  * Reads `stickies` off each layer's declaration and pairs it with that layer's
  * own `name` and `description` — `bodyFrom: "description"` means **the declaring
- * instance's** description, so cat-bootstrap's card carries cat-bootstrap's sentence and
+ * instance's** description, so bootstrap's card carries bootstrap's sentence and
  * not this instance's. Reading the root's for every layer would give a board of
  * one sentence repeated, which is the defect that makes the whole seam pointless.
  */
@@ -503,7 +503,7 @@ export function nextInitiation(
  * instead of with the files.
  *
  * Order comes from the composed contributions rather than from directory
- * listing, which is alphabetical and would put `cat-bootstrap` before `landing`.
+ * listing, which is alphabetical and would put `bootstrap` before `landing`.
  * A sticky whose file is absent or unparseable is skipped rather than faked.
  */
 export function readLandingStickies(root: string): LandingSticky[] {

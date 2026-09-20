@@ -36,6 +36,7 @@ import { Glob } from "bun";
 
 import {
   isPublishedGraphKind,
+  isRenderable,
   owningDirectory,
   resolveDirectories,
   subgraphTree,
@@ -90,6 +91,28 @@ export interface SubgraphReport {
    * `published: false` a skill now carries: the thing says what it is.
    */
   exempt: string[];
+  /**
+   * Links inside a RENDERABLE graph that do not resolve in the source tree.
+   *
+   * DIFFERENT from `exempt`, which drops a retired directory wholesale. This
+   * keeps the directory in scope and routes one class of link out of
+   * `dangling`: a renderable graph addresses the PUBLISHED tree, so
+   * `docs/architecture.md -> api/` names a directory the docs build
+   * generates and `docs/skills.md -> ...migration.html` names a page Jekyll
+   * renders. Neither is a file here and neither is broken.
+   *
+   * **Counted and printed, never asserted, and the number is why.** Declaring
+   * `docs/` — 241 files, until 2026-09-20 invisible to every
+   * declaration-driven consumer — put them in scope for the first time and
+   * produced 171, of which 23 ARE source-tree links carrying one `../` too
+   * many, rot left by the move of the instance under `cat-harness/`. That
+   * audit is bean `mi97`.
+   *
+   * Without this the gate below could not be held at 0 once `docs/` was
+   * declared, and the choice would have been 171 false findings or a silent
+   * skip — which this module already refuses two paragraphs up.
+   */
+  siteResolved: Array<{ from: string; fromDir: string; target: string }>;
   /** Files that could not be read — the third state. */
   unreadable: string[];
   /**
@@ -173,6 +196,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   const unreadable: string[] = [];
   const notExamined: string[] = [];
   const exempt: string[] = [];
+  const siteResolved: SubgraphReport["siteResolved"] = [];
   let scanned = 0;
 
   for (const dir of dirs) {
@@ -225,7 +249,13 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
           if (existsSync(asSource)) resolved = asSource;
         }
         if (!existsSync(resolved)) {
-          dangling.push({ from: relative(root, file), fromDir: owner.id, target });
+          // A renderable graph addresses the PUBLISHED tree, not this one.
+          const renderable = owner.graphs.some((g) => isRenderable(g));
+          (renderable ? siteResolved : dangling).push({
+            from: relative(root, file),
+            fromDir: owner.id,
+            target,
+          });
           continue;
         }
         const to = owningDirectory(dirs, resolved);
@@ -242,12 +272,13 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       notExamined.push(`${dir.id} (${dir.path})`);
     }
   }
-  return { tree, edges, dangling, exempt, unreadable, notExamined, scanned };
+  return { tree, edges, dangling, exempt, siteResolved, unreadable, notExamined, scanned };
 }
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const { tree, edges, dangling, exempt, unreadable, notExamined, scanned } = scanSubgraphs(ROOT);
+  const { tree, edges, dangling, exempt, siteResolved, unreadable, notExamined, scanned } =
+    scanSubgraphs(ROOT);
 
   console.log(`Subgraphs  (${scanned} markdown node(s) attributed to a declared directory)\n`);
 
@@ -295,6 +326,20 @@ if (import.meta.main) {
       console.log(`  ${String(list.length).padStart(3)}  ${dir}`);
       for (const d of list) console.log(`         ${d.from}  →  ${d.target}`);
     }
+  }
+
+  if (siteResolved.length > 0) {
+    const byDir = new Map<string, number>();
+    for (const l of siteResolved) byDir.set(l.fromDir, (byDir.get(l.fromDir) ?? 0) + 1);
+    console.log(
+      `\n· ${siteResolved.length} link(s) in RENDERABLE graph(s) do not resolve in the source tree:`,
+    );
+    for (const [id, n] of [...byDir].sort((a, b) => b[1] - a[1])) console.log(`    ${id}: ${n}`);
+    console.log(
+      "  Not a finding: a renderable graph addresses the PUBLISHED tree, where the\n" +
+        "  site build resolves `api/`, `*.html` and generated pages. NOT a clean bill\n" +
+        "  either — bean `mi97` audits them, and 23 carry one `../` too many.",
+    );
   }
 
   if (exempt.length > 0) {
