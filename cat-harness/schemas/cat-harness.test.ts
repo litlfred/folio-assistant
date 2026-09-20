@@ -332,7 +332,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     // the `dh4f` shape on a new axis: every consumer asking for content is
     // handed it, and reports a clean run.
     for (const name of defaultGraphKinds.names()) {
-      expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|context|state)$/)]);
+      expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|context|state|derived)$/)]);
     }
   });
 
@@ -352,11 +352,15 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     expect(isContextGraph("memory")).toBe(true);
   });
 
-  it("the three layers partition the registry and none is empty", () => {
+  it("the four layers partition the registry and none is empty", () => {
     // No pinned counts: the property is that every kind lands on exactly one
     // layer. A count would break on the change that was correct — which is
-    // what the two roster assertions above did when `memory` arrived.
-    const layers = (["content", "context", "state"] as const).map((l) => graphKindsOfLayer(l));
+    // what the two roster assertions above did when `memory` arrived, and
+    // again when `derived` did (bean `hqku`).
+    //
+    // The ARITY is still pinned, deliberately: adding a layer must be a
+    // deliberate edit here, not something a registry change does quietly.
+    const layers = (["content", "context", "state", "derived"] as const).map((l) => graphKindsOfLayer(l));
     expect(layers.flat().length).toBe(defaultGraphKinds.names().length);
     expect(new Set(layers.flat()).size).toBe(layers.flat().length);
     for (const l of layers) expect(l.length).toBeGreaterThan(0);
@@ -389,8 +393,19 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       // The same shape about the repository rather than its artefacts.
       health: graphLayer("health"),
       // A QUEUE that ingestion drains. Same file, different layer from
-      // `library`, which is what ingestion produced.
+      // `library`, which is what ingestion produced — and the two are STILL
+      // different after `library` moved to `derived` (bean `hqku`): a queue is
+      // live state a step drains, a library section is a produced artefact
+      // nobody edits in place.
       uploads: graphLayer("uploads"),
+      // `content` until 2026-09-20. The owner's ruling: *"library is static
+      // (only if we materialize assets or not)"*, *"can duplicate asset into a
+      // folio and work there"* — so a sweep must skip it, and a QA finding
+      // against a section belongs to the ingestion that produced it.
+      //
+      // NOT `context`, and that was eliminated by a rule: `context` means a
+      // step writing to it is a defect, and `document-ingestion.bpmn` writes
+      // `library/`.
       library: graphLayer("library"),
     }).toEqual({
       memory: "context",
@@ -399,7 +414,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       qa: "state",
       health: "state",
       uploads: "state",
-      library: "content",
+      library: "derived",
     });
   });
 
