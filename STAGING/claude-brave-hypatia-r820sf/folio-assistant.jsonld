@@ -256,10 +256,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T16:46:57.413Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8239f2f38cdd83467c004f49c01746c85157d52a",
-  "sourceCommitSha": "8239f2f38cdd83467c004f49c01746c85157d52a",
-  "sourceCommitAt": "2026-09-20T16:44:55Z",
+  "generatedAt": "2026-09-20T16:53:31.556Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c55d5ace45fe133c94eefda1b37270072e23d581",
+  "sourceCommitSha": "c55d5ace45fe133c94eefda1b37270072e23d581",
+  "sourceCommitAt": "2026-09-20T16:51:46Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 202,
@@ -813,13 +813,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/edge-kinds-and-blast-radius",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "edge-kinds-and-blast-radius",
-      "title": "Edge kinds and blast radius",
+      "title": "consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — \"Not every edge is a dependency\", \"Provenance is three-valued\", \"Taint propagates down the dependency graph\". It is read before deciding how to traverse a graph; nobody performs it as a task.",
       "description": "A graph has more than one kind of edge, and conflating them corrupts both the ordering and the impact answer. Interface edges versus implementation edges, the union rule for blast radius, and the split/merge signals — generalized out of the formal-math skills that first stated them.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/edge-kinds-and-blast-radius.md",
-      "instructionLines": 170,
+      "instructionLines": 172,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -29207,7 +29207,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/build-docs",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/build-pdf",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/latex-build-cache",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/latex-validation"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/latex-validation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/smart-base-tools"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Build%20pipeline%20—%20validate%20·%20render%20·%20publish",
@@ -29478,7 +29479,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/mcp-contract",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/kg-export",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/kg-viewer"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/kg-viewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/domain-fencing"
       ],
       "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/platform-authoring-agent"
@@ -29499,7 +29501,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/idle-backlog",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/diff"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/diff",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/corpus-grep",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/process-state"
       ],
       "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/session-coordinator"
@@ -29937,8 +29941,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "406048fe41598a6e4474729367d93030788139a5",
+    "sha": "548e75c0d89bb9f6b905bf504148b3928a44ab30",
     "pr": "564/merge",
-    "run": "35523702457"
+    "run": "35524045355"
   }
 }
