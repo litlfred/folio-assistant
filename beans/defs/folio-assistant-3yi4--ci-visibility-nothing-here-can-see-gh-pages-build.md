@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3yi4
 title: 'CI VISIBILITY: nothing here can see gh-pages build outcomes, so a cancelled deploy is invisible'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-20T16:33:19Z
-updated_at: 2026-09-20T16:33:19Z
+updated_at: 2026-09-20T17:20:08Z
 parent: folio-assistant-1xhc
 ---
 
@@ -58,3 +58,43 @@ measurement. `bm6d` closed on its property instead, by the owner's decision.
 The contention itself (`6pfo`, `1feu`) and the `docs-site.yml` full-replace
 question. This bean is about being able to SEE, not about reducing the
 collisions.
+
+
+## OWNER'S CORRECTION, 2026-09-20 — the framing in this bean was wrong
+
+> **"they are not. changes status of repo. tools need to look external"**
+
+This bean was filed asking that *"`gh-pages` build outcomes are legible from
+**inside the repository**"*. **That is the wrong shape and the Done-when has
+been rewritten.**
+
+A Pages build outcome is **not repository state**. It is a fact held by an
+external service that *changes the status of the repo* — the same as a workflow
+conclusion, a check run, or a deployment. Trying to make it legible from a
+checkout would mean writing it INTO the repo, which is a mirror that can go
+stale, disagree with the source, and需 a writer nobody owns.
+
+**The tools look external.** `check-ci-health.ts` already does exactly this —
+verified 2026-09-20, it calls
+`https://api.github.com/repos/<slug>/actions/runs` with `GITHUB_TOKEN` when
+present, and degrades with a named reason when it cannot. So the mechanism is
+not missing; **the query is too narrow**. It asks about the default branch,
+and these runs are on `gh-pages`, bot-triggered by `github-pages[bot]` with
+event `dynamic`.
+
+So this is *widen what the external query asks*, not *build a new store*.
+
+## Done when — REWRITTEN to the owner's shape
+
+- [ ] the existing external reader answers *"are the previews actually
+      building?"* — the `gh-pages` / `dynamic` / `github-pages[bot]` runs it
+      currently filters out
+- [ ] a `cancelled` run is a **third state**, neither success nor failure:
+      nothing broke and nothing shipped
+- [ ] self-cancellation is distinguishable from cross-session contention,
+      because `bm6d` fixed the first and not the second, and a merged count
+      cannot show whether it worked
+- [ ] **nothing is written into the repository to cache it.** Could-not-reach
+      is reported as could-not-reach, the way `check:ci-health` already does
+      for a private repo and for rate limiting — a stale mirror would be the
+      `xom7` failure rebuilt in a new place

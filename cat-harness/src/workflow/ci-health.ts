@@ -853,3 +853,149 @@ export function render(
   lines.push("");
   return lines.join("\n");
 }
+
+// ── Pages deployments — bean `3yi4` ──────────────────────────────────────
+//
+// **A Pages build outcome is not repository state.** It is a fact an external
+// service holds, which *changes the status of the repo* — the owner's
+// correction, 2026-09-20: *"they are not. changes status of repo. tools need
+// to look external."* So nothing here caches it; these are pure reducers over
+// what the caller fetched, and the caller asks the API.
+//
+// The gap they close: `bm6d` measured **6 of the last 10 `pages build and
+// deployment` runs cancelled**, in an exact pattern, with nothing anywhere
+// saying so. Three properties hid it — the runs are on `gh-pages` rather than
+// the default branch, they are bot-triggered (`github-pages[bot]`, event
+// `dynamic`), and the query above asks `?branch=<default>`. The reader was
+// never missing; the question was too narrow.
+
+/** The workflow GitHub runs for Pages. Not a file in `.github/workflows/`. */
+export const PAGES_WORKFLOW = "pages build and deployment";
+
+export interface PagesHealth {
+  total: number;
+  success: number;
+  /**
+   * THE THIRD STATE, and the reason this exists. A cancelled deployment is
+   * neither success nor failure: nothing broke, and nothing shipped. Folding
+   * it into either is the lie — into success because the preview is stale,
+   * into failure because nobody needs to fix a build that was superseded.
+   */
+  cancelled: number;
+  failure: number;
+  /** Queued, in flight, skipped, neutral — not yet a verdict of any kind. */
+  unsettled: number;
+  latest?: RunSummary;
+}
+
+/** Reduce the Pages runs the caller fetched. Pure; asks nothing. */
+export function pagesHealth(runs: readonly RunSummary[]): PagesHealth {
+  const pages = runs.filter((r) => r.name.toLowerCase() === PAGES_WORKFLOW);
+  const h: PagesHealth = {
+    total: pages.length,
+    success: 0,
+    cancelled: 0,
+    failure: 0,
+    unsettled: 0,
+    latest: pages[0],
+  };
+  for (const r of pages) {
+    if (r.status !== "completed") h.unsettled++;
+    else if (r.conclusion === "success") h.success++;
+    else if (r.conclusion === "cancelled") h.cancelled++;
+    else if (NOT_A_VERDICT.has(r.conclusion ?? "")) h.unsettled++;
+    else h.failure++;
+  }
+  return h;
+}
+
+/** One commit on the publish branch, as the commits API returns it. */
+export interface DeployCommit {
+  sha: string;
+  message: string;
+  /** ISO-8601. */
+  date: string;
+}
+
+/**
+ * The staging slug a publish-branch commit is about, or `undefined`.
+ *
+ * Three spellings, and **the order between them is load-bearing** — which a
+ * mutation established rather than a reading. The first version tried the
+ * `staging(<slug>):` subject first and a `render-log: … STAGING/<slug>`
+ * trailer second, on the rationale that the subject is authoritative. Stubbing
+ * the order gave a SURVIVING mutation, so the rationale was checked against
+ * `feature-staging.yml` and was wrong twice over.
+ *
+ * It was vacuous where it was right: a deploy commit writes `$STAGING_SLUG`
+ * into both spellings from one variable, so on that commit the two branches
+ * cannot disagree and the order decides nothing.
+ *
+ * And it was wrong where it mattered: the cleanup commits spell the subject
+ * `staging(cleanup): remove STAGING/<slug>`, where `cleanup` is the OPERATION
+ * and the slug is in the path. Subject-first read every removal as a deploy of
+ * a branch called `cleanup` — so two removals for two unrelated PRs became one
+ * slug, and {@link selfSupersedes} reported them as this repository contending
+ * with itself. A false finding in exactly the direction `3yi4` exists to
+ * remove.
+ *
+ * So a `STAGING/<slug>` path wins wherever it appears, and the bare subject is
+ * the fallback for a deploy commit that carries no path. Order alone carries
+ * it — the first fix also excluded the literal `cleanup` from the subject
+ * branch, and a test written for the cost of the fix rather than its benefit
+ * caught that this breaks a branch genuinely NAMED `cleanup`, whose deploy
+ * commit has no `remove STAGING/` for the first branch to find. A blanket
+ * exclusion would have made one real branch permanently invisible to the
+ * report, to guard a case the ordering already handles.
+ */
+export function slugOfDeployCommit(message: string): string | undefined {
+  const removed = /^staging\(cleanup\): \w+ STAGING\/(\S+)/m.exec(message);
+  if (removed) return removed[1];
+  const logged = /^render-log: \w+ STAGING\/(\S+)/m.exec(message);
+  if (logged) return logged[1];
+  const staged = /^staging\(([^)]+)\):/m.exec(message);
+  if (staged) return staged[1];
+  return undefined;
+}
+
+export interface SelfSupersede {
+  slug: string;
+  /** The commit that cancelled the build of `superseded`. */
+  by: string;
+  superseded: string;
+  secondsApart: number;
+}
+
+/**
+ * Consecutive publish-branch commits from ONE deploy — `bm6d`'s signature.
+ *
+ * **This is what separates self-cancellation from cross-session contention**,
+ * which `3yi4` asks for and `bm6d` needs: that bean fixed one workflow pushing
+ * twice and did nothing about four sessions contending for one ref, so a
+ * merged cancellation count cannot show whether it worked.
+ *
+ * Two commits naming the SAME slug within `withinSeconds` are one deploy
+ * writing twice; the second cancels the first's Pages build. Different slugs
+ * are two sessions, which is `6pfo`'s ground and not counted here.
+ *
+ * `commits` is newest-first, as the API returns it.
+ */
+export function selfSupersedes(
+  commits: readonly DeployCommit[],
+  withinSeconds = 120,
+): SelfSupersede[] {
+  const out: SelfSupersede[] = [];
+  for (let i = 0; i + 1 < commits.length; i++) {
+    const newer = commits[i];
+    const older = commits[i + 1];
+    const a = slugOfDeployCommit(newer.message);
+    const b = slugOfDeployCommit(older.message);
+    if (!a || a !== b) continue;
+    const gap = (Date.parse(newer.date) - Date.parse(older.date)) / 1000;
+    // A negative gap means the caller did not hand them over newest-first.
+    // Refuse rather than report a pair from an ordering we cannot trust.
+    if (!Number.isFinite(gap) || gap < 0 || gap > withinSeconds) continue;
+    out.push({ slug: a, by: newer.sha, superseded: older.sha, secondsApart: gap });
+  }
+  return out;
+}
