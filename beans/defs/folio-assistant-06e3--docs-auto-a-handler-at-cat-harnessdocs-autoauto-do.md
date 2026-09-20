@@ -167,3 +167,45 @@ Three consequences worth writing down before anything is built:
 Same home as §4: the harness layer, beside `mount-instance-docs.ts`, which
 already answers "which instance owns which route" and already refuses
 collisions.
+
+## 6. A sibling already built §4(c) and §5's mechanism — check before rebuilding
+
+Merging `main` on 2026-09-20 (76 commits) brought in
+`cat-harness/scripts/state-visualizer.ts` and `render-pipeline.ts`, from bean
+`o7eq` / `flh4` / PR #619. **A dashboard per declared graph, at
+`<base-url>/<graph>/`, driven off `harness.json`.** That is the same query
+§4(c) and §5 describe, already answered for state graphs.
+
+Its comment settles three URL rulings that this bean would otherwise have had
+to settle again:
+
+1. the segment is the instance's **`name`**, never its `stub`;
+2. the declared graph **is** a path segment, because an instance may declare
+   more than one renderable graph and they would collide otherwise;
+3. the root instance **elides its own name**, because its `docs/` is installed
+   by cat-harness rather than its own (bean `n0nf`).
+
+And it records a distinction worth not rediscovering: `state-visualizer.ts`
+keys the URL on the declared entry's **`id`**, while `gen-schema-viz.ts` and
+`gen-library-viz.ts` use `viewerPlacement(...)`, the handled directory's
+**repo-relative path**. Five of seven state graphs agree because a
+root-declared graph's path equals its id; `qa` (`test/results/`) and `health`
+(`test/health/results/`) do not. An id-derived URL survives the directory
+moving, and a public dashboard addressed `<base>/test/results/` names a test
+directory — which is why they are two rules on purpose.
+
+**So before building anything for §4(c) or §5:** read those three files and
+decide whether docs-auto is a NEW generator or a `kind` handled by the one
+that exists. The honest default is the second — §5 already says the docs
+navbar is the general query with `kind = docs`, and there is now a generator
+whose whole shape is "one visualiser per declared graph".
+
+What is NOT covered by it, and is still this bean's:
+
+- the **authored summary** (§2) and reuse-not-restate (§3) — a dashboard is an
+  index, and §2 exists precisely to forbid shipping an index with no prose;
+- the **"meaningfully populated" QA check** (§4b), which is about content
+  rather than about routing;
+- the **non-empty filter** (§4c) — a dashboard per declared graph does not by
+  itself skip a graph that is declared and empty, which is the `dh4f` defect
+  as a nav entry.
