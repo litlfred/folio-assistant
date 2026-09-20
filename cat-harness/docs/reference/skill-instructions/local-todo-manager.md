@@ -1,6 +1,6 @@
 ---
 layout: default
-title: todo-manager
+title: 'todo-manager'
 parent: Skill instructions
 ---
 

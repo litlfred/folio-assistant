@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Publication
+title: 'Content Publication'
 parent: Skill instructions
 ---
 

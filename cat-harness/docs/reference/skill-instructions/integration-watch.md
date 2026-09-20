@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /integration-watch
+title: '/integration-watch'
 parent: Skill instructions
 ---
 

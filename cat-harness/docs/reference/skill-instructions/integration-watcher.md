@@ -1,6 +1,6 @@
 ---
 layout: default
-title: integration-watcher (abstract parent)
+title: 'integration-watcher (abstract parent)'
 parent: Skill instructions
 ---
 

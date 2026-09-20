@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Rendering Auditor
+title: 'Rendering Auditor'
 parent: Skill instructions
 ---
 

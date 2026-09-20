@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Bean Coordination
+title: 'Bean Coordination'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Emitting cat-bootstrap's own graph
+title: 'Emitting cat-bootstrap''s own graph'
 parent: Skill instructions
 ---
 

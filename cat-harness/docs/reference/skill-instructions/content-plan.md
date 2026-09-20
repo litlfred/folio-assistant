@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Planning
+title: 'Content Planning'
 parent: Skill instructions
 ---
 

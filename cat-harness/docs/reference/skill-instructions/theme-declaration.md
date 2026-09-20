@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Declaring a theme
+title: 'Declaring a theme'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Authoring
+title: 'Content Authoring'
 parent: Skill instructions
 ---
 

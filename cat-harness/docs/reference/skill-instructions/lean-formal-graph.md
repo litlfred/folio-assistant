@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean formal dependency graph
+title: 'Lean formal dependency graph'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Edge kinds and blast radius
+title: 'Edge kinds and blast radius'
 parent: Skill instructions
 ---
 

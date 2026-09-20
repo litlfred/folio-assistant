@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean 4 Formalizer (Narrative to Proof)
+title: 'Lean 4 Formalizer (Narrative to Proof)'
 parent: Skill instructions
 ---
 

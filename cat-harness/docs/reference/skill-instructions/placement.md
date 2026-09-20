@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Placement
+title: 'Placement'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Proof Simplifier
+title: 'Proof Simplifier'
 parent: Skill instructions
 ---
 

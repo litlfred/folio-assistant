@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Theming, split on the stage it fails at
+title: 'Theming, split on the stage it fails at'
 parent: Skill instructions
 ---
 

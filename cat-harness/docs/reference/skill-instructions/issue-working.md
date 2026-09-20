@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Working an issue
+title: 'Working an issue'
 parent: Skill instructions
 ---
 

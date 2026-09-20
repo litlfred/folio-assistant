@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Generating a theme's CSS
+title: 'Generating a theme''s CSS'
 parent: Skill instructions
 ---
 

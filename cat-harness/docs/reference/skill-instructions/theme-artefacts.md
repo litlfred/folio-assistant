@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Per-artefact specialisation
+title: 'Per-artefact specialisation'
 parent: Skill instructions
 ---
 

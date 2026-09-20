@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /exposition-swarm-drain
+title: '/exposition-swarm-drain'
 parent: Skill instructions
 ---
 

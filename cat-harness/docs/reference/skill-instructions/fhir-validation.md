@@ -1,6 +1,6 @@
 ---
 layout: default
-title: fhir-validation
+title: 'fhir-validation'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: lean-formalization
+title: 'lean-formalization'
 parent: Skill instructions
 ---
 

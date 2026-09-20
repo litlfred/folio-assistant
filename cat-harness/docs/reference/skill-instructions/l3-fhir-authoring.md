@@ -1,6 +1,6 @@
 ---
 layout: default
-title: l3-fhir-authoring
+title: 'l3-fhir-authoring'
 parent: Skill instructions
 ---
 

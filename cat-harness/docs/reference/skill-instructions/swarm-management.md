@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Swarm management
+title: 'Swarm management'
 parent: Skill instructions
 ---
 

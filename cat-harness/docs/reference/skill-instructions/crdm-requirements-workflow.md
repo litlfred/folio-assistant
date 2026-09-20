@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CRDM requirements workflow
+title: 'CRDM requirements workflow'
 parent: Skill instructions
 ---
 

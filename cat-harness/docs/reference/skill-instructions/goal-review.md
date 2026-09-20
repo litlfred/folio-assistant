@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Goal review
+title: 'Goal review'
 parent: Skill instructions
 ---
 

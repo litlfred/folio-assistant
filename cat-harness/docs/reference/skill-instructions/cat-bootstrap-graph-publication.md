@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Publishing cat-bootstrap's graph
+title: 'Publishing cat-bootstrap''s graph'
 parent: Skill instructions
 ---
 

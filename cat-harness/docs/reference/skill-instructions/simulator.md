@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Simulator
+title: 'Simulator'
 parent: Skill instructions
 ---
 

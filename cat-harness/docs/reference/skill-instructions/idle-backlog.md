@@ -1,6 +1,6 @@
 ---
 layout: default
-title: idle-backlog
+title: 'idle-backlog'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Contrast: measured over the darkest thing that could be there
+title: 'Contrast: measured over the darkest thing that could be there'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: All UI must follow accessibility guidelines
+title: 'All UI must follow accessibility guidelines'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Critical Path Analysis & Context Review
+title: 'Critical Path Analysis & Context Review'
 parent: Skill instructions
 ---
 

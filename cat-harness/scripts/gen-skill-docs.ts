@@ -584,7 +584,21 @@ function main(): void {
       const page: string[] = [];
       page.push("---");
       page.push("layout: default");
-      page.push(`title: ${title}`);
+      // QUOTED, always. A skill's title is its H1, which is prose — so it
+      // carries colons ("Contrast: measured over the darkest thing that could
+      // be there") and backticks, and YAML rejects both unquoted. The page
+      // then has front matter Jekyll cannot parse, which `translation:index`
+      // reports as *"it could not be translated as things stand"* and nothing
+      // else notices, because the page still renders.
+      //
+      // Measured 2026-09-20: SIX generated pages were in that state, four of
+      // them predating the skill that made the seventh. Quoting here fixes the
+      // class rather than renaming headings one at a time.
+      //
+      // Single quotes, with YAML's own escape (a doubled quote), because a
+      // title may contain a backtick and a double-quoted scalar would then
+      // need backslash rules a heading has no reason to obey.
+      page.push(`title: '${title.replace(/'/g, "''")}'`);
       page.push("parent: Skill instructions");
       page.push("---");
       page.push("");

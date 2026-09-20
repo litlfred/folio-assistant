@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Processes are BPMN, and the diagrams are executable
+title: 'Processes are BPMN, and the diagrams are executable'
 parent: Skill instructions
 ---
 

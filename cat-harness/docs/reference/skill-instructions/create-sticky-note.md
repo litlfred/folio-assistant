@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Create a sticky note
+title: 'Create a sticky note'
 parent: Skill instructions
 ---
 

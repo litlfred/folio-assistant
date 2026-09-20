@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Site presentation assets
+title: 'Site presentation assets'
 parent: Skill instructions
 ---
 

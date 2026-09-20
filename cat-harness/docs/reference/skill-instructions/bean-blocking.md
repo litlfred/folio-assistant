@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Blocking is a claim about the work, not a mood
+title: 'Blocking is a claim about the work, not a mood'
 parent: Skill instructions
 ---
 

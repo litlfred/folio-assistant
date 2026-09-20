@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Deletion requires explicit confirmation
+title: 'Deletion requires explicit confirmation'
 parent: Skill instructions
 ---
 

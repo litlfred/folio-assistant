@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /build-pdf
+title: '/build-pdf'
 parent: Skill instructions
 ---
 
