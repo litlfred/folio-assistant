@@ -121,11 +121,11 @@ adapter-scoped tool would be unreachable in exactly the case it exists for.
 
 ```sh
 bun install                 # install deps
-bun run src/index.ts --http # run the assistant (HTTP);  --stdio for stdio MCP
+bun run cat-harness/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
 bun test                    # unit tests
 bunx playwright test        # e2e tests   (npm script: test:e2e)
 eslint .                    # lint
-bun run src/index.ts --check-deps   # probe environment capabilities
+bun run check-deps                  # probe environment capabilities
 bun run init-folio --help           # scaffold a new folio repository
 bun run readme:sync                 # refresh a folio README's generated sections
 bun run readme:sync:check           # ...and fail if any is stale (for CI)

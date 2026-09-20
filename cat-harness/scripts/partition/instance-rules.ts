@@ -504,6 +504,7 @@ export const RULES: Rule[] = [
       "scripts/check-head-has-run.ts",
       "scripts/check-agents-claims.ts",
       "scripts/check-agent-entry-links.ts",
+      "scripts/check-command-paths.ts",
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
       // The work plan's own readers. Harness by subject and by dependency:
