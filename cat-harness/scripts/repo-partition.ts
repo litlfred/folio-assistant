@@ -896,6 +896,11 @@ const RULES: Rule[] = [
       // in turn. Every one of those is core, so classifying it harness would
       // buy three wrong-direction edges for the tidiness of one list.
       "scripts/apply-image-verdicts.ts",    // agent verdicts → images.json
+      // Same test again: it reads a container in `uploads/` — a folio's own
+      // material — and its only schema import is `folio-assist-core`'s
+      // `extraction.ts`. Classifying it harness would buy a wrong-direction
+      // edge to core for the tidiness of one list.
+      "scripts/extract-assets.ts",          // a container's INDEX → uploads/*.extraction.json
     ],
   },
 ];
