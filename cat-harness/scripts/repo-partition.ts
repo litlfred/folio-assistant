@@ -500,6 +500,10 @@ const RULES: Rule[] = [
       "scripts/staging-cleanup-preflight.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
+      // Beside `capabilities.ts` and for the same reason: it joins a skill's
+      // declared `degradation` to the probe results. Both act on the
+      // HARNESS's own declarations and need no folio to have anything to do.
+      "src/tools/degradation.ts",
       "src/tools/skill-fetch.ts",
       "src/tools/preferences.ts",
       "src/tools/beans-prime.ts",
