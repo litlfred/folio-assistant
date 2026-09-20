@@ -152,6 +152,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <script>
 "use strict";
 var G = null, SEL = null;
+var DATA_HREF = "../../assets/schemas/index.json";
 var $ = function (id) { return document.getElementById(id); };
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -342,7 +343,7 @@ function select(id) {
   detail(d);
 }
 
-fetch("../assets/schemas/index.json").then(function (r) {
+fetch(DATA_HREF).then(function (r) {
   if (!r.ok) throw new Error(String(r.status));
   return r.json();
 }).then(function (data) {
@@ -382,7 +383,7 @@ fetch("../assets/schemas/index.json").then(function (r) {
   if (location.hash.length > 1) select(decodeURIComponent(location.hash.slice(1)));
 }).catch(function (e) {
   $("counts").textContent = "could not load the projection: " + e.message;
-  $("detail").innerHTML = '<p class="empty">The projection at <code>../assets/schemas/index.json</code> could not be read. ' +
+  $("detail").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) + '</code> could not be read. ' +
     "That is not an empty graph \u2014 it is a graph that could not be loaded, and the page says so rather than showing nothing.</p>";
 });
 </script>

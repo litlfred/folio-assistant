@@ -765,14 +765,14 @@
     {
       "id": "folio-assistant-5y4b",
       "title": "TODO STICKIES: carry theme art chosen by judgement from content, like every other sticky on the board",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:03:35Z",
-      "updatedAt": "2026-09-20T15:09:14Z",
+      "updatedAt": "2026-09-20T19:10:29Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> todos need grump cat themeing based on content too. used jugement\n\n## What it asks for\n\nTodo stickies carry **theme art**, the way the landing stickies do — and the\ntheme is chosen **by judgement from the todo's CONTENT**, not assigned by a\nfixed rule.\n\n## Measured: they are the only stickies on the board with no art\n\n`mountTodoBoard` (`docs/assets/js/docs-ui.js:202",
       "file": "beans/defs/folio-assistant-5y4b--todo-stickies-carry-theme-art-chosen-by-judgement.md"
     },
@@ -2341,15 +2341,15 @@
     {
       "id": "folio-assistant-ivfw",
       "title": "STICKY PIN: unpinning loses the theme and the sticky cannot be moved — it should stay visible and movable on the board",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:09:58Z",
-      "updatedAt": "2026-09-20T15:09:58Z",
-      "preview": "Owner, 2026-09-20, verbatim:\n\n> when you unpin, sticky, it loses its theme and you cant move around dispaly.\n> treate it as visible to move in fixed place around miro build like folio\n> visualtion.\n\n## Two defects in one gesture\n\n1. **Unpinning LOSES THE THEME.** A pinned sticky renders with its backdrop\n   art; unpinned it comes back as a flat card. The theme is a property of the\n   sticky, not o",
+      "updatedAt": "2026-09-20T18:39:46Z",
+      "preview": "**Tracked as [#558](https://github.com/litlfred/folio-assistant/issues/558)**, and the\nlink is recorded HERE because it was one-way: the issue names this bean, this bean\nnamed nothing. A one-way link is worse than none between an issue and a bean,\nbecause the half that has it reads as complete — an agent arriving at the bean\ncannot tell whether an issue exists, and opens a second.\n\nOwner, 2026-09-",
       "file": "beans/defs/folio-assistant-ivfw--sticky-pin-unpinning-loses-the-theme-and-the-stick.md"
     },
     {
@@ -2609,6 +2609,20 @@
       "file": "beans/defs/folio-assistant-lnpe--both-memory-agents-are-back-at-the-200-line-inject.md"
     },
     {
+      "id": "folio-assistant-lps0",
+      "title": "KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:59:22Z",
+      "updatedAt": "2026-09-20T18:59:22Z",
+      "preview": "`kg-audit.ts` walks a hardcoded `KG_ROOT = join(root, \"skills\")` when it\ncollects skill subjects (`skillFiles()`, line ~578). **Every skill outside\n`skills/` is therefore unaudited** — not reported as unknown, not reported at\nall. It is the `dh4f` shape in the tool whose job is finding that shape.\n\n## Measured, 2026-09-20\n\nThe instance declares several `cat-harness` directories that hold skills\nDI",
+      "file": "beans/defs/folio-assistant-lps0--kg-audit-skillfiles-walks-a-hardcoded-skills-so-ev.md"
+    },
+    {
       "id": "folio-assistant-lqo9",
       "title": "GLOSSARY: a coded, versioned glossary content kind in core, a defined-terms index in docs/ from every KG asset, translatable — roast first",
       "status": "todo",
@@ -2843,7 +2857,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-18T15:00:27Z",
       "updatedAt": "2026-09-18T15:00:27Z",
-      "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**Blocked on bean `fsch`** — without a folio holding 0..n content instances\nthere is only ever one node to render.\n\nGate: a two-instance folio shows two sections; a zero-instance folio renders\nwithout error.",
+      "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**Blocked on bean `fsch`** — without a folio holding 0..n content instances\nthere is only ever one node to render.\n\nGate: a two-instance folio shows two sections; a zero-instance folio renders\nwithout error.\n\n---\n\n## ",
       "file": "beans/defs/folio-assistant-nvbr--phase-i-4-lhs-navbar-section-per-node-in-the-folio-ins.md"
     },
     {
@@ -2884,7 +2898,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:30:55Z",
-      "updatedAt": "2026-09-20T19:30:46Z",
+      "updatedAt": "2026-09-20T20:03:22Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), verbatim:\n\n> rendered assets should be available at toplevel like `<baseURL>/` for main\n> just the docs pipeline, or `<baseurl>/<page>` where is registered rendered\n> page from a harness that was instantiated and enabled (by default enabled)\n> relative to their url, so `<baseurl>cat-harness/docs` or so...\n> `<baseurl>/<instantiated harness>/<pa",
       "file": "beans/defs/folio-assistant-o7eq--url-space-rendered-assets-mirror-the-instantiation.md"
     },
@@ -3005,14 +3019,14 @@
     {
       "id": "folio-assistant-pb04",
       "title": "STICKY: an edit AND a view affordance, linking straight to GitHub, gated on the rendering pipeline's GitHub capability",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T11:41:28Z",
-      "updatedAt": "2026-09-20T13:32:34Z",
+      "updatedAt": "2026-09-20T19:17:14Z",
       "preview": "Owner request, 2026-09-20, verbatim because the wording carries three distinct\nrequirements a paraphrase would merge:\n\n> stckynnotes should have edit tool = link to github pages edit directrly , liek\n> with other content blocks. rendeding shows edit src icon (and also need view\n> icon) if github tools avaialable in rendering pipeline. they get a pass at the\n> content rendering (it layered content ",
       "file": "beans/defs/folio-assistant-pb04--sticky-an-edit-and-a-view-affordance-linking-strai.md"
     },
@@ -3875,6 +3889,20 @@
       "updatedAt": "2026-09-20T08:48:44Z",
       "preview": "## The ask, owner 2026-09-20 (verbatim)\n\n> also please add back uploads/ folder. it should be initiation skill of\n> folio-asst-core/ and preseverd in the current folio-asst/ repo as state.\n> library/ should also be added in at initation, but not as state by KG-Content.\n\n## MEASURED FIRST, because \"add back\" turned out not to mean what it sounds like\n\nBoth directories are **present**, declared, and",
       "file": "beans/defs/folio-assistant-wwi6--initiation-uploads-and-library-are-created-at-init.md"
+    },
+    {
+      "id": "folio-assistant-x0hj",
+      "title": "PUBLICATION LAYOUT: <baseurl>/ is the root docs pipeline, <baseurl>/<instantiated harness>/<path> is everything else",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:26:35Z",
+      "updatedAt": "2026-09-20T18:26:35Z",
+      "preview": "Owner, 2026-09-20, verbatim — the layout is specific enough that a paraphrase\nwould lose which segment comes from where:\n\n| rendered assets should be available at toplevel like <baseULR>/ for main jsut\n| the docs pipleline, or <baseurl>/<page> where is registered rendered page from\n| a harness that was instantiated and enbaled (by default enabled) realtivg to\n| their url, so <baseurl>cat-harness/d",
+      "file": "beans/defs/folio-assistant-x0hj--publication-layout-baseurl-is-the-root-docs-pipeli.md"
     },
     {
       "id": "folio-assistant-x3bd",

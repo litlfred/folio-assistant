@@ -77,6 +77,38 @@
                 ],
                 "additionalProperties": false
               },
+              "avatarRegion": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "w",
+                  "h"
+                ],
+                "additionalProperties": false
+              },
               "title": {
                 "type": "string",
                 "minLength": 1
@@ -493,6 +525,36 @@
             ],
             "additionalProperties": false
           }
+        },
+        "renderExemption": {
+          "type": "object",
+          "properties": {
+            "of": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "visualiser",
+                  "workflow-visualiser"
+                ]
+              },
+              "minItems": 1
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owes": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "of",
+            "reason",
+            "owes"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -508,8 +570,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "ff1b8d231452af50b26a4ee9c749aef353218f5b",
+    "sha": "af468870d3413cf5c0eb3a06856bc2ec4cdf88d5",
     "pr": "581/merge",
-    "run": "35534690695"
+    "run": "35534933162"
   }
 }
