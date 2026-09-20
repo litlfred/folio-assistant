@@ -8,6 +8,8 @@ description: >-
 agents:
   - platform-boundary-guard
   - ci-health-watcher
+# consulted: reference material nobody performs — a DISCIPLINE. "Never encode a constraint you have not verified" is a rule that governs other work; its headings are the argument and the worked case. Nobody performs it as a task.
+consulted: true
 ---
 
 # Never encode a constraint you have not verified

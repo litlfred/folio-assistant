@@ -59,6 +59,8 @@ export function buildEntry(o: {
   summary: string;
   detail?: string;
   reason?: string;
+  /** The declared format of the three prose fields; absent means plain text. */
+  format?: string;
   branch?: string;
   commit?: string;
   run?: string;
@@ -88,6 +90,10 @@ export function buildEntry(o: {
     subject: { kind: o.kind, path: o.path, ...(o.slug ? { slug: o.slug } : {}) },
     summary: o.summary,
     ...(o.detail ? { detail: o.detail } : {}),
+    // Written ONLY when declared. An explicit `format: "text"` on every entry
+    // would be noise that also makes absence look like a bug rather than the
+    // default it is.
+    ...(o.format ? { format: o.format } : {}),
     ...(o.reason ? { reason: o.reason } : {}),
     ...(o.branch ? { branch: o.branch } : {}),
     ...(o.commit ? { commit: o.commit } : {}),
@@ -121,9 +127,103 @@ function flag(argv: string[], name: string): string | undefined {
 
 const USAGE =
   `usage: render-log.ts --dir DIR --event <${RENDER_EVENTS.join("|")}> --kind K --path P \\\n` +
-  `         --summary TEXT [--slug S] [--reason TEXT] [--detail TEXT] \\\n` +
-  `         [--branch B] [--commit C] [--run URL]\n` +
+  `         [--slug S] [--branch B] [--commit C] [--run URL]  < prose.json\n` +
+  `\n` +
+  `       The PROSE ARRIVES ON STDIN as one JSON object, never as argv:\n` +
+  `         {"summary": "...", "reason": "...", "detail": "...", "format": "markdown"}\n` +
+  `       \`summary\` is required; the rest are optional. Build it with jq, never\n` +
+  `       by string concatenation:\n` +
+  `         jq -n --arg s "$SUMMARY" --arg r "$REASON" '{summary:$s, reason:$r}' \\\n` +
+  `           | bun run render-log.ts --dir DIR --event removed ...\n` +
+  `\n` +
   `       render-log.ts --dir DIR --read [--day YYYY-MM-DD]`;
+
+/**
+ * Prose does not travel in argv — bean `ru6i`.
+ *
+ * `--summary` and `--reason` used to be command-line words. The reason for moving
+ * them is the CONTRACT, and it is worth being exact about that, because the first
+ * version of this comment claimed a live bug that does not exist.
+ *
+ * WHAT IS NOT THE REASON. I claimed the four callers in `feature-staging.yml`
+ * were broken by a quote in `$CLEANUP_REASON`, since they built the argument as
+ * `--reason "PR #... confirmed by: $CLEANUP_REASON"`. **Measured: they were
+ * safe.** Shell parameter expansion inside double quotes does not re-tokenize or
+ * re-quote, so `he said "no"`, a backtick and a `$(id)` all arrived as one
+ * literal argument with nothing executed. The value comes through `env:`, which
+ * is a shell variable — not a `${{ }}` template substitution, which would be a
+ * different story.
+ *
+ * THE ACTUAL REASON. `tool-types.ts` refuses prose as an argv word by design: "no
+ * pattern admits real markdown and excludes a payload … a tool whose prose
+ * argument is a command-line word was always going to need quoting nobody
+ * checks." So `render-logging` could not have a Tool node at all while its
+ * summary was a flag — `check:tools` said exactly that:
+ *
+ *     ✗ 1 command-line input(s) of a type that can express a shell payload:
+ *         render-log.summary : Text — put free text on stdin
+ *
+ * That rule is about what a TYPE can express, not about today's callers: its own
+ * argument is that "a caller is one refactor away from a template literal", and
+ * the property that survives a careless caller is the value never being
+ * dangerous. So this is a defensive change and a contract change, not a bug fix,
+ * and calling it a bug fix would have been a claim nobody could check.
+ *
+ * The flags are REFUSED rather than quietly ignored, and that part stands on its
+ * own. A caller left behind by the migration fails at exit 2 naming the flag,
+ * instead of writing a log entry with an empty summary — which would be a record
+ * that something was published and not what.
+ */
+function refuseProseFlags(argv: string[]): void {
+  const prose = ["summary", "reason", "detail"].filter((n) =>
+    argv.some((a) => a === `--${n}` || a.startsWith(`--${n}=`)),
+  );
+  if (prose.length === 0) return;
+  console.error(`render-log: ${prose.map((n) => `--${n}`).join(", ")} no longer travel in argv.`);
+  console.error("  Prose goes on stdin as JSON, because a command-line word cannot hold it safely");
+  console.error("  (bean `ru6i`). This is refused rather than ignored so the caller is fixed");
+  console.error("  rather than silently writing an entry with no summary.\n");
+  console.error(USAGE);
+  process.exit(2);
+}
+
+/**
+ * The prose, read from stdin.
+ *
+ * Returns a reason rather than throwing, matching `readRenderLogEntry` and
+ * `readFshGutsNode`: "nothing arrived" and "something arrived that will not
+ * parse" want different messages, and neither may be reported as a clean write.
+ */
+async function readProse(
+  stdin: ReadableStream<Uint8Array> | null,
+): Promise<{ prose: { summary: string; detail?: string; reason?: string; format?: string } } | { reason: string }> {
+  if (stdin === null) return { reason: "no stdin — the prose has nowhere to arrive from" };
+  const raw = await new Response(stdin).text();
+  if (raw.trim() === "") return { reason: "stdin was empty; expected one JSON object with a `summary`" };
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (e) {
+    return { reason: `stdin is not JSON: ${e instanceof Error ? e.message : String(e)}` };
+  }
+  if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return { reason: "stdin must be a single JSON OBJECT, not an array or a bare value" };
+  }
+  const o = parsed as Record<string, unknown>;
+  for (const k of ["summary", "detail", "reason", "format"]) {
+    if (k in o && typeof o[k] !== "string") return { reason: `\`${k}\` must be a string` };
+  }
+  const summary = typeof o.summary === "string" ? o.summary.trim() : "";
+  if (summary === "") return { reason: "`summary` is required and must be a non-empty string" };
+  return {
+    prose: {
+      summary,
+      detail: typeof o.detail === "string" && o.detail !== "" ? o.detail : undefined,
+      reason: typeof o.reason === "string" && o.reason !== "" ? o.reason : undefined,
+      format: typeof o.format === "string" && o.format !== "" ? o.format : undefined,
+    },
+  };
+}
 
 if (import.meta.main) {
   const argv = process.argv.slice(2);
@@ -154,20 +254,31 @@ if (import.meta.main) {
     process.exit(0);
   }
 
+  // Before anything else, so a caller still passing `--summary` is TOLD rather
+  // than having its prose dropped on the floor.
+  refuseProseFlags(argv);
+
   const event = flag(argv, "event");
   const kind = flag(argv, "kind");
   const path = flag(argv, "path");
-  const summary = flag(argv, "summary");
   if (
     event === undefined ||
     kind === undefined ||
     path === undefined ||
-    summary === undefined ||
     !(RENDER_EVENTS as readonly string[]).includes(event)
   ) {
     console.error(USAGE);
     process.exit(2);
   }
+
+  const read = await readProse(Bun.stdin.stream());
+  if (!("prose" in read)) {
+    console.error(`render-log: ${read.reason}`);
+    console.error("  Nothing was written. That is a refusal, not a log entry.\n");
+    console.error(USAGE);
+    process.exit(2);
+  }
+  const { summary, detail, reason, format } = read.prose;
 
   try {
     const at = new Date().toISOString();
@@ -177,8 +288,9 @@ if (import.meta.main) {
       path,
       slug: flag(argv, "slug"),
       summary,
-      detail: flag(argv, "detail"),
-      reason: flag(argv, "reason"),
+      detail,
+      reason,
+      format,
       branch: flag(argv, "branch"),
       commit: flag(argv, "commit"),
       run: flag(argv, "run"),

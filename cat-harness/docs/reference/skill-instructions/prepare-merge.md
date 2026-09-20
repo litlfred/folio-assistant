@@ -94,7 +94,20 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    did **not run**; report it that way rather than folding it into a green,
    per the same honesty rule as the build above.
 6. **Push** the feature branch (retry/backoff as in step 2):
-   `git push -u origin <branch>`.
+   `git push -u origin <branch>`. Then **ask whether the push produced a run**:
+   `bun run check:head-has-run`.
+
+   This does not change what you do next — step 7 dispatches either way. It
+   changes what you can honestly SAY. A push here can silently produce no run
+   at all (bean `3pqn`, observed three times), and a pull request showing zero
+   checks is indistinguishable from one whose checks have not started, so a
+   reviewer cannot tell "CI is coming" from "CI is never coming". If the check
+   reports **no run**, write that in the PR body alongside the dispatched run's
+   URL — otherwise the PR looks like it is merely early.
+
+   Three states, and the third is not a finding: `could not ask` (no remote, no
+   network, 403, 404) means nothing was established, and it must not be
+   reported as either answer.
 7. **Dispatch the repo's CI on the pushed branch, and fold the result into the
    PR.** Local green is not CI green — CI runs on a cold cache, its own
    toolchain, and without whatever build flags you set locally. So after the

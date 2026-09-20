@@ -206,8 +206,59 @@ the current head → exit 0 with its two runs listed.
 circularity**: a CI job asking whether this commit has a CI run has already
 answered it. It exists for the moment *before* the run.
 
-## Still open
+## Wired into `/prepare-merge` — and what that is and is not worth
 
-- wiring it into `/prepare-merge`, so shipping a branch checks it
-- whether anything should run it unattended — a PR with zero checks is
-  invisible precisely because nobody is looking
+Step 6 now ends with `bun run check:head-has-run`, in both the command recipe
+and the skill that carries the discipline.
+
+**It does not change what you do next, and the entry says so.** Step 7 already
+dispatches CI unconditionally — *"local green is not CI green"* — so a run
+exists either way. What the check changes is **what you can honestly say**: a
+pull request showing zero checks is indistinguishable from one whose checks
+have not started, so a reviewer cannot tell *CI is coming* from *CI is never
+coming*. When the push produced no run, that fact goes in the PR body beside
+the dispatched run's URL, and the PR stops looking merely early.
+
+Overselling this would be easy and wrong. It is a labelling fix on top of a
+mitigation that was already there.
+
+## Built: the unattended sweep — and the three decisions were the owner's
+
+`check:prs-have-runs` + `.github/workflows/pr-checks-present.yml`. The three
+open questions were put to the owner on 2026-09-20 **with a measurement rather
+than in the abstract**: sweeping the six open pull requests at that moment,
+**two had no run of any kind on their head** (`#525`, updated three minutes
+earlier; `#477`, one minute earlier). A third of the set.
+
+| decision | chosen |
+|---|---|
+| age gate | **15 minutes** |
+| cadence | **hourly**, at :37 |
+| reporting | **both** — tracking issue *and* a PR comment |
+
+**The age gate is the difference between useful and ignored**, and it is not a
+tuning knob. A head pushed thirty seconds ago legitimately has no run, and a
+sweep reporting those is one nobody reads — this bean's own failure mode,
+reproduced by its fix. A younger head is **not judged**, never called clean.
+
+**"Both" needed a consequence handled.** Hourly comments would put
+twenty-four notifications a day on one unchanged pull request, which is how a
+warning gets muted. So the comment is keyed by
+`<!-- pr-no-checks:<sha> -->` and posted **once per (pull request, head
+sha)**; the issue is **edited in place**, never appended to.
+
+Only `unknown` fails the job — a finding records itself and the workflow stays
+GREEN, the same inversion as `ci-health`. And one unreadable answer makes the
+**whole** run unknown: a sweep blind on one pull request has not cleared the
+others.
+
+### Caught by this session's own earlier work, twice
+
+- The workflow's YAML **would not parse** — a comment body at column 0 broke
+  out of the block scalar. `check:workflow-coverage` reported it as
+  COULD NOT DETERMINE rather than as uncovered, which is exactly the
+  distinction bean `7yvd` added.
+- Adding an auto-triggering workflow **re-opened the gap `7yvd` closed**, one
+  bean after `30hn` recorded me doing precisely that. So it ships with
+  `pr-checks-present.bpmn` and a declared `<folio:policy enforcement="strict"/>`:
+  **9/9 auto-triggering documented, jobs match.**

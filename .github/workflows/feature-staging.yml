@@ -656,11 +656,20 @@ jobs:
           # The tool writes into a directory and never pushes: this job already
           # holds the checkout and the retry loop, and a second pusher racing
           # those is a new way to lose a deploy.
+          # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+          # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+          # safe, because shell parameter expansion inside double quotes does
+          # not re-tokenize. The reason is the Tool contract — prose may not be
+          # an argv word — and `jq --arg` builds the JSON without concatenation.
+          #
+          # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+          # a gate from a line starting with `bun`, so piping `jq | bun run`
+          # would hide this step from the gate set and orphan its exemption.
+          PROSE=$(jq -n --arg s 'staging preview published' '{summary:$s}')
           bun run cat-harness/scripts/render-log.ts --dir pages \
             --event rendered --kind staging-preview \
             --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
-            --summary "staging preview published" \
-            --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL"
+            --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git -C pages add -A _render-log
@@ -836,21 +845,32 @@ jobs:
             # `plj1` left the branch in. Here the removal cannot land without
             # its entry, because they are the same commit.
             #
-            # `--reason` is not optional: `render-log.ts` refuses a `removed`
+            # `reason` is not optional: `render-log.ts` refuses a `removed`
             # entry without one, so this step fails loudly rather than writing
-            # a record that says an artefact went and not why.
+            # a record that says an artefact went and not why. It is a FIELD of
+            # the stdin object now, not a flag — bean `ru6i`.
             #
             # The reason is the GATE'S OWN — `merged` | `labelled` — never a
             # restatement of one branch of it. Bean `1feu` gave the merge the
             # standing a label used to have, so a record hardcoding "carried
             # the staging:cleanup label" would name the wrong rule on every
             # merged PR, which is worse than no reason: it reads as evidence.
+            # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+            # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+            # safe, because shell parameter expansion inside double quotes does
+            # not re-tokenize. The reason is the Tool contract — prose may not be
+            # an argv word — and `jq --arg` builds the JSON without concatenation.
+            #
+            # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+            # a gate from a line starting with `bun`, so piping `jq | bun run`
+            # would hide this step from the gate set and orphan its exemption.
+            PROSE=$(jq -n --arg s 'staging preview removed on PR close' \
+                        --arg r "PR #${{ github.event.pull_request.number }} closed; removal confirmed by: $CLEANUP_REASON" \
+                        '{summary:$s, reason:$r}')
             bun run source/cat-harness/scripts/render-log.ts --dir pages \
               --event removed --kind staging-preview \
               --path "STAGING/$SLUG" --slug "$SLUG" \
-              --summary "staging preview removed on PR close" \
-              --reason "PR #${{ github.event.pull_request.number }} closed; removal confirmed by: $CLEANUP_REASON" \
-              --run "$RUN_URL"
+              --run "$RUN_URL" <<<"$PROSE"
             git -C pages config user.name 'github-actions[bot]'
             git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git -C pages add -A "STAGING/$SLUG" _render-log
@@ -899,12 +919,22 @@ jobs:
             echo "No STAGING/$SLUG on gh-pages — nothing was retained, so there is nothing to record."
             exit 0
           fi
+          # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+          # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+          # safe, because shell parameter expansion inside double quotes does
+          # not re-tokenize. The reason is the Tool contract — prose may not be
+          # an argv word — and `jq --arg` builds the JSON without concatenation.
+          #
+          # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+          # a gate from a line starting with `bun`, so piping `jq | bun run`
+          # would hide this step from the gate set and orphan its exemption.
+          PROSE=$(jq -n --arg s 'staging preview retained after PR close' \
+                      --arg r "PR #${{ github.event.pull_request.number }} closed; removal refused because: $CLEANUP_REASON" \
+                      '{summary:$s, reason:$r}')
           bun run source/cat-harness/scripts/render-log.ts --dir pages \
             --event retained --kind staging-preview \
             --path "STAGING/$SLUG" --slug "$SLUG" \
-            --summary "staging preview retained after PR close" \
-            --reason "PR #${{ github.event.pull_request.number }} closed; removal refused because: $CLEANUP_REASON" \
-            --run "$RUN_URL"
+            --run "$RUN_URL" <<<"$PROSE"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git -C pages add -A _render-log
@@ -1082,12 +1112,22 @@ jobs:
           # because the guard above passed: bean `fuzm` — the slug here is a
           # DISPATCH INPUT, not a git ref, so the invariant that makes `..`
           # impossible for a branch-derived slug does not hold for this one.
+          # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+          # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+          # safe, because shell parameter expansion inside double quotes does
+          # not re-tokenize. The reason is the Tool contract — prose may not be
+          # an argv word — and `jq --arg` builds the JSON without concatenation.
+          #
+          # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+          # a gate from a line starting with `bun`, so piping `jq | bun run`
+          # would hide this step from the gate set and orphan its exemption.
+          PROSE=$(jq -n --arg s 'staging preview removed by dispatch' \
+                      --arg r "dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals" \
+                      '{summary:$s, reason:$r}')
           bun run ../source/cat-harness/scripts/render-log.ts --dir . \
             --event removed --kind staging-preview \
             --path "STAGING/$CLEANUP_SLUG" --slug "$CLEANUP_SLUG" \
-            --summary "staging preview removed by dispatch" \
-            --reason "dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals" \
-            --run "$RUN_URL"
+            --run "$RUN_URL" <<<"$PROSE"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A "STAGING/$CLEANUP_SLUG" _render-log

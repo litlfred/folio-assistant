@@ -167,10 +167,16 @@ describe("the reason the allowance was closed is still true", () => {
     // package.json script, never in a workflow, its output directory never
     // committed in any commit. So this list loses a reader that was real and
     // was never reached.
+    //
+    // The third entry RENAMED on 2026-09-20 rather than changing what it is:
+    // `repo-partition.ts` was split into a generic engine and this instance's
+    // data, and the literal travelled with the data. Still three, still the
+    // same three readers — the invariant this test states is unchanged and
+    // the assertion was not weakened to absorb the move.
     expect(readers.sort()).toEqual([
       "scripts/kg-audit.ts",
       "scripts/known-skills.ts",
-      "scripts/repo-partition.ts",
+      "scripts/partition/instance-rules.ts",
     ]);
   });
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6f1x
 title: 'MAINTAINS: the unproduced check is now blind to every producer but one'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:55:59Z
-updated_at: 2026-09-20T04:55:59Z
+updated_at: 2026-09-20T14:37:20Z
 parent: folio-assistant-d308
 ---
 
@@ -75,8 +75,9 @@ it does not clear the artefacts it did not reach.
       for a real absence; **exit 0** only on a populated tree. All four verified
 - [x] `kg:schema:check`'s narrowing note updated — it now says the cost "is now
       paid" and names the check, rather than describing an open gap
-- [ ] the drift test extended to cover the restored direction. Five tests cover
-      the new check directly; the two are still separate suites
+- [x] the drift test extended to cover the restored direction — a **third suite**
+      asserts the PARTITION rather than either side of it,
+      `scripts/tests/maintains-coverage-partition.test.ts`
 
 ---
 
@@ -119,3 +120,70 @@ file. Caught by parsing the YAML rather than by eyeballing the diff, reverted, a
 re-inserted at the real step boundary found by walking up past the next step's own
 leading comments. **Anchor on structure, not on a line that happens to be
 unique.**
+
+
+---
+
+## CLOSED 2026-09-20 — the gap was between the suites, not inside either
+
+The last criterion asked for the drift test to be "extended". Extending it would
+have been the wrong shape, and reading both suites is what showed why.
+
+**Each suite was correct and complete about its own scope.**
+`artefact-declaration-drift.test.ts` asserts that `ns/vocabulary.jsonld` and
+`ns/content/v1.jsonld` are **not** reported as drift — the narrowing, correctly
+pinned. `check-maintained-artefacts.test.ts` has five tests over a built tree.
+Neither file mentions the other.
+
+So *"correctly declined here"* and *"covered over there"* were asserted in separate
+files and **their conjunction was asserted nowhere.** If the site check narrowed,
+was renamed, or stopped iterating every Tool, the drift test would still pass — it
+asserts an ABSENCE — and the artefacts it declines would be covered by nothing,
+silently. Which is this bean's own sentence turned into a test:
+
+> **"right to decline" is not "covered".**
+
+That is `covered-is-not-reachable` one level out: each instrument reports success
+over its own scope, and nobody asks whether the scopes **tile**.
+
+### What the new suite asserts
+
+Five tests, all set relations over the two scopes:
+
+1. both sides of the split are non-empty — the guard that stops every assertion
+   below from holding trivially
+2. every artefact the drift check **declines** is a subject of the site check
+3. every declared artefact is judged by **at least one** check — the partition as
+   a whole, which is what breaks if a third producer appears
+4. both checks read **one** declaration (set equality against
+   `declaredArtefacts()`), since the site check iterates `tools()` directly while
+   the drift check goes through `declaredArtefacts`
+5. `ns/vocabulary.jsonld` and `ns/content/v1.jsonld` named explicitly, covered by
+   the site check **and** still declined by the drift check — the pairing is the
+   invariant
+
+`declined` is derived from **behaviour**, not from the `SELF_INVOCATION` constant:
+an empty produced-list makes the drift check indict everything it considers its
+own, so whatever it leaves alone is precisely what it declined. Reading the
+constant would make the test agree with the implementation by construction.
+
+### Mutation-checked, because a green partition test proves nothing by itself
+
+Simulated a narrowed site check (schema files only) and confirmed the bridge test
+**would fail**, naming all four declined artefacts. A partition assertion that
+cannot fail is worse than none.
+
+### The bean's own prediction came true the same day
+
+It said: *"Today that is two artefacts; it will be more as `d308` proceeds."*
+
+It is **four**. `assets/css/themes.css` and `assets/css/avatars.css` joined the
+declined set this morning, when `site-presentation-assets` was authored and
+`themes-css` / `avatars-css` entered the graph (bean `yean`). Both are published
+by the site build, so neither is the schema exporter's — exactly the shape that
+was uncovered. Measured: `declared=7`, `driftJudges=3`, `declined=4`.
+
+### Verified
+
+- `bun run gates` — 56 of 56 pass
+- the new suite: 5 pass, 0 fail, and demonstrated capable of failing

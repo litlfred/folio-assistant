@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T13:55:06.641Z",
+  "updated_at": "2026-09-20T16:15:54.932Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,13 +34,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 395695787,
+          "value": 280261915,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 7,
+          "value": 5,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
@@ -75,7 +75,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 7,
+          "value": 5,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -119,38 +119,38 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 75256376,
+          "value": 88494806,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 752383954,
+          "value": 852497601,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 702988288,
+          "value": 809842688,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 99,
+          "value": 102,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 10,
+          "value": 9.63,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 717.5 MB against 71.8 MB of tracked content — 10.0x, in 99 pack(s).",
+          "summary": "`.git` is 813.0 MB against 84.4 MB of tracked content — 9.6x, in 102 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -201,19 +201,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 198,
+          "value": 228,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 141,
+          "value": 143,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 57,
+          "value": 85,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
