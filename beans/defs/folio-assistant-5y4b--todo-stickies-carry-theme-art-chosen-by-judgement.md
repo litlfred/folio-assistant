@@ -3,9 +3,10 @@
 title: 'TODO STICKIES: carry theme art chosen by judgement from content, like every other sticky on the board'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-20T15:03:35Z
-updated_at: 2026-09-20T15:03:35Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-20T15:09:14Z
+parent: folio-assistant-o3xy
 ---
 
 Owner, 2026-09-20, verbatim:

@@ -3,9 +3,10 @@
 title: 'THEMING: a cat-harness/theming/ subgraph, broken up thematically'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-20T14:28:56Z
-updated_at: 2026-09-20T14:28:56Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-20T15:09:14Z
+parent: folio-assistant-o3xy
 ---
 
 Owner, 2026-09-20, verbatim:

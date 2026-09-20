@@ -3,9 +3,10 @@
 title: 'CAT-HARNESS/FOLIO: a minimal just-the-docs rendering describing folio, and folio/render for the rendering skills and tools'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-20T14:28:56Z
-updated_at: 2026-09-20T14:28:56Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-20T15:09:14Z
+parent: folio-assistant-vke6
 ---
 
 Owner, 2026-09-20, verbatim:

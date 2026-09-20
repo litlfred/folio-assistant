@@ -3,9 +3,10 @@
 title: 'BOOTSTRAP IS THE EXCEPTION: no visualiser, but its .json/.jsonld IS its existence — and it needs a render/ subgraph'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-20T14:28:23Z
-updated_at: 2026-09-20T14:28:23Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-20T15:09:14Z
+parent: folio-assistant-vke6
 ---
 
 Owner, 2026-09-20, verbatim — quoted rather than paraphrased because it

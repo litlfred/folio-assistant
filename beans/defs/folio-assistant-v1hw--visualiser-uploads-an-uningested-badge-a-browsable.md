@@ -3,9 +3,10 @@
 title: 'VISUALISER: uploads/ — an uningested badge, a browsable queue, and the first WRITABLE surface'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-20T15:00:40Z
-updated_at: 2026-09-20T15:00:40Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-20T15:09:14Z
+parent: folio-assistant-slw1
 ---
 
 Owner, 2026-09-20, verbatim:
