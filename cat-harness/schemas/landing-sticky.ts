@@ -335,43 +335,19 @@ export function isLandingSticky(note: unknown): note is LandingSticky {
 }
 
 /**
- * Where this sticky's declaration can be read and edited, on the forge.
+ * Re-exported so this module's existing callers read as they did.
  *
- * ## Both, because they are different acts
+ * The IMPLEMENTATION moved DOWN to `cat-harness.ts` (bean `pb04`, owner
+ * 2026-09-20: *"notes exist lower down than folio. make sure arrows
+ * correct"*). It had nothing to do with landing stickies — it is "where is
+ * this file on the forge" — and once the TODO index needed it too, a note-layer
+ * generator was reaching sideways into the folio-facing module for a generic
+ * helper. `repo-partition` allowed it, because both are `core`; the LAYER
+ * arrow was still wrong.
  *
- * The owner: *"edit tool = link to github pages edit directrly ... rendeding
- * shows edit src icon (and also need view icon)"*. `/blob/` is reading and
- * `/edit/` opens the editor; a reader who wants to check what a card says
- * should not be taken to a text box, and one who wants to fix it should not
- * have to find the button themselves.
- *
- * ## Absent, not broken, when there is no forge
- *
- * *"if github tools avaialable in rendering pipeline"* — so this is a real
- * probe rather than a hardcoded address. `detectRepoUrl` reads `origin` and
- * `upload-url.ts` already refuses a non-github.com remote for the same reason:
- * the `/edit/<branch>/<path>` form is GitHub's, and emitting it for another
- * forge is a guess wearing a URL's clothes.
- *
- * Returning `undefined` is what makes the control ABSENT rather than dead. A
- * link that 404s is worse than no link: it invites a click, and on a private
- * repository it 404s for exactly the reader who cannot edit, which reads as
- * "this page is broken" rather than "you cannot do this".
- *
- * `declaredIn` is repo-relative and comes from the sticky itself, so a card
- * contributed by `cat-bootstrap` links to `cat-bootstrap/harness.json` rather than to
- * whichever declaration happened to be read first.
+ * Down beside {@link publishedAssetPath}, which is the same shape of transform
+ * — a declared path to the URL that serves it — so both callers now point
+ * downward at one answer instead of at each other.
  */
-export function sourceLinks(
-  repoUrl: string | undefined,
-  declaredIn: string,
-  branch: string,
-): { viewHref: string; editHref: string } | undefined {
-  if (repoUrl === undefined) return undefined;
-  const path = declaredIn.split("/").map(encodeURIComponent).join("/");
-  return {
-    viewHref: `${repoUrl}/blob/${branch}/${path}`,
-    editHref: `${repoUrl}/edit/${branch}/${path}`,
-  };
-}
+export { sourceLinks } from "./cat-harness.js";
 

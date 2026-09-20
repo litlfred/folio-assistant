@@ -2104,6 +2104,59 @@ export function publishedAssetPath(root: string, src: string): string {
 }
 
 /**
+ * Where this sticky's declaration can be read and edited, on the forge.
+ *
+ * ## Both, because they are different acts
+ *
+ * The owner: *"edit tool = link to github pages edit directrly ... rendeding
+ * shows edit src icon (and also need view icon)"*. `/blob/` is reading and
+ * `/edit/` opens the editor; a reader who wants to check what a card says
+ * should not be taken to a text box, and one who wants to fix it should not
+ * have to find the button themselves.
+ *
+ * ## Absent, not broken, when there is no forge
+ *
+ * *"if github tools avaialable in rendering pipeline"* — so this is a real
+ * probe rather than a hardcoded address. `detectRepoUrl` reads `origin` and
+ * `upload-url.ts` already refuses a non-github.com remote for the same reason:
+ * the `/edit/<branch>/<path>` form is GitHub's, and emitting it for another
+ * forge is a guess wearing a URL's clothes.
+ *
+ * Returning `undefined` is what makes the control ABSENT rather than dead. A
+ * link that 404s is worse than no link: it invites a click, and on a private
+ * repository it 404s for exactly the reader who cannot edit, which reads as
+ * "this page is broken" rather than "you cannot do this".
+ *
+ * `declaredIn` is repo-relative and comes from the SUBJECT itself, so a card
+ * contributed by `cat-bootstrap` links to `cat-bootstrap/harness.json` rather
+ * than to whichever declaration happened to be read first — and a todo links
+ * to its own file.
+ *
+ * ## It lives HERE, below both callers
+ *
+ * It was in `landing-sticky.ts` until bean `pb04` gave the todo index the
+ * same two controls. The owner, 2026-09-20: *"notes exist lower down than
+ * folio. make sure arrows correct."* This is not about stickies — it is
+ * "where is this file on the forge" — and leaving it up there made a
+ * note-layer generator reach sideways into the folio-facing module.
+ * `repo-partition` allowed it, because both are `core`; the layer arrow was
+ * still wrong. Beside {@link publishedAssetPath}, which is the same shape of
+ * transform, both callers point DOWN at one answer instead of at each other.
+ */
+export function sourceLinks(
+  repoUrl: string | undefined,
+  declaredIn: string,
+  branch: string,
+): { viewHref: string; editHref: string } | undefined {
+  if (repoUrl === undefined) return undefined;
+  const path = declaredIn.split("/").map(encodeURIComponent).join("/");
+  return {
+    viewHref: `${repoUrl}/blob/${branch}/${path}`,
+    editHref: `${repoUrl}/edit/${branch}/${path}`,
+  };
+}
+
+/**
  * Where an instance's renderings are published, given the site they are
  * published to.
  *

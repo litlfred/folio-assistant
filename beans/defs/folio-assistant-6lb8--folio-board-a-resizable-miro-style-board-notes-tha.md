@@ -209,3 +209,47 @@ have had:
 **A position whose note is gone is an orphan in the LAYER**, which is the
 easier direction to handle: the layer is one file and one sweep, and nothing
 has to be edited out of a note that a person owns.
+
+### ONE file, and the arrows run one way — owner, 2026-09-20
+
+Two further clarifications, and together they finish the model:
+
+> notes exist lower down than folio. make sure arrows correct
+
+> it can be one file...
+
+**One file, not one per board.** The board is a KEY inside it, not a filename.
+That is strictly better for the merge property this choice rests on: one sorted
+file with a line per position merges the same way whether it holds one board or
+twenty, while a file-per-board layout adds a new file on every new board and
+nothing about that helps. Write the earlier heading as *one positions file*
+and read "per board" as "keyed by board".
+
+**The layering, which is the part that constrains the code rather than the
+data.** Notes sit BELOW folio, so the arrows run:
+
+    folio  ──▶  board layer  ──▶  positions  ──▶  note        (allowed)
+    note   ──▶  positions / board / folio                     (REFUSED)
+
+A note may not know it is on a board, may not know where, and may not know a
+board exists. The positions file names notes by id and nothing names it back.
+That is the same one-way shape `uses[]` already enforces between the editorial
+relation and the derived dependency graph, and it is why `state` is the
+positions layer's kind while a note keeps its own.
+
+**Measured 2026-09-20, because "the arrows are fine" is a claim**:
+`repo-partition` classifies `schemas/carried-note.ts` and
+`schemas/note-anchor.ts` as **harness** while `schemas/landing-sticky.ts` and
+`schemas/todo.ts` are **core** — so the note base types genuinely do sit lower
+than the folio-facing ones, and the ruling matches the tree rather than
+describing an intention.
+
+**It caught a live one in this session's own work.** `pb04` gave the todo index
+its view/edit controls by importing `sourceLinks` from `landing-sticky.ts` — a
+note-layer generator reaching SIDEWAYS into the folio-facing module for a
+helper that is not about stickies at all. `repo-partition` allowed it, because
+both modules are `core`; the layer arrow was still wrong. Moved down to
+`cat-harness.ts` beside `publishedAssetPath`, which is the same shape of
+transform, so both callers now point down at one answer instead of at each
+other. That is the check to run on the positions layer before it ships, not
+after.

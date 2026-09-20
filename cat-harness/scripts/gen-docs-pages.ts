@@ -44,7 +44,6 @@ import {
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
 import { readTodoFiles, todoDefaultTheme } from "./todos.js";
-import { sourceLinks } from "../schemas/landing-sticky.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -52,6 +51,7 @@ import {
   publishedAssetPath,
   readDeclaration,
   siteDirFor,
+  sourceLinks,
   repoRootFor,
 } from "../schemas/cat-harness.ts";
 
