@@ -346,13 +346,14 @@ downloadable from the repository and, separately, from a CDN edge.</p>
   jsDelivr serves any public repository, so the last one costs this project no
   hosting at all. The KG says what exists and where; the CDN says nothing and
   just serves it.</p>
-  <p><strong>The CDN links are unverified.</strong> <code>cdn.jsdelivr.net</code>
-  is egress-blocked from the environment that generated this page, so unlike the
-  <code>raw.githubusercontent.com</code> links — which were fetched and returned
-  200 with byte counts matching the catalogue exactly — the <em>via CDN</em>
-  links are composed from jsDelivr's documented URL form and have not been
-  exercised. Both are on the page for that reason: one is known to work, the
-  other is the one being demonstrated.</p>
+  <p><strong>Both link forms are confirmed working.</strong> The
+  <code>raw.githubusercontent.com</code> links were fetched and returned 200
+  with byte counts matching the catalogue exactly. The <em>via CDN</em> links
+  could not be checked from the environment that generated this page —
+  <code>cdn.jsdelivr.net</code> is egress-blocked there — so they were composed
+  from jsDelivr's documented URL form and the owner exercised one by hand on
+  2026-09-20. Both are kept: one costs this project nothing to serve, and a
+  reader who finds either unavailable still has the other.</p>
   <p><strong>Where the held copies actually live — bean <code>yl5w</code>.</strong>
   The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to
   <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved
