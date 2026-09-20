@@ -1,7 +1,7 @@
 ---
 # folio-assistant-r1vw
 title: Package ids come from the DIRECTORY basename, so cat-bootstrap/skills/ mints package/skills and collides
-status: done
+status: completed
 type: task
 parent: folio-assistant-zzmr
 created_at: 2026-09-20T17:06:00Z

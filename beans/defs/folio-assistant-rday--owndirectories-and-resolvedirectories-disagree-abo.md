@@ -1,7 +1,7 @@
 ---
 # folio-assistant-rday
 title: ownDirectories and resolveDirectories disagree about what an empty declaration means
-status: done
+status: completed
 type: task
 parent: folio-assistant-zzmr
 created_at: 2026-09-20T16:55:43Z
