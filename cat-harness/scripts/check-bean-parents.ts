@@ -64,6 +64,24 @@ import {
 
 const OPEN = new Set(["todo", "in-progress"]);
 
+/**
+ * The types that are ROOTS — they need no parent, and may be one.
+ *
+ * `epic` was the only one until 2026-09-20, when the owner settled bean `wqht`:
+ * **a goal is a `milestone` bean, with the epics serving it parented to it.**
+ * `wqht` asserted this check already permitted that; it did not, on either
+ * side — a milestone was an ordinary bean owing a parent, and an epic naming a
+ * milestone as its parent failed rule 3. Both directions are fixed here, and
+ * the assumption is worth recording: a bean that says a gate already allows
+ * something is a claim, and this one was wrong.
+ *
+ * The hierarchy is now two levels and the criterion at each is different: a
+ * task is parented to the epic whose SUBJECT it is, and an epic is parented to
+ * the GOAL it serves. Neither is required to have a parent above it — an epic
+ * serving no stated goal is legitimate and, under `wqht`, visibly so.
+ */
+const ROOT_TYPES = new Set(["epic", "milestone"]);
+
 interface Bean {
   id: string;
   file: string;
@@ -136,7 +154,7 @@ export function checkBeanParents(root: string): BeanParentsReport {
   if (beans === null) return { store: null, open: 0, problems: [] };
 
   const byId = new Map(beans.map((b) => [b.id, b]));
-  const open = beans.filter((b) => OPEN.has(b.status) && b.type !== "epic");
+  const open = beans.filter((b) => OPEN.has(b.status) && !ROOT_TYPES.has(b.type));
   const problems: string[] = [];
 
   for (const b of open.sort((a, c) => a.id.localeCompare(c.id))) {
@@ -148,8 +166,17 @@ export function checkBeanParents(root: string): BeanParentsReport {
     const p = byId.get(b.parent);
     if (!p) {
       problems.push(`${where}: \`parent: ${b.parent}\` names no bean — the roadmap omits this child entirely`);
-    } else if (p.type !== "epic") {
-      problems.push(`${where}: \`parent: ${b.parent}\` is a ${p.type || "bean with no type"}, not an epic`);
+    } else if (!ROOT_TYPES.has(p.type)) {
+      problems.push(
+        `${where}: \`parent: ${b.parent}\` is a ${p.type || "bean with no type"}, not an epic or a milestone`,
+      );
+    } else if (b.type === "epic" && p.type === "epic") {
+      // Epics are roots under a goal, not under each other. Stated as its own
+      // case so the message says WHY rather than "wrong type".
+      problems.push(
+        `${where}: an epic's parent is a \`milestone\` (a goal), not another epic — ` +
+          `\`${b.parent}\` is an epic`,
+      );
     }
   }
   return { store: beanDefsDir(root), open: open.length, problems };
@@ -157,13 +184,15 @@ export function checkBeanParents(root: string): BeanParentsReport {
 
 function formatReport(r: BeanParentsReport): string {
   if (r.store === null) return "Bean parents\n  · no bean store — nothing to check";
-  const out = [`Bean parents (${r.open} open, non-epic)`];
+  const out = [`Bean parents (${r.open} open, below the root types)`];
   if (r.problems.length === 0) {
-    out.push("  ✓ every open bean belongs to an epic");
+    out.push("  ✓ every open bean belongs to an epic, and every epic that names a goal names a milestone");
   } else {
     for (const p of r.problems) out.push(`  ✗ ${p}`);
     out.push("");
     out.push("  Set `parent: <epic-id>` in the bean's front matter, or open an epic for it.");
+    out.push("  An epic's parent, if it has one, is the `milestone` bean for the goal it serves");
+    out.push("  — skills/folio-core/todo-manager.md §\"A GOAL is a `milestone` bean\".");
     out.push("  `beans roadmap` shows the current structure.");
   }
   return out.join("\n");

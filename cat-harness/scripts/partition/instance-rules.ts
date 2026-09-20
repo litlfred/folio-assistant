@@ -514,6 +514,7 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      "scripts/check-bean-issue-links.ts",
       "scripts/check-ready-to-close.ts",
       "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",

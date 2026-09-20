@@ -424,11 +424,20 @@ The bean rule says *what* you are working on. This says **where in the process**
 and the task, and **say when you switch**, because switching changes who is
 accountable for the next step and which gates apply.
 
+**Naming the process is the report; the committed INSTANCE is the evidence.**
+54 merges in one window with `beans/workflows/` holding only `.gitkeep` (bean
+`vlhk`) — a STRICT rule whose breach looked exactly like compliance. The owner
+settled it 2026-09-20: the processes are real, so a turn inside one has an
+instance under the declared `workflow-state` graph, and the session-start sweep
+reports "no instance recorded" as a **finding** rather than as silence.
+
 **The discipline is in the skill, not here** —
 [`skills/workflow/process-state.md`](cat-harness/skills/workflow/process-state.md)
-§"Say which process you are in" carries the format, and the rest of that skill
-carries the five detectors for being out of process and the recovery that
-confirms with the user before re-entering.
+§"Say which process you are in" carries the format and §"Naming it is not the
+same as recording it" carries that rule, and the rest of that skill carries the
+five detectors for being out of process and the recovery that confirms with the
+user before re-entering — a confirmation the owner may waive for a session or a
+process run ([`confirmation-waiver`](cat-harness/skills/folio-core/confirmation-waiver.md)).
 
 ## Working an issue — announce, then re-check
 

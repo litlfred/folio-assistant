@@ -558,6 +558,11 @@ jobs:
           # permission and carries none, so it fails here rather than at the
           # gate it claims to have opened.
           bun run check:waivers
+          # Bean `oh78`: a bean and its issue must reach each other. The
+          # bean -> issue direction and the tracked-issue reverse are checked
+          # here; the general reverse needs the API and prints as undetermined
+          # rather than as clean.
+          bun run check:bean-issue-links
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete

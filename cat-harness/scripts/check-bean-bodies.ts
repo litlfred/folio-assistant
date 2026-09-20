@@ -41,6 +41,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { repoRootFor } from "../schemas/cat-harness.js";
+
 import {
   CLOSED_STATUSES,
   OPEN_STATUSES,
@@ -199,7 +201,10 @@ function formatReport(r: BeanBodyReport): string {
 if (import.meta.main) {
   let report: BeanBodyReport;
   try {
-    report = checkBeanBodies(resolve("."));
+    // The REPOSITORY root, not the cwd: `beans/` is repository-scoped, and a
+    // run from anywhere else reads "no store" — a clean-looking answer to a
+    // question asked in the wrong place.
+    report = checkBeanBodies(repoRootFor(resolve(import.meta.dir, "..")));
   } catch (e) {
     console.error(`Could not check bean bodies: ${e instanceof Error ? e.message : e}`);
     console.error("This is NOT a pass. Treat it as unknown.");

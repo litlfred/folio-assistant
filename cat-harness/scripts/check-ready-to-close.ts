@@ -45,6 +45,8 @@
 
 import { resolve } from "node:path";
 
+import { repoRootFor } from "../schemas/cat-harness.js";
+
 import { CLOSED_STATUSES, readBeanFiles } from "./bean-store-read.ts";
 
 /** The tag. One spelling, named once. */
@@ -118,7 +120,10 @@ function formatReport(r: ReadyToCloseReport): string {
 if (import.meta.main) {
   let report: ReadyToCloseReport;
   try {
-    report = checkReadyToClose(resolve("."));
+    // The REPOSITORY root, not the cwd: `beans/` is repository-scoped, and a
+    // run from anywhere else reads "no store" — a clean-looking answer to a
+    // question asked in the wrong place.
+    report = checkReadyToClose(repoRootFor(resolve(import.meta.dir, "..")));
   } catch (e) {
     console.error(`Could not read the ready-to-close queue: ${e instanceof Error ? e.message : e}`);
     console.error("This is NOT an empty queue. Treat it as unknown.");

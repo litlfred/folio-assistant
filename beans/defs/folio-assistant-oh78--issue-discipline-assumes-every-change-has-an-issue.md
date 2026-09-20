@@ -1,13 +1,13 @@
 ---
 # folio-assistant-oh78
 title: 'ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T18:05:19Z
+updated_at: 2026-09-20T19:00:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -22,3 +22,30 @@ issue-working says a round summary goes on the ISSUE after each round, and that 
 ## Done when
 - [ ] issue-working says what a bean-driven change with no issue owes, and where
 - [ ] A bean opened from an issue (or an issue opened from a bean) carries the link both ways, and a check reports the ones that do not
+
+---
+
+_2026-09-20T19:00Z_ — **Done-when 1 landed** (PR #589, issue #588).
+`issue-working` §"When the work has a BEAN and no issue (STRICT)" says what is
+owed: a round summary either way, and with no issue it goes on the change
+proposal **and into the bean**, because the bean is the durable artefact a
+sibling reads and a summary living only in a PR thread is invisible to the work
+plan on `main`. It also states the both-ways link rule, with #558/`ivfw` and
+#464/`mggs` as the measured cases.
+
+**Done-when 2 is partly landed, and the part that is not is named rather than
+implied.** `bun run check:bean-issue-links` checks two directions and reports
+the third as undetermined every run:
+
+| direction | verdict |
+|---|---|
+| bean → issue | checked — 101 issues are named by an open bean |
+| issue → bean, for an issue tracked in `issue-marks/` | checked — both are named |
+| issue → bean, in general | **could not determine** — needs the GitHub API |
+
+The third row is printed rather than dropped, because a check reporting the
+first two as a clean bill of health would be asserting something about every
+issue in the repository on the evidence of two files.
+
+- [x] issue-working says what a bean-driven change with no issue owes, and where
+- [ ] A bean opened from an issue (or an issue opened from a bean) carries the link both ways, and a check reports the ones that do not — the API half is still unchecked
