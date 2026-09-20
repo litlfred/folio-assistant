@@ -54,43 +54,89 @@ const host = (extra: Record<string, unknown> = {}) => ({
 const tilesOf = (f: { repo: string; names: string[] }) =>
   harnessTiles(f.repo, join(f.repo, "host"), f.names);
 
-describe("the ORDER is read from the declaration, never from a name", () => {
-  test("an instance exempt from owing a visualiser sorts last", () => {
-    // cat-bootstrap's own renderExemption says it in those words — "cat-bootstrap
-    // IS the navbar footer" — so this reads the exemption. A checker that
-    // tested for the string would state a rule true only for the instance
-    // somebody remembered, which is bean `hfkl`'s whole argument.
+describe("the ORDER is the declared dependency stack, bottom to top", () => {
+  test("the spine reads foundation-last, which is the owner's sentence", () => {
+    // Owner, 2026-09-20: "So bootsteap, cat harness, fa-core, f-a, from bottom
+    // to top." Computed from `needs`, never written out as names.
     const f = fixture({
-      host: host(),
-      zeta: { name: "zeta", directories: [] },
-      alpha: {
-        name: "alpha",
+      host: host({ needs: [] }),
+      mid: { name: "mid", directories: [], needs: ["host"] },
+      top: { name: "top", directories: [], needs: ["mid"] },
+    });
+    expect(tilesOf(f).map((t) => t.name)).toEqual(["top", "mid", "host"]);
+  });
+
+  test("it is the DECLARATION, not alphabetical luck", () => {
+    // `a` sorts first by name and sits at the bottom by rule; a comparator
+    // that happened to agree with the alphabet would pass the test above.
+    const f = fixture({
+      host: host({ needs: ["a"] }),
+      a: { name: "a", directories: [], needs: [] },
+    });
+    expect(tilesOf(f).map((t) => t.name)).toEqual(["host", "a"]);
+  });
+
+  test("an instance that declares NO needs is undetermined, sits above the spine, and says so", () => {
+    // Absent is not `[]`. A node that needs nothing is free to sort first in
+    // `flattenDependencies`, which would put an unlabelled instance on the
+    // floor beside the bootstrap — asserting something nobody declared.
+    const f = fixture({
+      host: host({ needs: [] }),
+      top: { name: "top", directories: [], needs: ["host"] },
+      loose: { name: "loose", directories: [] },
+    });
+    const tiles = tilesOf(f);
+    expect(tiles.map((t) => t.name)).toEqual(["loose", "top", "host"]);
+    expect(tiles.find((t) => t.name === "loose")!.findings.join(" ")).toContain("alphabetical rather than derived");
+  });
+
+  test("the declared FLOOR is last even when its layer was never declared", () => {
+    // The second rule, and the reason it is kept separate: an exempt instance
+    // with no `needs` is undetermined, and undetermined floats to the top of
+    // the unplaced group — which would put the bootstrap above everything it
+    // underpins.
+    const f = fixture({
+      host: host({ needs: [] }),
+      boot: {
+        name: "boot",
         directories: [],
         renderExemption: { of: ["visualiser"], reason: "it is the floor", owes: "its own graph" },
       },
     });
-    expect(tilesOf(f).map((t) => t.name)).toEqual(["host", "zeta", "alpha"]);
+    const tiles = tilesOf(f);
+    expect(tiles[tiles.length - 1]!.name).toBe("boot");
+    expect(tiles[tiles.length - 1]!.footer).toBe(true);
   });
 
-  test("and it is the EXEMPTION, not alphabetical luck", () => {
-    // `alpha` sorts first by name and last by rule; a comparator that happened
-    // to agree with the alphabet would pass the test above by accident.
+  test("the two rules AGREE on the real repository — the floor is also the deepest layer", () => {
     const f = fixture({
-      host: host(),
-      alpha: {
-        name: "alpha",
+      host: host({ needs: ["boot"] }),
+      boot: {
+        name: "boot",
         directories: [],
+        needs: [],
         renderExemption: { of: ["visualiser"], reason: "floor", owes: "graph" },
       },
     });
-    const [, last] = tilesOf(f);
-    expect(last!.name).toBe("alpha");
-    expect(last!.footer).toBe(true);
+    expect(tilesOf(f).map((t) => t.name)).toEqual(["host", "boot"]);
   });
 
-  test("everything else is alphabetical, so the order does not depend on the disk", () => {
-    const f = fixture({ host: host(), zeta: { name: "zeta" }, beta: { name: "beta" } });
-    expect(tilesOf(f).map((t) => t.name)).toEqual(["beta", "host", "zeta"]);
+  test("a CYCLE is reported and falls back to alphabetical — it does not blank the navbar", () => {
+    // `flattenDependencies` returns an empty order on a broken graph, which is
+    // right for a pipeline and wrong for a sidebar: showing nothing hides
+    // every instance over one typo.
+    const f = fixture({
+      host: host({ needs: ["b"] }),
+      b: { name: "b", directories: [], needs: ["host"] },
+    });
+    const tiles = tilesOf(f);
+    expect(tiles.map((t) => t.name)).toEqual(["b", "host"]);
+    expect(tiles.flatMap((t) => t.findings).join(" ")).toContain("cycle");
+  });
+
+  test("a dependency naming no instance is reported, never silently dropped", () => {
+    const f = fixture({ host: host({ needs: ["ghost"] }) });
+    expect(tilesOf(f)[0]!.findings.join(" ")).toContain('needs "ghost"');
   });
 });
 

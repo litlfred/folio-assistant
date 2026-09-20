@@ -54,6 +54,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
+import { flattenDependencies } from "./dependency-order.js";
 import {
   type CatHarnessDeclaration,
   isExemptFrom,
@@ -104,6 +105,12 @@ export type HarnessTile = {
   genericAvatar: boolean;
   stats: HarnessStat[];
   visualisations: HarnessVisualisation[];
+  /**
+   * The instances this one sits on, as declared. `undefined` is UNDETERMINED
+   * — nobody has said — and is a different answer from `[]`, which is an
+   * instance asserting it sits on nothing.
+   */
+  needs?: readonly string[];
   /** Candidates with no published page, and any other honest gap. */
   findings: string[];
 };
@@ -225,6 +232,7 @@ function tileFor(
     title: decl.title ?? decl.name,
     description: decl.description ?? "",
     footer: isExemptFrom(decl, "visualiser"),
+    ...(decl.needs ? { needs: decl.needs } : {}),
     icon: icon ? { src: siteRelative(icon.src, siteDir), title: icon.title ?? "" } : null,
     tone: avatar.tone,
     reads: avatar.reads,
@@ -269,10 +277,109 @@ export function harnessTiles(
     tiles.push(tileFor(decl, handler, siteDir, dir === harnessRoot));
   }
 
-  // Sorted by name, then the footer instances moved to the end — a STABLE
-  // partition rather than a comparator, so two exempt instances keep their
-  // own order instead of depending on the sort's stability guarantees.
-  const body = tiles.filter((t) => !t.footer).sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
-  const foot = tiles.filter((t) => t.footer).sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
-  return [...body, ...foot];
+  return orderTiles(tiles);
+}
+
+const byName = (a: HarnessTile, b: HarnessTile) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+
+/**
+ * Top to bottom: the most derived instance first, the floor last.
+ *
+ * The owner, 2026-09-20, giving the spine in one sentence:
+ *
+ * > So bootsteap, cat harness, fa-core, f-a, from bottom to top.
+ *
+ * That is **dependency order, reversed** — the foundation at the bottom and
+ * what is built on it above, which is how a layer diagram is drawn everywhere
+ * else in this repository. So it is computed from the declared `needs` rather
+ * than written out as four names: a list of names would be a rule true only
+ * for the instances somebody remembered, which is exactly why
+ * `cat-bootstrap`'s footer position is read from its declared exemption
+ * instead of from its name.
+ *
+ * ## The sort is `flattenDependencies`, not a second topological sort
+ *
+ * `dependency-order.ts` exists because *"a repeatable subprocess is a thing
+ * with one implementation"* — its own words, and it names four callers that
+ * would otherwise each write their own. This is the fourth. `fatal` is
+ * required there because a RUNNER must not inherit a failure policy nobody
+ * chose; nothing is run here, so every step takes `false` and the field is
+ * carried rather than consulted.
+ *
+ * ## An instance with no declared layer is UNDETERMINED, and says so
+ *
+ * `flattenDependencies` is free to put a node that needs nothing first, so an
+ * unlabelled instance would land on the floor beside the bootstrap — asserting
+ * something nobody declared. They are partitioned out instead and listed
+ * above the spine, alphabetically, with a finding. Absent is not `[]`.
+ *
+ * ## A broken graph does not blank the navbar
+ *
+ * `flattenDependencies` returns an EMPTY order when it finds a cycle or a
+ * missing dependency, which is right for a pipeline — a partial order over a
+ * broken graph is the shape that gets run anyway. A sidebar is not a pipeline:
+ * showing nothing hides every instance over one typo. So the problems are
+ * reported on the tiles and the list falls back to alphabetical, which is
+ * undetermined rather than wrong.
+ */
+export function orderTiles(tiles: readonly HarnessTile[]): HarnessTile[] {
+  const known = new Set(tiles.map((t) => t.name));
+  const needed = new Set(tiles.flatMap((t) => [...(t.needs ?? [])]));
+  const spine = tiles.filter((t) => t.needs !== undefined || needed.has(t.name));
+  const unplaced = tiles.filter((t) => !spine.includes(t)).sort(byName);
+  for (const t of unplaced) {
+    t.findings.push(
+      `${t.name}: declares no \`needs\`, so its place in the stack is alphabetical rather than derived.`,
+    );
+  }
+
+  const { order, problems } = flattenDependencies(
+    // Declaration order is what `flattenDependencies` breaks ties on, so the
+    // input is sorted by name: two instances on the same layer then read
+    // alphabetically instead of in whichever order the directory was walked.
+    [...spine].sort(byName).map((t) => ({
+      id: t.name,
+      needs: (t.needs ?? []).filter((n) => known.has(n)),
+      fatal: false,
+    })),
+  );
+  const dangling = spine.flatMap((t) =>
+    (t.needs ?? [])
+      .filter((n) => !known.has(n))
+      .map((n) => `${t.name}: needs "${n}", which names no instance in this tree.`),
+  );
+  for (const p of [...problems.map((p) => p.detail), ...dangling]) {
+    const owner = tiles.find((t) => p.startsWith(`${t.name}:`)) ?? tiles[0];
+    owner?.findings.push(p);
+  }
+  if (problems.length > 0) return [...tiles].sort(byName);
+
+  const byId = new Map(spine.map((t) => [t.name, t]));
+  // REVERSED: `flattenDependencies` yields foundation-first, and the owner
+  // asked for bottom-to-top.
+  const stack = [...order].reverse().map((s) => byId.get(s.id)!);
+  return floorLast([...unplaced, ...stack]);
+}
+
+/**
+ * The declared floor goes last, whatever the dependency graph said.
+ *
+ * TWO RULES THAT AGREE TODAY, kept as two on purpose. The dependency order
+ * puts `cat-bootstrap` last because it is what everything sits on; its own
+ * `renderExemption` puts it last because *"cat-bootstrap IS the navbar
+ * footer"*. In this repository they give the same answer, and a test asserts
+ * it.
+ *
+ * They are not the same rule, though, and collapsing them would lose the one
+ * that survives a missing declaration: an instance that declares no `needs`
+ * is undetermined and would float to the top of the unplaced group, so a
+ * bootstrap whose layer nobody wrote down would land ABOVE everything it
+ * underpins. The exemption is the fact that does not depend on the ordering
+ * having been declared, so it is applied last and wins.
+ *
+ * A stable partition rather than a comparator, so two exempt instances keep
+ * the order the stack gave them.
+ */
+function floorLast(tiles: readonly HarnessTile[]): HarnessTile[] {
+  return [...tiles.filter((t) => !t.footer), ...tiles.filter((t) => t.footer)];
 }
