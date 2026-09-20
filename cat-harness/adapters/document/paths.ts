@@ -43,7 +43,7 @@ export const get = {
   // declared-path-literal: the convention fallback for a WRITE target —
   // see adapters/mcp-server/paths.ts for the reasoning.
   // The declared `uploads` graph, falling back to the convention because
-  // this is a WRITE target: `directoryForGraph` returns undefined for a
+  // this is a WRITE target: `directoriesForGraph` returns undefined for a
   // directory that is not there yet, and the ingestion queue has to be
   // creatable before anything has been dropped in it.
   UPLOADS_DIR: () => directoryForGraph(_repoRoot, "uploads") ?? resolve(_repoRoot, "uploads"),

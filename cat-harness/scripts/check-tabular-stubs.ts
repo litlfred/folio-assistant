@@ -37,7 +37,7 @@ import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { tools } from "../tools/index.ts";
 import { TabularCsvwSchema } from "../schemas/tabular-csvw.ts";
 
@@ -115,14 +115,35 @@ export function stubFindings(
 }
 
 function run(): number {
-  const lib = directoryForGraph(ROOT, "library");
-  if (!lib || !existsSync(lib)) {
+  // EVERY declared library, not the one.
+  //
+  // This read `directoryForGraph(ROOT, "library")`, which was right while the
+  // platform held the corpus and refuses — loudly, by name — now that it does
+  // not. Bean `frs5` moved the four entries into `who-iris/` and
+  // `folio-assist-sci/`, and `wwi6`'s inheritance guarantee kept a third,
+  // empty declaration here, so `library` has three homes.
+  //
+  // THE REFUSAL IS THE DESIGN WORKING. `a02m` migrated every
+  // `directoriesForGraph(…)[0]` and added a test that fails on a new one, but
+  // this site spells the assumption with main's accessor instead, so that test
+  // never saw it. What caught it was the accessor itself, in CI, naming all
+  // three candidates — which is exactly the difference between an assumption
+  // that is visible and one that is checked.
+  //
+  // A scanner, so it fans out: this is an EXPIRY check over ingested
+  // documents, and scanning one of three libraries would report every stub in
+  // the other two as expired-nowhere — a clean run over the documents that
+  // actually carry them.
+  const libs = directoriesForGraph(ROOT, "library").filter((d) => existsSync(d));
+  if (libs.length === 0) {
     console.error("Could not resolve a `library` directory. This is NOT a pass.");
     return 2;
   }
-  const entries = readdirSync(lib)
-    .map((d) => join(lib, d))
-    .filter((d) => statSync(d).isDirectory());
+  const entries = libs.flatMap((lib) =>
+    readdirSync(lib)
+      .map((d) => join(lib, d))
+      .filter((d) => statSync(d).isDirectory()),
+  );
 
   // Read from the tool declarations rather than a literal here.
   let stubbed: Set<string>;

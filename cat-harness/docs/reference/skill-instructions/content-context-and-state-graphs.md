@@ -23,9 +23,13 @@ about it, or a record it may write from one it may not.
 
 | layer | the process… | example |
 |---|---|---|
-| **`content`** | produces it — that is usually the point | a skill, a schema, a library section |
+| **`content`** | produces it — that is usually the point | a skill, a schema, a folio chapter |
 | **`context`** | **reads it and never writes it**. Static for the duration of an instance; it changes only when a human directs an authoring act, outside any process | an agent-memory entry |
 | **`state`** | **writes it as it runs** — a bean's status changes because a step completed | a bean, a workflow instance, a QA verdict |
+| **`derived`** | produces it **from a source**, and would regenerate it rather than re-author it. Not the working corpus | a `library/` section |
+
+**`content`'s example used to be "a library section" and that was wrong** —
+see §"The case that added `derived`" below. It is a folio chapter now.
 
 It is `holds` on `GraphKindDef` in `schemas/cat-harness.ts`, and it is
 **required**: `tsc` refuses a kind that has not said.
@@ -43,6 +47,9 @@ they have agreed with each other in every case here.
 instructs, a schema still constrains, a library section still reads. A bean
 names work on something that is no longer there; a QA verdict judges an absent
 subject. **If detaching it empties it, it is not content.**
+
+(A library section passes this and is still not `content` — standing on its own
+rules out `state`, not `derived`. The section below is that case.)
 
 **Would you regenerate it or re-author it?** Content and context are *written*
 by somebody with an intention. Live state is *arrived at* — re-running is how
@@ -142,6 +149,43 @@ is the position this axis exists to end.
 `renderable` and `holds`, so two layers registering one name on different
 layers is a conflict that throws rather than a diamond where the first silently
 wins. `summary`, `skill` and `schema` are descriptive and are not compared.
+
+## The case that added `derived` — `library/`, 2026-09-20
+
+The fourth layer exists because the two supporting questions **disagreed**, and
+the instruction above is to say so rather than pick. This is what saying so
+looked like.
+
+Owner, 2026-09-20: *"library is static (only if we materialize assets or
+not)"* and *"can duplicate asset into a folio and work there."* Bean `hqku`.
+
+| question | answer for a `library/` section |
+|---|---|
+| does a process write it? | **yes** — `document-ingestion.bpmn` |
+| does it stand on its own? | **yes** — a section still reads. Says `content` |
+| regenerate, or re-author? | **regenerate**, from the ingested source. Says not-content |
+
+Both candidate answers were wrong, and each was ruled out by a rule rather
+than by taste:
+
+- **`context` is ruled out** because it carries *"a step that writes to it is a
+  defect, not an update"* — and a declared process writes `library/`. Choosing
+  it would have made `document-ingestion` a defect by this axis's own rule.
+- **`content` is ruled out** by the sweep rule, *"qa-sweep is only on
+  active/working content"* (owner, same day). A QA finding against a derived
+  section is a finding against its **generator**, so a sweep that judges
+  `library/` sends a reviewer to fix the wrong file.
+
+What `derived` buys, concretely: `walkBlocks` skips a directory whose declared
+graphs are all non-`content`, so `library/` leaves the sweep **with no
+directory name written down anywhere** — the same way `fsh-guts/` did. A
+hardcoded skip would have been the alternative, and a hardcoded path is what
+this declaration exists to remove.
+
+**What it does NOT mean.** `derived` is not "unimportant" and not "not
+committed". `library/` is L1 corpus, committed and greppable, and every
+knowledge-graph reference to a source still resolves through it. The layer says
+where a *finding* belongs, not what the material is worth.
 
 ## Classifying a kind is not a ruling on a directory's contents
 

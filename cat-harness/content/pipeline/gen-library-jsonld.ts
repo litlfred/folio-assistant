@@ -71,7 +71,7 @@ import { join } from "path";
 import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 // The `folio` graph kind is registered by CORE on import
@@ -525,26 +525,54 @@ async function run(): Promise<number> {
   const only = argv.includes("--doc") ? argv[argv.indexOf("--doc") + 1] : undefined;
 
   const root = findContentRepoRoot();
+  // EVERY declared library, not the one. This GENERATES the JSON-LD the whole
+  // corpus is read through, so a library it skips is a set of documents that
+  // exist on disk and nowhere in the graph, with a clean exit code over them.
+  //
+  // `directoryForGraph` REFUSES here — `library` has three homes since bean
+  // `frs5` — which is the accessor doing its job rather than picking one.
+  //
   // declared-path-literal: the convention fallback, at the call site so the
-  // choice is visible. An absent directory is already handled below as
-  // "nothing to ingest", which is the determined-empty third state.
-  const libraryDir = directoryForGraph(root, "library") ?? join(root, "library");
-  if (!existsSync(libraryDir)) {
+  // choice is visible. An absent directory is handled below as "nothing to
+  // ingest", which is the determined-empty third state.
+  const declaredLibraries = directoriesForGraph(root, "library");
+  const libraryDirs = (declaredLibraries.length > 0 ? declaredLibraries : [join(root, "library")]).filter(
+    (d) => existsSync(d),
+  );
+  if (libraryDirs.length === 0) {
     console.log(`gen-library-jsonld: no library/ under ${root} — nothing to ingest.`);
     return 0;
   }
 
-  const docs = readdirSync(libraryDir)
-    .filter((d) => !d.startsWith("."))
-    .filter((d) => (only ? d === only : true))
-    .filter((d) => {
+  // A document is (id, WHICH library), because an id alone no longer locates
+  // one. A slug in two libraries is REFUSED rather than merged: node ids are
+  // composed from the slug, so ingesting both would overwrite one and the next
+  // run would look idempotent.
+  const docs: Array<{ docId: string; dir: string }> = [];
+  const seen = new Map<string, string>();
+  for (const libraryDir of libraryDirs) {
+    for (const d of readdirSync(libraryDir).sort()) {
+      if (d.startsWith(".")) continue;
+      if (only && d !== only) continue;
+      const dir = join(libraryDir, d);
       try {
-        return statSync(join(libraryDir, d)).isDirectory();
+        if (!statSync(dir).isDirectory()) continue;
       } catch {
-        return false;
+        continue;
       }
-    })
-    .sort();
+      const prior = seen.get(d);
+      if (prior !== undefined) {
+        console.error(
+          `gen-library-jsonld: slug "${d}" is declared in two libraries — ` +
+            `${prior} and ${dir}. Node ids are composed from the slug, so ingesting ` +
+            `both would silently overwrite one. Rename one, or declare only one library.`,
+        );
+        return 1;
+      }
+      seen.set(d, dir);
+      docs.push({ docId: d, dir });
+    }
+  }
 
   const prune = argv.includes("--prune");
   const orphans: string[] = [];
@@ -560,8 +588,7 @@ async function run(): Promise<number> {
   // as "never ingested" — naming the wrong cause and the wrong fix.
   const unreadable: string[] = [];
 
-  for (const docId of docs) {
-    const dir = join(libraryDir, docId);
+  for (const { docId, dir } of docs) {
     const outcome = buildEntryNodes(docId, dir);
     if (outcome.state === "unreadable") {
       unreadable.push(docId);

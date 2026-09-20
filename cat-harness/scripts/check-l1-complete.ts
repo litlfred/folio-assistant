@@ -44,7 +44,7 @@
  */
 // `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
 // and this module resolves a DECLARED directory. Without it the first
-// `directoryForGraph` throws `unknown graph kind "folio"`. Measured
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
 // 2026-09-20 across the 20 modules that resolve a declared directory: 10
 // threw, including `narratives.ts` and the `translation` MCP tool, while
 // every gate and all 3298 tests passed — nothing covered the path.
@@ -54,7 +54,7 @@
 // harness alone never sees it (schemas/folio-graph-kind.ts says so).
 import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import {
   ARCHIVE_CONTENTS_SCHEMA_ID,
@@ -70,7 +70,7 @@ import {
 } from "../schemas/tabular-records.ts";
 import { DESCRIBABLE_ROLES, ImagesSidecarSchema } from "../schemas/document-image.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
-import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 export type State = "met" | "unmet" | "not-derivable";
@@ -83,6 +83,18 @@ export interface Requirement {
 
 export interface EntryReport {
   slug: string;
+  /**
+   * The library this entry is in, repo-relative — present only when there is
+   * more than one, so a single-library instance's output is unchanged.
+   *
+   * A slug alone stopped locating an entry when `library` gained a second home
+   * (bean `frs5`): the report printed `library/milnorlink/` and
+   * `library/who-pub-tps-931/` identically while they sat in different
+   * instances. Same reasoning as the per-directory root names in
+   * `graph-index.ts` and the MCP server's GRAPH_ROOTS — a line that says where
+   * something came from is useless the moment two sources share a name.
+   */
+  library?: string;
   requirements: Requirement[];
 }
 
@@ -704,9 +716,13 @@ export function checkEntry(dir: string): EntryReport {
  * falls back to the directory this module lives in.
  */
 export function instanceRootFor(cwd: string): string | undefined {
-  if (directoryForGraph(cwd, "library")) return cwd;
+  // `.length > 0`, not `[0]`. The question here is PRESENCE — does this root
+  // declare a library at all — and asking it by indexing reads as though the
+  // first one mattered. It never did here, and after bean `a02m` a root may
+  // declare several.
+  if (directoriesForGraph(cwd, "library").length > 0) return cwd;
   const own = resolve(import.meta.dir, "..");
-  return directoryForGraph(own, "library") ? own : undefined;
+  return directoriesForGraph(own, "library").length > 0 ? own : undefined;
 }
 
 /**
@@ -719,13 +735,43 @@ export function instanceRootFor(cwd: string): string | undefined {
  */
 export function checkAll(root: string): EntryReport[] | undefined {
   // Declared, not composed — see `libraryRoot` in `ingest-document.ts` for why.
-  const lib = directoryForGraph(root, "library");
-  if (!lib) return undefined;
-  if (!existsSync(lib)) return [];
-  return readdirSync(lib)
-    .filter((d) => statSync(join(lib, d)).isDirectory())
-    .sort()
-    .map((d) => checkEntry(join(lib, d)));
+  //
+  // EVERY declared library. This is the L1 COMPLETENESS gate, and the one
+  // failure it must never have is reporting a complete pass over part of the
+  // corpus — which is exactly what it did when it ran from the repository
+  // root and checked nothing (the comment on `instanceRootFor` above). Half
+  // is the same bug as none, with better camouflage: none at least yields the
+  // `undefined` third state. `directoriesForGraph(...)[0]` until bean `a02m`.
+  const libs = directoriesForGraph(root, "library");
+  if (libs.length === 0) return undefined;
+  const out: EntryReport[] = [];
+  // A slug in two libraries is REFUSED, not merged. The committed sidecar is
+  // `library-qa/<slug>.qa-results.json` — keyed on the slug alone — so two
+  // entries sharing one would write over each other's verdict and the second
+  // run would look idempotent. `gen-library-jsonld` refuses the same collision
+  // for the same reason, and this does not delegate to it: a gate that relies
+  // on a DIFFERENT tool having run is a gate with a hole in it.
+  const seen = new Map<string, string>();
+  for (const lib of libs) {
+    if (!existsSync(lib)) continue;
+    for (const d of readdirSync(lib).sort()) {
+      if (!statSync(join(lib, d)).isDirectory()) continue;
+      const prior = seen.get(d);
+      if (prior !== undefined) {
+        throw new Error(
+          `slug "${d}" appears in two libraries — ${prior} and ${join(lib, d)}. ` +
+            `The committed verdict is keyed on the slug alone, so one would silently ` +
+            `overwrite the other. Rename one.`,
+        );
+      }
+      seen.set(d, join(lib, d));
+      out.push({
+        ...checkEntry(join(lib, d)),
+        library: libs.length > 1 ? relative(root, lib) : undefined,
+      });
+    }
+  }
+  return out;
 }
 
 /**
@@ -829,7 +875,10 @@ function format(reports: EntryReport[]): string {
   const out: string[] = [];
   for (const r of reports) {
     const unmet = r.requirements.filter((q) => q.state === "unmet");
-    out.push(`${unmet.length ? "✗" : "✓"} library/${r.slug}/`);
+    // `<library>/<slug>/` when several libraries are in play, `library/<slug>/`
+    // when there is only one — an instance with a single library reads exactly
+    // as it always did.
+    out.push(`${unmet.length ? "✗" : "✓"} ${r.library ?? "library"}/${r.slug}/`);
     for (const q of r.requirements) {
       if (q.state === "not-derivable") continue;
       out.push(`    ${mark[q.state]} ${q.name.padEnd(16)} ${q.detail}`);
@@ -880,11 +929,16 @@ if (import.meta.main) {
   // `images.json`.
   if (!target) {
     const libRoot = instanceRootFor(resolve("."));
-    const lib = libRoot ? directoryForGraph(libRoot, "library") : undefined;
-    if (lib && existsSync(lib)) {
-      const dirs = readdirSync(lib)
-        .map((d) => join(lib, d))
-        .filter((d) => statSync(d).isDirectory());
+    // Across EVERY declared library: an exception that has expired in the
+    // second one is a gate lying about its coverage just as much as one that
+    // expired in the first. Bean `a02m`.
+    const libs = libRoot ? directoriesForGraph(libRoot, "library").filter((d) => existsSync(d)) : [];
+    if (libs.length > 0) {
+      const dirs = libs.flatMap((lib) =>
+        readdirSync(lib)
+          .map((d) => join(lib, d))
+          .filter((d) => statSync(d).isDirectory()),
+      );
       const expired = expiredExceptions(dirs, (d, f) => existsSync(join(d, f)));
       if (expired.length) {
         console.error("A `not-derivable` claim has EXPIRED — the arm now runs:");

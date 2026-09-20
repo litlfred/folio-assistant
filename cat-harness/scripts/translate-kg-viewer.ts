@@ -59,7 +59,7 @@ const root = resolve(import.meta.dir, "..");
  * tree for a locale that has none yet.
  *
  * declared-path-literal: the convention fallback, stated at the call site
- * rather than inside `directoryForGraph` so the choice is visible.
+ * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
   return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");

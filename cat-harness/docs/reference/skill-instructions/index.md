@@ -55,6 +55,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Activity log](activity-log.html) | `activity-log` | — | **Write an entry when you start a task, when you end one, and whenever you |
 | [Subagent memory](agent-memory.html) | `agent-memory` | — | A subagent declaring project memory gets its own directory; the first **200 |
+| [Asset extraction](asset-extraction.html) | `asset-extraction` | — | A container arrives in `uploads/`: a zip of a saved web page, a PDF, a |
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [bib-human-review](bib-human-review.html) | `bib-human-review` | — | Status sidecar: `content/schema/references.review.json`. |
@@ -73,7 +74,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
 | [Covered is not reachable](covered-is-not-reachable.html) | `covered-is-not-reachable` | — | **A skill can be satisfied by the *neighbours* of its mechanism while the |
-| [Create a sticky note](create-sticky-note.html) | `create-sticky-note` | — | A sticky note is a **carried note**: something a person or agent sticks onto the |
 | [Data modelling](data-modelling.html) | `data-modelling` | — | **One question, and everything else follows from it:** |
 | [A decision is not a finding, and neither is a substitute for the other](decision-audit.html) | `decision-audit` | — | A **finding** is an observation — a checker, an agent or a person saw something. |
 | [The comparison goes BEFORE the question, not inside the options](decision-comparison.html) | `decision-comparison` | — | [`interaction-modality`](interaction-modality.md) §4.1 fixes the *order* — |
@@ -94,6 +94,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/getting-started](getting-started.html) | `getting-started` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn). |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Capability: `review` · Package: `folio-core` |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
+| [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
 | [/integration-audit](integration-audit.html) | `integration-audit` | — | A maintenance command for the multi-axis QA-sidecar pipeline (`voice`, |
@@ -104,7 +105,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
 | [Offering the knowledge graph](kg-contribution-offer.html) | `kg-contribution-offer` | — | Owner, 2026-09-20: *"update CRDM process that when a user is done with |
 | [KG export](kg-export.html) | `kg-export` | — | **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph |
-| [Reading the knowledge graph](kg-navigation.html) | `kg-navigation` | — | You are in a fresh container. You have a task, a filesystem, and no memory of |
 | [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
 | [Library ingestion](library-ingestion.html) | `library-ingestion` | — | `uploads/` and `library/` are two stages of **one** pipeline. `uploads/` is the |
 | [Markdown Render Check](markdown-render-check.html) | `markdown-render-check` | — | git diff HEAD~1 HEAD --name-only -- '*.md' |
@@ -137,14 +137,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
-| [Site presentation assets](site-presentation-assets.html) | `site-presentation-assets` | — | **A visual fact has one home, and it is a node in the knowledge graph.** A |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Capability: `review` · Package: `folio-core` |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
-| [Theme art intake](theme-art-intake.html) | `theme-art-intake` | — | Art arrives — three crops for a theme or an avatar — and the answer is either |
 | [Post-MVP, because there is nothing to check before there is a render](theme-ui-review.html) | `theme-ui-review` | — | The owner, 2026-09-20: theme choice is *"authoring (human/agentic) |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
@@ -241,6 +239,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [scientific-visualization](scientific-visualization.html) | `scientific-visualization` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
 | [smart-launch](smart-launch.html) | `smart-launch` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
 
+## Theming (theming)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Create a sticky note](create-sticky-note.html) | `create-sticky-note` | — | A sticky note is a **carried note**: something a person or agent sticks onto the |
+| [Site presentation assets](site-presentation-assets.html) | `site-presentation-assets` | — | **A visual fact has one home, and it is a node in the knowledge graph.** A |
+| [Theme art intake](theme-art-intake.html) | `theme-art-intake` | — | Art arrives — three crops for a theme or an avatar — and the answer is either |
+
 ## Workflow & process (workflow)
 
 | Skill | Id | Schema | Summary |
@@ -282,6 +288,24 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Corpus-Grep](corpus-grep.html) | `corpus-grep` | — | > **Disambiguation.** This skill formalizes the **backward** check |
+
+## Knowledge-graph navigation (tooled)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Reading the knowledge graph](kg-navigation.html) | `kg-navigation` | — | You are in a fresh container. You have a task, a filesystem, and no memory of |
+
+## Large data sets (subsetting, materializing, publishing)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
+
+## WHO IRIS (catalogue instance)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
 
 ## Local skills (.claude/skills/local)
 

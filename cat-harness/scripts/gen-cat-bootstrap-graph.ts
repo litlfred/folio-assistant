@@ -74,10 +74,23 @@ const PROV = "http://www.w3.org/ns/prov#";
 /** The document, as a pure function of the cat-bootstrap instance on disk. */
 export async function buildCatBootstrapDocument(
   root: string = CAT_BOOTSTRAP,
+  baseUrl?: string,
 ): Promise<Record<string, unknown>> {
   const decl = readDeclaration(root);
   const name = decl?.name ?? "cat-bootstrap";
-  const docIri = `${decl?.canonicalUrl ?? `https://litlfred.github.io/folio-assistant/${name}`}/${name}.jsonld`;
+  // `baseUrl` is how a STAGING build says where this copy actually lives.
+  //
+  // Without it the document names itself by the canonical URL whatever tree it
+  // was written into, so a staged copy asserts it lives on the live site —
+  // which is arguably worse than the 404 it replaces, because a reader
+  // following the `@id` lands on a DIFFERENT document that looks right. Bean
+  // `35kc`: staging published no namespace documents and no cat-bootstrap graph
+  // at all, so a staged knowledge-graph change had a vocabulary that
+  // dereferenced to nothing. `kg-export.ts` already took `--base-url` for
+  // exactly this; this generator did not, and that asymmetry is why the staging
+  // fix could not just copy the live build's step.
+  const base = baseUrl ?? decl?.canonicalUrl ?? `https://litlfred.github.io/folio-assistant/${name}`;
+  const docIri = `${base}/${name}.jsonld`;
 
   const problems: string[] = [];
   const { nodes, omitted } = await collectInstanceNodes(root, docIri, "", problems);
@@ -149,7 +162,14 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const doc = await buildCatBootstrapDocument();
+  const baseFlag = process.argv.indexOf("--base-url");
+  if (baseFlag >= 0 && (process.argv[baseFlag + 1] ?? "").length === 0) {
+    console.error("✗ --base-url needs a URL");
+    process.exit(1);
+  }
+  const baseUrl = baseFlag >= 0 ? process.argv[baseFlag + 1] : undefined;
+
+  const doc = await buildCatBootstrapDocument(CAT_BOOTSTRAP, baseUrl);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(doc, null, 2) + "\n");
 

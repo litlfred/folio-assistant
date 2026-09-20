@@ -11,7 +11,7 @@
  *
  * The consequence is not deliberate. Whether a script works depends on whether
  * something in its import graph happened to pull that module in. Measured
- * 2026-09-20 across the 20 modules that call `directoryForGraph`: **10 threw**
+ * 2026-09-20 across the 20 modules that call `directoriesForGraph`: **10 threw**
  * `unknown graph kind "folio"` on their first call — among them
  * `scripts/narratives.ts`, the human review queue, and `src/tools/translation.ts`,
  * an MCP tool.
@@ -56,7 +56,13 @@ function modulesResolvingADirectory(): string[] {
         continue;
       }
       if (!e.endsWith(".ts") || e.includes(".test.")) continue;
-      if (readFileSync(p, "utf-8").includes("directoryForGraph(")) {
+      // Any of the three accessors — they share a registry, so a module that
+      // reaches it through `directoryForGraph` can throw `unknown graph
+      // kind` exactly as one calling the plural form can. Scanning for the
+      // plural name alone would have quietly dropped every module bean `a02m`
+      // migrated, which is the whole population this test exists to cover.
+      const src = readFileSync(p, "utf-8");
+      if (/\b(directoriesForGraph|directoryForGraph|instanceDirectoryForGraph)\(/.test(src)) {
         out.push(relative(ROOT, p));
       }
     }
@@ -77,7 +83,7 @@ describe("a module that resolves a declared directory can resolve one", () => {
 
   test("IMPORTING one writes nothing — an entry point must be guarded", () => {
     // This test file caused the defect it now guards. It imports every module
-    // that calls `directoryForGraph`, and one of them —
+    // that calls `directoriesForGraph`, and one of them —
     // `scripts/translation/simulate-translation.ts` — ended in a bare
     // `main();` rather than `if (import.meta.main) main();`. So the import
     // RAN the translation simulation, which writes four files under
@@ -110,8 +116,14 @@ describe("a module that resolves a declared directory can resolve one", () => {
           "bun",
           "-e",
           `import "./${m}";` +
-            `import { directoryForGraph } from "./schemas/cat-harness.js";` +
-            `directoryForGraph(".", "library");`,
+            `import { directoriesForGraph, directoryForGraph, instanceDirectoryForGraph }` +
+            ` from "./schemas/cat-harness.js";` +
+            // All THREE accessors, because all three go through the same
+            // registry and any of them can be the first call a module makes.
+            // Testing only the plural one would leave the two added by bean
+            // `a02m` un-probed in exactly the modules that now use them.
+            `directoriesForGraph(".", "library"); directoryForGraph(".", "library");` +
+            ` instanceDirectoryForGraph(".", "library");`,
         ],
         { cwd: ROOT },
       );

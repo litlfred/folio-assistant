@@ -3,8 +3,9 @@
 title: Drain the wrong-direction import edges so the repo split can cut
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-19T00:54:54Z
+updated_at: 2026-09-20T18:31:16Z
 parent: folio-assistant-vke6
 ---
 
@@ -271,3 +272,38 @@ Verified: `bun run check:partition` reports 4 with 0 unassigned; `bun test`
 | `schemas/index.ts` | `schemas/dak-blocks.ts` | barrel crossing a layer; drop the re-export or reclassify `dak-blocks` |
 | `scripts/check-workflow-refs.ts` | `schemas/translation-tools.ts` | already lazy; invert or reclassify the script |
 | `src/types.ts` | `schemas/types.ts` | `import type` only, and **this edge is the fix** for a drifted `FeedbackItem`; the answer is to move the type down, not delete the import |
+
+
+## RE-MEASURED 2026-09-20, after #477 — the count is now 0
+
+`bun run check:partition --edges` on `main` at `4cdd77d7d8`:
+
+```
+Partition — 679 modules, 1534 internal import edges
+  agentic-harness    163   folio-assist-core  177   folio-asst-sci  40
+  smart-kg             0   smart-base           6   (test material) 293
+  unassigned           0
+Wrong-direction edges: 0
+Edges touching an unassigned module: 0
+```
+
+The bean's body records **4** remaining, measured 2026-09-19 and each named
+with its fix (`harness-config.ts`→`contributions.ts`,
+`schemas/index.ts`→`dak-blocks.ts`, `check-workflow-refs.ts`→
+`translation-tools.ts`, `src/types.ts`→`schemas/types.ts`). All four are
+gone, and `unassigned` is 0 as well, so this is not the vacuous reading the
+tool warns about — a classification gap would show there rather than as a
+clean edge count.
+
+**This matters beyond the bean.** `vke6` names this as the gate for the whole
+cut: *"a lower layer importing from a higher one becomes a circular
+dependency BETWEEN REPOSITORIES the moment the cut happens, so that count has
+to reach zero before anything else here is safe."* On this measurement the
+gate is clear and `wggr` / `b5f0` / `zmdo` are no longer waiting on it.
+
+Recorded rather than resolved: this bean belongs to another session, and
+`bean-coordination` says never resolve a sibling's. Whoever owns it should
+check the four fixes actually landed (rather than the edges being hidden by a
+re-classification under #477's new instances) and then close it.
+
+_Recorded by session_017PqeiS4JYySSWGAYLedmus._
