@@ -55,7 +55,8 @@ import { findContentRepoRoot } from "./repo-root";
 // artifact. That exact mistake once left the whole detangler axis reporting
 // `n/a` while looking healthy; see the note on CONTENT_DIR in
 // qa-checkers-extended.ts.
-const CONTENT_DIR = join(findContentRepoRoot(), "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_DIR = join(findContentRepoRoot(), "folio");
 
 interface BlockEntry {
   derived: string[];

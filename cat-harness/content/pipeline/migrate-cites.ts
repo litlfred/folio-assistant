@@ -26,7 +26,8 @@ const BUILDER_RE = new RegExp(`(${BLOCK_KIND_ALT})\\(`);
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT_ROOT = join(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_ROOT = join(REPO_ROOT, "folio");
 const args = process.argv.slice(2);
 const dryRun = !args.includes("--write");
 

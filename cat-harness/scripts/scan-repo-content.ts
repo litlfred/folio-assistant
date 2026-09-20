@@ -269,7 +269,7 @@ export function formatScan(r: ScanResult): string {
   const order: Bucket[] = ["library", "content", "unclassified"];
   const label: Record<Bucket, string> = {
     library: "library/ — source material somebody else wrote",
-    content: "content/ — prose authored here",
+    content: "folio/ — prose authored here",
     unclassified: "unclassified — I could not tell; you decide",
   };
 

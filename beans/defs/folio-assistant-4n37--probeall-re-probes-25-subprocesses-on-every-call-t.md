@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4n37
-title: probeAll re-probes 25 subprocesses on every call — three tests in one file spawn 75
+title: probeAll re-probes EVERY declared capability on every call — 26 today, ~78 spawns per test file run
 status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T11:44:34Z
-updated_at: 2026-09-20T11:45:03Z
+updated_at: 2026-09-20T12:17:10Z
 parent: folio-assistant-d308
 ---
 
@@ -97,3 +97,35 @@ until somebody has a measurement saying otherwise.
       installs something and re-probes, not by a comment promising it works
 - [ ] the spawn count per run of `degradation.test.ts` measured after the change,
       so the claim is a number rather than "should be faster"
+
+
+---
+
+## CORRECTED 2026-09-20 — the count, and who else hit this
+
+**26 capabilities, not 25.** Re-measured after merging main. The figure above was
+right when taken and is wrong now, which is the point main's own comment makes:
+*"26 today, and the count only grows."* So a bean quoting the number needs it
+re-derived, not read.
+
+So one run of `degradation.test.ts` spawns about **78** processes, not 75.
+
+**Main fixed the symptom independently, and better.** Two sessions reached the same
+30 s budget from different commits: main at `a38fc2e3a3` (5012.69 ms) and a feature
+branch at `4946c142e7` (5011.41 ms). With the two on this branch — `9268d23`
+5007.52 ms, `33edd5ab` 5008.06 ms, against `89d9dfee` passing at 822.85 ms — that is
+**four failures across three sessions, every one within ~13 ms of the limit**, and
+the single pass nowhere near it. The signature of a test sitting exactly on its
+budget, not of anything in a diff.
+
+Main's rationale was also placed better — above the `test(` call rather than inside
+it — and made a point I had not: 30 s still **fails fast if the probe ever genuinely
+hangs**. The merge took main's version wholesale and folded in only what it lacked:
+the JVM contention evidence, the two extra SHAs, and this bean's pointer. Keeping
+two overlapping "why 30 s" comments is the drift this repo keeps paying for.
+
+**What this changes for the bean: nothing about the recommendation, and one thing
+about its urgency.** Option 4 — probe once per file in a `beforeAll` — is still the
+change with no correctness question attached. But four independent sessions have now
+spent time on this symptom, so the cost of leaving the root cause is measured in
+other people's sessions rather than in runtime.

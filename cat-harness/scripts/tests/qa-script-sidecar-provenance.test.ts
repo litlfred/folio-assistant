@@ -92,9 +92,9 @@ describe("saveQaScriptSidecar", () => {
 
   test("DOES rewrite when extra_inputs change", () => {
     saveQaScriptSidecar(base(), root);
-    saveQaScriptSidecar({ ...base(), extra_inputs: ["content/schema/refs.ts"] }, root);
+    saveQaScriptSidecar({ ...base(), extra_inputs: ["folio/schema/refs.ts"] }, root);
     expect(loadQaScriptSidecar("test-criterion", root)?.extra_inputs).toEqual([
-      "content/schema/refs.ts",
+      "folio/schema/refs.ts",
     ]);
   });
 

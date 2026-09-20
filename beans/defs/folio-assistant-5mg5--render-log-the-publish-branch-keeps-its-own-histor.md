@@ -1,7 +1,7 @@
 ---
 # folio-assistant-5mg5
 title: 'RENDER LOG: the publish branch keeps its own history of what was published and removed'
-status: in-progress
+status: completed
 type: task
 parent: folio-assistant-5a3l
 created_at: 2026-09-20T07:19:52Z
@@ -93,7 +93,7 @@ pull requests — is how that gap looks from the far side.
       `STAGING/`. `verifyStaging` now takes the carried prefixes and reports a
       lost one as NOT recoverable by re-running. 5 tests, including a control
       pinning the old blind spot so the fix cannot be quietly reverted.
-- [ ] merged
+- [x] merged — PR #473, merge commit `0720657c79`, 2026-09-20T09:52Z
 - [ ] the agent-memory entry, once there is room — bean `lnpe`. A six-line
       node evicted a TRAP from BOTH `ci-health-watcher` and
       `platform-boundary-guard`, so it was dropped rather than bought by
@@ -108,3 +108,57 @@ pull requests — is how that gap looks from the far side.
 | a closed PR is not an abandoned branch | `w2g5` |
 | the slug path hazard | `fuzm` |
 | the retired-record store, next tenant of `CARRIED_PREFIXES` | `6pfo` |
+
+_2026-09-20T09:55Z_ — MERGED as #473 (`0720657c79`). Six commits, three merges
+of `main` (55 commits) along the way; every conflict was a generated file and
+every one was regenerated rather than hand-merged.
+
+**One claim left unverified at merge, deliberately named rather than assumed:**
+the carry itself. `restore-staging.ts` now carries `_render-log/` across a full
+replace, but that code only takes effect once it is ON `main` — which it now
+is. The next `docs(gh-pages)` full replace is the first run that exercises it.
+Until one is observed keeping the log, the carry is tested and not yet
+witnessed. Checked at the next check-in.
+
+`removed`, `retained` and `restored` are still unexercised in production for
+the same reason they were at the PR: they need a PR close, a refused close,
+and a full replace respectively. The tests cover each against a real git
+remote; today proved that is not the same thing.
+
+_2026-09-20T10:10Z_ — **WITNESSED. Every claim left open at merge is now
+observed in production, within twenty minutes of the merge.**
+
+**1. The carry survives a full replace.** `gh-pages` commit `c2f1d25f20`,
+`docs(gh-pages): site from 42ba7a83` — the same commit TYPE that deleted this
+log at 08:16 this morning. `_render-log` is present at its parent AND at the
+commit, and `git show --name-status c2f1d25f20 -- _render-log` is EMPTY: the
+full replace did not touch it. That is `CARRIED_PREFIXES` working from `main`,
+which is the only place it could work from.
+
+**2. `removed` fired, twice, on real PR closes** — this bean's own PR and a
+sibling's:
+
+```
+2026-09-20T09:52:35Z  removed  STAGING/claude-sleepy-babbage-ls90iz
+2026-09-20T09:58:40Z  removed  STAGING/claude-brave-hypatia-r820sf
+```
+
+**3. And the reason fix is vindicated by those two entries.** Both read:
+
+> `PR #473 closed; removal confirmed by: merged`
+
+Both removals were **merges**, not labels. The first draft hardcoded *"closed
+and carried the staging:cleanup label"* — which would have written a FALSE
+reason into the permanent record of both, and a wrong reason is worse than
+none because it reads as evidence. Bean `1feu` landed mid-branch and the merge
+caught it; the entries above are what that catch bought.
+
+**4. Concurrent writers append.** Seven entries from four branches
+(`sleepy-babbage`, `brave-hypatia`, `festive-galileo`, `fervent-mccarthy`),
+several within seconds of each other, none overwriting another. `--read`
+exit 0, 0 skipped.
+
+Still unexercised: `retained` (needs a close WITHOUT the label, and both
+closes so far were merges) and `restored` (needs a full replace that finds the
+log MISSING from `_site`, which the unconditional carry is designed to make
+rare). Named rather than smoothed over.

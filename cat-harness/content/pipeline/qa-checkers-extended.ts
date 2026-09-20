@@ -52,7 +52,8 @@ const REPO_ROOT = findContentRepoRoot();
 // references.ts, and the paper manifests. The paper lookup therefore always
 // missed and the ENTIRE detangler axis reported n/a on every folio,
 // silently, while looking healthy.
-const CONTENT_DIR = join(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_DIR = join(REPO_ROOT, "folio");
 const COMPUTATIONS_DIR = join(REPO_ROOT, "computations");
 const BIB_QA_REPORT = join(CONTENT_DIR, "bib-qa.json");
 
@@ -333,7 +334,7 @@ export function checkBibCitedRefHasScreenshot(
     mdPath,
     leanPath,
     "has_screenshot",
-    "no screenshot under content/bib-qa-images/",
+    "no screenshot under folio/bib-qa-images/",
   );
 }
 

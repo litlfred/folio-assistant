@@ -62,7 +62,7 @@ export function registerTranslationTools(server: McpServer, repoRoot: string): v
     {
       path: z.string().describe(
         "Path to a .md file or directory of .md files (relative to repo root). " +
-          "E.g. 'docs/guides/agent-onboarding.md' or 'content/paper/chapters/ch1/'"
+          "E.g. 'docs/guides/agent-onboarding.md' or 'folio/paper/chapters/ch1/'"
       ),
       locale: z.string().default("en").describe(
         "Source locale (BCP 47 tag). Default: 'en'."

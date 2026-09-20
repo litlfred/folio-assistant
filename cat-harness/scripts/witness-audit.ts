@@ -151,7 +151,8 @@ function gitFileShas(filePaths: string[]): Map<string, string> {
 // ── Lean witness audit ───────────────────────────────────────────
 
 function auditLeanWitnesses(): WitnessStatus[] {
-  const leanFiles = globSync("content/**/*.lean", {
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const leanFiles = globSync("folio/**/*.lean", {
     cwd: REPO_ROOT,
     absolute: true,
   }).filter((f) => !f.includes(".lake/"));
@@ -317,7 +318,8 @@ function runAudit(options: {
   const leanResults = options.pyOnly ? [] : auditLeanWitnesses();
   const pyResults = options.leanOnly ? [] : auditPythonWitnesses();
 
-  const leanTotal = globSync("content/**/*.lean", {
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const leanTotal = globSync("folio/**/*.lean", {
     cwd: REPO_ROOT,
   }).filter((f) => !f.includes(".lake/")).length;
 

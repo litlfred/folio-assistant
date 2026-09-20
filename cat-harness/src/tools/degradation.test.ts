@@ -180,6 +180,43 @@ describe("over the real corpus", () => {
     expect(missing).toEqual(KNOWN_UNDECLARED);
   });
 
+  // An EXPLICIT timeout, because bun's default 5000ms is not a budget and this
+  // test had crept onto the wrong side of it.
+  //
+  // Measured 2026-09-20: red on `main` at `a38fc2e3a3` (5012.69ms) and on a
+  // feature branch at `4946c142e7` (5011.41ms) — two different commits by two
+  // different sessions, both ~12ms over. That is not a flake to re-run; it is
+  // a test whose runtime has arrived at its own limit, and from there it fails
+  // intermittently on everything.
+  //
+  // `probeAll` spawns ONE PROCESS PER DECLARED CAPABILITY — 26 today, and the
+  // count only grows. Locally the whole file runs in ~400ms; on a shared CI
+  // runner the same work is an order of magnitude slower, which is why this
+  // was invisible to every contributor and red in CI.
+  //
+  // The assertions are about SHAPE — a row per skill, each in one of four
+  // states — and say nothing about speed, so raising the limit weakens no
+  // claim. 30s is generous against the ~5s observed while still failing fast
+  // if the probe ever genuinely hangs.
+  //
+  // TWO MORE DATA POINTS, from a third session arriving at the same fix
+  // independently: `9268d23` 5007.52ms and `33edd5ab` 5008.06ms both failed,
+  // while `89d9dfee` passed at 822.85ms. So four commits across three sessions,
+  // every failure within ~13ms of the limit and the one pass nowhere near it —
+  // which is the signature of a test sitting exactly on its budget rather than
+  // of anything in a diff.
+  //
+  // A cause for the "order of magnitude slower on a shared runner" above: both
+  // of those failures logged `Terminate orphan process: pid (…) (java)` in the
+  // same job's teardown, so a JVM was competing for the runner. Nothing in
+  // either diff touched capabilities or probing.
+  //
+  // And the cost underneath, which this budget does not address: three tests in
+  // this file each call `probeAll`, so one run spawns ~78 processes for an
+  // answer that cannot change within the run. Bean `4n37` carries it, with the
+  // reason caching is not the obvious fix — an agent can install a capability
+  // mid-session, and a cached probe would then report `blocked` for something
+  // now present.
   test("the real join runs and produces a verdict per skill", async () => {
     const { kgRoots } = await import("../../scripts/known-skills.ts");
     const { loadCapabilities, probeAll } = await import("./capabilities.ts");
@@ -192,30 +229,5 @@ describe("over the real corpus", () => {
     // machine, and pinning it would make the suite fail on a developer
     // laptop with Lean present. Asserting the shape is the honest test.
     for (const r of rows) expect(["ready", "partial", "degraded", "blocked"]).toContain(r.state);
-    // AN EXPLICIT BUDGET, because the default was never chosen for this test.
-    //
-    // `probeAll` spawns one detection SUBPROCESS per declared capability — 25 of
-    // them — and it does not cache: measured 2026-09-20, run 1 and run 2 both
-    // cost ~432 ms, and the whole file runs locally in 563 ms. Bun's default 5000
-    // ms is intended for pure-function tests, and this one exceeded it on CI
-    // three times out of four while passing at 822 ms on the fourth:
-    //
-    //   9268d23   5007.52 ms  FAIL      33edd5ab   5008.06 ms  FAIL
-    //   89d9dfee   822.85 ms  pass
-    //
-    // Both failures logged `Terminate orphan process: pid (…) (java)` in the same
-    // job's teardown, so the variance is a shared runner with a JVM competing for
-    // it, not the corpus — nothing in the diffs touched capabilities or probing.
-    //
-    // 30 s is ~50x the local cost, chosen to sit well clear of contention rather
-    // than just above the observed 5008 ms: a budget set to the worst figure seen
-    // so far is a budget that fails again on the next slower runner.
-    //
-    // This is a BUDGET, not a relaxation. Every assertion still runs and still
-    // holds; nothing is skipped and nothing is quarantined. The cost underneath —
-    // that three tests in this file each re-probe 25 subprocesses, so one run
-    // spawns 75 — is a production question about memoising `probeAll`, and
-    // caching a probe is wrong if the environment changes mid-session. Carried to
-    // its own bean rather than decided here.
   }, 30_000);
 });

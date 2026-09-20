@@ -121,13 +121,14 @@ export function registerLatexRenderTools(server: McpServer): void {
           mkdirSync(blockPdfsDir, { recursive: true });
 
           // Find the block's .ts and .md in content/
-          const contentDir = join(REPO_ROOT, "content");
+          // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+          const contentDir = join(REPO_ROOT, "folio");
           const found = spawnSync("find", [contentDir, "-name", `${target}.ts`, "-not", "-path", "*/node_modules/*"], {
             stdio: "pipe",
           });
           const tsPath = found.stdout?.toString().trim().split("\n").find(p => p);
           if (!tsPath || !existsSync(tsPath)) {
-            return { content: [{ type: "text" as const, text: `Error: block '${target}' not found under content/` }] };
+            return { content: [{ type: "text" as const, text: `Error: block '${target}' not found under folio/` }] };
           }
           const blockDir = dirname(tsPath);
           const mdPath = join(blockDir, `${target}.md`);
@@ -483,9 +484,10 @@ const HTML_PDF_ENGINES = ["weasyprint", "prince", "wkhtmltopdf"] as const;
  * plausible artifact, which is worse than an error.
  */
 function resolveDocumentManifest(name?: string): { path: string; slug: string } | string {
-  const contentDir = join(REPO_ROOT, "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const contentDir = join(REPO_ROOT, "folio");
   if (!existsSync(contentDir)) {
-    return `Error: no content/ directory at ${REPO_ROOT}. Run folio_init first, or point --repo at your folio.`;
+    return `Error: no folio/ directory at ${REPO_ROOT}. Run folio_init first, or point --repo at your folio.`;
   }
   const candidates = readdirSync(contentDir, { withFileTypes: true })
     .filter((d) => d.isDirectory())
@@ -493,7 +495,7 @@ function resolveDocumentManifest(name?: string): { path: string; slug: string } 
     .filter((slug) => existsSync(join(contentDir, slug, `${slug}.ts`)));
 
   if (candidates.length === 0) {
-    return `Error: no document manifest found. Expected content/<slug>/<slug>.ts under ${contentDir}.`;
+    return `Error: no document manifest found. Expected folio/<slug>/<slug>.ts under ${contentDir}.`;
   }
   if (name) {
     if (!candidates.includes(name)) {
@@ -537,7 +539,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
     "renderers consume, and is worth rendering on its own to inspect ordering.",
     {
       document: z.string().optional()
-        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+        .describe("Document slug under folio/ (auto-detected if the folio holds one)"),
     },
     async ({ document }) => {
       const resolved = resolveDocumentManifest(document);
@@ -574,7 +576,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
     "Markdown. No LaTeX toolchain required.",
     {
       document: z.string().optional()
-        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+        .describe("Document slug under folio/ (auto-detected if the folio holds one)"),
       toc: z.boolean().default(true).describe("Emit a table of contents"),
       css: z.string().optional()
         .describe("Path to a stylesheet to inline, relative to the repo root"),
@@ -648,7 +650,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
     "are missing rather than falling back to LaTeX.",
     {
       document: z.string().optional()
-        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+        .describe("Document slug under folio/ (auto-detected if the folio holds one)"),
       engine: z.enum(["auto", ...HTML_PDF_ENGINES]).default("auto")
         .describe("PDF engine. 'auto' picks the first installed of weasyprint, prince, wkhtmltopdf."),
       css: z.string().optional()

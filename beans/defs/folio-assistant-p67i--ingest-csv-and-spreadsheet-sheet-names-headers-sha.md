@@ -83,3 +83,60 @@ waits on an arm that actually writes narratives — `d5f1` is the first.
 Tests: 20 in `scripts/tests/tabular-records.test.ts`; all five branches
 mutation-checked (1, 4, 3, 3, 1 named failures). 2 850 pass / 0 fail; tsc,
 eslint, 35/35 gates determined-pass.
+
+*2026-09-20* — Measured by running a real CSV through the LIVE pipeline, and
+it found a regression one PR old.
+
+The routing and extraction are fine: a CSV reaches the tabular rung,
+`tabular-records.py` yields 1 sheet and 6 headers. The **L1 gate** then
+demanded `structure.json`, `sections/`, `blocks/` and an `images.json` of it,
+with `image-descriptions` advising a reader to *"run scripts/pdf-images.py"*
+on a spreadsheet.
+
+Cosmetic until `pn6j` gated promotion on it. After that it was a PERMANENT
+BLOCKER: a CSV cannot have a chapter tree, so it could never be promoted, and
+the gate merged an hour earlier made every non-paged document un-ingestable.
+
+Three fixes, all in that class:
+
+1. **`entryKind`** derives the shape from the sidecar the entry HAS —
+   `structure.json` paged, `tabular.jsonld` tabular, `contents.jsonld`
+   archive — and `undetermined` when none, which keeps EVERY requirement
+   rather than assuming paged. The mimetype route cannot work here: a CSV has
+   no magic bytes, so its source honestly records `mimetype_sniffed: null`.
+
+2. **A staging bug I shipped in #495.** `planFor`'s third argument is the
+   LIBRARY ROOT, under which each arm creates `<slug>/`. I passed the entry
+   directory, so output landed at `ingest-staging/<slug>/<slug>/` and
+   `checkEntry` read an empty parent — reporting every requirement unmet, a
+   refusal indistinguishable from a correct one. The milnorlink checks passed
+   over it because the incomplete case refuses either way and the complete
+   case was staged by hand straight into the entry directory.
+
+3. **Three copies of the source reader**, in `tabular-records`,
+   `archive-contents` and `technical-metadata`, all reading `structure.json`
+   only. Teaching one to look further left the others reporting `no source
+   block — re-run the ingest rung` for a CSV whose `tabular.jsonld` carries a
+   complete one. Collapsed into `sourceBlockOf`.
+
+A CSV now reports **1** unmet requirement instead of 7, and the 1 is real:
+`manifest.jsonld`. That is this bean's own Done-when — "manifest.jsonld
+carries a tabular record per sheet" — and the tabular arm does not write one.
+
+## Still open on this bean
+
+- **the manifest** (above), which is mechanical and in scope;
+- **the narrative**, which is not blocked on effort but on there being a
+  dataset: the corpus holds four PDFs and no tabular source at all. `d5f1` has
+  since shipped the pattern an authored narrative would follow (agent drafts,
+  human confirms through `scripts/narratives.ts`), and `tabular.jsonld` is
+  already in `NARRATIVE_BEARING`, so the seam is ready. There is simply
+  nothing to describe.
+
+Six mutations, each caught by a named test. The one that at first survived —
+dropping the kind filter entirely — was caught only by the sidecar-staleness
+test, which fires on any edit to the file and proves nothing; an end-to-end
+`checkEntry` assertion on a real tabular fixture was added and it re-run.
+
+No test CSV was left in `uploads/`: a dataset there is CONTENT, and this is
+the platform repository.
