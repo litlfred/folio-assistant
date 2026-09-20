@@ -100,7 +100,9 @@ directory to notice the subject is gone.
 - [ ] the three unbound lanes get roles, or the lanes are renamed to declared ones
 - [ ] `initialize-harness.bpmn` gets a `BPMNDiagram`, or its absence is a recorded
       criterion rather than a hard renderer failure
-- [ ] the stale sidecar: owner decides
+- [x] the stale sidecar: **owner decided — "Delete it"**, and it is gone. Done in
+      `30f5057`, reported before acting: 2409 bytes, last touched 2026-09-19,
+      subject `bootstrap.bpmn` removed on `main` 2026-09-19
 
 ---
 
@@ -150,3 +152,35 @@ compose", applied to a diagnostic rather than to a link.
 - [ ] the three unbound lanes in `initialize-harness.bpmn`
 - [ ] that diagram has no `BPMNDiagram`, so `render:bpmn` cannot draw it
 - [ ] the stale `bootstrap.bpmn` sidecar — owner's call, still untouched
+
+
+---
+
+## 2026-09-20 — the sidecar item was already closed; four remain
+
+Re-checked rather than re-asked. `find` for `bootstrap*.kg-qa.json` returns
+**nothing**, and `git log --diff-filter=D` names the commit that removed it:
+`30f5057`, *"options-analysis.bpmn, and the two deletions the owner authorised"*.
+Its message records the figures that were reported **before** acting — 2409 bytes,
+last touched 2026-09-19, subject gone — which is what
+`deletion-requires-confirmation` asks for.
+
+So this bean was carrying an open question the owner had already answered. Ticked
+rather than re-raised: asking twice is its own failure, and it spends the one thing
+the owner's accessibility constraints make expensive.
+
+### The four that are genuinely open, and none of them is a decision
+
+- a gate runs the audits **per declared instance**, or the root's silence about a
+  nested one is itself reported. `kg:audit` currently reports
+  `graph:kg nested-instance-audited (2)`, so the finding exists and the **gate**
+  does not
+- `bootstrap/skills/` gets a package manifest, so `confirm-harness` is servable
+- the three unbound lanes get roles, or are renamed to declared ones
+- `initialize-harness.bpmn` gets a `BPMNDiagram`, or its absence becomes a recorded
+  criterion rather than a hard renderer failure
+
+Each is work, not a judgement for the owner. Left for a session that can take the
+nested-instance question whole, because the first item changes what the audit
+**ranges over** and the other three are findings inside that range — doing them in
+the other order means auditing them twice.
