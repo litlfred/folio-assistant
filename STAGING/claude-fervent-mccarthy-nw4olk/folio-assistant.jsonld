@@ -247,22 +247,22 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T19:27:13.967Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/91b35464b0a619388a46a69bdf0ccb3cffa71d85",
-  "sourceCommitSha": "91b35464b0a619388a46a69bdf0ccb3cffa71d85",
-  "sourceCommitAt": "2026-09-19T19:22:36Z",
+  "generatedAt": "2026-09-20T04:58:06.332Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ca4435c99e7847b5ca4899edd3077aedc3398bac",
+  "sourceCommitSha": "ca4435c99e7847b5ca4899edd3077aedc3398bac",
+  "sourceCommitAt": "2026-09-20T04:56:25Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
     "Actor": 26,
     "Capability": 23,
-    "Role": 100,
+    "Role": 103,
     "SkillPackage": 8,
     "Process": 34,
     "SequenceFlow": 475,
     "ProcessNode": 444,
-    "Tool": 28,
-    "Schema": 51,
+    "Tool": 33,
+    "Schema": 53,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -934,7 +934,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 271,
+      "instructionLines": 337,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1283,7 +1283,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 456,
+      "instructionLines": 491,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2138,7 +2138,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 275,
+      "instructionLines": 314,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2886,7 +2886,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/rendering-fixes.md",
-      "instructionLines": 437,
+      "instructionLines": 442,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2925,20 +2925,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-simplifier"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/determine-intent",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/confirm-harness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "determine-intent",
-      "title": "What is this repository supposed to be?",
-      "description": "Turn what a person wants this repository to become into ONE instance reference. The only step of bootstrap that requires user input, and it asks a single question rather than three.",
+      "name": "confirm-harness",
+      "title": "Which harness, and where",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/skills"
       ],
-      "instructionsPath": "bootstrap/skills/determine-intent.md",
-      "instructionLines": 71,
+      "instructionsPath": "bootstrap/skills/confirm-harness.md",
+      "instructionLines": 59,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/determine-intent"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/confirm-harness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/corpus-grep",
@@ -18183,6 +18183,128 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/beans-manual"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/ingest-stdlib",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-stdlib",
+      "title": "Ingest, standard library only",
+      "description": "Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The upload to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Library root; defaults to the declared `library` graph.",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Report the chosen rung and stop.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-stdlib"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/ingest-extended",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-extended",
+      "title": "Ingest, with PDF and image extensions",
+      "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
+      "install": {
+        "cli": "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils"
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "pymupdf",
+          "tesseract"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-extended"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/github",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "github",
@@ -18343,6 +18465,170 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/serving-renderings"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/kg-graph-export",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "kg-graph-export",
+      "title": "Knowledge-graph export",
+      "description": "Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:export"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "baseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Url",
+            "description": "Publication base the node IRIs are minted against; a preview passes its own.",
+            "required": false,
+            "arg": {
+              "flag": "--base-url"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write; defaults to `_kg/<stub>.jsonld`, which is build output and gitignored.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The written JSON-LD document."
+          },
+          {
+            "name": "problems",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Text",
+            "description": "Sources that could not be read, counted rather than silently omitted."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-graph-export"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/ns-vocabulary",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ns-vocabulary",
+      "title": "Namespace vocabulary",
+      "description": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run ns:export"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "layer",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/NamespaceLayer",
+            "description": "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does.",
+            "required": false,
+            "arg": {
+              "flag": "--layer"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write; defaults under `_kg/`, which is build output.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "vocabulary",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The written namespace document."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/ns/vocabulary.jsonld"
+      ],
+      "maintainsFrom": [
+        "schemas/vocabulary.ts"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ns-vocabulary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/content-context",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "content-context",
+      "title": "Content JSON-LD context",
+      "description": "Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/gen-jsonld-context.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed copy and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "context",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`ns/content/v1.jsonld`, the document served at CONTENT_CONTEXT_URL."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/ns/content/v1.jsonld"
+      ],
+      "maintainsFrom": [
+        "schemas/jsonld.ts"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/content-context"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/cat-harness-schema",
@@ -19851,6 +20137,9 @@
       "name": "jsonld",
       "title": "JSON-LD projection of the content block model.",
       "module": "schemas/jsonld.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/content-context"
+      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/jsonld"
     },
     {
@@ -19892,6 +20181,14 @@
       "title": "An agent's memory — what it carries into the next task, as a graph node.",
       "module": "schemas/memory.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/memory"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#schema/narrative",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "narrative",
+      "title": "A generated narrative, and who stands behind it — bean `ju0u`.",
+      "module": "schemas/narrative.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/narrative"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#schema/note-anchor",
@@ -19956,6 +20253,14 @@
       "title": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
       "module": "schemas/skill-package.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/skill-package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#schema/staging-preview",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "staging-preview",
+      "title": "`staging-preview` — a node of the trashcan that describes one review preview.",
+      "module": "schemas/staging-preview.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging-preview"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#schema/staging",
@@ -20073,6 +20378,9 @@
       "name": "vocabulary",
       "title": "What each term in the folio namespace MEANS — one brief gloss apiece.",
       "module": "schemas/vocabulary.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/ns-vocabulary"
+      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/vocabulary"
     },
     {
@@ -20904,6 +21212,53 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/log"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/initiator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "initiator",
+      "title": "Initiator",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/kg-navigation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/confirm-harness"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/initiator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/knowledge-graph-data-store",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "knowledge-graph-data-store",
+      "title": "Knowledge Graph Data Store",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/knowledge-graph-data-store"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "requestor",
+      "title": "Requestor",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/requestor"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#directory/tools",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "tools",
@@ -21050,8 +21405,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "69e92d94dfd749120aa674d6d5c76f9c510cf4a7",
-    "pr": "434/merge",
-    "run": "35464312945"
+    "sha": "c5dbcd0cec5f96f955f181d6f5dc39ea640e6bdb",
+    "pr": "454/merge",
+    "run": "35490398489"
   }
 }
