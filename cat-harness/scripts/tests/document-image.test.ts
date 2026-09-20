@@ -11,7 +11,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { buildDocumentNodes, orphanedBlocks } from "../../content/pipeline/gen-library-jsonld.ts";
+import { blockRefIn, buildDocumentNodes, orphanedBlocks } from "../../content/pipeline/gen-library-jsonld.ts";
 import {
   DESCRIBABLE_ROLES,
   requiresInspection,
@@ -402,5 +402,79 @@ describe("generated blocks nothing points at", () => {
       {},
     );
     expect(orphanedBlocks("d", list, read)).toEqual(["figure-a"]);
+  });
+
+  // ── bean `p67i`: a tabular entry has no `sections/` ────────────────────
+  //
+  // Scanning `sections/` alone was correct while every library entry was a
+  // paged document. The moment `gen-library-jsonld` grew a tabular branch it
+  // became a live hazard: a tabular entry's groupings are `sheets/`, and a
+  // CSV has no grouping at all, so EVERY table block read as orphaned — and
+  // `--prune` calls `rmSync` on what this reports, plus its `.md` sibling.
+
+  test("a CSV's table, contained by the MANIFEST alone, is not orphaned", () => {
+    // The `jg8s` shape: no sheet is invented for a CSV, so the manifest holds
+    // the block directly and nothing sits between them.
+    const { list, read } = fs(
+      { "d/blocks": ["table-001.jsonld"] },
+      { "d/manifest.jsonld": JSON.stringify({ contains: ["library/d/blocks/table-001"] }) },
+    );
+    expect(orphanedBlocks("d", list, read)).toEqual([]);
+  });
+
+  test("a workbook's table, contained through sheets/, is not orphaned", () => {
+    const { list, read } = fs(
+      { "d/sheets": ["sheet-001.jsonld"], "d/blocks": ["table-001.jsonld"] },
+      {
+        "d/manifest.jsonld": JSON.stringify({ contains: ["library/d/sheets/sheet-001"] }),
+        "d/sheets/sheet-001.jsonld": JSON.stringify({ contains: ["library/d/blocks/table-001"] }),
+      },
+    );
+    expect(orphanedBlocks("d", list, read)).toEqual([]);
+  });
+
+  test("a table nothing points at is STILL reported — the widening is not an amnesty", () => {
+    const { list, read } = fs(
+      { "d/sheets": ["sheet-001.jsonld"], "d/blocks": ["table-001.jsonld", "table-002.jsonld"] },
+      {
+        "d/manifest.jsonld": JSON.stringify({ contains: ["library/d/sheets/sheet-001"] }),
+        "d/sheets/sheet-001.jsonld": JSON.stringify({ contains: ["library/d/blocks/table-001"] }),
+      },
+    );
+    expect(orphanedBlocks("d", list, read)).toEqual(["table-002"]);
+  });
+
+  test("an UNREADABLE manifest is the same refusal an unreadable section is", () => {
+    const { list, read } = fs(
+      { "d/blocks": ["table-001.jsonld"] },
+      { "d/manifest.jsonld": "{ not json" },
+    );
+    expect(orphanedBlocks("d", list, read)).toEqual([]);
+  });
+
+  test("a manifest pointing at SECTIONS adds no block reference", () => {
+    // The manifest is now scanned for every entry, and a paged manifest holds
+    // section ids. Taking the last path segment would enter `page-001` into
+    // the block reference set, where it would mask a block of that name.
+    const { list, read } = fs(
+      { "d/sections": [], "d/blocks": ["page-001.jsonld"] },
+      { "d/manifest.jsonld": JSON.stringify({ contains: ["library/d/sections/page-001"] }) },
+    );
+    expect(orphanedBlocks("d", list, read)).toEqual(["page-001"]);
+  });
+});
+
+describe("blockRefIn — only a reference that names a block is one", () => {
+  test("a block reference yields its id", () => {
+    expect(blockRefIn("library/d/blocks/table-001")).toBe("table-001");
+  });
+  test("a section reference yields nothing", () => {
+    expect(blockRefIn("library/d/sections/page-001")).toBeUndefined();
+  });
+  test("a sheet reference yields nothing", () => {
+    expect(blockRefIn("library/d/sheets/sheet-001")).toBeUndefined();
+  });
+  test("a bare id, with no directory to judge by, yields nothing", () => {
+    expect(blockRefIn("table-001")).toBeUndefined();
   });
 });
