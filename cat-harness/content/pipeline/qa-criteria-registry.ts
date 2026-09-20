@@ -1457,31 +1457,6 @@ const DETANGLER: QaCriterionDefinition[] = [
     also_invalidated_by: ["graph"],
   },
   {
-    id: "detangler-archimedean-wall",
-    domain: "detangler",
-    description:
-      "Chapter-level archimedean wall placement: blocks whose .lean is " +
-      "purely archimedean live in `archimedean-universe/` / `observations/` / " +
-      "`fluid-dynamics/`. Generic-R blocks live in `braids-and-knots/` / " +
-      "`quantum-observable-universes/` / `quantum-universes/`. " +
-      "Companion to `wall-side-correct` (per-block) — this one is " +
-      "per-chapter placement.",
-    default_severity: "major",
-    // Lean. Classifies a block by reading its `.lean` for archimedean
-    // constructs, which a document folio cannot have. (Its chapter list is
-    // also one folio's directory names — a separate, folio-specific defect
-    // that `folioOptionalAxes()` is the right home for, not this axis.)
-    profiles: ["paper"],
-    depends_on: ["ts", "lean"],
-    automated: true,
-    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
-    // ANOTHER block's uses[] changes it while this block's own files are
-    // untouched. Without this the entry stays fresh-skip and keeps a stale
-    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
-    // still recording a cycle that no longer existed.
-    also_invalidated_by: ["graph"],
-  },
-  {
     id: "detangler-block-tanglement",
     domain: "detangler",
     description:
@@ -1568,6 +1543,70 @@ const DETANGLER: QaCriterionDefinition[] = [
       "path as evidence.",
     default_severity: "major",
     depends_on: ["ts"],
+    automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
+  },
+];
+
+// ── Folio-optional: the archimedean wall ────────────────────────
+//
+// `detangler-archimedean-wall` is a `detangler`-domain criterion by
+// mechanism and a SINGLE FOLIO's mathematics by content. Its wall, its
+// classifier and its six chapter directory names (`archimedean-universe/`,
+// `observations/`, `fluid-dynamics/`, `braids-and-knots/`,
+// `quantum-observable-universes/`, `quantum-universes/`) are qou's, and
+// `profiles: ["paper"]` does not fence them: any paper folio has a `.lean`
+// to read, so every other paper folio was being audited against chapters it
+// does not have. Measured here — this platform repo's own sidecars under
+// `test/results/block-qa/content/docs/publication-workflow/` carry
+// `detangler-archimedean-wall` verdicts on workflow documentation.
+//
+// So it is registered only when the folio opts in:
+//
+//   // harness.config.json
+//   { "qaAxes": ["archimedean-wall"] }
+//
+// The generic shell underneath — *a node must live on the side of a
+// declared partition wall that its content places it on* — is worth keeping
+// and is NOT what is fenced; re-expressing the wall, the classifier and the
+// chapter list as folio-supplied data (the repair `detangler-topic-coherence`
+// already had, when `DETANGLER_CHAPTER_KEYWORDS` migrated out to a
+// folio-supplied `topic-keywords.json`) would let the shell return to the
+// unconditional `detangler` axis. Until then, fenced.
+//
+// Scope note, recorded rather than silently acted on: the whole `wall`
+// domain (`wall-side-correct`, `wall-base-ring-minimal`, `wall-side-statement`,
+// `wall-side-proof`) is the same folio's mathematics by the same argument,
+// and cites that folio's `CLAUDE.md §7c` and chapter names directly. It is
+// NOT fenced here — its checkers are called directly from `q-usage-audit.ts`
+// and pinned by two tests, so moving it is its own change with its own
+// measurement.
+
+export const DETANGLER_ARCHIMEDEAN_WALL: QaCriterionDefinition[] = [
+  {
+    id: "detangler-archimedean-wall",
+    domain: "detangler",
+    description:
+      "Chapter-level archimedean wall placement: blocks whose .lean is " +
+      "purely archimedean live in `archimedean-universe/` / `observations/` / " +
+      "`fluid-dynamics/`. Generic-R blocks live in `braids-and-knots/` / " +
+      "`quantum-observable-universes/` / `quantum-universes/`. " +
+      "Companion to `wall-side-correct` (per-block) — this one is " +
+      "per-chapter placement.",
+    default_severity: "major",
+    // Lean. Classifies a block by reading its `.lean` for archimedean
+    // constructs, which a document folio cannot have. The chapter list is
+    // one folio's directory names, which is why the whole criterion is
+    // fenced behind the `archimedean-wall` opt-in axis below rather than
+    // relying on `profiles` alone — a paper folio that is not qou has a
+    // `.lean` to read and no such chapters.
+    profiles: ["paper"],
+    depends_on: ["ts", "lean"],
     automated: true,
     // Verdict is a property of the chapter uses[] GRAPH, so an edit to
     // ANOTHER block's uses[] changes it while this block's own files are
@@ -2388,6 +2427,12 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...CANONICAL,
   ...COMPUTE,
   ...DETANGLER,
+  // Folio-optional — see `DETANGLER_ARCHIMEDEAN_WALL` above. One folio's
+  // wall and one folio's chapter names; `profiles: ["paper"]` does not
+  // fence them, because every paper folio has a `.lean` to read.
+  ...(folioOptionalAxes().includes("archimedean-wall")
+    ? DETANGLER_ARCHIMEDEAN_WALL
+    : []),
   ...USES,
   ...BIBLIOGRAPHY,
   ...SCRIPT_QUALITY,
@@ -2431,9 +2476,16 @@ export const ONE_VOICE_WATCHER_CRITERIA: string[] = [
 export const PROOF_WATCHER_CRITERIA: string[] = PROOF.map((c) => c.id);
 export const CANONICAL_WATCHER_CRITERIA: string[] = CANONICAL.map((c) => c.id);
 export const COMPUTE_WATCHER_CRITERIA: string[] = COMPUTE.map((c) => c.id);
-export const DETANGLER_WATCHER_CRITERIA: string[] = DETANGLER.map(
-  (c) => c.id,
-);
+export const DETANGLER_WATCHER_CRITERIA: string[] = [
+  ...DETANGLER.map((c) => c.id),
+  // Present only when the folio opts in (see folioOptionalAxes). The
+  // watcher bucket has to agree with the registry: a bucket naming a
+  // criterion the registry never registered is a watcher axis that
+  // reports on nothing and looks clean doing it (bean `dh4f`).
+  ...(folioOptionalAxes().includes("archimedean-wall")
+    ? DETANGLER_ARCHIMEDEAN_WALL.map((c) => c.id)
+    : []),
+];
 export const USES_WATCHER_CRITERIA: string[] = USES.map((c) => c.id);
 export const BIBLIOGRAPHY_WATCHER_CRITERIA: string[] = BIBLIOGRAPHY.map(
   (c) => c.id,
