@@ -150,6 +150,19 @@ function tagsFrom(fm: Record<string, unknown>): NoteTags {
   };
 }
 
+/**
+ * The theme a todo falls back to, as the graph declares it.
+ *
+ * `undefined` is a determined state, not a failure: a graph that declares no
+ * default has todos that render as flat cards, which is the behaviour before
+ * bean `5y4b` and stays correct for a folio that wants it.
+ */
+export function todoDefaultTheme(root: string = TODO_ROOT): string | undefined {
+  const decl = join(root, TODO_GRAPH_FILE);
+  if (!existsSync(decl)) return undefined;
+  return parseTodoGraph(JSON.parse(readFileSync(decl, "utf8"))).defaultTheme;
+}
+
 /** The directories the todo graph declares, resolved against `todos/`. */
 export function todoDirs(root: string = TODO_ROOT): string[] {
   const decl = join(root, TODO_GRAPH_FILE);
@@ -204,6 +217,13 @@ export function readTodoFiles(root: string = TODO_ROOT): Array<{ todo: TodoNode;
         // id would resolve to whichever one a consumer happened to look at
         // first. Same lesson as `TaskRef` carrying its process.
         targetLabel: typeof fm["targetLabel"] === "string" ? fm["targetLabel"] : undefined,
+        // The theme this todo's sticky renders with. ABSENT rather than
+        // defaulted here: the default belongs to the GRAPH (`defaultTheme` in
+        // `todos.json`), and folding it in at parse time would make "the
+        // author chose grumpy-cat" and "nobody chose" indistinguishable to
+        // every consumer downstream — including the one that has to show a
+        // reviewer what was actually decided. Bean `5y4b`.
+        theme: typeof fm["theme"] === "string" ? fm["theme"] : undefined,
         tags: tagsFrom(fm),
         $schema: TODO_SCHEMA_TAG,
       });

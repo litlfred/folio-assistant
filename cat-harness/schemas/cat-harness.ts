@@ -2079,6 +2079,31 @@ export function siteDirFor(root: string): string {
 }
 
 /**
+ * A declared asset's path, as the PUBLISHED site serves it.
+ *
+ * `docs/assets/img/x.webp` → `/assets/img/x.webp`. An instance declares an
+ * image by its repo-relative path, and the site build copies the site
+ * directory's CONTENTS to the site root — so the declared prefix is exactly
+ * what a published URL does not carry.
+ *
+ * **Derived from {@link siteDirFor}, never from the literal `docs/`.** Two
+ * consumers needed this and the first wrote the literal; the second would have
+ * copied it, and an instance that moves its site directory would then serve
+ * two different answers — one correct, one a 404 that looks like a missing
+ * image. `site-dir-single-answer.test.ts` exists for exactly this class of
+ * duplicate.
+ *
+ * A path that does not start with the site directory is **passed through
+ * unchanged**: it is either already site-relative or points somewhere this
+ * function has no business rewriting, and guessing would turn a working
+ * external URL into a broken local one.
+ */
+export function publishedAssetPath(root: string, src: string): string {
+  const prefix = `${siteDirFor(root)}/`;
+  return src.startsWith(prefix) ? `/${src.slice(prefix.length)}` : src;
+}
+
+/**
  * Where an instance's renderings are published, given the site they are
  * published to.
  *

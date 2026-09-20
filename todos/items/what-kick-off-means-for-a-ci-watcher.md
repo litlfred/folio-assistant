@@ -5,6 +5,9 @@ summary: "Decide what 'kick off' means mechanically for the two CI-watcher dispa
 status: in_progress
 priority: medium
 origin: agent
+# THEME, chosen by judgement from this todo's content (bean `5y4b`).
+# CI dispatch mechanics — `operations` is the theme for building the thing and running it, and a watcher's kick-off is exactly the running half.
+theme: operations
 createdAt: 2026-09-19
 targetLabel: sec:publication-workflow-agents-and-system-actors
 processes:

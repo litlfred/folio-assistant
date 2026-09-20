@@ -1693,7 +1693,7 @@
     'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
-  var todoState = { items: [], floating: {}, processes: {} };
+  var todoState = { items: [], floating: {}, processes: {}, themeArt: {} };
 
   /** The published index, or `null` when it could not be read. */
   function fetchTodoIndex(done) {
@@ -1708,6 +1708,11 @@
       .then(function (doc) {
         if (!doc || !Array.isArray(doc.items)) return done(null);
         todoState.processes = doc.processes || {};
+        // The art, per THEME rather than per todo — fifty todos sharing a
+        // theme would otherwise carry fifty copies of the same three paths.
+        // Absent is a real state: a theme with no backdrop renders a flat
+        // themed card, which is correct rather than degraded.
+        todoState.themeArt = doc.themeArt || {};
         done(doc.items);
       })
       .catch(function (e) {
@@ -1884,6 +1889,40 @@
     document.dispatchEvent(new CustomEvent("fa:todos-discarded", { detail: { id: id } }));
   }
 
+  /**
+   * The `<picture>` a themed sticky renders its art in.
+   *
+   * MARKUP, not a CSS background, and the reason is recorded on the stylesheet
+   * rule this feeds: `<picture>` swaps the FILE at a breakpoint and
+   * `background-image: url(...)` can only name one crop. Serving the wide crop
+   * to a phone is a bug this repository has already shipped once.
+   *
+   * TWO sources, not three. The `card` crop is the default because a todo
+   * sticky IS a board card — dense, roughly square — and `mobile` takes over
+   * below 30rem where a square card has the least room on the tallest screen.
+   * The `laptop` crop is deliberately unused here: it is composed for a
+   * page-width surface, and handing it to a card would show the art's quiet
+   * area in the wrong place. The landing sticky still uses all three, because
+   * it really is a page-width surface at the top end.
+   *
+   * `alt=""` and `aria-hidden`: this is decoration behind text that already
+   * says everything. A description of the cat would be read out before every
+   * todo on the board.
+   */
+  function buildBackdrop(art, summary) {
+    var pic = el("picture", { "aria-hidden": "true" });
+    if (art.mobile) {
+      var src = el("source", { media: "(max-width: 30rem)", srcset: art.mobile });
+      pic.appendChild(src);
+    }
+    // `card` when there is one, else whatever the theme did supply — the
+    // generator only publishes complete sets, so this fallback is reached only
+    // by a hand-written index.
+    var chosen = art.card || art.mobile || art.laptop;
+    pic.appendChild(el("img", { class: "fa-sticky-art", src: chosen, alt: "", loading: "lazy" }));
+    return pic;
+  }
+
   function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
     var attrs = {
@@ -1903,7 +1942,25 @@
     // The attribute is what `themes.css` selects on, so this is the same
     // mechanism the landing stickies use rather than a second one.
     if (todo.theme) attrs["data-fa-sticky-theme"] = todo.theme;
+    // THE BACKDROP, when this todo's theme has art. Bean `5y4b`, the owner:
+    // "todos need grump cat themeing based on content too."
+    //
+    // Until now the landing board carried two kinds of sticky side by side —
+    // a harness card with per-theme art, a measured text region and a scrim,
+    // and a todo that was a flat card with a coloured left border. On one page
+    // they read as two systems, which is why this looked wrong rather than
+    // merely plain.
+    //
+    // `fa-sticky--backdrop` is the SAME class the landing sticky uses, so the
+    // art positioning, the clipping, the `isolation` stacking context and the
+    // scrim all come from rules that already exist and are already measured.
+    // Nothing here re-implements them, and nothing here sets a colour: the
+    // scrim is `--fa-sticky-scrim` from `themes.css`, whose AAA-over-pure-black
+    // guarantee travels with the value rather than being restated.
+    var art = todo.theme && todoState.themeArt[todo.theme];
+    if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
+    if (art) card.appendChild(buildBackdrop(art, todo.summary));
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {

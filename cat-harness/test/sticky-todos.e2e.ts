@@ -73,6 +73,13 @@ const PAGE_URL = "http://todo.test/page.html";
  * will land on.
  */
 const THEMED_PAGE_URL = "http://todo.test/themed.html";
+const THEMED_ART = {
+  library: {
+    laptop: "/assets/img/harness/landing-library-laptop.webp",
+    mobile: "/assets/img/harness/landing-library-mobile.webp",
+    card: "/assets/img/harness/landing-library-card.webp",
+  },
+};
 const THEMED_ITEMS = [
   {
     id: "themed-todo",
@@ -113,7 +120,11 @@ test.beforeEach(async ({ page }) => {
     if (url.endsWith("/assets/todos/themed.json")) {
       return route.fulfill({
         contentType: "application/json",
-        body: JSON.stringify({ $schema: "folio-todo-index/v1", items: THEMED_ITEMS }),
+        body: JSON.stringify({
+          $schema: "folio-todo-index/v1",
+          items: THEMED_ITEMS,
+          themeArt: THEMED_ART,
+        }),
       });
     }
     if (url.endsWith("/assets/todos/index.json")) {
@@ -286,6 +297,82 @@ test("a themed sticky keeps its theme across pin AND dock", async ({ page }) => 
   await page.locator(".fa-sticky-slot .fa-sticky-recall").click();
   await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
   await expect(onBoard).toHaveAttribute("data-fa-sticky-theme", "library");
+});
+
+test("a themed todo renders its backdrop art, the way every other sticky does", async ({ page }) => {
+  // Bean `5y4b`, the owner: "todos need grump cat themeing based on content
+  // too." Until this, the landing board carried two kinds of sticky side by
+  // side — a harness card with per-theme art, a measured text region and a
+  // scrim, and a todo that was a flat card with a coloured border. On one page
+  // they read as two systems.
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const card = page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"]');
+  await expect(card).toHaveClass(/fa-sticky--backdrop/);
+
+  // THE PICTURE IS THE POSITIONED LAYER, and the `<img>` is its child. The
+  // stylesheet records that `.fa-sticky--backdrop > .fa-sticky-art` matched
+  // NOTHING once — the img is a grandchild — and the art laid out at its
+  // intrinsic 1672px across the whole viewport with the markup entirely
+  // correct. So the STRUCTURE is what is asserted here, not just presence.
+  const img = card.locator("picture > img.fa-sticky-art");
+  await expect(img).toHaveCount(1);
+  await expect(img).toHaveAttribute("src", "/assets/img/harness/landing-library-card.webp");
+
+  // The CARD crop by default, with mobile below 30rem. The laptop crop is
+  // deliberately unused: it is composed for a page-width surface.
+  const source = card.locator("picture > source");
+  await expect(source).toHaveCount(1);
+  await expect(source).toHaveAttribute("srcset", "/assets/img/harness/landing-library-mobile.webp");
+
+  // Decoration behind text that already says everything. A description of the
+  // cat would be read out before every todo on the board.
+  await expect(img).toHaveAttribute("alt", "");
+  await expect(card.locator("picture")).toHaveAttribute("aria-hidden", "true");
+});
+
+test("the art survives a pin, because the card is rebuilt from the todo", async ({ page }) => {
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"] .fa-sticky-pin').click();
+
+  const floating = page.locator(".fa-sticky-layer .fa-sticky");
+  await expect(floating).toHaveClass(/fa-sticky--backdrop/);
+  await expect(floating.locator("picture > img.fa-sticky-art")).toHaveCount(1);
+});
+
+test("an UNTHEMED todo gets no backdrop — the check can fire", async ({ page }) => {
+  // Every assertion above passes equally for code that adds a backdrop to
+  // everything. The shared fixture's todos carry no theme, so this is the
+  // other direction against the same build.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await expect(page.locator(".fa-sticky--backdrop")).toHaveCount(0);
+  await expect(page.locator(".fa-sticky picture")).toHaveCount(0);
+});
+
+test("a theme with no published art renders a flat THEMED card, not a broken one", async ({ page }) => {
+  // The third state. `resolveThemeBackdrop` refuses a partial set, and a theme
+  // that declares no backdrop at all — `pale-sage`, the high-contrast pair —
+  // is simply absent from `themeArt`. The sticky must still take its palette.
+  await page.route("http://todo.test/assets/todos/themed.json", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({ $schema: "folio-todo-index/v1", items: THEMED_ITEMS, themeArt: {} }),
+    }),
+  );
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const card = page.locator('.fa-sticky[data-todo-id="themed-todo"]');
+  await expect(card).toHaveAttribute("data-fa-sticky-theme", "library");
+  await expect(card).not.toHaveClass(/fa-sticky--backdrop/);
+  await expect(card.locator("picture")).toHaveCount(0);
 });
 
 test("a todo with NO theme still gets the opaque floating treatment", () => {

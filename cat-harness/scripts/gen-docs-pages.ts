@@ -43,8 +43,15 @@ import {
   type QaFamily,
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
-import { readTodoFiles } from "./todos.js";
-import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+import { readTodoFiles, todoDefaultTheme } from "./todos.js";
+import { resolveThemeBackdrop } from "../schemas/theme.js";
+import { THEMES, themeById } from "../schemas/themes.js";
+import {
+  publishedAssetPath,
+  readDeclaration,
+  siteDirFor,
+  repoRootFor,
+} from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -774,6 +781,21 @@ function processHierarchy(): Record<string, string[]> {
 // is: the client would otherwise need the repo's web URL, and a literal in
 // `docs-ui.js` is a folio's own address inside shared client code.
 {
+  // THE THEME, resolved HERE rather than in the client or at parse time.
+  //
+  // Bean `5y4b`, the owner: "todos need grump cat themeing based on content
+  // too. used jugement". Three things follow, and this line is where the first
+  // two meet:
+  //
+  //  - the theme is DATA on the todo, never a keyword match on the summary in
+  //    `docs-ui.js` — a rule nobody can see, review or override, which changes
+  //    silently when somebody rewords a todo;
+  //  - the DEFAULT is the graph's (`todos.json`), so a folio chooses its own
+  //    and a literal here is not this repository's answer imposed downstream;
+  //  - the todo's OWN value is preserved unresolved upstream of this, so
+  //    "the author chose grumpy-cat" and "nobody chose" stay distinguishable
+  //    to a reviewer reading the file.
+  const fallbackTheme = todoDefaultTheme();
   const items = readTodoFiles().map(({ todo, path }) => ({
     id: todo.id,
     summary: todo.summary,
@@ -783,6 +805,7 @@ function processHierarchy(): Record<string, string[]> {
     origin: todo.origin,
     createdAt: todo.createdAt,
     targetLabel: todo.targetLabel,
+    theme: todo.theme ?? fallbackTheme,
     tags: todo.tags,
     // The edges, already resolved. A sticky that showed only status and
     // priority would waste a six-axis relationship model on two enums.
@@ -826,12 +849,57 @@ function processHierarchy(): Record<string, string[]> {
   //
   // The cost is 11,963 -> 14,144 bytes on a static asset gzip mostly removes.
   // `docs-ui.js` calls `JSON.parse`; it never sees the whitespace.
+  // THE ART, per theme, published beside the items rather than on each of them.
+  //
+  // One entry per theme actually used, not per todo: fifty todos sharing a
+  // theme would otherwise carry fifty copies of the same three paths. The
+  // client joins on the theme id it already has.
+  //
+  // `resolveThemeBackdrop` is what decides, so this cannot ship a partial set:
+  // it returns art or NOTHING, never some layouts, because a phone handed the
+  // laptop crop shows the art's quiet area in the wrong place and nothing
+  // reports it. A theme with no backdrop — `pale-sage`, the high-contrast pair
+  // — is simply absent here, and the client renders a flat themed card, which
+  // is correct rather than degraded.
+  //
+  // THE SCRIM IS NOT HERE, deliberately: `themes.css` already emits
+  // `--fa-sticky-scrim` per theme, so a copy in this file would be a second
+  // answer free to disagree with the stylesheet that actually paints it. The
+  // contrast guarantee — AAA over pure black — is a property of that value and
+  // travels with it.
+  const declaration = readDeclaration(REPO_ROOT);
+  const themeArt: Record<string, Record<string, string>> = {};
+  for (const id of new Set(items.map((i) => i.theme).filter((t): t is string => t !== undefined))) {
+    const theme = themeById(id);
+    if (theme === undefined) {
+      // A todo naming a theme nothing declares is a FINDING, not a silent flat
+      // card: the author asked for something and got nothing, and the failure
+      // is invisible on the page.
+      throw new Error(
+        `a todo declares theme "${id}", which no theme in schemas/themes.ts defines. ` +
+          `Declared themes: ${THEMES.map((t) => t.id).join(", ")}`,
+      );
+    }
+    const art = resolveThemeBackdrop(theme, declaration?.images);
+    if (art.art.size === 0) continue;
+    // PUBLISHED paths, not declared ones: the client fetches this file from the
+    // site, where the site directory's contents sit at the root. A declared
+    // `docs/assets/...` would 404 for every reader and look like missing art.
+    themeArt[id] = Object.fromEntries(
+      [...art.art].map(([layout, img]) => [layout, publishedAssetPath(REPO_ROOT, img.src)]),
+    );
+  }
+
   emit(
     TODO_ASSET,
-    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }, null, 2) + "\n",
+    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes, themeArt }, null, 2) + "\n",
     "data",
   );
-  console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
+  const themed = items.filter((i) => i.theme !== undefined).length;
+  console.log(
+    `  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s), ` +
+      `${themed} themed, ${Object.keys(themeArt).length} theme(s) with art)`,
+  );
 }
 
 // A subject that loses its sidecar — or a page that loses a node — must lose its

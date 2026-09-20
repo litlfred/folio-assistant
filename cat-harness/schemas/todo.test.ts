@@ -20,6 +20,11 @@ import {
   TODO_SCHEMA_TAG,
   type KgIndex,
 } from "./todo";
+import { resolve } from "node:path";
+import { readTodoFiles, todoDefaultTheme } from "../scripts/todos.js";
+import { readDeclaration } from "./cat-harness.js";
+import { resolveThemeBackdrop } from "./theme.js";
+import { themeById } from "./themes.js";
 
 const KG: KgIndex = {
   roles: new Set(["editor", "author"]),
@@ -180,5 +185,93 @@ describe("not-checked is a third state and never collapses", () => {
       KG,
     );
     expect(r[0]).toEqual({ axis: "actor", ref: "no-such-actor", state: "dangling" });
+  });
+});
+
+describe("a todo's theme — declared, defaulted, and never guessed", () => {
+  /**
+   * Bean `5y4b`, the owner: *"todos need grump cat themeing based on content
+   * too. used jugement"*.
+   *
+   * The judgement is the work, and three things follow from it being a
+   * judgement rather than a rule:
+   *
+   * 1. It is **declared data**, not a keyword match on the summary at render
+   *    time — a rule nobody can see, review or override, which changes
+   *    silently when somebody rewords a todo.
+   * 2. The **default makes no claim**. A wrong theme is worse than no theme: a
+   *    plain card says nothing, while a card themed `operations` says *"this
+   *    is operations work"* about a todo that may be nothing of the sort. The
+   *    instance's own theme says only "this belongs to this folio".
+   * 3. A theme id that resolves to nothing is a **finding**, not a flat card.
+   *    The author asked for something and got nothing, and on the page that
+   *    failure is invisible.
+   */
+  const todos = readTodoFiles();
+
+  test("the store declares a default, and it is a real theme", () => {
+    const id = todoDefaultTheme();
+    expect(id).toBeDefined();
+    expect(themeById(id!)?.id).toBe(id!);
+  });
+
+  test("every theme a todo names exists", () => {
+    // The guard that matters, run over the real corpus rather than a fixture.
+    const bad = todos
+      .map(({ todo }) => todo.theme)
+      .filter((t): t is string => t !== undefined)
+      .filter((t) => themeById(t) === undefined);
+    expect(bad).toEqual([]);
+  });
+
+  test("every theme a todo names can actually BACK a sticky", () => {
+    // A theme with no card crop cannot carry a backdrop, so assigning one is
+    // a choice that renders as nothing. `resolveThemeBackdrop` refuses a
+    // partial set wholesale, so this is complete-or-none rather than a count.
+    const decl = readDeclaration(resolve(import.meta.dir, ".."));
+    for (const { todo } of todos) {
+      if (todo.theme === undefined) continue;
+      const art = resolveThemeBackdrop(themeById(todo.theme)!, decl?.images);
+      expect({ id: todo.id, theme: todo.theme, missing: art.missing }).toEqual({
+        id: todo.id,
+        theme: todo.theme,
+        missing: [],
+      });
+    }
+  });
+
+  test("a todo's OWN theme is kept unresolved — the default is applied later", () => {
+    // "The author chose grumpy-cat" and "nobody chose" must stay
+    // distinguishable to a reviewer reading the file, so the parser does not
+    // fold the default in. Every todo in this store has been assigned one by
+    // judgement, so the property is asserted on a parsed fixture instead.
+    const parsed = TodoNodeSchema.safeParse({
+      id: "x",
+      summary: "s",
+      comment: "",
+      createdAt: "2026-09-20",
+      status: "open",
+      priority: "medium",
+      origin: "agent",
+      tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+      $schema: "folio-todo/v1",
+    });
+    expect(parsed.success && parsed.data.theme).toBeUndefined();
+  });
+
+  test("a theme id that is not kebab-case is refused", () => {
+    const bad = TodoNodeSchema.safeParse({
+      id: "x",
+      summary: "s",
+      comment: "",
+      createdAt: "2026-09-20",
+      status: "open",
+      priority: "medium",
+      origin: "agent",
+      theme: "Grumpy Cat",
+      tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+      $schema: "folio-todo/v1",
+    });
+    expect(bad.success).toBe(false);
   });
 });
