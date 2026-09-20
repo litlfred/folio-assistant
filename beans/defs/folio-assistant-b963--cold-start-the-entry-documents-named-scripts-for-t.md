@@ -7,7 +7,7 @@ priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T20:40:00Z
+updated_at: 2026-09-20T20:20:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -96,3 +96,55 @@ ran `bun test`, `eslint`, `typecheck` and a dozen named `check:*` scripts and
 called that green. `bun run gates` runs sixty-eight, and it was **not in
 AGENTS.md's Commands block** — so the subset was chosen from memory. Added
 there, with the measurement: a subset of the gate set is not the gate set.
+
+_2026-09-20T20:20Z_ — **The third class has a reader, and it found 237.**
+`checkPrintedCommands` in `check-command-paths.ts`, run over every `.ts` and
+`.sh` under the instance.
+
+**Two signals, and the second is the one that makes it decidable.** A **runner
+verb** (`bun run`, `bunx`, `bash`, `npx`, `python3`, `deno run`) separates a
+command from a cross-reference: `scripts/x.ts` appears both ways in this source
+and only one is wrong. Then the path must **resolve under an instance but not
+from the repository root** — that is not "might be wrong", it is wrong *with a
+known fix*, so the finding names it.
+
+**Two defects in the first draft, both instructive.** It reused `aboutThisTree`,
+which judges a path only when its first segment exists at the repository root —
+and `scripts/` does not, *which is this bean's entire defect*. The check
+declined the one case it was written for: **43 checked where a hand grep found
+370**. And `node` and `sh` were in the verb list; they are ordinary words here
+("node" is in nearly every graph module) and matched prose — four findings, all
+four false. A verb that is also English is not a signal. Both are tests now.
+
+Instance roots are **discovered** as the directories carrying their own
+`harness.json`, never listed: a hardcoded list would rot on the next split,
+which would be a poor joke in this check.
+
+## The 237, and why they are HELD rather than failed
+
+| first segment | n |
+|---|---|
+| `scripts/` | 123 |
+| `content/` | 109 |
+| `src/`, `library/`, `docs/` | 5 |
+
+The two groups may not be the same defect. `scripts/` has no meaning in a folio
+— `init-folio` scaffolds `content/`, `uploads/`, `library/` and never
+`scripts/` — so those commands can only mean this repository's and are broken
+from the root. `content/pipeline/…` is a **folio's** layout and those commands
+are correct where they are meant to run; the onboarding guide already carries
+three such blocks marked *"run IN A FOLIO"*.
+
+**Neither name is declared in any `harness.json`**, so the declarations do not
+settle it. Put to the owner with the counts; **held** in the meantime — a third
+state that is neither a baseline (which asserts "accepted") nor a pass, printed
+in full every run and excluded from the exit code. Collapsing it into either
+would be deciding the question by default.
+
+## Done when
+
+- [x] A check reads every fenced command in the entry documents and fails when a path in it does not resolve
+- [x] A reader covers `command` fields in `.claude/settings.json`
+- [x] A reader covers printed commands and module-header usage lines
+- [ ] The 237 held findings get their verdict, and the `scripts/` group is repointed if that is the answer
+- [ ] **The basis is tightened.** The `scripts/`-versus-`content/` distinction rests on the folio LAYOUT rather than on a declaration, which is weaker than this repository's usual standard. Stated rather than dressed up.

@@ -17,6 +17,7 @@ import { join } from "node:path";
 import {
   aboutThisTree,
   checkCommandPaths,
+  instanceRoots,
   shellBlocks,
   shellWords,
   skipCommand,
@@ -143,5 +144,61 @@ describe("the defect it was written for", () => {
   test("EXAMINED NOTHING is not a pass", () => {
     const root = fixture({});
     expect(checkCommandPaths(root).filesRead).toBe(0);
+  });
+});
+
+describe("the printed-command reader — bean `b963`'s third class", () => {
+  test("a runner verb before a path that resolves only under an instance is HELD", () => {
+    const root = fixture(
+      {
+        "cat-harness/harness.json": "{}",
+        "cat-harness/scripts/lean-audit.ts": "/** Usage: bun run scripts/lean-audit.ts */\n",
+      },
+      ["cat-harness/scripts"],
+    );
+    const r = checkCommandPaths(root);
+    expect(r.held.map((h) => h.token)).toEqual(["scripts/lean-audit.ts  →  cat-harness/scripts/lean-audit.ts"]);
+    // HELD is a third state: it does not fail, and it is not a pass either.
+    expect(r.dead).toEqual([]);
+  });
+
+  test("a cross-reference with NO runner verb is not a finding", () => {
+    const root = fixture(
+      {
+        "cat-harness/harness.json": "{}",
+        "cat-harness/scripts/a.ts": "// see `scripts/known-skills.ts` for what decides\n",
+        "cat-harness/scripts/known-skills.ts": "",
+      },
+      ["cat-harness/scripts"],
+    );
+    expect(checkCommandPaths(root).held).toEqual([]);
+  });
+
+  test("`node` is not a runner verb here — it is an ordinary word in this codebase", () => {
+    const root = fixture(
+      {
+        "cat-harness/harness.json": "{}",
+        "cat-harness/scripts/a.ts": "// a node resolves to its `.md`. A node with no path.\n",
+      },
+      ["cat-harness/scripts"],
+    );
+    // Measured: including `node` produced four findings over the real corpus,
+    // all four false. A verb that is also English is not a signal.
+    expect(checkCommandPaths(root).held).toEqual([]);
+  });
+
+  test("a path that resolves nowhere is a folio's — counted, never held", () => {
+    const root = fixture(
+      { "cat-harness/harness.json": "{}", "cat-harness/scripts/a.ts": "// bun run content/pipeline/x.ts\n" },
+      ["cat-harness/scripts"],
+    );
+    const r = checkCommandPaths(root);
+    expect(r.held).toEqual([]);
+    expect(r.folioRelative).toBeGreaterThan(0);
+  });
+
+  test("instance roots are DISCOVERED, so a split cannot silently blind the check", () => {
+    const root = fixture({ "cat-harness/harness.json": "{}", "other/harness.json": "{}" }, ["cat-harness", "other"]);
+    expect(instanceRoots(root)).toEqual(["cat-harness", "other"]);
   });
 });
