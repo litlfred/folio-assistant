@@ -981,7 +981,22 @@ too, with triggers, gateways and compensation paths, and until 2026-09-20 none
 was drawn. <code class="language-plaintext highlighter-rouge">bun run check:workflow-coverage</code> measures how many are, in three
 states; a diagram declares its subject with
 <code class="language-plaintext highlighter-rouge">&lt;folio:implements workflow="…"/&gt;</code> rather than being matched on its filename,
-because a mention is not coverage:</p>
+because a mention is not coverage.</p>
+
+<p><strong>Coverage alone would not have been worth having.</strong> Bean <code class="language-plaintext highlighter-rouge">7yvd</code>: <em>“a diagram
+that is drawn once and then drifts is worse than none, because it is
+consulted.”</em> So the node standing for a job declares it —
+<code class="language-plaintext highlighter-rouge">&lt;folio:job name="stage"/&gt;</code> — and the same check compares the two sets in
+<strong>both</strong> directions: a job with no node is a diagram that has gone stale, a
+node naming a job the workflow does not have is one that was stale already.
+Both exit 1, in the same tier as a dangling <code class="language-plaintext highlighter-rouge">&lt;folio:implements&gt;</code>, because
+both mislead a reader who follows them.</p>
+
+<p>Declaring is opt-in per diagram, and a covered workflow whose diagram names
+no job is reported as <strong>undeclared</strong> rather than as fully drifted: “nobody has
+said yet” and “said, and wrong” are different answers, and only the second is
+a finding. What is never allowed is a diagram declaring <em>some</em> of a
+workflow’s jobs and reading as complete.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -1809,7 +1824,7 @@ it belongs in <code class="language-plaintext highlighter-rouge">skills/workflow
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35512359264"><code>e5a514e</code></a> &middot; 2026-09-20T13:03:44Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35512512192"><code>4c929d1</code></a> &middot; 2026-09-20T13:06:51Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
