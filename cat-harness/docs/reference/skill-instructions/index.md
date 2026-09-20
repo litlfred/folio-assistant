@@ -74,6 +74,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
 | [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
 | [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
+| [Create a sticky note](create-sticky-note.html) | `create-sticky-note` | — | A sticky note is a **carried note**: something a person or agent sticks onto the |
 | [A decision is not a finding, and neither is a substitute for the other](decision-audit.html) | `decision-audit` | — | A **finding** is an observation — a checker, an agent or a person saw something. |
 | [The comparison goes BEFORE the question, not inside the options](decision-comparison.html) | `decision-comparison` | — | [`interaction-modality`](interaction-modality.md) §4.1 fixes the *order* — |
 | [Deletion requires explicit confirmation](deletion-requires-confirmation.html) | `deletion-requires-confirmation` | — | **One rule, and it has no exceptions worth the word:** |
