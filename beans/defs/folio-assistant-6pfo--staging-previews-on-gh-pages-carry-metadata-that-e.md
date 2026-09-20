@@ -236,3 +236,34 @@ STILL OPEN, and it is the whole remaining half of this bean: **no workflow is wi
 - Fourteen other workflows do have `contents: write`, so a scheduled writer is possible; which one, and whether per-preview commits to `main` are acceptable churn, is unanswered.
 
 Do not guess at that. It is a question for the owner, in the same shape as the two already answered.
+
+_2026-09-20T05:38:14Z_ — **CORRECTION to my own note above, re-measured on main at `ece998d22` after the cat-harness restructure.**
+
+I wrote: *"Fourteen other workflows do have `contents: write`, so a scheduled writer is possible."* That is true as a count and misleading as a conclusion, which is the worse kind of wrong.
+
+MEASURED, not quoted:
+
+- 16 workflows can write. **14 of them are `workflow_dispatch`-only** — a workflow nobody can trigger automatically is not a writer.
+- Exactly **2** both auto-fire and can write: `docs-site.yml` (push to `main`, path-filtered) and `feature-staging.yml`.
+- **3** workflows carry a `schedule:` — `ci-health.yml`, `health-check.yml`, `upstream-pins.yml` — and **all three are `contents: read`**.
+
+So **there is no scheduled writer at all**, and my "a scheduled writer is possible" pointed the next agent at an option that does not exist without building one.
+
+WHAT I MISSED, and it makes the remaining question much smaller. `feature-staging.yml` already fires at BOTH ends of a preview's life:
+
+```yaml
+pull_request:        types: [opened, synchronize, reopened]   # creation
+pull_request_target: types: [closed]                          # retirement
+```
+
+It has `contents: write`, and at both moments it knows the branch, the commit, the PR and the issue. So CREATION and RETIREMENT — the two halves the owner said belong to the node type — already have an owner that fires at exactly the right times. `retireStagingPreview` being idempotent matters here: `synchronize` fires repeatedly, `closed` can fire more than once.
+
+THE OPEN QUESTION IS ENRICHMENT ONLY — size, files, liveness. Those are the sweep's knowledge, and `health-check.yml` is `contents: read` **deliberately**: AGENTS.md states "It reports and never acts", with `plj1` as the worked example of what happens when a reporting tool acts. Granting it write to enrich records would contradict a stated principle, not merely a setting.
+
+Three shapes, put to the owner rather than guessed:
+
+1. Drop enrichment from the record — deploy facts only, retired on close. Meets this bean's `## Done when` without touching the principle or adding churn to `main`.
+2. Give `health-check.yml` write. Contradicts "It reports and never acts".
+3. A new scheduled workflow whose only job is to enrich. No principle broken, but a new writer committing per-preview records to `main`, and another thing to keep green.
+
+Leaving the wrong note above rather than editing it, so the correction is visible and the next reader does not re-derive it. What misled me: I counted `contents: write` and stopped, without asking what fires each workflow — the same shape as counting a thing and not checking it is reachable.
