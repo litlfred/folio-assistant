@@ -867,6 +867,128 @@ across two merged PRs.</p>
 instead. The CLI’s <code class="language-plaintext highlighter-rouge">create</code> does not, and that is the mechanism behind the
 14,688 duplicates in <code class="language-plaintext highlighter-rouge">qou</code>. <code class="language-plaintext highlighter-rouge">--force</code> exists for a genuinely intended duplicate
 and has to be typed.</p>
+<h2 id="check-before-you-work--a-checkbox-is-a-claim-not-a-measurement-strict">
+  
+  
+    <a href="#check-before-you-work--a-checkbox-is-a-claim-not-a-measurement-strict" class="anchor-heading" aria-labelledby="check-before-you-work--a-checkbox-is-a-claim-not-a-measurement-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Check before you WORK — a checkbox is a claim, not a measurement (STRICT)
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent, and §”Check before you create” above is the
+guard. This is its twin at the other end: <strong>a bean’s stated state is a claim
+somebody wrote down once, and the code has moved since.</strong></p>
+
+<blockquote>
+  <p><strong>Re-measure a bean’s open items against the code before you act on them.</strong></p>
+</blockquote>
+
+<p>The cost is not wasted effort. It is <em>acting on a stale claim</em>, and twice in
+one session (2026-09-20) that came within a single edit of re-introducing a
+defect a test had been written to catch.</p>
+<h3 id="measured-one-session-four-beans">
+  
+  
+    <a href="#measured-one-session-four-beans" class="anchor-heading" aria-labelledby="measured-one-session-four-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measured, one session, four beans
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>bean</th>
+      <th>what the file said</th>
+      <th>what was true</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sa8y</code></td>
+      <td>four items open</td>
+      <td>one open; two done, one a <strong>deliberate</strong> decision</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">vo9d</code></td>
+      <td>five items open</td>
+      <td>one open; four done by siblings</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">30hn</code></td>
+      <td>16 of 33 undeclared</td>
+      <td>14 of 41 — and the mover was <strong>this session</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">koth</code> / <code class="language-plaintext highlighter-rouge">b11x</code></td>
+      <td>two beans</td>
+      <td>one defect, filed <strong>3m53s apart</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="the-two-failures-this-prevents-and-they-are-different">
+  
+  
+    <a href="#the-two-failures-this-prevents-and-they-are-different" class="anchor-heading" aria-labelledby="the-two-failures-this-prevents-and-they-are-different"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two failures this prevents, and they are different
+  
+  
+</h3>
+    
+
+<p><strong>1. Doing work that exists.</strong> The cheap one. <code class="language-plaintext highlighter-rouge">vo9d</code>’s four items were done by
+<code class="language-plaintext highlighter-rouge">11d43ce4fb</code> and <code class="language-plaintext highlighter-rouge">ca5ec3e373</code>, neither of which ticked a box.</p>
+
+<p><strong>2. Undoing a decision that was recorded elsewhere.</strong> The expensive one.
+<code class="language-plaintext highlighter-rouge">sa8y</code>’s <em>“the three unbound lanes get roles”</em> reads like a gap. The roles
+exist; what is missing is <code class="language-plaintext highlighter-rouge">lanes</code>, and its absence is deliberate —
+<code class="language-plaintext highlighter-rouge">bootstrap/skills/roles/roles.json</code> carries a <code class="language-plaintext highlighter-rouge">_lanes_comment</code> explaining that
+binding them mints three dangling links in the root’s graph, with bean <code class="language-plaintext highlighter-rouge">pve3</code>
+owning the question. <strong>Doing the obvious thing would have re-created the exact
+shape of the wrong fix <code class="language-plaintext highlighter-rouge">sa8y</code> exists to record.</strong></p>
+
+<p>The decision was never in the bean. It was in the file the bean is about.</p>
+<h3 id="what-re-measure-means-concretely">
+  
+  
+    <a href="#what-re-measure-means-concretely" class="anchor-heading" aria-labelledby="what-re-measure-means-concretely"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What “re-measure” means, concretely
+  
+  
+</h3>
+    
+
+<ul>
+  <li><strong>Run the thing.</strong> <code class="language-plaintext highlighter-rouge">sa8y</code>’s headline finding was fixed hours earlier;
+<code class="language-plaintext highlighter-rouge">kg:audit</code> says so in one command.</li>
+  <li><strong>Read the body, not just the boxes.</strong> <code class="language-plaintext highlighter-rouge">vo9d</code> describes a Tool node its own
+checkbox still shows unticked.</li>
+  <li><strong>Date it.</strong> <code class="language-plaintext highlighter-rouge">git log -S</code> on the symbol or the file against the bean’s
+<code class="language-plaintext highlighter-rouge">created_at</code> separates <em>fixed since</em> from <em>wrong when written</em> — and <code class="language-plaintext highlighter-rouge">vo9d</code>
+was the second: it listed <code class="language-plaintext highlighter-rouge">check-l1-complete.ts</code> as having no callers when
+<code class="language-plaintext highlighter-rouge">ingest-document.ts</code> had imported from it 32 minutes earlier.</li>
+  <li><strong>Read the file the bean is about</strong>, for a comment saying why it is the way
+it is. That is where a deliberate absence lives.</li>
+</ul>
+<h3 id="and-a-bean-you-re-measure-you-record">
+  
+  
+    <a href="#and-a-bean-you-re-measure-you-record" class="anchor-heading" aria-labelledby="and-a-bean-you-re-measure-you-record"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> And a bean you re-measure, you record
+  
+  
+</h3>
+    
+
+<p>Leave what you found in the bean, with the commits and the times — a stale
+checkbox you silently worked around is one the next agent meets unchanged.
+Tick what is done and name who did it; withdraw a done-when you no longer
+believe, with reasons, rather than leaving it unmet. Where the bean and the
+code disagree, <strong>the code is what is true and the bean is what is wrong</strong> —
+the same rule <a href="../../../AGENTS.md"><code class="language-plaintext highlighter-rouge">AGENTS.md</code>’s banner</a> states for a skill
+against that file.</p>
+
+<p>This is the work-plan half. The cross-session half — why two sessions can file
+one defect four minutes apart — is
+<a href="/folio-assistant/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”A claim is branch-local”.</p>
 <h2 id="working-with-beans">
   
   
@@ -1080,7 +1202,7 @@ even when the <code class="language-plaintext highlighter-rouge">beans</code> CL
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35517385753"><code>89501db</code></a> &middot; 2026-09-20T14:44:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35517655800"><code>04f4bdf</code></a> &middot; 2026-09-20T14:50:12Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

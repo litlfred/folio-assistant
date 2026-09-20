@@ -842,6 +842,10 @@ These run alongside the content processes rather than inside them:</p>
       <td><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code></td>
       <td>Changing <strong>who can do what</strong>: add an actor and declare its kind, open or close a role, grant or revoke a permission, retire an actor without deleting it — then audit. Bean <code class="language-plaintext highlighter-rouge">hb2o</code>: the join is clean (31 of 31 roles bind a lane, no dangling reference), so this was a missing <em>process</em>, not a broken one. It <strong>calls</strong> <code class="language-plaintext highlighter-rouge">code-change-review</code> for the branch, gates and review rather than restating them, and adds the three things specific to editing the substrate every other diagram binds to. The <code class="language-plaintext highlighter-rouge">administrator</code> role waited for the owner to say administration is a swimlane — a role is never invented to make a diagram drawable</td>
     </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">graph-detanglement.bpmn</code></td>
+      <td>Part of a repository wants to leave — size, or a semantic reason. <strong>The four stages are gates rather than advice, and that is the whole reason this is a diagram</strong>: <code class="language-plaintext highlighter-rouge">graph-detanglement.md</code> says “nothing moves until the stage before it measures zero” in prose, and prose is what an agent under pressure talks itself past. All three gateways are DMN-backed, so completion refuses a hand-supplied outcome and the branch is computed from counts a tool already produced. The sharpest is <code class="language-plaintext highlighter-rouge">Detangled?</code>, and it is sharp because of its RULE ORDER — <code class="language-plaintext highlighter-rouge">unassignedEdges &gt; 0</code> returns <code class="language-plaintext highlighter-rouge">unknown</code> before the cross-edge rule is ever reached, so a zero cross-edge count over an unjudged corpus cannot be read as a pass. Every gate has a third state and none of them renders it as clean: both <code class="language-plaintext highlighter-rouge">unknown</code> paths are a REFUSAL to advance rather than a warning. <code class="language-plaintext highlighter-rouge">Authorise the extraction</code> sits in the <strong>Administrator</strong> lane because moving durable artefacts out of a repository is a person’s decision — the agent reports what would move and waits, per <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></td>
+    </tr>
   </tbody>
 </table></div>
 
@@ -1848,7 +1852,7 @@ it belongs in <code class="language-plaintext highlighter-rouge">skills/workflow
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35517385753"><code>89501db</code></a> &middot; 2026-09-20T14:44:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35517655800"><code>04f4bdf</code></a> &middot; 2026-09-20T14:50:12Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

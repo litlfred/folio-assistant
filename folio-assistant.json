@@ -251,11 +251,11 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T14:45:27.690Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/89501db4153d6277456a9c7cd9e2ccb4f1d7b2b5",
-  "sourceCommitSha": "89501db4153d6277456a9c7cd9e2ccb4f1d7b2b5",
-  "sourceCommitAt": "2026-09-20T16:44:01+02:00",
-  "sourceTreeDirty": true,
+  "generatedAt": "2026-09-20T14:50:44.852Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/04f4bdfe70f13632644484aaf22a275a6752a592",
+  "sourceCommitSha": "04f4bdfe70f13632644484aaf22a275a6752a592",
+  "sourceCommitAt": "2026-09-20T16:49:17+02:00",
+  "sourceTreeDirty": false,
   "counts": {
     "Skill": 201,
     "Actor": 27,
@@ -263,9 +263,9 @@
     "Role": 116,
     "Convention": 2,
     "SkillPackage": 12,
-    "Process": 49,
-    "SequenceFlow": 632,
-    "ProcessNode": 599,
+    "Process": 50,
+    "SequenceFlow": 650,
+    "ProcessNode": 614,
     "Tool": 59,
     "Schema": 68,
     "GraphKind": 20,
@@ -1616,7 +1616,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 210,
+      "instructionLines": 264,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1882,7 +1882,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 319,
+      "instructionLines": 382,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -18789,6 +18789,448 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "A sub-graph wants to leave",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/graph-detanglement.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Start_Wants"
+      ],
+      "nodeCount": 15,
+      "flowCount": 18
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G0",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Start_Wants",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Brief"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Brief",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "unknown",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Unknown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "declared",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "unknown",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Unknown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "keep detangling",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Move"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Move",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "detangled",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "isolated",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Propose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Propose",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "authorised",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Extract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "declined",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Declined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G16",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Extract",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Extracted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Start_Wants",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Size, or a semantic&#10;reason to separate",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G0"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Brief",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Brief the topic before&#10;touching anything",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/opening-brief"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G0"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "1 &#183; Declare in place&#10;(nothing moves)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G1",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Declared&#10;in place?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G3",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G4",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "2a &#183; Measure &#8212; unassigned&#10;column FIRST",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G4",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G6"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Detangled?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/detanglement-gate.dmn#Decision_DetanglementGate",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5b",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G8",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G9"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Move",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G7"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G9",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G10"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Stands&#10;alone?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/isolation-gate.dmn#Decision_IsolationGate",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G11",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G12"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Propose",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Report what would move&#10;&#8212; sizes, and what breaks",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G13"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Authorise the extraction",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G14",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G15"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Declined",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Stays where it is&#10;&#8212; declared, detangled, isolated",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G15"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Extract",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G16"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Extracted",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Extracted",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G16"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Unknown",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "UNKNOWN &#8212; stop.&#10;Not &#8220;not yet&#8221;, not clean",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G3",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5b"
+      ],
+      "outgoing": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ExtractStructure",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Ingestion subprocess — extract structure",
@@ -25999,14 +26441,17 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-authoring",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-structure",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/graph-detanglement",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/normative-statements",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge",
@@ -26595,8 +27040,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "89501db4153d6277456a9c7cd9e2ccb4f1d7b2b5",
+    "sha": "04f4bdfe70f13632644484aaf22a275a6752a592",
     "pr": "main",
-    "run": "35517385753"
+    "run": "35517655800"
   }
 }

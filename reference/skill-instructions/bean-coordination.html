@@ -865,8 +865,74 @@ started.</li>
 </ol>
 
 <p>An <strong>unclaimed</strong> bean is fair game for any session; a claimed one is not.
-Respect sibling claims. Agents create and set <code class="language-plaintext highlighter-rouge">in-progress</code>; they do not resolve
-another session’s items.</p>
+Respect sibling claims. Agents create and set <code class="language-plaintext highlighter-rouge">in-progress</code>; they do not take
+over the work another session is mid-flight on.</p>
+<h2 id="closing-a-bean-whose-work-has-already-landed-strict">
+  
+  
+    <a href="#closing-a-bean-whose-work-has-already-landed-strict" class="anchor-heading" aria-labelledby="closing-a-bean-whose-work-has-already-landed-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Closing a bean whose work has already landed (STRICT)
+  
+  
+</h2>
+    
+
+<p>The sentence above used to end <em>“they do not resolve another session’s
+items”</em>, full stop, and it produced the opposite of the care it intended.</p>
+
+<p><strong>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">0pes</code>.</strong> Six beans carried the same sentence,
+verbatim in shape:</p>
+
+<blockquote>
+  <p><em>“Verified resolved, <code class="language-plaintext highlighter-rouge">&lt;date&gt;</code> on main at <code class="language-plaintext highlighter-rouge">&lt;sha&gt;</code>. … This bean’s defect is
+closed. <strong>NOT closing it — not my bean to resolve.</strong>”</em></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">1dfh</code>, <code class="language-plaintext highlighter-rouge">ckpe</code>, <code class="language-plaintext highlighter-rouge">dzl3</code>, <code class="language-plaintext highlighter-rouge">g4dv</code>, <code class="language-plaintext highlighter-rouge">lx2s</code>, <code class="language-plaintext highlighter-rouge">xd1s</code>. Every one <code class="language-plaintext highlighter-rouge">in-progress</code>. And
+the number that made it a defect rather than a habit: <strong>zero</strong> beans carrying
+that phrase had ever reached <code class="language-plaintext highlighter-rouge">completed</code>. The rule named who may <strong>not</strong> close
+a bean and never named who <strong>may</strong>, so nothing ever discharged it. It also
+contradicted §”A claim is branch-local” one screen up, which says an unclaimed
+bean is fair game — none of the six carried a claim.</p>
+
+<p>The cost is the failure this section already warns about, reached from the
+other side. <em>“A bean abandoned silently is indistinguishable from one nobody
+started”</em> — and so is a bean <strong>verified done</strong> and left open. Worse, in fact:
+an agent that picks one up re-derives work already on <code class="language-plaintext highlighter-rouge">main</code>. Paid twice in one
+session, on <code class="language-plaintext highlighter-rouge">r1lz</code> and again while sweeping for others.</p>
+
+<p><strong>So: a bean closes on EVIDENCE, not on authorship.</strong></p>
+
+<blockquote>
+  <p><strong>You may close any bean — whoever opened it — when you have re-run the
+measurement yourself and it passes.</strong> You may not close one because a note in
+it says somebody else measured it.</p>
+</blockquote>
+
+<p>Three obligations come with that, and they are what stop it becoming a licence:</p>
+
+<ol>
+  <li><strong>Re-derive, never quote.</strong> The note claiming resolution is the thing under
+suspicion; reading it is not verification. Run the check, then record the
+command and its result in the bean. Where a note gives a line number, verify
+the <em>fact</em> — line numbers rot. <code class="language-plaintext highlighter-rouge">xd1s</code>’s note said “seven workflows” and named
+six; four files actually carry the group, and the invariant holds by
+<em>group <strong>or</strong> retry</em>, which is what its gate asserts. Discharged on the gate,
+not on the count.</li>
+  <li><strong>A Done-when only a person can satisfy is not yours to discharge.</strong>
+<code class="language-plaintext highlighter-rouge">lx2s</code>’s is <em>“Issue #215 can be closed by its author”</em>, and an agent never
+closes an issue on its own say-so. It stayed open, and its own note had
+already walked its resolution back. <strong>Two of seven candidates in that sweep
+failed re-verification</strong>, which is the whole reason the obligation is
+re-measurement rather than trust.</li>
+  <li><strong>Mid-flight is still off limits.</strong> This governs work that has <em>landed</em>. A
+bean a sibling is actively working — a claim naming a branch, a recent note,
+an open PR — is theirs, finished or not.</li>
+</ol>
+
+<p><strong>Verified-done and still not closable? Say why, with an expiry.</strong> Same shape
+<a href="/folio-assistant/reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking.md</code></a> requires of a block, and for the same
+reason: an exception that carries no way to re-derive it is indistinguishable
+from an oversight, which is precisely how six of these accumulated.</p>
 
 <p>Stopping because you are <em>blocked</em> is a different state with its own
 requirements — what it waits on, since when, an expiry and a handoff:
@@ -921,7 +987,7 @@ beans (see todo-manager.md disambiguation block).</li>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35517385753"><code>89501db</code></a> &middot; 2026-09-20T14:44:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35517655800"><code>04f4bdf</code></a> &middot; 2026-09-20T14:50:12Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
