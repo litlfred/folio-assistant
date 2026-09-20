@@ -1,3 +1,20 @@
+---
+name: fsh-guts
+description: >-
+  The trashcan that is kept — where work that is not wanted goes instead of
+  being deleted, what declares itself there, and what does NOT belong.
+# published: false — this skill DOCUMENTS the trashcan, so publishing it
+# advertises it to every consumer of the folio's graph, which is the precise
+# thing the owner's 2026-09-19 instruction forbids: "NEVER include fsh-guts,
+# references to fsh-guts stripped out of KG before sending to publication."
+# It was ALREADY stripped, by a name match against UNPUBLISHED_GRAPH_KINDS.
+# Declaring it states the fact where the author is looking, rather than
+# inferring it from a collision between this skill's name and a graph kind's
+# — which `isPublishedSkill` itself flags as the thing to replace: "if that
+# ever stops being true this needs its own list, not a cleverer derivation".
+published: false
+---
+
 # `fsh-guts/` — the trashcan that is kept
 
 **Delete means relocate.** Nothing in this repository is removed with `rm`
