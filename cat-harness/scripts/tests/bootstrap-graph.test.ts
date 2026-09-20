@@ -42,6 +42,28 @@ describe("pure, because committed-and-gated demands it", () => {
     expect(a).toBe(b);
   });
 
+  test("the graph is ORDERED, so two machines agree byte for byte", async () => {
+    // The test above compares two builds in ONE process against ONE
+    // filesystem, so it compares an ordering against itself and cannot fail
+    // on ordering at all. It is a real guard for timestamps and a guard that
+    // structurally cannot fire for this.
+    //
+    // Bean `3jj9`, measured 2026-09-20: the collectors walk directories, so
+    // node order was `readdirSync` order — the FILESYSTEM's, not the
+    // repository's. The committed file held skills as `bootstrap-kg-
+    // navigation, discussion, confirm-harness, log-message`, stable on the
+    // container that wrote it and different on CI. `it is current` compares
+    // bytes, so it passed locally and failed in CI on identical inputs.
+    //
+    // Asserting the ORDER rather than re-running the build is the point: this
+    // fails on the machine that introduces the regression, not only on the
+    // one that disagrees with it later.
+    const doc = await buildBootstrapDocument();
+    const ids = (doc["@graph"] as Array<Record<string, unknown>>).map((n) => String(n["@id"]));
+    expect(ids.length).toBeGreaterThan(0); // not vacuous
+    expect(ids).toEqual([...ids].sort());
+  });
+
   test("it carries no timestamp and no commit SHA", async () => {
     // A committed generated file CANNOT carry its own commit: the best it
     // could name is the commit before the one containing it, which is wrong by
