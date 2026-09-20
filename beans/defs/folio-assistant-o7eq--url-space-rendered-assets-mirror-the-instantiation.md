@@ -241,3 +241,53 @@ that has not decided should not compile. That is bean `o7eq`'s next step.
 `<base>/who-iris/` mocking WHO's own web interface **is** *"showing who-iris
 with existing materialised assets with themed harness"* — milestone `yg29`.
 It is not a routing detail; it is the goal.
+
+---
+---
+
+---
+
+## Its first two consumers exist — 2026-09-20, PR #583
+
+`schemas/` and `library/` now publish under this rule. Both resolve the
+rendered-content root through `siteDirFor` and take the published segment from
+the **declared directory's own name**, so neither writes an instance name nor a
+graph name down anywhere — `check:declared-paths` caught the first draft doing
+exactly that and was right to.
+
+### Their placement is NOT settled by the three-case ruling — open question
+
+This note said they were "case 2, and need no change at all". **The three-case
+ruling above supersedes that and the claim is withdrawn**, because the two
+viewers are exactly the shape case 3 describes: cat-harness's machinery
+rendering assets that belong to OTHER instances.
+
+Measured on the merged tree: the schema viewer reads **4** declared `schemas`
+directories (`cat-harness`, `folio-assistant-core`, `large-datasets`,
+`detangle`) and the library viewer reads **3** (`who-iris`, `agent-skills`,
+`folio-assist-sci`) plus three upload queues. So they are not the root
+rendering its own content; they are one instance's viewer over several
+instances' subgraphs — and they currently sit at `<base>/schemas/` and
+`<base>/library/`, which is case 1's shape.
+
+Three readings, and the owner has to pick:
+
+1. **They stay where they are.** A viewer that spans every instance has no
+   single `<subject>`, so case 3's path cannot be composed for it.
+2. **They move to `<base>/cat-harness/schemas/`** — owner + kind, with the
+   subject omitted because the view is the whole corpus.
+3. **They split per subject** — `<base>/cat-harness/schemas/detangle/` and so
+   on, with the current pages becoming an index over them. This is the reading
+   that matches case 3 most literally, and it is the largest change.
+
+**Nothing was moved on the strength of this**, because the generators compose
+no path: `siteDirFor` resolves the rendered-content root and the segment is the
+declared directory's own basename. Whichever reading wins, it is a change in
+one place per generator rather than a rewrite.
+
+Bean `8325` was opened in a parallel session from the same owner statement and
+is now **scrapped** as a duplicate of this one, carrying two measurements worth
+keeping: `siteDir()` + `artefactStub()` are the two resolvers this rule needs
+and both already exist, and `check:instance-render` is the conformance check it
+wants — three states, 'undetermined is never a pass' — so extending that is more
+likely right than writing a second.

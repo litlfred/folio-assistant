@@ -385,6 +385,22 @@ export const RULES: Rule[] = [
       "scripts/check-undeclared-files.ts",   // present-but-undeclared, the dh4f shape inverted
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
+      // The schema and library visualisers, and the two readers behind them.
+      //
+      // CORE rather than harness for the reason every entry above shares: each
+      // reads THIS INSTANCE'S declaration, and this instance declares a `folio`
+      // graph, so each must import `schemas/folio-graph-kind.ts` for the kind
+      // to be registered — and that module is core's by the argument written on
+      // it ("a layer that cannot render must not own the renderable kind").
+      //
+      // The generators are core on a second count as well, and it is the
+      // stronger one: they WRITE INTO THE RENDERED SITE. `cat-harness-minimum`
+      // carries "if it produces something a human looks at, it is not the
+      // harness", and a page under `docs/` is exactly that.
+      "scripts/schema-graph.ts",             // schemas/*.ts → declarations + edges
+      "scripts/gen-schema-viz.ts",           // that graph → projection + viewer
+      "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
+      "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
