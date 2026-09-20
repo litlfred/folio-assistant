@@ -74,6 +74,7 @@
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 
+import { classifyResponse, withBackoff, type BackoffOptions } from "../src/core/retry.js";
 import { detectRepoUrl, ownerRepo } from "../src/core/git-refs.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
@@ -105,22 +106,46 @@ export async function runsForHead(
   slug: string | undefined,
   sha: string,
   fetchImpl: typeof fetch = fetch,
+  /**
+   * Backoff options, so a test can inject a fast clock.
+   *
+   * Passed in rather than hardcoded because a retry loop with real sleeps is
+   * untestable in any suite with a sane timeout — the first draft of this made
+   * `a thrown fetch is cannot-ask` take 15 seconds and fail at 5.
+   */
+  backoff: BackoffOptions = {},
 ): Promise<HeadRunVerdict> {
   if (!slug) return { state: "cannot-ask", reason: "no GitHub `origin` remote to ask about" };
   const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
   const url =
     `https://api.github.com/repos/${slug}/actions/runs` +
     `?head_sha=${encodeURIComponent(sha)}&per_page=100`;
+  // Owner's rule, 2026-09-20: a falling-off retry rate on every error. A
+  // dropped socket or a 5xx says nothing about the question — but a 404 or a
+  // permission 403 IS the answer, and `classifyResponse` keeps those final so
+  // four waits are not spent re-reaching a conclusion already in hand.
   let res: Response;
   try {
-    res = await fetchImpl(url, {
-      headers: {
-        accept: "application/vnd.github+json",
-        ...(token ? { authorization: `Bearer ${token}` } : {}),
+    res = await withBackoff(
+      async () => {
+        const r = await fetchImpl(url, {
+          headers: {
+            accept: "application/vnd.github+json",
+            ...(token ? { authorization: `Bearer ${token}` } : {}),
+          },
+          signal: AbortSignal.timeout(20_000),
+        });
+        return { value: r, transient: classifyResponse(r.status, r.headers) };
       },
-      signal: AbortSignal.timeout(20_000),
-    });
+      {
+        onRetry: (n, ms, why) => console.error(`  … attempt ${n} failed (${why}); retrying in ${ms}ms`),
+        ...backoff,
+      },
+    );
   } catch (e) {
+    // Retries exhausted. The verdict is the SAME third state it would have
+    // been without them — backoff makes could-not-determine rarer, it never
+    // converts it into an answer.
     return { state: "cannot-ask", reason: e instanceof Error ? e.message : String(e) };
   }
   if (!res.ok) {

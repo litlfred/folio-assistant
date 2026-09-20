@@ -29,8 +29,12 @@ const stub = (runs: unknown[], init: { ok?: boolean; status?: number } = {}) =>
     ({
       ok: init.ok ?? true,
       status: init.status ?? 200,
+      headers: new Headers(),
       json: async () => ({ workflow_runs: runs }),
     }) as unknown as Response) as unknown as typeof fetch;
+
+/** No real sleeping in tests — see the thrown-fetch case below. */
+const FAST = { attempts: 3, sleep: async () => {} };
 
 describe("three answers stay three answers", () => {
   test("runs present is `has-run`, and they come back", async () => {
@@ -54,22 +58,49 @@ describe("three answers stay three answers", () => {
   });
 
   test("a 404 is `cannot-ask` and names the token — not being ALLOWED to look is not an absence", async () => {
-    const r = await runsForHead("o/r", "abc", stub([], { ok: false, status: 404 }));
+    const r = await runsForHead("o/r", "abc", stub([], { ok: false, status: 404 }), FAST);
     expect(r.state).toBe("cannot-ask");
     expect(r.state === "cannot-ask" && r.reason).toContain("GITHUB_TOKEN");
   });
 
   test("a 403 is `cannot-ask` and names rate limiting", async () => {
-    const r = await runsForHead("o/r", "abc", stub([], { ok: false, status: 403 }));
+    const r = await runsForHead("o/r", "abc", stub([], { ok: false, status: 403 }), FAST);
     expect(r.state === "cannot-ask" && r.reason).toContain("rate limited");
   });
 
-  test("a thrown fetch is `cannot-ask`, carrying the reason", async () => {
+  test("a thrown fetch is retried, and THEN `cannot-ask` with the reason", async () => {
+    // The owner's rule (2026-09-20): a falling-off retry rate on every error.
+    // A dropped socket says nothing about the question, so it is worth asking
+    // again — but exhausting the retries does NOT change the verdict. It is
+    // the same third state it would have been without them.
+    //
+    // The sleep is injected. With the real one this takes 1+2+4+8s and fails
+    // at bun's 5s default, which is exactly what the first draft did.
+    let calls = 0;
     const f = (async () => {
+      calls += 1;
       throw new Error("network is unreachable");
     }) as unknown as typeof fetch;
-    const r = await runsForHead("o/r", "abc", f);
+    const r = await runsForHead("o/r", "abc", f, { attempts: 3, sleep: async () => {} });
+    expect(calls).toBe(3);
     expect(r.state === "cannot-ask" && r.reason).toContain("unreachable");
+  });
+
+  test("a 5xx is retried; a 404 is NOT — one is a blip, the other is an answer", async () => {
+    let calls = 0;
+    const responder = (status: number) =>
+      (async () => {
+        calls += 1;
+        return { ok: false, status, headers: new Headers(), json: async () => ({}) } as unknown as Response;
+      }) as unknown as typeof fetch;
+
+    calls = 0;
+    await runsForHead("o/r", "abc", responder(503), { attempts: 3, sleep: async () => {} });
+    expect(calls).toBe(3);
+
+    calls = 0;
+    await runsForHead("o/r", "abc", responder(404), { attempts: 3, sleep: async () => {} });
+    expect(calls).toBe(1);
   });
 });
 

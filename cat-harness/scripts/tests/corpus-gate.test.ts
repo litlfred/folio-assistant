@@ -76,6 +76,11 @@ const authorise = async (label: string, decision = "accept"): Promise<void> => {
   complete(model, state, "Task_CollateFindings");
   complete(model, state, "Task_LogFindings");
   complete(model, state, "Task_ReviewFindings");
+  // The options analysis sits between the findings and the decision
+  // (`u4hs`). These fixtures are ordinary edits, so they take `GW_Trigger`'s
+  // "no" — the early exit `A_Frame` has always documented and, until this
+  // wiring exposed the gap, the diagram did not actually have.
+  drainSubprocess(model, state, "Call_OptionsAnalysis", { GW_Trigger: "no" });
   // The decision and its audit note are recorded before the gateway routes on them.
   complete(model, state, "Task_RecordDecision");
   complete(model, state, "Gateway_EditorDecision", { outcome: decision });

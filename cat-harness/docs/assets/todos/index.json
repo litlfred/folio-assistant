@@ -176,6 +176,7 @@
     "Process_CRDM_Close": [],
     "Process_CRDM_DataModel": [],
     "Process_CRDM_Deliver": [
+      "Process_OptionsAnalysis",
       "Process_Review",
       "Process_ThemeUIReview"
     ],
@@ -204,7 +205,9 @@
     "Process_CodeChangeReview": [],
     "Process_CodeQualityGates": [],
     "Process_ContentAcquisition": [],
-    "Process_ContentChangeReview": [],
+    "Process_ContentChangeReview": [
+      "Process_OptionsAnalysis"
+    ],
     "Process_Lifecycle": [
       "Process_Editing",
       "Process_Publication"
@@ -220,7 +223,8 @@
       "Process_Editing"
     ],
     "Process_Editing": [
-      "Process_EvidenceRetrieval"
+      "Process_EvidenceRetrieval",
+      "Process_OptionsAnalysis"
     ],
     "Process_EvidenceRetrieval": [],
     "Process_FeatureStaging": [],
@@ -236,6 +240,7 @@
     "Process_L2Dak": [],
     "Process_L3Fhir": [],
     "Process_OptionsAnalysis": [],
+    "Process_PrChecksPresent": [],
     "Process_QaReportSigning": [],
     "Process_RepoHealth": [],
     "Process_CodeReview": [],
