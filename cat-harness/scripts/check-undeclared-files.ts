@@ -159,23 +159,46 @@ export function accountedRootPaths(repoRoot: string): Map<string, string> {
   for (const [name, why] of Object.entries(ROOT_INFRASTRUCTURE)) out.set(name, `infrastructure: ${why}`);
   for (const d of IGNORED_ROOT_DIRS) out.set(d, "not this sweep's business");
 
+  // TWO PASSES, and the order is the whole correctness argument.
+  //
+  // A single pass got this wrong in a way that only CI could see. It marked a
+  // directory "an instance", then walked that instance's declared directories
+  // and OVERWROTE entries — and `cat-harness` declares `bootstrap/skills/` at
+  // repository scope, whose first segment is `bootstrap`. So whether
+  // `bootstrap` ended up reading "an instance: it declares itself" or "declared
+  // by folio-assistant" depended on which `readdirSync` returned first. Locally
+  // that is bootstrap; on the CI runner it is not, and the test failed there and
+  // nowhere else.
+  //
+  // Being an instance is the stronger fact and must win: an instance is
+  // accounted for BY ITSELF, and another instance happening to declare a
+  // directory inside it does not change that. So instances are marked first and
+  // the declared-directory pass never replaces one.
+  const instances: string[] = [];
   for (const entry of readdirSync(repoRoot, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
-    const abs = join(repoRoot, entry.name);
     // An instance declares itself. That is the contract everywhere else here,
     // and it means a new instance is accounted for the moment it exists rather
     // than when somebody remembers to add it to a list.
-    if (existsSync(join(abs, "harness.json"))) {
+    if (existsSync(join(repoRoot, entry.name, "harness.json"))) {
       out.set(entry.name, "an instance: it declares itself");
-      const decl = readDeclaration(abs);
-      for (const dir of decl?.directories ?? []) {
-        // A repository-scoped entry resolves against the ROOT, which is how
-        // `beans/` and `todos/` legitimately live there.
-        const base = rootForScope(abs, dir.scope);
-        if (base !== abs) {
-          const top = dir.path.replace(/^\.\//, "").split("/")[0];
-          if (top) out.set(top, `declared by ${decl?.name ?? entry.name} as "${dir.id}"`);
-        }
+      instances.push(entry.name);
+    }
+  }
+
+  for (const name of instances) {
+    const abs = join(repoRoot, name);
+    const decl = readDeclaration(abs);
+    for (const dir of decl?.directories ?? []) {
+      // A repository-scoped entry resolves against the ROOT, which is how
+      // `beans/` and `todos/` legitimately live there.
+      const base = rootForScope(abs, dir.scope);
+      if (base !== abs) {
+        const top = dir.path.replace(/^\.\//, "").split("/")[0];
+        // `!out.has(top)` is what makes this order-independent: an entry
+        // already marked an instance keeps that, and so does one already
+        // claimed by an earlier instance's declaration.
+        if (top && !out.has(top)) out.set(top, `declared by ${decl?.name ?? name} as "${dir.id}"`);
       }
     }
   }

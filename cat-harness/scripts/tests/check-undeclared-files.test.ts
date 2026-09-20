@@ -216,3 +216,56 @@ describe("the size report is for a person", () => {
     expect(humanBytes(n as number)).toBe(expected);
   });
 });
+
+describe("an instance's own declaration outranks another instance naming it", () => {
+  /**
+   * The exact live shape, and the defect it exposed.
+   *
+   * `cat-harness/harness.json` declares `bootstrap/skills/` at REPOSITORY scope,
+   * whose first path segment is `bootstrap` — which is itself an instance. A
+   * single-pass implementation marked `bootstrap` "an instance", then walked
+   * cat-harness's declarations and OVERWROTE it with "declared by". Which value
+   * survived depended on the order `readdirSync` returned the two directories.
+   *
+   * That passed locally and failed in CI, on nothing but directory order. These
+   * tests construct BOTH orders explicitly so neither can be the lucky one.
+   */
+  function pair(firstName: string, secondName: string): string {
+    const root = mkdtempSync(join(tmpdir(), "outrank-"));
+    // `outer` declares a repository-scoped directory INSIDE `inner`, which is
+    // itself an instance.
+    const outer = { name: "outer", directories: [{ id: "inner-skills", path: `${secondName}/skills/`, graphs: ["cat-harness"], scope: "repository" }] };
+    const inner = { name: "inner", directories: [] };
+    const byName: Record<string, unknown> = { [firstName]: outer, [secondName]: inner };
+    for (const [dir, decl] of Object.entries(byName)) {
+      mkdirSync(join(root, dir), { recursive: true });
+      writeFileSync(join(root, dir, "harness.json"), JSON.stringify(decl, null, 2));
+    }
+    mkdirSync(join(root, secondName, "skills"), { recursive: true });
+    writeFileSync(join(root, "package.json"), "{}");
+    return root;
+  }
+
+  test("the named instance still reads as an instance — declarer first", () => {
+    const root = pair("a-outer", "z-inner");
+    expect(accountedRootPaths(root).get("z-inner")).toContain("declares itself");
+  });
+
+  test("...and declarer second, which is the order that used to pass", () => {
+    const root = pair("z-outer", "a-inner");
+    expect(accountedRootPaths(root).get("a-inner")).toContain("declares itself");
+  });
+
+  test("neither is ever reported as undeclared", () => {
+    for (const [a, b] of [["a-outer", "z-inner"], ["z-outer", "a-inner"]] as const) {
+      expect(undeclaredAtRoot(pair(a, b))).toEqual([]);
+    }
+  });
+
+  test("on the REAL repository, bootstrap reads as an instance", () => {
+    // The live case. cat-harness declares bootstrap/skills/ at repository
+    // scope, so this is the pair above, with real names.
+    const REPO = resolve(import.meta.dir, "..", "..", "..");
+    expect(accountedRootPaths(REPO).get("bootstrap")).toContain("declares itself");
+  });
+});
