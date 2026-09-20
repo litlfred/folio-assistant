@@ -1,216 +1,4 @@
-#!/usr/bin/env bun
-/**
- * Publish the schema graph as a projection, and a viewer over it.
- *
- * @module scripts/gen-schema-viz
- * @graphNode none — a generator over the schema graph, not a schema itself
- *
- * ## The three pieces, and why the projection is separate from the page
- *
- * `schema-graph.ts` reads; this writes two artefacts and neither is the other:
- *
- * - **`<site>/assets/schemas/index.json`** — the projection. One indented JSON
- *   file, emitted through the same `--check` contract `gen-docs-pages.ts`
- *   uses for the todo and bean indices.
- * - **`<site>/schemas/index.html`** — the viewer. Carries no data of its own
- *   and fetches the projection **relative to its own location**, so the same
- *   bytes are correct at the canonical base and at a staging slug. That rule
- *   is `kg-viewer.ts`'s and it is the reason there is no base URL anywhere in
- *   this file.
- *
- * Keeping them apart is what lets something ELSE draw the graph. A viewer that
- * embedded its data would make every other consumer re-read the `.ts`.
- *
- * ## Where they go — resolved, never composed
- *
- * The owner's rule, 2026-09-20: rendered assets live at
- * `<base>/<instantiated harness>/<path to rendered content>`, relative to the
- * instance's own URL — bootstrap's `.jsonld`/`.json` being the worked example.
- * So there is **no top-level `schema/` segment** here and no instance name
- * written down. `siteDirFor` resolves this instance's rendered-content root
- * from its declaration and everything hangs off that. Bean `8325` carries the
- * general rule and the three questions still open on it; this file only has to
- * avoid pre-empting them, which it does by resolving rather than composing.
- *
- * ## Why a faceted index with a ONE-TYPE diagram, and not a class diagram
- *
- * 713 declarations and 464 edges do not want to be one UML diagram. That
- * renders as a wall: it looks like a data model and answers no question about
- * one. It is the same argument `kg-viewer.ts` made for 1111 KG nodes and won,
- * and the owner's own ask — *"browsable, so i can give overview like
- * browsing"* — is a navigation requirement rather than a poster requirement.
- *
- * So the diagram is a **view over the projection** rather than the output
- * format: one selected declaration, drawn as a UML class with its fields, its
- * generalisations above it and its references below. Everything else is the
- * index. Adding a whole-corpus render later costs nothing, because the
- * projection already carries every edge.
- *
- * ## Zero dependencies, and the SVG is hand-built for that reason
- *
- * No CDN, no framework, no build step — `kg-viewer.ts`'s rule, and the
- * argument is unchanged: a page that needs a network fetch to render cannot be
- * opened from a file, cannot be reviewed offline, and adds a third party to
- * the trust boundary of a page whose whole job is to display this repository's
- * own data. Mermaid would have been fewer lines and is exactly that third
- * party.
- *
- * Usage:
- *   bun run schema:viz          # write
- *   bun run schema:viz:check    # fail if either artefact is stale
- */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative, sep } from "node:path";
-
-import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
-import { readDeclaration, siteDirFor } from "../schemas/cat-harness.ts";
-// The `folio` graph kind is registered by CORE on import; this module resolves
-// this instance's directories and the instance declares a folio graph.
-import "../schemas/folio-graph-kind.js";
-
-const ROOT = join(import.meta.dir, "..");
-const check = process.argv.includes("--check");
-
-/**
- * How much of a declaration's doc the projection carries.
- *
- * The same argument the bean index records for its body preview: enough for a
- * detail panel, and a reader who wants the whole docblock follows the source
- * link. Measured at this length — see the size report the run prints.
- */
-const DOC_MAX = 400;
-
-/** The projection, trimmed for the page. */
-function projection(g: SchemaGraph): unknown {
-  return {
-    $schema: "folio-schema-graph/v1",
-    roots: g.roots,
-    modules: g.modules.map((m) => ({
-      module: m.module,
-      instance: m.instance,
-      name: m.name,
-      graphNode: m.graphNode,
-      ...(m.reason ? { reason: m.reason } : {}),
-      ...(m.summary ? { summary: m.summary.slice(0, DOC_MAX) } : {}),
-      isTest: m.isTest,
-      // `decls` is NOT carried. A declaration already names its module, so a
-      // per-module id list is the same fact written twice — one fact, one
-      // place, which is the rule `data-modelling` states and the reason the
-      // projection groups client-side instead. Measured: it cost 50 KB of the
-      // 866 KB raw file to say something the `decls` array already says.
-    })),
-    decls: g.decls.map((d) => ({
-      id: d.id,
-      name: d.name,
-      module: d.module,
-      kind: d.kind,
-      ...(d.note ? { note: d.note } : {}),
-      ...(d.doc ? { doc: d.doc.slice(0, DOC_MAX) } : {}),
-      fields: d.fields.map((f) => ({
-        name: f.name,
-        type: f.type,
-        optional: f.optional,
-        array: f.array,
-        ...(f.doc ? { doc: f.doc.slice(0, DOC_MAX) } : {}),
-      })),
-      extendsNames: d.extendsNames,
-      values: d.values,
-      refs: d.refs,
-      unresolved: d.unresolved,
-      external: d.external,
-      // `line` is NOT carried, and the reader keeps it — the difference is
-      // the whole of this comment.
-      //
-      // A line number is an EDITOR COORDINATE, not a property of a
-      // declaration. Carrying it made the committed projection change
-      // whenever anything above a declaration moved, so the staleness gate
-      // fired on edits that changed nothing about the schema graph. Measured
-      // on this very branch: merging main shifted two declarations in
-      // `cat-harness.ts` by 36 lines and nothing else in 895 KB differed —
-      // the gate went red over two integers.
-      //
-      // That fails the standard this repository applies to its own gates. The
-      // comment on `gen-docs-pages --check` states what a red there means:
-      // "somebody added a node, renamed a block, ran a first sweep, or moved
-      // a sidecar, and did not regenerate. A real omission, every time." A red
-      // here would have meant "somebody added a blank line in a schema file",
-      // which is not an omission and teaches contributors to regenerate
-      // reflexively rather than to read the finding.
-      //
-      // The cost is the deep link: the viewer names the module and not the
-      // line. That is the right trade — a stale anchor is wrong silently,
-      // while a module path stays correct under every reformat.
-      exported: d.exported,
-    })),
-    edges: g.edges,
-  };
-}
-
-/**
- * The viewer page.
- *
- * One file, no data. It reads its projection relative to its
- * own URL — the page sits at `<site>/schemas/` and the projection at
- * `<site>/assets/schemas/`, so the relative path is a property of the layout
- * rather than of the host.
- */
-
-/**
- * Where a viewer of a declared directory is published, and the relative path
- * from it back to its data.
- *
- * ## The rule — the URL IS the directory's path in the knowledge graph
- *
- * Owner, 2026-09-20, settling bean `o7eq`'s third case:
- *
- * > it `<baseurl>/<path to kind in knowledge graph>` or
- * > `<path to dir handled>/<optional subject>`
- *
- * So the segment is **the declared directory's own repo-relative path**, and
- * `<subject>` is optional — a viewer with no subject is the view over all of
- * them.
- *
- * **This is a resolution, not a composition, and the difference is not
- * cosmetic.** The first draft of this function composed `<owner>/<kind>` from
- * the rendering instance's name and the graph kind. That gives the right
- * answer for `cat-harness/schemas/` by coincidence — the directory happens to
- * sit at owner/kind — and the WRONG one for every directory that does not:
- * `who-iris/library/` would have been addressed as `cat-harness/library`,
- * naming the machinery where the rule names the data. Taking the path means
- * the two can never disagree, because there is only one of them.
- *
- * ## Why the data path is computed rather than written
- *
- * The projection stays at `<site>/assets/<kind>/`, and the page fetches it
- * RELATIVE to its own location so the same bytes are correct at the canonical
- * base and at a staging slug. A page at `cat-harness/schemas/` is two levels
- * down rather than one, and a literal `../assets/...` would have kept parsing
- * and fetched nothing. Deriving it means the layout can move again without a
- * silent 404.
- */
-export function viewerPlacement(
-  site: string,
-  /** The handled directory's repo-relative path, e.g. `cat-harness/schemas`. */
-  dirPath: string,
-  /** The graph kind, which names the projection's own directory. */
-  kind: string,
-): { pageDir: string; dataDir: string; dataHref: string } {
-  const pageDir = join(site, ...dirPath.split("/"));
-  const dataDir = join(site, "assets", kind);
-  const dataHref = relative(pageDir, join(dataDir, "index.json")).split(sep).join("/");
-  return { pageDir, dataDir, dataHref };
-}
-
-export function viewerHtml(dataHref: string, scope = ""): string {
-  // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
-  //
-  // The whole page is one template literal, so a backtick anywhere inside it
-  // terminates the string and the rest becomes TypeScript. It fails at a line
-  // number far from the mistake, and it has happened twice: once in a comment
-  // reading "the intake's own files[]", once in one quoting a field
-  // declaration. `viz-generators.test.ts` imports this module, so a stray one
-  // reddens the suite rather than only the generator.
-  return `<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -315,11 +103,11 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 <script>
 "use strict";
 var G = null, SEL = null;
-var DATA_HREF = "${dataHref}";
+var DATA_HREF = "../../../assets/schemas/index.json";
 /* The SUBJECT this page is scoped to, or "" for the handler's whole view.
    One projection serves every page — a second JSON per subject would be the
    same facts written N+1 times, free to disagree once one is regenerated. */
-var SCOPE = "${scope}";
+var SCOPE = "large-datasets";
 function inScope(d){ return !SCOPE || d.instance === SCOPE; }
 var $ = function (id) { return document.getElementById(id); };
 function esc(s) {
@@ -368,7 +156,7 @@ function uml(d) {
   });
   refs = refs.slice(0, 6);
   var selFields = (d.fields || []).map(function (f) {
-    return f.name + (f.optional ? "?" : "") + ": " + f.type.replace(/^z\\./, "").slice(0, 28);
+    return f.name + (f.optional ? "?" : "") + ": " + f.type.replace(/^z\./, "").slice(0, 28);
   });
 
   var W = 0, parts = [], y = 0;
@@ -399,7 +187,7 @@ function uml(d) {
   if (pShift > 0) W = Math.max(W, prowW + pShift);
   prow.forEach(function (p) {
     p.cx += pShift;
-    p.b.svg = p.b.svg.replace(/x="(\d+(?:\.\d+)?)"/, function (m0, v) {
+    p.b.svg = p.b.svg.replace(/x="(d+(?:.d+)?)"/, function (m0, v) {
       return 'x="' + (parseFloat(v) + pShift) + '"';
     });
     parts.push(p.b.svg);
@@ -449,13 +237,13 @@ function detail(d) {
     h += '<p class="note"><strong>This type carries id-style fields.</strong> ' +
       "The diagram draws containment and generalisation only: a reference held as a string id " +
       "(<code>actorId: z.string()</code>) carries no syntactic link to the schema it names, so it is " +
-      "<em>not</em> an absent relation \u2014 it is one this view structurally cannot see.</p>";
+      "<em>not</em> an absent relation — it is one this view structurally cannot see.</p>";
   }
   if (d.fields && d.fields.length) {
-    h += "<table><caption class=\\"sub\\" style=\\"text-align:left;padding:0 0 4px\\">Fields</caption><thead><tr><th>name</th><th>type</th><th>notes</th></tr></thead><tbody>";
+    h += "<table><caption class=\"sub\" style=\"text-align:left;padding:0 0 4px\">Fields</caption><thead><tr><th>name</th><th>type</th><th>notes</th></tr></thead><tbody>";
     d.fields.forEach(function (f) {
       h += "<tr><td><code>" + esc(f.name) + (f.optional ? '<span class="opt">?</span>' : "") +
-        "</code></td><td><code>" + esc(f.type) + "</code></td><td class=\\"sub\\">" + esc(f.doc || "") + "</td></tr>";
+        "</code></td><td><code>" + esc(f.type) + "</code></td><td class=\"sub\">" + esc(f.doc || "") + "</td></tr>";
     });
     h += "</tbody></table>";
   }
@@ -571,118 +359,8 @@ fetch(DATA_HREF).then(function (r) {
 }).catch(function (e) {
   $("counts").textContent = "could not load the projection: " + e.message;
   $("detail").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) + '</code> could not be read. ' +
-    "That is not an empty graph \\u2014 it is a graph that could not be loaded, and the page says so rather than showing nothing.</p>";
+    "That is not an empty graph \u2014 it is a graph that could not be loaded, and the page says so rather than showing nothing.</p>";
 });
 </script>
 </body>
 </html>
-`;
-}
-
-/** Write, or report staleness. Same contract as `gen-docs-pages.ts`. */
-let stale = 0;
-function emit(path: string, content: string): void {
-  if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
-    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
-    stale++;
-    return;
-  }
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, content);
-  console.log(`  ✓ ${path}`);
-}
-
-if (import.meta.main) {
-  const g = readSchemaGraph(ROOT);
-  if (g === null) {
-    // No schemas directory is not an empty graph. A folio without one simply
-    // gets no projection, and the viewer reads the absent file as "could not
-    // load" rather than as "there is nothing".
-    console.log("  · no schemas directory — nothing to publish");
-    process.exit(0);
-  }
-  const site = join(ROOT, siteDirFor(ROOT));
-  /**
-   * The published segment is the DECLARED directory's own name, read rather
-   * than written down.
-   *
-   * `check:declared-paths` caught the first draft writing `"schemas"` as a
-   * literal here, and it was right to: that is a second answer to a question
-   * `harness.json` already answers, and the moment the directory is renamed
-   * the source moves and the URL does not. Taking the basename of the
-   * resolved directory means one fact — where the schema graph lives — serves
-   * both the read and the publish.
-   *
-   * It also generalises, which is the point: a visualiser for any declared
-   * subgraph publishes under THAT subgraph's declared name, with no per-graph
-   * literal anywhere. That is what `2krx` would need if all 19 unrendered
-   * subgraphs get viewers.
-   */
-  /**
-   * This instance's OWN schemas directory decides the segment.
-   *
-   * Four instances declare one, and `schemaRoots` returns all four — a
-   * dependency's directory must not name the URL this instance publishes at.
-   * So the one inside ROOT wins, and the first declared one is the fallback
-   * for an instance that declares none of its own.
-   *
-   * On the wider URL shape: the owner ruled on `o7eq` that a rendered asset's
-   * address is the instance's NAME plus the declared graph as a segment, with
-   * whether the ROOT instance elides its own name still open and recommended
-   * to elide. This publishes at `<site>/<graph>/`, which is that ruling with
-   * the root eliding — so it needs no change if the recommendation stands,
-   * and one segment if it does not. `8325` tracks it either way.
-   */
-  const ownPrefix = `${ROOT}${sep}`;
-  const roots = schemaRoots(ROOT);
-  const own = roots.find((d) => d.startsWith(ownPrefix)) ?? roots[0];
-  if (own === undefined) {
-    console.log("  · no schemas directory is declared — nothing to publish");
-    process.exit(0);
-  }
-  const seg = basename(own);
-  const data = JSON.stringify(projection(g), null, 2) + "\n";
-  // Indented for the reason the todo and bean indices both document: a
-  // minified projection is one line, git merges by line, and two branches each
-  // adding a schema would conflict on the whole file every time.
-  // ── Rule 1: a HANDLER rendering a kind's assets ────────────────────────
-  //
-  // `<base>/<handler>/<kind>/<optional subject>` — the owner's own example is
-  // `<base>/cat-harness/docs/who-iris/`. The handler is THIS instance, the
-  // kind names what it renders, the subject scopes it to one instance.
-  //
-  // Rule 2, `<base>/<instance>/`, is the instance presenting ITSELF, and a
-  // subject page must never be published there: it would squat on that
-  // instance's own site.
-  const handler = readDeclaration(ROOT)?.name;
-  if (!handler) {
-    console.log("  · this instance declares no name — no handler segment to publish under");
-    process.exit(0);
-  }
-  const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
-  emit(join(dataDir, "index.json"), data);
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref));
-
-  // One page per SUBJECT — read from the modules actually found, so a
-  // declared-but-empty directory gets no page claiming to show it.
-  const subjects = [...new Set(g.modules.map((m) => m.instance))].sort();
-  for (const subject of subjects) {
-    const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
-  }
-
-  if (!check) {
-    console.log(
-      `  ${g.modules.length} module(s), ${g.decls.length} declaration(s), ${g.edges.length} edge(s), ` +
-        `${g.decls.filter((d) => d.kind === "undetermined").length} undetermined; ` +
-        `${subjects.length} subject page(s); ` +
-        `projection ${(Buffer.byteLength(data) / 1024).toFixed(0)} KB`,
-    );
-  }
-  if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run schema:viz\``);
-    process.exit(1);
-  }
-}

@@ -1,7 +1,7 @@
 {
   "_comment": "The WHO IRIS catalogue instance, staged as a top-level directory ahead of becoming its own repository. Owner, 2026-09-20: 'there needs to be a new repo (staged here as a new top-level dir -> repo later) which is an instance of fa-core, and is for the who-iris cataloge and this is an example artefact (the style guide is part of the library itself)', and later 'in future who-iris iwll be own repo. will have specialized tools/themes.' The `library` entry landed with the git mv (bean frs5), in the same change, exactly as the previous version of this comment said it would: until then its ABSENCE was load-bearing, because `resolveLibraryRef` reported `no-library-graph` for a citation naming this instance -- a different and more useful answer than 'that section is missing'. Both of those are now real answers rather than one standing in for the other.",
   "name": "who-iris",
-  "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
+  "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference \u2014 1,057,223 files known, three materialized.",
   "assets": [
     {
       "id": "readme",
@@ -19,13 +19,18 @@
       "description": "The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assist-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
       "graphs": [
         "library"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
     },
     {
       "id": "who-iris-catalogue",
       "path": "catalogue/",
       "dependents": "skip",
-      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today — 9 referenced, 3 materialized, 0 unknown — against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
+      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today \u2014 9 referenced, 3 materialized, 0 unknown \u2014 against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
       "graphs": [
         "catalogue"
       ]
@@ -34,10 +39,15 @@
       "id": "who-iris-uploads",
       "path": "uploads/",
       "dependents": "reproduce",
-      "description": "The incoming queue — raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF — the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
+      "description": "The incoming queue \u2014 raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF \u2014 the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
       "graphs": [
         "uploads"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
     },
     {
       "id": "who-iris-skills",
