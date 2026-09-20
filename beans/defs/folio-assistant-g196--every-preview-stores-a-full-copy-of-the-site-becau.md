@@ -439,5 +439,73 @@ other was a transition contaminated by a `main` merge.
 **This bean still claims nothing about deduplication.** The fix is now three
 deep and the fourth measurement has not been taken.
 
-- [ ] Re-measure with another controlled pair. Zero `.html` files changed is
-      the pass; anything else names the fourth cause.
+- [x] **Re-measured, and it passes.** See below — exactly ONE `.html` file
+      changed, and it is the page whose source changed.
+
+
+---
+
+*2026-09-20* — **MEASURED TRUE. Third time asked, first time evidenced.**
+
+## The pair
+
+Two consecutive deploys of this branch, both carrying all three fixes:
+
+```
+6ce2495  17:30:28  from a328ec0   (the TypeDoc fix)
+92abd14  17:36:36  from 566b2be   (hqku — a skill edit and a schema change)
+```
+
+## The result
+
+| changed | lines | why |
+|---|---|---|
+| `reference/skill-instructions/content-context-and-state-graphs.html` | 74 / 1 | **the one page whose source I edited** |
+| `assets/js/search-data.json` | 1931 / 1924 | the search index over that page |
+| `folio-assistant.json`, `.jsonld` | 7 / 7 | the graph export of the schema I changed |
+| `folio-assistant.schema.json`, `skills/*/{input,output}.schema.json` | 2 / 2 each | schema exports of the same change |
+
+**Exactly one `.html` file, and it is the page that genuinely changed.** No
+`api/` page moved. No unrelated Jekyll page moved.
+
+Against the baselines this bean recorded:
+
+| pair | HTML churn |
+|---|---|
+| `bbd5989` (banner only) | 1466 / 1465 across 613 files — **every page** |
+| `d7a09ee` (banner + footer) | 1193 / 1192 — **every page**, TypeDoc's SHA |
+| `92abd14` (all three) | **1 page**, and it is the one that changed |
+
+## What this establishes, and what it does not
+
+**Established:** a preview's pages are byte-identical across rebuilds of that
+preview. That is the unbounded half — the reason *"the history grows even when
+the preview count does not"* — and it is closed. Each re-push no longer adds
+~27.5 MB of permanently new HTML objects.
+
+**Not established, and still not claimed:**
+
+- Pages still differ **between** previews by slug. Causes 2 and 3
+  (`relative_url`'s baseurl prefixing, the `fa-translation-index` island) are
+  deliberately untouched, so the cross-preview duplication is unchanged.
+- The **~77 MB projection** remains unverified. It depends on the between-
+  preview half, which was never in this change's scope.
+- `search-data.json` and the schema exports moved here because the source
+  moved. Whether any of them ALSO carries per-build data has not been isolated
+  — a bean-only probe would settle it, and none of them is per-page, so none
+  is the 27.5 MB problem.
+
+## What it cost to get one number
+
+Three causes, three fixes, **two false claims published before the first
+measurement**, and four failed or contaminated attempts at measuring:
+
+1. deploy never ran — cancelled by the next push
+2. transition deploy — contaminated by a `main` merge
+3. probe fired, found cause 3 rather than confirming
+4. this one
+
+The rule that came out of it is on the skill now, and it is the only thing
+here worth carrying forward: **a test of the part is not a measurement of the
+whole.** Every unit test passed at every stage, and the page was wrong at
+every stage until the last.
