@@ -49,6 +49,51 @@ function deployScript(): string {
   return WF.slice(i, j === -1 ? WF.length : j);
 }
 
+describe("...and refuses to replace it with nothing — bean `oisv`", () => {
+  // The risk `85im` INTRODUCES, approved by the owner in the same breath as
+  // the `rm`. Once the deploy deletes first, a build that failed while still
+  // exiting 0 replaces a working preview with an empty one — and an empty
+  // preview 404s exactly like a page the author meant to delete, so the
+  // reviewer concludes their change took effect. "Could not determine" wearing
+  // the costume of a determined answer.
+  const step = deployScript();
+
+  test("an empty build fails the job rather than deploying", () => {
+    expect(step).toMatch(/if \[ -z "\$\(ls -A _site[^)]*\)" \]; then/);
+    expect(step).toMatch(/::error::the build produced an empty \.\/_site/);
+  });
+
+  test("the guard runs BEFORE the rm — order is the whole safety argument", () => {
+    // A check AFTER the delete protects nothing; it only reports the damage.
+    // This asserts the ORDER, not the presence, because a guard moved below
+    // the `rm` would still satisfy a presence test while protecting no one.
+    const guardAt = step.indexOf('if [ -z "$(ls -A _site');
+    const rmAt = step.indexOf('rm -rf "pages/STAGING/$STAGING_SLUG"');
+    expect(guardAt).toBeGreaterThan(-1);
+    expect(rmAt).toBeGreaterThan(-1);
+    expect(guardAt).toBeLessThan(rmAt);
+  });
+
+  test("the refusal exits non-zero, so a lost preview is not silent", () => {
+    const guardAt = step.indexOf('if [ -z "$(ls -A _site');
+    const rmAt = step.indexOf('rm -rf "pages/STAGING/$STAGING_SLUG"');
+    // `exit 1` must fall inside the guard, not somewhere later in the script.
+    expect(step.slice(guardAt, rmAt)).toMatch(/exit 1/);
+  });
+
+  test("the error names the slug, so the reader knows WHICH preview was spared", () => {
+    expect(step).toMatch(/STAGING\/\$STAGING_SLUG keeps its last working preview/);
+  });
+
+  test("it is a floor, not a page-count threshold", () => {
+    // A threshold would need calibration this has no basis for — the same
+    // argument that stopped `6xaz` inventing one. `-z` on `ls -A` is the only
+    // question that can be answered without a number.
+    expect(step).not.toMatch(/find \.\/_site.*-name.*\|\s*wc -l/);
+    expect(step).not.toMatch(/-lt \d+/);
+  });
+});
+
 describe("a deploy replaces its own preview, and only its own", () => {
   const step = deployScript();
 
