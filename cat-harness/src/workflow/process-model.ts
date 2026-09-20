@@ -34,6 +34,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decision-table.js";
 import { ACTOR_KINDS, type ActorKind } from "../../schemas/role-graph.js";
+import { CONVENTION_EXT, conventionsInForce, type ConventionScope } from "../../schemas/convention.js";
 import { WORK_PLAN_OPS, type WorkPlanOp } from "./bean-link.js";
 
 /** Element types the interpreter can walk faithfully. */
@@ -76,6 +77,20 @@ export interface ProcessNode {
   roleRef?: string;
   /** `<folio:skill ref="…"/>`, possibly several. */
   skills: string[];
+  /**
+   * The conventions in force HERE — process ∪ lane ∪ activity, in that order.
+   *
+   * `<folio:convention ref="…"/>`, mirroring `folio:skill` rather than
+   * inventing a second binding syntax. Bean `3190`: a convention is context
+   * attached to a process, so an agent implementing under CRDM has them and
+   * one adjudicating a translation does not.
+   *
+   * **EMPTY WHEN NOTHING BINDS, and that is the rule.** A default of "all
+   * conventions" would be the unconditional prose this replaces, wearing a
+   * schema. The scope is carried per entry so a reader can tell a
+   * process-wide rule from one attached to this step alone.
+   */
+  conventions: Array<{ ref: string; scope: ConventionScope }>;
   /**
    * `<folio:no-skill reason="…"/>` — this activity names no skill ON PURPOSE,
    * and this is why.
@@ -431,20 +446,30 @@ export async function loadProcessModel(
   const laneOf = new Map<string, string>();
   const laneIdOf = new Map<string, string>();
   const roleRefOf = new Map<string, string>();
+  const laneConventionsOf = new Map<string, string[]>();
   const lanes: LaneDef[] = [];
   for (const lane of proc.laneSets?.[0]?.lanes ?? []) {
     const laneId = lane.id ?? lane.name ?? `lane_${lanes.length}`;
-    const roleRef = (lane.extensionElements?.values ?? []).find(
-      (v) => v.$type === "folio:role" && v.ref,
-    )?.ref;
+    const laneExt = lane.extensionElements?.values ?? [];
+    const roleRef = laneExt.find((v) => v.$type === "folio:role" && v.ref)?.ref;
+    const laneConventions = laneExt
+      .filter((v) => v.$type === CONVENTION_EXT && v.ref)
+      .map((v) => v.ref!);
     const nodeIds = (lane.flowNodeRef ?? []).map((r) => r.id);
     lanes.push({ id: laneId, name: lane.name, roleRef, nodes: nodeIds });
     for (const id of nodeIds) {
       if (lane.name) laneOf.set(id, lane.name);
       laneIdOf.set(id, laneId);
       if (roleRef) roleRefOf.set(id, roleRef);
+      if (laneConventions.length) laneConventionsOf.set(id, laneConventions);
     }
   }
+
+  // PROCESS-LEVEL conventions: bound on the <bpmn:process> itself, so they
+  // reach every step in the diagram without being restated on each one.
+  const processConventions = (proc.extensionElements?.values ?? [])
+    .filter((v) => v.$type === CONVENTION_EXT && v.ref)
+    .map((v) => v.ref!);
 
   const nodes = new Map<string, ProcessNode>();
   const flows = new Map<string, ProcessFlow>();
@@ -461,6 +486,11 @@ export async function loadProcessModel(
       laneId: laneIdOf.get(el.id),
       roleRef: roleRefOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
+      conventions: conventionsInForce({
+        process: processConventions,
+        lane: laneConventionsOf.get(el.id),
+        activity: ext.filter((v) => v.$type === CONVENTION_EXT && v.ref).map((v) => v.ref!),
+      }),
       noSkillReason: noSkillReasonOf(ext, el.id),
       fulfilment: fulfilmentOf(ext, el.id),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
