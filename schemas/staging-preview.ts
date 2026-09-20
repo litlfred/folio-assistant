@@ -53,23 +53,30 @@
  * `retiredOn` and a reason and keeps everything else, so the record of a
  * preview that is gone still says what it was for.
  *
- * ## Two measured facts about the trashcan that this module has to work around
+ * ## Two measured facts about the trashcan — one since fixed, one still real
  *
- * Both were probed rather than assumed, and together they are why this module
- * carries its own reader and writer instead of leaning on the base ones.
+ * Both were probed rather than assumed. When this module shipped they were
+ * why it carried its own reader; one of them is now gone.
  *
- * 1. **`FshGutsNodeSchema` is a plain `z.object`, so zod drops unknown keys.**
- *    `readFshGutsNode` on a node carrying a `staging` block returns a node with
- *    no `staging` at all — silently.
- * 2. **`schemas/front-matter.ts` is a FLAT parser** (`Record<string, string |
- *    string[]>`). A nested `staging:` block parses to `[]`, so the fields are
- *    gone before any schema could object.
+ * 1. **FIXED 2026-09-20.** `FshGutsNodeSchema` was a plain `z.object`, so zod
+ *    dropped unknown keys and `readFshGutsNode` returned a node with no
+ *    `staging` at all, silently. It now carries `.passthrough()`: `kind` is
+ *    open, so the field set could not stay closed.
+ * 2. **STILL TRUE.** `schemas/front-matter.ts` is a FLAT parser
+ *    (`Record<string, string | string[]>`). A nested `staging:` block parses
+ *    to `[]` before any schema sees it — so a markdown node survives the
+ *    schema and still loses the data, which is worse than losing it outright
+ *    because `[]` looks like an answer.
  *
- * So `<base>/fsh-guts.jsonld` does NOT yet carry these records: the exporter
- * reads markdown front matter through the base reader, and this node is JSON
- * with a nested block. Closing that is a change to `schemas/fsh-guts.ts` and
- * `scripts/fsh-guts-export.ts` — bean `t0i3`'s subject, in progress and not
- * this module's to make unilaterally.
+ * (2) is why the carrier is JSON, and that has not changed. What has changed
+ * is that `<base>/fsh-guts.jsonld` now DOES carry these records: the exporter
+ * reads a JSON node of this graph and emits a kind's own fields under `data`.
+ * The log exclusion is untouched — membership is still `$schema`, so a
+ * `folio-log/v1` entry is excluded by what it says it is.
+ *
+ * {@link readStagingPreview} therefore stays as a TYPED reader — it returns a
+ * `StagingPreviewNode` and refuses another kind by name — rather than as a
+ * workaround for a reader that could not see the fields.
  */
 
 import { z } from "zod";

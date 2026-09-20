@@ -166,21 +166,30 @@ describe("round trip", () => {
   });
 });
 
-describe("the trashcan constraints this module works around", () => {
-  // If either of these ever starts failing, the workaround above can go. That
-  // is the point of pinning them: a silent fix leaves a detour nobody can date.
+describe("the trashcan constraints — one fixed, one still real", () => {
+  // These were PINNED as failing-by-design constraints when this module
+  // shipped, on the stated grounds that a silent fix leaves a detour nobody
+  // can date. On 2026-09-20 the first one was fixed and these tests failed,
+  // which is exactly what they were written to do. They are rewritten here
+  // rather than deleted, so the next reader sees which limit went and which
+  // did not.
 
-  test("the base schema STRIPS a staging block — why this module has its own reader", () => {
+  test("FIXED — the base schema no longer strips a kind's own fields", () => {
+    // `FshGutsNodeSchema` gained `.passthrough()`: `kind` is open, so the
+    // field set could not stay closed. Before this, `staging` came back
+    // `undefined` and this module needed its own reader to see it at all.
     const parsed = FshGutsNodeSchema.parse({
       $schema: FSH_GUTS_SCHEMA_ID,
       title: "t",
       kind: STAGING_PREVIEW_KIND,
       staging: { slug: "s" },
     });
-    expect((parsed as Record<string, unknown>)["staging"]).toBeUndefined();
+    expect((parsed as Record<string, unknown>)["staging"]).toEqual({ slug: "s" });
   });
 
-  test("front matter is FLAT — a nested block does not survive it", () => {
+  test("STILL TRUE — front matter is FLAT, so a nested block does not survive it", () => {
+    // Unchanged, and it is why the record is JSON rather than markdown. A
+    // nested `staging:` still parses to `[]`, before any schema sees it.
     const { fm } = parseFrontMatter(
       `---\n$schema: ${FSH_GUTS_SCHEMA_ID}\ntitle: "t"\nkind: ${STAGING_PREVIEW_KIND}\nstaging:\n  slug: s\n---\n\nbody\n`,
     );
@@ -188,10 +197,63 @@ describe("the trashcan constraints this module works around", () => {
     expect(fm["slug"]).toBeUndefined();
   });
 
-  test("so the markdown carrier loses the staging facts entirely", () => {
+  test("so the markdown carrier still cannot hold the staging facts", () => {
+    // The block now survives the SCHEMA and is still destroyed by the
+    // PARSER — it arrives as the empty array the flat parser produced, not
+    // as the object anybody wrote. Passing the schema is not the same as
+    // carrying the data, and a `staging` that reads `[]` is worse than one
+    // that is absent, because it looks like an answer.
     const md = `---\n$schema: ${FSH_GUTS_SCHEMA_ID}\ntitle: "t"\nkind: ${STAGING_PREVIEW_KIND}\nstaging:\n  slug: s\n---\n\nbody\n`;
     const r = readFshGutsNode(md);
     expect(r.node).toBeDefined();
-    expect((r.node as Record<string, unknown> | undefined)?.["staging"]).toBeUndefined();
+    expect((r.node as Record<string, unknown> | undefined)?.["staging"]).toEqual([]);
+  });
+});
+
+describe("a staging-preview record now reaches the published document", () => {
+  // This is what bean 6pfo was blocked on. The node type shipped first with
+  // its own reader, because the trashcan stripped its fields; those two
+  // limits are now fixed in schemas/fsh-guts.ts, so the generic path works
+  // and this module's reader is a convenience rather than a workaround.
+
+  test("the trashcan's own reader keeps the staging block", () => {
+    const node = createStagingPreview(DEPLOY);
+    const r = readFshGutsNode(serializeStagingPreview(node));
+    expect(r.node).toBeDefined();
+    const staging = (r.node as Record<string, unknown> | undefined)?.["staging"] as
+      | Record<string, unknown>
+      | undefined;
+    expect(staging?.["pr"]).toBe(435);
+    expect(staging?.["slug"]).toBe(DEPLOY.slug);
+  });
+
+  test("an enriched record round-trips through it too, liveness and all", () => {
+    const node = enrichStagingPreview(createStagingPreview(DEPLOY), {
+      bytes: 39_845_112,
+      files: 612,
+      liveness: "unknown",
+      observedAt: "2026-09-20T04:00:00Z",
+    });
+    const r = readFshGutsNode(serializeStagingPreview(node));
+    const staging = (r.node as Record<string, unknown> | undefined)?.["staging"] as
+      | Record<string, unknown>
+      | undefined;
+    const observed = staging?.["observed"] as Record<string, unknown> | undefined;
+    expect(observed?.["liveness"]).toBe("unknown");
+    expect(observed?.["bytes"]).toBe(39_845_112);
+  });
+
+  test("a retired record survives the round trip — retirement is a state, not a deletion", () => {
+    const node = retireStagingPreview(
+      createStagingPreview(DEPLOY),
+      "PR #435 merged",
+      "2026-09-20T03:10:00Z",
+    );
+    const r = readFshGutsNode(serializeStagingPreview(node));
+    const staging = (r.node as Record<string, unknown> | undefined)?.["staging"] as
+      | Record<string, unknown>
+      | undefined;
+    expect(staging?.["retiredReason"]).toBe("PR #435 merged");
+    expect(staging?.["slug"]).toBe(DEPLOY.slug);
   });
 });
