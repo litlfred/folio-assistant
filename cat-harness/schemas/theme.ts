@@ -331,6 +331,19 @@ export interface DeclaredImage {
   src: string;
   width?: number | undefined;
   height?: number | undefined;
+  /**
+   * The quiet interior a sticky's words sit in, in fractions of this image.
+   *
+   * Declared per LAYOUT, because the cloud is in a different place in each crop
+   * — that is what the three regions on the `landing` role record, and why the
+   * owner's instruction names *"the various clouds positions … across three
+   * layouts"* rather than one.
+   *
+   * Structural here, like the rest of this interface, so `KgImage` satisfies it
+   * without this module importing `kg-node.ts` and risking the cycle the doc
+   * above describes.
+   */
+  textRegion?: { x: number; y: number; w: number; h: number } | undefined;
 }
 
 /** What {@link resolveThemeBackdrop} found, so a caller can REPORT a gap. */

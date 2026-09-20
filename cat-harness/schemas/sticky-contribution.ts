@@ -152,6 +152,86 @@ export const STICKY_ORDER_LEADING = 10;
 export const STICKY_ORDER_TRAILING = 90;
 
 /**
+ * Where a sticky's words sit inside it, as fractions of the sticky.
+ *
+ * **Fractions, not pixels**, because the same box has to hold across three
+ * crops of different sizes — and because the art it is positioned against is
+ * declared in fractions already (`KgImage.textRegion`).
+ */
+export const TextBoxSchema = z
+  .object({
+    x: z.number().min(0).max(1),
+    y: z.number().min(0).max(1),
+    w: z.number().min(0).max(1),
+    h: z.number().min(0).max(1),
+  })
+  .strict();
+export type TextBox = z.infer<typeof TextBoxSchema>;
+
+/** Vertical placement of the words within their box. */
+export const TEXT_ALIGNMENTS = ["start", "center", "end"] as const;
+export type TextAlignment = (typeof TEXT_ALIGNMENTS)[number];
+
+/**
+ * How a sticky places and sizes its own words.
+ *
+ * ## This reverses a decision, deliberately, and the reversal is the owner's
+ *
+ * `landing-sticky.ts` said outright that **nothing reads `textRegion`** —
+ * *"a sticky note is not a thought cloud"* — on the reasoning that once the
+ * sticky IS the container, it should size to its content and a fixed interior
+ * would reimpose geometry the change removed.
+ *
+ * The owner, 2026-09-20, having looked at one:
+ *
+ * > i want stickys to be the same fixd size … dispalyed content matches layout
+ * > ratios. placemetn of markdown and scaling/size can be adjusted (in schema)
+ * > to allow more control. default is centered in the various clouds positions
+ * > of the default grump cloud (across three layouts)
+ *
+ * So a sticky is a **fixed shape** whose aspect is its crop's aspect, and the
+ * words default into the cloud — which is what `textRegion` has always
+ * measured, per layout, and which the three declared regions on the `landing`
+ * role already give: laptop `0.33, 0.25, 0.53 × 0.28`; mobile
+ * `0.13, 0.225, 0.72 × 0.225`; card `0.30, 0.255, 0.58 × 0.235`.
+ *
+ * **The old objection was real and is answered by `scale` rather than by
+ * refusing the box.** Text that does not fit a fixed interior used to clip or
+ * spill silently. A sticky that needs more room now says so — it shrinks its
+ * words, or widens its box — and that is a visible authoring choice rather
+ * than a quiet overflow.
+ *
+ * Every field is optional: an absent `text` means *use the art's declared
+ * cloud region for each layout, at normal size*, which is the default the owner
+ * asked for.
+ */
+export const StickyTextSchema = z
+  .object({
+    /**
+     * Override the art's cloud region.
+     *
+     * One box for all three layouts. The cloud moves between crops, so an
+     * override is a deliberate statement that this sticky's words do not follow
+     * it — a caption pinned low, say. Per-layout overrides are not offered
+     * until something needs them: three boxes to keep in step is three that can
+     * drift.
+     */
+    box: TextBoxSchema.optional(),
+    /**
+     * Multiply the words' size. `1` is normal; `0.8` fits more in.
+     *
+     * The answer to a box that is too small for its content. Bounded well away
+     * from illegible: below about 0.6 the words stop being readable at all,
+     * and a sticky nobody can read is worse than one that overflows.
+     */
+    scale: z.number().min(0.6).max(2).optional(),
+    /** Vertical placement within the box. Defaults to `center`. */
+    align: z.enum(TEXT_ALIGNMENTS).optional(),
+  })
+  .strict();
+export type StickyText = z.infer<typeof StickyTextSchema>;
+
+/**
  * One sticky a layer contributes, as that layer declares it.
  *
  * `.strict()` so a misspelled key is refused rather than silently dropped — the
@@ -216,6 +296,16 @@ export const StickyContributionSchema = z
      * an enumeration kept in two places, one of which goes short.
      */
     onboardingLinks: z.boolean().optional(),
+    /**
+     * Which crop this sticky takes, overriding the one derived from its content.
+     *
+     * The content-derived default guessed `card` for a note the owner wanted
+     * landscape, so the derivation is a starting point rather than an answer.
+     * Named layouts only — a sticky cannot invent a fourth shape.
+     */
+    shape: z.enum(["laptop", "mobile", "card"]).optional(),
+    /** Where and how big this sticky's words are. See {@link StickyTextSchema}. */
+    text: StickyTextSchema.optional(),
     /** Free-form note for a reader of the declaration. Never rendered. */
     _comment: z.string().optional(),
   })

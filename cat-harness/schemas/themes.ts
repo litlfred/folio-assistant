@@ -109,7 +109,18 @@ const RAW = [
       // is the binding one. A thinner scrim is where that guarantee
       // goes, which is why the number has a test and not a comment saying it
       // looked fine.
-      scrim: "rgba(237, 234, 228, 0.90)",
+      // 0.82, and the whole history is here because this number has been moved
+      // three times by LOOKING at it: 0.86 too present, 0.93 too far, 0.90
+      // settled — and then, on a board where the art finally filled its card,
+      // "still slightly too faded". The earlier readings were taken when the
+      // art was letterboxed into a text-sized box, so the cat was small and the
+      // scrim was doing less work than it appeared to.
+      //
+      // Re-measured rather than nudged. Ink over this scrim on PURE BLACK — the
+      // darkest art any instance could declare, which is the binding case:
+      //   grumpy-cat 9.02:1 | engineer 10.33:1 | library 8.81:1 | analyst 9.70:1
+      // Every one still clears AAA (7:1), which is the floor this must not cross.
+      scrim: "rgba(237, 234, 228, 0.82)",
       description:
         "The instance's declared landing art, behind the sticky's ink rather than composited with it.",
     },
@@ -143,7 +154,7 @@ const RAW = [
       // ONE fade knob: adding an `opacity` to the art would be a second control
       // for one effect, and the two would have to be kept in step by whoever
       // next changed either.
-      scrim: "rgba(253, 251, 239, 0.90)",
+      scrim: "rgba(253, 251, 239, 0.82)",
       description:
         "The instance's declared engineering landing art, behind the sticky's ink rather than composited with it.",
     },
@@ -171,7 +182,7 @@ const RAW = [
       // Measured over PURE BLACK like the others: 9.97:1 for this ink, 12.72:1
       // over white. This art has the widest tonal range of the three — a
       // near-black 4% of the frame beside lamplight — so the dark end is real.
-      scrim: "rgba(232, 232, 224, 0.90)",
+      scrim: "rgba(232, 232, 224, 0.82)",
       description:
         "The instance's declared librarian art, behind the sticky's ink rather than composited with it.",
     },
@@ -199,7 +210,7 @@ const RAW = [
       // Measured over PURE BLACK like the rest: 10.29:1 for this ink, 13.04:1
       // over white. The art is bright, so the dark end is the one that could
       // have been assumed and was not.
-      scrim: "rgba(242, 242, 232, 0.90)",
+      scrim: "rgba(242, 242, 232, 0.82)",
       description:
         "The instance's declared analyst art, behind the sticky's ink rather than composited with it.",
     },

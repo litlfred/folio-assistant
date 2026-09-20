@@ -84,6 +84,7 @@ import { CarriedNoteSchema } from "./carried-note.js";
 import { PageAnchorSchema } from "./note-anchor.js";
 import {
   StickyLinkSchema,
+  StickyTextSchema,
   isExternalLink,
   type DeclaredContribution,
   type StickyLink,
@@ -162,6 +163,23 @@ export const LandingStickySchema = CarriedNoteSchema.extend({
    * whose `contributedBy` is `bootstrap`, and therefore no cat.
    */
   contributedBy: z.string().min(1),
+  /**
+   * The crop this sticky takes, when it chooses rather than being derived.
+   *
+   * Absent means *derive it from the content*, which is what the generator does.
+   * The owner asked for one sticky to be landscape after the derivation picked
+   * `card` for it, so the derivation is a starting point and this is the
+   * override.
+   */
+  shape: z.enum(["laptop", "mobile", "card"]).optional(),
+  /**
+   * Where and how big this sticky's words are.
+   *
+   * Absent means *the art's declared cloud region for each layout, at normal
+   * size* — the default the owner asked for. See `StickyTextSchema` for why
+   * this reverses the earlier "nothing reads textRegion" decision.
+   */
+  text: StickyTextSchema.optional(),
 });
 export type LandingSticky = z.infer<typeof LandingStickySchema>;
 
@@ -265,6 +283,11 @@ export function stickyFromContribution(
     // link to itself wants it read before the platform's onboarding four.
     links: [...c.links, ...(c.onboardingLinks ? DEFAULT_ONBOARDING_LINKS : [])],
     contributedBy: declaredBy,
+    // Carried only when declared. Writing `shape: undefined` into the node would
+    // make every existing sticky file differ by a key, which `--check` reports
+    // as stale and an author reads as a change they did not make.
+    ...(c.shape === undefined ? {} : { shape: c.shape }),
+    ...(c.text === undefined ? {} : { text: c.text }),
   });
 }
 

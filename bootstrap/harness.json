@@ -21,7 +21,7 @@
   "_directories_comment": "ONE entry, and it is a subdirectory rather than `bootstrap/` itself. `isSkillMd` is declaration-over-location: a markdown file that does NOT declare `$schema:` is a skill. README.md and AGENTS.md declare neither, so a graph rooted at `bootstrap/` would count this instance's two DECLARED ASSETS as skill nodes — the instance has already said what those files are, and a scan would contradict its own declaration. Keeping the graph one level down means the two mechanisms cannot collide. Declared explicitly rather than relying on DEFAULT_DIRECTORIES: a declaration that exists is honoured as written, so defaults do not apply to an instance that declares anything at all.",
   "stickies": [
     {
-      "_comment": "Bootstrap contributes its OWN card, which is the whole point of the contribution seam: this file cannot import cat-harness, so a code registry would be a seam bootstrap could not reach. ORDER 90 is bootstrap's own judgement that it is the least interesting card on the board \u2014 a layer can only state its own priority, it cannot see the others, and without a declared order the board would render in dependency-resolution order (deepest dependency first), putting this above the instance's own description. THEME `pale-sage` is PALETTE-ONLY: it declares no imageRole, so this sticky resolves to no backdrop at all. That is the owner's ruling \u2014 \"i want the grumpy cat moved out of bootstrap and into cat harness\" \u2014 made structural rather than remembered. NO GH-PAGES LINK: the owner asked for \"link back to the source code + ghpaghes for boot strrap\", and bootstrap HAS NO SITE. This instance's canonicalUrl is cat-harness's site, not bootstrap's. Declaring a link to a page that does not exist would be a 404 on the landing page; add one line here when the URL exists.",
+      "_comment": "Bootstrap contributes its OWN card, which is the whole point of the contribution seam: this file cannot import cat-harness, so a code registry would be a seam bootstrap could not reach. ORDER 90 is bootstrap's own judgement that it is the least interesting card on the board — a layer can only state its own priority, it cannot see the others, and without a declared order the board would render in dependency-resolution order (deepest dependency first), putting this above the instance's own description. THEME `pale-sage` is PALETTE-ONLY: it declares no imageRole, so this sticky resolves to no backdrop at all. That is the owner's ruling — \"i want the grumpy cat moved out of bootstrap and into cat harness\" — made structural rather than remembered. NO GH-PAGES LINK: the owner asked for \"link back to the source code + ghpaghes for boot strrap\", and bootstrap HAS NO SITE. This instance's canonicalUrl is cat-harness's site, not bootstrap's. Declaring a link to a page that does not exist would be a 404 on the landing page; add one line here when the URL exists.  RTFM LINK ADDED on the owner's instruction, 2026-09-20: \"all sticky notes should be at end of initiation process for that harnes and provife links to that harness's docs (RTFM=...)\". It points at bootstrap's OWN README rather than at this site, because this site is cat-harness's — and it is a github.com blob URL rather than a page URL for the same reason the gh-pages link is still absent: bootstrap has no site of its own yet. Its README is self-documenting on the forge, which the instance declares as an asset, so the link resolves to something that really is bootstrap's documentation.",
       "id": "bootstrap",
       "order": 90,
       "theme": "pale-sage",
@@ -32,6 +32,11 @@
           "label": "bootstrap, in the source",
           "href": "https://github.com/litlfred/folio-assistant/tree/main/bootstrap",
           "note": "One process lives here and only one: workflows/initialize-harness.bpmn."
+        },
+        {
+          "label": "RTFM — the bootstrap docs",
+          "href": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md",
+          "note": "The flow, with every term linked to the schema that defines it."
         }
       ]
     }

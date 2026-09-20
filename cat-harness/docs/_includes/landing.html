@@ -7,23 +7,35 @@
   NOTHING about this repo is written in: an instance overrides the words, the
   links and the art by editing its own declaration and its own stickies.
 
-  ## What changed, and why the old geometry is gone
+  ## The geometry came BACK, and this comment used to say the opposite
 
-  This file used to composite `h.description` INTO the quiet interior of the
-  backdrop, positioned by each layout's declared `textRegion` — 53% x 28% of the
-  laptop crop, a few lines, with overflow rendered rather than clipped.
+  This file once composited the description into the quiet interior of the
+  backdrop, positioned by each layout's declared `textRegion`. That was dropped
+  when the board was built, on the argument that "a sticky note is not a thought
+  cloud" — the sticky is the container, so it should size to its content, and a
+  fixed interior would reimpose geometry the change removed. This comment said
+  **"nothing here reads textRegion"** in as many words.
 
-  That constraint does not survive the change, and it dissolves rather than
-  being violated:
+  It is read again, and the reversal is the owner's, 2026-09-20, looking at one:
 
-    A sticky note is not a thought cloud.
+    i want stickys to be the same fixd size, so there would be [no] unused space
+    ... dispalyed content matches layout ratios. placemetn of markdown and
+    scaling/size can be adjusted (in schema) to allow more control. default is
+    centered in the various clouds positions of the default grump cloud
+    (across three layouts)
 
-  `textRegion` existed because text was being fitted into a fixed interior of a
-  fixed crop. Now the STICKY is the container and the art is its background, so
-  it sizes to its content. **Nothing here reads `textRegion`** — carrying it
-  over would reimpose exactly the geometry this removes, and the failure would
-  be quiet: words clipping or spilling against a box nobody meant to keep. The
-  field stays declared for any instance still compositing.
+  So: a sticky is a FIXED SHAPE whose aspect is its crop's, and the words go in
+  the cloud — per layout, because the cloud moves between crops.
+
+  The old objection was real, and it is answered rather than ignored. Text that
+  did not fit used to clip or spill SILENTLY. A sticky that needs more room now
+  says so in its declaration — `text.scale` shrinks the words, `text.box` widens
+  their box — and the text box SCROLLS rather than spilling, so overflow is
+  visible instead of quiet. That is the difference between reimposing the
+  geometry and reimposing the failure.
+
+  Recorded rather than quietly rewritten: a comment that states the opposite of
+  what its file does is worse than no comment.
 
   ## Three states, and the third is why this is a template rather than a div
 
@@ -63,8 +75,58 @@
   {%- for st in stickies -%}
   {%- assign has_art = false -%}
   {%- if st.art.laptop -%}{%- assign has_art = true -%}{%- endif -%}
-  <article class="fa-sticky fa-landing-sticky{% if has_art %} fa-sticky--backdrop{% endif %}"
+  {%- comment -%}
+    FIXED SHAPE, and the shape is the CROP'S, not the text's.
+
+      i want stickys to be the same fixd size, so there would be [no] unused
+      space in the example above. dispalyed content matches layout ratios.
+      -- owner, 2026-09-20
+
+    Every layout's aspect and cloud region is emitted as its own custom
+    property, and the stylesheet ALIASES `--fa-sticky-aspect` to one of them per
+    breakpoint. That indirection is what makes this correct rather than nearly
+    correct: `<picture>` swaps the FILE at `30rem` and `48rem`, so the card's
+    ratio and the cloud's position have to change at exactly those widths or the
+    words land in the wrong part of the art. A media query cannot read which
+    `<source>` won, so both sides are keyed to the same two numbers instead.
+
+    The per-sticky default (widest viewport) is set here, because only this
+    template knows which crop this sticky chose.
+  {%- endcomment -%}
+  {%- assign sh = st.shape -%}
+  {%- assign d = st.art[sh] -%}
+  {%- if d == nil -%}{%- assign d = st.art.laptop -%}{%- endif -%}
+  <article class="fa-sticky fa-landing-sticky{% if has_art %} fa-sticky--backdrop fa-landing-sticky--fixed{% endif %}"
            data-fa-sticky-theme="{{ st.theme }}"
+           {%- if has_art %} data-fa-shape="{{ st.shape }}" style="
+             {%- comment -%}
+               RAW PER-LAYOUT VALUES ONLY. Which layout's aspect and cloud are
+               in force is decided entirely in the stylesheet, and that split is
+               forced rather than stylistic: a custom property set in a `style`
+               attribute CANNOT be overridden by a stylesheet rule, so setting
+               `--fa-sticky-aspect` here would pin the widest viewport's crop at
+               every width and the words would sit in the laptop cloud on a
+               phone. `data-fa-shape` tells the stylesheet which layout is this
+               sticky's default; the media queries take it from there.
+
+               The one thing that IS set here is an authored `text.box`, and
+               inline is exactly right for it: an explicit override should beat
+               every breakpoint, which is what an inline custom property does.
+             {%- endcomment -%}
+             {%- if st.art.laptop.aspect %}--fa-aspect-laptop:{{ st.art.laptop.aspect }};{% endif -%}
+             {%- if st.art.mobile.aspect %}--fa-aspect-mobile:{{ st.art.mobile.aspect }};{% endif -%}
+             {%- if st.art.card.aspect %}--fa-aspect-card:{{ st.art.card.aspect }};{% endif -%}
+             {%- for L in st.art -%}
+               {%- if L[1].textRegion -%}
+                 --fa-tx-{{ L[0] }}:{{ L[1].textRegion.x }};--fa-ty-{{ L[0] }}:{{ L[1].textRegion.y }};--fa-tw-{{ L[0] }}:{{ L[1].textRegion.w }};--fa-th-{{ L[0] }}:{{ L[1].textRegion.h }};
+               {%- endif -%}
+             {%- endfor -%}
+             {%- if st.text.box -%}
+               --fa-tx:{{ st.text.box.x }};--fa-ty:{{ st.text.box.y }};--fa-tw:{{ st.text.box.w }};--fa-th:{{ st.text.box.h }};
+             {%- endif -%}
+             {%- if st.text.scale %}--fa-text-scale:{{ st.text.scale }};{% endif -%}
+             {%- if st.text.align %}--fa-text-align:{{ st.text.align }};{% endif -%}
+           "{% endif -%}
            aria-labelledby="fa-sticky-{{ st.id }}-summary">
     {%- if has_art -%}
     {%- comment -%}
@@ -84,8 +146,20 @@
     {%- endcomment -%}
     {%- assign chosen = st.art[st.shape] | default: st.art.laptop | default: st.art.mobile | default: st.art.card -%}
     <picture>
-      {%- if st.art.card %}<source media="(max-width: 30rem)" srcset="{{ st.art.card.src | relative_url }}"{% if st.art.card.width %} width="{{ st.art.card.width }}" height="{{ st.art.card.height }}"{% endif %}>{% endif -%}
-      {%- if st.art.mobile %}<source media="(max-width: 48rem)" srcset="{{ st.art.mobile.src | relative_url }}"{% if st.art.mobile.width %} width="{{ st.art.mobile.width }}" height="{{ st.art.mobile.height }}"{% endif %}>{% endif -%}
+      {%- comment -%}
+        PORTRAIT FOR A PORTRAIT VIEWPORT. These two were the other way round —
+        the SQUARE crop at the narrowest width and the portrait one above it —
+        which was harmless while a card sized to its text and wrong the moment
+        the card took its crop's ratio: a 430px phone got a 329x329 card, the
+        least room there is, on the tallest screen there is. Measured, all three
+        art-bearing stickies overflowed their text box at that width and none
+        did one breakpoint up.
+
+        So the narrowest gets `mobile` (941x1670, portrait) and the middle band
+        gets `card`, where a column really is about square.
+      {%- endcomment -%}
+      {%- if st.art.mobile %}<source media="(max-width: 30rem)" srcset="{{ st.art.mobile.src | relative_url }}"{% if st.art.mobile.width %} width="{{ st.art.mobile.width }}" height="{{ st.art.mobile.height }}"{% endif %}>{% endif -%}
+      {%- if st.art.card %}<source media="(max-width: 48rem)" srcset="{{ st.art.card.src | relative_url }}"{% if st.art.card.width %} width="{{ st.art.card.width }}" height="{{ st.art.card.height }}"{% endif %}>{% endif -%}
       <img class="fa-sticky-art" src="{{ chosen.src | relative_url }}" alt="" aria-hidden="true"
            {% if chosen.width %}width="{{ chosen.width }}" height="{{ chosen.height }}"{% endif %}
            decoding="async" loading="lazy">
@@ -101,6 +175,13 @@
     {%- endcomment -%}
     <h2 id="fa-sticky-{{ st.id }}-summary" class="fa-sr-only">{{ st.summary }}</h2>
 
+    {%- comment -%}
+      The words live in their own box so they can be placed against the art.
+      Without art there is no cloud to sit in, so the wrapper is still there but
+      the stylesheet leaves it in normal flow — a themeless sticky reads exactly
+      as it did.
+    {%- endcomment -%}
+    <div class="fa-landing-sticky__text">
     <div class="fa-landing-sticky__body">
       {{ st.comment | markdownify }}
     </div>
@@ -123,6 +204,7 @@
       {%- endfor -%}
     </ul>
     {%- endif -%}
+    </div>
   </article>
   {%- endfor -%}
 </div>

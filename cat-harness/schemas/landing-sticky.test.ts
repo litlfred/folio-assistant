@@ -407,21 +407,61 @@ describe("the four default links point at pages that EXIST", () => {
   });
 });
 
+describe("EVERY declared link resolves to a page that exists", () => {
+  // The onboarding four were already checked. This is the rest, and it is the
+  // check the sub-graphs card needed: the owner asked for links, and a link
+  // that 404s is worse than the naming-without-linking it replaced. Site-root
+  // paths are resolved against the docs tree; absolute URLs are not fetched
+  // (this suite does no network), so they are checked for shape only.
+  const DOCS = join(INSTANCE, siteDirFor(INSTANCE));
+  const siteLinks = [...CAT, ...BOOT]
+    .flatMap((c) => c.contribution.links)
+    .filter((l) => !isExternalLink(l));
+
+  test("there are site links to check", () => {
+    expect(siteLinks.length).toBeGreaterThan(3);
+  });
+
+  test.each(siteLinks.map((l) => [l.label, l.href] as const))(
+    "%s -> %s resolves to a source page",
+    (_label, href) => {
+      const stem = href.replace(/^\//, "").replace(/\.html$/, "");
+      const candidates = [`${stem}.md`, join(stem, "index.md"), `${stem}.html`];
+      expect(candidates.some((c) => existsSyncSafe(join(DOCS, c)))).toBe(true);
+    },
+  );
+
+  test("every absolute link is https, not a bare host or http", () => {
+    const abs = [...CAT, ...BOOT].flatMap((c) => c.contribution.links).filter(isExternalLink);
+    expect(abs.length).toBeGreaterThan(0);
+    for (const l of abs) expect(l.href.startsWith("https://")).toBe(true);
+  });
+});
+
 describe("`onboardingLinks` asks for the SET rather than copying it", () => {
   test("the flag appends all four, after the layer's own links", () => {
     const landing = sticky(CAT, "landing");
     expect(landing.links).toEqual([...DEFAULT_ONBOARDING_LINKS]);
   });
 
-  test("no declaration copies an onboarding href, which would be the BLOCK_KINDS shape", () => {
+  test("no declaration copies the onboarding SET, which would be the BLOCK_KINDS shape", () => {
+    // Relaxed from "no declaration reuses an onboarding href", which was too
+    // strict and fired on something legitimate: the sub-graphs card links to
+    // `/content-types.html` under the label "Content", and two cards pointing
+    // at one page is normal. The failure this guards is a layer hand-COPYING
+    // the set instead of asking for it with the flag — one enumeration in
+    // several places, one of which goes short.
     const onboarding = new Set(DEFAULT_ONBOARDING_LINKS.map((l) => l.href));
     for (const c of [...CAT, ...BOOT]) {
-      for (const link of c.contribution.links) expect(onboarding.has(link.href)).toBe(false);
+      const copied = c.contribution.links.filter((l) => onboarding.has(l.href)).length;
+      expect(copied).toBeLessThan(onboarding.size);
     }
   });
 
-  test("without the flag a sticky carries only what it declared", () => {
-    expect(sticky(CAT, "subgraphs").links).toEqual([]);
+  test("without the flag a sticky carries exactly its declared links and no more", () => {
+    const declared = CAT.find((c) => c.contribution.id === "subgraphs")!.contribution;
+    expect(declared.onboardingLinks ?? false).toBe(false);
+    expect(sticky(CAT, "subgraphs").links).toEqual([...declared.links]);
   });
 });
 
@@ -458,25 +498,37 @@ describe("the summary is derived, not a second field to keep in step", () => {
 
 describe("the sub-graphs card says what the owner asked for", () => {
   const body = () => sticky(CAT, "subgraphs").comment;
+  const links = () => sticky(CAT, "subgraphs").links;
 
-  test("it is two sentences, because that is what was asked for", () => {
-    const sentences = body()
-      .split(/(?<=\.)\s+/)
-      .filter((s) => s.trim().length > 0);
-    expect(sentences).toHaveLength(2);
-  });
-
-  test("it names all four sub-graphs the owner listed", () => {
-    for (const word of ["Content", "acquisition", "tools", "skills"]) {
+  // It WAS two sentences with no links, on the owner's first instruction. The
+  // second: "knwoedege graph (content, skills, process, tools) could be a but
+  // more informative. needs links." Naming four things and giving a reader no
+  // way to reach any of them is the state that was corrected, so the tests
+  // check reachability now rather than brevity.
+  test("it names all four sub-graphs, including `process`", () => {
+    for (const word of ["Content", "Skills", "Processes", "Tools"]) {
       expect(body()).toContain(word);
     }
   });
 
-  test("it does NOT claim `acquisition` is a graph kind", () => {
+  test("each of the four is LINKED, not merely named", () => {
+    const labels = links().map((l) => l.label);
+    for (const label of ["Content", "Skills", "Processes", "Tools"]) {
+      expect(labels).toContain(label);
+    }
+  });
+
+  test("acquisition is described as a STEP, not a fifth graph kind", () => {
     // `readDeclaration` throws on an unknown kind, so prose naming a fifth one
-    // would send the next agent looking for something the registry rejects.
-    expect(body()).not.toMatch(/acquisition[^.]*\bgraph kind\b/i);
-    expect(body()).not.toMatch(/\bkinds?\b/i);
+    // would send the next agent looking for a directory that is not there. The
+    // card now says so outright instead of merely avoiding the word.
+    expect(body()).toContain("acquisition");
+    expect(body()).toMatch(/step rather than a graph kind/i);
+  });
+
+  test("it says where acquisition's two ends are, since they are real directories", () => {
+    expect(body()).toContain("uploads/");
+    expect(body()).toContain("library/");
   });
 });
 
@@ -493,13 +545,20 @@ describe("the cat's introduction keeps the owner's own words", () => {
     expect(sticky(CAT, "landing").theme).toBe("engineer");
   });
 
-  test("its one link is absolute and points at the source, not at this site", () => {
+  test("its source link is absolute and does not point at this site", () => {
     const links = sticky(CAT, "cat-harness").links;
-    expect(links).toHaveLength(1);
-    expect(isExternalLink(links[0]!)).toBe(true);
+    const source = links.find((l) => isExternalLink(l))!;
+    expect(source).toBeDefined();
     // A sticky on the landing page linking to the landing page is a link to
     // itself: cat-harness has no site of its own yet (issue #223).
-    expect(links[0]!.href).not.toBe(decl("cat-harness").canonicalUrl);
+    expect(source.href).not.toBe(decl("cat-harness").canonicalUrl);
+  });
+
+  test("it also carries an RTFM link to this harness's own docs", () => {
+    // The owner: "all sticky notes should be ... provife links to that
+    // harness's docs (RTFM=...)".
+    const links = sticky(CAT, "cat-harness").links;
+    expect(links.some((l) => /RTFM/i.test(l.label))).toBe(true);
   });
 });
 
