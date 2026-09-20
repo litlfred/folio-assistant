@@ -317,6 +317,45 @@
           },
           "default": []
         },
+        "remoteGraphs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "graphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "url",
+              "graphs"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
         "stickies": {
           "type": "array",
           "items": {
@@ -465,8 +504,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/wonderful-gauss-7frcrw",
-    "sha": "e883f752ec9b4100a040f8293506d51566cd88a9",
+    "sha": "8e4a408320839ecb76735fa0e7f244a42780fce2",
     "pr": "542/merge",
-    "run": "35526122166"
+    "run": "35529971753"
   }
 }

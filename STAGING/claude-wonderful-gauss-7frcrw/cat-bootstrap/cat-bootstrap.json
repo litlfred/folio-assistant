@@ -3,7 +3,7 @@
     "@version": 1.1,
     "bs": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#",
     "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "fac": "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#",
+    "fac": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
     "prov": "http://www.w3.org/ns/prov#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "schema": "https://schema.org/",
@@ -35,6 +35,10 @@
     "sourceCommitUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitUnavailable",
     "partOf": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#partOf",
+      "@type": "@id"
+    },
+    "inSubgraph": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#inSubgraph",
       "@type": "@id"
     },
     "implementedBy": {
