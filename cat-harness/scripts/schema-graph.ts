@@ -142,6 +142,19 @@ export interface SchemaField {
   names: string[];
   /** First line of the field's own doc comment, when it has one. */
   doc?: string;
+  /**
+   * The declaration this field's STRING ID points at, when the field declares
+   * one with `@ref <Name>`.
+   *
+   * This exists because the reader is syntactic and a foreign key carried as
+   * `z.string()` holds no link to the schema it names — measured against
+   * `assistant-schema.puml`, 0 of 9 id-associations were reproduced while 14
+   * of 15 compositions were. That is not a gap a better reader closes: the
+   * information is not in the source. So it is DECLARED, in the one place
+   * that cannot drift from the field, and the diagram draws what the author
+   * said rather than what a heuristic guessed.
+   */
+  ref?: string;
 }
 
 /** One declaration — a Zod schema, an interface or a type alias. */
@@ -205,7 +218,13 @@ export interface SchemaEdge {
   to: string;
   /** The field it goes through, or `""` for a union member or an extension. */
   via: string;
-  kind: "field" | "member" | "extends";
+  /**
+   * `id-ref` is an association DECLARED by `@ref`, not one the reader found:
+   * the field is a string and the target is typically not even imported. Kept
+   * distinct from `field` so a consumer can tell a reference the source proves
+   * from one an author asserted.
+   */
+  kind: "field" | "member" | "extends" | "id-ref";
   optional: boolean;
   array: boolean;
 }
@@ -242,6 +261,15 @@ export interface SchemaGraph {
   modules: SchemaGraphModule[];
   decls: SchemaDecl[];
   edges: SchemaEdge[];
+  /**
+   * Every `@ref` that named nothing, or named several things.
+   *
+   * Reported rather than dropped, for the reason every other state here is:
+   * a tag the graph could not honour and a field with no tag at all are
+   * different answers, and rendering them alike reports a clean run over a
+   * broken assertion.
+   */
+  refProblems: string[];
 }
 
 const TAG = /@graphNode\s+(\S+)(?:\s*[—-]\s*(.*))?/;
@@ -264,6 +292,23 @@ function firstProse(block: string): string | undefined {
     .split("\n")
     .map((l) => l.replace(/^\s*\*+\s?/, "").trim())
     .find((l) => l.length > 0 && !l.startsWith("@"));
+}
+
+/**
+ * The `@ref <Name>` a field declares, if any.
+ *
+ * Read from the RAW block rather than from `doc`, because `firstProse` skips
+ * every `@`-line on purpose — the prose summary and the machine-readable tag
+ * are different things and neither should swallow the other.
+ */
+function refTagOf(node: ts.Node, text: string): string | undefined {
+  const ranges = ts.getLeadingCommentRanges(text, node.getFullStart());
+  const last = ranges?.[ranges.length - 1];
+  if (!last) return undefined;
+  const raw = text.slice(last.pos, last.end);
+  if (!raw.startsWith("/**")) return undefined;
+  const m = /@ref\s+([A-Za-z_$][\w$]*)/.exec(raw);
+  return m?.[1];
 }
 
 /** The JSDoc block immediately above a node, as source text. */
@@ -382,6 +427,7 @@ function zodFields(lit: ts.ObjectLiteralExpression, text: string): SchemaField[]
       array: chain.includes("array"),
       names: namesIn(p.initializer),
       doc: docOf(p, text),
+      ref: refTagOf(p, text),
     });
   }
   return out;
@@ -483,6 +529,7 @@ function typeMembers(members: ts.NodeArray<ts.TypeElement>, text: string): Schem
       array: ts.isArrayTypeNode(m.type),
       names: namesIn(m.type),
       doc: docOf(m, text),
+      ref: refTagOf(m, text),
     });
   }
   return out;
@@ -763,6 +810,56 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
     return target.get(name) ?? null;
   };
 
+  /**
+   * Declarations by NAME, for `@ref` resolution.
+   *
+   * An id-ref cannot go through `resolve`: that requires the name to be BOUND
+   * in the module, and the whole point of a string id is that the target is
+   * not imported. So it resolves by name across the graph — nearest first.
+   */
+  const byName = new Map<string, SchemaDecl[]>();
+  for (const d of decls) {
+    const list = byName.get(d.name);
+    if (list) list.push(d);
+    else byName.set(d.name, [d]);
+  }
+
+  /** Where an `@ref` went wrong, if it did. One entry per bad tag. */
+  const refProblems: string[] = [];
+
+  const considerIdRef = (d: SchemaDecl, f: SchemaField): void => {
+    const name = f.ref as string;
+    const candidates = byName.get(name);
+    if (!candidates || candidates.length === 0) {
+      // A tag naming nothing is a DEFECT, not a quiet no-op: the author
+      // asserted an edge and the graph cannot honour it. Silence here would
+      // make a typo indistinguishable from an undeclared field.
+      refProblems.push(`${d.id}.${f.name}: @ref ${name} names no declaration`);
+      return;
+    }
+    // Nearest wins: same module, then same directory, then graph-wide — but
+    // ONLY when that narrowing leaves exactly one. Two equally-near targets is
+    // an ambiguous tag, and picking the first is the `wggr` failure one level
+    // down: an answer that looks resolved and may be the wrong schema.
+    const dir = dirOfModule.get(d.module) ?? "";
+    const tiers = [
+      candidates.filter((c) => c.module === d.module),
+      candidates.filter((c) => (dirOfModule.get(c.module) ?? "") === dir),
+      candidates,
+    ];
+    const hit = tiers.find((t) => t.length === 1)?.[0];
+    if (!hit) {
+      refProblems.push(
+        `${d.id}.${f.name}: @ref ${name} is ambiguous — ${candidates.length} declarations carry that name (${candidates
+          .map((c) => c.module)
+          .join(", ")})`,
+      );
+      return;
+    }
+    if (hit.id === d.id) return; // a self-reference is a property of the box
+    edges.push({ from: d.id, to: hit.id, via: f.name, kind: "id-ref", optional: f.optional, array: f.array });
+  };
+
   for (const d of decls) {
     const refs = new Set<string>();
     const unresolved = new Set<string>();
@@ -794,6 +891,7 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
     };
     for (const f of d.fields) {
       for (const n of f.names) consider(n, f.name, "field", f.optional, f.array);
+      if (f.ref) considerIdRef(d, f);
     }
     for (const n of d.extendsNames) consider(n, "", "extends", false, false);
     d.refs = [...refs].sort();
@@ -811,7 +909,9 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
   decls.sort((a, b) => a.id.localeCompare(b.id));
   modules.sort((a, b) => a.module.localeCompare(b.module));
 
-  return { roots: dirs.map(rel), modules, decls, edges };
+  refProblems.sort();
+
+  return { roots: dirs.map(rel), modules, decls, edges, refProblems };
 }
 
 if (import.meta.main) {

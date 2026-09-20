@@ -16173,13 +16173,15 @@
           "name": "skills",
           "type": "z.array(z.string()).default([])",
           "optional": true,
-          "array": true
+          "array": true,
+          "doc": "Skills available to an actor in this role, before inheritance."
         },
         {
           "name": "inherits",
           "type": "z.array(z.string()).optional()",
           "optional": true,
-          "array": true
+          "array": true,
+          "doc": "Roles this one IS-A, outermost last. Static composition, not the scoped"
         },
         {
           "name": "actedUpon",
@@ -30741,6 +30743,14 @@
       "via": "actorKinds",
       "kind": "field",
       "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/role-graph.ts#RoleDefSchema",
+      "to": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema",
+      "via": "skills",
+      "kind": "id-ref",
+      "optional": true,
       "array": true
     },
     {
