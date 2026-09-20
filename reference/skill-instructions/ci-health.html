@@ -668,6 +668,95 @@ in the repository you are standing in — a folio-shaped job preflighting on a
 manifest the platform does not carry, or a computation step needing a directory
 only a folio has. A red you caused by running something that was never meant to
 run here is worse than the stale verdict you were trying to clear.</p>
+<h2 id="the-report-answers-about-the-default-branch--and-pages-is-not-on-it">
+  
+  
+    <a href="#the-report-answers-about-the-default-branch--and-pages-is-not-on-it" class="anchor-heading" aria-labelledby="the-report-answers-about-the-default-branch--and-pages-is-not-on-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The report answers about the default branch — and Pages is not on it
+  
+  
+</h2>
+    
+
+<p><strong>A Pages build outcome is not repository state.</strong> It is a fact GitHub holds
+<em>about</em> the repository, and it changes the repository’s status without changing
+a single byte of it. That is the owner’s framing, 2026-09-20, and it settles
+how the tool must behave: <strong>look external, cache nothing.</strong> A committed answer
+would be right when it was written and silently wrong from then on, which is
+the original defect rebuilt in a new place.</p>
+
+<p>The default-branch query cannot see it, for three reasons at once, and all
+three have to be answered together:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>property</th>
+      <th>why the default-branch query misses it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>runs on the <strong>publish</strong> branch</td>
+      <td><code class="language-plaintext highlighter-rouge">?branch=&lt;default&gt;</code> excludes them outright</td>
+    </tr>
+    <tr>
+      <td>raised by <code class="language-plaintext highlighter-rouge">github-pages[bot]</code>, event <code class="language-plaintext highlighter-rouge">dynamic</code></td>
+      <td>there is no file in <code class="language-plaintext highlighter-rouge">.github/workflows/</code> to be a row about</td>
+    </tr>
+    <tr>
+      <td>its workflow has <strong>no file</strong></td>
+      <td>it is addressable only by a per-repository id</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Measured here on one day: the default-branch page held <strong>zero</strong> deployments
+while the publish branch held <strong>51 cancelled and 49 succeeded</strong>, of which
+<strong>25</strong> were self-inflicted. None of it was visible from anywhere.</p>
+<h3 id="two-more-for-the-question-the-three-above-do-not-cover">
+  
+  
+    <a href="#two-more-for-the-question-the-three-above-do-not-cover" class="anchor-heading" aria-labelledby="two-more-for-the-question-the-three-above-do-not-cover"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two more, for the question the three above do not cover
+  
+  
+</h3>
+    
+
+<p>Deliberately <strong>not</strong> numbered 4 and 5: the three rules are the three rules, for
+reading the default-branch report, and they are quoted by that count in several
+places. These are a separate pair for a separate question — which is itself the
+rule about never letting a count in prose go stale.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">cancelled</code> is a THIRD state.</strong> A cancelled deployment neither shipped nor
+broke: the previous preview stays up, so the site is <em>stale</em> rather than
+down, and nobody is owed a fix. Folded into success the report says the
+preview shipped; folded into failure it sends somebody after a build that was
+merely superseded. Both readings are wrong in a way the reader cannot detect
+— which is rule 1 again, wearing different clothes.</li>
+  <li><strong>Say WHOSE contention it is.</strong> One workflow pushing twice and cancelling its
+own build is a fixed defect; several sessions racing for the publish ref is a
+different, open one. A merged cancellation count cannot show whether the
+first fix held — so the self-inflicted ones are named <strong>by slug</strong>, and a slug
+still appearing is a branch running the workflow from before the fix.</li>
+</ul>
+<h3 id="report-the-counts-grade-only-a-floor">
+  
+  
+    <a href="#report-the-counts-grade-only-a-floor" class="anchor-heading" aria-labelledby="report-the-counts-grade-only-a-floor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Report the counts; grade only a floor
+  
+  
+</h3>
+    
+
+<p>There is no calibrated threshold for “too many cancellations”, so the report
+states the numbers and <strong>does not grade the share</strong> — no percentage, no verdict
+word. That is the same refusal that stopped a PDF heuristic inventing a size
+threshold with nothing to calibrate against.</p>
+
+<p>One statement <em>is</em> graded, because it is a <strong>floor</strong> rather than a threshold:
+deployments happened and <strong>not one succeeded</strong>. That needs no calibration, the
+way “the build directory is empty” needs none.</p>
 <h2 id="a-report-is-only-read-by-someone-in-the-room">
   
   
@@ -734,7 +823,7 @@ applies.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35529230069"><code>3a9557b</code></a> &middot; 2026-09-20T18:30:28Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35530602558"><code>e7f0b4d</code></a> &middot; 2026-09-20T18:56:10Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

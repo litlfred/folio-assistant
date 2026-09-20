@@ -256,18 +256,18 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T18:31:05.485Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3a9557b14b1b9a15a9301abadf6767f402a1eda4",
-  "sourceCommitSha": "3a9557b14b1b9a15a9301abadf6767f402a1eda4",
-  "sourceCommitAt": "2026-09-20T20:29:34+02:00",
+  "generatedAt": "2026-09-20T18:56:45.220Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e7f0b4d6a1c0f67b91a8a2f20f1a9eebd30b114d",
+  "sourceCommitSha": "e7f0b4d6a1c0f67b91a8a2f20f1a9eebd30b114d",
+  "sourceCommitAt": "2026-09-20T20:55:18+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 206,
     "Actor": 27,
-    "Capability": 26,
+    "Capability": 28,
     "Role": 124,
     "Convention": 2,
-    "SkillPackage": 12,
+    "SkillPackage": 13,
     "Process": 53,
     "SequenceFlow": 687,
     "ProcessNode": 652,
@@ -842,6 +842,54 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "site-presentation-assets",
+      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering",
+      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/site-presentation-assets.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note",
+      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/create-sticky-note.md",
+      "instructionLines": 154,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-art-intake",
+      "title": "Theme art intake",
+      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-art-intake.md",
+      "instructionLines": 176,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/scientific-visualization",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "scientific-visualization",
@@ -1288,22 +1336,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "site-presentation-assets",
-      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering",
-      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/site-presentation-assets.md",
-      "instructionLines": 109,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/where-a-proposal-goes",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "where-a-proposal-goes",
@@ -1431,22 +1463,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "create-sticky-note",
-      "title": "Create a sticky note",
-      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/create-sticky-note.md",
-      "instructionLines": 154,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/continual-progress",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "continual-progress",
@@ -1552,7 +1568,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 272,
+      "instructionLines": 281,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2208,12 +2224,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "ci-health",
       "title": "CI health — a red workflow looks exactly like a green one from in here",
-      "description": "A red workflow looks exactly like a green one from inside a checkout. How to read a default-branch health report, the three verdicts that keep it honest, and why a watchdog needs both a session-start print and an unattended run.",
+      "description": "A red workflow looks exactly like a green one from inside a checkout. How to read a default-branch health report, the three verdicts that keep it honest, why a watchdog needs both a session-start print and an unattended run, and the separate external question the Pages deployments need.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/ci-health.md",
-      "instructionLines": 87,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2372,22 +2388,6 @@
       ],
       "instructionsPath": "skills/folio-core/prepare-merge-auto.md",
       "instructionLines": 181,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "theme-art-intake",
-      "title": "Theme art intake",
-      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/theme-art-intake.md",
-      "instructionLines": 131,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4338,6 +4338,17 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/github-connector",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "github-connector",
+      "name": "GitHub connector (host-provided)",
+      "description": "Ability to reach the forge through a connector the HOST supplies — an MCP server the agent did not configure and cannot inspect. DISTINCT FROM github-api: the agent holds no credential of its own, so what it may do is whatever the connector was granted, and that is knowable only by trying. An mcp-probe against the server is therefore the honest detection: it answers 'is the connector reachable', which is the only question this capability can settle. It does NOT answer 'may I write' — that is a permission on the actor, and a session can hold this capability and still be refused. Declared 2026-09-20 alongside github-api, on the owner's answer that the write path is several tools chosen by capability and permission.",
+      "detection": {
+        "method": "mcp-probe",
+        "endpoint": "github"
+      }
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/bun-runtime",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
       "localId": "bun-runtime",
@@ -4390,6 +4401,17 @@
       "detection": {
         "method": "env-var",
         "variable": "FOLIO_SIGNING_ENDPOINT"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/github-api",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "github-api",
+      "name": "GitHub API (token or OAuth)",
+      "description": "Ability to write to the forge over its HTTP API — create or update a file, open a pull request, comment — authenticated by a token or an OAuth grant rather than by holding a checkout. DISTINCT FROM git-push: this writes with no working tree, so it is the path available to a process that has a credential and no clone, and its reach is whatever the credential was granted rather than whatever the filesystem allows. Probed by CONFIGURATION, not by calling the API: a probe that issued a request would be indistinguishable from an outage or a rate limit, and would touch an external host to answer a question about local setup — the same reading deploy-access and signing-api take. Declared 2026-09-20 on the owner's answer that the write path is several tools chosen by capability and permission, not one design.",
+      "detection": {
+        "method": "env-var",
+        "variable": "GITHUB_TOKEN"
       }
     },
     {
@@ -4668,6 +4690,23 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "theming",
+      "version": "0.1.0",
+      "description": "How a theme is made, declared, generated and checked for contrast. Split out of folio-core, where three theming skills sat among 107 and were found by knowing they existed rather than by looking.",
+      "path": "skills/theming",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/remote-stubs",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "remote-stubs",
@@ -4716,7 +4755,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/covered-is-not-reachable",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-comparison",
@@ -4779,14 +4817,12 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-intent",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/test-engineer",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-review",
@@ -30625,8 +30661,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "3a9557b14b1b9a15a9301abadf6767f402a1eda4",
+    "sha": "e7f0b4d6a1c0f67b91a8a2f20f1a9eebd30b114d",
     "pr": "main",
-    "run": "35529230069"
+    "run": "35530602558"
   }
 }
