@@ -5,10 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-19T16:20:36Z
+updated_at: 2026-09-20T04:15:47Z
 parent: folio-assistant-slw1
-blocked_by:
-    - folio-assistant-68dt
 ---
 
 ## What
@@ -101,3 +99,19 @@ dependencies and install them in CI).
   proceed. If it has not, do NOT hand-roll a parser; say what is missing.
   For `d5f1`, read this bean's measurement first: the image count is not the
   figure count, and 121 of `who-pub-tps-931`'s images are page scans.
+
+_2026-09-20T04:20Z_ — **Unblocked on the backend half.** `68dt` is done: the
+Python dependencies are declared in `schemas/python-deps.ts`, generated into
+`requirements.txt`, and **CI installs the lean set** — so the PDF rungs are now
+a path CI can exercise rather than the `5rfy` defect.
+
+`pymupdf`, `pypdf`, `pillow`, `pdfplumber`, `pdfminer.six` and `cffi` are all
+present. Only `camelot-py` (for `pdf-tables.py`) stays out of CI, at 323 MB
+with numpy/pandas/OpenCV — declared in `requirements-extended.txt` with the
+cost stated.
+
+Note before starting: `probe()` in `ingest-document.ts` imported the deprecated
+`fitz` alias, which prints a deprecation warning to STDOUT and broke the JSON
+parse. Fixed in `68dt`. Routing now works — and for `d5f1` specifically, read
+this bean's own 2026-09-19 measurement FIRST: the image count is not the figure
+count, and 121 of `who-pub-tps-931`'s images are page scans.

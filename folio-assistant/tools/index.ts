@@ -182,7 +182,12 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       title: "Ingest, with PDF and image extensions",
       description:
         "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
-      install: { cli: "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils" },
+      // The requirements file, NOT a pip line spelled out here. That line was
+      // a second spelling of `schemas/python-deps.ts` and would have drifted
+      // from it — it already omitted `cryptography`, which the declaration's
+      // own checker caught. `requirements.txt` is generated from the
+      // declaration; the apt packages are not pip-installable and stay named.
+      install: { cli: "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils" },
       invoke: { shell: "bun run scripts/ingest-document.ts" },
       requires: { runtime: ["python3", "pymupdf", "tesseract"], network: false },
       io: {
@@ -199,9 +204,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         when:
           "Reach for this when the upload is a PDF and you need its CONTENT — an outline-bearing document read at chapter granularity, a text-layer document read at page granularity, or a scan that must be OCR'd first. Confirm the backend is present before relying on it: `bun run src/index.ts --check-deps`, or simply run the pair's entry point, which reports `no PDF backend` rather than guessing.",
         limits:
-          "It adds nothing for archives, spreadsheets or metadata — `ingest-stdlib` already does those, and does them where this cannot run. It is also NOT available in CI here, so anything gated on it is a path CI cannot test, which is the `5rfy` defect (a gate that never fires).",
+          "It adds nothing for archives, spreadsheets or metadata — `ingest-stdlib` already does those, and does them where this cannot run. Its PDF rungs ARE testable in CI as of `68dt`, which installs the lean set; the table rung (`pdf-tables.py`, camelot) is the one part that still is not, and anything gated on THAT remains a path CI cannot exercise — the `5rfy` defect.",
         cost:
-          "Three installs and a system package, and they are not independent: `pypdf` image extraction needs `Pillow`, and `cryptography` panics under pyo3 on import when `cffi` is missing. Measured 2026-09-19 in this container. Add CI minutes on every run if it is ever installed there, and a toolchain to keep current.",
+          "Measured 2026-09-20: the lean set is 144 MB and CI installs it, so the PDF rungs ARE exercised there now. `camelot-py` for `pdf-tables.py` is the part CI still skips — 912 KB itself, but 323 MB with numpy, pandas and OpenCV, more than the whole lean set. The dependencies are not independent either: `pypdf` image extraction needs `Pillow`, and `cryptography` panics under pyo3 on IMPORT when `cffi` is missing. All of it is declared in `schemas/python-deps.ts`, so the cost is read rather than rediscovered.",
       },
     }),
 
