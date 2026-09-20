@@ -1,10 +1,11 @@
 ---
 # folio-assistant-pb04
 title: 'STICKY: an edit AND a view affordance, linking straight to GitHub, gated on the rendering pipeline''s GitHub capability'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T11:41:28Z
-updated_at: 2026-09-20T11:41:28Z
+updated_at: 2026-09-20T13:32:34Z
 parent: folio-assistant-o3xy
 ---
 

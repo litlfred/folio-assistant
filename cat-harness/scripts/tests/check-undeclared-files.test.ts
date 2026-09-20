@@ -8,7 +8,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -233,6 +233,32 @@ describe("this repository, as it stands", () => {
   // The walk-up is right for runtime code, which has no idea where it is. A
   // test does: tests/ -> scripts/ -> cat-harness/ -> the repository root.
   const REPO = resolve(import.meta.dir, "..", "..", "..");
+
+  test("no two declarations in this repository share a `name`", () => {
+    // MEASURED, not imagined: adding `harness.json` at the repository root
+    // gave it `name: "folio-assistant"`, which `cat-harness/harness.json`
+    // already used. Nothing failed. `resolveDirectories` sets
+    // `declaredBy: decl.name` and a landing sticky carries `contributedBy`, so
+    // both read `folio-assistant` with no way to tell WHICH — a directory can
+    // be attributed to the wrong instance while the string looks right.
+    //
+    // Over the real repository on purpose. A fixture would pin the collision I
+    // already fixed; this pins the property for whatever is declared next.
+    const names = new Map<string, string[]>();
+    for (const entry of readdirSync(REPO, { withFileTypes: true })) {
+      const rel = entry.isDirectory() ? join(entry.name, "harness.json") : null;
+      for (const p of [rel, entry.name === "harness.json" ? "harness.json" : null]) {
+        if (!p || !existsSync(join(REPO, p))) continue;
+        const name = (JSON.parse(readFileSync(join(REPO, p), "utf-8")) as { name?: string }).name;
+        if (name) names.set(name, [...(names.get(name) ?? []), p]);
+      }
+    }
+    // The vacuity guard this repository asks for everywhere: a clean run over
+    // zero declarations proves nothing, and there are at least three.
+    expect(names.size).toBeGreaterThanOrEqual(3);
+    const shared = [...names.entries()].filter(([, files]) => files.length > 1);
+    expect(shared).toEqual([]);
+  });
 
   test("the sweep runs over the real root without throwing", () => {
     expect(() => undeclaredAtRoot(REPO)).not.toThrow();
