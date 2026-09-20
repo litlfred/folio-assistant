@@ -1029,6 +1029,20 @@
       "file": "beans/defs/folio-assistant-7deg--librarian-an-avatar-for-knowledge-content-and-dubl.md"
     },
     {
+      "id": "folio-assistant-7iog",
+      "title": "COMMAND PATHS ARE CHECKED AGAINST THE REPO, NOT THE RUN: three of four backoff calls in feature-staging resolved at check time and not at run time",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:55:16Z",
+      "updatedAt": "2026-09-20T21:55:16Z",
+      "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while implementing #605's\n`merge=union` half, in the very loops that fix was going into.\n\n## The defect, measured\n\n`feature-staging.yml` has four retry loops. Each calls `backoff-sleep.ts` —\nthe ONE shared implementation bean `06kg` established. **Three of the four\nname a path that does not exist at run time:**\n\n| loop | job | `working-directory`",
+      "file": "beans/defs/folio-assistant-7iog--command-paths-are-checked-against-the-repo-not-the.md"
+    },
+    {
       "id": "folio-assistant-7o7i",
       "title": "RACI: declare involvement (A, C, I) over the roles and activities that already exist",
       "status": "completed",
@@ -1542,7 +1556,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T21:00:00Z",
+      "updatedAt": "2026-09-20T21:55:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`AGENTS.md` line 3 (the cold-start line every agent runs first), lines 192 and 351, `README.md` lines 4 and 371, and `cat-harness/docs/guides/",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
@@ -4357,14 +4371,14 @@
     {
       "id": "folio-assistant-yzsj",
       "title": "gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:02:00Z",
-      "updatedAt": "2026-09-20T20:33:25Z",
+      "updatedAt": "2026-09-20T21:48:19Z",
       "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) after merging #589, whose\n`Docs site (GitHub Pages)` run **failed on `main`**. The failure is not #589's\ncontent — it is the publish-ref race, and it is the one `xd1s` closed.\n\n## What actually failed\n\nRun 308, `4af80f84cf`, 19:53:01Z:\n\n```\n[command]/usr/bin/git push origin gh-pages\n ! [rejected]        gh-pages -> gh-pages (fetch first)\nerror: f",
       "file": "beans/defs/folio-assistant-yzsj--gh-pages-race-is-back-xd1s-closed-with-nine-push-s.md"
     },
