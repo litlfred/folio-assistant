@@ -229,7 +229,7 @@
     {
       "id": "administrator",
       "title": "Administrator",
-      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to \u2014 which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
       "actorKinds": [
         "person"
       ],
@@ -284,7 +284,7 @@
       ],
       "lanes": [
         "Publication manager",
-        "Publication manager — deploy and seed",
+        "Publication manager \u2014 deploy and seed",
         "Human signer"
       ],
       "skills": [
@@ -315,11 +315,12 @@
       ],
       "skills": [
         "bpmn-authoring",
-        "dmn-authoring",
         "content-validate",
-        "l2-dak-authoring",
         "crdm-requirements-workflow",
-        "decision-audit"
+        "decision-audit",
+        "dmn-authoring",
+        "l2-dak-authoring",
+        "methodology-adoption"
       ],
       "persona": "Turns stated needs into requirements others can build against. Works in the gap between what a stakeholder said and what the system can do, and is the one who notices when those differ.",
       "voice": "Requirement-shaped: the need, the constraint, the acceptance condition. Ambiguity named rather than resolved by assumption.",
@@ -699,7 +700,7 @@
     {
       "id": "attestation-service",
       "title": "Attestation service",
-      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
+      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out \u2014 which is why the signing process carries a second, human lane rather than a retry.",
       "actorKinds": [
         "system"
       ],

@@ -244,6 +244,39 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
   },
+  // ── Judgement methodologies, one sub-graph each ───────────────────────
+  //
+  // A methodology is a NAMED, EXTERNAL way of reaching a judgement — Kepner-Tregoe
+  // for a decision, MADR for its record, DMN for the computable case, GRADE for
+  // certainty of evidence. They are **parallel, not composable**: which one applies
+  // is contextual, and blending them produces a house method that cites nobody.
+  //
+  // ## Why its own kind rather than skills
+  //
+  // Three properties a skill does not have:
+  //
+  // 1. **Extractable.** A methodology is somebody else's work, adopted. If the
+  //    field moves on, or an instance needs a different one, the directory lifts
+  //    out and its declaration goes with it. A skill that had inlined the method
+  //    could not be lifted — it would have to be rewritten.
+  // 2. **Referenced, never inlined.** A skill names the methodology it follows;
+  //    the method's own text lives here once. Two skills quoting the same method
+  //    is two copies free to drift, which is the duplicate `directory-conventions`
+  //    calls unchecked.
+  // 3. **Not subject to skill criteria.** `skill-is-brief` caps a skill near 280
+  //    lines because a skill is an instruction. A methodology is a FAITHFUL
+  //    RENDERING of an external standard, and truncating it to fit a house limit
+  //    would misrepresent the standard.
+  //
+  // Any layer may declare a directory of this kind: the harness carries the
+  // domain-neutral ones, `smart-kg` carries GRADE, because certainty-of-evidence
+  // grading belongs to WHO L1 guideline development rather than to the harness.
+  methodology: {
+    type: termIri("MethodologyGraph"),
+    renderable: false,
+    summary:
+      "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
+  },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,

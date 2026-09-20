@@ -231,6 +231,10 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       // they are not interchangeable: the corpus checklist greps `library/`
       // and not `uploads/`.
       "library",
+      // Adopted judgement methodologies, 2026-09-20. `renderable: false` like
+      // every other entry here — a methodology is read by an agent choosing HOW
+      // to decide; it is never published as a page.
+      "methodology",
       // The published projection of every verdict. Its own kind rather than
       // part of `kg`, because a witness and the verdict it projects are
       // different artefacts: one is what a checker wrote and lives beside its
@@ -266,7 +270,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
     expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "cat-harness", "fsh-guts", "health", "library", "qa", "schemas",
+      "bean-defs", "beans", "cat-harness", "fsh-guts", "health", "library", "methodology", "qa", "schemas",
       "todo-feedback", "todo-items", "todos",
       "tools", "translation-sources", "uploads", "voices", "workflow-state",
     ]);

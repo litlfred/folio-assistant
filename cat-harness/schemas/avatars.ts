@@ -151,6 +151,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 140,
     reads: "a shield with a tick — a verdict about an artefact",
   },
+  // A fork in a path: two ways onward, one taken. Methodologies are PARALLEL
+  // tracks selected by context, so the glyph shows the choice rather than a
+  // procedure — a flowchart or a checklist would draw the wrong idea.
+  methodology: {
+    glyph: "M12 20V12m0 0L6 6m6 6l6-6M4 4h4m8 0h4",
+    tone: 268,
+    reads: "a fork in a path — parallel ways to a judgement, one chosen by context",
+  },
   health: {
     glyph: "M3 13h4l2-5 3 10 2-6 2 3h5",
     tone: 4,

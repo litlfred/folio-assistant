@@ -113,6 +113,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [MCP contract](mcp-contract.html) | `mcp-contract` | — | [`mcp-projection`](mcp-projection.md) emits a server. This checks the emitted |
 | [MCP projection](mcp-projection.html) | `mcp-projection` | — | **The harness does not require MCP. It knows how to emit it.** That distinction |
 | [Markdown Authoring Conventions](md-authoring.html) | `md-authoring` | — |  |
+| [Adopting a methodology, and choosing between them](methodology-adoption.html) | `methodology-adoption` | — | **A methodology is somebody else's work, adopted whole.** It is not a house |
 | [The Milnor exposition standard](milnor-exposition-standard.html) | `milnor-exposition-standard` | — | **Three files sent readers here for this section and it did not exist.** |
 | [One-Voice Audit](one-voice-audit.html) | `one-voice-audit` | — | grep -rEn "[✅❌⚠⏳🔧🚧☑☒]\|✓\|✗\|★" "$CONTENT" --include="*.md" |
 | [/one-voice-integration-watcher](one-voice-integration-watcher.html) | `one-voice-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |

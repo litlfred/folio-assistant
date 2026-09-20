@@ -253,7 +253,7 @@
     "SequenceFlow": 11,
     "Role": 6,
     "ProcessNode": 11,
-    "GraphKind": 16,
+    "GraphKind": 17,
     "Directory": 2
   },
   "problems": [],
@@ -627,6 +627,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#KnowledgeGraph",
       "renderable": false,
       "summary": "Skills, workflows, roles — the harness layer's own knowledge graph."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "methodology",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#MethodologyGraph",
+      "renderable": false,
+      "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
