@@ -52,6 +52,12 @@
       "description": "A BCP-47 language tag, e.g. en or fr-CA",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$",
+      "description": "An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "Flag": {
       "type": "boolean",
       "description": "A boolean switch — projects to a bare flag, with no value word",
@@ -293,8 +299,8 @@
   },
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "b6c1984446fd252c6375e73d8b447305a36657fd",
+    "sha": "1fac2ba9c1e3965fccd665e0768b3e409a02c492",
     "pr": "454/merge",
-    "run": "35501444344"
+    "run": "35504179989"
   }
 }
