@@ -177,20 +177,19 @@ describe("this repository, as it stands", () => {
     expect(accounted.get("todos")).toContain("declared by");
   });
 
-  test("the live findings are the style-guide files, and nothing else", () => {
+  test("the root is clean, and stays that way", () => {
     // Pinned deliberately. If this list grows, something arrived at the root
-    // that nobody declared — which is the event the sweep exists to surface. If
-    // it shrinks, the files were dealt with and this expectation should be
-    // updated in the same change that deals with them.
-    const found = undeclaredAtRoot(REPO).map((e) => e.path).sort();
-    expect(found).toEqual(
-      [
-        "Publication and information products style guide-info.pdf",
-        "Publication and information products style guide.html",
-        "Publication and information products style guide.pdf",
-        "Publication and information products style guide_files.zip",
-      ].sort(),
-    );
+    // that nobody declared — which is the event the sweep exists to surface.
+    //
+    // It was FOUR files when this sweep was written — the style guide's .pdf,
+    // -info.pdf, .html and a 1.2 MB _files.zip, 1.8 MB in all. They were not
+    // deleted: they had never been processed into `library/` (no slug for
+    // them), so on the owner's ruling — *"if already processed, then delete"* —
+    // they moved to `uploads/`, the declared ingestion queue, where document
+    // ingestion can reach them and where a gate can see them. This expectation
+    // was updated in the same change that dealt with them, as the note it
+    // replaces asked.
+    expect(undeclaredAtRoot(REPO).map((e) => e.path)).toEqual([]);
   });
 });
 
