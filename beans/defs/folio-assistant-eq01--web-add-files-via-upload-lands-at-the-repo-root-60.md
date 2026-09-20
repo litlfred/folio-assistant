@@ -53,17 +53,37 @@ That is the `dh4f` shape.
 Moving the five files into `cat-harness/uploads/` is the smaller change and
 needs no new declaration.
 
-## Options, for the owner
+## DECIDED — owner, 2026-09-20
 
-1. **Move the five into `cat-harness/uploads/`.** One commit, no schema
-   change, and the web-upload habit still lands at the root next time.
-2. **Move them AND add a root `uploads/` that is declared**, so the habit has
-   somewhere correct to land. Needs a rule for which queue ingestion reads.
-3. **Leave them.** 6.0 MB in every clone, forever, for files nothing
-   references.
+> *"only one uploads/ needed, cat-harness __initialize__ uploads/ if not there
+> as one of its steps. not keep it there permanently, but nice convention to
+> developer to know whats supposed to be there. easier to copy structure."*
 
-Nothing is moved or deleted without the owner saying which
-(`deletion-requires-confirmation`). Reported, not acted on.
+**One** uploads directory — `cat-harness/uploads/`, already declared in
+`harness.json`. No root twin, so the `dh4f` risk above does not arise.
+
+**Initialization creates it when absent.** Done: the session-start hook now
+runs `harness-dirs.ts`, the writer. `materialiseDeclaredDirectories` already
+existed and `init-folio` already called it for a NEW folio — the platform's
+own tree was the one case with a declaration and no step honouring it.
+
+The point is the CONVENTION being discoverable, not the files persisting: a
+created directory gets the `keepMarker` `.gitignore`, which ignores nothing and
+exists to say what belongs there. Verified by deleting `cat-harness/uploads/`
+and running the hook — it came back with the marker naming it as the ingestion
+queue — then restoring the four PDFs byte-for-byte.
+
+**Still open: the five files at the root.** 6.0 MB that nothing references.
+Moving them into `cat-harness/uploads/` is the smaller change; not done,
+because moving somebody's uploaded artefacts is a durable-artefact decision
+and the owner has not said to
+(`deletion-requires-confirmation`).
+
+## Done when
+
+- [x] initialization creates a missing declared directory, with its marker
+- [ ] the five root-level files are moved into `cat-harness/uploads/` — or
+      the owner says leave them
 
 ## Related
 
