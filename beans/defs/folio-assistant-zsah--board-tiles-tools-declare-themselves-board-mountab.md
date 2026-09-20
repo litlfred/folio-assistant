@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T21:47:28Z
-updated_at: 2026-09-20T22:13:42Z
+updated_at: 2026-09-20T22:17:09Z
 parent: folio-assistant-6lb8
 ---
 
@@ -93,3 +93,37 @@ reason: a tile that states nothing is complete, not invalid.
 - [ ] each tile opens the EXISTING visualisation — asserted by reuse (`kg-viewer.ts`, `7vhe`'s fsh-guts viewer, the `todos/` viewer in sibling work)
 - [ ] the tile template is `1le7`'s, extended if it needs to be, never duplicated
 - [ ] keyboard path into and out of every tile, accessible names on icon-only controls, target size at least the QR tile (`gjli`)
+
+
+## From sibling work merged 2026-09-20 — `flh4`, and the distinction it paid for
+
+`flh4` (STATE PAGES) found `uploads` rendered as *"this graph is declared and
+nothing publishes a projection for it yet"* while both `harness.json` files gave it
+a `coverage.visualiser`, that page existed, and it rendered live counts. Cause:
+`projectionFor(id)` asked the disk for `assets/<id>/index.json` only, and `uploads`
+publishes inside `assets/library/index.json` — so *"no projection AT MY PATH"* was
+collapsed into *"nothing renders this"*. **Two different facts.**
+
+**That distinction is this bean's too, and it decides which one a tile derives
+from.** Measured on the merged tree, 2026-09-20:
+
+| | declared `coverage.visualiser` | live projection |
+|---|---|---|
+| `uploads`, `library` | yes | yes |
+| `beans`, `todos` | **no** | yes |
+| `fsh-guts`, `qa`, `health`, `memory`, `interaction`, `issue-marks` | no | no |
+
+So `beans` and `todos` — two of the three tiles the owner named — have a working
+viewer and **no declaration**. A tile derived from the PROJECTION would appear for
+a graph nobody declared a visualiser for; derived from the DECLARATION it would be
+missing for two graphs that visibly have one.
+
+Neither is a bug to code around: it is the third state `flh4` names. **The tile
+derives from the declaration, and a live projection with no declaration is a
+FINDING** — which is what closes the gap rather than papering over it. `beans` and
+`todos` want their `coverage.visualiser` filled in; that is a line each, and it is
+prerequisite work for this bean rather than part of it.
+
+Also adjacent, merged the same day: `whbf` (Overview panel, the DYNAMIC half —
+drag, re-run layout) under `vke6`. Its drag/layout work and `le8b`'s board movement
+are the same problem on two surfaces and should not grow two answers.
