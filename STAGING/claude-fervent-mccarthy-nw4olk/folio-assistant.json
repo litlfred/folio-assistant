@@ -248,10 +248,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T06:18:45.928Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c6765fd0a5e51e1b82f2e02c76793bd9b6f08ff",
-  "sourceCommitSha": "3c6765fd0a5e51e1b82f2e02c76793bd9b6f08ff",
-  "sourceCommitAt": "2026-09-20T06:17:05Z",
+  "generatedAt": "2026-09-20T06:24:16.789Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/390b8ca50b073c7502328574f9c6db19b3b32949",
+  "sourceCommitSha": "390b8ca50b073c7502328574f9c6db19b3b32949",
+  "sourceCommitAt": "2026-09-20T06:22:34Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 176,
@@ -262,7 +262,7 @@
     "Process": 36,
     "SequenceFlow": 498,
     "ProcessNode": 464,
-    "Tool": 38,
+    "Tool": 40,
     "Schema": 56,
     "GraphKind": 16,
     "Directory": 13
@@ -19334,6 +19334,107 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-graph-export"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/kg-audit",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "kg-audit",
+      "title": "Knowledge-graph audit",
+      "description": "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes \"unbound since it was drawn\" distinguishable from \"broken in the commit under review\".",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:audit"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed sidecars and fail on a critical finding or a stale one, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Promote `major` to failing as well. Not what CI runs; see the note on constant-red checks in `remote-skill-servable.test.ts`.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "sidecars",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The QA tree, mirroring each subject's own path — flat would collide, since several basenames already occur twice."
+          },
+          {
+            "name": "worstSeverity",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Text",
+            "description": "critical, major, minor — or none. `unknown` findings are never a pass."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/code-node-review"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/bpmn-render",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "bpmn-render",
+      "title": "BPMN diagram rendering",
+      "description": "Render each process diagram to SVG for the documentation site. The .bpmn file is the source of truth; the picture is generated from it, so a diagram and its image cannot disagree.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run render:bpmn"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if any committed SVG is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "diagrams",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The generated SVG directory. Never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "chromium"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/bpmn-render"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/themes-css",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "themes-css",
@@ -22522,8 +22623,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "cc41e2356823ec33712808e5052a51a5eaac26b9",
+    "sha": "43e732a99148c6f7e3667d9a279c379f669e5700",
     "pr": "454/merge",
-    "run": "35493831308"
+    "run": "35494070387"
   }
 }
