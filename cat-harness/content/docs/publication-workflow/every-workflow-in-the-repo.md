@@ -97,6 +97,13 @@ the outer process; the rest are its call activities:
 | `ingest-build-l1-kg.bpmn` | Dublin Core, manifest, assets, binding, linking |
 | `ingest-l1-completeness-gate.bpmn` | Is the derived content complete enough to promote, and who says so? |
 
+**Post-MVP review** — what the delivered thing actually looks like, once
+stakeholders have accepted it and there is a render to judge:
+
+| Diagram | Answers |
+|---------|---------|
+| `theme-ui-review.bpmn` | Does what shipped read legibly, consistently and in every declared language? Accessibility measured rather than asserted, branding against the instance's own declaration, languages extracted and laid out. Called from `crdm-deliver.bpmn` on the single edge out of stakeholder acceptance — there is no role-to-theme mapping, so nothing could have been checked earlier |
+
 **Upstream dependencies** — what happens when somebody else's release changes
 what we ship. The first is the watcher and the second is the reusable
 subprocess it calls; any pinned dependency enters the second the same way, so a
