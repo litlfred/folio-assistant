@@ -251,10 +251,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T06:04:28.455Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9cb6af95a029f0432ab26d22c3b8452a26009409",
-  "sourceCommitSha": "9cb6af95a029f0432ab26d22c3b8452a26009409",
-  "sourceCommitAt": "2026-09-20T06:02:55Z",
+  "generatedAt": "2026-09-20T06:07:49.766Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2488fb4860496a90315d50226f3df49f135a6147",
+  "sourceCommitSha": "2488fb4860496a90315d50226f3df49f135a6147",
+  "sourceCommitAt": "2026-09-20T06:03:38Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
@@ -266,8 +266,8 @@
     "Process": 36,
     "SequenceFlow": 498,
     "ProcessNode": 464,
-    "Tool": 30,
-    "Schema": 56,
+    "Tool": 31,
+    "Schema": 57,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -19175,6 +19175,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#tool/kg-validate",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "kg-validate",
+      "title": "Validate a node in the graph",
+      "description": "Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:validate"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "path",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The node to check. Its graph kind is resolved from the declared directory that contains it.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "lenient",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/Flag",
+            "description": "Accept partial coverage knowingly: downgrade could-not-determine from an error to a warning.",
+            "required": false,
+            "arg": {
+              "flag": "--lenient"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/Text",
+            "description": "One line per file — valid, invalid with the failing paths, or could-not-determine with the reason. Exit 0 valid, 1 invalid or undetermined, 2 misuse."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/kg-navigation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-validate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#tool/cat-harness-schema",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "cat-harness-schema",
@@ -20716,6 +20768,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kg-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/kind-validator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "kind-validator",
+      "title": "Resolving a graph kind's **validator** — the one parameter that turns",
+      "module": "schemas/kind-validator.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kind-validator"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/lean-packages",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "lean-packages",
@@ -22006,8 +22066,8 @@
   ],
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "17f73be42dfff19f6c890d8850c376d4cf53d391",
+    "sha": "1cdd9f63d2feeca20402bc829726ece4435f8b27",
     "pr": "468/merge",
-    "run": "35493214810"
+    "run": "35493355056"
   }
 }
