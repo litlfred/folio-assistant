@@ -404,3 +404,80 @@ Verification: `bun run gates` **56/56**; `bun test` **3801 pass, 0 fail**;
 The ~94 skills bound to no role or process. Now separable: `consulted: true`
 marks reference material nobody performs, so each remaining one is either a
 missed annotation or a genuine gap.
+
+---
+
+## Sample of 15, 2026-09-20 — the population is three problems, not one
+
+Owner chose "sample first, measure the split, report back" over triaging all
+of them. That was the right call, and the reason is the result: **the split
+the sample was drawn to measure is not the useful cut.**
+
+### First, a count I had been repeating wrongly
+
+I quoted **94** unbound skills across several turns. The audit says **101**,
+and it had said 98 an hour earlier — the population moves as `main` and I
+both add skills. Quoting a count from memory is exactly what
+`never quote a count from prose` exists to stop, and I did it four times.
+**Take the number from `kg:audit`, not from this bean.**
+
+### The sample
+
+15, drawn by walking each package's sorted list at an even stride so the
+choice could not be cherry-picked: 7 `folio-paper-adapter`, 6 `folio-core`,
+1 `remote-stubs`, 1 `graph-management`.
+
+Classified by reading each: **12 performed tasks** (a role should carry them),
+**2 reference material** (`mcp-projection`, which explains a design
+distinction and instructs nobody; `fhir-client-operations`, whose own first
+line is *"This skill is declared, not implemented here. Do not follow it as
+guidance"*), **1 borderline** (`domain-fencing` — a discipline, but a
+`platform-boundary-guard` actor already exists to perform it, so it leans
+performed).
+
+**80 % missed annotation. And that ratio is close to useless**, because it
+averages over packages that are in completely different states.
+
+### The cut that matters
+
+| package | on disk | unbound | |
+|---|---:|---:|---:|
+| `content-lifecycle` | 9 | 0 | **0 %** |
+| `workflow` | 8 | 1 | 12 % |
+| `authoring-who-smart-guidelines` | 7 | 1 | 14 % |
+| `folio-core` | 107 | 43 | 40 % |
+| `bootstrap` | 4 | 3 | 75 % |
+| `graph-management` | 3 | 3 | 100 % |
+| `remote-stubs` | 5 | 5 | 100 % |
+| `folio-paper-adapter` | 47 | 44 | **93 %** |
+
+Three different problems:
+
+1. **`folio-paper-adapter` (44) — unmodelled, not untriaged.** Its 3 bound
+   skills sit one-apiece across six unrelated roles: incidental bindings, no
+   owner. All 7 sampled are performed tasks, so the triage question has the
+   same answer 44 times and answering it produces nothing. The real question
+   is *who performs paper work*, which is a modelling decision. **Bean
+   `3025`.**
+2. **`folio-core` (43) — a genuine triage.** 64 of 107 ARE bound, so roles
+   exist and these sit outside them. Mixed: mostly performed, with real
+   reference material among them. **This is what remains on `y1w9`.**
+3. **`bootstrap` (3) — a tooling blind spot, not a corpus fact.** All three
+   ARE named by activities in `bootstrap/workflows/*.bpmn`; `workflowDirs`
+   composes `<kgdir>/workflows` and bootstrap's diagrams are a SIBLING of its
+   skills, so nothing scans them. **Bean `7u3g`.**
+
+`remote-stubs` (5) is 100 % unbound by design — declared-not-implemented — and
+should be `consulted: true` or exempted, which is cheap and uncontested.
+
+### What the sample cost, and what it bought
+
+Reading 15 skills. It bought the knowledge that triaging 101 items would have
+spent most of its effort on 44 that needed a design decision instead, and
+would have reported 3 as unreachable that are merely unscanned.
+
+### `content-lifecycle` at 0 % is the control
+
+It is the reason 93 % reads as a defect rather than as the natural state of a
+package. Without it in the table the paper-adapter number has nothing to be
+surprising against.
