@@ -198,6 +198,37 @@
           },
           "minItems": 1
         },
+        "alternativeTo": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        },
+        "selection": {
+          "type": "object",
+          "properties": {
+            "when": {
+              "type": "string",
+              "minLength": 1
+            },
+            "limits": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cost": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "when",
+            "limits",
+            "cost"
+          ],
+          "additionalProperties": false
+        },
         "requires": {
           "type": "object",
           "properties": {
@@ -263,8 +294,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "4abdda11f594bf5d1d99ee6ef72008d2670142db",
+    "sha": "66df1db038f258155551173524a1cccef0502625",
     "pr": "452/merge",
-    "run": "35488401111"
+    "run": "35488577638"
   }
 }

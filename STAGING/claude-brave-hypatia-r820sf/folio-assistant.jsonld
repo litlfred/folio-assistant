@@ -248,21 +248,21 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:10:19.940Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/602b740b94328a53d587b3d4160b8170e0b4676c",
-  "sourceCommitSha": "602b740b94328a53d587b3d4160b8170e0b4676c",
-  "sourceCommitAt": "2026-09-20T04:08:49Z",
+  "generatedAt": "2026-09-20T04:14:34.141Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4fdd45797490554bf051cd6c3d9be05643e43326",
+  "sourceCommitSha": "4fdd45797490554bf051cd6c3d9be05643e43326",
+  "sourceCommitAt": "2026-09-20T04:10:59Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 170,
     "Actor": 27,
     "Capability": 24,
-    "Role": 106,
+    "Role": 109,
     "SkillPackage": 8,
     "Process": 36,
     "SequenceFlow": 498,
     "ProcessNode": 464,
-    "Tool": 28,
+    "Tool": 30,
     "Schema": 54,
     "GraphKind": 16,
     "Directory": 13
@@ -935,7 +935,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 271,
+      "instructionLines": 337,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2941,20 +2941,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-simplifier"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/determine-intent",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/confirm-harness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "determine-intent",
-      "title": "What is this repository supposed to be?",
-      "description": "Turn what a person wants this repository to become into ONE instance reference. The only step of bootstrap that requires user input, and it asks a single question rather than three.",
+      "name": "confirm-harness",
+      "title": "Which harness, and where",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/skills"
       ],
-      "instructionsPath": "bootstrap/skills/determine-intent.md",
-      "instructionLines": 89,
+      "instructionsPath": "bootstrap/skills/confirm-harness.md",
+      "instructionLines": 59,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/determine-intent"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/confirm-harness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/corpus-grep",
@@ -18884,6 +18884,128 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/beans-manual"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/ingest-stdlib",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-stdlib",
+      "title": "Ingest, standard library only",
+      "description": "Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The upload to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Library root; defaults to the declared `library` graph.",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Flag",
+            "description": "Report the chosen rung and stop.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-stdlib"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/ingest-extended",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-extended",
+      "title": "Ingest, with PDF and image extensions",
+      "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
+      "install": {
+        "cli": "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils"
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "pymupdf",
+          "tesseract"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-extended"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/github",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "github",
@@ -21668,6 +21790,53 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/log"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/initiator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "initiator",
+      "title": "Initiator",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/kg-navigation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/confirm-harness"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/initiator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/knowledge-graph-data-store",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "knowledge-graph-data-store",
+      "title": "Knowledge Graph Data Store",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/knowledge-graph-data-store"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "requestor",
+      "title": "Requestor",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/requestor"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#directory/tools",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "tools",
@@ -21814,8 +21983,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "4abdda11f594bf5d1d99ee6ef72008d2670142db",
+    "sha": "66df1db038f258155551173524a1cccef0502625",
     "pr": "452/merge",
-    "run": "35488401111"
+    "run": "35488577638"
   }
 }
