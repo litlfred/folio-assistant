@@ -128,6 +128,11 @@ between, rather than batching the remaining eleven. Each node is a probe.
 
 ## MEASURED 2026-09-20 — two capabilities share the word "publish", and each is broken the opposite way  ⟵ BLOCKER
 
+> **⚠ TWO OF THE THREE READINGS BELOW ARE NOW SETTLED — read the SHARPENED
+> section at the end of this bean first.** Reading 2 is **refuted**; reading 1 is
+> **evidenced** from `draft-to-publication.bpmn`. Only reading 3
+> (does `release-please.yml` get its own skill?) is still the owner's.
+
 Read `content-publish`'s declaration and every publishing mechanism in the repo,
 rather than reasoning from the bean's title.
 
@@ -193,3 +198,61 @@ none is a Tool node I can write honestly today.
       required-input decision recorded
 - [ ] if 1: recorded as the third unsatisfiable contract, and tier A's count says
       why
+
+
+---
+
+## SHARPENED 2026-09-20 — two of the three readings are now settled by evidence; ONE question survives
+
+The BLOCKER above offered the owner three readings. Two of them are answerable
+from the graph, and I answered them by reading it rather than handing all three
+over.
+
+### Reading 1 is EVIDENCED, not a choice — `content-publish` is folio-side
+
+`cat-harness/skills/workflows/draft-to-publication.bpmn` carries three tasks
+reffing `content-publish`, and the third is exactly the flow the skill's prose
+describes:
+
+| line | element | what it is |
+|---|---|---|
+| 91 | `Task_BuildDraft` — *"Build the draft publication"* | `serviceTask`, `<folio:skill ref="content-publish"/>` |
+| 176 | `Task_AuthorizeRelease` — *"Authorise the release"* | **`userTask`** — a person decides |
+| 185 | `Task_PublishRelease` — *"Version, tag and publish"* | `serviceTask`; documentation: *"Version bump, release notes, tag, build the final artifacts, deploy to the publication platform."* |
+
+So `content-publish`'s required `versionIncrement` is not a contract defect —
+it is an input a **person supplies at `Task_AuthorizeRelease`**, one step
+upstream, in the publication manager's lane. That kills reading 2: the contract
+describes the flow its own diagram draws. And it confirms reading 1 positively
+rather than by absence — the skill has a mechanism, in a folio, invoked from a
+diagram that lives here. Nothing in this repository is owed a node for it.
+
+Recorded as the third unsatisfiable-**here** contract beside `latex-authoring`
+(`jh2j`) — with the distinction that matters: `latex-authoring` is unsatisfiable
+because no mechanism exists anywhere yet; `content-publish` is unsatisfiable
+*here* because its mechanism is a folio's, by design.
+
+### Reading 3 survives, and it is genuinely the owner's
+
+`release-please.yml` cuts real releases — semver bump, CHANGELOG, GitHub release,
+tag — for the **7 published packages under `tools/`**, and **no skill in the
+corpus names it.** Re-verified by reading bodies, not names: the only skills
+matching `release-please|semver|CHANGELOG` are `upstream-version-adoption`
+(reading an *upstream's* changelog as a claim to be checked against
+`git diff --stat pinned..candidate`) and `diff` (a per-block git-log viewer).
+Zero hits for `release-please` or `semver` anywhere in `skills/` or
+`methodologies/`. That is the `yean` shape exactly: a mechanism with no skill.
+
+Authoring "cut a release of the platform's own packages" is a claim about the
+**capability vocabulary that every dependent instance inherits** — `yean`
+established that call is the owner's, not an agent's.
+
+### Done when — REPLACES the three-reading list above
+
+- [x] ~~reading 2: `content-publish`'s contract is wrong~~ — **refuted**;
+      `versionIncrement` is supplied by `Task_AuthorizeRelease`
+- [x] reading 1 **evidenced** from `draft-to-publication.bpmn`; recorded as
+      unsatisfiable-here-by-design, and tier A's count says why
+- [ ] **reading 3: does `release-please.yml` get its own skill?** — the owner's
+      call, and the only question left on this bean
+- [ ] if yes: the skill, then a node over `release-please.yml`
