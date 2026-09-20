@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Corpus-Grep
+title: 'Corpus-Grep'
 parent: Skill instructions
 ---
 

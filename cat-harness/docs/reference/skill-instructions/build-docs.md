@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /build-docs
+title: '/build-docs'
 parent: Skill instructions
 ---
 

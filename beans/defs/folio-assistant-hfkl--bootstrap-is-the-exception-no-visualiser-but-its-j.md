@@ -66,9 +66,9 @@ rule rather than a new one, and the two should be written down once.
 
 ## Done when
 
-- [ ] `bootstrap/render/` (or the right name) exists as a declared subgraph
+- [x] `bootstrap/render/` (or the right name) exists as a declared subgraph
       holding the skills for rendering `.jsonld`/`.json`
-- [ ] The exemption is written where the QA axis will read it, so `2krx` does
+- [x] The exemption is written where the QA axis will read it, so `2krx` does
       not raise a finding against bootstrap for having no visualiser
 - [x] The `_kg/` vs `cat-bootstrap/cat-bootstrap.jsonld` contradiction above is
       resolved, one way stated — **done 2026-09-20, and it was a stale
@@ -95,3 +95,75 @@ rule rather than a new one, and the two should be written down once.
       namespace document. So on staging, the layer whose existence IS its
       `.json`/`.jsonld` has neither.
 - [ ] The docs page's "conflict" section is rewritten as the resolved rule
+      resolved, one way stated
+- [x] The docs page's "conflict" section is rewritten as the resolved rule
+
+
+---
+
+## Done, 2026-09-20 — and two of the four boxes were already true
+
+**`cat-bootstrap/render/` exists and is DECLARED**, id `cat-bootstrap-render`,
+holding `cat-bootstrap-graph-emission.md` (what the document contains and the
+four properties it holds) and `cat-bootstrap-graph-publication.md` (where it
+lands, why its `@id` must equal that path, why it is no longer committed) plus
+its own `package-manifest.json`. A separate id from `cat-harness`, which
+`skills/` already holds — overrides match on id, so reusing it would have
+replaced cat-bootstrap's skills with these. `check:instance-render` reports
+cat-bootstrap at **81 own nodes**, up from the 76 this bean measured.
+
+**The exemption is DECLARED DATA, and that was the design decision.** The
+obvious shortcut is `if (name === "cat-bootstrap")` in the `2krx` checker,
+which states a rule true only for the instance somebody remembered — a
+vendored or renamed bootstrap silently reacquires the obligation it was
+excused from. So `renderExemption` is a field on the instance declaration
+(`schemas/cat-harness.ts`): `of` (a CLOSED set — `visualiser`,
+`workflow-visualiser`), `reason`, and `owes`. `isExemptFrom` is what the axis
+calls.
+
+**`owes` is REQUIRED by the schema**, and it is the part worth defending. An
+exemption with no substitute is a hole, and a list of holes is the silence list
+`2krx` says an opt-out must not become. cat-bootstrap is not dropping out of
+the requirement — it trades a criterion it could fail quietly for one it
+cannot. A test asserts the skill files `owes` names actually exist, so the
+field cannot rot into decoration.
+
+**The anti-spread guard is GLOBAL, and it had to be.** `renderExemptionProblems`
+takes every instance in the repository rather than one declaration, because
+*"only the bottom layer may claim this"* is a fact about the stack that a
+per-instance check structurally cannot see. At most one claimant, **not
+exactly one** — a repository vendoring no cat-bootstrap has nothing to exempt,
+and failing it for that is asking it to declare something to stay green. Wired
+into `check:instance-render`, which is the gate it is an exemption FROM.
+16 tests, falsified in both directions.
+
+### The `_kg/` contradiction resolved itself before this bean was written
+
+The bean asked which of the two was true and said it *"may be the whole bean"*.
+Measured: **neither, any more.** `cat-bootstrap/cat-bootstrap.jsonld` was
+committed with a byte-staleness gate; on 2026-09-20 (bean `blv9`) it became a
+build artefact published by `docs-site.yml` at
+`_site/cat-bootstrap/cat-bootstrap.jsonld`, the gate was removed, and a test
+now asserts the inverse — that **no tracked copy exists**. What was left was a
+stale comment at `kg-export.ts:1061` still calling it *"a COMMITTED artefact"*,
+four days after it stopped being one. Fixed, and the fix records that the
+comment's REASON survived its own premise: nothing compares bytes now, but a
+leaked absolute build path would ship to readers instead of merely failing CI.
+Same constraint, worse failure.
+
+### One measurement in this bean is now false
+
+*"`check-instance-render` fails the repository root today with 'no directory
+containing .bpmn files was found under .'"* — it does not. The guard
+`dirs.length === 0 && kgDirectories(root).length > 0` landed in the interim, so
+an instance declaring no `kg` directory is a determined empty rather than a
+failure. All four instances report `rendered`, 0 failed, 0 undetermined.
+
+### The fourth box was already ticked by somebody else
+
+*"The docs page's 'conflict' section is rewritten as the resolved rule"* —
+`cat-harness/docs/architecture/harness-instances.md` already carried
+§"Where the requirement starts — cat-bootstrap is the exception" with the
+floor-that-rises table. Extended rather than rewritten: a subsection now
+records that the exemption is declared data, why `owes` is required, and why
+the spread guard is global.

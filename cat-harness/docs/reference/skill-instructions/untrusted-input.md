@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Untrusted input
+title: 'Untrusted input'
 parent: Skill instructions
 ---
 

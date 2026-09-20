@@ -1,6 +1,6 @@
 ---
 layout: default
-title: bib-human-review
+title: 'bib-human-review'
 parent: Skill instructions
 ---
 

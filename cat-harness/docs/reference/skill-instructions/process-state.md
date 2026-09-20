@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Process state
+title: 'Process state'
 parent: Skill instructions
 ---
 

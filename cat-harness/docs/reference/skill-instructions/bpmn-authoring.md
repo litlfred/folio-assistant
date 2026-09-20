@@ -1,6 +1,6 @@
 ---
 layout: default
-title: bpmn-authoring
+title: 'bpmn-authoring'
 parent: Skill instructions
 ---
 

@@ -222,6 +222,48 @@
       {%- endfor -%}
     </ul>
     {%- endif -%}
+
+    {%- comment -%}
+      THE SOURCE CONTROLS — view and edit, on the DECLARATION this card came
+      from. Bean `pb04`, the owner: *"stckynnotes should have edit tool = link
+      to github pages edit directrly, liek with other content blocks.
+      rendeding shows edit src icon (and also need view icon) if github tools
+      avaialable in rendering pipeline."*
+
+      The generator resolved both into `stickies.json` months before anything
+      rendered them, which is the half worth noticing: the data was right, the
+      capability gate worked, and on the page there was no control at all. A
+      value nothing renders is indistinguishable from one nothing computes.
+
+      ABSENT, not disabled, with no forge. `sourceLinks` returns `undefined`
+      for anything that is not a github.com `origin`, and the generator SPREADS
+      the result — so the keys are missing rather than empty, and this `if` is
+      the whole gate. A dead edit link invites a click and, on a private
+      repository, 404s for exactly the reader who cannot edit.
+
+      `st.declaredIn` is the CONTRIBUTING instance's own declaration, so
+      cat-bootstrap's card links to `cat-bootstrap/harness.json` rather than to
+      whichever declaration happened to be read first. Three instances
+      contribute here, so a wrong default would be silently right one time in
+      three.
+
+      Always external: these are github.com URLs, never site paths, so
+      `relative_url` must not touch them.
+    {%- endcomment -%}
+    {%- if st.viewHref or st.editHref -%}
+    <p class="fa-landing-sticky__source">
+      {%- if st.viewHref -%}
+      <a class="fa-node-edit fa-sticky-view" href="{{ st.viewHref }}" rel="noopener"
+         title="View {{ st.declaredIn }} on GitHub"
+         aria-label="View the declaration of {{ st.summary }}">&#9096; View</a>
+      {%- endif -%}
+      {%- if st.editHref -%}
+      <a class="fa-node-edit fa-sticky-edit" href="{{ st.editHref }}" rel="noopener"
+         title="Edit {{ st.declaredIn }} on GitHub"
+         aria-label="Edit the declaration of {{ st.summary }}">&#9998; Edit</a>
+      {%- endif -%}
+    </p>
+    {%- endif -%}
     </div>
   </article>
   {%- endfor -%}

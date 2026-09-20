@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Managing a schema
+title: 'Managing a schema'
 parent: Skill instructions
 ---
 

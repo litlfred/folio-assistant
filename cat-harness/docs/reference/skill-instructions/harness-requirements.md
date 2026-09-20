@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Harness requirements
+title: 'Harness requirements'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: bib-photo-ingestion-watcher
+title: 'bib-photo-ingestion-watcher'
 parent: Skill instructions
 ---
 

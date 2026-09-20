@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Editor
+title: 'Editor'
 parent: Skill instructions
 ---
 

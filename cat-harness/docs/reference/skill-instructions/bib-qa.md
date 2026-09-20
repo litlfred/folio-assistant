@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Bibliography QA
+title: 'Bibliography QA'
 parent: Skill instructions
 ---
 

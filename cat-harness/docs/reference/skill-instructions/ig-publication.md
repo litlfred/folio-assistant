@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ig-publication
+title: 'ig-publication'
 parent: Skill instructions
 ---
 

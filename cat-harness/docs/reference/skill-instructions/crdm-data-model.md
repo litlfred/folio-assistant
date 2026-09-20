@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CRDM
+title: 'CRDM'
 parent: Skill instructions
 ---
 

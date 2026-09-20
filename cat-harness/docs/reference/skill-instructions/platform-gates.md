@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The platform's own gates
+title: 'The platform''s own gates'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /pending-show
+title: '/pending-show'
 parent: Skill instructions
 ---
 

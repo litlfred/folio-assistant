@@ -1,6 +1,6 @@
 ---
 layout: default
-title: A folio's README
+title: 'A folio''s README'
 parent: Skill instructions
 ---
 

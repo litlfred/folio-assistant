@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Prepare-merge
+title: 'Prepare-merge'
 parent: Skill instructions
 ---
 

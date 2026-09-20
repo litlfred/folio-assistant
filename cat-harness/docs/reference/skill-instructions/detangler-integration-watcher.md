@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /detangler-integration-watcher
+title: '/detangler-integration-watcher'
 parent: Skill instructions
 ---
 

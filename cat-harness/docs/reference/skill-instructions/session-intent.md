@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /session-intent
+title: '/session-intent'
 parent: Skill instructions
 ---
 

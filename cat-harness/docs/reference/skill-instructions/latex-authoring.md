@@ -1,6 +1,6 @@
 ---
 layout: default
-title: latex-authoring
+title: 'latex-authoring'
 parent: Skill instructions
 ---
 

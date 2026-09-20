@@ -1,6 +1,6 @@
 ---
 layout: default
-title: A decision is not a finding, and neither is a substitute for the other
+title: 'A decision is not a finding, and neither is a substitute for the other'
 parent: Skill instructions
 ---
 

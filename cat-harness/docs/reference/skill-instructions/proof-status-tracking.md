@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Proof Status Tracking
+title: 'Proof Status Tracking'
 parent: Skill instructions
 ---
 

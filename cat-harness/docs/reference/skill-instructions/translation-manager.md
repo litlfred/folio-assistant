@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Translation manager
+title: 'Translation manager'
 parent: Skill instructions
 ---
 

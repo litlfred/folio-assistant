@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Voice authoring guidance
+title: 'Voice authoring guidance'
 parent: Skill instructions
 ---
 

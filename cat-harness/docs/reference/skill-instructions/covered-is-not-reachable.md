@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Covered is not reachable
+title: 'Covered is not reachable'
 parent: Skill instructions
 ---
 

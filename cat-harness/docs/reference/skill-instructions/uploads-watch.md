@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Watching the queue
+title: 'Watching the queue'
 parent: Skill instructions
 ---
 

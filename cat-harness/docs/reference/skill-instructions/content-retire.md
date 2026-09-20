@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Retirement
+title: 'Content Retirement'
 parent: Skill instructions
 ---
 

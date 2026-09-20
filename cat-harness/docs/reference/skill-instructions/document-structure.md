@@ -1,6 +1,6 @@
 ---
 layout: default
-title: document-structure
+title: 'document-structure'
 parent: Skill instructions
 ---
 

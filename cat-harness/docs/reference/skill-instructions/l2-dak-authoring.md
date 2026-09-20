@@ -1,6 +1,6 @@
 ---
 layout: default
-title: l2-dak-authoring
+title: 'l2-dak-authoring'
 parent: Skill instructions
 ---
 

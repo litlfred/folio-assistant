@@ -1,6 +1,7 @@
 ---
 # folio-assistant-1hvo
 title: 'THEMING: a cat-harness/theming/ subgraph, broken up thematically'
+title: 'THEMING: a cat-harness theming subgraph, broken up thematically'
 status: completed
 type: task
 priority: normal
@@ -130,3 +131,114 @@ package is not published under a guessed heading"), the manifest-coverage test
 refused a `README.md` no other package carries (its substance moved into the
 skill), and `kg:audit:check` refused to delete the three dead sidecars itself —
 the owner authorised that.
+- [ ] `cat-harness/theming/` is declared, with its graph kind and `dependents`
+- [ ] The theming skills live there, split on an axis the owner chose
+- [ ] It has the visualiser and documentation entry `2krx` requires, or an
+      explicit exemption like bootstrap's (`hfkl`)
+
+---
+
+## Done, 2026-09-20 — and it found two live defects on the way in
+
+`cat-harness/theming/` is declared (id `theming`, graph kind `cat-harness`,
+`dependents: skip`) and holds six skills split on the owner's axis:
+
+| stage | faces | skill |
+|---|---|---|
+| — | map | `theming` |
+| 1 | producer | `theme-art-intake` (**moved** from `skills/folio-core/`, name kept) |
+| 2 | producer | `theme-declaration` |
+| 3 | consumer | `theme-generation` |
+| 4 | consumer | `theme-contrast` |
+| — | specialisation | `theme-artefacts` |
+
+**FLAT, one declared directory whose FILES carry the split.** Five declarations
+— one per stage — would owe five visualisers and five documentation entries
+under `2krx`, which manufactures findings on a repository trying to clear
+nineteen. *"Broken up thematically"* is satisfied by the files.
+
+**The map is authored AS A SKILL, not as a `README.md`.** `isSkillMd` is
+declaration-over-location, so a markdown file here with no `$schema:` enters
+the graph as a skill either way — a README would be one with no `name` to be
+fetched by, and the one orientation file an agent could not reach through
+`skill_fetch`, which is the route `AGENTS.md` tells it to use.
+
+**`theme-ui-review` deliberately did not move.** It is a UI review skill
+covering branding, languages and findings discipline, for which theming is one
+subject rather than the subject. A directory that takes every file with
+`theme` in its name is a directory nobody can describe.
+
+### It owes a visualiser and a documentation entry, and it has both
+
+`bun run theme:sheet` renders every theme: palette swatches, the scrim's
+contrast against the binding case, and each layout's art with `textRegion`
+(blue) and `avatarRegion` (pink) drawn, plus that clip at 46px navbar size.
+It PRINTS and never gates — the schema proves a box is square and in bounds
+and cannot see what a picture shows.
+
+Run independently it reproduces the recorded 9.25–9.36:1 range (computed
+8.21–9.38 across the backdrop themes, all clear of the AAA 7:1 floor), which is
+the cheapest confirmation there is that the comments beside those values are
+still true.
+
+`docs/architecture/theming.md` is the documentation entry. cat-bootstrap's
+`renderExemption` was the alternative and is the wrong shape: that exemption is
+a floor that rises, for a layer producing nothing a human browses. Theming
+produces nothing BUT things a human looks at.
+
+### DEFECT 1, found by doing this — three packages were being silently dropped
+
+`discoverLocalPackages` named every directly-held kg directory after its
+INSTANCE, so `cat-harness`'s four — `src/skills/`, `theming/`,
+`methodologies/crdm/`, `methodologies/raci/` — all resolved to
+`folio-assistant` and **the last assignment won**. Three packages were found
+and dropped with nothing reported: `kg:audit` showed **six
+`manifest-skill-exists` CRITICALs** for theming, and **27 of its MAJORs were
+CRDM activities whose skills nothing could serve**. `dh4f` one scope in from
+the cross-instance half the function's own docs already describe.
+
+Fixed by a RULE rather than by first-wins, in a second pass over the whole set
+because the answer depends on how many there are: a directory basenamed
+`skills` takes the instance name; otherwise a SOLE directly-held directory
+takes it; otherwise the basename. `src/skills/` stays `folio-assistant` and
+`cat-bootstrap/skills/` stays `cat-bootstrap`, both measured unchanged.
+**Majors 102 → 75, passes 1393 → 1404**, and the `role-skills-resolve`
+critical cleared with them.
+
+Falsified against order: the same four directories declared backwards produce
+the same names.
+
+### DEFECT 2, filed rather than fixed — `lps0`
+
+`kg-audit.ts`'s `skillFiles()` walks a hardcoded `join(root, "skills")`, so
+**every skill in a topical subgraph is unaudited** — CRDM's three, RACI's,
+`src/skills/`, and now theming's six. Not reported as unknown; not reported at
+all.
+
+That is why `test/results/kg-qa/skills/folio-core/theme-art-intake.kg-qa.json`
+went DEAD on this move and no sidecar appeared at the new path. **The dead one
+was removed** — it is generated QA output whose subject I relocated in this
+change, so removing it completes the move rather than deleting a durable
+artefact — and that is stated here because
+`deletion-requires-confirmation` means a removal is never silent even when it
+is bookkeeping. If the owner would rather it had stayed, restoring it is one
+`git revert` of that hunk.
+
+Not fixed here on purpose: widening the walk surfaces findings on ~20 skills
+nobody has ever audited, and a change that flips `kg:audit:check` red belongs
+in a commit about that.
+
+### Verified
+
+`bun test` 4101 pass / 0 fail. `check:instance-render` 4 rendered / 0 failed,
+`check:harness-dirs`, `check:declared-paths`, `check:declared-assets`,
+`check:skills`, `check:theme-art`, `themes:css:check`, `kg:audit:check`,
+`check:undeclared-files`, `readme:sync:check`, `render:bpmn:check` — all rc=0.
+`tsc` and `eslint` clean.
+
+### One thing left open, recorded on `lps0`
+
+`gen-skill-docs` keys a directly-held package by its DECLARED ID
+(`cat-harness-src`, `cat-bootstrap-render`) while `skill-fetch` keys it by the
+instance name or the basename (`folio-assistant`, `render`). Both are
+defensible; having both is the problem, and it predates this change.

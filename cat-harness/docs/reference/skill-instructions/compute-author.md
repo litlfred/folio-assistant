@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Compute-author
+title: 'Compute-author'
 parent: Skill instructions
 ---
 

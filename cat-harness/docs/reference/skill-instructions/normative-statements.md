@@ -1,6 +1,6 @@
 ---
 layout: default
-title: normative-statements
+title: 'normative-statements'
 parent: Skill instructions
 ---
 
