@@ -4,6 +4,13 @@
   "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
   "assets": [
     {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — who-iris",
+      "description": "Cold start for work in this layer. The gap between twelve modelled nodes and a million upstream files is the POINT rather than a backlog, so it is never work to be done; every node declares its state with no default, because \"the author did not say\" and \"the author said they could not tell\" are different facts."
+    },
+    {
       "id": "readme",
       "src": "README.md",
       "role": "instance-readme",
@@ -19,7 +26,12 @@
       "description": "The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assistant-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
       "graphs": [
         "library"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
     },
     {
       "id": "who-iris-catalogue",
@@ -37,7 +49,12 @@
       "description": "The incoming queue — raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF — the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
       "graphs": [
         "uploads"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
     },
     {
       "id": "who-iris-skills",

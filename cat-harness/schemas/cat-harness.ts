@@ -1511,11 +1511,46 @@ export const SubgraphCoverageSchema = z.object({
   visualiser: z.string().min(1).optional(),
   docs: z.string().min(1).optional(),
   skill: z.string().min(1).optional(),
+  /**
+   * What produces this directory's SERIALISATIONS — `json`, `jsonld` and
+   * `schema.json` at the directory's own URL.
+   *
+   * The owner, 2026-09-20: *"all dir urls should have json, jsonld,
+   * schema.json like `<base-url>/beans.jsonld`"*.
+   *
+   * **This is the one obligation with no by-kind exemption, and `hfkl` is why.**
+   * `cat-bootstrap` is excused a visualiser — *"it is exception to
+   * harness/layer not having visualtion/workflow visualizer. but it must have
+   * its json/jsonld… that is its existence."* The thing it is excused INTO is
+   * this. So a directory may be exempt from being LOOKED at and is never
+   * exempt from being READABLE BY A MACHINE: the visualiser is the courtesy,
+   * the serialisation is the existence claim.
+   *
+   * ## It is NOT WAIVABLE, and that is the one asymmetry in this object
+   *
+   * Every other criterion here takes an `exempt.<criterion>` reason, because a
+   * waiver with a reason is how this repository records a considered exception
+   * rather than a silence. This one does not, on the owner's ruling,
+   * 2026-09-20: *"harnesses cannot override there being in the KG."*
+   *
+   * An instance may decide nothing renders a directory, nothing documents it
+   * and nothing governs it — those are choices about EFFORT. Whether its nodes
+   * are addressable is not a choice about effort, it is the claim that they
+   * are in the graph at all. A harness that could waive it could declare a
+   * directory into the knowledge graph and then make its contents
+   * unreachable, which is the `dh4f` defect with a signature on it.
+   *
+   * So `exempt` below carries three keys and not four, deliberately. If this
+   * ever grows a fourth, that ruling has been reversed and the reversal
+   * belongs here.
+   */
+  serialisations: z.string().min(1).optional(),
   exempt: z
     .object({
       visualiser: z.string().min(1).optional(),
       docs: z.string().min(1).optional(),
       skill: z.string().min(1).optional(),
+      // NO `serialisations` — see the field above. Not an omission.
     })
     .optional(),
 });
@@ -3184,6 +3219,63 @@ export const AGENT_INSTRUCTIONS_ROLE = "agent-instructions";
 
 /** The role an instance's reader-facing README declares. */
 export const INSTANCE_README_ROLE = "instance-readme";
+
+/**
+ * What each asset role is FOR — one line, declared once.
+ *
+ * ## Why the purpose lives on the ROLE and not on the asset
+ *
+ * The owner, 2026-09-20, on `AGENTS.md`:
+ *
+ * > it is an asset and has a defined purpose (that is part of skills of
+ * > mantiaing agent memroies)
+ *
+ * A `purpose` field beside `role` on every asset would be a second answer to
+ * one question, free to disagree with the first: eleven instances would each
+ * spell out what `instance-readme` is for, and the eleventh would say
+ * something slightly different. The role already IS the purpose — this is
+ * where the role says so, once, for every instance that declares it.
+ *
+ * It was tried the other way first. A `purpose` key was written into
+ * `cat-harness/harness.json` and {@link KgAssetSchema} silently stripped it,
+ * which is worse than absent: the declaration read as if it carried a purpose
+ * and no consumer ever saw one.
+ *
+ * ## The two that matter, and the line between them
+ *
+ * `instance-readme` says what the instance IS; `agent-instructions` says what
+ * to DO. The second **augments and never restates** the first — the owner
+ * again, on the same day:
+ *
+ * > agents.md should give good coldstart instructions (dont duplicatae
+ * > readme.md) but augment.
+ *
+ * That is checkable rather than a matter of taste, and it is why both are
+ * required of every instance: a reader arriving with either question is
+ * entitled to a file that answers only theirs.
+ *
+ * Absent from this map means the role is one this layer does not govern —
+ * `cat-bootstrap-initialization` is cat-bootstrap's, and a purpose invented
+ * for it here would be the platform speaking for a layer it does not own.
+ */
+export const ASSET_ROLE_PURPOSE: Readonly<Record<string, string>> = {
+  [INSTANCE_README_ROLE]:
+    "What this instance IS, for a reader — its entry point, and the human half of the pair.",
+  [AGENT_INSTRUCTIONS_ROLE]:
+    "What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.",
+};
+
+/**
+ * The roles EVERY instance is expected to declare.
+ *
+ * Both, not one: an instance with a README and no `AGENTS.md` is readable by a
+ * person and mute to an agent, and the reverse leaves a reader with
+ * instructions to follow and nothing saying what they are in. Measured
+ * 2026-09-20: ten of eleven instances declared `instance-readme` and **two**
+ * declared `agent-instructions`, which is the gap `check:subgraph-coverage`
+ * could not see because it only ever asked about the README.
+ */
+export const REQUIRED_ASSET_ROLES = [INSTANCE_README_ROLE, AGENT_INSTRUCTIONS_ROLE] as const;
 
 /**
  * Where a declared asset of this role actually is, or `undefined` if the

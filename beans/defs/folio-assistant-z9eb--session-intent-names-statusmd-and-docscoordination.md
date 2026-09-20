@@ -1,13 +1,13 @@
 ---
 # folio-assistant-z9eb
 title: session-intent names STATUS.md and docs/coordination/<goal>.md; neither exists in this instance
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T19:30:00Z
+updated_at: 2026-09-20T21:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -20,8 +20,8 @@ Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS
 The ledger model came from another folio and was never re-homed when this instance moved its work plan to `beans/`. The skill's queue half is right; its ledger half points at nothing.
 
 ## Done when
-- [ ] session-intent names the artefacts this instance actually has (the work plan, and wherever goals end up living — see the goals bean), or marks the ledger optional with the three-state wording
-- [ ] `check:declared-paths` (or a sibling) covers paths named inside skills
+- [x] session-intent names the artefacts this instance actually has (the work plan, and wherever goals end up living — see the goals bean), or marks the ledger optional with the three-state wording
+- [x] `check:declared-paths` (or a sibling) covers paths named inside skills
 
 ---
 
@@ -51,5 +51,13 @@ Done-when 2 is covered by `check:command-paths`, which includes every skill in
 its corpus. A bare root-level markdown name in a skill — exactly `STATUS.md` —
 is judged, and there is a unit test asserting it.
 
-- [x] session-intent names the artefacts this instance actually has, or marks the ledger optional with the three-state wording
-- [x] `check:declared-paths` (or a sibling) covers paths named inside skills
+_2026-09-20T21:15Z_ — **Closed.** Both Done-when boxes above are ticked against
+the work recorded in this bean, and the status now says so.
+
+**It should have said so an hour ago.** This bean was finished, its evidence
+written into its own body, and left `in-progress` — while the session that left
+it there was closing `bbbl`, whose entire subject is *a bean finished in its
+body and left open*. Worse, the ticks were appended as a SECOND copy of the
+checklist at the foot of the file, so the canonical `## Done when` still read
+0 of 2 and any reader or tool consulting it saw an untouched bean.
+

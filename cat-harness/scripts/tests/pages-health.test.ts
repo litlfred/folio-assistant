@@ -203,7 +203,7 @@ describe("selfSupersedes — this repo's own contention, not a sibling's", () =>
 
   test("different slugs are TWO SESSIONS and are not counted", () => {
     // This is the distinction `3yi4` asks for. Cross-session contention is
-    // `6pfo`'s ground and a different fix; counting it here would make `bm6d`
+    // `yzsj`'s ground and a different fix; counting it here would make `bm6d`
     // look unfixed however well it worked.
     expect(
       selfSupersedes([
@@ -368,7 +368,7 @@ describe("renderPages — what it refuses to say", () => {
   });
 
   test("self-inflicted cancellations are named by slug, not merged into a count", () => {
-    // `bm6d` (one workflow pushing twice, fixed) and `6pfo` (sessions racing
+    // `bm6d` (one workflow pushing twice, fixed) and `yzsj` (sessions racing
     // for the ref, not fixed) are different repairs. A merged count cannot
     // show whether the first held; a named slug says which branch is still
     // running the old workflow.
@@ -385,7 +385,7 @@ describe("renderPages — what it refuses to say", () => {
     expect(out).toContain("**3** cancellation(s) were self-inflicted");
     expect(out).toContain("`aaa` — 2");
     expect(out).toContain("`bbb` — 1");
-    expect(out).toContain("6pfo"); // the rest are pointed somewhere, not dropped
+    expect(out).toContain("yzsj"); // the rest are pointed somewhere, not dropped
   });
 
   test("no self-supersede says so rather than going quiet", () => {

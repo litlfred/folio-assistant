@@ -541,6 +541,12 @@ export const RULES: Rule[] = [
       // checkout, not about any folio's material.
       "scripts/sibling-sessions.ts",
       "scripts/check-agents-xref.ts",
+      // The bean reader — HARNESS by subject as well as by dependency. It
+      // reads the agent work plan, which `AGENTS.md` places in the
+      // agent-actor half of its 2x2 and a folio has no content stake in. Its
+      // consumers are `check-bean-parents.ts` here and `gen-docs-pages.ts` in
+      // core, and core reading harness is downward.
+      "scripts/beans.ts",
       "scripts/check-bean-parents.ts",
       // The work plan's own readers. Harness by subject and by dependency:
       // `beans/` is the AGENT's work plan, declared by the harness, and a
@@ -781,8 +787,11 @@ export const RULES: Rule[] = [
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
+      "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
+      "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
+      "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-cat-bootstrap-graph.ts", // writes cat-bootstrap/cat-bootstrap.jsonld
@@ -975,19 +984,36 @@ export const RULES: Rule[] = [
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: [
-      "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts",
+      "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
       // The voice-graph validator. It resolves each rule's citation into
       // `library/` — a FOLIO's reference library — and `schemas/voices.ts`,
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
-      // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else,
-      // and its only consumer is `scripts/gen-docs-pages.ts`, which is core.
+      // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
-      // exclusively on core data for a core caller, and calling it harness
-      // bought two wrong-direction edges for nothing.
+      // exclusively on core data, and calling it harness bought two
+      // wrong-direction edges for nothing.
+      //
+      // This note said "its ONLY consumer is `scripts/gen-docs-pages.ts`"
+      // until 2026-09-20. That premise is gone — `state-visualizer.ts` is a
+      // second consumer — and the conclusion survives it because BOTH callers
+      // are core. A reason left standing on a fact that has changed is a
+      // reason nobody can re-check, which is why this says so rather than
+      // quietly keeping the old sentence.
       "scripts/todos.ts",
+      // The state visualiser, and it is core for the reason `gen-landing-data.ts`
+      // records about itself: it is a RENDERER, and rendering is core's.
+      //
+      // Its subject is mixed — it reads instance declarations and the bean
+      // store, both harness — and that is exactly why the direction settles
+      // it. Core reading harness is downward and costs nothing; harness
+      // reading `scripts/todos.ts` is upward, and `adapter-layering.test.ts`
+      // reported that edge on the first draft, where this sat beside
+      // `beans.ts` in the harness block. The fix is not an exemption, it is
+      // the right owner — the same sentence `gen-landing-data.ts` opens with.
+      "scripts/state-visualizer.ts",
       // Three of the 19 unassigned that are CONTENT-side, by the same test
       // read the other way: each operates on a folio's own material, not on
       // the machinery that runs a process. Classifying them harness alongside

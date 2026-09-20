@@ -4,6 +4,13 @@
   "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
   "assets": [
     {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — agent-skills",
+      "description": "Cold start for work in this layer. Carries the two rules a corpus of other publishers' documents needs and the README does not state as instructions: never edit a captured document, and say which KIND you are reading — an assertion is a convention, evidence is a finding, and nothing in the schema can tell them apart."
+    },
+    {
       "id": "readme",
       "src": "README.md",
       "role": "instance-readme",
@@ -19,7 +26,12 @@
       "description": "The ingested corpus — one `<bib-slug>/` per document, holding `sections/*.md` and `structure.json`. THREE PUBLISHERS AND TWO KINDS, and the distinction is load-bearing rather than bibliographic: the vendor documentation is ASSERTION (a publisher describing its own product, revisable without notice and in one case describing a product that no longer exists), while the arXiv papers are EVIDENCE (a measurement somebody else can repeat). A voice rule derived from the first is a convention; one derived from the second is a finding. Nothing in the schema can tell them apart, which is why each document's `structure.json` carries its publisher and why the voices state which kind they are reading.",
       "graphs": [
         "library"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/agent-skills/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
     },
     {
       "id": "voices",

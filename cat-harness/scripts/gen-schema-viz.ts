@@ -63,7 +63,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
-import { repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { readDeclaration, siteDirFor } from "../schemas/cat-harness.ts";
 // The `folio` graph kind is registered by CORE on import; this module resolves
 // this instance's directories and the instance declares a folio graph.
 import "../schemas/folio-graph-kind.js";
@@ -201,7 +201,7 @@ export function viewerPlacement(
   return { pageDir, dataDir, dataHref };
 }
 
-export function viewerHtml(dataHref: string): string {
+export function viewerHtml(dataHref: string, scope = ""): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
   //
   // The whole page is one template literal, so a backtick anywhere inside it
@@ -316,6 +316,11 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 "use strict";
 var G = null, SEL = null;
 var DATA_HREF = "${dataHref}";
+/* The SUBJECT this page is scoped to, or "" for the handler's whole view.
+   One projection serves every page — a second JSON per subject would be the
+   same facts written N+1 times, free to disagree once one is regenerated. */
+var SCOPE = "${scope}";
+function inScope(d){ return !SCOPE || d.instance === SCOPE; }
 var $ = function (id) { return document.getElementById(id); };
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -478,6 +483,7 @@ function render() {
   var q = $("q").value.trim().toLowerCase();
   var k = $("kind").value, m = $("mod").value;
   var rows = G.decls.filter(function (d) {
+    if (!inScope(d)) return false;
     if (k && d.kind !== k) return false;
     if (m && d.module !== m) return false;
     if (!q) return true;
@@ -490,9 +496,21 @@ function render() {
       '<br><span class="sub">' + esc(d.module.split("/").pop()) + "</span></li>";
   }).join("") || '<li><p class="empty">Nothing matches.</p></li>';
   $("counts").textContent = "";
-  $("counts").innerHTML = "<b>" + rows.length + "</b> of <b>" + G.decls.length + "</b> declarations &middot; <b>" +
-    G.modules.length + "</b> modules &middot; <b>" + G.edges.length + "</b> edges &middot; <b>" +
-    G.decls.filter(function (d) { return d.kind === "undetermined"; }).length + "</b> undetermined";
+  var scoped = G.decls.filter(inScope);
+  var mods = G.modules.filter(function (m) { return !SCOPE || m.instance === SCOPE; });
+  /* Edges are scoped too. Reporting the graph-wide 512 on a page showing 9
+     declarations says there are 512 edges among those 9, which is a claim the
+     page does not support. An edge COUNTS here when it leaves a declaration
+     this page shows — edges INTO the subject from elsewhere are real and are
+     still followable from the detail panel, they are just not this subject's
+     own outgoing structure. */
+  var edgeCount = SCOPE
+    ? G.edges.filter(function (e) { var f = G.declIndex[e.from]; return f && inScope(f); }).length
+    : G.edges.length;
+  $("counts").innerHTML = (SCOPE ? "<b>" + SCOPE + "</b> &middot; " : "") +
+    "<b>" + rows.length + "</b> of <b>" + scoped.length + "</b> declarations &middot; <b>" +
+    mods.length + "</b> modules &middot; <b>" + edgeCount + "</b> edges &middot; <b>" +
+    scoped.filter(function (d) { return d.kind === "undetermined"; }).length + "</b> undetermined";
 }
 
 function select(id) {
@@ -513,6 +531,11 @@ fetch(DATA_HREF).then(function (r) {
   G = data;
   G.declIndex = {};
   G.decls.forEach(function (d) { G.declIndex[d.id] = d; });
+  // A declaration names its module; the module names its instance. Joined
+  // here once rather than at each filter, so the scope test stays O(1).
+  var instOf = {};
+  G.modules.forEach(function (m) { instOf[m.module] = m.instance; });
+  G.decls.forEach(function (d) { d.instance = instOf[d.module]; });
   var kinds = [...new Set(G.decls.map(function (d) { return d.kind; }))].sort();
   kinds.forEach(function (k) {
     var o = document.createElement("option"); o.value = k; o.textContent = k; $("kind").appendChild(o);
@@ -526,6 +549,7 @@ fetch(DATA_HREF).then(function (r) {
   G.modules.forEach(function (m) { nameCount[m.name] = (nameCount[m.name] || 0) + 1; });
   G.modules.forEach(function (m) {
     if (!withDecls[m.module]) return;
+    if (SCOPE && m.instance !== SCOPE) return;
     var o = document.createElement("option");
     o.value = m.module;
     o.textContent = nameCount[m.name] > 1 ? m.instance + " / " + m.name : m.name;
@@ -623,16 +647,37 @@ if (import.meta.main) {
   // Indented for the reason the todo and bean indices both document: a
   // minified projection is one line, git merges by line, and two branches each
   // adding a schema would conflict on the whole file every time.
-  // The handled directory's own path, READ from where it resolved to. Not
-  // composed from an instance name and a kind — see `viewerPlacement`.
-  const dirPath = relative(repoRootFor(ROOT), own).split(sep).join("/");
-  const { pageDir, dataDir, dataHref } = viewerPlacement(site, dirPath, seg);
+  // ── Rule 1: a HANDLER rendering a kind's assets ────────────────────────
+  //
+  // `<base>/<handler>/<kind>/<optional subject>` — the owner's own example is
+  // `<base>/cat-harness/docs/who-iris/`. The handler is THIS instance, the
+  // kind names what it renders, the subject scopes it to one instance.
+  //
+  // Rule 2, `<base>/<instance>/`, is the instance presenting ITSELF, and a
+  // subject page must never be published there: it would squat on that
+  // instance's own site.
+  const handler = readDeclaration(ROOT)?.name;
+  if (!handler) {
+    console.log("  · this instance declares no name — no handler segment to publish under");
+    process.exit(0);
+  }
+  const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
   emit(join(dataDir, "index.json"), data);
   emit(join(pageDir, "index.html"), viewerHtml(dataHref));
+
+  // One page per SUBJECT — read from the modules actually found, so a
+  // declared-but-empty directory gets no page claiming to show it.
+  const subjects = [...new Set(g.modules.map((m) => m.instance))].sort();
+  for (const subject of subjects) {
+    const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
+    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+  }
+
   if (!check) {
     console.log(
       `  ${g.modules.length} module(s), ${g.decls.length} declaration(s), ${g.edges.length} edge(s), ` +
         `${g.decls.filter((d) => d.kind === "undetermined").length} undetermined; ` +
+        `${subjects.length} subject page(s); ` +
         `projection ${(Buffer.byteLength(data) / 1024).toFixed(0)} KB`,
     );
   }

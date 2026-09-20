@@ -4,6 +4,13 @@
   "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
   "assets": [
     {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — folio-assist-core",
+      "description": "Cold start for work in this layer, and the one rule specific to it: core owns content vocabulary, the harness owns the harness. Declared 2026-09-20 (issue #592) — the file existed and nothing declared it, which is the `v8gh` property: an undeclared file is one no checker has a reason to look at."
+    },
+    {
       "id": "readme",
       "src": "README.md",
       "role": "instance-readme",
@@ -72,7 +79,12 @@
       "graphs": [
         "schemas",
         "cat-harness"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "schema-management"
+      }
     },
     {
       "id": "folios",
