@@ -120,6 +120,82 @@ export const ThemePaletteSchema = z
   });
 export type ThemePalette = z.infer<typeof ThemePaletteSchema>;
 
+/**
+ * Artwork behind a sticky's ink, named by the image ROLE it resolves from.
+ *
+ * The owner, 2026-09-19: *"a note can hold the image as part of its theme."* So
+ * the image is the **theme's**, not the note body's — a note references a theme
+ * by id and gains the art for free, which is why the 2026-09-20 ask for a
+ * *"sticky note with grumpy cat background"* needs no new field on the note.
+ *
+ * ## A ROLE, never a path — and this is the load-bearing decision
+ *
+ * The obvious version declares `src: "docs/assets/img/harness/landing-laptop.webp"`
+ * on the theme. It was written first, and it is wrong, because **this module is
+ * platform code that a downstream folio inherits.** `landing.html` already
+ * states the consequence it was guarding against:
+ *
+ * > a downstream folio should not inherit a grumpy cat it did not choose.
+ *
+ * A literal path would give every folio depending on this platform a theme
+ * pointing at three `.webp`s that exist only here — a guaranteed 404 in any
+ * instance that did not happen to copy them, and the *same* defect class as
+ * bean `blv9` (link-shaped values nothing checks resolve).
+ *
+ * Naming a role instead inverts it. The theme says *"my backdrop is whatever
+ * this instance declares as its `landing` art"*; `harness.json` says what that
+ * is. An instance with its own art gets its own; an instance with none gets no
+ * backdrop and renders palette-only, which is an already-tested state rather
+ * than a broken one. `5oai` resolved exactly this before the field existed:
+ * *"reuse `images[].role` rather than invent an avatar vocabulary … a new
+ * parallel field would be two spellings of one concept."*
+ *
+ * ## `scrim` is REQUIRED, and it is the accessibility mechanism
+ *
+ * Ink on a flat `surface` has a contrast ratio anybody can compute. **Ink over
+ * a photograph does not** — it varies pixel to pixel, so no theme carrying art
+ * can state its contrast, and a check over the palette alone would pass a
+ * sticky that is unreadable across half of its own background.
+ *
+ * A scrim is what makes the question answerable again: it sits between art and
+ * ink, so the ink's effective ground is the scrim over the art's worst case
+ * rather than the art. Requiring it means a themed backdrop **cannot** be
+ * declared without the thing that makes it legible — not optional, precisely
+ * because "we will add a scrim later" is how the unreadable version ships.
+ *
+ * Same shape as the constraint this module already records for the priority
+ * stripe: a theme may set a hue; it may never remove a non-colour channel.
+ */
+export const ThemeBackdropSchema = z
+  .object({
+    /**
+     * The declared image `role` this theme's art comes from — `landing` for the
+     * three `landing-*` entries an instance declares.
+     *
+     * Resolved against the instance's own `images[]` at render time by
+     * {@link resolveThemeBackdrop}, never composed into a path here.
+     */
+    imageRole: z.string().min(1),
+    /**
+     * The layer between art and ink, as a CSS colour — normally a translucent
+     * form of `surface`. Required; see module docs.
+     */
+    scrim: z.string().min(1),
+    /**
+     * What the art is FOR, for an author reading the theme.
+     *
+     * **Not translatable, and not announced.** `landing.html` records the
+     * reasoning and it carries over unchanged: the backdrop is decorative,
+     * every word it carries is in the sticky's own markdown as real text, and
+     * announcing a paragraph about composition to somebody who already has the
+     * content is the mistake `title.html` shipped once. The rendered image is
+     * `alt=""`; this is authoring metadata.
+     */
+    description: z.string().min(1).optional(),
+  })
+  .strict();
+export type ThemeBackdrop = z.infer<typeof ThemeBackdropSchema>;
+
 /** The tag every theme node declares, per the `$schema` convention. */
 export const THEME_SCHEMA_TAG = "folio-theme/v1";
 
@@ -143,6 +219,17 @@ export const ThemeSchema = z
     /** One line for the theme picker. Translatable, same reasoning as `name`. */
     description: z.string().min(1).optional(),
     palette: ThemePaletteSchema,
+    /**
+     * Artwork behind the ink, when the theme has any.
+     *
+     * **Optional, and absence is the common case rather than an omission.** Most
+     * themes are a palette. A backdrop is what `grumpy-cat` has and what
+     * `high-contrast-light` / `high-contrast-dark` must never be given — art
+     * behind ink is the thing those two exist to remove, and a scrim strong
+     * enough to make a photograph safe at their ratios would hide the
+     * photograph anyway.
+     */
+    backdrop: ThemeBackdropSchema.optional(),
     /** All three, or invalid. See module docs — there is no fallback by design. */
     layouts: z
       .object({
@@ -180,7 +267,92 @@ export function themeCssVars(theme: Theme): string {
   if (p.gradientFrom && p.gradientTo) {
     rows.push(`--fa-sticky-grad-from: ${p.gradientFrom};`, `--fa-sticky-grad-to: ${p.gradientTo};`);
   }
+  // The scrim, and NOT the art. A custom property can carry a colour the
+  // stylesheet composites; it cannot carry the per-layout `<picture>` swap,
+  // which has to be markup because the breakpoint chooses the FILE. A single
+  // `--fa-sticky-art: url(...)` would serve one crop to every viewport — the
+  // bug `landing.html` records shipping once, where the mobile image loaded and
+  // the laptop's geometry stayed.
+  if (theme.backdrop) rows.push(`--fa-sticky-scrim: ${theme.backdrop.scrim};`);
   return rows.join("\n  ");
+}
+
+/**
+ * The minimal shape of a declared image this module needs.
+ *
+ * **Structural on purpose, rather than importing `KgImage`.** `theme.ts` imports
+ * nothing but `zod`, and that is worth keeping: `kg-node.ts` is reached from
+ * `cat-harness.ts`, which is the module a theme may end up being read *by*, and
+ * this module's own sibling `block-kinds.ts` exists entirely because one
+ * schema module importing another at module scope produced a runtime cycle
+ * whose symptom was an `undefined` import during initialisation.
+ *
+ * `KgImage` satisfies this shape, so a caller passes `decl.images` unchanged
+ * and the compiler checks the join.
+ */
+export interface DeclaredImage {
+  role?: string | undefined;
+  layout?: string | undefined;
+  src: string;
+  width?: number | undefined;
+  height?: number | undefined;
+}
+
+/** What {@link resolveThemeBackdrop} found, so a caller can REPORT a gap. */
+export interface ResolvedBackdrop {
+  /** The art per layout. Complete, or empty — never partial; see below. */
+  art: Map<ThemeLayout, DeclaredImage>;
+  /**
+   * The layouts the instance does not supply for this theme's role.
+   *
+   * Non-empty means `art` is **empty**: an incomplete backdrop is refused
+   * wholesale rather than served partially, because the failure of a partial
+   * one is silent. A phone handed the laptop crop shows the art's quiet area in
+   * the wrong place, and nothing reports it — which is exactly the substitution
+   * `pickLayout` exists to make visible, and the reason this module's `layouts`
+   * field has no fallback either.
+   */
+  missing: ThemeLayout[];
+  /** `true` when the theme declares no backdrop at all — not a gap. */
+  none: boolean;
+}
+
+/**
+ * Resolve a theme's backdrop against an instance's declared images.
+ *
+ * Three outcomes, and the third is why this returns a record rather than a map:
+ *
+ * | | meaning |
+ * |---|---|
+ * | `none` | the theme declares no backdrop. Palette-only, and ordinary. |
+ * | `missing` non-empty | the theme wants art this instance does not declare. |
+ * | `art` complete | all three layouts resolved. |
+ *
+ * **`none` and `missing` are different facts and must not collapse.** A
+ * palette-only theme is a choice; a theme whose role resolves to two of three
+ * crops is a declaration bug in the *instance*. Returning a bare empty map for
+ * both would make the second unreportable — the shape of the `targetLabel`
+ * conflation `note-anchor.ts` was written to undo.
+ */
+export function resolveThemeBackdrop(
+  theme: Theme,
+  images: readonly DeclaredImage[] | undefined,
+): ResolvedBackdrop {
+  if (!theme.backdrop) return { art: new Map(), missing: [], none: true };
+  const role = theme.backdrop.imageRole;
+  const byLayout = new Map<ThemeLayout, DeclaredImage>();
+  for (const i of images ?? []) {
+    if (i.role !== role || i.layout === undefined) continue;
+    const l = THEME_LAYOUTS.find((t) => t === i.layout);
+    // The FIRST entry for a layout wins, the same rule `imageForRole` uses for
+    // a repeated role: deterministic, and left to the declaration's own
+    // validation to complain about rather than silently preferring the last.
+    if (l !== undefined && !byLayout.has(l)) byLayout.set(l, i);
+  }
+  const missing = THEME_LAYOUTS.filter((l) => !byLayout.has(l));
+  return missing.length > 0
+    ? { art: new Map(), missing, none: false }
+    : { art: byLayout, missing: [], none: false };
 }
 
 /**

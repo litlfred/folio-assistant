@@ -94,6 +94,25 @@ const RAW = [
     palette: {
       surface: "#edeae4", ink: "#221f1b", edge: "#cbc5bb", accent: "#7d8a6e",
     },
+    // The one shipped theme with art, and it names a ROLE rather than three
+    // paths — so an instance declaring its own `landing` images gets its own
+    // backdrop, and one declaring none renders palette-only instead of pointing
+    // at three `.webp`s that live only in this repository. See
+    // `theme.ts`'s ThemeBackdropSchema docs for why that inversion is the whole
+    // point of the field.
+    backdrop: {
+      imageRole: "landing",
+      // 0.86 is measured, not chosen by eye: `themes.test.ts` computes the
+      // WORST-CASE contrast of `ink` over this scrim laid on pure black — the
+      // darkest art any instance could declare — and requires it to clear WCAG
+      // AAA. It comes out at 9.95:1, against 14.03:1 on pure white — the dark
+      // end is the binding one. A thinner scrim is where that guarantee
+      // goes, which is why the number has a test and not a comment saying it
+      // looked fine.
+      scrim: "rgba(237, 234, 228, 0.86)",
+      description:
+        "The instance's declared landing art, behind the sticky's ink rather than composited with it.",
+    },
     layouts: LAYOUTS,
   },
   {
