@@ -152,6 +152,20 @@ export const FOLIO_PATHS: FolioPath[] = [
       "this repository does not carry",
   },
   {
+    match: "content/pipeline/latex-overfull-report.ts",
+    reason:
+      "reads a FOLIO's `main.log`, inside `publish.yml` — the ONE workflow " +
+      "exposing `workflow_call`, which `litlfred/qou` invokes at `@main` " +
+      "(`qou/.github/workflows/build.yml:10`). Its four sibling invocations " +
+      "are folio-relative (`cd content && bun run pipeline/...`) and its " +
+      "`actions/checkout` steps carry no `repository:`, so they check out the " +
+      "CALLING repo: a `cat-harness/` prefix resolves to nothing there. " +
+      "I prefixed this line under `52dz` because THIS check demanded it, " +
+      "which made the file internally inconsistent in the one workflow folios " +
+      "consume. The check was right that the path does not resolve here and " +
+      "wrong about the remedy; that is what this table is for",
+  },
+  {
     match: "pipeline/codemod-leanval.ts",
     reason: "reads blocks under the retired `content/` root",
   },
