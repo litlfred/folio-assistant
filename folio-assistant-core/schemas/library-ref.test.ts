@@ -7,8 +7,9 @@
  * text in another repo would cite evidence its own instance cannot resolve."*
  */
 import { describe, expect, it } from "bun:test";
-import { readdirSync } from "fs";
-import { resolve } from "path";
+import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "fs";
+import { tmpdir } from "os";
+import { join, resolve } from "path";
 import { explainFailure, instanceRoots, libraryDirOf, resolveLibraryRef } from "./library-ref.js";
 
 const REPO = resolve(import.meta.dir, "../..");
@@ -198,5 +199,68 @@ describe("resolution keeps four failures apart", () => {
       expect(r.ok).toBe(false);
       if (!r.ok) expect(explainFailure(r.failure).length).toBeGreaterThan(40);
     }
+  });
+});
+
+describe("an instance's library is ITS OWN, not the first one declared", () => {
+  // Found by review 2026-09-20. `libraryDirOf` used `dirs.find(...)` over
+  // every entry declaring a `library` graph, and `cat-harness/harness.json`
+  // declares FOUR — its own, plus `who-iris/`, `folio-assist-sci/` and
+  // `agent-skills/`, all three `scope: "repository"` because the consumers
+  // that scan libraries run from the repository root.
+  //
+  // It happened to be right today only because cat-harness's own entry is
+  // declared first. Reorder the file and `libraryDirOf("cat-harness")` starts
+  // returning `cat-harness/who-iris/library` — a path that does not exist —
+  // so a citation to an INGESTED who-iris document reports "never brought
+  // through uploads/ -> library/". A correct answer resting on key order is
+  // not a correct answer.
+  function instance(dirs: unknown[]): string {
+    const root = mkdtempSync(join(tmpdir(), "libdir-"));
+    mkdirSync(join(root, "library"), { recursive: true });
+    mkdirSync(join(root, "elsewhere", "library"), { recursive: true });
+    writeFileSync(join(root, "harness.json"), JSON.stringify({ name: "x", directories: dirs }));
+    return root;
+  }
+
+  it("ignores a repository-scoped entry even when it is declared FIRST", () => {
+    const root = instance([
+      { id: "other", path: "elsewhere/library/", scope: "repository", dependents: "skip", graphs: ["library"] },
+      { id: "library", path: "library/", dependents: "reproduce", graphs: ["library"] },
+    ]);
+    expect(libraryDirOf(root)).toBe(resolve(root, "library"));
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("and the answer does not change when the order does", () => {
+    // The whole point: the same declaration, written the other way round.
+    const root = instance([
+      { id: "library", path: "library/", dependents: "reproduce", graphs: ["library"] },
+      { id: "other", path: "elsewhere/library/", scope: "repository", dependents: "skip", graphs: ["library"] },
+    ]);
+    expect(libraryDirOf(root)).toBe(resolve(root, "library"));
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("REFUSES when an instance declares two of its own, rather than picking", () => {
+    // `undefined` would say "this instance declares no library", which is a
+    // different and wrong fact. Two libraries of one's own has no answer to
+    // "where does this instance keep its corpus".
+    const root = instance([
+      { id: "a", path: "library/", dependents: "reproduce", graphs: ["library"] },
+      { id: "b", path: "elsewhere/library/", dependents: "reproduce", graphs: ["library"] },
+    ]);
+    expect(() => libraryDirOf(root)).toThrow(/no single answer/);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("every real instance here resolves its own library, or declares none", () => {
+    // Over the real repository, so a future declaration that breaks it says so.
+    for (const inst of ["cat-harness", "who-iris", "folio-assist-sci", "agent-skills"]) {
+      expect({ inst, dir: libraryDirOf(resolve(REPO, inst)) })
+        .toEqual({ inst, dir: resolve(REPO, inst, "library") });
+    }
+    // Declares voices and no corpus — a determined "none", not a failure.
+    expect(libraryDirOf(resolve(REPO, "who-style-guide"))).toBeUndefined();
   });
 });

@@ -430,7 +430,22 @@ const themeIdentityShape = {
 export const ThemeSchema = z
   .object({
     ...themeIdentityShape,
-    kind: z.enum(THEME_KINDS).default("sticky"),
+    // REQUIRED, with no default — which is what the comment above already
+    // claimed ("`kind` stays required on the declaration rather than
+    // inherited") while the code read `.default("sticky")`.
+    //
+    // The gap was not cosmetic. `resolveTheme` treats a kind change as
+    // resetting the geometry ("there is nothing shared to carry"), so a
+    // `publication` theme inheriting from a `publication` parent and omitting
+    // `kind` was silently parsed as `sticky`, dropped the print geometry it
+    // meant to inherit, and then failed with an error naming
+    // `layouts.laptop` — a message about the wrong field entirely.
+    //
+    // All twelve shipped themes relied on the default and now say `sticky`
+    // outright. That is the cost, and it is paid once: a default that is right
+    // for eleven cases and silently wrong for the twelfth is not a default, it
+    // is a trap with good odds.
+    kind: z.enum(THEME_KINDS),
     /** The theme this one starts from. Absent means it starts from nothing. */
     inherits: ThemeRefSchema.optional(),
     /**

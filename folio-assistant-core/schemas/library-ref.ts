@@ -110,14 +110,48 @@ export function instanceRoots(repoRoot: string): Map<string, string> {
 export function libraryDirOf(instanceRoot: string): string | undefined {
   const decl = join(instanceRoot, "harness.json");
   if (!existsSync(decl)) return undefined;
-  let dirs: Array<{ path?: string; graphs?: string[] }> = [];
+  let dirs: Array<{ path?: string; graphs?: string[]; scope?: string }> = [];
   try {
     dirs = JSON.parse(readFileSync(decl, "utf8"))?.directories ?? [];
   } catch {
     return undefined;
   }
-  const hit = dirs.find((d) => Array.isArray(d.graphs) && d.graphs.includes("library"));
-  if (!hit?.path) return undefined;
+  // THIS INSTANCE'S OWN, which is not "the first one declared".
+  //
+  // `cat-harness/harness.json` declares FOUR library entries: its own empty
+  // `library/`, plus `who-iris/library/`, `folio-assist-sci/library/` and
+  // `agent-skills/library/` — all three `scope: "repository"`, declared there
+  // because the consumers that scan libraries run from the repository root.
+  // `find` took whichever came first and `resolve(instanceRoot, path)` then
+  // resolved a repository-scoped path against the INSTANCE, which is not
+  // where it lives.
+  //
+  // Measured consequence, found by review 2026-09-20: a bare citation to a
+  // who-iris document could report "never brought through uploads/ ->
+  // library/" about a document that is ingested, and declared in the same
+  // file that was just read.
+  //
+  // `scope` is the discriminator, not `own`: every one of those entries is
+  // cat-harness's own declaration. A repository-scoped entry names where
+  // ANOTHER instance keeps its corpus, and the caller asking
+  // `libraryDirOf(who-iris)` gets it from who-iris's own declaration.
+  const mine = dirs.filter(
+    (d) => Array.isArray(d.graphs) && d.graphs.includes("library") && d.scope !== "repository",
+  );
+  if (mine.length === 0) return undefined;
+  if (mine.length > 1) {
+    // Refuse rather than pick. An instance with two libraries of its own has
+    // no answer to "where does this instance keep its corpus", and returning
+    // `undefined` would say "it declares none" — a different, wrong fact.
+    throw new Error(
+      `${decl}: ${mine.length} instance-scoped \`library\` directories (${mine
+        .map((d) => d.path ?? "(no path)")
+        .join(", ")}); "where does this instance keep its corpus" has no single answer. ` +
+        `Mark all but one \`scope: "repository"\`, or merge them.`,
+    );
+  }
+  const hit = mine[0]!;
+  if (!hit.path) return undefined;
   const abs = resolve(instanceRoot, hit.path);
   return existsSync(abs) ? abs : undefined;
 }

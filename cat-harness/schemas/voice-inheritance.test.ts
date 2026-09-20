@@ -14,6 +14,7 @@ import {
   VoiceSupersessionSchema,
   explainVoiceFailure,
   resolveVoice,
+  ruleAppliesHere,
   voiceActiveIn,
   type VoiceProfile,
   type VoiceRef,
@@ -201,5 +202,60 @@ describe("provenance and supersession are structural, the rules are not", () => 
     const v = voice("x", ["a"]);
     v.rules[0]!.description = "Anything at all — prose, a caveat, a contradiction of another vendor.";
     expect(VoiceProfileSchema.safeParse(v).success).toBe(true);
+  });
+});
+
+describe("an inherited rule keeps the scope it was DECLARED under", () => {
+  // The defect this pins, found by review 2026-09-20: `resolveVoice` dropped
+  // `appliesTo` and took `activeIn` from the child alone, so a base voice
+  // scoped to prose inside one process contributed rules to a child declaring
+  // neither — and they applied to every block kind everywhere.
+  const scoped = voice("scoped-base", ["base-rule"], {
+    appliesTo: ["prose"],
+    activeIn: { processes: ["Process_Crdm"] },
+  });
+  const open = voice("open-child", ["child-rule"], { extends: { voiceId: "scoped-base" } });
+  const resolved = (() => {
+    const r = resolveVoice({ instance: "i", voice: open }, lookupOver({ "scoped-base": scoped }));
+    if (!r.ok) throw new Error("should resolve");
+    return r.voice;
+  })();
+
+  test("both rules are present — inheritance still unions", () => {
+    expect(resolved.rules.map((r) => r.id)).toEqual(["base-rule", "child-rule"]);
+  });
+
+  test("the BASE's rule is still confined to prose, and to its process", () => {
+    expect(ruleAppliesHere(resolved, "base-rule", { blockKind: "prose", process: "Process_Crdm" })).toBe(true);
+    // Escaping either half is the defect.
+    expect(ruleAppliesHere(resolved, "base-rule", { blockKind: "theorem", process: "Process_Crdm" })).toBe(false);
+    expect(ruleAppliesHere(resolved, "base-rule", { blockKind: "prose", process: "Process_Review" })).toBe(false);
+  });
+
+  test("the CHILD's rule is unconfined, because its author declared no scope", () => {
+    // The other half, and why inheriting the parent's scope is not the fix
+    // either: it would make the child's own rules answer to a scope nobody
+    // wrote for them.
+    expect(ruleAppliesHere(resolved, "child-rule", { blockKind: "theorem", process: "Process_Review" })).toBe(true);
+  });
+
+  test("a child overriding a rule id takes over its scope — it is the child's rule now", () => {
+    const child = voice("child", ["base-rule"], { extends: { voiceId: "scoped-base" } });
+    const r = resolveVoice({ instance: "i", voice: child }, lookupOver({ "scoped-base": scoped }));
+    if (!r.ok) throw new Error("should resolve");
+    expect(ruleAppliesHere(r.voice, "base-rule", { blockKind: "theorem" })).toBe(true);
+  });
+
+  test("an unknown rule id is FALSE, not 'everywhere'", () => {
+    // absent-means-everywhere is about an absent SCOPE on a rule that exists.
+    expect(ruleAppliesHere(resolved, "no-such-rule", { blockKind: "prose" })).toBe(false);
+  });
+
+  test("the voice-level fields are the START voice's own, and say so", () => {
+    // Kept for a consumer reporting the voice as AUTHORED; conflating them
+    // with the effective scope of the resolved rules is the original defect.
+    expect(resolved.appliesTo).toBeUndefined();
+    expect(resolved.activeIn).toBeUndefined();
+    expect(resolved.scopeOf.get("base-rule")?.appliesTo).toEqual(["prose"]);
   });
 });

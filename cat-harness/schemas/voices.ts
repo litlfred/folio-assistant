@@ -576,6 +576,13 @@ export function voiceKey(instance: string, voiceId: string): string {
  * from a dead one. These describe the DOCUMENT the voice was read from, and a
  * voice has exactly one of those.
  */
+export interface VoiceScope {
+  /** Block kinds. Absent means every kind the folio has. */
+  appliesTo?: string[];
+  /** Process, lane and scenario. Absent means everywhere. */
+  activeIn?: VoiceApplicability;
+}
+
 export interface ResolvedVoice {
   id: string;
   instance: string;
@@ -584,7 +591,36 @@ export interface ResolvedVoice {
   rules: VoiceRule[];
   /** Which voice in the chain contributed each rule, by rule id. */
   origin: Map<string, string>;
+  /**
+   * The scope each rule was DECLARED under, by rule id — not the resolved
+   * voice's own.
+   *
+   * ## One scope cannot describe a union of rules
+   *
+   * `appliesTo` and `activeIn` belong to a VOICE, and after resolution the
+   * rules come from several. The first version of this carried a single
+   * `activeIn` taken from the child and dropped `appliesTo` altogether, so a
+   * base voice scoped to `prose` blocks inside one process contributed its
+   * rules to a child that declared neither — and they applied to every block
+   * kind everywhere. **Inherited rules escaped the scope they were declared
+   * under**, silently, which is the opposite of what an override is for.
+   *
+   * Inheriting the parent's scope when the child omits one does not fix it
+   * either: it makes the CHILD's own rules answer to a scope their author
+   * never wrote. Both halves of a union want their own answer, so each rule
+   * keeps the scope of the voice that declared it.
+   *
+   * Use {@link ruleAppliesHere}, which reads this rather than the voice-level
+   * fields.
+   */
+  scopeOf: Map<string, VoiceScope>;
   provenance: VoiceProvenance;
+  /**
+   * The START voice's own declaration, kept for a consumer reporting on the
+   * voice as authored. NOT the effective scope of its resolved rules — that
+   * is {@link ResolvedVoice.scopeOf}, and conflating them is the defect above.
+   */
+  appliesTo?: string[];
   activeIn?: VoiceApplicability;
   superseded?: VoiceSupersession;
 }
@@ -621,10 +657,18 @@ export function resolveVoice(
   // end when an override restates it.
   const byId = new Map<string, VoiceRule>();
   const origin = new Map<string, string>();
+  const scopeOf = new Map<string, VoiceScope>();
   for (const link of chain) {
+    // The declaring voice's scope, captured per rule. A child that overrides a
+    // rule id takes over its scope too — it is the child's rule now.
+    const scope: VoiceScope = {
+      ...(link.voice.appliesTo ? { appliesTo: link.voice.appliesTo } : {}),
+      ...(link.voice.activeIn ? { activeIn: link.voice.activeIn } : {}),
+    };
     for (const r of link.voice.rules) {
       byId.set(r.id, r);
       origin.set(r.id, voiceKey(link.instance, link.voice.id));
+      scopeOf.set(r.id, scope);
     }
   }
 
@@ -636,8 +680,10 @@ export function resolveVoice(
       chain: chain.map((l) => ({ instance: l.instance, voiceId: l.voice.id })),
       rules: [...byId.values()],
       origin,
+      scopeOf,
       // The CHILD's own — see the interface comment.
       provenance: start.voice.provenance,
+      ...(start.voice.appliesTo ? { appliesTo: start.voice.appliesTo } : {}),
       ...(start.voice.activeIn ? { activeIn: start.voice.activeIn } : {}),
       ...(start.voice.superseded ? { superseded: start.voice.superseded } : {}),
     },
@@ -683,4 +729,29 @@ export function voiceActiveIn(
     holds(a.lanes, context.lane) &&
     holds(a.scenarios, context.scenario)
   );
+}
+
+/**
+ * Does this RULE apply here — the per-rule question, which is the only one a
+ * resolved voice can answer correctly.
+ *
+ * Reads {@link ResolvedVoice.scopeOf}, so a rule inherited from a scoped base
+ * keeps that base's scope instead of escaping into the child's.
+ *
+ * A rule id the resolved voice does not carry answers `false` rather than
+ * defaulting to "everywhere": an unknown id is a caller bug, and the
+ * absent-means-everywhere default is about an absent SCOPE on a rule that
+ * exists, never about an absent rule.
+ */
+export function ruleAppliesHere(
+  voice: Pick<ResolvedVoice, "scopeOf">,
+  ruleId: string,
+  context: { blockKind?: string; process?: string; lane?: string; scenario?: string },
+): boolean {
+  const scope = voice.scopeOf.get(ruleId);
+  if (scope === undefined) return false;
+  if (scope.appliesTo !== undefined) {
+    if (context.blockKind === undefined || !scope.appliesTo.includes(context.blockKind)) return false;
+  }
+  return voiceActiveIn({ activeIn: scope.activeIn }, context);
 }

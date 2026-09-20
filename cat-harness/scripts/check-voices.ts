@@ -19,7 +19,7 @@
 
 import { existsSync, readdirSync } from "node:fs";
 import { explainFailure, resolveLibraryRef } from "../../folio-assistant-core/schemas/library-ref.js";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import { loadVoices, unionRules, voicesPresent } from "../schemas/voices";
 
@@ -120,6 +120,39 @@ function main(): number {
     loadVoices(root).map((voice) => ({ voice, root })),
   );
   const voices = loaded.map((l) => l.voice);
+
+  // ── A voice id must IDENTIFY a voice, and that is checked here ──────────
+  //
+  // Everything below — `rootOf`, `instanceOfSource`, and `unionRules`, which
+  // reports a finding as `<voiceId>/<ruleId>` — is keyed on the id alone.
+  // `instanceOfSource`'s own comment says why a global map is wrong ("two
+  // voices may legitimately derive same-named documents from different
+  // instances, and a global map would silently pick one") and then keys on
+  // `v.id`, which collides the moment two INSTANCES ship a voice of the same
+  // name. The loser's citations would then resolve against the winner's
+  // instance root: a wrong pass, reported in the same words as a right one.
+  //
+  // Refusing the duplicate is the fix rather than composite keys, because the
+  // id is already load-bearing elsewhere and a duplicate is unworkable there
+  // too: `harness.config.json` activates voices by bare id
+  // (`{"voices": {"active": ["who-editorial"]}}`), so two voices called
+  // `who-editorial` give that line no meaning either. One refusal, at the one
+  // place both problems start.
+  const seenId = new Map<string, string>();
+  for (const { voice, root } of loaded) {
+    const prior = seenId.get(voice.id);
+    if (prior !== undefined) {
+      console.error(
+        `check:voices — voice id "${voice.id}" is declared by two instances: ` +
+          `${relative(REPO_ROOT, prior) || "."} and ${relative(REPO_ROOT, root) || "."}.\n` +
+          `  A voice id is how a citation resolves and how \`harness.config.json\` ` +
+          `activates one, so it has to name exactly one voice. Rename one of them.`,
+      );
+      return 1;
+    }
+    seenId.set(voice.id, root);
+  }
+
   const rootOf = new Map(loaded.map((l) => [l.voice.id, l.root]));
   const rules = unionRules(voices);
   const problems: string[] = [];

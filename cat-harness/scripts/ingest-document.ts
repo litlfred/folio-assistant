@@ -158,11 +158,30 @@ export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
     );
   }
 
-  // Matched on the PATH the declaration resolves to, so `--library who-iris`
-  // and `--library ../who-iris/library` both work and neither is a second
-  // vocabulary to learn. Ambiguity refuses rather than taking the first — the
-  // whole point of this function.
-  const hits = declared.filter((d) => named(d).includes(choice) || d.includes(`/${choice}/`));
+  // Matched EXACTLY, on either spelling a caller would reasonably use: the
+  // relative path the declaration resolves to (`../who-iris/library`) or the
+  // instance directory holding it (`who-iris`). Both work and neither is a
+  // second vocabulary to learn.
+  //
+  // IT WAS A SUBSTRING MATCH, and that is a guess wearing the clothes of a
+  // match. Measured 2026-09-20: `--library c` matched exactly one declared
+  // library — `../folio-assist-sci/library` is the only one containing a `c`
+  // — so a one-character typo filed a document into the science corpus and
+  // printed success. In the one function whose stated job is refusing to
+  // guess a write target, and directly under a comment saying ambiguity
+  // refuses "the whole point of this function": the ambiguity check was real
+  // and what fed it was not.
+  //
+  // A loose match cannot be rescued by the ambiguity guard, because the
+  // failure is a UNIQUE wrong hit. Exactness is the only form where "matches
+  // one" means what it reads as.
+  const instanceOf = (d: string): string => {
+    const rel = named(d);
+    const parts = rel.split("/").filter((p) => p.length > 0 && p !== "..");
+    // `../who-iris/library` -> `who-iris`; a bare `library` is this instance's.
+    return parts.length > 1 ? parts[parts.length - 2]! : ".";
+  };
+  const hits = declared.filter((d) => named(d) === choice || instanceOf(d) === choice);
   if (hits.length === 1) return named(hits[0]!);
   throw new Error(
     hits.length === 0

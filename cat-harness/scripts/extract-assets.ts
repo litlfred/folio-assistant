@@ -192,9 +192,23 @@ function run(argv: string[]): number {
     const written = join(outDir, basename(target.path));
     target.localPath = relative(REPO, written);
     target.extractedBecause = why;
-    target.sha256 = new TextDecoder()
-      .decode(Bun.spawnSync(["sha256sum", written]).stdout)
-      .split(" ")[0];
+    // CHECKED, because the failure is silent and lands downstream. An
+    // unchecked `sha256sum` gives `""`, which fails `ExtractionSchema.parse`
+    // below — AFTER the file has been extracted — so the run ends with a local
+    // copy on disk and no record saying where it came from or why. That is the
+    // one state this whole module exists to prevent: an extracted asset with
+    // no provenance.
+    const sum = Bun.spawnSync(["sha256sum", written]);
+    const digest = new TextDecoder().decode(sum.stdout).split(" ")[0] ?? "";
+    if (sum.exitCode !== 0 || !/^[0-9a-f]{64}$/.test(digest)) {
+      console.error(
+        `sha256sum failed for ${written} (exit ${sum.exitCode}) — the file is extracted ` +
+          `and NOT recorded. Remove it or re-run once sha256sum works; an asset on disk ` +
+          `with no extraction record is exactly what this tool exists to prevent.`,
+      );
+      return 1;
+    }
+    target.sha256 = digest;
   }
 
   const parsed = ExtractionSchema.parse(record);

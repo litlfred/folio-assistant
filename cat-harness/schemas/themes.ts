@@ -53,6 +53,7 @@ const LAYOUTS = {
 const RAW = [
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "pale-sage",
     name: "Pale sage",
     description: "The default. Matches the staging banner.",
@@ -63,6 +64,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "pale-sage-fade",
     name: "Pale sage, fading",
     description: "The sage with a soft vertical gradation.",
@@ -74,6 +76,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "dusty-carolina",
     name: "Dusty Carolina blue",
     palette: {
@@ -83,6 +86,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "dusty-carolina-fade",
     name: "Dusty Carolina blue, fading",
     description: "The blue with a soft vertical gradation.",
@@ -94,6 +98,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "grumpy-cat",
     name: "Grumpy cat",
     description: "Warm greys and a sage accent, after the mark.",
@@ -134,6 +139,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "bootstrap",
     name: "Bootstrap",
     description: "Desert sand and sienna \u2014 the frontier at the start of the trail.",
@@ -166,6 +172,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "operations",
     name: "Grumpy cat, operations",
     description: "Steel and blueprint blue — building the thing, and running it.",
@@ -216,6 +223,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "engineer",
     name: "Grumpy cat, engineering",
     description: "The cloud cream and a working green, behind the cat in a hi-vis vest.",
@@ -250,6 +258,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "library",
     name: "Grumpy cat, librarian",
     description: "Storm slate and a cool cream, behind the cat with the books.",
@@ -278,6 +287,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "analyst",
     name: "Grumpy cat, analyst",
     description: "Daylight cream and a working blue, behind the cat with the charts.",
@@ -306,6 +316,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "high-contrast-light",
     name: "High contrast, light",
     description: "Black on white. No gradation, by design.",
@@ -314,6 +325,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "high-contrast-dark",
     name: "High contrast, dark",
     description: "White on black. No gradation, by design.",

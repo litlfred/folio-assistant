@@ -40,6 +40,7 @@ import {
   failingClauses,
   type DetangleEdge,
   type DetangleNode,
+  type EdgeAuthority,
 } from "../schemas/detangle.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -97,7 +98,14 @@ const dangling: Array<{ from: string; ref: string; via: string }> = [];
  * three extractors qualify; see `EdgeAuthority` for why the distinction
  * decides the whole classification.
  */
-const AUTHORITY: Record<string, "enforced" | "recorded"> = {
+// `EdgeAuthority`, not a restatement of it. This read
+// `Record<string, "enforced" | "recorded">` — two of the three levels — while
+// the table below assigns `"prose"` and line 157 assigns it directly. A real
+// TS2322 that nothing caught, because `tsconfig.json` did not include this
+// tree; `detangle/`, `large-datasets/`, `who-iris/` and `folio-assist-sci/`
+// were all outside the program while the file's own comment said "Every tree
+// is now compiled".
+const AUTHORITY: Record<string, EdgeAuthority> = {
   "ts-import": "enforced",
   "bpmn-call": "enforced",
   "bpmn-import": "enforced",

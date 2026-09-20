@@ -57,14 +57,35 @@ const cat = CatalogueSchema.parse(JSON.parse(readFileSync(join(INSTANCE, "catalo
 const dir = join(INSTANCE, "catalogue", cat.nodesDir);
 
 const nodes: CatalogueNode[] = [];
+// Ids of nodes that are PRESENT, including ones that failed to validate.
+//
+// `ids` was built from `nodes` alone, so a single malformed node dropped out
+// of the set and every child of it then reported `parent ... is not a node in
+// this catalogue` — a cascade of findings about nodes that are fine, pointing
+// away from the one file that is not. One defect reading as N+1, with the real
+// one buried among its own consequences.
+//
+// The id is read from the raw JSON because that is what a parent points AT; it
+// does not require the node to be well-formed, and a node too broken to yield
+// an id simply is not in the set, which is then true.
+const present = new Set<string>();
 for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
+  let raw: unknown;
   try {
-    nodes.push(CatalogueNodeSchema.parse(JSON.parse(readFileSync(join(dir, f), "utf8"))));
+    raw = JSON.parse(readFileSync(join(dir, f), "utf8"));
+  } catch (e) {
+    problems.push(`${f}: is not JSON — ${(e as Error).message.split("\n")[0]}`);
+    continue;
+  }
+  const id = (raw as { id?: unknown })?.id;
+  if (typeof id === "string" && id.length > 0) present.add(id);
+  try {
+    nodes.push(CatalogueNodeSchema.parse(raw));
   } catch (e) {
     problems.push(`${f}: does not validate — ${(e as Error).message.split("\n")[0]}`);
   }
 }
-const ids = new Set(nodes.map((n) => n.id));
+const ids = present;
 
 for (const n of nodes) {
   if (n.metadataRef) {
