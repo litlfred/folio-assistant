@@ -74,7 +74,7 @@ const CAT = contributionsOf("cat-harness");
 // sit, and this line is the one place they differ — which is exactly why it
 // broke when they were assumed to be one string.
 const CORE = contributionsOf("folio-assistant-core");
-const BOOT = contributionsOf("bootstrap");
+const BOOT = contributionsOf("cat-bootstrap");
 const ALL = [...CAT, ...CORE, ...BOOT];
 
 function built(declared: DeclaredContribution[]): LandingSticky[] {
@@ -94,11 +94,11 @@ describe("a sticky is a CONTRIBUTION from a layer, not an entry in one list", ()
     expect(CAT.length).toBeGreaterThan(0);
     expect(BOOT.length).toBeGreaterThan(0);
     expect(CAT.every((c) => c.declaredBy === "cat-harness")).toBe(true);
-    expect(BOOT.every((c) => c.declaredBy === "bootstrap")).toBe(true);
+    expect(BOOT.every((c) => c.declaredBy === "cat-bootstrap")).toBe(true);
   });
 
   test("the built sticky records which layer contributed it", () => {
-    expect(sticky(BOOT, "bootstrap").contributedBy).toBe("bootstrap");
+    expect(sticky(BOOT, "cat-bootstrap").contributedBy).toBe("cat-bootstrap");
     // `cat-harness`, the DECLARED NAME, since the owner's 2026-09-20 ruling that
     // the three instances are distinct. It read `folio-assistant` while the
     // harness layer and the repository shared that name — which is the
@@ -139,7 +139,7 @@ describe("bootstrap has its OWN cat, not cat-harness's", () => {
       expect(resolved.none).toBe(false);
       expect(resolved.art.size).toBe(3);
       // The role is bootstrap's, so a reader can tell whose cat it is.
-      for (const [, img] of resolved.art) expect(img.src).toContain("bootstrap");
+      for (const [, img] of resolved.art) expect(img.src).toContain("cat-bootstrap");
     }
   });
 
@@ -173,7 +173,7 @@ describe("order is DECLARED, not inherited from dependency resolution", () => {
     // which would put bootstrap above the instance's own description.
     const ids = built([...BOOT, ...CORE, ...CAT]).map((s) => s.id);
     expect(ids[0]).toBe("cat-harness");
-    expect(ids.at(-1)).toBe("bootstrap");
+    expect(ids.at(-1)).toBe("cat-bootstrap");
   });
 
   test("the order survives the layers being read in the other sequence", () => {
@@ -280,12 +280,12 @@ describe("`bodyFrom: description` reads the DECLARING layer's description", () =
   test("bootstrap's card carries bootstrap's sentence, not this instance's", () => {
     // The defect that would make the seam pointless: a board of one sentence
     // repeated.
-    const boot = sticky(BOOT, "bootstrap");
+    const boot = sticky(BOOT, "cat-bootstrap");
     // `startsWith` rather than equality: a card may APPEND to its description
     // (`bodyAppend`), which is how the scope line is added without copying the
     // sentence above it. What must hold is that the description is read from
     // the DECLARING instance and comes first, verbatim.
-    expect(boot.comment.startsWith(decl("bootstrap").description!)).toBe(true);
+    expect(boot.comment.startsWith(decl("cat-bootstrap").description!)).toBe(true);
     expect(boot.comment.startsWith(decl("cat-harness").description!)).toBe(false);
   });
 
@@ -628,9 +628,13 @@ describe("the cat's introduction keeps the owner's own words", () => {
 
 describe("bootstrap's card links to its source and does NOT invent a site", () => {
   test("it offers a source link", () => {
-    const links = sticky(BOOT, "bootstrap").links;
+    const links = sticky(BOOT, "cat-bootstrap").links;
     expect(links.length).toBeGreaterThan(0);
-    expect(links.some((l) => isExternalLink(l) && l.href.includes("/bootstrap"))).toBe(true);
+    // `/cat-bootstrap`, not `/bootstrap` — the separator is a hyphen, so the
+    // old substring stopped matching when the directory was renamed and this
+    // assertion failed for the right reason. Verified against the real link:
+    // `.../tree/main/cat-bootstrap`.
+    expect(links.some((l) => isExternalLink(l) && l.href.includes("/cat-bootstrap"))).toBe(true);
   });
 
   test("it offers no link to a bootstrap site, because there is none", () => {
@@ -639,7 +643,7 @@ describe("bootstrap's card links to its source and does NOT invent a site", () =
     // cat-harness's — and a declared link to a page that does not exist is a
     // 404 on the landing page.
     const site = decl("cat-harness").canonicalUrl!;
-    for (const l of sticky(BOOT, "bootstrap").links) expect(l.href.startsWith(site)).toBe(false);
+    for (const l of sticky(BOOT, "cat-bootstrap").links) expect(l.href.startsWith(site)).toBe(false);
   });
 });
 
