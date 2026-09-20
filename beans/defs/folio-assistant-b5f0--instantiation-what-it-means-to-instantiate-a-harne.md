@@ -238,3 +238,63 @@ health report that goes quiet.
 six sections end in an owner question precisely because the answers change the
 code, and `b5f0` §1 in particular cannot be implemented in either direction
 without a ruling that does not yet exist.
+
+## CORRECTION to §3, 2026-09-20 — `7u3g` is SCRAPPED, and §3 rests on it
+
+§3 called `7u3g` *"a hard prerequisite, not a related item"* and said the
+initialization process *"cannot be started"* because nothing can list it.
+**`7u3g` was scrapped on `main` the same day** (PR #541), and the scrap is
+right.
+
+There is no bootstrap blind spot. `bootstrap/` is a **separate instance**, and
+`scripts/tests/instance-graph-isolation.test.ts` enforces that a nested
+instance's graph stays out of the first's — written against a real leak live on
+2026-09-19, when `findBpmnDirs` walked the tree and
+`_kg/folio-assistant.jsonld` carried **88** references to
+`Process_InitializeHarness`. The root NOT seeing bootstrap's diagrams is the
+invariant working, not a defect.
+
+So §3's conclusion inverts: *"part of ALL harness initializations"* is not
+blocked by an unlistable process. `workflow_list` not starting bootstrap's
+diagrams from cat-harness's root is **correct behaviour**, and
+`isExecutable="false"` means the engine was never going to drive them anyway
+(see the §4 correction above, which found the same thing from the other side).
+
+### I implemented the scrapped fix before reading the scrap, and it failed the way the scrap says
+
+Declared `bootstrap/workflows/` in `cat-harness/harness.json`; every measure I
+chose said it worked — `workflowFiles` 58 → 61, the three diagrams visible,
+four roles bound, **0 dangling `bindsLane` edges**. Then
+`a second instance in the tree stays out of the first's graph` **failed**.
+
+**That failure was in my own `gates --all` output and I did not read it.** I
+read the tail, saw `translate-bpmn` and `gen-docs-pages` stale, fixed those,
+and never read the rest of a run that had already told me the answer. Reverted
+in full.
+
+I am the **fourth** session at this and the **third** to get as far as editing
+`harness.json`. `kg-qa.ts`'s `nested-instance-audited` criterion was written
+earlier the same day and describes the failure mode in advance; the finding it
+scopes says *"a nested instance may name it, and this audit does not read one"*.
+Three of us read that disclaimer as boilerplate.
+
+**What is left of §3:** nothing about listability. The open question is only
+whether `folio_init` should install an initialization step at all, and
+`folio_init` writing zero workflows is a fact about `folio_init`, not about
+bootstrap.
+
+## What DID survive, and it is small
+
+`bootstrap/workflows/log-message.bpmn` had **no `BPMNDiagram` element at all** —
+zero shapes, zero edges. A BPMN file with no diagram interchange cannot be drawn
+by any tool, whoever scans it, so this is a defect of the file and not of the
+declaration. DI authored: pool, two lanes, six nodes, five edges with the yes/no
+labels.
+
+Verified to be independent of the reverted change: with the DI in place and
+`bootstrap/workflows/` **not** declared, `instance-graph-isolation` passes 5/5
+and `render:bpmn:check` passes — the root correctly does not want an SVG for a
+file it does not scan. **No SVG was committed**, for that reason.
+
+> **Do not "fix" the missing SVG by declaring the directory.** That is the dead
+> end three sessions have now walked into.
