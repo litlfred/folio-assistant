@@ -26,7 +26,15 @@ function fill(d,f,r){
     d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
   measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
 }
 function go(){
   measure();
@@ -54,7 +62,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <h1>Interface MappingManifest</h1></div>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">MappingManifest</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#generated_at">generated_at</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#mappings">mappings</a><span class="tsd-signature-symbol">:</span> <a href="schemas_formalization-types.NarrativeMapping.html" class="tsd-signature-type tsd-kind-interface">NarrativeMapping</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#version">version</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;1.0&quot;</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L242">formalization-types.ts:242</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L242">formalization-types.ts:242</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -73,17 +81,17 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <h3 class="tsd-anchor-link" id="generated_at"><span>generated_<wbr/>at</span><a href="#generated_at" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">generated_at</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L244">formalization-types.ts:244</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L244">formalization-types.ts:244</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="mappings"><span>mappings</span><a href="#mappings" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">mappings</span><span class="tsd-signature-symbol">:</span> <a href="schemas_formalization-types.NarrativeMapping.html" class="tsd-signature-type tsd-kind-interface">NarrativeMapping</a><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L245">formalization-types.ts:245</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L245">formalization-types.ts:245</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="version"><span>version</span><a href="#version" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">version</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;1.0&quot;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L243">formalization-types.ts:243</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L243">formalization-types.ts:243</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

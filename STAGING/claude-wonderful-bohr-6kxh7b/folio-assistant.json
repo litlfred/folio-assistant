@@ -256,22 +256,22 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T17:11:19.954Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d",
-  "sourceCommitSha": "9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d",
-  "sourceCommitAt": "2026-09-20T17:09:46Z",
+  "generatedAt": "2026-09-20T17:21:40.469Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b9434d227af6f9d4bd8a87cab36e19f6beb4904d",
+  "sourceCommitSha": "b9434d227af6f9d4bd8a87cab36e19f6beb4904d",
+  "sourceCommitAt": "2026-09-20T17:19:36Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 202,
     "Actor": 27,
     "Capability": 26,
-    "Role": 116,
+    "Role": 124,
     "Convention": 2,
     "SkillPackage": 12,
     "Process": 51,
     "SequenceFlow": 665,
     "ProcessNode": 630,
-    "Tool": 65,
+    "Tool": 66,
     "Schema": 68,
     "GraphKind": 20,
     "Directory": 21,
@@ -813,13 +813,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/edge-kinds-and-blast-radius",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "edge-kinds-and-blast-radius",
-      "title": "Edge kinds and blast radius",
+      "title": "consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — \"Not every edge is a dependency\", \"Provenance is three-valued\", \"Taint propagates down the dependency graph\". It is read before deciding how to traverse a graph; nobody performs it as a task.",
       "description": "A graph has more than one kind of edge, and conflating them corrupts both the ordering and the impact answer. Interface edges versus implementation edges, the union rule for blast radius, and the split/merge signals — generalized out of the formal-math skills that first stated them.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/edge-kinds-and-blast-radius.md",
-      "instructionLines": 170,
+      "instructionLines": 172,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3523,7 +3523,9 @@
       },
       "hasCapability": [],
       "roleName": [
-        "reviewer"
+        "reviewer",
+        "integration-watcher",
+        "proof-review-agent"
       ],
       "permissionName": [
         "review-comments"
@@ -3693,7 +3695,13 @@
       "hasCapability": [],
       "roleName": [
         "authoring-agent",
-        "sibling-session"
+        "sibling-session",
+        "compute-authoring-agent",
+        "docs-authoring-agent",
+        "editorial-authoring-agent",
+        "lean-authoring-agent",
+        "platform-authoring-agent",
+        "session-coordinator"
       ],
       "permissionName": [
         "content-authoring"
@@ -25798,6 +25806,39 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/gates"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#tool/narrative-queue",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "narrative-queue",
+      "title": "What narratives are waiting on a person",
+      "description": "List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run narratives"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "queue",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/tool-types.schema.json#/$defs/Text",
+            "description": "Every narrative awaiting a person, NUMBERED, with its subject, its text and its file — then the two commands that act on a number, then the rejection reasons, also numbered. Numbered throughout because the person this is for has very limited hand function and every action must be a selection rather than a typed sentence; `interaction-modality`'s `low-dexterity` profile is the general rule."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/narrative-queue"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#tool/check-tools",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-tools",
@@ -28735,7 +28776,10 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/semantic-review-scoping",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/translation-manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/voice-overlay-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/voice-overlay-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/content-block-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/content-validation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/rendering-auditor"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Reviewer%20/%20SME",
@@ -29123,7 +29167,9 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/document-intake",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/library-ingestion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/library-ingestion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/paper-importer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-status-tracking"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)"
@@ -29190,7 +29236,12 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/upstream-version-adoption",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/watch"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/build-docs",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/build-pdf",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/latex-build-cache",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/latex-validation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/smart-base-tools"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Build%20pipeline%20—%20validate%20·%20render%20·%20publish",
@@ -29395,6 +29446,204 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Session%20record"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/session-record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/editorial-authoring-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "editorial-authoring-agent",
+      "title": "Editorial authoring agent",
+      "description": "The authoring agent in the editorial lane: auditing a block's prose, structure and sourcing rather than writing new subject matter.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/block-density",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/chapter-complexity-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/readability-editing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/scientific-accuracy",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/one-voice-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/ontologist",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/md-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/html-rendering-qc",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/markdown-render-check",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/exposition-swarm-drain",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/todo-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bib-human-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bib-qa"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/editorial-authoring-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/docs-authoring-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "docs-authoring-agent",
+      "title": "Docs authoring agent",
+      "description": "The authoring agent producing what a person reads ABOUT the instance — generated references, the glossary, sticky notes, theme art and deployment documentation.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/docs-generation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/glossary-build",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/tabular-metadata",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/deployment-auth",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/editor"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/docs-authoring-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/platform-authoring-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "platform-authoring-agent",
+      "title": "Platform authoring agent",
+      "description": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/mcp-assembly",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/mcp-contract",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/serving-renderings",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-viewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/domain-fencing"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/platform-authoring-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/session-coordinator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "session-coordinator",
+      "title": "Session coordinator",
+      "description": "The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/coordinate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/pending-show",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/idle-backlog",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/diff",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/corpus-grep",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/process-state"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/session-coordinator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/integration-watcher",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "integration-watcher",
+      "title": "Integration watcher",
+      "description": "Watches the default branch and open branches for newly-landed work that an existing audit axis should be re-run over. Reports findings; does not author the fix.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/canonical-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/compute-integration-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/detangler-integration-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/devils-advocate-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/one-voice-integration-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/integration-watch",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/integration-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/integration-backlog",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-integration-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/q-usage-watcher"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/lean-authoring-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "lean-authoring-agent",
+      "title": "Lean authoring agent",
+      "description": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/formalizer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/chapter-analysis",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-generation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-substantive-pass",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-build-fix",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-cache-restore",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-environment-setup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-mathlibext-curator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-formal-graph",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-triage",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/category-theory",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/groebner-basis"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/lean-authoring-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/proof-review-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "proof-review-agent",
+      "title": "Proof review agent",
+      "description": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-proof-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-proof-vacuity-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-gap-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-conciseness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-editor",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-exposition-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-simplifier",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proof-narrative-lean-equivalence",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-completeness-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/remark-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/definition-clarity-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/proposition-consolidation-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/critical-path-analysis"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/proof-review-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/compute-authoring-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "compute-authoring-agent",
+      "title": "Compute authoring agent",
+      "description": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/compute-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/compute-author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/ffi-roundtrip-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/lean-witness-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/witnessed-values",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/verify-local-substrate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/simulator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/simulator-math-audit"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/compute-authoring-agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/initiator",
@@ -29725,8 +29974,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "5201e70d4dfca383c17eef998f4e5edfc3285aab",
+    "sha": "62735055b162d40d9505b338de67ef80cac500e9",
     "pr": "568/merge",
-    "run": "35524981312"
+    "run": "35525534980"
   }
 }

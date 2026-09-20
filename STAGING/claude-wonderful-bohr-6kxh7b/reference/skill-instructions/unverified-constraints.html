@@ -294,7 +294,15 @@ function fill(d,f,r){
     d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
   measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
 }
 function go(){
   measure();
@@ -801,7 +809,7 @@ answer.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35524981312"><code>5201e70</code></a> &middot; 2026-09-20T17:10:38Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p>
 
 
   <div class="d-md-none mt-4 fs-2">

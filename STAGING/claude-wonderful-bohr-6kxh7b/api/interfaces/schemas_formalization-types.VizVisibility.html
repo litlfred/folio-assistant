@@ -26,7 +26,15 @@ function fill(d,f,r){
     d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
   measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
 }
 function go(){
   measure();
@@ -57,7 +65,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">VizVisibility</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#axes">axes</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#axispts">axispts</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#brane">brane</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#stars">stars</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L630">formalization-types.ts:630</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L630">formalization-types.ts:630</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -79,28 +87,28 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <div class="tsd-comment tsd-typography"><p>Show xyz axes helper.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L634">formalization-types.ts:634</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L634">formalization-types.ts:634</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="axispts"><code class="tsd-tag">Optional</code><span>axispts</span><a href="#axispts" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">axispts</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
 <div class="tsd-comment tsd-typography"><p>Show colour tubes at ±axis poles.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L638">formalization-types.ts:638</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L638">formalization-types.ts:638</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="brane"><code class="tsd-tag">Optional</code><span>brane</span><a href="#brane" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">brane</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
 <div class="tsd-comment tsd-typography"><p>Show brane sphere S³.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L632">formalization-types.ts:632</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L632">formalization-types.ts:632</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="stars"><code class="tsd-tag">Optional</code><span>stars</span><a href="#stars" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">stars</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
 <div class="tsd-comment tsd-typography"><p>Show background star field.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9eb3ae870b4d2def72e0f856fc6a1e36d776bb8d/cat-harness/schemas/formalization-types.ts#L636">formalization-types.ts:636</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9434d227af6f9d4bd8a87cab36e19f6beb4904d/cat-harness/schemas/formalization-types.ts#L636">formalization-types.ts:636</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
