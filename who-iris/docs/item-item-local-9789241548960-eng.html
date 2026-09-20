@@ -105,6 +105,10 @@
     vertical-align: top;
   }
   table.items th { font-weight: 700; background: var(--iris-wash); }
+  /* Six columns on the held-items table; without a floor the title and
+     collection cells wrap to one word per line. */
+  table.items td:first-child, table.items th:first-child { min-width: 13rem; }
+  table.items td:nth-child(2) { min-width: 9rem; }
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
@@ -190,10 +194,10 @@
 <tr><td>Upstream, at WHO</td><td>none recorded</td></tr>
 <tr><td>Held here, in folio-assistant</td>
     <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/9789241548960_eng.pdf">9789241548960_eng.pdf</a></td></tr>
+<tr><td>In collection</td><td><span class="none">no collection recorded</span></td></tr>
 <tr><td>Ingested text (L1)</td>
-    <td><code>who-iris/library/9789241548960-eng/sections/</code></td></tr>
-<tr><td>Dublin Core record</td>
-    <td><code>who-iris/catalogue/records/9789241548960-eng.dc.json</code></td></tr>
+    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections">who-iris/library/9789241548960-eng/sections/</a></td></tr>
+<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Download 9789241548960-eng.dc.json</a><br><code>qualified Dublin Core · 1.9 KB</code></td></tr>
 </tbody>
 </table>
 

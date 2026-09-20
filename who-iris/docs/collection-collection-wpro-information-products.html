@@ -105,6 +105,10 @@
     vertical-align: top;
   }
   table.items th { font-weight: 700; background: var(--iris-wash); }
+  /* Six columns on the held-items table; without a floor the title and
+     collection cells wrap to one word per line. */
+  table.items td:first-child, table.items th:first-child { min-width: 13rem; }
+  table.items td:nth-child(2) { min-width: 9rem; }
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
@@ -175,13 +179,14 @@
 collection is larger; this catalogue holds what was materialised, and says so per row.</p>
 
 <table class="items">
-<thead><tr><th>Item</th><th>State</th><th>Upstream</th><th>Held copy</th></tr></thead>
+<thead><tr><th>Item</th><th>State</th><th>Upstream</th><th>Held copy</th><th>Metadata record</th></tr></thead>
 <tbody>
 <tr>
   <td><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a><br><code>wpr-rdo-2020-003-eng</code></td>
   <td><span class="state materialized">materialized</span></td>
   <td class="dl"><a href="https://iris.who.int/handle/10665/332098">IRIS source &rarr;</a></td>
   <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WPR-RDO-2020-003-eng.pdf">Download WPR-RDO-2020-003-eng.pdf</a><br><code>2.68 MB</code></td>
+  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download wpr-rdo-2020-003-eng.dc.json</a><br><code>qualified Dublin Core · 4.0 KB</code></td>
 </tr>
 </tbody>
 </table>

@@ -264,6 +264,10 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
     vertical-align: top;
   }
   table.items th { font-weight: 700; background: var(--iris-wash); }
+  /* Six columns on the held-items table; without a floor the title and
+     collection cells wrap to one word per line. */
+  table.items td:first-child, table.items th:first-child { min-width: 13rem; }
+  table.items td:nth-child(2) { min-width: 9rem; }
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
@@ -393,10 +397,12 @@ function communityList(all: Node[]): string {
       ({ n, a }) => `<tr>
   <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br>
       <code>${esc(n.libraryId ?? n.id)}</code></td>
+  <td>${collectionCell(n, all)}</td>
   <td>${stateBadge("materialized")}</td>
   <td class="dl">${upstreamCell(n)}</td>
   <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a><br>
       <code>${(a!.bytes / 1048576).toFixed(2)} MB</code></td>
+  <td class="dl">${metadataCell(n)}</td>
 </tr>`,
     )
     .join("\n");
@@ -417,7 +423,7 @@ ${rows}
 <strong>asset as this repository holds it</strong>.</p>
 
 <table class="items">
-<thead><tr><th>Item</th><th>State</th><th>Upstream</th><th>Held copy</th></tr></thead>
+<thead><tr><th>Item</th><th>Collection</th><th>State</th><th>Upstream</th><th>Held copy</th><th>Metadata record</th></tr></thead>
 <tbody>
 ${table}
 </tbody>
@@ -459,6 +465,57 @@ function sourceOf(n: Node): string | undefined {
   return undefined;
 }
 
+/**
+ * The collection(s) an item is in, as named links — or a statement that the
+ * catalogue records none.
+ *
+ * **Two of the three held items have `parents: []`, and that is real.** They
+ * were ingested from a PDF somebody had, not walked down from a collection, so
+ * the catalogue knows the bytes and not the shelf. Rendering them under a
+ * plausible collection would be inventing containment, which is the same class
+ * of error as inventing an upstream URI.
+ */
+function collectionCell(n: Node, all: Node[]): string {
+  const containers = (n.parents[0] ?? [])
+    .map((id) => all.find((x) => x.id === id))
+    .filter((x): x is Node => x !== undefined);
+  const collections = containers.filter((c) => c.flavour === "collection");
+  if (collections.length === 0) {
+    return `<span class="none">no collection recorded</span>`;
+  }
+  return collections
+    .map(
+      (c) =>
+        `<a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a>` +
+        (containers.filter((x) => x.flavour === "community").length
+          ? `<br><code>in ${esc(containers.filter((x) => x.flavour === "community").map((x) => x.title).join(" / "))}</code>`
+          : ""),
+    )
+    .join("<br>");
+}
+
+/**
+ * The Dublin Core record as something a reader can actually download.
+ *
+ * Owner: *"link to emtada record i can download?"* It was printed as a code
+ * path, which tells a reader where it is and makes them go and find it.
+ *
+ * All three held items DO carry one — checked, not assumed; an earlier note
+ * here claimed only one did, from reading a truncated dump. The branch that
+ * says "none captured" is still live because `metadataRef` is optional in the
+ * schema and an item ingested without a captured DSpace record is the ordinary
+ * case upstream; it just is not the case for these three.
+ */
+function metadataCell(n: Node): string {
+  if (!n.metadataRef) return `<span class="none">none captured</span>`;
+  const abs = join(INSTANCE, n.metadataRef);
+  if (!existsSync(abs)) return `<span class="none">declared, but missing on disk</span>`;
+  const rel = `who-iris/${n.metadataRef}`;
+  const href = `${RAW}/${rel.split("/").map(encodeURIComponent).join("/")}`;
+  const bytes = readFileSync(abs, "utf-8").length;
+  return `<a href="${esc(href)}">Download ${esc(n.metadataRef.split("/").pop()!)}</a><br><code>qualified Dublin Core · ${(bytes / 1024).toFixed(1)} KB</code>`;
+}
+
 /** The upstream cell: a real link, or a plain statement that there is none. */
 function upstreamCell(n: Node): string {
   const u = sourceOf(n);
@@ -480,6 +537,7 @@ function collectionPage(c: Node, all: Node[]): string {
   <td>${stateBadge(a ? "materialized" : (n.materialization?.state ?? "unknown"))}</td>
   <td class="dl">${upstreamCell(n)}</td>
   <td class="dl">${a ? `<a href="${esc(a.href)}">Download ${esc(a.name)}</a><br><code>${(a.bytes / 1048576).toFixed(2)} MB</code>` : "not held here"}</td>
+  <td class="dl">${metadataCell(n)}</td>
 </tr>`;
     })
     .join("\n");
@@ -496,7 +554,7 @@ ${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was es
 collection is larger; this catalogue holds what was materialised, and says so per row.</p>
 
 <table class="items">
-<thead><tr><th>Item</th><th>State</th><th>Upstream</th><th>Held copy</th></tr></thead>
+<thead><tr><th>Item</th><th>State</th><th>Upstream</th><th>Held copy</th><th>Metadata record</th></tr></thead>
 <tbody>
 ${rows}
 </tbody>
@@ -547,28 +605,112 @@ ${bits}
 <tr><td>Upstream, at WHO</td><td>${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : "none recorded"}</td></tr>
 <tr><td>Held here, in folio-assistant</td>
     <td>${a ? `<a href="${esc(a.href)}">${esc(a.name)}</a>` : "not held"}</td></tr>
+<tr><td>In collection</td><td>${collectionCell(n, all)}</td></tr>
 <tr><td>Ingested text (L1)</td>
-    <td>${n.libraryId ? `<code>who-iris/library/${esc(n.libraryId)}/sections/</code>` : "—"}</td></tr>
-<tr><td>Dublin Core record</td>
-    <td>${hasDc ? `<code>who-iris/${esc(n.metadataRef!)}</code>` : "none — this item was ingested without one"}</td></tr>
+    <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
+<tr><td>Dublin Core record</td><td>${metadataCell(n)}</td></tr>
 </tbody>
 </table>
 
 ${
   hasDc
     ? ""
-    : `<div class="caveat"><p><strong>No Dublin Core record.</strong> Two of the three
-  items here have none: only one DSpace full item record was ever captured. The
-  catalogue says so rather than synthesising metadata from the PDF — the
+    : `<div class="caveat"><p><strong>No Dublin Core record.</strong> The catalogue
+  says so rather than synthesising metadata from the PDF — the
   <code>iris-dspace</code> skill's R8, <em>never infer metadata from the PDF when a
-  record exists</em>, and its converse is that an absent record stays absent.</p></div>`
+  record exists</em>, whose converse is that an absent record stays absent.</p></div>`
 }
+`;
+}
+
+/**
+ * The instance's front door — `<base-url>/<kind>/<instance>/`.
+ *
+ * Owner, 2026-09-20: *"`<baseurl>/who-iris` should be defaul harness
+ * behaviour, themed. that default harness benafour shoud show lassets in
+ * library"*, and then the addressing rule: *"`<path-to-kind-or-node>`"*, with
+ * `library/who-iris` as the worked example.
+ *
+ * **This is a front door, not the library visualiser.** The library
+ * visualiser is bean `jbx2` and belongs to another agent — the owner said so
+ * in the same session: *"library is another agent."* So this lists what is
+ * held and links onward; it does not try to be the thing somebody else is
+ * building, which would be two answers to one question.
+ *
+ * It exists for a second, mechanical reason: `mount-instance-docs.ts` mounts a
+ * directory only when it carries an `index.html` at its root, because "has a
+ * front door" is the difference between a built visualiser and a directory of
+ * source files served under a URL that promises one.
+ */
+function landingPage(all: Node[]): string {
+  const items = all.filter((n) => n.flavour === "item");
+  const held = items.map((n) => ({ n, a: assetHref(n) })).filter((x) => x.a);
+  const communities = all.filter((n) => n.flavour === "community");
+  const collections = all.filter((n) => n.flavour === "collection");
+
+  const rows = held
+    .map(
+      ({ n, a }) => `<tr>
+  <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br>
+      <code>${esc(n.libraryId ?? n.id)}</code></td>
+  <td>${collectionCell(n, all)}</td>
+  <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a><br>
+      <code>${(a!.bytes / 1048576).toFixed(2)} MB</code></td>
+  <td class="dl">${metadataCell(n)}</td>
+</tr>`,
+    )
+    .join("\n");
+
+  return `<h1>who-iris</h1>
+
+<p>An instance holding a catalogue of <a href="https://iris.who.int/">WHO IRIS</a>
+modelled <strong>by reference</strong>. ${all.length} nodes —
+${communities.length} communities, ${collections.length} collection,
+${items.length} items — of a repository whose own storage report gives
+1,057,223 files and 361.55&nbsp;GiB. <strong>${held.length} items are held
+here.</strong></p>
+
+<h2>Held assets</h2>
+<p>Each carries the asset itself and its qualified Dublin Core record, both
+downloadable.</p>
+
+<table class="items">
+<thead><tr><th>Item</th><th>Collection</th><th>Asset</th><th>Metadata record</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table>
+
+<h2>Browse</h2>
+<ul class="kids" style="margin-left:0">
+  <li><a href="community-list.html">List of Communities</a> — the replica of
+      <code>iris.who.int/community-list</code>, with every node's materialisation state</li>
+${collections
+  .map((c) => `  <li><a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a> — collection</li>`)
+  .join("\n")}
+</ul>
+
+<div class="caveat">
+  <p><strong>This is the front door, not the library visualiser.</strong> The
+  full <code>library/</code> visualiser is bean <code>jbx2</code> and is being
+  built separately. This page lists what is held and links onward rather than
+  becoming a second answer to the same question.</p>
+  <p>Addressing follows the owner's rule —
+  <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that
+  instantiates a directory gets a visualiser mounted under that directory's
+  kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
+</div>
 `;
 }
 
 function main(): number {
   const all = nodes();
   const files = new Map<string, string>();
+
+  files.set(
+    "index.html",
+    page("who-iris", [{ label: "Home" }], landingPage(all)),
+  );
 
   files.set(
     "community-list.html",

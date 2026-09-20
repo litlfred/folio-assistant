@@ -105,6 +105,10 @@
     vertical-align: top;
   }
   table.items th { font-weight: 700; background: var(--iris-wash); }
+  /* Six columns on the held-items table; without a floor the title and
+     collection cells wrap to one word per line. */
+  table.items td:first-child, table.items th:first-child { min-width: 13rem; }
+  table.items td:nth-child(2) { min-width: 9rem; }
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
@@ -190,10 +194,10 @@
 <tr><td>Upstream, at WHO</td><td><a href="https://iris.who.int/handle/10665/332098">https://iris.who.int/handle/10665/332098</a></td></tr>
 <tr><td>Held here, in folio-assistant</td>
     <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a></td></tr>
+<tr><td>In collection</td><td><a href="collection-collection-wpro-information-products.html">Information products</a><br><code>in 7. Regional Office for the Western Pacific</code></td></tr>
 <tr><td>Ingested text (L1)</td>
-    <td><code>who-iris/library/wpr-rdo-2020-003-eng/sections/</code></td></tr>
-<tr><td>Dublin Core record</td>
-    <td><code>who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json</code></td></tr>
+    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections">who-iris/library/wpr-rdo-2020-003-eng/sections/</a></td></tr>
+<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download wpr-rdo-2020-003-eng.dc.json</a><br><code>qualified Dublin Core · 4.0 KB</code></td></tr>
 </tbody>
 </table>
 
