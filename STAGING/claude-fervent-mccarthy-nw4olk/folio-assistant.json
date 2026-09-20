@@ -247,13 +247,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T05:01:22.579Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ee3f9fda21c53b12f298ad19bfcb270ee8e43f15",
-  "sourceCommitSha": "ee3f9fda21c53b12f298ad19bfcb270ee8e43f15",
-  "sourceCommitAt": "2026-09-20T04:59:43Z",
+  "generatedAt": "2026-09-20T05:14:26.891Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6f9c46cd691b2f29033808c3ca5de369b42bc8c0",
+  "sourceCommitSha": "6f9c46cd691b2f29033808c3ca5de369b42bc8c0",
+  "sourceCommitAt": "2026-09-20T05:12:49Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 169,
+    "Skill": 170,
     "Actor": 26,
     "Capability": 23,
     "Role": 103,
@@ -934,7 +934,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 337,
+      "instructionLines": 353,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2015,6 +2015,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-blocking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/covered-is-not-reachable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "covered-is-not-reachable",
+      "title": "Covered is not reachable — and `check:tools` cannot tell you which",
+      "description": "A skill can be satisfied by the neighbours of its mechanism while the mechanism is reachable from no Tool node. Read before concluding from check:tools that a command is reachable, and before adding a Tool node or a `maintains` claim.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
+      "instructionLines": 100,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/covered-is-not-reachable"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/deletion-requires-confirmation",
@@ -4019,6 +4035,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/coordinate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/covered-is-not-reachable",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/decision-audit",
@@ -12392,7 +12409,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Code%20reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/skills-and-tools"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/skills-and-tools",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/covered-is-not-reachable"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -21491,8 +21509,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "e406b9a55d414c5ad92e693b2b5d80d60823da93",
+    "sha": "a922948942e49a8e948a3361dce6a9912f1f2459",
     "pr": "454/merge",
-    "run": "35490525318"
+    "run": "35491103183"
   }
 }
