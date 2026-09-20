@@ -38,7 +38,6 @@ export default tseslint.config(
       "node_modules/**",
       "**/.lake/**",
       "dist/**",
-      "schemas/generated/**",
       "**/*.d.ts",
       "viewer/**",
       "ui/**",

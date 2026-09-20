@@ -307,7 +307,6 @@ const RULES: Rule[] = [
       // inversion alone just relocated them here, measured.
       "scripts/check-corpus-gate.ts",        // runs in the folio repo, over its content
       "scripts/gen-schema-docs.ts",          // content-object model → reference
-      "scripts/generate-docs.ts",            // schema documentation
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
