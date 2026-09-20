@@ -86,31 +86,43 @@ dynamically** on display size and usability, best-fit among three:
 cropped for, which is not a coincidence — a layout with no crop for it has
 nothing to render on.
 
-## The conflict with "not self-documenting", stated plainly
+## Where the requirement starts — bootstrap is the exception
 
 [The minimum `cat-harness`](cat-harness-minimum.html) carries a one-line
 admission test from the owner's own #223 revision:
 
 > **If it produces something a human looks at, it is not the harness.**
 
-Read literally against this page, the two cannot both hold: a default rendering
-is precisely something a human looks at.
+Read flatly against "an instance renders by default", the two cannot both
+hold. **They are not flat.** The owner settled this on 2026-09-20: the
+requirement is a *floor that rises*, not a rule applied uniformly.
 
-**The reconciliation that probably works** — and it is offered as a candidate,
-not asserted — is that these are statements about **different objects**.
-`cat-harness` is a *layer*, and the layer owns no renderer: the just-the-docs
-pipeline and every renderer belong to `folio-assist-core`. A harness *instance*
-is a layer plus its dependencies, so an instance renders by *depending on* a
-renderer rather than by containing one.
+| layer | visualiser / workflow visualiser | its own `.json` / `.jsonld` |
+|---|---|---|
+| `bootstrap` | **exempt** — it is the navbar **footer** | **required** |
+| `cat-harness` | required | required |
+| everything above | required | required |
 
-**What that does not resolve** is direction. In the
-[revised repo set](cat-harness-minimum.html#the-revised-repo-set),
-`folio-assist-core` depends on `cat-harness` — so `cat-harness` sits **below**
-the renderer and cannot reach up to it. Either `cat-harness` has no default
-rendering of its own (and "every instance renders" is really "every instance
-above core renders"), or something in that layering moves. That is a design
-decision with consequences for the split, so it is the owner's, and it is
-recorded here rather than settled in passing.
+**Bootstrap is the exception, and what it owes instead is its graph.** In the
+owner's words, its `.json`/`.jsonld` *"is its existence"* — a layer that cannot
+emit its own graph has not shown it is a graph. So bootstrap is not simply
+dropped from the requirement: it trades the visualiser for a criterion it
+cannot fail quietly.
+
+**`cat-harness` is where the rest begins to apply**, and the reason is an
+obligation rather than a convention: cat-harness is what supplies the layers
+above with `folio/`. A layer that hands its dependents a folio and renders
+nothing itself is asking of them what it did not do. Concretely that means a
+minimal just-the-docs rendering in `cat-harness/folio/` describing what a folio
+is, and `cat-harness/folio/render/` for the rendering skills and tools.
+
+This is the **same shape** the workflow split already has — bootstrap keeps the
+bare minimum, `cat-harness/workflows` elaborates — so it is a second instance
+of one rule rather than a new one.
+
+*Tracked: `hfkl` (bootstrap's exemption and its `render/` subgraph), `ohx6`
+(`cat-harness/folio/`), `1hvo` (`cat-harness/theming/`), `7po1` (the workflow
+split this parallels).*
 
 ## Open, and named rather than guessed
 

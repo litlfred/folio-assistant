@@ -52,12 +52,12 @@ into five composable folio-assistant instances. Child pages carry it:
 | [Minimum `cat-harness`](architecture/cat-harness-minimum.html) | What survives in the harness once "not self-documenting" is applied as a test |
 | [Harness instances](architecture/harness-instances.html) | What an instance IS — schematics, visualisations, tools; the four directories; the default rendering |
 
-The last two are in **tension with each other**, deliberately and visibly:
-the minimum says a harness produces nothing a human looks at, and the instance
-page says an instance renders by default. Which object each claim is about is
-the open question, stated on
-[Harness instances](architecture/harness-instances.html#the-conflict-with-not-self-documenting-stated-plainly)
-rather than reconciled by whichever page a reader happens to open second.
+The last two look like they disagree — the minimum says a harness produces
+nothing a human looks at, and the instance page says an instance renders by
+default. They do not: the requirement is a **floor that rises**, with
+`bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
+instead, and `cat-harness` the layer where the rest begins to apply. See
+[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 The rest of this page describes the architecture **as it is now**.
 
