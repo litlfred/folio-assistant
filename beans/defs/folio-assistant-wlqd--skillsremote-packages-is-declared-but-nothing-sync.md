@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wlqd
 title: skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-19T05:47:28Z
-updated_at: 2026-09-19T11:05:51Z
+updated_at: 2026-09-20T16:13:34Z
 parent: folio-assistant-zzmr
 ---
 
@@ -224,3 +224,53 @@ unfetchable and the sync is still unimplemented. What changed is that QA now
 says so on every run instead of a doc block saying it once. Implementing the
 sync remains a platform capability change, so a GitHub issue and the CRDM
 workflow come first.
+
+---
+
+## Re-measured 2026-09-20 — three of the four claims have moved
+
+Checked against the code, not the checkboxes.
+
+| the bean's claim | now |
+|---|---|
+| `shallow-clone` is only a schema value, no code acts on it | **still true** |
+| `skill-fetch.ts` has no mention of `remote-packages/` | **stale** — it mentions it, but only in an EXCLUSION list, so the substance holds: it still does not serve them |
+| the registry does not carry them | **still true** |
+| `autoUpdate` / `frequency` are read by nothing | **still true** — the only hit is a test asserting the docs SAY "Intended frequency" |
+
+**And two real things were built since.** A `kg-qa` criterion,
+`remote-skill-is-servable` (`major`), which the summary records the owner asking
+for *"a todo that FAILS rather than prose explaining itself"*. And five **stub
+bodies** under `skills/remote-stubs/`.
+
+### The stubs are honest, and they still trip
+
+`remote-skill-is-servable` now **passes** — the names resolve, so the instance
+can serve them. That would be gaming the criterion if the stubs were empty.
+They are not. `smart-launch.md` opens *"This skill is declared, not implemented
+here. Do not follow it as guidance; there is none to follow"*, names the
+upstream repository, and restates the remedy and this bean.
+
+More to the point, **they still fail a different criterion**: `skill-is-a-stub`
+fires on all five, `major`. So the gap did not go quiet — it moved to the
+criterion that describes it accurately. That is the right outcome, not a
+silenced one.
+
+## What remains is blocked on the author, by the criterion's own text
+
+> Remedy: implement the sync (**a platform capability change, so a GitHub issue
+> and the CRDM workflow first**), or drop the declaration.
+
+Both branches need the author:
+
+- **Implement the sync** — a capability change. The CRDM process requires a
+  linked GitHub issue, and an agent never opens one without permission.
+- **Drop the declaration** — removing two wrappers about real external
+  dependencies, which
+  [`deletion-requires-confirmation`](../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)
+  puts with the author too. `skill-package.ts:353` records that *"a maintainer
+  chose `shallow-clone` over"* the alternatives, so the declaration carries a
+  decision somebody made.
+
+Nothing here is an agent's call. Brought back as a question rather than
+actioned.
