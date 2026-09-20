@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6lb8
 title: 'FOLIO BOARD: a resizable Miro-style board, notes that move and attach, and semantic zoom to avatars'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-20T10:37:35Z
-updated_at: 2026-09-20T10:38:04Z
+updated_at: 2026-09-20T20:23:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -253,3 +253,73 @@ both modules are `core`; the layer arrow was still wrong. Moved down to
 transform, so both callers now point down at one answer instead of at each
 other. That is the check to run on the positions layer before it ships, not
 after.
+
+---
+
+## Slice 1 done — the positions LAYER, and only that
+
+`schemas/board-positions.ts`: one document, `boards` keyed by board id, each
+holding `{note, x, y}`. `place`, `unplace`, `sortPositions`,
+`renderPositions`, `orphanPositions`.
+
+**Scoped deliberately, and the bean's own framing is why.** This bean says it
+is a CRDM feature request — a new content type, a new schema, a rendering mode
+and an interaction model — and that such work *"goes through the requirements
+workflow rather than being implemented directly"*. The owner ruled on ONE
+question, where a position lives. That ruling unblocks the layer; it does not
+authorise pan/zoom, semantic zoom to avatars, resizable panes, sticky icons
+badged on content avatars, or the per-node panel. Those stay for CRDM.
+
+### What the schema refuses, and why each refusal is the ruling
+
+- **A note carries nothing.** A test asserts no field named `x`, `y`, `board`
+  or `position` appears in `todo.ts`, `carried-note.ts`, `landing-sticky.ts`
+  or `note-anchor.ts` — checked against the SOURCE, because the failure it
+  guards is somebody later adding coordinates "for convenience", which would
+  make a content node carry state and give one note two answers on two boards.
+- **This module imports no note module.** Asserted at the import level: its
+  only import is `zod`. It names notes by id, and an id needs no type from the
+  layer below. That is *"notes exist lower down than folio. make sure arrows
+  correct"* made checkable.
+- **BOARD UNITS, not pixels.** Pixels bake in whichever viewport was open when
+  somebody moved a note, so the same board reads differently on a phone and is
+  unreproducible from the file.
+- **No `z`, no `width`.** A sticky sizes to its content — `theme-artefacts`
+  records that — and stacking order is a rendering decision from the list, not
+  a value a person edits into a file.
+- **Non-finite coordinates refused.** `NaN` survives `z.number()` and
+  serialises to `null`, which reads back as a position that is not one.
+
+### The mergeability property, and its stated limit
+
+Sorted by board then note, indented, one position per line — the fix
+`gen-docs-pages` proved this week, where a minified file made every concurrent
+edit a whole-file conflict on three consecutive merges. **Idempotent sorting is
+tested**, because a writer that reshuffled on save would conflict with every
+other save and the whole shape would be pointless. `localeCompare` is
+deliberately not used: it is locale-dependent, so two machines could order the
+same ids differently and each rewrite the other's file.
+
+**The limit is recorded rather than glossed**: two notes that sort ADJACENT
+still conflict, because the inserted lines overlap. This removes the guaranteed
+conflict, not every conflict.
+
+### Orphans reported, never removed
+
+A position whose note does not resolve may mean the note was deleted, or that
+this board was written against a folio whose notes are not fetched. Opposite
+facts, and only a caller with more context can tell them apart — so
+`orphanPositions` returns them and removes nothing, per
+`deletion-requires-confirmation`. The direction is the easy one: an orphan
+lives in the layer, so clearing it is one edit to one file rather than a sweep
+across notes a person owns.
+
+### Not yet wired
+
+Nothing reads or writes this file yet: no declared graph directory, no store,
+no UI. That is the next slice, together with `ivfw`'s move half — and the move
+must stay KEYBOARD-DRIVEN. `docs-ui.js` ~2006 records the Pin button as a
+deliberate choice over a drag on this instance's declared low-dexterity
+interaction profile; drag may be added on top, never as the only way in.
+
+17 tests, falsified in both directions.

@@ -112,6 +112,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/board-positions.test.ts",
+      "instance": "cat-harness",
+      "name": "board-positions.test",
+      "graphNode": "undeclared",
+      "summary": "The positions layer sits on top of notes, and its order is a function of its",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/board-positions.ts",
+      "instance": "cat-harness",
+      "name": "board-positions",
+      "graphNode": "schema",
+      "summary": "Where a note sits on a board — a layer ON TOP of the notes, never inside them.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/builders.ts",
       "instance": "cat-harness",
       "name": "builders",
@@ -4020,6 +4036,102 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board-positions.ts#BoardPosition",
+      "name": "BoardPosition",
+      "module": "cat-harness/schemas/board-positions.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board-positions.ts#BoardPositions",
+      "name": "BoardPositions",
+      "module": "cat-harness/schemas/board-positions.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board-positions.ts#BoardPositionSchema",
+      "name": "BoardPositionSchema",
+      "module": "cat-harness/schemas/board-positions.ts",
+      "kind": "zod-object",
+      "doc": "Where one note sits, in BOARD UNITS rather than pixels.",
+      "fields": [
+        {
+          "name": "note",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The note this places. An id, never an embedded copy — see the module docs."
+        },
+        {
+          "name": "x",
+          "type": "z.number().finite()",
+          "optional": false,
+          "array": false,
+          "doc": "Horizontal position in board units."
+        },
+        {
+          "name": "y",
+          "type": "z.number().finite()",
+          "optional": false,
+          "array": false,
+          "doc": "Vertical position in board units."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board-positions.ts#BoardPositionsSchema",
+      "name": "BoardPositionsSchema",
+      "module": "cat-harness/schemas/board-positions.ts",
+      "kind": "zod-object",
+      "doc": "Every board's positions, in one document.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(BOARD_POSITIONS_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "boards",
+          "type": "z.record(z.string().min(1), z.array(BoardPositionSchema))",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/board-positions.ts#BoardPositionSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "BOARD_POSITIONS_SCHEMA_TAG",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -28654,6 +28766,14 @@
       "from": "cat-harness/schemas/block-qa.ts#QaReviewer",
       "to": "cat-harness/schemas/block-qa.ts#QaReviewerKind",
       "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/board-positions.ts#BoardPositionsSchema",
+      "to": "cat-harness/schemas/board-positions.ts#BoardPositionSchema",
+      "via": "boards",
       "kind": "field",
       "optional": false,
       "array": false
