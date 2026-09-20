@@ -19,6 +19,28 @@
  * agent process that merely touches one. A mention is not coverage, and the
  * only thing that can tell them apart is a declaration inside the file.
  *
+ * ## Coverage is not enough — a diagram that DRIFTS is worse than none
+ *
+ * The bean is explicit: *"a diagram that is drawn once and then drifts is
+ * worse than none, because it is consulted."* Answering "is there a diagram"
+ * does not answer "does it still match", and until 2026-09-20 nothing here
+ * did. `feature-staging.bpmn` made that concrete — three start events for the
+ * workflow's three jobs, and **nothing in the file saying which node was
+ * which job**. Add a fourth job and every check stayed green.
+ *
+ * So a node that stands for a job DECLARES it:
+ * `<folio:job name="stage"/>`, and the two sets are compared in **both**
+ * directions. A job with no node is a diagram that has gone stale; a node
+ * naming a job the YAML does not have is one that was stale already. Neither
+ * is inferred from a label — same reason `<folio:implements>` is not inferred
+ * from a filename.
+ *
+ * Declaring is OPT-IN per diagram: a covered workflow whose diagram names no
+ * job at all is reported as undeclared rather than as fully drifted, because
+ * "nobody has said yet" and "said, and wrong" are different answers and the
+ * first is not a finding. What is never allowed is a diagram declaring SOME
+ * of a workflow's jobs and being read as complete.
+ *
  * ## Three states, and the third is why this exists
  *
  * - **covered** — a diagram declares this workflow.
@@ -102,6 +124,25 @@ export interface WorkflowRow {
   diagrams: string[];
   /** Why, when `coverage` is `unknown`. */
   reason?: string;
+  /**
+   * How the diagram's declared jobs compare to the workflow's real ones.
+   *
+   * `undefined` when there is nothing to compare — an uncovered or unreadable
+   * workflow. `declared: false` means covered but no diagram has said which
+   * node is which job yet, which is not a finding.
+   */
+  jobs?: JobDrift;
+}
+
+export interface JobDrift {
+  /** Has any diagram declared a job for this workflow? */
+  declared: boolean;
+  /** Jobs in the YAML that no node claims. */
+  missing: string[];
+  /** Jobs a node claims that the YAML does not have. */
+  extra: string[];
+  /** Jobs claimed by more than one node, with the count. */
+  duplicated: string[];
 }
 
 /** Every `<folio:implements workflow="…"/>` in a diagram. */
@@ -111,6 +152,64 @@ export function declaredWorkflows(xml: string): string[] {
     out.push(m[1]!);
   }
   return out;
+}
+
+/**
+ * Every `<folio:job name="…"/>` in a diagram, with the node declaring it.
+ *
+ * Matched as an element BODY rather than by proximity: a self-closing node
+ * has no body and so declares nothing, and a `folio:job` is attributed to the
+ * element that actually contains it. Walking backwards to the nearest
+ * preceding `id="…"` would attribute a job to whatever happened to be typed
+ * above it, which is the kind of near-miss that reads correct in every
+ * example somebody tries.
+ */
+export function declaredJobs(xml: string): { node: string; job: string }[] {
+  const out: { node: string; job: string }[] = [];
+  const pat = /<bpmn:([A-Za-z]+)\b[^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/bpmn:\1>/g;
+  for (const m of xml.matchAll(pat)) {
+    for (const j of m[3]!.matchAll(/<folio:job\b[^>]*\bname="([^"]+)"/g)) {
+      out.push({ node: m[2]!, job: j[1]! });
+    }
+  }
+  return out;
+}
+
+/**
+ * The job names a workflow declares, or why they could not be read.
+ *
+ * A reason rather than an empty list, for the same reason `autoTriggered`
+ * returns one: a workflow whose `jobs:` cannot be read has UNKNOWN jobs, and
+ * an empty list would make every declared job look like an `extra` — turning
+ * a parse failure into a wall of false findings pointing at the diagram.
+ */
+export function workflowJobs(yaml: string): string[] | { reason: string } {
+  let doc: unknown;
+  try {
+    doc = Bun.YAML.parse(yaml);
+  } catch (e) {
+    return { reason: `YAML will not parse: ${e instanceof Error ? e.message : String(e)}` };
+  }
+  if (doc === null || typeof doc !== "object") return { reason: "is not a YAML mapping" };
+  const jobs = (doc as Record<string, unknown>)["jobs"];
+  if (jobs === undefined) return { reason: "declares no `jobs:`" };
+  if (typeof jobs !== "object" || jobs === null || Array.isArray(jobs)) {
+    return { reason: "`jobs:` is not a mapping" };
+  }
+  return Object.keys(jobs);
+}
+
+/** Compare a workflow's real jobs against what its diagrams claim. */
+export function compareJobs(real: string[], claimed: string[]): JobDrift {
+  const realSet = new Set(real);
+  const counts = new Map<string, number>();
+  for (const c of claimed) counts.set(c, (counts.get(c) ?? 0) + 1);
+  return {
+    declared: claimed.length > 0,
+    missing: real.filter((r) => !counts.has(r)).sort(),
+    extra: [...counts.keys()].filter((c) => !realSet.has(c)).sort(),
+    duplicated: [...counts.entries()].filter(([, n]) => n > 1).map(([c]) => c).sort(),
+  };
 }
 
 /**
@@ -178,10 +277,17 @@ export function surveyWorkflows(repo: string = REPO, instance: string = HERE): {
 
   // diagram -> declared workflows, and the inverse.
   const byWorkflow = new Map<string, string[]>();
+  // The jobs each diagram claims. A diagram declares ONE workflow in practice,
+  // so its jobs are attributed to every workflow it implements — which is the
+  // only reading that does not invent a second declaration syntax for a case
+  // nobody has.
+  const jobsByWorkflow = new Map<string, string[]>();
   const dangling: { diagram: string; workflow: string }[] = [];
   for (const d of workflowFiles(instance).filter((f) => f.endsWith(".bpmn"))) {
     const rel = relative(repo, d);
-    for (const w of declaredWorkflows(readFileSync(d, "utf-8"))) {
+    const xml = readFileSync(d, "utf-8");
+    const claimed = declaredJobs(xml).map((j) => j.job);
+    for (const w of declaredWorkflows(xml)) {
       if (!existsSync(join(repo, w))) {
         // Unambiguous, and it breaks a reader who follows it — the same tier
         // `check-workflow-refs.ts` puts a dangling `<folio:skill ref>` in.
@@ -189,6 +295,7 @@ export function surveyWorkflows(repo: string = REPO, instance: string = HERE): {
         continue;
       }
       byWorkflow.set(w, [...(byWorkflow.get(w) ?? []), rel]);
+      jobsByWorkflow.set(w, [...(jobsByWorkflow.get(w) ?? []), ...claimed]);
     }
   }
 
@@ -197,10 +304,21 @@ export function surveyWorkflows(repo: string = REPO, instance: string = HERE): {
     const diagrams = (byWorkflow.get(rel) ?? []).sort();
     let auto: boolean | undefined;
     let reason: string | undefined;
+    let jobs: JobDrift | undefined;
     try {
-      const r = autoTriggered(readFileSync(join(dir, f), "utf-8"));
+      const yaml = readFileSync(join(dir, f), "utf-8");
+      const r = autoTriggered(yaml);
       if (typeof r === "boolean") auto = r;
       else reason = r.reason;
+      if (reason === undefined && diagrams.length > 0) {
+        const real = workflowJobs(yaml);
+        // A workflow whose `jobs:` cannot be read is UNKNOWN, not drift-free.
+        // Leaving `jobs` undefined here would report a covered workflow as
+        // having nothing to say about its jobs, which is the pass-shaped
+        // blindness this whole file is against; `reason` moves it to unknown.
+        if (Array.isArray(real)) jobs = compareJobs(real, jobsByWorkflow.get(rel) ?? []);
+        else reason = real.reason;
+      }
     } catch (e) {
       reason = `could not be read: ${e instanceof Error ? e.message : String(e)}`;
     }
@@ -209,7 +327,14 @@ export function surveyWorkflows(repo: string = REPO, instance: string = HERE): {
     // file nobody could parse.
     const coverage: Coverage =
       reason !== undefined ? "unknown" : diagrams.length > 0 ? "covered" : "uncovered";
-    return { path: rel, auto, coverage, diagrams, ...(reason ? { reason } : {}) };
+    return {
+      path: rel,
+      auto,
+      coverage,
+      diagrams,
+      ...(reason ? { reason } : {}),
+      ...(coverage === "covered" && jobs ? { jobs } : {}),
+    };
   });
 
   return { rows, dangling };
@@ -235,9 +360,16 @@ if (import.meta.main) {
     console.log(label);
     for (const r of set) {
       const mark = r.coverage === "covered" ? "✓" : r.coverage === "unknown" ? "?" : "·";
+      const drift = r.jobs
+        ? r.jobs.declared
+          ? r.jobs.missing.length + r.jobs.extra.length + r.jobs.duplicated.length > 0
+            ? "  ✗ DRIFTED"
+            : "  (jobs match)"
+          : "  (no job declared)"
+        : "";
       const note =
         r.coverage === "covered"
-          ? r.diagrams.map((d) => basename(d)).join(", ")
+          ? r.diagrams.map((d) => basename(d)).join(", ") + drift
           : r.coverage === "unknown"
             ? `COULD NOT DETERMINE — ${r.reason}`
             : "";
@@ -257,9 +389,40 @@ if (import.meta.main) {
       `${gap.length} not, ${unknown.length} could not be determined.`,
   );
 
+  // A diagram that declares SOME of a workflow's jobs and is read as complete
+  // is the failure the bean names: it is consulted, and it is wrong. A
+  // diagram that has declared NOTHING yet is not a finding — nobody has said
+  // anything to be wrong about.
+  const drifted = rows.filter(
+    (r) =>
+      r.jobs?.declared &&
+      r.jobs.missing.length + r.jobs.extra.length + r.jobs.duplicated.length > 0,
+  );
+  const undeclared = rows.filter((r) => r.jobs && !r.jobs.declared);
+  if (undeclared.length > 0) {
+    console.log(
+      `${undeclared.length} documented workflow(s) declare no job, so their diagrams are\n` +
+        `not checked for drift. That is a gap, not a finding: nothing has been claimed.\n`,
+    );
+  }
+
   if (dangling.length > 0) {
     console.error("\n✗ DECLARED BUT ABSENT — a diagram documents a workflow that is not there:");
     for (const d of dangling) console.error(`    ${d.diagram} → ${d.workflow}`);
+  }
+  if (drifted.length > 0) {
+    console.error("\n✗ DRIFTED — the diagram no longer matches the workflow it documents:");
+    for (const r of drifted) {
+      console.error(`    ${r.path}  (${r.diagrams.join(", ")})`);
+      const j = r.jobs!;
+      if (j.missing.length) console.error(`      job(s) with no node: ${j.missing.join(", ")}`);
+      if (j.extra.length) console.error(`      node(s) naming a job the workflow does not have: ${j.extra.join(", ")}`);
+      if (j.duplicated.length) console.error(`      job(s) claimed by more than one node: ${j.duplicated.join(", ")}`);
+    }
+    console.error(
+      "\n  A diagram that is drawn once and then drifts is worse than none, because\n" +
+        "  it is consulted. Update the diagram, or the `<folio:job>` that names the job.",
+    );
   }
   if (unknown.length > 0) {
     console.error(
@@ -271,7 +434,9 @@ if (import.meta.main) {
   // Order matters: an unreadable file outranks a coverage gap, because it is
   // the state that can hide one.
   if (unknown.length > 0) process.exit(2);
-  if (dangling.length > 0) process.exit(1);
+  // Drift and dangling are the same tier: both are a diagram that misleads a
+  // reader who follows it, and neither waits on `--strict`.
+  if (dangling.length > 0 || drifted.length > 0) process.exit(1);
   if (strict && gap.length > 0) {
     console.error(`\n✗ ${gap.length} workflow(s) carry no diagram. Run without --strict to report only.`);
     process.exit(1);
