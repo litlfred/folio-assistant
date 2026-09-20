@@ -109,9 +109,43 @@ because a diagram that omitted a whole class of relation *silently* would be
 the "rendered as nothing" failure this repository works to avoid. An
 undrawn association is **invisible, not absent**.
 
-If you want those edges drawn, they have to be **declared**: the id field must
-say what it points at. That is a modelling change, not a reader change, and it
-belongs to [`data-modelling`](data-modelling.md).
+### `@ref` — declaring the edge the reader cannot find
+
+Those edges are drawable, and the mechanism is a **JSDoc tag on the field**:
+
+```ts
+/**
+ * Skills available to an actor in this role, before inheritance.
+ *
+ * @ref SkillDefinitionSchema
+ */
+skills: z.array(z.string()).default([]),
+```
+
+Zero runtime cost — no helper, no wrapper, nothing changes about what the
+schema validates. `firstProse` already skips every `@`-line, so the prose
+summary and the machine-readable tag do not swallow each other.
+
+**It cannot resolve the way everything else does.** `resolve()` requires the
+name to be BOUND in the module, and the entire point of a string id is that
+the target is not imported. So an `@ref` resolves **by name, nearest first** —
+same module, then same directory, then graph-wide — **and only when the
+narrowing leaves exactly one**. Two equally-near targets is an *ambiguous tag*,
+not a winner: picking the first is the `wggr` failure one level down, an answer
+that looks resolved and may be the wrong schema. That case is real here rather
+than defensive — `SkillDefinition` is declared **twice in one directory**.
+
+A tag naming nothing, and an ambiguous one, both land in `refProblems` and are
+**reported**. Silence would make a typo indistinguishable from a field with no
+tag — the same rule `undetermined` states.
+
+`id-ref` is its own edge kind and is never folded into `field`, so a consumer
+can tell a reference **the source proves** from one **an author asserted**. The
+diagram draws it dashed for that reason.
+
+**What to tag is still a modelling question** —
+[`data-modelling`](data-modelling.md). A tag is an assertion about the domain,
+and a wrong one is worse than none: it draws an edge that does not exist.
 
 ### The control worked in both directions
 
@@ -227,73 +261,77 @@ against an absent directory here, because a declared-but-absent directory is
 the `dh4f` defect. Bean `n0nf` carries the same `skip` finding from the root's
 side.
 
-## The overview panel — a whole-graph picture, and why this one is allowed
+## The relationship diagram — what is defined here, and HOW it is linked
 
-[`kg-viewer`](kg-viewer.md) §"Do not draw the whole graph" says the instinct is
-a force-directed node-link diagram of everything and to resist it, measured on
-**1111 nodes and ~2000 edges** rendering as a hairball. This skill said the same
-for a long time, and the viewer carried it as *"there is deliberately no
-whole-corpus class diagram"*.
+A collapsible panel at the top of the viewer draws the declarations the page is
+scoped to as **UML class boxes wired by their edges, each edge labelled with
+the field it goes through**. That label is the point. Owner, 2026-09-20:
 
-**The owner asked for one anyway, 2026-09-20, and the rule bends rather than
-breaks — because the measurement behind it does not transfer.** Two differences
-decide it, and both are countable rather than aesthetic:
+> so you can see Role is linked to Task (how) etc. / the relatioship diagram
+> or so
 
-| | KG viewer | schema overview |
+*"Role is linked to Skill"* is half an answer; *"via `skills`, many"* is the
+whole one. A picture that shows connection without naming the relation is a
+prettier version of the list it replaced.
+
+### It is scoped, and refusing is an answer
+
+Owner, same day: **"not the WHOLE thing"**, and *"what's defined in that KG
+harness"*. So the diagram draws the page's scope narrowed by the **module
+filter**, and above `DIA_MAX` (40) declarations it **refuses and says how to
+get a picture** — pick a module. Drawing 812 labelled boxes is exactly the
+hairball [`kg-viewer`](kg-viewer.md) measured at 1111 nodes; that rule is
+applied here rather than argued with.
+
+### One hop of context, because counting an edge is not showing it
+
+A strict module filter cuts the edge most worth seeing.
+`RoleDefSchema --skills--> SkillDefinitionSchema` spans two files, so
+filtering to `role-graph.ts` drew Role with its most interesting relation
+missing and reported the loss as a number.
+
+So a declaration just outside the filter that a drawn one touches **is drawn**,
+faded and dashed, marked as context rather than as part of the set.
+Context-to-context edges are not drawn — that would be a graph the page is not
+about.
+
+**The fade is load-bearing.** It shipped broken once: the CSS landed but the
+class was never applied, so context boxes were indistinguishable from real
+ones — a diagram that quietly widened its own scope. Caught by counting
+`.dia-ctx` in the render test rather than by reading the diff.
+
+### Three edge kinds, and `id-ref` is drawn differently on purpose
+
+| kind | drawn | means |
 |---|---|---|
-| nodes | 1111 | **75** (modules) or ≤70 (declarations) |
-| drawn edges | ~2000 | **35** |
+| `extends` | solid, hollow triangle | generalisation |
+| `field` | solid, open arrow | a reference **in the source** |
+| `id-ref` | **dashed** | an association **declared** with `@ref` over a plain string |
 
-The hairball argument is about *density*, and it still governs: what it rules
-out is drawing **812 labelled declarations**, which nothing here does.
+A field reference is something the reader *found*. An id-ref is something an
+author *asserted*, because the target is a string id the reader structurally
+cannot see. Drawing them alike would claim the reader saw something it did
+not — the same honesty the three `undetermined`/`unresolved`/`external` states
+already enforce one level down.
 
-### Three rules it obeys, each paid for
+### Layout
 
-- **The layout is STATIC and deterministic.** Computed once from the
-  projection; no simulation, no frame budget, nothing to settle. Ordering ties
-  break on group size, then degree, then id — everything stable, so the picture
-  is *reproducible* rather than merely deterministic-looking. A node the reader
-  found last week is where they left it. Dragging and re-running a layout are
-  deliberately absent and are their own work (bean `whbf`).
-- **Granularity is adaptive, and the threshold is stated.** At or under
-  `OV_DECL_MAX` (70) in-scope declarations it draws declarations; above it,
-  the **modules** holding them, edges aggregated with weight as a real count.
-  This is the hairball rule applied rather than ignored.
-- **It is drawn on first OPEN, not at load.** The panel is `<details>`, closed
-  by default: a reader who never opens it should not pay for a layout over 812
-  declarations, and the local questions the list answers are the ones people
-  arrive with.
+Longest-path layering so a generalisation reads downward, then one barycentre
+pass to reduce crossings, ties broken by name. The walk is **depth-capped
+rather than assuming a DAG**: mutually recursive types are real here, and a
+cycle must settle rather than hang.
 
-### The count that must never go unexplained
+Static, in the strict sense — computed once, no simulation, nothing to settle.
+Dragging and alternate arrangements are bean `whbf`.
 
-Once **modules** are the nodes, an edge inside one module has nowhere to go.
-Measured here: **446 of 512** edges are intra-module — 87 %. Drawing 35 lines
-under a header reading *512 edges* would leave the difference unaccounted for,
-which is the **same defect** the scoped counts already fixed once, when a
-`detangle` page claimed 512 edges among nine declarations.
+Edge labels stagger by index, because two edges whose midpoints land in the
+same band overplot: `permissions * 0..1` and `actors * 0..1` came out on top of
+each other. The stagger only has to separate neighbours, not be optimal.
 
-So an undrawn edge is **counted and reported**, never dropped. The caption says
-how many ran within a module and why they cannot appear. The general rule,
-worth applying to any aggregate view:
+### Clicking a box opens its definition
 
-> If aggregation makes an edge vanish, the view owes the reader the count it
-> vanished into. A picture that silently loses 87 % of its edges is not a
-> simplification, it is a wrong answer.
-
-The same applies to isolates: **37 of 75** modules neither reference nor are
-referenced, and the panel says so. That is a finding about this corpus, not
-noise to hide — it is visible as an entire unconnected arc.
-
-### Edges are coloured by source, and that was a fix
-
-The first cut drew them in `--line` (`#d9dde2`) and the picture answered
-nothing: a panel whose question is *"how connected is this"* had edges you could
-not see against its own background. They are now coloured by **source** node,
-which also makes a cross-instance reference legible as one.
-
-Canvas size derives from the **longest label**, because labels are drawn
-radially outside the ring — at a fixed 920×560 the bottom of the ring ran past
-the viewBox and names came out clipped.
+Which is what makes the diagram navigation rather than a poster — the owner's
+original ask was *"browsable, so i can give overview like browsing"*.
 
 ## Editing a viewer — no backticks
 

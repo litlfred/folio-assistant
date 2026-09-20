@@ -48,71 +48,50 @@ every declared `schemas` directory, with the edges between them.
   generalisations above it and its field references below, each labelled with
   the field it goes through.
 
-- An **overview panel** at the top, collapsible and closed by default: the
-  whole graph as one static picture, for the question the list cannot answer —
-  *how connected is this, and where are the hubs?*
+- A **relationship diagram** at the top, collapsible and closed by default:
+  the declarations this page is scoped to, as UML boxes wired by labelled
+  edges — *what is defined here, and how it is linked?*
 
-There is still **no whole-corpus class diagram**, and the overview is not one.
-Hundreds of labelled declaration boxes render as a wall that looks like a data
-model and answers no question about one — the same argument the knowledge-graph
-viewer made and won. The overview obeys it by changing *granularity* instead:
-see below.
+There is still **no whole-corpus class diagram.** Hundreds of labelled
+declaration boxes render as a wall that looks like a data model and answers no
+question about one — the same argument the knowledge-graph viewer made and won.
+The diagram obeys it by staying **scoped**, and by declining when the scope is
+too big rather than drawing it anyway.
 
-### The overview panel
+### The relationship diagram
 
-Static, in the strict sense — the layout is computed once and deterministically
-from the projection. No simulation, nothing to settle, and every tie in the
-ordering breaks on something stable, so a node you found last week is where you
-left it. Dragging and alternate arrangements are deliberately absent and are
-tracked separately.
+A collapsible panel at the top draws the declarations the page is scoped to as
+**UML class boxes wired by their edges, each edge labelled with the field it
+goes through** — so you can read not just that `Role` is linked to `Skill`, but
+that it goes through `skills`, and that it is a list.
 
-**Granularity adapts, and the threshold is stated on the page.** At or under 70
-in-scope declarations it draws declarations. Above that it draws the **modules**
-holding them, with edges aggregated and line weight carrying a real reference
-count. So `detangle` shows its 9 declarations individually, while the whole
-graph shows 75 modules rather than 812 boxes.
+**It is scoped, and refusing is an answer.** The diagram draws the page's scope
+narrowed by the module filter; above 40 declarations it declines and says to
+pick a module. Drawing 812 labelled boxes is the hairball the knowledge-graph
+viewer measured at 1111 nodes.
 
-**An edge that aggregation makes vanish is counted, never dropped.** Once
-modules are the nodes, an edge inside one module has nowhere to go — and
-measured here that is **446 of 512** edges, 87 %. Drawing 35 lines under a
-header reading *512 edges* would leave the difference unexplained, which is the
-same defect the scoped counts already fixed once. The caption says how many ran
-within a module and why they cannot appear.
+**One hop of context is drawn, faded.** A strict module filter cuts the edge
+most worth seeing — `RoleDefSchema --skills--> SkillDefinitionSchema` spans two
+files — so a declaration just outside the filter that a drawn one touches is
+drawn too, dashed and dimmed. Counting a cut edge is not showing it.
 
-The isolates are reported for the same reason: **37 of 75** modules neither
-reference nor are referenced, which is visible as an entire unconnected arc.
-That is a finding about this corpus, not noise to hide.
+Three edge kinds, and the third is drawn differently on purpose:
 
-### Reading it
+| kind | drawn | means |
+|---|---|---|
+| generalisation | solid, hollow triangle | `extends` |
+| field reference | solid, open arrow | a reference **in the source** |
+| id reference | **dashed** | an association **declared** with `@ref` |
 
-Three of the states it shows are easy to mistake for noise:
+A field reference is something the reader *found*; an id reference is something
+an author *asserted*, because the target is a string id no syntactic reader can
+see. Drawing them alike would claim the reader saw something it did not.
 
-- **`undetermined`** — the reader saw an expression it does not model, and
-  **says what it saw**. This is never rendered as a type with no fields,
-  because "no fields" and "could not be read" are different answers.
-- **`unresolved`** — a name the module binds, from a module inside this graph,
-  that resolves to no declaration. A real finding, usually a vocabulary
-  constant.
-- **`external`** — bound to something outside this graph. Resolved correctly;
-  nothing to do.
+Clicking a box opens that declaration's definition, which is what makes the
+panel navigation rather than a poster.
 
-### What the diagram cannot show
-
-A reference carried as a **string id** is not drawn, and this is a structural
-limit rather than a gap: a field declared as a plain string holds no link to
-the schema it names, so nothing syntactic — and nothing in JSON Schema or the
-type checker either — can recover it.
-
-Measured against `schemas/assistant-schema.puml`, a hand-drawn UML diagram
-used as a control: **14 of 15** compositions reproduced, **0 of 9** id
-associations. The page says so permanently, and again on any type carrying
-id-style fields, because an undrawn association is **invisible, not absent**.
-
-The same comparison found the hand-drawn diagram wrong in one place, which is
-what a control is for.
-
-The data is at `assets/schemas/index.json` and is the same file the page
-reads; anything else may draw it.
+The layout is **static**: computed once, deterministically, no simulation.
+Dragging and alternate arrangements are tracked separately.
 
 ## The library — the L1 corpus
 
