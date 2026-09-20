@@ -341,6 +341,11 @@ const RULES: Rule[] = [
       // harness module. The pure check it drives, `schemas/theme-art-intake.ts`,
       // needs none of that and is left to the `schemas/` prefix.
       "scripts/check-theme-art.ts",          // theme/avatar art intake, run over what shipped
+      // The reverse of `check-declared-assets` (declared -> disk): this walks
+      // disk -> declared. Same reason it is core rather than harness — it reads
+      // an instance's declaration, and this instance declares a `folio` graph,
+      // so it imports core's kind registration.
+      "scripts/check-undeclared-files.ts",   // present-but-undeclared, the dh4f shape inverted
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC

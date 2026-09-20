@@ -50,6 +50,8 @@
     "check:corpus-gate": "bun run cat-harness/scripts/check-corpus-gate.ts",
     "check:declared-paths": "bun run cat-harness/scripts/check-declared-paths.ts",
     "check:declared-assets": "bun run cat-harness/scripts/check-declared-assets.ts",
+    "check:undeclared-files": "bun run cat-harness/scripts/check-undeclared-files.ts",
+    "check:undeclared-files:check": "bun run cat-harness/scripts/check-undeclared-files.ts --check",
     "bootstrap:graph": "bun run cat-harness/scripts/gen-bootstrap-graph.ts",
     "bootstrap:graph:check": "bun run cat-harness/scripts/gen-bootstrap-graph.ts --check",
     "ingest": "bun run cat-harness/scripts/ingest-document.ts",
