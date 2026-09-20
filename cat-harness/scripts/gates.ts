@@ -672,6 +672,28 @@ export function unrunScripts(root: string): string[] {
 }
 
 /**
+ * What to print when the gate set could not be derived.
+ *
+ * Pure, and exported, for one reason: the CLI's `ROOT` is computed from this
+ * file's own location (`repoRootFor(import.meta.dir/..)`), so no spawn test can
+ * put it in a tree without workflows — `cd` elsewhere and it still reads this
+ * repository's. The decision is therefore separated from the exit so the
+ * decision is what gets tested.
+ *
+ * The wording matters as much as the code: a caller must be able to tell this
+ * from a failure, so it says so in as many words rather than leaving the exit
+ * code to carry the whole distinction.
+ */
+export function undeterminedReport(e: unknown, root: string): string[] {
+  return [
+    `? could not derive the gate set: ${e instanceof Error ? e.message : String(e)}`,
+    `  Expected ${GATES_WORKFLOW} relative to ${root}.`,
+    "  This is NOT a pass and NOT a failure — no verdict is possible, so nothing here",
+    "  may be read as a clean tree. Exit 2.",
+  ];
+}
+
+/**
  * Run a command, streaming its output AND keeping a copy.
  *
  * `stdio: "inherit"` was here, and the summary could say nothing about WHY a
@@ -749,7 +771,36 @@ if (import.meta.main) {
   // `await` below — the gate loop tees each child's output (bean `ucb9`).
   const all = process.argv.includes("--all");
   const listOnly = process.argv.includes("--list");
-  const gates = loadGates(ROOT, { all });
+
+  // ── The third state (bean `6366`) ──────────────────────────────────────
+  //
+  // Until now this exited 0 or 1 only, so "every gate passed" and "I could not
+  // work out what the gates ARE" were the same answer. They are not.
+  //
+  // `loadGates` was ALREADY right about this and says so in its own message —
+  // "no gate commands were extracted. That is not a clean sweep, it is a broken
+  // reader" — and it throws for both shapes: the workflow file absent, and the
+  // file present but yielding nothing. The defect was here, in the CLI, which
+  // let that throw escape as an uncaught exception and so reported a
+  // could-not-determine as exit **1**, indistinguishable from a real failure.
+  //
+  // So this block adds no detection. It translates a refusal the library already
+  // makes into the exit code the third-state rule requires, and there is
+  // deliberately NO `gates.length === 0` branch underneath it: that check cannot
+  // fire, because `loadGates` throws first. A guard that cannot fire is the
+  // `build-glossary` dead-guard defect, which reads as protection and is not.
+  //
+  // Note what is NOT exit 2. UNCLASSIFIED and UNRUN below are *determined*
+  // findings — the set is known and every member is named — so they stay a loud
+  // report at the existing exit codes. "I know exactly which steps are missing"
+  // is not "I could not tell".
+  let gates: Gate[];
+  try {
+    gates = loadGates(ROOT, { all });
+  } catch (e) {
+    for (const line of undeterminedReport(e, ROOT)) console.error(line);
+    process.exit(2);
+  }
 
   const scope = all
     ? "every job, plus every locally-runnable step from the other workflows"

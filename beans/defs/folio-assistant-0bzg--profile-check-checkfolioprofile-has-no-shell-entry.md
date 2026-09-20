@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0bzg
 title: 'PROFILE CHECK: checkFolioProfile has no shell entry point — three options, none chosen'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T10:45:46Z
-updated_at: 2026-09-20T12:07:31Z
+updated_at: 2026-09-20T14:12:30Z
 parent: folio-assistant-d308
 ---
 
@@ -80,10 +80,13 @@ unreachable from CI. Nothing regresses; the gap simply stays, now written down.
 
 ## Done when
 
-- [ ] one of the three chosen, by a person
-- [ ] whichever is chosen, `covered-is-not-reachable` gains this as its worked
-      example of the no-command case
-- [ ] `readFolioProfile` either gains a caller or is recorded as dead
+- [x] one of the three chosen, by a person — the `qa-sweep` axis
+- [x] whichever is chosen, `covered-is-not-reachable` gains this as its worked
+      example of the no-command case — **case 4** in its table, with the
+      generalisation the case actually cost (see below)
+- [x] `readFolioProfile` is **not** dead: `checkFolioProfile` calls it at
+      `profile-check.ts:147`, and `profile-scoping.test.ts:169` pins the
+      two-caller distinction in a test — *"Two callers, two right answers"*
 
 
 
@@ -189,3 +192,53 @@ bean raised does not arise.
 - [ ] `covered-is-not-reachable` gains this as its worked example of the no-command case
 - [ ] whether `checkFolioProfile` also wants a Tool node, per "triggers or tools as
       appropriate" — the axis is the trigger; a named command would be the Tool
+
+
+---
+
+## CLOSED 2026-09-20 — all three criteria met, and the third was a measurement not a change
+
+**Criterion 3 needed checking, not doing.** The box asked for a caller *or* a
+record of death, and the answer was already the former: `readFolioProfile` is
+called by `checkFolioProfile` (`content/pipeline/profile-check.ts:147`), which the
+axis now reaches. Better, the distinction the axis rests on is already *tested* —
+`scripts/tests/profile-scoping.test.ts:169` says it in words: **"Two callers, two
+right answers."** `readFolioProfile` answers *"what may this folio contain"* and
+defaults to `paper`; `readDeclaredFolioProfile` answers *"what did anybody say"*
+and returns `undefined`. Recording it as dead would have been false.
+
+**Criterion 2 was the one with work in it**, and the case is genuinely distinct
+from the three the skill already carried. Cases 1–3 are about a missing node or a
+missing skill. This one had **both** and was still unaskable:
+
+| | what exists | what is missing |
+|---|---|---|
+| case 4 | a skill, a mechanism, an MCP tool | **a command** — in-process only |
+
+`checkFolioProfile`'s only caller registered MCP tools, so it was reachable by an
+MCP-connected agent and by nothing else: not a gate, not a sweep, not a person at
+a shell. It is the hardest of the four to notice **because the mechanism *is*
+reachable** — to one caller class — so every instrument answering "can this be
+reached" says yes. The rule written down: *ask which callers, not whether.*
+
+### The generalisation, which is the part worth more than the axis
+
+The first version of the axis reported **`pass` on a folio declaring no content
+type** — precisely the laundering it exists to prevent. It guarded on
+`ProfileCheckResult.profile === undefined`, and that field is *never* `undefined`.
+
+> **A library's defaulting is usually what erases the third state.** When you give
+> a library function its first entry point, the value it resolves for its own use
+> is not the value a verdict may report.
+
+`readFolioProfile` defaulting to `paper` is **correct for a validator** — the
+wider vocabulary is the safe thing to validate against — and wrong for a reporter.
+Caught by running it, not by reading it.
+
+### Verified
+
+- `covered-is-not-reachable` — 260 lines, under the 280 `skill-is-brief`
+  threshold; sidecar 4 pass / 0 fail / 0 unknown at hash `0cee3ea7904e`
+- `bun run kg:audit:check` — exit 0
+- the axis's own tests (`profile-conformance-axis.test.ts`) reach `pass`, `fail`
+  and `n/a`, rather than only the state this repository happens to produce

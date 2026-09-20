@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yean
 title: 'SKILL GAP: two textbook Tool nodes cannot be written — no skill states what they do'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T05:14:54Z
-updated_at: 2026-09-20T05:14:54Z
+updated_at: 2026-09-20T14:06:58Z
 parent: folio-assistant-d308
 ---
 
@@ -84,3 +84,63 @@ walks.
       then both nodes
 - [ ] either way, a check that finds case 3 — a published generated artefact with
       no Tool maintaining it. `check:declared-assets` may already be the place
+
+---
+
+## CLOSED 2026-09-20 — the skill was authored on `main`, and candidate A was taken
+
+**The gap this bean recorded no longer exists.** A sibling session answered it
+independently, and the answer arrived here through merge `ce9b4cf`.
+
+`skills/folio-core/site-presentation-assets.md` (108 lines) is **candidate A** —
+one skill for site presentation assets, stated generically:
+
+> *A visual fact — a colour, a glyph, a theme — lives in a graph node, and the
+> stylesheet the site serves is a rendering of it.*
+
+It carries the owner's requirement verbatim, a one-question test ("could a reader
+change this visual fact in one place and be sure the site agrees?"), four rules,
+and an explicit non-coverage list separating it from `one-voice-style-guide` and
+the rendering auditor.
+
+### It is not the thing this bean warned against
+
+The trap recorded above was that *"a skill written to give a script somewhere to
+point is **a Tool with front matter** — it would pass every check and teach
+nothing."* Checked against the text rather than assumed from its existence:
+
+- **It names no script, deliberately, and says so** in its own closing section.
+- Its rules are about **direction of authority**, not invocation: never hand-edit
+  generated output; gate staleness rather than trust it; a published generated
+  asset needs a Tool that `maintains` it; an asset reference resolves and is never
+  composed.
+- It generalises past the two scripts — themes as **token sets** rather than
+  stylesheets with branches, and the third state for an asset whose presence
+  cannot be determined.
+
+### Both nodes are in the graph
+
+| node | invoke | satisfies | maintains |
+|---|---|---|---|
+| `themes-css` | `bun run themes:css` | `site-presentation-assets` | `schemas/themes.ts` → `assets/css/themes.css` |
+| `avatars-css` | `bun run avatars:css` | `site-presentation-assets` | `schemas/avatars.ts` → `assets/css/avatars.css` |
+
+Verified, by running it rather than reading it:
+
+- `bun run check:tools` → *"every satisfies resolves and agrees with its skill's
+  contract; every io type is declared; every argv input is injection-safe"*.
+- `bun run tools:coverage` → `site-presentation-assets` is **absent from all four
+  uncovered tiers** (44 skills have a Tool, 155 do not; tier A is 28).
+- `test/results/kg-qa/skills/folio-core/site-presentation-assets.kg-qa.json` —
+  4 pass, 0 fail, 0 unknown.
+- Both nodes take a `--check` arm, which is rule 2 of the skill satisfied by the
+  mechanism the skill governs.
+
+### One thing the owner may still want to revisit
+
+This bean existed **because the A-vs-B choice was the owner's**, and it was
+settled on `main` by a sibling rather than by them. The outcome is A. B was
+*"these are `kg-export` after all"*, which would have required rewording
+`kg-export` away from *"serialize … to one JSON document"* — the stretch under
+another name. A is the better answer on the merits and is what shipped; recorded
+here only so the decision is visible as having been made, not inferred.
