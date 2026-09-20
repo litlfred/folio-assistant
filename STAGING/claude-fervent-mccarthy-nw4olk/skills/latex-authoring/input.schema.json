@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/skills/latex-authoring/input.schema.json",
+  "title": "LaTeX Authoring Input",
+  "description": "Input schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "documentClass",
+    "mainFile"
+  ],
+  "properties": {
+    "documentClass": {
+      "type": "string",
+      "enum": [
+        "article",
+        "book",
+        "report",
+        "beamer"
+      ],
+      "description": "LaTeX document class."
+    },
+    "mainFile": {
+      "type": "string",
+      "description": "Path to the main .tex file."
+    },
+    "bibliographyFile": {
+      "type": "string",
+      "description": "Path to the .bib bibliography file."
+    },
+    "outputFormat": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "dvi",
+        "ps"
+      ],
+      "default": "pdf"
+    }
+  },
+  "staging": {
+    "branch": "claude/fervent-mccarthy-nw4olk",
+    "sha": "7eae630dcf858d6e89706f14c0f9b377ae2070c4",
+    "pr": "525/merge",
+    "run": "35516009855"
+  }
+}
