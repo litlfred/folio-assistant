@@ -150,10 +150,13 @@ export class GitHelper {
     mkdirSync(tmpFileDir, { recursive: true });
     try {
       // Symlink schema dir for relative imports
-      const schemaLink = join(branchTmpDir, "content", "schema");
-      const realSchema = resolve(this.repoRoot, "content", "schema");
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const schemaLink = join(branchTmpDir, "folio", "schema");
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const realSchema = resolve(this.repoRoot, "folio", "schema");
       if (!existsSync(schemaLink) && existsSync(realSchema)) {
-        mkdirSync(join(branchTmpDir, "content"), { recursive: true });
+        // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+        mkdirSync(join(branchTmpDir, "folio"), { recursive: true });
         try {
           symlinkSync(realSchema, schemaLink, "dir");
         } catch {}

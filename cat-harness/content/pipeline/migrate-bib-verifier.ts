@@ -31,7 +31,8 @@ import { findContentRepoRoot } from "./repo-root";
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-const TARGET = join(REPO_ROOT, "content/bib-qa-verifications.json");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const TARGET = join(REPO_ROOT, "folio/bib-qa-verifications.json");
 
 /** Parse legacy "Claude (model-name)" pattern → `{ kind: "agent", model }`. */
 function parseLegacyVerifier(s: string): { kind: "agent"; model: string } | null {

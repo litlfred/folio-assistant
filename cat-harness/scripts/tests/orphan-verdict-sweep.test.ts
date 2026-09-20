@@ -23,9 +23,9 @@ function inTmp(run: (root: string) => void): void {
   }
 }
 
-/** Write a verdict for `content/<chapter>/<stem>`, with or without its manifest. */
+/** Write a verdict for `folio/<chapter>/<stem>`, with or without its manifest. */
 function place(root: string, chapter: string, stem: string, opts: { manifest: boolean }): void {
-  const blockRoot = join(root, "content", chapter, stem);
+  const blockRoot = join(root, "folio", chapter, stem);
   if (opts.manifest) {
     mkdirSync(dirname(blockRoot), { recursive: true });
     writeFileSync(blockRoot + ".ts", "export default {};\n");
@@ -44,7 +44,7 @@ describe("orphanVerdicts", () => {
       const found = orphanVerdicts(root);
       expect(found).toHaveLength(1);
       expect(found[0]!.kind).toBe("abandoned");
-      expect(found[0]!.expects).toContain(join("content", "gone", "b.ts"));
+      expect(found[0]!.expects).toContain(join("folio", "gone", "b.ts"));
     });
   });
 
@@ -71,7 +71,7 @@ describe("orphanVerdicts", () => {
     // A folio that has never run a sweep since migrating has no tree. Reporting
     // that would put a finding in front of every such folio on day one.
     inTmp((root) => {
-      mkdirSync(join(root, "content"), { recursive: true });
+      mkdirSync(join(root, "folio"), { recursive: true });
       expect(orphanVerdicts(root)).toEqual([]);
     });
   });

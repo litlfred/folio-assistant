@@ -1,11 +1,9 @@
 # ci-health-watcher — memory
 
-**Edit `memory/*.md`, not this file.** The region below is assembled by
-`bun run agent-memory` and anything written into it by hand is overwritten;
-everything outside it — the session log — is yours and is never touched.
-Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote).
-
----
+**Edit `memory/*.md`, not this file** — `bun run agent-memory` overwrites the
+region below; outside it is yours. Types: **STABLE** · **TRAP** · **BASELINE**
+(re-measure, never quote). Compact on purpose: every line here is a line of
+the 200-line injection budget the entries need.
 
 <!-- folio:memory:begin -->
 
@@ -199,9 +197,7 @@ Without rule 3 these two would be red forever. That is what rule 3 is for.
 
 <!-- folio:memory:end -->
 
----
-
 ## Session log
 
-One line per check: what was red, which of the three rules applied, whether
-it was a fire. Keep under ~200 lines — prune the log, never the TRAPs.
+One line per check: what was red, which rule applied, whether it was a fire.
+Prune the log, never the TRAPs.

@@ -97,7 +97,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       id: "folio-init",
       title: "Scaffold a folio",
       description:
-        "Create a new folio repository that uses this platform — content/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
+        "Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
       install: bundled,
       invoke: { ...inProcess("src/tools/folio-init.ts", "folio_init"), shell: "bun run init-folio" },
       io: {

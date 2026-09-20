@@ -2,7 +2,7 @@
 #
 # `docs-site.yml` was triggered by all 30 `main` pushes between 2026-06-29 and
 # 2026-08-26, and failed every one. Bean `xom7` fixed the *visibility* half:
-# `scripts/check-ci-health.ts` classifies every workflow's state on the default
+# `cat-harness/scripts/check-ci-health.ts` classifies every workflow's state on the default
 # branch, and `session-start-coord-sweep.sh` prints it where agent attention
 # already goes.
 #
@@ -68,7 +68,7 @@ jobs:
         id: check
         run: |
           set +e
-          bun run scripts/check-ci-health.ts --out "$RUNNER_TEMP/ci-health.md"
+          bun run check:ci-health --out "$RUNNER_TEMP/ci-health.md"
           status=$?
           set -e
           echo "status=$status" >> "$GITHUB_OUTPUT"

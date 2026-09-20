@@ -44,7 +44,7 @@
 export interface LeanPackage {
   /** Short-form package name used in `lean.ref` URI prefixes. */
   name: string;
-  /** Paper directory under `content/` (where the `.ts`/`.md` siblings live). */
+  /** Paper directory under `folio/` (where the `.ts`/`.md` siblings live). */
   paperDir: string;
   /** Path to the paper's Lake package root, relative to repo root. */
   lakeRoot: string;

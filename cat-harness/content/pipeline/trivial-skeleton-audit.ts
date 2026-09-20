@@ -44,8 +44,8 @@ const REPO_ROOT = findContentRepoRoot();
 const PAPERS = findPapers(REPO_ROOT);
 // Scan every paper the folio has, not one named in advance.
 const PAPER_GLOBS = PAPERS.flatMap((p) => [
-  `content/${p}/*/*.lean`,
-  `content/${p}/lean/**/*.lean`,
+  `folio/${p}/*/*.lean`,
+  `folio/${p}/lean/**/*.lean`,
 ]);
 
 // CLI parsing: `--out <path>` overrides witness output;

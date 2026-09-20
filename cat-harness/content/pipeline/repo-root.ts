@@ -46,10 +46,12 @@ export function findContentRepoRoot(): string {
     dir = dirname(dir);
   }
   for (const d of ancestors) {
-    if (existsSync(join(d, "computations")) && existsSync(join(d, "content"))) return d;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    if (existsSync(join(d, "computations")) && existsSync(join(d, "folio"))) return d;
   }
   for (const d of ancestors) {
-    if (existsSync(join(d, "content"))) return d;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    if (existsSync(join(d, "folio"))) return d;
   }
   // Fallback: import-relative heuristic (two levels up from
   // content/pipeline/). Preserves behaviour when the walk-up finds nothing.
@@ -69,7 +71,8 @@ export function findContentRepoRoot(): string {
  */
 export function findPapers(repoRoot?: string): string[] {
   const root = repoRoot ?? findContentRepoRoot();
-  const contentDir = join(root, "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const contentDir = join(root, "folio");
   if (!existsSync(contentDir)) return [];
   const out: string[] = [];
   for (const entry of readdirSync(contentDir)) {
@@ -117,7 +120,8 @@ export function requirePaper(explicit?: string, repoRoot?: string): string {
   const papers = findPapers(root);
   throw new Error(
     papers.length === 0
-      ? `No paper found under ${join(root, "content")}. folio-assistant is the ` +
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      ? `No paper found under ${join(root, "folio")}. folio-assistant is the ` +
         `PLATFORM; papers live in a folio. Run this from the content repo, or ` +
         `name a paper explicitly.`
       : `${papers.length} papers found (${papers.join(", ")}) — name one explicitly.`,

@@ -1339,7 +1339,7 @@ export interface FeedbackItem extends TodoItem {
  * The pipeline resolves `<dir>/<dir>.ts` by convention.
  */
 export interface PaperRef {
-  /** Directory name under content/ (e.g. "quantum-observable-universe"). */
+  /** Directory name under folio/ (e.g. "quantum-observable-universe"). */
   dir: string;
   /** Optional display title override (otherwise read from paper manifest). */
   title?: string;

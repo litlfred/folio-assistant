@@ -4,7 +4,7 @@
  * These are hermetic: they exercise the wrapper's structural behaviour
  * (script-path resolution, JSON extraction, graceful errors) and verify the
  * tools register with the expected names/handlers — without spawning the real
- * pipeline (which needs a content/<paper> fixture).
+ * pipeline (which needs a folio/<paper> fixture).
  */
 import { test, expect, describe } from "bun:test";
 import {
@@ -156,7 +156,7 @@ describe("registerQaTools", () => {
     const stub = { tool(name: string, _d: string, _s: unknown, h: ToolHandler) { registered[name] = h; } };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     registerQaTools(stub as any);
-    // In this repo there is no content/<paper>, so auto-detect yields nothing.
+    // In this repo there is no folio/<paper>, so auto-detect yields nothing.
     const res = await registered["glossary_check"]({});
     expect(res.content[0].type).toBe("text");
     expect(res.content[0].text.toLowerCase()).toContain("paper");

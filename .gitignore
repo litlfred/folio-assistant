@@ -157,3 +157,13 @@ cat-harness/docs/vendor/
 # — that is what makes the never-delete rule a relocation rather than a
 # disappearance.
 fsh-guts/logs/
+
+# Transient ingest staging — the arms write here, `check:l1-complete` gates it
+# on `--promote`, and only a COMPLETE entry is copied into `library/`
+# (bean `pn6j`). A REFUSED document's output is deliberately left behind for
+# inspection, so this can be non-empty; it is working state, never an artefact.
+# Not dot-prefixed: `.beans/` and `.harness/` were moved out from behind dots
+# in 2026-09-18 because the artefacts a person looks for first were the
+# hardest to find, and a staging tree holding a refused document is exactly
+# that.
+cat-harness/ingest-staging/

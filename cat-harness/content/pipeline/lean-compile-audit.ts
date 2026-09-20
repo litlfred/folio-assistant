@@ -236,7 +236,8 @@ if (args[0] === "--ingest" && args[1]) {
 } else if (args[0] === "--stale") {
   reportStale();
 } else if (args[0] === "--list") {
-  const contentRoot = args[1] || join(REPO_ROOT, "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const contentRoot = args[1] || join(REPO_ROOT, "folio");
   const files = findLeanFilesWithSiblingTs(contentRoot);
   for (const f of files) console.log(f);
   console.log(`\n${files.length} .lean files with .ts siblings`);

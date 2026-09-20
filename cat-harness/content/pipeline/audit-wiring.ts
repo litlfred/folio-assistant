@@ -41,7 +41,8 @@ import { paperArg } from "./cli-args";
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
 const PAPER = requirePaper(_paperArg);
-const PAPER_DIR = join(findContentRepoRoot(), "content", PAPER);
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const PAPER_DIR = join(findContentRepoRoot(), "folio", PAPER);
 const OUT_JSON = resolve(__dirname, "../audit-wiring.json");
 
 // Block kinds that don't require a .lean file.

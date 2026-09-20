@@ -94,7 +94,8 @@ function main() {
   const write = args.includes("--write");
   const beansTodos = "build/paper-todos.json";
 
-  let root = join("content", paper);
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  let root = join("folio", paper);
   if (chapter) root = join(root, chapter);
 
   const stats = { blocks: 0, mdSectionsRemoved: 0, authorNotesInjected: 0, todosExtracted: 0, substantiveSkipped: 0, tsNotInjectable: 0 };

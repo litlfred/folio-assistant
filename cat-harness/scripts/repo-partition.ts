@@ -459,6 +459,10 @@ const RULES: Rule[] = [
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
       "scripts/check-declared-paths.ts",
+      // Which `.github/workflows/*.yml` carry a BPMN diagram — bean `7yvd`.
+      // Harness by its subject: it reads THIS REPOSITORY's CI processes and
+      // its knowledge graph, and a folio has neither of those as content.
+      "scripts/check-workflow-coverage.ts",
       "scripts/claim-bean.ts",
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
@@ -647,6 +651,7 @@ const RULES: Rule[] = [
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-python-deps.ts",       // the repo's own toolchain
+      "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts",     // writes bootstrap/bootstrap.jsonld
