@@ -75,6 +75,29 @@ describe("a module that resolves a declared directory can resolve one", () => {
     expect(modules.length).toBeGreaterThan(10);
   });
 
+  test("IMPORTING one writes nothing — an entry point must be guarded", () => {
+    // This test file caused the defect it now guards. It imports every module
+    // that calls `directoryForGraph`, and one of them —
+    // `scripts/translation/simulate-translation.ts` — ended in a bare
+    // `main();` rather than `if (import.meta.main) main();`. So the import
+    // RAN the translation simulation, which writes four files under
+    // `translations/fr/`, and from the commit that added this file a plain
+    // `bun test` left the working tree modified. Whoever ran the suite
+    // reverted them as somebody else's churn; I did, four times, before
+    // measuring where they came from. Bean `07p7`.
+    //
+    // Compared BEFORE against AFTER rather than asserted clean: a tree that
+    // was already dirty is not this test's business, and asserting clean
+    // would make it fail for whoever is mid-edit — which is everyone.
+    const status = (): string =>
+      new TextDecoder()
+        .decode(Bun.spawnSync(["git", "status", "--porcelain"], { cwd: ROOT }).stdout)
+        .trim();
+    const before = status();
+    for (const m of modules) Bun.spawnSync(["bun", "-e", `import "./${m}";`], { cwd: ROOT });
+    expect(status()).toBe(before);
+  });
+
   test("each one resolves `library` in a FRESH process, without throwing", () => {
     // Fresh process per module is the whole point. In one process the first
     // module to reach core registers `folio` for all of them, and this test

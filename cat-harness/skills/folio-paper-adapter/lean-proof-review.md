@@ -1,6 +1,5 @@
 ---
 name: lean-proof-review
-roles: [collaborator, owner]
 description: >
   Review Lean 4 proofs for correctness, style, and completeness.
   Tracks review scores from multiple reviewers (human and agentic) in

@@ -1,6 +1,5 @@
 ---
 name: proof-editor
-roles: [collaborator, owner]
 description: >
   Coordinator skill for proof review and repair. Runs the full proof
   skill suite (gap audit, lean review, completeness, simplifier,

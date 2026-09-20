@@ -253,6 +253,11 @@ const RULES: Rule[] = [
       // part of the content model.
       "scripts/schema-nodes.ts",
       "scripts/check-schema-nodes.ts",
+      // The retired-front-matter ratchet. Harness for the same reason: it
+      // reads `harness.json` for where to sweep and for where the trashcan
+      // is, and the keys it retires are the harness's own vocabulary. It
+      // needs no folio to have anything to do.
+      "scripts/check-retired-front-matter.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -493,6 +498,20 @@ const RULES: Rule[] = [
       "schemas/staging-preview.ts",
       "scripts/staging-record.ts",
       "scripts/restore-staging.ts",
+      // The render log — same family, same argument, and the schema moves WITH
+      // the script for the reason stated just above. It describes what is on
+      // the PUBLISH BRANCH, which is a property of the repository rather than
+      // of any folio's content, and its only imports are zod and
+      // `schemas/log-entry.ts` (harness). Caught by the unassigned gate added
+      // in #469 on its first encounter, which is the gate working.
+      //
+      // Classifying the script alone minted exactly the two edges that comment
+      // warns about — measured with `--edges`: `scripts/render-log.ts` and
+      // `scripts/restore-staging.ts` both reaching into `folio-assist-core`,
+      // taking the wrong-direction count from 1 to 3. With the schema here it
+      // is back to 1, the `src/types.ts` residue this file already analyses.
+      "schemas/render-log.ts",
+      "scripts/render-log.ts",
       "scripts/serve-rendering.ts",
       "scripts/staging-cleanup-preflight.ts",
       "src/tools/check-deps.ts",

@@ -1,6 +1,5 @@
 ---
 name: formalizer
-roles: [collaborator, owner]
 description: >
   Lean 4 Formalizer — translates the logical skeleton of narrative mathematical
   proofs into Lean 4 tactic blocks.  Uses the Ontologist's glossary to resolve

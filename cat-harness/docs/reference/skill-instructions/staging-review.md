@@ -136,6 +136,20 @@ anyone is:
 | **merged** | the same thing the MAIN SITE now shows | redundant on the instant, and removed automatically — no label |
 | **closed, unmerged** | the ONLY rendering of that work | the last copy, and retained unless a person says otherwise |
 
+**The store DRAINS, and the size threshold depends on it.** Under the old
+retain-on-everything policy the total only ever grew, so any warning point was
+breached once and stayed breached — a permanent verdict rather than a signal.
+Now what remains is bounded by **concurrent reviews**, not by cumulative
+history, which is why the warning point could move from 100 MB to **500 MB**
+on 2026-09-20 and start meaning something again: at the measured ~38 MB per
+preview it is about **thirteen concurrent reviews**, and half the documented
+1 GB Pages ceiling.
+
+The floor still governs and pruning is still not the action: a live branch's
+preview must not be removed, so N concurrent reviews floor the total at
+N × ~38 MB. What changed is that the floor now **falls on its own** as work
+merges, instead of being carried forever.
+
 **This is not a relaxation of
 [`deletion-requires-confirmation`](deletion-requires-confirmation.md) — it is
 that rule applied more precisely.** The merge *is* the confirmation: a person

@@ -1,6 +1,5 @@
 ---
 name: editor
-roles: [reader, collaborator, owner]
 ---
 
 # Editor Skill

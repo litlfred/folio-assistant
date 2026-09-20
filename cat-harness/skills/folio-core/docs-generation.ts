@@ -22,8 +22,5 @@ export const docsGeneration: SkillDefinition = {
     { path: ".github/scripts/generate_dependency_graph.py", runtime: "python", phase: "execute" },
   ],
   mcpServices: ["paper-assistant"],
-  schemas: [
-    { module: "schemas/formalization-types", types: ["ProofObjectsManifest", "GlossaryManifest"], access: "read" },
-  ],
   tags: ["docs", "generation", "build"],
 };

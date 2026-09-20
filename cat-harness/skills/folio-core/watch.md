@@ -1,7 +1,6 @@
 ---
 name: watch
 description: Background-watch a branch (default origin/main) or a GitHub PR for new activity while you work, and on every event report whether to integrate / whether it conflicts with the current branch / whether it lets you simplify exposition / proofs / computations
-roles: [reader, collaborator, owner]
 user_invocable: true
 ---
 

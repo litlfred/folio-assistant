@@ -1,6 +1,5 @@
 ---
 name: docs-generation
-roles: [reader, collaborator, owner]
 description: >
   Generate and deploy documentation artifacts: schema docs (TypeDoc),
   formal-layer API docs, dependency graphs, schema manifests, and

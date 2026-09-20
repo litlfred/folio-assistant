@@ -1,6 +1,5 @@
 ---
 name: markdown-render-check
-roles: [reader, collaborator, owner]
 ---
 
 # Markdown Render Check

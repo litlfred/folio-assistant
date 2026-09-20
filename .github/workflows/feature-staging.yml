@@ -523,6 +523,65 @@ jobs:
           keep_files: true
           commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }} (retry)'
 
+      # ── The render log ───────────────────────────────────────
+      # *What happened to `STAGING/<slug>`, and why?* Nothing could answer
+      # that: a preview appears, a bot comments the URL below, and some time
+      # later the link 404s — cleaned up, dispatched away, or deleted by an
+      # unrelated merge to `main` (bean `plj1`, which really happened, on
+      # every deploy, for months). The publish branch now keeps its own
+      # record. Discipline: `cat-harness/skills/folio-core/render-logging.md`.
+      #
+      # It cannot ride in `_site`. The deploy above writes into
+      # `destination_dir`, so the entry would land at
+      # `STAGING/<slug>/_render-log/` — inside the very directory a cleanup
+      # removes, which is the one place a record of the removal must not be.
+      # So it gets its own commit, with the rebase-and-retry loop every other
+      # writer of this ref uses.
+      - name: Check out the publish branch, to log the render
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: pages
+          persist-credentials: true
+
+      # `continue-on-error`, deliberately: a preview that deployed and whose
+      # entry did not is a GAP IN THE RECORD, not a failed deploy, and failing
+      # here would turn a logging problem into a lost review surface. The step
+      # goes red in the run, so the gap is visible rather than silent.
+      - name: Log the render
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          # The tool writes into a directory and never pushes: this job already
+          # holds the checkout and the retry loop, and a second pusher racing
+          # those is a new way to lose a deploy.
+          bun run cat-harness/scripts/render-log.ts --dir pages \
+            --event rendered --kind staging-preview \
+            --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
+            --summary "staging preview published" \
+            --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL"
+          git -C pages config user.name 'github-actions[bot]'
+          git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C pages add -A _render-log
+          git -C pages commit -m "render-log: rendered STAGING/$STAGING_SLUG" || exit 0
+          for attempt in 1 2 3; do
+            if git -C pages push origin gh-pages; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::could not append the render log after 3 attempts"
+              exit 1
+            fi
+            echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            git -C pages pull --rebase origin gh-pages
+            sleep $((attempt * 5))
+          done
+
       - name: Comment staging URL on PR
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -589,9 +648,29 @@ jobs:
     # works — a three-attempt rebase-and-push loop below — and a cleanup that
     # removes one directory loses nothing by rebasing onto whatever landed.
     steps:
-      - uses: actions/checkout@v4
+      # TWO checkouts, like `cleanup-dispatch` below and for the same reason:
+      # the publish branch is what changes, and the platform is what knows how
+      # to write the render log. `actions/checkout` on `pull_request_target`
+      # defaults to the BASE branch — never the fork's head — which is the
+      # whole reason that default matters in this job.
+      - name: Check out the platform, to write the render log
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install deps
+        working-directory: source
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Check out the publish branch
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
+          path: pages
 
       - name: Determine staging slug
         id: slug
@@ -639,21 +718,44 @@ jobs:
         # shape in this workflow that a reader should be able to copy.
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          CLEANUP_REASON: ${{ steps.check.outputs.reason }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           SLUG="$STAGING_SLUG"
-          if [ -d "STAGING/$SLUG" ]; then
-            rm -rf "STAGING/$SLUG"
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add -A "STAGING/$SLUG"
-            git commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
+          if [ -d "pages/STAGING/$SLUG" ]; then
+            rm -rf "pages/STAGING/$SLUG"
+            # ONE COMMIT for the removal and its record, deliberately. A
+            # separate log push can fail on its own and leave a preview that
+            # vanished with nothing saying why — which is the exact state bean
+            # `plj1` left the branch in. Here the removal cannot land without
+            # its entry, because they are the same commit.
+            #
+            # `--reason` is not optional: `render-log.ts` refuses a `removed`
+            # entry without one, so this step fails loudly rather than writing
+            # a record that says an artefact went and not why.
+            #
+            # The reason is the GATE'S OWN — `merged` | `labelled` — never a
+            # restatement of one branch of it. Bean `1feu` gave the merge the
+            # standing a label used to have, so a record hardcoding "carried
+            # the staging:cleanup label" would name the wrong rule on every
+            # merged PR, which is worse than no reason: it reads as evidence.
+            bun run source/cat-harness/scripts/render-log.ts --dir pages \
+              --event removed --kind staging-preview \
+              --path "STAGING/$SLUG" --slug "$SLUG" \
+              --summary "staging preview removed on PR close" \
+              --reason "PR #${{ github.event.pull_request.number }} closed; removal confirmed by: $CLEANUP_REASON" \
+              --run "$RUN_URL"
+            git -C pages config user.name 'github-actions[bot]'
+            git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git -C pages add -A "STAGING/$SLUG" _render-log
+            git -C pages commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
             # Same race as the deploy above, and the same reason a queue is not
             # enough: five other workflows push to `gh-pages` without joining
             # it. Rebase and retry rather than losing the cleanup — our commit
             # only removes one STAGING/ directory, so it rebases onto whatever
             # landed first without touching it.
             for attempt in 1 2 3; do
-              if git push origin gh-pages; then
+              if git -C pages push origin gh-pages; then
                 echo "pushed on attempt $attempt"
                 break
               fi
@@ -662,13 +764,58 @@ jobs:
                 exit 1
               fi
               echo "push rejected; rebasing onto origin/gh-pages and retrying"
-              git pull --rebase origin gh-pages
+              git -C pages pull --rebase origin gh-pages
               sleep $((attempt * 5))
             done
             echo "Cleaned up STAGING/$SLUG"
           else
             echo "No staging directory found for $SLUG (already cleaned up)"
           fi
+
+      # `retained` is the event that makes the log worth reading. A removal was
+      # CONSIDERED and refused, and without an entry that leaves no trace at
+      # all — so the next person asking *"why is this preview still up"* has
+      # only the PR comment below, which is on the pull request rather than on
+      # the branch the preview lives on. Bean `w2g5` is how that gap looks from
+      # the far side: a branch reused across five successive pull requests,
+      # with nothing on `gh-pages` saying why its preview kept surviving.
+      - name: Log the retention
+        if: steps.check.outputs.confirmed == 'false'
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          CLEANUP_REASON: ${{ steps.check.outputs.reason }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          SLUG="$STAGING_SLUG"
+          if [ ! -d "pages/STAGING/$SLUG" ]; then
+            echo "No STAGING/$SLUG on gh-pages — nothing was retained, so there is nothing to record."
+            exit 0
+          fi
+          bun run source/cat-harness/scripts/render-log.ts --dir pages \
+            --event retained --kind staging-preview \
+            --path "STAGING/$SLUG" --slug "$SLUG" \
+            --summary "staging preview retained after PR close" \
+            --reason "PR #${{ github.event.pull_request.number }} closed; removal refused because: $CLEANUP_REASON" \
+            --run "$RUN_URL"
+          git -C pages config user.name 'github-actions[bot]'
+          git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C pages add -A _render-log
+          git -C pages commit -m "render-log: retained STAGING/$SLUG" || exit 0
+          for attempt in 1 2 3; do
+            if git -C pages push origin gh-pages; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::could not append the render log after 3 attempts"
+              exit 1
+            fi
+            echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            git -C pages pull --rebase origin gh-pages
+            sleep $((attempt * 5))
+          done
 
       - name: Post retention notice (not confirmed)
         if: steps.check.outputs.confirmed == 'false'
@@ -823,9 +970,21 @@ jobs:
           du -sh "STAGING/$CLEANUP_SLUG" || true
           find "STAGING/$CLEANUP_SLUG" -type f | wc -l
           rm -rf -- "STAGING/$CLEANUP_SLUG"
+          # The record rides in the SAME commit as the removal, so a preview
+          # cannot vanish without an entry saying who dispatched it and why.
+          # `--path` is re-checked by VALUE inside the tool rather than trusted
+          # because the guard above passed: bean `fuzm` — the slug here is a
+          # DISPATCH INPUT, not a git ref, so the invariant that makes `..`
+          # impossible for a branch-derived slug does not hold for this one.
+          bun run ../source/cat-harness/scripts/render-log.ts --dir . \
+            --event removed --kind staging-preview \
+            --path "STAGING/$CLEANUP_SLUG" --slug "$CLEANUP_SLUG" \
+            --summary "staging preview removed by dispatch" \
+            --reason "dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals" \
+            --run "$RUN_URL"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A "STAGING/$CLEANUP_SLUG"
+          git add -A "STAGING/$CLEANUP_SLUG" _render-log
           git commit \
             -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
             -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness/scripts/staging-cleanup-preflight.ts." \

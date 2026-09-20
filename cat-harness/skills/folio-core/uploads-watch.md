@@ -1,6 +1,5 @@
 ---
 name: uploads-watch
-roles: [ingestion-agent, authoring-agent, owner]
 description: >
   Notice what has landed in the acquisition queue, and tell an arrival from a
   backlog. Reports; it never deletes, and never ingests on its own say-so.

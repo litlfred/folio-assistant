@@ -90,48 +90,57 @@ describe("a sticky is a CONTRIBUTION from a layer, not an entry in one list", ()
   });
 });
 
-describe("a bare bootstrap instance gets NO CAT — structurally, not by convention", () => {
-  test("every theme bootstrap declares resolves to no backdrop at all", () => {
-    // The owner's ruling: "i want the grumpy cat moved out of bootstrap and into
-    // cat harness". This is what makes it true rather than remembered — the
-    // themes bootstrap chooses carry no `imageRole`, so there is no art to
-    // resolve, whatever images the composing instance happens to declare.
+describe("bootstrap has its OWN cat, not cat-harness's", () => {
+  // SUPERSEDED, and the supersession is the point. This block asserted that
+  // every theme bootstrap declared resolved to NO backdrop at all — which was
+  // how the ruling *"i want the grumpy cat moved out of bootstrap and into cat
+  // harness"* was satisfied while bootstrap had no art of its own: by having no
+  // cat.
+  //
+  // The owner supplied bootstrap art on 2026-09-20, so the ruling is now
+  // satisfied the better way. What must hold is not "no cat" but "not
+  // cat-harness's cat", and that is what these check.
+  test("bootstrap declares a theme, and it is not the one cat-harness uses", () => {
     expect(BOOT.length).toBeGreaterThan(0);
+    const catThemes = new Set(CAT.map((c) => c.contribution.theme));
+    for (const b of BOOT) {
+      expect(catThemes.has(b.contribution.theme)).toBe(false);
+    }
+  });
+
+  test("its theme resolves to its OWN art, not the default cloud's", () => {
+    const images = decl("cat-harness").images ?? [];
     for (const b of BOOT) {
       const theme = THEMES.find((t) => t.id === b.contribution.theme);
-      expect(theme).toBeDefined();
-      expect(theme!.backdrop).toBeUndefined();
+      expect(theme, `no theme "${b.contribution.theme}"`).toBeDefined();
+      const resolved = resolveThemeBackdrop(theme!, images);
+      expect(resolved.none).toBe(false);
+      expect(resolved.art.size).toBe(3);
+      // The role is bootstrap's, so a reader can tell whose cat it is.
+      for (const [, img] of resolved.art) expect(img.src).toContain("bootstrap");
     }
-  });
-
-  test("resolving one of bootstrap's themes against THIS instance reports `none`", () => {
-    // Composed inside folio-assistant, which DOES declare cat art. The sticky
-    // still gets none, because the theme asks for no image role. `none: true` is
-    // the third outcome `resolveThemeBackdrop` exists to distinguish — "declares
-    // no backdrop", as against "declares one whose art is missing".
-    const images = decl("cat-harness").images ?? [];
-    for (const b of BOOT) {
-      const theme = THEMES.find((t) => t.id === b.contribution.theme)!;
-      const resolved = resolveThemeBackdrop(theme, images);
-      expect(resolved.none).toBe(true);
-      expect(resolved.art.size).toBe(0);
-    }
-  });
-
-  test("that check CAN fire — this instance's own engineer theme resolves to art", () => {
-    // Without this, `none: true` would also be what a typo in the theme id
-    // produced, and the test above would pass for the wrong reason.
-    const images = decl("cat-harness").images ?? [];
-    const engineer = THEMES.find((t) => t.id === "engineer")!;
-    const resolved = resolveThemeBackdrop(engineer, images);
-    expect(resolved.none).toBe(false);
-    expect(resolved.art.size).toBeGreaterThan(0);
   });
 
   test("the schema gives `theme` no default, so a layer cannot inherit a cat by silence", () => {
+    // Unchanged, and still the mechanism: a default here is how a layer that
+    // said nothing would end up wearing somebody else's theme.
     expect(() =>
       StickyContributionSchema.parse({ id: "x", order: 1, body: "words" }),
     ).toThrow();
+  });
+
+  test("every backdrop role a theme names has all three crops, or it serves none", () => {
+    // The falsifier for the check above: `resolveThemeBackdrop` refuses an
+    // incomplete backdrop WHOLESALE, so "resolved 3 layouts" is the only state
+    // that renders art at all.
+    const images = decl("cat-harness").images ?? [];
+    const used = new Set([...CAT, ...BOOT].map((c) => c.contribution.theme));
+    for (const id of used) {
+      const theme = THEMES.find((t) => t.id === id)!;
+      if (!theme.backdrop) continue;
+      const r = resolveThemeBackdrop(theme, images);
+      expect(r.missing, `${id} has a partial backdrop`).toEqual([]);
+    }
   });
 });
 

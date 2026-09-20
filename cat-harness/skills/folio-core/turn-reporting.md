@@ -1,6 +1,5 @@
 ---
 name: turn-reporting
-roles: [reader, collaborator, owner]
 description: >
   Say which bean you are on, every turn — the opening and closing report
   formats, the rules that make a report worth reading (two sentences and a link

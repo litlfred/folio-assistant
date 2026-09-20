@@ -1,6 +1,5 @@
 ---
 name: witnessed-values
-roles: [reader, collaborator, owner]
 ---
 
 # Witnessed Values Skill

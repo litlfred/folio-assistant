@@ -1,6 +1,5 @@
 ---
 name: corpus-grep
-roles: [reader, collaborator, owner]
 description: >
   Pre-declaration corpus check. Before declaring any item "open",
   "gap", "TODO", "open problem", "pending derivation" — or asserting

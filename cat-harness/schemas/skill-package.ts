@@ -125,13 +125,11 @@ export const SkillCapabilityRefSchema = z.object({
   capabilityId: z.string(),
   degradation: DegradationStrategySchema,
   fallbackCapabilityId: z.string().optional(),
-  /**
-   * The ROLE that performs this instead, when no capability can — the
-   * air-gapped case, where an API cannot be reached and a person signs.
-   * See {@link SkillCapabilityRef} for why a role rather than an actor,
-   * and why this is not modelled as a capability.
-   */
-  fallbackRole: z.string().min(1).optional(),
+  // `fallbackRole` was here from 2026-09-20 until later the same day. It is
+  // DERIVED now — the role of a lane holding a task only a person can fill,
+  // which the BPMN already carries executably. Declaring it too was one fact
+  // in two places with nothing asserting they agreed. See
+  // {@link SkillCapabilityRef} and `scripts/check-fallback-roles.ts`.
 });
 
 export const SkillDependencySchema = z.object({
@@ -175,10 +173,16 @@ export const SkillDefinitionSchema = z.object({
   routingPatterns: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   package: z.string().optional(),
-  // `SkillDefinition.schemas` is documented and appears in the interface's own
-  // example, but had no counterpart here — so `.parse()` stripped it off any
-  // skill that used one. Same defect as `lean` on the provable blocks.
-  schemas: z.array(SkillSchemaRefSchema).optional(),
+  // `schemas` was here until 2026-09-20, added because the interface had it
+  // and Zod was stripping it — a real defect, correctly fixed at the time.
+  //
+  // Both halves are gone now, and the fix is the reason worth keeping: the
+  // field reached no reader in EITHER state. Adding the counterpart made the
+  // value survive `.parse()` and travel to exactly one consumer,
+  // `generate-docs.ts`, which had never run since the root commit and is
+  // retired (`folio-assistant-3w0i`). Fixing a field's plumbing is not
+  // evidence that anything is on the other end — this one was two years of
+  // declaration with no destination (`folio-assistant-t2yg`).
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
   schemaRef: z.string().optional(),
 });
