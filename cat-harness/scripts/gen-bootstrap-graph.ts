@@ -69,7 +69,41 @@ export async function buildBootstrapDocument(
 
   const problems: string[] = [];
   const { nodes, omitted } = await collectInstanceNodes(root, docIri, "", problems);
-  const graph = nodes.map(compact);
+  // SORTED BY `@id`, because this file is committed and byte-gated.
+  //
+  // `collectInstanceNodes` returns nodes in the order the collectors found
+  // them, and the collectors walk directories — so the order is `readdirSync`
+  // order, which is the FILESYSTEM's, not this repository's. Two machines
+  // scanning identical trees produce identical nodes in different sequences,
+  // and `it is current` compares bytes.
+  //
+  // Measured 2026-09-20 (bean `3jj9`): the committed file held skills as
+  // `bootstrap-kg-navigation, discussion, confirm-harness, log-message` and
+  // processes as `InitializeHarness, LogMessage, Discussion` — neither
+  // alphabetical, both stable per machine. The check passed on the container
+  // that wrote the file and failed on CI, with the same inputs and the same
+  // 3433 tests.
+  //
+  // The neighbouring purity test — "two builds are byte-identical" — cannot
+  // catch this: both builds run in ONE process against ONE filesystem, so it
+  // compares an ordering against itself. It is a real guard for timestamps
+  // and a guard that cannot fire for ordering.
+  //
+  // `@id` is the sort key rather than insertion order or type: every node has
+  // one, it is unique, and it is the thing a reader dereferences.
+  //
+  // Compared with `<` rather than `localeCompare`, and that is not a style
+  // choice. `localeCompare` with no locale argument uses the RUNTIME's
+  // default, which is an environment input exactly like the filesystem
+  // ordering this sort exists to remove — it would swap one cross-machine
+  // nondeterminism for a subtler one. Code-unit order is the same everywhere.
+  const graph = nodes
+    .map(compact)
+    .sort((a, b) => {
+      const x = String(a["@id"]);
+      const y = String(b["@id"]);
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
 
   const counts: Record<string, number> = {};
   for (const n of graph) {
