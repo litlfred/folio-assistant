@@ -256,10 +256,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T15:52:55.338Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/91a62dbd747fb75fbd4a766614fda8ed46f69e32",
-  "sourceCommitSha": "91a62dbd747fb75fbd4a766614fda8ed46f69e32",
-  "sourceCommitAt": "2026-09-20T15:51:12Z",
+  "generatedAt": "2026-09-20T16:05:03.687Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1b096a23602a5b59476366500051e041f7e588e4",
+  "sourceCommitSha": "1b096a23602a5b59476366500051e041f7e588e4",
+  "sourceCommitAt": "2026-09-20T16:03:22Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 201,
@@ -267,7 +267,7 @@
     "Capability": 26,
     "Role": 116,
     "Convention": 2,
-    "SkillPackage": 12,
+    "SkillPackage": 13,
     "Process": 50,
     "SequenceFlow": 650,
     "ProcessNode": 614,
@@ -842,6 +842,54 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/domain-fencing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/site-presentation-assets",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "site-presentation-assets",
+      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering",
+      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/site-presentation-assets.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/create-sticky-note",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note",
+      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/create-sticky-note.md",
+      "instructionLines": 154,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "theme-art-intake",
+      "title": "Theme art intake",
+      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-art-intake.md",
+      "instructionLines": 176,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/scientific-visualization",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "scientific-visualization",
@@ -1272,22 +1320,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/uses-editorial-review"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/site-presentation-assets",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "site-presentation-assets",
-      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering",
-      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/site-presentation-assets.md",
-      "instructionLines": 109,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/where-a-proposal-goes",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "where-a-proposal-goes",
@@ -1413,22 +1445,6 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/diff"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/create-sticky-note",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "create-sticky-note",
-      "title": "Create a sticky note",
-      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/create-sticky-note.md",
-      "instructionLines": 154,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/continual-progress",
@@ -2360,22 +2376,6 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/theme-art-intake",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "theme-art-intake",
-      "title": "Theme art intake",
-      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/theme-art-intake.md",
-      "instructionLines": 131,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/integration-backlog",
@@ -4636,6 +4636,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/graph-management"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/theming",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "theming",
+      "version": "0.1.0",
+      "description": "How a theme is made, declared, generated and checked for contrast. Split out of folio-core, where three theming skills sat among 107 and were found by knowing they existed rather than by looking.",
+      "path": "skills/theming",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/site-presentation-assets",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/theme-art-intake"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/remote-stubs",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "remote-stubs",
@@ -4683,7 +4700,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/covered-is-not-reachable",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/create-sticky-note",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/decision-comparison",
@@ -4745,14 +4761,12 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/session-intent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/test-engineer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/theme-art-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/todo-review",
@@ -28922,8 +28936,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-gauss-7frcrw",
-    "sha": "bd115b2f6b284ef589f046f7c676ec10bb0bc5f7",
+    "sha": "20a481499138680563850104563488b90f142c00",
     "pr": "542/merge",
-    "run": "35520880045"
+    "run": "35521495873"
   }
 }
