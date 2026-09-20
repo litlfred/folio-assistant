@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T13:19:51Z
-updated_at: 2026-09-20T16:41:12Z
+updated_at: 2026-09-20T16:55:45Z
 parent: folio-assistant-1xhc
 ---
 

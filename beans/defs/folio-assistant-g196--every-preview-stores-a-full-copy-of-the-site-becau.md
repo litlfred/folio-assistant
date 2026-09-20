@@ -1,11 +1,12 @@
 ---
 # folio-assistant-g196
 title: Every preview stores a full copy of the site because per-preview facts are baked into every page
-status: todo
+status: in-progress
 type: feature
-parent: folio-assistant-1xhc
+priority: normal
 created_at: 2026-09-19T12:53:43Z
-updated_at: 2026-09-19T12:53:43Z
+updated_at: 2026-09-20T16:47:53Z
+parent: folio-assistant-1xhc
 ---
 
 

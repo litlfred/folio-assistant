@@ -341,6 +341,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
   },
   {
+    match: "staging-banner.ts",
+    kind: "ci-only",
+    reason:
+      "injects the banner into the built `_site` and writes `staging.json` beside it; there is " +
+      "no `_site` in a checkout, and the facts it writes (run id, event payload, publish-ref " +
+      "listing) exist only in CI. The property it exists for — that the injected bytes do NOT " +
+      "depend on the build, which is what lets git deduplicate a preview against its own next " +
+      "rebuild (bean `g196`) — is covered by `staging-banner-constant.test.ts` in `bun test`, " +
+      "and the client half it ships by `staging-banner.e2e.ts` in the e2e set. Both are gates",
+  },
+  {
     match: "restore-staging.ts",
     kind: "ci-only",
     reason: "reconciles the `gh-pages` working tree against the open PRs' previews; needs that branch checked out",

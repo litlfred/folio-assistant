@@ -719,6 +719,7 @@ export const RULES: Rule[] = [
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
+      "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",
       // The activity log's vocabulary: "what an agent did, when, and in which
