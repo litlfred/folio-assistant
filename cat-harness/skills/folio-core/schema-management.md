@@ -109,9 +109,43 @@ because a diagram that omitted a whole class of relation *silently* would be
 the "rendered as nothing" failure this repository works to avoid. An
 undrawn association is **invisible, not absent**.
 
-If you want those edges drawn, they have to be **declared**: the id field must
-say what it points at. That is a modelling change, not a reader change, and it
-belongs to [`data-modelling`](data-modelling.md).
+### `@ref` — declaring the edge the reader cannot find
+
+Those edges are drawable, and the mechanism is a **JSDoc tag on the field**:
+
+```ts
+/**
+ * Skills available to an actor in this role, before inheritance.
+ *
+ * @ref SkillDefinitionSchema
+ */
+skills: z.array(z.string()).default([]),
+```
+
+Zero runtime cost — no helper, no wrapper, nothing changes about what the
+schema validates. `firstProse` already skips every `@`-line, so the prose
+summary and the machine-readable tag do not swallow each other.
+
+**It cannot resolve the way everything else does.** `resolve()` requires the
+name to be BOUND in the module, and the entire point of a string id is that
+the target is not imported. So an `@ref` resolves **by name, nearest first** —
+same module, then same directory, then graph-wide — **and only when the
+narrowing leaves exactly one**. Two equally-near targets is an *ambiguous tag*,
+not a winner: picking the first is the `wggr` failure one level down, an answer
+that looks resolved and may be the wrong schema. That case is real here rather
+than defensive — `SkillDefinition` is declared **twice in one directory**.
+
+A tag naming nothing, and an ambiguous one, both land in `refProblems` and are
+**reported**. Silence would make a typo indistinguishable from a field with no
+tag — the same rule `undetermined` states.
+
+`id-ref` is its own edge kind and is never folded into `field`, so a consumer
+can tell a reference **the source proves** from one **an author asserted**. The
+diagram draws it dashed for that reason.
+
+**What to tag is still a modelling question** —
+[`data-modelling`](data-modelling.md). A tag is an assertion about the domain,
+and a wrong one is worse than none: it draws an edge that does not exist.
 
 ### The control worked in both directions
 
@@ -227,7 +261,79 @@ against an absent directory here, because a declared-but-absent directory is
 the `dh4f` defect. Bean `n0nf` carries the same `skip` finding from the root's
 side.
 
-## Editing a viewer — no backticks## Editing a viewer — no backticks
+## The relationship diagram — what is defined here, and HOW it is linked
+
+A collapsible panel at the top of the viewer draws the declarations the page is
+scoped to as **UML class boxes wired by their edges, each edge labelled with
+the field it goes through**. That label is the point. Owner, 2026-09-20:
+
+> so you can see Role is linked to Task (how) etc. / the relatioship diagram
+> or so
+
+*"Role is linked to Skill"* is half an answer; *"via `skills`, many"* is the
+whole one. A picture that shows connection without naming the relation is a
+prettier version of the list it replaced.
+
+### It is scoped, and refusing is an answer
+
+Owner, same day: **"not the WHOLE thing"**, and *"what's defined in that KG
+harness"*. So the diagram draws the page's scope narrowed by the **module
+filter**, and above `DIA_MAX` (40) declarations it **refuses and says how to
+get a picture** — pick a module. Drawing 812 labelled boxes is exactly the
+hairball [`kg-viewer`](kg-viewer.md) measured at 1111 nodes; that rule is
+applied here rather than argued with.
+
+### One hop of context, because counting an edge is not showing it
+
+A strict module filter cuts the edge most worth seeing.
+`RoleDefSchema --skills--> SkillDefinitionSchema` spans two files, so
+filtering to `role-graph.ts` drew Role with its most interesting relation
+missing and reported the loss as a number.
+
+So a declaration just outside the filter that a drawn one touches **is drawn**,
+faded and dashed, marked as context rather than as part of the set.
+Context-to-context edges are not drawn — that would be a graph the page is not
+about.
+
+**The fade is load-bearing.** It shipped broken once: the CSS landed but the
+class was never applied, so context boxes were indistinguishable from real
+ones — a diagram that quietly widened its own scope. Caught by counting
+`.dia-ctx` in the render test rather than by reading the diff.
+
+### Three edge kinds, and `id-ref` is drawn differently on purpose
+
+| kind | drawn | means |
+|---|---|---|
+| `extends` | solid, hollow triangle | generalisation |
+| `field` | solid, open arrow | a reference **in the source** |
+| `id-ref` | **dashed** | an association **declared** with `@ref` over a plain string |
+
+A field reference is something the reader *found*. An id-ref is something an
+author *asserted*, because the target is a string id the reader structurally
+cannot see. Drawing them alike would claim the reader saw something it did
+not — the same honesty the three `undetermined`/`unresolved`/`external` states
+already enforce one level down.
+
+### Layout
+
+Longest-path layering so a generalisation reads downward, then one barycentre
+pass to reduce crossings, ties broken by name. The walk is **depth-capped
+rather than assuming a DAG**: mutually recursive types are real here, and a
+cycle must settle rather than hang.
+
+Static, in the strict sense — computed once, no simulation, nothing to settle.
+Dragging and alternate arrangements are bean `whbf`.
+
+Edge labels stagger by index, because two edges whose midpoints land in the
+same band overplot: `permissions * 0..1` and `actors * 0..1` came out on top of
+each other. The stagger only has to separate neighbours, not be optimal.
+
+### Clicking a box opens its definition
+
+Which is what makes the diagram navigation rather than a poster — the owner's
+original ask was *"browsable, so i can give overview like browsing"*.
+
+## Editing a viewer — no backticks
 
 Both viewers are a whole HTML document inside one TypeScript template literal.
 A backtick **anywhere** inside it — including in a JavaScript comment in the
