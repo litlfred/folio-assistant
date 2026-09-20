@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: low
 created_at: 2026-09-20T16:33:37Z
-updated_at: 2026-09-20T16:33:37Z
+updated_at: 2026-09-20T17:19:50Z
 parent: folio-assistant-1xhc
 ---
 
@@ -65,3 +65,17 @@ already dead.
 ## Where the rest lives
 
 `3pqn` holds the six observations in full, with dates, shas and timings.
+
+
+## OWNER: **"yv4z: ok"**, 2026-09-20
+
+Acknowledged as filed — low priority, no work scheduled. Its value is the
+record of what NOT to re-test: three falsified hypotheses (paths filter,
+ref-update race, app-token suppression), two narrowings (not a force-push
+property; not "recently pointed at a merged commit"), and a flat timing series
+across six observations.
+
+Left open deliberately rather than closed. Its Done-when allows *"not
+determinable from here"* as a **determined** answer, so whoever next hits this
+can close it honestly without having solved it — which is the outcome this
+bean expects.
