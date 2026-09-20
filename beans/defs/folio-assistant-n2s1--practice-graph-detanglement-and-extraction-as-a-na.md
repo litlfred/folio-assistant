@@ -65,13 +65,86 @@ may not.
 
 ## Done when
 
-- [ ] the practice is one named sub-practice under KG navigation, in
-      `cat-harness`, with its skills and their tools
-- [ ] the math/Lean-specific detangling rules are generalized, or each is
-      recorded as irreducibly domain-specific with the reason
-- [ ] the staged process is a BPMN whose stages gate, not advise
-- [ ] every rule cites a worked example by SHA and by measurement
-- [ ] siblings' SOPs are consolidated rather than duplicated
+- [x] the practice is one named sub-practice under KG navigation, in
+      `cat-harness`, with its skills and their tools — `skills/graph-management/`,
+      three skills, PR #523
+- [x] the math/Lean-specific detangling rules are generalized, or each is
+      recorded as irreducibly domain-specific with the reason —
+      `edge-kinds-and-blast-radius.md` carries the nine that generalized with
+      their domain originals named; `domain-fencing.md` carries the ones that
+      did not, and the three-question test that separates them
+- [x] the staged process is a BPMN whose stages gate, not advise —
+      `skills/workflows/graph-detanglement.bpmn`, all three gateways DMN-backed
+- [x] every rule cites a worked example by SHA and by measurement
+- [x] siblings' SOPs are consolidated rather than duplicated — #494's
+      `covered-is-not-reachable` is POINTED AT rather than restated
+
+## The BPMN, and what building it turned up
+
+Four stages, three gates, two lanes. Every gateway carries `folio:decision`, so
+`workflow_complete` refuses a hand-supplied outcome: the branch is computed from
+counts a tool already produced rather than asserted by whoever is in a hurry.
+That is the whole difference between a stage and a paragraph.
+
+**The sharpest gate is `Detangled?`, and it is sharp because of its RULE ORDER.**
+`unassignedEdges > 0` returns `unknown` **before** the cross-edge rule is ever
+reached, so a zero cross-edge count over an unjudged corpus cannot be read as a
+pass. `repo-partition.ts` says it in its own voice — *"these are not cross-edges,
+they are edges this tool declined to judge. Do not read them as clean"* — and
+move 1 of the practice is that sentence. A person can talk past it. A table
+cannot.
+
+Every gate has a **third state** and none renders it as clean. Both `unknown`
+paths reach an end event that is a REFUSAL to advance, not a warning.
+
+**The falsifier did not fire.** It was: *if "declare in place" cannot be
+expressed as a gated step distinct from "detangle", the four stages are three
+and the skill's prose is wrong.* They stayed distinct, and for a concrete reason
+— declaring produces a DECLARATION (`declarationPresent`, `pathsResolve`),
+detangling produces a COUNT (`unassignedEdges`, `crossEdges`). Two measurements,
+two tables, no overlap.
+
+**The extraction is a person's decision and the lane says so.** `Authorise the
+extraction` is in the Administrator lane: an extraction moves durable artefacts
+out of a repository, and `deletion-requires-confirmation` is not a courtesy the
+agent may waive. **No role was minted** — `role-model`'s rule is that a role is
+never invented to make a diagram drawable, so the agent lane binds
+`authoring-agent` and the human lane binds `administrator`.
+
+### Two gates caught real defects, both measured
+
+**`check:workflow-refs` was green on `main` and my diagram turned it red** —
+*"NOT INDEXED: a diagram no reader of the workflow page can find."* Fixed by
+indexing it, and the first attempt edited the wrong file:
+`docs/publication-workflow.md` is GENERATED from
+`content/docs/publication-workflow/`, so hand-editing it would have been undone
+by the next build while reading as done.
+
+**The lane binding near-missed, exactly as `code-change-review` warns.** Naming
+the lane "Authoring agent" matched no declared alias (the role's list has
+"Authoring agent (system)", "Agent", …), and `kg:audit` caught it. Binding with
+`<folio:role ref>` instead of adding an alias is the fix the role graph's own
+comment prescribes for a new diagram — **a ref cannot near-miss**. And binding
+it explicitly then made a SECOND finding visible that the unbound lane had
+hidden: seven activities named skills the role did not carry.
+
+**The diagram closed an orphan.** Measured in the sidecar diff: before it,
+`authoring-agent.kg-qa.json` carried *"no role carries `graph-detanglement` and
+no activity names it — reached, if at all, by direct invocation."* That finding
+is gone. The skill shipped one PR earlier reachable from nothing, which is
+`covered-is-not-reachable`'s subject happening to the skill that points at it.
+
+Verified: 3838 tests 0 failures; 17 gates rc=0 including `check:workflow-refs`,
+`kg:audit:check`, `render:bpmn:check`, `gen-docs-pages --check` and
+`translate-bpmn --check` (5 locales extracted).
+
+## Still open
+
+- `repo-partition.ts` generalisation — roughly 400 of its 1,180 lines are this
+  repository's exception list inlined into a generic algorithm.
+- The `wall` domain, fenced or not — recorded in `domain-fencing.md`, not acted
+  on.
+- `zkgs` — the config-root split, three candidate fixes, none chosen.
 
 ## Surveyed 2026-09-20 — what exists, and one correction to my own framing
 

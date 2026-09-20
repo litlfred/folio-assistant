@@ -28,6 +28,29 @@
  * one is a deliberate act, and a workflow left off is simply unchecked — which
  * is a weaker guarantee honestly stated rather than a strong one that is false.
  *
+ * ## This is NOT a duplicate of `check:workflow-paths`, and must not be merged into it
+ *
+ * The two look like one property stated twice, and they are not. Measured
+ * 2026-09-20 by breaking each in turn and running both:
+ *
+ * | probe | this test | `check:workflow-paths` |
+ * |---|---|---|
+ * | a `cp` argument naming a missing dir, in an ALLOWLISTED workflow | **caught** | missed |
+ * | `bun run scripts/does-not-exist.ts` in `publish.yml` (not allowlisted) | missed | **caught** |
+ *
+ * They are complementary on two orthogonal axes. This test covers **4
+ * workflows** but **every path-shaped token on a line** — a `cp` argument, a
+ * `paths:` filter entry, a typedoc entry list, a `bun -e` string — which is
+ * where four of the five `wggr` failures actually lived.
+ * `check:workflow-paths` covers **all 38 workflows** but only **script
+ * invocations**, and models the cwd (job defaults, `working-directory`, `cd`,
+ * `--cwd`, checkout `path:`) so it can tell a working workflow from a broken
+ * spelling.
+ *
+ * Neither subsumes the other. Deleting either loses a class of defect that no
+ * scan in this repository would then see, and a workflow's outcome is
+ * invisible from a checkout — which is the `xom7` defect both exist for.
+ *
  * @module cat-harness/scripts/tests/workflow-paths-resolve.test
  */
 import { describe, expect, test } from "bun:test";

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-17T22:29:53Z
-updated_at: 2026-09-19T00:41:01Z
+updated_at: 2026-09-20T14:37:30Z
 parent: folio-assistant-1xhc
 ---
 
@@ -150,3 +150,26 @@ design call, not a bug fix. Recorded rather than decided.
 only a site-root manifest reaches them, and its costs (a second answer to
 "which build", staleness if anything writes to `_site` afterwards, and a PDF
 fetched on its own still carrying nothing) make it the owner's decision.
+
+
+## 2026-09-20 — swept under `0pes` and deliberately NOT closed
+
+The other five beans carrying *"Verified resolved … NOT closing it — not my
+bean to resolve"* were discharged today under the new evidence-not-authorship
+rule in `bean-coordination`. **This one was not**, and the reason is in this
+bean already: the correction above walks its own resolution back.
+
+Its *Done when* is **"Issue #215 can be closed by its author."** An agent never
+closes an issue on its own say-so, so this is not an agent's to discharge under
+any rule — that is obligation 2 of the new §"Closing a bean whose work has
+already landed", and this bean is the worked example it cites.
+
+Three items remain open and none is mechanical:
+
+- [ ] establish what *"all rendered content is stamped"* covers beyond the HTML banner
+- [ ] BPMN for the feature-branch review SOP
+- [ ] walk issue #215's immunization-schedule scenario end to end and record where it breaks
+
+The mechanism runs — `feature-staging.yml` deploys previews, and it did so for
+this very sweep's PRs. The issue's scope is wider than the mechanism, which is
+what the earlier correction established and why *"it works"* was too fast.
