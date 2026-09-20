@@ -26,7 +26,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { scanDeclaredPaths } from "../check-declared-paths.js";
+import { isTestFile, scanDeclaredPaths, witnessesOf } from "../check-declared-paths.js";
 
 const root = resolve(import.meta.dir, "../..");
 const scan = scanDeclaredPaths(root);
@@ -42,8 +42,13 @@ describe("declared-path literals", () => {
     expect(existsSync(baselinePath), "the ratchet needs a committed baseline").toBe(true);
     const prior = (JSON.parse(readFileSync(baselinePath, "utf-8")) as { files: Record<string, number> }).files;
 
+    // Test files are governed by the witness list, not by this count — see
+    // `witnessesOf`, and the guard below that pins it.
     const current: Record<string, number> = {};
-    for (const r of scan.refused) current[r.file] = (current[r.file] ?? 0) + 1;
+    for (const r of scan.refused) {
+      if (isTestFile(r.file)) continue;
+      current[r.file] = (current[r.file] ?? 0) + 1;
+    }
 
     const over = Object.entries(current)
       .filter(([f, n]) => n > (prior[f] ?? 0))
@@ -56,9 +61,56 @@ describe("declared-path literals", () => {
     expect(bare, "`declared-path-literal:` with no reason is a rubber stamp").toEqual([]);
   });
 
-  test("every literal admitted as an artefact dereferences", () => {
-    const dead = scan.artefacts.filter((a) => !existsSync(join(root, a.literal)));
-    expect(dead.map((d) => `${d.file}:${d.line} → ${d.literal}`)).toEqual([]);
+  /**
+   * This replaces an assertion that was **structurally vacuous**, found
+   * 2026-09-20 (bean `dhol`). It read:
+   *
+   *     const dead = scan.artefacts.filter((a) => !existsSync(join(root, a.literal)));
+   *     expect(dead).toEqual([]);
+   *
+   * `scanDeclaredPaths` admits a literal to `artefacts` only when `existsSync`
+   * is true, so the filter could never match. Worse than useless: relocate an
+   * artefact and its literal silently leaves `artefacts` for `refused`, and
+   * the assertion goes on passing over a shorter list — reporting health while
+   * the exact defect it names happens underneath it.
+   *
+   * The witness list is what makes it mean something: membership is COMMITTED,
+   * so a literal that stops resolving is missing from a set we already wrote
+   * down rather than absent from a set we recompute.
+   */
+  test("every witnessed literal still resolves", () => {
+    const baseline = JSON.parse(
+      readFileSync(join(root, "scripts", "declared-path-baseline.json"), "utf-8"),
+    ) as { resolves?: string[] };
+    const recorded = baseline.resolves ?? [];
+    expect(recorded.length, "no witnesses recorded — the relocation guard is vacuous").toBeGreaterThan(50);
+
+    const held = new Set(witnessesOf(scan));
+    const lost = recorded.filter((w) => !held.has(w));
+    expect(lost, "an artefact moved and the code naming it was not updated").toEqual([]);
+  });
+
+  /**
+   * The false-fire case, pinned. A test that builds a fixture tree names
+   * declared directories by necessity, and those literals correctly resolve to
+   * nothing. Counting them would fire on every new test — which is the "a
+   * check that cries wolf is a check somebody switches off" failure this
+   * module's header names twice. Measured the same hour: a sibling's
+   * `schemas/folio-dir.test.ts`, merged from main, tripped the count with two
+   * literals that were both entirely correct.
+   */
+  test("a test file's unresolved literals are not counted as debt", () => {
+    const baseline = JSON.parse(
+      readFileSync(join(root, "scripts", "declared-path-baseline.json"), "utf-8"),
+    ) as { files: Record<string, number> };
+    const counted = Object.keys(baseline.files).filter((f) => f.endsWith(".test.ts"));
+    expect(counted, "tests belong to the witness list, not the count ratchet").toEqual([]);
+
+    const unresolvedInTests = scan.refused.filter((r) => r.file.endsWith(".test.ts"));
+    expect(
+      unresolvedInTests.length,
+      "no unresolved test literals at all — this guard is not exercising anything",
+    ).toBeGreaterThan(50);
   });
 
   /**

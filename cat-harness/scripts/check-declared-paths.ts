@@ -73,28 +73,37 @@
  * `src/skills`; and real corpus references. A line-local fixture heuristic
  * scored 161 of 407 and misfiled the rest.
  *
- * **No heuristic was needed.** The ratchet already separates them, and does
- * it dynamically, which a static rule cannot:
+ * **No heuristic was needed, and neither did the count work.** The first
+ * attempt put all 407 into the per-file baseline and relied on the ratchet:
+ * a corpus literal that stops resolving raises its file above baseline. That
+ * catches relocation, and it was still wrong, for a reason that showed up
+ * within the hour — a sibling's `schemas/folio-dir.test.ts`, merged from main,
+ * tripped the gate with **two literals that were both entirely correct**. A
+ * test that builds a fixture tree names declared directories by necessity, so
+ * counting tests fires on every new test. That is the *"a check that cries
+ * wolf is a check somebody switches off"* failure this file names twice, and
+ * arriving at it by a different route does not make it a different failure.
  *
- *  - a fixture or vector names nothing that resolves, scores once into its
- *    file's baseline, and never moves again;
- *  - a corpus reference RESOLVES, so it is an `artefact` — and the moment
- *    somebody relocates the file it names, it stops resolving, its file goes
- *    above baseline, and the gate fires.
+ * So tests leave the count ratchet entirely — for a test, naming nothing is
+ * the normal case and counting it is noise — and what governs them instead is
+ * the **witness list** (`witnessesOf`, `resolves` in the baseline): the
+ * literals that resolve TODAY, committed. The gate fires when a recorded
+ * witness stops resolving, which is relocation and nothing else.
  *
- * That is the case a fixture heuristic provably cannot catch: a literal that
- * LOOKS like a fixture path today because the file it named was moved
- * yesterday. **36 test literals currently resolve** — among them the CRDM
- * diagrams in `bpmn-translate.test.ts` and `editing-hci-validation.bpmn` five
- * times in `corpus-gate.test.ts` — and each is now protected.
+ * That also closes the case a fixture heuristic provably cannot catch: a
+ * literal that LOOKS like a fixture path today because the file it named was
+ * moved yesterday. **96 literals are witnessed, 23 of them in tests** — among
+ * them the CRDM diagrams in `bpmn-translate.test.ts` and
+ * `editing-hci-validation.bpmn` in `corpus-gate.test.ts`.
  *
- * Falsified rather than assumed: renamed `crdm-deliver.bpmn`, watched
- * `bpmn-translate.test.ts` go 0 → 1 with the literal named, restored it,
- * watched the gate go quiet.
+ * Falsified in both directions rather than assumed: renamed
+ * `crdm-deliver.bpmn` and the gate named the lost witness and exited 1;
+ * restored it and the gate went quiet; added a new test building a fixture
+ * tree under `mkdtemp` and the gate stayed silent, which the count could not
+ * do.
  *
- * The cost is honest and is the same one the 152 bought: the baseline jumps
- * to 425 across 98 files. It is recorded debt that can only go down, and the
- * protection above is what it buys.
+ * **The source baseline did not move** — still 18 across 11 files. Scanning
+ * tests cost no recorded debt at all; it bought 23 witnesses.
  *
  * ## Why it ships as a ratchet and not as a wall
  *
@@ -429,17 +438,61 @@ export function scanDeclaredPaths(root: string): Scan {
   return { prefixes, artefacts, marked, refused };
 }
 
+/** A test file's literals are governed by the witness list, not by the count. */
+export function isTestFile(file: string): boolean {
+  return file.endsWith(".test.ts");
+}
+
+/**
+ * The literals that RESOLVE today, as a committed positive list.
+ *
+ * ## Why a witness list and not a count
+ *
+ * The per-file count is a ratchet over what is WRONG. It cannot express the
+ * thing this check is ultimately for — *this literal names a real artefact,
+ * and must go on naming one*. Two defects followed from that, both found
+ * 2026-09-20 (bean `dhol`):
+ *
+ *  - `declared-paths.test.ts` asserted "every artefact dereferences" over a
+ *    list whose membership test IS `existsSync`. **Structurally vacuous** —
+ *    it could never fail. Relocate an artefact and the literal silently
+ *    leaves `artefacts` for `refused`; the assertion goes on passing over a
+ *    shorter list.
+ *  - Counting test files would have fired on every NEW test that builds a
+ *    fixture tree, because a fixture literal correctly names nothing. A gate
+ *    that routinely fires for a non-defect is the one this module's header
+ *    twice says somebody switches off. Measured immediately: a sibling's
+ *    `schemas/folio-dir.test.ts`, merged from main the same hour, tripped it
+ *    with two literals that were both entirely correct.
+ *
+ * A witness inverts both. It fires when a recorded literal STOPS resolving —
+ * which is relocation, the actual defect — and stays silent for a new fixture
+ * literal, which was never a witness. So test files leave the count ratchet
+ * entirely: for a test, naming nothing is the normal case and counting it is
+ * noise.
+ */
+export function witnessesOf(scan: Scan): string[] {
+  return [...new Set(scan.artefacts.map((a) => `${a.file}::${a.literal}`))].sort();
+}
+
 if (import.meta.main) {
   const { prefixes, artefacts, marked, refused } = scanDeclaredPaths(root);
 
-  interface Baseline { _comment: string; files: Record<string, number> }
+  interface Baseline { _comment: string; files: Record<string, number>; resolves: string[] }
 
   const prior: Baseline = existsSync(BASELINE)
     ? (JSON.parse(readFileSync(BASELINE, "utf-8")) as Baseline)
-    : { _comment: "", files: {} };
+    : { _comment: "", files: {}, resolves: [] };
 
+  // Test files are governed by the witness list below, not by this count:
+  // for a test, a literal naming nothing is a fixture or a test vector, which
+  // is the normal case. See `witnessesOf`.
   const current: Record<string, number> = {};
-  for (const r of refused) current[r.file] = (current[r.file] ?? 0) + 1;
+  for (const r of refused) if (!isTestFile(r.file)) current[r.file] = (current[r.file] ?? 0) + 1;
+
+  const witnesses = witnessesOf({ prefixes, artefacts, marked, refused });
+  const held = new Set(witnesses);
+  const lost = (prior.resolves ?? []).filter((w) => !held.has(w));
 
   const over: Array<{ file: string; was: number; now: number }> = [];
   for (const [file, n] of Object.entries(current)) {
@@ -459,7 +512,10 @@ if (import.meta.main) {
       `${artefacts.length + marked.length + refused.length} literals found)\n`,
   );
 
-  console.log(`  ✓ ${String(artefacts.length).padStart(3)}  name a file that exists — checked to resolve`);
+  console.log(
+    `  ${lost.length ? "✗" : "✓"} ${String(artefacts.length).padStart(3)}  ` +
+      `name a file that exists — ${witnesses.length} witnessed, ${lost.length} lost`,
+  );
   console.log(`  · ${String(marked.length).padStart(3)}  declared base cases, each with a reason`);
   console.log(
     `  ${over.length ? "✗" : "·"} ${String(refused.length).padStart(3)}  ` +
@@ -474,6 +530,23 @@ if (import.meta.main) {
   if (improved.length) {
     console.log("\nIMPROVED — fewer than the baseline records. Re-run with --update:");
     for (const i of improved) console.log(`  ✓ ${i.file.padEnd(46)} ${i.was} → ${i.now}`);
+  }
+
+  if (lost.length) {
+    console.log(
+      "\nA WITNESSED LITERAL STOPPED RESOLVING — the artefact moved, or was deleted,\n" +
+        "and the code naming it was not updated. This is the defect the witness list\n" +
+        "exists for; `log-writer.test.ts` went ENOENT this way and then reported a\n" +
+        "false finding about the corpus (bean `dhol`).",
+    );
+    for (const w of lost) {
+      const [file, literal] = w.split("::");
+      console.log(`  ✗ ${file}  →  "${literal}"`);
+    }
+    console.log(
+      "\nPoint it at where the artefact went. If it was deliberately deleted, re-run\n" +
+        "with --update: dropping a witness is a diff somebody reviews.",
+    );
   }
 
   if (over.length) {
@@ -498,11 +571,22 @@ if (import.meta.main) {
         "hardcodes a path `harness.json` already declares. See the module header of " +
         "scripts/check-declared-paths.ts for why it ships as a ratchet.",
       files: Object.fromEntries(Object.entries(current).sort(([a], [b]) => a.localeCompare(b))),
+      resolves: witnesses,
     };
     writeFileSync(BASELINE, `${JSON.stringify(next, null, 2)}\n`);
-    console.log(`\nBaseline written: ${relative(root, BASELINE)} (${refused.length} across ${Object.keys(current).length} files)`);
+    const counted = Object.values(current).reduce((a, b) => a + b, 0);
+    console.log(
+      `\nBaseline written: ${relative(root, BASELINE)} — ${counted} counted across ` +
+        `${Object.keys(current).length} source file(s), ${witnesses.length} witnessed literal(s). ` +
+        `${refused.length - counted} literal(s) in tests are governed by the witnesses, not counted.`,
+    );
     if (over.length) console.log("RAISED for the files above — that belongs in the diff somebody reviews.");
     process.exit(0);
+  }
+
+  if (lost.length) {
+    console.log(`\n${lost.length} witnessed literal(s) no longer resolve.`);
+    process.exit(1);
   }
 
   if (over.length) {

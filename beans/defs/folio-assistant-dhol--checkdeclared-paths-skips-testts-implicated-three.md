@@ -140,3 +140,49 @@ Verification: `bun run gates` **56/56**; `bun test` **3770 pass, 0 fail**.
 The **224** literals naming a real declared directory from a test. Recorded
 debt on the same contract as source's original 152 — visible in one number,
 can only go down. Burning it down is a separate argument and not this bean's.
+
+### Revised within the hour — the count was still wrong
+
+The design above ("no heuristic needed, the ratchet already does it") shipped
+and was **wrong for a reason it took one merge to expose**. Merging `main`
+brought a sibling's new `schemas/folio-dir.test.ts`, and the gate immediately
+fired on it — with **two literals that were both entirely correct**: a test
+vector inside a synthetic `directories: [{ path: "beans/" }]`, and a layout
+assertion `expect(folioDir(root)).toBe(join(root, "folio"))` that *has* to name
+`folio` because that is the assertion.
+
+A test that builds a fixture tree names declared directories by necessity. So
+counting test files fires on **every new test** — the *"a check that cries wolf
+is a check somebody switches off"* failure this module's header names twice.
+Reaching it by a different route does not make it a different failure.
+
+**What replaced it: a witness list.** `resolves` in the baseline records every
+literal that resolves today as `<file>::<literal>`. The gate fires when a
+recorded witness stops resolving — relocation, and nothing else. Test files
+leave the count ratchet entirely.
+
+This also closed a defect in existing code. `declared-paths.test.ts` asserted
+*"every literal admitted as an artefact dereferences"* over a list whose
+membership test **is** `existsSync`. **Structurally vacuous — it could never
+fail**, and worse than useless: relocate an artefact and the literal silently
+leaves `artefacts` for `refused`, so the assertion goes on passing over a
+shorter list, reporting health while the exact defect it names happens
+underneath it. A committed witness list is what makes it assert something.
+
+Falsified in **both** directions this time, which the first pass did not do:
+
+| | result |
+|---|---|
+| renamed `crdm-deliver.bpmn` | witness named, **exit 1** |
+| restored it | exit 0 |
+| new test building a `mkdtemp` fixture | **silent** — the case the count got wrong |
+
+**The source baseline never moved: still 18 across 11 files.** Scanning tests
+cost no recorded debt at all; it bought 23 test witnesses (96 total). The
+earlier claim of "425 across 98 files" was the count design and is obsolete.
+
+Two guards pin it: tests never appear in `files`, and the witness list is
+non-empty. Both are floors, and both open with a vacuity check — the failure
+this bean just found twice.
+
+Verification: `bun run gates` **56/56**; `bun test` **3785 pass, 0 fail**.
