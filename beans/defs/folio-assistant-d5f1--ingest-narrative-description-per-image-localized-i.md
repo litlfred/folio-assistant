@@ -162,3 +162,40 @@ An image entry must record the verdict AND its basis (coverage, images per
 page), not just the verdict — the `nso8` discipline. A bare `kind: "scan"` is
 unfalsifiable by the next reader, and this bean has already been misled once by
 a stored conclusion whose reason was not checkable.
+
+## 2026-09-20 — Stage A and Stage B shipped; the narrative half remains
+
+### What now exists
+
+| | |
+|---|---|
+| `scripts/pdf-images.py` | extracts placed images, classifies each, writes `images.json` |
+| `schemas/document-image.ts` | role + the **basis** it was computed from; refuses a verdict with no working |
+| `figure` block kind | registered at all seven points; `folio:Figure` + `doco:Figure` |
+| `gen-library-jsonld.ts` | emits figure blocks into the section whose pages hold them |
+
+**24 figure blocks on the real corpus** — 21 / 2 / 1 / **zero** for the
+121-page scan. Matches the hand survey exactly.
+
+Each carries `narrative: {state: "not-authored"}`, so the bean's "Done when"
+is now a **non-empty** set for the first time: there are images in
+`manifest.jsonld`, and each says it has no description yet.
+
+### What is NOT done
+
+The descriptions themselves, and their localisation. That needs a **vision
+backend**, and nothing declares one — the same shape as `1r0p`'s missing
+transcription backend, and the same rule applies: do not claim the capability
+until something declares it. `schemas/python-deps.ts` is where it would go.
+
+The narrative machinery is ready: `schemas/narrative.ts` has the four states
+and the rule that **only a human may confirm a draft**, and
+`scripts/narratives.ts` refuses to record a human decision from a
+non-interactive shell.
+
+### A measurement corrected here
+
+An earlier note in this bean said 141 scans / 23 figures. The true split is
+**140 / 24** — `milnorlink`'s one small image (coverage 0.008) was tallied as a
+scan though the same table had already called it figure-shaped. Total of 164
+was right; the split was not.
