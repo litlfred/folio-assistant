@@ -198,6 +198,129 @@ export const VoiceRuleSchema = z.object({
 });
 export type VoiceRule = z.infer<typeof VoiceRuleSchema>;
 
+/**
+ * A voice in this instance, or in another one.
+ *
+ * Mirrors `ThemeRef` and `LibraryRef` exactly, and for the same reason: a
+ * NAME, never a path. `../who-style-guide/voices/who-editorial.json` would
+ * work today and hardcode a checkout layout into content.
+ */
+export const VoiceRefSchema = z
+  .object({
+    /** The declared name of the instance holding it. Absent means this one. */
+    instance: z.string().min(1).optional(),
+    voiceId: z.string().regex(/^[a-z0-9-]+$/, "a voice id is lower-case kebab"),
+  })
+  .strict();
+export type VoiceRef = z.infer<typeof VoiceRefSchema>;
+
+/**
+ * Where a voice's rules come from, EPISTEMICALLY — the one thing about a
+ * published source that no amount of reading the rules will tell you.
+ *
+ * - `assertion` — a publisher describing its own product or house style. True
+ *   by declaration, revisable without notice, and in one case in this
+ *   repository describing a product that no longer exists.
+ * - `evidence` — a measurement somebody else can repeat. An arXiv paper
+ *   reporting what 138,000 SKILL.md files actually contain is a different kind
+ *   of claim from a vendor page saying what they should contain.
+ * - `house` — a standard this project set for itself, citing the node that
+ *   states it rather than an ingested document. The `milnor` voice is the
+ *   case.
+ *
+ * REQUIRED, with no default. A rule read from a vendor page is a CONVENTION
+ * and a rule read from a measurement is a FINDING; treating the first as the
+ * second is how "best practice" acquires the authority of a result. Nothing in
+ * the rule text distinguishes them, and a default would pick one silently for
+ * every voice somebody forgets to classify.
+ */
+export const VOICE_PROVENANCE = ["assertion", "evidence", "house"] as const;
+export type VoiceProvenance = (typeof VOICE_PROVENANCE)[number];
+
+/**
+ * When a voice is IN FORCE — the process axis.
+ *
+ * Owner, 2026-09-20: *"specialized voices depending on context/process or user
+ * scenario/requirements like in CRDM"*. A voice is not only a property of the
+ * folio, it is a property of WHAT YOU ARE DOING. The register that belongs in
+ * a requirements interview is not the one that belongs in a published
+ * guideline, and CRDM already models the phases as lanes and activities of a
+ * BPMN process, so the binding it needs already exists as declared objects.
+ *
+ * **This is a DIFFERENT axis from `appliesTo`, which is block kinds**, and the
+ * two are kept apart rather than merged into one "scope" field. A voice can
+ * govern `prose` blocks everywhere, or every block kind but only inside one
+ * process. Collapsing them would make those two indistinguishable.
+ *
+ * Every list is optional and ABSENT MEANS EVERYWHERE — the same default
+ * `appliesTo` takes. An empty array is not the same thing and is rejected:
+ * `processes: []` reads as "no processes", which would silently switch the
+ * voice off, and a voice that is off for a reason nobody wrote down is the
+ * failure this whole module's opt-in default exists to prevent.
+ */
+export const VoiceApplicabilitySchema = z
+  .object({
+    /**
+     * BPMN process ids, as `<bpmn:process id>` spells them —
+     * `Process_CrdmRequirements`, not a filename. Resolved against the
+     * diagrams the `cat-harness` graph carries, so a typo is a dangling
+     * reference rather than a voice that quietly never activates.
+     */
+    processes: z.array(z.string().min(1)).min(1).optional(),
+    /**
+     * Declared role ids from `skills/roles/roles.json` — the SWIMLANE, which
+     * `AGENTS.md` names as what a role is. "Nothing *is* a reviewer";
+     * somebody acts as one inside a process, and a voice bound to a lane
+     * applies for exactly that duration.
+     */
+    lanes: z.array(z.string().min(1)).min(1).optional(),
+    /**
+     * User scenarios or requirement ids this voice serves.
+     *
+     * FREE TEXT, deliberately, where `processes` and `lanes` resolve against
+     * declared objects. A scenario is the thing that has not been formalised
+     * yet — it is what a requirement looks like before CRDM turns it into a
+     * process — so demanding a declared id here would mean no voice could be
+     * written until the process existed, which is backwards.
+     */
+    scenarios: z.array(z.string().min(1)).min(1).optional(),
+  })
+  .strict();
+export type VoiceApplicability = z.infer<typeof VoiceApplicabilitySchema>;
+
+/**
+ * A source that has been replaced, recorded rather than dropped.
+ *
+ * The case, measured 2026-09-20 off the document's own face: the Gemini CLI
+ * *Agent Skill best practices* page carries a banner reading *"Gemini CLI was
+ * replaced by Antigravity CLI on June 18th, 2026"* and a footer reading *"Last
+ * updated: Apr 30, 2026"*.
+ *
+ * Dropping such a voice loses the guidance, which may still be sound; keeping
+ * it unmarked lets a rule be followed on the authority of a dead product. So
+ * it is kept and marked, and `successor` — when there IS one — is what lets a
+ * reviewer ask the only question that matters: which of these rules survived?
+ *
+ * `successor` is OPTIONAL and its absence is a real state rather than an
+ * oversight. Antigravity's *Best practices* page replaced the product without
+ * replacing the document: it covers operator workflow, not skill authoring.
+ * Recording "superseded, successor unknown" is the honest answer, and it is
+ * not the same as "superseded by that one over there".
+ */
+export const VoiceSupersessionSchema = z
+  .object({
+    /** ISO date the replacement took effect, as the source states it. */
+    on: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "an ISO date, as the source states it"),
+    /** What replaced it, in the source's own words. */
+    by: z.string().min(1),
+    /** Where that is stated — a quote, so a reader need not re-open the PDF. */
+    quote: z.string().min(1),
+    /** The voice reading the successor document, when one has been ingested. */
+    successor: VoiceRefSchema.optional(),
+  })
+  .strict();
+export type VoiceSupersession = z.infer<typeof VoiceSupersessionSchema>;
+
 /** A named voice profile. */
 export const VoiceProfileSchema = z.object({
   $schema: z.literal("folio-voice/v1"),
@@ -225,6 +348,34 @@ export const VoiceProfileSchema = z.object({
   rules: z.array(VoiceRuleSchema).min(1),
   /** Block kinds this voice audits. Absent means every kind the folio has. */
   appliesTo: z.array(z.string().min(1)).optional(),
+  /**
+   * Where this voice's rules come from, epistemically. See
+   * {@link VOICE_PROVENANCE} for why it is required and has no default.
+   */
+  provenance: z.enum(VOICE_PROVENANCE),
+  /**
+   * The voice this one OVERRIDES — a shared base it adds to and narrows.
+   *
+   * Owner, 2026-09-20: *"for model specific sources, make those model specific
+   * voices."* The vendors overlap heavily — "degrees of freedom", with the same
+   * three levels and nearly the same triggers, appears in both Anthropic's and
+   * Google's pages — so the agreed part is stated once in a base voice and an
+   * override carries only what differs. Stating it three times instead would
+   * make it impossible to tell an agreed rule from a coincidence, and would
+   * drift the moment one vendor revised.
+   *
+   * ONE parent, not a list. A voice with two parents has no defined answer
+   * when they disagree, and the whole point of an override is that there is
+   * one thing being overridden.
+   */
+  extends: VoiceRefSchema.optional(),
+  /**
+   * When this voice is in force, by process, lane or scenario. Absent means
+   * everywhere. See {@link VoiceApplicabilitySchema}.
+   */
+  activeIn: VoiceApplicabilitySchema.optional(),
+  /** Set when the source has been replaced. See {@link VoiceSupersessionSchema}. */
+  superseded: VoiceSupersessionSchema.optional(),
 });
 export type VoiceProfile = z.infer<typeof VoiceProfileSchema>;
 export type VoiceProfileLabels = KgNodeLabels;
@@ -387,4 +538,149 @@ export function readActiveVoices(repoRoot: string): string[] | undefined {
   } catch {
     return undefined; // unparseable config — third state
   }
+}
+
+// ── Inheritance: a shared base, and what each override adds ────────────────
+
+/** Why a voice chain could not be resolved. Each names what to fix. */
+export type VoiceResolveFailure =
+  | { kind: "cycle"; chain: string[] }
+  | { kind: "no-such-voice"; ref: VoiceRef; from: string };
+
+/** `<instance>/<voiceId>`, the key a chain is deduplicated on. */
+export function voiceKey(instance: string, voiceId: string): string {
+  return `${instance}/${voiceId}`;
+}
+
+/**
+ * A voice with its inherited rules folded in, root-first.
+ *
+ * ## Rules UNION; they do not override
+ *
+ * This is where a voice differs from a theme, and it is not a detail. Two
+ * themes setting `palette.ink` must resolve to one colour, so a child wins.
+ * Two voices carrying a rule about the same subject are two editorial rules,
+ * and the union is the honest result: the vendors AGREE about degrees of
+ * freedom, and an override silently replacing the base's rule with a
+ * near-identical one would delete the evidence that they agree.
+ *
+ * A child DOES override by rule `id`, and only by rule `id` — which is an
+ * explicit act, spelled the same as the rule it replaces, and visible in a
+ * diff. Anything else accumulates.
+ *
+ * ## What is NOT merged, and why
+ *
+ * `provenance` and `superseded` are the child's own, never inherited. A voice
+ * read from a vendor page does not become `evidence` by extending one read
+ * from a paper, and a live source does not become superseded by inheriting
+ * from a dead one. These describe the DOCUMENT the voice was read from, and a
+ * voice has exactly one of those.
+ */
+export interface ResolvedVoice {
+  id: string;
+  instance: string;
+  /** Root-first, so a reader can see where each rule entered. */
+  chain: Array<{ instance: string; voiceId: string }>;
+  rules: VoiceRule[];
+  /** Which voice in the chain contributed each rule, by rule id. */
+  origin: Map<string, string>;
+  provenance: VoiceProvenance;
+  activeIn?: VoiceApplicability;
+  superseded?: VoiceSupersession;
+}
+
+/**
+ * Fold a voice's `extends` chain into one rule set.
+ *
+ * `lookup` resolves a {@link VoiceRef} the same way `resolveTheme`'s does, and
+ * for the same reason: this module cannot read another instance's directory
+ * without hardcoding a layout, so the caller that already resolved the
+ * declaration supplies it.
+ */
+export function resolveVoice(
+  start: { instance: string; voice: VoiceProfile },
+  lookup: (ref: VoiceRef, citingInstance: string) => { instance: string; voice: VoiceProfile } | undefined,
+): { ok: true; voice: ResolvedVoice } | { ok: false; failure: VoiceResolveFailure } {
+  const chain: Array<{ instance: string; voice: VoiceProfile }> = [];
+  const seen = new Set<string>();
+  let cur: { instance: string; voice: VoiceProfile } | undefined = start;
+  while (cur) {
+    const key = voiceKey(cur.instance, cur.voice.id);
+    if (seen.has(key)) return { ok: false, failure: { kind: "cycle", chain: [...seen, key] } };
+    seen.add(key);
+    chain.unshift(cur);
+    const ref = cur.voice.extends;
+    if (!ref) break;
+    const parent = lookup(ref, cur.instance);
+    if (!parent) return { ok: false, failure: { kind: "no-such-voice", ref, from: key } };
+    cur = parent;
+  }
+
+  // Keyed by rule id so a child can replace one deliberately; insertion order
+  // is preserved, so a base rule stays where it was rather than moving to the
+  // end when an override restates it.
+  const byId = new Map<string, VoiceRule>();
+  const origin = new Map<string, string>();
+  for (const link of chain) {
+    for (const r of link.voice.rules) {
+      byId.set(r.id, r);
+      origin.set(r.id, voiceKey(link.instance, link.voice.id));
+    }
+  }
+
+  return {
+    ok: true,
+    voice: {
+      id: start.voice.id,
+      instance: start.instance,
+      chain: chain.map((l) => ({ instance: l.instance, voiceId: l.voice.id })),
+      rules: [...byId.values()],
+      origin,
+      // The CHILD's own — see the interface comment.
+      provenance: start.voice.provenance,
+      ...(start.voice.activeIn ? { activeIn: start.voice.activeIn } : {}),
+      ...(start.voice.superseded ? { superseded: start.voice.superseded } : {}),
+    },
+  };
+}
+
+/** A failure, as a sentence naming what to do about it. */
+export function explainVoiceFailure(f: VoiceResolveFailure): string {
+  switch (f.kind) {
+    case "cycle":
+      return `voice inheritance is a cycle: ${f.chain.join(" -> ")}. A voice may extend at most one other, and the chain must terminate.`;
+    case "no-such-voice":
+      return (
+        `${f.from} extends ${f.ref.instance ? `${f.ref.instance}/` : ""}${f.ref.voiceId}, which no instance serves. ` +
+        `Check the voice id, and that the instance declares a \`voices\` graph holding it.`
+      );
+  }
+}
+
+/**
+ * Is this voice in force for the process, lane and scenario at hand?
+ *
+ * ABSENT MEANS EVERYWHERE, per {@link VoiceApplicabilitySchema} — so a voice
+ * with no `activeIn` answers true for every context, including one that names
+ * nothing.
+ *
+ * Each declared list is an OR within itself and an AND across the three: a
+ * voice naming two processes and one lane is in force in either process, but
+ * only while acting in that lane. That is the CRDM shape — an activity sits in
+ * one lane of one process — rather than a free-for-all union, which would put
+ * a lane-scoped voice in force anywhere its process ran.
+ */
+export function voiceActiveIn(
+  voice: { activeIn?: VoiceApplicability },
+  context: { process?: string; lane?: string; scenario?: string },
+): boolean {
+  const a = voice.activeIn;
+  if (!a) return true;
+  const holds = (declared: string[] | undefined, actual: string | undefined): boolean =>
+    declared === undefined || (actual !== undefined && declared.includes(actual));
+  return (
+    holds(a.processes, context.process) &&
+    holds(a.lanes, context.lane) &&
+    holds(a.scenarios, context.scenario)
+  );
 }
