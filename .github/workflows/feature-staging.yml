@@ -144,6 +144,36 @@ jobs:
           # Sanitise the branch name for use as a URL path segment
           BRANCH="${HEAD_REF:-${INPUT_BRANCH:-$REF_NAME}}"
           SLUG=$(echo "$BRANCH" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          # THE SLUG MUST BE ONE SAFE PATH SEGMENT — checked by VALUE, never
+          # trusted because of where it came from. Bean `fuzm`.
+          #
+          # `.` is in the permitted class above and `sed` REPLACES rather than
+          # deletes, so two adjacent input dots survive: input `..` gives output
+          # `..`, measured. A slug of `..` makes `STAGING/$SLUG` the checkout
+          # root.
+          #
+          # Two guards already stand between that and harm, and BOTH were found
+          # by measuring rather than by reading:
+          #   1. git rejects every ref name containing `..` — `..`, `a..b`,
+          #      `../..`, `feat/../x`, `...`, `.git` all refused by
+          #      `git check-ref-format`. A ref-derived slug cannot be `..`.
+          #   2. `rm` refuses `.` and `..` operands outright: `rm -rf
+          #      "STAGING/.."` skips and exits 1, deleting nothing.
+          #
+          # What neither covers is `git add -A "STAGING/.."`, which does NOT
+          # refuse — it stages the whole tree above, so the job would commit
+          # unrelated changes. That is the residual, and it is why the check is
+          # on the VALUE: guard 1 holds only while the slug comes from a ref,
+          # and `cleanup-dispatch` already takes one from a dispatch input.
+          #
+          # `/` is not in the permitted class, so the output is always a single
+          # segment; the whole hazard is the two spellings refused here.
+          case "$SLUG" in
+            ""|.|..)
+              echo "::error::staging slug resolved to '$SLUG', which names no preview. Refusing."
+              exit 1
+              ;;
+          esac
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "Staging slug: $SLUG"
@@ -512,7 +542,26 @@ jobs:
           keep_files: true
           commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }}'
 
+      # THREE attempts, not two, and the third was bought by a measurement
+      # rather than by caution. The render log (bean `5mg5`) added a SECOND
+      # push to `gh-pages` per staging run, and the branch was already the
+      # most contended ref here. Counted over 35 minutes on 2026-09-20:
+      #
+      #   20  staging(...)      the deploys themselves
+      #   14  render-log: ...   added by the log, where there were none
+      #    3  docs(gh-pages)    the main site
+      #
+      # — a ~38% rise in write volume, after which attempt 2 started losing
+      # the race and failing the job (run 35504532974). The action re-clones
+      # `gh-pages` on each attempt, so another attempt is a real remedy and
+      # not a longer wait: it picks up whoever won and adds this branch's
+      # directory beside it, which `keep_files: true` makes safe.
+      #
+      # `continue-on-error` on attempts 1 and 2 only. If the third fails it
+      # fails the job — a lost staging deploy must stay visible.
       - name: Retry deploy (another workflow pushed to gh-pages first)
+        id: retry
+        continue-on-error: true
         if: steps.deploy.outcome == 'failure'
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -522,6 +571,17 @@ jobs:
           publish_branch: gh-pages
           keep_files: true
           commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }} (retry)'
+
+      - name: Retry deploy once more (gh-pages is the most contended ref here)
+        if: steps.deploy.outcome == 'failure' && steps.retry.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          destination_dir: STAGING/${{ steps.slug.outputs.slug }}
+          publish_branch: gh-pages
+          keep_files: true
+          commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }} (retry 2)'
 
       # ── The render log ───────────────────────────────────────
       # *What happened to `STAGING/<slug>`, and why?* Nothing could answer
@@ -683,6 +743,15 @@ jobs:
         run: |
           BRANCH="$HEAD_REF"
           SLUG=$(echo "$BRANCH" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          # Same guard as `stage`, and this is the job that runs `rm -rf` and
+          # `git add -A` on the result. See the comment there for the two
+          # measured invariants and the one they do not cover.
+          case "$SLUG" in
+            ""|.|..)
+              echo "::error::staging slug resolved to '$SLUG', which names no preview. Refusing."
+              exit 1
+              ;;
+          esac
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
 
       - name: Check for cleanup confirmation

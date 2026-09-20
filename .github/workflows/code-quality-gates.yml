@@ -284,6 +284,20 @@ jobs:
       - name: workflow skill refs
         run: bun run check:workflow-refs
 
+      # Which `.github/workflows/*.yml` are documented as BPMN — bean `7yvd`,
+      # owner: "make sure all workflows documented as bpmn".
+      #
+      # NOT `--strict` yet, deliberately. Coverage is 0 of 38 as this lands, so
+      # a strict gate would be red on arrival and switched off within the day.
+      # What it DOES fail on is the two unambiguous states: a workflow whose
+      # YAML cannot be read (exit 2 — could-not-determine is never rendered as
+      # clean, and an unreadable file is the one state that can hide a gap),
+      # and a diagram declaring a workflow that is not there (exit 1, the same
+      # tier as a dangling `<folio:skill ref>` above). The gap itself is
+      # reported so the number is visible and moves.
+      - name: workflow BPMN coverage
+        run: bun run check:workflow-coverage
+
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
       # `satisfies` to be non-empty; it cannot know whether the names resolve,

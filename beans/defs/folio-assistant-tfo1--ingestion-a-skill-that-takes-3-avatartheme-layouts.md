@@ -110,3 +110,17 @@ That is the better home and it is worth saying why, because "ingestion" was abou
 CONSEQUENCE: the constraint list in this bean becomes a set of checks WITHIN document ingestion keyed on the payload being theme art, not a new process. The `return success or explanation of failure` contract should be whatever that pipeline's gate already returns, rather than a new result type.
 
 STILL OPEN and unchanged by this: whether the third avatar in `1b62b57` is missing or the duplicate was an upload slip (two of the three files are byte-identical, sha256 `30dad51dfc691587`, both 1,606,269 bytes), and the constraint list itself.
+
+_2026-09-20T11:15Z_ — **Note from `eq01`, not a change to this bean.** The
+root-level uploads this bean cites as evidence were moved to
+`cat-harness/uploads/` on the owner's instruction (*"move/leave root level
+uplaods in uploads/"*). Eleven files, 17.2 MB, moved with `git mv` so history
+follows. The paths above now read `cat-harness/uploads/<name>`.
+
+The duplicate finding was independently confirmed in the process: `sha256
+30dad51dfc691587…` for BOTH `ChatGPT Image Sep 20, 2026, 08_26_47 AM.png` and
+`d1a26515-9bde-455d-84bc-2e5fc196b004.png`, matching what is recorded above.
+
+Nothing else here is touched, and the status stays `todo` — the question of
+whether the third avatar is missing or the duplicate was an upload slip is
+still the owner's, and this bean is still the argument for the ingestion skill.
