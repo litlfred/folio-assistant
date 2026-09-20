@@ -129,7 +129,7 @@ export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
   // this document go", it is a coin toss that files it somewhere plausible.
   //
   // THREE states, and the middle one arrived with bean `frs5`, which moved the
-  // corpus into `who-iris/` and `folio-assist-sci/`:
+  // corpus into `who-iris/` and `folio-assistant-sci/`:
   //
   //   none declared   -> throw: ingesting into a guessed directory files the
   //                     document where nothing scans it
@@ -165,7 +165,7 @@ export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
   //
   // IT WAS A SUBSTRING MATCH, and that is a guess wearing the clothes of a
   // match. Measured 2026-09-20: `--library c` matched exactly one declared
-  // library — `../folio-assist-sci/library` is the only one containing a `c`
+  // library — `../folio-assistant-sci/library` is the only one containing a `c`
   // — so a one-character typo filed a document into the science corpus and
   // printed success. In the one function whose stated job is refusing to
   // guess a write target, and directly under a comment saying ambiguity

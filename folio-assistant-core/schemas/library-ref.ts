@@ -119,7 +119,7 @@ export function libraryDirOf(instanceRoot: string): string | undefined {
   // THIS INSTANCE'S OWN, which is not "the first one declared".
   //
   // `cat-harness/harness.json` declares FOUR library entries: its own empty
-  // `library/`, plus `who-iris/library/`, `folio-assist-sci/library/` and
+  // `library/`, plus `who-iris/library/`, `folio-assistant-sci/library/` and
   // `agent-skills/library/` — all three `scope: "repository"`, declared there
   // because the consumers that scan libraries run from the repository root.
   // `find` took whichever came first and `resolve(instanceRoot, path)` then

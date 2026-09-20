@@ -30,6 +30,12 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - 'cat-harness/docs/**'
+      # An instance's own rendered pages are mounted into the site by
+      # mount-instance-docs.ts, so a change to them must rebuild it. Without
+      # this the pages are committed, gated, and never redeployed.
+      - 'who-iris/docs/**'
+      - 'who-iris/catalogue/**'
+      - 'cat-harness/scripts/mount-instance-docs.ts'
       - 'cat-harness/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
@@ -280,6 +286,21 @@ jobs:
 
       - name: Take ownership of Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
+      # Mount every OTHER instance's rendered content under the built site.
+      #
+      # Jekyll above builds ONE directory — `cat-harness/docs` — so an instance
+      # that publishes its own rendered pages was built by nothing and reachable
+      # at no URL. `who-iris/docs/` was in exactly that state: six committed,
+      # gated pages that no deployed site served.
+      #
+      # Owner's addressing rule, 2026-09-20: `<base-url>/<path-to-kind-or-node>`
+      # — a harness that instantiates a directory gets a visualiser for it,
+      # mounted under that directory's KIND. So `/docs/who-iris/`, and
+      # `/library/who-iris/` the day the library visualiser (bean jbx2) lands
+      # with a front door of its own. No change here when it does.
+      - name: Mount instance-rendered content
+        run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
 
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
       #

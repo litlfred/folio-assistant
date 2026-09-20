@@ -205,7 +205,7 @@ describe("resolution keeps four failures apart", () => {
 describe("an instance's library is ITS OWN, not the first one declared", () => {
   // Found by review 2026-09-20. `libraryDirOf` used `dirs.find(...)` over
   // every entry declaring a `library` graph, and `cat-harness/harness.json`
-  // declares FOUR — its own, plus `who-iris/`, `folio-assist-sci/` and
+  // declares FOUR — its own, plus `who-iris/`, `folio-assistant-sci/` and
   // `agent-skills/`, all three `scope: "repository"` because the consumers
   // that scan libraries run from the repository root.
   //
@@ -256,7 +256,7 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
 
   it("every real instance here resolves its own library, or declares none", () => {
     // Over the real repository, so a future declaration that breaks it says so.
-    for (const inst of ["cat-harness", "who-iris", "folio-assist-sci", "agent-skills"]) {
+    for (const inst of ["cat-harness", "who-iris", "folio-assistant-sci", "agent-skills"]) {
       expect({ inst, dir: libraryDirOf(resolve(REPO, inst)) })
         .toEqual({ inst, dir: resolve(REPO, inst, "library") });
     }
