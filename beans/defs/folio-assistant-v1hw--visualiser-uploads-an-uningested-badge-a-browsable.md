@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T15:00:40Z
-updated_at: 2026-09-20T15:09:14Z
+updated_at: 2026-09-20T18:50:25Z
 parent: folio-assistant-slw1
 ---
 
@@ -98,3 +98,76 @@ reporting a set that does not exist. Per instance, or explicitly grouped.
       `skills`/`tools` rather than placed beside the data
 - [ ] Badge count, browsable queue, and an upload path whose write mechanism
       the owner has chosen
+
+
+---
+
+## THE BLOCKER IS REFUTED — measured 2026-09-20, four of four, hash-verified
+
+This bean's blocker says:
+
+> **Nothing records that an upload was ingested.** … `AssetSource`
+> (`schemas/kg-node.ts:212`) records `{instance, path, ref}` … There is no
+> marker on an upload, no back-reference on a library entry, and no manifest
+> between them. So **"# uningested" is not a query anybody can currently
+> run**, and a badge that guessed would be worse than no badge.
+
+**The back-reference exists, and it is stronger than any of the three shapes
+proposed below it.** Every `library/<slug>/manifest.jsonld` carries
+`meta.source_file` **and** `meta.source_sha256`:
+
+| entry | `meta.source_file` | in a queue | sha256 recomputed |
+|---|---|---|---|
+| `9789241548960-eng` | `9789241548960_eng.pdf` | yes | **match** |
+| `milnorlink` | `milnorlink.pdf` | yes | **match** |
+| `who-pub-tps-931` | `WHO_PUB_TPS_93.1.pdf` | yes | **match** |
+| `wpr-rdo-2020-003-eng` | `WPR-RDO-2020-003-eng.pdf` | yes | **match** |
+
+Four of four, and the hash is **recomputed from the file on disk** rather than
+trusted, so the relation is CONTENT-VERIFIED rather than name-matched. That is
+better than option 1 (a back-reference) because it also detects a replaced
+file, better than option 2 (a marker on the upload) because it does not mutate
+the queue a person is looking at, and better than option 3 (a manifest between
+them) because there is nothing extra to keep in sync.
+
+## What the badge actually is, now that it can be computed
+
+| queue | files | ingested | **uningested** |
+|---|---|---|---|
+| `cat-harness/uploads/` | 4 | 4 | **0** |
+| `uploads/` (repository root) | 22 | 0 | **22** |
+
+So the harness layer's own queue is **fully drained** and the repository
+root's is **untouched**. Nobody could state either fact before.
+
+**And the 22/23 discrepancy is itself the finding about badges.** The first
+run of the reader said 23, because it counted the queue's `.gitignore`. A
+badge wrong by one is a badge nobody trusts the second time, so dot-prefixed
+names are excluded — the same dot-prefix rule `directory-conventions` applies
+to every path segment. This is exactly the failure mode this bean warned
+about ("a badge that guessed would be worse than no badge"), caught by
+looking at the rendered page rather than at the number.
+
+## Where the bean was right, and it is kept
+
+The relation is only as good as the manifest. An entry whose manifest names
+no `source_file` is **`unknown`** — never silently "not from an upload" —
+which is the third state, and `differs` (named, present, wrong bytes) is a
+fourth. `scripts/library-graph.ts` renders all four and styles none of them
+as an error.
+
+## What this leaves open — the WRITE half, unchanged
+
+Nothing above touches the upload affordance. This bean's items 1 and 2 (badge,
+browsable queue) are **done**, in the `library/` viewer rather than in a
+separate page, since they are one dataset and two pages over it would be two
+answers to "how many are queued". Item 3 — **upload, in various ways** — is
+still blocked on `yj32`'s write-path question, and deliberately so.
+
+## Done when — revised
+
+- [x] The ingested relation exists and is readable — it always did; it is
+      `meta.source_file` + `meta.source_sha256`, and it is verified rather
+      than assumed
+- [x] Badge count and browsable queue, per declaring instance, never merged
+- [ ] An upload path whose write mechanism the owner has chosen (`yj32`)

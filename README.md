@@ -168,6 +168,7 @@ repo to one where you can say *"add a chapter"* and have it work.
 
 In a new, empty repository:
 
+<!-- command-path-ok: run IN THE NEW FOLIO, where folio-assistant is the submodule just added -->
 ```sh
 # Get the platform. A submodule pins the exact revision your content is
 # authored against, so a fresh clone reproduces your build.
@@ -265,7 +266,7 @@ bun install
 bun run check-deps
 
 # 4. Run the MCP server (point --repo at your content repo)
-bun run src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 ### Common commands

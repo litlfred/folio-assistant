@@ -378,6 +378,22 @@ export const RULES: Rule[] = [
       "scripts/check-undeclared-files.ts",   // present-but-undeclared, the dh4f shape inverted
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
+      // The schema and library visualisers, and the two readers behind them.
+      //
+      // CORE rather than harness for the reason every entry above shares: each
+      // reads THIS INSTANCE'S declaration, and this instance declares a `folio`
+      // graph, so each must import `schemas/folio-graph-kind.ts` for the kind
+      // to be registered — and that module is core's by the argument written on
+      // it ("a layer that cannot render must not own the renderable kind").
+      //
+      // The generators are core on a second count as well, and it is the
+      // stronger one: they WRITE INTO THE RENDERED SITE. `cat-harness-minimum`
+      // carries "if it produces something a human looks at, it is not the
+      // harness", and a page under `docs/` is exactly that.
+      "scripts/schema-graph.ts",             // schemas/*.ts → declarations + edges
+      "scripts/gen-schema-viz.ts",           // that graph → projection + viewer
+      "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
+      "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
@@ -504,6 +520,10 @@ export const RULES: Rule[] = [
       "scripts/check-head-has-run.ts",
       "scripts/check-agents-claims.ts",
       "scripts/check-agent-entry-links.ts",
+      "scripts/check-command-paths.ts",
+      // Who else is working THIS repository — a fact about the forge and this
+      // checkout, not about any folio's material.
+      "scripts/sibling-sessions.ts",
       "scripts/check-agents-xref.ts",
       // The bean reader — HARNESS by subject as well as by dependency. It
       // reads the agent work plan, which `AGENTS.md` places in the
@@ -512,6 +532,17 @@ export const RULES: Rule[] = [
       // core, and core reading harness is downward.
       "scripts/beans.ts",
       "scripts/check-bean-parents.ts",
+      // The work plan's own readers. Harness by subject and by dependency:
+      // `beans/` is the AGENT's work plan, declared by the harness, and a
+      // folio's content has no bean store. `bean-store-read.ts` is the shared
+      // file reader the three import; `check-waivers.ts` reads the `waiver`
+      // graph, which is the harness's confirmation model and nothing a folio
+      // authors.
+      "scripts/bean-store-read.ts",
+      "scripts/check-bean-bodies.ts",
+      "scripts/check-bean-issue-links.ts",
+      "scripts/check-ready-to-close.ts",
+      "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",
       // The external-specification registry — which edition of BPMN, DD or
       // DCMI Terms this repository conforms to, reconciled against the
@@ -645,6 +676,18 @@ export const RULES: Rule[] = [
       //    survives the "describes a process" test.
       "schemas/memory.ts",
       "schemas/carried-note.ts",
+      // Same argument as `memory.ts`, one step along: a waiver is a permission
+      // a PERSON gives an AGENT about a gate in this repository's process. It
+      // is declared over the same directory as agent memory and it fails the
+      // "describes a folio's material" test just as plainly. Keyword triage
+      // put it in core on the word "confirmation"; the import direction is
+      // what settles it — `scripts/check-waivers.ts` is harness and may not
+      // reach into core.
+      "schemas/waiver.ts",
+      // How a DECISION is handed to a person. Harness by the same test again:
+      // it is about the agent-human interaction this platform defines, and a
+      // folio authors no decision requests.
+      "schemas/decision-request.ts",
       // Translation is cat-harness's, stated directly: "ui stuff like
       // translations (skills, tooling) are not in cat-bootstrap, it is in
       // cat-harness/". These three are the gettext machinery and the registry
