@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-09-20T16:15:08Z
+updated_at: 2026-09-20T16:24:01Z
 parent: folio-assistant-1xhc
 ---
 
@@ -329,3 +329,33 @@ is a question for the author, below.
    is what the third-state rule implies everywhere else here; reporting keeps
    an agent unblocked when GitHub is merely slow. The two differ in exactly
    the case that matters — a PR whose checks will never arrive.
+
+
+## 2026-09-20 — Done-when 2 and 3 landed; #1 stays open
+
+Both were actionable without the cause, which is the argument for splitting
+them off #1 rather than waiting on it.
+
+**Where it went.** `skills/folio-core/prepare-merge.md` §Guardrails, directly
+under **Honest green** — which covered *red* and said nothing about *absent*,
+the exact gap. The new rule is **NO CHECKS IS NOT GREEN — verify against the
+run list, never the PR page**, carrying the six observations, the three
+falsified hypotheses, the flat timing series, and a four-step procedure: read
+`head_sha`, match it against `list_workflow_runs` for the branch, treat
+no-run-for-that-sha as **not ready** in those words, and re-run by
+`workflow_dispatch`. Step 4 is *re-check after every push* — a new commit
+moves the head, and the head is what the absence attaches to.
+
+**Why a guardrail rather than a recipe step.** An agent holding a standing
+merge authorisation reads zero checks as nothing-red and merges unverified.
+Measured, not argued: this session held such an authorisation when #552
+reproduced the bug **twice in eight minutes on two different commits**, and
+was one step from merging a PR with no coverage.
+
+**Mirrored into `prepare-merge-auto.md` §Anti-patterns**, with a cross-link
+each way. `prepare-merge.md` itself records why: the branch-deletion rule was
+stated in only one of the two files, *"which is how it got broken"*.
+
+Done-when 3 asked for the workaround to be written down rather than left as
+folklore. It is the dispatch step above — and the six observations are what
+justify it over "wait longer", which the timing series falsifies.
