@@ -6,7 +6,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/session-start-coord-sweep.sh\""
+            "command": "bash \"$CLAUDE_PROJECT_DIR/cat-harness/scripts/session-start-coord-sweep.sh\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/cat-harness/scripts/ask-well.sh\""
           }
         ]
       }

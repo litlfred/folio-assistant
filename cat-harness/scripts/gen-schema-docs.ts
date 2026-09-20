@@ -240,7 +240,7 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
   // "do not edit by hand" only tells a reader where NOT to go. The schema
   // files are the real source and are editable; the per-section links below
   // now carry an editor target alongside the raw view.
-  lines.push("_Generated from JSON Schema — do not edit by hand. Run `bun run scripts/gen-schema-docs.ts`._");
+  lines.push("_Generated from JSON Schema — do not edit by hand. Run `bun run cat-harness/scripts/gen-schema-docs.ts`._");
   lines.push("");
 
   if (input) {

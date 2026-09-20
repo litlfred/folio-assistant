@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d1r6
 title: 'STICKY: the close control discards to fsh-guts, with a crumpled-sticky icon'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T11:08:23Z
-updated_at: 2026-09-19T13:25:33Z
+updated_at: 2026-09-20T20:00:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -111,3 +111,40 @@ the discard removes that slot, so `.first()` silently retargeted to the NEXT
 todo's slot, which had never floated. Two fixture items was all it took.
 Measured 2 slots before, 1 after. Rewritten to assert the COUNT, which is what
 would have caught it.
+
+## Evidence
+
+Tagged `ready-to-close` by the `bbbl` sweep, 2026-09-20. **Not closed** — the
+owner confirms the batch (`bun run check:ready-to-close`).
+
+**The bean carries a full `## Implemented` section** against 0 of 5 ticked
+boxes, which is the `bbbl` shape exactly: the work is described as done and the
+checklist was never walked back over.
+
+**Two defects found and fixed during the work**, both recorded: the control
+vanished when no `fsh-guts` document was published (*"a delete wearing a
+crumpled icon"*), and `buildViews()` cached from launcher-open so a discarded
+sticky had no route back until reload — now repainted on `fa:todos-discarded`.
+Both are the never-delete rule failing *through a mechanism rather than a
+decision*, which is the argument for the fix rather than a description of it.
+
+**A test was found passing for the wrong reason and rewritten** — `"closing a
+pinned sticky returns it to the board"` asserted on `.fa-sticky-slot").first()`,
+which silently retargeted after the discard removed the slot. Measured 2 slots
+before, 1 after; rewritten to assert the count. A session that finds and fixes
+a vacuous test is evidence about the work's quality, not just its completion.
+
+**What this session could NOT re-derive**: the Playwright specs were not run
+here, and the restore path (Settings → Discarded) was not exercised against a
+running viewer.
+
+---
+
+_2026-09-20T20:00Z_ — **CLOSED on the owner's confirmation of the `ready-to-close`
+batch, 2026-09-20.** The evidence above is what was confirmed against; nothing
+new was measured at closing time, and this note says so rather than implying a
+re-derivation that did not happen.
+
+The `ready-to-close` tag is spent and removed: `check:ready-to-close` reports a
+tag on a closed bean as one to take off, so leaving it would make the queue
+report a defect on its own success.

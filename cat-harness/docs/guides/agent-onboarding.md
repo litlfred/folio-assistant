@@ -32,6 +32,7 @@ There are two kinds, and confusing them is the most common early mistake.
 | Has `content/<paper>/` | no — only `content/pipeline/` | yes |
 | You edit here to | change how authoring works | change what is being authored |
 
+<!-- command-path-ok: a PROBE — whether `content/` is here is the answer, so it must not be required to resolve -->
 ```sh
 ls content/          # pipeline/ only  ⇒ platform;  paper dirs ⇒ folio
 ```
@@ -45,8 +46,8 @@ folio-supplied data. See §7.
 
 ```sh
 beans prime && beans list      # the work-plan — see §6
-scripts/session-start-coord-sweep.sh   # CLI-independent equivalent
-bun run src/index.ts --check-deps      # what this environment can do
+cat-harness/scripts/session-start-coord-sweep.sh  # CLI-independent equivalent
+bun run check-deps                     # what this environment can do
 ```
 
 `--check-deps` matters more than it looks. Many checks degrade to `n/a`
@@ -127,6 +128,7 @@ it never formally cites.
 ordering metric is computed from. For impact questions ("what breaks if
 this changes?") take the union:
 
+<!-- command-path-ok: run IN A FOLIO — the platform carries no content/, which is this guide's own §1 -->
 ```sh
 bun run content/pipeline/content-graph.ts content/<paper>
 ```
@@ -147,7 +149,7 @@ beans update <id> --status in-progress    # CLAIM before you work
 ```
 
 Claim before working so two sessions don't pick the same item, and never
-resolve a sibling's bean, and never delete ANY bean — scrap it with reasons instead. Do not stand up a parallel todo
+close a bean a sibling is mid-flight on (a finished one closes on evidence, not on authorship), and never delete ANY bean — scrap it with reasons instead. Do not stand up a parallel todo
 store. Do not `beans create` bulk machine-generated queues (`*.qa.json`,
 witness files) — those stay as bulk JSON.
 
@@ -164,6 +166,7 @@ block is edited and must be re-adjudicated.
 Criteria are grouped into **axes** (`proof`, `voice`, `detangler`,
 `uses`, `canonical`, `compute`, `bibliography`, …). Run one:
 
+<!-- command-path-ok: run IN A FOLIO — the platform carries no content/, which is this guide's own §1 -->
 ```sh
 bun run content/pipeline/qa-sweep.ts --axis uses content/<paper>
 bun run content/pipeline/qa-staleness.ts content/<paper>

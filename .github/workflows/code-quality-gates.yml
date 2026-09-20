@@ -542,7 +542,32 @@ jobs:
           bun run landing:sticky:check
           bun run landing:data:check
           bun run check:agents-xref
+          # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
+          # symbol claim and not a literal in a .ts file, so all three
+          # neighbouring checks miss it by design. The cold-start line every
+          # agent runs first rotted in exactly that gap.
+          bun run check:command-paths
           bun run check:bean-parents
+          # Bean `sfhr`: three store defects `beans check` cannot see, because
+          # none of them is a link -- an empty body on an open bean, a `title:`
+          # block scalar that swallowed the body's first lines, and a prose
+          # blocker naming a bean that is `completed` or `scrapped`. Baselined
+          # at the eight the store had, so a NEW one fails and the backlog is
+          # listed rather than demanded.
+          bun run check:bean-bodies
+          # Bean `bbbl`: a bean tagged `ready-to-close` carries the evidence its
+          # session did find. Fails only on a tag with no `## Evidence` -- the
+          # parking space the skill forbids. Closing them stays the owner's.
+          bun run check:ready-to-close
+          # Bean `bbbl` / the owner's waiver rule: a malformed waiver reads as
+          # permission and carries none, so it fails here rather than at the
+          # gate it claims to have opened.
+          bun run check:waivers
+          # Bean `oh78`: a bean and its issue must reach each other. The
+          # bean -> issue direction and the tracked-issue reverse are checked
+          # here; the general reverse needs the API and prints as undetermined
+          # rather than as clean.
+          bun run check:bean-issue-links
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
