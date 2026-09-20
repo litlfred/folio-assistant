@@ -61,6 +61,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#requiresCapability",
       "@type": "@id"
     },
+    "fallbackToCapability": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#fallbackToCapability",
+      "@type": "@id"
+    },
     "satisfies": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfies",
       "@type": "@id"
@@ -251,25 +255,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T10:13:01.508Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1a343880e9bd63acfd04526e4ca047d6ecb60d48",
-  "sourceCommitSha": "1a343880e9bd63acfd04526e4ca047d6ecb60d48",
-  "sourceCommitAt": "2026-09-20T10:11:19Z",
+  "generatedAt": "2026-09-20T11:02:59.969Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/de5169fc23b7f66cf1c3e73fb6ba43b9ac52c47d",
+  "sourceCommitSha": "de5169fc23b7f66cf1c3e73fb6ba43b9ac52c47d",
+  "sourceCommitAt": "2026-09-20T11:01:35Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 180,
+    "Skill": 191,
     "Actor": 27,
-    "Capability": 24,
+    "Capability": 25,
     "Role": 116,
     "Convention": 2,
-    "SkillPackage": 8,
-    "Process": 40,
-    "SequenceFlow": 543,
-    "ProcessNode": 505,
-    "Tool": 33,
+    "SkillPackage": 9,
+    "Process": 42,
+    "SequenceFlow": 573,
+    "ProcessNode": 538,
+    "Tool": 51,
     "Schema": 63,
     "GraphKind": 20,
-    "Directory": 17
+    "Directory": 19
   },
   "@graph": [
     {
@@ -788,6 +792,86 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-publishing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/scientific-visualization",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "scientific-visualization",
+      "title": "scientific-visualization — a stub, and it is not working",
+      "description": "STUB. Plotting and figure production for scientific results. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/remote-stubs"
+      ],
+      "instructionsPath": "skills/remote-stubs/scientific-visualization.md",
+      "instructionLines": 57,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/scientific-visualization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/hypothesis-generation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "hypothesis-generation",
+      "title": "hypothesis-generation — a stub, and it is not working",
+      "description": "STUB. Proposing candidate hypotheses from observations, with what each predicts. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/remote-stubs"
+      ],
+      "instructionsPath": "skills/remote-stubs/hypothesis-generation.md",
+      "instructionLines": 57,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/hypothesis-generation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/scientific-critical-thinking",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "scientific-critical-thinking",
+      "title": "scientific-critical-thinking — a stub, and it is not working",
+      "description": "STUB. Appraising a scientific claim — what would falsify it, what the evidence actually supports. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/remote-stubs"
+      ],
+      "instructionsPath": "skills/remote-stubs/scientific-critical-thinking.md",
+      "instructionLines": 57,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/scientific-critical-thinking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/smart-launch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "smart-launch",
+      "title": "smart-launch — a stub, and it is not working",
+      "description": "STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/remote-stubs"
+      ],
+      "instructionsPath": "skills/remote-stubs/smart-launch.md",
+      "instructionLines": 57,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/smart-launch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/fhir-client-operations",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "fhir-client-operations",
+      "title": "fhir-client-operations — a stub, and it is not working",
+      "description": "STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/remote-stubs"
+      ],
+      "instructionsPath": "skills/remote-stubs/fhir-client-operations.md",
+      "instructionLines": 57,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/fhir-client-operations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/readme-sections",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "readme-sections",
@@ -849,6 +933,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/swarm-management"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/methodology-adoption",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "methodology-adoption",
+      "title": "Adopting a methodology, and choosing between them",
+      "description": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/methodology-adoption.md",
+      "instructionLines": 96,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/methodology-adoption"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/scientific-accuracy",
@@ -1035,7 +1135,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 337,
+      "instructionLines": 353,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1087,6 +1187,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-requirements-workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/site-presentation-assets",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "site-presentation-assets",
+      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering",
+      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/site-presentation-assets.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/where-a-proposal-goes",
@@ -1351,7 +1467,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 559,
+      "instructionLines": 560,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1380,14 +1496,13 @@
       "title": "Reading the knowledge graph — how to find the skill you need",
       "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-navigation.md",
       "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
-      "ambiguous": true,
+      "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation"
     },
     {
@@ -1927,6 +2042,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-contribution-offer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "kg-contribution-offer",
+      "title": "Offering the knowledge graph — the question nobody was asking",
+      "description": "Ask whether agreed requirements should become knowledge-graph content, and as what — in a form the person can answer by selecting. Use at the end of CRDM sign-off, or whenever a body of agreed work could become a skill, a process, a schema or a bean and nobody has been asked. Offers \"none\" as a first-class answer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/kg-contribution-offer.md",
+      "instructionLines": 131,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-contribution-offer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/bib-qa",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "bib-qa",
@@ -2177,6 +2308,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-blocking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/covered-is-not-reachable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "covered-is-not-reachable",
+      "title": "Covered is not reachable — and `check:tools` cannot tell you which",
+      "description": "A skill can be satisfied by the neighbours of its mechanism while the mechanism is reachable from no Tool node. Read before concluding from check:tools that a command is reachable, and before adding a Tool node or a `maintains` claim.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
+      "instructionLines": 142,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/covered-is-not-reachable"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/deletion-requires-confirmation",
@@ -3103,6 +3250,37 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-simplifier"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "discussion",
+      "title": "discussion — settling what an agent cannot read off disk",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/skills"
+      ],
+      "instructionsPath": "../bootstrap/skills/discussion.md",
+      "instructionLines": 107,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/bootstrap-kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bootstrap-kg-navigation",
+      "title": "Reading a knowledge graph before you have anything",
+      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/skills"
+      ],
+      "instructionsPath": "../bootstrap/skills/bootstrap-kg-navigation.md",
+      "instructionLines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bootstrap-kg-navigation"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/confirm-harness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "confirm-harness",
@@ -3753,15 +3931,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
       "localId": "lean-mcp",
       "name": "Lean MCP Server",
-      "description": "MCP server providing Lean 4 diagnostics, proof state, and goal information.",
+      "description": "MCP server providing Lean 4 diagnostics, proof state, and goal information. It does NOT require a local lean-toolchain: the Lean runs server-side and detection is an mcp-probe against the endpoint. It used to declare that requirement, which made it unavailable on any machine without a local Lean even when the server was reachable — and, because `lean-toolchain.fallbackTo` names this capability, made that fallback unable to fire at all (it was absent in exactly the case it existed for). Removed 2026-09-20, bean folio-assistant-sym3.",
       "detection": {
         "method": "mcp-probe",
         "endpoint": "lean-mcp",
         "healthPath": "/health"
       },
-      "requiresCapability": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#capability/lean-toolchain"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/lean-mcp"
     },
     {
@@ -3820,6 +3995,18 @@
         "command": "docker info"
       },
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/docker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#capability/git-read",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "git-read",
+      "name": "Git Read",
+      "description": "Ability to read the Git repository — history, refs and working tree. Required by every skill that reasons about what changed. It was referenced by 17 skills and declared by NO capability until 2026-09-20, when executing the degradation model found it on the first run (bean folio-assistant-ahvw): a reference-shaped value resolving to nothing, so those skills could not be shown to run at all.",
+      "detection": {
+        "method": "command",
+        "command": "git rev-parse --git-dir"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/git-read"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#capability/node-runtime",
@@ -3886,6 +4073,7 @@
         "method": "command",
         "command": "lean --version"
       },
+      "fallbackToCapability": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#capability/lean-mcp",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/lean-toolchain"
     },
     {
@@ -4104,7 +4292,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "skills",
       "path": "../bootstrap/skills",
-      "hasManifest": false,
+      "hasManifest": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
     },
     {
@@ -4241,6 +4429,25 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-document-adapter"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/remote-stubs",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "remote-stubs",
+      "version": "0.1.0",
+      "description": "Stub bodies for skills that remote packages DECLARE and this instance does not vendor. A stub exists so the graph traverses and skill_fetch answers instead of failing mid-task; every one is reported by kg:audit under skill-is-a-stub so filling the gap does not hide it. This package is deliberately separate from the packages that hold real skills: a stub in folio-core would read as ours, and the remedy for each of these is upstream. Its docker block declares an empty aptPackages list on purpose: a stub needs nothing installed, and stating that explicitly keeps \"nothing required\" distinguishable from \"nobody filled this in\" — the same reason install.none exists on a Tool node.",
+      "path": "skills/remote-stubs",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/fhir-client-operations",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/hypothesis-generation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/scientific-critical-thinking",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/scientific-visualization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/smart-launch"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/remote-stubs"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "folio-core",
@@ -4268,6 +4475,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/coordinate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/covered-is-not-reachable",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/decision-audit",
@@ -4296,6 +4504,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/interaction-modality",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/issue-working",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-contribution-offer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-viewer",
@@ -4305,6 +4514,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/mcp-contract",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/mcp-projection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/md-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/methodology-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/milnor-exposition-standard",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/one-voice-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/one-voice-integration-watcher",
@@ -4328,6 +4538,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/swarm-management",
@@ -5768,8 +5979,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Start_Adopt"
       ],
-      "nodeCount": 13,
-      "flowCount": 14,
+      "nodeCount": 14,
+      "flowCount": 15,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption"
     },
     {
@@ -5843,8 +6054,16 @@
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Findings",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/PM_Decide",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Call_OptionsAnalysis",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Call_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/PM_Decide",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_15"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_10",
@@ -6076,6 +6295,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Findings"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Call_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Options analysis adopt · hold · decline",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_15"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Call_OptionsAnalysis"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/PM_Decide",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adopt, hold or decline",
@@ -6089,7 +6329,7 @@
       "touchesWorkPlan": false,
       "relaxable": false,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_9"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_15"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_10"
@@ -9534,6 +9774,612 @@
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GettingStarted/node/EndEvent_Ready"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Staging a feature branch preview, and taking it down",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/feature-staging.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_PR",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Closed",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch"
+      ],
+      "nodeCount": 22,
+      "flowCount": 19,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_0",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_PR",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Build",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Build",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Deploy",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Deploy",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRendered",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRendered",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Comment",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Comment",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Staged",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Closed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Slug",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Slug",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "merged, or labelled",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Remove",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Remove",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Removed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "closed unmerged,\nno label",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRetained",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRetained",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Notice",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Notice",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Retained",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Validate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Validate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Preflight",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Preflight",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no signal —\nsafe to remove",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_RemoveDisp",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_16",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_RemoveDisp",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_RemovedDisp",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_17",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "live, OR\ncould not tell",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Refused",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_18",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/H_Confirm",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_18"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Human%20actor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human actor",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_PR",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Pull request opened, synchronised or reopened",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_0"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_PR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Build",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Build the docs site Jekyll · TypeDoc · KG export",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_0"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Deploy",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Publish to STAGING/&lt;slug&gt;",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_2"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Deploy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRendered",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Append `rendered` to the render log",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRendered"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Comment",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Comment the preview URL on the PR",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_4"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Comment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Staged",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preview live",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_4"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Staged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Closed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Pull request closed",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Closed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Slug",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Derive the slug from the head ref",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_6"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Slug"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Removal confirmed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_9"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Remove",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Remove the preview AND append `removed` — one commit",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_8"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Removed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preview gone, with its reason",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_8"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Removed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRetained",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Append `retained`, with why it stays",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_10"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRetained"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Notice",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Post the retention notice on the PR",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_11"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Notice"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Retained",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preview kept",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_11"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Retained"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dispatched with cleanup_slug",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_18"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_12"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Validate",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Check the slug's SHAPE and that the confirmation repeats it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_13"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Validate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Preflight",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Re-evaluate liveness AT REMOVAL TIME",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_14"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Preflight"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Still in use?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_15",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_17"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_RemoveDisp",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Remove it AND append `removed` — one commit",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_16"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_RemoveDisp"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_RemovedDisp",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preview gone",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_16"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_RemovedDisp"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Refused",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "REFUSED — nothing removed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_17"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/node/H_Confirm",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Repeat the slug, exactly, to confirm",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Human%20actor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_18"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/H_Confirm"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements",
@@ -13600,8 +14446,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/Start_Process_CRDM_Signoff"
       ],
-      "nodeCount": 5,
-      "flowCount": 4,
+      "nodeCount": 9,
+      "flowCount": 9,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff"
     },
     {
@@ -13625,8 +14471,50 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_Signoff",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_AnnounceBranch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_ChooseKg",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_ChooseKg",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "a graph",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_RecordKg",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_RecordKg",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_AnnounceBranch",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_None",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "none — recorded\nas an answer",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_AnnounceBranch",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_None"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_4",
@@ -13711,7 +14599,8 @@
       "workPlanOp": "claim",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_3"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_None"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_4"
@@ -13734,6 +14623,90 @@
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/End_Process_CRDM_Signoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Offer the knowledge-graph destinations for the agreed set",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-contribution-offer"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_ChooseKg",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Choose a destination, or none",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-contribution-offer"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_2"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_ChooseKg"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A destination?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_None"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_RecordKg",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Run placement, and raise a bean for the authoring",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/placement"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_4"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_RecordKg"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
@@ -14228,7 +15201,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Code%20reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/skills-and-tools"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/skills-and-tools",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/covered-is-not-reachable"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -14249,7 +15223,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Code%20reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/code-node-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/site-presentation-assets"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -16054,6 +17029,178 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval/node/EndEvent_GapRecorded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Options analysis",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/options-analysis.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis"
+      ],
+      "nodeCount": 6,
+      "flowCount": 5,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Frame",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Frame",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Apply",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Apply",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Record",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Record",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A decision is in play",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Frame",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Frame the decision and check the trigger",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/opening-brief"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Frame"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Select the methodology by context",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Apply",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Apply it, and state each option's trade-offs",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_4"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Apply"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Record",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record the recommendation AND the rejected options",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Options and recommendation recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_5"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_Ingestion",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Document ingestion — uploads/ to the L1 source knowledge graph",
@@ -17524,13 +18671,6 @@
       "name": "Agent (playing the machine)",
       "sourceKind": "bpmn-lane",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Human%20actor",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Human actor",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Session%20record",
@@ -20254,6 +21394,47 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/node/EndEvent_Published"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/discuss",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "discuss",
+      "title": "discussion",
+      "description": "Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "question",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "The question as put, with its candidates named. One question where one will do.",
+            "required": true
+          },
+          {
+            "name": "askedOf",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "`person` or `agent` — symmetric participants, recorded because the answers are evidence of different weight.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "answer",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "The reply as received. Absent is a real result: it routes to `outcome: unsettled`, never to a guess."
+          }
+        ]
+      },
+      "requirements": {},
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/discussion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/discuss"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/beans-cli",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "beans-cli",
@@ -20660,6 +21841,949 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/serving-renderings"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/kg-graph-export",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "kg-graph-export",
+      "title": "Knowledge-graph export",
+      "description": "Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:export"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "baseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Url",
+            "description": "Publication base the node IRIs are minted against; a preview passes its own.",
+            "required": false,
+            "arg": {
+              "flag": "--base-url"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write; defaults to `_kg/<stub>.jsonld`, which is build output and gitignored.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The written JSON-LD document."
+          },
+          {
+            "name": "problems",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "Sources that could not be read, counted rather than silently omitted."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-graph-export"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/qa-sweep",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "qa-sweep",
+      "title": "QA sweep",
+      "description": "Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish \"never checked\" from \"checked and clean\".",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/qa-sweep.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "targetPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The content root to sweep. Absent, the command exits 2 with its usage — could-not-determine, not a clean sweep.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Report what would change without writing sidecars.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          },
+          {
+            "name": "ci",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail on a finding rather than recording it.",
+            "required": false,
+            "arg": {
+              "flag": "--ci"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "sidecars",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One `<block>.qa.json` per block, committed beside its subject."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-test"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/qa-sweep"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/latex-preflight",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "latex-preflight",
+      "title": "LaTeX preflight",
+      "description": "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/latex-preflight.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "warn",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Report without failing — for a corpus not yet clean.",
+            "required": false,
+            "arg": {
+              "flag": "--warn"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "Compile-breaking hazards, located. A clean run here is not a successful compile; it is the absence of these classes."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/latex-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/latex-preflight"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/latex-overfull",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "latex-overfull",
+      "title": "LaTeX overfull-box report",
+      "description": "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/latex-overfull-report.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "log",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The pdflatex log to read. Nothing to read means no answer, not a pass.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "min",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Dpi",
+            "description": "Ignore overruns below this size — the long tail is noise, and reporting it hides the rest.",
+            "required": false,
+            "arg": {
+              "flag": "--min"
+            }
+          },
+          {
+            "name": "max",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Dpi",
+            "description": "Fail above this count, for use as a gate.",
+            "required": false,
+            "arg": {
+              "flag": "--max"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "Located overfull boxes. Requires a build log: with no log there is nothing to read, which is could-not-determine rather than clean."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/latex-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/latex-overfull"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/lean-build",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "lean-build",
+      "title": "Lean build",
+      "description": "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "scripts/lean-build-all.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Slug",
+            "description": "Build one paper instead of all of them.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "cache",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Fetch the Mathlib cache first. A from-source Mathlib build is 30–60 minutes against ~2 for a restore.",
+            "required": false,
+            "arg": {
+              "flag": "--cache"
+            }
+          },
+          {
+            "name": "update",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Run `lake update` before building.",
+            "required": false,
+            "arg": {
+              "flag": "--update"
+            }
+          },
+          {
+            "name": "logDir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where logs and the status sidecar go.",
+            "required": false,
+            "arg": {
+              "flag": "--log-dir"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`lean-build-status.json` — committable, so a green build is distinguishable from one nobody ran."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "lean",
+          "lake"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/lean-build-fix"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/lean-build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/lean-cache",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "lean-cache",
+      "title": "Lake olean cache",
+      "description": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "scripts/lake-cache.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "action",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/LakeCacheAction",
+            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "lakeRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The package whose `.lake/` is acted on.",
+            "required": false,
+            "arg": {
+              "flag": "--lake-root"
+            }
+          },
+          {
+            "name": "package",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/PackageName",
+            "required": false,
+            "arg": {
+              "flag": "--package"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "git",
+          "lake"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/lean-cache-restore"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/lean-cache"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/lean-toolchain-setup",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "lean-toolchain-setup",
+      "title": "Lean toolchain install",
+      "description": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
+      "install": {
+        "cli": "scripts/setup-lean-toolchain.sh"
+      },
+      "invoke": {
+        "shell": "scripts/setup-lean-toolchain.sh"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "toolchain",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "The linked toolchain name, and the per-repo override that selects it."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "curl",
+          "elan"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/lean-environment-setup"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/lean-toolchain-setup"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/lean-coverage",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "lean-coverage",
+      "title": "Lean coverage",
+      "description": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/lean-coverage.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Slug",
+            "description": "One paper instead of all.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "contentRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where content blocks live. NOT a Lean project root — see the note above this node.",
+            "required": false,
+            "arg": {
+              "flag": "--content-root"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "coverage",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "Provable blocks, and how many are sorry-free. A count, not a verdict: a sorry-free proof can still be vacuous, which is the sibling node's question."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/lean-completeness-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/lean-coverage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/lean-audit",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "lean-audit",
+      "title": "Lean vacuity audit",
+      "description": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/lean-audit.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "chapter",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Slug",
+            "description": "One chapter instead of the whole corpus.",
+            "required": false,
+            "arg": {
+              "flag": "--chapter"
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          },
+          {
+            "name": "checkAxioms",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Axiom-cleanliness is a separate question from vacuity: a proof can be axiom-clean and still assume its conclusion.",
+            "required": false,
+            "arg": {
+              "flag": "--check-axioms"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "Sorry inventory and trivial-truth detections. Sibling of `lean-coverage`, not an alternative to it: that one COUNTS what is proved, this one asks whether a proof says anything."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/lean-proof-vacuity-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/lean-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/kg-audit",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "kg-audit",
+      "title": "Knowledge-graph audit",
+      "description": "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes \"unbound since it was drawn\" distinguishable from \"broken in the commit under review\".",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:audit"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed sidecars and fail on a critical finding or a stale one, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Promote `major` to failing as well. Not what CI runs; see the note on constant-red checks in `remote-skill-servable.test.ts`.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "sidecars",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The QA tree, mirroring each subject's own path — flat would collide, since several basenames already occur twice."
+          },
+          {
+            "name": "worstSeverity",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Text",
+            "description": "critical, major, minor — or none. `unknown` findings are never a pass."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/code-node-review"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/bpmn-render",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "bpmn-render",
+      "title": "BPMN diagram rendering",
+      "description": "Render each process diagram to SVG for the documentation site. The .bpmn file is the source of truth; the picture is generated from it, so a diagram and its image cannot disagree.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run render:bpmn"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if any committed SVG is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "diagrams",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The generated SVG directory. Never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "chromium"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/bpmn-render"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/themes-css",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "themes-css",
+      "title": "Theme stylesheet",
+      "description": "Render the declared theme nodes into the stylesheet the site serves. The nodes are the source: a colour has one home, and light and dark are two valuations of one token set rather than two hand-kept blocks.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run themes:css"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed copy and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "stylesheet",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The generated stylesheet. Build output that happens to be committed, so it is readable on the forge — never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/site-presentation-assets"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css"
+      ],
+      "maintainsFrom": [
+        "schemas/themes.ts"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/themes-css"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/avatars-css",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "avatars-css",
+      "title": "Avatar stylesheet",
+      "description": "Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run avatars:css"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed copy and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "stylesheet",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The generated stylesheet. Never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/site-presentation-assets"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css"
+      ],
+      "maintainsFrom": [
+        "schemas/avatars.ts"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/avatars-css"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/schema-docs",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "schema-docs",
+      "title": "Skill contract reference",
+      "description": "Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/gen-schema-docs.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed pages and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The generated reference directory. Never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/schema-docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/skill-docs",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "skill-docs",
+      "title": "Skill instruction reference",
+      "description": "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/gen-skill-docs.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed pages and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The generated instruction directory. Never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/skill-docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/ns-vocabulary",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ns-vocabulary",
+      "title": "Namespace vocabulary",
+      "description": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run ns:export"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "layer",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/NamespaceLayer",
+            "description": "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does.",
+            "required": false,
+            "arg": {
+              "flag": "--layer"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write; defaults under `_kg/`, which is build output.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "vocabulary",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The written namespace document."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/ns/vocabulary.jsonld"
+      ],
+      "maintainsFrom": [
+        "schemas/vocabulary.ts"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ns-vocabulary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/content-context",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "content-context",
+      "title": "Content JSON-LD context",
+      "description": "Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/gen-jsonld-context.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed copy and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "context",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`ns/content/v1.jsonld`, the document served at CONTENT_CONTEXT_URL."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/ns/content/v1.jsonld"
+      ],
+      "maintainsFrom": [
+        "schemas/jsonld.ts"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/content-context"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/gates",
@@ -22218,6 +24342,9 @@
       "name": "avatars",
       "title": "An avatar for every declared kind — in and out of the trash, in both",
       "module": "schemas/avatars.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/avatars-css"
+      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/avatars"
     },
     {
@@ -22365,6 +24492,9 @@
       "name": "jsonld",
       "title": "JSON-LD projection of the content block model.",
       "module": "schemas/jsonld.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/content-context"
+      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/jsonld"
     },
     {
@@ -22581,6 +24711,9 @@
       "name": "themes",
       "title": "The themes this instance ships, and the default.",
       "module": "schemas/themes.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/themes-css"
+      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/themes"
     },
     {
@@ -22659,6 +24792,9 @@
       "name": "vocabulary",
       "title": "What each term in the folio namespace MEANS — one brief gloss apiece.",
       "module": "schemas/vocabulary.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#tool/ns-vocabulary"
+      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/vocabulary"
     },
     {
@@ -22692,6 +24828,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#KnowledgeGraph",
       "renderable": false,
       "summary": "Skills, workflows, roles — the harness layer's own knowledge graph."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "methodology",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#MethodologyGraph",
+      "renderable": false,
+      "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
@@ -22788,14 +24932,6 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TodoFeedbackGraph",
       "renderable": false,
       "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/session-state",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "session-state",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SessionStateGraph",
-      "renderable": false,
-      "summary": "A session's context — the acting actor, the instances it has open, and what it waits on."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction",
@@ -22981,7 +25117,9 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/covered-is-not-reachable",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/placement",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/test-engineer"
       ],
@@ -23105,11 +25243,13 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/bpmn-authoring",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/dmn-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/l2-dak-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/crdm-requirements-workflow",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/decision-audit"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/l2-dak-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/methodology-adoption",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/opening-brief"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Business%20analyst",
@@ -23589,14 +25729,15 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "initiator",
       "title": "Initiator",
-      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "agent"
       ],
       "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-navigation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/bootstrap-kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/confirm-harness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/discussion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/log-message"
       ],
       "bindsLane": [],
@@ -23691,6 +25832,17 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#directory/methodologies",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "methodologies",
+      "path": "methodologies/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
+      ],
+      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here — see smart-kg-methodologies.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/methodologies"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#directory/qa",
@@ -23834,12 +25986,23 @@
       ],
       "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/folio"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#directory/smart-kg-methodologies",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "smart-kg-methodologies",
+      "path": "smart-kg/methodologies/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
+      ],
+      "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/smart-kg-methodologies"
     }
   ],
   "staging": {
     "branch": "claude/sleepy-babbage-ls90iz",
-    "sha": "339f5d6fc67b2ce8423cc928a57f600d63925a53",
+    "sha": "4aa71a0228a8544b055bc910c35bf3bb99cd18f6",
     "pr": "488/merge",
-    "run": "35504366158"
+    "run": "35506683581"
   }
 }
