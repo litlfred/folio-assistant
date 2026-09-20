@@ -19,7 +19,8 @@ Exactly three things, and they are all files:
 |---|---|
 | `bootstrap/README.md` | the flow, with every term linked to the schema that defines it |
 | `bootstrap/harness.json` | this instance's own declaration |
-| `bootstrap/skills/` | two skills: reading a graph, and determining intent |
+| `bootstrap/skills/` | two skills, plus the three roles the process uses |
+| `bootstrap/workflows/` | ONE process: `initialize-harness.bpmn` |
 | your ability to read a file | that is the entire toolchain |
 
 **There is no tool call in bootstrap.** Not because one would be untidy, but
