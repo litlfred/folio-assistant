@@ -1071,6 +1071,18 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * {@link DependentMaterialisationSchema} for the measurement.
    */
   dependents: DependentMaterialisation;
+
+  /**
+   * What makes this subgraph reachable — a renderer, a documentation entry,
+   * and a governing skill — or the reasons it does not need one.
+   *
+   * OPTIONAL on purpose, unlike {@link dependents} above. An absent field is
+   * exactly the finding `check:subgraph-coverage` exists to raise, so making
+   * it required would both destroy the measurement and bill every concurrent
+   * branch for a field they had no reason to know about — which is what
+   * `dependents` did the day it landed. See {@link SubgraphCoverageSchema}.
+   */
+  coverage?: SubgraphCoverage;
 }
 
 /** An instance's root declaration. */
@@ -1260,8 +1272,57 @@ export const GraphNodeDirectorySchema = z.object({
   ...kgNodeLabelShape,
 });
 
+/**
+ * What makes a declared subgraph REACHABLE — and the reasons it may not need
+ * to be.
+ *
+ * The owner, 2026-09-20: *"everytime an instance names a directory as a
+ * subgraph, it needs (QA valduation) to have visualizer, documenationentry. QA
+ * if no skill, no tools."* Three obligations that fail differently, so they are
+ * three fields rather than one flag:
+ *
+ * - `visualiser` — something renders it. Without one, a reader cannot LOOK.
+ * - `docs` — something says what it is FOR. Without one, a reader who finds it
+ *   cannot tell what belongs in it.
+ * - `skill` — a skill governs it. Without one there is nothing for an agent to
+ *   invoke, so the graph is agent-unreachable even where a human can read it.
+ *   This is the sharpest of the three and the easiest to miss, because the
+ *   directory looks perfectly fine.
+ *
+ * ## Every field is OPTIONAL, and that is deliberate
+ *
+ * `dependents` was made REQUIRED four hours before this was written, and the
+ * bill landed on a sibling branch within the hour: `main` added two directory
+ * entries without it, and CI on the merged tree reported 166 failures and 35
+ * errors. Nothing was wrong with either side. **A required field is a change
+ * every concurrent branch pays for**, and this one does not need to be
+ * required to do its job — an absent field is exactly the finding the axis
+ * exists to raise.
+ *
+ * ## `exempt` carries a REASON, never a bare true
+ *
+ * Not every subgraph wants a viewer: `interaction/` is read by an agent at
+ * session start and a human page for it may be pointless. But an opt-out with
+ * no reason is a silence list, and the next person cannot tell a considered
+ * waiver from a shrug. So the value is the reason, and the axis prints it.
+ */
+export const SubgraphCoverageSchema = z.object({
+  visualiser: z.string().min(1).optional(),
+  docs: z.string().min(1).optional(),
+  skill: z.string().min(1).optional(),
+  exempt: z
+    .object({
+      visualiser: z.string().min(1).optional(),
+      docs: z.string().min(1).optional(),
+      skill: z.string().min(1).optional(),
+    })
+    .optional(),
+});
+export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
+
 export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
   dependents: DependentMaterialisationSchema,
+  coverage: SubgraphCoverageSchema.optional(),
 });
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
