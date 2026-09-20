@@ -179,6 +179,34 @@
   --fa-sticky-font-scale: 0.95;
 }
 
+/* Grumpy cat, operations — Steel and blueprint blue — building the thing, and running it. */
+[data-fa-sticky-theme="operations"] {
+  --fa-sticky-surface: #edf0f3;
+  --fa-sticky-ink: #1a2129;
+  --fa-sticky-edge: #ccd4db;
+  --fa-sticky-accent: #3f6d9e;
+  --fa-sticky-scrim: rgba(237, 240, 243, 0.82);
+  --fa-sticky-min-width: 17rem;
+  --fa-sticky-padding: 0.7em 0.8em;
+  --fa-sticky-font-scale: 1;
+}
+
+/* Grumpy cat, operations — mobile layout. A phone sticky is not a laptop one scaled down. */
+@media (max-width: 40rem) {
+  [data-fa-sticky-theme="operations"] {
+    --fa-sticky-min-width: 100%;
+    --fa-sticky-padding: 0.8em 0.9em;
+    --fa-sticky-font-scale: 1.05;
+  }
+}
+
+/* Grumpy cat, operations — card layout, for a dense board. */
+[data-fa-sticky-theme="operations"][data-fa-sticky-layout="card"] {
+  --fa-sticky-min-width: 13rem;
+  --fa-sticky-padding: 0.6em 0.7em;
+  --fa-sticky-font-scale: 0.95;
+}
+
 /* Grumpy cat, engineering — The cloud cream and a working green, behind the cat in a hi-vis vest. */
 [data-fa-sticky-theme="engineer"] {
   --fa-sticky-surface: #fdfbef;
