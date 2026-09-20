@@ -351,6 +351,73 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── The TeX checks, and the SECOND authoring skill with no mechanism ──
+    //
+    // `latex-authoring` is not satisfied here, and the reason is now a pattern
+    // rather than an accident. Its contract requires `documentClass` and
+    // `mainFile` — what you are AUTHORING. Nothing in the corpus accepts either:
+    // `generate-main-tex` takes `--preamble`, `--chapters-dir` and `--out`.
+    //
+    // That is the same shape as `proof-verification` one group over, whose
+    // contract requires `projectRoot` and finds no taker. **Authoring skills
+    // name the artefact you are creating; the corpus has checking mechanisms.**
+    // Two instances make it worth stating: a contract written from the authoring
+    // side does not become satisfiable by pointing a checker at it, and forcing
+    // the edge would make the node lie about its interface. Recorded on `jh2j`.
+    //
+    // These two satisfy `latex-validation`, which matches them exactly —
+    // "validate LaTeX source files for syntactic correctness, structural
+    // consistency, and adherence to project conventions" — and has no contract
+    // to contradict. Complementary rather than alternative: one stops a compile
+    // from failing, the other reports a defect in a compile that succeeded.
+    defineTool({
+      id: "latex-preflight",
+      title: "LaTeX preflight",
+      description:
+        "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/latex-preflight.ts" },
+      io: {
+        inputs: [
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+          { name: "warn", schema: t("Flag"), required: false, arg: { flag: "--warn" }, description: "Report without failing — for a corpus not yet clean." },
+        ],
+        outputs: [{ name: "findings", schema: t("Text"), description: "Compile-breaking hazards, located. A clean run here is not a successful compile; it is the absence of these classes." }],
+      },
+      satisfies: ["latex-validation"],
+      // No TeX distribution needed: this reads source and never invokes pdflatex.
+      // Stated because the sibling `latex-overfull` DOES need a build log, and a
+      // caller would otherwise assume both have the same prerequisites.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "latex-overfull",
+      title: "LaTeX overfull-box report",
+      description:
+        "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/latex-overfull-report.ts" },
+      io: {
+        inputs: [
+          // REQUIRED and positional — found by running it, not by reading it:
+          // `usage: latex-overfull-report.ts <main.log> [--min N] …`. The first
+          // draft of this node declared only the flags, which would have told a
+          // caller the log was optional and sent them to a usage error.
+          { name: "log", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The pdflatex log to read. Nothing to read means no answer, not a pass." },
+          { name: "min", schema: t("Dpi"), required: false, arg: { flag: "--min" }, description: "Ignore overruns below this size — the long tail is noise, and reporting it hides the rest." },
+          { name: "max", schema: t("Dpi"), required: false, arg: { flag: "--max" }, description: "Fail above this count, for use as a gate." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "Located overfull boxes. Requires a build log: with no log there is nothing to read, which is could-not-determine rather than clean." }],
+      },
+      satisfies: ["latex-validation"],
+      // Reads a pdflatex LOG, so it needs a build to have happened — not a TeX
+      // distribution of its own. The distinction matters to a caller deciding
+      // whether to run it: no log means no answer, not a pass.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     // ── The Lean family, which is a FAMILY and not one command ────────────
     //
     // Bean `eu38` wrote the caution before the work: 16 entry points spanning
