@@ -248,10 +248,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:55:15.613Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ddaa91f8a70fd6ef1283ce891d9fba44a8b07b3b",
-  "sourceCommitSha": "ddaa91f8a70fd6ef1283ce891d9fba44a8b07b3b",
-  "sourceCommitAt": "2026-09-20T04:53:10Z",
+  "generatedAt": "2026-09-20T04:58:22.046Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cfe2c4686d2df55de753d22333f9cf7bf38543da",
+  "sourceCommitSha": "cfe2c4686d2df55de753d22333f9cf7bf38543da",
+  "sourceCommitAt": "2026-09-20T04:53:50Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 170,
@@ -263,7 +263,7 @@
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 30,
-    "Schema": 54,
+    "Schema": 55,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -18951,7 +18951,7 @@
       "title": "Ingest, with PDF and image extensions",
       "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
       "install": {
-        "cli": "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils"
+        "cli": "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils"
       },
       "invoke": {
         "shell": "bun run scripts/ingest-document.ts"
@@ -20749,6 +20749,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/precision-scalar"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#schema/python-deps",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "python-deps",
+      "title": "The Python packages this repository's scripts need — declared once.",
+      "module": "schemas/python-deps.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/python-deps"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#schema/qa-review",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "qa-review",
@@ -21983,8 +21991,8 @@
   ],
   "staging": {
     "branch": "claude/sleepy-babbage-ls90iz",
-    "sha": "84b9b1f6aefcb9d7a58b73732e137ba9da8f8371",
+    "sha": "b717aac6ee2a4d9634cea084b506fbc1f4ee27a8",
     "pr": "459/merge",
-    "run": "35490283620"
+    "run": "35490412885"
   }
 }
