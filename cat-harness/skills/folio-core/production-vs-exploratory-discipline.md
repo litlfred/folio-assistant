@@ -10,6 +10,7 @@ description: >
   for which output goes where, the derivation-menu check, and the
   escalation path for off-menu coefficients.
 allowed-tools: Read Bash Grep Glob Edit Write AskUserQuestion Skill
+consulted: true
 ---
 
 # Production vs exploratory vs numerology — the bright-line guide

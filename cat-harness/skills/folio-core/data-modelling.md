@@ -6,6 +6,7 @@ description: >
   the tools can read it. Process-agnostic technique; the CRDM phase that
   invokes it is `crdm-data-model`.
 allowed-tools: Read Grep Glob Bash
+consulted: true
 ---
 
 # Data modelling — the entities, before the fields

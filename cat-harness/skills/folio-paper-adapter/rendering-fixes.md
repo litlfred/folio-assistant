@@ -4,6 +4,7 @@ description: >
   Quick-fix reference for common rendering errors found by the rendering-auditor.
   Agents should consult this when editing content blocks to avoid introducing
   issues and to fix flagged problems efficiently.
+consulted: true
 ---
 
 # Rendering Fixes

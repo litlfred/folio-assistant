@@ -10,6 +10,7 @@ description: >
   flake handling — that every concrete watcher inherits. Children
   fill nine domain-specific slots; everything else is shared here.
 allowed-tools: Read Edit Write Bash Grep Glob Agent Monitor Skill
+consulted: true
 ---
 
 # integration-watcher (abstract parent)

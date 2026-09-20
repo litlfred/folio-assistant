@@ -510,7 +510,33 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "COVERAGE, not a defect: no role carries this skill and no activity names it, so nothing in the " +
       "actor/role/process model reaches it. Legitimate for a skill invoked directly by name, which most " +
-      "are. Expect this to be large and to stay large; watch it move, do not drive it to zero.",
+      "are. Expect this to be large and to stay large; watch it move, do not drive it to zero. Skills " +
+      "declaring `consulted: true` are EXCLUDED — reference material belongs in no lane by its nature, " +
+      "so counting it measured this criterion rather than the corpus (bean `y1w9`).",
+  },
+  {
+    id: "consulted-skill-not-performed",
+    applies: ["graph"],
+    severity: "major",
+    // The guard that makes `consulted: true` falsifiable, and the reason
+    // the exemption above is safe to grant.
+    //
+    // A skill cannot be reference material AND a step somebody performs. If
+    // a lane or a role claims one, either the annotation is wrong or the
+    // binding is — and which it is takes a person, so this reports both
+    // rather than choosing.
+    //
+    // `major` rather than `minor`, unlike the criterion it guards, because
+    // the failure mode is different in kind. That one is coverage and
+    // expected to be large; this is a CONTRADICTION between two
+    // declarations, and there should never be any. Without it,
+    // `consulted: true` would be an unfalsifiable opt-out — a worse field
+    // than the one `qif9` removed, because that one at least did nothing.
+    summary:
+      "A skill declares `consulted: true` — reference material nobody performs — while a role carries it " +
+      "or a BPMN activity names it. The two declarations contradict each other; a person decides which " +
+      "is wrong. Guards the `consulted` exemption in `skill-in-role-or-process` from being an " +
+      "unfalsifiable opt-out.",
   },
   {
     id: "manifest-skill-exists",

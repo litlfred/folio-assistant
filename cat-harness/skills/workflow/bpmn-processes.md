@@ -7,6 +7,7 @@ description: >
   than chosen.
 adapters: [document, paper, dak]
 profiles: [document, paper]
+consulted: true
 ---
 
 # Processes are BPMN, and the diagrams are executable

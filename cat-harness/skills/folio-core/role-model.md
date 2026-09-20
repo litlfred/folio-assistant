@@ -29,6 +29,36 @@ Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
 [`schemas/kg-qa.ts`](../../schemas/kg-qa.ts).
 
+### Not every skill is PERFORMED — `consulted: true`
+
+**Reference material belongs in no lane, by its nature.** `build-pdf` and
+`proof-triage` are tasks somebody carries out; `directory-conventions`,
+`untrusted-input` and `turn-reporting` are what the performer READS. Both
+kinds are skills; only the first can sit in a swimlane.
+
+A skill that is reference material declares `consulted: true` in its front
+matter. Absent means performed — the exception is annotated, not the rule,
+because an axis whose default costs an edit in every skill file does not get
+adopted.
+
+**Why it had to be declared.** `kg-audit`'s `skill-in-role-or-process`
+counted both kinds together. Two mechanical discriminators were tested over
+the unbound set (bean `y1w9`) and both cut across the distinction rather
+than along it: a sibling `.ts` `SkillDefinition` covers a fifth of them and
+misses `glossary-build` and `editor`; an `allowed-tools:` line covers half
+and splits the same families arbitrarily. The distinction is real,
+load-bearing for a criterion, and was declared nowhere.
+
+**It is checked in BOTH directions**, which is what stops it being an
+opt-out. `skill-in-role-or-process` skips a consulted skill; the separate
+`consulted-skill-not-performed` reports one that a role carries or an
+activity names, because a skill cannot be reference material *and* a step
+somebody performs. Which of the two declarations is wrong takes a person,
+so the criterion reports both rather than choosing.
+
+**It shipped with its reader in the same commit** — the rule the retired
+`roles:` field broke, immediately below.
+
 ### A skill's `roles:` front matter is GONE — do not bring it back
 
 **Removed 2026-09-20**, bean `folio-assistant-qif9`, on the owner's

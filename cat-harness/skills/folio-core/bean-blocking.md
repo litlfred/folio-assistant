@@ -4,6 +4,7 @@ description: >
   Default to non-blocking when updating a bean's status. Mark blocked only
   when the work genuinely cannot proceed, and then always with what it waits
   on, when the wait expires, and what the next agent should do.
+consulted: true
 ---
 
 # Blocking is a claim about the work, not a mood
