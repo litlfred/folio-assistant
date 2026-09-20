@@ -212,3 +212,78 @@ and mode-755 code files (64), 121 distinct. BPMN tasks read from the 34 diagrams
 **No count here should be quoted from this bean into a second place.** That is
 the failure `kg:audit`'s reading rules name, and this bean is exactly the sort of
 document that invites it.
+
+---
+
+## CROSS-VALIDATION, 2026-09-20 — and it is the strongest result on this bean
+
+`bun run tools:coverage` was finally run, rather than reasoned around. It tiers
+all 179 uncovered skills by BPMN evidence and reports **tier A = 28 skills**, "a
+`serviceTask` names it, or it has an I/O contract. A Tool is warranted."
+
+**Eleven of this bean's thirteen code groups map onto a tier-A skill, and those
+eleven skills are uncovered.** Two independent instruments — one built over
+*code* for this bean, one built over *skills* two days earlier for `ce65` —
+converge:
+
+| group | skill its BPMN task refs | tier | covered? |
+|---|---|---|---|
+| `v7bg` Publish | `content-publish` | **A** | no |
+| `eu38` Lean | `lean-formalization`, `proof-verification` | **A** (both) | no |
+| `zq4z` QA sweep | `content-test` | **A** | no |
+| `oait` Content graph | `content-validate` | **A** | no |
+| `jh2j` LaTeX | `latex-authoring` | **A** | no |
+| `81t5` Ingestion | `document-intake` | **A** | no |
+| `w5h0` Block authoring | `content-author`, `document-authoring` | **A** (both) | no |
+| `9x17` Schema validation | `content-validate` | **A** | no |
+| `1oqu` Bibliography | `document-intake` | **A** | no |
+| `h588` FHIR | `fhir-validation`, `ig-publication`, `l3-fhir-authoring` | **A** (all) | no |
+| `7ajt` Narratives | `content-review` | **A** | no |
+| `pha7` Translation | `translation-extract` &c. | — | **COVERED, 5 nodes** |
+| `shzs` KG audit | `kg-export` | — | **COVERED, 5 nodes** |
+
+That convergence is worth more than either list alone. A grouping of code derived
+from filenames and a tiering of skills derived from BPMN task TYPE had no
+common input, and they agree on eleven rows.
+
+### It also corrects two of the fifteen children
+
+`pha7` and `shzs` were written as if their skills were uncovered. They are not,
+and both beans now say so.
+
+### And it names the complement, which is `ce65`'s half not this one's
+
+Tier A holds ~17 skills with **no corresponding code group at all**:
+`content-plan`, `content-review`, `content-feedback`, `bpmn-authoring`,
+`dmn-authoring`, `document-structure`, `normative-statements`,
+`quality-control`, `terminology-management`, `l2-dak-authoring`,
+`interaction-modality`, `delivery-summary`, `feature-staging`, `prepare-merge`,
+`upstream-version-adoption`, `document-publishing`.
+
+A skill in tier A with no code is a skill whose mechanism is **inlined in its
+prose** — exactly the debt `skills-and-tools` names and `ce65` exists to pay.
+So the two beans are complementary halves of one surface and neither is
+redundant:
+
+- **`d308`**: code with no Tool to be reached through — 13 groups
+- **`ce65`**: skills with no Tool and a mechanism in their prose — ~17 more
+- **the overlap**: 11 rows where both are true, and one node fixes both
+
+### The uncomfortable part, again
+
+`tool-coverage.ts` has said "tier A is the list to act on" since 2026-09-18. I
+hand-rolled a Python categoriser in a scratchpad to answer the adjacent question
+and did not run it until the first node was already being written. The
+convergence above is real; that it took this long to look is the finding about
+process rather than about code.
+
+## Also worth recording: 14 of the 28 in tier A are ALSO a `userTask`
+
+`tool-coverage` says so itself: "for those the question is not *should this be a
+Tool* but *which part of it is*. Splitting the mechanism out is the work; the
+judgement stays."
+
+`content-author` is one of them — `serviceTask, io-contract, userTask` — which is
+independent confirmation of the `w5h0` correction above. Its judgement half is an
+agent writing a manifest and will never be a Tool. Its mechanical half is the
+render path. That is why `w5h0` carries a question rather than a node.

@@ -34,3 +34,40 @@ which is the whole thesis of `d308` demonstrated against the repo itself.
 - [ ] `satisfies` includes `kg-export` and the review skills
 - [ ] `tool-coverage` itself reachable as a Tool
 - [ ] `ce65` cross-referenced both ways
+
+---
+
+## CORRECTED 2026-09-20: `kg-export` is already covered — rescope to the audits
+
+Five nodes satisfy `kg-export`: `pages-publish`, `serve-rendering`,
+`cat-harness-schema`, `tool-schema`, `tool-types-schema`. So this bean's stated
+skill is not uncovered, and `tool-coverage` does not list it in tier A.
+
+**What IS uncovered and in tier A: `bpmn-authoring`** (`io-contract, userTask`).
+And the audit family itself — `kg-audit`, `check-tools`, `tool-coverage`,
+`capture-mcp-tools`, `validate-skills` — is reachable from no Tool node at all,
+which is the joke this bean already noted and now has a name for.
+
+## Rescoped
+
+Two separable things were in one bean:
+
+1. **The audit family** — `kg-audit`, `check-tools`, `tool-coverage`,
+   `validate-skills`, `check-workflow-refs/-policy`, `check-mirror-drift`,
+   `check-duplicate-decls`. 11 of these are run from this repo's `package.json`,
+   so this is the **most verifiable node on the whole epic** and the right one to
+   build first on evidence, whatever the process order says.
+2. **BPMN rendering / authoring** — `bpmn-render`, `render-bpmn`,
+   `translate-bpmn`, satisfying `bpmn-authoring`, which IS tier A and uncovered.
+
+These should be two nodes, not one. Rendering a diagram and auditing the graph
+are different jobs with different inputs.
+
+## Done when — REPLACES the list above
+
+- [ ] a Tool node for the audit family; `satisfies` names the review skills, NOT
+      `kg-export`
+- [ ] a second node for BPMN rendering; `satisfies` names `bpmn-authoring`
+- [ ] neither claims `kg-export`, which has five nodes already
+- [ ] `tool-coverage` reachable through a Tool — the instrument that found this
+- [ ] `ce65` cross-referenced both ways
