@@ -16,7 +16,7 @@
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">SessionHook</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#commands">commands</a><span class="tsd-signature-symbol">:</span> <a href="assistant-types.HookCommand.html" class="tsd-signature-type tsd-kind-interface">HookCommand</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#event">event</a><span class="tsd-signature-symbol">:</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;SessionStart&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;PostToolUse&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;PreCommit&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;PostCommit&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;UserPromptSubmit&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#matcher">matcher</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0720657c795bb607b0c2ac4e5672f8e24e8dc4f3/cat-harness/schemas/assistant-types.ts#L563">assistant-types.ts:563</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/42ba7a83e6efa8e6dfeb0475db7d691e43a208c4/cat-harness/schemas/assistant-types.ts#L578">assistant-types.ts:578</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -37,21 +37,21 @@
 <div class="tsd-comment tsd-typography"><p>Commands to execute when the event fires.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0720657c795bb607b0c2ac4e5672f8e24e8dc4f3/cat-harness/schemas/assistant-types.ts#L574">assistant-types.ts:574</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/42ba7a83e6efa8e6dfeb0475db7d691e43a208c4/cat-harness/schemas/assistant-types.ts#L589">assistant-types.ts:589</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="event"><span>event</span><a href="#event" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">event</span><span class="tsd-signature-symbol">:</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;SessionStart&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;PostToolUse&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;PreCommit&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;PostCommit&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;UserPromptSubmit&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>The event that triggers this hook.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0720657c795bb607b0c2ac4e5672f8e24e8dc4f3/cat-harness/schemas/assistant-types.ts#L565">assistant-types.ts:565</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/42ba7a83e6efa8e6dfeb0475db7d691e43a208c4/cat-harness/schemas/assistant-types.ts#L580">assistant-types.ts:580</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="matcher"><code class="tsd-tag">Optional</code><span>matcher</span><a href="#matcher" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">matcher</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Tool name regex matcher (for PostToolUse).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0720657c795bb607b0c2ac4e5672f8e24e8dc4f3/cat-harness/schemas/assistant-types.ts#L572">assistant-types.ts:572</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/42ba7a83e6efa8e6dfeb0475db7d691e43a208c4/cat-harness/schemas/assistant-types.ts#L587">assistant-types.ts:587</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
