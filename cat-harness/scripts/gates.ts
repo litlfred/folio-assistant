@@ -215,6 +215,11 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "`gen-docs-pages.ts --check` is in the gate set; the site build runs the writer",
   },
   {
+    match: "run schema:viz",
+    kind: "covered-by",
+    reason: "`schema:viz:check` is in the gate set; the site build runs the writer",
+  },
+  {
     match: "run translation:index",
     kind: "covered-by",
     reason: "`translation:index:check` is in the gate set; the site build runs the writer",

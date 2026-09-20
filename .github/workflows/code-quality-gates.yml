@@ -615,6 +615,18 @@ jobs:
       - name: generated docs pages are current
         run: bun run cat-harness/scripts/gen-docs-pages.ts --check
 
+      # The schema graph's projection and viewer.
+      #
+      # This gate is the whole reason `xgd8` is not the FOURTH unwired schema
+      # generator. Three were written before it — `generate-schemas.ts`,
+      # `generate-schema-manifest.ts` and the hand-authored
+      # `schemas/assistant-schema.puml` — and every one of them rotted because
+      # nothing ever asked whether its output still matched its input. A red
+      # here means somebody added, renamed or reshaped a schema and did not
+      # regenerate.
+      - name: schema graph projection and viewer are current
+        run: bun run schema:viz:check
+
       # The translation index is what the navbar's locale filter reads. It is
       # derived from what each page DECLARES — `lang`, and `translation_source`
       # naming what it expresses — never from a directory whose name looks like

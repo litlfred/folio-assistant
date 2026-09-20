@@ -30,6 +30,11 @@ on:
       - 'cat-harness/schemas/**'
       - 'cat-harness/scripts/gen-schema-docs.ts'
       - 'cat-harness/scripts/gen-docs-pages.ts'
+      # The schema viewer is generated, so a change to the generator or to the
+      # reader behind it changes the published page while touching nothing
+      # under `docs/` — without these paths the site would serve a stale one.
+      - 'cat-harness/scripts/gen-schema-viz.ts'
+      - 'cat-harness/scripts/schema-graph.ts'
       - 'cat-harness/content/docs/**'
       - 'cat-harness/scripts/render-bpmn.ts'
       # The navbar's locale filter reads `docs/_data/translations.json`, built
@@ -91,6 +96,15 @@ jobs:
       # the deploy-time refresh.
       - name: Regenerate content-backed docs pages
         run: bun run cat-harness/scripts/gen-docs-pages.ts
+
+      # The schema graph's projection and its viewer. Same reasoning as the
+      # regenerations above: the committed copy is browsable on GitHub and the
+      # PUBLISHED one must never be the stale half of that pair. `schemas/` is
+      # a declared graph holding CONTENT, and until this step it was the
+      # largest declared subgraph in the instance with no way to look at it
+      # (bean `xgd8`).
+      - name: Regenerate the schema graph projection and viewer
+        run: bun run schema:viz
 
       # Same reasoning as the three regenerations above: the committed copy is
       # browsable on GitHub and the PUBLISHED one must never be the stale half
