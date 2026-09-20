@@ -184,3 +184,23 @@ declared-but-not-materialised instance, `bootstrap` as the footer, and
 local-vs-remote shown per directory. It is a picture to react to, wired to
 nothing — the epic's open questions are unanswered and building against a guess
 would be the expensive kind of progress.
+
+## OPEN, and deliberately uninterpreted — owner, 2026-09-20
+
+> i wanted bootstrap/ harness/ etc as todos, not landing page info
+
+Said while looking at the live landing page, where each harness renders as a
+large informational card — scope, RTFM links, *"The documentation you will
+never read"* — with the todo stickies in a separate section below.
+
+**No reading is recorded here on purpose.** Four were put to the owner and the
+question was dismissed pending a further instruction, so writing down a
+best guess would turn "not yet decided" into "decided", which is the failure
+this bean's own KG-DS entry already cost once. The statement is preserved
+exactly as given; the next session takes it from the owner, not from here.
+
+What IS settled and can be relied on: the todo board mounts INSIDE the landing
+board (`mountTodoBoard`, `docs-ui.js:2020`) by an earlier owner instruction —
+*"i want todo board inside of the landing folio/board"* — so whatever the
+answer, harness cards and todo stickies already share one surface. `5y4b`
+(todo stickies carry theme art) is independent of the answer and can proceed.
