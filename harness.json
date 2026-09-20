@@ -17,5 +17,26 @@
         "skill": "library-ingestion"
       }
     }
+  ],
+  "_assets_comment": "THE REPOSITORY'S OWN TWO FILES, declared here as of 2026-09-20 (issue #592). Before that the root instance declared NO assets at all, and `cat-harness` declared both of these with `scope: \"repository\"` — so the file an agent reads first was simultaneously \"what this repository is\" and \"what the cat-harness layer is\", and no instance owned it. `check:subgraph-coverage` reported nothing, because the asset DID resolve; it resolved to the wrong file's job, which is a distinction that check could not make until this split gave it two files to tell apart. The owner settled the fork on 2026-09-20: split them, so every instance owns exactly one README and one AGENTS.md, the root's being the INDEX over the others.",
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — folio-assistant",
+      "description": "The file every cold agent reads first, and the rules that bind in EVERY layer of this checkout. A layer's own AGENTS.md augments it and never restates it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer. This provenance sits here rather than on cat-harness's because THIS is the file cat-bootstrap copies at initialisation; cat-harness's own is authored in place and carries no source.",
+      "source": {
+        "instance": "litlfred/folio-assistant",
+        "path": "cat-bootstrap/AGENTS.md"
+      }
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "folio-assistant",
+      "description": "The repository's reader-facing entry point, and the INDEX over every instance in it: its `cat-harness:instances` section is generated from the declarations themselves, giving each instance both an agent entry (AGENTS.md, memories) and a human one (README, docs). Generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
+    }
   ]
 }

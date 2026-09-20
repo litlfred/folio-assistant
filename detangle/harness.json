@@ -3,6 +3,13 @@
   "name": "detangle",
   "description": "Is this candidate subgraph really a subgraph? Size, cohesion, and whether the arrows' direction is a fact or a filing decision.",
   "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — detangle",
+      "description": "Cold start for work in this layer. The rule it exists to state: the scanner DECIDES NOTHING, and neither does an agent reading its output — the carve is an adjudicator's Decision that may overrule any finding. Also that the criterion is a near-SINK rather than a small cut, and that an edge's direction may be a filing decision rather than a fact."
+    },
     { "id": "readme", "src": "README.md", "role": "instance-readme", "title": "detangle",
       "description": "The criterion, the four boundary roles, and the two defects the first cut had." }
   ],
