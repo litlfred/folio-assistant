@@ -1,11 +1,11 @@
 ---
 # folio-assistant-06kg
 title: 'RETRY: retry-backoff.md is an owner rule with a TS implementation and FOUR shell loops nothing checks'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-20T17:00:45Z
-updated_at: 2026-09-20T17:01:11Z
+updated_at: 2026-09-20T17:09:26Z
 parent: folio-assistant-1xhc
 ---
 
@@ -62,15 +62,11 @@ because a herd only shows up as someone else's push rejection.
 
 ## Done when
 
-- [ ] All four shell loops double and jitter, matching `[0.5, 1.5)` from the
-      skill rather than approximating it.
-- [ ] A gate reads the WORKFLOWS, not just `retry.ts` — so a fifth loop
-      written linear fails `bun run gates` rather than being found by the next
-      person who happens to read a sibling's PR. `staging-slug.test.ts` is the
-      shape to copy: it asserts a property per job rather than counting
-      occurrences.
-- [ ] The skill says which call sites it governs, so "use `retry.ts`" does not
-      read as covering a bash loop that structurally cannot call it.
+- [x] All four shell loops double and jitter, matching `[0.5, 1.5)` from the
+      skill rather than approximating it — **by calling it**, not by matching
+      it. See below.
+- [x] A gate reads the WORKFLOWS, not just `retry.ts`.
+- [x] The skill says which call sites it governs.
 
 ## Not in scope
 
@@ -104,3 +100,76 @@ threads. What this bean records is the part that is salvageable regardless —
 the backoff rule and the rebuild-not-rebase argument — so that if #565 is
 closed as superseded, the two insights in it are not lost with it. That is the
 same reason a bean is `scrapped` with its reasons rather than deleted.
+
+
+---
+
+*2026-09-20* — **Done. The fix is not "add jitter to four loops".**
+
+Approximating the policy in bash would have left four implementations free to
+drift — `bqrg`'s shape, where six copies of one function had three broken and
+nothing saying so. `cat-harness/scripts/backoff-sleep.ts` **imports
+`waitFor`**, so a workflow and `withBackoff` now compute the same number from
+the same code and changing the policy is one edit.
+
+```sh
+bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+```
+
+Four call sites, one implementation, zero arithmetic repeated.
+
+### Three decisions worth keeping
+
+**It sleeps rather than printing a number.** `sleep $(bun run …)` passes an
+EMPTY argument on any failure of the script, and `sleep` with no operand is an
+error the loop would take as its own. Sleeping inside means a fault is this
+script's exit code.
+
+**Base 5 s, not `waitFor`'s 1 s.** `waitFor`'s defaults are tuned for an HTTP
+call; a rejected push to `gh-pages` is a lost race against another session's
+whole job. 5 s is what the linear version started at, kept deliberately so
+this is a change of SHAPE and not a change of scale. The cap stays 16 s.
+
+**A bad `--attempt` exits 2.** Silently treating a typo as attempt 1
+reintroduces the short wait, which is the herd this exists to break.
+
+### The gate, and its vacuity guard
+
+`retry-backoff-in-workflows.test.ts` (7 tests) discovers every `for attempt`
+loop across every workflow and pins the **property** — *a loop that retries
+does not compute its own wait* — not any spelling. It also refuses to pass on
+an empty discovery: the counts of workflows and of loops are asserted first,
+because `check-declared-assets` shipped exactly that failure (`6tkl`, "0
+across 0 instances, exit 0").
+
+**Ratcheted three ways, all red on the regression:** reverting one loop to
+linear fails 2 tests; hand-rolling jitter with `$RANDOM` fails 1; making
+`backoff-sleep.ts` reimplement the doubling instead of calling `waitFor`
+fails 1.
+
+### Two things I got wrong, both caught by measuring
+
+**The log line claimed a cap it does not keep.** It read *"capped at 16s"*,
+and attempt 5 measured **22.9 s**. `waitFor` caps the IDEAL and then
+multiplies by `[0.5, 1.5)`, so an actual wait runs to 1.5x the cap. The
+wording now says "capped at 16s before jitter of [0.5, 1.5)", and the skill
+says it too — an unexplained 22.9 s reads as a broken cap to whoever next
+times the job.
+
+**The gate failed on its own subject's prose.** `backoff-sleep.ts` documents
+*why* it does not reimplement the doubling, and that explanation necessarily
+spells `baseMs * 2 ** (attempt - 1)` — which the "carries no copy of the
+arithmetic" assertion matched. I had written the comment-stripper for the
+workflows and not applied it to the script. **Third time this trap has been
+paid for here**, after `staging-replaces-preview.test.ts` and the workflow
+comments in this very change.
+
+### Still open, and honestly
+
+- [ ] **The other insight banked from PR #565 is NOT implemented**: its retry
+      loop REBUILDS rather than rebases (reset to `FETCH_HEAD`, redo the copy
+      and the append), because a rebase replays a stale append and can
+      conflict. `main` still does `git -C pages pull --rebase`. That argument
+      is sound and is a change to deploy semantics rather than to a wait, so
+      it is deliberately not folded into a backoff fix. It stays here so it is
+      not lost with the closed PR.

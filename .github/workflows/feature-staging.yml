@@ -635,7 +635,13 @@ jobs:
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
             git -C pages pull --rebase origin gh-pages
-            sleep $((attempt * 5))
+            # Doubling with jitter, via the ONE implementation the repo has
+            # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
+            # `sleep $((attempt * 5))` in all FOUR loops here — linear and
+            # unjittered, which is the thundering herd `retry-backoff.md`
+            # names, on the ref it cites as contended, written by the very
+            # sessions it says contend on it.
+            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
           done
 
       - name: Comment staging URL on PR
@@ -841,7 +847,13 @@ jobs:
               fi
               echo "push rejected; rebasing onto origin/gh-pages and retrying"
               git -C pages pull --rebase origin gh-pages
-              sleep $((attempt * 5))
+              # Doubling with jitter, via the ONE implementation the repo has
+              # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
+              # `sleep $((attempt * 5))` in all FOUR loops here — linear and
+              # unjittered, which is the thundering herd `retry-backoff.md`
+              # names, on the ref it cites as contended, written by the very
+              # sessions it says contend on it.
+              bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
             done
             echo "Cleaned up STAGING/$SLUG"
           else
@@ -900,7 +912,13 @@ jobs:
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
             git -C pages pull --rebase origin gh-pages
-            sleep $((attempt * 5))
+            # Doubling with jitter, via the ONE implementation the repo has
+            # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
+            # `sleep $((attempt * 5))` in all FOUR loops here — linear and
+            # unjittered, which is the thundering herd `retry-backoff.md`
+            # names, on the ref it cites as contended, written by the very
+            # sessions it says contend on it.
+            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
           done
 
       - name: Post retention notice (not confirmed)
@@ -1100,6 +1118,12 @@ jobs:
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
             git pull --rebase origin gh-pages
-            sleep $((attempt * 5))
+            # Doubling with jitter, via the ONE implementation the repo has
+            # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
+            # `sleep $((attempt * 5))` in all FOUR loops here — linear and
+            # unjittered, which is the thundering herd `retry-backoff.md`
+            # names, on the ref it cites as contended, written by the very
+            # sessions it says contend on it.
+            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
           done
           echo "Removed STAGING/$CLEANUP_SLUG"

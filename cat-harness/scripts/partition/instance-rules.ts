@@ -720,6 +720,7 @@ export const RULES: Rule[] = [
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
+      "scripts/backoff-sleep.ts",           // the one retry wait (bean `06kg`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",
       // The activity log's vocabulary: "what an agent did, when, and in which

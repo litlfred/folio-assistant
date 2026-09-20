@@ -341,6 +341,18 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
   },
   {
+    // Four call sites, one entry — `match` is a substring and the script is
+    // the same in every retry loop in `feature-staging.yml`.
+    match: "backoff-sleep.ts",
+    kind: "ci-only",
+    reason:
+      "it SLEEPS. Running it as a gate would add a jittered wait of up to 24s to every " +
+      "`bun run gates`, to observe a number `retry.test.ts` already covers at the source — " +
+      "`waitFor` is the only arithmetic here and this script does not repeat it (bean `06kg`). " +
+      "That it is reached from every retry loop, rather than each loop computing its own wait, " +
+      "is covered by `retry-backoff-in-workflows.test.ts` in `bun test`, which is a gate",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:
