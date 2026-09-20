@@ -318,6 +318,32 @@ Idempotent: three runs leave one line.
 repository, so it is `.git` wherever the caller stands, and it also resolves
 the case where `actions/checkout` leaves `.git` as a file.
 
+### Live CI evidence, and its limit
+
+`Feature Staging` run 1264 on `2afa2c8a86` (PR #624) exercised this for real —
+`event: pull_request`, so GitHub used that PR's own workflow file.
+
+**Step "Let a same-day render-log append merge instead of conflicting":
+`conclusion: success`.** That green is load-bearing rather than decorative: the
+script exits 1 unless `git check-attr` reports `merge: union`, so a passing step
+is one where the attribute demonstrably took effect in the real `pages/`
+checkout.
+
+**What it does not show.** The deploy then logged `pushed on attempt 1` — it
+WON its race, so the rebase never ran. So:
+
+| | verified where |
+|---|---|
+| the attribute is installed and active in a real checkout | **CI** |
+| a same-day append rebases cleanly instead of conflicting | **scratch repo only** |
+
+A scratch repo is a model. It reproduced `CONFLICT (content)` /
+`UU _render-log/<day>.jsonl` / `could not apply` byte-for-byte and the fix
+resolved it keeping both lines, which is strong — but the first CI run that
+actually LOSES a race is what confirms it end to end. That will happen on its
+own the next time two sessions deploy within the same minute; manufacturing
+contention to force it would prove less than waiting for the real thing.
+
 ### And the retry was broken anyway, in three of four loops
 
 Found in the loops this was going into, filed as **`7iog`**: three of the four
