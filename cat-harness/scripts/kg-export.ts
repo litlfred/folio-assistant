@@ -49,6 +49,7 @@ import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.j
 import { termLayer } from "../schemas/vocabulary.js";
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
+import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
   defaultGraphKinds,
@@ -118,17 +119,6 @@ function skillMdDirs(root: string = ROOT): string[] {
  */
 const SKILL_IO_DIR = "schemas/skills";
 
-/** `.claude/skills/<group>/*.json` — the typed nodes beside the skills. */
-const REGISTRY_GROUPS: Record<string, string> = {
-  actors: "Actor",
-  capabilities: "Capability",
-  roles: "Role",
-  requirements: "Requirement",
-  // Bean `3190`. A convention is context attached to a PROCESS, so it is a
-  // node like the others rather than prose in AGENTS.md — which that file
-  // itself calls a rule with no home.
-  conventions: "Convention",
-};
 
 /**
  * Directories holding BPMN processes, DISCOVERED.

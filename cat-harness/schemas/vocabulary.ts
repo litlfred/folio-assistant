@@ -92,6 +92,18 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A concrete participant — human, agentic or mechanical — that persists across processes and takes on a role in each.",
     seeAlso: "/agentic-harness.html",
   },
+  Convention: {
+    layer: "harness",
+    gloss:
+      "A standing rule an actor must hold while performing a task, bound to a process, a lane or an activity rather than loaded unconditionally. Resolution is first-binding-wins along that order, not a merge, so a reader asking why a rule applies here gets one answer.",
+    seeAlso: "/agentic-harness.html",
+  },
+  Requirement: {
+    layer: "harness",
+    gloss:
+      "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
+    seeAlso: "/crdm-methodology.html",
+  },
   Role: {
     layer: "bootstrap",
     gloss:
