@@ -130,6 +130,7 @@
     "localId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#localId",
     "actorKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKinds",
+    "reach": "https://litlfred.github.io/folio-assistant/cat-harness/ns#reach",
     "actedUpon": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -247,22 +248,22 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T03:37:02.309Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6190b4ca1618b4c373af82b2b7c7ed476c102b9a",
-  "sourceCommitSha": "6190b4ca1618b4c373af82b2b7c7ed476c102b9a",
-  "sourceCommitAt": "2026-09-20T03:35:19Z",
+  "generatedAt": "2026-09-20T04:01:12.349Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/429f8274d46a6031d711189327bc9a55eee7a26f",
+  "sourceCommitSha": "429f8274d46a6031d711189327bc9a55eee7a26f",
+  "sourceCommitAt": "2026-09-20T03:59:40Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 169,
-    "Actor": 26,
-    "Capability": 23,
-    "Role": 100,
+    "Skill": 170,
+    "Actor": 27,
+    "Capability": 24,
+    "Role": 103,
     "SkillPackage": 8,
-    "Process": 34,
-    "SequenceFlow": 475,
-    "ProcessNode": 444,
+    "Process": 35,
+    "SequenceFlow": 484,
+    "ProcessNode": 453,
     "Tool": 28,
-    "Schema": 53,
+    "Schema": 54,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -1669,6 +1670,21 @@
       "hasIOContract": false,
       "ambiguous": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "qa-report-signing",
+      "title": "QA report signing — two routes, chosen by the performer's reach",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/qa-report-signing.md",
+      "instructionLines": 105,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/mcp-assembly",
@@ -3086,6 +3102,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/translator"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#actor/attestation-service",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "attestation-service",
+      "actorKind": "system",
+      "title": "Attestation service",
+      "description": "The signing endpoint. Declares `reach: \"internet\"` because an API signer that cannot reach out is not a signer — this is the one actor whose reach is part of what it IS, rather than a fact about where it happens to run.",
+      "reach": "internet",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#capability/signing-api"
+      ],
+      "roleName": [
+        "attestation-service"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/attestation-service"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#actor/ci-pipeline",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
       "localId": "ci-pipeline",
@@ -3785,6 +3817,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/git-push"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#capability/signing-api",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "signing-api",
+      "name": "Signing API",
+      "description": "An attestation endpoint that will sign a QA report's run hashes. Probed by configuration, not by calling it: a probe that made a live request would be indistinguishable from an outage on the one machine this matters for, and would call an external service just to answer a question about setup.",
+      "detection": {
+        "method": "env-var",
+        "variable": "FOLIO_SIGNING_ENDPOINT"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/signing-api"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#capability/html-pdf-engine",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
       "localId": "html-pdf-engine",
@@ -4069,6 +4113,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/production-vs-exploratory-discipline",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/readme-sections",
@@ -11756,6 +11801,296 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_VoiceReview/node/End_VoiceReviewed"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "QA report signing",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/qa-report-signing.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "api",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "human",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Validation and QA (mechanical + agents)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Attestation%20service%20(API)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Attestation service (API)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20service%20(API)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Human%20signer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human signer",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20signer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "QA report ready to attest",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Build the test run [folio-test-run/v1]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/content-test"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Resolve the performer's reach [effectiveReach + signing-api probe]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which signing route?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/signing-route.dmn#Decision_SigningRoute",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Sign over the API",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Attestation%20service%20(API)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Sign as release authority",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Human%20signer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Signed",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record which route signed it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Report attested",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/End_Signed"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#process/Process_CRDM_Signoff",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "CRDM Phase 5 — beans and sign-off",
@@ -14662,13 +14997,6 @@
       "name": "Programme manager",
       "sourceKind": "bpmn-lane",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Programme%20manager"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Validation and QA (mechanical + agents)",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Review%20team%20and%20SMEs",
@@ -19675,6 +20003,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/workflow-complete"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/actor-reach",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "actor-reach",
+      "title": "**Network reach is a property of an ACTOR**, and how it composes with the",
+      "module": "schemas/actor-reach.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/actor-reach"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/archive-contents",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "archive-contents",
@@ -20461,11 +20797,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/ig-publication",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/decision-audit"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Publication%20manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Human%20signer"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/publication-manager"
     },
@@ -20842,6 +21180,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/ig-publisher-service"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/attestation-service",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "attestation-service",
+      "title": "Attestation service",
+      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/Attestation%20service%20(API)"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/attestation-service"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#role/work-plan",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "work-plan",
@@ -21066,8 +21422,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "eb7032e82e80ef9382e84f3bd8019b702d0b801b",
-    "pr": "450/merge",
-    "run": "35486980175"
+    "sha": "f70f942966d8cae9bf67fb23e6a419ed58353577",
+    "pr": "452/merge",
+    "run": "35487990235"
   }
 }
