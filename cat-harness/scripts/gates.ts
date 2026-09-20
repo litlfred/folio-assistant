@@ -552,6 +552,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "a REPORT, not a gate: it reads the DEFAULT BRANCH, so on a PR it describes main rather than the diff. `ci-health.yml` runs it",
   },
   {
+    script: "check:head-has-run",
+    kind: "report",
+    reason:
+      "CIRCULAR as a gate — it asks whether this commit has a workflow run, and a CI job asking that has already answered it. Bean `3pqn`: it exists for the moment BEFORE the run, when a PR shows zero checks and that is indistinguishable from checks not started. Run it by hand, or from `/prepare-merge`",
+  },
+  {
     script: "check:corpus-gate",
     kind: "no-folio",
     reason: "runs over a folio's content tree; the platform carries none",
