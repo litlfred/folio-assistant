@@ -67,6 +67,58 @@ export function tools(baseUrl?: string): ToolDefinition[] {
   const t = (n: Parameters<typeof toolTypeIri>[1]): string => toolTypeIri(B, n);
 
   return [
+    // ── The one tool an agent has before it has any tooling.
+    //
+    // Bean `3jj9`, and the owner's ruling that human/agent and agent/agent
+    // interaction is documented as a skill plus a tool. The SKILL lives in
+    // `bootstrap/skills/discussion.md`, because an Initiator must be able to
+    // READ it with nothing installed; the typed node lives here, because a
+    // Tool is cat-harness's vocabulary and bootstrap may not import it.
+    //
+    // `invoke: { manual: true }` — "performed by a person following the
+    // skill, with no command", and the `beans-manual` precedent is explicit
+    // that this has equal standing to a CLI rather than marking an
+    // unfinished record. It is the honest declaration: there is no binary and
+    // no endpoint, the mechanism is putting a question to a participant and
+    // receiving an answer. Declaring a shell or an MCP name would assert
+    // machinery that is not there, and an Initiator that trusted it would be
+    // stuck at the first step of `initialize-harness` — the step this exists
+    // to unblock. (`conversation: true` was the first draft; `tsc` refused it,
+    // correctly — a new invoke kind for one tool is a vocabulary change, and
+    // `manual` already means this.)
+    //
+    // It DOES NOT DECIDE. It carries a question out and an answer back; the
+    // skill's judgement chooses what to ask and rules on when the answer
+    // settles the matter. The output is a document conforming to
+    // `discussion.output.schema.json`, which is what makes the task checkable
+    // rather than "we discussed it".
+    defineTool({
+      id: "discuss",
+      title: "discussion",
+      description:
+        "Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "question", schema: t("Text"), required: true, description: "The question as put, with its candidates named. One question where one will do." },
+          { name: "askedOf", schema: t("Text"), required: true, description: "`person` or `agent` — symmetric participants, recorded because the answers are evidence of different weight." },
+        ],
+        outputs: [
+          { name: "answer", schema: t("Text"), description: "The reply as received. Absent is a real result: it routes to `outcome: unsettled`, never to a guess." },
+        ],
+      },
+      satisfies: ["discussion"],
+      selection: {
+        when:
+          "A fact is needed that no file in reach holds — which harness, or which repositories. Narrow the candidates from context first; a repository already carrying `cat-harness/harness.json` is not a blank slate, and a question the agent could have answered itself wastes the one it is entitled to.",
+        limits:
+          "It cannot manufacture an answer. A participant may decline, and that is `outcome: unsettled` with what is still open — not an error and not a default. An agent that reaches for a documented default because nobody replied has produced a guess.",
+        cost: "One round trip through a person's attention, which is the most expensive input in the system and the reason the skill's rule is to ask once.",
+      },
+      requires: {},
+    }),
+
     defineTool({
       id: "beans-cli",
       title: "beans CLI",
@@ -296,6 +348,587 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // No network: it BINDS one, it does not reach out. `requires.network`
       // means "needs egress", and conflating the two would mark this
       // unavailable on exactly the air-gapped topology it exists for.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The export itself, which five nodes claimed and none performed ────
+    //
+    // `kg-export` was already `satisfies`-covered FIVE times over —
+    // `pages-publish`, `serve-rendering` and the three schema carriers below —
+    // and not one of them runs an export. `pages-publish` publishes a built
+    // directory; `serve-rendering` serves one; the carriers regenerate JSON
+    // Schemas through `kg:schema`. The command that builds the graph rendering
+    // in the first place, `bun run kg:export`, was reachable from no node.
+    //
+    // That is worth a comment rather than a silent addition, because
+    // `check:tools` reported this skill as covered throughout and was right to:
+    // coverage is a relation between a Tool and a SKILL, and a skill can be
+    // satisfied by neighbours of its mechanism. Found 2026-09-20 while working
+    // bean `d308`, whose whole premise is that code with no node is invisible
+    // even when its skill looks served. This node is that premise's first
+    // instance in the graph rather than in a bean.
+    defineTool({
+      id: "kg-graph-export",
+      title: "Knowledge-graph export",
+      description:
+        "Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it.",
+      install: { none: true },
+      invoke: { shell: "bun run kg:export" },
+      io: {
+        inputs: [
+          // The script reads `KG_BASE_URL` when the flag is absent, and falls
+          // back to `harness.json`'s `canonicalUrl`. Declared as the flag
+          // because that is the arm a caller controls; the other two are
+          // defaults, not inputs.
+          { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base the node IRIs are minted against; a preview passes its own." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults to `_kg/<stub>.jsonld`, which is build output and gitignored." },
+        ],
+        outputs: [
+          { name: "graph", schema: t("RepoPath"), description: "The written JSON-LD document." },
+          // A source that cannot be read is reported and counted, never
+          // dropped — the script's own three-state rule, and it belongs in the
+          // contract rather than only in its header. An export that quietly
+          // omits half a corpus looks well-formed to a consumer, which is bean
+          // `dh4f`.
+          { name: "problems", schema: t("Text"), description: "Sources that could not be read, counted rather than silently omitted." },
+        ],
+      },
+      satisfies: ["kg-export"],
+      // No `alternativeTo`, deliberately. The four siblings sharing this skill
+      // are COMPLEMENTARY steps — export, then publish, then serve — not four
+      // ways to do one thing, and the schema's own note on that field says a
+      // rule keyed on "shares a skill" would demand comparative prose where
+      // there is nothing to compare. Exactly one pair in this instance is
+      // genuinely substitutable, and it is `beans-cli` / `beans-manual`.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The QA sweep: one node over a checker REGISTRY ─────────────────────
+    //
+    // 27 files in this group and 2 entry points, which is the shape `d308` argues
+    // for rather than against: the group is already almost entirely
+    // library-behind-one-command. So this is one node over `qa-sweep`, and the
+    // checker registry underneath is untouched.
+    //
+    // **`qa-checker-discovery` is the extension point, not the entry point.** A
+    // new criterion is added by registering a checker, never by adding a Tool —
+    // a node per checker would put twenty-odd near-identical entries in the graph
+    // and still not describe how a criterion gets registered.
+    //
+    // And unlike `latex-authoring` and `proof-verification` above, `content-test`'s
+    // contract IS satisfiable: it requires `targetPath`, and `qa-sweep` takes a
+    // content root as its first positional. Found by running it — `usage:
+    // qa-sweep.ts <content-root> …`, exit 2 — rather than by reading for it.
+    defineTool({
+      id: "qa-sweep",
+      title: "QA sweep",
+      description:
+        "Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish \"never checked\" from \"checked and clean\".",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/qa-sweep.ts" },
+      io: {
+        inputs: [
+          { name: "targetPath", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The content root to sweep. Absent, the command exits 2 with its usage — could-not-determine, not a clean sweep." },
+          { name: "dryRun", schema: t("Flag"), required: false, arg: { flag: "--dry-run" }, description: "Report what would change without writing sidecars." },
+          { name: "ci", schema: t("Flag"), required: false, arg: { flag: "--ci" }, description: "Fail on a finding rather than recording it." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+          // `--only ID,ID` and `--axis NAME,NAME` are DELIBERATELY not declared.
+          // Both take a comma-separated list inside one argv word, and the type
+          // vocabulary has no honest shape for that: `Slug` forbids the comma,
+          // `repeated` would claim the flag may be given more than once when the
+          // script parses one list, and `Text` is refused on argv for exactly the
+          // reason it would be wrong here. Adding a type to fit a flag rather than
+          // to describe a value is how the vocabulary stops meaning anything, so
+          // these two stay undeclared and documented rather than mistyped.
+        ],
+        outputs: [
+          { name: "sidecars", schema: t("RepoPath"), description: "One `<block>.qa.json` per block, committed beside its subject." },
+        ],
+      },
+      satisfies: ["content-test"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The TeX checks, and the SECOND authoring skill with no mechanism ──
+    //
+    // `latex-authoring` is not satisfied here, and the reason is now a pattern
+    // rather than an accident. Its contract requires `documentClass` and
+    // `mainFile` — what you are AUTHORING. Nothing in the corpus accepts either:
+    // `generate-main-tex` takes `--preamble`, `--chapters-dir` and `--out`.
+    //
+    // That is the same shape as `proof-verification` one group over, whose
+    // contract requires `projectRoot` and finds no taker. **Authoring skills
+    // name the artefact you are creating; the corpus has checking mechanisms.**
+    // Two instances make it worth stating: a contract written from the authoring
+    // side does not become satisfiable by pointing a checker at it, and forcing
+    // the edge would make the node lie about its interface. Recorded on `jh2j`.
+    //
+    // These two satisfy `latex-validation`, which matches them exactly —
+    // "validate LaTeX source files for syntactic correctness, structural
+    // consistency, and adherence to project conventions" — and has no contract
+    // to contradict. Complementary rather than alternative: one stops a compile
+    // from failing, the other reports a defect in a compile that succeeded.
+    defineTool({
+      id: "latex-preflight",
+      title: "LaTeX preflight",
+      description:
+        "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/latex-preflight.ts" },
+      io: {
+        inputs: [
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+          { name: "warn", schema: t("Flag"), required: false, arg: { flag: "--warn" }, description: "Report without failing — for a corpus not yet clean." },
+        ],
+        outputs: [{ name: "findings", schema: t("Text"), description: "Compile-breaking hazards, located. A clean run here is not a successful compile; it is the absence of these classes." }],
+      },
+      satisfies: ["latex-validation"],
+      // No TeX distribution needed: this reads source and never invokes pdflatex.
+      // Stated because the sibling `latex-overfull` DOES need a build log, and a
+      // caller would otherwise assume both have the same prerequisites.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "latex-overfull",
+      title: "LaTeX overfull-box report",
+      description:
+        "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/latex-overfull-report.ts" },
+      io: {
+        inputs: [
+          // REQUIRED and positional — found by running it, not by reading it:
+          // `usage: latex-overfull-report.ts <main.log> [--min N] …`. The first
+          // draft of this node declared only the flags, which would have told a
+          // caller the log was optional and sent them to a usage error.
+          { name: "log", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The pdflatex log to read. Nothing to read means no answer, not a pass." },
+          { name: "min", schema: t("Dpi"), required: false, arg: { flag: "--min" }, description: "Ignore overruns below this size — the long tail is noise, and reporting it hides the rest." },
+          { name: "max", schema: t("Dpi"), required: false, arg: { flag: "--max" }, description: "Fail above this count, for use as a gate." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "Located overfull boxes. Requires a build log: with no log there is nothing to read, which is could-not-determine rather than clean." }],
+      },
+      satisfies: ["latex-validation"],
+      // Reads a pdflatex LOG, so it needs a build to have happened — not a TeX
+      // distribution of its own. The distinction matters to a caller deciding
+      // whether to run it: no log means no answer, not a pass.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The Lean family, which is a FAMILY and not one command ────────────
+    //
+    // Bean `eu38` wrote the caution before the work: 16 entry points spanning
+    // setup, build, cache and audit is not one command with modes, and forcing
+    // them into one node would produce exactly the invoke-a-string-and-hope node
+    // the schema refuses elsewhere. The inventory bore that out — four concerns,
+    // and all eight candidate skills exist and are uncovered.
+    //
+    // Three are declared here. The audit half — `proof-verification`,
+    // `lean-completeness-audit`, `lean-proof-vacuity-audit` — stays on the bean
+    // rather than being guessed at in the same commit.
+    //
+    // ## None of these can be EXERCISED in this repository
+    //
+    // The platform carries no folio, and no Lean toolchain is installed here, so
+    // what was verified is the CONTRACT — `satisfies` resolves and agrees with
+    // each skill's own I/O contract, every io type is declared, every argv input
+    // is injection-safe. The mechanism is verified downstream, in a folio.
+    // `requires.runtime` says so rather than leaving a caller to find out, which
+    // is the posture bean `h588` established for FHIR and which turns out to be
+    // the general case for six of the thirteen groups in `d308`.
+    defineTool({
+      id: "lean-build",
+      title: "Lean build",
+      description:
+        "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
+      install: { none: true },
+      invoke: { shell: "scripts/lean-build-all.sh" },
+      io: {
+        inputs: [
+          { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "Build one paper instead of all of them." },
+          { name: "cache", schema: t("Flag"), required: false, arg: { flag: "--cache" }, description: "Fetch the Mathlib cache first. A from-source Mathlib build is 30–60 minutes against ~2 for a restore." },
+          { name: "update", schema: t("Flag"), required: false, arg: { flag: "--update" }, description: "Run `lake update` before building." },
+          { name: "logDir", schema: t("RepoPath"), required: false, arg: { flag: "--log-dir" }, description: "Where logs and the status sidecar go." },
+        ],
+        outputs: [
+          { name: "status", schema: t("RepoPath"), description: "`lean-build-status.json` — committable, so a green build is distinguishable from one nobody ran." },
+        ],
+      },
+      // NOT `lean-formalization`, and NOT `proof-verification`. Both read right
+      // and `check:tools` refused both, on the skills' own I/O contracts:
+      //
+      // - `lean-formalization` requires `sourceFile` and `targetModule`, because
+      //   it formalises A CLAIM into A MODULE. Building the workspace is not that.
+      // - `proof-verification` requires `projectRoot`. This script DISCOVERS the
+      //   root — it "can be invoked from any directory" and builds from the repo
+      //   root so cross-package deps resolve against the root manifest — so
+      //   declaring a `projectRoot` input would make the node lie about its
+      //   interface to satisfy a check.
+      //
+      // `lean-build-fix` is the honest one, and not merely because it has no
+      // contract to contradict: it says it works by "parsing lake build output",
+      // so a Tool that produces that output is one concrete way to exercise it.
+      // It is the build half of that skill's loop, not the whole loop.
+      satisfies: ["lean-build-fix"],
+      requires: { runtime: ["bash", "lean", "lake"], network: true },
+    }),
+
+    defineTool({
+      id: "lean-cache",
+      title: "Lake olean cache",
+      description:
+        "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+      install: { none: true },
+      invoke: { shell: "scripts/lake-cache.sh" },
+      io: {
+        inputs: [
+          { name: "action", schema: t("LakeCacheAction"), required: true, arg: { positional: 0 }, description: "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked." },
+          { name: "lakeRoot", schema: t("RepoPath"), required: false, arg: { flag: "--lake-root" }, description: "The package whose `.lake/` is acted on." },
+          { name: "package", schema: t("PackageName"), required: false, arg: { flag: "--package" } },
+        ],
+        outputs: [{ name: "result", schema: t("Text"), description: "A real hit, a miss, or a diagnosis — never a miss that reads as a hit." }],
+      },
+      satisfies: ["lean-cache-restore"],
+      requires: { runtime: ["bash", "git", "lake"], network: true },
+    }),
+
+    defineTool({
+      id: "lean-toolchain-setup",
+      title: "Lean toolchain install",
+      description:
+        "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
+      // It IS the install step, so `install.cli` names itself: an agent that needs
+      // Lean runs this, and `install.none` would say no step exists.
+      install: { cli: "scripts/setup-lean-toolchain.sh" },
+      invoke: { shell: "scripts/setup-lean-toolchain.sh" },
+      io: {
+        inputs: [],
+        outputs: [{ name: "toolchain", schema: t("Text"), description: "The linked toolchain name, and the per-repo override that selects it." }],
+      },
+      satisfies: ["lean-environment-setup"],
+      // Network, and a specific reason worth carrying: `release.lean-lang.org`
+      // answers 403 "Host not in allowlist" from this container's network policy,
+      // which is what breaks `elan toolchain install` and why this script exists
+      // at all. An agent reading only `network: true` would retry elan.
+      requires: { runtime: ["bash", "curl", "elan"], network: true },
+    }),
+
+    // ── The Lean audit half, and the one skill still without a mechanism ──
+    //
+    // `proof-verification` is NOT satisfied here, and that is a finding rather
+    // than an omission. Its contract requires `projectRoot`, and nothing in this
+    // corpus accepts one — the only root-shaped flag anywhere in the Lean scripts
+    // is `--content-root`, which names where content BLOCKS live, not the Lean
+    // package. Typing that as `projectRoot` would be the lie `lean-build` already
+    // refused to tell. So the skill has an I/O contract and no mechanism that can
+    // meet it; recorded on bean `eu38`.
+    defineTool({
+      id: "lean-coverage",
+      title: "Lean coverage",
+      description:
+        "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/lean-coverage.ts" },
+      io: {
+        inputs: [
+          { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "One paper instead of all." },
+          { name: "contentRoot", schema: t("RepoPath"), required: false, arg: { flag: "--content-root" }, description: "Where content blocks live. NOT a Lean project root — see the note above this node." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" } },
+        ],
+        outputs: [
+          { name: "coverage", schema: t("Text"), description: "Provable blocks, and how many are sorry-free. A count, not a verdict: a sorry-free proof can still be vacuous, which is the sibling node's question." },
+        ],
+      },
+      satisfies: ["lean-completeness-audit"],
+      // Exits 1 in the platform repo, by design and with a good message: "papers
+      // live in a folio. Run this from the content repo, or name a paper
+      // explicitly." That is the script refusing rather than reporting a silent
+      // empty result, and it is the behaviour to want.
+      //
+      // Written down because the refusal LOOKS like a broken `invoke` to anyone
+      // who runs it here — and this node was nearly discarded on exactly that
+      // reading, off a pipeline's exit code rather than the script's.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "lean-audit",
+      title: "Lean vacuity audit",
+      description:
+        "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/lean-audit.ts" },
+      io: {
+        inputs: [
+          { name: "chapter", schema: t("Slug"), required: false, arg: { flag: "--chapter" }, description: "One chapter instead of the whole corpus." },
+          { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" } },
+          { name: "checkAxioms", schema: t("Flag"), required: false, arg: { flag: "--check-axioms" }, description: "Axiom-cleanliness is a separate question from vacuity: a proof can be axiom-clean and still assume its conclusion." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+        ],
+        outputs: [
+          { name: "findings", schema: t("Text"), description: "Sorry inventory and trivial-truth detections. Sibling of `lean-coverage`, not an alternative to it: that one COUNTS what is proved, this one asks whether a proof says anything." },
+        ],
+      },
+      satisfies: ["lean-proof-vacuity-audit"],
+      // Same refusal as its sibling in the platform repo, and for the same
+      // reason: no folio, so no papers to audit. Exit 1 with an explanation.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The audits, which had no node while auditing the graph that holds ─
+    //
+    // `tool-coverage.ts` has said since 2026-09-18 that its tier A "is the list
+    // to act on", and `kg-audit` writes the committed verdict for every node in
+    // the graph. Neither was reachable by asking that graph. A node here is the
+    // premise of bean `d308` closing on itself: the instrument that finds
+    // unreachable mechanisms was one.
+    //
+    // No `maintains` on either, for the reason `schema-docs` records: each writes
+    // one artefact PER SUBJECT — a sidecar per node, an SVG per diagram — and
+    // `maintains.artefact` is a single path, so naming one file out of hundreds
+    // would read as a complete provenance record and be false.
+    defineTool({
+      id: "kg-audit",
+      title: "Knowledge-graph audit",
+      description:
+        "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes \"unbound since it was drawn\" distinguishable from \"broken in the commit under review\".",
+      install: { none: true },
+      invoke: { shell: "bun run kg:audit" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed sidecars and fail on a critical finding or a stale one, instead of writing." },
+          { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Promote `major` to failing as well. Not what CI runs; see the note on constant-red checks in `remote-skill-servable.test.ts`." },
+        ],
+        outputs: [
+          { name: "sidecars", schema: t("RepoPath"), description: "The QA tree, mirroring each subject's own path — flat would collide, since several basenames already occur twice." },
+          // `unknown` is a result, not an absence, and it belongs in the
+          // contract: a criterion that could not be evaluated must not be read
+          // as a pass, and a caller that cannot see the distinction will read it
+          // as one.
+          { name: "worstSeverity", schema: t("Text"), description: "critical, major, minor — or none. `unknown` findings are never a pass." },
+        ],
+      },
+      satisfies: ["code-node-review"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "bpmn-render",
+      title: "BPMN diagram rendering",
+      description:
+        "Render each process diagram to SVG for the documentation site. The .bpmn file is the source of truth; the picture is generated from it, so a diagram and its image cannot disagree.",
+      install: { none: true },
+      invoke: { shell: "bun run render:bpmn" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any committed SVG is stale, instead of writing." },
+        ],
+        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "The generated SVG directory. Never hand-edited." }],
+      },
+      // NOT `bpmn-authoring`, and the refusal is worth recording. That edge was
+      // written first and `check:tools` rejected it: the skill's own I/O
+      // contract requires `processName`, because AUTHORING a process starts from
+      // one. Rendering an existing diagram starts from the corpus and takes no
+      // process name, so the edge asserted this Tool was a way to exercise a
+      // skill it cannot exercise.
+      //
+      // That is `covered-is-not-reachable`'s rule enforced by machine rather
+      // than by discipline — do not pick a skill to make a node validate — and
+      // it is better than the discipline, because it caught the attempt. The
+      // honest skill is the one `schema-docs` and `skill-docs` already satisfy:
+      // a source in the graph, an artefact on the site, never hand-edited.
+      satisfies: ["docs-generation"],
+      // Needs a browser: bpmn-js renders through Chromium, which is why this is
+      // in `gates --all` rather than the fast set. Stated here so an agent
+      // choosing it on a headless box learns before running it, not after.
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
+    // ── The site's visual assets, which had no SKILL until 2026-09-20 ─────
+    //
+    // These two were blocked rather than missing. Both are committed, published,
+    // single-file artefacts — the exact shape `maintains` exists for — and
+    // neither could be declared, because `satisfies` requires a skill and no
+    // skill stated the capability. `kg-export` serializes the graph to JSON;
+    // `rendering-auditor` audits a content block's visual output; neither is
+    // "render the graph's asset nodes into the site's stylesheets".
+    //
+    // That is the THIRD mismatch in `covered-is-not-reachable`: a mechanism with
+    // no skill, invisible to `tools:coverage` by construction because it
+    // enumerates skills and asks which lack Tools. The skill was authored first,
+    // on the owner's decision (bean `yean`), and deliberately names no script —
+    // a skill written to give a command somewhere to point is a Tool with front
+    // matter that passes every check and teaches nothing.
+    //
+    // They are siblings rather than alternatives: one renders theme tokens and
+    // the other avatar glyphs, and a caller wanting either is not served by the
+    // other.
+    defineTool({
+      id: "themes-css",
+      title: "Theme stylesheet",
+      description:
+        "Render the declared theme nodes into the stylesheet the site serves. The nodes are the source: a colour has one home, and light and dark are two valuations of one token set rather than two hand-kept blocks.",
+      install: { none: true },
+      invoke: { shell: "bun run themes:css" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed copy and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "stylesheet", schema: t("RepoPath"), description: "The generated stylesheet. Build output that happens to be committed, so it is readable on the forge — never hand-edited." }],
+      },
+      satisfies: ["site-presentation-assets"],
+      maintains: [
+        { source: "schemas/themes.ts", artefact: "assets/css/themes.css", format: "css" },
+      ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "avatars-css",
+      title: "Avatar stylesheet",
+      description:
+        "Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves.",
+      install: { none: true },
+      invoke: { shell: "bun run avatars:css" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed copy and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "stylesheet", schema: t("RepoPath"), description: "The generated stylesheet. Never hand-edited." }],
+      },
+      satisfies: ["site-presentation-assets"],
+      maintains: [
+        { source: "schemas/avatars.ts", artefact: "assets/css/avatars.css", format: "css" },
+      ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The generated reference, which `docs-generation` did not reach ────
+    //
+    // `docs-generation` was already covered — by `readme-audit` and
+    // `readme-sync`, which maintain a README's generated SECTIONS. Neither
+    // generates a page of the documentation site, and the two generators that do
+    // were reachable from no node.
+    //
+    // That is the THIRD instance of one shape in this session: a skill satisfied
+    // by the neighbours of its mechanism while the mechanism stays invisible.
+    // `kg-export` was the first (five nodes, none performing an export) and this
+    // is the second and third. It is worth naming as a pattern rather than
+    // recording three times as a coincidence — `check:tools` answers "does this
+    // skill have a Tool", and nothing yet answers "is this command reachable",
+    // which is bean `d308`.
+    //
+    // Neither carries `maintains`, and that is a judgement not an omission. Each
+    // writes ONE PAGE PER SUBJECT plus an index — tens of files — and
+    // `maintains.artefact` is a single path. A declaration naming one page out of
+    // tens would be false in the specific way that is worse than absent: it would
+    // look like a complete provenance record.
+    defineTool({
+      id: "schema-docs",
+      title: "Skill contract reference",
+      description:
+        "Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site.",
+      install: { none: true },
+      invoke: { shell: "bun run scripts/gen-schema-docs.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "pages", schema: t("RepoPath"), description: "The generated reference directory. Never hand-edited." }],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "skill-docs",
+      title: "Skill instruction reference",
+      description:
+        "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",
+      install: { none: true },
+      invoke: { shell: "bun run scripts/gen-skill-docs.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "pages", schema: t("RepoPath"), description: "The generated instruction directory. Never hand-edited." }],
+      },
+      // Sibling of `schema-docs`, not an alternative to it: one renders a
+      // skill's CONTRACT and the other its INSTRUCTIONS, and a reader wanting
+      // either is not served by the other. Complementary, so no
+      // `alternativeTo` — the field's own note warns against deriving that
+      // relation from a shared skill.
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The two JSON-LD artefacts a consumer dereferences ─────────────────
+    //
+    // Both are `maintains` nodes in the same sense as the three zod carriers
+    // below, and they were missing for the same reason those were: the relation
+    // between a source module and the public document it keeps true lived in a
+    // `package.json` script and nowhere a tool could read it.
+    //
+    // They are separate nodes because they answer different questions. A
+    // consumer that meets `folio:Actor` needs the VOCABULARY to learn what it
+    // means; a consumer parsing a block needs the CONTEXT to expand its keys.
+    // One document cannot be both: `<base>/ns` has to be a directory for
+    // `ns/content/v1.jsonld` to sit under it, which is why the vocabulary is
+    // `ns/vocabulary.jsonld` and not `ns` itself.
+    defineTool({
+      id: "ns-vocabulary",
+      title: "Namespace vocabulary",
+      description:
+        "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
+      install: { none: true },
+      invoke: { shell: "bun run ns:export" },
+      io: {
+        inputs: [
+          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults under `_kg/`, which is build output." },
+        ],
+        outputs: [{ name: "vocabulary", schema: t("RepoPath"), description: "The written namespace document." }],
+      },
+      satisfies: ["kg-export"],
+      // The PRIMARY job is the graph documenting itself — the owner's
+      // correction, 2026-09-19, and the order matters. That `--check` also lets
+      // CI assert every minted term is defined is a second use of one artefact,
+      // not the reason it exists. Stated here because a node whose description
+      // led with "conformance test" would invert that and invite someone to
+      // drop the document once CI was satisfied another way.
+      maintains: [
+        { source: "schemas/vocabulary.ts", artefact: "ns/vocabulary.jsonld", format: "json-ld" },
+      ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "content-context",
+      title: "Content JSON-LD context",
+      description:
+        "Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept.",
+      install: { none: true },
+      invoke: { shell: "bun run scripts/gen-jsonld-context.ts" },
+      io: {
+        inputs: [
+          // `--check` is the CI arm: it compares against the committed copy and
+          // fails rather than writing, like every other generated file here.
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed copy and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "context", schema: t("RepoPath"), description: "`ns/content/v1.jsonld`, the document served at CONTENT_CONTEXT_URL." }],
+      },
+      satisfies: ["kg-export"],
+      // Load-bearing and currently LOSSY, which is bean `ovkk`: the @context
+      // declares fewer terms than the graph uses, so a conforming JSON-LD
+      // processor silently drops the property occurrences it cannot expand.
+      // A node here does not fix that. It makes the artefact's source
+      // addressable, which is what a fix has to start from — and it is why this
+      // node is worth having before the gap is closed rather than after.
+      maintains: [
+        { source: "schemas/jsonld.ts", artefact: "ns/content/v1.jsonld", format: "json-ld" },
+      ],
       requires: { runtime: ["bun"], network: false },
     }),
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-07p7
 title: the fr catalogues are stale on main, no gate compares them, and every sweep dirties the tree
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-20T09:26:40Z
-updated_at: 2026-09-20T09:27:48Z
+updated_at: 2026-09-20T10:15:27Z
 parent: folio-assistant-1xhc
 ---
 
@@ -105,3 +105,75 @@ generated file lands in the same gap.
 Fixing the churn by committing the regeneration alone. That makes the tree
 clean today and stale again the next time the source file gains a line, which
 is exactly how it got here.
+
+---
+
+## Resolved 2026-09-20 — and the headline I nearly shipped was WRONG
+
+The first measurement said all five published translations of
+`agent-onboarding.md` were five headings adrift from their source. It came
+from `grep -c '^#'`, which counts the `#` COMMENT lines in each page's YAML
+front matter as headings. Strip the front matter and **every translation
+matches its source exactly** — 11 headings, same levels, same numbering, in
+all five locales.
+
+The brief for this bean named that as its falsifier and checked it first,
+which is the only reason it did not ship. A count from a grep is a claim.
+
+## What is actually true
+
+Two catalogue families already had a writer AND a reader —
+`workflows/*.pot` (205 files, `translate-bpmn:check`) and `kg-viewer.*`
+(15, `translate-kg-viewer:check`). The **docs pages** had a writer and
+nothing that read it back: five published translations, catalogues for three
+locales, a template for one.
+
+`translation:index:check` indexes which pages have translations. It does not
+compare them.
+
+## What the new gate found on its FIRST run
+
+Not `agent-onboarding` — the **landing page**. `docs/index.md` gained a
+section, *"Four things, in order"*, and **no translation followed**. All five
+locales are missing it; every other section is present and in order. That is
+a section a reader cannot reach in their language, on the site's front door,
+and nothing could have reported it.
+
+Recorded rather than fixed: a faithful translation is a translator's job, and
+this bean's own history is the argument for not guessing — the first
+measurement here was wrong, and a wrong translation is far harder to notice
+than a wrong count.
+
+## The design flaw MUTATION found, twice
+
+The backlog first exempted the whole PAGE, so a recorded translation could
+drift further in silence — a second way to go quiet, which is the failure this
+bean is an instance of. Found by re-levelling a heading in `docs/fr/index.md`
+and watching the suite pass.
+
+The fix pinned each entry to `6 -> 5` headings. **The same mutation passed
+again**: re-levelling changes no count. An entry now records the full
+{@link shapeOf} of both sides, and anything but that exact shape is new drift.
+
+Seven mutations, each caught by a named test. `check:declared-paths` also
+caught a hardcoded `"translations"` literal in the new module on the commit
+that introduced it — resolved from the `translation-sources` declaration now.
+
+Gates 52 -> **53**, and `unrunScripts` (bean `ot9a`) forced the new check to be
+wired rather than merely declared.
+
+## Done when
+
+- [x] the sweep stops writing the catalogues by accident (#483)
+- [x] the `fr/agent-onboarding` catalogues regenerated and committed (main)
+- [x] a `:check` exists that fails on drift, and it is in the gate set
+- [x] the generated files are tracked or ignored, decided (main tracked them)
+- [x] verified across every language, not only `fr` — all five, and the
+      finding is on `index`, not on the page this bean was about
+
+## Left open, deliberately
+
+The five landing-page translations are missing a section. That needs a
+translator, not this gate. `es/agent-onboarding` and `zh/agent-onboarding`
+are published with no `.po` at all; a catalogue cannot be derived from a
+finished translation without inventing the segmentation.
