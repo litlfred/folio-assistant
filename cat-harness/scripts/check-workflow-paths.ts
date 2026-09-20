@@ -36,6 +36,46 @@
  * the step's own `working-directory`, then any `cd` earlier in the same
  * `run:` block. That is a real parse of the common cases, not a guess.
  *
+ * ## The fourth input, and why three were not enough (bean `7iog`)
+ *
+ * A cwd is only half an answer. The other half is **where the tree is** —
+ * `actions/checkout` with a `path:` puts it somewhere other than the
+ * workspace root, and then the root holds NOTHING.
+ *
+ * The first version collected those prefixes and used them only to *strip*,
+ * which made the check strictly more permissive: a path under a checkout
+ * resolved, and a path that was not under one resolved too, because it fell
+ * through to the repository. So `feature-staging.yml`'s `cleanup` job — which
+ * checks out to `source/` — ran `bun run cat-harness/scripts/backoff-sleep.ts`
+ * from the workspace root and passed, while at run time that directory is
+ * empty. `run:` blocks are `bash -e`, so the step aborted, and **the retry
+ * loops those calls exist to provide never ran**: the first lost push race
+ * ended the job. Three of the four were wrong this way and this check said
+ * `✓ every workflow script path resolves` over all three.
+ *
+ * A checkout at another `ref:` is a third state again. `pages` holds
+ * `gh-pages`: the directory is there and its contents are real, they are
+ * simply not the tree a working copy of HEAD can read. Stripping that prefix
+ * measured paths against the wrong commit, which is how the third broken call
+ * kept passing after the other two were caught. It is now
+ * {@link Verdict.Undetermined} — not a pass, per the rule below.
+ *
+ * ## What this check structurally CANNOT see, and where that exposure went
+ *
+ * `bun run check:l1-complete` is an npm script NAME, so {@link invokedPath}
+ * declines it — deliberately, since naming the script instead of the path is
+ * the fix this check recommends. Bean `a6kl` lives exactly there: the
+ * workflow line was correct, and `check:l1-complete` resolved its own corpus
+ * from `process.cwd()` (the repository root, which carries no declaration),
+ * found nothing, and reported `nothing to check` over 1,402 files.
+ *
+ * So the recommended fix MOVES the risk rather than removing it: out of the
+ * workflow, into the script's own root resolution. That successor class has
+ * its own reader — `check:anchor-names`, which is why `a6kl`'s fix resolves
+ * `INSTANCE_ROOT` rather than the CWD. Neither check subsumes the other and
+ * neither is the whole answer; between them the path is accounted for at
+ * both ends.
+ *
  * ## "Could not determine" is never green
  *
  * When a `cd` names something this module cannot resolve statically — a
@@ -259,7 +299,7 @@ interface WorkflowDoc {
         name?: string;
         run?: string;
         uses?: string;
-        with?: { path?: string; repository?: string };
+        with?: { path?: string; repository?: string; ref?: string };
         "working-directory"?: string;
       }[];
     }
@@ -267,7 +307,17 @@ interface WorkflowDoc {
 }
 
 /**
- * Directories a job materialises by checking THIS repository into them.
+ * A `ref:` that names the commit the workflow is already running on.
+ *
+ * `ref: ${{ github.sha }}` and friends check out the same tree the checkout
+ * would have taken by default, so they are NOT a different commit. Anything
+ * else — a branch name, a tag, a computed ref — is a tree this module cannot
+ * read from a working copy of HEAD.
+ */
+const SELF_REF = /github\.(sha|ref|head_ref|event\.pull_request\.head\.sha)/;
+
+/**
+ * What a job actually materialises by checking THIS repository out.
  *
  * `actions/checkout` with a `path:` puts the repo somewhere other than the
  * workspace root, and a step working there spells its paths from that
@@ -275,19 +325,71 @@ interface WorkflowDoc {
  * this the check would call a working workflow broken, which is the failure
  * mode that teaches people to skim its output.
  *
+ * **`atRoot` is the half that was missing, and it is the half that catches
+ * things.** Collecting the prefixes only ever made the check MORE permissive:
+ * a path under a checkout resolved, and a path *not* under one resolved too,
+ * because it was then measured against the repository. So a job that checks
+ * out to `source/` and runs `bun run cat-harness/scripts/x.ts` from the
+ * workspace root passed — while at run time that directory is empty and the
+ * step dies. Knowing the prefixes is not the same as knowing where the tree
+ * IS.
+ *
  * A checkout naming a DIFFERENT `repository:` is deliberately not collected:
  * its contents are not this repo's and nothing here can say whether a path
- * in it resolves.
+ * in it resolves. `any` therefore counts checkouts of THIS repository only —
+ * a job whose sole checkout is someone else's tree is one this module has no
+ * layout for, and it falls back to the old behaviour rather than inventing a
+ * verdict.
  */
-function checkoutPaths(steps: NonNullable<WorkflowDoc["jobs"]>[string]["steps"]): string[] {
-  const out: string[] = [];
+export interface CheckoutLayout {
+  /** Non-root `path:` values holding THIS commit's tree, in workflow order. */
+  paths: string[];
+  /**
+   * Checkouts of this repository at a DIFFERENT ref — `ref: gh-pages` and the
+   * like. The directory exists at run time and holds a real tree; it is just
+   * not the tree this module can read. Kept apart from {@link paths} because
+   * stripping such a prefix measures a path against the wrong commit, which
+   * is how the third of `feature-staging.yml`'s three broken backoff calls
+   * went on passing after the other two were caught.
+   */
+  otherRef: { path: string; ref: string }[];
+  /** This repository is checked out AT the workspace root. */
+  atRoot: boolean;
+  /** This repository is checked out somewhere, root or not. */
+  any: boolean;
+}
+
+export function checkoutLayout(
+  steps: NonNullable<WorkflowDoc["jobs"]>[string]["steps"],
+): CheckoutLayout {
+  const paths: string[] = [];
+  const otherRef: { path: string; ref: string }[] = [];
+  let atRoot = false;
+  let any = false;
   for (const step of steps ?? []) {
     if (!step.uses?.startsWith("actions/checkout")) continue;
     if (step.with?.repository) continue; // someone else's tree
     const path = step.with?.path;
-    if (path && !/[$*?`]/.test(path)) out.push(path.replace(/\/+$/, ""));
+    const ref = step.with?.ref;
+    if (path && /[$*?`]/.test(path)) continue; // a computed directory
+    if (ref !== undefined && !SELF_REF.test(ref)) {
+      // A different commit of this repository. `path` is required in practice
+      // for such a checkout to coexist with another; without one it REPLACES
+      // the root tree, so nothing here can be judged and the job gets no
+      // usable layout.
+      if (path) otherRef.push({ path: path.replace(/\/+$/, ""), ref });
+      continue;
+    }
+    any = true;
+    // No `path:` at all, or an explicit `.`, is the workspace root — the
+    // default, and the case every ordinary workflow uses.
+    if (!path || path === "." || path === "./") {
+      atRoot = true;
+      continue;
+    }
+    paths.push(path.replace(/\/+$/, ""));
   }
-  return out;
+  return { paths, otherRef, atRoot, any };
 }
 
 /**
@@ -319,7 +421,7 @@ export function invocationsFrom(file: string, text: string): Invocation[] {
   const out: Invocation[] = [];
   for (const [job, def] of Object.entries(doc.jobs ?? {})) {
     const jobCwd = def.defaults?.run?.["working-directory"] ?? "";
-    const checkouts = checkoutPaths(def.steps);
+    const layout = checkoutLayout(def.steps);
     for (const step of def.steps ?? []) {
       if (!step.run) continue;
       const stepCwd = step["working-directory"] ?? jobCwd;
@@ -348,7 +450,7 @@ export function invocationsFrom(file: string, text: string): Invocation[] {
           out.push(
             classify(
               { file, job, step: step.name ?? "(unnamed step)", path, cwd: effective },
-              checkouts,
+              layout,
             ),
           );
         }
@@ -360,7 +462,7 @@ export function invocationsFrom(file: string, text: string): Invocation[] {
 
 function classify(
   inv: { file: string; job: string; step: string; path: string; cwd: string | null },
-  checkouts: string[],
+  layout: CheckoutLayout,
 ): Invocation {
   const base = { file: inv.file, job: inv.job, step: inv.step, path: inv.path };
   if (inv.cwd === null) {
@@ -374,7 +476,45 @@ function classify(
   // Join FIRST, then strip: the prefix may be in the cwd, in the path, or
   // reached relatively through `..` from a sibling checkout.
   const joined = applyCd(inv.cwd, inv.path);
-  if (existsSync(resolve(ROOT, stripCheckout(joined, checkouts)))) {
+  const inTree = stripCheckout(joined, layout.paths);
+  // Lands inside a checkout of a DIFFERENT commit. The directory is there and
+  // its contents are real; they are simply not readable from here, so this is
+  // an unknown rather than a pass — the house rule this module already states
+  // for an unresolvable `cd`.
+  const foreign = layout.otherRef.find(
+    (c) => joined === c.path || joined.startsWith(`${c.path}/`),
+  );
+  if (foreign) {
+    return {
+      ...base,
+      cwd: inv.cwd,
+      verdict: Verdict.Undetermined,
+      note:
+        `it resolves inside \`${foreign.path}/\`, which is this repository at ` +
+        `\`${foreign.ref}\` — a different tree from the one being checked. ` +
+        `Nothing here can say whether \`${joined}\` is in it`,
+    };
+  }
+  // A job that checks this repository out SOMEWHERE ELSE has an empty
+  // workspace root. A path that lands there names a directory the job never
+  // materialised, and it is broken however well the same spelling reads
+  // against the repository — which is exactly how three of four backoff
+  // calls in `feature-staging.yml` passed this check while aborting their
+  // step at run time (bean `7iog`).
+  if (layout.any && !layout.atRoot && inTree === joined) {
+    return {
+      ...base,
+      cwd: inv.cwd,
+      verdict: Verdict.Missing,
+      note:
+        `this job checks the repository out to ` +
+        `${layout.paths.map((p) => `\`${p}/\``).join(", ")} and nothing to the ` +
+        `workspace root, so \`${joined}\` names an empty directory at run ` +
+        `time. The same spelling resolves here, which is why it reads as ` +
+        `correct`,
+    };
+  }
+  if (existsSync(resolve(ROOT, inTree))) {
     return { ...base, cwd: inv.cwd, verdict: Verdict.Resolves };
   }
   const folio = FOLIO_PATHS.find((f) => inv.path.includes(f.match));
@@ -435,11 +575,17 @@ function main(): number {
   );
 
   for (const i of missing) {
+    // A `note` means the invocation failed for a reason the generic sentence
+    // would MISSTATE. The layout case resolves perfectly well from the
+    // repository root — saying it does not is the misconception the check
+    // exists to correct, printed by the check itself.
     console.error(
-      `✗ ${i.file} › ${i.step}: \`${i.path}\` does not resolve from ` +
-        `${i.cwd === "" ? "the repository root" : `\`${i.cwd}/\``}. ` +
-        `If the script moved under \`cat-harness/\`, call the npm script ` +
-        `instead so the path is written down once.`,
+      i.note
+        ? `✗ ${i.file} › ${i.step}: \`${i.path}\` — ${i.note}.`
+        : `✗ ${i.file} › ${i.step}: \`${i.path}\` does not resolve from ` +
+            `${i.cwd === "" ? "the repository root" : `\`${i.cwd}/\``}. ` +
+            `If the script moved under \`cat-harness/\`, call the npm script ` +
+            `instead so the path is written down once.`,
     );
   }
   for (const i of undetermined) {
