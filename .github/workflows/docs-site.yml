@@ -385,7 +385,18 @@ jobs:
       # offers nothing that is (`keep_files`, `force_orphan`, `exclude_assets` —
       # and `exclude_assets` filters the SOURCE, not the branch). So it would
       # also stop the main site's own DELETED pages from ever disappearing:
-      # rename a doc and both URLs serve forever. Restoring the previews into
+      # rename a doc and both URLs serve forever.
+      #
+      # THE OTHER END OF THIS TRADEOFF IS `feature-staging.yml`, and the two
+      # comments are one argument seen from its two sides. Staging carried
+      # `keep_files: true` to survive the deletion this file records — and paid
+      # for it in exactly the way predicted above: its previews could never show
+      # a REMOVAL, only an addition (bean `85im`, five stale `proposals/*.html`
+      # served after main relocated them). Neither end is fixable with a flag.
+      # Both are now fixed the same way and for the same reason: each deploy
+      # names the paths it owns. This one restores the previews into `_site` so
+      # a full replace does not touch them; that one deletes and rewrites its
+      # OWN `STAGING/<slug>/` and no other. If you change either, read both. Restoring the previews into
       # `_site` keeps both halves — the main site stays a full replace, the
       # previews are part of what is published.
       #
