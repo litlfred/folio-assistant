@@ -424,18 +424,31 @@ jobs:
       #                            staged there earlier in the session -- the
       #                            precise "green locally, red on a clean
       #                            runner" gap these gates exist to close.
-      #   check:ci-health       -- a REPORT, not a gate. It reads the default
-      #                            branch, so on a PR it describes main rather
-      #                            than the diff. `ci-health.yml` runs it.
-      #   check:corpus-gate     -- needs a folio; the platform carries none.
-      #   check:upstream-pins   -- `upstream-pins.yml` runs it weekly.
-      #   check:partition:edges -- prints the edge list; `check:partition` is
-      #                            the gate and is wired below.
-      #   translate-*:check     -- need a translation toolchain not installed
-      #                            on this runner.
+      #
+      # The scripts CI deliberately does NOT gate used to be listed here, in
+      # this comment. They now live in `SCRIPT_EXEMPTIONS` (scripts/gates.ts),
+      # because a comment cannot be compared against the set it describes:
+      # it covered six of the nine unwired check scripts, and the other three
+      # -- health:check, landing:data:check, landing:sticky:check -- had no
+      # reason anywhere and nothing said so. `bun run gates` now reports any
+      # check script no workflow runs. Bean `ot9a`.
+      #
+      # One entry here was also FALSE. `translate-*:check` was excluded as
+      # needing "a translation toolchain not installed on this runner"; both
+      # run clean on a bare checkout, measured 2026-09-20, and both are wired
+      # below. A reason nothing checks is free to stop being true.
       - name: gates that were registered and never run
         run: |
           set -e
+          # Wired 2026-09-20 (bean `ot9a`): each was declared in package.json
+          # and run by no workflow. `translate-kg-viewer:check` was RED on
+          # main for an unknown stretch while CI stayed green -- a gate no
+          # workflow runs cannot fail, which is bean `xom7` one level down.
+          bun run translate-kg-viewer:check
+          bun run translate-bpmn:check
+          bun run landing:sticky:check
+          bun run landing:data:check
+          bun run check:agents-xref
           bun run check:bean-parents
           bun run check:python-deps
           bun run deps:python:check
