@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T11:01:06.138Z",
+  "updated_at": "2026-09-20T11:08:01.769Z",
   "verdict": "clean",
   "checks": [
     {
@@ -34,13 +34,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 290974711,
+          "value": 361271375,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 5,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
@@ -75,7 +75,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 5,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -119,31 +119,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 86023184,
+          "value": 86113872,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 557169259,
+          "value": 564823238,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 523158528,
+          "value": 530101248,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 67,
+          "value": 68,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 6.48,
+          "value": 6.56,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
@@ -194,7 +194,7 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 178,
+          "value": 179,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -206,7 +206,7 @@
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 39,
+          "value": 40,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
