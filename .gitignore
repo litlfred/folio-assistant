@@ -76,8 +76,8 @@ content/schema/
 # because compiled JS is generated next to its .ts; these files are
 # hand-written and vendored assets that Jekyll serves verbatim to the browser,
 # so there is no build step that could regenerate them.
-!folio-assistant/docs/assets/js/
-!folio-assistant/docs/assets/js/**/*.js
+!cat-harness/docs/assets/js/
+!cat-harness/docs/assets/js/**/*.js
 
 # Same reason, different directory. `mermaid_config.js` is the hook
 # just-the-docs interpolates into its `mermaid.initialize()` call (see that
@@ -85,11 +85,11 @@ content/schema/
 # hand-written source and lives OUTSIDE the assets tree, so the exception
 # above does not reach it — `git add` reported nothing and the file would
 # simply never have deployed.
-!folio-assistant/docs/_includes/*.js
+!cat-harness/docs/_includes/*.js
 
 # Build stamp written by .github/workflows/docs-site.yml at deploy time.
 # Never committed: a sha in the repo names the commit BEFORE the deploy.
-folio-assistant/docs/_data/build.yml
+cat-harness/docs/_data/build.yml
 
 # Build artifacts: regenerated from the tree, stale the moment they are
 # committed. `_kg/` is the published KG export; `registry.json` is the runtime
@@ -124,8 +124,8 @@ playwright-report/
 # Not to be confused with the `!…/docs/assets/js/` exception above: THAT
 # vendor is hand-written source Jekyll serves verbatim and is deliberately
 # tracked. Same word, opposite intent.
-folio-assistant/docs/.bundle/
-folio-assistant/docs/vendor/
+cat-harness/docs/.bundle/
+cat-harness/docs/vendor/
 
 # The pre-inversion site root. Zero tracked files (`git ls-tree -r HEAD docs/`
 # returns nothing) — what is left in a working tree that predates the move is
