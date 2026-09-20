@@ -582,6 +582,45 @@ function declaredDir(
   return { dir: resolve(repoRoot, root, node.path) };
 }
 
+/**
+ * The heading that makes a bean a DECISION RECORD.
+ *
+ * A prefix match, and deliberately not the canonical `## Considered options`
+ * alone: measured 2026-09-20, **no bean in this store uses that spelling.** The
+ * two that record options write `## Options, with what each costs` and
+ * `## Options, none chosen here`. A detector keyed on MADR's exact heading would
+ * have had ZERO subjects, and a filter over nothing passes — which is the trap
+ * `NoCheckScriptsFound` exists to refuse one layer along.
+ *
+ * Case-insensitive because a heading is prose, and `\b` so `## Optional` is not
+ * an options section.
+ */
+const OPTIONS_HEADING = /^##\s+(?:considered\s+)?options\b/i;
+
+/** A top-level list item — `- x`, `* x` or `1. x`. Indented items are sub-points of one option. */
+const OPTION_ITEM = /^(?:[-*]|\d+\.)\s+\S/;
+
+/**
+ * How many options a bean's options section lists, or `undefined` when it has
+ * none — the third state, which the check must not read as zero.
+ *
+ * Counts to the NEXT heading of level 1 or 2, so an option's own `###`
+ * sub-headings stay inside it. A bean with several options sections (a decision
+ * revisited later in the same file) counts the FIRST: the later ones are the
+ * re-analysis, and its own record is what the later section is.
+ */
+export function countConsideredOptions(text: string): number | undefined {
+  const lines = text.split("\n");
+  const at = lines.findIndex((l) => OPTIONS_HEADING.test(l));
+  if (at < 0) return undefined;
+  let n = 0;
+  for (let i = at + 1; i < lines.length; i++) {
+    if (/^#{1,2}\s/.test(lines[i]!)) break;
+    if (OPTION_ITEM.test(lines[i]!)) n++;
+  }
+  return n;
+}
+
 export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
   const found = declaredDir(
     repoRoot,
@@ -618,6 +657,10 @@ export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
       title,
       status,
       updatedAt: frontMatterValue(fm, "updated_at"),
+      // The WHOLE file, not the body after the front matter: a heading cannot
+      // appear inside front matter, so narrowing the input would only add a
+      // parse step that can go wrong.
+      consideredOptions: countConsideredOptions(text),
     });
   }
   // An empty store is not a clean one. A walk that found nothing is how a

@@ -271,9 +271,21 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const checkMode = args.includes("--check");
   const positional = args.filter(a => !a.startsWith("--"));
-  const paperDir = resolve(positional[0] || "");
-  if (!paperDir || !existsSync(paperDir)) {
+  // The ARGUMENT is tested before it is resolved, and that order is the fix.
+  // `resolve("")` returns the CWD — truthy, and it exists — so `resolve(positional[0] || "")`
+  // made the guard below unreachable for the no-argument case: a bare
+  // `bun run build-glossary.ts` fell through it into `buildGlossary`, which threw
+  // `Paper manifest not found: <cwd>/<cwd-basename>.ts` and exited 1 with a stack
+  // trace. The usage line never printed and the exit code said "it broke" rather
+  // than "you did not tell me which paper", which is the could-not-determine
+  // state this script otherwise gets right everywhere.
+  if (positional.length === 0) {
     console.error(`Usage: build-glossary.ts <paper-dir> [--check]`);
+    process.exit(2);
+  }
+  const paperDir = resolve(positional[0]!);
+  if (!existsSync(paperDir)) {
+    console.error(`Usage: build-glossary.ts <paper-dir> [--check]\n  no such directory: ${paperDir}`);
     process.exit(2);
   }
 

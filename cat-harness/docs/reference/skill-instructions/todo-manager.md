@@ -147,6 +147,36 @@ just clutter:
 The runaway loop is not something a doc can prevent; an unguarded `create` is.
 This rule is platform-level so every folio inherits it.
 
+## After you create — parent it, and re-run the guard before you push
+
+`check-bean-parents` fails on an **open bean with no `parent`**, because such a
+bean lands in the roadmap's Miscellaneous section where nobody looks for it. The
+guard works. The way it gets past you is procedural, and it happened **twice in
+one session** on 2026-09-20:
+
+1. **A multi-flag `beans update` can apply only some of its flags.**
+   `beans update <id> -s in-progress --parent <epic>` set the status, silently
+   left the parent unset, and **reported success**. As two calls it worked. So
+   after setting several properties at once, **read the front matter back** —
+   `grep -n "^status:\|^parent:\|^priority:" beans/defs/<file>.md` — rather than
+   trusting the "Updated …" line.
+
+2. **A bean created after your last test run is an unguarded bean.** The second
+   occurrence was not the CLI at all: the bean was minted, its body written and
+   its priority set *after* `bun test` had passed, and the push went out on that
+   stale green. CI caught it, which cost a cycle for a one-line fix.
+
+**So: `beans create` and the `--parent` that follows it are one action, and
+touching the bean store invalidates your last test run.** Re-run at least
+`bun test cat-harness/scripts/tests/check-bean-parents.test.ts` — 105 ms —
+before pushing.
+
+The general shape is worth more than the bean case: **a green suite is green for
+the tree you ran it against.** Anything added afterwards, including an artefact
+that is "just a note", is untested. This is the cheap end of the same discipline
+`continual-progress` states about verifying rendered work rather than describing
+it.
+
 ## When the `beans` CLI is not there — you are still not read-only
 
 `scripts/beans-fallback.ts` writes the same store in the same layout: same
