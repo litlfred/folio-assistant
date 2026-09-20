@@ -331,6 +331,7 @@
   "directories": [
     {
       "id": "tools",
+      "coverage": {"docs": "cat-harness/docs/skills.md", "skill": "skills-and-tools"},
       "path": "tools/",
       "dependents": "skip",
       "description": "Tool definitions, one subdirectory per contributing instance (tools/<stub>/) so a composed instance adds its own without colliding on a filename. tools/index.ts merges them and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
@@ -379,6 +380,7 @@
     },
     {
       "id": "methodology-crdm",
+      "coverage": {"docs": "cat-harness/docs/crdm-methodology.md", "skill": "crdm-detect"},
       "theme": "analyst",
       "path": "methodologies/crdm/",
       "dependents": "skip",
@@ -427,6 +429,7 @@
     },
     {
       "id": "beans",
+      "coverage": {"docs": "cat-harness/docs/beans-and-todos.md", "skill": "todo-manager"},
       "path": "beans/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -437,6 +440,7 @@
     },
     {
       "id": "todos",
+      "coverage": {"docs": "cat-harness/docs/beans-and-todos.md", "skill": "todo-manager"},
       "path": "todos/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -447,6 +451,7 @@
     },
     {
       "id": "memory",
+      "coverage": {"skill": "agent-memory"},
       "path": "memory/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -457,6 +462,7 @@
     },
     {
       "id": "interaction",
+      "coverage": {"docs": "cat-harness/docs/agentic-harness.md", "skill": "interaction-modality"},
       "path": "interaction/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -467,6 +473,7 @@
     },
     {
       "id": "issue-marks",
+      "coverage": {"skill": "issue-working"},
       "path": "issue-marks/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -503,6 +510,7 @@
     },
     {
       "id": "voices",
+      "coverage": {"skill": "one-voice-audit"},
       "path": "voices/",
       "dependents": "reproduce",
       "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
@@ -512,6 +520,7 @@
     },
     {
       "id": "translation-sources",
+      "coverage": {"docs": "cat-harness/docs/translation-support.md", "skill": "translation-manager"},
       "path": "translations/",
       "dependents": "reproduce",
       "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
@@ -530,6 +539,7 @@
     },
     {
       "id": "folio",
+      "coverage": {"docs": "cat-harness/docs/content-types.md", "skill": "content-profiles"},
       "path": "folio/",
       "dependents": "reproduce",
       "graphs": [
