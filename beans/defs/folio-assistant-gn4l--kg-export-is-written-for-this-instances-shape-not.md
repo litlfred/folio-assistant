@@ -36,7 +36,7 @@ the first is what another instance needs.
 
 ## Why this blocks bootstrap
 
-`bootstrap/README.md` step 2 says *"Load `bootstrap/bootstrap.jsonld`"*. That
+`cat-bootstrap/README.md` step 2 says *"Load `cat-bootstrap/cat-bootstrap.jsonld`"*. That
 file should be GENERATED — `.jsonld` is generated everywhere else here and CI
 gates the siblings — but nothing can generate it for an instance that is not
 this repository.

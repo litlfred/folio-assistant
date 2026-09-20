@@ -1,18 +1,18 @@
 ---
-name: bootstrap-kg-navigation
+name: cat-bootstrap-kg-navigation
 description: >
   Read and navigate a knowledge graph with nothing installed — no MCP server,
-  no tools, no harness. The first skill bootstrap hands you, because the second
+  no tools, no harness. The first skill cat-bootstrap hands you, because the second
   step of the handoff cannot be followed without it.
 
-  Named `bootstrap-` rather than `kg-navigation` because `skills/folio-core/`
+  Named `cat-bootstrap-` rather than `kg-navigation` because `skills/folio-core/`
   carries a skill of that bare name which assumes the harness IS installed.
   Both resolvers preferred core's and dropped this one silently, so a cold
-  agent following bootstrap's README step 1 was served instructions written
-  for a repository it does not have — the exact failure bootstrap exists to
+  agent following cat-bootstrap's README step 1 was served instructions written
+  for a repository it does not have — the exact failure cat-bootstrap exists to
   prevent, arrived at by a name collision rather than a missing file. Bean
   `v3se`; measured 2026-09-20: `skill_fetch` resolves over PACKAGES and
-  bootstrap is not one, so this body was reachable by neither route.
+  cat-bootstrap is not one, so this body was reachable by neither route.
 consulted: true
 ---
 
@@ -24,7 +24,7 @@ on yet — see [`AGENTS.md`](AGENTS.md).
 
 That constraint is the reason this skill exists rather than a pointer to the
 harness's own navigation tooling: an agent here may have no connected server,
-and a bootstrap that required one would fail in exactly the cold-start case it
+and a cat-bootstrap that required one would fail in exactly the cold-start case it
 exists for.
 
 ## A graph is files that declare what they are
@@ -44,7 +44,7 @@ reading:
 ## Do this, in order
 
 1. **Read the root `harness.json`.** If there is none, this repository is not
-   an instance yet, and that is the case bootstrap exists for.
+   an instance yet, and that is the case cat-bootstrap exists for.
 2. **Find the entry whose `graphs` name the kind you want.** For skills,
    workflows and roles that kind is `cat-harness`. The entry's `path` is
    relative to the instance root.
@@ -62,7 +62,7 @@ them is the mistake this section exists to prevent:
 
 | what you found | what it means | what to do |
 |---|---|---|
-| no `harness.json` | not an instance yet | this is bootstrap's case — continue |
+| no `harness.json` | not an instance yet | this is cat-bootstrap's case — continue |
 | `harness.json` that will not parse | an instance asserting something broken | **stop and say so**; do not fall back |
 | a declared directory that is not there | the declaration is wrong | **stop and say so** — scanning nothing and reporting a clean run is the defect |
 | no declaration for a kind you want | this instance has none of it | that is an answer, not a failure |
@@ -77,6 +77,6 @@ It is not the content model. A folio, a block, a voice, a profile and a QA
 verdict are all concepts of the harness you have not loaded yet, and a
 description of them here would be a second one, free to disagree with the first.
 
-If you find yourself needing one of them to finish bootstrap, **that is a sign
+If you find yourself needing one of them to finish cat-bootstrap, **that is a sign
 the boundary is in the wrong place** — say so rather than importing the
 definition.

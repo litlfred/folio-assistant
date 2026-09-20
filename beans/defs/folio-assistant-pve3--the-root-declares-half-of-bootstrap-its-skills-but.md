@@ -11,9 +11,9 @@ parent: folio-assistant-vke6
 
 ## Measured 2026-09-20
 
-The root `harness.json` declares `bootstrap` → `bootstrap/skills/`, so
+The root `harness.json` declares `bootstrap` → `cat-bootstrap/skills/`, so
 folio-assistant's graph carries **bootstrap's skills and roles**. It does NOT
-declare `bootstrap/workflows/`, so it does not carry **bootstrap's process** —
+declare `cat-bootstrap/workflows/`, so it does not carry **bootstrap's process** —
 that isolation was deliberate (#432, where bootstrap's process was leaking into
 the root graph 88 times).
 
@@ -32,7 +32,7 @@ Both are symptoms of the same asymmetry.
 
 ## Worked around, not fixed
 
-`lanes` was omitted from `bootstrap/skills/roles/roles.json` to keep the graph
+`lanes` was omitted from `cat-bootstrap/skills/roles/roles.json` to keep the graph
 honest without widening the dangling-link allowance — which would have recorded
 new debt as progress. Bootstrap's own graph binds correctly either way (0
 dangling), because it carries both halves.

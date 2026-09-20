@@ -1,6 +1,6 @@
 Thirty-three BPMN 2.0 files, and **no longer all in one directory**: thirty-two
 under [`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
-and one under [`bootstrap/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/bootstrap/workflows)
+and one under [`cat-bootstrap/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/cat-bootstrap/workflows)
 (`bun -e 'console.log((await import("./scripts/known-skills.ts")).workflowFiles(process.cwd()).filter(f=>f.endsWith(".bpmn")).length)'`
 on 2026-09-19 — this line said "six", then "nineteen", then "thirty", then
 "thirty-two, all under `skills/workflows/`", each for long enough to be wrong,
@@ -18,7 +18,7 @@ that runs when there is no folio yet:
 
 | Diagram | Answers |
 |---------|---------|
-| `bootstrap/workflows/bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](../proposals/bootstrap.html) |
+| `cat-bootstrap/workflows/cat-bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`cat-bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/README.md) and the [proposal](../proposals/cat-bootstrap.html) |
 | `getting-started.bpmn` | Somebody said "create a folio". Which of the five things did they mean, and what has to be true before anything is written? |
 
 Its intent gateway is *computed*, not chosen: `decisions/folio-intent.dmn`

@@ -66,7 +66,7 @@ describe("could not determine is a THIRD state, never a pass", () => {
 describe("an empty render is a failure, not an empty success", () => {
   test("zero nodes fails, and says why in those words", async () => {
     // THE DEFECT THIS WHOLE MODULE EXISTS FOR. `collectSkills` resolved
-    // bootstrap's declared directory against the wrong root, found nothing,
+    // cat-bootstrap's declared directory against the wrong root, found nothing,
     // and continued — the export succeeded and the graph silently lost every
     // skill. "Did it throw" cannot see that; a node count can.
     const r = await renderInstance(instance({ name: "empty", directories: [] }));
@@ -128,7 +128,7 @@ describe("this repository's own instances", () => {
   const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
 
   test("every instance is found — otherwise everything below is vacuous", () => {
-    // This asserted exactly `["cat-harness", "bootstrap"]`, and it PASSED for
+    // This asserted exactly `["cat-harness", "cat-bootstrap"]`, and it PASSED for
     // the whole period that list was wrong: `instancesIn` returned a literal
     // and this test pinned the same literal, so the two agreed with each other
     // and neither looked at the repository. `folio-assist-core` and the root
@@ -137,7 +137,7 @@ describe("this repository's own instances", () => {
     // The order is root-first then sorted, which is what `instanceRootsIn`
     // promises so that a report is stable.
     const found = instancesIn(REPO).map((p) => p.split("/").pop());
-    expect(found).toEqual(["folio-assistant", "bootstrap", "cat-harness", "folio-assist-core"]);
+    expect(found).toEqual(["folio-assistant", "cat-bootstrap", "cat-harness", "folio-assist-core"]);
     // Named individually rather than only as a list: these two are the ones
     // the old literal omitted, so if a future edit narrows the set again, the
     // failure should say which instance stopped being checked.
@@ -153,11 +153,11 @@ describe("this repository's own instances", () => {
     }
   });
 
-  test("bootstrap's OWN skills are in its render — the silent drop, pinned", async () => {
-    // `confirm-harness` lives only in `bootstrap/skills/`. When `skillMdDirs`
+  test("cat-bootstrap's OWN skills are in its render — the silent drop, pinned", async () => {
+    // `confirm-harness` lives only in `cat-bootstrap/skills/`. When `skillMdDirs`
     // resolved that repository-scoped directory against the instance root, the
     // skill vanished from the graph and `hasSkill` dangled. Nothing failed.
-    const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
+    const boot = instancesIn(REPO).find((p) => p.endsWith("cat-bootstrap"))!;
     const r = await renderInstance(boot);
     expect(r.nodeCount).toBeGreaterThan(10);
   });
@@ -171,23 +171,23 @@ describe("this repository's own instances", () => {
     //    somebody makes it fatal without clearing the count."
     //
     // Bean `3jj9` cleared the count: `collectGraphKinds` now takes a root and
-    // filters by `declaredKinds`, so bootstrap publishes the one kind it
+    // filters by `declaredKinds`, so cat-bootstrap publishes the one kind it
     // declares instead of all 16. The finding is fatal from the same change,
     // which is the repository's standing rule applied rather than deferred.
-    const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
+    const boot = instancesIn(REPO).find((p) => p.endsWith("cat-bootstrap"))!;
     const r = await renderInstance(boot);
     expect(r.verdict).toBe("rendered");
     expect(r.undeclared).toEqual([]);
-    // `beans` was the named example of a kind bootstrap advertised and could
+    // `beans` was the named example of a kind cat-bootstrap advertised and could
     // not reach. Keeping it named guards the specific regression.
     expect(r.undeclared).not.toContain("beans");
   });
 
-  test("...and the guard is not vacuous — bootstrap really does publish kinds", async () => {
+  test("...and the guard is not vacuous — cat-bootstrap really does publish kinds", async () => {
     // `undeclared: []` is satisfied trivially by publishing nothing at all,
     // which is the `dh4f` defect this whole check exists to refuse. So assert
     // the positive half too.
-    const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
+    const boot = instancesIn(REPO).find((p) => p.endsWith("cat-bootstrap"))!;
     const r = await renderInstance(boot);
     expect(r.published.length).toBeGreaterThan(0);
     expect(r.declared.length).toBeGreaterThan(0);

@@ -1,28 +1,28 @@
 #!/usr/bin/env bun
 /**
- * Write `bootstrap/bootstrap.jsonld` — the graph an agent loads before it has
+ * Write `cat-bootstrap/cat-bootstrap.jsonld` — the graph an agent loads before it has
  * a harness to build one with.
  *
- * @module scripts/gen-bootstrap-graph
+ * @module scripts/gen-cat-bootstrap-graph
  *
  * ## Why this file is NOT committed — and why it was, until 2026-09-20
  *
  * It was committed, and the rationale written here said its reader "has just
  * been pointed at a repository and has nothing installed", so a graph that
  * only appears after a build is one that reader never sees. It cited
- * `bootstrap/README.md` step 2: *"Load `bootstrap/bootstrap.jsonld`"*.
+ * `cat-bootstrap/README.md` step 2: *"Load `cat-bootstrap/cat-bootstrap.jsonld`"*.
  *
  * **Both halves were false when checked.** The string `jsonld` appears in no
- * prose file under `bootstrap/` — the README sends a cold reader to
- * `workflows/initialize-harness.bpmn` and `skills/bootstrap-kg-navigation.md`,
+ * prose file under `cat-bootstrap/` — the README sends a cold reader to
+ * `workflows/initialize-harness.bpmn` and `skills/cat-bootstrap-kg-navigation.md`,
  * and never to this document. And nothing published it: `docs-site.yml`
- * writes `_site/bootstrap/ns.jsonld`, the NAMESPACE document, and never
+ * writes `_site/cat-bootstrap/ns.jsonld`, the NAMESPACE document, and never
  * copied this one, so its own `@id` —
- * `<base>/bootstrap/bootstrap.jsonld` — dereferenced to nothing. That is
+ * `<base>/cat-bootstrap/cat-bootstrap.jsonld` — dereferenced to nothing. That is
  * `blv9`, a link-shaped value that does not resolve, in the artefact whose
  * whole purpose is to be resolved.
  *
- * So it was 52 % of `bootstrap/` by line count, read by no documented
+ * So it was 52 % of `cat-bootstrap/` by line count, read by no documented
  * instruction, published nowhere, and byte-gated in CI. It is now BUILT AT
  * RENDER TIME into the published site, which is the first time the IRI it has
  * always claimed actually answers.
@@ -32,7 +32,7 @@
  * The byte gate is gone with the committed file, but purity is not a property
  * of being gated — it is what makes a published artefact diffable and
  * cacheable, and what stops two builds of one tree disagreeing. The ordering
- * guard in `tests/bootstrap-graph.test.ts` is the one that matters and it
+ * guard in `tests/cat-bootstrap-graph.test.ts` is the one that matters and it
  * never depended on the file: it asserts the ORDER on the machine that
  * introduces a regression, not only on the one that later disagrees.
  *
@@ -50,7 +50,7 @@
  * ## What it does NOT claim to have looked at
  *
  * `omitted` carries the instance-bound collectors that were not run
- * ({@link COLLECTOR_SCOPE}), so a reader can tell *"bootstrap has no tools"*
+ * ({@link COLLECTOR_SCOPE}), so a reader can tell *"cat-bootstrap has no tools"*
  * from *"tools were never looked for"*. An empty section rendered as a clean
  * one is the `dh4f` defect.
  */
@@ -62,21 +62,21 @@ import { readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
 import { buildContext, collectInstanceNodes, compact, stripNamespace } from "./kg-export.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-// declared-path-literal: bootstrap is not a directory THIS instance declares —
+// declared-path-literal: cat-bootstrap is not a directory THIS instance declares —
 // it is a separate instance with its own `harness.json`, and the whole point is
 // that it is reachable before any declaration has been read. See the module
 // docs above.
-const BOOTSTRAP = join(repoRootFor(ROOT), "bootstrap");
-const OUT = join(BOOTSTRAP, "bootstrap.jsonld");
+const CAT_BOOTSTRAP = join(repoRootFor(ROOT), "cat-bootstrap");
+const OUT = join(CAT_BOOTSTRAP, "cat-bootstrap.jsonld");
 
 const PROV = "http://www.w3.org/ns/prov#";
 
-/** The document, as a pure function of the bootstrap instance on disk. */
-export async function buildBootstrapDocument(
-  root: string = BOOTSTRAP,
+/** The document, as a pure function of the cat-bootstrap instance on disk. */
+export async function buildCatBootstrapDocument(
+  root: string = CAT_BOOTSTRAP,
 ): Promise<Record<string, unknown>> {
   const decl = readDeclaration(root);
-  const name = decl?.name ?? "bootstrap";
+  const name = decl?.name ?? "cat-bootstrap";
   const docIri = `${decl?.canonicalUrl ?? `https://litlfred.github.io/folio-assistant/${name}`}/${name}.jsonld`;
 
   const problems: string[] = [];
@@ -90,7 +90,7 @@ export async function buildBootstrapDocument(
   // and `it is current` compares bytes.
   //
   // Measured 2026-09-20 (bean `3jj9`): the committed file held skills as
-  // `bootstrap-kg-navigation, discussion, confirm-harness, log-message` and
+  // `cat-bootstrap-kg-navigation, discussion, confirm-harness, log-message` and
   // processes as `InitializeHarness, LogMessage, Discussion` — neither
   // alphabetical, both stable per machine. The check passed on the container
   // that wrote the file and failed on CI, with the same inputs and the same
@@ -149,12 +149,12 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const doc = await buildBootstrapDocument();
+  const doc = await buildCatBootstrapDocument();
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(doc, null, 2) + "\n");
 
   const counts = doc.counts as Record<string, number>;
-  console.log(`bootstrap graph → ${out}`);
+  console.log(`cat-bootstrap graph → ${out}`);
   for (const [k, v] of Object.entries(counts).sort()) console.log(`  ${String(v).padStart(4)}  ${k}`);
   const problems = doc.problems as string[];
   if (problems.length > 0) for (const p of problems) console.log(`  · ${p}`);

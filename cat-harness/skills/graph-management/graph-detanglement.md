@@ -84,7 +84,7 @@ skill is about it.
 ### 3. Isolate
 
 The sub-graph carries its own declaration, its own namespace, its own published
-artefact. `bootstrap/` is the demonstrated case: its own `harness.json`, its
+artefact. `cat-bootstrap/` is the demonstrated case: its own `harness.json`, its
 own `bs:` namespace, its own graph document.
 
 ### 4. Extract

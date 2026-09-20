@@ -62,7 +62,7 @@ export function vocabularyIri(): string {
   // day it deployed.
   //
   // Nothing is lost by moving: no term hangs off this document. Every term
-  // lives in its layer's namespace (`bootstrap/ns`, `cat-harness/ns`,
+  // lives in its layer's namespace (`cat-bootstrap/ns`, `cat-harness/ns`,
   // `folio-assist-core/ns`), each of which IS a file and dereferences. The
   // union is a convenience for a person reading the whole vocabulary at once,
   // so it can sit anywhere that resolves.
@@ -121,15 +121,15 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
  * A kind absent from this map is `harness` — the middle. That default is
  * deliberate and is the safe direction: a term wrongly called harness is
  * merely carried by an instance that did not need it, while a term wrongly
- * called bootstrap makes the base layer depend on something above it, which
+ * called cat-bootstrap makes the base layer depend on something above it, which
  * is the one thing the direction rule forbids.
  */
 const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
-  "cat-harness": "bootstrap",
-  schemas: "bootstrap",
-  // Everything the owner named as NOT bootstrap, plus the rest of the folio's
+  "cat-harness": "cat-bootstrap",
+  schemas: "cat-bootstrap",
+  // Everything the owner named as NOT cat-bootstrap, plus the rest of the folio's
   // own furniture: "we shouldnt need voicegraph or librarygrph or
-  // previewgrapjh in bootstrap!!"
+  // previewgrapjh in cat-bootstrap!!"
   voices: "core",
   library: "core",
   uploads: "core",
@@ -163,9 +163,9 @@ export function buildVocabulary(
   /**
    * Emit only this layer and the ones BELOW it, or the whole vocabulary.
    *
-   * "And below" rather than "only this": a harness consumer meets bootstrap's
+   * "And below" rather than "only this": a harness consumer meets cat-bootstrap's
    * terms constantly, so a harness slice that omitted them would document a
-   * vocabulary nobody actually uses. Bootstrap's slice is the interesting one
+   * vocabulary nobody actually uses. CatBootstrap's slice is the interesting one
    * and it is genuinely minimal — it is the bottom of the stack.
    */
   layer?: TermLayer,
@@ -174,7 +174,7 @@ export function buildVocabulary(
    *
    * The two modes answer different questions and conflating them would publish
    * a lie. `--layer harness` is what a HARNESS CONSUMER wants: it meets
-   * bootstrap's terms constantly, so the document includes them. A NAMESPACE
+   * cat-bootstrap's terms constantly, so the document includes them. A NAMESPACE
    * document is what `cat:Harness` dereferences to, and it must contain only
    * `cat:` terms — a `cat-harness/ns` that also defined `bs:Actor` would be
    * asserting ownership of a term in somebody else's namespace.
@@ -184,7 +184,7 @@ export function buildVocabulary(
   const kinds = graphKindTerms();
   const doublyDefined = [...kinds.keys()].filter((t) => t in CLASS_GLOSSES || t in PROPERTY_GLOSSES).sort();
 
-  const ORDER: readonly TermLayer[] = ["bootstrap", "harness", "core"];
+  const ORDER: readonly TermLayer[] = ["cat-bootstrap", "harness", "core"];
   const cutoff = layer ? ORDER.indexOf(layer) : ORDER.length - 1;
   const inSlice = (g: TermGloss): boolean => {
     const i = ORDER.indexOf(g.layer ?? "harness");
@@ -211,7 +211,7 @@ export function buildVocabulary(
   for (const [name, g] of [...kinds].sort(([a], [b]) => a.localeCompare(b))) emit(name, "class", g);
   for (const [name, g] of Object.entries(PROPERTY_GLOSSES)) emit(name, "property", g);
 
-  // Only a FULL build can say a term is undefined. A bootstrap slice omits
+  // Only a FULL build can say a term is undefined. A cat-bootstrap slice omits
   // core terms ON PURPOSE, and reporting those as missing would turn the
   // layering into a permanent wall of findings — the "check that cries wolf"
   // this repository switches off.
@@ -270,8 +270,8 @@ if (import.meta.main) {
   const check = argv.includes("--check");
   const layerIdx = argv.indexOf("--layer");
   const layer = layerIdx >= 0 ? (argv[layerIdx + 1] as TermLayer) : undefined;
-  if (layer !== undefined && !["bootstrap", "harness", "core"].includes(layer)) {
-    console.error(`--layer must be bootstrap, harness or core (got ${String(layer)})`);
+  if (layer !== undefined && !["cat-bootstrap", "harness", "core"].includes(layer)) {
+    console.error(`--layer must be cat-bootstrap, harness or core (got ${String(layer)})`);
     process.exit(2);
   }
   const outIdx = argv.indexOf("--out");

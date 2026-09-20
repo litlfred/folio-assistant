@@ -1,6 +1,6 @@
 ---
 # folio-assistant-7u3g
-title: bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows
+title: cat-bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows
 status: todo
 type: task
 created_at: 2026-09-20T14:47:57Z
@@ -13,19 +13,19 @@ that sample went looking for, which is the point of sampling.
 
 ## The gap
 
-`bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it
+`cat-bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it
 and the audit reads its skills. `workflowDirs` then composes
-`<kgdir>/workflows` — i.e. **`bootstrap/skills/workflows/`**, which does not
-exist. The diagrams are at **`bootstrap/workflows/`**, a SIBLING of
-`bootstrap/skills/`, not a child.
+`<kgdir>/workflows` — i.e. **`cat-bootstrap/skills/workflows/`**, which does not
+exist. The diagrams are at **`cat-bootstrap/workflows/`**, a SIBLING of
+`cat-bootstrap/skills/`, not a child.
 
 So `workflowFiles(root)` returns 49 diagrams and **none of the three in
 `bootstrap/`**:
 
 ```
-bootstrap/workflows/discussion.bpmn
-bootstrap/workflows/initialize-harness.bpmn
-bootstrap/workflows/log-message.bpmn
+cat-bootstrap/workflows/discussion.bpmn
+cat-bootstrap/workflows/initialize-harness.bpmn
+cat-bootstrap/workflows/log-message.bpmn
 ```
 
 ## What is blind, measured
@@ -48,9 +48,9 @@ consequences:
 
 `skill-in-role-or-process` reports `confirm-harness`, `discussion` and
 `log-message` as *"no role carries it and no activity names it"*. **All three
-ARE named** by `<folio:skill ref>` in `bootstrap/workflows/*.bpmn`. The
+ARE named** by `<folio:skill ref>` in `cat-bootstrap/workflows/*.bpmn`. The
 criterion is right about what it read and wrong about the corpus — its own
-finding text even lists `bootstrap` at `bootstrap/skills/` among the
+finding text even lists `bootstrap` at `cat-bootstrap/skills/` among the
 directories it read, which is what makes the report so convincing.
 
 That is this repository's recurring defect in its purest form: **relied upon
@@ -59,7 +59,7 @@ unreachable; the truth is that three diagrams are.
 
 ## Two candidate fixes, and the choice is not obvious
 
-1. **Move** `bootstrap/workflows/` to `bootstrap/skills/workflows/`. Cheapest,
+1. **Move** `cat-bootstrap/workflows/` to `cat-bootstrap/skills/workflows/`. Cheapest,
    and makes bootstrap match every other kg directory. But `bootstrap/` is
    built to be lifted out whole (issue #223), and `workflows/` beside
    `skills/` may be deliberate about what that extraction contains.

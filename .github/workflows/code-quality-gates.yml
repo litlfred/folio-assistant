@@ -277,15 +277,15 @@ jobs:
       - name: no undeclared files at the repository root
         run: bun run check:undeclared-files:check
 
-      # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
+      # `cat-bootstrap/cat-bootstrap.jsonld` HAD a staleness gate here, because it was
       # committed. It no longer is — it is built at render time into the
       # published site by `docs-site.yml` — so there is no committed copy to
       # go stale and nothing for a byte gate to compare against.
       #
       # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
       # assuming: the gate compared bytes, while every property it was
-      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
-      # against `buildBootstrapDocument()` — purity, id ordering, no absolute
+      # protecting is asserted directly in `scripts/tests/cat-bootstrap-graph.test.ts`
+      # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
       # build paths, skills derived from disk, graph kinds a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
       # the TypeScript job above already runs. Removing a check whose

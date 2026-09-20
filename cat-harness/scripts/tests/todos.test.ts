@@ -136,7 +136,7 @@ describe("the published process hierarchy", () => {
     // uses — not the literal `skills/workflows`.
     //
     // This hardcoded that path and broke the moment a second root existed:
-    // `bootstrap/workflows/bootstrap.bpmn` is in the published hierarchy and
+    // `cat-bootstrap/workflows/cat-bootstrap.bpmn` is in the published hierarchy and
     // was not in this expectation, so the test called the GENERATOR wrong for
     // correctly reading the declaration. A test that pins an order must derive
     // it from the same source as the thing it pins, or it pins the past.
