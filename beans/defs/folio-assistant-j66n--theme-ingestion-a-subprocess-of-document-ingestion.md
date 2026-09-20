@@ -1,7 +1,7 @@
 ---
 # folio-assistant-j66n
 title: 'THEME INGESTION: a subprocess of document ingestion, and one Theme node with kind sticky|webpage|publication'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T08:02:10Z

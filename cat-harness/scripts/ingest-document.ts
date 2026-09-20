@@ -509,7 +509,9 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
  */
 export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
   const slug = bibSlug(pdf);
-  const structure = join(resolve(libRoot), slug, "structure.json");
+  // Against INSTANCE_ROOT, same reason as the promote path below: `libraryRoot`
+  // is INSTANCE-relative, and a bare `resolve` reads the CWD.
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, "structure.json");
   if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
   // The indent is READ OFF the file, never chosen here. `pdf-structure.py`
   // writes `indent=1` and `pdf-pages.py` writes `indent=2`, so a refresh that
@@ -703,7 +705,21 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const out = join(resolve(destination), slug);
+  // Against INSTANCE_ROOT, never the CWD.
+  //
+  // `libraryRoot` returns an INSTANCE-RELATIVE path — that is its contract, and
+  // it is what every `-o` argument wants. `resolve()` with one argument
+  // resolves against `process.cwd()`, so running this from the repository root
+  // (which is where `bun run` puts you) turned `../who-iris/library` into
+  // `/home/user/who-iris/library` — OUTSIDE THE CHECKOUT. It then copied the
+  // staged tree there, deleted the staging directory, and printed `✓ promoted`.
+  //
+  // Latent before bean `frs5` and load-bearing after it: while the only
+  // library was this instance's own, the relative path was `library` and the
+  // mistake resolved to a wrong directory inside the repo. Once a library
+  // could sit in a SIBLING instance the path gained a `../` and the same line
+  // started escaping the repository altogether.
+  const out = join(resolve(INSTANCE_ROOT, destination), slug);
   mkdirSync(dirname(out), { recursive: true });
   // Only ever INTO the library. `renameSync` would fail across a filesystem
   // boundary, and a staged tree the arms just wrote is small enough that the

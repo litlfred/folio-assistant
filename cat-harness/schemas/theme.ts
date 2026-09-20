@@ -136,6 +136,82 @@ export const THEME_LAYOUTS = ["laptop", "mobile", "card"] as const;
 export type ThemeLayout = (typeof THEME_LAYOUTS)[number];
 
 /**
+ * What KIND of surface a theme dresses.
+ *
+ * ## One node, not three, and the reason is the palette
+ *
+ * `schemas/theme.ts` exists because 106 hardcoded hex colours were replaced by
+ * 22 named custom properties. Three separate theme node types would reintroduce
+ * exactly that, one level up: three spellings of "accent colour", free to
+ * disagree about what an accent IS. So the palette vocabulary is shared across
+ * every kind and only the GEOMETRY varies — bean `j66n`, and the owner's
+ * "one node with a kind discriminator rather than three node kinds".
+ *
+ * ## The geometry has to vary, and that was MEASURED rather than assumed
+ *
+ * A sticky theme's three layouts are `laptop | mobile | card`. The WHO
+ * publication style guide (`wpr-rdo-2020-003-eng`, page 18, "Frequently used
+ * formats and specs") states three PRINT formats instead — A4 21×29.7 cm, A5
+ * 14.8×21 cm, A5 landscape 21×14.8 cm — and states **no** column widths and no
+ * page margins anywhere in its 66 sections.
+ *
+ * So a publication theme cannot honestly fill `minWidth` ("before the grid
+ * reflows"), and calling an A4 page a `laptop` would be a name that lies. The
+ * requirement is untouched — three layouts, or invalid — and only their names
+ * and fields follow the medium. Owner's ruling, 2026-09-20: *"Layouts vary by
+ * kind; palette stays shared."*
+ *
+ * `webpage` shares the sticky geometry deliberately: both are screens, and
+ * inventing a third viewport vocabulary for the same three breakpoints is the
+ * duplication this file was written to end.
+ */
+export const THEME_KINDS = ["sticky", "webpage", "publication"] as const;
+export type ThemeKind = (typeof THEME_KINDS)[number];
+
+/**
+ * The three print formats, named as the source names them.
+ *
+ * `a5Landscape` rather than `a5-landscape` because these are object KEYS and
+ * the sticky layouts are camel-free only by luck of being single words.
+ */
+export const PRINT_FORMATS = ["a4", "a5", "a5Landscape"] as const;
+export type PrintFormat = (typeof PRINT_FORMATS)[number];
+
+/**
+ * Geometry for one print format.
+ *
+ * Deliberately NOT {@link ThemeGeometrySchema}. `minWidth` is documented as
+ * "minimum column width before the grid reflows", which a fixed page does not
+ * do; `padding` is card padding. Reusing the shape would have typechecked and
+ * meant nothing — the values are trim size and margin, and a reader following
+ * the field name would be told the wrong thing about a real publication.
+ *
+ * `width` and `height` are CSS lengths so the source's own units survive: the
+ * guide says `21 cm x 29.7 cm`, and rewriting that as millimetres or points
+ * would be a conversion nobody asked for and a chance to be wrong.
+ */
+export const PrintGeometrySchema = z
+  .object({
+    /** Trim width, as a CSS length — `21cm` for A4. */
+    width: z.string().min(1),
+    /** Trim height, as a CSS length — `29.7cm` for A4. */
+    height: z.string().min(1),
+    /**
+     * Page margin, as a CSS length.
+     *
+     * The WHO guide states a 1 cm logo exclusion zone and a 3 cm minimum logo
+     * size, and no page margin. A theme that carries one is stating a fact its
+     * source did not — so where the source is silent this is the exclusion
+     * zone, cited as such, and never a plausible-looking invention.
+     */
+    margin: z.string().min(1),
+    /** Body scale relative to the format, as a unitless multiplier. */
+    fontScale: z.number().positive(),
+  })
+  .strict();
+export type PrintGeometry = z.infer<typeof PrintGeometrySchema>;
+
+/**
  * Geometry for one layout.
  *
  * **Geometry, not colour.** The palette is shared across a theme's three

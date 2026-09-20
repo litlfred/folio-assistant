@@ -1038,7 +1038,24 @@ function stampSubgraph(graph: Node[], doc: string): void {
   const dirs = declaredGraphs(ROOT)
     .filter((d) => d.absPath !== undefined)
     .map((d) => ({ id: d.id, rel: relative(ROOT, d.absPath!).replace(/\\/g, "/").replace(/\/$/, "") }))
-    .filter((d) => d.rel.length > 0 && !d.rel.startsWith(".."))
+    // `..` is KEPT, and dropping it is what made this facet useless.
+    //
+    // Every repository-scoped entry — `who-iris/`, `folio-assistant-core/`,
+    // `bootstrap/`, `detangle/`, `large-datasets/`, `who-style-guide/` —
+    // resolves to `../<instance>/…` relative to this instance, so
+    // `!startsWith("..")` excluded the entire set the facet exists to offer.
+    //
+    // MEASURED after the fact, which is the part worth recording: the facet
+    // rendered, was screenshotted, and was reported as working, while its
+    // values were `cat-harness` (1,267 nodes) and a handful of this instance's
+    // own directories. Not one sibling instance appeared. The owner had asked
+    // to "filter by bootstrap/ cat-harness/ f-a-core/ etc"; the thing shipped
+    // could not.
+    //
+    // A path that leaves the instance is still a path this graph carries —
+    // `schema-nodes.ts` mints `../folio-assistant-core/schemas/…` — so the
+    // comparison below matches in the same space rather than excluding it.
+    .filter((d) => d.rel.length > 0)
     .sort((a, b) => b.rel.length - a.rel.length);
 
   const PATH_KEYS = ["instructionsPath", "module", "sourcePath", "path"] as const;
