@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T18:56:45.220Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e7f0b4d6a1c0f67b91a8a2f20f1a9eebd30b114d",
-  "sourceCommitSha": "e7f0b4d6a1c0f67b91a8a2f20f1a9eebd30b114d",
-  "sourceCommitAt": "2026-09-20T20:55:18+02:00",
+  "generatedAt": "2026-09-20T19:06:20.344Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fba57515a1111aad7f18379fe90faba757143e1e",
+  "sourceCommitSha": "fba57515a1111aad7f18379fe90faba757143e1e",
+  "sourceCommitAt": "2026-09-20T21:04:58+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 206,
@@ -267,7 +267,7 @@
     "Capability": 28,
     "Role": 124,
     "Convention": 2,
-    "SkillPackage": 13,
+    "SkillPackage": 17,
     "Process": 53,
     "SequenceFlow": 687,
     "ProcessNode": 652,
@@ -3387,7 +3387,7 @@
       "name": "discussion",
       "title": "discussion — settling what an agent cannot read off disk",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/discussion.md",
       "instructionLines": 107,
@@ -3403,7 +3403,7 @@
       "title": "Reading a knowledge graph before you have anything",
       "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill cat-bootstrap hands you, because the second step of the handoff cannot be followed without it.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/cat-bootstrap-kg-navigation.md",
       "instructionLines": 83,
@@ -3419,7 +3419,7 @@
       "title": "Which harness, and where",
       "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/confirm-harness.md",
       "instructionLines": 59,
@@ -3435,7 +3435,7 @@
       "title": "Logging what you are doing",
       "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/log-message.md",
       "instructionLines": 93,
@@ -3530,7 +3530,7 @@
       "title": "Reading the knowledge graph — how to find the skill you need",
       "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/kg-navigation"
       ],
       "instructionsPath": "../kg-navigation/skills/kg-navigation.md",
       "instructionLines": 141,
@@ -3546,7 +3546,7 @@
       "title": "Materializing remote content",
       "description": "Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/large-datasets"
       ],
       "instructionsPath": "../large-datasets/skills/materialize-remote.md",
       "instructionLines": 91,
@@ -3562,7 +3562,7 @@
       "title": "IRIS, DSpace and Dublin Core",
       "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
       "instructionLines": 151,
@@ -4516,9 +4516,9 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "skills",
+      "name": "cat-bootstrap",
       "path": "../cat-bootstrap/skills",
       "hasManifest": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap"
@@ -4538,6 +4538,38 @@
       "path": "methodologies/crdm",
       "hasManifest": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/methodology-crdm"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "skills",
+      "path": "src/skills",
+      "hasManifest": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness-src"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "kg-navigation",
+      "path": "../kg-navigation/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/kg-navigation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/large-datasets",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "large-datasets",
+      "path": "../large-datasets/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/large-datasets-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/who-iris",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "who-iris",
+      "path": "../who-iris/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/who-iris-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/authoring-who-smart-guidelines",
@@ -30661,8 +30693,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "e7f0b4d6a1c0f67b91a8a2f20f1a9eebd30b114d",
+    "sha": "fba57515a1111aad7f18379fe90faba757143e1e",
     "pr": "main",
-    "run": "35530602558"
+    "run": "35531129154"
   }
 }
