@@ -4,6 +4,8 @@ description: >
   Generate an MCP server from Tool nodes — the mapping from this harness's
   skill/Tool vocabulary onto the current MCP standard. Read before exposing a
   CLI tool over MCP, or when asked how an agent stands a service up.
+# consulted: reference material nobody performs — EXPLAINS a mapping — Tool node to MCP service — and instructs nobody. Classified the same way in the y1w9 sample of 15, by reading it, before this pass.
+consulted: true
 ---
 
 # MCP projection — turning a Tool node into an MCP service
