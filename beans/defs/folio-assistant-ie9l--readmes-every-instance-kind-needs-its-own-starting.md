@@ -164,3 +164,12 @@ about.
       truncation budget applies; the trigger is named and tested
 - [ ] Wherever this lands, it states that creation at INITIALISATION is not a
       process write — otherwise ask 3 and ask 6 read as contradicting
+
+## `aazi` is this README's top section
+
+The owner's later instruction puts a status dashboard at the TOP of the root
+README on active KG repos. It shares this bean's unresolved `active` vs
+`static` definition — the obvious reading is *an instance is active if it
+declares a `state` graph* (`beans`, `todos`, `workflow-state`), which is
+already declared and checkable rather than a new flag. **Both beans need that
+confirmed; neither should invent it separately.**

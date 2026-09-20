@@ -85,3 +85,11 @@ happen; it may not decide that it happens.
 - [ ] The harness card is a todo sticky carrying outstanding work, a
       next-action recommendation, and health badges — and recommends without
       acting
+
+## `aazi` computes the same fact on a different surface
+
+The root README dashboard (`aazi`) needs "initiated / partially initiated" per
+instance — which is this bean's blocker exactly: where an instance reached in
+`initialize-harness.bpmn`, with `beans/workflows/` empty. **Whichever lands
+first should record the relation; the second consumes it.** Two surfaces
+computing process position independently is how they start disagreeing.
