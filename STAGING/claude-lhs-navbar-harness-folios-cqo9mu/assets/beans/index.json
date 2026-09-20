@@ -1073,14 +1073,14 @@
     {
       "id": "folio-assistant-7iog",
       "title": "COMMAND PATHS ARE CHECKED AGAINST THE REPO, NOT THE RUN: three of four backoff calls in feature-staging resolved at check time and not at run time",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:55:16Z",
-      "updatedAt": "2026-09-20T21:55:16Z",
+      "updatedAt": "2026-09-20T22:45:13Z",
       "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while implementing #605's\n`merge=union` half, in the very loops that fix was going into.\n\n## The defect, measured\n\n`feature-staging.yml` has four retry loops. Each calls `backoff-sleep.ts` —\nthe ONE shared implementation bean `06kg` established. **Three of the four\nname a path that does not exist at run time:**\n\n| loop | job | `working-directory`",
       "file": "beans/defs/folio-assistant-7iog--command-paths-are-checked-against-the-repo-not-the.md"
     },
