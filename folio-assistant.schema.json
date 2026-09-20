@@ -277,6 +277,45 @@
           },
           "default": []
         },
+        "remoteGraphs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "graphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "url",
+              "graphs"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
         "stickies": {
           "type": "array",
           "items": {
@@ -425,8 +464,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "cf115c6494ab2cd0d672a20a64cc274eebbb97c0",
+    "sha": "4cdd77d7d839dbd7a208744123e3fdf5ad903943",
     "pr": "main",
-    "run": "35526304510"
+    "run": "35528648711"
   }
 }

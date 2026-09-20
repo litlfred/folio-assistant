@@ -5,7 +5,7 @@
     "owl": "http://www.w3.org/2002/07/owl#",
     "bs": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#",
     "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "fac": "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#",
+    "fac": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
     "label": "rdfs:label",
     "comment": "rdfs:comment",
     "isDefinedBy": {
@@ -142,6 +142,22 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:CatalogueGraph",
+      "@type": "rdfs:Class",
+      "label": "CatalogueGraph",
+      "comment": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:DocsGraph",
+      "@type": "rdfs:Class",
+      "label": "DocsGraph",
+      "comment": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:FshGutsGraph",
       "@type": "rdfs:Class",
       "label": "FshGutsGraph",
@@ -242,6 +258,14 @@
       "@type": "rdf:Property",
       "label": "inPackage",
       "comment": "The skill package a skill ships in.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:inSubgraph",
+      "@type": "rdf:Property",
+      "label": "inSubgraph",
+      "comment": "The DECLARED DIRECTORY a node was projected from — the named subgraph it belongs to, as a link to that directory's own node rather than a bare id. Derived from the instance's declaration, longest path prefix winning, and INHERITED through `partOf` for nodes that have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no value belongs to no declared directory — vocabulary nodes are minted from the namespace rather than from any file — and that absence is reported as its own state rather than folded into a default.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
     },

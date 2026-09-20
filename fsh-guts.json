@@ -2,7 +2,7 @@
   "@context": {
     "bs": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#",
     "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "fac": "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#",
+    "fac": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
     "name": "rdfs:label",
     "description": "rdfs:comment",
     "nodeKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeKind",
@@ -19,7 +19,7 @@
   "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsGraph",
   "name": "folio-assistant — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 16,
+  "nodeCount": 17,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/proposals/actor-facts-and-their-processes.md",
@@ -161,6 +161,18 @@
       "body": "# The six computations-refactor fixers\n\nOne record for six files, because a page each would say the same thing six times\nand the thing they share **is** the finding.\n\n| file | bytes | what it did |\n|---|---|---|\n| `migrate-probes-phase1.py` | 9,868 | executed phase 1: moved `*_probe.py` into `probes/` |\n| `fix-moved-scripts.py` | 7,773 | *\"post-move corrections for Phase 1/2\"* — two bugs in the shim injector |\n| `fix-root-script-shim.py` | 5,572 | added a bridge import to root scripts after phase 6 moved `substrate/` |\n| `fix-cross-cluster-witness-loads.py` | 7,795 | rewrote `HERE / \"X.witness.json\"` to `_path_bridge.witness_path(...)` after phases 1–4 |\n| `materialize_iw_queue.py` | 7,064 | built the integration-watcher queue from audit witnesses |\n| `wire_stale_claims.py` | 7,616 | inserted `computation:` fields into content blocks from `stale-claims.tsv` |\n\nAll born 2026-09-17 in the same commit — the bulk import (PR #209) — so they are\nthe fossil record of reorganisations in the **source** repository, not in this one.\nThat corrects the bean's own framing, which read them as this repository's\nstratigraphy.\n\n## Why they are spent, established rather than assumed\n\nTwo facts, both measured on 2026-09-20, and the second is the one that matters:\n\n1. **Their subject is absent.** `cat-harness/computations/` holds **one** file, a\n   `.witness.json`, and **no Python at all** — no `substrate/`, no `*_probe.py`.\n   The proposal they cite,\n   `docs/proposals/computations-subdirectory-refactor.md`, is gone.\n2. **They are numbered phases, and they say so themselves** — \"Phase 1\",\n   \"post-move corrections for Phase 1/2\", \"After Phases 1-4\", \"during Phase 6\".\n\nThe second is what makes this a judgement rather than a guess. *\"Absent from this\nrepository\"* alone is **not** evidence of death here: `d308` records that\n`content/pipeline/*.ts` are invoked from a **folio's** `package.json`, which cannot\nbe read from this checkout, so four codemods in the same family were **kept** on\nexactly that reasoning. The difference is that a phase script is spent **by\nconstruction**: an executed migration does not run twice, and no folio can be\nholding an entry point for phase 1 of a refactor that has already reached phase 6.\n\n## The rule they are evidence for\n\n> **A codemod is a commit, not a committed script.**\n\nFour of the six are corrections to corrections — `fix-moved-scripts` repairs the\nshim injector, `fix-root-script-shim` and `fix-cross-cluster-witness-loads` repair\nwhat the moves broke. That chain is the argument: each was a bulk edit preserved as\na file rather than as a diff, and the diff was in the history the whole time.\n\nThe pattern underneath them, extracted so it outlives them, is in\n[`migrate-cluster-phase.md`](migrate-cluster-phase.md) — the generalisation these\nsix were each a partial, bug-fixed instance of.\n\n## Restoring one\n\n`git mv` back. Nothing was deleted, the bodies are here beside this record, and\n`git log --follow` still reaches 2026-09-17."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/extract-lean-blocks.md",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
+      "name": "extract-lean-blocks.py",
+      "nodeKind": "script",
+      "sourcePath": "fsh-guts/scripts/extract-lean-blocks.md",
+      "movedOn": "2026-09-20",
+      "movedFrom": "cat-harness/scripts/extract-lean-blocks.py",
+      "bean": "folio-assistant-81t5",
+      "description": "A one-shot split of one folio's monolithic Lean files into per-content-block .lean siblings — and about ninety per cent of its 20,662 bytes is that folio's own data: a hand-written table mapping `quantum-observable-universe` block basenames to declaration names, plus a CH1_IMPORTS header and the `QOU` namespace. Retired under the owner's standing rule for one-shot migrations, because it is subject matter rather than a transferable example. Referenced by nothing; its subject directory does not exist in this repository.",
+      "body": "# `extract-lean-blocks.py`\n\nRetired under the owner's standing rule for one-shot migrations, 2026-09-20:\n\n> if one shot migration useful as examples keep for didactic, otherwise fsh-guts\n\nIt is **not** useful as an example, and the reason is what it is made of.\n\n## It is one folio's data, in the platform\n\nIts own docstring names the path it reads:\n\n> Reads **`content/quantum-observable-universe/lean/`** source files, maps\n> declarations to content blocks, and writes individual `.lean` files alongside\n> their `.ts`/`.md` siblings.\n\nThat directory does not exist here — the platform carries no folio — and inside,\nthe script is mostly that folio's subject matter:\n\n| what | where |\n|---|---|\n| a hand-written table: block basename → declaration name, source file, extra decls | line 206 |\n| `Blocks NOT in QuantumObservableUniverse.lean — need special handling` | line 277 |\n| `CH1_IMPORTS`, taken from `QuantumObservableUniverse.lean` | line 21 |\n| `namespace='QOU'` as the default | line 295 |\n\n`AGENTS.md` opens with the rule this breaks: *\"folio-assistant is the platform, not\nthe content … If you are about to write subject matter here (a chapter, a\nconstant, a vocabulary), you are either in the wrong repo or writing something\nthat belongs in the folio as data.\"* A mapping table of one paper's block names is\nexactly that.\n\nReferenced by **nothing** — no caller, no test, no workflow, no `package.json`\nentry. Born 2026-09-17 in the bulk import.\n\n## The one observation worth keeping\n\n**A declaration's helpers travel with it.** The mapping's third element is *\"extra\ndecls to include — helper defs that belong with the main declaration\"*, and that is\nthe non-obvious part of splitting a monolithic Lean file: a declaration lifted\nwithout the `private` lemmas it depends on does not compile, and the dependency is\nnot visible from the declaration's own text. Anything doing this again needs that\nlist, computed or hand-written.\n\nThe rest — parsing declaration starts by pattern, writing a namespaced header — is\nordinary.\n\n## If it is still wanted\n\nIt probably belongs in `litlfred/qou`, where its subject lives and where it might\nstill run. Moving it there was **not** done from here: that is a cross-repository\nact, and `fsh-guts` loses nothing — the body is beside this record, `git log\n--follow` reaches 2026-09-17, and a copy into the folio is a `git show` away."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/fix-env-injection.md",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
       "name": "fix_env_injection.py",
@@ -212,6 +224,10 @@
   "skipped": [
     {
       "path": "fsh-guts/retired/skill-definition-roles.md",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/scripts/extract-lean-blocks.py",
       "reason": "declares no $schema, so it is not a node of this graph"
     },
     {
