@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`theming/theme-art-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/theming/theme-art-intake.md) — do not edit here.
+> Generated from [`theming/intake.md`](https://github.com/litlfred/folio-assistant/blob/main/theming/intake.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/theming/theme-art-intake.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/theming/intake.md){: .fa-edit-source }
 
 {% raw %}
 # Theme art intake

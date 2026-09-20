@@ -248,6 +248,13 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // holds its skills directly, so `discoverGroups` takes the
   // `SKILLS_CATEGORIES[decl.id]` branch — the same one `cat-bootstrap` uses
   // below. Keyed on `crdm` it threw, naming the id it actually wanted.
+  // Keyed on the DECLARED ID for the same reason as the entries below: this
+  // directory holds its skills DIRECTLY rather than in package subdirectories,
+  // so `discoverGroups` takes the `SKILLS_CATEGORIES[decl.id]` branch. Bean
+  // `1hvo`: it is one flat directory whose FILES carry the stage split, not
+  // one declared subgraph per stage — five declarations would owe five
+  // visualisers and five documentation entries under `2krx`.
+  theming: "Theming (theming)",
   "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
   "methodology-raci": "RACI involvement model (methodologies/raci)",
   "remote-stubs": "Declared but not implemented here (stubs)",
@@ -264,6 +271,13 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `cat-harness/` move, which is the next step on bean `wggr` and would turn
   // `src/skills` into `cat-harness/src/skills`.
   "cat-bootstrap": "CatBootstrap (read before anything else is known)",
+  // CatBootstrap's SECOND declared directory, and the one that constitutes its
+  // exemption rather than describing it: the layer is excused a visualiser and
+  // owes its own `.jsonld`/`.json` instead, so the skills governing that
+  // emission ARE the substitute. Its own heading, because a reader meeting
+  // "how cat-bootstrap emits its graph" under "read before anything else is
+  // known" would reasonably conclude they have to read it first. Bean `hfkl`.
+  "cat-bootstrap-render": "CatBootstrap rendering (cat-bootstrap/render)",
   "cat-harness-src": "Agent skills",
 };
 

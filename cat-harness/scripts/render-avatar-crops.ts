@@ -35,7 +35,7 @@ import { instanceRootFor, readDeclaration, repoRootFor } from "../schemas/cat-ha
 import "../schemas/folio-graph-kind.js";
 import type { ImageRegion } from "../schemas/kg-node.js";
 
-const MEDIA: Readonly<Record<string, string>> = {
+export const MEDIA: Readonly<Record<string, string>> = {
   ".webp": "image/webp",
   ".png": "image/png",
   ".jpg": "image/jpeg",
@@ -43,7 +43,8 @@ const MEDIA: Readonly<Record<string, string>> = {
   ".svg": "image/svg+xml",
 };
 
-function dataUri(abs: string): string | undefined {
+/** The file as a `data:` URI, or `undefined` when it cannot be read or typed. */
+export function dataUri(abs: string): string | undefined {
   const dot = abs.lastIndexOf(".");
   const type = MEDIA[abs.slice(dot).toLowerCase()];
   if (type === undefined || !existsSync(abs)) return undefined;

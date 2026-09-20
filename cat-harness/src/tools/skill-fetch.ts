@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
-import { resolve, join } from "node:path";
+import { basename, resolve, join } from "node:path";
 
 import { nodeSummary } from "../../scripts/front-matter.js";
 import { isSkillMd } from "../../scripts/known-skills.js";
@@ -131,6 +131,11 @@ function holdsSkill(dir: string): boolean {
  */
 export function discoverLocalPackages(root: string): Record<string, string> {
   const out: Record<string, string> = {};
+  // Collected first and named in a SECOND PASS, because which directly-held
+  // directory gets the instance name depends on how many there are — see
+  // `nameDirectlyHeld`. Deciding it inline made the answer depend on
+  // iteration order, which is the defect rather than the implementation.
+  const held: string[] = [];
   for (const kgDir of resolveSkillDirs(root)) {
     // A kg directory may hold skills DIRECTLY as well as in subdirectories,
     // and BOTH shapes are real here: `skills/` holds none directly and every
@@ -158,16 +163,88 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // unchanged and measured; `cat-bootstrap/skills/` → `cat-bootstrap/harness.json`
     // → `cat-bootstrap`. A directory under no declaration at all is skipped rather
     // than guessed at.
-    if (holdsSkill(kgDir)) {
-      const instanceRoot = findInstanceRoot(kgDir);
-      const name = instanceRoot === undefined ? undefined : readDeclaration(instanceRoot)?.name;
-      if (name !== undefined) out[name] = kgDir;
-    }
+    //
+    // ...AND THE INSTANCE NAME IS TAKEN BY THE `skills` DIRECTORY ALONE.
+    // The paragraph above fixed the CROSS-instance half of this collision and
+    // left the within-instance half, which `1hvo` walked straight into:
+    // `cat-harness` declares `src/skills/` AND now `theming/`, both hold their
+    // skills directly, both resolved to the name `folio-assistant`, and the
+    // later won — theming's six skills were found and silently dropped, with
+    // `kg:audit` reporting all six as `manifest-skill-exists` criticals. The
+    // same `dh4f` shape the paragraph above describes, one scope in.
+    //
+    // Resolved BY A RULE rather than by first-wins, because first-wins is the
+    // defect: whichever directory `resolveSkillDirs` happened to yield last
+    // took the name. A directory basenamed `skills` IS the instance's own
+    // package — there is no other name for it — so it takes the instance name;
+    // any other directly-held directory takes its own basename, which is what
+    // a person calls it anyway. `src/skills/` stays `folio-assistant` and
+    // `cat-bootstrap/skills/` stays `cat-bootstrap`, both measured unchanged;
+    // `theming/` becomes `theming`.
+    //
+    // Two `skills`-named directly-held directories in ONE instance would still
+    // collide. That is a narrower and more obviously wrong configuration than
+    // the one this fixes, and inventing a disambiguator for it now would be a
+    // rule with no subject.
+    if (holdsSkill(kgDir)) held.push(kgDir);
     for (const e of readdirSync(kgDir, { withFileTypes: true })) {
       if (!e.isDirectory()) continue;
       const dir = join(kgDir, e.name);
       if (holdsSkill(dir)) out[e.name] = dir;
     }
+  }
+  Object.assign(out, nameDirectlyHeld(held));
+  return out;
+}
+
+/**
+ * Name the directly-held kg directories, in one pass over all of them.
+ *
+ * ## Why this cannot be decided one directory at a time
+ *
+ * Three rules, and the third needs the whole set:
+ *
+ * 1. A directory basenamed **`skills`** is the instance's own package — there
+ *    is no other name for it — so it takes the instance's name. `src/skills/`
+ *    stays `folio-assistant`; `cat-bootstrap/skills/` stays `cat-bootstrap`.
+ * 2. Otherwise, if it is the instance's **only** directly-held directory, it
+ *    takes the instance's name, because there is nothing to disambiguate it
+ *    from and the instance's name is the better one.
+ * 3. Otherwise it takes its **basename** — `theming/`, `methodologies/crdm/`.
+ *
+ * Rule 2 is the one that needs the set, and stating it as "unique" rather than
+ * "first" is the whole point: FIRST-WINS was the defect. `cat-harness`
+ * declares `src/skills/`, `theming/`, `methodologies/crdm/` and
+ * `methodologies/raci/` — four directly-held directories, all resolving to the
+ * name `folio-assistant`, with the last assignment winning. Measured on
+ * 2026-09-20 (bean `1hvo`): three packages were found and silently dropped,
+ * `kg:audit` reported six `manifest-skill-exists` CRITICALs for theming alone,
+ * and 27 further MAJORs were CRDM activities whose skills nothing could serve.
+ * No collision was reported and nothing threw — `dh4f` one scope in from the
+ * cross-instance half the caller's docs describe.
+ *
+ * Two `skills`-basenamed directories in ONE instance would still collide. That
+ * is a narrower and more obviously wrong configuration, and inventing a
+ * disambiguator for it now would be a rule with no subject.
+ */
+function nameDirectlyHeld(dirs: readonly string[]): Record<string, string> {
+  const instanceOf = new Map<string, string | undefined>();
+  for (const dir of dirs) {
+    const r = findInstanceRoot(dir);
+    // A directory under no declaration at all is skipped rather than guessed
+    // at, exactly as before.
+    instanceOf.set(dir, r === undefined ? undefined : readDeclaration(r)?.name);
+  }
+  const count = new Map<string, number>();
+  for (const name of instanceOf.values()) {
+    if (name !== undefined) count.set(name, (count.get(name) ?? 0) + 1);
+  }
+  const out: Record<string, string> = {};
+  for (const dir of dirs) {
+    const name = instanceOf.get(dir);
+    if (name === undefined) continue;
+    const base = basename(dir);
+    out[base === "skills" || count.get(name) === 1 ? name : base] = dir;
   }
   return out;
 }

@@ -144,7 +144,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
-| [Theme art intake](theme-art-intake.html) | `theme-art-intake` | — | Art arrives — three crops for a theme or an avatar — and the answer is either |
 | [Post-MVP, because there is nothing to check before there is a render](theme-ui-review.html) | `theme-ui-review` | — | The owner, 2026-09-20: theme choice is *"authoring (human/agentic) |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
@@ -262,6 +261,24 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Initiator.** You may narrow; only the Requestor may decide. |
 | [discussion](discussion.html) | `discussion` | — | An agent that has just read `cat-bootstrap/README.md` knows the shape of a |
 | [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
+
+## CatBootstrap rendering (cat-bootstrap/render)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Emitting cat-bootstrap's own graph](cat-bootstrap-graph-emission.html) | `cat-bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** cat-bootstrap |
+| [Publishing cat-bootstrap's graph](cat-bootstrap-graph-publication.html) | `cat-bootstrap-graph-publication` | — |  |
+
+## Theming (theming)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Theme art intake](theme-art-intake.html) | `theme-art-intake` | — | Art arrives — three crops for a theme or an avatar — and the answer is either |
+| [Per-artefact specialisation](theme-artefacts.html) | `theme-artefacts` | — | **This is level 3 of the axis, and it is deliberately the narrowest.** The |
+| [Contrast: measured over the darkest thing that could be there](theme-contrast.html) | `theme-contrast` | — | **Consumer stage.** `generation` emits the ink; this says what the ink has to |
+| [Declaring a theme](theme-declaration.html) | `theme-declaration` | — | **Producer stage.** Intake decides whether art may enter; this decides what is |
+| [Generating a theme's CSS](theme-generation.html) | `theme-generation` | — | **Consumer stage.** `declaration` says what a theme is; this says what a |
+| [Theming, split on the stage it fails at](theming.html) | `theming` | — | **Every file here is named for the skill it declares, and that is load-bearing |
 
 ## RACI involvement model (methodologies/raci)
 

@@ -402,10 +402,30 @@
       ]
     },
     {
+      "_comment": "CAT-BOOTSTRAP'S RENDER SUBGRAPH, declared here for the same reason its sibling above is: `resolveSkillDirs` walks THIS instance's declaration plus its dependencies, and cat-bootstrap is not a declared dependency of cat-harness — it is composed under it. So a directory declared only in `cat-bootstrap/harness.json` is invisible to `skill_fetch` from this root, which is how cat-bootstrap's own skills came to be declared twice BY DECISION (see the entry above). This is that decision applied to the second directory rather than a new one. WITHOUT IT the two skills that constitute cat-bootstrap's rendering exemption are unfetchable from the root — and an exemption whose substitute cannot be reached is the hole `renderExemption.owes` exists to close. Bean `hfkl`. A SEPARATE id from `cat-bootstrap`, because overrides match on id and reusing it would replace the skills with these.",
+      "id": "cat-bootstrap-render",
+      "path": "cat-bootstrap/render/",
+      "dependents": "skip",
+      "scope": "repository",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
       "id": "cat-harness",
       "path": "skills/",
       "dependents": "skip",
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "_comment": "THE THEMING SUBGRAPH. Owner, 2026-09-20: \"also themeing skills under cat-harness/thermeing/. break up thematically\", and then the axis: \"1 + 2, then specialized to 3\" — pipeline stage first (intake -> declaration -> generation -> contrast), producer/consumer as the direction each stage faces, per-artefact specialisation last. FLAT, one declared directory rather than one per stage: five declarations would owe five visualisers and five documentation entries under `2krx`, which manufactures the finding this repository is trying to clear. \"Broken up thematically\" is satisfied by the files. `theme-art-intake` MOVED here from `skills/folio-core/` and KEPT ITS NAME — ids are stable across a relocation, paths are not, so `skill_fetch` and `roles.json` resolve unchanged. `theme-ui-review` deliberately stayed: it is a UI review skill covering branding, languages and findings discipline, for which theming is one subject rather than the subject, and a directory that takes every file with `theme` in the name is a directory nobody can describe. Bean `1hvo`.",
+      "id": "theming",
+      "path": "theming/",
+      "dependents": "skip",
+      "description": "Theming, split on pipeline stage with producer/consumer as the direction each stage faces and per-artefact specialisation last. `overview.md` is the map and is authored AS A SKILL rather than as a README, because `isSkillMd` is declaration-over-location: a markdown file here that declares no `$schema:` enters the graph as a skill, so a README would be a skill with no name to be fetched by — and the one orientation file an agent could not reach through `skill_fetch`, which is the route AGENTS.md tells it to use. Its visualiser is `bun run theme:sheet`; its documentation entry is docs/architecture/theming.md.",
       "graphs": [
         "cat-harness"
       ]
