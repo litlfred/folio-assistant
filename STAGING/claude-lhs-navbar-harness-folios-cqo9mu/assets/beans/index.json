@@ -1519,6 +1519,20 @@
       "file": "beans/defs/folio-assistant-amom--mode-testswarm-a-stack-of-models-over-shared-or-in.md"
     },
     {
+      "id": "folio-assistant-ankg",
+      "title": "Subgraph viewer generators write but never prune — an orphan page answers to no declaration",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:02:36Z",
+      "updatedAt": "2026-09-20T21:02:36Z",
+      "preview": "Found live during #603's merge of main, not hypothesised.\n\n## What happened\n\n#604 renamed `folio-assist-sci/` to `folio-assistant-sci/`. Subject slugs in\nthe schema and library viewers are derived from the entry's PATH, so\nregeneration correctly produced the new page:\n\n    /cat-harness/library/folio-assistant-sci/\n\nIt did NOT remove the page it replaced. `folio-assist-sci/index.html` survived\nas a",
+      "file": "beans/defs/folio-assistant-ankg--subgraph-viewer-generators-write-but-never-prune-a.md"
+    },
+    {
       "id": "folio-assistant-apui",
       "title": "INGEST: one pipeline entry point — uploads/ to library/ through a single documented path",
       "status": "in-progress",
@@ -2127,6 +2141,20 @@
       "updatedAt": "2026-09-20T21:15:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n60 beans were `in-progress`; 43 had no change in the window, and 38 of those were last touched by one bulk move at 09:37. Eight sessions were ",
       "file": "beans/defs/folio-assistant-fgnw--in-progress-carries-no-activity-43-of-60-claims-un.md"
+    },
+    {
+      "id": "folio-assistant-flh4",
+      "title": "STATE PAGES: a graph whose declaration names a visualiser is reported as having none — the missing third state",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:26:38Z",
+      "updatedAt": "2026-09-20T21:26:38Z",
+      "preview": "`cat-harness/docs/uploads/index.html` says \"This graph is declared and nothing publishes a projection for it yet\", while `harness.json` AND `cat-harness/harness.json` both give it a `coverage.visualiser`, that page exists, and it renders live per-instance queue counts (4/4/0, 28/2/26, 1/1/0). The page contradicts the repository's own declaration.\n\nCause: `projectionFor(id)` in `state-visualizer.ts",
+      "file": "beans/defs/folio-assistant-flh4--state-pages-a-graph-whose-declaration-names-a-visu.md"
     },
     {
       "id": "folio-assistant-frq2",
@@ -4073,6 +4101,20 @@
       "file": "beans/defs/folio-assistant-wggr--split-invert-the-stub-pattern-stubdocs-not-docsstu.md"
     },
     {
+      "id": "folio-assistant-whbf",
+      "title": "Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:10:28Z",
+      "updatedAt": "2026-09-20T21:10:28Z",
+      "preview": "Owner, 2026-09-20, splitting the work explicitly:\n\n| dynamic stuff is bean for later.  but static visualiztion overview is needed.\n| panel at top (colassibkle)\n\nThe static half shipped: a collapsible `<details>` panel at the top of the\nschema viewer holding a deterministic SVG of the whole graph. See\n`schema-management` §\"The overview panel\".\n\n## What is NOT there, and is this bean\n\n- Dragging a n",
+      "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
+    },
+    {
       "id": "folio-assistant-wlqd",
       "title": "skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package",
       "status": "in-progress",
@@ -4574,7 +4616,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:47:28Z",
-      "updatedAt": "2026-09-20T22:13:42Z",
+      "updatedAt": "2026-09-20T22:17:09Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R12 + R16, and it is mostly a REUSE constraint. Unit 9 of 10.\n\n**CRDM Q8, answered:** *\"3 + default wtih sticky and fsh guts and tile(s) for KG\nviewer(s) and docs\"* — so tiles come from the **Tool registry** (a tool declares\nitself board-mountable), **plus a default set** every board carries: new sticky,\nfsh-guts, KG viewer(s), docs.\n",
       "file": "beans/defs/folio-assistant-zsah--board-tiles-tools-declare-themselves-board-mountab.md"
     },
