@@ -251,10 +251,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T08:01:42.966Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/790ec2fe48cae93577bf8c137509b1b5f2ef5035",
-  "sourceCommitSha": "790ec2fe48cae93577bf8c137509b1b5f2ef5035",
-  "sourceCommitAt": "2026-09-20T07:59:54Z",
+  "generatedAt": "2026-09-20T08:11:06.460Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c6ba903f7db55b90179c7711d975f6746efb0b87",
+  "sourceCommitSha": "c6ba903f7db55b90179c7711d975f6746efb0b87",
+  "sourceCommitAt": "2026-09-20T08:09:36Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 175,
@@ -22652,7 +22652,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction"
       ],
-      "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks.",
+      "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/interaction"
     },
     {
@@ -22663,7 +22663,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/issue-marks"
       ],
-      "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find.",
+      "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/issue-marks"
     },
     {
@@ -22724,8 +22724,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "eeb10c3758705de48f10f3b1ad2fcccc67cdc9ac",
+    "sha": "9a812562bc99a384e84dbebf8c1f6bc726a0991c",
     "pr": "458/merge",
-    "run": "35498346762"
+    "run": "35498800071"
   }
 }
