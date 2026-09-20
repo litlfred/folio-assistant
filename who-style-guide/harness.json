@@ -4,6 +4,13 @@
   "description": "The WHO house voices — editorial style, guideline development, publication design — each derived from one IRIS publication and citing it by page.",
   "assets": [
     {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — who-style-guide",
+      "description": "Cold start for work in this layer, and the one rule that governs it: a voice is DERIVED FROM a publication and is not the publication. Source text is never copied here — every rule cites `{instance, libraryId, sectionId}` across the boundary and carries its quote and page, which is what makes a voice auditable rather than asserted."
+    },
+    {
       "id": "readme",
       "src": "README.md",
       "role": "instance-readme",

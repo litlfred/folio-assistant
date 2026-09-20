@@ -270,25 +270,20 @@ describe("every instance needs a starting README OF ITS OWN (bean `ie9l`)", () =
     expect(offenders.sort()).toEqual([]);
   });
 
-  it("the AGENT half is asked about too, and names who is missing it", () => {
-    // Measured 2026-09-20: ten of eleven instances declared `instance-readme`
-    // and TWO declared `agent-instructions`. The count is the argument for
-    // asking at all, so it is asserted rather than described — but as a
-    // MEMBERSHIP claim, not a total: a new instance arriving with neither file
-    // should not fail this test, it should appear in `check:subgraph-coverage`.
+  it("the AGENT half is asked about too, and no instance is mute any more", () => {
+    // Measured 2026-09-20 when the criterion was added: ten of eleven
+    // instances declared `instance-readme` and TWO declared
+    // `agent-instructions`. Eight were readable by a person and mute to an
+    // agent — including `folio-assistant-core`, which HAD an AGENTS.md on disk
+    // and did not declare it (a finding, not an exemption: an undeclared file
+    // is one no checker has a reason to look at — the `v8gh` property).
+    //
+    // All eight were written and declared. Asserted as EMPTY rather than
+    // deleted, for the same reason as the README list above: a list that went
+    // to zero and a check that stopped looking are indistinguishable once the
+    // assertion is gone, and this is the fix's only durable witness.
     const repo = resolve(import.meta.dir, "..", "..", "..");
-    const audited = auditAll(repo);
-    const mute = audited.filter((r) => r.agentInstructions !== undefined).map((r) => r.instance);
-
-    // The three that own one: the repository root, the harness layer, and
-    // cat-bootstrap — whose AGENTS.md is the one a cold agent reads before any
-    // harness exists at all.
-    for (const owns of ["folio-assistant", "cat-harness", "cat-bootstrap"]) {
-      expect(mute).not.toContain(owns);
-    }
-    // folio-assistant-core HAS an AGENTS.md on disk and does not declare it.
-    // That is a finding, not an exemption: an undeclared file is one no
-    // checker has a reason to look at — the `v8gh` property.
-    expect(mute).toContain("folio-assistant-core");
+    const mute = auditAll(repo).filter((r) => r.agentInstructions !== undefined).map((r) => r.instance);
+    expect(mute.sort()).toEqual([]);
   });
 });

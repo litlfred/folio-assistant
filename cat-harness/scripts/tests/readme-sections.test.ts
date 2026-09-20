@@ -280,16 +280,49 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
     expect(out.markdown).not.toContain("./cat-harness/memory/");
   });
 
+  // The gap behaviour is tested against a FIXTURE rather than the real tree.
+  // It used to assert on `who-style-guide`, which had no agent entry when this
+  // was written and has one now — so the test was measuring the repository's
+  // state rather than the renderer's behaviour, and closing the gap broke it.
+  // A property worth keeping must not depend on the corpus still being wrong.
+  function repoWith(instances: Record<string, unknown>): string {
+    const root = mkdtempSync(join(tmpdir(), "instances-"));
+    writeFileSync(join(root, "harness.json"), JSON.stringify({ name: "root" }));
+    for (const [name, decl] of Object.entries(instances)) {
+      mkdirSync(join(root, name), { recursive: true });
+      writeFileSync(join(root, name, "harness.json"), JSON.stringify(decl));
+    }
+    return root;
+  }
+
   it("an instance with no agent entry gets an em dash, never a guessed path", () => {
-    const row = out.markdown.split("\n").find((l) => l.startsWith("| `who-style-guide`"))!;
+    const root = repoWith({
+      mute: { name: "mute", assets: [{ id: "r", src: "README.md", role: "instance-readme" }] },
+    });
+    const r = section.render({ root, cfg: loadReadmeConfig(root), fetch: false });
+    const row = r.markdown.split("\n").find((l) => l.startsWith("| `mute`"))!;
     expect(row).toContain("| — |");
-    expect(row).not.toContain("who-style-guide/AGENTS.md");
+    expect(row).not.toContain("mute/AGENTS.md");
+    rmSync(root, { recursive: true, force: true });
   });
 
   it("states the gap as a count AND says which check names them", () => {
     // A count in prose is a claim; this one has to carry where the list is.
-    expect(out.markdown).toMatch(/\*\*\d+ of \d+\*\* declare no `agent-instructions`/);
-    expect(out.markdown).toContain("check:subgraph-coverage");
+    const root = repoWith({
+      mute: { name: "mute", assets: [{ id: "r", src: "README.md", role: "instance-readme" }] },
+    });
+    const r = section.render({ root, cfg: loadReadmeConfig(root), fetch: false });
+    expect(r.markdown).toMatch(/\*\*\d+ of \d+\*\* declare no `agent-instructions`/);
+    expect(r.markdown).toContain("check:subgraph-coverage");
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("every instance in THIS repository now carries both entries", () => {
+    // The state the fixtures above deliberately do not depend on: eight
+    // instances were mute when this section was written, and none is now.
+    const rows = out.markdown.split("\n").filter((l) => l.startsWith("| `"));
+    for (const row of rows) expect(row).toContain("AGENTS.md");
+    expect(out.markdown).not.toContain("declare no `agent-instructions`");
   });
 
   it("carries each role's purpose from the one place it is declared", () => {
