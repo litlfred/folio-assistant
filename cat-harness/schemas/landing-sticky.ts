@@ -83,9 +83,12 @@ import { z } from "zod";
 import { CarriedNoteSchema } from "./carried-note.js";
 import { PageAnchorSchema } from "./note-anchor.js";
 import {
+  InitiationSchema,
   StickyLinkSchema,
+  StickyTextSchema,
   isExternalLink,
   type DeclaredContribution,
+  type Initiation,
   type StickyLink,
 } from "./sticky-contribution.js";
 
@@ -162,6 +165,31 @@ export const LandingStickySchema = CarriedNoteSchema.extend({
    * whose `contributedBy` is `bootstrap`, and therefore no cat.
    */
   contributedBy: z.string().min(1),
+  /**
+   * The crop this sticky takes, when it chooses rather than being derived.
+   *
+   * Absent means *derive it from the content*, which is what the generator does.
+   * The owner asked for one sticky to be landscape after the derivation picked
+   * `card` for it, so the derivation is a starting point and this is the
+   * override.
+   */
+  shape: z.enum(["laptop", "mobile", "card"]).optional(),
+  /**
+   * Where and how big this sticky's words are.
+   *
+   * Absent means *the art's declared cloud region for each layout, at normal
+   * size* — the default the owner asked for. See `StickyTextSchema` for why
+   * this reverses the earlier "nothing reads textRegion" decision.
+   */
+  text: StickyTextSchema.optional(),
+  /**
+   * What this harness's initiation reported — the sticky as a RECEIPT.
+   *
+   * Written by the minting tool rather than declared: a layer says what its
+   * card SAYS, and initiation says how it WENT. Absent means no initiation has
+   * reported, which is not the same as `ok` and must never render as it.
+   */
+  initiation: InitiationSchema.optional(),
 });
 export type LandingSticky = z.infer<typeof LandingStickySchema>;
 
@@ -217,6 +245,8 @@ export interface StickyBuildContext {
   createdAt: string;
   /** Defaults to {@link LANDING_STICKY_PAGE}. */
   page?: string;
+  /** Carried onto the node when initiation has reported. See {@link Initiation}. */
+  initiation?: Initiation;
 }
 
 /**
@@ -247,8 +277,11 @@ export function stickyFromContribution(
   // yet, and initiation failing is worse than a thin card. `name` is required by
   // the declaration schema, so the chain always terminates in something.
   const declaredBody = c.body ?? description;
-  const body =
+  const base =
     declaredBody !== undefined && declaredBody.trim().length > 0 ? declaredBody : declaredBy;
+  // Appended AFTER the fallback chain, so a card that reads its instance's
+  // description verbatim can still add to it without copying the words.
+  const body = c.bodyAppend === undefined ? base : `${base}\n\n${c.bodyAppend}`;
   const firstLine = body.split("\n").find((l) => l.trim().length > 0)?.trim();
   return LandingStickySchema.parse({
     $schema: LANDING_STICKY_SCHEMA_TAG,
@@ -265,6 +298,16 @@ export function stickyFromContribution(
     // link to itself wants it read before the platform's onboarding four.
     links: [...c.links, ...(c.onboardingLinks ? DEFAULT_ONBOARDING_LINKS : [])],
     contributedBy: declaredBy,
+    // Carried only when declared. Writing `shape: undefined` into the node would
+    // make every existing sticky file differ by a key, which `--check` reports
+    // as stale and an author reads as a change they did not make.
+    ...(c.shape === undefined ? {} : { shape: c.shape }),
+    ...(c.text === undefined ? {} : { text: c.text }),
+    // Preserved across a rebuild rather than reset. The builder runs on every
+    // initiation and on every `--check`; dropping the status would make a
+    // finished harness read as "never reported" the next time anything touched
+    // the board.
+    ...(ctx.initiation === undefined ? {} : { initiation: ctx.initiation }),
   });
 }
 
