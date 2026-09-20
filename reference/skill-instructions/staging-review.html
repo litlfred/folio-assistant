@@ -276,6 +276,15 @@
 <meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 
 <!--
+  The bean index — the AGENT work plan, published by the same generator beside
+  the todo index above, for the same reason and read the same way. Separate
+  files rather than one combined document because the two stores are separate
+  graphs with separate declarations, and a consumer that wants only the human
+  half should not fetch 239 beans to get three todos.
+-->
+<meta name="fa-beans-src" content="/folio-assistant/assets/beans/index.json">
+
+<!--
   The discarded-items document — `fsh-guts.jsonld`, published at the base by
   `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
   then some: it carries every node's BODY, which is 64 KB against a 5 KB
@@ -294,6 +303,13 @@
 -->
 <meta name="fa-fsh-guts-src" content="/folio-assistant/fsh-guts.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
+
+<!--
+  The work-plan dashboard's styles, split from docs-ui.css so that
+  `state-visualizer.ts` can inline exactly these bytes into the generated
+  `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
+-->
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
@@ -322,6 +338,14 @@
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/assets/js/docs-ui.js" defer></script>
+
+<!--
+  The work-plan dashboard. SELF-MOUNTING on any page carrying
+  `[data-fa-workplan]`, so docs-ui.js neither calls it nor knows it exists; a
+  page without that container pays one failed querySelector. The same file is
+  inlined verbatim into the generated state-visualiser pages.
+-->
+<script src="/folio-assistant/assets/js/work-plan.js" defer></script>
 
 <!--
   The landing panel — the instance's declared description drawn inside the
@@ -1048,7 +1072,7 @@ so a failed fetch is not evidence either way.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35536577515"><code>f168de2</code></a> &middot; 2026-09-20T20:46:35Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35536789327"><code>c424e02</code></a> &middot; 2026-09-20T20:50:58Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

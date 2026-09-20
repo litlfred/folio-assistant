@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T20:47:14.109Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f168de2eb70e296ae66dc66155f4b9e93026f34a",
-  "sourceCommitSha": "f168de2eb70e296ae66dc66155f4b9e93026f34a",
-  "sourceCommitAt": "2026-09-20T22:45:45+02:00",
+  "generatedAt": "2026-09-20T20:51:33.375Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c424e027ef99efa23494b385d357a67308380c48",
+  "sourceCommitSha": "c424e027ef99efa23494b385d357a67308380c48",
+  "sourceCommitAt": "2026-09-20T22:49:51+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 216,
@@ -1801,12 +1801,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "harness-requirements",
       "title": "Harness requirements — what an instance owes for what it declares",
-      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, and why the discriminator is \"is this the static knowledge graph\".",
+      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/harness-requirements.md",
-      "instructionLines": 178,
+      "instructionLines": 253,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -31250,8 +31250,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f168de2eb70e296ae66dc66155f4b9e93026f34a",
+    "sha": "c424e027ef99efa23494b385d357a67308380c48",
     "pr": "main",
-    "run": "35536577515"
+    "run": "35536789327"
   }
 }

@@ -276,6 +276,15 @@
 <meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 
 <!--
+  The bean index — the AGENT work plan, published by the same generator beside
+  the todo index above, for the same reason and read the same way. Separate
+  files rather than one combined document because the two stores are separate
+  graphs with separate declarations, and a consumer that wants only the human
+  half should not fetch 239 beans to get three todos.
+-->
+<meta name="fa-beans-src" content="/folio-assistant/assets/beans/index.json">
+
+<!--
   The discarded-items document — `fsh-guts.jsonld`, published at the base by
   `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
   then some: it carries every node's BODY, which is 64 KB against a 5 KB
@@ -294,6 +303,13 @@
 -->
 <meta name="fa-fsh-guts-src" content="/folio-assistant/fsh-guts.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
+
+<!--
+  The work-plan dashboard's styles, split from docs-ui.css so that
+  `state-visualizer.ts` can inline exactly these bytes into the generated
+  `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
+-->
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
@@ -322,6 +338,14 @@
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/assets/js/docs-ui.js" defer></script>
+
+<!--
+  The work-plan dashboard. SELF-MOUNTING on any page carrying
+  `[data-fa-workplan]`, so docs-ui.js neither calls it nor knows it exists; a
+  page without that container pays one failed querySelector. The same file is
+  inlined verbatim into the generated state-visualiser pages.
+-->
+<script src="/folio-assistant/assets/js/work-plan.js" defer></script>
 
 <!--
   The landing panel — the instance's declared description drawn inside the
@@ -629,10 +653,10 @@ an agent is handed something that governs it.</p>
 
 <p>The axis that measures them is <code class="language-plaintext highlighter-rouge">bun run check:subgraph-coverage</code>. This skill is
 how to read it and what to do before adding to it.</p>
-<h2 id="the-four-obligations">
+<h2 id="the-five-obligations">
   
   
-    <a href="#the-four-obligations" class="anchor-heading" aria-labelledby="the-four-obligations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four obligations
+    <a href="#the-five-obligations" class="anchor-heading" aria-labelledby="the-five-obligations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The five obligations
   
   
 </h2>
@@ -663,6 +687,11 @@ how to read it and what to do before adding to it.</p>
       <td>is an agent handed something that GOVERNS this?</td>
     </tr>
     <tr>
+      <td><strong>serialisations</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">coverage.serialisations</code></td>
+      <td>is each node ADDRESSABLE as json, jsonld and schema.json?</td>
+    </tr>
+    <tr>
       <td><strong>README</strong></td>
       <td>an <code class="language-plaintext highlighter-rouge">instance-readme</code> asset, inside the instance</td>
       <td>can a reader ENTER this instance at all?</td>
@@ -670,7 +699,7 @@ how to read it and what to do before adding to it.</p>
   </tbody>
 </table></div>
 
-<p>The first three are per declared directory. The fourth is per instance, and it
+<p>The first four are per declared directory. The fifth is per instance, and it
 is ranked harder: an instance with no starting README of its own is not a gap
 somebody has not filled, it is an instance a reader cannot enter.</p>
 <h2 id="an-unmet-obligation-is-not-an-unanswered-question">
@@ -820,6 +849,114 @@ namespace under which the docs-kind assets of another subgraph are rendered:
 questions, and a visualiser’s declaration answers the first. Do not compose the
 second by hand — that is what produced four incompatible URL shapes across four
 open branches on 2026-09-20.</p>
+<h2 id="serialisations--the-obligation-that-cannot-be-waived">
+  
+  
+    <a href="#serialisations--the-obligation-that-cannot-be-waived" class="anchor-heading" aria-labelledby="serialisations--the-obligation-that-cannot-be-waived"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Serialisations — the obligation that cannot be waived
+  
+  
+</h2>
+    
+
+<p>The owner, 2026-09-20, in two rulings that belong together:</p>
+
+<blockquote>
+  <p>all dir urls should have json, jsonld, schema.json like
+<code class="language-plaintext highlighter-rouge">&lt;base-url&gt;/beans.jsonld</code></p>
+</blockquote>
+
+<blockquote>
+  <p>also subpaths must remain addressable… like <code class="language-plaintext highlighter-rouge">&lt;base-url&gt;/beans/bean-id.jsonld</code>,
+json and schema etc if there, harnesses cannot override there being in the KG</p>
+</blockquote>
+
+<p>So a declared directory owes <strong>two levels</strong> of addressability, and they are
+different promises:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>level</th>
+      <th>URL</th>
+      <th>what it asserts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>the directory</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/beans.json</code>, <code class="language-plaintext highlighter-rouge">.jsonld</code>, <code class="language-plaintext highlighter-rouge">.schema.json</code></td>
+      <td>this graph exists and here is its shape</td>
+    </tr>
+    <tr>
+      <td>every node in it</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/beans/&lt;node-id&gt;.json</code>, <code class="language-plaintext highlighter-rouge">.jsonld</code>, <code class="language-plaintext highlighter-rouge">.schema.json</code></td>
+      <td>each node is individually in the graph</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>“if there” is doing real work in that sentence.</strong> A node that carries no
+schema does not acquire one by being published; the rule is that whatever the
+node HAS is reachable, not that a missing form is invented. A <code class="language-plaintext highlighter-rouge">.schema.json</code>
+that 404s where no schema exists is honest. A <code class="language-plaintext highlighter-rouge">.jsonld</code> that 404s where the
+node exists is the defect.</p>
+<h3 id="why-this-one-takes-no-exempt">
+  
+  
+    <a href="#why-this-one-takes-no-exempt" class="anchor-heading" aria-labelledby="why-this-one-takes-no-exempt"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this one takes no <code class="language-plaintext highlighter-rouge">exempt</code>
+  
+  
+</h3>
+    
+
+<p>Every other obligation here is waivable with a reason, because rendering,
+documenting and governing are choices about <strong>effort</strong> and a considered
+exception is worth recording. This one is not waivable, and the wording of the
+ruling says why: <em>harnesses cannot override there being in the KG.</em></p>
+
+<p>Addressability is not effort, it is the <strong>existence claim</strong>. A harness that
+could waive it could declare a directory into the knowledge graph and then make
+its contents unreachable — which is the <code class="language-plaintext highlighter-rouge">dh4f</code> defect with a signature on it, a
+consumer scanning nothing and reporting a clean run over it.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">hfkl</code> is the proof rather than the exception.</strong> <code class="language-plaintext highlighter-rouge">cat-bootstrap</code> is excused a
+visualiser — <em>“it is exception to harness/layer not having visualtion/workflow
+visualizer. but it must have its json/jsonld… that is its existence.”</em> The
+thing it is excused INTO is this obligation. A floor that the one exempt case
+is exempt <em>to</em> cannot itself be exempt from.</p>
+
+<p>So: <strong>the visualiser is the courtesy, the serialisation is the existence
+claim.</strong> <code class="language-plaintext highlighter-rouge">SubgraphCoverageSchema.exempt</code> carries three keys and not four, and
+<code class="language-plaintext highlighter-rouge">tsc</code> enforces it — adding <code class="language-plaintext highlighter-rouge">serialisations</code> to <code class="language-plaintext highlighter-rouge">CRITERIA</code> turned the checker’s
+waiver lookup into a type error rather than a silent <code class="language-plaintext highlighter-rouge">undefined</code> that would
+have read as “not exempted” and worked by luck.</p>
+<h3 id="how-it-fits-the-render-pipeline">
+  
+  
+    <a href="#how-it-fits-the-render-pipeline" class="anchor-heading" aria-labelledby="how-it-fits-the-render-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it fits the render pipeline
+  
+  
+</h3>
+    
+
+<p>The pipeline the sibling branches are converging on is four parts per graph —
+<strong>reader → projection → viewer → gate</strong> (PR #583 for <code class="language-plaintext highlighter-rouge">schemas/</code> and <code class="language-plaintext highlighter-rouge">library/</code>,
+this branch for the state graphs). The serialisation obligation is a
+constraint on the <strong>projection</strong>, not a fifth part:</p>
+
+<ul>
+  <li>a projection already exists for every browsable graph, and it is already
+published under the graph’s own segment;</li>
+  <li>what this adds is that it must be reachable by the three content types at
+the directory’s URL, and per node beneath it;</li>
+  <li>so a graph that has done the pipeline work has mostly done this, and a graph
+that has not cannot claim to be in the KG at all.</li>
+</ul>
+
+<p><strong>Do not compose these URLs by hand.</strong> <code class="language-plaintext highlighter-rouge">o7eq</code> records that hand-composition
+produced four incompatible URL shapes across four open branches on a single
+day. The directory’s declaration answers which directory holds the nodes; the
+published-URL resolver answers where they are served.</p>
 <h2 id="before-you-declare-a-directory">
   
   
@@ -833,6 +970,8 @@ open branches on 2026-09-20.</p>
   <li><strong>Say what renders it, documents it and governs it</strong>, or say why it needs
 none — <code class="language-plaintext highlighter-rouge">coverage.exempt.&lt;criterion&gt;</code> takes a reason, and a waiver with no
 reason is a silence list.</li>
+  <li><strong>Say what serialises it</strong>, and do not look for a waiver: there is none.
+A directory whose nodes are not addressable has not entered the graph.</li>
   <li><strong>Declare only what exists.</strong> A declared-but-absent directory is the <code class="language-plaintext highlighter-rouge">dh4f</code>
 defect: a consumer scans nothing and reports a clean run over it.</li>
   <li><strong>Check the kind’s layer.</strong> If it is not <code class="language-plaintext highlighter-rouge">content</code>, you are promising a
@@ -898,7 +1037,10 @@ and every graph kind</li>
 what <code class="language-plaintext highlighter-rouge">holds</code> means, and the one question that settles a kind</li>
   <li><a href="/folio-assistant/reference/skill-instructions/kg-viewer.html"><code class="language-plaintext highlighter-rouge">kg-viewer</code></a> — the viewer this repository already ships</li>
   <li><code class="language-plaintext highlighter-rouge">bun run check:subgraph-coverage</code> — the axis; <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>
-<code class="language-plaintext highlighter-rouge">owesVisualiser()</code> — the obligation</li>
+<code class="language-plaintext highlighter-rouge">owesVisualiser()</code> — the visualiser obligation, and
+<code class="language-plaintext highlighter-rouge">SubgraphCoverageSchema.serialisations</code> — the one that takes no waiver</li>
+  <li><a href="../../../beans/defs/"><code class="language-plaintext highlighter-rouge">url-space</code></a> — bean <code class="language-plaintext highlighter-rouge">o7eq</code> for where a rendered
+asset is addressed, and why not to compose that URL by hand</li>
 </ul>
 
           
@@ -914,7 +1056,7 @@ what <code class="language-plaintext highlighter-rouge">holds</code> means, and 
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35536577515"><code>f168de2</code></a> &middot; 2026-09-20T20:46:35Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35536789327"><code>c424e02</code></a> &middot; 2026-09-20T20:50:58Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
