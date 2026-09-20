@@ -342,6 +342,22 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:scope",
+      "@type": "rdf:Property",
+      "label": "scope",
+      "comment": "Which root a declared path resolves against — the instance's or the repository's.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:dependents",
+      "@type": "rdf:Property",
+      "label": "dependents",
+      "comment": "Whether an instance depending on this one materialises its own copy of a declared directory. Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:movedOn",
       "@type": "rdf:Property",
       "label": "movedOn",

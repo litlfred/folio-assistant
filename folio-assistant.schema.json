@@ -258,12 +258,20 @@
               "description": {
                 "type": "string",
                 "minLength": 1
+              },
+              "dependents": {
+                "type": "string",
+                "enum": [
+                  "reproduce",
+                  "skip"
+                ]
               }
             },
             "required": [
               "id",
               "path",
-              "graphs"
+              "graphs",
+              "dependents"
             ],
             "additionalProperties": false
           },
@@ -417,8 +425,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "40e41ee2ec35f459aff90619570d25f6edbd37e8",
+    "sha": "e5a8983b3b551ef279eb9dc61e33c7ef69085c97",
     "pr": "main",
-    "run": "35515640118"
+    "run": "35515895242"
   }
 }
