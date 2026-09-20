@@ -236,15 +236,24 @@ function projectionFor(id: string): string | null {
  * narrow one the declaration can actually answer — `coverage.visualiser` —
  * and the three outcomes are kept apart rather than reduced to a boolean.
  *
+ * Takes its roots as an argument so the four outcomes can be exercised
+ * against fixtures. `unresolved` fires on nothing in this corpus, so without
+ * that it would be a branch no test could reach — and a branch no test can
+ * reach is a branch that is wrong the first time it matters.
+ *
  * @param id     the declared entry's id, which is also its page's URL segment
  * @param cov    `coverage.visualiser` as declared, or undefined
+ * @param roots  the published site and the repo root; defaults to this
+ *               instance's, which is what the generator itself passes
  * @returns the state this graph is in once `projectionFor` has said `null`,
  *          with the declared path and an href where one is publishable
  */
-function declaredVisualiserFor(
+export function declaredVisualiserFor(
   id: string,
   cov: string | undefined,
+  roots: { site: string; repoRoot: string } = { site: SITE, repoRoot: REPO_ROOT },
 ): Pick<StateGraph, "state" | "declaredVisualiser" | "href"> {
+  const { site: SITE, repoRoot: REPO_ROOT } = roots;
   if (!cov) return { state: "declared" };
   // REPO-root relative — see `REPO_ROOT`. This is the line that would silently
   // report all 27 as missing if it used `ROOT`.
@@ -519,6 +528,16 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
   });
 }
 
+if (import.meta.main) main();
+
+/**
+ * Generate every dashboard, or check them.
+ *
+ * Behind `import.meta.main` — the house pattern here, and 97 of 135 scripts
+ * already use it — so that a test can import the pure resolver above without
+ * this writing into the real site directory as a side effect of the import.
+ */
+function main(): void {
 const decl = readDeclaration(ROOT);
 if (!decl) {
   // "Could not determine", and this generator does not get to decide it means
@@ -552,4 +571,5 @@ if (check) {
 } else {
   console.log(`\nWrote ${wrote} dashboard(s) under ${relative(ROOT, SITE)}/`);
   if (taken.length > 0) process.exit(1);
+}
 }
