@@ -5,6 +5,7 @@ description: >
   model level, against which decomposition. Read BEFORE dispatching more than
   one background agent — a swarm spends the author's tokens and the decision
   is theirs.
+consulted: true
 ---
 
 # Swarm management

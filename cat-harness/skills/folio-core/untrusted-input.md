@@ -5,6 +5,7 @@ description: >
   command lines, in anything that is parsed before it runs. Read before
   interpolating any value into a script, and before giving a Tool a
   command-line input.
+consulted: true
 ---
 
 # Untrusted input — the value must never become program text

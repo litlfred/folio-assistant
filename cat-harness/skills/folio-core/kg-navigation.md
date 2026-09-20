@@ -6,6 +6,7 @@ description: >
   fallback — what counts as a skill, and the three ways the search goes wrong.
 adapters: [document, paper, dak]
 profiles: [document, paper]
+consulted: true
 ---
 
 # Reading the knowledge graph — how to find the skill you need

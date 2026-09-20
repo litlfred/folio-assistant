@@ -4,6 +4,7 @@ description: >
   Every user interface this project produces must be operable by keyboard,
   legible at measured contrast, and comfortable to hit. How to build to that,
   how to check it, and why an automated pass is not the standard.
+consulted: true
 ---
 
 # All UI must follow accessibility guidelines
