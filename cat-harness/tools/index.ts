@@ -214,7 +214,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // `hashlib` ship with Python. Stated, so "needs nothing" is
       // distinguishable from an unfinished record.
       install: { none: true },
-      invoke: { shell: "bun run scripts/ingest-document.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/ingest-document.ts" },
       requires: { runtime: ["python3"], network: false },
       io: {
         inputs: [
@@ -247,7 +247,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // own checker caught. `requirements.txt` is generated from the
       // declaration; the apt packages are not pip-installable and stay named.
       install: { cli: "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils" },
-      invoke: { shell: "bun run scripts/ingest-document.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/ingest-document.ts" },
       requires: { runtime: ["python3", "pymupdf", "tesseract"], network: false },
       io: {
         inputs: [
@@ -582,7 +582,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
       install: { none: true },
-      invoke: { shell: "scripts/lean-build-all.sh" },
+      invoke: { shell: "cat-harness/scripts/lean-build-all.sh" },
       io: {
         inputs: [
           { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "Build one paper instead of all of them." },
@@ -619,7 +619,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
       install: { none: true },
-      invoke: { shell: "scripts/lake-cache.sh" },
+      invoke: { shell: "cat-harness/scripts/lake-cache.sh" },
       io: {
         inputs: [
           { name: "action", schema: t("LakeCacheAction"), required: true, arg: { positional: 0 }, description: "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked." },
@@ -640,7 +640,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // It IS the install step, so `install.cli` names itself: an agent that needs
       // Lean runs this, and `install.none` would say no step exists.
       install: { cli: "scripts/setup-lean-toolchain.sh" },
-      invoke: { shell: "scripts/setup-lean-toolchain.sh" },
+      invoke: { shell: "cat-harness/scripts/setup-lean-toolchain.sh" },
       io: {
         inputs: [],
         outputs: [{ name: "toolchain", schema: t("Text"), description: "The linked toolchain name, and the per-repo override that selects it." }],
@@ -870,7 +870,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-schema-docs.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-schema-docs.ts" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
@@ -887,7 +887,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-skill-docs.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-skill-docs.ts" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
@@ -949,7 +949,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-jsonld-context.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-jsonld-context.ts" },
       io: {
         inputs: [
           // `--check` is the CI arm: it compares against the committed copy and
