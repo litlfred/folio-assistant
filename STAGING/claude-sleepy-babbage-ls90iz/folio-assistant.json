@@ -251,25 +251,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T08:09:51.946Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/485fe13bcd744fa3f29fa590eff3201f92c501d0",
-  "sourceCommitSha": "485fe13bcd744fa3f29fa590eff3201f92c501d0",
-  "sourceCommitAt": "2026-09-20T08:08:12Z",
+  "generatedAt": "2026-09-20T08:48:21.748Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/78778293e1357b7b210b62d34ded43dfa982aa08",
+  "sourceCommitSha": "78778293e1357b7b210b62d34ded43dfa982aa08",
+  "sourceCommitAt": "2026-09-20T08:44:39Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 170,
+    "Skill": 174,
     "Actor": 27,
     "Capability": 24,
-    "Role": 109,
+    "Role": 111,
     "Convention": 2,
     "SkillPackage": 7,
-    "Process": 37,
-    "SequenceFlow": 510,
-    "ProcessNode": 474,
+    "Process": 39,
+    "SequenceFlow": 530,
+    "ProcessNode": 494,
     "Tool": 31,
-    "Schema": 59,
+    "Schema": 61,
     "GraphKind": 16,
-    "Directory": 13
+    "Directory": 14
   },
   "@graph": [
     {
@@ -930,6 +930,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/integration-watch"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-acquisition",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "content-acquisition",
+      "title": "Acquisition is the step before ingestion, and it had no home",
+      "description": "Getting a resource INTO the graph in the first place — accepting one offered unprompted, or asking for one and then asking for it to be uploaded. The channels are plural and open: `uploads/` is one, the conversation is another. Runs before document ingestion, which begins only once a file has landed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/content-acquisition.md",
+      "instructionLines": 105,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-acquisition"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/skills-and-tools",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "skills-and-tools",
@@ -986,7 +1002,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/crdm-requirements-workflow.md",
-      "instructionLines": 269,
+      "instructionLines": 293,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1069,6 +1085,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/theme-ui-review",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "theme-ui-review",
+      "title": "Post-MVP, because there is nothing to check before there is a render",
+      "description": "Review what the MVP actually renders — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: there is no role-to-theme mapping to check at build time, so what gets reviewed is the result. Measures rather than asserts, and raises findings rather than fixing them.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/theme-ui-review.md",
+      "instructionLines": 91,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-ui-review"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/devils-advocate-watcher",
@@ -1262,6 +1294,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/uploads-watch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "uploads-watch",
+      "title": "Watching the queue",
+      "description": "Notice what has landed in the acquisition queue, and tell an arrival from a backlog. Reports; it never deletes, and never ingests on its own say-so.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/uploads-watch.md",
+      "instructionLines": 61,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/uploads-watch"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/kg-navigation",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "kg-navigation",
@@ -1351,7 +1399,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 315,
+      "instructionLines": 321,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1891,6 +1939,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/symbiotic-interaction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/decision-comparison",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "decision-comparison",
+      "title": "The comparison goes BEFORE the question, not inside the options",
+      "description": "Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option labels. Required whenever a choice is handed to a person.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/decision-comparison.md",
+      "instructionLines": 117,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-comparison"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/block-density",
@@ -4083,6 +4147,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/code-node-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/compute-integration-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-acquisition",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-graph",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/continual-progress",
@@ -4090,6 +4155,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/decision-comparison",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/deployment-auth",
@@ -4152,12 +4218,14 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/test-engineer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/untrusted-input",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/uploads-watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/uses-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/voice-authoring-guidance",
@@ -8356,8 +8424,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver"
       ],
-      "nodeCount": 13,
-      "flowCount": 15,
+      "nodeCount": 14,
+      "flowCount": 16,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver"
     },
     {
@@ -8483,8 +8551,16 @@
       "name": "accepted",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/GW_StakeholderOK",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver",
@@ -8732,6 +8808,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/BA_TranslateFeedback"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Post-MVP theme + UI review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/theme-ui-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Phase complete",
@@ -8743,7 +8840,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver"
@@ -9332,8 +9429,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/Start_Process_CRDM_Requirements"
       ],
-      "nodeCount": 7,
-      "flowCount": 7,
+      "nodeCount": 8,
+      "flowCount": 8,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Requirements"
     },
     {
@@ -9357,8 +9454,16 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/A_DefineReqs",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/BA_ReviewReqs",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/BA_ReviewReqs",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_4",
@@ -9456,6 +9561,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/A_DefineReqs"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Phase 4a: Compare the viable options",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/decision-comparison"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3b"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/node/BA_ReviewReqs",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Review requirements and impact analysis",
@@ -9469,7 +9595,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_4"
@@ -11364,6 +11490,278 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BeanLifecycle/node/End_Recorded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Content acquisition",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/content-acquisition.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/Start_Acquire"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/Start_Acquire",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/GW_Offered",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/GW_Offered",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Ask",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Ask",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/P_Respond",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/P_Respond",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_PointToUpload",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_PointToUpload",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/P_Upload",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/P_Upload",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Accept",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/GW_Offered",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Accept",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Accept",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Route",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Route",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/End_Acquired",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Contributor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Contributor",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Contributor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/Start_Acquire",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A resource is needed, or one is offered",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/Start_Acquire"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/GW_Offered",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Offered already?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_7"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/GW_Offered"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Ask",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Say what is needed, and ask for a link OR a description",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-acquisition"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Ask"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/P_Respond",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Give a link, a description, or neither",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Contributor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_4"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/P_Respond"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_PointToUpload",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Point at the upload target [scripts/upload-url.ts]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-acquisition"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_PointToUpload"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/P_Upload",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Drop the file in the queue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Contributor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_6"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/P_Upload"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Accept",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Accept it, and record where it came from",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/content-acquisition"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_6",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_8"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Accept"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Route",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Route it, and watch the queue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/uploads-watch",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_9"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/A_Route"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/node/End_Acquired",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "In the queue, or recorded in the conversation",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ContentAcquisition/flow/SF_CA_9"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentAcquisition/node/End_Acquired"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_Translation",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Translation Workflow",
@@ -11833,6 +12231,279 @@
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Translation/node/End_Stale"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Post-MVP theme and UI review",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/theme-ui-review.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/Start_TUR"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/Start_TUR",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Inventory",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Inventory",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Accessibility",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Accessibility",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Branding",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Branding",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Locales",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Locales",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/R_Judge",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/R_Judge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/GW_Findings",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/GW_Findings",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_RaiseFindings",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_RaiseFindings",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/End_TUR",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "none",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/GW_Findings",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/End_TUR",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Reviewer",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/Start_TUR",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "MVP accepted",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/Start_TUR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Inventory",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Inventory what actually renders",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/theme-ui-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_2"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Inventory"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Accessibility",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Accessibility: measure, do not assert",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/theme-ui-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Accessibility"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Branding",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Branding: does it read as this instance?",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/theme-ui-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_4"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Branding"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Locales",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Languages: extracted, rendered, and RTL",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/theme-ui-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_Locales"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/R_Judge",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Judge the rendered result",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Reviewer",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_6"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/R_Judge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/GW_Findings",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Findings?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_9"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/GW_Findings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_RaiseFindings",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Raise findings against the authoring",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#skill/theme-ui-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_8"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/A_RaiseFindings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/node/End_TUR",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Reviewed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_9"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/End_TUR"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#process/Process_RenderLog",
@@ -21119,6 +21790,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kind-validator"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#schema/landing-sticky",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "landing-sticky",
+      "title": "The landing page, as a sticky note.",
+      "module": "schemas/landing-sticky.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/landing-sticky"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#schema/lean-packages",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "lean-packages",
@@ -21253,6 +21932,14 @@
       "title": "What makes a dataset findable — bean `p67i`.",
       "module": "schemas/tabular-records.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tabular-records"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#schema/test-preload",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "test-preload",
+      "title": "Register core's graph kinds before any test reads a declaration.",
+      "module": "schemas/test-preload.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/test-preload"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#schema/test-run",
@@ -22413,12 +23100,23 @@
       ],
       "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse — committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness-src"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#directory/folio",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio",
+      "path": "folio/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/folio"
+      ],
+      "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/folio"
     }
   ],
   "staging": {
     "branch": "claude/sleepy-babbage-ls90iz",
-    "sha": "fce45b7b719d0570cc10bb8f3bb3741c0343b6e1",
+    "sha": "f60b78446a5e4ca95739d46002a9ab7ceb5f4d36",
     "pr": "473/merge",
-    "run": "35498736130"
+    "run": "35500402187"
   }
 }
