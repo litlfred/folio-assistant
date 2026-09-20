@@ -24,8 +24,8 @@ import { loadProcessModel } from "../../src/workflow/process-model.js";
 import { classify, scanRepo } from "../scan-repo-content.js";
 import { derivePagesUrl, outcomeFor, parseRemote, type PagesOutcome } from "../pages-bootstrap.js";
 
-const REPO_ROOT = resolve(import.meta.dir, "..", "..");
-const WORKFLOWS = join(REPO_ROOT, "skills", "workflows");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
+const WORKFLOWS = join(INSTANCE_ROOT, "skills", "workflows");
 
 describe("folio-intent.dmn — five requests, one sentence", () => {
   const load = () =>
@@ -136,7 +136,7 @@ describe("scan-repo-content — the third bucket", () => {
   });
 
   test("scanning this repo writes nothing and leaves source code unclassified", () => {
-    const r = scanRepo(REPO_ROOT);
+    const r = scanRepo(INSTANCE_ROOT);
     expect(r.source).toBe("git");
     expect(r.entries.length).toBeGreaterThan(0);
     // Source code is not the author's subject matter, and a scanner that
@@ -167,7 +167,7 @@ describe("pages-bootstrap — deriving the address", () => {
   });
 
   test("this repo's own address is derived from the remote", () => {
-    const r = derivePagesUrl(REPO_ROOT);
+    const r = derivePagesUrl(INSTANCE_ROOT);
     expect(r.url).toBe("https://litlfred.github.io/folio-assistant/");
     expect(r.urlSource).toBe("git remote");
   });

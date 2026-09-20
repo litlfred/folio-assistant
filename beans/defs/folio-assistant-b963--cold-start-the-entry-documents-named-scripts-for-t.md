@@ -7,7 +7,7 @@ priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T21:00:00Z
+updated_at: 2026-09-20T21:55:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -218,11 +218,12 @@ the path was therefore fine. An exemption suppresses the check, not the defect.
 
 **Running total: nine, plus thirteen, plus 127, plus nine, plus two.**
 
-- [ ] A reader for paths inside TEST FIXTURES that silently re-root on a move.
-      `resolve(import.meta.dir, "../..")` is the shape; what makes it hard is
-      that the correct depth is a fact about where the test file sits, so the
-      check has to compare the resolved directory against what the fixture then
-      assumes of it rather than against a literal.
+- [x] The fourth class was ATTEMPTED and the direct check is **not decidable**
+      by the means available. Three designs measured and falsified — see below.
+      `check:anchor-names` ships the decidable neighbour instead.
+- [ ] A reader that catches a re-rooted ascent itself, by comparing it against
+      what the fixture then DOES with the value. Deferred with evidence, not
+      with a shrug.
 
 _2026-09-20T21:00Z_ — **The check had the defect it exists for, in its own
 corpus.** `sourceFiles` listed `cat-harness/{scripts,src,content,schemas}`. A
@@ -238,3 +239,74 @@ new instance is picked up without anyone editing this file.
 Noticed because the `stage` job went red on a stale base: the merge that fixed
 it is what brought the instance in. Worth recording that the finding came from
 handling an unrelated failure rather than from looking for it.
+
+_2026-09-20T21:55Z_ — **The fourth class: three designs measured, all
+falsified, and the decidable neighbour shipped.**
+
+| signal | findings | why it failed |
+|---|---|---|
+| refuse hand-rolled ascents | 301 sites | most ARE this repository's idiom (`resolve(import.meta.dir, "..")` for an instance root); unimplementable |
+| lands on a directory that does not exist | 8 | 7 were ordinary WRITE targets — temp dirs, generated output, a junit report |
+| the ascent's depth is wrong | — | **there is no literal to check.** `"../.."` is always valid and the right depth is a fact about where the file sits |
+
+**What made the real case wrong was none of those.** `PLATFORM` →
+`cat-harness/` is defensible. It was what the fixture then DID with the value:
+symlinked it as `folio-assistant` and expected `schemas/` directly beneath.
+That is a semantic relation between an ascent and its downstream use, and every
+signal that tried to infer intent produced false positives.
+
+## What shipped: `check:anchor-names`
+
+> `REPO_ROOT`/`REPO`/`repoRoot` must land on the repository root.
+> `INSTANCE_ROOT`/`instanceRoot` must land on a directory with its own
+> `harness.json`. `PLATFORM`/`platformRoot` name neither and are refused.
+
+Definitional rather than a guess, so it has no false positives. **19 findings,
+all fixed** — 13 names that lied (`REPO_ROOT` → `cat-harness/`) and 6
+ambiguous, 122 identifier occurrences renamed across 19 files.
+
+**The measurement that justifies refusing `PLATFORM`:** within
+`cat-harness/scripts/tests/` alone, `init-folio.test.ts` used it for the
+repository root while **five siblings used it for `cat-harness/`**. One name,
+two anchors, one directory — which is the confusion the original defect lived
+inside.
+
+**It does not catch the fourth class and says so** — in the module header, in
+the report footer, and in a test that asserts a truthfully-named re-rooted
+ascent passes clean, so a later session cannot read a green run as coverage it
+does not have.
+
+**Found while building it:** the check reported three findings against its own
+test file, whose fixtures embed sample ascents as strings. A check that cannot
+tell code from a quoted example of code is reported to by every test that
+exercises it. Fixed, with a test.
+
+_2026-09-20T22:00Z_ — **A fifth shape, found by my own rename turning a gate
+red.** Renaming `REPO_ROOT` in `translation-block-qa.ts` staled a sidecar; the
+failure message read:
+
+```
+1 sidecar(s) stale — run: bun run content/pipeline/translation-block-qa.ts
+```
+
+From the repository root, where a reader stands, that does not resolve. **The
+instruction telling somebody how to fix the failure named a path that does not
+exist** — this bean's subject again, in a shape none of the three readers can
+see: the source is `bun run ${SELF}`, so the **verb and the path are separated
+by an interpolation** and no single line carries both.
+
+`SELF` was doing double duty — the reviewer id written into every sidecar AND
+the re-run message. Those are different facts, and changing the constant would
+have rewritten `reviewer.id` across the corpus. So `SELF` stays as the id and
+`RERUN_COMMAND` names the **package script**, which cannot rot when the file
+moves — the same remedy `docs:harness` got in `sync-docs-harness.ts`.
+
+**And the owner's verdict exempts it.** `content/` is in `FOLIO_OWNED`, so even
+a reader that DID see this would count rather than fail it. That is the stated
+cost of "count `content/`", arriving in a real case rather than in the
+abstract. Not re-litigated here; recorded so the trade-off has evidence.
+
+- [ ] A reader for the interpolated shape — a runner verb whose path arrives
+      through a variable. Needs the constant's value at the use site, so it is
+      light static analysis rather than a line scan.
+
