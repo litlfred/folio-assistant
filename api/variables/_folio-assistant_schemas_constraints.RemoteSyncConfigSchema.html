@@ -21,6 +21,12 @@ at all; and the directory's only substantive reader,
 <code>scripts/generate-docs.ts</code>, reads it for the Docker requirements this type's
 own doc comment names. So <code>frequency</code> and <code>autoUpdate</code> are fields no code
 consults.</p>
+<p><strong>Stronger since 2026-09-20</strong>: that &quot;only substantive reader&quot; was itself
+never invoked — no package.json entry and no workflow, in any commit since
+the root commit — and is retired to <code>fsh-guts/scripts/</code> (bean
+<code>folio-assistant-3w0i</code>). The directory now has no substantive reader at
+all, which does not change the conclusion below; it removes the last
+reason to soften it.</p>
 <p>It is documented rather than deleted because the intent is real information
 about two real external dependencies — a maintainer chose <code>shallow-clone</code> over
 <code>subtree</code> — and losing that costs the next reader the same decision. What was
@@ -36,7 +42,7 @@ resolution (bean <code>nup0</code>); that allowance should come back, and
 closing it so it is revisited rather than rediscovered.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/845de5687186a2474758dc70e213ecf2d23d5070/cat-harness/schemas/skill-package.ts#L316">skill-package.ts:316</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4ac89c19e1cf3b1f4f0bcc9f695f54d7972a5d6c/cat-harness/schemas/skill-package.ts#L323">skill-package.ts:323</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

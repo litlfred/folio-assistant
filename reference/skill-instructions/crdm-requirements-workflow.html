@@ -1000,12 +1000,15 @@ URL pair in a Markdown table. See <code class="language-plaintext highlighter-ro
 uses the staging preview URLs</li>
   <li><strong>Ask user for explicit confirmation before merging to main</strong></li>
   <li><strong>Update documentation</strong> — content/docs/ pages, workflow BPMNs</li>
-  <li><strong>Staging cleanup</strong> — staging previews are retained by default. While the
-PR is open, the user adds the <code class="language-plaintext highlighter-rouge">staging:cleanup</code> label; <strong>once it is closed
-the label can no longer reach it</strong>, and removal is a <code class="language-plaintext highlighter-rouge">feature-staging.yml</code>
-dispatch the user runs with <code class="language-plaintext highlighter-rouge">cleanup_slug</code> and a matching <code class="language-plaintext highlighter-rouge">cleanup_confirm</code>
-(see <a href="/folio-assistant/reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a>). <strong>Never remove a staging
-preview any other way, and never on your own initiative.</strong></li>
+  <li><strong>Staging cleanup</strong> — <strong>a merged PR’s preview goes away on its own</strong>
+(owner, 2026-09-20): the merge is the confirmation, since the main site
+now shows the same thing. Everything else is retained by default. While a
+PR that will not be merged is open, the user adds the <code class="language-plaintext highlighter-rouge">staging:cleanup</code>
+label; <strong>once it is closed the label can no longer reach it</strong>, and removal
+is a <code class="language-plaintext highlighter-rouge">feature-staging.yml</code> dispatch the user runs with <code class="language-plaintext highlighter-rouge">cleanup_slug</code> and a
+matching <code class="language-plaintext highlighter-rouge">cleanup_confirm</code> (see <a href="/folio-assistant/reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a>).
+<strong>Never remove a staging preview any other way, and never on your own
+initiative.</strong></li>
 </ol>
 
 <p>When a round of implementation is complete (one or more beans resolved):</p>
@@ -1057,7 +1060,7 @@ explicitly says to. An agent must never assume completion.</li>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35494530668"><code>845de56</code></a> &middot; 2026-09-20T06:34:05Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35496160881"><code>4ac89c1</code></a> &middot; 2026-09-20T07:11:22Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

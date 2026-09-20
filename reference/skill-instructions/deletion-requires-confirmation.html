@@ -714,8 +714,8 @@ tell it was removed on purpose?</strong></p>
     </tr>
     <tr>
       <td>a <strong>staging preview</strong> (<code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> on the publish branch)</td>
-      <td>it is the artefact a human assesses a rendered change from</td>
-      <td>while the PR is open, the <code class="language-plaintext highlighter-rouge">staging:cleanup</code> label, applied by a person; once it is closed, a <code class="language-plaintext highlighter-rouge">feature-staging.yml</code> dispatch with <code class="language-plaintext highlighter-rouge">cleanup_slug</code> + a matching <code class="language-plaintext highlighter-rouge">cleanup_confirm</code> — the label cannot reach a closed PR (bean <code class="language-plaintext highlighter-rouge">w2g5</code>)</td>
+      <td>it is the artefact a human assesses a rendered change from — <strong>unless the PR merged</strong>, when the main site now shows the same thing</td>
+      <td><strong>merged → removed automatically; the merge IS the confirmation</strong> (owner, 2026-09-20). Otherwise: while the PR is open, the <code class="language-plaintext highlighter-rouge">staging:cleanup</code> label applied by a person; once closed unmerged, a <code class="language-plaintext highlighter-rouge">feature-staging.yml</code> dispatch with <code class="language-plaintext highlighter-rouge">cleanup_slug</code> + a matching <code class="language-plaintext highlighter-rouge">cleanup_confirm</code>, since the label cannot reach a closed PR (bean <code class="language-plaintext highlighter-rouge">w2g5</code>)</td>
     </tr>
     <tr>
       <td>a <strong>published page</strong> on the site</td>
@@ -830,11 +830,24 @@ their parent commit carried.</p>
 <p>Four things about it are worth carrying forward:</p>
 
 <ol>
-  <li><strong>Nobody decided it.</strong> There was no deletion step, no flag saying “remove
+  <li>
+    <p><strong>Nobody decided it.</strong> There was no deletion step, no flag saying “remove
 previews”, no line anyone wrote with that intent. The <em>shape</em> of the
 workflow deleted them. A deletion nobody decided is still a deletion that
 requires confirmation — and since there is nobody to ask at push time, the
-answer is that the workflow must not be shaped that way.</li>
+answer is that the workflow must not be shaped that way.</p>
+
+    <blockquote>
+      <p><strong>The policy changed on 2026-09-20 and this example is untouched by it.</strong>
+A <strong>merged</strong> PR’s preview is now removed without a label, because the
+merge is a person’s decision that the content belongs on <code class="language-plaintext highlighter-rouge">main</code> — a
+stronger confirmation than a label. <code class="language-plaintext highlighter-rouge">plj1</code> deleted the previews of
+<strong>open</strong> PRs: work nobody had accepted, mid-review. Nothing in the new
+policy reaches an open PR, and the one-directory-at-a-time shape this
+bean forced on the job is unchanged. The lesson stands exactly as
+written.</p>
+    </blockquote>
+  </li>
   <li><strong>It overrode a written policy that said the opposite.</strong>
 <code class="language-plaintext highlighter-rouge">feature-staging.yml</code> removes a preview on PR close <strong>only</strong> with a
 <code class="language-plaintext highlighter-rouge">staging:cleanup</code> label, and otherwise posts <em>“Staging preview retained …
@@ -941,7 +954,7 @@ nothing.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35494530668"><code>845de56</code></a> &middot; 2026-09-20T06:34:05Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35496160881"><code>4ac89c1</code></a> &middot; 2026-09-20T07:11:22Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
