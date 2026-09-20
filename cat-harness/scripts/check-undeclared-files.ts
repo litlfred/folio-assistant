@@ -186,6 +186,41 @@ export function accountedRootPaths(repoRoot: string): Map<string, string> {
     }
   }
 
+  // THE ROOT MAY ITSELF BE AN INSTANCE, and since 2026-09-20 it is.
+  //
+  // Owner: *"only uploads/ on this repo's root b/c acting as if it was
+  // intialized"*. A `harness.json` at the repository root declares the checkout
+  // as an initialized instance, so the directories IT names sit at the root
+  // legitimately — `uploads/` is the worked example, and it is a DIFFERENT
+  // queue from `cat-harness/uploads/`: same id, different instance, not one
+  // directory declared twice.
+  //
+  // This sweep was written when the root was deliberately not an instance, and
+  // said so; that premise changed and the sweep reported 19.4 MB of correctly
+  // declared content as unaccounted. A sweep whose model of the repository has
+  // gone stale reports exactly like one finding a real defect, which is why
+  // this reads the declaration rather than gaining two `ROOT_INFRASTRUCTURE`
+  // entries — the entries would still be there after the next instance is
+  // declared, and would account for anything sharing those names.
+  //
+  // `rootForScope` is deliberately NOT used here. For the root instance both
+  // scopes land at the root, and `repoRootFor` would resolve a
+  // repository-scoped entry to the checkout's PARENT — outside the repository
+  // entirely. A root instance declaring repository scope is a contradiction in
+  // terms; it is not special-cased because nothing should write one.
+  if (existsSync(join(repoRoot, "harness.json"))) {
+    out.set("harness.json", "the repository's own declaration: it acts as an initialized instance");
+    const rootDecl = readDeclaration(repoRoot);
+    for (const dir of rootDecl?.directories ?? []) {
+      const top = dir.path.replace(/^\.\//, "").split("/")[0];
+      // Same `!out.has` guard and the same reason: being an instance is the
+      // stronger fact, and the root claiming a name does not unmake one.
+      if (top && !out.has(top)) {
+        out.set(top, `declared by ${rootDecl?.name ?? "the repository"} as "${dir.id}"`);
+      }
+    }
+  }
+
   for (const name of instances) {
     const abs = join(repoRoot, name);
     const decl = readDeclaration(abs);

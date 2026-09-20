@@ -74,6 +74,71 @@ describe("a repository-scoped declared directory is accounted for", () => {
   });
 });
 
+describe("the ROOT may itself be an instance", () => {
+  /** `repo()` plus a root `harness.json` declaring one directory of its own. */
+  function repoWithRootInstance(): string {
+    const root = repo();
+    writeFileSync(
+      join(root, "harness.json"),
+      JSON.stringify(
+        { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", graphs: ["uploads"] }] },
+        null,
+        2,
+      ),
+    );
+    mkdirSync(join(root, "uploads"), { recursive: true });
+    writeFileSync(join(root, "uploads", "dropped.pdf"), "x");
+    return root;
+  }
+
+  test("its declared directory is accounted for, and the reason names the declaration", () => {
+    // Owner, 2026-09-20: "only uploads/ on this repo's root b/c acting as if it
+    // was intialized". This sweep was written when the root was deliberately
+    // NOT an instance and reported 19.4 MB of correctly declared content as
+    // unaccounted the moment that changed.
+    const root = repoWithRootInstance();
+    expect(undeclaredAtRoot(root).map((e) => e.path)).not.toContain("uploads");
+    expect(accountedRootPaths(root).get("uploads")).toContain("the-repo");
+  });
+
+  test("the root's own harness.json is accounted for", () => {
+    expect(accountedRootPaths(repoWithRootInstance()).get("harness.json")).toContain("own declaration");
+  });
+
+  test("a root instance does NOT account for what it does not declare", () => {
+    // The falsifier. Without this, "read the root declaration" is
+    // indistinguishable from "stop reporting root directories".
+    const root = repoWithRootInstance();
+    mkdirSync(join(root, "undeclared-thing"), { recursive: true });
+    writeFileSync(join(root, "undeclared-thing", "x.txt"), "x");
+    expect(undeclaredAtRoot(root).map((e) => e.path)).toContain("undeclared-thing");
+  });
+
+  test("with NO root harness.json the same directory is still a finding", () => {
+    // The other falsifier: it must be the DECLARATION doing the work, not the
+    // name `uploads` being special.
+    const root = repo();
+    mkdirSync(join(root, "uploads"), { recursive: true });
+    writeFileSync(join(root, "uploads", "dropped.pdf"), "x");
+    expect(undeclaredAtRoot(root).map((e) => e.path)).toContain("uploads");
+  });
+
+  test("being an instance still outranks a root declaration naming the same directory", () => {
+    // Same ordering argument as the two-pass fix: an instance is accounted for
+    // BY ITSELF, and another declaration claiming its name does not unmake it.
+    const root = repo();
+    writeFileSync(
+      join(root, "harness.json"),
+      JSON.stringify(
+        { name: "the-repo", directories: [{ id: "x", path: "an-instance/", graphs: ["uploads"] }] },
+        null,
+        2,
+      ),
+    );
+    expect(accountedRootPaths(root).get("an-instance")).toContain("declares itself");
+  });
+});
+
 describe("the check can fire — which is the whole point", () => {
   test("a stray file at the root IS reported", () => {
     const root = repo();
