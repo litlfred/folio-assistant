@@ -1,13 +1,11 @@
 ---
 # folio-assistant-y8as
 title: simulators/ is qou's content sitting in the platform, and qou reaches into the submodule to find it
-status: in-progress
+status: completed
 type: task
 priority: normal
-tags:
-    - ready-to-close
 created_at: 2026-09-19T15:03:52Z
-updated_at: 2026-09-20T18:45:00Z
+updated_at: 2026-09-20T20:00:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -166,3 +164,14 @@ the bean is explicit about and does not claim — *"NOT VERIFIED, and stated on
 the PR rather than implied away"*. Its tooling is in a submodule this clone does
 not carry. Also noted there and not fixed: editing the 11 manifests stales their
 `*.qa.json` sidecars by hash, left for the QA sweep to regenerate.
+
+---
+
+_2026-09-20T20:00Z_ — **CLOSED on the owner's confirmation of the `ready-to-close`
+batch, 2026-09-20.** The evidence above is what was confirmed against; nothing
+new was measured at closing time, and this note says so rather than implying a
+re-derivation that did not happen.
+
+The `ready-to-close` tag is spent and removed: `check:ready-to-close` reports a
+tag on a closed bean as one to take off, so leaving it would make the queue
+report a defect on its own success.

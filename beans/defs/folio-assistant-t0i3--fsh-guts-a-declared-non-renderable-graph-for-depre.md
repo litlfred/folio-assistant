@@ -1,13 +1,11 @@
 ---
 # folio-assistant-t0i3
 title: 'FSH-GUTS: a declared non-renderable graph for deprecated and throwaway content'
-status: in-progress
+status: completed
 type: feature
 priority: high
-tags:
-    - ready-to-close
 created_at: 2026-09-19T10:48:00Z
-updated_at: 2026-09-20T18:45:00Z
+updated_at: 2026-09-20T20:00:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -173,3 +171,14 @@ The same note flags one unreproduced flake (*"the first `bun run gates`
 reported `bun test` failing; standalone `bun test` then passed 3014/0 and two
 later gate runs passed"*) — recorded so the owner sees it before confirming,
 not presented as resolved.
+
+---
+
+_2026-09-20T20:00Z_ — **CLOSED on the owner's confirmation of the `ready-to-close`
+batch, 2026-09-20.** The evidence above is what was confirmed against; nothing
+new was measured at closing time, and this note says so rather than implying a
+re-derivation that did not happen.
+
+The `ready-to-close` tag is spent and removed: `check:ready-to-close` reports a
+tag on a closed bean as one to take off, so leaving it would make the queue
+report a defect on its own success.

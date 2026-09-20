@@ -1,13 +1,13 @@
 ---
 # folio-assistant-bbbl
 title: 'TWO RULES COLLIDE on a finished sibling bean: 0pes closes on evidence, bean-coordination never resolves a sibling'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T19:00:00Z
+updated_at: 2026-09-20T20:00:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -50,3 +50,13 @@ the rule stalling.
 
 - [x] One sentence in bean-coordination says who closes an evidence-complete bean that another session opened, and what the closer must quote
 - [ ] The four beans above are closed by whoever that sentence names
+
+_2026-09-20T20:00Z_ — **Done-when 2 discharged; this bean is closed.** The owner
+confirmed the `ready-to-close` batch, and `7uff`, `t0i3`, `y8as` and `d1r6` are
+`completed`, each citing the evidence already in its body. `ready-to-close` was
+removed from all four: `check:ready-to-close` reports a tag on a closed bean as
+one to take off, so leaving it would have made the queue report a defect on its
+own success.
+
+- [x] One sentence in bean-coordination says who closes an evidence-complete bean that another session opened, and what the closer must quote
+- [x] The four beans above are closed by whoever that sentence names

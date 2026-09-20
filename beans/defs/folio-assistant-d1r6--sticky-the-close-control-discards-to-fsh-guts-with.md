@@ -1,13 +1,11 @@
 ---
 # folio-assistant-d1r6
 title: 'STICKY: the close control discards to fsh-guts, with a crumpled-sticky icon'
-status: in-progress
+status: completed
 type: task
 priority: normal
-tags:
-    - ready-to-close
 created_at: 2026-09-19T11:08:23Z
-updated_at: 2026-09-20T18:45:00Z
+updated_at: 2026-09-20T20:00:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -139,3 +137,14 @@ a vacuous test is evidence about the work's quality, not just its completion.
 **What this session could NOT re-derive**: the Playwright specs were not run
 here, and the restore path (Settings → Discarded) was not exercised against a
 running viewer.
+
+---
+
+_2026-09-20T20:00Z_ — **CLOSED on the owner's confirmation of the `ready-to-close`
+batch, 2026-09-20.** The evidence above is what was confirmed against; nothing
+new was measured at closing time, and this note says so rather than implying a
+re-derivation that did not happen.
+
+The `ready-to-close` tag is spent and removed: `check:ready-to-close` reports a
+tag on a closed bean as one to take off, so leaving it would make the queue
+report a defect on its own success.

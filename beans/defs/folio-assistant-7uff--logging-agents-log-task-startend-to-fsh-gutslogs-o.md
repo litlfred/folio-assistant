@@ -1,13 +1,11 @@
 ---
 # folio-assistant-7uff
 title: 'LOGGING: agents log task start/end to fsh-guts/logs/, off by default, as a mechanical role'
-status: in-progress
+status: completed
 type: feature
 priority: high
-tags:
-    - ready-to-close
 created_at: 2026-09-19T11:23:31Z
-updated_at: 2026-09-20T18:45:00Z
+updated_at: 2026-09-20T20:00:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -291,3 +289,14 @@ question the bean raises at the end — nothing outside `workflow_start` /
 `workflow_complete` calls the producer — is explicitly *"a real design
 question, not an oversight"*, and belongs in its own bean rather than holding
 this one open.
+
+---
+
+_2026-09-20T20:00Z_ — **CLOSED on the owner's confirmation of the `ready-to-close`
+batch, 2026-09-20.** The evidence above is what was confirmed against; nothing
+new was measured at closing time, and this note says so rather than implying a
+re-derivation that did not happen.
+
+The `ready-to-close` tag is spent and removed: `check:ready-to-close` reports a
+tag on a closed bean as one to take off, so leaving it would make the queue
+report a defect on its own success.
