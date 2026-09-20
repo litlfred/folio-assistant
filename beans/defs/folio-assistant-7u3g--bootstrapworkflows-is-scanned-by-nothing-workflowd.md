@@ -1,10 +1,11 @@
 ---
 # folio-assistant-7u3g
 title: bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows
-status: todo
+status: scrapped
 type: task
+priority: normal
 created_at: 2026-09-20T14:47:57Z
-updated_at: 2026-09-20T14:47:57Z
+updated_at: 2026-09-20T15:32:27Z
 parent: folio-assistant-zzmr
 ---
 
@@ -88,3 +89,68 @@ picking the cheaper one.**
 
 The other 98 unbound skills. Those are the `y1w9` triage proper; these three
 are a tooling blind spot wearing the same costume.
+
+---
+
+## SCRAPPED 2026-09-20 — this bean is wrong, and the corpus already said so
+
+**There is no blind spot.** The audit does not read a nested instance's graph
+**by design**, and `instance-graph-isolation.test.ts` enforces it against a
+leak that was live on `main` on 2026-09-19: `findBpmnDirs` walked the tree, so
+`_kg/folio-assistant.jsonld` carried **88** references to
+`Process_InitializeHarness`. Bootstrap's process was published as part of
+folio-assistant's graph.
+
+### I implemented the fix this bean proposed, and it re-introduced that leak
+
+Declared `bootstrap/workflows/` at the root with `scope: "repository"`, built
+a `check:nested-declarations` guard, fixed a real `..`-escape in
+`kgQaSidecarPath`, updated CI and the partition, and regenerated. All of it
+verified as working: `workflowFiles` 49 → 53, all four bootstrap skills bound,
+`workflow_list` loading three processes with their activities.
+
+Then `bun run gates` failed on *"a second instance in the tree stays out of
+the first's graph"* — which is the invariant, doing its job. **Everything
+above is reverted.**
+
+### The correction was already written, and it describes me
+
+`kg-qa.ts`, criterion `nested-instance-audited`, authored earlier the same
+day:
+
+> *"On 2026-09-20 a session read 'named by no activity' as absolute, concluded
+> the audit had a blind spot, declared the nested directory at the root and
+> re-introduced the leak the test exists to prevent."*
+
+A sibling made this mistake hours before me. Their fix — bean `sa8y` — scoped
+the finding's wording and added `nested-instance-audited` so the unread
+corpus is a reported number rather than something to deduce.
+
+**And the scoping worked; I ignored it.** The finding I quoted in full says:
+*"In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap`
+at `bootstrap/skills/` …) — a nested instance may name it, and this audit
+does not read one."* I pasted that sentence into my own notes and still wrote
+a bean asserting a blind spot. The defect was not the wording; it was that I
+treated a disclaimer as boilerplate.
+
+### What was actually true, and where it went
+
+- **`workflow_list` cannot start bootstrap's diagrams from cat-harness's
+  root** — correct, and correct BEHAVIOUR: bootstrap is its own instance and
+  the engine run against `bootstrap/` sees all three. Not a defect.
+- **`kgQaSidecarPath` normalises a `..` straight out of the results tree** —
+  a real latent bug, and reverted with the rest because nothing can reach it
+  while the isolation invariant holds. It becomes live the day a subject
+  legitimately sits outside an instance, and is recorded here rather than
+  fixed in the dark.
+- **`every-workflow-in-the-repo.md` names `bootstrap/workflows/bootstrap.bpmn`,
+  which does not exist** (the file is `initialize-harness.bpmn`). A genuine
+  dangling reference, unrelated to any of the above. Carried to bean `rl3h`,
+  where the other 46 live.
+
+### For whoever reads this next
+
+If `skill-in-role-or-process` names a skill you believe is bound, **read the
+finding's scope clause before concluding anything.** It tells you which
+directories were read and that a nested instance was not. Three sessions have
+now walked at this; two got as far as editing `harness.json`.
