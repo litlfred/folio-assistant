@@ -359,6 +359,14 @@ export function corpus(repo: string): { file: string; corpus: Corpus }[] {
   // check whose whole subject is a path that moved. A topical split of the
   // knowledge graph is exactly the relocation this check would then have
   // stopped seeing.
+  // `.claude/skills/` is not a declared kg directory — it is the HOST agent's
+  // skill directory, which this repository fills with trigger stubs. Named
+  // explicitly for that reason, and checked because a stub's whole job is to
+  // point at the canonical skill: a stub with a dead link is worse than no
+  // stub, since it reads as a working pointer.
+  for (const f of existsSync(join(repo, ".claude/skills")) ? walkMarkdown(join(repo, ".claude/skills")) : []) {
+    out.push({ file: f.slice(repo.length + 1), corpus: "skill" });
+  }
   for (const graph of ["cat-harness", "methodology"]) {
     for (const dir of directoriesForGraph(INSTANCE_ROOT, graph)) {
       if (!existsSync(dir)) continue;
