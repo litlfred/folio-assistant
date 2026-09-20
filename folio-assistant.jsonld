@@ -256,25 +256,25 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T20:05:53.239Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bea07a8d077e831c77fb503ebf0c18a4ecafc741",
-  "sourceCommitSha": "bea07a8d077e831c77fb503ebf0c18a4ecafc741",
-  "sourceCommitAt": "2026-09-20T22:04:32+02:00",
+  "generatedAt": "2026-09-20T20:13:29.961Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a86e1fa21329b4ec144517d1f912530b835846a5",
+  "sourceCommitSha": "a86e1fa21329b4ec144517d1f912530b835846a5",
+  "sourceCommitAt": "2026-09-20T22:11:45+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 209,
+    "Skill": 216,
     "Actor": 27,
     "Capability": 28,
     "Role": 124,
     "Convention": 2,
-    "SkillPackage": 17,
+    "SkillPackage": 18,
     "Process": 53,
     "SequenceFlow": 687,
     "ProcessNode": 652,
     "Tool": 67,
     "Schema": 79,
     "GraphKind": 22,
-    "Directory": 31,
+    "Directory": 32,
     "Asset": 3
   },
   "@graph": [
@@ -842,6 +842,38 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-artefacts",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-artefacts",
+      "title": "Per-artefact specialisation",
+      "description": "The per-surface SPECIALISATION layer — sticky, landing board, docs background, navbar avatar. Only what DIFFERS lives here; the general rule lives in its stage. Read this last, after the stage that owns your question.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-artefacts.md",
+      "instructionLines": 101,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theming",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theming",
+      "title": "Theming, split on the stage it fails at",
+      "description": "The map of this subgraph: theming is split on PIPELINE STAGE first — intake, declaration, generation, contrast — with producer/consumer as the direction each stage faces, and per-artefact specialisation last. Read this to find which stage owns the fact you need; read the stage for the fact.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theming.md",
+      "instructionLines": 100,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "site-presentation-assets",
@@ -874,6 +906,38 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-generation",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-generation",
+      "title": "Generating a theme's CSS",
+      "description": "Turning a declared theme into CSS — `bun run themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of \"still not image\" had that one cause.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-generation.md",
+      "instructionLines": 75,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-declaration",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-declaration",
+      "title": "Declaring a theme",
+      "description": "What a theme IS as data — the palette, the three required layouts, and the per-image regions (`textRegion`, `avatarRegion`). The PRODUCER stage: this is where a number is written down, and the rule is that geometry over art is declared rather than derived, because no amount of arithmetic on an aspect ratio can see where a picture is quiet.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-declaration.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "theme-art-intake",
@@ -884,6 +948,22 @@
       ],
       "instructionsPath": "skills/theming/theme-art-intake.md",
       "instructionLines": 176,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-contrast",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-contrast",
+      "title": "Contrast: measured over the darkest thing that could be there",
+      "description": "Why every scrim is measured over PURE BLACK rather than over the art actually in use, what the AAA floor is, and why the high-contrast pair declares no backdrop at all. The CONSUMER stage that says what the ink must survive.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-contrast.md",
+      "instructionLines": 75,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2277,7 +2357,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
-      "instructionLines": 194,
+      "instructionLines": 221,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3493,6 +3573,38 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/cat-bootstrap-graph-emission",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "cat-bootstrap-graph-emission",
+      "title": "Emitting cat-bootstrap's own graph",
+      "description": "How cat-bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that emission is the one obligation the layer cannot trade away. cat-bootstrap is exempt from the visualiser requirement every layer above it carries; what it owes instead is this document — in the owner's words, its `.json`/`.jsonld` *\"is its existence\"*. A layer that cannot emit its own graph has not shown it is a graph.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap-render"
+      ],
+      "instructionsPath": "../cat-bootstrap/render/cat-bootstrap-graph-emission.md",
+      "instructionLines": 89,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap-render"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/cat-bootstrap-graph-publication",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "cat-bootstrap-graph-publication",
+      "title": "Publishing cat-bootstrap's graph",
+      "description": "Where cat-bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more. The failure this skill exists to stop is `blv9` — a self-describing artefact whose own `@id` dereferenced to nothing, for months, while the generator worked perfectly.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap-render"
+      ],
+      "instructionsPath": "../cat-bootstrap/render/cat-bootstrap-graph-publication.md",
+      "instructionLines": 103,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap-render"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/raci",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "raci",
@@ -4572,6 +4684,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap-render",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "cat-bootstrap-render",
+      "path": "../cat-bootstrap/render",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap-render"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/raci",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "raci",
@@ -4774,13 +4894,18 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "theming",
       "version": "0.1.0",
-      "description": "How a theme is made, declared, generated and checked for contrast. Split out of folio-core, where three theming skills sat among 107 and were found by knowing they existed rather than by looking.",
+      "description": "Theming, split on PIPELINE STAGE first (intake -> declaration -> generation -> contrast), with producer/consumer as the direction each stage faces and per-artefact specialisation last. The owner chose that axis on 2026-09-20 — \"1 + 2, then specialized to 3\" — and the ordering matters more than the names: going artefact-first would duplicate intake and contrast into every surface, which is the shape that put the scrim rule in one skill's prose and let it be rediscovered rather than read. TWO SESSIONS BUILT THIS PACKAGE INDEPENDENTLY and the merge kept both halves: this LOCATION and the relocation of `create-sticky-note`, `site-presentation-assets` and `theme-art-intake` out of folio-core came from one; the stage split, the `theme:sheet` visualiser and the documentation entry came from the other, which had put them in a top-level `cat-harness/theming/`. The location here won on evidence rather than on arriving first — bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so a top-level topical directory silently drops its skills out of skill QA, and `theme-art-intake` would have lost the sidecar it has here. Beans `1hvo`, `lps0`.",
       "path": "skills/theming",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theming",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-declaration",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-generation",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-contrast",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-artefacts",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -30495,6 +30620,15 @@
       "description": "The cat-bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `cat-bootstrap/skills/`, NOT `cat-bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `cat-bootstrap/README.md` and `cat-bootstrap/AGENTS.md` declare neither, and they are the cat-bootstrap instance's two DECLARED ASSETS — so a graph rooted at `cat-bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `cat-bootstrap/harness.json`; this entry is the same fact at the root, and it is stated twice BY DECISION (2026-09-20) rather than by necessity. THE EARLIER NOTE HERE WAS WRONG and the correction is the useful part: it said \"this instance depends on cat-bootstrap\" is not expressible because `HarnessConfigDependenciesSchema` knows only `folioAssistant`. That key does not mean the folio-assistant PACKAGE — its own doc comment reads \"Other folio-assistant instances this folio depends on\", and cat-bootstrap is such an instance by every test the code applies. MEASURED, not argued: writing `cat-harness/harness.config.json` with `{name: \"cat-bootstrap\", path: \"../cat-bootstrap\", provides: [\"skills\"]}` serves cat-bootstrap through `LOCAL_PACKAGES` with `folio-assistant` unmoved. The zod schema needs no change at all. WHAT ACTUALLY BLOCKS IT is one directory entry, and it is not in the dependency schema: cat-bootstrap declares `workflows/` with no `scope`, so cat-harness INHERITS it, and `materialiseDirectories` resolves an inherited path against the INHERITING instance by design — it wants `cat-harness/workflows/`, which does not exist, and `harness:dirs:check` reports `21 declared, 1 missing` and exits 1. The gap it exposes is general and this entry is only where it surfaced: a `ContentDirectory` cannot say whether it is a LAYOUT dependents should reproduce (`uploads/`, `library/`, `voices/`) or merely WHERE ITS OWN CONTENT LIVES (`workflows/`, `schemas/`, `tools/`). Simulated on a fresh folio depending on this instance, `init-folio` would create five directories it has no use for, each with a committed keep-marker — the `dh4f` shape, shipped downstream. Adding that distinction was considered and DECLINED for now: it is a schema change whose per-directory classification is a judgement about every directory here, not a cat-bootstrap workaround. So THIS entry stays, and the thing to fix before deleting it is the convention/content distinction — not the dependency schema. The earlier note here said `resolveSkillDirs` had no caller: it has one — `discoverLocalPackages` — and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap-render",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
+      "name": "cat-bootstrap-render",
+      "path": "cat-bootstrap/render/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
       "name": "cat-harness",
@@ -30822,8 +30956,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "bea07a8d077e831c77fb503ebf0c18a4ecafc741",
+    "sha": "a86e1fa21329b4ec144517d1f912530b835846a5",
     "pr": "main",
-    "run": "35534362002"
+    "run": "35534756688"
   }
 }

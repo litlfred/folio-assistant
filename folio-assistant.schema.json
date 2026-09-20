@@ -77,6 +77,38 @@
                 ],
                 "additionalProperties": false
               },
+              "avatarRegion": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "w",
+                  "h"
+                ],
+                "additionalProperties": false
+              },
               "title": {
                 "type": "string",
                 "minLength": 1
@@ -489,6 +521,36 @@
             ],
             "additionalProperties": false
           }
+        },
+        "renderExemption": {
+          "type": "object",
+          "properties": {
+            "of": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "visualiser",
+                  "workflow-visualiser"
+                ]
+              },
+              "minItems": 1
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owes": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "of",
+            "reason",
+            "owes"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -504,8 +566,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "bea07a8d077e831c77fb503ebf0c18a4ecafc741",
+    "sha": "a86e1fa21329b4ec144517d1f912530b835846a5",
     "pr": "main",
-    "run": "35534362002"
+    "run": "35534756688"
   }
 }
