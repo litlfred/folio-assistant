@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T18:21:04Z
-updated_at: 2026-09-20T18:29:15Z
+updated_at: 2026-09-20T19:21:31Z
 parent: folio-assistant-yj32
 ---
 
@@ -307,3 +307,82 @@ instance root and `artefactStub` already names the instance, so both halves of
 | browsable viewer over the projection | C | follows the projection |
 | per-type UML as a VIEW in that viewer | D-in-C | last |
 | schemas into `library/`, both directions | — | blocked on `slw1`, see above |
+
+
+---
+
+## DELIVERED — 2026-09-20, PR #583
+
+All three of `2krx`'s requirements, for `schemas/`:
+
+| requirement | what landed |
+|---|---|
+| **visualiser** | `scripts/schema-graph.ts` (reader) + `scripts/gen-schema-viz.ts` (projection + viewer). Faceted index, detail panel, per-type UML neighbourhood. |
+| **documentation entry** | `docs/subgraph-viewers.md`, covering both this and `library/`. |
+| **governing skill** | `skills/folio-core/schema-management.md`, registered in `folio-core`. |
+
+And option A separately, as the owner asked: TypeDoc reads the schemas
+DIRECTORY rather than a list of eight literals — **8 → 95** module pages, 0
+errors, and a file added to `schemas/` now publishes its reference with no
+second edit.
+
+### Measured on the merged tree
+
+| | |
+|---|---|
+| declared `schemas` directories read | **4** (`schemas/`, `folio-assistant-core/`, `large-datasets/`, `detangle/`) |
+| modules | 108 |
+| declarations | 799 |
+| edges | 505 |
+| undetermined | 6 |
+| unresolved (distinct names) | 6 |
+| projection | 880 KB raw, ~87 KB gzipped |
+
+### Three defects found by measuring rather than by reading the code
+
+1. **`.extend()` classified `undetermined`** — 31 of 713 declarations, nearly
+   all `BaseSchema.extend({…})`, which is THE inheritance relation of this
+   corpus. The walker was discarding the generalisation arrow a class diagram
+   exists to draw. Now 6, all genuinely non-Zod object literals.
+2. **`z` was the graph's most-referenced "missing declaration"**, 175 times.
+   Fixed without a deny-list — a name is a candidate reference only if the
+   module BINDS it, and `z` is bound to `zod`, a non-relative import.
+   Distinct unresolved names 150 → 6.
+3. **The singular `directoryForGraph` call threw on merged main**, because
+   four instances declare the graph. The `wggr` guard was right and the reader
+   was wrong; the fix is never to pick one.
+
+### The gate defect, which is the part worth carrying forward
+
+`schema:viz:check` went red on CI while passing locally. The entire difference
+in 895 KB was two integers: main added 36 lines to `cat-harness.ts` and shifted
+two declarations.
+
+**A line number is an editor coordinate, not a property of a declaration.** A
+red meaning "somebody added a blank line" teaches contributors to regenerate
+reflexively rather than to read the finding. `line` is dropped from the
+projection and kept on the reader. Generalised in the skill as:
+
+> If a red can be caused by a change that alters nothing the artefact
+> describes, the artefact is carrying something it should not.
+
+### Still open, and not guessed at
+
+- **Schemas into `library/`, both directions** (the owner picked 1 AND 3).
+  Blocked on `slw1`: `library/<slug>/` has a shape built for a SCANNED source
+  and a schema has no pages, so what `sections/`, `structure.json` and the
+  OCR three-state mean for a schema entry is `slw1`'s to answer, not this
+  bean's to invent.
+- `assistant-schema.puml` — 266 lines of hand-authored UML, still referenced
+  by nothing. Left in place: `deletion-requires-confirmation`. It would make a
+  good validation target for the generated diagram, which is a cheaper use for
+  it than deletion.
+
+## Done when — revised
+
+- [x] The option is chosen by the owner and recorded here (C + D-as-a-view + widen A)
+- [x] `schemas/` has a visualiser at a declared, instance-keyed path, built from the authoritative `.ts`
+- [x] A `--check` gate fails on a stale rendering — falsified both directions
+- [x] The schema-management skill exists
+- [ ] The ingestion skill — deferred to `slw1` with the reason above
+- [ ] `assistant-schema.puml` is retired or made the validation target — owner's call
