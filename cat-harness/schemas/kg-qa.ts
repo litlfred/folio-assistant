@@ -333,6 +333,42 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "(acts, but no procedure yields the answer), and an activity carrying `<folio:no-skill reason=\"…\"/>`.",
   },
   {
+    id: "raci-role-resolves",
+    applies: ["process"],
+    // `critical`, and the severity is argued rather than picked. Every
+    // `critical` in this registry is a DANGLING REFERENCE and every `major`
+    // is a gap between things that exist — and this is `role-ref-resolves`
+    // on a different edge: a name in a RACI column that dereferences to no
+    // declared role. Grading it lower would say the same defect matters less
+    // depending on which attribute carries it.
+    severity: "critical",
+    summary:
+      "A `<folio:raci ref>` names a role that is in no role registry, so 'who is accountable' " +
+      "dereferences to nothing.",
+  },
+  {
+    id: "raci-single-accountable",
+    applies: ["process"],
+    // `major`: structural, not dangling. Every role named exists; what is
+    // wrong is how many of them carry the decision.
+    severity: "major",
+    summary:
+      "An activity declaring RACI does not have exactly one `accountable`. Zero is a breach too — a " +
+      "half-annotated activity is worse than an unannotated one, because the chart looks complete.",
+  },
+  {
+    id: "raci-accountable-not-consulted",
+    applies: ["process"],
+    // `major` for the same reason, and not `minor`. `minor` here grades
+    // INTENDED states (a stub, reference material nobody performs); this is a
+    // modelling error that makes the chart read as complete while one of its
+    // four letters is decorative.
+    severity: "major",
+    summary:
+      "A role is both `accountable` and `consulted` on one activity — asking yourself is not " +
+      "consultation, and it is how `consulted` quietly becomes a formality.",
+  },
+  {
     id: "activity-fulfilment-kind",
     applies: ["process"],
     // `major`. Nothing dangles — both ends of this join resolve — so it is not
