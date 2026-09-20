@@ -43,6 +43,7 @@
     <bpmn:task id="Task_Lean" name="Lean: no bare&amp;#10;`import Mathlib` (HARD)">
       <bpmn:extensionElements>
         <folio:job name="lean-bare-import"/>
+        <folio:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
@@ -50,6 +51,7 @@
     <bpmn:task id="Task_Python" name="Python: unused and&amp;#10;wildcard imports (HARD)">
       <bpmn:extensionElements>
         <folio:job name="python-imports"/>
+        <folio:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
@@ -57,7 +59,7 @@
     <bpmn:task id="Task_TypeScript" name="TypeScript: tests, lint, types,&amp;#10;and ~30 repository gates (HARD)">
       <bpmn:extensionElements>
         <folio:job name="typescript"/>
-        <folio:skill ref="placement"/>
+        <folio:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
@@ -65,6 +67,7 @@
     <bpmn:task id="Task_E2E" name="End-to-end +&amp;#10;accessibility (HARD)">
       <bpmn:extensionElements>
         <folio:job name="e2e"/>
+        <folio:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
@@ -72,6 +75,7 @@
     <bpmn:task id="Task_Rust" name="Rust wildcard imports&amp;#10;(WARN-ONLY)">
       <bpmn:extensionElements>
         <folio:job name="rust-wildcard"/>
+        <folio:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_10</bpmn:outgoing>

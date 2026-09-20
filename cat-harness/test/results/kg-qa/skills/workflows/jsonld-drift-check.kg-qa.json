@@ -5,7 +5,7 @@
     "id": "Process_JsonLdDrift",
     "path": "skills/workflows/jsonld-drift-check.bpmn"
   },
-  "source_hash": "sha256:621d45a9b3a25cc8ca686b0a9cc1e79600b16c9c1fbf0a8f06c63e8094198fc7",
+  "source_hash": "sha256:7fbbc589b8bbd71562e5807f6d2765dfdacfe6dc0e8372c497220e6a6ed41cf0",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -40,13 +40,8 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Check",
-          "detail": "\"Regenerate the context, block,&#10;library and site graphs &#8212; and diff\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-fulfilment-kind": {
       "result": "n/a",
@@ -58,8 +53,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 4,
     "unknown": 0
   }

@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "skills/workflows/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:98ae56431cf6d17900b742d13e78059383bf47e4da4e0cd853babb9d55ace6f4",
+  "source_hash": "sha256:b131f4052320f03e9c22d0ba6846cf2d259073481f36fdbc176fdb3fd18e4325",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -39,31 +39,30 @@
       "result": "fail",
       "findings": [
         {
+          "where": "Task_Lean",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Python",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
           "where": "Task_TypeScript",
-          "detail": "needs skill \"placement\", but its lane's role \"build-pipeline\" does not carry it."
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_E2E",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Rust",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
         }
       ]
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Lean",
-          "detail": "\"Lean: no bare&#10;`import Mathlib` (HARD)\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_Python",
-          "detail": "\"Python: unused and&#10;wildcard imports (HARD)\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_E2E",
-          "detail": "\"End-to-end +&#10;accessibility (HARD)\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_Rust",
-          "detail": "\"Rust wildcard imports&#10;(WARN-ONLY)\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-fulfilment-kind": {
       "result": "n/a",
@@ -75,8 +74,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 2,
+    "pass": 6,
+    "fail": 1,
     "n/a": 4,
     "unknown": 0
   }

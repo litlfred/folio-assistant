@@ -50,6 +50,9 @@
       <bpmn:incoming>Flow_2</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_Label" name="Ensure the tracking&amp;#10;label exists">
+      <bpmn:extensionElements>
+        <folio:skill ref="ci-health"/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:task>
@@ -59,6 +62,9 @@
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_Close" name="Close the&amp;#10;tracking issue">
+      <bpmn:extensionElements>
+        <folio:skill ref="ci-health"/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
@@ -66,6 +72,9 @@
       <bpmn:incoming>Flow_6</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_Track" name="Open or EDIT the one&amp;#10;tracking issue">
+      <bpmn:extensionElements>
+        <folio:skill ref="ci-health"/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
     </bpmn:task>

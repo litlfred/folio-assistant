@@ -5,7 +5,7 @@
     "id": "Process_CiHealth",
     "path": "skills/workflows/ci-health-watch.bpmn"
   },
-  "source_hash": "sha256:dd1e628687d897b45a31ff6bdbd222dda8ffe87d0c138c1ad428d0b97ae97203",
+  "source_hash": "sha256:b8e5435563e624658260c673a7779b9d3a7adb0c2d5970e5b40562c03d1450a2",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -41,25 +41,24 @@
         {
           "where": "Task_Check",
           "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Label",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Close",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Track",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
         }
       ]
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Label",
-          "detail": "\"Ensure the tracking&#10;label exists\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_Close",
-          "detail": "\"Close the&#10;tracking issue\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_Track",
-          "detail": "\"Open or EDIT the one&#10;tracking issue\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-fulfilment-kind": {
       "result": "n/a",
@@ -71,8 +70,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 2,
+    "pass": 6,
+    "fail": 1,
     "n/a": 4,
     "unknown": 0
   }

@@ -5,7 +5,7 @@
     "id": "Process_AtomicMassDrift",
     "path": "skills/workflows/atomic-mass-drift-check.bpmn"
   },
-  "source_hash": "sha256:1321893716f934bbe971dc5289be9ab2ce423269053800939798864b8001d818",
+  "source_hash": "sha256:7565885368e872d4ffe35350b99044359d2410ad5855326f1eb2e6ded70db8f9",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -40,13 +40,8 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Check",
-          "detail": "\"Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-fulfilment-kind": {
       "result": "n/a",
@@ -58,8 +53,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 4,
     "unknown": 0
   }

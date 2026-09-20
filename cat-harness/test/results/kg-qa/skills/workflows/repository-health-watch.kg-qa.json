@@ -5,7 +5,7 @@
     "id": "Process_RepoHealth",
     "path": "skills/workflows/repository-health-watch.bpmn"
   },
-  "source_hash": "sha256:c0455a62835fd5612bb6a90d7e0de6f0a61f5640e0919cdc673fa7bcbd849cfe",
+  "source_hash": "sha256:5c8844ad1666494e668738f7e230b23dcd8fd2959cd33acb4fc9ff386a8163cc",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -41,25 +41,24 @@
         {
           "where": "Task_Check",
           "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Label",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Close",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Track",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
         }
       ]
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Label",
-          "detail": "\"Ensure the tracking&#10;label exists\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_Close",
-          "detail": "\"Close the&#10;tracking issue\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_Track",
-          "detail": "\"Open or EDIT the one&#10;tracking issue\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-fulfilment-kind": {
       "result": "n/a",
@@ -71,8 +70,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 2,
+    "pass": 6,
+    "fail": 1,
     "n/a": 4,
     "unknown": 0
   }

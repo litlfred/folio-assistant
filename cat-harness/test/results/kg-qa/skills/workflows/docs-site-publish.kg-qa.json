@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "skills/workflows/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:f2fac50efaa1387e69f1ef6eb9fd700729065c32ead8053a3e8aa1f05f13ccbe",
+  "source_hash": "sha256:fbfc67f5f51f40641e63415e06d41926f58643502973de2c63417b7d025122aa",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -36,30 +36,12 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Regenerate",
-          "detail": "needs skill \"placement\", but its lane's role \"build-pipeline\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Build",
-          "detail": "\"Build the Jekyll site&#10;and the API reference\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_Export",
-          "detail": "\"Export the knowledge graph&#10;and its schema\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        },
-        {
-          "where": "Task_Publish",
-          "detail": "\"Publish to gh-pages&#10;(FULL REPLACE)\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-fulfilment-kind": {
       "result": "n/a",
@@ -71,8 +53,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 2,
+    "pass": 7,
+    "fail": 0,
     "n/a": 4,
     "unknown": 0
   }

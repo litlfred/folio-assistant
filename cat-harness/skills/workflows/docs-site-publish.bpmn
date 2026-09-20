@@ -37,16 +37,22 @@
     </bpmn:startEvent>
     <bpmn:task id="Task_Regenerate" name="Regenerate every derived&amp;#10;reference from its source">
       <bpmn:extensionElements>
-        <folio:skill ref="placement"/>
+        <folio:no-skill reason="Five independent generators run from their own sources. Each is documented where it lives; there is no single procedure for &quot;regenerate everything&quot;, and inventing one here would name a skill nobody could open."/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_Build" name="Build the Jekyll site&amp;#10;and the API reference">
+      <bpmn:extensionElements>
+        <folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_Export" name="Export the knowledge graph&amp;#10;and its schema">
+      <bpmn:extensionElements>
+        <folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:task>
@@ -66,6 +72,9 @@
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_Publish" name="Publish to gh-pages&amp;#10;(FULL REPLACE)">
+      <bpmn:extensionElements>
+        <folio:no-skill reason="A mechanical actor force-pushes the built tree. The DECISIONS around it are the two tasks either side — what to carry across the replace, and whether it survived — and those carry the skill. This step is the push itself."/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
