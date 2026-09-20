@@ -77,6 +77,45 @@ pushed all three and learned about them from a red PR.
 
 ---
 
+## ...and the gates green is not the PUBLISHED PAGE green
+
+The section above is one step of a ladder, and the step after it is the one that
+ships a broken site. Measured 2026-09-20 on a single change:
+
+| what ran | result |
+|---|---|
+| `bun test` | 3517 pass, 0 fail |
+| `eslint`, `tsc --noEmit` | clean |
+| twelve `*:check` gates | all green |
+| e2e **and** accessibility suites | pass |
+| the actual published `index.html` | **3 escaped `<article>` tags, 0 real** |
+
+A Liquid `{% endif -%}` in `docs/_includes/landing.html` right-stripped the
+newline before the next attribute. The emitted tag had two attributes with no
+separator between them, `index.md` is markdown, so Kramdown refused the block as
+HTML and escaped the whole of it — the live landing page printed
+`&lt;article class="fa-sticky …"` as visible words and every sticky rule was
+dead.
+
+**Not one of those gates was wrong.** They all read a **source**, and the source
+was valid HTML. The defect exists only in the markdown converter's output, so
+nothing readable from a checkout could see it.
+
+Two things follow, and the second is the one to act on:
+
+- **Gate coverage is bounded by what a gate can look at.** A repository can have
+  a dense wall of green checks and no check at all on the artefact a reader
+  loads. Ask what the gates *read*, not how many there are.
+- **When your change alters a rendered page, build the page.** The site build is
+  not in the fast loop and there is no `*:check` twin for "the output is
+  well-formed" — `check:escaped-markup` now asks one narrow version of that
+  question, and only in `docs-site.yml`, where `_site/` exists. If the real build
+  will not run locally (the `just-the-docs` remote theme 403s through the agent
+  proxy), stub the **theme** and build anyway; never substitute the thing under
+  test. `continual-progress` §"A template is not a page" carries the discipline.
+
+---
+
 ## Fast versus full, and why the split is not a judgement call
 
 It is job membership in the workflow, read at run time.

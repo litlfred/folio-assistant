@@ -105,6 +105,23 @@ Three rules for reading it, the same three `ci-health` states:
    because `docs/` is not a declared directory — and it should not be: a
    declared entry names a *graph*, and the site is the render *target*. The
    check was corrected, not the repository.
+
+   **This one is general, and it has now been paid for twice.** The rule is
+   stated here because this is where it was first measured, not because it is
+   about art. Second instance, 2026-09-20: the first run of
+   `check-escaped-markup` found the landing-page defect it was written for **and**
+   two pages that are simply correct — `translation-support.html` documents the
+   path `&lt;section&gt;/&lt;block&gt;/…` and `md-authoring.html` quotes
+   `&lt;table class="md-table"&gt;`, both inside `<code>`, which is how a document
+   shows markup to a reader. 19 findings; 6 were real. Blanking `<code>` and
+   `<pre>` regions took it to 6/6, and the exclusion is tested in **both**
+   directions, because a test that only checks the excluded case passes equally
+   for a check that never fires at all.
+
+   So when you write a check and its first run lights up broadly, the first
+   question is *which of these are correct?* — not *how do I fix the repository?*
+   A check that fires on legitimate subjects is a check somebody switches off,
+   and a switched-off check is worse than none because it reads as coverage.
 3. **Warnings do not accumulate into a refusal.** Twelve heavy files are twelve
    reports, not a failure. Weight is `ll11`'s subject.
 
