@@ -45,14 +45,15 @@ import { createHash } from "node:crypto";
 import { kgDirectories, workflowDirs, workflowFiles } from "./known-skills.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync, type Dirent } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
-  KG_QA_RESULTS_DIR,
   kgQaSidecarPath,
+  sweepOrphans,
+  type OrphanSidecar,
   KG_QA_MANIFEST_SCHEMA,
   KG_QA_MANIFEST_PATH,
   KG_CRITERIA_BY_ID,
@@ -1394,38 +1395,39 @@ for (const r of reports) {
 // process is simply not discovered from this root. Deleting on that
 // evidence would destroy a verdict to hide a declaration gap.
 // `deletion-requires-confirmation` — the agent reports, a person decides.
-const orphans: string[] = [];
-const sweepOrphans = (dir: string): void => {
-  let entries: Dirent[];
-  try {
-    entries = readdirSync(dir, { withFileTypes: true });
-  } catch {
-    return; // No sidecar tree yet is not a finding.
-  }
-  for (const e of entries) {
-    const full = join(dir, e.name);
-    if (e.isDirectory()) {
-      sweepOrphans(full);
-      continue;
-    }
-    if (!e.name.endsWith(".kg-qa.json")) continue;
-    if (!written.has(resolve(full))) orphans.push(relative(root, full));
-  }
-};
-// KG_QA_RESULTS_DIR, not KG_QA_DIRNAME. The first draft of this sweep used
-// the dirname ("kg-qa") and so walked `cat-harness/kg-qa`, which does not
-// exist — `readdirSync` threw, the catch returned, and the guard reported a
-// clean sweep over nothing on every run. It was caught only because the
-// orphan it was written for was put back and the guard stayed silent.
-// A guard that cannot fire is the defect it was written to prevent.
-sweepOrphans(join(root, KG_QA_RESULTS_DIR));
+const orphans = sweepOrphans(root, written);
 if (orphans.length > 0) {
+  const gone = orphans.filter((o) => o.subjectExists === false);
+  const present = orphans.filter((o) => o.subjectExists === true);
+  const unknown = orphans.filter((o) => o.subjectExists === undefined);
   console.error(`\n\u2717 ${orphans.length} sidecar(s) audit a subject no report covers:`);
-  for (const o of orphans.sort()) console.error(`    ${o}`);
-  console.error(
-    "    Either the subject moved and the sidecar should go, or it is no longer" +
-      "\n    discovered from this root and the DECLARATION is what is wrong.",
+  const show = (label: string, rows: OrphanSidecar[], advice: string): void => {
+    if (rows.length === 0) return;
+    console.error(`\n  ${label} (${rows.length}):`);
+    for (const o of rows.sort((a, b) => (a.sidecar < b.sidecar ? -1 : 1))) {
+      console.error(`    ${o.sidecar}`);
+    }
+    console.error(`    ${advice}`);
+  };
+  show(
+    "SUBJECT GONE",
+    gone,
+    "The audited file is not there. The verdict describes nothing; the sidecar is dead.",
   );
+  show(
+    "SUBJECT PRESENT, NOT AUDITED",
+    present,
+    "The file exists and this run did not audit it. Either discovery is wrong, or it\n" +
+      "    is excluded on purpose — `isPartOfASkill` excludes a fragment that declares\n" +
+      "    `part-of:`, and a sidecar predating that exclusion is stale, not evidence.",
+  );
+  show(
+    "SUBJECT UNREADABLE",
+    unknown,
+    "The sidecar could not be parsed or names no path, so which case this is could\n" +
+      "    not be determined. That is not a pass for it.",
+  );
+  console.error("\n  Reported, never deleted — `deletion-requires-confirmation`.");
 }
 
 if (asJson) {
