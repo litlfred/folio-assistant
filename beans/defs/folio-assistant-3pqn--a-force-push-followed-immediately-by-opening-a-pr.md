@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3pqn
 title: A force-push followed immediately by opening a PR produces a PR with zero checks
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-09-20T16:24:01Z
+updated_at: 2026-09-20T16:34:05Z
 parent: folio-assistant-1xhc
 ---
 
@@ -359,3 +359,39 @@ stated in only one of the two files, *"which is how it got broken"*.
 Done-when 3 asked for the workaround to be written down rather than left as
 folklore. It is the dispatch step above — and the six observations are what
 justify it over "wait longer", which the timing series falsifies.
+
+
+## CLOSED 2026-09-20 — owner's decisions on both open points
+
+**"2 bean"** — the cause is split out as **`yv4z`**, low priority, carrying the
+six observations, the three falsified hypotheses (paths filter, ref-update
+race, app-token suppression), the two narrowings (not a force-push property;
+not "recently pointed at a merged commit"), and the one surviving hypothesis
+(the branch's previous PR had just merged). Its Done-when allows *"not
+determinable from here"* as a determined answer, so it cannot sit open forever
+as a question nobody returns to.
+
+**"3 report"** — the guard **reports loudly and re-runs**; it does not refuse.
+That is what shipped, so nothing changes. Worth recording why the alternative
+was arguable: refusing matches the third-state rule everywhere else here, and
+the two differ exactly where it matters — a PR whose checks will never arrive.
+Reporting keeps an agent moving when GitHub is merely slow, and the re-run step
+means a report is never the end of it.
+
+### Done when — final
+
+- [ ] the cause is established → **moved to `yv4z`**, not dropped
+- [x] a PR with NO check runs on its head is reported as such, not read as
+      green — `prepare-merge.md` §Guardrails, **"NO CHECKS IS NOT GREEN — verify
+      against the run list, never the PR page"**, with the four-step procedure
+      and the evidence
+- [x] the workaround is written in the skill that governs opening a PR, not
+      left as folklore — the `workflow_dispatch` step, with the flat timing
+      series recorded so nobody substitutes "wait longer"
+
+Mirrored into `prepare-merge-auto.md` §Anti-patterns, because that file records
+what happened the last time a rule lived in only one of the two copies.
+
+**It caught its own author within the minute.** #552's head moved and the rule
+refused the merge until a completed run existed for the new sha. Merged as
+`92e83dbcb1` once it did.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bm6d
 title: 'STAGING: every deploy pushes TWO commits, so every deploy cancels its own Pages build'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-20T11:44:36Z
-updated_at: 2026-09-20T16:27:28Z
+updated_at: 2026-09-20T16:34:05Z
 parent: folio-assistant-1xhc
 ---
 
@@ -396,3 +396,59 @@ outside it.
 My recommendation: **yes**, in its own PR against `85im`, not bolted onto this
 one — so the push-count change and the content change can be reverted
 independently if the second turns out to be wrong.
+
+
+## CLOSED 2026-09-20 — owner's decision, and the measurement re-checked on GitHub first
+
+Owner, asked whether to close on the property and split the blindness off:
+**"1 y (first check commit gh-pages on github)"**.
+
+So it was re-checked **on GitHub**, not off a local fetch — the local clone had
+just been force-updated on that ref, and reading a measurement from a tree you
+also wrote is exactly the shortcut this session has been removing.
+
+`GET /commits/617cfefb06` returns one commit whose message carries **both**
+subjects:
+
+```
+staging(claude-ecstatic-goldberg-eroyaz): from ee90b3cb19bbfce9b6ee7e5aed3ee4afec54348a
+
+render-log: rendered STAGING/claude-ecstatic-goldberg-eroyaz
+
+https://github.com/litlfred/folio-assistant/actions/runs/35522103984
+```
+
+And the surrounding window on `gh-pages`, read from the API, shows **four**
+concurrent controls rather than the three counted earlier — every one of them
+two commits, nine to ten seconds apart:
+
+| branch | commits |
+|---|---|
+| `claude-sleepy-rubin-mr6kdu` | `d6b53e03` 16:14:20 + `b4dbad26` 16:14:29 |
+| `claude-wonderful-gauss-7frcrw` | `4dfe0e69` 16:14:56 + `747f1695` 16:15:05 |
+| `claude-fervent-mccarthy-nw4olk` | `af5d5e19` 16:15:44 + `f8c754a7` 16:15:54 |
+| `claude-brave-hypatia-r820sf` | `2ee65a54` 16:17:04 + `2e240eeb` 16:17:14 |
+| **`claude-ecstatic-goldberg-eroyaz`** | **`617cfefb` 16:16:24 — one** |
+
+Four for four on the old code, one on the new, inside three minutes on the
+same ref.
+
+### Done when — final
+
+- [x] A staging deploy produces ONE commit on `gh-pages`. Tested in the file
+      (`staging-one-commit.test.ts`, 7 checks, six mutations) **and** measured
+      on the ref against four controls.
+- [x] The cleanup path still records a removal with its reason. It always did —
+      it was already the single-commit pattern this fix copied — and both it
+      and the retained path are now asserted.
+- [x] **Closed on the property rather than the outcome**, by the owner's
+      decision. The outcome half needed `pages build and deployment` state,
+      which nothing here can read; that is now **`3yi4`**, where it belongs —
+      it is `xom7` one ref over and bigger than this bean.
+
+### What this did NOT fix, deliberately
+
+Contention *between* sessions still cancels builds, and `85im` — a preview
+structurally unable to show a deletion — is still open. The sibling analysis
+above is right that they are one fix; the expensive half is now paid, so
+`85im` is a one-line `rm -rf`. **That question is open and unanswered.**
