@@ -947,7 +947,29 @@ function processHierarchy(): Record<string, string[]> {
         null,
         2,
       ) + "\n",
-      "data",
+      // EXISTENCE-gated, not content-gated, and the asymmetry with the todo
+      // index above is the whole point.
+      //
+      // `emit`'s own note says a `data` projection is gated on exact content
+      // because it projects files a human authored, so a difference is
+      // somebody who forgot to regenerate. That holds for three todos. It does
+      // not hold for the bean store: EVERY agent session writes to `beans/`,
+      // so the projection moves whenever anybody works — which nobody forgot
+      // to do.
+      //
+      // Measured, 2026-09-20, and this is why the gating changed: this branch
+      // carried 296 bean files while `main` carried 522, four hours apart.
+      // CI tests the MERGE ref, so a content gate went red on a projection
+      // that was fresh on the branch and fresh on main and stale only against
+      // their union. Every open PR would have to regenerate on every merge, to
+      // fix nothing a reader could see.
+      //
+      // That is exactly the shape bean `d2kp` exists to stop: "gating them
+      // could only ever fire on a graph that changed". A missing file is still
+      // an omission — the board would fetch a 404 forever — so existence is
+      // gated and contents are not, and `docs-site.yml` regenerates before
+      // publishing so what a reader fetches is current regardless.
+      "verdict",
     );
     console.log(`  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s))`);
   }
