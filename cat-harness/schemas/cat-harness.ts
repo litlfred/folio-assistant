@@ -77,6 +77,7 @@ import {
   type KgNodeLabels,
 } from "./kg-node";
 import { NS_PREFIXES, termIri } from "./namespaces";
+import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
 
 /** Root-relative filename carrying an instance's declaration. */
 export const DECLARATION_FILENAME = "harness.json";
@@ -718,6 +719,24 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   topology?: Topology;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
+  /**
+   * Sticky notes this layer contributes to the landing board.
+   *
+   * **A contribution, not a list somebody else owns.** The owner's ask was
+   * *"each intiator should create its own sticky"*, and this is the seam that
+   * makes it true: the board is composed from whatever the layers present
+   * declare, so a new layer adds its card by declaring one rather than by
+   * editing a constant in the layer above. See
+   * {@link StickyContribution} for why this is a declaration rather than a
+   * code registry — bootstrap holds no TypeScript and may not import the
+   * layer composed on top of it, so a registry is a seam it cannot reach.
+   *
+   * Optional, and absent means **this layer contributes none** rather than
+   * "unmigrated". That is the honest reading and the useful one: a bare
+   * bootstrap instance with no cat is the owner's ruling, and a default here
+   * would hand one back.
+   */
+  stickies?: StickyContribution[];
 }
 
 export const ContentDirectorySchema = z.object({
@@ -1053,6 +1072,7 @@ export const CatHarnessDeclarationSchema = z.object({
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
+  stickies: z.array(StickyContributionSchema).optional(),
 });
 
 /**

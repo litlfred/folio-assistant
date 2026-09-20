@@ -19,18 +19,46 @@ import {
   stickyFile,
   toAsciiJson,
 } from "../ensure-landing-sticky.js";
-import {
-  CAT_HARNESS_STICKY_ID,
-  LANDING_STICKY_ID,
-  SUBGRAPHS_STICKY_ID,
-} from "../../schemas/landing-sticky.js";
 import { LandingStickySchema } from "../../schemas/landing-sticky.js";
+import { contributingRoots, declaredContributions } from "../ensure-landing-sticky.js";
+
+/**
+ * The ids this fixture's declaration contributes.
+ *
+ * Named from the FIXTURE rather than imported from `schemas/`, because there is
+ * no longer a constant to import: the board is composed from whatever the layers
+ * declare, so a test's expected set comes from the declaration the test wrote.
+ */
+const LANDING_STICKY_ID = "landing";
+const CAT_HARNESS_STICKY_ID = "cat-harness";
+const SUBGRAPHS_STICKY_ID = "subgraphs";
 
 /** A declaration in the committed style: ASCII-escaped, 2-space, prose comments. */
 const DECL = `{
   "_comment": "An instance \\u2014 with an em dash, because the committed file escapes them.",
   "name": "a-folio",
   "description": "one line\\n\\n\\u00a0c@t-harness",
+  "stickies": [
+    {
+      "id": "landing",
+      "order": 10,
+      "theme": "engineer",
+      "bodyFrom": "description",
+      "onboardingLinks": true
+    },
+    {
+      "id": "cat-harness",
+      "order": 20,
+      "theme": "grumpy-cat",
+      "body": "a cat"
+    },
+    {
+      "id": "subgraphs",
+      "order": 30,
+      "theme": "engineer",
+      "body": "the graphs"
+    }
+  ],
   "directories": [
     {
       "id": "schemas",
@@ -241,5 +269,123 @@ describe("a malformed sticky is repaired, not fatal", () => {
     const report = ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     expect(report.declaredFolio).toBe("already");
     expect(report.folioDir).toBe("authored/");
+  });
+});
+
+describe("a nested instance contributes its own stickies", () => {
+  /** An instance declaring a directory that is itself an instance — bootstrap's shape. */
+  function nested(): string {
+    const root = mkdtempSync(join(tmpdir(), "landing-nested-"));
+    writeFileSync(
+      join(root, "harness.json"),
+      JSON.stringify(
+        {
+          name: "outer",
+          description: "the outer layer",
+          stickies: [
+            { id: "landing", order: 10, theme: "engineer", bodyFrom: "description" },
+          ],
+          // Mirrors the live shape rather than a convenient one: the declared
+          // entry is the nested instance's GRAPH directory, one level inside it,
+          // so `harness.json` is not in the directory named here. That is what
+          // `bootstrap/skills/` looks like, and a composer that looked for a
+          // declaration inside the declared directory would find nothing.
+          directories: [{ id: "inner", path: "inner/skills/", graphs: ["cat-harness"] }],
+        },
+        null,
+        2,
+      ),
+    );
+    mkdirSync(join(root, "inner", "skills"), { recursive: true });
+    writeFileSync(
+      join(root, "inner", "harness.json"),
+      JSON.stringify(
+        {
+          name: "inner",
+          description: "the inner layer",
+          stickies: [
+            { id: "inner-card", order: 90, theme: "pale-sage", bodyFrom: "description" },
+          ],
+          directories: [],
+        },
+        null,
+        2,
+      ),
+    );
+    return root;
+  }
+
+  test("the nested instance is DISCOVERED, not named by the outer one", () => {
+    // Hardcoding `bootstrap/` in the composer would put the layer list back in
+    // the layer above — the ownership inversion this change undoes — and would go
+    // stale the moment the split happens. What marks an instance is that it
+    // declares itself.
+    const root = nested();
+    expect(contributingRoots(root)).toEqual([join(root, "inner"), root]);
+  });
+
+  test("a declared directory of the instance ITSELF is not a second contributor", () => {
+    // `findInstanceRoot` walks up, so a plain subdirectory resolves to the
+    // instance that declared it — which must not be read twice, or its own
+    // stickies would collide with themselves.
+    const root = mkdtempSync(join(tmpdir(), "landing-plain-"));
+    writeFileSync(
+      join(root, "harness.json"),
+      JSON.stringify(
+        { name: "only", directories: [{ id: "s", path: "sub/", graphs: ["cat-harness"] }] },
+        null,
+        2,
+      ),
+    );
+    mkdirSync(join(root, "sub"), { recursive: true });
+    expect(contributingRoots(root)).toEqual([root]);
+  });
+
+  test("both layers' cards are composed, each carrying its OWN description", () => {
+    // The defect that would make the seam pointless: a board of one sentence
+    // repeated, because every card read the root's description.
+    const root = nested();
+    const composed = declaredContributions(root);
+    expect(composed.map((c) => c.contribution.id)).toEqual(["landing", "inner-card"]);
+    expect(composed.map((c) => c.description)).toEqual(["the inner layer", "the outer layer"].reverse());
+  });
+
+  test("the nested layer's declared order places it, not its depth", () => {
+    // Read order is inner-first (deepest first, as `resolveDirectories` does), so
+    // an undeclared order would render the inner card ABOVE the outer's
+    // description. `order` is what decides it.
+    const root = nested();
+    expect(declaredContributions(root).map((c) => c.contribution.order)).toEqual([10, 90]);
+  });
+
+  test("the written board holds one file per contributed sticky, from both layers", () => {
+    const root = nested();
+    const report = ensureLandingSticky(root, "2026-09-20T00:00:00.000Z");
+    expect(report.stickies.map((s) => s.id)).toEqual(["landing", "inner-card"]);
+    const dir = folioDirPath(JSON.parse(readFileSync(join(root, "harness.json"), "utf8")));
+    for (const st of report.stickies) {
+      const node = LandingStickySchema.parse(
+        JSON.parse(readFileSync(join(root, dir, stickyFile(st.id)), "utf8")),
+      );
+      expect(node.id).toBe(st.id);
+    }
+    // `contributedBy` is on the node, so "which layer put this here" is answerable
+    // from the file rather than by re-deriving the composition.
+    const inner = LandingStickySchema.parse(
+      JSON.parse(readFileSync(join(root, dir, stickyFile("inner-card")), "utf8")),
+    );
+    expect(inner.contributedBy).toBe("inner");
+  });
+
+  test("an instance contributing NO stickies gets an empty board, not a default one", () => {
+    // Absent means "this layer contributes none" rather than "unmigrated". A
+    // default here would hand a cat back to a bare bootstrap.
+    const root = mkdtempSync(join(tmpdir(), "landing-none-"));
+    writeFileSync(
+      join(root, "harness.json"),
+      JSON.stringify({ name: "quiet", description: "no cards", directories: [] }, null, 2),
+    );
+    expect(declaredContributions(root)).toEqual([]);
+    expect(ensureLandingSticky(root, "2026-09-20T00:00:00.000Z").stickies).toEqual([]);
   });
 });
