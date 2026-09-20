@@ -19,7 +19,6 @@
  */
 
 import { describe, expect, test } from "bun:test";
-import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -35,7 +34,8 @@ import {
   readStoreConfig,
   updateBean,
 } from "../beans-fallback.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { configNameFor, writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 // The REPOSITORY root, and it has to be said out loud now: `"..", ".."` from
 // here reaches the INSTANCE, and this file's subject — `.beans.yml`, `beans/`
@@ -236,13 +236,33 @@ describe("the fallback can work the plan, not just read it", () => {
   });
 });
 
-describe("the config name — harness.config.json, and only that", () => {
-  test("the config is found by its name", () => {
+describe("the config name — `<instance>.config.json`, and only that", () => {
+  test("the config is found by the name its INSTANCE declares", () => {
+    // Not a global filename any more. The name comes from the instance's own
+    // `harness.json`, which is what lets one checkout hold several configured
+    // instances without either of them answering for the other.
     const root = scratchStore();
     try {
-      writeFileSync(join(root, HARNESS_CONFIG), JSON.stringify({ contentType: "document" }));
-      expect(resolveHarnessConfigPath(root)!.path.endsWith(HARNESS_CONFIG)).toBe(true);
+      writeInstanceConfig(root, JSON.stringify({ contentType: "document" }));
+      expect(resolveHarnessConfigPath(root)!.path.endsWith(configNameFor(root))).toBe(true);
       expect(readHarnessConfig(root)?.contentType).toBe("document");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a directory that declares NO instance has no config name to look for", () => {
+    // The third state, and it is not "absent". A config filename is composed
+    // from a name, and an undeclared directory has none — so the honest
+    // answer to "where is its config" is that nobody can say, rather than a
+    // global filename guessed back into existence. `folio_init` writes the
+    // declaration and the config together for exactly this reason.
+    const root = scratchStore();
+    try {
+      rmSync(join(root, DECLARATION_FILENAME), { force: true });
+      writeFileSync(join(root, "anything.config.json"), JSON.stringify({ contentType: "paper" }));
+      expect(resolveHarnessConfigPath(root)).toBeUndefined();
+      expect(readHarnessConfig(root)).toBeNull();
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -281,9 +301,7 @@ describe("the config name — harness.config.json, and only that", () => {
         { id: "defs", path: "defs", graphs: ["bean-defs"] },
         { id: "workflows", path: "workflows", graphs: ["workflow-state"] },
       ]);
-      writeFileSync(
-        join(root, HARNESS_CONFIG),
-        JSON.stringify({ harness: { workPlan: "ignored", workflowState: "also-ignored" } }),
+      writeInstanceConfig(root, JSON.stringify({ harness: { workPlan: "ignored", workflowState: "also-ignored" } }),
       );
       const r = checkHarnessDirs(root);
       expect(r.configured).toBe(true);

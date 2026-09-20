@@ -30,6 +30,7 @@ import {
 import { registerBaseContentTypes } from "./content-types-base";
 import { registerDakContentTypes } from "./dak-content-type";
 import { describeRepositoryClosure } from "./harness-config";
+import { writeInstanceConfig } from "../test/support/instance-fixture.js";
 
 const roots: string[] = [];
 afterEach(() => {
@@ -236,8 +237,11 @@ describe("the set is closed under the dependency tree", () => {
   }
 
   function dependsOn(root: string, depName: string, depPath: string): void {
-    writeFileSync(
-      join(root, "harness.config.json"),
+    // Through the helper: the config is named after the instance now, and
+    // these roots pin their own name in `harness.json` (`{"name":"mine"}`),
+    // which `declareInstance` honours rather than overwrites.
+    writeInstanceConfig(
+      root,
       JSON.stringify({
         contentType: "paper",
         dependencies: { folioAssistant: [{ name: depName, path: depPath }] },
@@ -307,7 +311,15 @@ describe("the set is closed under the dependency tree", () => {
 
   test("...but a disagreement WITHIN one instance is reported, tagged with it", () => {
     const dep = instance("dep5", {
-      "harness.json": '{"canonicalUrl":"http://a/"}',
+      // `name` is REQUIRED, and it is what makes this a declaration rather
+      // than a file that happens to be called `harness.json`. The fixture got
+      // away without one while nothing walked into a dependency as an
+      // instance; `readHarnessConfig` now resolves the config through the
+      // declaration, and a present-but-invalid declaration throws by design
+      // (AGENTS.md: "Absent declaration is fine … a present-but-unreadable one
+      // throws"). The subject here is two markers disagreeing about
+      // `canonicalUrl`, and a valid declaration carries both facts fine.
+      "harness.json": '{"name":"who-adapter","canonicalUrl":"http://a/"}',
       "dak.json": '{"canonicalUrl":"http://b/"}',
     });
     const root = instance("root5", { "harness.json": '{"name":"mine"}' });

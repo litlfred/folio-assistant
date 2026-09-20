@@ -61,14 +61,16 @@
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 
 import {
+  DECLARATION_FILENAME,
   instanceRootFor,
   readDeclaration,
   repoRootFor,
   rootForScope,
 } from "../schemas/cat-harness.js";
+import { instanceConfigFilename } from "../schemas/harness-config.js";
 // REQUIRED: an instance here declares a `folio` graph, whose kind is registered
 // by a load-time side effect in core.
 import "../schemas/folio-graph-kind.js";
@@ -76,10 +78,23 @@ import "../schemas/folio-graph-kind.js";
 /**
  * Repository-level files that belong at the root, each with why.
  *
- * **A list with reasons, not a pattern.** `*.json` would account for
- * `harness.config.json` and also for any JSON anybody ever drops here, which is
- * the failure this sweep exists to catch. Every entry below is a file whose
- * location is fixed by a tool that looks for it there.
+ * **A list with reasons, not a pattern.** `*.json` would account for a config
+ * and also for any JSON anybody ever drops here, which is the failure this
+ * sweep exists to catch. Every entry below is a file whose location is fixed
+ * by a tool that looks for it there.
+ *
+ * ## The instance configs are COMPUTED, and that is not a pattern either
+ *
+ * `harness.config.json` was an entry here until 2026-09-20. The config is
+ * `<instance>.config.json` now, one per instance at the instantiation root,
+ * so a fixed entry could only ever account for one of them — and `*.config.json`
+ * would be exactly the wildcard this list exists to refuse.
+ *
+ * {@link instanceConfigNames} therefore asks the DECLARATIONS which names are
+ * legitimate. That is still a list with reasons: the reason each name is
+ * allowed is that an instance in this checkout declares it, which is a better
+ * reason than a line in a constant, and a config for an instance that is not
+ * here stays a finding.
  */
 export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
   "package.json": "bun/npm reads it from the repository root",
@@ -90,7 +105,6 @@ export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
   "playwright.config.ts": "playwright's project root",
   "test-server.mjs": "the e2e test server playwright.config.ts starts",
   Dockerfile: "the image build context is the repository",
-  "harness.config.json": "this repository's own folio configuration",
   "harness.config.example.json": "the worked example beside it",
   "upstream-pins.json": "the pinned upstream revisions check-upstream-pins.ts reads",
   "requirements.txt": "the Python toolchain, read from the root",
@@ -192,10 +206,43 @@ export interface UndeclaredEntry {
   bytes: number;
 }
 
+/**
+ * The config filename each declared instance is entitled to at this root.
+ *
+ * Asked of the declarations rather than listed, because the names are the
+ * instances' own (`<name>.config.json`, 2026-09-20). An unreadable
+ * declaration contributes NOTHING rather than a guess: the config stays
+ * unaccounted for and the sweep reports it, which is the right way round —
+ * "could not tell" must not buy a file its place on the list.
+ */
+export function instanceConfigNames(repoRoot: string): Map<string, string> {
+  const out = new Map<string, string>();
+  const roots: string[] = [];
+  if (existsSync(join(repoRoot, DECLARATION_FILENAME))) roots.push(repoRoot);
+  for (const e of readdirSync(repoRoot, { withFileTypes: true })) {
+    if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
+    const d = join(repoRoot, e.name);
+    if (existsSync(join(d, DECLARATION_FILENAME))) roots.push(d);
+  }
+  for (const r of roots) {
+    let name: string | undefined;
+    try {
+      name = readDeclaration(r)?.name;
+    } catch {
+      continue; // unreadable ⇒ no claim
+    }
+    if (name !== undefined) {
+      out.set(instanceConfigFilename(name), `the config of the instance declared at ${relative(repoRoot, r) || "."}`);
+    }
+  }
+  return out;
+}
+
 /** Every root-level path that IS accounted for, and by what. */
 export function accountedRootPaths(repoRoot: string): Map<string, string> {
   const out = new Map<string, string>();
   for (const [name, why] of Object.entries(ROOT_INFRASTRUCTURE)) out.set(name, `infrastructure: ${why}`);
+  for (const [name, why] of instanceConfigNames(repoRoot)) out.set(name, `infrastructure: ${why}`);
   for (const d of IGNORED_ROOT_DIRS) out.set(d, "not this sweep's business");
 
   // TWO PASSES, and the order is the whole correctness argument.

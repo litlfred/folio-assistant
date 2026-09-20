@@ -28,7 +28,7 @@
 
 import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
-import { join } from "path";
+import { basename } from "path";
 
 import {
   DOCUMENT_FORBIDS_LEAN,
@@ -37,7 +37,7 @@ import {
   type ContentProfile,
 } from "../../schemas/block-kinds";
 import { walkBlocks } from "./qa-utils";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 
 export interface ProfileViolation {
   label: string;
@@ -79,25 +79,36 @@ export function readDeclaredFolioProfile(repoRoot: string): {
   profile?: ContentProfile;
   declaredBy: string;
 } {
-  const configPath = resolveHarnessConfigPath(repoRoot)?.path ?? join(repoRoot, HARNESS_CONFIG);
+  const configPath = expectedInstanceConfigPath(repoRoot);
+  // A FOURTH way of not knowing, and it is not the same as the three below:
+  // nothing here declares an instance, so there is no name to compose a
+  // config filename from and no file to be absent. Reported as its own
+  // sentence rather than folded into "no config", because the remedy differs
+  // — one wants a config written, the other wants a `harness.json`.
+  if (configPath === undefined) {
+    return { declaredBy: "undetermined (no instance declares this directory)" };
+  }
+  // The file's name is the instance's, so the messages below say which file
+  // they mean rather than naming a global that no longer exists.
+  const shown = basename(configPath);
   if (!existsSync(configPath)) {
-    return { declaredBy: "undetermined (no harness.config.json)" };
+    return { declaredBy: `undetermined (no ${shown})` };
   }
   try {
     const config = JSON.parse(readFileSync(configPath, "utf-8")) as { contentType?: string };
     if (!config.contentType) {
-      return { declaredBy: "undetermined (harness.config.json declares no contentType)" };
+      return { declaredBy: `undetermined (${shown} declares no contentType)` };
     }
     return {
       profile: profileForContentType(config.contentType),
-      declaredBy: `harness.config.json contentType: "${config.contentType}"`,
+      declaredBy: `${shown} contentType: "${config.contentType}"`,
     };
   } catch (e) {
     // A config that will not parse is reported, not silently defaulted: the
     // folio's whole configuration is unread in that state and every other
     // tool reading it is equally in the dark.
     return {
-      declaredBy: `undetermined (harness.config.json unreadable: ${e instanceof Error ? e.message : String(e)})`,
+      declaredBy: `undetermined (${shown} unreadable: ${e instanceof Error ? e.message : String(e)})`,
     };
   }
 }

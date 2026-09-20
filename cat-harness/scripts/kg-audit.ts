@@ -84,6 +84,7 @@ import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import {
   consultedSkills,
+  unpublishedSkills,
   isSkillMd,
   knownSkills,
   remotePackageDeclarations,
@@ -1129,8 +1130,26 @@ function auditGraph(
   // performer reads, not a step anybody takes — so counting it as unbound
   // measured the criterion rather than the corpus. Bean `y1w9`.
   const consulted = consultedSkills(root);
+  // A skill that must never reach a published graph cannot be carried by a
+  // published role either, so reporting it as unbound measures the strip
+  // rather than the corpus.
+  //
+  // `fsh-guts` is the standing case and it is STRUCTURAL, not an oversight:
+  // a role carrying it emits a dangling `hasSkill` edge into the export,
+  // because every emitter strips the node while the edge keeps its name.
+  // Measured 2026-09-20 — adding it to `docs-authoring-agent` broke
+  // `kg-export.test.ts` on exactly that. So the criterion would report it
+  // forever and the only "fix" available would re-introduce the leak the
+  // owner's "NEVER include fsh-guts in the KG" rule exists to prevent.
+  //
+  // Exempting on the DECLARATION rather than on the name, per the owner's
+  // 2026-09-20 answer: the skill says `published: false` in its own front
+  // matter, and this reads what it said. The narrower, safer direction is
+  // deliberate — a skill is exempt here only because it opted out of
+  // publication, never merely because nothing happens to bind it.
+  const unpublished = unpublishedSkills(root);
   const unmodelled = [...skills]
-    .filter((s) => !modelled.has(s) && !consulted.has(s))
+    .filter((s) => !modelled.has(s) && !consulted.has(s) && !unpublished.has(s))
     .sort()
     .map((s) => ({
       where: s,

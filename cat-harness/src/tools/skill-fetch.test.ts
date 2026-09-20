@@ -9,6 +9,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { LOCAL_PACKAGES, discoverLocalPackages } from "./skill-fetch.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -112,10 +113,12 @@ describe("a dependency's packages are served — the overlay", () => {
     // skills are not reachable today. This is what reachable looks like.
     const dep = instance({ shared: SKILL, "dep-only": SKILL });
     const root = instance({ shared: SKILL });
-    writeFileSync(
-      // `root` is a FIXTURE instance root; its config belongs IN it. The
-      // sweep sent this to the fixture's parent — `/tmp`.
-      join(root, "harness.config.json"),
+    // `root` is a FIXTURE instance root; its config belongs IN it, under the
+    // name `root` declares. The sweep sent this to the fixture's parent —
+    // `/tmp` — and the name half is newer still: there is no global config
+    // filename to join on any more.
+    writeInstanceConfig(
+      root,
       JSON.stringify({ dependencies: { folioAssistant: [{ name: "dep", path: dep }] } }),
     );
 

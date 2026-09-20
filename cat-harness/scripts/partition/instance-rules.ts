@@ -142,6 +142,7 @@ export const RULES: Rule[] = [
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
+      "scripts/check-instance-config.ts",    // the config-naming gate
       // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
       // entry was added to `RULES` while `RULES` was moving to this file,
       // so it arrives here rather than where it was written.

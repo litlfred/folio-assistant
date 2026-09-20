@@ -74,6 +74,7 @@ import {
   kgRoots,
   skillMdDirs as knownSkillDirs,
   workflowDirs,
+  unpublishedSkills,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
@@ -834,8 +835,20 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
   // The skill documenting an unpublished kind is itself unpublished — it
   // carries that kind's name, and its subject is where SDLC churn goes, so
   // publishing it advertises the trashcan. Bean `folio-assistant-uv09`.
+  //
+  // TWO inputs, deliberately. `isPublishedSkill` matches the NAME against
+  // `UNPUBLISHED_GRAPH_KINDS`; `unpublishedSkills` reads a skill's own
+  // `published: false`. Its own note asked for the second — *"if that ever
+  // stops being true this needs its own list, not a cleverer derivation"* —
+  // and the declaration is that list, kept with the file rather than in
+  // code. They answer different questions ("is it NAMED after the trashcan",
+  // "did it SAY not to publish it"), and the blanket test asserts the
+  // OUTCOME over the built document at any depth, so neither can quietly
+  // stop working.
+  const declared = unpublishedSkills(ROOT);
+  const publishable = (name: string): boolean => isPublishedSkill(name) && !declared.has(name);
   return [...byName.entries()]
-    .filter(([name]) => isPublishedSkill(name))
+    .filter(([name]) => publishable(name))
     .map(([name, s]) => ({
     "@id": makeIri(doc, "skill", name),
     "@type": termIri("Skill"),
@@ -996,6 +1009,10 @@ function collectPackages(doc: string, problems: string[]): Node[] {
   }
 
   const skillsRoot = join(ROOT, "skills");
+  // Hoisted: `unpublishedSkills` walks every declared skill directory, so
+  // calling it inside the filter below would re-read the corpus once per
+  // package entry.
+  const declaredUnpublished = unpublishedSkills(ROOT);
   if (!existsSync(skillsRoot)) return nodes;
   for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
     if (!d.isDirectory()) continue;
@@ -1018,7 +1035,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
         // Filtered too: an edge to a stripped node is a dangling reference
         // that still spells the name it was meant to remove.
         declaresSkill: ((m.skills as string[]) ?? [])
-          .filter(isPublishedSkill)
+          .filter((n) => isPublishedSkill(n) && !declaredUnpublished.has(n))
           .map((n) => makeIri(doc, "skill", n)),
         providesCapability: ((m.providesCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
         requiresCapability: ((m.requiresCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),

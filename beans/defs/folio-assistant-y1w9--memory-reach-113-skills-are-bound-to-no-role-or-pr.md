@@ -583,3 +583,63 @@ markers and every heading a claim.
 
 Verification: `bun run gates` **58/58**; `bun test` **4033 pass, 0 fail**;
 `consulted-skill-not-performed` pass, 0 findings.
+
+---
+
+## `fsh-guts` exempted, and the strip now reads a DECLARATION
+
+Owner, 2026-09-20: *"yes exempt. can we model the other way?"*
+
+### The code had already asked the same question
+
+`isPublishedSkill` strips a skill whose NAME is an unpublished graph kind,
+and its own note says where that stops:
+
+> *"Same list, because the skill and the kind share a name by construction.
+> **If that ever stops being true this needs its own list, not a cleverer
+> derivation.**"*
+
+So this is that list — and a **declaration** rather than a list in code, which
+is the same "a directory is a place to look and the file says what it is" rule
+the repository applies to `isSkillMd`, to bean front matter and to a workflow
+instance's `$schema`. A skill that must not be published says so, in the place
+its author is already looking.
+
+### It EXTENDS the name rule rather than replacing it
+
+Both inputs are checked. They answer different questions — *is it named after
+the trashcan* and *did it say not to publish it* — and the second was
+previously unexpressible: a skill whose subject is an unpublished graph but
+whose name is something else had no way to opt out.
+
+Two inputs to one predicate is a duplicate, and the rule is that an
+**unchecked** duplicate is the problem. The blanket test asserts the OUTCOME
+over the built document at any depth, so neither input can quietly stop
+working.
+
+### Why the exemption is narrow
+
+`skill-in-role-or-process` now skips a skill that declares `published: false`
+— **not** one that merely happens to be unbound. The reason is structural, and
+measured: a published role carrying `fsh-guts` emits a dangling `hasSkill`
+edge, because every emitter strips the node while the edge keeps the name.
+Adding it to `docs-authoring-agent` earlier the same day broke
+`kg-export.test.ts` on exactly that. So the criterion would have reported it
+forever, and the only available "fix" would re-introduce the leak.
+
+### Guarding the input, because the outcome test cannot
+
+Three tests pin the declared half. The blanket test is what makes the
+mechanism safe to change — but an outcome test cannot say WHY it passed: if
+`published: false` silently vanished, the name rule would carry it and nobody
+would learn the declared half had stopped working. So one test asserts the
+declaration exists, one asserts both inputs independently, and one is a
+vacuity check — an ordinary skill is neither declared nor name-matched, and
+the declared set stays small, because a predicate that matched everything
+would pass the first two while stripping the corpus.
+
+`skill-in-role-or-process`: **9 → 8**, and the 8 remaining are the three
+bootstrap skills and the five `remote-stubs`, both deliberate.
+
+Verification: export still contains **zero** occurrences of `fsh-guts`;
+`bun run gates` **58/58**; `bun test` **4051 pass, 0 fail**.

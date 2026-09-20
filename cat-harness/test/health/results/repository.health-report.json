@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T17:20:16.170Z",
+  "updated_at": "2026-09-20T17:26:37.006Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,7 +34,7 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 206840893,
+          "value": 207062834,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
@@ -119,31 +119,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 91712187,
+          "value": 91712505,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 319900016,
+          "value": 328649992,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 291228672,
+          "value": 299777024,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 51,
+          "value": 53,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 3.49,
+          "value": 3.58,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
@@ -194,19 +194,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 266,
+          "value": 269,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 168,
+          "value": 169,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 98,
+          "value": 100,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -237,7 +237,7 @@
       ],
       "findings": [
         {
-          "summary": "168 open beans (todo + in-progress), past the 150 calibration point.",
+          "summary": "169 open beans (todo + in-progress), past the 150 calibration point.",
           "metric": "bean-open",
           "severity": "minor",
           "action": "Read `beans roadmap` rather than `beans list` and check the backlog still has a shape. This is a fact about the plan, not about any one item."
