@@ -15,18 +15,41 @@ import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { loadProcessModel, isActivity } from "../../src/workflow/process-model.ts";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { kgRoots } from "../known-skills.ts";
 
 const ROOT = join(import.meta.dir, "../..");
 
+/**
+ * Every skill this repository declares.
+ *
+ * ## It listed five directories by hand until 2026-09-20
+ *
+ * That is the practice `AGENTS.md` opens by warning against — *"hardcoding a
+ * path is how a skill goes missing the moment the layout moves"* — and it had
+ * already gone wrong twice over by the time it was found: the list omitted
+ * `authoring-math`, `authoring-who-smart-guidelines` and `bootstrap/skills`,
+ * so every skill in them was invisible here, and it then reported
+ * `materialize-remote` as naming no skill when two new named subgraphs landed.
+ *
+ * It was the THIRD implementation of one question in this repository, after
+ * `scripts/known-skills.ts` (correct) and `scripts/check-tools.ts` (also
+ * scanning only the first root, fixed the same day). All three now read the
+ * declaration, so a relocation moves them together or fails all three.
+ */
 function knownSkills(): Set<string> {
   const names = new Set<string>();
-  for (const dir of [
-    join(ROOT, "skills", "content-lifecycle"),
-    join(ROOT, "skills", "folio-core"),
-    join(ROOT, "skills", "folio-document-adapter"),
-    join(ROOT, "skills", "folio-paper-adapter"),
-    join(ROOT, "src", "skills"),
-  ]) {
+  // Every DECLARED knowledge-graph root, plus one level down: a root may hold
+  // skills directly (`src/skills/corpus-grep.md`, `kg-navigation/skills/`) as
+  // well as in packages (`skills/folio-core/`).
+  const dirs: string[] = [];
+  for (const root of kgRoots(ROOT)) {
+    if (!existsSync(root)) continue;
+    dirs.push(root);
+    for (const d of readdirSync(root, { withFileTypes: true })) {
+      if (d.isDirectory()) dirs.push(join(root, d.name));
+    }
+  }
+  for (const dir of dirs) {
     if (!existsSync(dir)) continue;
     for (const f of readdirSync(dir)) if (f.endsWith(".md")) names.add(f.slice(0, -3));
   }

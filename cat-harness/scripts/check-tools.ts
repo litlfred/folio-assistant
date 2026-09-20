@@ -56,10 +56,25 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export function knownSkills(): Set<string> {
   const names = new Set<string>();
   const dirs: string[] = [];
-  // declared-path-literal: the convention fallback. Every declared root is
-  // scanned below; this names one for the message when none is declared.
-  const skillsRoot = kgRoots(ROOT)[0] ?? join(ROOT, "skills");
-  if (existsSync(skillsRoot)) {
+  // EVERY declared knowledge-graph root, not just the first.
+  //
+  // This read `kgRoots(ROOT)[0]` until 2026-09-20 — "the root's graph" — and
+  // the comment beside it claimed "every declared root is scanned below", which
+  // was false the moment a second root held a skill. It cost a dangling
+  // `satisfies` the same day: `kg-validate → kg-navigation` reported as naming
+  // no skill, because `kg-navigation` had moved into a named subgraph of its
+  // own and this scan could not see past the first root. `known-skills.ts`
+  // resolved it correctly throughout — two implementations of one question,
+  // which is the drift AGENTS.md keeps naming, and the failing one was the
+  // local copy.
+  //
+  // A root may hold skills DIRECTLY as well as in packages (`src/skills/`
+  // holds `corpus-grep.md` beside its `.ts`; `kg-navigation/skills/` and
+  // `large-datasets/skills/` hold theirs), so each root is scanned itself AND
+  // one level down.
+  for (const skillsRoot of kgRoots(ROOT)) {
+    if (!existsSync(skillsRoot)) continue;
+    dirs.push(skillsRoot);
     for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
       if (d.isDirectory()) dirs.push(join(skillsRoot, d.name));
     }

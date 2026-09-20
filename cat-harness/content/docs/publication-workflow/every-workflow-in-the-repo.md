@@ -1,9 +1,11 @@
-Thirty-three BPMN 2.0 files, and **no longer all in one directory**: thirty-two
+Thirty-nine BPMN 2.0 files, and **no longer all in one directory**: thirty-eight
 under [`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
 and one under [`bootstrap/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/bootstrap/workflows)
 (`bun -e 'console.log((await import("./scripts/known-skills.ts")).workflowFiles(process.cwd()).filter(f=>f.endsWith(".bpmn")).length)'`
-on 2026-09-19 — this line said "six", then "nineteen", then "thirty", then
-"thirty-two, all under `skills/workflows/`", each for long enough to be wrong,
+on 2026-09-20 — this line said "six", then "nineteen", then "thirty", then
+"thirty-two, all under `skills/workflows/`", each for long enough to be wrong.
+**It was wrong again when this was written:** it claimed thirty-three when
+`ls` counted thirty-six, so it had drifted by four with nobody noticing,
 which is why it now carries the command as well as the date. **The command
 changed too, and that is the point:** `ls skills/workflows/*.bpmn` counts one
 directory, so it would have gone on reporting thirty-two while a diagram sat
@@ -88,6 +90,17 @@ the outer process; the rest are its call activities:
 | `ingest-derive-content.bpmn` | Archive, technical metadata, images, audio, tabular data, provenance |
 | `ingest-build-l1-kg.bpmn` | Dublin Core, manifest, assets, binding, linking |
 | `ingest-l1-completeness-gate.bpmn` | Is the derived content complete enough to promote, and who says so? |
+
+**Remote content** — landing something that lives somewhere else, and keeping it
+current. Named on 2026-09-20 after this repository had been running the process
+twice without a word for it: `who-iris` taking three items out of a 361.55 GB
+catalogue, and `bootstrap` fetching a harness and landing it locally, with
+`upstream-pins.json` as half of that second one's refresh.
+
+| Diagram | Answers |
+|---------|---------|
+| `materialize-remote.bpmn` | May we hold a local copy, what does holding it cost, and for what purpose — `working` or `archival`? Five gates, three states, and a refusal leaves the node `referenced` rather than failing |
+| `refresh-materialized.bpmn` | What changed upstream, what changed locally, and what to do when both. An **archival** copy is never refreshed — re-fetching discards the state it exists to keep — so it gets a fixity check instead |
 
 **Upstream dependencies** — what happens when somebody else's release changes
 what we ship. The first is the watcher and the second is the reusable

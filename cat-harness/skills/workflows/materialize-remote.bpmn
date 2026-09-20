@@ -34,11 +34,11 @@ The three states (referenced / materialized / unknown) and the five gates are sc
       <folio:policy enforcement="strict" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_MaterializeRemote_LaneSet">
-      <bpmn:lane id="Lane_0" name="Requester (human or agent)">
+      <bpmn:lane id="Lane_0" name="Contributor (human or agent)">
         <bpmn:flowNodeRef>StartEvent_Asked</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Purpose</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_1" name="Materialization engine — the five gates">
+      <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:flowNodeRef>Task_Size</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Restrictions</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Copyright</bpmn:flowNodeRef>
@@ -47,7 +47,7 @@ The three states (referenced / materialized / unknown) and the five gates are sc
         <bpmn:flowNodeRef>Gateway_Gates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Fetch</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_2" name="Corpus — library/, uploads/, or a harness checkout">
+      <bpmn:lane id="Lane_2" name="Corpus — L1 source knowledge graph">
         <bpmn:flowNodeRef>Task_Declare</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_StayRef</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Done</bpmn:flowNodeRef>
@@ -77,9 +77,9 @@ the whole would cost">
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Task_Restrictions" name="RESTRICTIONS —
-and unknown is an answer
-[materialize-remote]">
+    <bpmn:userTask id="Task_Restrictions" name="RESTRICTIONS
+unknown is an answer,
+not a green light">
       <bpmn:documentation>The owner's phrase is 'no restrictions known in context', and that is a STATE, not a green light. GateVerdict is three-valued for this reason alone, and `unknown` is never rendered as `permitted`.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="materialize-remote" />
@@ -135,7 +135,7 @@ none refused?">
       <bpmn:documentation>The node's state moves from `referenced` to `materialized`, carrying purpose, localPath, gates and (archival) fixity. There is NO default state: a node that has not said is invalid, because 'the author did not say' and 'the author said they could not tell' are different facts.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="materialize-remote" />
-        <folio:bean op="update" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
@@ -145,7 +145,7 @@ record why">
       <bpmn:documentation>A refusal is not a failure of the process — it is the process working. The node stays `referenced`, which means the graph still knows it exists and where, and the refusing gate's basis is recorded so the next caller does not re-litigate it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="materialize-remote" />
-        <folio:bean op="update" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_9</bpmn:incoming>
       <bpmn:outgoing>Flow_12</bpmn:outgoing>

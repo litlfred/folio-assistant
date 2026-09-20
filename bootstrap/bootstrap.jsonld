@@ -253,7 +253,7 @@
     "SequenceFlow": 11,
     "Role": 6,
     "ProcessNode": 11,
-    "GraphKind": 16,
+    "GraphKind": 17,
     "Directory": 2
   },
   "problems": [],
@@ -635,6 +635,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SchemaGraph",
       "renderable": false,
       "summary": "Schema definitions, self-declared in the smart-base manner."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/docs",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "docs",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#DocsGraph",
+      "renderable": true,
+      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/qa",

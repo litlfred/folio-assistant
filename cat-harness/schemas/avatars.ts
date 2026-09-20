@@ -176,6 +176,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 176,
     reads: "a glyph and an A — one language against another",
   },
+  docs: {
+    // The one renderable kind the harness owns. Distinct from `folio`, which is
+    // core's: the difference is the SUBJECT, not the format, so the glyph is a
+    // page WITH a magnifier over it — documentation ABOUT something — rather
+    // than a plain page, which would read as "any content".
+    glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4",
+    tone: 212,
+    reads: "a page with a folded corner — documentation about the graph itself",
+  },
   "fsh-guts": {
     // The trashcan itself is a kind. Distinct from the trash STATE below.
     glyph: "M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13M11 11v6M14 11v6",

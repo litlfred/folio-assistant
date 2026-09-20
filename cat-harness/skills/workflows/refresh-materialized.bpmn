@@ -32,18 +32,18 @@ An ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exis
       <folio:policy enforcement="strict" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_RefreshMaterialized_LaneSet">
-      <bpmn:lane id="Lane_0" name="Trigger (schedule, actor, or upstream watch)">
+      <bpmn:lane id="Lane_0" name="Contributor (human or agent)">
         <bpmn:flowNodeRef>StartEvent_Due</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Adjudicate</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_1" name="Refresh engine">
+      <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:flowNodeRef>Gateway_Purpose</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Fixity</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Upstream</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Local</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Both</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_2" name="Corpus">
+      <bpmn:lane id="Lane_2" name="Corpus — L1 source knowledge graph">
         <bpmn:flowNodeRef>Task_Apply</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Fresh</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -104,7 +104,7 @@ the five gates">
       <bpmn:documentation>The gates are re-asked, not inherited: a licence can change, and a collection can grow past the size a caller agreed to.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="materialize-remote" />
-        <folio:bean op="update" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:incoming>Flow_8</bpmn:incoming>

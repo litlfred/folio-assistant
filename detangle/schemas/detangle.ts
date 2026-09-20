@@ -283,7 +283,6 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
   const enforcedBoundary = boundary.filter((e) => e.authority === "enforced").length;
   const recordedBoundary = boundary.length - enforcedBoundary;
   const eIn = boundary.filter((e) => e.authority === "enforced" && !inGroup.has(e.from)).length;
-  const eOut = enforcedBoundary - eIn;
   const eRatio = enforcedBoundary === 0 ? 0 : eIn / enforcedBoundary;
   const role: BoundaryRole =
     inbound + outbound === 0 ? "isolated"

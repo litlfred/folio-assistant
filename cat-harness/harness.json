@@ -140,7 +140,7 @@
     },
     {
       "id": "folio-assist-core-schemas",
-      "path": "../folio-assistant-core/schemas/",
+      "path": "folio-assistant-core/schemas/",
       "scope": "repository",
       "description": "The CONTENT layer's schema nodes, staged as a top-level directory ahead of the split (#223). Owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' A NAMED SUBGRAPH and not a second `schemas` entry: overrides match on the entry's id, so reusing `schemas` would REPLACE this instance's schema graph rather than add to it -- the same trap the `cat-harness-src` entry above documents from the other side. REPOSITORY-scoped, like `bootstrap/skills/`: it sits at the top of the checkout, not inside this instance, and is deliberately never overlaid by a dependency. This entry is the mirror of `folio-assistant-core/harness.json`'s own, and it has to be stated twice only because `resolveSkillDirs` has no caller -- when that is wired, THIS entry is the one to delete.",
       "graphs": [
@@ -150,10 +150,29 @@
     },
     {
       "id": "kg-navigation",
-      "path": "../kg-navigation/skills/",
+      "path": "kg-navigation/skills/",
       "scope": "repository",
       "description": "The TOOLED knowledge-graph navigation skill, lifted out of the `folio-core` package on 2026-09-20 at the owner's direction: '(kg-navigation should be similar named subgraph)'. Repository-scoped and a SIBLING of `skills/`, not a child: `skills/` is already declared as this instance's `cat-harness` graph in full, so a nested entry would be a declaration inside a declaration -- #263's own defect, where a consumer beneath the outer path cannot tell which declaration owns what it finds. The name is shared with `bootstrap/skills/kg-navigation.md`, which stays where it is and must: that one assumes NOTHING is installed, and a bootstrap reaching into another instance for its first skill would fail in the cold-start case it exists for. Two bodies under one name, each addressable -- see kg-navigation/README.md.",
       "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "large-datasets-skills",
+      "path": "large-datasets/skills/",
+      "scope": "repository",
+      "description": "The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/skills/workflows/ -- a skill ref resolves across the declared graphs, not within one directory.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "large-datasets-schemas",
+      "path": "large-datasets/schemas/",
+      "scope": "repository",
+      "description": "The `large-datasets` subgraph's schema nodes -- `source-descriptor` (how to enumerate a corpus and ask it for a subset) and `artifact-store` (where an artifact too large for the site tree goes, as a declaration rather than a hardcoded host). Repository-scoped, so the path resolves against the REPO ROOT and carries no `../` -- a `../` prefix resolved OUTSIDE the checkout and every consumer silently dropped the entry (caught by CI, 2026-09-20).",
+      "graphs": [
+        "schemas",
         "cat-harness"
       ]
     },
