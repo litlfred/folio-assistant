@@ -23,11 +23,9 @@
  *
  * **At the directory's own URL, with no `/dashboard` beneath it.** That is the
  * obligation `harness-requirements` states — *"a requirement of them is to
- * provide visualisers accessible at `<base-url>/beans`"* — and it is the same
- * address `gen-schema-viz.ts` publishes at, so the two agree by construction
- * rather than by coincidence. An earlier draft put the page one segment
- * deeper, which left `<base>/beans` a 404: the obligation names that URL, so
- * a page beside it does not meet it.
+ * provide visualisers accessible at `<base-url>/beans`"*. An earlier draft put
+ * the page one segment deeper, which left `<base>/beans` a 404: the obligation
+ * names that URL, so a page beside it does not meet it.
  *
  * Bean `o7eq` carries the owner's three rulings on the published URL space,
  * and all three bind here:
@@ -42,18 +40,44 @@
  * 3. **The root instance elides its own name**, because its `docs/` is
  *    installed by cat-harness rather than its own (bean `n0nf`). This
  *    instance's site dir IS the published root, so `<site>/<graph>/` already
- *    is `<base>/<graph>/` — ruling 2 with ruling 3 applied, and the same
- *    address `gen-schema-viz.ts` publishes at.
+ *    is `<base>/<graph>/` — ruling 2 with ruling 3 applied.
  *
- * ## The segment is the declared entry's `id`, and NOT its basename
+ * ## The segment is the declared entry's `id` — and that is a SECOND rule
  *
- * `gen-schema-viz.ts` takes `basename(declaredDirectory)`, which is right for
- * `schemas/` and `library/` and would be wrong here. Measured on this
- * instance's declaration: `qa` is `test/results/` and `health` is
- * `test/health/results/`, so **both basename to `results`** and one dashboard
- * would silently overwrite the other. All 32 declared ids are unique, because
- * the id is the thing `harness.json` declares and the thing an override
- * matches on.
+ * This generator takes the declared entry's `id`. `gen-schema-viz.ts` and
+ * `gen-library-viz.ts` take `viewerPlacement(site, dirPath, kind)`, which is
+ * the handled directory's **repo-relative path**. Two rules, deliberately,
+ * and this comment said otherwise until 2026-09-20.
+ *
+ * **Where they agree and where they do not.** Measured on this instance's
+ * declaration, over the seven declared state graphs:
+ *
+ * | id | declared path | here, `<base>/<id>/` | `viewerPlacement` |
+ * |---|---|---|---|
+ * | `beans`, `todos`, `interaction`, `issue-marks`, `workflows` | at the root | same | same |
+ * | `qa` | `test/results/` | `<base>/qa/` | `<base>/test/results/` |
+ * | `health` | `test/health/results/` | `<base>/health/` | `<base>/test/health/results/` |
+ *
+ * Five of seven agree, because a graph declared at the repository root has a
+ * path equal to its id. The two that diverge are the nested ones, and they are
+ * the reason this generator does not share the sibling's resolver: a public
+ * dashboard addressed `<base>/test/results/` names a TEST directory, and `id`
+ * is what `harness.json` declares and what an override matches on, so an
+ * id-derived URL survives a directory moving.
+ *
+ * **What this comment claimed before, and why it was wrong.** It said
+ * `gen-schema-viz.ts` takes `basename(declaredDirectory)`, and that both
+ * generators therefore "agree by construction". The basename reading was true
+ * when written and stopped being true at #598, which replaced it with
+ * `viewerPlacement` — `gen-schema-viz.ts` now contains no `basename(…)` call
+ * at all. The collision that argument rested on (`test/results/` and
+ * `test/health/results/` both basenaming to `results`) cannot occur under the
+ * rule that replaced it, since those are distinct paths.
+ *
+ * So the *conclusion* stands on its own reasons above, and the *premise* was
+ * stale. Both are stated here rather than one, because a reader who checks the
+ * premise and finds it false has no way to tell which half to keep.
+ * All 32 declared ids are unique.
  *
  * Read from the declaration either way — never written down here. That is what
  * `check:declared-paths` exists to catch, and it caught the literal in an
@@ -64,8 +88,11 @@
  * The first two drafts generated into `_site` at build time and argued that a
  * `--check` was therefore impossible. Both the argument and the premise were
  * wrong: the house pattern for a visualiser here is a COMMITTED page under the
- * instance's site dir, gated on exact content, which is what
- * `schema:viz:check` and `library:viz:check` do. A reviewer can then see the
+ * instance's site dir, gated on exact content — the pattern
+ * `schema:viz:check` and `library:viz:check` established. Note those two are
+ * no longer IN the gate set (#598 removed them: their projections derive from
+ * the whole repository, so a red meant a sibling merged). `state:visualizer:check`
+ * is, so of the three it is now the only one a gate run actually executes. A reviewer can then see the
  * page in the diff, and the gate fires when somebody changes the generator and
  * does not regenerate.
  *
