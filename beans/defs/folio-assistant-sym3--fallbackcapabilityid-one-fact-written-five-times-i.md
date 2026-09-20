@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sym3
 title: 'fallbackCapabilityId: one fact written five times — it belongs on the capability'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T09:53:30Z
-updated_at: 2026-09-20T10:14:51Z
+updated_at: 2026-09-20T10:32:19Z
 parent: folio-assistant-ahvw
 ---
 
@@ -171,3 +171,39 @@ with no record it was ever real.
 - [ ] **the contradiction resolved** — which side is wrong, `lean-mcp`'s
       `requires` or the fallback itself. Then gate the check and invert the
       test.
+
+---
+
+## 2026-09-20 — contradiction resolved, check GATED, test inverted
+
+Owner: *"a1"* — `lean-mcp.requires` was the wrong side.
+
+`requires: ["lean-toolchain"]` is gone from `lean-mcp.json`. Its Lean runs
+**server-side** and its detection is an `mcp-probe` against an endpoint, so
+requiring a local toolchain made it unavailable on any machine without one
+even when the server was reachable — and, because `lean-toolchain.fallbackTo`
+names it, made that fallback unable to fire at all. The reason is recorded in
+the capability's own `description`, since JSON carries no comments.
+
+**The check now gates.** It shipped reporting-only for a few hours on
+`check:agents-xref`'s precedent, because the finding was sound while the
+correct side was undecided. The backlog is empty, so it fails now — and an
+empty backlog is the whole reason it can: a check that fails on the day it
+lands teaches people to ignore it.
+
+**The test is inverted, not deleted**, as this bean said it must be. Deleting
+it would leave no evidence the finding was ever real, and the next person to
+re-add that `requires` would get a green suite and a dead fallback. Two
+guards came with it: a general assertion over **every** capability with a
+`fallbackTo`, so a new one cannot reintroduce the shape; and a
+non-vacuity test on a constructed chain, because with the corpus clean every
+real assertion expects `false` and a predicate that always returned `false`
+would satisfy them all.
+
+### Done when
+
+- [x] capability-global question answered by measurement
+- [x] `fallbackTo` on the capability, declared once, cycle-safe
+- [x] the five modules drop the field
+- [x] `check:fallback-roles` resolves through the capability
+- [x] **contradiction resolved**, check gated, test inverted
