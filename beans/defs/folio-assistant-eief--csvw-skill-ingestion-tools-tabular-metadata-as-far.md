@@ -61,3 +61,42 @@ whole reason for adopting a standard.
 
 The narrative description of a dataset. That needs an author and there is no
 tabular source in the corpus yet (`p67i`).
+
+*2026-09-20* — Built to the strawperson's defaults, all four accepted.
+
+`fac:` namespace · fail CI on an expired stub, report an outstanding one ·
+model + skill + both stubs + QA axis · infer datatypes, mark `undetermined`
+when unsure.
+
+**Shipped:** `csvw:` in the published `@context` beside the other eight
+prefixes; `schemas/tabular-csvw.ts`; `skills/folio-core/tabular-metadata.md`;
+`tabular-csv` and `tabular-xlsx` declared as stubs in `tools/index.ts`; and
+`bun run check:tabular-stubs`, wired into the gate set (52 fast / 55 all).
+
+**No extractor ships.** That was the instruction, and the QA axis is what makes
+it safe: a stub is `not-derivable` naming its tool, a half-stub fails schema
+validation, and an expired stub fails CI. The stubbed set is READ from
+`install: { none: true }` on the tool declarations rather than restated — the
+`transcript.json` probe is why.
+
+Ten mutations, each caught by a named test. Two needed the test strengthened
+first: `install.none` ignored still passed until a test asserted a RUNNABLE
+tool is outside the set, and my extent refine compared two conditions for
+equality, so `{rows: 8, columns: null, source: "measured"}` — the exact
+half-known extent the rule refuses — validated. Caught by the test written for
+it, not by review.
+
+**Three of this repo's own gates caught things I got wrong**, which is the
+system working: a skill with no published reference page and no manifest
+entry; an unassigned module; and a WRONG-DIRECTION EDGE. I had filed
+`check-tabular-stubs.ts` with the harness because it reads the tool graph, and
+`--edges` reported a harness module importing core's schema. The table's own
+test settles it — does it need a folio to have anything to do? It scans
+`library/`. It is core, and core may import harness.
+
+## Still open
+
+- the extractors themselves (deliberately absent);
+- migrating `folio-tabular-records/v1` — both models now exist side by side;
+- what a sheet IS in the document graph (`0lmb`), which still blocks `p67i`'s
+  manifest.
