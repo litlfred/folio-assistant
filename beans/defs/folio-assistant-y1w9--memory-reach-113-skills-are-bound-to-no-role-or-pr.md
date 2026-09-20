@@ -137,3 +137,104 @@ touched here, deliberately: the triage had to say first whether "bind the
 skill" is even the right remedy, and it now says the binding route is
 blocked on `qif9`. Worth noting that binding is not obviously sufficient
 anyway — a role carrying a skill makes it reachable, not injected.
+
+---
+
+## 2026-09-20 — the route this bean planned is CLOSED, and the measurement says why
+
+Owner queued this after `qif9` merged. The plan was: *"`qif9` first. Once
+every `roles:` value resolves, recount the evidence-backed bucket — it may
+be a large fraction of the 110."*
+
+**It is zero.** `qif9` did not make the evidence resolve; it established
+that there was never any evidence there. Count unchanged at **110**.
+
+### Every candidate evidence source, measured
+
+| source | skills it covers | usable as ROLE evidence? |
+|---|---|---|
+| markdown `roles:` front matter | — | **gone** (`qif9`), and 90 % dangled |
+| `.ts` `SkillDefinition.roles` | 23 of 24 modules | **no** — see below |
+| Tool `satisfies` | 15 of the 110 | **no** — says what IMPLEMENTS a skill, not who performs it |
+| BPMN lane bindings | 0 of the 110 | vacuous *by construction* — unbound means no lane names it |
+
+### The `.ts` half of the field is still there, and it is worse
+
+`qif9` removed the markdown field. `SkillDefinition.roles` in the sibling
+`.ts` modules **survived**, carrying the identical undeclared vocabulary:
+
+| uses | value | resolves |
+|---|---|---|
+| 22 | `owner` | **nothing** |
+| 21 | `collaborator` | **nothing** |
+| 8 | `reader` | **nothing** |
+| 1 each | `validation-pipeline`, `attestation-service`, `publication-manager` | role |
+
+**51 of 54 dangling — 94 %**, against 90 % for the markdown half. Exactly
+**one** module of 24 declares roles that all resolve: `qa-report-signing.ts`,
+written the day before under `85e8`.
+
+Probed for readers the way `qif9` should have been, having been wrong
+twice there: nothing reads `.roles` off a `SkillDefinition`; `kg-export`
+never imports the modules, so the field cannot reach the graph (consistent
+with 0 of 180 Skill nodes carrying a role key). It is **required** by
+`SkillDefinitionSchema` and enforced by `validate-skills.ts` — validated,
+and consumed by nothing.
+
+Not excised here. Unlike the markdown field it is schema-REQUIRED, so
+removal touches the schema and 24 modules, and its one correct use is
+load-bearing for a process the owner is currently reconsidering. Raised
+rather than taken.
+
+### The second blocker, which is the more interesting one
+
+**The 110 is not one population.** Read the list and two kinds are plainly
+mixed:
+
+- **performed** — `build-pdf`, `lean-generation`, `proof-triage`,
+  `glossary-build`, `html-rendering-qc`, `bib-qa`, `latex-validation`
+- **consulted** — `directory-conventions`, `bpmn-processes`,
+  `opening-brief`, `turn-reporting`, `untrusted-input`,
+  `where-a-proposal-goes`, `content-profiles`, `deterministic-and-agentic`
+
+A consulted skill belongs in **no lane by its nature** — it is what the
+performer reads, not a step anybody takes. `skill-in-role-or-process`
+grades both `major`, so an unknown share of the 110 is a criterion
+mismatch rather than a defect.
+
+**No mechanical discriminator exists.** Tested two:
+
+| discriminator | result |
+|---|---|
+| sibling `.ts` `SkillDefinition` | 20 of 110 — and `glossary-build`, `editor`, `rendering-fixes` have none |
+| `allowed-tools:` in front matter | 58 of 110 — splits the same families arbitrarily |
+| neither | 47, mixing `directory-conventions` with `html-rendering-qc` |
+
+`kg-audit` has no per-skill applicability guard either — the criterion is
+`entry(unmodelled)` over everything, with only a graph-level `unknown`
+when no role graph exists.
+
+So the distinction is **real, load-bearing for an audit criterion, and
+declared nowhere.** That is the mirror of this repo's usual defect: not
+"declared but read by nothing", but *relied upon and never declared*.
+
+### What this bean now waits on — two questions, not 110 judgements
+
+1. **Is a skill's performed/consulted status an axis worth declaring?** If
+   yes, `skill-in-role-or-process` applies to performed skills only and its
+   count becomes meaningful for the first time. If no, the criterion is
+   wrong and should be dropped or downgraded.
+2. **Does `SkillDefinition.roles` go the way of its markdown twin?**
+
+**No binding was done.** The bean's own rule holds and is the reason:
+a skill bound to a role it does not belong to widens that role's closure
+until an audit cannot fail. With zero evidence sources, every binding
+would be invention — which is how the retired field got its 260 dangling
+values in the first place.
+
+### Done when — revised
+
+- [ ] the performed/consulted question answered, and the criterion made to
+      match whichever way it goes
+- [ ] `SkillDefinition.roles` decided
+- [ ] only then: triage the remainder, in batches small enough to argue with
