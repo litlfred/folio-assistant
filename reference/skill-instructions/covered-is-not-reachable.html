@@ -798,8 +798,32 @@ instruments.</p>
       <td><strong>any skill stating the capability</strong></td>
       <td>nothing</td>
     </tr>
+    <tr>
+      <td>4</td>
+      <td>a skill, a mechanism, a Tool</td>
+      <td><strong>a command</strong> — it runs in-process only</td>
+      <td>nothing</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>a skill, a mechanism, <strong>a command</strong></td>
+      <td>anything that <em>invokes</em> it</td>
+      <td>nothing</td>
+    </tr>
   </tbody>
 </table></div>
+
+<p><strong>Case 5 is case 4’s inverse</strong> — the entry point is present and the callers are
+absent — and it is discussed under <a href="#reachability-is-plural--which-caller-should-this-have-presumes-one">§Reachability is PLURAL</a>
+below, because the useful question there is not <em>what is missing</em> but <em>how many
+dispatch points this should have</em>. Worked example: <code class="language-plaintext highlighter-rouge">translation-roundtrip.ts</code>,
+bean <code class="language-plaintext highlighter-rouge">vo9d</code>, which was <strong>born</strong> callerless in commit <code class="language-plaintext highlighter-rouge">4997840</code> — its only
+references at birth were its own usage string and a line of skill prose telling a
+human what to type. That is this skill’s own “mechanism inlined in prose”
+failure, and the bean’s standing hypothesis — that a caller was <em>lost</em> when the
+translation simulation was removed — is <strong>struck</strong>: <code class="language-plaintext highlighter-rouge">simulate-translation.ts</code> had
+its own private <code class="language-plaintext highlighter-rouge">roundTripQA()</code> over a hand-written map and never called the
+script. A path cannot lose a caller it never had.</p>
 
 <p>Case 3 was met on 2026-09-20: <code class="language-plaintext highlighter-rouge">gen-themes-css</code> and <code class="language-plaintext highlighter-rouge">gen-avatars-css</code> render theme
 and avatar nodes into <code class="language-plaintext highlighter-rouge">assets/css/themes.css</code> and <code class="language-plaintext highlighter-rouge">assets/css/avatars.css</code>. Both
@@ -834,11 +858,75 @@ a Tool with front matter.</li>
 </ul>
 
 <p>Authoring the skill is a <strong>design act</strong> — a claim about the platform’s capability
-vocabulary — so it goes to the owner rather than being decided in passing. Bean
-<code class="language-plaintext highlighter-rouge">yean</code> carries the two candidates and the argument for each.</p>
+vocabulary, inherited by every dependent instance — so it goes to the owner rather
+than being decided in passing. Bean <code class="language-plaintext highlighter-rouge">yean</code> carried the two candidates.</p>
 
-<p>Until it is settled, those scripts stay unreachable, and that is the honest state
-rather than a gap papered over with a false edge.</p>
+<p><strong>Settled 2026-09-20:</strong> <a href="/folio-assistant/reference/skill-instructions/site-presentation-assets.html"><code class="language-plaintext highlighter-rouge">site-presentation-assets</code></a>
+was authored, and <code class="language-plaintext highlighter-rouge">themes-css</code> / <code class="language-plaintext highlighter-rouge">avatars-css</code> are in the graph satisfying it. The
+resolution is recorded here because the alternative — leaving the gap notice
+standing — is worse than never having written one: an agent that believes a stale
+gap either avoids the capability or rebuilds it.</p>
+
+<p>Note which came first. <strong>The skill was written before the nodes, and names no
+script</strong>, which is the second bullet above honoured rather than merely stated.</p>
+<h2 id="the-fourth-case-a-mechanism-with-no-command-reachable-in-process-only">
+  
+  
+    <a href="#the-fourth-case-a-mechanism-with-no-command-reachable-in-process-only" class="anchor-heading" aria-labelledby="the-fourth-case-a-mechanism-with-no-command-reachable-in-process-only"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The fourth case: a mechanism with no command, reachable in-process only
+  
+  
+</h2>
+    
+
+<p>Cases 1–3 are about a missing <em>node</em> or a missing <em>skill</em>. This one has both, and
+is still unaskable: <strong>the mechanism has no command, so no CI job and no person can
+run it.</strong></p>
+
+<p>Met on 2026-09-20 (bean <code class="language-plaintext highlighter-rouge">0bzg</code>). <code class="language-plaintext highlighter-rouge">checkFolioProfile</code> in
+<code class="language-plaintext highlighter-rouge">content/pipeline/profile-check.ts</code> catches what schema validation <strong>structurally
+cannot</strong> — a block valid against its own schema but wrong for the folio’s content
+profile, because adapters partition disjointly while profiles nest. Its only caller
+registered MCP tools. So the check was reachable by an MCP-connected agent and by
+<strong>nothing else</strong>: not a gate, not a sweep, not a person at a shell.</p>
+
+<p>This is the hardest of the four to notice, because the mechanism <em>is</em> reachable —
+to one caller class — so every instrument that asks “can this be reached” answers
+yes.</p>
+
+<blockquote>
+  <p><strong>Ask which callers, not whether.</strong> “Reachable from MCP” and “reachable from CI”
+are different claims, and a durable verdict needs the second.</p>
+</blockquote>
+<h3 id="giving-a-library-function-its-first-command">
+  
+  
+    <a href="#giving-a-library-function-its-first-command" class="anchor-heading" aria-labelledby="giving-a-library-function-its-first-command"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Giving a library function its first command
+  
+  
+</h3>
+    
+
+<p>The remedy was a <code class="language-plaintext highlighter-rouge">qa-sweep</code> axis rather than a <code class="language-plaintext highlighter-rouge">check:profile</code> script, chosen
+because <strong>a sweep verdict is durable where a printed one is not</strong> — a printed
+verdict cannot distinguish “wrong since it was written” from “broken in the commit
+under review”.</p>
+
+<p>And the first version of that axis reported <strong><code class="language-plaintext highlighter-rouge">pass</code> on a folio that declares no
+content type at all</strong> — the laundering it exists to prevent. It guarded on
+<code class="language-plaintext highlighter-rouge">ProfileCheckResult.profile === undefined</code>, and that field is <em>never</em> <code class="language-plaintext highlighter-rouge">undefined</code>:
+<code class="language-plaintext highlighter-rouge">checkFolioProfile</code> resolves through <code class="language-plaintext highlighter-rouge">readFolioProfile</code>, which turns an undeclared
+profile into <code class="language-plaintext highlighter-rouge">"paper"</code>. That default is <strong>correct for a validator</strong> — the wider
+vocabulary is the safe thing to validate against — and wrong for a reporter, which
+needs <code class="language-plaintext highlighter-rouge">readDeclaredFolioProfile</code> instead.</p>
+
+<p>So the general rule, which is where the cost of this case actually lands:</p>
+
+<blockquote>
+  <p><strong>A library’s defaulting is usually what erases the third state.</strong> When you give
+a library function its first entry point, the value it resolves for its own use
+is not the value a verdict may report. Check which of the two you are reading —
+by running it, not by reading it, which is how this one was caught.</p>
+</blockquote>
 <h2 id="reachability-is-plural--which-caller-should-this-have-presumes-one">
   
   
@@ -971,7 +1059,7 @@ not to quiet the finding. Same move as the three-way split of <code class="langu
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35520094090"><code>b1a6178</code></a> &middot; 2026-09-20T15:36:49Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35521054710"><code>f166ca5</code></a> &middot; 2026-09-20T15:55:43Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
