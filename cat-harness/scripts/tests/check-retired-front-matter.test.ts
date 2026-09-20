@@ -41,8 +41,8 @@ function fixture(files: Record<string, string>, declare = true): string {
       JSON.stringify({
         name: "fixture",
         directories: [
-          { id: "skills", path: "skills/", graphs: ["cat-harness"] },
-          { id: "fsh-guts", path: "fsh-guts/", scope: "repository", graphs: ["fsh-guts"] },
+          { id: "skills", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] },
+          { id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", scope: "repository", graphs: ["fsh-guts"] },
         ],
       }),
     );

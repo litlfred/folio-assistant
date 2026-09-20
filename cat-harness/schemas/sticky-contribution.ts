@@ -423,6 +423,23 @@ export interface DeclaredContribution {
   contribution: StickyContribution;
   /** The declaring instance's `name`. */
   declaredBy: string;
+  /**
+   * The declaration this contribution came from, RELATIVE TO THE REPOSITORY —
+   * `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`.
+   *
+   * ## Why the path and not just the name
+   *
+   * `declaredBy` answers *which layer*, which is what the board needs to render
+   * attribution. It does NOT answer *which file*, and those are different
+   * questions the moment anything wants to link to the source: a name is not
+   * resolvable, and resolving one by searching would reintroduce exactly the
+   * ambiguity that two instances sharing a `name` already caused once here.
+   *
+   * Repo-relative rather than absolute because its consumers are a forge URL
+   * (`/edit/<branch>/<path>`) and a published page — neither of which has any
+   * use for this checkout's location on somebody's disk.
+   */
+  declaredIn: string;
   /** The declaring instance's `description`, for `bodyFrom: "description"`. */
   description?: string;
 }

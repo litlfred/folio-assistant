@@ -5,7 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-20T12:32:20Z
 updated_at: 2026-09-20T12:32:20Z
-parent: folio-assistant-o3xy
+parent: folio-assistant-yj32
 ---
 
 
@@ -61,6 +61,40 @@ The stickies do not go away — they are what a collapsed section shows.
   subset? Today `uploads` and `library` are declared but have no renderer.
 - Where does the existing `.fa-landing-board` fit — does it become the open
   state of the root instance's section, or stay a separate page?
+
+## The avatar crop is DATA, not CSS — measured 2026-09-20
+
+The navbar avatar is the theme's card art **clipped to the cat's head and
+torso**, not the card scaled down: scaling the whole 1:1 card into a 46px frame
+makes the cat about four pixels tall and every theme looks like grey mush.
+
+**The box is per-image and cannot be derived.** The cat sits in a different
+place in every composition — measured off a 10% grid overlay of the seven cards
+that exist today, as fractions `x y w h` of the card:
+
+| card | box |
+|---|---|
+| `landing-card` (grumpy-cat) | `0.00 0.46 0.50 0.50` |
+| `landing-library-card` | `0.14 0.40 0.42 0.42` |
+| `landing-bootstrap-card` | `0.27 0.615 0.24 0.24` |
+| `landing-operations-card` | `0.19 0.505 0.24 0.24` |
+| `landing-engineer-card` | `0.00 0.40 0.46 0.46` |
+| `landing-analyst-card` | `0.05 0.48 0.36 0.36` |
+| `landing-architecture-card` | `0.00 0.36 0.46 0.46` |
+
+So production declares an **`avatarRegion`** per crop, sibling to the existing
+`textRegion` — same reason `textRegion` is declared rather than assumed. A
+literal in a stylesheet is a value with no schema, no validation and no way for
+a new theme to supply its own, which is how the next avatar silently frames a
+patch of sky. Two of the seven boxes above were wrong on the first pass (the
+library and analyst crops landed on scenery, not the cat) and only a render
+caught it — so whatever declares `avatarRegion` should be rendered in review,
+not eyeballed in a diff.
+
+**The box must be SQUARE.** The frame is square and the clip scales width and
+height by `1/w` and `1/h` independently, so a non-square box stretches the cat
+by `w/h`. The owner's two example crops were non-square and were explicitly
+withdrawn as examples on that ground.
 
 ## Depends on
 
