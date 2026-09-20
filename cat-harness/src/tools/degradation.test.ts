@@ -211,12 +211,22 @@ describe("over the real corpus", () => {
   // same job's teardown, so a JVM was competing for the runner. Nothing in
   // either diff touched capabilities or probing.
   //
-  // And the cost underneath, which this budget does not address: three tests in
-  // this file each call `probeAll`, so one run spawns ~78 processes for an
-  // answer that cannot change within the run. Bean `4n37` carries it, with the
-  // reason caching is not the obvious fix — an agent can install a capability
-  // mid-session, and a cached probe would then report `blocked` for something
-  // now present.
+  // NO COST UNDERNEATH, and an earlier version of this comment claimed one.
+  // Bean `4n37` asserted that three tests in this file each call `probeAll`, so a
+  // run spawned ~78 processes, and proposed hoisting it into a `beforeAll`. All of
+  // it was wrong and the bean is SCRAPPED:
+  //
+  //   · `probeAll` is called ONCE here, and once in `src/index.ts`. No caller
+  //     calls it twice, so there is nothing to hoist. The "three tests" were
+  //     three tests in this `describe` calling `loadSkillNeeds`, not `probeAll`.
+  //   · it ALREADY memoises within a call — the `resolved` map and `inFlight` set
+  //     in `capabilities.ts` probe each capability once even when several others
+  //     `require` it, and resolve a cycle to unmet rather than looping.
+  //   · 26 capabilities cost 441 ms measured, against this 30 s budget: 68x
+  //     headroom.
+  //
+  // So the budget is not a workaround for a deeper problem. It is the whole fix,
+  // on its own terms.
   test("the real join runs and produces a verdict per skill", async () => {
     const { kgRoots } = await import("../../scripts/known-skills.ts");
     const { loadCapabilities, probeAll } = await import("./capabilities.ts");
