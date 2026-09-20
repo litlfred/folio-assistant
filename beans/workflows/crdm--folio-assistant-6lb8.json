@@ -6,7 +6,7 @@
   "subject": "folio-assistant-6lb8",
   "bean": "folio-assistant-6lb8",
   "tokens": [
-    "Call_Needs"
+    "Call_Requirements"
   ],
   "arrivals": {},
   "history": [
@@ -39,11 +39,17 @@
       "node": "Call_Issue",
       "actor": "claude",
       "note": "subprocess Process_CRDM_Issue completed"
+    },
+    {
+      "at": "2026-09-20T20:46:47.858Z",
+      "node": "Call_Needs",
+      "actor": "claude",
+      "note": "subprocess Process_CRDM_Needs completed"
     }
   ],
   "status": "running",
   "startedAt": "2026-09-20T20:25:49.818Z",
-  "updatedAt": "2026-09-20T20:28:15.124Z",
+  "updatedAt": "2026-09-20T20:47:40.481Z",
   "children": {
     "Call_Issue": {
       "id": "crdm--folio-assistant-6lb8/Call_Issue",
@@ -94,9 +100,7 @@
       "source": "cat-harness/methodologies/crdm/workflows/crdm-needs.bpmn",
       "subject": "folio-assistant-6lb8",
       "bean": "folio-assistant-6lb8",
-      "tokens": [
-        "BA_ReviewNeeds"
-      ],
+      "tokens": [],
       "arrivals": {},
       "history": [
         {
@@ -115,11 +119,62 @@
           "node": "A_Synthesise",
           "actor": "claude",
           "note": "Synthesised and POSTED TO THE ISSUE rather than left in chat, as Phase 1 step 5 requires: #602 section 2. The statement is that a folio's notes and its content are two readings of one body of work and neither can show the other; the accessibility floor is stated as a requirement rather than a fallback; and the badge/panel identity is argued as ONE query rather than two numbers, because a badge that can disagree with its own panel is the defect to design out."
+        },
+        {
+          "at": "2026-09-20T20:46:29.971Z",
+          "node": "BA_ReviewNeeds",
+          "actor": "litlfred",
+          "note": "APPROVED by the requestor, 2026-09-20, verbatim: \"needs statement is right, run phase 2\". Recorded with litlfred as the actor because this step is theirs — the agent proposed the statement at A_Synthesise and the requestor accepted it here. The three questions in issue #602 section 6 were answered by acceptance of section 2 as written; no correction to the stakeholder list or to the todos/ vs cat-harness split was offered, so both stand as posted."
+        },
+        {
+          "at": "2026-09-20T20:46:43.118Z",
+          "node": "S_ConfirmNeeds",
+          "actor": "litlfred",
+          "note": "Confirmed by litlfred, who is the ONLY HUMAN stakeholder of the five recorded at A_Stakeholders. Said plainly rather than staged: the requestor and the stakeholder lane are the same person here, so this is one confirmation recorded twice because the diagram has two lanes, not two independent reviews. The other four are not people — readers of the published site are REPRESENTED by the linear-collapse floor being a requirement rather than a fallback; the todos/ graph, cat-harness and the positions layer are artefacts whose interests are constraints in section 5; sibling agent sessions are represented by the mergeability property, which is stated with its limit. If a second human stakeholder appears later, Phase 1 loops rather than being re-opened by exception."
+        },
+        {
+          "at": "2026-09-20T20:46:47.857Z",
+          "node": "GW_Needs",
+          "outcome": "yes",
+          "actor": "claude",
+          "note": "Approved — the requestor's own words, quoted on BA_ReviewNeeds. The gateway records the loop's exit; the evidence is on the step before it."
+        },
+        {
+          "at": "2026-09-20T20:46:47.858Z",
+          "node": "End_Process_CRDM_Needs",
+          "note": "end event reached"
+        }
+      ],
+      "status": "completed",
+      "startedAt": "2026-09-20T20:27:45.486Z",
+      "updatedAt": "2026-09-20T20:46:47.858Z"
+    },
+    "Call_Requirements": {
+      "id": "crdm--folio-assistant-6lb8/Call_Requirements",
+      "processId": "Process_CRDM_Requirements",
+      "source": "cat-harness/methodologies/crdm/workflows/crdm-requirements-definition.bpmn",
+      "subject": "folio-assistant-6lb8",
+      "bean": "folio-assistant-6lb8",
+      "tokens": [
+        "A_DefineReqs"
+      ],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-09-20T20:46:47.858Z",
+          "node": "Start_Process_CRDM_Requirements",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-09-20T20:47:40.480Z",
+          "node": "A_MapWorkflow",
+          "actor": "claude",
+          "note": "Mapped against the real corpus, not assumed. The affected area is note-against-content, and it is covered by ONE documented flow plus two rendering paths. The flow: skills/folio-core/todo-review.md section 'Session Start: Todo Workflow' — offer, scope selection, then a TABLE grouped by chapter, then a flat list by priority. It is entirely list-shaped. The renderings: mountTodoBoard (a grid of stickies, mounted inside .fa-landing-board) and mountPageStickies (a badge beside each block heading, opening that block's list). No .bpmn covers it: the twenty diagrams mentioning note/sticky/todo do so incidentally (bean-lifecycle, review-task, content-change-review). So the as-is is documented in prose and in two client functions, and Phase 2 step 3 applies — document the as-is rather than pretend a diagram exists."
         }
       ],
       "status": "running",
-      "startedAt": "2026-09-20T20:27:45.486Z",
-      "updatedAt": "2026-09-20T20:28:15.124Z"
+      "startedAt": "2026-09-20T20:46:47.858Z",
+      "updatedAt": "2026-09-20T20:47:40.481Z"
     }
   }
 }

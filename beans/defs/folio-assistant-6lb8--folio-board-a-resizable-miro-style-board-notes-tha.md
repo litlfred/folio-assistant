@@ -389,3 +389,56 @@ asked for instead.
 
 `schemas/board-positions.ts` implements a ruling the owner had already given on
 one bounded question. The process above is for what that ruling did not settle.
+
+## Phase 1 closed, Phase 2 posted — and two requirements were already met
+
+Requestor approved the needs statement 2026-09-20: *"needs statement is right,
+run phase 2"*. Recorded on `BA_ReviewNeeds` with litlfred as the actor, since
+that step is theirs.
+
+**`S_ConfirmNeeds` was recorded honestly rather than staged.** The requestor is
+the ONLY HUMAN stakeholder of the five, so the requestor lane and the
+stakeholder lane are one confirmation recorded twice because the diagram has
+two lanes — not two independent reviews. The other four are not people: readers
+are represented by the linear-collapse floor being a requirement rather than a
+fallback; `todos/`, cat-harness and the positions layer are artefacts whose
+interests are constraints; sibling sessions are represented by the mergeability
+property and its stated limit.
+
+### Phase 2's finding changes what Phase 3 should ask for
+
+**The gap is a RENDERING gap, not a modelling gap**, and the requirement set is
+smaller than the ask sounds.
+
+**No BPMN covers note-against-content.** Twenty diagrams mention
+note/sticky/todo and every one does so incidentally. The as-is is
+`todo-review.md` §"Session Start: Todo Workflow" — offer, a table grouped by
+chapter, a filtered list, resolve — which is entirely LIST-SHAPED, plus two
+client renderings that never meet: `mountTodoBoard` shows every note and no
+content; `mountPageStickies` shows content with one block's notes at a time.
+
+**The attachment is already modelled AND already resolved.** `targetLabel` is
+page-qualified, `note-anchor` declares three states including attached-to-
+nothing, and a dangling label is reported rather than dropped. So the need does
+not appear at a modelling step — it appears at the seam where those two
+renderings fail to meet.
+
+**Asks 5 and 6 are ALREADY IMPLEMENTED for a block on a page.**
+`mountPageStickies` builds `.fa-sticky-badge` carrying `.fa-sticky-badge-count`
+= `mine.length`, and clicking toggles a list built from the same `mine` array —
+so the badge and the panel are already ONE QUERY, which is the identity the ask
+wanted designed in. Two measured divergences: the badge renders whenever
+`mine.length > 0`, so a single note shows "1" where the ask says *"badge of # if
+> 1"*; and nothing badges an AVATAR, because nothing renders content as an
+avatar yet.
+
+**The bottleneck, probed rather than restated:** the only place a note appears
+near its subject is a per-page sidecar, one block at a time. A board is the
+shape that holds notes and content at once, which is why the ask took that
+form — but the expensive-sounding parts are done, and what is missing is a
+second rendering of an existing relation at board scale plus semantic zoom, the
+one genuinely new mechanism.
+
+Posted to [#602](https://github.com/litlfred/folio-assistant/issues/602).
+**Phases 3–4 NOT run** — the requestor scoped this to Phase 2, and the
+requirement sketch is an input to Phase 3 rather than its output.
