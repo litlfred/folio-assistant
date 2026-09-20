@@ -248,13 +248,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:36:14.818Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e56df95d41711c9aa18c8858b5dba291ec9187bc",
-  "sourceCommitSha": "e56df95d41711c9aa18c8858b5dba291ec9187bc",
-  "sourceCommitAt": "2026-09-20T04:34:05Z",
+  "generatedAt": "2026-09-20T05:16:09.472Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/82d72b717b3269b1a9b57cc3dc48e8de4b5714f8",
+  "sourceCommitSha": "82d72b717b3269b1a9b57cc3dc48e8de4b5714f8",
+  "sourceCommitAt": "2026-09-20T05:14:33Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 171,
+    "Skill": 172,
     "Actor": 27,
     "Capability": 24,
     "Role": 110,
@@ -1235,7 +1235,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 533,
+      "instructionLines": 548,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2143,6 +2143,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/one-voice-integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/content-and-state-graphs",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "content-and-state-graphs",
+      "title": "Content graphs and state graphs",
+      "description": "Every declared graph says what the instance IS or where something GOT TO. The definition, the two questions that settle a hard case, what a consumer may assume about each side, and why the classification is required rather than inferred.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/content-and-state-graphs.md",
+      "instructionLines": 150,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-and-state-graphs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/library-ingestion",
@@ -4076,6 +4092,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/code-node-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/compute-integration-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/content-and-state-graphs",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/content-graph",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/continual-progress",
@@ -22082,8 +22099,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "75a2a487ae35ba227e5755fdca996ec095000a0f",
+    "sha": "5408b41be30d022282f148b1f0d42dc32dfe0f63",
     "pr": "458/merge",
-    "run": "35489494514"
+    "run": "35491177241"
   }
 }

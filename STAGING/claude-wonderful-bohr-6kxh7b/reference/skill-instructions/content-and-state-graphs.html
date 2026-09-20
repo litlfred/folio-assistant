@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(6)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(56)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(12) > ul > li:nth-child(6) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(56) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(12) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(12) > ul > li:nth-child(6) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(56) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(12) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(12) > ul.nav-list > li.nav-list-item:nth-child(6) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(56) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Content Review | folio-assistant</title>
+<title>Content graphs and state graphs | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Content Review" />
+<meta property="og:title" content="Content graphs and state graphs" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Content Review" />
+<meta property="twitter:title" content="Content graphs and state graphs" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -266,7 +266,7 @@
   those are opposite facts.
 
   `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
-  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">5408b41</span> · built 2026-09-20T05:16:00Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/456" style="color:#fff;text-decoration:underline">issue #456</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skills/content-review.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35491177241" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
+  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">5408b41</span> · built 2026-09-20T05:16:00Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/456" style="color:#fff;text-decoration:underline">issue #456</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35491177241" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/todos/index.json">
@@ -469,7 +469,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">5408b41</span> · built 2026-09-20T05:16:00Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/456" style="color:#fff;text-decoration:underline">issue #456</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skills/content-review.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35491177241" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">5408b41</span> · built 2026-09-20T05:16:00Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/456" style="color:#fff;text-decoration:underline">issue #456</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35491177241" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -595,8 +595,8 @@
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skills/">Skill schema reference</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Content Review</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Content graphs and state graphs</span></li>
   </ol>
 </nav>
 
@@ -604,445 +604,198 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 id="content-review">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/content-and-state-graphs.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/content-and-state-graphs.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/content-and-state-graphs.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="content-graphs-and-state-graphs">
   
   
-    <a href="#content-review" class="anchor-heading" aria-labelledby="content-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content Review
+    <a href="#content-graphs-and-state-graphs" class="anchor-heading" aria-labelledby="content-graphs-and-state-graphs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content graphs and state graphs
   
   
 </h1>
     
 
+<p>An instance declares directories, and each says what <strong>kind</strong> of graph it
+holds. Until 2026-09-20 a kind answered one question — does this render as a
+website — and a consumer had no way to tell the subject matter from a record
+about it. This is the second axis.</p>
+
 <blockquote>
-  <p>Skill id: <code class="language-plaintext highlighter-rouge">content-review</code></p>
+  <p><strong><code class="language-plaintext highlighter-rouge">content</code></strong> — authored nodes a reader or a tool consumes as the subject
+matter. It is what the instance <strong>IS</strong>.</p>
+
+  <p><strong><code class="language-plaintext highlighter-rouge">state</code></strong> — a record of where a process, a participant or an artefact
+<strong>GOT TO</strong>. It <strong>references</strong> content and is meaningless without it.</p>
 </blockquote>
 
-<p><em>Generated from JSON Schema — do not edit by hand. Run <code class="language-plaintext highlighter-rouge">bun run scripts/gen-schema-docs.ts</code>.</em></p>
-<h2 id="input">
+<p>It is <code class="language-plaintext highlighter-rouge">holds</code> on <code class="language-plaintext highlighter-rouge">GraphKindDef</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>, and it is
+<strong>required</strong>: <code class="language-plaintext highlighter-rouge">tsc</code> refuses a kind that has not said.</p>
+<h2 id="the-two-questions">
   
   
-    <a href="#input" class="anchor-heading" aria-labelledby="input"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input
-  
-  
-</h2>
-    
-
-<p>Input schema for formal content review and approval workflow.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">reviewType</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"l2-to-l3-gate"</code> | <code class="language-plaintext highlighter-rouge">"l3-to-publish-gate"</code> | <code class="language-plaintext highlighter-rouge">"change-assessment"</code> | <code class="language-plaintext highlighter-rouge">"final-signoff"</code></td>
-      <td><strong>yes</strong></td>
-      <td>Type of review phase gate.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">contentRef</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td>Git ref or path to the content being reviewed.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">previousVersion</code></td>
-      <td>string</td>
-      <td>no</td>
-      <td>Git ref of the previous approved version (for diff).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">validationReport</code></td>
-      <td>string</td>
-      <td>no</td>
-      <td>Path to the validation report for this content.</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><a href="https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-review/input.schema.json">Raw schema</a> · <a href="https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-review/input.schema.json" class="fa-edit-source">✎ Edit</a></p>
-<h2 id="output">
-  
-  
-    <a href="#output" class="anchor-heading" aria-labelledby="output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Output
+    <a href="#the-two-questions" class="anchor-heading" aria-labelledby="the-two-questions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two questions
   
   
 </h2>
     
 
-<p>What a review produces: findings, a decision about them, and the audit notes that justify it. A finding is an observation; a decision is an act about a set of findings; neither determines the other. Mirrors schemas/qa-review.ts — see skills/folio-core/decision-audit.md.</p>
+<p>Reach for these rather than for the directory’s name. Both are about the
+graph’s contents, not about who wrote them or how often they change.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">findings</code></td>
-      <td>array<object></object></td>
-      <td><strong>yes</strong></td>
-      <td>One entry per observation. Immutable once raised: to disagree with one, overrule it in the decision.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">decision</code></td>
-      <td>object</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">notes</code></td>
-      <td>array<object></object></td>
-      <td><strong>yes</strong></td>
-      <td>Why the decision was made, and why each overruled finding was left.</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="findings">
+<p><strong>1. Does it stand on its own?</strong> Detach a node from everything else in the
+repository. A skill still instructs, a schema still constrains, a library
+section still reads. A bean names work on something that is no longer there; a
+QA verdict judges an absent subject; a workflow instance holds a token in a
+process drawn elsewhere. <strong>If detaching it empties it, it is state.</strong></p>
+
+<p><strong>2. Would you regenerate it or re-author it?</strong> Content is written and revised
+by somebody with an intention. State is <em>arrived at</em> — it is what running
+something produced, and re-running is how you would get it back. A <code class="language-plaintext highlighter-rouge">.po</code>
+catalogue is authored; a health report is arrived at.</p>
+
+<p>The questions agree in every case in this repository. Where they disagree,
+say so rather than picking: a kind that stands alone AND is arrived at is a
+shape this axis has not met, and inventing an answer for it is how a
+vocabulary acquires a category nobody can use.</p>
+<h2 id="the-classification">
   
   
-    <a href="#findings" class="anchor-heading" aria-labelledby="findings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">findings[]</code>
+    <a href="#the-classification" class="anchor-heading" aria-labelledby="the-classification"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The classification
   
   
-</h3>
+</h2>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">id</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">subject</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td>Block label, skill name or repo-relative path.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">criterion</code></td>
-      <td>string</td>
-      <td>no</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">reviewer</code></td>
-      <td>object</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">severity</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"critical"</code> | <code class="language-plaintext highlighter-rouge">"major"</code> | <code class="language-plaintext highlighter-rouge">"minor"</code></td>
-      <td>no</td>
-      <td>Machine axis — what kind of breakage. Required of a script reviewer.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">weight</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"blocking"</code> | <code class="language-plaintext highlighter-rouge">"suggestion"</code> | <code class="language-plaintext highlighter-rouge">"praise"</code></td>
-      <td>no</td>
-      <td>Human axis — what the reviewer asks of the gate. Required of a human reviewer. <code class="language-plaintext highlighter-rouge">praise</code> has no image under the machine axis.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">detail</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">evidence</code></td>
-      <td>array<any></any></td>
-      <td>no</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">raised_at</code></td>
-      <td>string (date-time)</td>
-      <td>no</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
-<h4 id="findingsreviewer">
+<p>Ask the code, not this table — <code class="language-plaintext highlighter-rouge">graphKindsOfLayer("state")</code> returns the live
+answer and this page cannot go stale against it. <strong>No count is given here on
+purpose</strong>: a count in prose is a claim nothing checks, and this repository has
+corrected two of them.</p>
+
+<p>What is worth writing down is the <strong>reasoning for the four that are not
+obvious</strong>. The rest are obvious in both directions and are recorded in the
+table itself.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">qa</code> is state.</strong> A verdict is where a <em>review</em> got to on a subject that
+lives elsewhere. It fails question 1 outright — detached from the artefact it
+judges it asserts nothing about anything. This is also why the <code class="language-plaintext highlighter-rouge">kg-qa/</code> tree
+<strong>mirrors</strong> each subject’s path rather than being flat: a verdict’s identity is
+partly the thing it is about.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">health</code> is state.</strong> The same shape one level out. <code class="language-plaintext highlighter-rouge">qa</code> asks whether the
+artefacts pass; <code class="language-plaintext highlighter-rouge">health</code> asks about the repository itself — how large the
+clone has grown, how much of the publish branch the previews occupy. Both are
+evidence <em>about</em> an instance, never part of it.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">uploads</code> is state, and <code class="language-plaintext highlighter-rouge">library</code> is content.</strong> This pair is the clearest
+demonstration that the axis is not about file type: the same PDF is state in
+one directory and content in the other. <code class="language-plaintext highlighter-rouge">uploads/</code> is a <strong>queue</strong>, and a queue
+is a position in a pipeline. The declaration already says these files are not
+L1 and read as absent to every corpus consumer — the file is on disk and the
+content does not exist yet. <code class="language-plaintext highlighter-rouge">library/</code> is what ingestion produced, and every
+knowledge-graph reference to a source resolves through it.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">fsh-guts</code> is state, and it is the one that reads like content.</strong> It holds
+structured material that <em>could</em> be rendered — that is what makes it the hard
+case — and the fact it actually carries is <strong>where something got to</strong>:
+abandoned, superseded, decided against. That is why it is deliberately absent
+from the rendered site while being renderable in principle, and it is the sense
+in which “delete means relocate here” is reversible. Classified by the owner,
+2026-09-20; both questions agree.</p>
+<h2 id="what-a-consumer-may-assume">
   
   
-    <a href="#findingsreviewer" class="anchor-heading" aria-labelledby="findingsreviewer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">findings[].reviewer</code>
+    <a href="#what-a-consumer-may-assume" class="anchor-heading" aria-labelledby="what-a-consumer-may-assume"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a consumer may assume
   
   
-</h4>
+</h2>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">kind</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"script"</code> | <code class="language-plaintext highlighter-rouge">"agent"</code> | <code class="language-plaintext highlighter-rouge">"human"</code></td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">id</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">version</code></td>
-      <td>string</td>
-      <td>no</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="decision">
+<p><strong>Of a content graph</strong>, that a node means what it says without further lookup,
+and that two instances holding the same node hold the same thing.</p>
+
+<p><strong>Of a state graph</strong>, neither. A state node is <em>about</em> something, so a
+consumer must resolve the reference before reporting on it, and the same node
+in two instances is two different records. A state graph is also the one that
+can be <strong>stale</strong>: content is wrong or right, state is wrong, right, or about a
+version that has moved on.</p>
+
+<p><strong>Of an unregistered kind, nothing.</strong> <code class="language-plaintext highlighter-rouge">graphLayer()</code> returns <code class="language-plaintext highlighter-rouge">undefined</code>, and
+<code class="language-plaintext highlighter-rouge">isContentGraph</code> / <code class="language-plaintext highlighter-rouge">isStateGraph</code> are deliberately <strong>not</strong> each other’s
+negation. Reading an absence as <code class="language-plaintext highlighter-rouge">content</code> is how somebody asking for a skill
+gets handed a QA verdict.</p>
+<h2 id="adding-a-kind">
   
   
-    <a href="#decision" class="anchor-heading" aria-labelledby="decision"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">decision</code>
+    <a href="#adding-a-kind" class="anchor-heading" aria-labelledby="adding-a-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a kind
   
   
-</h3>
+</h2>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">outcome</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"approve"</code> | <code class="language-plaintext highlighter-rouge">"request-changes"</code> | <code class="language-plaintext highlighter-rouge">"reject"</code></td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">role</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td>Role id from schemas/role-graph.ts — the lane this was decided in.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">by</code></td>
-      <td>object</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">considered</code></td>
-      <td>array<string></string></td>
-      <td><strong>yes</strong></td>
-      <td>Finding ids weighed, overruled or not.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">overrules</code></td>
-      <td>array<object></object></td>
-      <td>no</td>
-      <td>Findings the decision went against. The finding stays on the record; the note says why.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">notes</code></td>
-      <td>array<string></string></td>
-      <td><strong>yes</strong></td>
-      <td>Audit-note ids. At least one.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">decided_at</code></td>
-      <td>string (date-time)</td>
-      <td>no</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
-<h4 id="decisionby">
+<p>Answer the two questions and write the answer in <code class="language-plaintext highlighter-rouge">holds</code>, with the reason
+beside it as a comment. Two rules about how, and both are about not creating a
+second answer:</p>
+
+<p><strong>Do not add a third value.</strong> “Could not determine” is right when a <em>check</em>
+looked and could not tell, and wrong when an <em>author</em> is registering a kind
+they are defining. Whoever adds a kind knows what it holds; declining to say
+moves the burden to every consumer, which is the position this axis exists to
+end.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">holds</code> is part of a kind’s identity.</strong> <code class="language-plaintext highlighter-rouge">sameKind</code> in <code class="language-plaintext highlighter-rouge">cat-harness.ts</code>
+compares <code class="language-plaintext highlighter-rouge">type</code>, <code class="language-plaintext highlighter-rouge">renderable</code> and <code class="language-plaintext highlighter-rouge">holds</code>, so two layers registering one name
+on opposite sides of the line is a conflict that throws rather than a diamond
+where the first registration silently wins. <code class="language-plaintext highlighter-rouge">summary</code>, <code class="language-plaintext highlighter-rouge">skill</code> and <code class="language-plaintext highlighter-rouge">schema</code> are
+descriptive and are not compared — a dependency wording its summary
+differently is not a conflict.</p>
+<h2 id="two-things-this-axis-is-not">
   
   
-    <a href="#decisionby" class="anchor-heading" aria-labelledby="decisionby"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">decision.by</code>
+    <a href="#two-things-this-axis-is-not" class="anchor-heading" aria-labelledby="two-things-this-axis-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two things this axis is NOT
   
   
-</h4>
+</h2>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">kind</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"script"</code> | <code class="language-plaintext highlighter-rouge">"agent"</code> | <code class="language-plaintext highlighter-rouge">"human"</code></td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">id</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
-<h4 id="decisionoverrules">
+<p><strong>It is not <code class="language-plaintext highlighter-rouge">renderable</code>.</strong> The two are independent. Everything renderable so
+far is content, and nothing about state forbids a future kind being rendered —
+<code class="language-plaintext highlighter-rouge">fsh-guts</code> is the near miss, renderable in principle and withheld on purpose.</p>
+
+<p><strong>It is not a ruling on a graph’s contents.</strong> Classifying <code class="language-plaintext highlighter-rouge">cat-harness</code> as
+content says what that <em>kind</em> holds. Whether a particular node inside it is on
+the right side is a separate question, and one of them is open:
+<code class="language-plaintext highlighter-rouge">skills/memory/</code> holds agent-memory nodes inside <code class="language-plaintext highlighter-rouge">cat-harness</code> — a content
+kind — while their human mirror <code class="language-plaintext highlighter-rouge">todos/</code> is state. The 2×2 that
+<code class="language-plaintext highlighter-rouge">harness.json</code> states on <code class="language-plaintext highlighter-rouge">todos/</code> (memory vs workflow management, human vs
+agent) does not settle it, because <code class="language-plaintext highlighter-rouge">todos/</code> is labelled <em>memory</em> and holds
+<strong>outstanding items</strong>, which is workflow-management-shaped, while a memory
+entry is an <strong>established fact</strong>. So the content/state line may cut <em>across</em>
+that 2×2 rather than aligning with it. Bean <code class="language-plaintext highlighter-rouge">mhh9</code>, and the answer changes
+where 36 nodes live. <strong>Do not decide it in passing.</strong></p>
+<h2 id="see-also">
   
   
-    <a href="#decisionoverrules" class="anchor-heading" aria-labelledby="decisionoverrules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">decision.overrules[]</code>
+    <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
   
   
-</h4>
+</h2>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">finding</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">note</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="notes">
-  
-  
-    <a href="#notes" class="anchor-heading" aria-labelledby="notes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">notes[]</code>
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">id</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">author</code></td>
-      <td>object</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">rationale</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cites</code></td>
-      <td>array<any></any></td>
-      <td><strong>yes</strong></td>
-      <td>A rationale with no citation is an assertion.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">proposed_by</code></td>
-      <td>string</td>
-      <td>no</td>
-      <td>The agent that assembled the citations. Never the author — searching the corpus is clerical work.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">written_at</code></td>
-      <td>string (date-time)</td>
-      <td>no</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
-<h4 id="notesauthor">
-  
-  
-    <a href="#notesauthor" class="anchor-heading" aria-labelledby="notesauthor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">notes[].author</code>
-  
-  
-</h4>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">kind</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"script"</code> | <code class="language-plaintext highlighter-rouge">"agent"</code> | <code class="language-plaintext highlighter-rouge">"human"</code></td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">id</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><a href="https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-review/output.schema.json">Raw schema</a> · <a href="https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-review/output.schema.json" class="fa-edit-source">✎ Edit</a></p>
+<ul>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — what a declaration is
+and how a path resolves. This page is the axis; that one is the mechanism.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/process-state.html"><code class="language-plaintext highlighter-rouge">process-state</code></a> and
+<a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/bpmn-processes.html"><code class="language-plaintext highlighter-rouge">bpmn-processes</code></a> — the largest consumer of a state
+graph: a workflow instance is a token’s position in a diagram that lives in
+a content graph.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> and
+<a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> — the work plan, and why a bean
+is never deleted. A state record that vanishes leaves a sibling unable to
+tell abandonment from accident.</li>
+</ul>
 
           
 
