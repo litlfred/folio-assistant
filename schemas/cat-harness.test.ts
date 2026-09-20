@@ -16,7 +16,9 @@ import {
   GraphKindRegistry,
   graphLayer,
   isContentGraph,
+  isContextGraph,
   isStateGraph,
+  processMayWrite,
   graphKindsOfLayer,
   BASE_GRAPH_KINDS,
   GraphKindConflictError,
@@ -214,54 +216,19 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
   it("the harness's own vocabulary contains no renderable kind", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
-    expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
-      "bean-defs",
-      "beans",
-      // Renamed from `kg` on 2026-09-19: named for the LAYER that defines it,
-      // like every other harness concept. `kg` still READS, as a deprecated
-      // alias — see the alias test below.
-      "cat-harness",
-      // The trashcan that is kept: `renderable: false` ON PURPOSE rather
-      // than because there was never a page to make of it. It belongs to
-      // the harness for the same reason `beans` does — an instance can
-      // have something to throw away whether or not it has content.
-      "fsh-guts",
-      // The daily repository sweep's own reports. A SEPARATE kind from `qa`:
-      // a QA verdict judges an artefact this repository produced, a health
-      // report judges the repository itself — its size, its publish branch,
-      // its work plan. Neither criterion belongs to the other's subject.
-      "health",
-      // The two stages of the ingestion pipeline, declared separately because
-      // they are not interchangeable: the corpus checklist greps `library/`
-      // and not `uploads/`.
-      "library",
-      // The published projection of every verdict. Its own kind rather than
-      // part of `kg`, because a witness and the verdict it projects are
-      // different artefacts: one is what a checker wrote and lives beside its
-      // subject, the other is that flattened for the web and is never edited.
-      "qa",
-      "schemas",
-      // The todo graph: human actors' outstanding work. NOT a second work
-      // plan — `beans` is the agent work plan — but the harness owns the KIND
-      // while a folio owns the directory, exactly as with `beans`.
-      "todo-feedback",
-      "todo-items",
-      "todos",
-      "tools",
-      // The gettext INPUT to injection — `.pot`, `.po`, and the manifests
-      // that make each pair addressable. There is deliberately no matching
-      // kind for the OUTPUT: a rendered translation is the same kind of thing
-      // as the page it translates, differing by a `lang` the file declares
-      // for itself. See this kind's comment in cat-harness.ts for the version
-      // of PR #351 that got this wrong and why.
-      "translation-sources",
-      "uploads",
-      "voices",
-      "workflow-state",
-    ]);
-    for (const def of Object.values(BASE_GRAPH_KINDS)) {
-      expect(def.renderable).toBe(false);
-    }
+    //
+    // This ENUMERATED all sixteen until 2026-09-20, which asserted a roster
+    // the test's own name does not claim — so adding `memory` broke it, on the
+    // change that was correct, and the failure said "the list differs" rather
+    // than "something renderable appeared". Same pinned-count antipattern this
+    // repo keeps paying for, one level along: a list nothing derives it from.
+    const renderable = Object.entries(BASE_GRAPH_KINDS)
+      .filter(([, def]) => def.renderable)
+      .map(([name]) => name);
+    expect(renderable).toEqual([]);
+    // ...and the kind that IS renderable is genuinely not here, rather than
+    // here and flagged false. That is the fact the roster was standing in for.
+    expect(Object.keys(BASE_GRAPH_KINDS)).not.toContain("folio");
   });
 
   it("a bare harness registry does not know `folio` at all", () => {
@@ -269,11 +236,10 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     // naming it against a bare registry is refused.
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
-    expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "cat-harness", "fsh-guts", "health", "library", "qa", "schemas",
-      "todo-feedback", "todo-items", "todos",
-      "tools", "translation-sources", "uploads", "voices", "workflow-state",
-    ]);
+    expect(bare.get("folio")).toBeUndefined();
+    // A bare registry is exactly the harness's own vocabulary and nothing
+    // more. Derived rather than listed, for the reason above.
+    expect(bare.names().sort()).toEqual(Object.keys(BASE_GRAPH_KINDS).sort());
   });
 
   it("core's registration adds it, and it is the renderable one", () => {
@@ -304,60 +270,80 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       .toThrow(GraphKindConflictError);
   });
 
-  it("every registered kind says which side of the content/state line it is on", () => {
+  it("every registered kind says what a process does with it", () => {
     // `tsc` enforces this for a kind written as a literal; this catches one
     // built dynamically, where the type is erased. A kind that has not said is
     // the `dh4f` shape on a new axis: every consumer asking for content is
     // handed it, and reports a clean run.
     for (const name of defaultGraphKinds.names()) {
-      expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|state)$/)]);
+      expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|context|state)$/)]);
     }
   });
 
-  it("the two predicates are not each other's negation", () => {
+  it("the predicates are not each other's negations", () => {
     // An unregistered kind has not said `content` — it has not said anything.
-    // Collapsing the third state is how somebody asking for a skill is handed
-    // a QA verdict.
+    // Collapsing that is how somebody asking for a skill is handed a QA
+    // verdict.
     expect(graphLayer("not-a-kind")).toBeUndefined();
     expect(isContentGraph("not-a-kind")).toBe(false);
+    expect(isContextGraph("not-a-kind")).toBe(false);
     expect(isStateGraph("not-a-kind")).toBe(false);
+    expect(processMayWrite("not-a-kind")).toBe(false);
+    // ...and `context` is not a flavour of `state`. `isStateGraph` answered
+    // for every non-content kind until `context` landed, so a caller asking
+    // "may a step write this" got `true` for a memory entry.
+    expect(isStateGraph("memory")).toBe(false);
+    expect(isContextGraph("memory")).toBe(true);
   });
 
-  it("the two sides partition the registry and neither is empty", () => {
+  it("the three layers partition the registry and none is empty", () => {
     // No pinned counts: the property is that every kind lands on exactly one
-    // side. A count would break on the change that was correct.
-    const content = graphKindsOfLayer("content");
-    const state = graphKindsOfLayer("state");
-    expect(content.length + state.length).toBe(defaultGraphKinds.names().length);
-    expect(content.filter((k) => state.includes(k))).toEqual([]);
-    expect(content.length).toBeGreaterThan(0);
-    expect(state.length).toBeGreaterThan(0);
+    // layer. A count would break on the change that was correct — which is
+    // what the two roster assertions above did when `memory` arrived.
+    const layers = (["content", "context", "state"] as const).map((l) => graphKindsOfLayer(l));
+    expect(layers.flat().length).toBe(defaultGraphKinds.names().length);
+    expect(new Set(layers.flat()).size).toBe(layers.flat().length);
+    for (const l of layers) expect(l.length).toBeGreaterThan(0);
   });
 
-  it("the classification of the four non-obvious kinds is pinned", () => {
-    // These four are the ones a reader would guess wrong from the name, so
-    // they are the ones worth defending against a silent flip. Named
-    // individually rather than counted, so a failure says WHICH moved.
-    // Reasoning: skills/folio-core/content-and-state-graphs.md.
+  it("only `state` is writable by a running step", () => {
+    // The property `context` exists for. A step writing to a context graph is
+    // a defect, and this is what lets a consumer ask.
+    for (const name of defaultGraphKinds.names()) {
+      expect([name, processMayWrite(name)]).toEqual([name, graphLayer(name) === "state"]);
+    }
+  });
+
+  it("the classification of the kinds a reader would guess wrong is pinned", () => {
+    // Named individually rather than counted, so a failure says WHICH moved.
+    // Reasoning: skills/folio-core/content-context-and-state-graphs.md.
     expect({
-      // A verdict is where a REVIEW got to; detached from its subject it
-      // asserts nothing.
+      // Read during a process, never written by one. The owner's ruling on
+      // bean `mhh9`, 2026-09-20 — and the kind the third layer exists for.
+      memory: graphLayer("memory"),
+      // Its mirror in the todos/ 2x2, and the axis cuts ACROSS that row: a
+      // todo is an outstanding item a process CLOSES.
+      todos: graphLayer("todos"),
+      // Renderable in principle and withheld on purpose, and nothing mid-
+      // process writes it — relocating something there is a human-directed
+      // act. `state` for a few hours until `mhh9` was settled.
+      "fsh-guts": graphLayer("fsh-guts"),
+      // A verdict is where a REVIEW got to, and the sweep writes it.
       qa: graphLayer("qa"),
       // The same shape about the repository rather than its artefacts.
       health: graphLayer("health"),
-      // A QUEUE — a position in a pipeline. Same file, different side of the
-      // line from `library`, which is what ingestion produced.
+      // A QUEUE that ingestion drains. Same file, different layer from
+      // `library`, which is what ingestion produced.
       uploads: graphLayer("uploads"),
       library: graphLayer("library"),
-      // Renderable in principle and withheld on purpose: what it carries is
-      // abandoned/superseded, which is a fact about where something got to.
-      "fsh-guts": graphLayer("fsh-guts"),
     }).toEqual({
+      memory: "context",
+      todos: "state",
+      "fsh-guts": "context",
       qa: "state",
       health: "state",
       uploads: "state",
       library: "content",
-      "fsh-guts": "state",
     });
   });
 

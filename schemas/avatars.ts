@@ -176,6 +176,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 176,
     reads: "a glyph and an A — one language against another",
   },
+  memory: {
+    // A knot tied in a thread — the oldest mnemonic there is, and the right
+    // read for a kind that is fixed rather than accumulating: the knot is
+    // already tied. Deliberately NOT a brain, which would say "the agent" and
+    // this kind is what the agent CARRIES, not the agent.
+    glyph: "M4 12h4m8 0h4M9.5 9.5a3 3 0 000 5M14.5 9.5a3 3 0 010 5M9.5 9.5c2 1 3 1 5 0M9.5 14.5c2-1 3-1 5 0",
+    tone: 108,
+    reads: "a knot in a thread — a fact tied down, read and not rewritten",
+  },
   "fsh-guts": {
     // The trashcan itself is a kind. Distinct from the trash STATE below.
     glyph: "M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13M11 11v6M14 11v6",

@@ -92,18 +92,42 @@ export const DECLARATION_FILENAME = "harness.json";
  * the site build.
  */
 /**
- * Which side of the content/state line a graph kind sits on.
+ * What a running process does with a graph of this kind.
  *
- * Two values and no third. There is no "could not determine" here, and that is
- * a departure from this repo's usual three-state rule for a reason worth
+ * **One question settles it: does a running process WRITE it, READ it, or is it
+ * the SUBJECT?**
+ *
+ * - `content` — the subject. A process may PRODUCE it, and that is usually the
+ *   point of the process.
+ * - `context` — **static state.** A record about content that a process reads
+ *   and never writes. Fixed for the duration of an instance. It changes only
+ *   when a human directs an authoring act, outside any process.
+ * - `state` — **live state.** A record the process itself writes as it runs. A
+ *   bean's status changes because a step completed.
+ *
+ * Three values and no fourth. There is no "could not determine" here, and that
+ * is a departure from this repo's usual three-state rule for a reason worth
  * stating: a third state is right when a CHECK looked and could not tell, and
  * wrong when an AUTHOR is registering a kind they are defining. Whoever adds a
- * kind knows what it holds; letting them decline to say would put the burden on
- * every consumer instead, which is the position the axis exists to end.
+ * kind knows what a process does with it; letting them decline to say would put
+ * the burden on every consumer instead, which is the position the axis exists
+ * to end.
  *
- * See `skills/folio-core/content-and-state-graphs.md`.
+ * ## `context` arrived by being needed, not by being symmetrical
+ *
+ * The axis shipped with two values and the owner refined it the same day,
+ * settling bean `mhh9`: *"put memory under state/context as static, during a
+ * process. it does not change. agents dont work on it (except when an authoring
+ * agent is directed by human). todos, beans are not static."*
+ *
+ * That is not a subdivision for tidiness. `content` and `state` alone forced
+ * two unlike things together: a bean, which a step rewrites, and a memory
+ * entry, which no step may touch. A consumer told only "this is state" cannot
+ * tell whether writing to it is normal or a bug.
+ *
+ * See `skills/folio-core/content-context-and-state-graphs.md`.
  */
-export type GraphLayer = "content" | "state";
+export type GraphLayer = "content" | "context" | "state";
 
 /** What a declared directory's graph kind means. */
 export interface GraphKindDef {
@@ -133,10 +157,14 @@ export interface GraphKindDef {
    *   subject matter. It is what the instance IS. It stands on its own: you
    *   can read a skill, a schema or a library section without knowing what
    *   anybody did with it.
-   * - **`state`** — a record of where a process, a participant or an artefact
-   *   GOT TO. It REFERENCES content and is meaningless without it: a bean
-   *   names work on something, a QA verdict judges something, a workflow
-   *   instance holds a token in a process drawn somewhere else.
+   * - **`context`** — STATIC state. A record about content that a running
+   *   process READS and never writes, fixed for the duration of an instance.
+   *   It changes only when a human directs an authoring act, outside any
+   *   process. A step that writes to a `context` graph is a defect.
+   * - **`state`** — LIVE state. A record the process itself WRITES as it
+   *   runs: a bean's status changes because a step completed, a workflow
+   *   instance's token moves. It REFERENCES content and is meaningless
+   *   without it.
    *
    * **REQUIRED, so a kind cannot go unclassified.** That is the
    * `DOCUMENT_BLOCK_KINDS` discipline — derived as the complement of
@@ -147,18 +175,21 @@ export interface GraphKindDef {
    * not say" indistinguishable from "content".
    *
    * **The discipline is in the skill, not here** —
-   * `skills/folio-core/content-and-state-graphs.md` carries the definition,
+   * `skills/folio-core/content-context-and-state-graphs.md` carries the definition,
    * the classification of every kind with its reason, the two questions that
    * settle a hard case, and what a consumer may assume about each side. The
    * classification of `fsh-guts`, `qa`, `health` and `uploads` is the part
    * worth reading before adding a kind: none of the four is obvious from its
    * name, and each is decided by the same two questions rather than by taste.
    *
-   * NOT yet settled, and deliberately left open: `skills/memory/` holds agent
-   * memory inside `cat-harness`, which is classified `content` here, while its
-   * human mirror `todos/` is `state`. Whether those 36 nodes are on the right
-   * side is bean `mhh9`, and the answer changes where they live. Classifying
-   * the CONTAINING kind is not a ruling on its contents.
+   * SETTLED, and the move is outstanding: agent memory is `context` — bean
+   * `mhh9`, decided by the owner 2026-09-20. The `memory` kind below carries
+   * that. The 36 nodes still sit in `skills/memory/`, inside a `cat-harness`
+   * directory, because relocating a directory as a SIDE EFFECT of adding a
+   * classification is the shape #395 refused and bean `auap` did as its own
+   * change. Bean `07xs`. Classifying the CONTAINING kind was never a ruling on
+   * its contents, and this is the case that proves it: `cat-harness` is
+   * correctly `content` while something inside it is not.
    */
   holds: GraphLayer;
   summary: string;
@@ -473,15 +504,52 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // WHO SMART folios this platform targets. The collision was raised and the
   // owner confirmed the spelling; it is recorded here so the overlap is met
   // as a known fact rather than rediscovered as a defect.
+  // Agent memory — durable facts an agent carries between sessions.
+  //
+  // `context`, and it is the kind the third value was added FOR. The owner,
+  // settling bean `mhh9` on 2026-09-20: "put memory under state/context as
+  // static, during a process. it does not change. agents dont work on it
+  // (except when an authoring agent is directed by human). todos, beans are
+  // not static."
+  //
+  // Every clause of that is the `context` definition. A running process READS
+  // memory and no step writes it; a step that did would be a defect rather
+  // than an update. It changes when a human directs an authoring agent to
+  // change it, which is an act OUTSIDE any instance.
+  //
+  // That is also what separates it from `todos`, its mirror in the 2x2
+  // `todos/todos.json` states. Both were called "memory" there — human and
+  // agent — and the axis cuts ACROSS that: a todo is an OUTSTANDING ITEM a
+  // process closes, so it is live `state`, while a memory entry is an
+  // ESTABLISHED FACT nothing mid-process revises. Same quadrant row, opposite
+  // sides of this line.
+  //
+  // REGISTERED BUT NOT YET DECLARED by any directory here: the nodes are in
+  // `skills/memory/`, inside a `cat-harness` directory, and moving them is
+  // bean `07xs`. A kind registered ahead of a directory is the `folio`
+  // situation, not the `dh4f` one — `dh4f` is a DIRECTORY declared and absent,
+  // where a consumer scans nothing and reports clean. Nothing scans a kind.
+  memory: {
+    type: termIri("MemoryGraph"),
+    renderable: false,
+    holds: "context",
+    summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
+  },
+
   "fsh-guts": {
     type: termIri("FshGutsGraph"),
     renderable: false,
-    // The one that reads like content and is not. What is in here is
-    // deprecated or superseded: the fact it carries is WHERE SOMETHING GOT TO
-    // — abandoned, replaced, decided against — which is why it is deliberately
-    // absent from the rendered site while being rendarable in principle. The
-    // owner classified it as state, 2026-09-20, and the two questions agree.
-    holds: "state",
+    // The one that reads like content, and the one `context` moved. What is
+    // in here is deprecated or superseded, so the fact it carries is WHERE
+    // SOMETHING GOT TO — which is why it is deliberately absent from the
+    // rendered site while being renderable in principle. But no running step
+    // writes it: relocating something here is a HUMAN-DIRECTED act, and
+    // `deletion-requires-confirmation` is the skill that says so in as many
+    // words. Read, never written by a process — which is `context`, and it
+    // was `state` for the few hours between the axis landing and `mhh9`
+    // being settled. Classified state by the owner 2026-09-20; the refinement
+    // the same day moved it, by the same criterion that moved memory.
+    holds: "context",
     summary:
       "Deprecated and throwaway structured content — kept, addressable and exported, and " +
       "deliberately absent from the rendered site. The destination for anything that would " +
@@ -663,14 +731,14 @@ export function isRenderable(kind: string, registry: GraphKindRegistry = default
 }
 
 /**
- * Which side of the content/state line a kind sits on, or `undefined` for a
+ * What a running process does with a graph of this kind, or `undefined` for a
  * kind this registry does not know.
  *
- * **`undefined` is a third state and callers must not collapse it.** An
+ * **`undefined` is a further state and callers must not collapse it.** An
  * unregistered kind has not said `content`; it has not said anything, and a
  * consumer that reads the absence as content will hand somebody a QA verdict
- * where they asked for a skill. The paired predicates below are deliberately
- * NOT each other's negation for the same reason.
+ * where they asked for a skill. The predicates below are deliberately NOT each
+ * other's negations for the same reason.
  */
 export function graphLayer(kind: string, registry: GraphKindRegistry = defaultGraphKinds): GraphLayer | undefined {
   return registry.get(kind)?.holds;
@@ -681,8 +749,44 @@ export function isContentGraph(kind: string, registry: GraphKindRegistry = defau
   return graphLayer(kind, registry) === "content";
 }
 
-/** Does this kind hold a record of where something got to? False for an unregistered kind. */
+/**
+ * Is this STATIC state — read during a process and never written by one?
+ *
+ * False for an unregistered kind, and false for `content`. There is
+ * deliberately no `isNotContent` convenience: "is this the subject matter" and
+ * "may a step write this" are different questions, and one predicate answering
+ * both is how two call sites come to disagree about which they asked.
+ */
+export function isContextGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "context";
+}
+
+/**
+ * Is this LIVE state — a record a running process writes as it goes?
+ *
+ * **Narrowed when `context` arrived.** It previously answered for every
+ * non-content kind, so a caller asking "may a step write this" got `true` for
+ * a memory entry. Anything that meant "not content" must now say which of the
+ * two it meant.
+ */
 export function isStateGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "state";
+}
+
+/**
+ * May a running process WRITE to a graph of this kind?
+ *
+ * The question `isStateGraph` is usually being asked in service of, named so a
+ * caller does not have to know that `state` is the only writable layer — and
+ * so that adding a fourth value later is one edit here rather than a search
+ * for every `=== "state"`.
+ *
+ * `content` is `false` on purpose even though a process certainly produces
+ * content: writing content is the SUBJECT of an authoring process, governed by
+ * the HCI validation gate and the commit boundary, not a bookkeeping write a
+ * step performs in passing. Those are the writes this predicate is about.
+ */
+export function processMayWrite(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
   return graphLayer(kind, registry) === "state";
 }
 

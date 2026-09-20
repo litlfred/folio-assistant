@@ -43,13 +43,11 @@ graph**. `folio` is one graph kind among several.
 The vocabulary is **open**, and split across two layers.
 
 **A kind answers two questions, and only one of them is here.** `renderable`
-— does this become a website — is below. The other is whether the graph holds
-the subject matter or a record about it, and
-[`content-and-state-graphs`](content-and-state-graphs.md) owns it: the
-definition, the two questions that settle a hard case, the reasoning for the
-four kinds whose side is not obvious from their name, and what a consumer may
-assume about each. **Read it before adding a kind** — `holds` is required, so
-a kind that has not decided does not compile.
+— does this become a website — is below. The other is what a running process
+does with the graph: produces it, reads it, or writes it, and
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md) owns
+it. **Read it before adding a kind** — `holds` is required, so a kind that has
+not decided does not compile.
 
 > ### `kg` was renamed to `cat-harness` (2026-09-19)
 >
@@ -86,7 +84,16 @@ a kind that has not decided does not compile.
 > and churning them would touch hundreds of references for no gain in what a
 > declaration MEANS.
 
-| kind | declared by | holds | renderable |
+**The column is `contents`, not `holds`.** `holds` is the FIELD on
+`GraphKindDef`, and it carries the content/context/state layer rather than a
+description — one word meaning two things in the same document is a collision
+worth one rename. The layer is deliberately **not** a column here: it is
+`graphKindsOfLayer()` in
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md), and a
+hand-maintained copy of it would be free to drift from the registry that
+decides it.
+
+| kind | declared by | contents | renderable |
 |---|---|---|---|
 | `tools` | **harness** | Tool definitions, themselves nodes in the KG | no |
 | `cat-harness` | **harness** | skills, workflows, roles — the harness layer's own knowledge graph. Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. | no |
@@ -99,6 +106,7 @@ a kind that has not decided does not compile.
 | `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
 | `todo-items` | **harness** | todo nodes — one file each, `"$schema": "folio-todo/v1"`. Authored by people, and by agents on their behalf. | no |
 | `todo-feedback` | **harness** | feedback items — todos raised against a specific block, carrying the submitter's identity. Read by `todo-review`. | no |
+| `memory` | **harness** | agent memory — durable facts an agent carries between sessions, one `"$schema": "folio-memory/v1"` node each. Read during a process and never written by one; it changes when a human directs an authoring agent. **Registered ahead of a directory**: the nodes are still in `skills/memory/`, and the move to a declared `memory/` is bean `07xs`. | no |
 | `fsh-guts` | **harness** | deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. | **no, on purpose** |
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
@@ -547,11 +555,11 @@ Either way the definition is `@type` IRI + `renderable` + `holds` + summary,
 and the JSON-LD projection and the reverse lookup both derive from it. A kind
 added without deciding **either** axis will not compile.
 
-`holds` is the content/state one, and
-[`content-and-state-graphs`](content-and-state-graphs.md) is where you answer
-it — including why there is no third value, and why it is compared by
-`sameKind` so two layers cannot register one name on opposite sides of the
-line and have the first silently win.
+`holds` is the content/context/state one, and
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md) is
+where you answer it — including the bar for adding a value at all, why there is
+no "could not determine", and why it is compared by `sameKind` so two layers
+cannot register one name on different layers and have the first silently win.
 
 Note the declaration's `graph` field is validated **against the registry at
 read time**, not by a closed Zod enum. An enum would be built at module load —

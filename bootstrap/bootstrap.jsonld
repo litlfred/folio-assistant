@@ -250,7 +250,7 @@
     "SequenceFlow": 20,
     "Role": 9,
     "ProcessNode": 20,
-    "GraphKind": 16,
+    "GraphKind": 17,
     "Directory": 2
   },
   "problems": [],
@@ -993,6 +993,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TodoFeedbackGraph",
       "renderable": false,
       "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "memory",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#MemoryGraph",
+      "renderable": false,
+      "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",

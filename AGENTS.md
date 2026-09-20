@@ -539,15 +539,17 @@ to spend the words: **do not start the topic.**
   holds: `folio` (authored content, rendered to a website by just-the-docs),
   `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,
   roles) or `schemas`. A kind answers TWO questions: `renderable` — is it wired
-  to the site build, which is what makes `folio` special — and `holds`, whether
-  the graph says what the instance **IS** (`content`) or where something **GOT
-  TO** (`state`). Both are required, so a kind that has not decided does not
-  compile. **The discipline is in the skill, not here** —
-  [`skills/folio-core/content-and-state-graphs.md`](skills/folio-core/content-and-state-graphs.md)
-  carries the definition, the two questions that settle a hard case, the four
-  kinds whose side is not obvious from their name, what a consumer may assume
-  about each side, and the open question about where agent memory belongs
-  (bean `mhh9`).
+  to the site build, which is what makes `folio` special — and `holds`, which
+  asks what a running process does with the graph: produces it (`content`),
+  READS it and never writes it (`context`), or WRITES it as it runs (`state`).
+  Both are required, so a kind that has not decided does not compile, and a
+  step writing to a `context` graph is a defect rather than an update.
+  **The discipline is in the skill, not here** —
+  [`skills/folio-core/content-context-and-state-graphs.md`](skills/folio-core/content-context-and-state-graphs.md)
+  carries the one question that settles a kind, the two that settle a hard
+  case, the kinds whose layer is not obvious from their name, what a consumer
+  may assume of each, and why agent memory is `context` while its mirror
+  `todos/` is `state` (bean `mhh9`, settled 2026-09-20).
   An instance **inherits its dependencies' directories**: `agentic-harness`
   declares `tools/`, `kg/` and `schemas/`; `folio-assist-core` declares only
   `folio/` and gets the other three. **Overrides match on the entry's `id`, not

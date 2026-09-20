@@ -15,7 +15,7 @@ living only in `AGENTS.md` is a rule with no home.
 
 ## Summary of Changes
 
-`skills/folio-core/content-and-state-graphs.md`:
+`skills/folio-core/content-context-and-state-graphs.md`:
 
 - The definition of each side, stated so it can be applied rather than recalled.
 - **The two questions** that settle a hard case: does it stand on its own when
