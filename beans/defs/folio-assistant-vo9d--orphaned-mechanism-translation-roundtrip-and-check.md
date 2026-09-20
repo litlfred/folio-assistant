@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vo9d
 title: 'ORPHANED MECHANISM: translation-roundtrip and check-l1-complete have entry points and no callers, while the BPMN asserts the step runs'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T11:31:09Z
-updated_at: 2026-09-20T12:58:35Z
+updated_at: 2026-09-20T14:12:51Z
 parent: folio-assistant-d308
 ---
 
@@ -111,11 +111,13 @@ gap is simply now written down instead of inferable only by grepping for callers
 
 ## Done when
 
-- [ ] one of the three chosen for `translation-roundtrip`, by a person
-- [ ] `check-l1-complete` either gains a caller or is recorded as deliberately manual
-- [ ] `covered-is-not-reachable` gains this as the INVERSE of its third case —
-      entry point present, callers absent
-- [ ] the `dw7v` hypothesis either confirmed from history or struck
+- [x] one of the three chosen for `translation-roundtrip`, by a person — and the
+      owner refused the choice: *"1 2 3 are all triggers"*
+- [x] `check-l1-complete` gained a caller — the `l1-complete-check` Tool node
+- [x] `covered-is-not-reachable` gains this as the INVERSE — **case 5** in its
+      table, *"a skill, a mechanism, a command / missing: anything that invokes
+      it"*, pointing at §Reachability is PLURAL where it is discussed
+- [x] the `dw7v` hypothesis **STRUCK** from history — see below
 
 
 ---
@@ -357,3 +359,48 @@ lesson: **a name says what something is for; an argument list says what it does.
       answered structurally, capability live, one subject, and the skill argues
       against exactly this
 - [x] the one-mechanism-many-dispatch-points pattern written into a skill
+
+
+---
+
+## CLOSED 2026-09-20 — the `dw7v` hypothesis is struck, and the truth is worse
+
+The hypothesis recorded above, flagged as one rather than asserted:
+
+> `dw7v` may be when this path lost its last caller — removing the simulation
+> removed the only thing that exercised it.
+
+**Struck.** Read from history rather than reasoned about:
+
+1. `simulate-translation.ts` before `dw7v` (`git show e23d3b98e6^:…`) contains its
+   **own private `roundTripQA()`** at line 117, over a hand-written
+   `BACK_TRANSLATIONS` map. It never referenced `translation-roundtrip.ts` at all —
+   grepping the pre-commit file for `roundtrip` returns only its own prose and its
+   own function.
+2. `translation-roundtrip.ts` does not appear in `dw7v`'s changed-file list.
+3. At its **birth** commit `4997840` (*"the agentic round trip — two agents, and
+   the separation is the measurement"*), the only references to it anywhere in the
+   tree were its own `@module` tag, its own `usage:` string, and one line of
+   `translation-manager.md` prose telling a human what to type.
+
+**A path cannot lose a caller it never had.** It was born callerless.
+
+### Why that is the worse finding
+
+"Lost a caller" is a regression — something used to work. "Born callerless" is
+this skill's own **mechanism-inlined-in-prose** failure committed at the moment the
+mechanism was written, and it survived every subsequent check because the skill
+*did* document the command. A reader checking the skill, the diagram and the file
+finds all three present.
+
+So `dw7v` is exonerated, and `4997840` is where the gap was introduced — which is
+worth having straight, because the three dispatch points proposed for this bean
+were all framed as *restoring* something.
+
+### Recorded in the skill as case 5, not as a fifth section
+
+The table row plus a pointer, rather than another worked section, for a stated
+reason: the useful question for this shape is not *what is missing* but **how many
+dispatch points it should have**, which §Reachability is PLURAL already answers
+with the owner's own words. A second section would have said it twice, and the
+skill is at 260 lines against a 280-line `skill-is-brief` threshold.
