@@ -14,13 +14,13 @@
  * export of nothing succeeds**. Both defects this check was written against
  * rendered cleanly:
  *
- * - `collectSkills` resolved `bootstrap/skills/` against the wrong root, found
+ * - `collectSkills` resolved `cat-bootstrap/skills/` against the wrong root, found
  *   nothing, and `continue`d under the comment "a package this instance does
- *   not carry". Bootstrap's skills left the published graph in silence;
+ *   not carry". CatBootstrap's skills left the published graph in silence;
  *   `confirm-harness` became a dangling `hasSkill` and `kg-navigation` only
  *   looked present because a second copy exists elsewhere (bean `v3se`).
- * - `bootstrap/bootstrap.jsonld` publishes **16** graph-kind nodes while
- *   `bootstrap/harness.json` declares **one**.
+ * - `cat-bootstrap/cat-bootstrap.jsonld` publishes **16** graph-kind nodes while
+ *   `cat-bootstrap/harness.json` declares **one**.
  *
  * Neither threw. So the question is not whether a render returned, it is
  * whether what came back is the instance's OWN — which is a comparison
@@ -82,7 +82,7 @@ export interface InstanceRender {
    * Published and not declared — REPORTED, not yet fatal.
    *
    * Measured on `35b868a45d`: cat-harness 1 (`folio`, contributed by core),
-   * bootstrap 15. Both instances publish all 16 registered kinds because
+   * cat-bootstrap 15. Both instances publish all 16 registered kinds because
    * `collectGraphKinds()` takes no root — `COLLECTOR_SCOPE` files `graphKinds`
    * as `universal`, "reads nothing instance-specific at all". A graph kind is
    * contributed by a LAYER, so the registry is global in STORAGE and not in
@@ -118,7 +118,7 @@ export interface InstanceRender {
  *
  * A directory entry names kinds; a graph file INSIDE that directory may name
  * more, and those are equally the instance's. Reading only `harness.json`
- * makes `bean-defs` look like something bootstrap smuggled in.
+ * makes `bean-defs` look like something cat-bootstrap smuggled in.
  */
 
 /**
@@ -212,7 +212,7 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
  * Every instance this repository owns — the root, and any beside it.
  *
  * The docstring above is unchanged and was FALSE in both halves until
- * 2026-09-20: this listed `["cat-harness", "bootstrap"]`, so the root was not
+ * 2026-09-20: this listed `["cat-harness", "cat-bootstrap"]`, so the root was not
  * in it and two instances beside it were missing. There are four —
  * `folio-assist-core` and the repository root are the two that were going
  * unchecked, and `check-declared-assets` carried the same literal and the same

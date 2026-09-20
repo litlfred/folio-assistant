@@ -5,19 +5,19 @@
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Definitions_Process_Discussion"
-                  targetNamespace="https://litlfred.github.io/folio-assistant/bootstrap/workflows"
-                  exporter="bootstrap" exporterVersion="1">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/cat-bootstrap/workflows"
+                  exporter="cat-bootstrap" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_Discussion">
     <bpmn:participant id="Participant_Process_Discussion" name="Determine the harness and repositories" processRef="Process_Discussion"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_Discussion" name="Determine the harness and repositories" isExecutable="false">
-    <bpmn:documentation>THE SECOND PROCESS IN BOOTSTRAP, and an exception to bootstrap holding as little as possible. Two facts have no answer in any file an Initiator can reach: WHICH harness this repository should become, and WHICH repositories are read from and written to. No instruction body produces them — they are judgements held by whoever asked for the harness. An agent that cannot obtain them cannot take the first step of `initialize-harness`, so this is presupposed by every task rather than indicated by one. (Logging sits differently and is NOT the contrast it first looks like: the owner's rule is "logging is optional, unless indicated on tasks", and `initialize-harness` indicates it — which is why `log-message` is here too.)
+    <bpmn:documentation>THE SECOND PROCESS IN CAT_BOOTSTRAP, and an exception to cat-bootstrap holding as little as possible. Two facts have no answer in any file an Initiator can reach: WHICH harness this repository should become, and WHICH repositories are read from and written to. No instruction body produces them — they are judgements held by whoever asked for the harness. An agent that cannot obtain them cannot take the first step of `initialize-harness`, so this is presupposed by every task rather than indicated by one. (Logging sits differently and is NOT the contrast it first looks like: the owner's rule is "logging is optional, unless indicated on tasks", and `initialize-harness` indicates it — which is why `log-message` is here too.)
 
 SYMMETRIC IN ITS PARTICIPANTS. Human-to-agent and agent-to-agent are the same process: the Requestor lane is filled by a person or by a sibling agent that already holds the answer. The output records which, because the two are evidence of different weight, but neither is refused and they are not conflated.
 
 THE TOOL DOES NOT DECIDE. `discuss` carries a question out and an answer back. Judgement — the Initiator's — chooses what to ask and rules on when an answer settles the matter. The task is finished when a document conforming to `discussion.output.schema.json` exists, not when a pleasant exchange has occurred.
 
-PRECONDITION: the Initiator has read bootstrap/README.md and has narrowed the candidates as far as context allows. BPMN has no precondition element and this schema adds none yet, so it is stated here as `initialize-harness` states its own, and tracked as bean `lv3j`.
+PRECONDITION: the Initiator has read cat-bootstrap/README.md and has narrowed the candidates as far as context allows. BPMN has no precondition element and this schema adds none yet, so it is stated here as `initialize-harness` states its own, and tracked as bean `lv3j`.
 
 NO folio:bean on any activity, and isExecutable is false, for the reasons `initialize-harness` gives: a bean is work-plan machinery and an engine is harness machinery, and an Initiator runs before either exists. This is data an Initiator reads.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_Discussion">

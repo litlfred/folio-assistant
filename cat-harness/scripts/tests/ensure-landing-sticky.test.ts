@@ -277,7 +277,7 @@ describe("a malformed sticky is repaired, not fatal", () => {
 });
 
 describe("a nested instance contributes its own stickies", () => {
-  /** An instance declaring a directory that is itself an instance — bootstrap's shape. */
+  /** An instance declaring a directory that is itself an instance — cat-bootstrap's shape. */
   function nested(): string {
     const root = mkdtempSync(join(tmpdir(), "landing-nested-"));
     writeFileSync(
@@ -292,7 +292,7 @@ describe("a nested instance contributes its own stickies", () => {
           // Mirrors the live shape rather than a convenient one: the declared
           // entry is the nested instance's GRAPH directory, one level inside it,
           // so `harness.json` is not in the directory named here. That is what
-          // `bootstrap/skills/` looks like, and a composer that looked for a
+          // `cat-bootstrap/skills/` looks like, and a composer that looked for a
           // declaration inside the declared directory would find nothing.
           directories: [{ id: "inner", path: "inner/skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
         },
@@ -320,7 +320,7 @@ describe("a nested instance contributes its own stickies", () => {
   }
 
   test("the nested instance is DISCOVERED, not named by the outer one", () => {
-    // Hardcoding `bootstrap/` in the composer would put the layer list back in
+    // Hardcoding `cat-bootstrap/` in the composer would put the layer list back in
     // the layer above — the ownership inversion this change undoes — and would go
     // stale the moment the split happens. What marks an instance is that it
     // declares itself.
@@ -383,7 +383,7 @@ describe("a nested instance contributes its own stickies", () => {
 
   test("an instance contributing NO stickies gets an empty board, not a default one", () => {
     // Absent means "this layer contributes none" rather than "unmigrated". A
-    // default here would hand a cat back to a bare bootstrap.
+    // default here would hand a cat back to a bare cat-bootstrap.
     const root = mkdtempSync(join(tmpdir(), "landing-none-"));
     writeFileSync(
       join(root, "harness.json"),

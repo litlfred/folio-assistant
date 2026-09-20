@@ -201,7 +201,7 @@ function run(): void {
     // (see the comment on `qaPath` above).
     let report: BlockQaReport | undefined = loadQaReport(existingBlockQaPath(repo, rootAbs) ?? qaPath);
     if (!report) {
-      // Bootstrap a fresh sidecar — agent can write the first
+      // CatBootstrap a fresh sidecar — agent can write the first
       // entry even if qa-sweep hasn't run yet. Reuses the shared
       // `readBlockManifest` helper to extract { kind, label } in a
       // single file read.

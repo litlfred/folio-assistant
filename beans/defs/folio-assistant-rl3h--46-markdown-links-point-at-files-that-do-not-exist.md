@@ -61,7 +61,7 @@ it means checking each target against the history, which is the work.
 ## One more, found 2026-09-20 and not counted above
 
 `cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
-names **`bootstrap/workflows/bootstrap.bpmn`** in its table. That file does
+names **`cat-bootstrap/workflows/bootstrap.bpmn`** in its table. That file does
 not exist; the process is `initialize-harness.bpmn`, and `discussion.bpmn`
 and `log-message.bpmn` sit beside it unnamed.
 
@@ -71,7 +71,7 @@ does not resolve — reached by a different route, which is worth noting when
 someone extends the sweep: **the count is of links, not of references.**
 
 Fixing it is three table rows and no declaration. **Do not "fix" it by
-declaring `bootstrap/workflows/` at the root** — that re-introduces the 88-
+declaring `cat-bootstrap/workflows/` at the root** — that re-introduces the 88-
 reference graph leak `instance-graph-isolation.test.ts` guards, which is bean
 `7u3g`, scrapped for exactly that.
 

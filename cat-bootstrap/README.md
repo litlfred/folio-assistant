@@ -1,4 +1,4 @@
-# bootstrap
+# cat-bootstrap
 
 **You have just been pointed at a repository and know nothing about it.** Read
 this page, then start the one process it names. Nothing else here is a
@@ -10,11 +10,11 @@ Six, and every later sentence uses them rather than re-explaining them.
 
 | | |
 |---|---|
-| **Harness** | what a repository can be made into — `bootstrap` itself, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. |
+| **Harness** | what a repository can be made into — `cat-bootstrap` itself, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. |
 | **Initiator** | **you**: the agent asked to initialize a harness, knowing only what this page gives you. |
 | **Requestor** | the person who wants one initialized. The only one who can say *which*. |
 | **Knowledge Graph Data Store** | a git repository — where a harness is read from and a new one written to. Reached through the git CLI, or through a forge's API. |
-| **Logger** | where an actor says what it is doing. Records; decides nothing. In bootstrap it is the discussion you are already in. |
+| **Logger** | where an actor says what it is doing. Records; decides nothing. In cat-bootstrap it is the discussion you are already in. |
 | **Process** | a diagram with lanes, steps and branches. Each lane is a role; you act in yours. |
 
 An Initiator has **no** harness, no server, no tools and no work plan. If a
@@ -37,7 +37,7 @@ where saying so is required. Its skill is
 [`skills/log-message.md`](skills/log-message.md).
 
 To read it, and anything else here, use
-[`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md). It assumes nothing but
+[`skills/cat-bootstrap-kg-navigation.md`](skills/cat-bootstrap-kg-navigation.md). It assumes nothing but
 the ability to open a file.
 
 The process ends one of two ways: a harness installed, or a failure logged.
@@ -60,7 +60,7 @@ one** harness. You may narrow the list. You may not break a tie.
 **The chosen harness's own instructions** — always at the same place inside it:
 
 ```
-<name>/docs/bootstrap/initialization.md
+<name>/docs/cat-bootstrap/initialization.md
 ```
 
 `<name>` is the `name` in that harness's `harness.json`. It is the same path
@@ -87,4 +87,4 @@ un-initialised is recoverable; one declaring the wrong upstream is not.
 [process](../cat-harness/skills/workflows) ·
 [tool](../cat-harness/schemas/tool.ts).
 Why bootstrapping is built this way:
-[the proposal](../fsh-guts/proposals/bootstrap.md).
+[the proposal](../fsh-guts/proposals/cat-bootstrap.md).

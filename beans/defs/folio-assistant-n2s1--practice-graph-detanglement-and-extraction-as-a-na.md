@@ -1,11 +1,11 @@
 ---
 # folio-assistant-n2s1
 title: 'PRACTICE: graph detanglement and extraction as a named sub-practice of KG management'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T13:19:36Z
-updated_at: 2026-09-20T13:19:36Z
+updated_at: 2026-09-20T16:24:37Z
 parent: folio-assistant-vke6
 ---
 

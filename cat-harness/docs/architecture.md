@@ -55,9 +55,9 @@ into five composable folio-assistant instances. Child pages carry it:
 The last two look like they disagree — the minimum says a harness produces
 nothing a human looks at, and the instance page says an instance renders by
 default. They do not: the requirement is a **floor that rises**, with
-`bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
+`cat-bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
 instead, and `cat-harness` the layer where the rest begins to apply. See
-[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
+[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--cat-bootstrap-is-the-exception).
 
 The rest of this page describes the architecture **as it is now**.
 
