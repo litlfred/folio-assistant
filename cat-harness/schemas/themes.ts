@@ -35,7 +35,13 @@
  * changes, this is a judgement to re-make there rather than a number to
  * recompute here — no test asserts the match, because none can.
  */
-import { THEME_SCHEMA_TAG, ThemeSchema, type Theme } from "./theme.js";
+import {
+  THEME_SCHEMA_TAG,
+  ThemeSchema,
+  explainThemeFailure,
+  resolveTheme,
+  type ResolvedTheme,
+} from "./theme.js";
 
 /** Geometry shared by every shipped theme: the sticky is the same sticky. */
 const LAYOUTS = {
@@ -266,8 +272,27 @@ const RAW = [
   },
 ] as const;
 
-/** Every shipped theme, parsed — so a malformed one fails at import, not at render. */
-export const THEMES: readonly Theme[] = RAW.map((t) => ThemeSchema.parse(t));
+/**
+ * Every shipped theme, RESOLVED — so a malformed one fails at import, not at
+ * render, and so consumers get the form that has all its fields.
+ *
+ * `ResolvedThemeSchema`, not `ThemeSchema`. The declared form went lax when
+ * themes gained inheritance (bean `j66n`): every field but identity is
+ * optional there, because a theme states only what it changes. That is the
+ * AUTHOR's form. A renderer needs the resolved one, where requiredness
+ * actually lives — `data-modelling` step 7.
+ *
+ * None of these eleven inherits from anything, so resolving them is a parse
+ * with `kind` defaulted to `sticky`. They go through the same function a
+ * who-iris theme will, rather than a shortcut that would stop exercising the
+ * path the moment it mattered.
+ */
+export const THEMES: readonly ResolvedTheme[] = RAW.map((t) => {
+  const declared = ThemeSchema.parse(t);
+  const r = resolveTheme({ instance: "cat-harness", theme: declared }, () => undefined);
+  if (!r.ok) throw new Error(`theme ${declared.id}: ${explainThemeFailure(r.failure)}`);
+  return r.theme;
+});
 
 /**
  * The default.
@@ -284,6 +309,6 @@ export const GRADATED_THEME_IDS = THEMES.filter((t) => t.palette.gradientFrom).m
 /** The high-contrast pair, which the accessibility clause requires to exist. */
 export const HIGH_CONTRAST_THEME_IDS = ["high-contrast-light", "high-contrast-dark"] as const;
 
-export function themeById(id: string): Theme | undefined {
+export function themeById(id: string): ResolvedTheme | undefined {
   return THEMES.find((t) => t.id === id);
 }
