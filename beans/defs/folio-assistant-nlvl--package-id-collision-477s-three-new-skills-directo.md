@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-20T18:30:22Z
-updated_at: 2026-09-20T18:30:22Z
+updated_at: 2026-09-20T18:33:23Z
 parent: folio-assistant-zzmr
 ---
 
@@ -82,3 +82,41 @@ is minted"*.
       through the publish workflow
 
 Blocks: PR #576 (`r1vw` + `rday`).
+
+
+## Option 1 VERIFIED, 2026-09-20 — not a theory
+
+Tried on a throwaway branch: `main` at `3a9557b14b` with
+`claude/bean-roast-rday-r1vw` (#576) merged in, its one generated-file
+conflict resolved by taking main's copy.
+
+**Before** — `bun run kg:export` exits 1 with the three collisions quoted
+above.
+
+**After** adding one `package-manifest.json` to each of the three
+directories, naming it after its instance:
+
+```
+kg-navigation/skills/package-manifest.json   name: kg-navigation   skills: [kg-navigation]
+large-datasets/skills/package-manifest.json  name: large-datasets  skills: [materialize-remote]
+who-iris/skills/package-manifest.json        name: who-iris        skills: [iris-dspace]
+```
+
+| | result |
+|---|---|
+| `bun run kg:export` | **rc=0**, 1991 nodes, **16 SkillPackage** |
+| `bun run check:skills` | rc=0 |
+| `bun run kg:audit:check` | rc=0 |
+
+16 is the number to check against, not just the exit code: #576's own table
+predicts **13** packages after its fix, and three newly-named ones is exactly
+13 + 3. A collision resolved by *dropping* a claimant would have left it at
+13 and still exited 0.
+
+`cat-harness/src/skills` is untouched and remains the sole claimant of the id
+`skills`, so the open question #576 deferred — whether "no package" is the
+honest answer for that one — is not pre-empted by this.
+
+**The throwaway branch was discarded; nothing is pushed.** This records that
+the recommended option works, so choosing it is a small edit rather than an
+experiment.
