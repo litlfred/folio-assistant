@@ -122,4 +122,45 @@ does.
 The agents defer to `skills/` as the source of truth. **Memory summarises; the
 skill governs. Where the two disagree, the skill wins and the memory entry is
 wrong — fix it.**
+
+## The instance's two declared assets are maintained here too
+
+`README.md` and `AGENTS.md` are not documentation somebody else owns. They are
+**declared assets with a declared purpose**, and the owner put their upkeep in
+this skill (2026-09-20, issue #592):
+
+> it is an asset and has a defined purpose (that is part of skills of mantiaing
+> agent memroies)
+
+| role | purpose | delivery |
+|---|---|---|
+| `instance-readme` | what the instance **is**, for a reader | read as a file |
+| `agent-instructions` | what a cold agent **does** here, in order | read as a file |
+| agent memory | durable facts an agent must have without asking | **injected** |
+
+The purposes are declared once, per ROLE, in `ASSET_ROLE_PURPOSE`
+(`schemas/cat-harness.ts`) — never per asset, which would be eleven instances
+each spelling out what `instance-readme` is for and the eleventh saying
+something slightly different.
+
+**The delivery column is the rule, and it is mechanical rather than a matter of
+taste.** Memory is spliced into a prompt, so it pays a budget — `MEMORY.md`'s
+first 200 lines, *with the overflow dropped silently*. A file is opened, so
+nothing truncates it. That is why `AGENTS.md` may be long and an entry here may
+not, and why a fact that must arrive unasked belongs here rather than there.
+
+**`AGENTS.md` augments the README; it never restates it.**
+
+> agents.md should give good coldstart instructions (dont duplicatae readme.md)
+> but augment.
+
+So the split is by question, not by audience: the README answers *what is
+this*, `AGENTS.md` answers *what do I do, in what order*. A session that
+establishes a durable fact about an instance updates the one whose question it
+answers — and if it answers neither, it is a memory entry.
+
+`bun run check:subgraph-coverage` reports any instance missing either asset.
+Both are required of every instance: one with a README and no `AGENTS.md` is
+readable by a person and mute to an agent, and the reverse leaves a reader
+following instructions with nothing saying what they are in.
 {% endraw %}

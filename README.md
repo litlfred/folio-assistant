@@ -32,6 +32,40 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
+## Harness instances
+
+This repository holds several **instances**, each declaring its own
+`harness.json`. Every one has two entry points on purpose: a **README** saying
+what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments
+the first rather than restating it.
+
+The table is generated from the declarations themselves by `bun run
+readme:sync`; it is not a list anybody keeps. Add an instance and it appears;
+rename a directory and the links follow.
+
+<!-- cat-harness:instances:begin -->
+
+| Instance | Path | For an agent | For a person |
+|----------|------|--------------|--------------|
+| `folio-assistant` | . | [AGENTS.md](AGENTS.md) | [README](README.md) |
+| `agent-skills` | agent-skills | [AGENTS.md](./agent-skills/AGENTS.md) | [README](./agent-skills/README.md) |
+| `cat-bootstrap` | cat-bootstrap | [AGENTS.md](./cat-bootstrap/AGENTS.md) | [README](./cat-bootstrap/README.md) |
+| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
+| `detangle` | detangle | [AGENTS.md](./detangle/AGENTS.md) | [README](./detangle/README.md) |
+| `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
+| `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
+| `kg-navigation` | kg-navigation | [AGENTS.md](./kg-navigation/AGENTS.md) | [README](./kg-navigation/README.md) |
+| `large-datasets` | large-datasets | [AGENTS.md](./large-datasets/AGENTS.md) | [README](./large-datasets/README.md) |
+| `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/docs/) |
+| `who-style-guide` | who-style-guide | [AGENTS.md](./who-style-guide/AGENTS.md) | [README](./who-style-guide/README.md) |
+
+> **9 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+
+*`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
+*`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
+
+<!-- cat-harness:instances:end -->
+
 ## Bootstrapping — setting up a repository to write in
 
 **`cat-bootstrap litlfred/cat-harness`** means *set this repository up the same way

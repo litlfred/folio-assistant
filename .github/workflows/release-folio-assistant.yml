@@ -1,7 +1,14 @@
 # Publish folio-assistant as a GitHub Release with tarball.
 #
 # Content repos install via:
-#   bun add https://github.com/litlfred/qou/releases/download/folio-assistant-v0.1.0/folio-assistant-0.1.0.tgz
+#   bun add https://github.com/litlfred/folio-assistant/releases/download/folio-assistant-v0.1.0/folio-assistant-0.1.0.tgz
+#
+# The URL in the RELEASE BODY below is `${{ github.repository }}`, not this
+# literal: the workflow creates the release in the repository it runs in, so
+# deriving it is the one spelling that cannot drift. Both said `litlfred/qou`
+# until 2026-09-20 — inherited at the split — which published an install
+# command, on the release page itself, pointing at a repository that does not
+# host the package. Bean `folio-assistant-frq2`.
 #
 # Triggers on:
 #   - Tag push matching folio-assistant-v*
@@ -83,7 +90,7 @@ jobs:
             ### Install in a content repo
 
             ```bash
-            bun add https://github.com/litlfred/qou/releases/download/${{ steps.version.outputs.tag }}/folio-assistant-${{ steps.version.outputs.version }}.tgz
+            bun add https://github.com/${{ github.repository }}/releases/download/${{ steps.version.outputs.tag }}/folio-assistant-${{ steps.version.outputs.version }}.tgz
             ```
 
             ### What's included
