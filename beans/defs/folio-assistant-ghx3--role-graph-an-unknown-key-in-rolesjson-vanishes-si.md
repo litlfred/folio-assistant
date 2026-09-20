@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ghx3
 title: 'ROLE GRAPH: an unknown key in roles.json vanishes silently — RoleDefSchema should be strict'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:13:53Z
-updated_at: 2026-09-20T04:14:07Z
+updated_at: 2026-09-20T04:23:49Z
 parent: folio-assistant-zzmr
 ---
 
