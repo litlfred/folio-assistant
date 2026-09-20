@@ -1473,6 +1473,21 @@ if (check) {
     const w = worstSeverity(r);
     return w !== undefined && gate.includes(w);
   });
-  process.exit(stale.length || tripped ? 1 : 0);
+  // ORPHANS FAIL, and they did not until the count reached zero.
+  //
+  // The sweep printed its findings to stderr and `orphans` appeared nowhere in
+  // this expression, so `kg:audit:check` reported twelve and exited 0 — a
+  // report nobody fails on, which is `xom7`: from inside a checkout that looks
+  // exactly like a clean run. CI ran this command and was green over all of
+  // them.
+  //
+  // Gating earlier would have been gating a backlog, which is how a check gets
+  // switched off within a week. The repository's own precedent is the ruff
+  // comment in `code-quality-gates.yml`: **a check is an error only once its
+  // count is zero.** The twelve were cleared in the commit that added this
+  // line — four whose subject had moved, eight written before
+  // `isPartOfASkill` existed — so it starts at zero and any new one is a
+  // regression rather than debt.
+  process.exit(stale.length || tripped || orphans.length > 0 ? 1 : 0);
 }
 process.exit(0);
