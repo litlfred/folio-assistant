@@ -3,6 +3,7 @@ import {
   assess,
   byWorkflow,
   classifyRuns,
+  cronPeriodDays,
   describeWindow,
   render,
   type RunSummary,
@@ -585,5 +586,123 @@ describe("the window is a page of runs, not a period", () => {
     // honest rendering of "nothing to measure a span against".
     const out = render([], { branch: "main" });
     expect(out).not.toContain("spanning");
+  });
+});
+
+/**
+ * "Never run" and "not yet run" are different answers.
+ *
+ * ## The finding that was not one
+ *
+ * The change that made `never-ran` visible immediately reported
+ * `upstream-pins.yml` — scheduled, asked directly, zero runs on `main`. Every
+ * word of that was true and the finding was empty: the file had been added
+ * **the previous day**, and its cron is `43 9 * * 2`, a Tuesday two days out.
+ * It had never run because it had never had the chance.
+ *
+ * That is `5rfy`'s ambiguity one level in. The report could see that nothing
+ * HAD run; it could not see that nothing COULD have. A workflow neutered for
+ * months and one added yesterday rendered identically — and the second is far
+ * more common, so the finding would have been noise from its first day.
+ *
+ * ## Why an approximate cron reading is the right one
+ *
+ * `cronPeriodDays` answers one yes/no: has the schedule come round since the
+ * file appeared? The LONGEST gap suffices for that, and every shape it cannot
+ * read returns `undefined`, which leaves the row a finding. Not knowing must
+ * never explain a silent workflow away.
+ */
+describe("a workflow too new to have fired is not a finding", () => {
+  const NOW2 = new Date("2026-09-20T12:00:00Z");
+  const files = [
+    { path: ".github/workflows/docs-site.yml", name: "Docs site" },
+    { path: ".github/workflows/upstream-pins.yml", name: "Upstream pin watchdog" },
+  ];
+  const ran = run({ name: "Docs site", path: ".github/workflows/docs-site.yml" });
+  const base = {
+    now: NOW2,
+    knownWorkflows: files,
+    hasSchedule: (p: string) => p.endsWith("upstream-pins.yml"),
+    probed: (p: string) => (p.endsWith("upstream-pins.yml") ? ("never-ran" as const) : undefined),
+  };
+
+  test("the real case: added yesterday, fires Tuesdays — not yet run", () => {
+    const h = assess([ran], {
+      ...base,
+      workflowAddedAt: () => "2026-09-19T08:37:20Z",
+      cronOf: () => "43 9 * * 2",
+    });
+    const row = h.find((x) => x.workflow === "Upstream pin watchdog")!;
+    expect(row.tooYoung).toBe(true);
+    expect(row.fileAgeDays).toBe(1);
+  });
+
+  test("...and the report says so instead of raising it", () => {
+    const out = render(
+      assess([ran], {
+        ...base,
+        workflowAddedAt: () => "2026-09-19T08:37:20Z",
+        cronOf: () => "43 9 * * 2",
+      }),
+      { branch: "main" },
+    );
+    expect(out).toContain("its schedule has not come round");
+    expect(out).not.toContain("never run on this branch");
+    // And it does not withhold the tick — there is no finding to stop on.
+    expect(out).toContain("✓ every workflow");
+  });
+
+  test("an OLD workflow that has never run is still a finding", () => {
+    // The other direction of the ratchet. Two months old, fires weekly: the
+    // schedule has come round eight times and nothing happened.
+    const out = render(
+      assess([ran], {
+        ...base,
+        workflowAddedAt: () => "2026-07-20T08:00:00Z",
+        cronOf: () => "43 9 * * 2",
+      }),
+      { branch: "main" },
+    );
+    expect(out).toContain("never run on this branch");
+    expect(out).not.toContain("has not come round");
+    expect(out).not.toContain("✓ every workflow");
+  });
+
+  test("an unreadable age or cron leaves it a finding — never explained away", () => {
+    for (const extra of [
+      { workflowAddedAt: () => undefined, cronOf: () => "43 9 * * 2" },
+      { workflowAddedAt: () => "2026-09-19T08:37:20Z", cronOf: () => undefined },
+      // A shape cronPeriodDays refuses: both day fields restricted.
+      { workflowAddedAt: () => "2026-09-19T08:37:20Z", cronOf: () => "30 2 1 * 3" },
+    ]) {
+      const out = render(assess([ran], { ...base, ...extra }), { branch: "main" });
+      expect(out).toContain("never run on this branch");
+    }
+  });
+});
+
+describe("cronPeriodDays — the longest gap, or nothing", () => {
+  test("the two real schedules in this repo", () => {
+    expect(cronPeriodDays("43 9 * * 2")).toBe(7); // upstream-pins, Tuesdays
+    expect(cronPeriodDays("17 9 * * 1")).toBe(7); // ci-health, Mondays
+    expect(cronPeriodDays("41 6 * * *")).toBe(1); // health-check, daily
+  });
+
+  test("sub-daily is capped at a day — nothing is ever too young by more", () => {
+    expect(cronPeriodDays("0 */4 * * *")).toBe(1);
+    expect(cronPeriodDays("* * * * *")).toBe(1);
+  });
+
+  test("a day-of-month schedule is a month at worst", () => {
+    expect(cronPeriodDays("0 3 1 * *")).toBe(31);
+  });
+
+  test("what it refuses, and refusing is the point", () => {
+    // Both day fields restricted: GitHub ORs them, so this can fire often or
+    // almost never. A guess here would be indistinguishable from a
+    // measurement, and the caller treats undefined as "still a finding".
+    expect(cronPeriodDays("30 2 1 * 3")).toBeUndefined();
+    expect(cronPeriodDays("not a cron")).toBeUndefined();
+    expect(cronPeriodDays("0 3 * *")).toBeUndefined(); // four fields
   });
 });

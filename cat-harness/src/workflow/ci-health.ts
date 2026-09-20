@@ -321,6 +321,24 @@ export interface WorkflowHealth {
    * because it sends the reader to debug the tool instead of the workflow.
    */
   probe?: "never-ran" | "unknown";
+  /**
+   * It has never run because it has never had the CHANCE — the workflow file
+   * is younger than the longest gap its cron can leave.
+   *
+   * Set only on a `probe: "never-ran"` row, and only when both the file's age
+   * and {@link cronPeriodDays} are known. It turns a finding into a fact.
+   *
+   * Measured 2026-09-20, which is why it exists: `upstream-pins.yml` was
+   * reported as a finding — never run on `main`, asked directly. True, and
+   * meaningless: the file had been added the day before and its cron is
+   * `43 9 * * 2`, a Tuesday two days out. A workflow neutered for months and
+   * one added yesterday rendered identically. That is `5rfy`'s ambiguity one
+   * level in — the report could see that nothing HAD run, not that nothing
+   * COULD have.
+   */
+  tooYoung?: boolean;
+  /** Whole days since the workflow file first appeared on the default branch. */
+  fileAgeDays?: number;
 }
 
 /** Conclusions that are not a pass but are also not the workflow's fault. */
@@ -480,6 +498,42 @@ export interface AssessOptions {
    * probed.
    */
   probed?: (path: string) => "never-ran" | "unknown" | undefined;
+  /**
+   * When did this workflow file first appear on the default branch? ISO, or
+   * `undefined` when git cannot answer.
+   *
+   * Only consulted for a `never-ran` row. Not knowing leaves the row as a
+   * plain finding, which is the safe direction: an unknown age must never
+   * explain a silent workflow away.
+   */
+  workflowAddedAt?: (path: string) => string | undefined;
+  /** The workflow's cron expression, for {@link cronPeriodDays}. */
+  cronOf?: (path: string) => string | undefined;
+}
+
+/**
+ * Is this workflow simply too new to have fired yet?
+ *
+ * Every input is optional and any missing one yields `{}` — not knowing must
+ * leave the row a finding rather than explain it away. The comparison is
+ * against the LONGEST gap the cron can leave, so `tooYoung` is only ever set
+ * when the schedule demonstrably could not have come round.
+ */
+function youth(
+  path: string,
+  opts: AssessOptions,
+  now: Date,
+): { tooYoung?: true; fileAgeDays?: number } {
+  if (opts.probed?.(path) !== "never-ran") return {};
+  const added = opts.workflowAddedAt?.(path);
+  if (!added) return {};
+  const ageMs = now.getTime() - new Date(added).getTime();
+  if (Number.isNaN(ageMs)) return {};
+  const fileAgeDays = Math.floor(ageMs / 86_400_000);
+  const cron = opts.cronOf?.(path);
+  const period = cron ? cronPeriodDays(cron) : undefined;
+  if (period === undefined) return { fileAgeDays };
+  return fileAgeDays < period ? { tooYoung: true, fileAgeDays } : { fileAgeDays };
 }
 
 export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHealth[] {
@@ -537,6 +591,7 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
       // run says nothing about it, rather than implying "dispatch-only".
       ...(opts.hasSchedule?.(wf.path) === true ? { scheduled: true } : {}),
       ...(opts.probed?.(wf.path) ? { probe: opts.probed(wf.path) } : {}),
+      ...youth(wf.path, opts, now),
     });
   }
 
@@ -581,6 +636,54 @@ export interface Window {
  * the scheduled ones separately is what fixes it, and that is the caller's job
  * because it costs API calls.
  */
+/**
+ * The LONGEST gap a 5-field cron can leave between fires, in days.
+ *
+ * `undefined` when the expression is not one of the shapes below — which is
+ * the honest answer and the one every caller here is built to take, rather
+ * than a guess that would be indistinguishable from a measurement.
+ *
+ * ## Why an approximation is the right tool
+ *
+ * This answers exactly one question: **has this workflow's schedule had a
+ * chance to fire since its file appeared?** For that, the longest gap is
+ * sufficient and a full cron evaluator is not needed — and a full evaluator
+ * is a surprising amount of code to carry for a yes/no.
+ *
+ * It exists because `never-ran` alone is ambiguous in the worst way. Measured
+ * 2026-09-20: `upstream-pins.yml` had never run on `main` and the report
+ * raised it as a finding. It had been added **the previous day**, and its
+ * cron is `43 9 * * 2` — a Tuesday, two days out. Nothing was wrong with it.
+ * A workflow neutered for months and one added yesterday rendered identically,
+ * which is `5rfy`'s ambiguity one level in: the report could see that nothing
+ * had run, and not that nothing *could* have.
+ */
+export function cronPeriodDays(cron: string): number | undefined {
+  const f = cron.trim().split(/\s+/);
+  if (f.length !== 5) return undefined;
+  const [minute, hour, dom, , dow] = f as [string, string, string, string, string];
+
+  // Anything sub-daily in minute or hour: at most a day, so nothing is ever
+  // "too young" by more than that. One day is the safe over-estimate.
+  if (/[*/,-]/.test(minute) && minute !== "*") return 1;
+  if (minute === "*") return 1;
+  if (hour === "*" || hour.includes("/")) return 1;
+
+  const domEvery = dom === "*";
+  const dowEvery = dow === "*";
+
+  if (domEvery && dowEvery) return 1; // daily at a fixed time
+  // A day-of-week field, with no day-of-month restriction: weekly at worst,
+  // and less when it names several days — but the LONGEST gap is what is
+  // asked for, so 7 stands whether it is one day or three.
+  if (domEvery && !dowEvery) return 7;
+  // A specific day of month. The longest month is 31 days.
+  if (!domEvery && dowEvery) return 31;
+  // Both restricted. GitHub ORs them, which can fire often or almost never
+  // depending on the values; not worth guessing.
+  return undefined;
+}
+
 export function describeWindow(w: Window): string {
   const hours = (new Date(w.to).getTime() - new Date(w.from).getTime()) / 3_600_000;
   const span =
@@ -674,7 +777,14 @@ export function render(
   // longer than the window — but it is the one thing a reader must not take
   // the summary's word on, because the summary is computed from workflows that
   // ran and this one did not.
-  const unjudgedScheduled = health.filter((h) => h.noRunsInWindow && h.scheduled);
+  // A workflow that has never run because its schedule has not come round yet
+  // is NOT a finding, and must not sit in the list that withholds the green
+  // tick. It is still reported — silence would be the other error — but below
+  // the fold and as a fact.
+  const tooYoung = health.filter((h) => h.noRunsInWindow && h.scheduled && h.tooYoung);
+  const unjudgedScheduled = health.filter(
+    (h) => h.noRunsInWindow && h.scheduled && !h.tooYoung,
+  );
   for (const h of unjudgedScheduled) {
     const why =
       h.probe === "never-ran"
@@ -687,6 +797,13 @@ export function render(
             "If its period is longer than the window above, it cannot appear " +
             "however healthy or broken it is.";
     lines.push(`- ⚠️ **${h.workflow}** — fires on a schedule; ${why}`);
+  }
+
+  for (const h of tooYoung) {
+    lines.push(
+      `- 🌱 **${h.workflow}** — scheduled and not yet run, but the file is only ` +
+        `${h.fileAgeDays}d old and its schedule has not come round. Nothing to do.`,
+    );
   }
 
   const unjudgedOther = health.filter((h) => h.noRunsInWindow && !h.scheduled);

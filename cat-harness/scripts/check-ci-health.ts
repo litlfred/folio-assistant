@@ -227,6 +227,54 @@ function knownWorkflows(): Array<{ path: string; name: string }> | undefined {
   return out;
 }
 
+/** The workflow's first `cron:` value, or `undefined`. */
+function cronOf(path: string): string | undefined {
+  try {
+    const m = /^\s*-\s*cron:\s*["']?([^"'\n]+?)["']?\s*$/m.exec(
+      readFileSync(resolve(repoRoot, path), "utf8"),
+    );
+    return m?.[1];
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * When the workflow file first appeared on the default branch.
+ *
+ * `--diff-filter=A` and the LAST line of the log, because `git log` is newest
+ * first and the addition is the oldest entry. Asked against `origin/<branch>`
+ * for the same reason `workflowChangedAt` is: the runs being classified are
+ * the default branch's.
+ *
+ * `undefined` on any failure — a shallow clone, an unknown ref — which leaves
+ * a never-run workflow reported as a finding. Not knowing how old a file is
+ * must never explain its silence away.
+ */
+const addedAtCache = new Map<string, string | undefined>();
+function workflowAddedAt(path: string): string | undefined {
+  if (addedAtCache.has(path)) return addedAtCache.get(path);
+  let out: string | undefined;
+  for (const ref of [`origin/${branch}`, "HEAD"]) {
+    try {
+      const log = execFileSync(
+        "git",
+        ["log", "--diff-filter=A", "--format=%cI", ref, "--", path],
+        { encoding: "utf8", cwd: repoRoot, stdio: ["ignore", "pipe", "ignore"] },
+      ).trim();
+      const lines = log.split("\n").filter(Boolean);
+      if (lines.length > 0) {
+        out = lines[lines.length - 1];
+        break;
+      }
+    } catch {
+      // Next ref; an unknown ref is not an answer of "never added".
+    }
+  }
+  addedAtCache.set(path, out);
+  return out;
+}
+
 /** Does this workflow file carry a `schedule:` trigger? `undefined` if unreadable. */
 function hasSchedule(path: string): boolean | undefined {
   try {
@@ -396,6 +444,8 @@ const health = runs
       knownWorkflows: files,
       hasSchedule,
       probed: (p) => probes.get(p),
+      workflowAddedAt,
+      cronOf,
     })
   : [];
 
@@ -448,7 +498,13 @@ if (markdown) {
   // named; the rest are a count, because most are folio-vendored and naming
   // them every run teaches the reader to skip the section.
   const unjudged = health.filter((h) => h.noRunsInWindow);
-  for (const h of unjudged.filter((h) => h.scheduled)) {
+  for (const h of unjudged.filter((h) => h.scheduled && h.tooYoung)) {
+    console.log(
+      `  🌱 ${h.workflow.padEnd(40)} not yet run — file is ${h.fileAgeDays}d old and ` +
+        `its schedule has not come round. Nothing to do.`,
+    );
+  }
+  for (const h of unjudged.filter((h) => h.scheduled && !h.tooYoung)) {
     const why =
       h.probe === "never-ran"
         ? "scheduled, and has NEVER run on this branch (asked directly)"
