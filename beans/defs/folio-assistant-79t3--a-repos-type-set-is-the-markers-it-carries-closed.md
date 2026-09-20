@@ -99,6 +99,15 @@ rather than derived from the **directory** — `bean-graph.ts` states that movin
 is a live defect this bean should pick up, and it is what generalising the
 pattern would make the norm rather than the corner.
 
+**RESOLVED 2026-09-20.** `GraphKindDef.declarationFile` is where the name now
+lives, once: the `beans` kind says `beans.json`, `declaredKinds` asks the kind,
+and `BEAN_GRAPH_FILE`/`TODO_GRAPH_FILE` derive from it rather than restating
+it. The directory-name convention stays as a fallback so a kind declaring no
+filename is unmigrated rather than broken. Guarded by a test that relocates the
+directory to `work/`, keeps the file as `beans.json`, and asserts the nested
+kinds are still found — confirmed red against the directory-derived version
+before being kept.
+
 **So the true rule is three layers, not one convention with an inconsistency:**
 root declaration = fixed name; nested graph declaration = directory-derived
 (`declaredKinds()` does this today, and it is cheap precisely because it already
@@ -117,6 +126,30 @@ Option 1 collapses layer 1 into layer 3.
    naming a `canonicalUrl`. Report the disagreement and resolve nothing (the
    third-state rule this repo uses everywhere), rank the markers, or let ours
    always win.
+
+## DECIDED 2026-09-20 — question 1 is option 3
+
+The owner: *"each type declaring its own filename/rule conventions"*. Written
+into `skills/folio-core/directory-conventions.md` §"Every other marker: THE
+TYPE DECLARES ITS OWN FILENAME (STRICT)", with the two rejected alternatives
+and the measurements that rejected them.
+
+**Shipped with it, at the graph-kind level:** `GraphKindDef.declarationFile`.
+The `beans` and `todos` kinds now name their own nested declaration, and
+`declaredKinds` asks the kind before falling back to the directory-name
+convention. That closes the live disagreement this bean surfaced — see below —
+and it is the same rule one level down, which is the evidence that the rule
+generalises rather than merely sounding good.
+
+**Still open from question 1's scope:** the CONTENT-TYPE markers themselves
+(`dak.json`, `sushi-config.yaml`, ours) are not yet a declared set a consumer
+can iterate, so "what are you?" still cannot be asked. That is the bean's
+"Done when", and it is untouched. Question 2 is untouched.
+
+---
+
+_The recommendation as originally written, kept because the owner's decision
+agreed with it and the reasoning is the record:_
 
 **Recommendation on question 1, 2026-09-20: option 3 — both accepted, with the
 type declaring its own filename.** The bean's own objection to it is that *"the

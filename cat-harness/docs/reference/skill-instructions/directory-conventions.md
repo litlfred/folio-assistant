@@ -402,6 +402,46 @@ word.
 - **The renderable site lives at `docs/<stub>/`.** Compute it with
   `siteDir(d)` or `siteDirFor(root)`, never by writing the path out.
 
+### Every other marker: THE TYPE DECLARES ITS OWN FILENAME (STRICT)
+
+Settled by the owner 2026-09-20, bean `79t3` question 1. The rule above covers
+the root declaration and published artefacts. For every **other** marker — the
+files by which a repository asserts what it is — there is no uniform spelling
+and there cannot be one:
+
+| marker | who owns the name |
+|---|---|
+| `sushi-config.yaml` | SUSHI reads that exact name, and it is YAML |
+| `dak.json` | WHO's `smart-base` |
+| `harness.json`, `harness.config.json` | ours |
+| `beans.json`, `todos.json` | ours, and named after the graph KIND |
+
+Two of those are not ours to rename, so any rule claiming to cover the set
+would be false on arrival. **So the type declares its filename, and the
+convention is that rule rather than a spelling.** What a new type copies is
+*say what your marker is called*, not a pattern to imitate.
+
+The two alternatives were considered and rejected on measurement:
+`<slug>.config.json` everywhere would rename what WHO owns; bare `<slug>.json`
+collides with `<stub>.json`, which is already the published KG-as-JSON alias,
+and would make the declaration un-findable — `findInstanceRoot` walks up
+testing one fixed filename per level, and no declaration in this tree carries a
+`$schema` to glob for, while `{name, directories}` is the shared shape of the
+root declaration, `beans.json` and `todos.json` alike, so duck-typing returns
+`beans/` as an instance root **silently**.
+
+**At the graph-kind level this is `GraphKindDef.declarationFile`**, and it is
+already load-bearing rather than decorative. `declaredKinds` computed a nested
+declaration's filename as `${basename(path)}.json` while `bean-graph.ts` held
+that *moving `beans/` to `work/` requires editing nothing inside it*. Both were
+true of today's layout and contradict each other on the first relocation: the
+walk looks for `work/work.json`, the file is still `work/beans.json`, and the
+nested kinds drop out of `declared` with nothing said — an under-count, which
+manufactures an `undeclared` finding somewhere else. The kind now names its own
+file, `BEAN_GRAPH_FILE` and `TODO_GRAPH_FILE` derive from it, and the
+directory-name convention remains only as a fallback for a kind that declares
+none.
+
 ### `docs/<stub>/` — the site is packaged for the split (STRICT)
 
 The stub that names `<stub>.jsonld` also names the directory holding this

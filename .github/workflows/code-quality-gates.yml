@@ -296,6 +296,22 @@ jobs:
       - name: agent entry links
         run: bun run check:agent-entry-links
 
+      # What `AGENTS.md` ASSERTS about the code — bean `77ex`. The two checks
+      # above bracket it without covering it: `agents-xref` verifies citations
+      # INTO the file, `agent-entry-links` verifies links OUT of it, and
+      # neither reads what the prose says is true.
+      #
+      # Gating from the first commit, because it starts at zero findings:
+      # every claim on the current file holds. The two it was written for are
+      # both historical, and the second is why the ABSENCE half exists — at
+      # `08f43c55b2` the file placed `resolveSkillDirs` in a module that DID
+      # declare it, so the location claim was true and only "has no caller"
+      # was false. `AGENTS.md` states the cost in its own voice: a stale gap
+      # notice is worse than none, because an agent that believes it either
+      # avoids the feature or rebuilds it.
+      - name: AGENTS.md claims about code
+        run: bun run check:agents-claims
+
       # Which `.github/workflows/*.yml` are documented as BPMN — bean `7yvd`,
       # owner: "make sure all workflows documented as bpmn".
       #
