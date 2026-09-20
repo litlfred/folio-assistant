@@ -151,3 +151,36 @@ a fact you can audit and one you can only grep for.
 - [x] 55 gates, 3533 tests, tsc and eslint clean
 - [ ] **qou declares its folio at `content/`** — coordinated, in that repo
 - [ ] the eight vendored workflows' `cd content`: they move after the folios do
+
+## 2026-09-20 — the coordinated half is open: litlfred/qou#7445
+
+qou had **no declaration at all**, so it fell back to the convention and
+resolved to a `folio/` that does not exist. Measured against the platform at
+`e1cd7877`, by moving the file aside and back rather than inferring:
+
+    without harness.json:  folioDir -> /home/user/qou/folio   findPapers -> []
+    with    harness.json:  folioDir -> /home/user/qou/content findPapers -> 5 folios
+
+`bach2013-double-slit`, `fred2005-formal-groups`,
+`quantum-observable-universe`, `unital-groebner-bases`, `visualizer`.
+
+**One entry, not six.** A `directories` array MERGES with the conventions
+rather than replacing them — verified directly: with only `folio` declared,
+`library` and `uploads` still resolved. Declaring qou's `library/`, `uploads/`
+and `todos/` would restate defaults that already work, and a
+declared-but-absent directory is the `dh4f` defect.
+
+**Declare rather than rename**, per the owner: moving `content/` -> `folio/`
+in qou would touch five folio trees, the bun workspace, the CI paths and every
+cross-reference in the corpus. The declaration is four lines.
+
+## Done
+
+- [x] 91 non-test sites call `folioDir`
+- [x] `folioDir` reads the declaration, falls back to the CONVENTION (never
+      `content/`), and throws rather than guessing when the kind is unregistered
+- [x] a ratchet — `scripts/tests/folio-root-is-asked.test.ts` — falsified both
+      ways, and already clean against 37 commits of concurrent work
+- [x] 27 identifiers renamed off `CONTENT_*`
+- [x] qou declares its folio at `content/` (litlfred/qou#7445, OPEN)
+- [ ] the eight vendored workflows' `cd content` — after the folios move
