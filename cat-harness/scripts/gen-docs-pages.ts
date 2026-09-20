@@ -44,7 +44,7 @@ import {
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
 import { readTodoFiles } from "./todos.js";
-import { beanDefsDir, blockedBy, hasExpiry, isOpen, readBeans, type BeanNode } from "./beans.js";
+import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -868,99 +868,6 @@ function processHierarchy(): Record<string, string[]> {
     "data",
   );
   console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
-}
-
-/**
- * The stuck states a bean store can be in, computed from committed data only.
- *
- * ## Why these three and not the obvious fourth
- *
- * Bean `v49e` names the interesting states as *"the ones that look like
- * nothing"* — a step enabled but not taken, a block with no expiry, an
- * instance whose position has not moved. Two of those need
- * `beans/workflows/`, the declared `workflow-state` graph, which was **empty**
- * when this was written: a BPMN-position finding would have had no data on one
- * side of its join and would have reported "nowhere" for all 239 beans. They
- * are not here, and their absence is the honest answer rather than an
- * oversight.
- *
- * The obvious fourth — **a stale `in-progress` bean** — is missing for a
- * different and sharper reason, and it is about this file rather than about
- * beans. `emit(..., "data")` gates the projection on EXACT CONTENT, so
- * anything computed against the clock changes the file on every run and the
- * staleness gate fires forever. So the projection publishes each bean's
- * `updatedAt` and the CLIENT computes age at view time. That is the same rule
- * the todo index's own sort comment states: an artefact reproducible only
- * where it was generated is a snapshot, not a generated file. A build-time
- * `Date.now()` would have made this one exactly that.
- *
- * ## Each finding's basis, measured 2026-09-20 over 239 beans
- *
- * | finding | fired on |
- * |---|---|
- * | `blocked-without-expiry` | 4 of the 4 beans holding a block |
- * | `blocker-closed` | 1 — `04vl`, completed, still blocking an open bean |
- * | `blocking-unknown` | 0 |
- *
- * `blocked-without-expiry` firing on **all** of its subjects is the one
- * result worth arguing with, because this repository's own rule is that a
- * check firing on every one of its subjects is a check that is wrong. It is
- * kept, and the reason is that the rule is about a check with no discriminating
- * power over a LARGE population: 4 subjects out of 239 is a finding about four
- * specific beans, not a wall somebody switches off. If the count of blocks
- * grows and this still fires on all of them, that is the point to reconsider.
- *
- * The other two fire on 1 and 0 respectively, which is the shape
- * `check-bean-parents.ts` describes as locking in a property the corpus HAS
- * rather than demanding work to reach one.
- */
-function beanFindings(beans: BeanNode[]): Array<{
-  kind: "blocked-without-expiry" | "blocker-closed" | "blocking-unknown";
-  bean: string;
-  blocks: string;
-  detail: string;
-}> {
-  const byId = new Map(beans.map((b) => [b.id, b]));
-  const out: Array<{ kind: "blocked-without-expiry" | "blocker-closed" | "blocking-unknown"; bean: string; blocks: string; detail: string }> = [];
-  for (const b of beans) {
-    for (const target of b.blocking) {
-      const t = byId.get(target);
-      if (!t) {
-        out.push({
-          kind: "blocking-unknown",
-          bean: b.id,
-          blocks: target,
-          detail: `blocks \`${target}\`, which is not a bean in this store`,
-        });
-        continue;
-      }
-      // A CLOSED bean still holding a block on an OPEN one. The work finished
-      // and nobody lifted the block, so the blocked bean reads as waiting on
-      // something that already happened — indistinguishable, from the blocked
-      // end, from waiting on something that never will.
-      if (!isOpen(b) && isOpen(t)) {
-        out.push({
-          kind: "blocker-closed",
-          bean: b.id,
-          blocks: target,
-          detail: `is ${b.status} but still blocks \`${target}\`, which is ${t.status}`,
-        });
-      }
-      // `bean-blocking`: a real block carries what it waits on, since when, an
-      // EXPIRY and a handoff — because a block with no expiry cannot be told
-      // from abandoned work. Only live blocks are worth reporting; a closed
-      // blocker is already the finding above.
-      if (isOpen(b) && !hasExpiry(b)) {
-        out.push({
-          kind: "blocked-without-expiry",
-          bean: b.id,
-          blocks: target,
-          detail: `blocks \`${target}\` and states no expiry, so the block cannot be told from abandoned work`,
-        });
-      }
-    }
-  }
-  return out.sort((a, b) => a.kind.localeCompare(b.kind) || a.bean.localeCompare(b.bean) || a.blocks.localeCompare(b.blocks));
 }
 
 // The bean board's data. Sibling of the todo block above, and deliberately the
