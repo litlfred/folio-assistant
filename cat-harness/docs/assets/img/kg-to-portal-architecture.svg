@@ -18,7 +18,7 @@
   and it carries its own dark-mode block because it is inlined into pages this
   file does not control.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 524" width="1000" height="524"
      role="img" aria-labelledby="kgp-title kgp-desc" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
   <title id="kgp-title">Knowledge graph to public portal</title>
   <desc id="kgp-desc">Six stages in three zones. The publisher's zone holds the knowledge graph, the
@@ -69,7 +69,7 @@
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="1000" height="500" fill="var(--kgp-paper)"/>
+  <rect x="0" y="0" width="1000" height="524" fill="var(--kgp-paper)"/>
 
   <!-- ZONE 1 — the publisher -->
   <rect class="zone" x="16" y="44" width="516" height="270" stroke="var(--kgp-pub)" fill="var(--kgp-pub-wash)" fill-opacity="0.55"/>
@@ -129,9 +129,10 @@
   <text class="box-s" x="880" y="271" text-anchor="middle">cannot check → unknown</text>
 
   <!-- TRUST ANCHOR — outside all three zones, deliberately -->
-  <rect class="box" x="330" y="326" width="380" height="56" stroke="var(--kgp-trust)" stroke-width="2"/>
-  <text class="box-t" x="520" y="348" text-anchor="middle" fill="var(--kgp-trust)">GDHCN — trust network</text>
-  <text class="box-s" x="520" y="366" text-anchor="middle">the verifier resolves the key from HERE, not from the package</text>
+  <rect class="box" x="300" y="326" width="440" height="66" stroke="var(--kgp-trust)" stroke-width="2"/>
+  <text class="box-t" x="520" y="346" text-anchor="middle" fill="var(--kgp-trust)">GDHCN — DID trustlist (WHO SMART Trust)</text>
+  <text class="box-s" x="520" y="363" text-anchor="middle">static did.json on tng-cdn.who.int; the key is resolved from HERE,</text>
+  <text class="box-s" x="520" y="377" text-anchor="middle">not read out of the package</text>
 
   <!-- flows, publisher side -->
   <path class="flow" d="M 168 131 L 198 131"/>
@@ -155,13 +156,14 @@
   <path class="flow" d="M 880 166 L 880 206"/>
 
   <path class="flow flow-dash" d="M 450 288 L 450 320"/>
-  <path class="flow flow-dash" d="M 710 354 L 880 354 L 880 292"/>
-  <text class="flow-t" x="396" y="304" text-anchor="end">signs as a participant</text>
-  <text class="flow-t" x="795" y="346" text-anchor="middle">resolves the key</text>
+  <path class="flow flow-dash" d="M 740 358 L 880 358 L 880 292"/>
+  <text class="flow-t" x="396" y="304" text-anchor="end">with a key the trustlist carries</text>
+  <text class="flow-t" x="812" y="350" text-anchor="middle">resolves the key</text>
 
-  <text class="note" x="30" y="408">The consumer owns nothing: the canonical URL is the origin's. A cache is a faster route to the same bytes; model it as the host and</text>
-  <text class="note" x="30" y="424">every citation breaks the day the cache changes.</text>
-  <text class="note" x="30" y="442">Money, traffic, graph size and latency decide the transport; each needs a denominator before it is an argument rather than a preference.</text>
-  <text class="note" x="30" y="458">A package that is signed and never verified is a package whose signature is decoration. A portal nobody asked is not a portal that checked.</text>
-  <text class="note" x="30" y="474">Stages: select · serialize · package · sign · distribute · verify.</text>
+  <text class="note" x="30" y="416">The consumer owns nothing: the canonical URL is the origin's. A cache is a faster route to the same bytes; model it as the host and</text>
+  <text class="note" x="30" y="432">every citation breaks the day the cache changes.</text>
+  <text class="note" x="30" y="450">Money, traffic, graph size and latency decide the transport; each needs a denominator before it is an argument rather than a preference.</text>
+  <text class="note" x="30" y="466">A package that is signed and never verified is a package whose signature is decoration. A portal nobody asked is not a portal that checked.</text>
+  <text class="note" x="30" y="482">WHO's own trust network is this shape one layer down: static signed artefacts, served from a CDN, fetched a slice at a time.</text>
+  <text class="note" x="30" y="498">Stages: select · serialize · package · sign · distribute · verify.</text>
 </svg>

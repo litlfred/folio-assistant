@@ -289,7 +289,7 @@ the skill is <code>kg-to-portal</code> and the process is
 <code>kg-to-portal.bpmn</code>. What is on this page is the part only who-iris can
 say: which stages are actually built here, with this instance&rsquo;s own numbers.</p>
 
-<figure class="arch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500"
+<figure class="arch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 524" width="1000" height="524"
      role="img" aria-labelledby="kgp-title kgp-desc" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
   <title id="kgp-title">Knowledge graph to public portal</title>
   <desc id="kgp-desc">Six stages in three zones. The publisher's zone holds the knowledge graph, the
@@ -340,7 +340,7 @@ say: which stages are actually built here, with this instance&rsquo;s own number
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="1000" height="500" fill="var(--kgp-paper)"/>
+  <rect x="0" y="0" width="1000" height="524" fill="var(--kgp-paper)"/>
 
   <rect class="zone" x="16" y="44" width="516" height="270" stroke="var(--kgp-pub)" fill="var(--kgp-pub-wash)" fill-opacity="0.55"/>
   <text class="zone-label" x="30" y="66" fill="var(--kgp-pub)">Publisher — owns the canonical URL</text>
@@ -396,9 +396,10 @@ say: which stages are actually built here, with this instance&rsquo;s own number
   <text class="box-s" x="880" y="256" text-anchor="middle">digests + signature;</text>
   <text class="box-s" x="880" y="271" text-anchor="middle">cannot check → unknown</text>
 
-  <rect class="box" x="330" y="326" width="380" height="56" stroke="var(--kgp-trust)" stroke-width="2"/>
-  <text class="box-t" x="520" y="348" text-anchor="middle" fill="var(--kgp-trust)">GDHCN — trust network</text>
-  <text class="box-s" x="520" y="366" text-anchor="middle">the verifier resolves the key from HERE, not from the package</text>
+  <rect class="box" x="300" y="326" width="440" height="66" stroke="var(--kgp-trust)" stroke-width="2"/>
+  <text class="box-t" x="520" y="346" text-anchor="middle" fill="var(--kgp-trust)">GDHCN — DID trustlist (WHO SMART Trust)</text>
+  <text class="box-s" x="520" y="363" text-anchor="middle">static did.json on tng-cdn.who.int; the key is resolved from HERE,</text>
+  <text class="box-s" x="520" y="377" text-anchor="middle">not read out of the package</text>
 
   <path class="flow" d="M 168 131 L 198 131"/>
   <path class="flow" d="M 324 131 L 354 131"/>
@@ -419,15 +420,16 @@ say: which stages are actually built here, with this instance&rsquo;s own number
   <path class="flow" d="M 880 166 L 880 206"/>
 
   <path class="flow flow-dash" d="M 450 288 L 450 320"/>
-  <path class="flow flow-dash" d="M 710 354 L 880 354 L 880 292"/>
-  <text class="flow-t" x="396" y="304" text-anchor="end">signs as a participant</text>
-  <text class="flow-t" x="795" y="346" text-anchor="middle">resolves the key</text>
+  <path class="flow flow-dash" d="M 740 358 L 880 358 L 880 292"/>
+  <text class="flow-t" x="396" y="304" text-anchor="end">with a key the trustlist carries</text>
+  <text class="flow-t" x="812" y="350" text-anchor="middle">resolves the key</text>
 
-  <text class="note" x="30" y="408">The consumer owns nothing: the canonical URL is the origin's. A cache is a faster route to the same bytes; model it as the host and</text>
-  <text class="note" x="30" y="424">every citation breaks the day the cache changes.</text>
-  <text class="note" x="30" y="442">Money, traffic, graph size and latency decide the transport; each needs a denominator before it is an argument rather than a preference.</text>
-  <text class="note" x="30" y="458">A package that is signed and never verified is a package whose signature is decoration. A portal nobody asked is not a portal that checked.</text>
-  <text class="note" x="30" y="474">Stages: select · serialize · package · sign · distribute · verify.</text>
+  <text class="note" x="30" y="416">The consumer owns nothing: the canonical URL is the origin's. A cache is a faster route to the same bytes; model it as the host and</text>
+  <text class="note" x="30" y="432">every citation breaks the day the cache changes.</text>
+  <text class="note" x="30" y="450">Money, traffic, graph size and latency decide the transport; each needs a denominator before it is an argument rather than a preference.</text>
+  <text class="note" x="30" y="466">A package that is signed and never verified is a package whose signature is decoration. A portal nobody asked is not a portal that checked.</text>
+  <text class="note" x="30" y="482">WHO's own trust network is this shape one layer down: static signed artefacts, served from a CDN, fetched a slice at a time.</text>
+  <text class="note" x="30" y="498">Stages: select · serialize · package · sign · distribute · verify.</text>
 </svg>
 <figcaption>Six stages in three zones. The publisher owns the canonical URL; the cache owns neither end. The dashed arrow is undetermined on purpose.</figcaption></figure>
 
@@ -452,7 +454,7 @@ say: which stages are actually built here, with this instance&rsquo;s own number
 <tr><th class="rid">1</th><td><strong>Select</strong><br><span class="why">Everything in this catalogue is publishable, so the editorial cut has never had to refuse anything. An untested filter is not a working one.</span></td><td><span class="state unknown">partial</span></td></tr>
 <tr><th class="rid">2</th><td><strong>Serialize</strong><br><span class="why"><code>kg-export</code> emits the harness graph as JSON-LD; this instance&rsquo;s catalogue is 13 nodes with 3 item(s).</span></td><td><span class="state materialized">built</span></td></tr>
 <tr><th class="rid">3</th><td><strong>Package</strong><br><span class="why">There is no manifest. The pages and assets are published individually, so nothing here can detect a file that was <em>removed</em>.</span></td><td><span class="state referenced">not built</span></td></tr>
-<tr><th class="rid">4</th><td><strong>Sign</strong><br><span class="why">Nothing is signed. The catalogue records a <code>sha256</code> per bitstream, which is a digest and not an attestation &mdash; anyone who can change the bytes can change the digest beside them. The trust anchor is to be <strong>GDHCN</strong>; see below.</span></td><td><span class="state referenced">not built</span></td></tr>
+<tr><th class="rid">4</th><td><strong>Sign</strong><br><span class="why">Nothing is signed. The catalogue records a <code>sha256</code> per bitstream, which is a digest and not an attestation &mdash; anyone who can change the bytes can change the digest beside them. The trust anchor is to be <strong>GDHCN</strong>, via WHO SMART Trust; see below.</span></td><td><span class="state referenced">not built</span></td></tr>
 <tr><th class="rid">5</th><td><strong>Distribute</strong><br><span class="why">9 generated page(s) and 3 cover(s) on GitHub Pages, with a jsDelivr route to the same bytes.</span></td><td><span class="state materialized">built</span></td></tr>
 <tr><th class="rid">6</th><td><strong>Verify</strong><br><span class="why">No consumer verifies anything, because there is nothing signed to verify. This is the stage that gets dropped, and it is dropped here.</span></td><td><span class="state referenced">not built</span></td></tr>
   </tbody>
@@ -473,28 +475,49 @@ generation time &mdash; not quoted, not remembered.</p>
   </tbody>
 </table>
 
-<h2>Signing: the trust anchor is GDHCN</h2>
+<h2>Trust: GDHCN, via WHO SMART Trust</h2>
 
-<p>Owner, 2026-09-20: <code>propsal signing = GDHCN</code> &mdash; the WHO
-<strong>Global Digital Health Certification Network</strong>. What that settles is not the
-algorithm but <em>where trust comes from</em>, and the consequence is architectural: the
-publisher signs <strong>as a participant</strong>, so signing capability is granted and can be
-withdrawn; and a verifier resolves the key <strong>from the network</strong> rather than from
-the package. In the drawing above the trust box sits outside all three zones for that
-reason &mdash; it belongs to neither end, which is the whole point of having it.</p>
+<p>Owner, 2026-09-20, in two messages: <code>propsal signing = GDHCN</code>, then
+<code>smart-trust</code> &mdash; which names where the first is specified. The
+<strong>WHO SMART Trust Implementation Guide</strong>
+(<a href="https://smart.who.int/trust"><code>smart.who.int.trust</code></a>, FHIR R5,
+v1.8.0 as read) publishes GDHCN key material as
+<a href="https://www.w3.org/TR/did-core/">W3C DID documents</a>.</p>
 
 <div class="caveat">
-  <p><strong>A verifier now needs reachability the publisher does not control.</strong> A portal
-  that can fetch the bytes but cannot reach the trust list has not failed verification &mdash; it
-  reports <code>unknown</code>. An offline portal is a real deployment
-  (<code>network: air-gapped</code> is a declared value), so it is a case to answer rather than
-  assume away.</p>
-  <p><strong>Nothing about GDHCN&rsquo;s mechanism is stated here from general knowledge.</strong>
-  It is named in this repository for the first time on 2026-09-20 and the network that would
-  fetch its specification is blocked from the container that generates this page. What envelope
-  it signs and whether that admits a file manifest at all; how a participant is onboarded and by
-  whom; the key rotation and revocation model; whether a verifier may cache the trust list &mdash;
-  all four are <strong>open against the specification</strong>, and each one changes the design.</p>
+  <p><strong>This corrected an earlier draft on this branch.</strong> It said the publisher
+  &ldquo;signs as a participant&rdquo;, which left the impression that GDHCN supplies the signing
+  envelope. It supplies the <strong>key distribution</strong>: a trustlist carries trust anchors
+  &mdash; which keys belong to which participant, for which domain and which usage &mdash; and says
+  nothing about what you wrap your bytes in. The health-certificate envelope is a separate
+  specification in the same IG, and <em>a document package is not a health certificate</em>.
+  What is settled is where a verifier <strong>gets the key</strong>.</p>
+</div>
+
+<p>Three things from <code>concepts_did_gdhcn.md</code>, and the third is the one that matters
+for the drawing above:</p>
+
+<ul class="kids" style="margin-left:0">
+  <li><strong>Two variants.</strong> <em>Embedded</em> carries the keys inline and supports
+      immediate verification; <em>by reference</em> carries only DID ids to resolve, which keeps
+      the root document concise and supports dynamic discovery.</li>
+  <li><strong>The path is a hierarchical filter</strong> &mdash;
+      <code>/v2/trustlist/$domain/$participant/$usage/did.json</code>, the levels ANDed, with
+      <code>-</code> as a wildcard. A verifier fetches exactly the slice it needs.</li>
+  <li><strong>It is static JSON served from a CDN</strong>, on a host named
+      <code>tng-cdn.who.int</code>. So the pattern on this page is not an analogy to how GDHCN
+      works &mdash; it <em>is</em> how GDHCN works, one layer down.</li>
+</ul>
+
+<div class="caveat">
+  <p><strong>Read off the IG, not fetched.</strong> Those endpoints are transcribed from
+  <code>input/pagecontent/concepts_did_gdhcn.md</code> on <code>main</code>;
+  <code>tng-cdn.who.int</code> returns <code>000</code> from the container that generates this
+  page, the same block <code>iris.who.int</code> and <code>cdn.jsdelivr.net</code> return.</p>
+  <p><strong>Still open and unread:</strong> the key rotation and revocation model
+  (<code>concepts_certificate_governance.md</code>), and whether a document-package signature can
+  be expressed for a GDHCN-aware verifier at all &mdash; the envelope specified in that IG is for
+  health certificates, and nothing there covers arbitrary files.</p>
 </div>
 
 <h2>What is deliberately not decided</h2>

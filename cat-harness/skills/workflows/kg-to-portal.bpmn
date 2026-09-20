@@ -20,8 +20,9 @@
   A branch drawn as the obvious one is a decision nobody made, recorded as
   though somebody had.
 
-  THE TRUST ANCHOR IS EXTERNAL. The attestation lane is GDHCN, and the key a
-  verifier needs comes from that network rather than from the package. So
+  THE TRUST ANCHOR IS EXTERNAL. The attestation lane is GDHCN as specified by
+  the WHO SMART Trust IG, and the key a verifier needs comes from a DID
+  trustlist on that network rather than from the package. So
   P_Verify depends on reachability the publisher does not control, and a
   portal that cannot reach the trust list reports `unknown` rather than
   failing — `network: air-gapped` is a declared deployment value.
@@ -80,7 +81,7 @@
         <bpmn:flowNodeRef>GW_Budget</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_OverBudget</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_Attestation" name="Attestation (GDHCN trust network)">
+      <bpmn:lane id="Lane_Attestation" name="Attestation (GDHCN / WHO SMART Trust)">
         <bpmn:extensionElements><folio:role ref="attestation-service"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_Sign</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -149,7 +150,7 @@
     </bpmn:endEvent>
 
     <bpmn:serviceTask id="S_Sign" name="Sign the package&#10;and/or each asset">
-      <bpmn:documentation>THE TRUST ANCHOR IS GDHCN — the WHO Global Digital Health Certification Network (owner, 2026-09-20). That settles where trust comes from rather than which algorithm is used, and it moves a boundary: the publisher signs AS A PARTICIPANT, so signing capability is granted and can be withdrawn, and the verifier resolves the key from the network rather than from the package. A portal that can fetch the bytes but not reach the trust list cannot verify, which is `unknown` and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. What GDHCN's envelope admits, how a participant is onboarded, and the rotation and revocation model are OPEN against its specification; the network that would fetch it is blocked from this container. Two schemes with different properties remain to choose between. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's.</bpmn:documentation>
+      <bpmn:documentation>THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG (owner, 2026-09-20: `propsal signing = GDHCN`, then `smart-trust`). READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is `unknown` and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F7</bpmn:incoming>
       <bpmn:outgoing>F9</bpmn:outgoing>
@@ -194,7 +195,7 @@
     </bpmn:serviceTask>
 
     <bpmn:task id="P_Verify" name="Verify what arrived&#10;against what was signed">
-      <bpmn:documentation>Against the GDHCN trust list, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trust network rather than read out of the package. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports `unknown` — a portal nobody asked is not a portal that checked.</bpmn:documentation>
+      <bpmn:documentation>Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (`tng-cdn.who.int`), and its path is a hierarchical filter — domain, participant, key usage, with `-` as a wildcard — so a verifier fetches the slice it needs rather than the whole list. WHO's own trust network is therefore the same shape as this diagram one layer down, which is the strongest argument the design has. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports `unknown` — a portal nobody asked is not a portal that checked.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F14</bpmn:incoming>
       <bpmn:outgoing>F15</bpmn:outgoing>

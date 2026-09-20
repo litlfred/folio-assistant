@@ -1407,7 +1407,7 @@ ${svg ? `<figure class="arch">${svg}<figcaption>Six stages in three zones. The p
 ${stage(1, "Select", "partial", "Everything in this catalogue is publishable, so the editorial cut has never had to refuse anything. An untested filter is not a working one.")}
 ${stage(2, "Serialize", "built", `<code>kg-export</code> emits the harness graph as JSON-LD; this instance&rsquo;s catalogue is ${all.length} nodes with ${items.length} item(s).`)}
 ${stage(3, "Package", "not built", "There is no manifest. The pages and assets are published individually, so nothing here can detect a file that was <em>removed</em>.")}
-${stage(4, "Sign", "not built", "Nothing is signed. The catalogue records a <code>sha256</code> per bitstream, which is a digest and not an attestation &mdash; anyone who can change the bytes can change the digest beside them. The trust anchor is to be <strong>GDHCN</strong>; see below.")}
+${stage(4, "Sign", "not built", "Nothing is signed. The catalogue records a <code>sha256</code> per bitstream, which is a digest and not an attestation &mdash; anyone who can change the bytes can change the digest beside them. The trust anchor is to be <strong>GDHCN</strong>, via WHO SMART Trust; see below.")}
 ${stage(5, "Distribute", "built", `${pages} generated page(s) and ${covers} cover(s) on GitHub Pages, with a jsDelivr route to the same bytes.`)}
 ${stage(6, "Verify", "not built", "No consumer verifies anything, because there is nothing signed to verify. This is the stage that gets dropped, and it is dropped here.")}
   </tbody>
@@ -1428,28 +1428,49 @@ generation time &mdash; not quoted, not remembered.</p>
   </tbody>
 </table>
 
-<h2>Signing: the trust anchor is GDHCN</h2>
+<h2>Trust: GDHCN, via WHO SMART Trust</h2>
 
-<p>Owner, 2026-09-20: <code>propsal signing = GDHCN</code> &mdash; the WHO
-<strong>Global Digital Health Certification Network</strong>. What that settles is not the
-algorithm but <em>where trust comes from</em>, and the consequence is architectural: the
-publisher signs <strong>as a participant</strong>, so signing capability is granted and can be
-withdrawn; and a verifier resolves the key <strong>from the network</strong> rather than from
-the package. In the drawing above the trust box sits outside all three zones for that
-reason &mdash; it belongs to neither end, which is the whole point of having it.</p>
+<p>Owner, 2026-09-20, in two messages: <code>propsal signing = GDHCN</code>, then
+<code>smart-trust</code> &mdash; which names where the first is specified. The
+<strong>WHO SMART Trust Implementation Guide</strong>
+(<a href="https://smart.who.int/trust"><code>smart.who.int.trust</code></a>, FHIR R5,
+v1.8.0 as read) publishes GDHCN key material as
+<a href="https://www.w3.org/TR/did-core/">W3C DID documents</a>.</p>
 
 <div class="caveat">
-  <p><strong>A verifier now needs reachability the publisher does not control.</strong> A portal
-  that can fetch the bytes but cannot reach the trust list has not failed verification &mdash; it
-  reports <code>unknown</code>. An offline portal is a real deployment
-  (<code>network: air-gapped</code> is a declared value), so it is a case to answer rather than
-  assume away.</p>
-  <p><strong>Nothing about GDHCN&rsquo;s mechanism is stated here from general knowledge.</strong>
-  It is named in this repository for the first time on 2026-09-20 and the network that would
-  fetch its specification is blocked from the container that generates this page. What envelope
-  it signs and whether that admits a file manifest at all; how a participant is onboarded and by
-  whom; the key rotation and revocation model; whether a verifier may cache the trust list &mdash;
-  all four are <strong>open against the specification</strong>, and each one changes the design.</p>
+  <p><strong>This corrected an earlier draft on this branch.</strong> It said the publisher
+  &ldquo;signs as a participant&rdquo;, which left the impression that GDHCN supplies the signing
+  envelope. It supplies the <strong>key distribution</strong>: a trustlist carries trust anchors
+  &mdash; which keys belong to which participant, for which domain and which usage &mdash; and says
+  nothing about what you wrap your bytes in. The health-certificate envelope is a separate
+  specification in the same IG, and <em>a document package is not a health certificate</em>.
+  What is settled is where a verifier <strong>gets the key</strong>.</p>
+</div>
+
+<p>Three things from <code>concepts_did_gdhcn.md</code>, and the third is the one that matters
+for the drawing above:</p>
+
+<ul class="kids" style="margin-left:0">
+  <li><strong>Two variants.</strong> <em>Embedded</em> carries the keys inline and supports
+      immediate verification; <em>by reference</em> carries only DID ids to resolve, which keeps
+      the root document concise and supports dynamic discovery.</li>
+  <li><strong>The path is a hierarchical filter</strong> &mdash;
+      <code>/v2/trustlist/$domain/$participant/$usage/did.json</code>, the levels ANDed, with
+      <code>-</code> as a wildcard. A verifier fetches exactly the slice it needs.</li>
+  <li><strong>It is static JSON served from a CDN</strong>, on a host named
+      <code>tng-cdn.who.int</code>. So the pattern on this page is not an analogy to how GDHCN
+      works &mdash; it <em>is</em> how GDHCN works, one layer down.</li>
+</ul>
+
+<div class="caveat">
+  <p><strong>Read off the IG, not fetched.</strong> Those endpoints are transcribed from
+  <code>input/pagecontent/concepts_did_gdhcn.md</code> on <code>main</code>;
+  <code>tng-cdn.who.int</code> returns <code>000</code> from the container that generates this
+  page, the same block <code>iris.who.int</code> and <code>cdn.jsdelivr.net</code> return.</p>
+  <p><strong>Still open and unread:</strong> the key rotation and revocation model
+  (<code>concepts_certificate_governance.md</code>), and whether a document-package signature can
+  be expressed for a GDHCN-aware verifier at all &mdash; the envelope specified in that IG is for
+  health certificates, and nothing there covers arbitrary files.</p>
 </div>
 
 <h2>What is deliberately not decided</h2>

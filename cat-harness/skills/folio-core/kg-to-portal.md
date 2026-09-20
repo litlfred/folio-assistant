@@ -123,52 +123,85 @@ says so; one taken from a chat message is neither, and the who-iris catalogue
 carries the worked example — every note in a branch said "0.7 TB", sourced from
 a chat message, and the measured figure was about half.
 
-## Signing: the trust anchor is GDHCN, and that moves the boundary
+## Trust: GDHCN, distributed as WHO SMART Trust DID trustlists
 
-Owner, 2026-09-20, answering the open question: **`propsal signing = GDHCN`**
-— the WHO **Global Digital Health Certification Network**.
+Owner, 2026-09-20, in two messages: **`propsal signing = GDHCN`**, then
+**`smart-trust`**. The second names where the first is specified — the
+[WHO SMART Trust Implementation Guide](https://smart.who.int/trust)
+(`smart.who.int.trust`, FHIR R5, v1.8.0 at the time of reading, support address
+`gdhcn-support@who.int`).
 
-**What this settles is not the algorithm; it is where trust comes from.** A
-self-contained signature ships the key, or its certificate, inside the package,
-and a verifier decides whether to believe it. A trust-network signature does
-not: the verifier resolves the signer's key **from the network**, and the
-package carries only enough to say which key it wants. The consequence is
-architectural rather than cryptographic:
+**Everything in this section is read off that IG**, from `sushi-config.yaml`
+and `input/pagecontent/concepts_did_gdhcn.md` on `main`, 2026-09-20. The live
+endpoints below are **transcribed, not fetched** — `tng-cdn.who.int` returns
+`000` from this container, the same block `iris.who.int` and
+`cdn.jsdelivr.net` return.
 
-- **The publisher signs as a participant**, not as itself. Signing capability
-  becomes something a deployment is granted and can lose, so key rotation and
-  revocation are operations the pipeline has to survive — a package signed with
-  a key later withdrawn must be re-signed, not merely re-served.
-- **The verifier needs the network, not just the bytes.** A portal that can
-  fetch the package but not reach the trust list cannot verify, and that is
-  `unknown` rather than a failure. An offline portal is a real deployment —
-  `network: air-gapped` is a declared value — so this is a case the design has
-  to answer rather than assume away.
-- **The trust anchor is outside all three zones** in the architecture drawing,
-  and that is deliberate: it belongs to neither the publisher nor the consumer,
-  which is the whole reason it is worth having.
+### The correction this made to an earlier draft of this skill
 
-### What is NOT established here, and must be before anything is built
+This section previously said the publisher *"signs as a participant"* and left
+the impression that GDHCN supplies the signing envelope. **It supplies the key
+distribution.** A GDHCN trustlist carries *trust anchors* — which keys belong
+to which participant, for which domain and which usage — and says nothing about
+what you wrap your bytes in. The health-certificate envelope is a separate
+specification in the same IG (`hcert_spec.md`).
 
-GDHCN is named in this repository for the first time on 2026-09-20, and the
-network that would fetch its specification is blocked from this container — a
-request to `worldhealthorganization.github.io` returns `000`. So the following
-are **open questions to put to the specification**, not facts:
+That distinction matters here because a **document package is not a health
+certificate.** Whether a manifest signature can be expressed in a form GDHCN
+verifiers recognise is a real open question; what is settled is where a
+verifier gets the key.
 
-| question | why it decides the design |
+### The trustlist is a DID document, served from a CDN
+
+`concepts_did_gdhcn.md`, verbatim in substance:
+
+- Key material is published as **DID documents** ([W3C DID Core](https://www.w3.org/TR/did-core/)), as `did.json`.
+- **Two variants.** *Embedded* carries the keys inline in `verificationMethod`
+  and supports immediate verification. *By reference* carries only DID ids to
+  resolve, which keeps the root document concise and supports dynamic
+  discovery.
+- **Three environments** — DEV, UAT, PROD — each with both variants. PROD:
+  `https://tng-cdn.who.int/v2/trustlist/did.json` and
+  `…/v2/trustlist-ref/did.json`.
+- **The path is a hierarchical filter**:
+  `…/v2/trustlist/$domain/$participant/$usage/did.json`, the levels ANDed, with
+  `-` as a wildcard at any level. A verifier fetches exactly the slice it
+  needs rather than the whole list.
+- `$domain`, `$participant` and `$usage` are **FHIR ValueSets in the IG**, not
+  free text.
+
+### What that settles, and it is the design's own argument back at it
+
+**WHO's trust network distributes its trust anchors as static JSON from a
+CDN** — the host is literally named `tng-cdn`. So the pattern this skill
+describes is not an analogy to how GDHCN works; it *is* how GDHCN works, one
+layer down. A portal that can fetch a package from a cache can fetch its trust
+anchors from a cache by the same means, and the hierarchical path is the
+mechanism that keeps that cheap.
+
+It also answers the caching question outright: the *by reference* variant
+exists because resolving a slice is expected to be the normal case.
+
+**Three of the four questions this section used to carry are now answered** —
+onboarding (a documented process, `concepts_onboarding.md`, with its own
+[checklist](https://smart.who.int/trust/concepts_onboarding_checklist.html)),
+caching (native to the design), and the envelope (a trustlist is keys; the
+envelope is elsewhere, and for a document package is unsettled). What remains
+open and unread:
+
+| still open | where it is specified |
 |---|---|
-| what envelope does GDHCN sign, and does it admit a **file manifest** at all? | it was built for health certificates; a package of documents may or may not fit the same envelope |
-| how is a participant onboarded, and by whom? | this is an institutional process with a lead time, not a configuration flag |
-| what is the key rotation and revocation model? | it sets whether a published package can ever be left alone after publishing |
-| can a verifier cache the trust list, and for how long? | it decides whether an intermittently-connected portal can verify at all |
+| key rotation and revocation, and what a published package must do when a key is withdrawn | `concepts_certificate_governance.md` |
+| whether a document-package signature can be expressed for GDHCN verifiers at all | `hcert_spec.md` is for health certificates; nothing here covers arbitrary files |
+| how the gateway relates to the CDN, and who publishes to it | `trust_network_gateway_architecture.md` |
 
-**Nothing about GDHCN's mechanism is asserted above from general knowledge.**
-That is the `r1lz` rule — *a voice with no provenance is the same class of
-defect as a measurement with no date* — and this is exactly the situation it
-exists for: the name is the owner's, the consequences follow from what a trust
-network *is*, and the specifics wait for the document.
+Read those before designing stage 4, not after. **Nothing about GDHCN is
+written here from general knowledge** — that is the `r1lz` rule, and the first
+draft of this section broke it in exactly the way the rule predicts: it was
+plausible, it was confident, and the part it got wrong (envelope versus key
+distribution) was the part that decides what stage 4 is.
 
-## Package or per-asset: still a choice, and GDHCN does not make it
+## Package or per-asset: still a choice, and the trustlist does not make it
 
 | | signs | a verifier needs | breaks when |
 |---|---|---|---|
@@ -185,10 +218,11 @@ because there is nothing left to verify.
 both properties. That is the safer default and the more expensive one, and it
 is a deployment decision rather than a pipeline one.
 
-Choosing GDHCN as the trust anchor leaves this open, and may constrain it: if
-the envelope admits only one payload shape, the manifest-versus-asset question
-is answered by what can be put in it. Another reason the specification has to
-be read before this is designed rather than after.
+Choosing GDHCN as the trust anchor leaves this open. A trustlist distributes
+keys and does not constrain what is signed with them — so the choice is still
+the deployment's, and the constraint, if there is one, comes from whatever
+envelope a GDHCN-aware verifier is built to read. That is the unread question
+above, and it is the one that decides stage 4.
 
 ## Related
 
