@@ -351,6 +351,75 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── The audits, which had no node while auditing the graph that holds ─
+    //
+    // `tool-coverage.ts` has said since 2026-09-18 that its tier A "is the list
+    // to act on", and `kg-audit` writes the committed verdict for every node in
+    // the graph. Neither was reachable by asking that graph. A node here is the
+    // premise of bean `d308` closing on itself: the instrument that finds
+    // unreachable mechanisms was one.
+    //
+    // No `maintains` on either, for the reason `schema-docs` records: each writes
+    // one artefact PER SUBJECT — a sidecar per node, an SVG per diagram — and
+    // `maintains.artefact` is a single path, so naming one file out of hundreds
+    // would read as a complete provenance record and be false.
+    defineTool({
+      id: "kg-audit",
+      title: "Knowledge-graph audit",
+      description:
+        "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes \"unbound since it was drawn\" distinguishable from \"broken in the commit under review\".",
+      install: { none: true },
+      invoke: { shell: "bun run kg:audit" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed sidecars and fail on a critical finding or a stale one, instead of writing." },
+          { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Promote `major` to failing as well. Not what CI runs; see the note on constant-red checks in `remote-skill-servable.test.ts`." },
+        ],
+        outputs: [
+          { name: "sidecars", schema: t("RepoPath"), description: "The QA tree, mirroring each subject's own path — flat would collide, since several basenames already occur twice." },
+          // `unknown` is a result, not an absence, and it belongs in the
+          // contract: a criterion that could not be evaluated must not be read
+          // as a pass, and a caller that cannot see the distinction will read it
+          // as one.
+          { name: "worstSeverity", schema: t("Text"), description: "critical, major, minor — or none. `unknown` findings are never a pass." },
+        ],
+      },
+      satisfies: ["code-node-review"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "bpmn-render",
+      title: "BPMN diagram rendering",
+      description:
+        "Render each process diagram to SVG for the documentation site. The .bpmn file is the source of truth; the picture is generated from it, so a diagram and its image cannot disagree.",
+      install: { none: true },
+      invoke: { shell: "bun run render:bpmn" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any committed SVG is stale, instead of writing." },
+        ],
+        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "The generated SVG directory. Never hand-edited." }],
+      },
+      // NOT `bpmn-authoring`, and the refusal is worth recording. That edge was
+      // written first and `check:tools` rejected it: the skill's own I/O
+      // contract requires `processName`, because AUTHORING a process starts from
+      // one. Rendering an existing diagram starts from the corpus and takes no
+      // process name, so the edge asserted this Tool was a way to exercise a
+      // skill it cannot exercise.
+      //
+      // That is `covered-is-not-reachable`'s rule enforced by machine rather
+      // than by discipline — do not pick a skill to make a node validate — and
+      // it is better than the discipline, because it caught the attempt. The
+      // honest skill is the one `schema-docs` and `skill-docs` already satisfy:
+      // a source in the graph, an artefact on the site, never hand-edited.
+      satisfies: ["docs-generation"],
+      // Needs a browser: bpmn-js renders through Chromium, which is why this is
+      // in `gates --all` rather than the fast set. Stated here so an agent
+      // choosing it on a headless box learns before running it, not after.
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
     // ── The site's visual assets, which had no SKILL until 2026-09-20 ─────
     //
     // These two were blocked rather than missing. Both are committed, published,
