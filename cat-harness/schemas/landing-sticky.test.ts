@@ -65,7 +65,13 @@ function contributionsOf(rel: string): DeclaredContribution[] {
 // harnesses, and these fixtures name them that way so a reader of the tests
 // sees the structure rather than a list of historical ids.
 const CAT = contributionsOf("cat-harness");
-const CORE = contributionsOf("folio-assist-core");
+// The DIRECTORY, which is `folio-assistant-core/` since the owner's ruling of
+// 2026-09-20 ("use folio-assistant-core/"). The sticky's own id below is
+// `folio-assist-core` and is deliberately NOT renamed with it: a card id is a
+// published identifier on the landing page, the directory is where the files
+// sit, and this line is the one place they differ — which is exactly why it
+// broke when they were assumed to be one string.
+const CORE = contributionsOf("folio-assistant-core");
 const BOOT = contributionsOf("bootstrap");
 const ALL = [...CAT, ...CORE, ...BOOT];
 
@@ -85,13 +91,17 @@ describe("a sticky is a CONTRIBUTION from a layer, not an entry in one list", ()
     // neither layer appears in the other's declaration.
     expect(CAT.length).toBeGreaterThan(0);
     expect(BOOT.length).toBeGreaterThan(0);
-    expect(CAT.every((c) => c.declaredBy === "folio-assistant")).toBe(true);
+    expect(CAT.every((c) => c.declaredBy === "cat-harness")).toBe(true);
     expect(BOOT.every((c) => c.declaredBy === "bootstrap")).toBe(true);
   });
 
   test("the built sticky records which layer contributed it", () => {
     expect(sticky(BOOT, "bootstrap").contributedBy).toBe("bootstrap");
-    expect(sticky(CAT, "cat-harness").contributedBy).toBe("folio-assistant");
+    // `cat-harness`, the DECLARED NAME, since the owner's 2026-09-20 ruling that
+    // the three instances are distinct. It read `folio-assistant` while the
+    // harness layer and the repository shared that name — which is the
+    // collision the ruling ended, and this line could not have told them apart.
+    expect(sticky(CAT, "cat-harness").contributedBy).toBe("cat-harness");
   });
 
   test("no layer's declaration names another layer's sticky", () => {

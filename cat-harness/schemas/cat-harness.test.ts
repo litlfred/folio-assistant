@@ -6,7 +6,7 @@
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
@@ -504,9 +504,31 @@ describe("materialiseDirectories", () => {
     expect(dirs.map((d) => d.id)).toContain("uploads");
     const libraries = dirs.filter((d) => d.graphs.includes("library"));
     expect(libraries.length, "no library graph reachable from the platform root").toBeGreaterThan(0);
-    // And none of them is the platform's own, which is the rule AGENTS.md
-    // states as "folio-assistant is the platform, not the content".
-    expect(libraries.map((d) => d.id)).not.toContain("library");
+
+    // SEVERAL, and that is the assertion. The platform declares `library` and
+    // HOLDS NOTHING IN IT: bean `frs5` moved all four entries out, and the
+    // entry came back on the owner's 2026-09-20 ruling because `wwi6` pins
+    // the guarantee that a DEPENDENT folio materialises its own `uploads/`
+    // and `library/`, which it gets by inheriting the convention the harness
+    // declares. Remove it and every downstream folio silently loses a library.
+    //
+    // This asserted `not.toContain("library")` for a few hours — the platform
+    // owning no content, stated as a rule. The rule is not wrong; the entry
+    // is no longer a claim about what this instance HOLDS. What replaces it is
+    // the check that the corpus is reachable and is NOT here: at least two
+    // libraries resolve, and the platform's own is not one of the two that
+    // carry documents.
+    const ids = libraries.map((d) => d.id);
+    expect(ids).toContain("library");
+    expect(libraries.length).toBeGreaterThan(1);
+    // The platform's own library EXISTS and is EMPTY. It was absent for a few
+    // hours between `frs5` and the owner's ruling; `harness:dirs:check`
+    // reports a declared-but-missing directory, so re-declaring it required
+    // re-creating it. Emptiness is the assertion — existence is what the
+    // declaration demands, and holding nothing is what the platform rule does.
+    const own = libraries.find((d) => d.id === "library")!.absPath;
+    expect(existsSync(own)).toBe(true);
+    expect(readdirSync(own).filter((f) => !f.startsWith("."))).toEqual([]);
   });
 });
 

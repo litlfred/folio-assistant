@@ -7,6 +7,7 @@
  * text in another repo would cite evidence its own instance cannot resolve."*
  */
 import { describe, expect, it } from "bun:test";
+import { readdirSync } from "fs";
 import { resolve } from "path";
 import { explainFailure, instanceRoots, libraryDirOf, resolveLibraryRef } from "./library-ref.js";
 
@@ -73,15 +74,24 @@ describe("library location is read from the declaration", () => {
     expect(libraryDirOf(WHO_IRIS)).toBe(resolve(WHO_IRIS, "library"));
   });
 
-  it("the PLATFORM declares none, and that is the point of the platform", () => {
+  it("the PLATFORM declares a library and HOLDS NOTHING IN IT", () => {
     // `cat-harness` held 1,431 files of somebody else's writing until bean
-    // `frs5`. AGENTS.md states the rule this asserts — "folio-assistant is the
-    // platform, not the content" — and until the move nothing checked it.
+    // `frs5`. AGENTS.md states the rule — "folio-assistant is the platform,
+    // not the content" — and until that move nothing checked it.
     //
-    // `undefined`, not an empty directory: the `library` entry was REMOVED
-    // from its declaration rather than left pointing at an emptied path,
-    // because a declared-and-absent directory is the `dh4f` defect.
-    expect(libraryDirOf(PLATFORM)).toBeUndefined();
+    // This asserted `toBeUndefined()` for a few hours, because `frs5` removed
+    // the declaration along with the content. The entry came back on the
+    // owner's 2026-09-20 ruling: `wwi6` pins that a DEPENDENT folio
+    // materialises its own `uploads/` and `library/`, and it inherits that
+    // convention from what the harness declares.
+    //
+    // So the rule is now checked one step along — the platform declares the
+    // CONVENTION and holds no CONTENT — which is a weaker check than the
+    // absence was, and the weakening is the cost of the ruling rather than an
+    // oversight.
+    const dir = libraryDirOf(PLATFORM);
+    expect(dir).toBeDefined();
+    expect(readdirSync(dir!).filter((f) => !f.startsWith("."))).toEqual([]);
   });
 
   it("returns undefined for an instance that declares no library graph", () => {
@@ -143,15 +153,26 @@ describe("resolution keeps four failures apart", () => {
     if (!r.ok) expect(r.failure.kind).toBe("no-library-graph");
   });
 
-  it("a BARE reference from the platform is `no-library-graph`, not `not-ingested`", () => {
-    // The two are a sentence apart and send a reader to different places:
-    // "this instance has no corpus, name the one that does" versus "that
-    // document was never ingested". Post-`frs5` the platform is the instance
-    // where this distinction matters most, because every citation written
-    // before the move is now a bare one against an empty declaration.
+  it("a BARE reference from the platform now says `not-ingested`, and that is WORSE", () => {
+    // The two answers are a sentence apart and send a reader to different
+    // places: "this instance has no corpus, name the one that does" versus
+    // "that document was never ingested".
+    //
+    // Between `frs5` and the owner's ruling the platform declared no library,
+    // so a bare citation got the FIRST and more useful answer. Re-declaring
+    // the (empty) library to preserve `wwi6`'s inheritance guarantee replaced
+    // it with the second: the graph is there, the document is not, so the
+    // resolver correctly reports `not-ingested` — and sends the reader looking
+    // for an ingestion that was never going to happen here, instead of telling
+    // them to name `who-iris`.
+    //
+    // Asserted rather than lamented: this is a real cost of declaring a
+    // directory an instance does not fill, it is the `dh4f` shape doing
+    // exactly what that bean says it does, and the core relocation is what
+    // ends it. Pinning it here means the day it changes back, this says so.
     const r = resolveLibraryRef(local, PLATFORM, REPO);
     expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.failure.kind).toBe("no-library-graph");
+    if (!r.ok) expect(r.failure.kind).toBe("not-ingested");
   });
 
   it("a document that was never ingested is distinct from a missing section", () => {
