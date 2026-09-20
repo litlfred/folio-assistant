@@ -261,13 +261,27 @@ function checkoutPaths(steps: NonNullable<WorkflowDoc["jobs"]>[string]["steps"])
   return out;
 }
 
-/** Strip a checkout prefix, so `source/cat-harness/x.ts` resolves as `cat-harness/x.ts`. */
-function stripCheckout(cwd: string, checkouts: string[]): string {
+/**
+ * Strip a checkout prefix, so `source/cat-harness/x.ts` resolves as
+ * `cat-harness/x.ts`.
+ *
+ * Applied to the JOINED, normalised path rather than to the cwd alone. The
+ * first version stripped only the cwd, and CI found the two shapes it
+ * therefore missed within the hour — `feature-staging.yml` spells the prefix
+ * in the PATH from the workspace root (`bun run source/cat-harness/...`), and
+ * once, from a sibling checkout, relatively (`bun run ../source/cat-harness/
+ * ...`). Both are correct invocations that this reported as broken.
+ *
+ * A check whose false positives are the thing people meet first is worse than
+ * no check: it teaches the reader to skim, and then the true positive goes by
+ * unread too.
+ */
+function stripCheckout(path: string, checkouts: string[]): string {
   for (const c of checkouts) {
-    if (cwd === c) return "";
-    if (cwd.startsWith(`${c}/`)) return cwd.slice(c.length + 1);
+    if (path === c) return "";
+    if (path.startsWith(`${c}/`)) return path.slice(c.length + 1);
   }
-  return cwd;
+  return path;
 }
 
 /** Every script invocation in one workflow, with the cwd each runs in. */
@@ -301,9 +315,13 @@ export function invocationsFrom(file: string, text: string): Invocation[] {
           const path = invokedPath(line);
           if (!path) continue;
           const flag = cwdFlag(line);
-          const effective =
-            cwd === null ? null : stripCheckout(flag ? applyCd(cwd, flag) : cwd, checkouts);
-          out.push(classify({ file, job, step: step.name ?? "(unnamed step)", path, cwd: effective }));
+          const effective = cwd === null ? null : flag ? applyCd(cwd, flag) : cwd;
+          out.push(
+            classify(
+              { file, job, step: step.name ?? "(unnamed step)", path, cwd: effective },
+              checkouts,
+            ),
+          );
         }
       }
     }
@@ -311,13 +329,10 @@ export function invocationsFrom(file: string, text: string): Invocation[] {
   return out;
 }
 
-function classify(inv: {
-  file: string;
-  job: string;
-  step: string;
-  path: string;
-  cwd: string | null;
-}): Invocation {
+function classify(
+  inv: { file: string; job: string; step: string; path: string; cwd: string | null },
+  checkouts: string[],
+): Invocation {
   const base = { file: inv.file, job: inv.job, step: inv.step, path: inv.path };
   if (inv.cwd === null) {
     return {
@@ -327,7 +342,10 @@ function classify(inv: {
       note: "a `cd` in this block names a variable, glob or substitution",
     };
   }
-  if (existsSync(resolve(ROOT, inv.cwd, inv.path))) {
+  // Join FIRST, then strip: the prefix may be in the cwd, in the path, or
+  // reached relatively through `..` from a sibling checkout.
+  const joined = applyCd(inv.cwd, inv.path);
+  if (existsSync(resolve(ROOT, stripCheckout(joined, checkouts)))) {
     return { ...base, cwd: inv.cwd, verdict: Verdict.Resolves };
   }
   const folio = FOLIO_PATHS.find((f) => inv.path.includes(f.match));

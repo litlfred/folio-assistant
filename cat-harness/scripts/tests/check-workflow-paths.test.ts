@@ -173,6 +173,40 @@ jobs:
     expect(inv.verdict).toBe(Verdict.Resolves);
   });
 
+  // The two shapes CI caught within an hour of the first version shipping.
+  // Both are CORRECT invocations that were reported as broken, which is the
+  // false-positive failure mode this module most has to avoid.
+  test("the prefix may be in the PATH, from the workspace root", () => {
+    const text = `
+jobs:
+  j:
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: source
+      - name: s
+        run: bun run source/cat-harness/scripts/gates.ts
+`;
+    const [inv] = invocationsFrom("f.yml", text);
+    expect(inv.verdict).toBe(Verdict.Resolves);
+  });
+
+  test("the prefix may be reached RELATIVELY, through `..` from a sibling dir", () => {
+    const text = `
+jobs:
+  j:
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: source
+      - name: s
+        working-directory: pages
+        run: bun run ../source/cat-harness/scripts/gates.ts
+`;
+    const [inv] = invocationsFrom("f.yml", text);
+    expect(inv.verdict).toBe(Verdict.Resolves);
+  });
+
   test("a checkout of a DIFFERENT repository is not collected", () => {
     // Nothing here can say whether a path in someone else's tree resolves,
     // so the prefix must not be stripped and the verdict must not be green.
