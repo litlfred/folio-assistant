@@ -16,6 +16,13 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, join as joinPath, relative } from "node:path";
 
 import { resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
+// The `folio` graph kind is registered by CORE as a load-time side effect
+// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
+// exists. This module resolves this instance's directories and the instance now
+// DECLARES a folio graph — without this import `resolveDirectories` throws
+// `unknown graph kind "folio"`, which `kgDirectories` used to swallow into an
+// empty list. See the comment on that catch for what that cost (issue #464).
+import "../schemas/folio-graph-kind.js";
 
 /**
  * Groups under `.claude/skills/` that hold something other than skills.
@@ -90,8 +97,29 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
       // on the `.ts`, not a guess about the `.md`.
       .filter((d) => d.graphs.length === 1 && d.graphs[0] === "cat-harness")
       .filter((d) => existsSync(d.absPath));
-  } catch {
-    return [];
+  } catch (err) {
+    // NOT swallowed into an empty list, and the reason is measured.
+    //
+    // This was `catch { return []; }`. `AGENTS.md` states the contract it was
+    // silently breaking: "Absent declaration is fine (an unmigrated instance
+    // falls back to today's conventions); a present-but-unreadable one throws."
+    // So the only thing this catch could ever catch was the case that is
+    // supposed to be loud — and it turned it into "this instance has no
+    // knowledge-graph directories".
+    //
+    // Measured 2026-09-20, when a `folio` graph was first declared here
+    // (issue #464): `resolveDirectories` threw, this returned `[]`,
+    // `workflowDirs` found nothing, and `translate-bpmn --check` reported
+    // "No .bpmn files in any declared knowledge-graph directory" and EXITED 0
+    // on a repository holding 36 of them. `skill_list` and `skill_fetch` read
+    // the same list. That is the `dh4f` defect from the inside — a consumer
+    // scans nothing and reports a clean run over it — and it is worse than the
+    // error it was hiding, because a broken declaration is recoverable and a
+    // silent empty graph is believed.
+    throw new Error(
+      `cannot resolve knowledge-graph directories for ${root}: ${err instanceof Error ? err.message : String(err)}`,
+      { cause: err },
+    );
   }
 }
 
