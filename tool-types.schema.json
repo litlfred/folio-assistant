@@ -163,11 +163,11 @@
     "NamespaceLayer": {
       "type": "string",
       "enum": [
-        "bootstrap",
+        "cat-bootstrap",
         "harness",
         "core"
       ],
-      "description": "A namespace layer: bootstrap resolves before anything else, then harness, then core.",
+      "description": "A namespace layer: cat-bootstrap resolves before anything else, then harness, then core.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
     "PreferenceAction": {
@@ -323,8 +323,8 @@
   },
   "staging": {
     "branch": "main",
-    "sha": "9f5652b21851faff52cb3fceb344efe01a73ca78",
+    "sha": "92e83dbcb1f693113928bcf71751c8a6c38351db",
     "pr": "main",
-    "run": "35522644138"
+    "run": "35523051113"
   }
 }
