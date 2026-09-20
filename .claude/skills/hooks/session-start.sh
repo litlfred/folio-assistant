@@ -70,6 +70,55 @@ for cap_file in "$SKILLS_DIR/capabilities/"*.json; do
   esac
 done
 
+# ── Materialise the declared directories ────────────────────────────────────
+# Owner, 2026-09-20: *"cat-harness __initialize__ uploads/ if not there as one
+# of its steps. not keep it there permanently, but nice convention to developer
+# to know whats supposed to be there. easier to copy structure."*
+#
+# `harness.json` declares which directories an instance has; until now nothing
+# CREATED them here. `harness:dirs:check` runs in CI as a dry run, and
+# `init-folio` materialises them for a NEW folio — so the platform's own tree
+# was the one case with a declaration and no step that honours it. A developer
+# cloning this repo got whatever happened to be committed, and an empty
+# declared directory is invisible: git tracks files, not directories.
+#
+# This runs the WRITER, idempotently. Each directory it creates gets the
+# `keepMarker` .gitignore — a file that ignores nothing and exists to say what
+# the directory is for, which is the convention being made discoverable.
+#
+# Deliberately NOT in `session-start-coord-sweep.sh`: that script's own
+# docstring says "keep this fast and read-only", and this writes. The hook is
+# where initialization belongs — it is the step that already reports
+# "Session initialized".
+#
+# Never fails the hook. A session that cannot create a directory should still
+# start, and the reason is printed rather than swallowed.
+echo ""
+echo "Declared directories..."
+if command -v bun >/dev/null 2>&1; then
+  if DIRS_OUT=$(cd "$REPO_ROOT" && bun run cat-harness/scripts/harness-dirs.ts 2>&1); then
+    # Match the per-directory lines (`  created <path>`), NOT the summary —
+    # which reads "18 declared, 0 created." and contains the word either way.
+    # A first draft grepped for "created" and reported a creation on a clean
+    # run; caught by running the hook rather than by reading it.
+    CREATED_LINES=$(printf '%s\n' "$DIRS_OUT" | grep -E '^  created ' || true)
+    if [ -n "$CREATED_LINES" ]; then
+      echo "  materialised from harness.json — each gets a .gitignore saying what it is for:"
+      printf '%s\n' "$CREATED_LINES" | sed 's/^  created /    + /'
+    else
+      printf '%s\n' "$DIRS_OUT" | grep -E '^harness dirs:' | sed 's/^/  ✓ /' \
+        || echo "  ✓ all declared directories present"
+    fi
+  else
+    # Could-not-determine, said out loud. "No output" and "the command failed"
+    # look identical otherwise, and only the second is a defect.
+    echo "  ? could not materialise declared directories:"
+    printf '%s\n' "$DIRS_OUT" | tail -3 | sed 's/^/    /'
+  fi
+else
+  echo "  ? bun not on PATH — declared directories not checked"
+fi
+
 # Work-plan priming lives in the shared primer (scripts/session-start-coord-sweep.sh,
 # wired from each CLI's SessionStart hook), not here — single ownership avoids
 # double-priming when both the capability prober and the primer run. See

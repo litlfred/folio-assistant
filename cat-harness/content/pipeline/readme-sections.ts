@@ -159,8 +159,10 @@ function undetermined(why: string): SectionOutput {
  */
 export function leanLibName(root: string, paper: string): string | undefined {
   for (const candidate of [
-    join(root, "content", paper, "lean", "lakefile.toml"),
-    join(root, "content", paper, "lakefile.toml"),
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    join(root, "folio", paper, "lean", "lakefile.toml"),
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    join(root, "folio", paper, "lakefile.toml"),
   ]) {
     if (!existsSync(candidate)) continue;
     const src = readFileSync(candidate, "utf-8");
@@ -172,7 +174,8 @@ export function leanLibName(root: string, paper: string): string | undefined {
 
 /** The directory holding a paper's Lean sources, if it has one. */
 function leanDir(root: string, paper: string): string | undefined {
-  const dir = join(root, "content", paper, "lean");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const dir = join(root, "folio", paper, "lean");
   return existsSync(dir) ? dir : undefined;
 }
 
@@ -219,7 +222,8 @@ const leanCoverageSection: ReadmeSection = {
     const papers = papersWithLean(root);
     if (papers.length === 0) return empty("papers with Lean sources");
 
-    const contentRoot = join(root, "content");
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const contentRoot = join(root, "folio");
     const rows: string[] = [];
     const notes: string[] = [];
     for (const paper of papers) {

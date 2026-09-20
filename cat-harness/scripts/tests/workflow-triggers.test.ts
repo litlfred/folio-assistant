@@ -8,7 +8,7 @@
  * `code-quality-gates`, whose header insisted *"the ratchet only works if
  * something runs it"* while the file had never run once.
  *
- * The neutering was right: the platform has no `content/<paper>/`, no
+ * The neutering was right: the platform has no `folio/<paper>/`, no
  * `chapters/`, no `tools/`, so a content sweep here would sweep nothing
  * and report clean. What was wrong is that no file said so, leaving every
  * reader — human or agent — to infer automation that does not exist.

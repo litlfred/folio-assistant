@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pn6j
 title: 'INGEST: L1 completeness gate — derived content must be present before L1 KG is complete'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-19T12:56:53Z
+updated_at: 2026-09-20T10:59:25Z
 parent: folio-assistant-slw1
 ---
 
@@ -107,3 +107,45 @@ editing the checker changes `script_hash`.
 STILL NOT DONE, unchanged and deliberate: opening a bean on failure, and
 holding the document in uploads/. Both are blocked on standing rules rather
 than on effort — see below.
+
+*2026-09-20* — Both remaining Done-whens CLOSED, by the owner's decision.
+
+**Open a bean on failure: NO.** The owner chose reporting-only. `beans create`
+dedupes on nothing and once produced 14,688 duplicates; a gate minting one per
+run against that store is a bad trade, and a person reading the refusal has
+context a bean would only approximate. Recorded as a decision, not left as a
+gap.
+
+**Hold the document in uploads/: reframed as REFUSE TO PROMOTE, and built.**
+The arms already take `-o <dir>`, so the only change needed was which
+directory. They write into `ingest-staging/<slug>/`, and `--promote` is the
+single moment anything crosses into `library/`. Nothing is ever moved OUT of
+the library and nothing is deleted, so `deletion-requires-confirmation` is
+untouched — which is why this reframing was available and "move it back" was
+not.
+
+The first placement was WRONG and the measurement caught it. Gating at the end
+of the ingest command refused milnorlink on SEVEN unmet requirements, because
+`planFor` runs ONE rung: `pdf-pages.py` alone yields page files and none of
+structure.json, sections/, blocks/, manifest.jsonld or images.json. That gate
+would have refused every document ever ingested, and a gate that always
+refuses is one somebody switches off. Hence a separate promote step.
+
+Verified end-to-end on the real corpus, both directions:
+- incomplete staging + `--promote` → refused, exit 1, `library/` untouched,
+  staged output left in place for inspection;
+- `library/milnorlink/` copied into staging + `--promote` → promoted, exit 0,
+  byte-identical no-op, staging cleaned.
+
+Staging is NOT dot-prefixed, for the reason `8xzw`/`x89g` moved `.beans/` and
+`.harness/` out: a staging tree holding a REFUSED document is exactly what
+somebody comes looking for.
+
+Eight mutations. Seven caught by a named test. The eighth — replacing the CLI's
+`if (ingestMode(argv) === "stage")` with `if (false)` — is control flow no unit
+test reaches without running the whole CLI against a real PDF, and it is
+recorded here rather than papered over. Both branches WERE exercised by hand
+end-to-end, which is evidence and not a test. Two decisions were extracted into
+`mayPromote` and `ingestMode` precisely because the first pass covered them
+only with source-text greps, and two mutations survived that read fine
+textually.

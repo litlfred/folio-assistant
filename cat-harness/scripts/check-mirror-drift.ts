@@ -394,7 +394,8 @@ function audit(repoRoot: string, packages: readonly LeanPackage[]): Report {
 
   for (const pkg of packages) {
     const lakeRoot = resolve(repoRoot, pkg.lakeRoot);
-    const paperRoot = resolve(repoRoot, "content", pkg.paperDir);
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const paperRoot = resolve(repoRoot, "folio", pkg.paperDir);
 
     const push = (m: Map<string, Decl[]>, d: Decl) => {
       const bucket = m.get(d.fqn);

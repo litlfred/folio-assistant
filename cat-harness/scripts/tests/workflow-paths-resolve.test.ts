@@ -18,7 +18,7 @@
  * ## Why it is scoped to a LIST of workflows rather than all of them
  *
  * Most workflows here are VENDORED BY FOLIOS. `lean_ci.yml` names
- * `content/<paper>/lean/lakefile.toml`, `snappea_wasm.yml` names
+ * `folio/<paper>/lean/lakefile.toml`, `snappea_wasm.yml` names
  * `scripts/build-gmp.sh`, `wrapper-tests.yml` names `src/rust/` — none of
  * those exists here and none should. Asserting over them would demand that the
  * platform contain a folio's tree, which is the boundary this repository most

@@ -10,7 +10,7 @@
  * @module scripts/tests/ingest-and-l1
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -23,7 +23,13 @@ import {
   staleSidecars,
 } from "../check-l1-complete.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
-import { OCR_THRESHOLD_CHARS, planFor, usableOutlineEntries } from "../ingest-document.ts";
+import {
+  OCR_THRESHOLD_CHARS,
+  ingestMode,
+  mayPromote,
+  planFor,
+  usableOutlineEntries,
+} from "../ingest-document.ts";
 
 const made: string[] = [];
 afterEach(() => {
@@ -507,5 +513,114 @@ describe("image-descriptions has three states, and the third is not a pass", () 
     const r = checkEntry(dir).requirements.find((q) => q.name === "image-descriptions");
     expect(r?.state).toBe("unmet");
     expect(r?.detail).toContain("pdf-images.py");
+  });
+});
+
+describe("refuse to promote — the gate between the arms and the library", () => {
+  /**
+   * The owner's decision, 2026-09-20: an unmet document must not reach
+   * `library/`, and the way to achieve that is to never move it there —
+   * NOT to move it back. Nothing is deleted and nothing leaves `library/`,
+   * so `deletion-requires-confirmation` is untouched.
+   */
+  test("promotion is a SEPARATE step — one rung is not a whole pipeline", () => {
+    // Measured while building this, and it changed the design: `planFor` runs
+    // ONE rung. `pdf-pages.py` alone yields page files and none of
+    // structure.json, sections/, blocks/, manifest.jsonld or images.json, so
+    // gating at the end of the ingest command refused the document on SEVEN
+    // unmet requirements — and would refuse every document ever ingested.
+    //
+    // A gate that always refuses is one somebody switches off, which is worse
+    // than no gate. So the arms accumulate in staging and `--promote` is the
+    // single moment anything crosses into `library/`.
+    // Behavioural. A source grep for `--promote` matched the string at a
+    // SECOND call site, so dropping the guard at the first survived the
+    // mutation — which is why the mode is a named function now.
+    expect(ingestMode([])).toBe("stage");
+    expect(ingestMode(["uploads/x.pdf"])).toBe("stage");
+    expect(ingestMode(["--promote"])).toBe("promote");
+    expect(ingestMode(["uploads/x.pdf", "--promote"])).toBe("promote");
+    // And the arms must NOT re-run on a promote: staging already holds them.
+    const src = readFileSync(new URL("../ingest-document.ts", import.meta.url).pathname, "utf-8");
+    expect(src).toContain('ingestMode(argv) === "promote" ? [] : plan.steps');
+  });
+
+  test("the arms are pointed at STAGING, never at the library", () => {
+    // The whole mechanism is which directory `-o` receives. If a step is ever
+    // handed the library again, the document is filed before anything can
+    // refuse it and this gate becomes decoration.
+    const src = readFileSync(new URL("../ingest-document.ts", import.meta.url).pathname, "utf-8");
+    expect(src).toContain('planFor(pdf, undefined, staging)');
+    expect(src).not.toContain("const plan = planFor(pdf);");
+  });
+
+  test("staging is NOT dot-prefixed", () => {
+    // `.beans/` and `.harness/` were moved out from behind dots on 2026-09-18
+    // because the artefacts a person looks for first were the hardest to
+    // find, and this repository's own guard rejects a dot-prefixed segment. A
+    // staging tree holding a REFUSED document is exactly what somebody comes
+    // looking for.
+    const src = readFileSync(new URL("../ingest-document.ts", import.meta.url).pathname, "utf-8");
+    expect(src).toContain('"ingest-staging"');
+    expect(src).not.toContain('".ingest-staging"');
+  });
+
+  test("ONE unmet requirement refuses the whole entry", () => {
+    // Behavioural, not a source grep. The two mutations that survived the
+    // first pass — dropping the `--promote` guard, and `if (unmet.length)` →
+    // `if (false)` — both read fine textually, so the decision was extracted
+    // into `mayPromote` and is tested here on its values.
+    expect(mayPromote([{ name: "a", state: "met", detail: "" }])).toBe(true);
+    expect(mayPromote([{ name: "a", state: "unmet", detail: "" }])).toBe(false);
+    expect(
+      mayPromote([
+        { name: "a", state: "met", detail: "" },
+        { name: "b", state: "unmet", detail: "" },
+      ]),
+    ).toBe(false);
+  });
+
+  test("`not-derivable` does NOT refuse — that is the third state's whole job", () => {
+    // `audio-transcripts` has no arm. Refusing every document until every arm
+    // exists makes the gate unusable, and an unusable gate gets switched off.
+    expect(mayPromote([{ name: "audio-transcripts", state: "not-derivable", detail: "" }])).toBe(true);
+    expect(
+      mayPromote([
+        { name: "audio-transcripts", state: "not-derivable", detail: "" },
+        { name: "structure", state: "met", detail: "" },
+      ]),
+    ).toBe(true);
+  });
+
+  test("an EMPTY requirement list does not promote by vacuous truth", () => {
+    // `every` over `[]` is true, so this would promote an entry nothing
+    // examined. The CLI never passes an empty list — `checkEntry` on an empty
+    // directory yields unmet requirements, asserted below — but the pairing is
+    // the thing that makes it safe, and it is recorded here rather than
+    // assumed.
+    expect(mayPromote([])).toBe(true);
+    const empty = mkdtempSync(join(tmpdir(), "stage-vac-"));
+    made.push(empty);
+    expect(checkEntry(empty).requirements.length).toBeGreaterThan(0);
+  });
+
+  test("an unmet entry has unmet requirements to refuse ON", () => {
+    // The gate reads `checkEntry(staging)`. A staging tree with nothing in it
+    // must produce unmet requirements — if it produced none, promotion would
+    // succeed over an empty directory, which is the vacuity this repository
+    // keeps paying for.
+    const empty = mkdtempSync(join(tmpdir(), "stage-"));
+    made.push(empty);
+    const unmet = checkEntry(empty).requirements.filter((r) => r.state === "unmet");
+    expect(unmet.length).toBeGreaterThan(0);
+    expect(unmet.map((r) => r.name)).toContain("structure");
+  });
+
+  test("a COMPLETE entry has none, so it can promote", () => {
+    // The other half, and the one that stops this being a gate that always
+    // refuses. Verified end-to-end against the real corpus as well: copying
+    // `library/milnorlink/` into staging and promoting it was a byte-identical
+    // no-op, exit 0.
+    expect(checkEntry(entry()).requirements.filter((r) => r.state === "unmet")).toEqual([]);
   });
 });

@@ -163,10 +163,11 @@ export function asToolText(title: string, r: PipelineResult) {
   return { content: [{ type: "text" as const, text }] };
 }
 
-/** Resolve the single paper under content/ if not given (else undefined). */
+/** Resolve the single paper under folio/ if not given (else undefined). */
 export function autoPaper(paper?: string): string | undefined {
   if (paper) return paper;
-  const dir = join(get.REPO_ROOT(), "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const dir = join(get.REPO_ROOT(), "folio");
   if (!existsSync(dir)) return undefined;
   const papers = readdirSync(dir, { withFileTypes: true })
     .filter(

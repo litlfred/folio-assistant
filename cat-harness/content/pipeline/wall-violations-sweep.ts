@@ -111,7 +111,8 @@ function walk(dir: string, results: Hit[]) {
 }
 
 const results: Hit[] = [];
-walk(join("content", requirePaper(_paperArg)), results);
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+walk(join("folio", requirePaper(_paperArg)), results);
 const seen = new Set<string>();
 const unique = results.filter(h => { const k = `${h.file}|${h.line}|${h.pattern}`; if (seen.has(k)) return false; seen.add(k); return true; });
 

@@ -314,7 +314,8 @@ Needs: scripts/lake-cache.sh restore-toolchain && ... restore`);
   }
 
   const abs = join(repoRoot, lakeRoot);
-  const searchRoot = join(repoRoot, "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const searchRoot = join(repoRoot, "folio");
   const decls: Record<string, unknown> = {};
   // Counted per reason: a 57%-skipped run is only actionable if you can
   // tell "restore the oleans" from "the lexer missed the declaration".

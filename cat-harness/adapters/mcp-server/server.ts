@@ -274,7 +274,8 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
 
 // ── Content resolution (dynamic, no static JSON) ────────────────
 
-const CONTENT_DIR = resolve(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_DIR = resolve(REPO_ROOT, "folio");
 
 /** The two node populations the graph tools read. */
 const GRAPH_ROOTS = [
@@ -460,7 +461,8 @@ interface FolioEntry {
 
 async function resolveFolio(branch?: string): Promise<{ title: string; papers: FolioEntry[]; branch: string }> {
   const br = branch;
-  const folioRel = "content/folio.ts";
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const folioRel = "folio/folio.ts";
   let folioData: Folio;
 
   if (fileExistsBranch(br, folioRel)) {
@@ -469,7 +471,8 @@ async function resolveFolio(branch?: string): Promise<{ title: string; papers: F
     // Auto-discover: scan content/ for directories with matching .ts manifests
     const dirs = listDirBranch(br, "content").filter(d => {
       if (d === "schema" || d === "pipeline" || d === "node_modules") return false;
-      return fileExistsBranch(br, `content/${d}/${d}.ts`);
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      return fileExistsBranch(br, `folio/${d}/${d}.ts`);
     });
     folioData = { title: "Papers", papers: dirs.map(d => ({ dir: d })) };
   }
@@ -477,11 +480,13 @@ async function resolveFolio(branch?: string): Promise<{ title: string; papers: F
   const papers: FolioEntry[] = [];
   for (const ref of folioData.papers) {
     try {
-      const paperMod = await importTsBranch<Paper>(br, `content/${ref.dir}/${ref.dir}.ts`);
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const paperMod = await importTsBranch<Paper>(br, `folio/${ref.dir}/${ref.dir}.ts`);
       let blockCount = 0, provedCount = 0, todoCount = 0, chapCount = 0;
 
       for (const chRef of paperMod.chapters || []) {
-        const chRel = `content/${ref.dir}/${chRef.dir}/${chRef.dir}.ts`;
+        // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+        const chRel = `folio/${ref.dir}/${chRef.dir}/${chRef.dir}.ts`;
         if (!fileExistsBranch(br, chRel)) continue;
         chapCount++;
         const ch = await importTsBranch<Chapter>(br, chRel);
@@ -493,7 +498,8 @@ async function resolveFolio(branch?: string): Promise<{ title: string; papers: F
           // used the reference test; these now agree.
           if (isSectionRef(sec)) continue;
           for (const rootName of sectionBlockNames(sec)) {
-            const blkRel = `content/${ref.dir}/${chRef.dir}/${rootName}.ts`;
+            // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+            const blkRel = `folio/${ref.dir}/${chRef.dir}/${rootName}.ts`;
             if (!fileExistsBranch(br, blkRel)) continue;
             blockCount++;
             try {
@@ -541,7 +547,8 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
   if (cached) return cached;
 
   const br = branch;
-  const paperRel = `content/${id}/${id}.ts`;
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const paperRel = `folio/${id}/${id}.ts`;
   if (!fileExistsBranch(br, paperRel)) return null;
 
   const paperMod = await importTsBranch<Paper>(br, paperRel);
@@ -550,7 +557,8 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
   // Auto-number chapters from manifest order
   let autoNum = 1;
   for (const chRef of paperMod.chapters || []) {
-    const chRel = `content/${id}/${chRef.dir}`;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const chRel = `folio/${id}/${chRef.dir}`;
     const chTsRel = `${chRel}/${chRef.dir}.ts`;
     if (!fileExistsBranch(br, chTsRel)) continue;
     const ch = await importTsBranch<Chapter>(br, chTsRel);
@@ -728,7 +736,8 @@ async function resolvePaperOutline(id: string, branch?: string): Promise<PaperOu
   if (cached) return cached;
 
   const br = branch;
-  const paperRel = `content/${id}/${id}.ts`;
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const paperRel = `folio/${id}/${id}.ts`;
   if (!fileExistsBranch(br, paperRel)) return null;
 
   const paperMod = await importTsBranch<Paper>(br, paperRel);
@@ -737,7 +746,8 @@ async function resolvePaperOutline(id: string, branch?: string): Promise<PaperOu
   // Auto-number chapters from manifest order
   let autoNum = 1;
   for (const chRef of paperMod.chapters || []) {
-    const chRel = `content/${id}/${chRef.dir}`;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const chRel = `folio/${id}/${chRef.dir}`;
     const chTsRel = `${chRel}/${chRef.dir}.ts`;
     if (!fileExistsBranch(br, chTsRel)) continue;
     const ch = await importTsBranch<Chapter>(br, chTsRel);
@@ -794,7 +804,8 @@ async function resolveChapterDetail(
   if (cached) return cached;
 
   const br = branch;
-  const chRel = `content/${paperId}/${chapterDir}`;
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const chRel = `folio/${paperId}/${chapterDir}`;
   const chTsRel = `${chRel}/${chapterDir}.ts`;
   if (!fileExistsBranch(br, chTsRel)) return null;
 
@@ -868,7 +879,8 @@ async function resolveSection(
   if (cached) return cached;
 
   const br = branch;
-  const chRel = `content/${paperId}/${chapterDir}`;
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const chRel = `folio/${paperId}/${chapterDir}`;
   const chTsRel = `${chRel}/${chapterDir}.ts`;
   if (!fileExistsBranch(br, chTsRel)) return null;
 
@@ -1339,7 +1351,8 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
               try { blockCount = JSON.parse(readFileSync(extractedPath, "utf-8")).length; } catch {}
             }
             // Check if content objects were generated
-            const contentDir = join(REPO_ROOT, "content", d);
+            // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+            const contentDir = join(REPO_ROOT, "folio", d);
             const hasContent = existsSync(contentDir);
             imports.push({ ...meta, hasExtracted, blockCount, hasContent });
           }
@@ -1603,7 +1616,8 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       if (!rootName || !chapterDir) {
         return Response.json({ error: `Block "${label}" not found` }, { status: 404 });
       }
-      const base = `content/${id}/${chapterDir}/${rootName}`;
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const base = `folio/${id}/${chapterDir}/${rootName}`;
       const files = [`${base}.ts`, `${base}.md`, `${base}.lean`];
       const commits = gitLogFiles(files, limit);
       return Response.json({ label, rootName, chapterDir, commits }, {
@@ -1621,7 +1635,8 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
     const slashIdx = rel.indexOf("/");
     if (slashIdx < 0) return new Response("Bad request", { status: 400 });
     const sha = rel.slice(0, slashIdx);
-    const filePath = `content/${rel.slice(slashIdx + 1)}`;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const filePath = `folio/${rel.slice(slashIdx + 1)}`;
     const buf = gitShowBinaryAt(sha, filePath);
     if (!buf) return new Response("Not found at that commit", { status: 404 });
     const ext = extname(filePath);
@@ -1991,7 +2006,8 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
           if (!chDir) continue;
           try {
             const blockObj = await importTsBranch<Block>(
-              undefined, `content/${paperId}/${chDir}/${b.rootName}.ts`,
+              // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+              undefined, `folio/${paperId}/${chDir}/${b.rootName}.ts`,
             );
             blockTexParts.push(render(blockObj, b.md || ""));
           } catch (e) {
@@ -2185,7 +2201,8 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
         return Response.json({ error: `Block "${body.rootName}" not found` }, { status: 404 });
       }
       // Revert .md content from the specified commit
-      const relMd = `content/${body.paperId}/${chapterDir}/${body.rootName}.md`;
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const relMd = `folio/${body.paperId}/${chapterDir}/${body.rootName}.md`;
       const oldMd = gitShowAt(body.sha, relMd);
       if (oldMd === null) {
         return Response.json({ error: `No .md found at commit ${body.sha}` }, { status: 404 });
@@ -2743,6 +2760,7 @@ These become clickable buttons so users don't have to type. Make them specific t
           "qc": "The user is viewing the **QC Dashboard** — a quality-control overview showing proof status, sorry counts, and block-level formalization progress. They likely want to understand what needs work.",
           "diff": "The user is viewing the **diff view** — comparing changes between branches. They are reviewing edits and may want to understand what changed and why.",
           "critical-path": "The user is viewing the **critical path** — a filtered view showing only the essential proof chain: leaf theorems traced back through their dependencies to foundational definitions. They want to understand the paper's core logical structure and narrative.",
+          // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
           "folio": "The user is on the **folio landing page** — browsing the list of available papers. They may want an overview or help choosing what to read.",
         };
         systemPrompt += `\n\n## Current view\n${viewDescriptions[vm] || `The user is in the **${vm}** view.`}`;
@@ -3146,7 +3164,8 @@ These become clickable buttons so users don't have to type. Make them specific t
         source?: { type: string; id: string; url: string; citationKey: string };
       };
 
-      const paperDir = join(REPO_ROOT, "content", body.paperId);
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const paperDir = join(REPO_ROOT, "folio", body.paperId);
       const chDir = body.chapterDir || `imported-${body.source?.id || "upload"}`.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
       const chapterPath = join(paperDir, chDir);
       mkdirSync(chapterPath, { recursive: true });
@@ -3198,13 +3217,14 @@ These become clickable buttons so users don't have to type. Make them specific t
       const chapterTs = `import { chapter } from "../../schema/builders";\n\nexport default chapter({\n  number: 99,\n  title: "${(body.chapterTitle || `Imported: ${body.source?.id || "Upload"}`).replace(/"/g, '\\"')}",\n  sections: [{\n    title: "Imported Results",\n    blocks: ${JSON.stringify(blockRefs)},\n  }],\n});\n`;
       wfs(join(chapterPath, `${chDir}.ts`), chapterTs);
 
-      log("import", `generated ${generated.length} content objects`, `→ content/${body.paperId}/${chDir}/`);
+      log("import", `generated ${generated.length} content objects`, `→ folio/${body.paperId}/${chDir}/`);
       return Response.json({
         ok: true,
         paperId: body.paperId,
         chapterDir: chDir,
         generated,
-        path: `content/${body.paperId}/${chDir}`,
+        // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+        path: `folio/${body.paperId}/${chDir}`,
       }, { headers: { "Access-Control-Allow-Origin": "*" } });
     } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });

@@ -223,10 +223,13 @@ export async function gitImportTs(branch: string, relPath: string): Promise<unkn
     // Also need to ensure imported relative deps are on disk.
     // For content .ts files, they import from schema/ which lives on disk
     // and is the same across branches. We symlink content/schema → real schema.
-    const schemaLink = join(branchTmpDir, "content", "schema");
-    const realSchema = resolve(REPO_ROOT, "content", "schema");
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const schemaLink = join(branchTmpDir, "folio", "schema");
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const realSchema = resolve(REPO_ROOT, "folio", "schema");
     if (!existsSync(schemaLink) && existsSync(realSchema)) {
-      mkdirSync(join(branchTmpDir, "content"), { recursive: true });
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      mkdirSync(join(branchTmpDir, "folio"), { recursive: true });
       try {
         symlinkSync(realSchema, schemaLink, "dir");
       } catch {}

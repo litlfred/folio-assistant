@@ -184,13 +184,13 @@ const MEV_RE = /\b(MeV|GeV|keV|CODATA|PDG|ppb|ppm|ppq)\b/;
 /** Q-related word boundary — picks up `$q$`, `q ∈`, `q :`. */
 const MENTIONS_Q_RE = /\$q\b|\bq\s*[:∈]|\bq\^|\$q\^|q_0/;
 
-/** Lift the chapter directory name from a file path under `content/<paper>/<chapter>/<file>`. */
+/** Lift the chapter directory name from a file path under `folio/<paper>/<chapter>/<file>`. */
 export function chapterFromPath(path: string | undefined): string | undefined {
   if (!path) return undefined;
   const parts = path.split(sep);
-  const idx = parts.indexOf("content");
+  const idx = parts.indexOf("folio");
   if (idx < 0 || idx + 2 >= parts.length) return undefined;
-  // content / <paper-dir> / <chapter-dir> / <file>
+  // folio / <paper-dir> / <chapter-dir> / <file>
   return parts[idx + 2];
 }
 
