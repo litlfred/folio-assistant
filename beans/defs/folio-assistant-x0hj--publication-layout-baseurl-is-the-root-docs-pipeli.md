@@ -107,3 +107,66 @@ leaves the link dead just as surely as one that never runs it.
       nothing — tested in BOTH directions
 - [ ] No `@id` moves without the thing that names it moving with it, gated the
       way `cat-bootstrap-graph.test.ts` gates its one
+
+---
+
+## SUPERSEDED IN SUBSTANCE — the owner corrected the rule, and it is already built
+
+Found 2026-09-20 by reading sibling PRs rather than by being told. **This bean
+records the owner's FIRST statement of the rule; they corrected it in another
+session, and the correction is implemented on `claude/determined-euler-gqhkk0`
+(PR [#584](https://github.com/litlfred/folio-assistant/pull/584)).** Leaving
+this bean as written would have sent the next agent to build the superseded
+form.
+
+The correction, quoted from that branch's commit message:
+
+> First: `<baseurl>/<insantiated harness>/<path_to_rendered_conentent>`.
+>
+> Then the correction, which is the one implemented: *"your right... it should
+> be `<base-url>library/who-iris`. note rule on harnesses that instantiate a
+> director like fsh-guts, docs/ library/ need to create a visualize for them"*,
+> and the form: `<path-to-kind-or-node>`.
+>
+> So the mount point is keyed on the GRAPH KIND, not the instance alone:
+> `<base-url>/<kind>/<instance>/`
+
+**Keying on the instance alone — which this bean records — collapses every kind
+an instance declares onto one path**, so a folio with both a library and its
+own docs could publish only one of them. That is the defect, and it is exactly
+the shape of the two-instances-one-name collision `#477` already paid for, one
+layer out.
+
+### Two of this bean's open questions are answered by that work
+
+- **"Does the root instance get a segment TOO?"** — No. PR
+  [#583](https://github.com/litlfred/folio-assistant/pull/583) records the
+  owner's ruling: *"the root gets no segment, since its `docs/` is installed by
+  cat-harness and served at `<baseurl>/`"*. So statement 1 of this bean stands
+  unchanged and the two viewers need no change at all.
+- **"Which string is the segment"** — moot in the form this bean asked it, since
+  the first segment is now the KIND. The instance is the second, and `who-iris`
+  landing at `/docs/who-iris/` and `/library/who-iris/` is the worked example.
+
+### And a collision rule this bean did not have
+
+That branch also implements what happens when two instances claim one path:
+**walk from the root, outermost wins, stop** — the opposite of longest-prefix
+routing, and right for the reason given there: a mount point is a claim on a
+SUBTREE, so a deeper handler punching through would mean the outer instance's
+index could not be trusted to describe what is under it. A losing claim is
+REFUSED with its owner named and the step exits non-zero, rather than `cpSync`
+writing one instance's page over another's and exiting 0.
+
+### What is left of this bean
+
+The **measurement**, which stands and is not in that branch: three published
+artefacts already follow the rule and three do not —
+`_site/<STUB>.jsonld`, `_site/<STUB>/index.html` (the KG viewer, prefixed by
+`folio-assistant` rather than by kind and instance) and `_site/fsh-guts.jsonld`.
+Under the corrected rule those become `<kind>/<instance>` questions rather than
+`<instance>` ones, and the `@id`-moves-with-the-file hazard (`blv9`) is
+unchanged and still the thing to gate.
+
+**Do not scrap without checking that.** Whoever picks this up should read #584
+first, then decide whether the residue is a bean or a line on that branch's.
