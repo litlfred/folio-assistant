@@ -1514,7 +1514,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T20:40:00Z",
+      "updatedAt": "2026-09-20T20:20:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`AGENTS.md` line 3 (the cold-start line every agent runs first), lines 192 and 351, `README.md` lines 4 and 371, and `cat-harness/docs/guides/",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
@@ -1973,6 +1973,20 @@
       "updatedAt": "2026-09-20T07:41:19Z",
       "preview": "Group 2 of 13 in `d308`. **33 files, 16 entry points.**\n\n`lean-*` (audit, build-all, build-bg, build-timed, cache-dump,\nclosure-orchestrator, compile-audit, coverage, witness), `lake-cache*`,\n`setup-lean-toolchain`, `setup-elan-symlinks`, `reseed-lean-cache`,\n`install-lean-atlas`, `extract-lean-blocks`, `lean_auto_discharge`,\n`lean-triviality-probe`, `trivial-skeleton-audit`,\n`check-self-dischargi",
       "file": "beans/defs/folio-assistant-eu38--tool-213-task-formalize-lean-formalisation-33-file.md"
+    },
+    {
+      "id": "folio-assistant-fd6i",
+      "title": "CONTEXT, THE OTHER DIRECTION: `skos:` is bound in the published @context and emitted by ZERO nodes — and prose claims the graph speaks it",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T19:55:26Z",
+      "updatedAt": "2026-09-20T19:55:26Z",
+      "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while holding the `lqo9`\nglossary roast, which asked which standards fit a knowledge graph. Answering it\nrequired checking what this graph already speaks — and one of the answers was\nwrong.\n\n## The measurement\n\n`SKOS_NS` is declared at `schemas/jsonld.ts:90` and bound as `skos:` in the\npublished context at `schemas/jsonld.ts:551` **and** in the s",
+      "file": "beans/defs/folio-assistant-fd6i--context-the-other-direction-skos-is-bound-in-the-p.md"
     },
     {
       "id": "folio-assistant-fgnw",
@@ -4185,6 +4199,20 @@
       "updatedAt": "2026-09-20T17:19:50Z",
       "preview": "Split out of `3pqn` on the owner's instruction, 2026-09-20. `3pqn` closed on\nits Done-when 2 and 3 — the **damage** is stopped, because\n[`prepare-merge`](../../cat-harness/skills/folio-core/prepare-merge.md)\n§Guardrails now says *\"NO CHECKS IS NOT GREEN\"* and gives the procedure. This\nbean carries the remaining **why**, at low priority, with the evidence\nattached so nobody re-derives it.\n\n## The o",
       "file": "beans/defs/folio-assistant-yv4z--3pqn-cause-why-does-a-pr-sometimes-get-no-pull-req.md"
+    },
+    {
+      "id": "folio-assistant-yzsj",
+      "title": "gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T20:02:00Z",
+      "updatedAt": "2026-09-20T20:02:00Z",
+      "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) after merging #589, whose\n`Docs site (GitHub Pages)` run **failed on `main`**. The failure is not #589's\ncontent — it is the publish-ref race, and it is the one `xd1s` closed.\n\n## What actually failed\n\nRun 308, `4af80f84cf`, 19:53:01Z:\n\n```\n[command]/usr/bin/git push origin gh-pages\n ! [rejected]        gh-pages -> gh-pages (fetch first)\nerror: f",
+      "file": "beans/defs/folio-assistant-yzsj--gh-pages-race-is-back-xd1s-closed-with-nine-push-s.md"
     },
     {
       "id": "folio-assistant-z4mq",
