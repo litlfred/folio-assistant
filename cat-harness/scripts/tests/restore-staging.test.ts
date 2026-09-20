@@ -244,33 +244,77 @@ describe("the three states", () => {
  * between the restore and the push widens the window in which a
  * `feature-staging` deploy can land a preview this push then removes.
  */
-describe(".github/workflows/docs-site.yml", () => {
-  const wf = readFileSync(join(repoRootFor(resolve(import.meta.dir, "..", "..")), ".github", "workflows", "docs-site.yml"), "utf-8");
-  const steps = wf.split("\n").filter((l) => /^\s{6}- name: |^\s{8}(run|uses):/.test(l));
+describe(".github/workflows/docs-site.yml + publish-gh-pages.sh", () => {
+  const root = repoRootFor(resolve(import.meta.dir, "..", ".."));
+  const wf = readFileSync(join(root, ".github", "workflows", "docs-site.yml"), "utf-8");
+  const pub = readFileSync(join(root, "cat-harness", "scripts", "publish-gh-pages.sh"), "utf-8");
 
-  test("the restore is the step immediately before the publish", () => {
-    const restore = steps.findIndex((l) => l.includes("scripts/restore-staging.ts") && !l.includes("--verify"));
-    const publish = steps.findIndex((l) => l.includes("peaceiris/actions-gh-pages@"));
-    expect(restore).toBeGreaterThan(-1);
-    expect(publish).toBeGreaterThan(restore);
-    // The restore matches on its own `run:` line, so the only two lines
-    // between it and the `uses:` are the publish step's own `- name:` and
-    // that `uses:`. Anything else in between is a step that widened the
-    // window, which is the thing this asserts against.
-    expect(publish - restore).toBe(2);
-  });
+  // These keyed on `peaceiris/actions-gh-pages@` until 2026-09-20. When that
+  // action was replaced (bean `yzsj`, #605 half a) ONE of them failed loudly
+  // and TWO passed VACUOUSLY — `indexOf` returned -1, and both assertions are
+  // satisfied by -1. That is the `6tkl` shape introduced by the very change
+  // the tests exist to guard, so each now asserts against something that
+  // cannot silently go missing: a `-1` fails before the ordering is compared.
 
-  test("the verify runs after the publish", () => {
-    const publish = steps.findIndex((l) => l.includes("peaceiris/actions-gh-pages@"));
+  test("the workflow delegates the publish to the script, and still verifies after", () => {
+    const steps = wf.split("\n").filter((l) => /^\s{6}- name: |^\s{8}(run|uses):/.test(l));
+    const publish = steps.findIndex((l) => l.includes("scripts/publish-gh-pages.sh"));
     const verify = steps.findIndex((l) => l.includes("restore-staging.ts --verify"));
+    expect({ publish: publish > -1, verify: verify > -1 }).toEqual({ publish: true, verify: true });
     expect(verify).toBeGreaterThan(publish);
   });
 
+  test("the action is gone — it is what made a retry impossible", () => {
+    // It clones, replaces and pushes in one step, so the race window was
+    // INSIDE it and there was nothing to wrap. Prose may still mention it.
+    expect(wf).not.toMatch(/uses:\s*peaceiris\/actions-gh-pages/);
+  });
+
+  test("the restore is the last thing before the push, now inside the loop", () => {
+    // The invariant is unchanged and better served: every step between
+    // reading `gh-pages` and pushing widens the window in which a
+    // `feature-staging` deploy lands a preview this push then removes.
+    const restore = pub.indexOf("restore-staging.ts --site");
+    const push = pub.indexOf("git -C \"$PAGES_DIR\" push");
+    expect({ restore: restore > -1, push: push > -1 }).toEqual({ restore: true, push: true });
+    expect(push).toBeGreaterThan(restore);
+    // Nothing between them may read the branch again or sleep.
+    const between = pub.slice(restore, push);
+    expect(between).not.toContain("backoff-sleep");
+    expect(between).not.toContain("fetch");
+  });
+
+  test("EVERY attempt re-reads and rebuilds — it must never rebase", () => {
+    // The load-bearing property. This commit replaces the WHOLE TREE, so
+    // replaying it onto a newer `gh-pages` would re-apply that replacement
+    // over whatever landed in between — `plj1` re-created by the retry.
+    // Verified end to end on a scratch remote: with the first push losing,
+    // the final commit's parent was the rival's commit.
+    expect(pub).toContain("reset --hard FETCH_HEAD");
+    expect(pub).not.toMatch(/pull\s+--rebase|git\s+rebase/);
+    // The restore sits INSIDE the attempt loop, not before it.
+    const loop = pub.indexOf("for attempt in");
+    expect(loop).toBeGreaterThan(-1);
+    expect(pub.indexOf("restore-staging.ts --site")).toBeGreaterThan(loop);
+  });
+
   test("the publish is still a FULL REPLACE — delete-on-remove is the point", () => {
-    // `keep_files: true` here would be the regression the control test above
-    // measures: the main site's own deleted pages would serve forever.
-    const publishBlock = wf.slice(wf.indexOf("peaceiris/actions-gh-pages@"));
-    expect(publishBlock.slice(0, publishBlock.indexOf("- name:"))).not.toContain("keep_files");
+    // `keep_files` here would be the regression the control test above
+    // measures: the main site's own deleted pages would serve forever. The
+    // previews survive by being RESTORED into `_site`, never by not deleting.
+    expect(pub).toContain("rm -r --ignore-unmatch");
+    // Comments stripped: the script's header explains at length why
+    // `keep_files` is NOT the fix, so asserting on the raw text would fail on
+    // its own reasoning. The assertion is about what it DOES.
+    const code = pub.split("\n").filter((l) => !l.trim().startsWith("#")).join("\n");
+    expect(code).not.toContain("keep_files");
+  });
+
+  test("a restore that could not READ the branch is fatal, never 'no previews'", () => {
+    // Exit 2 means the branch was unreadable. Publishing then would assert
+    // "there are no previews to keep" on the strength of a failed read.
+    const guard = pub.slice(pub.indexOf("restore-staging.ts --site"));
+    expect(guard.slice(0, guard.indexOf("rm -r"))).toContain("exit");
   });
 });
 
