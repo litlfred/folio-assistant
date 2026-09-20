@@ -59,7 +59,19 @@ things a bare "we decided X" loses.
 
 - **Never fewer than two considered options.** If there genuinely was only one,
   the record says *why no alternative existed* — that is a finding about the
-  constraint, not a decision.
+  constraint, not a decision. **This one is checked**: `bun run health` reports
+  `bean-thin-decision-records` over the bean store, at `minor`, because it maps
+  analytical debt rather than breaking a consumer. It reports the SUBJECT COUNT
+  beside it (`bean-decision-records`) on purpose — the finding can only fire on a
+  bean that count includes, so a detector that stops matching shows as zero
+  subjects instead of as a clean run. Measured when it landed, 2026-09-20: two
+  records in the store, both with three options, so it locks in a property the
+  store has rather than demanding work.
+
+  The check refuses the shortcut the rule invites: its remedy offers *why no
+  alternative existed* and says outright not to invent a straw option to reach
+  two. A criterion that could be satisfied by padding would make the records
+  worse than no criterion.
 - **Never rewrite a superseded record.** Mark it superseded and link forward.
   Editing it erases the fact that the decision changed, which is the same erasure
   `decision-audit` refuses when it says overruling is recorded rather than erased.

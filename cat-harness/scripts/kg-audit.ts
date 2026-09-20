@@ -1428,6 +1428,15 @@ if (orphans.length > 0) {
       "    not be determined. That is not a pass for it.",
   );
   console.error("\n  Reported, never deleted — `deletion-requires-confirmation`.");
+  // And, since 2026-09-20, this FAILS `kg:audit:check`. Reporting without
+  // failing is what let twelve of these accumulate: the finding printed `✗` on
+  // every run while the gate set announced "53 gates pass", so the only reader
+  // who would ever act on it was one already reading the log for another reason.
+  //
+  // Failing the check does NOT delete anything — the line above still holds, and
+  // the remedy is still a person's. What changes is that the remedy cannot be
+  // indefinitely deferred in silence.
+  console.error("  It fails `kg:audit:check`; removing a dead sidecar is still yours to authorise.");
 }
 
 if (asJson) {
@@ -1488,6 +1497,24 @@ if (check) {
   // line — four whose subject had moved, eight written before
   // `isPartOfASkill` existed — so it starts at zero and any new one is a
   // regression rather than debt.
+  //
+  // Three further points, from a second session that reached this same change
+  // independently and whose merge is where these were folded in:
+  //
+  //   · WHY the severity gate could not already see them: orphans are computed
+  //     outside `reports`, so `worstSeverity` has nothing to rank. They are not
+  //     findings ABOUT a subject — a stale sidecar is a verdict that has not
+  //     caught up, an orphaned one a verdict about something this run did not
+  //     judge — which is why they sit beside `stale` rather than inside the
+  //     severity ladder.
+  //   · ALL THREE orphan groups count, the UNREADABLE one included. `AGENTS.md`
+  //     on this repository's own sweeps: could-not-determine "is never rendered
+  //     as clean" and it "outranks a finding" — a sweep blind on one check has
+  //     not cleared the others. Excluding the unresolvable case would put the
+  //     third state back on the pass side.
+  //   · Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0,
+  //     or regenerating after a rename would fail the very command you run to
+  //     fix it.
   process.exit(stale.length || tripped || orphans.length > 0 ? 1 : 0);
 }
 process.exit(0);

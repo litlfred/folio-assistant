@@ -136,6 +136,63 @@ vocabulary — so it goes to the owner rather than being decided in passing. Bea
 Until it is settled, those scripts stay unreachable, and that is the honest state
 rather than a gap papered over with a false edge.
 
+## Reachability is PLURAL — "which caller should this have?" presumes one
+
+The three cases above ask what is missing. This asks what shape the question has,
+and getting it wrong wastes a round of proposals.
+
+**The owner has stated this twice, in the same words both times.** Asked to choose
+between three ways of reaching a mechanism: *"1 2 3 are all triggers"*, then *"all
+for triggers or tools as appropriate"*. And a day earlier, asked which of three
+mechanisms should start a CI watcher: *"kick off if like task or workflow initation
+or bean roast"*. Both times the offered choice was refused, and both times the
+answer was the same: **one mechanism, several dispatch points.**
+
+So the question to ask is not *which caller should this have* but:
+
+> **What should be able to start this — and is each of those a trigger or a Tool?**
+
+The two are different objects, and which one a dispatch point is follows from who
+initiates:
+
+| dispatch point | it is a | because |
+|---|---|---|
+| a named command | **Tool** | a caller invokes it; that is what a Tool node IS |
+| a BPMN activity | **trigger** | the process fires it when the step is reached |
+| a QA sweep axis | **trigger** | the sweep fires it per subject |
+| a schedule or a watcher | **trigger** | time or an event fires it |
+
+`alternativeTo` stays **empty** across them, by the same argument
+`ToolDefinitionSchema` makes about sharing a skill: these are not substitutable
+arms, they are different ways the same work gets started.
+
+### Enumerating the dispatch points is also how you find the ones already built
+
+The value is not only completeness. Worked on `translation-roundtrip.ts`
+(bean `vo9d`), where three dispatch points were proposed and, on reading the
+mechanism, **two of the three were already done or wrong**:
+
+- the BPMN trigger **already existed** — `Task_RoundTripQA` carried
+  `<folio:skill ref="translation-manager"/>`, so `workflow_next` already handed an
+  agent the skill at that step;
+- a sweep axis was **wrong**, not merely awkward — the sweep cannot back-translate,
+  and the verdict originates outside it;
+- only the **Tool** was missing.
+
+Presented as a choice, that is one proposal accepted and two wasted. Enumerated as
+dispatch points, it is a three-line audit with one action.
+
+### The failure underneath, which is worth naming on its own
+
+Each wrong proposal came from the same move: **describing a mechanism from its name
+and its position in a diagram, then reasoning about what it needs.** "Round-trip QA,
+a `serviceTask` with no caller" generated three plausible options. The script's
+usage string — `--payload <file.json>` — settled it in one line, because the
+mechanism **records** a verdict agents produced rather than performing the check.
+
+So before proposing dispatch points, read the mechanism's entry point. A name says
+what something is for; an argument list says what it does.
+
 ## Why this is its own skill
 
 It was written into [`skills-and-tools`](skills-and-tools.md) first, which took
