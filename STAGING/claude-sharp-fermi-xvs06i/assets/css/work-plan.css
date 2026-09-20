@@ -155,10 +155,7 @@
 }
 
 .fa-workplan-bar-row {
-  display: grid;
-  grid-template-columns: minmax(6rem, 18rem) 1fr 2.5rem;
-  align-items: center;
-  gap: 0.7rem;
+  display: block;
   margin: 0;
 }
 
@@ -271,12 +268,130 @@
 /* An epic's bar label is a link to the epic. Kept visually identical to the
    non-link case until hover: 14 underlined rows stacked in a chart is a
    texture, not a set of affordances. */
-a.fa-workplan-bar-label { color: var(--fa-wp-ink-2); text-decoration: none; }
-a.fa-workplan-bar-label:hover {
+/* The bar is a BUTTON now, spanning the row, so the label is no longer a link
+   and the hover-only underline that hid it is gone with it. Every link in the
+   expanded panel is underlined at rest — this stylesheet's own rule, which the
+   old `:hover`-only underline broke on the one control the chart had. */
+.fa-workplan-bar-toggle {
+  display: grid;
+  grid-template-columns: minmax(6rem, 18rem) 1fr 2.5rem;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.3rem 0.2rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.fa-workplan-bar-toggle:hover { background: var(--fa-wp-track); }
+.fa-workplan-bar-toggle:focus-visible {
+  outline: 2px solid var(--fa-wp-series);
+  outline-offset: 1px;
+}
+/* The open state is announced by a caret as well as by position, so the
+   affordance does not rest on the panel being in view. */
+.fa-workplan-bar-label::before {
+  content: "\25B8";
+  display: inline-block;
+  width: 0.9em;
+  margin-left: -0.9em;
+  color: var(--fa-wp-muted);
+}
+.fa-workplan-bar-toggle[aria-expanded="true"] .fa-workplan-bar-label::before {
+  content: "\25BE";
+}
+.fa-workplan-bar-label { padding-left: 0.9em; }
+
+.fa-workplan-bar-detail {
+  margin: 0.15rem 0 0.5rem 0.9em;
+  padding: 0.5rem 0.7rem;
+  border-left: 2px solid var(--fa-wp-border);
+}
+.fa-workplan-bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+/* One shape for every action on this board — the epic link, the scope button
+   and the clear button — because they are the same kind of thing to a reader
+   even though two are buttons and one is an anchor. */
+.fa-workplan-action {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--fa-wp-border);
+  border-radius: 0.25rem;
+  background: none;
   color: var(--fa-wp-ink);
+  font: inherit;
+  font-size: 0.78rem;
   text-decoration: underline;
   text-underline-offset: 0.15em;
+  cursor: pointer;
 }
+.fa-workplan-action:hover { background: var(--fa-wp-track); }
+.fa-workplan-action:focus-visible {
+  outline: 2px solid var(--fa-wp-series);
+  outline-offset: 1px;
+}
+
+.fa-workplan-bean-list { margin: 0; padding: 0; list-style: none; }
+.fa-workplan-bean-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0.12rem 0;
+  font-size: 0.8rem;
+}
+/* A status word, never a status colour alone — the reserved-status rule: it
+   ships with a label, and here the label IS the mark. */
+.fa-workplan-bean-status {
+  flex: 0 0 auto;
+  min-width: 5.2rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--fa-wp-ink-2);
+}
+.fa-workplan-bean-status.is-in-progress { color: var(--fa-wp-series); }
+.fa-workplan-bean-blocked {
+  flex: 0 0 auto;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--fa-wp-warning);
+}
+.fa-workplan-bean-link { color: var(--fa-wp-ink); }
+a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.15em; }
+.fa-workplan-bean-empty { margin: 0; font-size: 0.8rem; color: var(--fa-wp-ink-2); }
+
+/* The scoped row stays visible among the others rather than replacing them,
+   so the way back is never further than the bar you came from.
+   SELECTION IS NOT THE SAME INK AS HOVER: the first draft gave both the same
+   background, so the row you had chosen and the row your pointer happened to
+   rest on were indistinguishable. Hover stays a wash; selection adds an
+   accent rule in the series colour and is announced with aria-current. */
+.fa-workplan-bar-row.is-scoped .fa-workplan-bar-toggle {
+  background: var(--fa-wp-track);
+  box-shadow: inset 3px 0 0 var(--fa-wp-series);
+}
+
+/* ONE ROW, ABOVE THE PANELS. */
+.fa-workplan-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  grid-column: 1 / -1;
+  margin-bottom: 0.2rem;
+  font-size: 0.82rem;
+}
+.fa-workplan-filter-label { color: var(--fa-wp-ink-2); }
+.fa-workplan-filter-value { color: var(--fa-wp-ink); font-weight: 600; }
 
 .fa-workplan-empty,
 .fa-workplan-fallback {
@@ -294,5 +409,5 @@ a.fa-workplan-bar-label:hover {
 }
 
 @media (max-width: 40rem) {
-  .fa-workplan-bar-row { grid-template-columns: minmax(5rem, 1fr) 1fr 2.2rem; }
+  .fa-workplan-bar-toggle { grid-template-columns: minmax(5rem, 1fr) 1fr 2.2rem; }
 }
