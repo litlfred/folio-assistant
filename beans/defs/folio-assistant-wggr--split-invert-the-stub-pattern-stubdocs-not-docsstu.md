@@ -464,3 +464,74 @@ resolve through the declaration instead. Not decided here.
 Recorded in agent memory as `the-top-level-is-four-things-and-three-are-memory`
 (`platform-boundary-guard`), since "where does this belong" is that agent's
 lane and this rule has now been got wrong twice.
+
+## Merging main into PR #437 — what the two-root split found, 2026-09-20
+
+70 commits of main merged in two passes. **208 rename/rename conflicts**, all
+`X -> cat-harness/X` here against `X -> folio-assistant/X` on main, resolved
+toward `cat-harness/` after comparing every pair byte-for-byte: **208
+identical, 0 differing**. Main relocated and did not edit, so nothing of theirs
+was lost to the choice. Both sides were already heading here — this bean's own
+section is titled "What this means for the `cat-harness` rename, which is the
+next step".
+
+**Three silent drops, each this branch's layout meeting code that was correct
+while the two roots were one directory.** None would fail on main, and none
+was found by the check that owns the area:
+
+1. **Bootstrap's skills left the published graph.** `skillMdDirs` builds from
+   the DECLARED `path` — relative to whatever root the entry's *scope* names,
+   and `bootstrap/skills/` is repository-scoped — then returns it as if it were
+   instance-relative. `collectSkills` joins that to the instance root, finds
+   nothing, and `continue`s under the comment *"a package this instance does
+   not carry"*. `confirm-harness` became a dangling `hasSkill`; `kg-navigation`
+   only LOOKED fine because a second copy exists under `skills/`, which is bean
+   `v3se` exactly. Fixed by composing from the `absPath` the resolver already
+   produced. Note the first fix returned one joined string, which corrected the
+   root and broke the segment shape callers index (`p[0] === "skills"`);
+   `skill-coverage.test.ts` caught it by asserting set equality against the
+   filesystem.
+
+2. **`check-actor-reach` examined nothing over 27 actors.** `.claude/` is the
+   repository's; `root = process.cwd()` named `cat-harness/.claude/`. Its own
+   vacuity guard printed "EXAMINED NOTHING" and the test asserting that guard
+   fires was the only thing that noticed. Its test then passed ONE root for two
+   questions — the actor registry is the repository's, the declaration the
+   instance's.
+
+3. **`requirements.txt` and the Python import scan want DIFFERENT roots.**
+   `requirements.txt` sits beside `package.json` and CI installs it from the
+   checkout root, so it is the repository's; the `.py` files that import those
+   packages are the instance's. A single `ROOT` breaks one half whichever way
+   it points — at the instance `requirements.txt` is ENOENT, at the repository
+   the `scripts/**/*.py` glob matches nothing and the scan reports 0 imports.
+   Both named now.
+
+**The pattern worth carrying**: every one of these is a directory resolved
+against the wrong root, and every one FAILED SILENTLY in the same direction —
+an empty scan reported as a clean one. Where a guard existed it fired; where it
+did not, the graph simply lost nodes. That is the argument for the vacuity
+guards this repo keeps writing, stated as a measurement rather than a
+preference.
+
+**`initializationDoc` narrowed, and the open half is recorded not papered
+over.** It composed `<stub>/docs/...` and its docstring claimed a "full
+repo-relative path"; `siteDir` returns plain `docs` here because the instance
+has a directory of its own. The suffix is now IDENTICAL for every instance,
+stronger than "differs only by site root" — **but bootstrap needs the
+instance's DIRECTORY to use it**, and with the directory (`cat-harness/`)
+deliberately unequal to the stub (`folio-assistant`), `<stub>/` names nothing.
+Scanning the top level for a `harness.json` is the declaration-driven answer
+and is what `findInstanceRoot` already does in the other direction. **Not
+implemented, not assumed.** The test asserting `toContain("base/")` is inverted
+rather than deleted and says in place what it no longer proves.
+
+Accepted from main without argument: 11 simulators DELETED (moved to the `qou`
+folio that owns them, sha256-verified identical there — the platform/folio
+boundary, and main is right), the `determine-intent` -> `confirm-harness` and
+`bootstrap.bpmn` -> `initialize-harness.bpmn` renames, and 34 new files git had
+already placed. Also relocated 11 files main added under `folio-assistant/`
+with no counterpart here, which the rename pass structurally could not see.
+
+Verified: 3078 tests 0 fail, `bun run gates --all` the whole set, tsc and
+eslint clean.

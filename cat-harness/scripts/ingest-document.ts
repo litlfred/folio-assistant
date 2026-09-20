@@ -152,25 +152,52 @@ export interface Probe {
  * unavailable -- "could not probe" is a third state, not "no outline".
  */
 export function probe(pdf: string): Probe {
+  // `pymupdf`, NOT `fitz`. The legacy alias still imports, and that is the
+  // trap: it prints a deprecation warning TO STDOUT before anything else, so
+  // the JSON parse below saw `warning: The \`fitz\` API is deprecated…` and
+  // reported "probe produced no JSON". Invisible until the backend is
+  // installed — with nothing installed, `fitz` simply failed to import and
+  // the honest "no PDF backend" masked it. `pdf-pages.py` and
+  // `pdf-structure.py` already used the canonical name; this was the holdout.
   const py = `
 import sys, json
 try:
-    import fitz
+    import pymupdf
 except Exception as e:
     print(json.dumps({"error": f"no PDF backend: {e}"})); sys.exit(0)
 try:
-    d = fitz.open(sys.argv[1])
+    d = pymupdf.open(sys.argv[1])
     chars = sum(len(d[i].get_text()) for i in range(min(len(d), 20)))
     print(json.dumps({"outline": len(d.get_toc()), "chars": chars}))
 except Exception as e:
     print(json.dumps({"error": str(e)}))
 `;
   const r = Bun.spawnSync(["python3", "-c", py, pdf]);
-  try {
-    return JSON.parse(new TextDecoder().decode(r.stdout)) as Probe;
-  } catch {
-    return { outline: null, chars: null, error: "probe produced no JSON" };
+  return parseProbe(new TextDecoder().decode(r.stdout));
+}
+
+/**
+ * The probe's answer, read out of stdout that may not be only JSON.
+ *
+ * Takes the LAST line that parses, because a library is free to print to
+ * stdout before the payload and one did: PyMuPDF's `fitz` alias emits a
+ * deprecation warning there, which turned a working probe into
+ * "probe produced no JSON". Parsing the whole stream assumes the tool is the
+ * only thing writing to it, and that assumption is not ours to make.
+ *
+ * Still a third state when nothing parses — an unparseable probe is
+ * `undetermined`, never "no outline".
+ */
+export function parseProbe(stdout: string): Probe {
+  const lines = stdout.split("\n").map((l) => l.trim()).filter(Boolean);
+  for (let i = lines.length - 1; i >= 0; i--) {
+    try {
+      return JSON.parse(lines[i]) as Probe;
+    } catch {
+      // keep walking back
+    }
   }
+  return { outline: null, chars: null, error: "probe produced no JSON" };
 }
 
 /**

@@ -133,6 +133,20 @@ jobs:
       - name: Install ruff
         run: pip install "ruff>=0.5"
 
+      # The Python backends the scripts actually import, from the file
+      # `schemas/python-deps.ts` generates. Bean `68dt`: nothing declared them
+      # before, so `pdf-structure.py` needed PyMuPDF and CI had no way to know
+      # — which made every PDF path one CI could not exercise, the `5rfy`
+      # defect (a gate that never fires).
+      #
+      # `requirements.txt` is the LEAN set. `requirements-extended.txt` is
+      # deliberately NOT installed: camelot-py is 912 KB but pulls numpy,
+      # pandas and OpenCV — 323 MB, measured 2026-09-20, more than the whole
+      # lean set — for one script. That is a cost statement, not a
+      # deprecation; `pdf-tables.py` is live and its tests run outside CI.
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
       # HARD GATE, promoted from warn-only. Same rule as eslint: a check is an
       # error only once its count is zero, and this repo's count is zero — the
       # 24 live F401s were drained in the same commit that repointed the scan.
@@ -423,6 +437,8 @@ jobs:
         run: |
           set -e
           bun run check:bean-parents
+          bun run check:python-deps
+          bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
           bun run check:declared-paths

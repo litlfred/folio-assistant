@@ -128,7 +128,10 @@
     "check:actor-reach": "bun run cat-harness/scripts/check-actor-reach.ts",
     "narratives": "bun run cat-harness/scripts/narratives.ts",
     "narratives:confirm": "bun run cat-harness/scripts/narratives.ts confirm",
-    "narratives:reject": "bun run cat-harness/scripts/narratives.ts reject"
+    "narratives:reject": "bun run cat-harness/scripts/narratives.ts reject",
+    "deps:python": "bun run cat-harness/scripts/gen-python-deps.ts",
+    "deps:python:check": "bun run cat-harness/scripts/gen-python-deps.ts --check",
+    "check:python-deps": "bun run cat-harness/scripts/check-python-deps.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
