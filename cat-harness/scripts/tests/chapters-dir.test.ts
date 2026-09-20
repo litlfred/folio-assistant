@@ -39,10 +39,10 @@ afterAll(() => {
  */
 function makeFolio(name: string, opts: { withChapter?: boolean } = {}): string {
   const root = join(DIR, name);
-  mkdirSync(join(root, "content", "demo-paper"), { recursive: true });
+  mkdirSync(join(root, "folio", "demo-paper"), { recursive: true });
   mkdirSync(join(root, "chapters"), { recursive: true });
   writeFileSync(
-    join(root, "content", "demo-paper", "demo-paper.ts"),
+    join(root, "folio", "demo-paper", "demo-paper.ts"),
     'export default { title: "Demo", authors: [], chapters: [] };\n',
   );
   if (opts.withChapter) {

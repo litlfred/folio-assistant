@@ -31,6 +31,7 @@
         <bpmn:flowNodeRef>Call_Issue</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Needs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Requirements</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_DataModel</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Signoff</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Deliver</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Close</bpmn:flowNodeRef>
@@ -62,6 +63,10 @@ They do not need to know it is called CRDM.</bpmn:documentation>
       <bpmn:documentation>Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:callActivity>
+    <bpmn:callActivity id="Call_DataModel" name="Data model&#10;Entities + cardinalities" calledElement="Process_CRDM_DataModel">
+      <bpmn:documentation>Between requirements and sign-off, and the order is the argument: requirements are statements about things, and the model says what the things ARE. Drafted earlier it is invented from nothing, since the entities come from the phase-2 BPA; drafted later, sign-off approves requirements whose nouns were never pinned — which is how two stakeholders approve one sentence meaning different things. Owner, 2026-09-20.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:callActivity>
     <bpmn:callActivity id="Call_Signoff" name="Phase 5&#10;Beans + sign-off" calledElement="Process_CRDM_Signoff">
       <bpmn:documentation>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
@@ -82,7 +87,8 @@ They do not need to know it is called CRDM.</bpmn:documentation>
     <bpmn:sequenceFlow id="SF_Process_CRDM_5" name="yes" sourceRef="GW_Feature" targetRef="Call_Issue"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_6" sourceRef="Call_Issue" targetRef="Call_Needs"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_7" sourceRef="Call_Needs" targetRef="Call_Requirements"/>
-    <bpmn:sequenceFlow id="SF_Process_CRDM_8" sourceRef="Call_Requirements" targetRef="Call_Signoff"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_8" sourceRef="Call_Requirements" targetRef="Call_DataModel"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_12" sourceRef="Call_DataModel" targetRef="Call_Signoff"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_9" sourceRef="Call_Signoff" targetRef="Call_Deliver"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_10" sourceRef="Call_Deliver" targetRef="Call_Close"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_11" sourceRef="Call_Close" targetRef="End_CRDM"/>
@@ -90,13 +96,13 @@ They do not need to know it is called CRDM.</bpmn:documentation>
   <bpmndi:BPMNDiagram id="Diagram_Process_CRDM">
     <bpmndi:BPMNPlane id="Plane_Process_CRDM" bpmnElement="Collaboration_Process_CRDM">
       <bpmndi:BPMNShape id="Shape_Participant_Process_CRDM" bpmnElement="Participant_Process_CRDM" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2466" height="380" />
+        <dc:Bounds x="160" y="80" width="2666" height="380" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_BA_Process_CRDM" bpmnElement="Lane_BA" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="2436" height="170" />
+        <dc:Bounds x="190" y="80" width="2636" height="170" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Agent_Process_CRDM" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="190" y="250" width="2436" height="170" />
+        <dc:Bounds x="190" y="250" width="2636" height="170" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_BA" bpmnElement="Start_BA">
         <dc:Bounds x="310" y="147" width="36" height="36" />
@@ -122,17 +128,20 @@ They do not need to know it is called CRDM.</bpmn:documentation>
       <bpmndi:BPMNShape id="Shape_Call_Requirements" bpmnElement="Call_Requirements">
         <dc:Bounds x="1710" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Call_Signoff" bpmnElement="Call_Signoff">
+      <bpmndi:BPMNShape id="Shape_Call_DataModel" bpmnElement="Call_DataModel">
         <dc:Bounds x="1910" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Call_Deliver" bpmnElement="Call_Deliver">
+      <bpmndi:BPMNShape id="Shape_Call_Signoff" bpmnElement="Call_Signoff">
         <dc:Bounds x="2110" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Call_Close" bpmnElement="Call_Close">
+      <bpmndi:BPMNShape id="Shape_Call_Deliver" bpmnElement="Call_Deliver">
         <dc:Bounds x="2310" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Close" bpmnElement="Call_Close">
+        <dc:Bounds x="2510" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_CRDM" bpmnElement="End_CRDM">
-        <dc:Bounds x="2510" y="317" width="36" height="36" />
+        <dc:Bounds x="2710" y="317" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_1" bpmnElement="SF_Process_CRDM_1">
         <di:waypoint x="346" y="165" />
@@ -168,17 +177,21 @@ They do not need to know it is called CRDM.</bpmn:documentation>
         <di:waypoint x="1850" y="335" />
         <di:waypoint x="1910" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_9" bpmnElement="SF_Process_CRDM_9">
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_12" bpmnElement="SF_Process_CRDM_12">
         <di:waypoint x="2050" y="335" />
         <di:waypoint x="2110" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_10" bpmnElement="SF_Process_CRDM_10">
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_9" bpmnElement="SF_Process_CRDM_9">
         <di:waypoint x="2250" y="335" />
         <di:waypoint x="2310" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_11" bpmnElement="SF_Process_CRDM_11">
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_10" bpmnElement="SF_Process_CRDM_10">
         <di:waypoint x="2450" y="335" />
         <di:waypoint x="2510" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_11" bpmnElement="SF_Process_CRDM_11">
+        <di:waypoint x="2650" y="335" />
+        <di:waypoint x="2710" y="335" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

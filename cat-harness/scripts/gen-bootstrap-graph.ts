@@ -5,35 +5,47 @@
  *
  * @module scripts/gen-bootstrap-graph
  *
- * ## Why this file is COMMITTED when `_kg/` is not
+ * ## Why this file is NOT committed — and why it was, until 2026-09-20
  *
- * `_kg/<stub>.jsonld` is gitignored: it is a build artefact, regenerated on
- * every build, and nothing needs it in a fresh clone. Bootstrap's graph is the
- * opposite case and for the reason bootstrap exists at all — its reader has
- * **just been pointed at a repository and has nothing installed**. It cannot
- * run `bun install`, let alone `bun run kg:export`, so a graph that only
- * appears after a build is a graph that reader never sees.
+ * It was committed, and the rationale written here said its reader "has just
+ * been pointed at a repository and has nothing installed", so a graph that
+ * only appears after a build is one that reader never sees. It cited
+ * `bootstrap/README.md` step 2: *"Load `bootstrap/bootstrap.jsonld`"*.
  *
- * `bootstrap/README.md` step 2 says *"Load `bootstrap/bootstrap.jsonld`"*. For
- * that instruction to be true in a fresh clone, the file has to be in the
- * clone.
+ * **Both halves were false when checked.** The string `jsonld` appears in no
+ * prose file under `bootstrap/` — the README sends a cold reader to
+ * `workflows/initialize-harness.bpmn` and `skills/bootstrap-kg-navigation.md`,
+ * and never to this document. And nothing published it: `docs-site.yml`
+ * writes `_site/bootstrap/ns.jsonld`, the NAMESPACE document, and never
+ * copied this one, so its own `@id` —
+ * `<base>/bootstrap/bootstrap.jsonld` — dereferenced to nothing. That is
+ * `blv9`, a link-shaped value that does not resolve, in the artefact whose
+ * whole purpose is to be resolved.
  *
- * ## Committed means gated, and gated means PURE
+ * So it was 52 % of `bootstrap/` by line count, read by no documented
+ * instruction, published nowhere, and byte-gated in CI. It is now BUILT AT
+ * RENDER TIME into the published site, which is the first time the IRI it has
+ * always claimed actually answers.
  *
- * A generated file that is committed drifts from its inputs unless something
- * checks — this repository's standing rule, and `--check` is that something.
- * Which forces a property the build artefact does not need: **the output must
- * be a pure function of its inputs.**
+ * ## Still pure, and the reason has outlived the gate
  *
- * So two fields the main export carries are deliberately absent:
+ * The byte gate is gone with the committed file, but purity is not a property
+ * of being gated — it is what makes a published artefact diffable and
+ * cacheable, and what stops two builds of one tree disagreeing. The ordering
+ * guard in `tests/bootstrap-graph.test.ts` is the one that matters and it
+ * never depended on the file: it asserts the ORDER on the machine that
+ * introduces a regression, not only on the one that later disagrees.
+ *
+ * So two fields the main export carries are still deliberately absent:
  *
  * - **`generatedAt`.** A timestamp makes every run a diff, so `--check` would
  *   fail on a tree nobody touched and be switched off within a week.
- * - **`sourceCommitSha`.** A committed generated file *cannot* carry its own
- *   commit: the best it could name is the commit BEFORE the one containing
- *   it, which is wrong by construction and invites a consumer to check out a
- *   commit where this file says something else. Its provenance is that it is
- *   IN the repository — git already answers "which commit is this" exactly.
+ * - **`sourceCommitSha`.** The reason it was absent — a committed generated
+ *   file cannot name its own commit — no longer applies now that it is built
+ *   at render time, so this one is now a DEFENSIBLE ADDITION rather than an
+ *   impossibility. Left out here on purpose: adding it is a change to what
+ *   the document says, not to where it is written, and the two do not belong
+ *   in one commit. Tracked rather than done.
  *
  * ## What it does NOT claim to have looked at
  *
@@ -42,8 +54,8 @@
  * from *"tools were never looked for"*. An empty section rendered as a clean
  * one is the `dh4f` defect.
  */
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
@@ -69,7 +81,41 @@ export async function buildBootstrapDocument(
 
   const problems: string[] = [];
   const { nodes, omitted } = await collectInstanceNodes(root, docIri, "", problems);
-  const graph = nodes.map(compact);
+  // SORTED BY `@id`, because this file is committed and byte-gated.
+  //
+  // `collectInstanceNodes` returns nodes in the order the collectors found
+  // them, and the collectors walk directories — so the order is `readdirSync`
+  // order, which is the FILESYSTEM's, not this repository's. Two machines
+  // scanning identical trees produce identical nodes in different sequences,
+  // and `it is current` compares bytes.
+  //
+  // Measured 2026-09-20 (bean `3jj9`): the committed file held skills as
+  // `bootstrap-kg-navigation, discussion, confirm-harness, log-message` and
+  // processes as `InitializeHarness, LogMessage, Discussion` — neither
+  // alphabetical, both stable per machine. The check passed on the container
+  // that wrote the file and failed on CI, with the same inputs and the same
+  // 3433 tests.
+  //
+  // The neighbouring purity test — "two builds are byte-identical" — cannot
+  // catch this: both builds run in ONE process against ONE filesystem, so it
+  // compares an ordering against itself. It is a real guard for timestamps
+  // and a guard that cannot fire for ordering.
+  //
+  // `@id` is the sort key rather than insertion order or type: every node has
+  // one, it is unique, and it is the thing a reader dereferences.
+  //
+  // Compared with `<` rather than `localeCompare`, and that is not a style
+  // choice. `localeCompare` with no locale argument uses the RUNTIME's
+  // default, which is an environment input exactly like the filesystem
+  // ordering this sort exists to remove — it would swap one cross-machine
+  // nondeterminism for a subtler one. Code-unit order is the same everywhere.
+  const graph = nodes
+    .map(compact)
+    .sort((a, b) => {
+      const x = String(a["@id"]);
+      const y = String(b["@id"]);
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
 
   const counts: Record<string, number> = {};
   for (const n of graph) {
@@ -91,26 +137,24 @@ export async function buildBootstrapDocument(
 }
 
 if (import.meta.main) {
-  const check = process.argv.includes("--check");
-  const doc = await buildBootstrapDocument();
-  const next = JSON.stringify(doc, null, 2) + "\n";
-
-  if (check) {
-    if (!existsSync(OUT)) {
-      console.error(`✗ ${OUT} is missing — run \`bun run bootstrap:graph\``);
-      process.exit(1);
-    }
-    if (readFileSync(OUT, "utf-8") !== next) {
-      console.error(`✗ bootstrap/bootstrap.jsonld is stale — run \`bun run bootstrap:graph\``);
-      process.exit(1);
-    }
-    console.log(`✓ bootstrap/bootstrap.jsonld is current (${Object.keys(doc.counts as object).length} node kinds)`);
-    process.exit(0);
+  // `--out` so the site build can write this straight into `_site/`, the same
+  // shape every other published document here uses (`kg-export`, `ns-export`,
+  // `fsh-guts-export`). Without it the build would have to write into the
+  // working tree and copy, which is how a build artefact ends up committed by
+  // somebody running `git add -A`.
+  const outFlag = process.argv.indexOf("--out");
+  const out = outFlag >= 0 ? resolve(process.argv[outFlag + 1] ?? "") : OUT;
+  if (outFlag >= 0 && (process.argv[outFlag + 1] ?? "").length === 0) {
+    console.error("✗ --out needs a path");
+    process.exit(1);
   }
 
-  writeFileSync(OUT, next);
+  const doc = await buildBootstrapDocument();
+  mkdirSync(dirname(out), { recursive: true });
+  writeFileSync(out, JSON.stringify(doc, null, 2) + "\n");
+
   const counts = doc.counts as Record<string, number>;
-  console.log(`bootstrap graph → bootstrap/bootstrap.jsonld`);
+  console.log(`bootstrap graph → ${out}`);
   for (const [k, v] of Object.entries(counts).sort()) console.log(`  ${String(v).padStart(4)}  ${k}`);
   const problems = doc.problems as string[];
   if (problems.length > 0) for (const p of problems) console.log(`  · ${p}`);

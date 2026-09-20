@@ -33,12 +33,12 @@ afterEach(() => {
 function folio(files: Record<string, string> = {}): string {
   const root = mkdtempSync(join(tmpdir(), "folio-sec-"));
   dirs.push(root);
-  mkdirSync(join(root, "content", "solo", "intro"), { recursive: true });
+  mkdirSync(join(root, "folio", "solo", "intro"), { recursive: true });
   writeFileSync(
-    join(root, "content", "solo", "solo.ts"),
+    join(root, "folio", "solo", "solo.ts"),
     `export default paper({ title: "Solo", chapters: [ chapterRef({ dir: "intro" }) ] });\n`,
   );
-  writeFileSync(join(root, "content", "solo", "intro", "intro.ts"), `export default chapter({ title: "Intro" });\n`);
+  writeFileSync(join(root, "folio", "solo", "intro", "intro.ts"), `export default chapter({ title: "Intro" });\n`);
   for (const [rel, body] of Object.entries(files)) {
     const abs = join(root, rel);
     mkdirSync(join(abs, ".."), { recursive: true });
@@ -129,8 +129,8 @@ describe("workflows section", () => {
 describe("lean modules section", () => {
   test("the namespace is the folio's own Lake library, not a hardcoded one", async () => {
     const root = folio({
-      "content/solo/lean/lakefile.toml": '[[lean_lib]]\nname = "Solo"\n',
-      "content/solo/lean/Solo/Basic.lean": "-- basic\n",
+      "folio/solo/lean/lakefile.toml": '[[lean_lib]]\nname = "Solo"\n',
+      "folio/solo/lean/Solo/Basic.lean": "-- basic\n",
     });
     expect(leanLibName(root, "solo")).toBe("Solo");
 
@@ -140,7 +140,7 @@ describe("lean modules section", () => {
   });
 
   test("no lean_lib means unprefixed modules and a note — never an invented namespace", async () => {
-    const root = folio({ "content/solo/lean/Basic.lean": "-- basic\n" });
+    const root = folio({ "folio/solo/lean/Basic.lean": "-- basic\n" });
     const out = SECTIONS.find((s) => s.marker === "folio:lean-modules")!.render(ctx(root));
 
     expect(out.markdown).toContain("| `Basic` |");

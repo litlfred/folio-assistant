@@ -4,7 +4,8 @@
  * @module scripts/tests/bootstrap-graph.test
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join, resolve } from "node:path";
 
 import { buildBootstrapDocument } from "../gen-bootstrap-graph.js";
@@ -15,21 +16,59 @@ const ROOT = resolve(import.meta.dir, "../..");
 // `bootstrap/` is at the REPOSITORY root, not inside this instance — it is
 // the graph read before anything knows which instance it is looking at.
 const BOOTSTRAP = join(repoRootFor(ROOT), "bootstrap");
-const OUT = join(BOOTSTRAP, "bootstrap.jsonld");
 
-describe("the file a cold agent is told to load exists", () => {
-  test("`bootstrap/bootstrap.jsonld` is committed, not a build artefact", () => {
-    // `_kg/<stub>.jsonld` is gitignored because nothing needs it in a fresh
-    // clone. This one is the opposite case: its reader has nothing installed
-    // and cannot run a build, and `bootstrap/README.md` step 2 says to load
-    // it. For that instruction to be true in a fresh clone, it must be IN the
-    // clone.
-    expect(existsSync(OUT)).toBe(true);
+describe("the document is published where it says it is", () => {
+  /**
+   * These two replaced "`bootstrap.jsonld` is committed" and "it is current",
+   * which went with the committed file on 2026-09-20.
+   *
+   * Their premise was that a cold reader is told to load the file from a fresh
+   * clone. **No prose file under `bootstrap/` mentions this document** — the
+   * README sends that reader to `workflows/initialize-harness.bpmn` and
+   * `skills/bootstrap-kg-navigation.md`. So the pair defended an instruction
+   * that does not exist, while the thing worth defending went unguarded: the
+   * `@id` resolved to nothing, because the site build published
+   * `bootstrap/ns.jsonld` — the NAMESPACE document — and never this one.
+   *
+   * That is `blv9` in the artefact whose whole purpose is being dereferenced,
+   * and it is what these assert instead.
+   */
+  test("its `@id` is the URL the site build writes it to", async () => {
+    const doc = await buildBootstrapDocument();
+    const id = String(doc["@id"]);
+    // The build writes `./_site/bootstrap/bootstrap.jsonld`, and `_site/` is
+    // served at the site base. So the path the IRI carries must be exactly
+    // the path under `_site/` — anything else is a link that 404s.
+    expect(id.endsWith("/bootstrap/bootstrap.jsonld")).toBe(true);
   });
 
-  test("it is current", async () => {
-    const doc = await buildBootstrapDocument();
-    expect(readFileSync(OUT, "utf-8")).toBe(JSON.stringify(doc, null, 2) + "\n");
+  test("the site build actually writes it, at that path", () => {
+    // The assertion is against the WORKFLOW, because the failure being
+    // guarded is a publication gap rather than a generator bug: the generator
+    // worked perfectly for months while nothing published what it produced.
+    //
+    // Matched on the `--out` path rather than on the script name: a build that
+    // runs the generator and writes it somewhere else leaves the `@id` dead
+    // just as surely as one that never runs it, and the script name alone
+    // cannot tell the two apart.
+    const wf = readFileSync(
+      join(repoRootFor(ROOT), ".github", "workflows", "docs-site.yml"),
+      "utf-8",
+    );
+    expect(wf).toContain("gen-bootstrap-graph.ts --out \"./_site/bootstrap/bootstrap.jsonld\"");
+  });
+
+  test("it is NOT committed — it is a build artefact now", () => {
+    // The inverse of the test this replaces, and it earns its place: an
+    // ignored path is easy to re-add with `git add -f`, and a re-added copy
+    // silently goes stale with no gate left to catch it. The file may exist
+    // locally, since `bun run bootstrap:graph` writes it; what must not
+    // exist is a TRACKED copy.
+    const tracked = execFileSync("git", ["ls-files", "--", "bootstrap/bootstrap.jsonld"], {
+      cwd: repoRootFor(ROOT),
+      encoding: "utf-8",
+    }).trim();
+    expect(tracked).toBe("");
   });
 });
 
@@ -40,6 +79,28 @@ describe("pure, because committed-and-gated demands it", () => {
     const a = JSON.stringify(await buildBootstrapDocument());
     const b = JSON.stringify(await buildBootstrapDocument());
     expect(a).toBe(b);
+  });
+
+  test("the graph is ORDERED, so two machines agree byte for byte", async () => {
+    // The test above compares two builds in ONE process against ONE
+    // filesystem, so it compares an ordering against itself and cannot fail
+    // on ordering at all. It is a real guard for timestamps and a guard that
+    // structurally cannot fire for this.
+    //
+    // Bean `3jj9`, measured 2026-09-20: the collectors walk directories, so
+    // node order was `readdirSync` order — the FILESYSTEM's, not the
+    // repository's. The committed file held skills as `bootstrap-kg-
+    // navigation, discussion, confirm-harness, log-message`, stable on the
+    // container that wrote it and different on CI. `it is current` compares
+    // bytes, so it passed locally and failed in CI on identical inputs.
+    //
+    // Asserting the ORDER rather than re-running the build is the point: this
+    // fails on the machine that introduces the regression, not only on the
+    // one that disagrees with it later.
+    const doc = await buildBootstrapDocument();
+    const ids = (doc["@graph"] as Array<Record<string, unknown>>).map((n) => String(n["@id"]));
+    expect(ids.length).toBeGreaterThan(0); // not vacuous
+    expect(ids).toEqual([...ids].sort());
   });
 
   test("it carries no timestamp and no commit SHA", async () => {
@@ -73,6 +134,30 @@ describe("what it contains, and what it admits it did not look at", () => {
     // worth defending.
     const doc = await buildBootstrapDocument();
     expect(skillIds(doc)).toEqual(skillFilesOnDisk());
+  });
+
+  test("bootstrap publishes only the graph kinds it DECLARES", async () => {
+    // Bean `3jj9`. `collectGraphKinds` emitted the UNIVERSAL registry into
+    // every instance, so bootstrap — whose premise is that it knows nothing
+    // yet — published 16 GraphKind nodes while its declaration names one.
+    // It advertised `folio`, `voices` and `library` (core's) and `beans` and
+    // `todos` (cat-harness's), none of which it can reach.
+    //
+    // Derived from the declaration rather than pinned to "cat-harness", for
+    // the reason the skill test above gives: a literal breaks on the change
+    // that was correct. What is defended is the RELATION — published is a
+    // subset of declared — not today's contents.
+    const doc = await buildBootstrapDocument();
+    const kinds = (doc["@graph"] as Array<Record<string, unknown>>)
+      .filter((n) => String(n["@type"]).endsWith("#GraphKind"))
+      .map((n) => String(n["name"]));
+    const declared = new Set(
+      (JSON.parse(readFileSync(join(BOOTSTRAP, "harness.json"), "utf-8")) as {
+        directories?: Array<{ graphs?: string[] }>;
+      }).directories?.flatMap((d) => d.graphs ?? []) ?? [],
+    );
+    expect(kinds.length).toBeGreaterThan(0); // not vacuous
+    for (const k of kinds) expect([...declared]).toContain(k);
   });
 
   test("the instance-bound collectors are named as NOT looked for", async () => {

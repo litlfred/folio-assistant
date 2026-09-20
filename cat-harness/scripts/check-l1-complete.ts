@@ -68,6 +68,8 @@ import {
   TabularRecordsSchema,
   isTabularMimetype,
 } from "../schemas/tabular-records.ts";
+import { DESCRIBABLE_ROLES, ImagesSidecarSchema } from "../schemas/document-image.ts";
+import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
@@ -89,6 +91,108 @@ export interface EntryReport {
  * else belongs in the not-derivable list below, with the bean that would move
  * it here.
  */
+/**
+ * What SHAPE of document is this entry? — measured 2026-09-20.
+ *
+ * ## The regression this exists to undo
+ *
+ * `derivableRequirements` applied every requirement to every entry. Two of
+ * them — `tabular-records` and `archive-contents` — already ask the entry
+ * what it is and answer *"not tabular (application/pdf)"*. The reverse was
+ * never done, so a CSV was asked for `structure.json`, `sections/`, `blocks/`
+ * and an `images.json`, with `image-descriptions` advising a reader to *"run
+ * scripts/pdf-images.py"* on a spreadsheet.
+ *
+ * That was a wrong report until `pn6j` gated promotion on it. Then it became
+ * a PERMANENT BLOCKER: a CSV cannot have a chapter tree, so it could never be
+ * promoted, and the gate I had just added made every non-paged document
+ * un-ingestable. Found by running a real CSV through the live pipeline rather
+ * than by reading the code.
+ *
+ * ## Why the sidecar and not the mimetype
+ *
+ * The obvious route is `source.mimetype_sniffed`, which the other two
+ * requirements use. It cannot work here: a CSV has **no magic bytes**, so its
+ * source block honestly records `mimetype_sniffed: null` and
+ * `mimetype_source: "unrecognised"` — `p67i` established that routing a CSV
+ * cannot be a sniff and must not become an extension guess.
+ *
+ * What an entry DOES carry is the sidecar its rung wrote. That is a fact
+ * about the entry rather than a claim about the file, which is the same
+ * argument `nso8` makes for sniffing over extensions, one level up.
+ */
+export type EntryKind = "paged" | "tabular" | "archive" | "undetermined";
+
+/** Which sidecar identifies which shape. One place, so a fourth rung adds one line. */
+export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
+  ["paged", "structure.json"],
+  ["tabular", "tabular.jsonld"],
+  ["archive", "contents.jsonld"],
+];
+
+/**
+ * The entry's shape, or `undetermined`.
+ *
+ * Third state, and it is NOT "assume paged". An entry with no sidecar at all
+ * is one no rung has run on, and asking it for a chapter tree would report a
+ * defect where the fact is that nothing has been derived yet.
+ */
+export function entryKind(has: (file: string) => boolean): EntryKind {
+  for (const [kind, file] of KIND_SIDECAR) if (has(file)) return kind;
+  return "undetermined";
+}
+
+/** Requirements that only make sense for a PAGED document. */
+export const PAGED_ONLY: readonly string[] = [
+  "structure",
+  "structure-note",
+  "sections",
+  "blocks",
+  "narrative-provenance",
+  "image-descriptions",
+];
+
+/**
+ * Does this requirement apply to an entry of this shape?
+ *
+ * `undetermined` keeps EVERYTHING, deliberately. An entry nothing has run on
+ * must not quietly satisfy the gate by having no applicable requirements —
+ * that is the vacuity this repository keeps paying for, and it would let an
+ * empty directory promote.
+ */
+export function appliesTo(requirement: string, kind: EntryKind): boolean {
+  if (kind === "paged" || kind === "undetermined") return true;
+  return !PAGED_ONLY.includes(requirement);
+}
+
+/**
+ * The `source` block, from whichever sidecar this entry actually has.
+ *
+ * ONE definition, deliberately. This logic existed THREE times —
+ * `tabular-records`, `archive-contents` and `technical-metadata` each rolled
+ * their own, all reading `structure.json` only. Teaching the first to look
+ * beyond it left the other two reporting `no source block — re-run the ingest
+ * rung` for a CSV whose `tabular.jsonld` carries a complete one: advice that
+ * was wrong, and that re-running would not have fixed.
+ *
+ * One rule in three places is three rules, and this file has already paid for
+ * that once today — `narrative-review` restated the review queue's bearing
+ * list and went stale at the same moment the queue's copy did (bean `04vl`).
+ */
+export function sourceBlockOf(dir: string): Record<string, unknown> | undefined {
+  for (const [, file] of KIND_SIDECAR) {
+    const f = join(dir, file);
+    if (!existsSync(f)) continue;
+    try {
+      const d = JSON.parse(readFileSync(f, "utf-8")) as Record<string, unknown>;
+      if (d.source) return d.source as Record<string, unknown>;
+    } catch {
+      continue; // the owning requirement reports an unparseable sidecar
+    }
+  }
+  return undefined;
+}
+
 function derivableRequirements(dir: string): Requirement[] {
   const out: Requirement[] = [];
   const has = (p: string) => existsSync(join(dir, p));
@@ -152,11 +256,23 @@ function derivableRequirements(dir: string): Requirement[] {
   // person, and `bun run narratives` is where they see it. Calling it unmet
   // would make an unreviewed queue indistinguishable from a broken arm.
   {
-    const bearing = ["tabular.jsonld", "contents.jsonld", "manifest.jsonld"];
+    // The list and the shape both come from `scripts/narratives.ts`, which is
+    // the review queue itself. They were RESTATED here — the same three files,
+    // and the same `doc.narrative` single-narrative read — and went stale in
+    // exactly the same way, at the same time, for the same reason: `d5f1` put
+    // 24 draft narratives into `library/<slug>/images.json`, which holds MANY
+    // at `images[i].narrative` and has no top-level `narrative` at all. So
+    // this gate reported "no narrative-bearing file in this entry" over four
+    // entries holding 24 drafts, while the queue reported zero awaiting review
+    // (bean `04vl`).
+    //
+    // One rule in two places is two rules. Importing the queue's own
+    // definition means a third bearing file cannot be added to one and missed
+    // by the other.
     const bad: string[] = [];
     const counts: Record<string, number> = {};
     let looked = 0;
-    for (const name of bearing) {
+    for (const name of NARRATIVE_BEARING) {
       if (!has(name)) continue;
       let doc: Record<string, unknown>;
       try {
@@ -164,11 +280,16 @@ function derivableRequirements(dir: string): Requirement[] {
       } catch {
         continue; // the owning requirement reports an unparseable file
       }
-      if (!("narrative" in doc)) continue;
-      looked++;
-      const r = NarrativeSchema.safeParse(doc.narrative);
-      if (!r.success) bad.push(`${name}: ${r.error.issues[0]?.message ?? "invalid"}`);
-      else counts[r.data.state] = (counts[r.data.state] ?? 0) + 1;
+      for (const { narrative } of narrativesIn(doc)) {
+        looked++;
+        counts[narrative.state] = (counts[narrative.state] ?? 0) + 1;
+      }
+      // A `narrative` key that `narrativesIn` could not parse is a DEFECT,
+      // not an absence — reported rather than skipped, which is what the
+      // old `safeParse` branch was for and must not be lost in the move.
+      if ("narrative" in doc && !NarrativeSchema.safeParse(doc.narrative).success) {
+        bad.push(`${name}: narrative will not parse`);
+      }
     }
     const tally = Object.entries(counts).map(([k, v]) => `${v} ${k}`).join(", ");
     out.push({
@@ -177,7 +298,10 @@ function derivableRequirements(dir: string): Requirement[] {
       detail: bad.length
         ? bad.slice(0, 2).join("; ")
         : looked === 0
-          ? "no narrative-bearing file in this entry"
+          // Precise about WHICH zero: `who-pub-tps-931` has an images.json
+          // with 121 page scans and no narrative in any of them, which is not
+          // the same fact as having no bearing file at all.
+          ? "no narrative in any bearing file"
           : tally,
     });
   }
@@ -196,15 +320,11 @@ function derivableRequirements(dir: string): Requirement[] {
   // it when the mimetype declares a workbook. Requiring it of every
   // unrecognised entry would demand a dataset of every text file.
   {
-    const src = (() => {
-      try {
-        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
-          | Record<string, unknown>
-          | undefined;
-      } catch {
-        return undefined;
-      }
-    })();
+    // From whichever sidecar this entry actually has. Reading `structure.json`
+    // alone reported `no source block — re-run the ingest rung` for a CSV,
+    // whose `tabular.jsonld` carries a complete one; the advice was wrong and
+    // re-running would not have helped.
+    const src = sourceBlockOf(dir);
     const mime = src?.mimetype_sniffed;
     if (!has("tabular.jsonld")) {
       out.push(
@@ -255,15 +375,7 @@ function derivableRequirements(dir: string): Requirement[] {
   // ran" are different facts, and only one of them is a pass. The requirement
   // is proved to fire by fixtures in `scripts/tests/archive-contents.test.ts`.
   {
-    const src = (() => {
-      try {
-        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
-          | Record<string, unknown>
-          | undefined;
-      } catch {
-        return undefined;
-      }
-    })();
+    const src = sourceBlockOf(dir);
     const mime = src?.mimetype_sniffed;
     if (!isArchiveMimetype(mime)) {
       out.push({
@@ -386,15 +498,7 @@ function derivableRequirements(dir: string): Requirement[] {
   // file WAS looked at, which absence alone would not say. What fails is the
   // field being absent entirely, i.e. an older ingest that never sniffed.
   {
-    const src = (() => {
-      try {
-        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
-          | Record<string, unknown>
-          | undefined;
-      } catch {
-        return undefined;
-      }
-    })();
+    const src = sourceBlockOf(dir);
     if (!src) {
       out.push({
         name: "technical-metadata",
@@ -438,28 +542,148 @@ function derivableRequirements(dir: string): Requirement[] {
       });
     }
   }
-  return out;
+
+  // ── image-descriptions — moved OUT of NOT_DERIVABLE 2026-09-20 ──────────
+  //
+  // `d5f1` shipped: `pdf-images.py` classifies every placed image by geometry,
+  // `apply-image-verdicts.ts` records an inspection basis naming who looked,
+  // and a describable role carries a narrative. All four entries have one.
+  // The gate went on reporting this as "no arm builds this yet" until the
+  // probe in NOT_DERIVABLE was added — see there for why that is the failure
+  // rather than the oversight.
+  {
+    const f = join(dir, "images.json");
+    if (!existsSync(f)) {
+      out.push({
+        name: "image-descriptions",
+        state: "unmet",
+        detail: "no images.json — run scripts/pdf-images.py",
+      });
+    } else {
+      try {
+        const parsed = ImagesSidecarSchema.parse(JSON.parse(readFileSync(f, "utf-8")));
+        if (parsed.images === null) {
+          // The sidecar's OWN could-not-determine, carried through rather than
+          // flattened. No backend could place the images and the reason is
+          // recorded; calling that `unmet` asks somebody to fix a document
+          // that is not broken.
+          out.push({
+            name: "image-descriptions",
+            state: "not-derivable",
+            detail: `images could not be determined — ${parsed.undetermined_reason ?? "no reason recorded"}`,
+          });
+        } else {
+          const describable = parsed.images.filter((i) => DESCRIBABLE_ROLES.includes(i.role));
+          const undescribed = describable.filter(
+            (i) => (i.narrative?.state ?? "not-authored") === "not-authored",
+          );
+          // An `undetermined` ROLE is the third state one level down: nobody
+          // has judged what this image is, so whether it needs describing is
+          // unknown. Counting it as described would be the pass-by-default
+          // this gate exists against.
+          const unjudged = parsed.images.filter((i) => i.role === "undetermined");
+          out.push({
+            name: "image-descriptions",
+            state: undescribed.length || unjudged.length ? "unmet" : "met",
+            detail:
+              undescribed.length || unjudged.length
+                ? `${undescribed.length} describable image(s) with no narrative, ` +
+                  `${unjudged.length} with an undetermined role`
+                : `${parsed.images.length} image(s), ${describable.length} describable and all described`,
+          });
+        }
+      } catch (e) {
+        out.push({
+          name: "image-descriptions",
+          state: "unmet",
+          detail: `images.json will not parse: ${e instanceof Error ? e.message : e}`,
+        });
+      }
+    }
+  }
+
+  // Applied LAST, over the whole list, so a requirement cannot be silently
+  // skipped at its own call site and later look like it passed.
+  const kind = entryKind(has);
+  return out.filter((r) => appliesTo(r.name, kind));
 }
 
 /**
- * What `pn6j` asks for that nothing can produce yet. Each names the bean that
- * would move it into {@link derivableRequirements}, so this list shrinks by
- * work rather than by editing.
+ * What `pn6j` asks for that nothing can produce yet.
+ *
+ * ## The third state has to EXPIRE, and this one did not
+ *
+ * The entry above used to read *"this list shrinks by work rather than by
+ * editing"*. It does not. Nothing forced the edit, so when `d5f1` shipped —
+ * `pdf-images.py`, the inspection pass, 164 classified images across all four
+ * library entries — the gate went on reporting `image-descriptions` as *"no
+ * arm builds this yet"*. Measured 2026-09-20: four entries, four `images.json`
+ * files, 2 / 20 / 121 / 21 images, every one with a role and a basis, and the
+ * gate checking none of it.
+ *
+ * A not-derivable entry is a declared exception, and this repository has now
+ * paid for the same shape three times in one session: a reason living in a
+ * YAML comment that nothing compared and had become false (`ot9a`), a drift
+ * backlog that exempted a whole page so it could drift further in silence
+ * (`07p7`), and this. Each outlived its premise because nothing re-derived it.
+ *
+ * So each entry carries a `probe`: the artefact whose EXISTENCE means the arm
+ * now runs. {@link expiredExceptions} fails the gate when one is found, and
+ * the fix is to move the requirement into {@link derivableRequirements} rather
+ * than to edit the reason.
+ *
+ * **The probe is the corpus, not the bean's status.** `d5f1` is still
+ * `in-progress` while its output is committed and complete, so a status field
+ * would have reported this as correctly not-derivable. A human-maintained flag
+ * is the weak signal; the artefact on disk is the strong one.
  */
-export const NOT_DERIVABLE: ReadonlyArray<readonly [string, string]> = [
-  ["image-descriptions", "d5f1"],
-  ["audio-transcripts", "1r0p"],
+export interface NotDerivable {
+  name: string;
+  /** The bean that would move this into the checked set. */
+  bean: string;
+  /** Filename within a library entry whose presence means the arm now runs. */
+  probe: string;
+}
+
+export const NOT_DERIVABLE: readonly NotDerivable[] = [
+  // `transcript`, NOT `transcript.json`. `1r0p`'s own Done-when says
+  // `library/<slug>/transcript/` holds the source-language transcript and
+  // each translation — a DIRECTORY. The first probe here guessed a filename
+  // and would therefore never have fired, which is a gate that cannot fail:
+  // the precise class of defect this probe was added to prevent, reproduced
+  // two PRs later by the person who added it. Read from the bean, not from
+  // the shape a sidecar usually takes.
+  { name: "audio-transcripts", bean: "1r0p", probe: "transcript" },
 ];
+
+/**
+ * Not-derivable claims the corpus has outgrown.
+ *
+ * Never empty-by-accident: {@link checkAll} reports `undefined` rather than
+ * `[]` when it cannot read the library, and this is only consulted on a real
+ * list of entries.
+ */
+export function expiredExceptions(
+  entries: readonly string[],
+  has: (dir: string, file: string) => boolean,
+): { name: string; bean: string; found: string }[] {
+  const out: { name: string; bean: string; found: string }[] = [];
+  for (const nd of NOT_DERIVABLE) {
+    const found = entries.find((d) => has(d, nd.probe));
+    if (found) out.push({ name: nd.name, bean: nd.bean, found });
+  }
+  return out;
+}
 
 export function checkEntry(dir: string): EntryReport {
   return {
     slug: dir.split("/").filter(Boolean).pop() ?? dir,
     requirements: [
       ...derivableRequirements(dir),
-      ...NOT_DERIVABLE.map(([name, bean]) => ({
-        name,
+      ...NOT_DERIVABLE.map((nd) => ({
+        name: nd.name,
         state: "not-derivable" as const,
-        detail: `no arm builds this yet — bean ${bean}`,
+        detail: `no arm builds this yet — bean ${nd.bean}`,
       })),
     ],
   };
@@ -617,7 +841,7 @@ function format(reports: EntryReport[]): string {
     out.push("");
     out.push(`  · ${nd.length} requirement(s) NOT DERIVABLE by any arm yet, so not checked:`);
     out.push(`    ${nd.map((q) => q.name).join(", ")}`);
-    out.push("    These are not passes. Beans: " + NOT_DERIVABLE.map(([, b]) => b).join(", "));
+    out.push("    These are not passes. Beans: " + NOT_DERIVABLE.map((nd) => nd.bean).join(", "));
   }
   return out.join("\n");
 }
@@ -649,6 +873,31 @@ if (import.meta.main) {
     console.error("This is NOT a pass. Treat it as unknown.");
     process.exit(2);
   }
+  // An EXPIRED exception is a gate lying about its own coverage, so it is
+  // checked before anything else and on every run, not only under `--check`.
+  // `image-descriptions` sat in NOT_DERIVABLE naming `d5f1` for as long as it
+  // took somebody to notice, while all four entries carried a complete
+  // `images.json`.
+  if (!target) {
+    const libRoot = instanceRootFor(resolve("."));
+    const lib = libRoot ? directoryForGraph(libRoot, "library") : undefined;
+    if (lib && existsSync(lib)) {
+      const dirs = readdirSync(lib)
+        .map((d) => join(lib, d))
+        .filter((d) => statSync(d).isDirectory());
+      const expired = expiredExceptions(dirs, (d, f) => existsSync(join(d, f)));
+      if (expired.length) {
+        console.error("A `not-derivable` claim has EXPIRED — the arm now runs:");
+        for (const x of expired) {
+          console.error(`  ✗ ${x.name} (bean ${x.bean}) — ${x.found} has ${x.name === "audio-transcripts" ? "transcript.json" : "its artefact"}`);
+        }
+        console.error("\nMove it into `derivableRequirements` and check it. A third state");
+        console.error("that never expires is an exemption, not a measurement.");
+        process.exit(1);
+      }
+    }
+  }
+
   if (argv.includes("--check")) {
     const stale = staleSidecars(instanceRootFor(resolve(".")) ?? resolve("."), reports);
     if (stale.length) {

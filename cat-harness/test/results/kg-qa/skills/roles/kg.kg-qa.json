@@ -8,13 +8,8 @@
   "source_hash": null,
   "criteria": {
     "skill-has-entry-point": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "log-message",
-          "detail": "skill \"log-message\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "skill-in-role-or-process": {
       "result": "fail",
@@ -42,6 +37,10 @@
         {
           "where": "block-density",
           "detail": "no role carries \"block-density\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "bootstrap-kg-navigation",
+          "detail": "no role carries \"bootstrap-kg-navigation\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "bpmn-processes",
@@ -120,6 +119,10 @@
           "detail": "no role carries \"critical-path-analysis\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
+          "where": "data-modelling",
+          "detail": "no role carries \"data-modelling\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
           "where": "definition-clarity-audit",
           "detail": "no role carries \"definition-clarity-audit\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -146,6 +149,10 @@
         {
           "where": "directory-conventions",
           "detail": "no role carries \"directory-conventions\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "discussion",
+          "detail": "no role carries \"discussion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "docs-generation",
@@ -472,6 +479,10 @@
           "detail": "no role carries \"untrusted-input\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
+          "where": "unverified-constraints",
+          "detail": "no role carries \"unverified-constraints\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
           "where": "verify-local-substrate",
           "detail": "no role carries \"verify-local-substrate\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -514,14 +525,14 @@
       "findings": [
         {
           "where": "bootstrap/harness.json",
-          "detail": "nested instance \"bootstrap\" declares its own graph, and this audit does not read it — 2 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+          "detail": "nested instance \"bootstrap\" declares its own graph, and this audit does not read it — 3 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         }
       ]
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 3,
+    "pass": 7,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }

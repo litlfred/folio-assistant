@@ -52,7 +52,8 @@ function leanProjectDir(dir?: string): string {
   ) {
     return REPO_ROOT;
   }
-  const leanArchive = join(REPO_ROOT, "content/quantum-observable-universe/lean");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const leanArchive = join(REPO_ROOT, "folio/quantum-observable-universe/lean");
   if (existsSync(join(leanArchive, "lakefile.toml")) || existsSync(join(leanArchive, "lakefile.lean"))) {
     return leanArchive;
   }
@@ -197,12 +198,12 @@ export function registerLeanTools(server: McpServer): void {
     "lean_check",
     "Run `lake check` to type-check Lean files without full compilation. " +
     "Faster than lean_build — useful for quick validation after edits. " +
-    "Defaults to content/quantum-observable-universe/lean/ if it contains a lakefile.",
+    "Defaults to folio/quantum-observable-universe/lean/ if it contains a lakefile.",
     {
       project: z.string().optional()
         .describe("Specific library to check (e.g. 'QOU'). Default: check all."),
       dir: z.string().optional()
-        .describe("Lean project directory relative to repo root (default: auto-detect content/quantum-observable-universe/lean/ or lean/)"),
+        .describe("Lean project directory relative to repo root (default: auto-detect folio/quantum-observable-universe/lean/ or lean/)"),
     },
     async ({ project, dir }) => {
       if (!hasCommand("lake")) {

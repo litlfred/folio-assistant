@@ -56,7 +56,8 @@ function walk(dir: string) {
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
-walk(join("content", requirePaper(_paperArg)));
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+walk(join("folio", requirePaper(_paperArg)));
 
 const conjectureLabels = new Set<string>();
 for (const b of blocks.values()) if (b.kind === "conjecture") conjectureLabels.add(b.label);

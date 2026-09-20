@@ -757,7 +757,8 @@ function main() {
   const repoRoot = execFileSync("git", ["rev-parse", "--show-toplevel"])
     .toString()
     .trim();
-  if (!roots.length) roots.push(join(repoRoot, "content"));
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  if (!roots.length) roots.push(join(repoRoot, "folio"));
   if (!branch) {
     try {
       branch = execFileSync("git", ["rev-parse", "--abbrev-ref", "HEAD"], {

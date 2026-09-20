@@ -6,7 +6,7 @@ import { resolve, join } from "node:path";
 import { nodeSummary } from "../../scripts/front-matter.js";
 import { isSkillMd } from "../../scripts/known-skills.js";
 import { resolveSkillDirs } from "../../schemas/harness-config.js";
-import { readDeclaration } from "../../schemas/cat-harness.js";
+import { readDeclaration, findInstanceRoot } from "../../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
 // renderable kind"), so the harness alone does not know it exists. This module
@@ -141,8 +141,26 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // instance, because that is what it is — there is no subdirectory name to
     // take. Before `src/skills/` was declared this was a hand-written
     // exception in this file; now it falls out of the declaration.
+    //
+    // NAMED BY THE INSTANCE THE DIRECTORY LIVES IN, not by the caller's root.
+    // `readDeclaration(root)` gave the ROOT's name to every directly-held set
+    // regardless of which instance contributed it, which is correct only while
+    // exactly one such directory is ever discovered. The moment a second one
+    // is — `bootstrap/skills/`, once `ownDirectories` resolved its declared
+    // repository scope — both are assigned the same key and the later wins.
+    // Not an error, not a collision report: bootstrap's four skills would have
+    // been found and then silently dropped, which is the same `dh4f` shape one
+    // layer up from the one that hid them in the first place.
+    //
+    // `findInstanceRoot` walks to the nearest enclosing declaration, so the
+    // name is a property of where the skills live rather than of who asked:
+    // `src/skills/` → `cat-harness/harness.json` → `folio-assistant`,
+    // unchanged and measured; `bootstrap/skills/` → `bootstrap/harness.json`
+    // → `bootstrap`. A directory under no declaration at all is skipped rather
+    // than guessed at.
     if (holdsSkill(kgDir)) {
-      const name = readDeclaration(root)?.name;
+      const instanceRoot = findInstanceRoot(kgDir);
+      const name = instanceRoot === undefined ? undefined : readDeclaration(instanceRoot)?.name;
       if (name !== undefined) out[name] = kgDir;
     }
     for (const e of readdirSync(kgDir, { withFileTypes: true })) {

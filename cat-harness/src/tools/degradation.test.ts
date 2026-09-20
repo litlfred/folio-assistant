@@ -156,18 +156,20 @@ describe("over the real corpus", () => {
   });
 
   test("every capability a skill requires is DECLARED", async () => {
-    // The finding this join was written to make possible. `git-read` was
-    // referenced by 17 skills and declared by no capability; it is declared
-    // now. `deploy-access` is still undeclared and is listed here so the
-    // gap is named rather than passing — remove it from the list when it
-    // gains a declaration, and never widen the list to make this green.
+    // The finding this join was written to make possible, now closed.
+    // `git-read` was referenced by 17 skills and declared by nothing;
+    // `deploy-access` by `deployment-auth` and nothing. Both are declared.
+    //
+    // The list is EMPTY and stays empty: a new undeclared id fails here,
+    // which is the point. Never widen it to make this green — that turns
+    // the check back into the thing it was written to catch.
     const { kgRoots } = await import("../../scripts/known-skills.ts");
     const { loadCapabilities } = await import("./capabilities.ts");
     const { repoRootFor } = await import("../../schemas/cat-harness.ts");
     const { skills } = await loadSkillNeeds(kgRoots(INSTANCE));
     const declared = new Set(loadCapabilities(repoRootFor(INSTANCE)).map((c) => c.id));
     expect(declared.size).toBeGreaterThan(5);
-    const KNOWN_UNDECLARED = ["deploy-access"];
+    const KNOWN_UNDECLARED: string[] = [];
     const missing = [
       ...new Set(
         skills
@@ -178,6 +180,24 @@ describe("over the real corpus", () => {
     expect(missing).toEqual(KNOWN_UNDECLARED);
   });
 
+  // An EXPLICIT timeout, because bun's default 5000ms is not a budget and this
+  // test had crept onto the wrong side of it.
+  //
+  // Measured 2026-09-20: red on `main` at `a38fc2e3a3` (5012.69ms) and on a
+  // feature branch at `4946c142e7` (5011.41ms) — two different commits by two
+  // different sessions, both ~12ms over. That is not a flake to re-run; it is
+  // a test whose runtime has arrived at its own limit, and from there it fails
+  // intermittently on everything.
+  //
+  // `probeAll` spawns ONE PROCESS PER DECLARED CAPABILITY — 26 today, and the
+  // count only grows. Locally the whole file runs in ~400ms; on a shared CI
+  // runner the same work is an order of magnitude slower, which is why this
+  // was invisible to every contributor and red in CI.
+  //
+  // The assertions are about SHAPE — a row per skill, each in one of four
+  // states — and say nothing about speed, so raising the limit weakens no
+  // claim. 30s is generous against the ~5s observed while still failing fast
+  // if the probe ever genuinely hangs.
   test("the real join runs and produces a verdict per skill", async () => {
     const { kgRoots } = await import("../../scripts/known-skills.ts");
     const { loadCapabilities, probeAll } = await import("./capabilities.ts");
@@ -190,5 +210,5 @@ describe("over the real corpus", () => {
     // machine, and pinning it would make the suite fail on a developer
     // laptop with Lean present. Asserting the shape is the honest test.
     for (const r of rows) expect(["ready", "partial", "degraded", "blocked"]).toContain(r.state);
-  });
+  }, 30_000);
 });

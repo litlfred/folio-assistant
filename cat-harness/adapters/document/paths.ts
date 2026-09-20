@@ -28,7 +28,8 @@ export function getRepoRoot(): string {
 
 export const get = {
   REPO_ROOT: () => _repoRoot,
-  CONTENT_DIR: () => resolve(_repoRoot, "content"),
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  CONTENT_DIR: () => resolve(_repoRoot, "folio"),
   CHAPTERS_DIR: () => resolve(_repoRoot, "chapters"),
   MAIN_TEX: () => resolve(_repoRoot, "main.tex"),
   /**
@@ -54,7 +55,8 @@ export const get = {
 // tools should import `get` above.
 
 export const REPO_ROOT = _repoRoot;
-export const CONTENT_DIR = resolve(_repoRoot, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+export const CONTENT_DIR = resolve(_repoRoot, "folio");
 export const CHAPTERS_DIR = resolve(_repoRoot, "chapters");
 export const MAIN_TEX = resolve(_repoRoot, "main.tex");
 export const LEAN_DIR = _repoRoot;

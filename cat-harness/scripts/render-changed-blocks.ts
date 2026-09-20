@@ -45,7 +45,8 @@ import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../schemas/harness-con
 // ── Repo layout ──────────────────────────────────────────────────────────────
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
-const CONTENT_DIR = join(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_DIR = join(REPO_ROOT, "folio");
 const PREAMBLE_PATH = join(REPO_ROOT, "latex", "preamble.tex");
 const BLOCK_PDFS_DIR = join(REPO_ROOT, "build", "block-pdfs");
 const GOOGLE_DRIVE_MCP = join(REPO_ROOT, "src", "google-drive-mcp.py");

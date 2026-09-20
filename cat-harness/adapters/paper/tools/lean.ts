@@ -44,7 +44,8 @@ function leanProjectDir(dir?: string): string {
   ) {
     return REPO_ROOT;
   }
-  const leanArchive = join(REPO_ROOT, "content/quantum-observable-universe/lean");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const leanArchive = join(REPO_ROOT, "folio/quantum-observable-universe/lean");
   if (existsSync(join(leanArchive, "lakefile.toml")) || existsSync(join(leanArchive, "lakefile.lean"))) {
     return leanArchive;
   }
@@ -324,8 +325,8 @@ export function registerLeanTools(server: McpServer): void {
       } else if (leanOk) {
         mode = "local-degraded";
         if (!uvOk) fix = "Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh";
-        else if (!manifestOk) fix = "Run lean_setup or: cd content/quantum-observable-universe/lean && lake update";
-        else if (!cacheOk) fix = "Run lean_setup or: cd content/quantum-observable-universe/lean && lake exe cache get";
+        else if (!manifestOk) fix = "Run lean_setup or: cd folio/quantum-observable-universe/lean && lake update";
+        else if (!cacheOk) fix = "Run lean_setup or: cd folio/quantum-observable-universe/lean && lake exe cache get";
       } else if (remoteOk) {
         mode = "remote";
       } else {
@@ -362,7 +363,7 @@ export function registerLeanTools(server: McpServer): void {
   server.tool(
     "lean_build",
     "Run `lake build` in the Lean project directory. Returns build output. " +
-    "Defaults to content/quantum-observable-universe/lean/ if it contains a lakefile. " +
+    "Defaults to folio/quantum-observable-universe/lean/ if it contains a lakefile. " +
     "Automatically uses local mathlib clone (if configured in lean-mcp.config.json) " +
     "to avoid re-downloading from GitHub.",
     {
@@ -371,7 +372,7 @@ export function registerLeanTools(server: McpServer): void {
       project: z.string().optional()
         .describe("Specific library to build (e.g. 'QOU'). Default: build all."),
       dir: z.string().optional()
-        .describe("Lean project directory relative to repo root (default: auto-detect content/quantum-observable-universe/lean/ or lean/)"),
+        .describe("Lean project directory relative to repo root (default: auto-detect folio/quantum-observable-universe/lean/ or lean/)"),
       update_local_mathlib: z.boolean().default(false)
         .describe("Fetch latest commits in the local mathlib clone before building"),
     },
@@ -436,12 +437,12 @@ export function registerLeanTools(server: McpServer): void {
     "lean_check",
     "Run `lake check` to type-check Lean files without full compilation. " +
     "Faster than lean_build — useful for quick validation after edits. " +
-    "Defaults to content/quantum-observable-universe/lean/ if it contains a lakefile.",
+    "Defaults to folio/quantum-observable-universe/lean/ if it contains a lakefile.",
     {
       project: z.string().optional()
         .describe("Specific library to check (e.g. 'QOU'). Default: check all."),
       dir: z.string().optional()
-        .describe("Lean project directory relative to repo root (default: auto-detect content/quantum-observable-universe/lean/ or lean/)"),
+        .describe("Lean project directory relative to repo root (default: auto-detect folio/quantum-observable-universe/lean/ or lean/)"),
     },
     async ({ project, dir }) => {
       if (!hasCommand("lake")) {

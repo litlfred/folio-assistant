@@ -161,7 +161,8 @@ function main() {
     process.exit(2);
   }
 
-  const rootPath = resolve(REPO_ROOT, "content", args.root);
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const rootPath = resolve(REPO_ROOT, "folio", args.root);
   if (!existsSync(rootPath)) {
     console.error(`Root not found: ${rootPath}`);
     process.exit(2);
@@ -172,7 +173,8 @@ function main() {
 
   for (const block of walkBlocks(rootPath)) {
     if (!block.lean) { continue; }
-    const leanPath = resolve(REPO_ROOT, "content", block.lean);
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const leanPath = resolve(REPO_ROOT, "folio", block.lean);
     if (!existsSync(leanPath)) { continue; }
 
     const leanText = readFileSync(leanPath, "utf-8");
@@ -181,7 +183,8 @@ function main() {
       continue;
     }
 
-    const tsPath = resolve(REPO_ROOT, "content", block.ts);
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const tsPath = resolve(REPO_ROOT, "folio", block.ts);
     const tsText = readFileSync(tsPath, "utf-8");
     const kind = extractKind(tsText);
     const label = extractLabel(tsText);

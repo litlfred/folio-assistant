@@ -16,7 +16,7 @@ import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { REPO_ROOT, CONTENT_DIR } from "../paths.js";
 
-/** Find all paper directories under content/. */
+/** Find all paper directories under folio/. */
 function discoverPapers(): string[] {
   if (!existsSync(CONTENT_DIR)) return [];
   return readdirSync(CONTENT_DIR, { withFileTypes: true })
@@ -61,7 +61,7 @@ export function registerValidateTools(server: McpServer): void {
         const papers = discoverPapers();
         if (papers.length === 0) {
           return {
-            content: [{ type: "text" as const, text: "No papers found in content/" }],
+            content: [{ type: "text" as const, text: "No papers found in folio/" }],
           };
         }
 
@@ -150,7 +150,7 @@ export function registerValidateTools(server: McpServer): void {
         const paperName = paper || papers[0];
         if (!paperName) {
           return {
-            content: [{ type: "text" as const, text: "No papers found in content/" }],
+            content: [{ type: "text" as const, text: "No papers found in folio/" }],
           };
         }
 

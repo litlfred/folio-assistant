@@ -189,3 +189,17 @@ change as the check would make CI red over art that is **missing** rather than
 over a regression somebody just introduced. The gate goes in when the art is
 complete — and intake does not repair anybody's art on its own initiative, per
 `deletion-requires-confirmation`.
+
+_2026-09-20T11:15Z_ — **Note from `eq01`, not a change to this bean.** The
+root-level uploads this bean cites as evidence were moved to
+`cat-harness/uploads/` on the owner's instruction (*"move/leave root level
+uplaods in uploads/"*). Eleven files, 17.2 MB, moved with `git mv` so history
+follows. The paths above now read `cat-harness/uploads/<name>`.
+
+The duplicate finding was independently confirmed in the process: `sha256
+30dad51dfc691587…` for BOTH `ChatGPT Image Sep 20, 2026, 08_26_47 AM.png` and
+`d1a26515-9bde-455d-84bc-2e5fc196b004.png`, matching what is recorded above.
+
+Nothing else here is touched, and the status stays `todo` — the question of
+whether the third avatar is missing or the duplicate was an upload slip is
+still the owner's, and this bean is still the argument for the ingestion skill.

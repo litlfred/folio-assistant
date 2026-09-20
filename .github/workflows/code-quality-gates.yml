@@ -277,17 +277,20 @@ jobs:
       - name: no undeclared files at the repository root
         run: bun run check:undeclared-files:check
 
-      # `bootstrap/bootstrap.jsonld` is COMMITTED, unlike `_kg/`, because its
-      # reader has nothing installed and cannot run a build — so a graph that
-      # only appears after one is a graph that reader never sees. Committed
-      # means it can drift, and this is what stops it.
+      # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
+      # committed. It no longer is — it is built at render time into the
+      # published site by `docs-site.yml` — so there is no committed copy to
+      # go stale and nothing for a byte gate to compare against.
       #
-      # The generator is deliberately a PURE function of its inputs: no
-      # timestamp (which would make every run a diff and get the check
-      # switched off) and no commit SHA (which a committed generated file
-      # cannot carry without naming the commit BEFORE the one containing it).
-      - name: bootstrap graph is current
-        run: bun run bootstrap:graph:check
+      # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
+      # assuming: the gate compared bytes, while every property it was
+      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
+      # against `buildBootstrapDocument()` — purity, id ordering, no absolute
+      # build paths, skills derived from disk, graph kinds a subset of the
+      # declaration, and the `omitted` list. Those run in `bun test`, which
+      # the TypeScript job above already runs. Removing a check whose
+      # coverage lives elsewhere is fine; removing one and saying so is what
+      # stops the next reader reinstating it.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
@@ -298,6 +301,20 @@ jobs:
       # fake ref onto a real step.
       - name: workflow skill refs
         run: bun run check:workflow-refs
+
+      # Which `.github/workflows/*.yml` are documented as BPMN — bean `7yvd`,
+      # owner: "make sure all workflows documented as bpmn".
+      #
+      # NOT `--strict` yet, deliberately. Coverage is 0 of 38 as this lands, so
+      # a strict gate would be red on arrival and switched off within the day.
+      # What it DOES fail on is the two unambiguous states: a workflow whose
+      # YAML cannot be read (exit 2 — could-not-determine is never rendered as
+      # clean, and an unreadable file is the one state that can hide a gap),
+      # and a diagram declaring a workflow that is not there (exit 1, the same
+      # tier as a dangling `<folio:skill ref>` above). The gap itself is
+      # reported so the number is visible and moves.
+      - name: workflow BPMN coverage
+        run: bun run check:workflow-coverage
 
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
@@ -338,6 +355,23 @@ jobs:
       # "it parses locally" was never evidence.
       - name: workflow yaml
         run: bun run check:workflows
+
+      # Every script path a workflow invokes resolves, from the directory the
+      # step actually runs in. Bean `52dz`. The #223 split moved the platform's
+      # scripts under `cat-harness/` and the workflows naming them without that
+      # prefix kept naming them without it — which is not a type error, not a
+      # lint error and not a test failure, so nothing here could see it.
+      #
+      # THREE workflows were live and broken when this was added: `ci-health`
+      # (weekly), `upstream-pins` (weekly) and `health-check` (DAILY), each
+      # crashing on its first command. `ci-health` exists to catch workflows
+      # failing where nobody looks, so it had been failing at its own job.
+      # Eight more were `workflow_dispatch`-only, two of them never once run.
+      #
+      # This step is the point: the previous sentence describes what happens
+      # when a check lives in `package.json` and no workflow invokes it.
+      - name: workflow script paths
+        run: bun run check:workflow-paths
 
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:

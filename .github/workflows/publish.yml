@@ -490,7 +490,7 @@ jobs:
         continue-on-error: true
         run: |
           if command -v bun >/dev/null 2>&1; then
-            bun run content/pipeline/latex-overfull-report.ts main.log --min 10
+            bun run cat-harness/content/pipeline/latex-overfull-report.ts main.log --min 10
           else
             echo "bun unavailable in image; raw Overfull lines are in latex-warnings.txt"
           fi
