@@ -899,12 +899,57 @@ this way rather than as advice.</p>
     <tr>
       <td><strong>R8</strong></td>
       <td>Never infer metadata from the PDF when a record exists</td>
-      <td>see below</td>
+      <td>OCR off a title page catalogued the WHO Editorial Style Manual as <em>Abies</em></td>
     </tr>
     <tr>
       <td><strong>R9</strong></td>
       <td>Record what the source says even when it contradicts the file</td>
       <td><code class="language-plaintext highlighter-rouge">dc.description</code> says <code class="language-plaintext highlighter-rouge">30 p.</code>; the PDF has <strong>33</strong></td>
+    </tr>
+    <tr>
+      <td><strong>R10</strong></td>
+      <td>An item with no known collection carries <code class="language-plaintext highlighter-rouge">parents: []</code> — never a guessed one</td>
+      <td>held-and-unplaceable is a STATE; inventing containment is unfalsifiable</td>
+    </tr>
+    <tr>
+      <td><strong>R11</strong></td>
+      <td>Key a node by <strong>path</strong> when its UUID is not in the capture</td>
+      <td>an invented UUID resolves to nothing while looking authoritative</td>
+    </tr>
+    <tr>
+      <td><strong>R12</strong></td>
+      <td>Keep the <strong>page captured</strong> and the <strong>identifier</strong> apart</td>
+      <td><code class="language-plaintext highlighter-rouge">/items/&lt;uuid&gt;/full</code> is what was fetched; the Handle is what the item IS</td>
+    </tr>
+    <tr>
+      <td><strong>R13</strong></td>
+      <td>A <code class="language-plaintext highlighter-rouge">materialized</code> claim must name bytes that EXIST, and something must check it</td>
+      <td>see <code class="language-plaintext highlighter-rouge">yl5w</code>: three claims resolved to nothing and the gate said “clean”</td>
+    </tr>
+    <tr>
+      <td><strong>R14</strong></td>
+      <td>Read a storage figure in the units that round-trip its own bytes</td>
+      <td>IRIS prints “GB” for what its byte counts make <strong>GiB</strong> — a 7% error</td>
+    </tr>
+    <tr>
+      <td><strong>R15</strong></td>
+      <td>Never fall back to a parent URL when an item has no upstream URI</td>
+      <td>“no upstream URI recorded” is the answer; the front page is a lie that resolves</td>
+    </tr>
+    <tr>
+      <td><strong>R16</strong></td>
+      <td>A partial transcription must SAY it is partial</td>
+      <td>a truncated abstract that does not declare itself cannot be told from a short one</td>
+    </tr>
+    <tr>
+      <td><strong>R17</strong></td>
+      <td>Hold what you hold: model the bitstreams whose bytes are here</td>
+      <td>the handbook lists <strong>8</strong> upstream; this repository has <strong>1</strong></td>
+    </tr>
+    <tr>
+      <td><strong>R18</strong></td>
+      <td>Do not “correct” a record that looks wrong</td>
+      <td>the English-titled editorial manual really does carry an <strong>Italian</strong> ISBN</td>
     </tr>
   </tbody>
 </table></div>
@@ -926,10 +971,10 @@ catalogued the WHO Editorial Style Manual as a publication called <em>Abies</em>
 one title (<code class="language-plaintext highlighter-rouge">Handbook forGuideline Development 2nd edition</code> from joined title
 lines, <code class="language-plaintext highlighter-rouge">GRC Handbook - second edition</code> from PDF docinfo, and the real one), with
 no authority among them. That is what an IRIS record settles.</p>
-<h2 id="getting-a-record-and-why-there-isnt-one-for-two-of-three">
+<h2 id="getting-a-record--and-the-prediction-this-section-made-which-came-true">
   
   
-    <a href="#getting-a-record-and-why-there-isnt-one-for-two-of-three" class="anchor-heading" aria-labelledby="getting-a-record-and-why-there-isnt-one-for-two-of-three"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Getting a record, and why there isn’t one for two of three
+    <a href="#getting-a-record--and-the-prediction-this-section-made-which-came-true" class="anchor-heading" aria-labelledby="getting-a-record--and-the-prediction-this-section-made-which-came-true"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Getting a record — and the prediction this section made, which came true
   
   
 </h2>
@@ -938,12 +983,22 @@ no authority among them. That is what an IRIS record settles.</p>
 <p>DSpace 7 exposes <code class="language-plaintext highlighter-rouge">/server/api/discover/search/objects</code>, paged and filterable by
 <code class="language-plaintext highlighter-rouge">dsoType</code>, <code class="language-plaintext highlighter-rouge">scope</code> and facets; communities are listed at <code class="language-plaintext highlighter-rouge">/community-list</code>.</p>
 
-<p><strong>None of that was exercised here.</strong> <code class="language-plaintext highlighter-rouge">iris.who.int</code> is egress-blocked from this
-environment — <code class="language-plaintext highlighter-rouge">curl</code> returns <code class="language-plaintext highlighter-rouge">CONNECT tunnel failed, response 403</code>, the same
-block bean <code class="language-plaintext highlighter-rouge">r1lz</code> recorded on 2026-09-19. So the API shape above is read from
-DSpace’s documentation and the site’s own navigation, and two of the three items
-carry <strong>derived</strong> records marked as such. They are placeholders with honest
-provenance, to be replaced wholesale when IRIS is reachable — not records.</p>
+<p><strong>None of that has ever been exercised here.</strong> <code class="language-plaintext highlighter-rouge">iris.who.int</code> is egress-blocked
+from this environment — <code class="language-plaintext highlighter-rouge">curl</code> returns <code class="language-plaintext highlighter-rouge">CONNECT tunnel failed, response 403</code>,
+the same block bean <code class="language-plaintext highlighter-rouge">r1lz</code> recorded on 2026-09-19. The API shape above is read
+from DSpace’s documentation and the site’s own navigation, not from a call.</p>
+
+<p>This section used to end by saying two of the three items carried <strong>derived</strong>
+records, <em>“placeholders with honest provenance, to be replaced wholesale when
+IRIS is reachable — not records.”</em></p>
+
+<p><strong>That is exactly what happened, by a route it did not anticipate.</strong> IRIS is
+still unreachable. On 2026-09-20 the owner captured the two full item records
+by hand and uploaded them, and both derived records were replaced wholesale.
+The lesson is not that the prediction was lucky: it is that <em>marking a derived
+record as derived</em> is what made the replacement a clean swap instead of an
+archaeology exercise. Nothing had to be reconciled, because nothing downstream
+had been allowed to believe the placeholder.</p>
 
 <p>Enumeration cost, subsetting and the characterisation that decides whether IRIS
 may be cited at all are in

@@ -114,6 +114,20 @@
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
+  p.lede { font-size: 1.05rem; line-height: 1.6; max-width: 46rem; }
+
+  table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
+  table.reqs th, table.reqs td {
+    text-align: left; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
+    vertical-align: top;
+  }
+  table.reqs thead th { background: var(--iris-wash); font-weight: 700; }
+  table.reqs th.rid {
+    width: 3.2rem; white-space: nowrap; font-weight: 700; color: var(--iris-accent);
+  }
+  table.reqs td.why { color: var(--iris-muted); }
+  table.reqs code { font-size: 0.87em; }
+
   .caveat {
     border-left: 4px solid var(--iris-current); background: var(--iris-wash);
     padding: 0.9rem 1.1rem; margin: 1.6rem 0; font-size: 0.95rem;
@@ -129,15 +143,21 @@
 
   @media (max-width: 640px) {
     h1 { font-size: 1.9rem; }
-    .none { color: var(--iris-muted); font-style: italic; }
-  /* The CDN link is secondary to the one that is known to work. */
-  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
-  .nologo { display: none; }
+    /* .none and .cdn are defined above and were duplicated in here; the
+       copies said nothing the base rules did not. A .nologo display:none was
+       in here too, which HID the "replica, not published under WHO" notice on
+       exactly the screens where a reader is least able to tell a replica from
+       the real site. It shrinks now; it does not disappear. */
+    .nologo { font-size: 0.72rem; max-width: none; }
     .wordmark .iris { font-size: 1.7rem; }
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+    table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
+    table.reqs thead { display: none; }
+    table.reqs td, table.reqs th.rid { border-bottom: none; padding: 0.2rem 0; }
+    table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
   }
 </style>
 </head>
@@ -214,6 +234,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
+  <a href="ingestion-notes.html">Ingestion notes</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
