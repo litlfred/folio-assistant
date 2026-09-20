@@ -34,7 +34,7 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { Glob } from "bun";
 
-import { owningDirectory, resolveDirectories, subgraphTree } from "../schemas/cat-harness.js";
+import { isRenderable, owningDirectory, resolveDirectories, subgraphTree } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -70,6 +70,44 @@ export interface SubgraphReport {
   dangling: Array<{ from: string; fromDir: string; target: string }>;
   /** Files that could not be read — the third state. */
   unreadable: string[];
+  /**
+   * Declared directories that exist and hold markdown, yet contributed no
+   * attributed file — so nothing in them was examined.
+   *
+   * Added 2026-09-20 after this sweep reported **0 dangling links** over a
+   * corpus in which a just-retired page still carried seven. The page had
+   * moved to `fsh-guts/`, which is `scope: "repository"` and therefore sits
+   * OUTSIDE this instance — and `owningDirectory` compares in the instance's
+   * path space, so every repository-scoped directory was skipped without a
+   * word. `bootstrap/skills/`, `smart-kg/` and `uploads/` are skipped the
+   * same way.
+   *
+   * Skipping retired content is defensible; skipping it SILENTLY is not,
+   * because "0 dangling" then reads as "everything resolves" when it means
+   * "everything I looked at resolves". That is the could-not-determine state
+   * rendered as clean, which this repository refuses everywhere else.
+   */
+  notExamined: string[];
+  /**
+   * Links inside a RENDERABLE graph that do not resolve in the source tree.
+   *
+   * Counted and printed, never asserted, because a renderable graph's links
+   * are resolved by the SITE BUILD against the published tree — a different
+   * address space from this one. `docs/architecture.md -> api/` names a
+   * directory the docs build generates; `docs/skills.md -> ...migration.html`
+   * names a page Jekyll renders. Neither is a file here and neither is broken.
+   *
+   * **This is not an exemption for convenience, and the number is the reason
+   * it is reported rather than dropped.** Declaring `docs/` (241 files, until
+   * 2026-09-20 invisible to every declaration-driven consumer) put them in
+   * scope for the first time and produced 171 of these, of which 23 ARE
+   * source-tree links carrying one `../` too many — rot left by the move of
+   * the instance under `cat-harness/`. That audit is bean `mi97`; asserting
+   * zero here would have meant either 171 false findings or a silent skip,
+   * and this module already says which of those is worse: "Skipping retired
+   * content is defensible; skipping it SILENTLY is not."
+   */
+  siteResolved: Array<{ from: string; fromDir: string; target: string }>;
   scanned: number;
 }
 
@@ -131,11 +169,14 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   const edges: CrossEdge[] = [];
   const dangling: SubgraphReport["dangling"] = [];
   const unreadable: string[] = [];
+  const notExamined: string[] = [];
+  const siteResolved: SubgraphReport["siteResolved"] = [];
   let scanned = 0;
 
   for (const dir of dirs) {
     const abs = dir.absPath ?? join(root, dir.path);
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
+    let attributed = 0;
     for (const rel of new Glob("**/*.md").scanSync({ cwd: abs })) {
       const file = join(abs, rel);
       const owner = owningDirectory(dirs, relative(root, file));
@@ -143,6 +184,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       // sweep happened to reach it — that attribution IS the `x4v4` defect.
       if (owner === undefined || owner.id !== dir.id) continue;
       scanned += 1;
+      attributed += 1;
       let text: string;
       try {
         text = readFileSync(file, "utf-8");
@@ -165,7 +207,13 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
           if (existsSync(asSource)) resolved = asSource;
         }
         if (!existsSync(resolved)) {
-          dangling.push({ from: relative(root, file), fromDir: owner.id, target });
+          // A renderable graph addresses the PUBLISHED tree, not this one.
+          const renderable = owner.graphs.some((g) => isRenderable(g));
+          (renderable ? siteResolved : dangling).push({
+            from: relative(root, file),
+            fromDir: owner.id,
+            target,
+          });
           continue;
         }
         const to = owningDirectory(dirs, relative(root, resolved));
@@ -178,13 +226,17 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         });
       }
     }
+    if (attributed === 0 && [...new Glob("**/*.md").scanSync({ cwd: abs })].length > 0) {
+      notExamined.push(`${dir.id} (${dir.path})`);
+    }
   }
-  return { tree, edges, dangling, unreadable, scanned };
+  return { tree, edges, dangling, unreadable, notExamined,
+    siteResolved, scanned };
 }
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const { tree, edges, dangling, unreadable, scanned } = scanSubgraphs(ROOT);
+  const { tree, edges, dangling, unreadable, notExamined, siteResolved, scanned } = scanSubgraphs(ROOT);
 
   console.log(`Subgraphs  (${scanned} markdown node(s) attributed to a declared directory)\n`);
 
@@ -232,6 +284,38 @@ if (import.meta.main) {
       console.log(`  ${String(list.length).padStart(3)}  ${dir}`);
       for (const d of list) console.log(`         ${d.from}  →  ${d.target}`);
     }
+  }
+
+  if (notExamined.length > 0) {
+    console.log(
+      `\nNOT EXAMINED — ${notExamined.length} declared directory(ies) hold markdown but`,
+    );
+    console.log("contributed no attributed file, so nothing in them was checked. A clean");
+    console.log("result above is a statement about what WAS looked at:\n");
+    for (const d of notExamined) console.log(`  · ${d}`);
+    console.log(
+      "\nRepository-scoped entries resolve outside this instance, which is why they\n" +
+        "fall out. Retired content under `fsh-guts/` is deliberately not held to\n" +
+        "link resolution; the others are a gap, not a decision.",
+    );
+  }
+
+  if (siteResolved.length > 0) {
+    // PRINTED, and the count is the point. These are not asserted because a
+    // renderable graph's links resolve in the published tree, but a silent
+    // skip of 171 links is exactly what this module refuses to do elsewhere.
+    const byDir = new Map<string, number>();
+    for (const l of siteResolved) byDir.set(l.fromDir, (byDir.get(l.fromDir) ?? 0) + 1);
+    console.log(
+      `\n· ${siteResolved.length} link(s) in RENDERABLE graph(s) do not resolve in the source tree:`,
+    );
+    for (const [id, n] of [...byDir].sort((a, b) => b[1] - a[1])) console.log(`    ${id}: ${n}`);
+    console.log(
+      "  Not a finding here: a renderable graph addresses the PUBLISHED tree, and\n" +
+        "  the site build resolves `api/`, `*.html` and generated pages that are not\n" +
+        "  files in this one. NOT a clean bill either — bean `mi97` audits them, and\n" +
+        "  23 of the current set carry one `../` too many from the cat-harness move.",
+    );
   }
 
   if (unreadable.length > 0) {

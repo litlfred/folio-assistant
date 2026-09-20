@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-18T17:59:38Z
-updated_at: 2026-09-20T14:37:11Z
+updated_at: 2026-09-20T16:38:20Z
 parent: folio-assistant-1xhc
 ---
 
@@ -50,3 +50,22 @@ Re-derived rather than read off that note:
   including *"refuses to serve outside its root, including percent-encoded traversal"*.
 
 Both faults this bean named are gone.
+
+## CLOSED 2026-09-20 — verified fixed, not assumed
+
+Re-measured before working it, because a bean asserting `bunx playwright test`
+cannot run sat beside a session that had run it successfully several times.
+
+    playwright.config.ts:60   command: 'node test-server.mjs'
+    ls test-server.mjs        present
+    bunx playwright test …    EXIT=0
+
+The config's own comment records the fix and cites this bean: *"`test-server.mjs`
+serves the repo root statically. It was referenced here long before it existed
+— see bean `dzl3` — so no e2e test in this repo was runnable until it was
+written."*
+
+So the file was written and the reference repointed from the `.cjs` that never
+existed. Branch `claude/test-server-dzl3` is where it came from. Closed on the
+measurement rather than on the comment: the comment says what someone intended,
+the exit code says what happens.

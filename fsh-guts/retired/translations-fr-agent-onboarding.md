@@ -1,11 +1,30 @@
 ---
-layout: default
-title: Agent onboarding
-parent: Authoring guides
-nav_order: 0
-lang: en
-available_locales: ["ar", "zh", "fr", "ru", "es"]
+$schema: folio-fsh-guts/v1
+title: "Agent onboarding — an English page in the French gettext directory"
+kind: page
+movedOn: 2026-09-20
+movedFrom: "cat-harness/translations/fr/agent-onboarding.md"
+bean: folio-assistant-tc95
+summary: >-
+  The only `.md` anywhere under `translations/`, a directory declared to hold
+  `.pot` templates, `.po` catalogues and `.ts` manifests — the gettext INPUT
+  to injection. Its front matter read `lang: en` with an English title while
+  the real French translation lives at `docs/guides/fr/agent-onboarding.md`,
+  so it was an English page sitting in a French locale directory. It was also
+  the sole remaining source of dangling links in bean `rl3h`: its relative
+  paths are correct for `docs/guides/`, where the English source lives, and
+  resolve to nothing at the depth it sat. Superseded by
+  `cat-harness/docs/guides/agent-onboarding.md` (the English source) and
+  `cat-harness/docs/guides/fr/agent-onboarding.md` (the French translation),
+  both of which had their relative links repaired in the same change.
 ---
+
+> **Retired 2026-09-20.** Moved here rather than deleted, per the standing
+> rule in `skills/folio-core/fsh-guts.md`: work that is not wanted moves to
+> `fsh-guts/` with a note saying what superseded it, and actual deletion
+> happens **only on explicit confirmation from the owner**. The links below
+> are preserved as they were and are not expected to resolve from here.
+
 # Intégration de l'agent
 {: .no_toc }
 Vous êtes un agent LLM qui vient d'être placé dans un dépôt utilisant folio-assistant. Cette page est votre orientation : ce que vous regardez, ce qu'il faut faire en premier, et où chercher les informations.

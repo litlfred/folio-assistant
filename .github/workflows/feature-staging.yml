@@ -575,14 +575,49 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -eu
+          # THE SLUG, RE-CHECKED BY VALUE. It was validated in the `slug` step,
+          # but it has crossed a job boundary as an output since — and this
+          # file's own rule is "checked by VALUE, never trusted because of
+          # where it came from" (bean `fuzm`). The next line deletes a
+          # directory; an empty slug would make it `pages/STAGING/`, which is
+          # EVERY open PR's preview. That is `plj1` exactly, and it is worth
+          # four lines to make it unreachable rather than merely unlikely.
+          case "$STAGING_SLUG" in
+            ""|.|..|*/*)
+              echo "::error::staging slug '$STAGING_SLUG' is not one safe path segment. Refusing to deploy."
+              exit 1
+              ;;
+          esac
+
+          # REPLACE this slug's preview rather than overlaying it — bean `85im`.
+          #
+          # The copy below adds and overwrites and never deletes, which is what
+          # `keep_files: true` did before this job took over the push. That
+          # protected every OTHER branch's preview (the `plj1` protection, and
+          # it still holds — nothing here touches a sibling slug) but it also
+          # preserved THIS slug's files that the build no longer produces.
+          #
+          # Measured 2026-09-19: main relocated four proposals out of the
+          # rendered site to `fsh-guts/`, the main-site deploy honoured it, and
+          # the staging preview served five `proposals/*.html` pages the build
+          # had stopped producing. Provably stale rather than rebuilt — the
+          # deploy was gh-pages c190bc19c (13:18:11) while the last commit
+          # touching those files was aca09df0e (12:34:09), the PREVIOUS deploy.
+          #
+          # Why that matters more than a stale page: a preview is what a
+          # reviewer opens to answer "did my change take effect?", and an
+          # overlay can only ever answer that for ADDITIONS. A reviewer
+          # checking whether a removal worked got a false negative from the one
+          # artefact built to tell them — the `xom7` shape, landing on the
+          # review surface instead of in CI. The deploy is green, the comment
+          # is posted, the URL resolves, and the content is wrong.
+          #
+          # Path-scoped BY CONSTRUCTION rather than by a flag: this names one
+          # directory. `keep_files`/`force_orphan`/`exclude_assets` offer
+          # nothing path-scoped, which is what `docs-site.yml`'s comment says
+          # from the other end of the same tradeoff.
+          rm -rf "pages/STAGING/$STAGING_SLUG"
           mkdir -p "pages/STAGING/$STAGING_SLUG"
-          # `keep_files: true`, preserved exactly. A plain copy adds and
-          # overwrites and never deletes, which is what the flag did: every
-          # OTHER branch's preview survives (the `plj1` protection), and so do
-          # this slug's own files that the build no longer produces. That
-          # second half is a defect — bean `85im` holds it — and fixing it
-          # here would widen a change about push COUNT into one about preview
-          # CONTENT.
           cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
           # Writes into the directory and never pushes: this step already
           # holds the checkout and the retry loop, and a second pusher racing
