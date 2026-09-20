@@ -224,7 +224,7 @@ describe("every instance needs a starting README OF ITS OWN (bean `ie9l`)", () =
   it("declaring no instance-readme at all is MAJOR", () => {
     const r = readmeFinding("/nowhere", decl([]), false);
     expect(r?.severity).toBe("major");
-    expect(r?.detail).toContain("nothing says what this instance IS");
+    expect(r?.detail).toContain("What this instance IS, for a reader");
   });
 
   it("BORROWING the repository's README is MAJOR — the case check-declared-assets cannot see", () => {
@@ -259,13 +259,36 @@ describe("every instance needs a starting README OF ITS OWN (bean `ie9l`)", () =
     rmSync(base, { recursive: true, force: true });
   });
 
-  it("this repository has exactly the two known offenders", () => {
-    // Against the real tree: the root declares no assets at all, and
-    // cat-harness borrows the root's README. bootstrap and folio-assist-core
-    // each own theirs. If this changes, the check should say so rather than
-    // quietly track it.
+  it("this repository has no README offender left", () => {
+    // It had exactly two — the root declared no assets at all, and cat-harness
+    // borrowed the root's README. Issue #592 split them, so every instance now
+    // owns its own. Asserted as EMPTY rather than deleted: a list that went to
+    // zero and a check that stopped looking are indistinguishable from a
+    // deleted test, and this is the fix's only durable witness.
     const repo = resolve(import.meta.dir, "..", "..", "..");
     const offenders = auditAll(repo).filter((r) => r.readme !== undefined).map((r) => r.instance);
-    expect(offenders.sort()).toEqual(["cat-harness", "folio-assistant"]);
+    expect(offenders.sort()).toEqual([]);
+  });
+
+  it("the AGENT half is asked about too, and names who is missing it", () => {
+    // Measured 2026-09-20: ten of eleven instances declared `instance-readme`
+    // and TWO declared `agent-instructions`. The count is the argument for
+    // asking at all, so it is asserted rather than described — but as a
+    // MEMBERSHIP claim, not a total: a new instance arriving with neither file
+    // should not fail this test, it should appear in `check:subgraph-coverage`.
+    const repo = resolve(import.meta.dir, "..", "..", "..");
+    const audited = auditAll(repo);
+    const mute = audited.filter((r) => r.agentInstructions !== undefined).map((r) => r.instance);
+
+    // The three that own one: the repository root, the harness layer, and
+    // cat-bootstrap — whose AGENTS.md is the one a cold agent reads before any
+    // harness exists at all.
+    for (const owns of ["folio-assistant", "cat-harness", "cat-bootstrap"]) {
+      expect(mute).not.toContain(owns);
+    }
+    // folio-assistant-core HAS an AGENTS.md on disk and does not declare it.
+    // That is a finding, not an exemption: an undeclared file is one no
+    // checker has a reason to look at — the `v8gh` property.
+    expect(mute).toContain("folio-assistant-core");
   });
 });

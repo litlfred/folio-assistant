@@ -55,6 +55,9 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import {
+  AGENT_INSTRUCTIONS_ROLE,
+  ASSET_ROLE_PURPOSE,
+  INSTANCE_README_ROLE,
   instanceRootsIn,
   readDeclaration,
   repoRootFor,
@@ -88,6 +91,8 @@ export interface InstanceCoverage {
   findings: CoverageFinding[];
   /** The instance-level README finding, when there is one. */
   readme?: { severity: Severity; detail: string };
+  /** The instance-level `agent-instructions` finding — the AGENT half of the same pair. */
+  agentInstructions?: { severity: Severity; detail: string };
   /** Waivers honoured, with the reason each one gave. */
   exempted: Array<{ directory: string; criterion: Criterion; reason: string }>;
   reason?: string;
@@ -156,22 +161,68 @@ export function readmeFinding(
   decl: { assets?: Array<{ role?: string; src: string; scope?: string }> } | undefined,
   isRepositoryRoot: boolean,
 ): { severity: Severity; detail: string } | undefined {
-  const readme = (decl?.assets ?? []).find((a) => a.role === "instance-readme");
-  if (readme === undefined) {
-    return { severity: "major", detail: "declares no `instance-readme` asset — nothing says what this instance IS" };
+  return assetRoleFinding(root, decl, isRepositoryRoot, INSTANCE_README_ROLE);
+}
+
+/**
+ * The same question, asked about the AGENT half of the pair.
+ *
+ * Added 2026-09-20 (issue #592) because the axis had only ever asked about the
+ * README, and the number that argument rests on is the measurement: ten of
+ * eleven instances declared `instance-readme` and **two** declared
+ * `agent-instructions`. Nine instances were readable by a person and mute to
+ * an agent, and nothing said so — not because the check disagreed, but because
+ * it was never asked.
+ *
+ * Same severity as the README's, and for the owner's reason rather than by
+ * symmetry: *"agents.md should give good coldstart instructions (dont
+ * duplicatae readme.md) but augment"*. An augment that does not exist is not a
+ * thinner answer to the reader's question; it is no answer to a different
+ * question. See {@link ASSET_ROLE_PURPOSE}, which is where each role says what
+ * it is for, once.
+ */
+export function agentInstructionsFinding(
+  root: string,
+  decl: { assets?: Array<{ role?: string; src: string; scope?: string }> } | undefined,
+  isRepositoryRoot: boolean,
+): { severity: Severity; detail: string } | undefined {
+  return assetRoleFinding(root, decl, isRepositoryRoot, AGENT_INSTRUCTIONS_ROLE);
+}
+
+/**
+ * One implementation, asked once per role in {@link REQUIRED_ASSET_ROLES}.
+ *
+ * Written generically rather than copied because the three failure modes are
+ * identical for both roles and the copy is where they drift: the `scope`
+ * clause in particular is subtle enough that a second hand-written version
+ * would plausibly omit it, and its absence reads as a clean instance.
+ */
+export function assetRoleFinding(
+  root: string,
+  decl: { assets?: Array<{ role?: string; src: string; scope?: string }> } | undefined,
+  isRepositoryRoot: boolean,
+  role: string,
+): { severity: Severity; detail: string } | undefined {
+  const purpose = ASSET_ROLE_PURPOSE[role] ?? role;
+  const asset = (decl?.assets ?? []).find((a) => a.role === role);
+  if (asset === undefined) {
+    return {
+      severity: "major",
+      detail: `declares no \`${role}\` asset — nothing provides: ${purpose}`,
+    };
   }
-  // The repository root legitimately owns the repository's README; every other
+  // The repository root legitimately owns the repository's files; every other
   // instance reaching for a repository-scoped one is borrowing it.
-  if (readme.scope === "repository" && !isRepositoryRoot) {
+  if (asset.scope === "repository" && !isRepositoryRoot) {
     return {
       severity: "major",
       detail:
-        `declares its README \`scope: "repository"\`, so it resolves to the repository root's — ` +
+        `declares its \`${role}\` \`scope: "repository"\`, so it resolves to the repository root's — ` +
         "one file doing two jobs, and a reader of either question gets the other's answer",
     };
   }
-  if (!existsSync(resolve(root, readme.src))) {
-    return { severity: "major", detail: `declares README \`${readme.src}\` and it is not there` };
+  if (!existsSync(resolve(root, asset.src))) {
+    return { severity: "major", detail: `declares \`${role}\` \`${asset.src}\` and it is not there` };
   }
   return undefined;
 }
@@ -239,8 +290,10 @@ export function auditInstance(root: string): InstanceCoverage {
     }
   }
 
-  const readme = readmeFinding(root, decl, resolve(root) === resolve(repoRootFor(root)));
-  return { instance, verdict: "checked", declared: dirs.length, findings, exempted, readme };
+  const isRoot = resolve(root) === resolve(repoRootFor(root));
+  const readme = readmeFinding(root, decl, isRoot);
+  const agentInstructions = agentInstructionsFinding(root, decl, isRoot);
+  return { instance, verdict: "checked", declared: dirs.length, findings, exempted, readme, agentInstructions };
 }
 
 export function auditAll(repoRoot: string): InstanceCoverage[] {
@@ -261,6 +314,9 @@ export function formatReport(rs: InstanceCoverage[]): string {
         (major ? `, ${major} MAJOR` : "") +
         (r.exempted.length ? `, ${r.exempted.length} exempt` : ""),
     );
+    if (r.agentInstructions !== undefined) {
+      out.push(`      ✗ ${r.instance} / agent-instructions: ${r.agentInstructions.detail}`);
+    }
     if (r.readme !== undefined) {
       out.push(`      ✗ ${r.instance} / readme: ${r.readme.detail}`);
     }
@@ -273,6 +329,7 @@ export function formatReport(rs: InstanceCoverage[]): string {
   }
 
   const noReadme = rs.filter((r) => r.readme !== undefined).length;
+  const noAgents = rs.filter((r) => r.agentInstructions !== undefined).length;
   const undet = rs.filter((r) => r.verdict === "undetermined").length;
   const all = rs.flatMap((r) => r.findings);
   const major = all.filter((f) => f.severity === "major").length;
@@ -283,6 +340,11 @@ export function formatReport(rs: InstanceCoverage[]): string {
   if (noReadme) {
     out.push(
       `${noReadme} instance(s) have no starting README OF THEIR OWN — an instance a reader cannot enter.`,
+    );
+  }
+  if (noAgents) {
+    out.push(
+      `${noAgents} instance(s) have no \`AGENTS.md\` OF THEIR OWN — readable by a person, mute to an agent.`,
     );
   }
   if (undet) {
@@ -313,7 +375,12 @@ if (import.meta.main) {
   // defect rather than a backlog item.
   if (
     process.argv.includes("--strict") &&
-    rs.some((r) => r.readme !== undefined || r.findings.some((f) => f.severity === "major"))
+    rs.some(
+      (r) =>
+        r.readme !== undefined ||
+        r.agentInstructions !== undefined ||
+        r.findings.some((f) => f.severity === "major"),
+    )
   ) {
     process.exit(1);
   }
