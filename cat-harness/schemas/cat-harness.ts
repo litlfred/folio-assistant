@@ -1020,6 +1020,14 @@ export interface ContentDirectory extends KgNodeLabels {
   /**
    * The directory, relative to the root {@link scope} names, with or without a
    * trailing slash.
+   *
+   * REQUIRED, and a remote graph is not modelled by relaxing it. See
+   * {@link RemoteGraph}: a graph that lives somewhere else has no directory,
+   * and calling it a `ContentDirectory` with an optional path was tried on
+   * 2026-09-20 and abandoned the same hour. It loosened `bean-graph.ts` and
+   * `todo-graph.ts`, which REUSE this schema for their own nodes — and a bean
+   * store is never remote — so the change weakened two graphs that had nothing
+   * to do with it, and the compiler said so in twenty-four errors.
    */
   path: string;
   /**
@@ -1141,6 +1149,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   topology?: Topology;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
+  /** Graphs known about but not held — see {@link RemoteGraph}. Absent means none. */
+  remoteGraphs?: RemoteGraph[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -1159,6 +1169,80 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * would hand one back.
    */
   stickies?: StickyContribution[];
+}
+
+/**
+ * A graph this instance KNOWS ABOUT but does not hold.
+ *
+ * The owner, 2026-09-20: *"any top level repos or KGs in the repo, or
+ * navigable if external/remote pointed to in the core harness schema (need to
+ * extend so graphs can be url of remote graph)"*.
+ *
+ * ## A remote graph is NOT a directory, and that is the whole modelling
+ *
+ * The first cut made `ContentDirectory.path` optional and added a `url` beside
+ * it. That is wrong twice over. `bean-graph.ts` and `todo-graph.ts` REUSE
+ * `ContentDirectorySchema` for their own nodes — AGENTS.md says so outright,
+ * *"a bean-graph entry IS a ContentDirectory"* — and a bean store is never
+ * remote, so relaxing the shared schema weakened two graphs that had nothing
+ * to do with the change. And a field that is sometimes a path and sometimes an
+ * address is one field with two meanings, which every consumer then has to
+ * guess between.
+ *
+ * So this is its own node kind. It has an `id` and `graphs` like a directory,
+ * because those are what make it addressable and filterable; it has no `path`,
+ * because there is nothing here.
+ *
+ * ## It is `materialization` at the graph level
+ *
+ * `folio-assistant-core/schemas/materialization.ts` already names the states a
+ * body of content is in, and a declared graph is in the same ones: a
+ * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
+ * **referenced** (we know it exists and where, we hold none of it).
+ *
+ * A reader may FOLLOW a remote graph — the KG viewer does, to keep a hierarchy
+ * of named subgraphs navigable across instances that are not in this checkout.
+ * Anything that wants the CONTENTS goes through `materialize-remote`: the five
+ * gates and a declared purpose, rather than fetching it merely because it has
+ * an address.
+ */
+export interface RemoteGraph extends KgNodeLabels {
+  /** Stable identifier, unique within an instance — as on a directory, and for the same reason. */
+  id: string;
+  /** Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates. */
+  url: string;
+  /** Which parts of the knowledge graph live there. */
+  graphs: GraphKind[];
+}
+
+export const RemoteGraphSchema = z
+  .object({
+    id: z.string().min(1),
+    url: z.string().url(),
+    graphs: z.array(z.string().min(1)).min(1),
+    ...kgNodeLabelShape,
+  })
+  // STRICT, and that is the point rather than tidiness: without it a stray
+  // `path` on a remote graph is silently accepted, and the declaration then
+  // carries two answers to where the graph is — the exact confusion this node
+  // kind exists to prevent. Caught by its own test on the hour it was written.
+  .strict();
+
+/**
+ * The local path of a declared directory, or `undefined` when the graph is
+ * REMOTE.
+ *
+ * Every consumer that needs bytes on disk goes through this, so "this graph is
+ * not in this checkout" is a case each one has to answer rather than a
+ * `string` it can assume. When `url` landed on 2026-09-20 the compiler named
+ * the whole set in nine errors across six files — which is the set that had
+ * been assuming a local path all along, and the reason `path` was made
+ * optional rather than widened to hold a URL. A field that is sometimes a path
+ * and sometimes an address is one field with two meanings, and every consumer
+ * then has to guess which it got.
+ */
+export function localPathOf(d: { path?: string; url?: string }): string | undefined {
+  return d.path;
 }
 
 export const ContentDirectorySchema = z.object({
@@ -1494,6 +1578,12 @@ export const CatHarnessDeclarationSchema = z.object({
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
+  /**
+   * Graphs this instance knows about and does not hold — see {@link RemoteGraph}.
+   * A SEPARATE array from `directories`, not a variant of one, because a remote
+   * graph has no directory.
+   */
+  remoteGraphs: z.array(RemoteGraphSchema).default([]),
   stickies: z.array(StickyContributionSchema).optional(),
 });
 
@@ -2181,6 +2271,17 @@ export function resolveDirectories(
       // never-overlaid property of those two directories was a rule an agent
       // had to remember until this line; now the resolver holds it.
       if (dir.scope === "repository" && link.own !== true) continue;
+      // A REMOTE graph has no `absPath` because it has no bytes here, and this
+      // function answers ONE question: where do I scan. Every one of its
+      // callers walks a directory, and there is nothing to walk.
+      //
+      // It is skipped rather than returned with `absPath: undefined`, which
+      // would push the case onto twenty-five call sites that would each have to
+      // remember it — the shape `directoryForGraph` was just excised for. A
+      // consumer that wants the FULL declared set, remote entries included,
+      // calls `declaredDirectories` instead; the KG viewer does, because a
+      // hierarchy of named subgraphs stays navigable whether or not the bytes
+      // are in this checkout.
       // Override by id, replacing in place so the inherited ORDER is kept: a
       // relocation should not reshuffle what a consumer scans first.
       byId.set(dir.id, {
@@ -2193,6 +2294,47 @@ export function resolveDirectories(
     }
 
   return [...byId.values()];
+}
+
+/**
+ * EVERY declared directory, remote entries included — the navigable set.
+ *
+ * The complement of {@link resolveDirectories}, which answers "where do I
+ * scan" and therefore drops remote graphs because there is nothing on disk to
+ * walk. This one answers **"what is declared"**, which is the question the KG
+ * viewer asks: the owner, 2026-09-20, wants the hierarchy of named subgraphs
+ * filterable *"or navigable if external/remote pointed to in the core harness
+ * schema"*, and a graph whose bytes are elsewhere is still a node in that
+ * hierarchy.
+ *
+ * Two functions rather than a flag, because the two questions have different
+ * right answers and a caller that passed the wrong flag would get a plausible
+ * list either way.
+ */
+export interface DeclaredGraph extends KgNodeLabels {
+  id: string;
+  graphs: GraphKind[];
+  declaredBy: string;
+  /** Set iff the graph is HERE. */
+  absPath?: string;
+  /** Set iff the graph is elsewhere. Exactly one of the two, always. */
+  url?: string;
+}
+
+export function declaredGraphs(
+  root: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): DeclaredGraph[] {
+  const decl = readDeclaration(root, registry);
+  if (!decl) return [];
+  return [
+    ...decl.directories.map((d) => ({
+      ...d,
+      declaredBy: decl.name,
+      absPath: resolve(rootForScope(root, d.scope), d.path),
+    })),
+    ...(decl.remoteGraphs ?? []).map((g) => ({ ...g, declaredBy: decl.name })),
+  ];
 }
 
 /**

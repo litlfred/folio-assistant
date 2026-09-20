@@ -33,6 +33,7 @@ import {
   resolveGraphKind,
   toJsonLd,
   type ResolvedDirectory,
+  CatHarnessDeclarationSchema
 } from "./cat-harness";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
@@ -660,5 +661,49 @@ describe("the scope trap", () => {
     } finally {
       rmSync(repo, { recursive: true, force: true });
     }
+  });
+});
+
+describe("remote graphs — a graph this instance knows about and does not hold", () => {
+  const decl = (extra: Record<string, unknown>) => ({
+    name: "x",
+    directories: [{ id: "kg", path: "skills/", graphs: ["cat-harness"] }],
+    ...extra,
+  });
+
+  it("round-trips a declared remote graph", () => {
+    const d = CatHarnessDeclarationSchema.parse(
+      decl({ remoteGraphs: [{ id: "sci", url: "https://example.org/folio-asst-sci.jsonld", graphs: ["cat-harness"] }] }),
+    );
+    expect(d.remoteGraphs).toHaveLength(1);
+    expect(d.remoteGraphs[0]!.url).toBe("https://example.org/folio-asst-sci.jsonld");
+  });
+
+  it("defaults to none, so an instance that declares no remote graph has an empty list rather than undefined", () => {
+    expect(CatHarnessDeclarationSchema.parse(decl({})).remoteGraphs).toEqual([]);
+  });
+
+  it("refuses a remote graph with no url — the whole point is that it says where", () => {
+    expect(
+      CatHarnessDeclarationSchema.safeParse(decl({ remoteGraphs: [{ id: "sci", graphs: ["cat-harness"] }] })).success,
+    ).toBe(false);
+  });
+
+  it("refuses a path on a remote graph — a remote graph is NOT a directory", () => {
+    // The first cut modelled this as `ContentDirectory` with an optional
+    // `path`. That loosened `bean-graph.ts` and `todo-graph.ts`, which reuse
+    // ContentDirectorySchema for their own nodes and are never remote, and the
+    // compiler said so in twenty-four errors. A remote graph has no directory.
+    expect(
+      CatHarnessDeclarationSchema.safeParse(
+        decl({ remoteGraphs: [{ id: "sci", url: "https://example.org/x.jsonld", path: "sci/", graphs: ["cat-harness"] }] }),
+      ).success,
+    ).toBe(false);
+  });
+
+  it("a ContentDirectory still REQUIRES a path — the loosening was reverted", () => {
+    expect(
+      CatHarnessDeclarationSchema.safeParse({ name: "x", directories: [{ id: "kg", graphs: ["cat-harness"] }] }).success,
+    ).toBe(false);
   });
 });

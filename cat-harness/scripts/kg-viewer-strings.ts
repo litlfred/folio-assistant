@@ -105,6 +105,14 @@ export const UI_STRINGS: readonly UiString[] = [
     comment: "Heading of the filter column. The kinds are node types (Tool, ProcessNode, …) and come from the graph, so they are not translated.",
   },
   {
+    en: "Subgraph",
+    comment:
+      "Heading of the SECOND filter column, added 2026-09-20. The values are declared-directory ids " +
+      "from the instance's own harness.json (cat-harness, bootstrap, schemas, …) and come from the " +
+      "graph, so like the kinds they are NOT translated — a reader types them into a query, and a " +
+      "translated id resolves to nothing.",
+  },
+  {
     en: "All",
     comment: "The filter that selects every node, shown above the individual kinds.",
   },
