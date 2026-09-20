@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Verify Anchor Connectivity
+title: 'Verify Anchor Connectivity'
 parent: Skill instructions
 ---
 

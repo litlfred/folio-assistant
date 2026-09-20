@@ -1,6 +1,6 @@
 ---
 layout: default
-title: `MathlibExt` Curator
+title: '`MathlibExt` Curator'
 parent: Skill instructions
 ---
 

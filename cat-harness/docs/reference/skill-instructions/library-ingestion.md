@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Library ingestion
+title: 'Library ingestion'
 parent: Skill instructions
 ---
 

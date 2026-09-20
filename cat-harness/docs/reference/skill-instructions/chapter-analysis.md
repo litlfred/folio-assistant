@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Chapter Analysis & Formalization
+title: 'Chapter Analysis & Formalization'
 parent: Skill instructions
 ---
 

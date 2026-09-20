@@ -1,6 +1,6 @@
 ---
 layout: default
-title: smart-base Toolchain
+title: 'smart-base Toolchain'
 parent: Skill instructions
 ---
 

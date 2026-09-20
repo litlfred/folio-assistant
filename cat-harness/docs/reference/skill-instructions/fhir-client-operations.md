@@ -1,6 +1,6 @@
 ---
 layout: default
-title: fhir-client-operations
+title: 'fhir-client-operations'
 parent: Skill instructions
 ---
 

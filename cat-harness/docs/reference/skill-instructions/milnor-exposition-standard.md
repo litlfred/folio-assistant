@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The Milnor exposition standard
+title: 'The Milnor exposition standard'
 parent: Skill instructions
 ---
 

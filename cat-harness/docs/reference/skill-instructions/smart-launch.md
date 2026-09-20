@@ -1,6 +1,6 @@
 ---
 layout: default
-title: smart-launch
+title: 'smart-launch'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Markdown Authoring Conventions
+title: 'Markdown Authoring Conventions'
 parent: Skill instructions
 ---
 

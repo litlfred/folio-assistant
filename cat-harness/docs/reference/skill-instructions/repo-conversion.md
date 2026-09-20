@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /repo-conversion
+title: '/repo-conversion'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Deployment & Auth
+title: 'Deployment & Auth'
 parent: Skill instructions
 ---
 

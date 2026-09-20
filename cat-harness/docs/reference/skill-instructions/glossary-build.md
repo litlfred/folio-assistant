@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Glossary Build
+title: 'Glossary Build'
 parent: Skill instructions
 ---
 

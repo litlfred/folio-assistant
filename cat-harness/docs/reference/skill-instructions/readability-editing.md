@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Readability Editing
+title: 'Readability Editing'
 parent: Skill instructions
 ---
 

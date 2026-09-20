@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Activity log
+title: 'Activity log'
 parent: Skill instructions
 ---
 

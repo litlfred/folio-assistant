@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Chapter Complexity Review
+title: 'Chapter Complexity Review'
 parent: Skill instructions
 ---
 

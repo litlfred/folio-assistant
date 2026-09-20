@@ -1,6 +1,6 @@
 ---
 layout: default
-title: quality-control
+title: 'quality-control'
 parent: Skill instructions
 ---
 

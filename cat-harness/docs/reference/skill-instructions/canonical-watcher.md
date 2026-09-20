@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /canonical-watcher
+title: '/canonical-watcher'
 parent: Skill instructions
 ---
 

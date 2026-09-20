@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Tabular metadata
+title: 'Tabular metadata'
 parent: Skill instructions
 ---
 

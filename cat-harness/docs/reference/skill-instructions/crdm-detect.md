@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Feature-request detection (CRDM trigger)
+title: 'Feature-request detection (CRDM trigger)'
 parent: Skill instructions
 ---
 

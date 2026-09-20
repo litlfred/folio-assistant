@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Delivery Summary
+title: 'Delivery Summary'
 parent: Skill instructions
 ---
 

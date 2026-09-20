@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Paper Importer
+title: 'Paper Importer'
 parent: Skill instructions
 ---
 

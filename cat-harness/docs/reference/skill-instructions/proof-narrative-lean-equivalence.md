@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Proof Narrative ↔ Lean Equivalence Audit
+title: 'Proof Narrative ↔ Lean Equivalence Audit'
 parent: Skill instructions
 ---
 

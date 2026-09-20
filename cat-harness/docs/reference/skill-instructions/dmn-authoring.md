@@ -1,6 +1,6 @@
 ---
 layout: default
-title: dmn-authoring
+title: 'dmn-authoring'
 parent: Skill instructions
 ---
 

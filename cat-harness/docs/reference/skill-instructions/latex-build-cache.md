@@ -1,6 +1,6 @@
 ---
 layout: default
-title: LaTeX build performance
+title: 'LaTeX build performance'
 parent: Skill instructions
 ---
 

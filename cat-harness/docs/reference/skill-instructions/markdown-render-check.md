@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Markdown Render Check
+title: 'Markdown Render Check'
 parent: Skill instructions
 ---
 

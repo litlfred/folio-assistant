@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Session Task Manager (`beans`)
+title: 'Session Task Manager (`beans`)'
 parent: Skill instructions
 ---
 

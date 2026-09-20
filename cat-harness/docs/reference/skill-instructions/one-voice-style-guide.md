@@ -1,6 +1,6 @@
 ---
 layout: default
-title: One-Voice Style Guide
+title: 'One-Voice Style Guide'
 parent: Skill instructions
 ---
 

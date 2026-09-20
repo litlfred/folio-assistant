@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Simulator Math Audit
+title: 'Simulator Math Audit'
 parent: Skill instructions
 ---
 

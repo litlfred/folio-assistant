@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Proof Gap Audit
+title: 'Proof Gap Audit'
 parent: Skill instructions
 ---
 

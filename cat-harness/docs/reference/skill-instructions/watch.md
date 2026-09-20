@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /watch
+title: '/watch'
 parent: Skill instructions
 ---
 

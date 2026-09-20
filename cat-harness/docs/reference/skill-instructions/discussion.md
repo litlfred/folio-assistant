@@ -1,6 +1,6 @@
 ---
 layout: default
-title: discussion
+title: 'discussion'
 parent: Skill instructions
 ---
 

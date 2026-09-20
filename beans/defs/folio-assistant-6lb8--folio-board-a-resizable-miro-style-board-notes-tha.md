@@ -109,3 +109,147 @@ Measured, so the requirements start from what is there:
 - [ ] a note carries a position and an attachment, both optional
 - [ ] the board collapses to a linear rendering that is complete, not degraded
 - [ ] a note attached to content renders as a badged icon on it, and opens
+
+---
+
+## RULED, 2026-09-20 — board positions are COMMITTED, in one file per board
+
+Put to the owner with four options and the merge hazard stated; they chose:
+
+> **Committed, one positions file per board.**
+
+So a note's position is **shared, publishable and survives a fresh clone** —
+not `localStorage`, which the discard control already demonstrates the limits
+of ("this browser only"), and not a field on each note, which would put a
+rendering coordinate into the work plan and make every move its own file's
+conflict.
+
+### Why one file rather than per-note, in the owner's own precedent
+
+The merge hazard is real and was not waved away — it is **contained**, using a
+fix this repository proved on 2026-09-20 in `gen-docs-pages.ts`:
+
+> Minified, this file is ONE LINE of ~12 KB. Git merges text by line, so a
+> single line means any change on both sides of a merge is a whole-file
+> conflict — two branches adding two different todos cannot both win. That is
+> not hypothetical: it conflicted on three consecutive merges of one branch on
+> 2026-09-20, every time.
+
+Indented, one note per line, sorted by id, two sessions moving **different**
+notes merge untouched. **It is a partial fix and the limit is known**: two
+notes that sort ADJACENT still conflict, because the inserted lines overlap.
+That was measured on a scratch repository rather than reasoned about, and the
+same limit applies here — so this removes the guaranteed conflict, not every
+conflict.
+
+### What follows, and none of it is optional
+
+- **The ordering must be deterministic**, or every save reshuffles and
+  conflicts anyway. The todo index earns its mergeability only because
+  `readTodoFiles` sorts; a positions file needs the same guarantee stated and
+  tested, not assumed.
+- **It is a new declared artefact**, so it owes a graph kind, a directory
+  declaration, and — under `2krx` — a visualiser and a documentation entry. The
+  kind's LAYER is the question to settle first: this is `state` (written by a
+  running process), which puts it beside `beans/workflows/` rather than beside
+  `folio/`. See `content-context-and-state-graphs`.
+- **Writing it needs a writable datastore**, which `harness-instances.md`
+  still lists as an open owner question — gh-pages is static. So the board is
+  READABLE everywhere and writable only where there is a git path, which is the
+  same conditional that page already states rather than a new one.
+- **A position for a note that no longer exists is an orphan**, and orphans are
+  reported rather than silently dropped. Same rule `gen-docs-pages` applies to
+  QA projections.
+
+### This unblocks `ivfw`'s move half
+
+`ivfw`'s theme half shipped 2026-09-20; its *"you cant move around dispaly"*
+half was left explicitly because the two must agree rather than ship two
+notions of position. They now can. The movement model must stay
+keyboard-driven — `docs-ui.js` ~2006 records the Pin button as a deliberate
+choice over a drag, and this instance's declared interaction profile is
+low-dexterity. **Drag may be added ON TOP as an accelerator; it must not be the
+only way in.**
+
+### And it lives ON TOP of the notes, not as data WITHIN them
+
+The owner, clarifying the choice immediately:
+
+> 1, it lives on top of notes, not data within notes.
+
+That is sharper than "one file per board" and it is the part to build against,
+because "one file" is satisfied by a file that still owns the notes.
+
+**A note is not modified at all.** It gains no `x`, no `y`, no `board`, no
+`order`. The positions file references notes BY ID and the relation points one
+way: the layer knows about the notes, the notes know nothing about the layer.
+
+Four things follow, and each is a property the per-note alternative could not
+have had:
+
+- **A note is complete with no board.** Every existing consumer — the todo
+  index, the sticky board, `readTodoFiles`, the QA sidecars — is untouched, and
+  a folio that never opens a board has nothing extra in its work plan. The
+  layer is ADDITIVE and REMOVABLE: delete the positions file and every note is
+  exactly what it was.
+- **One note can sit on several boards**, at different places, without the note
+  arbitrating between them. Per-note coordinates make that impossible without a
+  second vocabulary.
+- **The two stores keep their own layers.** A note is `content` or `state`
+  depending on its graph; the positions file is unambiguously `state`, written
+  by a running process. Putting a coordinate on a note would have made a
+  `content` node carry `state`, which
+  `content-context-and-state-graphs` refuses.
+- **It is the same rule the repository already applies to `uses[]`.** The
+  EDITORIAL relation is authored on the block; the formal dependency graph is
+  derived and kept OUT of it, because mixing the two destroys the signal each
+  carries. A rendering coordinate on a work-plan node is that conflation in a
+  new place.
+
+**A position whose note is gone is an orphan in the LAYER**, which is the
+easier direction to handle: the layer is one file and one sweep, and nothing
+has to be edited out of a note that a person owns.
+
+### ONE file, and the arrows run one way — owner, 2026-09-20
+
+Two further clarifications, and together they finish the model:
+
+> notes exist lower down than folio. make sure arrows correct
+
+> it can be one file...
+
+**One file, not one per board.** The board is a KEY inside it, not a filename.
+That is strictly better for the merge property this choice rests on: one sorted
+file with a line per position merges the same way whether it holds one board or
+twenty, while a file-per-board layout adds a new file on every new board and
+nothing about that helps. Write the earlier heading as *one positions file*
+and read "per board" as "keyed by board".
+
+**The layering, which is the part that constrains the code rather than the
+data.** Notes sit BELOW folio, so the arrows run:
+
+    folio  ──▶  board layer  ──▶  positions  ──▶  note        (allowed)
+    note   ──▶  positions / board / folio                     (REFUSED)
+
+A note may not know it is on a board, may not know where, and may not know a
+board exists. The positions file names notes by id and nothing names it back.
+That is the same one-way shape `uses[]` already enforces between the editorial
+relation and the derived dependency graph, and it is why `state` is the
+positions layer's kind while a note keeps its own.
+
+**Measured 2026-09-20, because "the arrows are fine" is a claim**:
+`repo-partition` classifies `schemas/carried-note.ts` and
+`schemas/note-anchor.ts` as **harness** while `schemas/landing-sticky.ts` and
+`schemas/todo.ts` are **core** — so the note base types genuinely do sit lower
+than the folio-facing ones, and the ruling matches the tree rather than
+describing an intention.
+
+**It caught a live one in this session's own work.** `pb04` gave the todo index
+its view/edit controls by importing `sourceLinks` from `landing-sticky.ts` — a
+note-layer generator reaching SIDEWAYS into the folio-facing module for a
+helper that is not about stickies at all. `repo-partition` allowed it, because
+both modules are `core`; the layer arrow was still wrong. Moved down to
+`cat-harness.ts` beside `publishedAssetPath`, which is the same shape of
+transform, so both callers now point down at one answer instead of at each
+other. That is the check to run on the positions layer before it ships, not
+after.

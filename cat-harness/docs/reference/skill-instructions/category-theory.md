@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Category Theory Formalization
+title: 'Category Theory Formalization'
 parent: Skill instructions
 ---
 

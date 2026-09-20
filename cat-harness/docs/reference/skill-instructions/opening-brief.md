@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Opening brief
+title: 'Opening brief'
 parent: Skill instructions
 ---
 

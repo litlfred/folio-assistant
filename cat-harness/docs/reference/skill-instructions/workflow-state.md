@@ -1,6 +1,6 @@
 ---
 layout: default
-title: State in a running process
+title: 'State in a running process'
 parent: Skill instructions
 ---
 

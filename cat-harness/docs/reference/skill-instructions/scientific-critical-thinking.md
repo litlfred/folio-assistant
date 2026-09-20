@@ -1,6 +1,6 @@
 ---
 layout: default
-title: scientific-critical-thinking
+title: 'scientific-critical-thinking'
 parent: Skill instructions
 ---
 

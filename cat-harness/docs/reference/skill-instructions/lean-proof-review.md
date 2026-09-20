@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean Proof Review
+title: 'Lean Proof Review'
 parent: Skill instructions
 ---
 

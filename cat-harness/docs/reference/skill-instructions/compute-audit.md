@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Compute Audit
+title: 'Compute Audit'
 parent: Skill instructions
 ---
 

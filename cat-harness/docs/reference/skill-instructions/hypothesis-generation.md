@@ -1,6 +1,6 @@
 ---
 layout: default
-title: hypothesis-generation
+title: 'hypothesis-generation'
 parent: Skill instructions
 ---
 

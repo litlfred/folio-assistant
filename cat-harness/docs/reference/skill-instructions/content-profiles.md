@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content types
+title: 'Content types'
 parent: Skill instructions
 ---
 

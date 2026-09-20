@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /q-usage-watcher
+title: '/q-usage-watcher'
 parent: Skill instructions
 ---
 

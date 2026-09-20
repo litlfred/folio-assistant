@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean File Generation
+title: 'Lean File Generation'
 parent: Skill instructions
 ---
 

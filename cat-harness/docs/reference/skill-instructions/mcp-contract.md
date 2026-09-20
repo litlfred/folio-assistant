@@ -1,6 +1,6 @@
 ---
 layout: default
-title: MCP contract
+title: 'MCP contract'
 parent: Skill instructions
 ---
 

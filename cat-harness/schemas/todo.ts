@@ -51,6 +51,7 @@
 
 import { z } from "zod";
 
+import { ThemedTodoFieldsSchema } from "./theme.js";
 import {
   CarriedNoteSchema,
   NoteTagsSchema,
@@ -183,6 +184,21 @@ export function danglingTags(resolved: ResolvedTag[]): ResolvedTag[] {
  * being possible.
  */
 export const TodoNodeSchema = CarriedNoteSchema.extend({
+  /**
+   * The theme this todo's sticky renders with — an id from `THEMES`.
+   *
+   * `ThemedTodoFieldsSchema` in `theme.ts` has declared this shape all along
+   * and nothing merged it in, so the field was authorable in principle and
+   * dropped in practice. Bean `5y4b`.
+   *
+   * **Absent means nobody has chosen**, which is a statement about an author
+   * rather than a lookup that failed — the todo then takes the graph's
+   * `defaultTheme`, and a flat card if the graph declares none.
+   *
+   * Reused from `ThemedTodoFieldsSchema` rather than restated, because two
+   * spellings of one field is the drift this repository keeps paying for.
+   */
+  ...ThemedTodoFieldsSchema.shape,
   /** `TodoStatus` from `types.ts`, not re-enumerated here. */
   status: z.string().min(1),
   /** `TodoPriority` from `types.ts`. */

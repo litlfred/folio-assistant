@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /proposition-consolidation-audit
+title: '/proposition-consolidation-audit'
 parent: Skill instructions
 ---
 

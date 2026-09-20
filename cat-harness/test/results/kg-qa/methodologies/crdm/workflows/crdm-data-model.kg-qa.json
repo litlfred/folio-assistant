@@ -28,29 +28,8 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_Entities",
-          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "A_Relations",
-          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "BA_ConfirmEntities",
-          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "S_ConfirmCardinality",
-          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "A_Declare",
-          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -107,8 +86,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
+    "pass": 9,
+    "fail": 1,
     "n/a": 4,
     "unknown": 0
   }

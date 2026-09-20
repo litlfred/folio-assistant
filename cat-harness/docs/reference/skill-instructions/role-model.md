@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Roles are swimlanes
+title: 'Roles are swimlanes'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Reading GitHub state
+title: 'Reading GitHub state'
 parent: Skill instructions
 ---
 

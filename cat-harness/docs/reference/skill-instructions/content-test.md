@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Testing
+title: 'Content Testing'
 parent: Skill instructions
 ---
 

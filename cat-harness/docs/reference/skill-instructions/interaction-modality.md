@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /interaction-modality
+title: '/interaction-modality'
 parent: Skill instructions
 ---
 
@@ -231,6 +231,47 @@ None of the three is sufficient and the omissions are stated rather than
 implied, which is the same three-state discipline the rest of this skill asks
 for. `bun test cat-harness/scripts/tests/decision-request.test.ts` asserts each
 refusal, because a schema whose refusals are untested quietly stops refusing.
+
+##### The posture, and the condition that revisits it
+
+**The owner chose, 2026-09-20: *"reminder now, gate later."*** The third layer
+does **not** block. Asked as: should the `PreToolUse` hook refuse
+`AskUserQuestion` until a validated {@link DecisionRequest} has been rendered?
+
+The argument against gating *today* is not that gating is wrong. It is that
+`decision-request.ts` was written in one sitting against four questions its own
+author had got wrong — **a sample of one author, and a biased one**. A gate that
+refused a well-formed question because the schema turned out too narrow would
+cost the person the one channel they use to correct an agent, and the day it was
+written is the day that channel mattered.
+
+So the posture is:
+
+1. **The hook reminds.** It never blocks, and a question always reaches the
+   person, well-formed or not.
+2. **`renderDecision` is the house style** for any decision with more than two
+   options, or any decision whose options differ in cost rather than only in
+   kind. Write the object, render the prose, then offer the selection.
+3. **Gating is revisited on EVIDENCE, not on a date.**
+
+> **The condition: twelve real decision records.** `bun run health` reports
+> `bean-decision-records` — beans carrying a `## Options` section — and it read
+> **7** on 2026-09-20. At twelve, a person can read them and answer the question
+> the schema cannot answer about itself: does this shape fit the decisions this
+> repository actually has?
+
+**The counter is the one that already existed**, and deliberately so. Adding a
+second store of decision objects would have created a parallel count free to
+disagree with `bean-store`'s — the `beans`/`todos` confusion one level along. So
+a decision worth keeping goes into the **bean it belongs to**, under
+`## Options`, where `madr.md`'s two-option floor and
+`bean-thin-decision-records` already govern it. `renderDecision` composes the
+chat message; the bean keeps the record.
+
+**A deferral with no trigger is not a deferral**, which is the defect class this
+whole section is about: it is a rule with no home, indistinguishable a month
+later from a decision nobody made. The trigger is named, it is measured by a
+command, and it is carried as an open Done-when on bean `hajp`.
 
 ### 4.2 Form — the checklist
 

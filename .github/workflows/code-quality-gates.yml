@@ -663,6 +663,33 @@ jobs:
       - name: generated docs pages are current
         run: bun run cat-harness/scripts/gen-docs-pages.ts --check
 
+      # NOT GATED: the schema and library projections.
+      #
+      # `schema:viz:check` and `library:viz:check` exist and are worth running
+      # locally, but they are deliberately NOT in this gate set. Owner's call,
+      # 2026-09-20, after the gate went red twice on PR #583 for a reason that
+      # was never the author's doing.
+      #
+      # Both projections are derived from the WHOLE repository, so any branch
+      # alive for more than a few minutes finds them stale against the merge
+      # ref. Measured across one session: `main` moved four times — 120, 2, 2
+      # and 11 commits — and twice that was enough to redden this gate on a
+      # branch whose own tree was correct. A red that means "somebody else
+      # merged while you worked" is not an omission by whoever sees it, and it
+      # fails the standard stated eight lines above: "a real omission, every
+      # time."
+      #
+      # Nothing published goes stale. `docs-site.yml` runs the WRITERS at
+      # deploy, so the page a reader opens is regenerated from the tree being
+      # published. What can lag is the committed copy on `main`, which exists
+      # to be browsable on GitHub — and a browsable copy one merge behind is a
+      # far smaller cost than a gate contributors learn to re-run without
+      # reading.
+      #
+      # The other `--check` gates here stay, and the difference is their
+      # INPUTS: each derives from a narrow set of files, so its red really does
+      # mean the author of the diff forgot to regenerate.
+
       # The translation index is what the navbar's locale filter reads. It is
       # derived from what each page DECLARES — `lang`, and `translation_source`
       # naming what it expresses — never from a directory whose name looks like

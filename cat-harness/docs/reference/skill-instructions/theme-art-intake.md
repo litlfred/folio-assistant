@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Theme art intake
+title: 'Theme art intake'
 parent: Skill instructions
 ---
 

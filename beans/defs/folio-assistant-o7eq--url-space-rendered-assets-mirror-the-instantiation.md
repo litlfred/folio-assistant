@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T18:30:55Z
-updated_at: 2026-09-20T19:30:46Z
+updated_at: 2026-09-20T20:03:22Z
 parent: folio-assistant-yj32
 ---
 
@@ -241,3 +241,115 @@ that has not decided should not compile. That is bean `o7eq`'s next step.
 `<base>/who-iris/` mocking WHO's own web interface **is** *"showing who-iris
 with existing materialised assets with themed harness"* — milestone `yg29`.
 It is not a routing detail; it is the goal.
+
+---
+---
+
+---
+
+## Its first two consumers exist — 2026-09-20, PR #583
+
+`schemas/` and `library/` now publish under this rule. Both resolve the
+rendered-content root through `siteDirFor` and take the published segment from
+the **declared directory's own name**, so neither writes an instance name nor a
+graph name down anywhere — `check:declared-paths` caught the first draft doing
+exactly that and was right to.
+
+### Their placement is NOT settled by the three-case ruling — open question
+
+This note said they were "case 2, and need no change at all". **The three-case
+ruling above supersedes that and the claim is withdrawn**, because the two
+viewers are exactly the shape case 3 describes: cat-harness's machinery
+rendering assets that belong to OTHER instances.
+
+Measured on the merged tree: the schema viewer reads **4** declared `schemas`
+directories (`cat-harness`, `folio-assistant-core`, `large-datasets`,
+`detangle`) and the library viewer reads **3** (`who-iris`, `agent-skills`,
+`folio-assist-sci`) plus three upload queues. So they are not the root
+rendering its own content; they are one instance's viewer over several
+instances' subgraphs — and they currently sit at `<base>/schemas/` and
+`<base>/library/`, which is case 1's shape.
+
+Three readings, and the owner has to pick:
+
+1. **They stay where they are.** A viewer that spans every instance has no
+   single `<subject>`, so case 3's path cannot be composed for it.
+2. **They move to `<base>/cat-harness/schemas/`** — owner + kind, with the
+   subject omitted because the view is the whole corpus.
+3. **They split per subject** — `<base>/cat-harness/schemas/detangle/` and so
+   on, with the current pages becoming an index over them. This is the reading
+   that matches case 3 most literally, and it is the largest change.
+
+**Nothing was moved on the strength of this**, because the generators compose
+no path: `siteDirFor` resolves the rendered-content root and the segment is the
+declared directory's own basename. Whichever reading wins, it is a change in
+one place per generator rather than a rewrite.
+
+Bean `8325` was opened in a parallel session from the same owner statement and
+is now **scrapped** as a duplicate of this one, carrying two measurements worth
+keeping: `siteDir()` + `artefactStub()` are the two resolvers this rule needs
+and both already exist, and `check:instance-render` is the conformance check it
+wants — three states, 'undetermined is never a pass' — so extending that is more
+likely right than writing a second.
+
+
+---
+
+## OWNER, 2026-09-20 — `<subject>` is optional, and the segment is the PATH
+
+Two statements, and the second corrects the shape the first was read into:
+
+> `<base>/<owner>/<kind>/<subject>/`,,.. `<subject>` is not required behaviour.
+
+> it `<baseurl>/<path to kind in knowledge graph>` or
+> `<path to dir handled>/<optional subject>`
+
+### What this settles
+
+**A viewer's address is the repo-relative path of the directory it handles**,
+with an optional `<subject>` below it. A viewer with no subject is the view
+over ALL subjects.
+
+So the three-case table above reads, for case 3:
+
+| | |
+|---|---|
+| the handled directory | `cat-harness/schemas/` |
+| its URL | `<base>/cat-harness/schemas/` |
+| a per-subject page, if ever wanted | `<base>/cat-harness/schemas/<subject>/` |
+
+### The correction inside the correction, and it is the part worth keeping
+
+The first implementation **composed** the address from the rendering
+instance's `name` plus the graph kind — `<owner>/<kind>`. That was written,
+and it was wrong, and it passed its own test:
+
+`cat-harness/schemas/` happens to SIT at owner/kind, so composition and
+resolution give the same string for the one directory that was checked. They
+diverge for every directory that does not: `who-iris/library/` would have been
+published at `cat-harness/library` — **naming the machinery where the rule
+names the data**, and silently, because the page would have rendered fine.
+
+Taking the directory's path means the two can never disagree, because there is
+only one of them. `viewerPlacement` is that single implementation, shared
+between both viewers, with a test asserting the `who-iris/library` case
+specifically — the case the composition got wrong.
+
+### Applied
+
+`schemas/` and `library/` moved from `<base>/schemas/` and `<base>/library/`
+to `<base>/cat-harness/schemas/` and `<base>/cat-harness/library/`. Verified
+by rendering both at the new URLs: zero console errors.
+
+The page's link back to its projection is now **computed from the page's own
+depth** rather than written. It had been a literal `../assets/…`, which keeps
+parsing and fetches nothing the moment the page moves a level down — the exact
+failure this move would have caused.
+
+### Still open on this bean
+
+Cases 1 and 2 are untouched here. `<base>/who-iris/` "mocking WHO's web
+interface" (case 2) is a different artefact from `<base>/who-iris/library/`
+(case 3, the viewer over who-iris's library) — and the two now share a prefix.
+Whether that is a collision or a hierarchy is not settled by anything the
+owner has said, and nothing in this work depends on it.
