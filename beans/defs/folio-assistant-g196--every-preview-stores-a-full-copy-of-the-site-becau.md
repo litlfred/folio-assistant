@@ -118,20 +118,23 @@ different facts about one node. Left alone.
 
 ## Done when
 
-- [ ] `staging.json` emitted per preview, carrying branch, sha, built, PR, run URL.
-- [ ] The banner rendered from it at load time, so its markup is constant across
-      previews AND across rebuilds of one preview. **Verified on a rendered
-      preview by a person** — `continual-progress` is explicit that a rendered
-      artefact cannot be assessed from a description of it.
-- [ ] `docs-ui.js` derives the baseurl at runtime; the language switcher still
-      swaps nav items correctly, including the three-state fallback
-      (index present / present-but-empty / absent) it already distinguishes.
-- [ ] Presentational hrefs emitted document-relative; identity references
-      untouched, checked rather than assumed.
-- [ ] Re-measure STAGING and compare against the ~77 MB projection. A projection
-      that was not checked is a guess.
+- [x] `staging.json` emitted per preview, carrying branch, sha, built, PR, run
+      URL — and `newPages`, which the bean did not anticipate. See below.
+- [x] The banner rendered from it at load time, so its markup is constant
+      across previews AND across rebuilds of one preview. **Pinned by byte
+      comparison** (`staging-banner-constant.test.ts`) rather than by
+      inspection; the client half is pinned in a real browser
+      (`staging-banner.e2e.ts`). **Still wants the person's look at a rendered
+      preview** — continual-progress is explicit that a rendered artefact
+      cannot be assessed from a description of it, and a byte-equality test is
+      a description.
+- [ ] `docs-ui.js` derives the baseurl at runtime. **Not done — deliberately.**
+- [ ] Presentational hrefs emitted document-relative. **Not done — deliberately.**
+- [ ] Re-measure STAGING and compare against the ~77 MB projection.
+      **Cannot be done from a checkout**: it needs previews deployed from the
+      new code. The projection is NOT claimed until then.
 - [ ] `STAGING_WARN_BYTES` revisited with its floor restated, once the real
-      number is known.
+      number is known. Blocked on the row above.
 
 ## Risks
 
@@ -143,3 +146,101 @@ different facts about one node. Left alone.
   preview. **"Could not determine" is never rendered as "this is the real
   site"** — the same third-state rule the rest of this repository runs on, and
   here the failure mode is a reviewer approving the wrong artefact.
+
+
+---
+
+*2026-09-20* — **Cause 1 landed. Causes 2 and 3 did not, on purpose.**
+
+## What shipped
+
+`cat-harness/scripts/staging-banner.ts` replaces the bash banner in
+`feature-staging.yml`. It writes the build's facts once to `staging.json` at
+the preview root and injects a fragment that **takes no argument**; the
+browser derives its preview root from `location.pathname`, fetches the JSON
+and fills the banner in — the client-derived pattern `head_custom.html`
+already uses for the sidebar QR, as this bean proposed.
+
+## The one thing that could have sunk it, checked first
+
+The compare link was the risk: it is the single genuinely per-page fragment,
+with three states (present on main → deep link; absent → site root and SAY the
+page is new; publish ref unread → site root, neutral). It looked like
+build-time per-page data, and if it were, the fragment could not be constant
+and the saving would collapse.
+
+It is not. The client knows its own path; the only thing it cannot compute is
+**which pages main has** — so `staging.json` carries `newPages`, the pages
+with NO counterpart, which is the **short** list rather than the long one.
+Membership is a client-side check. That field is not in this bean's proposal
+and is the one design decision the bean did not already contain.
+
+## How it is verified, and why not by looking at it
+
+`staging-banner-constant.test.ts` (16 tests) runs **two builds with different
+SHA, timestamp and PR and compares the emitted HTML byte for byte**. That is
+the bean's actual claim — a test asserting the markup contains some string
+would pass just as happily with the SHA still in it. Beside it, a positive
+control: `staging.json` must still DIFFER between those runs, or the facts
+went nowhere and the banner is constant because it is empty.
+
+`staging-banner.e2e.ts` (9 tests) runs the client half in Chromium, because a
+unit test cannot: it only runs with a `location.pathname` under `STAGING/` and
+a JSON to fetch. All three states are asserted first-class — fetched, 404, and
+not-served-from-a-preview-path — along with the sidebar offset (filling the
+banner in is a **third** moment its height changes, which the build-time
+version never had) and a branch name carrying an `onerror` payload.
+
+**Ratcheted both directions.** Reintroducing a build fact into the page fails
+2 unit tests. Degrading the failed-fetch path to silence fails the e2e — and
+initially did **not** fail the unit test, because `toContain` over the whole
+fragment matched the *other* unavailability message. Found by ratcheting, not
+by review; that test is now scoped to the `catch` body. A test that cannot
+fail is this repository's recurring defect and it was one keystroke from
+shipping again here.
+
+## The two rules this bean set, and where they now live
+
+*"A client-rendered banner must not be defeatable by a failed fetch."* The
+static markup carries "FEATURE BRANCH" before any fetch happens and the fetch
+only ever ADDS detail, so the degraded state announces the preview and says
+the detail is gone.
+
+New, and not in this bean: **values from the JSON go in as `textContent`,
+never as markup.** Git ref names may contain `<`, `>` and `"` — they are not
+in git's forbidden set, which stops at space, `~`, `^`, `:`, `?`, `*`, `[`,
+`\` and the control characters. The bash banner interpolated `$BRANCH` into
+an HTML string, so a branch name was markup; the client builds nodes.
+
+## What is NOT fixed, and the honest accounting
+
+Causes **2** and **3** are untouched: `relative_url` still prepends the
+`baseurl` to ~235 hrefs per page, and the `fa-translation-index` island still
+publishes `site.baseurl` to JavaScript. This bean already establishes they are
+**one** change — document-relative hrefs break the language switcher, which
+rebuilds them from the baseurl — and its own Risks section says ~20 branches
+were live in `docs/`. Splitting them off was the cut with the best
+risk-to-value ratio, not a stopping point reached by running out of road.
+
+So: pages still differ **between** previews by slug. They no longer differ
+**across rebuilds of one preview**, which is the *unbounded* half — the reason
+"the history grows even when the preview count does not".
+
+**The ~77 MB projection is not claimed.** It needs previews deployed from this
+code, which a checkout cannot produce. This bean's own words: *"A projection
+that was not checked is a guess."* Two Done-when rows stay open on it.
+
+## Two drift hazards found in passing, one fixed
+
+`skills/folio-core/feature-staging.md` described a **"yellow staging
+banner"** — stale since the contrast fix that replaced `#d946ef` (3.46:1
+against its own white text, failing AA) with `#4F6F52` (5.63:1). Fixed, with
+the measurement, so the next editor does not restore a colour for looking
+right.
+
+Not fixed: `cat-harness/test/sidebar-panels.e2e.ts:62-63` carries its **own
+hand-copied** banner and offset script. It is a theme-structure harness rather
+than a banner test, so it is not wrong today — but it is the shape `bqrg`
+measured, where six copies of one function had three broken and nothing said
+so. Left alone rather than changed blind, and recorded here so it is a known
+copy rather than a forgotten one.
