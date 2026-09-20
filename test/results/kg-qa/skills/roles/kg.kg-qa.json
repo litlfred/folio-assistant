@@ -156,6 +156,10 @@
           "detail": "no role carries \"ffi-roundtrip-audit\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
+          "where": "fhir-client-operations",
+          "detail": "no role carries \"fhir-client-operations\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "flushable-containers",
           "detail": "no role carries \"flushable-containers\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -178,6 +182,10 @@
         {
           "where": "html-rendering-qc",
           "detail": "no role carries \"html-rendering-qc\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
+          "where": "hypothesis-generation",
+          "detail": "no role carries \"hypothesis-generation\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
           "where": "idle-backlog",
@@ -404,6 +412,14 @@
           "detail": "no role carries \"scientific-accuracy\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
+          "where": "scientific-critical-thinking",
+          "detail": "no role carries \"scientific-critical-thinking\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
+          "where": "scientific-visualization",
+          "detail": "no role carries \"scientific-visualization\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "serving-renderings",
           "detail": "no role carries \"serving-renderings\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -422,6 +438,10 @@
         {
           "where": "smart-base-tools",
           "detail": "no role carries \"smart-base-tools\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
+          "where": "smart-launch",
+          "detail": "no role carries \"smart-launch\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
           "where": "swarm-management",
@@ -466,29 +486,8 @@
       "findings": []
     },
     "remote-skill-is-servable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "claude-scientific-skills.json/scientific-visualization",
-          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"scientific-visualization\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
-        },
-        {
-          "where": "claude-scientific-skills.json/scientific-critical-thinking",
-          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"scientific-critical-thinking\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
-        },
-        {
-          "where": "claude-scientific-skills.json/hypothesis-generation",
-          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"hypothesis-generation\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
-        },
-        {
-          "where": "smarter-fhir.json/smart-launch",
-          "detail": "skills/remote-packages/smarter-fhir.json declares \"smart-launch\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
-        },
-        {
-          "where": "smarter-fhir.json/fhir-client-operations",
-          "detail": "skills/remote-packages/smarter-fhir.json declares \"fhir-client-operations\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "actor-roles-resolve": {
       "result": "pass",
@@ -508,8 +507,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 3,
+    "pass": 6,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }

@@ -386,6 +386,24 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   // rather than instructions. `minor` at 280 is roughly p75. Neither is a
   // style opinion; both say "this is longer than three quarters of its peers".
   {
+    id: "skill-is-a-stub",
+    applies: ["skill"],
+    // `minor`, and the severity is the whole point. A stub is INTENDED
+    // work-in-progress, not a defect: it exists so the graph traverses and
+    // `skill_fetch` answers instead of failing mid-task. It must be VISIBLE —
+    // otherwise stubbing a gap hides it, which is strictly worse than leaving the
+    // gap open — and it must not gate, or the act of stubbing would turn CI red.
+    //
+    // `minor` gives exactly that: `kg:audit` prints it, `kg:audit:check` passes,
+    // and `kg:audit:strict` does not promote it either. The owner's principle,
+    // 2026-09-20: "stub things out knowing its not working. make sure QA checks
+    // pickup so we can fix later. principle: KG is always a work in progress. QA
+    // helps show where to work on it next, close gaps."
+    severity: "minor",
+    summary:
+      "A skill is a declared stub: it exists so the graph traverses and skill_fetch answers, and its content is not here yet.",
+  },
+  {
     id: "skill-is-brief",
     applies: ["skill"],
     severity: "minor",

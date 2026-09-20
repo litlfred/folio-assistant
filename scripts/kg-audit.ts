@@ -546,6 +546,22 @@ function auditSkills(): KgQaReport[] {
       }
     }
 
+    // `stub:` in the front matter, if any. Read positionally rather than with a
+    // YAML parser because the front matter here is already walked line-by-line
+    // above, and a stub's reason is a single scalar.
+    let stubReason: string | undefined;
+    if (lines[0]?.trim() === "---") {
+      for (let i = 1; i < lines.length; i += 1) {
+        const l = lines[i]!;
+        if (l.trim() === "---") break;
+        const m = /^stub:\s*(.+?)\s*$/.exec(l);
+        if (m) {
+          stubReason = m[1]!.replace(/^["']|["']$/g, "");
+          break;
+        }
+      }
+    }
+
     out.push(
       report(
         "skill",
@@ -553,6 +569,19 @@ function auditSkills(): KgQaReport[] {
         rel,
         createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 12),
         {
+          // A stub declares itself in front matter, and the DECLARATION is the
+          // contract — not a filename convention, not a line count. Same rule
+          // as every other node kind here: extension is a coincidence, a
+          // declaration inside the file is binding.
+          //
+          // The reason is carried into the finding rather than summarised,
+          // because "this is a stub" without "and here is what would finish it"
+          // is a note nobody can act on.
+          "skill-is-a-stub": entry(
+            stubReason === undefined
+              ? []
+              : [{ where: rel, detail: stubReason }],
+          ),
           "skill-is-brief": entry(
             n > 280 ? [{ where: rel, detail: `${n} lines; p75 of the skill corpus is 279.` }] : [],
           ),
