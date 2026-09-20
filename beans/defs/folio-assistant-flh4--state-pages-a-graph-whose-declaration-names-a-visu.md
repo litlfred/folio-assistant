@@ -15,6 +15,6 @@ Cause: `projectionFor(id)` in `state-visualizer.ts` asks the disk for `assets/<i
 Measured 2026-09-20 across both declarations: `uploads` is the ONLY graph with this defect. `qa`, `health` and `issue-marks` carry no `coverage.visualiser`, so their pages are honest; `beans` and `todos` are live.
 
 ## Done when
-- [ ] A graph whose declared `coverage.visualiser` resolves on disk links to it instead of claiming nothing renders it
-- [ ] A declared visualiser that does NOT resolve is reported as a defect, never rendered as either state
-- [ ] Falsified both ways in tests, and qa/health/issue-marks still say what they say now
+- [x] A graph whose declared `coverage.visualiser` resolves on disk links to it instead of claiming nothing renders it
+- [x] A declared visualiser that does NOT resolve is reported as a defect, never rendered as either state
+- [x] Falsified both ways in tests, and qa/health/issue-marks still say what they say now
