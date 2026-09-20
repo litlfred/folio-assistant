@@ -18,6 +18,7 @@ import {
   formatReport,
   CRITERIA,
   VISUALISER_EXEMPT_INSTANCES,
+  readmeFinding,
 } from "../check-subgraph-coverage";
 import { DECLARATION_FILENAME } from "../../schemas/cat-harness";
 
@@ -192,5 +193,66 @@ describe("this repository", () => {
     expect(rs.map((r) => r.instance)).toContain("cat-harness");
     expect(rs.map((r) => r.instance)).toContain("bootstrap");
     expect(rs.every((r) => r.verdict === "checked")).toBe(true);
+  });
+});
+
+describe("every instance needs a starting README OF ITS OWN (bean `ie9l`)", () => {
+  const decl = (assets: unknown) => ({ assets }) as Parameters<typeof readmeFinding>[1];
+
+  it("an instance with its own instance-readme is clean", () => {
+    const base = mkdtempSync(join(tmpdir(), "readme-"));
+    writeFileSync(join(base, "README.md"), "#");
+    expect(
+      readmeFinding(base, decl([{ role: "instance-readme", src: "README.md" }]), false),
+    ).toBeUndefined();
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("declaring no instance-readme at all is MAJOR", () => {
+    const r = readmeFinding("/nowhere", decl([]), false);
+    expect(r?.severity).toBe("major");
+    expect(r?.detail).toContain("nothing says what this instance IS");
+  });
+
+  it("BORROWING the repository's README is MAJOR — the case check-declared-assets cannot see", () => {
+    // That gate verifies an asset RESOLVES, and a repository-scoped README
+    // resolves perfectly. What is wrong is that one file is doing two jobs,
+    // which is a question about ownership rather than existence.
+    const r = readmeFinding(
+      "/repo/cat-harness",
+      decl([{ role: "instance-readme", src: "README.md", scope: "repository" }]),
+      false,
+    );
+    expect(r?.severity).toBe("major");
+    expect(r?.detail).toContain("two jobs");
+  });
+
+  it("...but the repository ROOT may legitimately own the repository's README", () => {
+    // The falsifier for the rule above: if it fired on the root too, the check
+    // would be demanding every instance avoid a file only one of them can own.
+    const base = mkdtempSync(join(tmpdir(), "readme-root-"));
+    writeFileSync(join(base, "README.md"), "#");
+    expect(
+      readmeFinding(base, decl([{ role: "instance-readme", src: "README.md", scope: "repository" }]), true),
+    ).toBeUndefined();
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("a declared README that is not on disk is MAJOR", () => {
+    const base = mkdtempSync(join(tmpdir(), "readme-gone-"));
+    const r = readmeFinding(base, decl([{ role: "instance-readme", src: "README.md" }]), false);
+    expect(r?.severity).toBe("major");
+    expect(r?.detail).toContain("not there");
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("this repository has exactly the two known offenders", () => {
+    // Against the real tree: the root declares no assets at all, and
+    // cat-harness borrows the root's README. bootstrap and folio-assist-core
+    // each own theirs. If this changes, the check should say so rather than
+    // quietly track it.
+    const repo = resolve(import.meta.dir, "..", "..", "..");
+    const offenders = auditAll(repo).filter((r) => r.readme !== undefined).map((r) => r.instance);
+    expect(offenders.sort()).toEqual(["cat-harness", "folio-assistant"]);
   });
 });

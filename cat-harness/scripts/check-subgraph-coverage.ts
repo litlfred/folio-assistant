@@ -86,6 +86,8 @@ export interface InstanceCoverage {
   verdict: "checked" | "undetermined";
   declared: number;
   findings: CoverageFinding[];
+  /** The instance-level README finding, when there is one. */
+  readme?: { severity: Severity; detail: string };
   /** Waivers honoured, with the reason each one gave. */
   exempted: Array<{ directory: string; criterion: Criterion; reason: string }>;
   reason?: string;
@@ -110,6 +112,58 @@ function targetExists(root: string, target: string): boolean {
   // lying about what it looked at.
   if (!target.includes("/") && !target.includes(".")) return true;
   return existsSync(resolve(root, target)) || existsSync(resolve(repoRootFor(root), target));
+}
+
+/**
+ * Does this instance have a STARTING README of its own?
+ *
+ * The owner, 2026-09-20: *"each harness kind needs readme, it is added as a
+ * reference to repo's root readme.md to explain what is in it"*. Bean `ie9l`.
+ *
+ * ## Why "of its own" is the whole criterion
+ *
+ * `check-declared-assets` already verifies that a declared asset RESOLVES, and
+ * it reports zero findings here — because `cat-harness` declares
+ * `src: "README.md"` with `scope: "repository"`, which resolves to the
+ * REPOSITORY ROOT's README. The asset is fine. What is wrong is that one file
+ * is doing two jobs: "what this repository is" and "what the cat-harness
+ * instance is". A reader arriving at either question gets the other one's
+ * answer mixed in.
+ *
+ * So this asks a question the resolve-check structurally cannot: does the
+ * README live INSIDE the instance it describes? A repository-scoped README on
+ * a non-root instance is a borrowed one, and that is the finding.
+ *
+ * MAJOR rather than minor, unlike the subgraph criteria: an instance with no
+ * starting README is not a gap somebody has not filled in yet, it is an
+ * instance a reader cannot enter. The subgraph criteria are minor because 2 of
+ * 22 directories have a renderer and a wall of findings gets switched off;
+ * there are four instances and three have a README, so this one can be sharp
+ * from the start.
+ */
+export function readmeFinding(
+  root: string,
+  decl: { assets?: Array<{ role?: string; src: string; scope?: string }> } | undefined,
+  isRepositoryRoot: boolean,
+): { severity: Severity; detail: string } | undefined {
+  const readme = (decl?.assets ?? []).find((a) => a.role === "instance-readme");
+  if (readme === undefined) {
+    return { severity: "major", detail: "declares no `instance-readme` asset — nothing says what this instance IS" };
+  }
+  // The repository root legitimately owns the repository's README; every other
+  // instance reaching for a repository-scoped one is borrowing it.
+  if (readme.scope === "repository" && !isRepositoryRoot) {
+    return {
+      severity: "major",
+      detail:
+        `declares its README \`scope: "repository"\`, so it resolves to the repository root's — ` +
+        "one file doing two jobs, and a reader of either question gets the other's answer",
+    };
+  }
+  if (!existsSync(resolve(root, readme.src))) {
+    return { severity: "major", detail: `declares README \`${readme.src}\` and it is not there` };
+  }
+  return undefined;
 }
 
 export function auditInstance(root: string): InstanceCoverage {
@@ -175,7 +229,8 @@ export function auditInstance(root: string): InstanceCoverage {
     }
   }
 
-  return { instance, verdict: "checked", declared: dirs.length, findings, exempted };
+  const readme = readmeFinding(root, decl, resolve(root) === resolve(repoRootFor(root)));
+  return { instance, verdict: "checked", declared: dirs.length, findings, exempted, readme };
 }
 
 export function auditAll(repoRoot: string): InstanceCoverage[] {
@@ -196,6 +251,9 @@ export function formatReport(rs: InstanceCoverage[]): string {
         (major ? `, ${major} MAJOR` : "") +
         (r.exempted.length ? `, ${r.exempted.length} exempt` : ""),
     );
+    if (r.readme !== undefined) {
+      out.push(`      ✗ ${r.instance} / readme: ${r.readme.detail}`);
+    }
     for (const f of r.findings.filter((x) => x.severity === "major")) {
       out.push(`      ✗ ${f.directory} / ${f.criterion}: ${f.detail}`);
     }
@@ -204,6 +262,7 @@ export function formatReport(rs: InstanceCoverage[]): string {
     }
   }
 
+  const noReadme = rs.filter((r) => r.readme !== undefined).length;
   const undet = rs.filter((r) => r.verdict === "undetermined").length;
   const all = rs.flatMap((r) => r.findings);
   const major = all.filter((f) => f.severity === "major").length;
@@ -211,6 +270,11 @@ export function formatReport(rs: InstanceCoverage[]): string {
   out.push(
     `${all.length} finding(s) across ${rs.length - undet} instance(s) — ${major} major, ${all.length - major} minor.`,
   );
+  if (noReadme) {
+    out.push(
+      `${noReadme} instance(s) have no starting README OF THEIR OWN — an instance a reader cannot enter.`,
+    );
+  }
   if (undet) {
     out.push(
       `${undet} instance(s) UNDETERMINED — not a clean run. A sweep blind on one has not cleared the others.`,
@@ -237,7 +301,10 @@ if (import.meta.main) {
   // the minor count is low enough to hold, and for a caller who wants to pin
   // "no MAJOR findings" now — a declared-but-missing target is already a
   // defect rather than a backlog item.
-  if (process.argv.includes("--strict") && rs.some((r) => r.findings.some((f) => f.severity === "major"))) {
+  if (
+    process.argv.includes("--strict") &&
+    rs.some((r) => r.readme !== undefined || r.findings.some((f) => f.severity === "major"))
+  ) {
     process.exit(1);
   }
   if (rs.some((r) => r.verdict === "undetermined")) process.exit(2);
