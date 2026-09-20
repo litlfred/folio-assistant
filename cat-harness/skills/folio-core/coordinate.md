@@ -140,7 +140,7 @@ A repeated flip-flop episode (a claim asserted and retracted across
 several sessions) motivates a more structured coordination layer that
 overlays this skill:
 
-- **Root [`STATUS.md`](../../../STATUS.md)** — single dashboard
+- **Root `STATUS.md`** — single dashboard
   listing every goal + pointer to its master ledger + active PRs.
 - **Master ledger per goal** — `docs/coordination/<goal>.md` holds
   the durable narrative: current canonical status, open tasks,

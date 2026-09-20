@@ -21,7 +21,7 @@ where the previous one left off.
 
 | Artifact | Purpose |
 |---|---|
-| [`STATUS.md`](../../../STATUS.md) | Always-current root dashboard: goals → master ledgers → active PRs |
+| `STATUS.md` | Always-current root dashboard: goals → master ledgers → active PRs |
 | `docs/coordination/<goal>.md` | Per-goal **master ledger**: status table, open tasks, flip-flop history, session log |
 | `beans/` (via `beans` CLI) | Machine-readable **queue** of tasks, managed as hierarchical issues (Beans). |
 | Per-PR body | Session intent at branch-open; EOS results appended |
@@ -32,7 +32,7 @@ where the previous one left off.
 
 ### 1. Read STATUS.md
 
-Open [`STATUS.md`](../../../STATUS.md). Identify which goal row(s)
+Open `STATUS.md`. Identify which goal row(s)
 the user's current request touches. Note the active PRs column —
 those are your siblings.
 

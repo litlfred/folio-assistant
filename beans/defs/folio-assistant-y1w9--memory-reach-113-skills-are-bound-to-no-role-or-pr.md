@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T18:34:19Z
-updated_at: 2026-09-20T11:42:22Z
+updated_at: 2026-09-20T16:15:40Z
 parent: folio-assistant-8jt6
 ---
 
@@ -481,3 +481,63 @@ would have reported 3 as unreachable that are merely unscanned.
 It is the reason 93 % reads as a defect rather than as the natural state of a
 package. Without it in the table the paper-adapter number has nothing to be
 surprising against.
+
+---
+
+## folio-core drained as far as it goes without the owner, 2026-09-20
+
+**101 → 98.** Three skills declared `consulted: true`; the remaining 41 need
+a decision that is not mine.
+
+### The three, and why only three
+
+`retry-backoff`, `unverified-constraints`, `mcp-projection`. Each was
+verified by reading, not by a heuristic, and each carries its reason in
+front matter beside the flag.
+
+I first filtered on "has no imperative markers" and it returned **eight**.
+Two were false positives and the reason is worth keeping: `readability-editing`
+is a checklist an editor works through, but its steps are `###` headings
+rather than `1.` list items, so the regex missed them; and `kg-viewer`'s
+headings are imperatives in disguise — *"Do not draw the whole graph"*,
+*"No dependencies, and that is a requirement rather than a preference"*.
+Three more (`mcp-assembly`, `mcp-contract`, `serving-renderings`) describe
+rules but each opens with an action or carries a *"Running one"* section.
+
+**A wrong `consulted: true` is a silent exemption**, and the
+`consulted-skill-not-performed` guard only catches the opposite direction.
+So the filter selected candidates and reading decided. It still passes:
+`consulted-skill-not-performed: pass, 0 findings`.
+
+### The 41 that remain are SIX decisions, not 41
+
+Every one clusters, with nothing left over:
+
+| cluster | n | skills |
+|---|---:|---|
+| integration watchers | 9 | `canonical-`, `compute-`, `detangler-`, `devils-advocate-`, `one-voice-`, `bib-photo-ingestion-watcher`, plus `integration-watch` / `-audit` / `-backlog` |
+| editorial review | 11 | `block-density`, `chapter-complexity-review`, `readability-editing`, `scientific-accuracy`, `one-voice-audit`, `ontologist`, `md-authoring`, `html-rendering-qc`, `markdown-render-check`, `exposition-swarm-drain`, `todo-review` |
+| docs & presentation | 8 | `docs-generation`, `glossary-build`, `create-sticky-note`, `theme-art-intake`, `tabular-metadata`, `deployment-auth`, `editor`, `fsh-guts` |
+| session & coordination | 6 | `coordinate`, `pickup`, `session-intent`, `pending-show`, `idle-backlog`, `diff` |
+| MCP / serving | 5 | `mcp-assembly`, `mcp-contract`, `serving-renderings`, `kg-export`, `kg-viewer` |
+| bibliography | 2 | `bib-human-review`, `bib-qa` |
+
+### Why I stopped here rather than assigning them
+
+A role is a **BPMN swimlane** — "an actor performs a task in a process as a
+role". Choosing which lane performs "audit a chapter's dependency graph" is a
+statement about how this project works, not an annotation. Existing roles
+already carry 64 folio-core skills, so there is precedent to extend
+(`authoring-agent` 34, `build-pipeline` 14, `reviewer` 9,
+`narrative-reviewer` 7, `code-reviewer` 6) — but extending `authoring-agent`
+to 75 would make one lane that performs most of the platform, which is the
+caution bean `3025` already records.
+
+**The question is six rows wide**: for each cluster, an existing role, a new
+one, or split. Answer that and the 41 are mechanical.
+
+### Done when
+
+- [ ] the six clusters are bound to roles
+- [ ] `skill-in-role-or-process` reports only skills that are genuinely
+      reference, each carrying `consulted: true` with its reason

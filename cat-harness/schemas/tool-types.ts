@@ -258,6 +258,38 @@ export const PreferenceActionSchema = z
  * would make each Tool's contract claim a value it rejects, which is the
  * failure mode a contract exists to prevent.
  */
+/**
+ * A render-log event — `rendered` | `removed` | `restored` | `retained`.
+ *
+ * The closed half of `render-log`'s vocabulary. `RENDER_SUBJECT_KINDS` is
+ * deliberately open and takes `Slug`; this one is a fixed four, because
+ * `EVENTS_REQUIRING_REASON` branches on it and a fifth event would need a
+ * decision about whether it owes a reason rather than a schema edit.
+ *
+ * Injection-safe by construction: a value outside the member list does not
+ * parse, and no member contains a shell metacharacter.
+ */
+/**
+ * A git commit SHA — full or abbreviated.
+ *
+ * Declared rather than borrowing `Slug`, which a 40-hex string does match: a
+ * type's `describe` is part of a Tool's published contract, and "A folio slug,
+ * e.g. quantum-observable-universe" is the wrong thing for a reader to be told
+ * about a commit. Reusing a type because its REGEX happens to admit the value is
+ * how a contract ends up asserting something nobody meant.
+ *
+ * Hex only, so injection-safe by construction. Abbreviated forms are admitted
+ * because every caller here passes `$GITHUB_SHA` or a `git rev-parse --short`.
+ */
+export const CommitShaSchema = z
+  .string()
+  .regex(/^[0-9a-f]{7,40}$/, "a commit sha is 7-40 lowercase hex digits")
+  .describe("A git commit sha, full or abbreviated (7-40 hex digits).");
+
+export const RenderEventSchema = z
+  .enum(["rendered", "removed", "restored", "retained"])
+  .describe("A render-log event: rendered, removed, restored or retained.");
+
 export const RenderFormatSchema = z.enum(["pdf", "html"]).describe("A render target: pdf or html.");
 
 /** A render a preview can open, including images the render path emits. */
@@ -467,6 +499,8 @@ export const TOOL_TYPES = {
   LakeCacheAction: LakeCacheActionSchema,
   NamespaceLayer: NamespaceLayerSchema,
   PreferenceAction: PreferenceActionSchema,
+  CommitSha: CommitShaSchema,
+  RenderEvent: RenderEventSchema,
   RenderFormat: RenderFormatSchema,
   PreviewFormat: PreviewFormatSchema,
   RenderScope: RenderScopeSchema,
@@ -562,6 +596,8 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "LakeCacheAction",
   "NamespaceLayer",
   "PreferenceAction",
+  "CommitSha",
+  "RenderEvent",
   "RenderFormat",
   "PreviewFormat",
   "RenderScope",

@@ -75,3 +75,70 @@ the last of the core→sci edges in the repository-partition work. Extracting th
 lexer to `content/pipeline/lean-lexer.ts` (classified core, by the same test as
 `schemas/lean-packages.ts`) drained that edge and gave the five copies one home
 to converge on.
+
+## DONE 2026-09-20 — all five converged, with the corpus evidence this bean demanded
+
+The bean warned that converging blind is how a cleanup becomes a silent
+re-scoring, and named a third state — **no corpus to compare against** — that
+must not be collapsed. There IS a corpus: qou's **3,954** `.lean` files, read
+as test data.
+
+### The comparison that mattered, and the one that did not
+
+Raw output was the wrong axis: canonical BLANKS comments to preserve byte
+offsets while every copy DELETED them, so raw output differed on 3,947 of
+3,954 files — a design difference, not a behavioural one. Comparing the
+**identifier set** each produced is what a downstream checker actually sees:
+
+    impl        same token set   differs   verdict
+    extended         3954           0      equivalent — depth counter
+    coverage         3954           0      equivalent — depth counter
+    vacuity          3950           4      NOT equivalent
+    banner           3950           4      NOT equivalent
+    qusage           3950           4      NOT equivalent
+
+So this was never "five copies of one function". Two were faithful
+reimplementations; **three were broken**.
+
+### The defect in the three
+
+All three used `/\/-[\s\S]*?-\//g`, which is non-greedy and matches to the
+FIRST `-/`. Lean nests block comments, so an outer comment ends early and its
+tail reaches the checker as code. Measured on
+`confined-particle.lean` (nesting depth 2): **113 prose tokens** leaked —
+`def`, `Prop`, `fun`, `True`, and English words including "docstring" and
+"about" — into text three QA checkers scan for declarations. That is exactly
+what `lean-lexer`'s own header warns of: *"how a scanner invents edges out of
+documentation."*
+
+### Before/after, REPORTED not asserted
+
+Four files in the corpus strip differently now:
+
+     113 tokens   knots-particles-confinement/confined-particle.lean
+     117 tokens   lean/QOU/Interactions/AlgebraicPrimality.lean
+      60 tokens   lean/QOU/HeckeAlgebra/JonesMarkovWenzl.lean
+     328 tokens   scripts/lean/probes/prop-field-carrier-vacuity.lean
+
+In every case the change REMOVES prose that was being read as code. Whether
+any verdict flips is qou's to observe — this repository carries no folio, and
+asserting "verdicts unchanged" from here is the thing the bean forbids. The
+four files and the token counts are the handover.
+
+### What landed
+
+Five definitions deleted; all five sites import `lean-lexer`'s. One
+implementation remains repo-wide. `check:partition` passes — `lean-lexer` is
+core and `scripts/lean-coverage.ts` may import it.
+
+7 tests, ratchet falsified (reintroducing a copy fails 1), plus the three
+invariants a reimplementation kept losing: byte offsets preserved, nested
+`/- /- -/ -/` closing in the right place, and doc comments counting as
+comments.
+
+### `leanDeclSpans` is NOT done
+
+The bean also noted `qa-checkers-q-usage` carries its own declaration splitter
+beside `lean-lexer`'s `splitDeclarations`. Untouched here — a span splitter's
+output feeds offsets rather than a token set, so the same differential method
+needs a different comparison, and bundling it would have made one change two.

@@ -79,8 +79,8 @@ only ran on `workflow_dispatch`, so the image was never actually built.
 
 | Tool | Role |
 |------|------|
-| [`scripts/install-tex.sh`](../../../scripts/install-tex.sh) | Get a TeX engine into the sandbox (the base Ubuntu repos are reachable; only launchpad PPAs are firewalled). Idempotent. **This is how you compile/verify at all.** |
-| [`scripts/feature-build.sh`](../../../scripts/feature-build.sh) | Quick draft: compiles ONLY the changed chapters (not the full paper) with the **inline** preamble, + per-chapter latexdiff (colored + plain). Speedup is from fewer chapters, not a format. **Sets `FAST_PREVIEW=1` by default** (margins off, ~2× on top). |
+| [`scripts/install-tex.sh`](../../scripts/install-tex.sh) | Get a TeX engine into the sandbox (the base Ubuntu repos are reachable; only launchpad PPAs are firewalled). Idempotent. **This is how you compile/verify at all.** |
+| [`scripts/feature-build.sh`](../../scripts/feature-build.sh) | Quick draft: compiles ONLY the changed chapters (not the full paper) with the **inline** preamble, + per-chapter latexdiff (colored + plain). Speedup is from fewer chapters, not a format. **Sets `FAST_PREVIEW=1` by default** (margins off, ~2× on top). |
 | **`FAST_PREVIEW=1`** env flag | Read by `generate-main-tex.ts`: no-ops `\marginnote`, skipping the 2944 per-block source/issue/Lean icons that cost **~50%** of compile (19.5 s → 9.2 s). Body byte-identical; **published builds leave it unset**. The biggest single *preview* speedup. |
 
 ## Getting a TeX engine in the sandbox
@@ -130,5 +130,5 @@ imbalance) — it gates every PR even when the heavy compile job no-ops.
 ## References
 
 - Strategy + full investigation log:
-  [`docs/workplans/2026-06-14-latex-build-caching-strategy.md`](../../../docs/workplans/2026-06-14-latex-build-caching-strategy.md)
+  `docs/workplans/2026-06-14-latex-build-caching-strategy.md` (no longer in this repository)
 - CI billing signature: `litlfred/qou` `AGENTS.md` §"CI billing failures".

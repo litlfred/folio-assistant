@@ -1,10 +1,11 @@
 ---
 # folio-assistant-rl3h
 title: 46 markdown links point at files that do not exist
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T14:22:43Z
-updated_at: 2026-09-20T14:22:43Z
+updated_at: 2026-09-20T15:59:50Z
 parent: folio-assistant-zzmr
 ---
 
@@ -80,3 +81,77 @@ The 21 cross-subgraph edges the same report lists. Those are real, resolving
 references between subgraphs, and whether they should exist is the
 disentangling question the owner described as in progress — a different
 decision, needing them.
+
+---
+
+## Drained 2026-09-20 — 46 → 7, and most of the 46 were my own instrument
+
+`bun run subgraphs` now reports **7**, all from one file whose existence is
+the open question (bean `tc95`, needs the owner).
+
+### The classification the bean asked for
+
+| | count | what happened |
+|---|---:|---|
+| **moved** — exactly one file of that basename exists | 10 | repointed, every new target asserted to exist before writing |
+| **ambiguous** — source vs its generated copy under `docs/reference/` | 18 | repointed at the **source**, never the generated copy |
+| **never existed / deleted** | 18 | see below — most were not links at all |
+
+### Most of the "never existed" were the checker's fault, not the corpus's
+
+This is the finding, and it changes what the 46 meant. Of the 18:
+
+- **`[`prop:Y`](Y.md)`** sits inside an inline code span showing what a
+  cross-reference LOOKS like.
+- **`[audit](../../../docs/audits/...)`** is a table cell in
+  `one-voice-audit.md` quoting a pattern the audit tells you to find and
+  REMOVE.
+- **Two invented bean ids** in a blockquoted specimen turn report.
+
+A link inside an example is not a link. `check-subgraphs` now strips fenced
+blocks and inline code spans before scanning — the same rule, and the same
+reason, as `check-declared-paths`'s `stripComments`, which exists because
+its scanner matched its own documentation.
+
+Counting these was worse than an ordinary false positive: **the remedy a
+reader infers is to "fix" prose that is correct**, and in the bean case to
+invent two beans so a link in an example resolves.
+
+### A second instrument bug: a rendered page is not a file
+
+`../skills.html` was reported broken beside
+`../proposals/llm-authoring-tool-integration.html`. Jekyll builds the first
+from `docs/skills.md`, which exists; the second has no source and `docs/
+proposals/` is gone entirely. Testing `.html` on disk called both broken;
+skipping `.html` would have called both fine. The checker now resolves a
+`.html` target to its `.md` source, which tells them apart — and the second
+was repointed at [issue #198](https://github.com/litlfred/folio-assistant/issues/198),
+where `AGENTS.md` says the Lean tooling roadmap now lives.
+
+### Genuinely dead, and unlinked rather than left
+
+`STATUS.md` (×3 — a root dashboard this repository does not have),
+`docs/workplans/2026-06-14-latex-build-caching-strategy.md`,
+`scripts/check-sidecars.sh`,
+`docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md`,
+and `content/quantum-observable-universe/notation/notation-collisions.md`
+(which is FOLIO content and correctly absent from the platform).
+
+Each keeps its text and loses its link, with a parenthetical saying where it
+went — because the bean's own rule is that a reader cannot tell a stale link
+from a wrong one, and a bare name that says "no longer in this repository"
+tells them.
+
+### Found outside the sweep's reach, and fixed
+
+`docs/guides/fr/agent-onboarding.md` — the REAL French translation — had
+**5 broken links on the published site**, because it sits one level deeper
+than its English source and the relative paths were never rewritten.
+`docs/` is not a declared directory, so `check:subgraphs` cannot see it; this
+turned up only by following the stray file. Fixed, and both onboarding pages
+now resolve every relative link.
+
+### Still open
+
+The 7, all in `translations/fr/agent-onboarding.md` — bean `tc95`. Until
+that is settled the count cannot be gated, so this bean stays open.

@@ -129,3 +129,57 @@ restarts, so the preview appears later — not a lost preview. Weigh that
 against rewriting the deploy path untested.
 
 Left as analysis, not a change. The next session has the trap written down.
+
+---
+
+## Re-measured 2026-09-20 — the mechanism is intact, the EXAMPLE washed out
+
+`git ls-tree -r --name-only origin/gh-pages` reads fine (**5178 paths**, so
+this is a determined answer and not an unreadable ref), and the bean's own
+example slug `claude-festive-galileo-s7ibx0` is still present with **870
+files** — but **zero** `proposals/` pages remain in any preview.
+
+Not a fix. That slug belongs to **PR #540, created 2026-09-20T15:27** — a new
+pull request reusing the branch name. The previous preview was removed when
+its PR closed and the directory was rebuilt from nothing, which is the only
+thing that clears stale files today.
+
+Checked and ruled out as explanations:
+
+- `feature-staging.yml` still deploys with `keep_files: true` on **all three**
+  attempts, with no path-scoped clear. Read, not assumed.
+- `restore-staging.ts` copies the `STAGING/` prefix **wholesale**
+  (`copyPrefix`), so a full-replace deploy carries stale files across rather
+  than dropping them.
+
+**Fresh evidence was not constructed**, and saying so is the honest state: it
+needs a branch that deletes a published page and then deploys, which is a real
+push to the shared publish branch. The structural property is verified; a new
+instance of it is not.
+
+## `85im` AND `bm6d` ARE ONE FIX, and together they justify what neither did alone
+
+Both die on the same line: `peaceiris/actions-gh-pages` offers no path-scoped
+clear, and the deploy therefore cannot both (a) leave sibling previews alone
+and (b) remove this preview's dead files.
+
+The design that resolves both is the same one `bm6d` records — do the deploy in
+**one git operation** with the rebase-and-retry loop the render log already
+uses:
+
+1. check out `gh-pages`
+2. **`rm -rf STAGING/<slug>`** ← what `keep_files: true` cannot express, and all of `85im`
+3. copy `_site` into `STAGING/<slug>/`
+4. append the render-log entry — **one** commit, not two ← all of `bm6d`
+5. push with rebase-retry, so a concurrent append is replayed rather than clobbered
+
+**This changes the cost/benefit I recorded on `bm6d` hours earlier.** There I
+judged the rewrite a poor trade, because `bm6d`'s harm is waste and latency and
+the bean says the 404 that prompted it was not caused by it. `85im` is a
+different kind of harm: a review surface **structurally incapable of showing a
+removal**, answering *"did my change take effect?"* with a false negative for
+every deletion. That is worth more than a wasted Pages build.
+
+The cost is unchanged and still real: hand-rolled git in the deploy path of
+every session's preview, **untestable from a checkout**. That is a decision for
+the author, not for me, and it is the question being brought back.

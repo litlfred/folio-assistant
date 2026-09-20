@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ru6i
 title: 'TOOL BLOCKED: render-log.ts takes free prose as argv, which the Tool type system refuses'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T15:21:28Z
-updated_at: 2026-09-20T15:21:58Z
+updated_at: 2026-09-20T16:13:39Z
 parent: folio-assistant-d308
 ---
 
@@ -87,12 +87,14 @@ That is the `yean` shape (a capability nobody has stated) rather than this one
 
 ## Done when
 
-- [ ] the owner picks 1, 2 or 3
-- [ ] if 1 or 2: the interface changed, all four `feature-staging.yml` call sites
-      updated, and the workflow exercised rather than reasoned about
-- [ ] a Tool node for `render-logging` whose `satisfies` is that one skill
-- [ ] `tools:coverage` no longer lists `render-logging` in tier A
-- [ ] if 3: this bean is the recorded reason, and tier A's count says why
+- [x] the owner answered, and reframed it: *"keep ingestion schema general. log is
+      string of text, optional markdown. string by convention may have formatting
+      declared on it."* — which settles the SCHEMA and leaves the transport free
+- [x] the interface changed (prose on stdin), all four `feature-staging.yml` call
+      sites updated, and the workflow **exercised** rather than reasoned about
+- [x] a Tool node for `render-logging` whose `satisfies` is that one skill
+- [x] `tools:coverage` no longer lists `render-logging` in any tier — tier A
+      27 → 26, total 156 → 155
 
 ## Related
 
@@ -100,3 +102,96 @@ That is the `yean` shape (a capability nobody has stated) rather than this one
 - `plj1`, `xd1s` — what a race on the publish branch costs
 - `covered-is-not-reachable` — case 1, and the rule against stretching a skill
   or a type to make a node validate
+
+
+---
+
+## DONE 2026-09-20 — and I HAD THE JUSTIFICATION WRONG, which is the part to read
+
+### The owner's answer reframed the question
+
+Not one of the three options as posed. *"Keep ingestion schema general. log is
+string of text, optional markdown. string by convention may have formatting
+declared on it."*
+
+Measured against the code: the schema was **already** general —
+`summary: z.string().min(1)`, `detail`/`reason` optional strings. Nothing to
+generalise. What was missing was the *second* half of that sentence, so an entry
+now carries an optional `format` (`RENDER_TEXT_FORMATS`, open like
+`RENDER_SUBJECT_KINDS`), absent meaning plain text.
+
+ONE declaration for all three prose fields rather than one each: they are one
+author's prose about one event, and three fields would invite two to disagree.
+**Declared, never sniffed** — a reason like *"the \*only\* liveness signal was
+stale"* carries emphasis it does not mean, and every other store here identifies
+itself from inside the file rather than being guessed at.
+
+### THE CORRECTION: the injection bug I reported does not exist
+
+This bean, its commit message and the first PR body all claimed:
+
+> three of the four callers build them by interpolation — `--reason "PR #...
+> confirmed by: $CLEANUP_REASON"` — so a quote or a backtick in
+> `$CLEANUP_REASON` broke the command line.
+
+**False.** Tested rather than reasoned about: shell parameter expansion inside
+double quotes does **not** re-tokenize or re-quote, so
+`merged; he said "ship it" \`whoami\` $(id) & rm -rf /` arrived as ONE literal
+argument with nothing executed. The value comes through `env:`, so it is a shell
+variable — not a `${{ }}` template substitution, which would have been a real
+finding.
+
+**Sixth instance this session** of the same move: describing a mechanism from its
+shape and reasoning confidently from the wrong premise. One `bash -c` with the
+hostile value would have settled it before the claim was written, and it is the
+same lesson `covered-is-not-reachable` §"The failure underneath" already carries.
+Corrected in the script's docstring, the four workflow comments, the tests' module
+docstring and the PR body — a false claim left in a comment is worse than none,
+because the next reader treats it as measured.
+
+### The real justification, which still holds
+
+`tool-types.ts` refuses prose as an argv word **by design**, so `render-logging`
+could not have a Tool node at all while its summary was a flag:
+
+```
+✗ 1 command-line input(s) of a type that can express a shell payload:
+    render-log.summary : Text — put free text on stdin
+```
+
+And that rule's own argument is about types, not about today's callers:
+*"a caller is one refactor away from a template literal … the property that
+survives a careless caller is the value never being dangerous."* So this is a
+**defensive contract change, not a bug fix** — which is a smaller claim, and the
+true one.
+
+### Two things the fail-closed type system forced, both improvements
+
+- **`RenderEvent`** declared as a tool type rather than typed `Text`. The closed
+  half of the vocabulary; `RENDER_SUBJECT_KINDS` stays open and takes `Slug`.
+- **`CommitSha`** declared rather than borrowing `Slug`, which a 40-hex string
+  does match. A type's `describe` is part of the published contract, and *"A folio
+  slug, e.g. quantum-observable-universe"* is the wrong thing to tell a reader
+  about a commit. **Reusing a type because its regex admits the value is how a
+  contract asserts something nobody meant.**
+
+### And a gate caught a real mistake in the workflow rewrite
+
+My first rewrite piped `jq … | bun run render-log.ts`, and
+`every exemption still matches something CI runs` went red: `gatesFrom` extracts a
+gate from a line **starting with** `bun`, so the piped form hid the step from the
+gate set and orphaned its exemption. Restructured to build `PROSE=$(jq -n …)` and
+pass it with a herestring, so `bun run` stays the leading token. Better on both
+counts — the command now reads as itself.
+
+### Verified
+
+- `bun run gates --all` — **60 of 60**, the whole set, 174 e2e tests
+- 21 new tests: the three refused flags (named together, writing nothing), eight
+  unusable-stdin third states, prose surviving verbatim including a newline, the
+  `format` default staying absent, and the pre-existing rules (`reason` required
+  for `removed`/`retained`, unsafe path refused) still holding through the new
+  transport
+- the real workflow pipeline **executed** with a hostile `CLEANUP_REASON` under
+  `set -eu`: the reason lands intact and inert
+- `check:tools` 0; `tools:coverage` no longer lists `render-logging`
