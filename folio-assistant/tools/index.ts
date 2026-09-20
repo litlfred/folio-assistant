@@ -339,6 +339,65 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── The generated reference, which `docs-generation` did not reach ────
+    //
+    // `docs-generation` was already covered — by `readme-audit` and
+    // `readme-sync`, which maintain a README's generated SECTIONS. Neither
+    // generates a page of the documentation site, and the two generators that do
+    // were reachable from no node.
+    //
+    // That is the THIRD instance of one shape in this session: a skill satisfied
+    // by the neighbours of its mechanism while the mechanism stays invisible.
+    // `kg-export` was the first (five nodes, none performing an export) and this
+    // is the second and third. It is worth naming as a pattern rather than
+    // recording three times as a coincidence — `check:tools` answers "does this
+    // skill have a Tool", and nothing yet answers "is this command reachable",
+    // which is bean `d308`.
+    //
+    // Neither carries `maintains`, and that is a judgement not an omission. Each
+    // writes ONE PAGE PER SUBJECT plus an index — tens of files — and
+    // `maintains.artefact` is a single path. A declaration naming one page out of
+    // tens would be false in the specific way that is worse than absent: it would
+    // look like a complete provenance record.
+    defineTool({
+      id: "schema-docs",
+      title: "Skill contract reference",
+      description:
+        "Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site.",
+      install: { none: true },
+      invoke: { shell: "bun run scripts/gen-schema-docs.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "pages", schema: t("RepoPath"), description: "The generated reference directory. Never hand-edited." }],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "skill-docs",
+      title: "Skill instruction reference",
+      description:
+        "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",
+      install: { none: true },
+      invoke: { shell: "bun run scripts/gen-skill-docs.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "pages", schema: t("RepoPath"), description: "The generated instruction directory. Never hand-edited." }],
+      },
+      // Sibling of `schema-docs`, not an alternative to it: one renders a
+      // skill's CONTRACT and the other its INSTRUCTIONS, and a reader wanting
+      // either is not served by the other. Complementary, so no
+      // `alternativeTo` — the field's own note warns against deriving that
+      // relation from a shared skill.
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     // ── The two JSON-LD artefacts a consumer dereferences ─────────────────
     //
     // Both are `maintains` nodes in the same sense as the three zod carriers
