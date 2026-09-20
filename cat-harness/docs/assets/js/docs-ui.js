@@ -2008,16 +2008,34 @@
     }
 
     var tools = el("div", { class: "fa-sticky-tools" });
-    // The SAME affordance every node on this site already has, pointed at this
-    // todo's own file. `editHref` is composed at build time.
+    // VIEW *AND* EDIT — two controls, because they are two acts. Bean `pb04`,
+    // the owner: *"rendeding shows edit src icon (and also need view icon)"*.
+    // `/blob/` is reading and `/edit/` opens GitHub's editor: a reader
+    // checking what a card says should not land in a text box, and one who
+    // wants to fix it should not have to find the button.
+    //
+    // BOTH ARE ABSENT, NOT BROKEN, when the rendering pipeline has no forge.
+    // The keys are simply missing from the published index — `sourceLinks`
+    // returns `undefined` for anything that is not a github.com `origin` — so
+    // the test here is presence, and there is nothing to disable or grey out.
+    // A dead link is worse than no link: it invites a click, and on a private
+    // repository it 404s for exactly the reader who cannot edit, which reads
+    // as "this page is broken" rather than "you cannot do this".
+    if (todo.viewHref) {
+      tools.appendChild(el("a", {
+        class: "fa-node-edit fa-sticky-view",
+        href: todo.viewHref,
+        title: "View this todo's source on GitHub",
+        "aria-label": "View the source of " + todo.summary,
+      }, "⎘ View"));
+    }
     if (todo.editHref) {
-      var pencil = el("a", {
+      tools.appendChild(el("a", {
         class: "fa-node-edit fa-sticky-edit",
         href: todo.editHref,
-        title: "Edit this todo's markdown",
+        title: "Edit this todo's markdown on GitHub",
         "aria-label": "Edit " + todo.summary,
-      }, "✎ Edit");
-      tools.appendChild(pencil);
+      }, "✎ Edit"));
     }
     // An INLINE sticky is already beside the content it is about, so Pin and
     // Close have nothing to do: pinning it would move it AWAY from the thing

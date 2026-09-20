@@ -32,7 +32,7 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
 import { workflowFiles } from "./known-skills.js";
-import { join, dirname } from "node:path";
+import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
@@ -44,6 +44,8 @@ import {
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
 import { readTodoFiles, todoDefaultTheme } from "./todos.js";
+import { sourceLinks } from "../schemas/landing-sticky.js";
+import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
 import {
@@ -69,6 +71,40 @@ const SRC_DIR = join(REPO_ROOT, "content", "docs");
 const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
 const REPO_WEB = "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
+
+/**
+ * The forge this checkout actually has, and the branch its links point at.
+ *
+ * RESOLVED from `origin`, never composed from a literal — bean `pb04`. The
+ * `REPO_WEB` constant above still serves the page-node links that predate
+ * this; the todo board's own controls go through `sourceLinks`, which returns
+ * `undefined` for a non-github.com remote and so makes the control absent
+ * rather than dead.
+ *
+ * `main` rather than the checked-out branch, for the reason
+ * `gen-landing-data.ts` gives: this data is generated into a PUBLISHED site,
+ * and a link to a feature branch dies when that branch does.
+ */
+/**
+ * A path `readTodoFiles` reports, as the REPOSITORY sees it.
+ *
+ * `todos/` sits at the repository root while this generator's `REPO_ROOT` is
+ * the cat-harness instance, so `readTodoFiles` returns `../todos/items/x.md`.
+ *
+ * **The old edit link shipped that verbatim**, as
+ * `https://github.com/.../edit/main/../todos/items/x.md`. A browser normalises
+ * the `..` away before the request is sent, so what GitHub received was
+ * `/edit/todos/items/x.md` — the branch segment eaten, a path that has never
+ * existed. Every todo sticky's pencil was dead, and it looked entirely correct
+ * in the generated JSON. Bean `pb04`; found by resolving the link rather than
+ * by reading it.
+ */
+function repoRelative(p: string): string {
+  return relative(repoRootFor(REPO_ROOT), resolve(REPO_ROOT, p));
+}
+
+const REPO_URL = detectRepoUrl(repoRootFor(REPO_ROOT));
+const SOURCE_BRANCH = "main";
 /** Matches gen-skill-docs.ts / gen-schema-docs.ts — one glyph, no inline SVG. */
 const EDIT_GLYPH = "✎";
 
@@ -810,9 +846,29 @@ function processHierarchy(): Record<string, string[]> {
     // The edges, already resolved. A sticky that showed only status and
     // priority would waste a six-axis relationship model on two enums.
     relations: todoRelations(todo.tags),
-    // The SAME affordance every node already gets, pointed at this todo's own
-    // file. A sticky is a content object; it does not need an editor of its own.
-    editHref: `${EDIT_BASE}/${path}`,
+    // VIEW *AND* EDIT, both resolved through the same seam the landing
+    // stickies use, and both ABSENT when there is no github.com `origin`.
+    //
+    // Bean `pb04`, the owner: *"rendeding shows edit src icon (and also need
+    // view icon) if github tools avaialable in rendering pipeline"*. Three
+    // things were wrong here and each is a different failure:
+    //
+    //  - only EDIT existed. `/blob/` is reading and `/edit/` opens the editor:
+    //    a reader checking what a card says should not land in a text box, and
+    //    one who wants to fix it should not have to find the button;
+    //  - the address was a LITERAL (`EDIT_BASE`), so a fork or a rename
+    //    published links to this repository — and the comment beside it
+    //    already argued that a folio's own address does not belong in shared
+    //    code, then wrote one down one layer up;
+    //  - there was NO CAPABILITY GATE, so the icon appeared whether or not the
+    //    pipeline had a forge behind it. A dead edit link is worse than no
+    //    link: it invites a click, and on a private repository it 404s for
+    //    exactly the reader who cannot edit, which reads as "this page is
+    //    broken" rather than "you cannot do this".
+    //
+    // Spread, so an absent link is an ABSENT KEY rather than `null` — a
+    // consumer testing truthiness and one testing presence should agree.
+    ...(sourceLinks(REPO_URL, repoRelative(path), SOURCE_BRANCH) ?? {}),
   }));
   mkdirSync(dirname(TODO_ASSET), { recursive: true });
   const processes = processHierarchy();

@@ -1982,6 +1982,27 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  *
  * Semantics inherited, presentation overridden. A pattern adopted at the class
  * level still has to be looked at where it lands. */
+/* BOTH source controls, not just the pencil. Bean `pb04` added a `⎘ View`
+ * beside `✎ Edit`, and the accessibility argument above applies to it
+ * unchanged — so it is styled by the SAME rule rather than by a copy that
+ * would drift away from the 2.75rem target and the restored opacity.
+ *
+ * The selector is a list rather than a shared class, because the two controls
+ * ARE different: `.fa-sticky-view` and `.fa-sticky-edit` are what a test and a
+ * future style can tell apart, and collapsing them into one class to save a
+ * selector would throw that away. */
+/* The row the landing card's two source controls sit in. `display: flex` with
+ * a gap rather than margins on the controls themselves, so the 2.75rem touch
+ * target below stays the whole of each control and the spacing between them
+ * is not part of either. */
+.fa-landing-sticky__source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.7em 0 0;
+}
+
+.fa-sticky-view,
 .fa-sticky-edit {
   float: none;
   margin: 0;

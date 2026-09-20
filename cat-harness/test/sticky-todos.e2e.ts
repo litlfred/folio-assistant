@@ -40,6 +40,7 @@ const ITEMS = [
       // Deliberately unresolvable: a bean nothing on disk carries.
       { axis: "bean", label: "folio-assistant-gone" },
     ],
+    viewHref: "https://github.com/litlfred/folio-assistant/blob/main/todos/items/first-todo.md",
     editHref: "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
   },
   {
@@ -51,6 +52,7 @@ const ITEMS = [
     origin: "human",
     createdAt: "2026-09-19",
     tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+    viewHref: "https://github.com/litlfred/folio-assistant/blob/main/todos/items/second-todo.md",
     editHref: "https://github.com/litlfred/folio-assistant/edit/main/todos/items/second-todo.md",
   },
 ];
@@ -229,13 +231,89 @@ test("an edge that resolves to nothing is SHOWN, not dropped", async ({ page }) 
   expect(await page.locator(".fa-sticky").first().locator("a[href='']").count()).toBe(0);
 });
 
+test("a sticky carries VIEW and EDIT, two controls for two acts", async ({ page }) => {
+  // Bean `pb04`, the owner: "rendeding shows edit src icon (and also need view
+  // icon)". `/blob/` is reading and `/edit/` opens GitHub's editor — a reader
+  // checking what a card says should not land in a text box.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const tools = page.locator(".fa-sticky").first().locator(".fa-sticky-tools");
+  await expect(tools.locator(".fa-sticky-view")).toHaveAttribute(
+    "href",
+    "https://github.com/litlfred/folio-assistant/blob/main/todos/items/first-todo.md",
+  );
+  await expect(tools.locator(".fa-sticky-edit")).toHaveAttribute(
+    "href",
+    "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
+  );
+  // Two DIFFERENT URLs. One control pointing at one of them would satisfy any
+  // assertion that only checked presence.
+  const hrefs = await tools
+    .locator("a.fa-node-edit")
+    .evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).getAttribute("href")));
+  expect(new Set(hrefs).size).toBe(hrefs.length);
+});
+
+test("both controls are ABSENT, not broken, when the pipeline has no forge", async ({ page }) => {
+  // The other direction, and the one that matters. `sourceLinks` returns
+  // undefined for anything that is not a github.com `origin`, and the
+  // generator SPREADS the result, so the keys are missing rather than empty. A
+  // test that only checked the present case would pass equally for a control
+  // that is always shown.
+  //
+  // A dead edit link is worse than no link: it invites a click, and on a
+  // private repository it 404s for exactly the reader who cannot edit, which
+  // reads as "this page is broken" rather than "you cannot do this".
+  await page.route("http://todo.test/assets/todos/index.json", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        $schema: "folio-todo-index/v1",
+        items: ITEMS.map((t) => {
+          const copy: Record<string, unknown> = { ...t };
+          delete copy["viewHref"];
+          delete copy["editHref"];
+          return copy;
+        }),
+      }),
+    }),
+  );
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await expect(page.locator(".fa-sticky")).not.toHaveCount(0); // the board did mount
+  await expect(page.locator(".fa-sticky-view")).toHaveCount(0);
+  await expect(page.locator(".fa-sticky-edit")).toHaveCount(0);
+  // ...and nothing disabled or greyed in their place.
+  await expect(page.locator(".fa-sticky-tools a")).toHaveCount(0);
+});
+
+test("neither link carries a `..` — the old one resolved to a dead path", () => {
+  // The path `readTodoFiles` reports is relative to the cat-harness INSTANCE
+  // while todos/ sits at the repository root, so it read `../todos/items/x.md`
+  // and the old link shipped that verbatim. A browser normalises the `..`
+  // before the request is sent, so GitHub received `/edit/todos/items/x.md` —
+  // the branch segment eaten, a path that has never existed. Every pencil on
+  // the board was dead, and the generated JSON looked entirely correct.
+  for (const t of ITEMS) {
+    expect(t.editHref).not.toContain("..");
+    expect(t.viewHref).not.toContain("..");
+  }
+});
+
 test("the pencil is `.fa-node-edit` pointing at the todo's own file", async ({ page }) => {
   // The owner's rule: the edit affordance is the class-level pattern every
   // content object on this site already has, not a bespoke editor.
   await page.goto(PAGE_URL);
   await page.locator(".fa-qr-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  const edit = page.locator(".fa-sticky").first().locator("a.fa-node-edit");
+  // `.fa-sticky-edit`, not the bare `a.fa-node-edit` this used: bean `pb04`
+  // put a `⎘ View` beside the pencil, so the class-level selector now matches
+  // two links and the assertion would be order-dependent. Naming the control
+  // is what the two classes exist for.
+  const edit = page.locator(".fa-sticky").first().locator("a.fa-sticky-edit");
   await expect(edit).toHaveAttribute(
     "href",
     "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
@@ -636,8 +714,13 @@ test.describe("todos attached to a block", () => {
     await expect(first.locator(".fa-sticky-pin")).toHaveCount(0);
     await expect(first.locator(".fa-sticky-close")).toHaveCount(0);
     await expect(first.locator(".fa-sticky-discard")).toHaveCount(0);
-    // But it keeps the edit affordance, which is the point of the pencil.
-    await expect(first.locator("a.fa-node-edit")).toHaveCount(1);
+    // But it keeps BOTH source affordances, which is the point: an inline
+    // sticky loses the board's controls and keeps the content object's. Two
+    // now rather than one — bean `pb04` added `⎘ View` beside `✎ Edit` — and
+    // asserted by name, because a count over the shared `.fa-node-edit` class
+    // would silently accept two pencils.
+    await expect(first.locator("a.fa-sticky-view")).toHaveCount(1);
+    await expect(first.locator("a.fa-sticky-edit")).toHaveCount(1);
   });
 
   test("a todo targeting a block this page lacks still reaches the board", async ({ page }) => {
