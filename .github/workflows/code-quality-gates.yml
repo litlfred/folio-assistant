@@ -522,6 +522,9 @@ jobs:
           # Bean `07p7`: a published translation that has drifted from its
           # source is a section a reader cannot reach in their language.
           bun run translation:drift:check
+          # Bean `eief`: a stubbed tool must not read as a working one, and a
+          # stub that has outlived its tool must fail rather than linger.
+          bun run check:tabular-stubs
           bun run translate-bpmn:check
           bun run landing:sticky:check
           bun run landing:data:check

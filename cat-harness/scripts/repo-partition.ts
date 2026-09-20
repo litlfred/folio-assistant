@@ -345,6 +345,14 @@ const RULES: Rule[] = [
       // on that module: a layer that cannot render must not own the renderable
       // kind. Classifying it harness would put core's own kind registration
       // behind a harness module.
+      // CORE, and my first classification of it was WRONG. I filed it with
+      // the harness because it reads the TOOL declarations, and `--edges`
+      // immediately reported the consequence: a harness module importing
+      // `schemas/tabular-csvw.ts`, which is core's. The table's own test
+      // settles it — does it need a folio to have anything to do? It scans
+      // `library/` for tabular records, so yes. Reading the tool graph is
+      // core importing harness, which is the allowed direction.
+      "scripts/check-tabular-stubs.ts",      // a stubbed tool must not read as a working one
       "scripts/ensure-landing-sticky.ts",    // creates folio/ and mints its landing stickies
       // Same repo and the same reason: it reads the folio graph's sticky nodes
       // and writes the data file the landing page renders from. It was part of
