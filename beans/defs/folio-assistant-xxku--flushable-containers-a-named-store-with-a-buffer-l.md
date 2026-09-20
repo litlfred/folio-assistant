@@ -21,7 +21,7 @@ Three stores here accumulate **by design**, so none is fixable by writing less:
 `fsh-guts` (the trashcan that is kept), the staging previews under
 `STAGING/<slug>/` on the publish branch, and a run's console log. Each has
 grown its own ad-hoc answer to "it is too big now". They want one contract, and
-the contract is written: [`skills/folio-core/flushable-containers.md`](../../skills/folio-core/flushable-containers.md).
+the contract is written: [`skills/folio-core/flushable-containers.md`](../../cat-harness/skills/folio-core/flushable-containers.md).
 
 The skill exists because the three differ in exactly the places a shared
 implementation would paper over:
@@ -225,7 +225,7 @@ treatment for the same kind of reason.
 
 **Not done here, and the reason is a rule rather than a budget.** It changes the
 docs build and the language switcher, and
-[`continual-progress`](../../skills/folio-core/continual-progress.md) is explicit
+[`continual-progress`](../../cat-harness/skills/folio-core/continual-progress.md) is explicit
 that a rendered artefact cannot be assessed from a description of it — I cannot
 render this site from here, and ~20 branches are currently live in `docs/`. It
 wants its own bean, its own PR and a preview somebody looks at.
