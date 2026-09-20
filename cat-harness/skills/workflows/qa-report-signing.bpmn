@@ -24,15 +24,25 @@
        the hash ATTESTABLE. Nothing else here is new evidence; the two
        routes differ in who vouches, not in what is vouched for.
 
-       WHY A GATEWAY AND NOT A DEGRADATION. `SkillCapabilityRef.fallbackRole`
-       (bean `folio-assistant-85e8`) DECLARES that this skill falls back to a
-       role. It does not route anything: measured 2026-09-20, the only reader
-       of the degradation model is `generate-docs.ts`, which renders it. The
-       thing that EXECUTES a branch in this repository is a BPMN gateway with
-       a DMN table, so that is what the branch is. Declaration and execution
-       agree here by pointing at the same two lanes — they are not the same
-       mechanism, and drawing only one of them would have left the other
-       inert.
+       THIS DIAGRAM IS THE ONLY STATEMENT OF THE FALLBACK. A
+       `SkillCapabilityRef.fallbackRole` field declared the same fact for
+       eight hours on 2026-09-20 (bean `folio-assistant-85e8`) and was
+       removed the same day, on the owner's question — "do we need
+       fallbackRole, can it be computed, i dont like duplicate data
+       maintenace issues".
+
+       It can, from here, exactly: the fallback role is the role of a lane
+       holding a task only a person can fill, which is `Lane_Human` binding
+       `publication-manager` below. `check:fallback-roles` derives it and
+       fails a `fallback` that resolves to neither a declared capability nor
+       such a lane, so this diagram is now load-bearing for that check —
+       delete `Task_HumanSign`'s lane binding and the gate goes red.
+
+       The earlier argument here was that declaration and execution are
+       different mechanisms and drawing only one would leave the other
+       inert. The first half is true. The second does not follow: a
+       declaration recoverable from the executable artefact is a cached
+       copy, and nothing asserted the two agreed.
 
        TWO ROUTES, NOT A RETRY. The human lane is not what happens when the
        API call fails; it is what happens when there is no call to make. An
