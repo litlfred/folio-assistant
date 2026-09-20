@@ -9,7 +9,7 @@ updated_at: 2026-09-18T15:00:27Z
 ---
 
 **BLOCKER for the whole five-repo split.** See
-[migration plan §0.1](../docs/architecture/migration-plan.md).
+[migration plan §0.1](../../../cat-harness/docs/architecture/migration-plan.md).
 
 `dependencies.folioAssistant` resolves translations only. Measured 2026-09-18:
 `resolveSkillDirs` 0 external callers, `resolveTranslationDirs` 0,

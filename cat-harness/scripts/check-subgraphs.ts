@@ -34,7 +34,13 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { Glob } from "bun";
 
-import { isRenderable, owningDirectory, resolveDirectories, subgraphTree } from "../schemas/cat-harness.js";
+import {
+  isPublishedGraphKind,
+  isRenderable,
+  owningDirectory,
+  resolveDirectories,
+  subgraphTree,
+} from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -68,6 +74,45 @@ export interface SubgraphReport {
    * prevent.
    */
   dangling: Array<{ from: string; fromDir: string; target: string }>;
+  /**
+   * Directories skipped BY DECLARATION — they hold only unpublished graph
+   * kinds, so their links are not held to resolution.
+   *
+   * `fsh-guts/` is the standing case, and the distinction matters: it was
+   * already skipped before 2026-09-20, but by ACCIDENT — a repository-scoped
+   * path fell out of attribution, and the right outcome arrived for the wrong
+   * reason (bean `3ye4`). A thing in the trashcan is there because it was
+   * superseded, and its links pointing at what moved is EXPECTED; that is a
+   * decision, and a decision should be readable.
+   *
+   * Keyed on the declared graph kind rather than a new field, because
+   * `isPublishedGraphKind` already answers exactly this question and the
+   * directory already declares `graphs: ["fsh-guts"]`. Same shape as the
+   * `published: false` a skill now carries: the thing says what it is.
+   */
+  exempt: string[];
+  /**
+   * Links inside a RENDERABLE graph that do not resolve in the source tree.
+   *
+   * DIFFERENT from `exempt`, which drops a retired directory wholesale. This
+   * keeps the directory in scope and routes one class of link out of
+   * `dangling`: a renderable graph addresses the PUBLISHED tree, so
+   * `docs/architecture.md -> api/` names a directory the docs build
+   * generates and `docs/skills.md -> ...migration.html` names a page Jekyll
+   * renders. Neither is a file here and neither is broken.
+   *
+   * **Counted and printed, never asserted, and the number is why.** Declaring
+   * `docs/` — 241 files, until 2026-09-20 invisible to every
+   * declaration-driven consumer — put them in scope for the first time and
+   * produced 171, of which 23 ARE source-tree links carrying one `../` too
+   * many, rot left by the move of the instance under `cat-harness/`. That
+   * audit is bean `mi97`.
+   *
+   * Without this the gate below could not be held at 0 once `docs/` was
+   * declared, and the choice would have been 171 false findings or a silent
+   * skip — which this module already refuses two paragraphs up.
+   */
+  siteResolved: Array<{ from: string; fromDir: string; target: string }>;
   /** Files that could not be read — the third state. */
   unreadable: string[];
   /**
@@ -88,26 +133,6 @@ export interface SubgraphReport {
    * rendered as clean, which this repository refuses everywhere else.
    */
   notExamined: string[];
-  /**
-   * Links inside a RENDERABLE graph that do not resolve in the source tree.
-   *
-   * Counted and printed, never asserted, because a renderable graph's links
-   * are resolved by the SITE BUILD against the published tree — a different
-   * address space from this one. `docs/architecture.md -> api/` names a
-   * directory the docs build generates; `docs/skills.md -> ...migration.html`
-   * names a page Jekyll renders. Neither is a file here and neither is broken.
-   *
-   * **This is not an exemption for convenience, and the number is the reason
-   * it is reported rather than dropped.** Declaring `docs/` (241 files, until
-   * 2026-09-20 invisible to every declaration-driven consumer) put them in
-   * scope for the first time and produced 171 of these, of which 23 ARE
-   * source-tree links carrying one `../` too many — rot left by the move of
-   * the instance under `cat-harness/`. That audit is bean `mi97`; asserting
-   * zero here would have meant either 171 false findings or a silent skip,
-   * and this module already says which of those is worse: "Skipping retired
-   * content is defensible; skipping it SILENTLY is not."
-   */
-  siteResolved: Array<{ from: string; fromDir: string; target: string }>;
   scanned: number;
 }
 
@@ -170,16 +195,33 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   const dangling: SubgraphReport["dangling"] = [];
   const unreadable: string[] = [];
   const notExamined: string[] = [];
+  const exempt: string[] = [];
   const siteResolved: SubgraphReport["siteResolved"] = [];
   let scanned = 0;
 
   for (const dir of dirs) {
     const abs = dir.absPath ?? join(root, dir.path);
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
+    // Retired content is not held to link resolution — see `exempt`.
+    if (dir.graphs.length > 0 && dir.graphs.every((g) => !isPublishedGraphKind(g))) {
+      exempt.push(`${dir.id} (${dir.path})`);
+      continue;
+    }
     let attributed = 0;
     for (const rel of new Glob("**/*.md").scanSync({ cwd: abs })) {
       const file = join(abs, rel);
-      const owner = owningDirectory(dirs, relative(root, file));
+      // ABSOLUTE, not instance-relative. A `scope: "repository"` directory
+      // resolves OUTSIDE this instance, so `relative(root, …)` yields a
+      // `../…` path that matches no declared prefix and the file is
+      // attributed to nothing — silently. Six declared directories were
+      // swept past that way (bean `3ye4`), and the symptom was a sweep
+      // reporting ZERO dangling links over a corpus that had some.
+      //
+      // `owningDirectory` compares in the space of the path it is given, and
+      // every resolved directory carries `absPath`, so absolute is the space
+      // in which instance-relative and repository-scoped entries are
+      // commensurable at all.
+      const owner = owningDirectory(dirs, file);
       // Attribute the file to its DEEPEST owner, not to the directory whose
       // sweep happened to reach it — that attribution IS the `x4v4` defect.
       if (owner === undefined || owner.id !== dir.id) continue;
@@ -216,7 +258,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
           });
           continue;
         }
-        const to = owningDirectory(dirs, relative(root, resolved));
+        const to = owningDirectory(dirs, resolved);
         if (to === undefined || to.id === owner.id) continue;
         edges.push({
           from: relative(root, file),
@@ -230,13 +272,13 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       notExamined.push(`${dir.id} (${dir.path})`);
     }
   }
-  return { tree, edges, dangling, unreadable, notExamined,
-    siteResolved, scanned };
+  return { tree, edges, dangling, exempt, siteResolved, unreadable, notExamined, scanned };
 }
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const { tree, edges, dangling, unreadable, notExamined, siteResolved, scanned } = scanSubgraphs(ROOT);
+  const { tree, edges, dangling, exempt, siteResolved, unreadable, notExamined, scanned } =
+    scanSubgraphs(ROOT);
 
   console.log(`Subgraphs  (${scanned} markdown node(s) attributed to a declared directory)\n`);
 
@@ -286,6 +328,32 @@ if (import.meta.main) {
     }
   }
 
+  if (siteResolved.length > 0) {
+    const byDir = new Map<string, number>();
+    for (const l of siteResolved) byDir.set(l.fromDir, (byDir.get(l.fromDir) ?? 0) + 1);
+    console.log(
+      `\n· ${siteResolved.length} link(s) in RENDERABLE graph(s) do not resolve in the source tree:`,
+    );
+    for (const [id, n] of [...byDir].sort((a, b) => b[1] - a[1])) console.log(`    ${id}: ${n}`);
+    console.log(
+      "  Not a finding: a renderable graph addresses the PUBLISHED tree, where the\n" +
+        "  site build resolves `api/`, `*.html` and generated pages. NOT a clean bill\n" +
+        "  either — bean `mi97` audits them, and 23 carry one `../` too many.",
+    );
+  }
+
+  if (exempt.length > 0) {
+    console.log(`\nEXEMPT BY DECLARATION — ${exempt.length} directory(ies) hold only`);
+    console.log("unpublished graph kinds, so their links are not held to resolution:\n");
+    for (const d of exempt) console.log(`  · ${d}`);
+    console.log(
+      "\nRetired content is superseded by definition, so a link of its pointing at\n" +
+        "what moved is expected. Stated here rather than inferred, because this WAS\n" +
+        "skipped accidentally until 2026-09-20 and a right answer for the wrong\n" +
+        "reason is one nobody can rely on.",
+    );
+  }
+
   if (notExamined.length > 0) {
     console.log(
       `\nNOT EXAMINED — ${notExamined.length} declared directory(ies) hold markdown but`,
@@ -300,22 +368,22 @@ if (import.meta.main) {
     );
   }
 
-  if (siteResolved.length > 0) {
-    // PRINTED, and the count is the point. These are not asserted because a
-    // renderable graph's links resolve in the published tree, but a silent
-    // skip of 171 links is exactly what this module refuses to do elsewhere.
-    const byDir = new Map<string, number>();
-    for (const l of siteResolved) byDir.set(l.fromDir, (byDir.get(l.fromDir) ?? 0) + 1);
-    console.log(
-      `\n· ${siteResolved.length} link(s) in RENDERABLE graph(s) do not resolve in the source tree:`,
+  // GATED, as of 2026-09-20 — and only now, because only now is the number
+  // trustworthy. It read 0 while six declared directories went unattributed
+  // (bean `3ye4`), so gating it then would have enforced a statement about
+  // what the sweep happened to look at. With attribution fixed the corpus
+  // stands at 0 with every directory either examined or exempt by
+  // declaration, and a new broken link is a regression somebody introduced.
+  //
+  // The ENTANGLEMENT report above stays ungated, deliberately: disentangling
+  // is work the owner has said is in progress, and a gate on known-
+  // outstanding work is one somebody switches off (bean `x4v4`).
+  if (check && dangling.length > 0) {
+    console.error(
+      `\n✗ ${dangling.length} link(s) point at nothing. Repoint them, or remove the\n` +
+        "link and keep the text — a reader cannot tell a stale link from a wrong one.",
     );
-    for (const [id, n] of [...byDir].sort((a, b) => b[1] - a[1])) console.log(`    ${id}: ${n}`);
-    console.log(
-      "  Not a finding here: a renderable graph addresses the PUBLISHED tree, and\n" +
-        "  the site build resolves `api/`, `*.html` and generated pages that are not\n" +
-        "  files in this one. NOT a clean bill either — bean `mi97` audits them, and\n" +
-        "  23 of the current set carry one `../` too many from the cat-harness move.",
-    );
+    process.exit(1);
   }
 
   if (unreadable.length > 0) {
