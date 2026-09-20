@@ -388,14 +388,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
   },
-  schemas: {
-    type: termIri("SchemaGraph"),
-    renderable: false,
-    // A shape is the subject matter of the schema graph. It is true before
-    // anything is validated against it.
-    holds: "content",
-    summary: "Schema definitions, self-declared in the smart-base manner.",
-  },
   // THE ONE RENDERABLE KIND THE HARNESS OWNS, added 2026-09-20.
   //
   // This table carried no renderable kind until now, on the reasoning in
@@ -442,6 +434,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "the graph; the difference is the SUBJECT, not the format. The who-iris " +
       "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
       "how ingestion works is `docs`.",
+  },
+  schemas: {
+    type: termIri("SchemaGraph"),
+    renderable: false,
+    // A shape is the subject matter of the schema graph. It is true before
+    // anything is validated against it.
+    holds: "content",
+    summary: "Schema definitions, self-declared in the smart-base manner.",
   },
   // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
   //
@@ -599,6 +599,18 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
       "greppable as corpus: a document here reads as absent to every consumer.",
   },
+  library: {
+    type: termIri("LibraryGraph"),
+    renderable: false,
+    // L1 source content. Every knowledge-graph reference to a source resolves
+    // through here, which is only possible because it stands on its own.
+    holds: "content",
+    summary:
+      "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
+      "`structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every " +
+      "knowledge-graph reference to a source resolves through here, never to a loose path " +
+      "or a bare URL.",
+  },
   // A REMOTE catalogue modelled in the graph without being held. Distinct from
   // `library`, and the distinction is the whole point: `library` is L1 content
   // that IS here, `catalogue` is the shape of a collection of which almost
@@ -633,18 +645,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "of a corpus the instance does not hold. Every node declares whether its bytes " +
       "are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), " +
       "with no default. Distinct from `library`, which is content that IS here.",
-  },
-  library: {
-    type: termIri("LibraryGraph"),
-    renderable: false,
-    // L1 source content. Every knowledge-graph reference to a source resolves
-    // through here, which is only possible because it stands on its own.
-    holds: "content",
-    summary:
-      "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
-      "`structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every " +
-      "knowledge-graph reference to a source resolves through here, never to a loose path " +
-      "or a bare URL.",
   },
   // Named editorial voice profiles, overlaid on the base house voice. A
   // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
@@ -1066,14 +1066,6 @@ export interface ContentDirectory extends KgNodeLabels {
   /**
    * The directory, relative to the root {@link scope} names, with or without a
    * trailing slash.
-   *
-   * REQUIRED, and a remote graph is not modelled by relaxing it. See
-   * {@link RemoteGraph}: a graph that lives somewhere else has no directory,
-   * and calling it a `ContentDirectory` with an optional path was tried on
-   * 2026-09-20 and abandoned the same hour. It loosened `bean-graph.ts` and
-   * `todo-graph.ts`, which REUSE this schema for their own nodes — and a bean
-   * store is never remote — so the change weakened two graphs that had nothing
-   * to do with it, and the compiler said so in twenty-four errors.
    */
   path: string;
   /**
@@ -1195,7 +1187,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   topology?: Topology;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
-  /** Graphs known about but not held — see {@link RemoteGraph}. Absent means none. */
+  /** Graphs known but not held — {@link RemoteGraph}. */
   remoteGraphs?: RemoteGraph[];
   /**
    * Sticky notes this layer contributes to the landing board.
@@ -1215,80 +1207,6 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * would hand one back.
    */
   stickies?: StickyContribution[];
-}
-
-/**
- * A graph this instance KNOWS ABOUT but does not hold.
- *
- * The owner, 2026-09-20: *"any top level repos or KGs in the repo, or
- * navigable if external/remote pointed to in the core harness schema (need to
- * extend so graphs can be url of remote graph)"*.
- *
- * ## A remote graph is NOT a directory, and that is the whole modelling
- *
- * The first cut made `ContentDirectory.path` optional and added a `url` beside
- * it. That is wrong twice over. `bean-graph.ts` and `todo-graph.ts` REUSE
- * `ContentDirectorySchema` for their own nodes — AGENTS.md says so outright,
- * *"a bean-graph entry IS a ContentDirectory"* — and a bean store is never
- * remote, so relaxing the shared schema weakened two graphs that had nothing
- * to do with the change. And a field that is sometimes a path and sometimes an
- * address is one field with two meanings, which every consumer then has to
- * guess between.
- *
- * So this is its own node kind. It has an `id` and `graphs` like a directory,
- * because those are what make it addressable and filterable; it has no `path`,
- * because there is nothing here.
- *
- * ## It is `materialization` at the graph level
- *
- * `folio-assistant-core/schemas/materialization.ts` already names the states a
- * body of content is in, and a declared graph is in the same ones: a
- * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
- * **referenced** (we know it exists and where, we hold none of it).
- *
- * A reader may FOLLOW a remote graph — the KG viewer does, to keep a hierarchy
- * of named subgraphs navigable across instances that are not in this checkout.
- * Anything that wants the CONTENTS goes through `materialize-remote`: the five
- * gates and a declared purpose, rather than fetching it merely because it has
- * an address.
- */
-export interface RemoteGraph extends KgNodeLabels {
-  /** Stable identifier, unique within an instance — as on a directory, and for the same reason. */
-  id: string;
-  /** Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates. */
-  url: string;
-  /** Which parts of the knowledge graph live there. */
-  graphs: GraphKind[];
-}
-
-export const RemoteGraphSchema = z
-  .object({
-    id: z.string().min(1),
-    url: z.string().url(),
-    graphs: z.array(z.string().min(1)).min(1),
-    ...kgNodeLabelShape,
-  })
-  // STRICT, and that is the point rather than tidiness: without it a stray
-  // `path` on a remote graph is silently accepted, and the declaration then
-  // carries two answers to where the graph is — the exact confusion this node
-  // kind exists to prevent. Caught by its own test on the hour it was written.
-  .strict();
-
-/**
- * The local path of a declared directory, or `undefined` when the graph is
- * REMOTE.
- *
- * Every consumer that needs bytes on disk goes through this, so "this graph is
- * not in this checkout" is a case each one has to answer rather than a
- * `string` it can assume. When `url` landed on 2026-09-20 the compiler named
- * the whole set in nine errors across six files — which is the set that had
- * been assuming a local path all along, and the reason `path` was made
- * optional rather than widened to hold a URL. A field that is sometimes a path
- * and sometimes an address is one field with two meanings, and every consumer
- * then has to guess which it got.
- */
-export function localPathOf(d: { path?: string; url?: string }): string | undefined {
-  return d.path;
 }
 
 export const ContentDirectorySchema = z.object({
@@ -1604,6 +1522,77 @@ export class TopologyConflictError extends Error {
     this.name = "TopologyConflictError";
   }
 }
+
+/**
+ * A graph this instance KNOWS ABOUT but does not hold.
+ *
+ * The owner, 2026-09-20: *"any top level repos or KGs in the repo, or
+ * navigable if external/remote pointed to in the core harness schema (need to
+ * extend so graphs can be url of remote graph)"*.
+ *
+ * ## A remote graph is NOT a directory, and that is the whole modelling
+ *
+ * The first cut made `ContentDirectory.path` optional and added a `url` beside
+ * it. That is wrong twice over. `bean-graph.ts` and `todo-graph.ts` REUSE
+ * `ContentDirectorySchema` for their own nodes — AGENTS.md says so outright,
+ * *"a bean-graph entry IS a ContentDirectory"* — and a bean store is never
+ * remote, so relaxing the shared schema weakened two graphs that had nothing
+ * to do with the change. And a field that is sometimes a path and sometimes an
+ * address is one field with two meanings, which every consumer then has to
+ * guess between.
+ *
+ * So this is its own node kind. It has an `id` and `graphs` like a directory,
+ * because those are what make it addressable and filterable; it has no `path`,
+ * because there is nothing here.
+ *
+ * ## It is `materialization` at the graph level
+ *
+ * `folio-assistant-core/schemas/materialization.ts` already names the states a
+ * body of content is in, and a declared graph is in the same ones: a
+ * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
+ * **referenced** (we know it exists and where, we hold none of it).
+ *
+ * A reader may FOLLOW a remote graph — the KG viewer does, to keep a hierarchy
+ * of named subgraphs navigable across instances that are not in this checkout.
+ * Anything that wants the CONTENTS goes through `materialize-remote`: the five
+ * gates and a declared purpose, rather than fetching it merely because it has
+ * an address.
+ */
+export interface RemoteGraph extends KgNodeLabels {
+  /** Stable identifier, unique within an instance — as on a directory, and for the same reason. */
+  id: string;
+  /** Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates. */
+  url: string;
+  /** Which parts of the knowledge graph live there. */
+  graphs: GraphKind[];
+}
+
+export const RemoteGraphSchema = z
+  .object({
+    id: z.string().min(1),
+    url: z.string().url(),
+    graphs: z.array(z.string().min(1)).min(1),
+    ...kgNodeLabelShape,
+  })
+  // STRICT, and that is the point rather than tidiness: without it a stray
+  // `path` on a remote graph is silently accepted, and the declaration then
+  // carries two answers to where the graph is — the exact confusion this node
+  // kind exists to prevent. Caught by its own test on the hour it was written.
+  .strict();
+
+/**
+ * The local path of a declared directory, or `undefined` when the graph is
+ * REMOTE.
+ *
+ * Every consumer that needs bytes on disk goes through this, so "this graph is
+ * not in this checkout" is a case each one has to answer rather than a
+ * `string` it can assume. When `url` landed on 2026-09-20 the compiler named
+ * the whole set in nine errors across six files — which is the set that had
+ * been assuming a local path all along, and the reason `path` was made
+ * optional rather than widened to hold a URL. A field that is sometimes a path
+ * and sometimes an address is one field with two meanings, and every consumer
+ * then has to guess which it got.
+ */
 
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
@@ -2317,17 +2306,6 @@ export function resolveDirectories(
       // never-overlaid property of those two directories was a rule an agent
       // had to remember until this line; now the resolver holds it.
       if (dir.scope === "repository" && link.own !== true) continue;
-      // A REMOTE graph has no `absPath` because it has no bytes here, and this
-      // function answers ONE question: where do I scan. Every one of its
-      // callers walks a directory, and there is nothing to walk.
-      //
-      // It is skipped rather than returned with `absPath: undefined`, which
-      // would push the case onto twenty-five call sites that would each have to
-      // remember it — the shape `directoryForGraph` was just excised for. A
-      // consumer that wants the FULL declared set, remote entries included,
-      // calls `declaredDirectories` instead; the KG viewer does, because a
-      // hierarchy of named subgraphs stays navigable whether or not the bytes
-      // are in this checkout.
       // Override by id, replacing in place so the inherited ORDER is kept: a
       // relocation should not reshuffle what a consumer scans first.
       byId.set(dir.id, {
@@ -2340,47 +2318,6 @@ export function resolveDirectories(
     }
 
   return [...byId.values()];
-}
-
-/**
- * EVERY declared directory, remote entries included — the navigable set.
- *
- * The complement of {@link resolveDirectories}, which answers "where do I
- * scan" and therefore drops remote graphs because there is nothing on disk to
- * walk. This one answers **"what is declared"**, which is the question the KG
- * viewer asks: the owner, 2026-09-20, wants the hierarchy of named subgraphs
- * filterable *"or navigable if external/remote pointed to in the core harness
- * schema"*, and a graph whose bytes are elsewhere is still a node in that
- * hierarchy.
- *
- * Two functions rather than a flag, because the two questions have different
- * right answers and a caller that passed the wrong flag would get a plausible
- * list either way.
- */
-export interface DeclaredGraph extends KgNodeLabels {
-  id: string;
-  graphs: GraphKind[];
-  declaredBy: string;
-  /** Set iff the graph is HERE. */
-  absPath?: string;
-  /** Set iff the graph is elsewhere. Exactly one of the two, always. */
-  url?: string;
-}
-
-export function declaredGraphs(
-  root: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
-): DeclaredGraph[] {
-  const decl = readDeclaration(root, registry);
-  if (!decl) return [];
-  return [
-    ...decl.directories.map((d) => ({
-      ...d,
-      declaredBy: decl.name,
-      absPath: resolve(rootForScope(root, d.scope), d.path),
-    })),
-    ...(decl.remoteGraphs ?? []).map((g) => ({ ...g, declaredBy: decl.name })),
-  ];
 }
 
 /**
@@ -2753,72 +2690,102 @@ export function renderableDirectories(
   return dirs.filter((d) => d.graphs.some((g) => isRenderable(g, registry)));
 }
 
-
 /**
- * EVERY directory carrying a graph, in declaration order.
+ * The absolute path of the directory holding a given graph, read from the
+ * instance's declaration.
  *
- * ## There is no singular form, and that is deliberate
+ * ## The literal this exists to replace
  *
- * `directoryForGraph` returned the FIRST declaration carrying a graph. It was
- * removed on 2026-09-20, at the owner's instruction — *"excise singular"* —
- * rather than deprecated, because deprecation leaves the wrong thing reachable
- * and it had already cost three bugs **in one day**:
+ * `check:declared-paths` found **114** places where a directory
+ * `harness.json` already declares is written out in code instead —
+ * `join(root, "skills")`, `join(root, "translations", loc)`,
+ * `join(root, "uploads")`. Every one of them is a place a topical or
+ * relocated layout breaks silently, which is the whole defect the
+ * declaration exists to remove.
  *
- * - `check-tools.ts` scanned only the first knowledge-graph root and reported
- *   a real skill (`kg-navigation`) as a dangling `satisfies`;
- * - `workflow-skill-refs.test.ts` hardcoded five directories and had been
- *   blind to three whole skill packages for months;
- * - `schema-nodes.ts` gated one of three `schemas` directories — so the gate
- *   whose entire purpose is to stop a module being silently absent from the
- *   published graph was itself absent from two thirds of it.
+ * `resolveDirectories` already answered this; what was missing was a call
+ * short enough that nobody reaches for the literal instead. One line, one
+ * argument, and the caller does not have to build a chain.
  *
- * Every one of those callers was **correct when written** and became wrong the
- * moment a second directory declared the same graph. That is not a mistake
- * three people made; it is an accessor whose shape encodes an assumption the
- * declaration format has never guaranteed. A graph may have many homes:
- * measured the same day, `cat-harness` had five and `schemas` three.
+ * ## Three states, and the third is why this returns `undefined`
  *
- * ## A single home is now something a call site SAYS
- *
- * A caller that genuinely wants one writes `directoriesForGraph(...)[0]`, so
- * the assumption is visible where it is made and greppable across the repo —
- * the same discipline the `declared-path-literal` fallbacks already follow
- * ("the fallback is at the call site so the choice is visible").
- *
- * A graph with one home returns a single-element array, so a caller written
- * against this stays correct when a second arrives.
- *
- * ## Three states, and the third is why this can return empty
- *
- * A graph the instance does not declare is NOT the same as one declared at the
- * conventional path. `DEFAULT_DIRECTORIES` is existence-filtered, so an
+ * A graph the instance does not declare is NOT the same as one declared at
+ * the conventional path. `DEFAULT_DIRECTORIES` is existence-filtered, so an
  * instance with no `uploads/` genuinely has no `uploads` graph — and
- * defaulting here would hand a caller a path to a directory that is not there,
- * which is precisely the `dh4f` defect. Callers that legitimately want the
- * convention as a fallback say so at their own call site.
+ * defaulting here would hand a caller a path to a directory that is not
+ * there, which is precisely the `dh4f` defect (a consumer scans nothing and
+ * reports a clean run over it). Callers that legitimately want the
+ * convention as a fallback say so at their own call site, where the choice
+ * is visible.
+ *
+ * ## Ambiguity REFUSES rather than picking, and that is the point
+ *
+ * A graph declared by two directories is legal — `cat-harness` is declared by
+ * four (`schemas/`, `skills/`, `bootstrap/skills/`, `src/skills/`) and
+ * `methodology` by two. This used to return the FIRST of them, under a comment
+ * saying it was "the accessor for the single-home case". That precondition was
+ * stated and enforced by nothing, which is this repository's own rule broken
+ * in one line: an unavoidable duplicate is fine, an UNCHECKED one is not.
+ *
+ * The cost is on the record. Bean `wggr`: a by-graph lookup for `cat-harness`
+ * resolves to `schemas/`, not `skills/`, because `schemas/` declares
+ * `["schemas", "cat-harness"]` and comes first. An audit walked `schemas/`,
+ * wrote **37** sidecars against the wrong subjects, and exited **0**. Nothing
+ * threw, because the wrong answer is indistinguishable from the right one at
+ * the call site — *"a by-graph lookup is not a weaker version of a by-id
+ * lookup; for `cat-harness` it resolves to a DIFFERENT DIRECTORY."*
+ *
+ * So an ambiguous kind now throws, naming every candidate. Measured before the
+ * change: **none of the 34 call sites in this repository asks for either
+ * ambiguous kind** — every one passed `library`, `translation-sources`,
+ * `uploads`, `schemas`, `fsh-guts`, `todos` or `memory`, all single-homed at
+ * the time. The throw was therefore unreachable, and existed for the caller
+ * who had not been written yet, which is the one `wggr` was.
+ *
+ * **That caller arrived the same day.** Bean `frs5` moved the corpus out of
+ * the platform into `who-iris/library/` and `folio-assist-sci/library/`, so
+ * `library` has TWO homes and `schemas` has FOUR (`cat-harness/`,
+ * `folio-assistant-core/`, `large-datasets/`, `detangle/`). The paragraph
+ * above is kept as written and corrected here rather than edited, because
+ * what it records — a throw added for a caller nobody had written — is worth
+ * more beside the date it stopped being true than it is silently updated.
+ *
+ * Every site that wanted one was migrated: scanners fan out through
+ * {@link directoriesForGraph}, write targets refuse through this, and the four
+ * that wanted THEIR OWN instance's directory ask
+ * {@link instanceDirectoryForGraph}, which is a third question neither of the
+ * other two answers. `scripts/tests/no-silent-first-directory.test.ts` fails
+ * on a new `directoriesForGraph(…)[0]`, since the last fix of this shape was
+ * one site at a time and left thirty-one.
+ *
+ * {@link directoriesForGraph} is the honest accessor when several homes are
+ * what you want; a by-ID lookup through {@link resolveDirectories} is the
+ * answer when you want a particular one.
  */
-export function directoriesForGraph(
+export function directoryForGraph(
   root: string,
   graph: string,
   registry: GraphKindRegistry = defaultGraphKinds,
-): string[] {
-  return resolveDirectories([{ name: "(local)", root, own: true }], registry)
-    .filter((d) => d.graphs.includes(graph as GraphKind))
-    .map((d) => d.absPath);
+): string | undefined {
+  const all = matchingDirectories(root, graph, registry);
+  if (all.length > 1) {
+    throw new Error(
+      `graph "${graph}" is declared by ${all.length} directories, so there is no single ` +
+        `directory for it: ${all.map((d) => `${d.id} (${d.path})`).join(", ")}. ` +
+        `Returning the first silently is bean \`wggr\` — it resolved \`cat-harness\` to ` +
+        `\`schemas/\` and wrote 37 sidecars against the wrong subjects on a run that exited 0. ` +
+        `Use \`directoriesForGraph\` if you want all of them, or look the directory up by its ` +
+        `\`id\` through \`resolveDirectories\` if you want a particular one.`,
+    );
+  }
+  return all[0]?.absPath;
 }
 
-/**
- * The resolved records, not just their paths — for the two accessors below.
- *
- * Separate from `directoriesForGraph` rather than replacing it: a caller that
- * wants paths should not have to know what a `ResolvedDirectory` is, and the
- * two questions below need the `declaredBy` and `own` fields to answer
- * usefully when they refuse.
- */
-function resolvedForGraph(
+/** Every directory this instance declares as holding `graph`, in declaration order. */
+function matchingDirectories(
   root: string,
   graph: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphKindRegistry,
 ): ResolvedDirectory[] {
   return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
     d.graphs.includes(graph as GraphKind),
@@ -2826,57 +2793,20 @@ function resolvedForGraph(
 }
 
 /**
- * The ONE directory carrying a graph — REFUSING when there is more than one.
+ * Every directory holding `graph`, for the callers {@link directoryForGraph}
+ * now refuses.
  *
- * ## What this fixes, and what it does not undo
- *
- * `directoriesForGraph` exists because `directoryForGraph` returned the first
- * declaration silently and cost three bugs in a day. Its doc comment above
- * settles where the singular assumption belongs, and that decision stands:
- *
- * > *A caller that genuinely wants one writes `directoriesForGraph(...)[0]`,
- * > so the assumption is visible where it is made and greppable across the
- * > repo.*
- *
- * Making the assumption VISIBLE was the improvement. What `[0]` still does not
- * do is CHECK it: the call site says "I expect one home" and then quietly
- * takes the first when there are four. Greppable is not checked, and an
- * assumption nothing tests is visible only to somebody already looking.
- *
- * So this is not a reinstatement of `directoryForGraph`. That one was silent,
- * and silence is the property that got it excised — not its arity. This one
- * keeps the assumption exactly where the design put it, at the call site, and
- * turns it from hoped into enforced. A graph with several homes is a caller
- * asking the wrong question, and it says so by name rather than by returning a
- * plausible path to half the answer.
- *
- * ## It was already wrong, not merely about to be
- *
- * Measured 2026-09-20 from the `cat-harness` root: `schemas` resolves to FOUR
- * directories — `cat-harness/`, `folio-assistant-core/`, `large-datasets/` and
- * `detangle/` — and four call sites took `[0]` over it. Bean `a02m`.
- *
- * ## Absent is not the same as several
- *
- * Returns `undefined` for a graph with no home, so `?? join(root, "…")` at the
- * call site keeps working and the `declared-path-literal` discipline is
- * unchanged. It throws ONLY for the ambiguous case, which no fallback can
- * paper over: there is no sensible default for "which of these four".
+ * Empty means the instance declares the graph nowhere — the same third state
+ * its sibling documents, and for the same reason: a caller that wants the
+ * convention as a fallback says so at its own call site, where the choice is
+ * visible, rather than being handed a path to a directory that is not there.
  */
-export function soleDirectoryForGraph(
+export function directoriesForGraph(
   root: string,
   graph: string,
   registry: GraphKindRegistry = defaultGraphKinds,
-): string | undefined {
-  const found = resolvedForGraph(root, graph, registry);
-  if (found.length > 1) {
-    throw new Error(
-      `graph "${graph}" has ${found.length} declared directories, and this call site expects one: ` +
-        found.map((d) => `${d.id} (${d.declaredBy}) → ${d.absPath}`).join("; ") +
-        ". Use directoriesForGraph to scan all of them, or instanceDirectoryForGraph for the one at this instance's own root.",
-    );
-  }
-  return found[0]?.absPath;
+): string[] {
+  return matchingDirectories(root, graph, registry).map((d) => d.absPath);
 }
 
 /**
@@ -2886,7 +2816,10 @@ export function soleDirectoryForGraph(
  * ## A third question, found by reading the callers rather than by design
  *
  * `a02m` began with two shapes in mind: scan every home, or expect exactly
- * one. Both were wrong for the four `schemas` call sites, which is how this
+ * one (`directoryForGraph`, reinstated on `main` the same day with the
+ * refusing semantics this branch had built separately as
+ * `directoryForGraph` — two names for one question, resolved in favour of
+ * main's). Both were wrong for the four `schemas` call sites, which is how this
  * one was found. `check-tools`, `harness-schema-export`, `gen-schema-docs` and
  * `fsh-guts/generate-docs` all compose `join(schemasRoot(root), "skills")` or
  * `"generated"` — a path INSIDE the directory. They are not asking "who
@@ -2921,7 +2854,7 @@ export function instanceDirectoryForGraph(
   graph: string,
   registry: GraphKindRegistry = defaultGraphKinds,
 ): string | undefined {
-  const here = resolvedForGraph(root, graph, registry).filter(
+  const here = matchingDirectories(root, graph, registry).filter(
     (d) => d.own && d.scope !== "repository",
   );
   if (here.length > 1) {
@@ -2931,6 +2864,63 @@ export function instanceDirectoryForGraph(
     );
   }
   return here[0]?.absPath;
+}
+
+/**
+ * EVERY declared directory, remote entries included — the navigable set.
+ *
+ * The complement of {@link resolveDirectories}, which answers "where do I
+ * scan" and therefore drops remote graphs because there is nothing on disk to
+ * walk. This one answers **"what is declared"**, which is the question the KG
+ * viewer asks: the owner, 2026-09-20, wants the hierarchy of named subgraphs
+ * filterable *"or navigable if external/remote pointed to in the core harness
+ * schema"*, and a graph whose bytes are elsewhere is still a node in that
+ * hierarchy.
+ *
+ * Two functions rather than a flag, because the two questions have different
+ * right answers and a caller that passed the wrong flag would get a plausible
+ * list either way.
+ */
+export interface DeclaredGraph extends KgNodeLabels {
+  id: string;
+  graphs: GraphKind[];
+  declaredBy: string;
+  /** Set iff the graph is HERE. */
+  absPath?: string;
+  /** Set iff the graph is elsewhere. Exactly one of the two, always. */
+  url?: string;
+}
+
+export function declaredGraphs(
+  root: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): DeclaredGraph[] {
+  const decl = readDeclaration(root, registry);
+  if (!decl) return [];
+  return [
+    ...decl.directories.map((d) => ({
+      ...d,
+      declaredBy: decl.name,
+      absPath: resolve(rootForScope(root, d.scope), d.path),
+    })),
+    ...(decl.remoteGraphs ?? []).map((g) => ({ ...g, declaredBy: decl.name })),
+  ];
+}
+/**
+ * The local path of a declared directory, or `undefined` when the graph is
+ * REMOTE.
+ *
+ * Every consumer that needs bytes on disk goes through this, so "this graph is
+ * not in this checkout" is a case each one has to answer rather than a
+ * `string` it can assume. When `url` landed on 2026-09-20 the compiler named
+ * the whole set in nine errors across six files — which is the set that had
+ * been assuming a local path all along, and the reason `path` was made
+ * optional rather than widened to hold a URL. A field that is sometimes a path
+ * and sometimes an address is one field with two meanings, and every consumer
+ * then has to guess which it got.
+ */
+export function localPathOf(d: { path?: string; url?: string }): string | undefined {
+  return d.path;
 }
 
 // ── Graph projection ────────────────────────────────────────────

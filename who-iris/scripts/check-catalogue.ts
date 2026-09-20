@@ -41,7 +41,7 @@ const INSTANCE = resolve(import.meta.dir, "..");
  * `harness.json` is that nobody has to: bean `frs5` moved the three entries
  * here and this is now read rather than written down.
  *
- * `instanceDirectoryForGraph`, not `soleDirectoryForGraph`: this script checks
+ * `instanceDirectoryForGraph`, not `directoryForGraph`: this script checks
  * THIS instance's catalogue against THIS instance's library, and a sibling
  * declaring one of its own is not an ambiguity to refuse over. Bean `a02m`.
  */

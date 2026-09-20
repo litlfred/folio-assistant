@@ -22,7 +22,7 @@
  * The last fix of this shape was `schema-nodes.ts`, one site, and it left
  * thirty-one. A defect that is fixed one occurrence at a time is a defect that
  * comes back, because the fix is knowledge in one person's head at one moment.
- * `soleDirectoryForGraph` and `instanceDirectoryForGraph` make the assumption
+ * `directoryForGraph` and `instanceDirectoryForGraph` make the assumption
  * enforceable; this makes it enforced.
  *
  * @module scripts/tests/no-silent-first-directory
@@ -105,7 +105,7 @@ describe("a call site that wants ONE directory says so with an accessor that ref
     // the same thing this test already knows.
     expect(
       offenders,
-      "use soleDirectoryForGraph (refuses when there are several), " +
+      "use directoryForGraph (refuses when there are several), " +
         "instanceDirectoryForGraph (the one at this instance's own root), " +
         "or directoriesForGraph and scan them all",
     ).toEqual([]);

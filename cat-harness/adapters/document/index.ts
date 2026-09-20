@@ -73,7 +73,7 @@ import { log } from "../../src/core/logging.js";
 import { hasRole, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
-import { soleDirectoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 /**
  * The declared `uploads` graph for a folio, or the convention.
@@ -88,7 +88,7 @@ import { soleDirectoryForGraph } from "../../schemas/cat-harness.js";
  * impossible rather than merely empty.
  */
 function uploadsRoot(repoRoot: string): string {
-  return soleDirectoryForGraph(repoRoot, "uploads") ?? join(repoRoot, "uploads");
+  return directoryForGraph(repoRoot, "uploads") ?? join(repoRoot, "uploads");
 }
 
 const CORS = { "Access-Control-Allow-Origin": "*" };

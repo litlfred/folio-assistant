@@ -43,10 +43,10 @@ import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject.js";
  * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
-  return soleDirectoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
+  return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
 }
 
-import { soleDirectoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 export function registerTranslationTools(server: McpServer, repoRoot: string): void {
 

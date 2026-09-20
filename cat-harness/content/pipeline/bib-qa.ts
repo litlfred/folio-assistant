@@ -368,7 +368,7 @@ async function checkUrl(
 
 import type { Verifier, VerificationStatus } from "../../schemas/bib-verification";
 import { verifierLabel } from "../../schemas/bib-verification";
-import { soleDirectoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 interface VerificationEntry {
   id: string;
@@ -410,7 +410,7 @@ function localPdfPath(verif?: VerificationEntry, refId?: string): string | null 
   // Fallback: glob uploads/ for any file matching the ref id.
   if (refId) {
     // declared-path-literal: the convention fallback, at the call site so the choice is visible.
-    const uploads = soleDirectoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
+    const uploads = directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
     if (existsSync(uploads)) {
       for (const f of readdirSync(uploads)) {
         if (f.startsWith(refId)) return `uploads/${f}`;

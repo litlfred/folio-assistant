@@ -9,7 +9,7 @@
  */
 
 import { resolve } from "path";
-import { soleDirectoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 // Default: assume folio-assistant/adapters/paper/ is inside the repo
 let _repoRoot = resolve(import.meta.dir, "../../..");
@@ -47,7 +47,7 @@ export const get = {
   // this is a WRITE target: `directoriesForGraph` returns undefined for a
   // directory that is not there yet, and the ingestion queue has to be
   // creatable before anything has been dropped in it.
-  UPLOADS_DIR: () => soleDirectoryForGraph(_repoRoot, "uploads") ?? resolve(_repoRoot, "uploads"),
+  UPLOADS_DIR: () => directoryForGraph(_repoRoot, "uploads") ?? resolve(_repoRoot, "uploads"),
 };
 
 // ── Static exports for backward compatibility with tool files ────

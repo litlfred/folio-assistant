@@ -53,7 +53,7 @@ import "../../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import type { LedgerEntry, SourceLedger, SourceRef } from "../../schemas/bib-verification";
-import { soleDirectoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
 // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
@@ -61,7 +61,7 @@ const LEDGER_PATH = join(REPO_ROOT, "folio", "bib-qa-verifications.json");
 // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
 const REFERENCES_PATH = join(REPO_ROOT, "folio", "schema", "references.ts");
 // declared-path-literal: the convention fallback, at the call site so the choice is visible.
-const UPLOADS_DIR = soleDirectoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
+const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
 
 const SCHEMA_ID = "source-ledger/v1";
 

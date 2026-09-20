@@ -43,7 +43,7 @@ import { join, resolve } from "node:path";
 
 import { formatPot } from "../content/pipeline/pot-extract.js";
 import { parsePo, parsePoEntries } from "../content/pipeline/po-inject.js";
-import { soleDirectoryForGraph } from "../schemas/cat-harness.js";
+import { directoryForGraph } from "../schemas/cat-harness.js";
 import {
   STRINGS_SOURCE,
   UI_STRINGS,
@@ -62,7 +62,7 @@ const root = resolve(import.meta.dir, "..");
  * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
-  return soleDirectoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
+  return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
 }
 const argv = process.argv.slice(2);
 

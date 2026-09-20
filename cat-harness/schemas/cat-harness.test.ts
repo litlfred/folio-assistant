@@ -29,11 +29,12 @@ import {
   materialiseDirectories,
   renderableDirectories,
   DEFAULT_DIRECTORIES,
+  directoryForGraph,
+  directoriesForGraph,
   resolveDirectories,
   resolveGraphKind,
   toJsonLd,
   type ResolvedDirectory,
-  CatHarnessDeclarationSchema
 } from "./cat-harness";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
@@ -678,46 +679,105 @@ describe("the scope trap", () => {
   });
 });
 
-describe("remote graphs — a graph this instance knows about and does not hold", () => {
-  const decl = (extra: Record<string, unknown>) => ({
-    name: "x",
-    directories: [{ id: "kg", path: "skills/", graphs: ["cat-harness"] }],
-    ...extra,
-  });
-
-  it("round-trips a declared remote graph", () => {
-    const d = CatHarnessDeclarationSchema.parse(
-      decl({ remoteGraphs: [{ id: "sci", url: "https://example.org/folio-asst-sci.jsonld", graphs: ["cat-harness"] }] }),
+describe("directoryForGraph refuses an ambiguous kind rather than picking one", () => {
+  /**
+   * Bean `wggr`, as a guard rather than as a story.
+   *
+   * `directoryForGraph` returned the FIRST directory declaring a kind, under a
+   * doc comment calling itself "the accessor for the single-home case". The
+   * precondition was stated and enforced by nothing — this repository's own
+   * rule broken in one line: an unavoidable duplicate is fine, an UNCHECKED
+   * one is not.
+   *
+   * What it cost: a by-graph lookup for `cat-harness` resolves to `schemas/`
+   * rather than `skills/`, because `schemas/` declares
+   * `["schemas", "cat-harness"]` and comes first. An audit walked `schemas/`,
+   * wrote 37 sidecars against the wrong subjects, and exited 0.
+   *
+   * Fixtures rather than the real tree, deliberately. Asserting that THIS
+   * repository has an ambiguous `cat-harness` pins today's declaration: the
+   * test would go green the day somebody removed `cat-harness` from
+   * `schemas/`, which is a change to the subject rather than to the code.
+   */
+  function twoHomes(): string {
+    const root = mkdtempSync(join(tmpdir(), "amb-"));
+    mkdirSync(join(root, "a"), { recursive: true });
+    mkdirSync(join(root, "b"), { recursive: true });
+    writeFileSync(
+      join(root, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "amb",
+        directories: [
+          { id: "first", path: "a/", graphs: ["schemas", "cat-harness"] },
+          { id: "second", path: "b/", graphs: ["cat-harness"] },
+        ],
+      }),
     );
-    expect(d.remoteGraphs).toHaveLength(1);
-    expect(d.remoteGraphs[0]!.url).toBe("https://example.org/folio-asst-sci.jsonld");
+    return root;
+  }
+
+  test("two homes → it throws, and the message names both", () => {
+    const root = twoHomes();
+    try {
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/declared by 2 directories/);
+      // Naming the candidates is what makes the throw actionable rather than
+      // merely loud: the caller has to pick one, and cannot without knowing
+      // what there is to pick from.
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/first \(a\/\)/);
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/second \(b\/\)/);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
-  it("defaults to none, so an instance that declares no remote graph has an empty list rather than undefined", () => {
-    expect(CatHarnessDeclarationSchema.parse(decl({})).remoteGraphs).toEqual([]);
+  test("...and it does NOT silently return the first, which is the whole defect", () => {
+    // Stated as its own assertion because a throw and a wrong answer are the
+    // same shape to a caller that does not check: the old behaviour returned
+    // `a/` here and nothing anywhere said so.
+    const root = twoHomes();
+    try {
+      let returned: string | undefined | symbol = Symbol("not reached");
+      try {
+        returned = directoryForGraph(root, "cat-harness");
+      } catch {
+        returned = Symbol("threw");
+      }
+      expect(returned).not.toBe(join(root, "a"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
-  it("refuses a remote graph with no url — the whole point is that it says where", () => {
-    expect(
-      CatHarnessDeclarationSchema.safeParse(decl({ remoteGraphs: [{ id: "sci", graphs: ["cat-harness"] }] })).success,
-    ).toBe(false);
+  test("a single-homed kind in the SAME declaration still resolves", () => {
+    // The throw must be scoped to the ambiguous kind, not to a declaration
+    // that happens to contain one. `schemas` lives only in `a/` here.
+    const root = twoHomes();
+    try {
+      expect(directoryForGraph(root, "schemas")).toBe(join(root, "a"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
-  it("refuses a path on a remote graph — a remote graph is NOT a directory", () => {
-    // The first cut modelled this as `ContentDirectory` with an optional
-    // `path`. That loosened `bean-graph.ts` and `todo-graph.ts`, which reuse
-    // ContentDirectorySchema for their own nodes and are never remote, and the
-    // compiler said so in twenty-four errors. A remote graph has no directory.
-    expect(
-      CatHarnessDeclarationSchema.safeParse(
-        decl({ remoteGraphs: [{ id: "sci", url: "https://example.org/x.jsonld", path: "sci/", graphs: ["cat-harness"] }] }),
-      ).success,
-    ).toBe(false);
+  test("directoriesForGraph returns every home, in declaration order", () => {
+    const root = twoHomes();
+    try {
+      expect(directoriesForGraph(root, "cat-harness")).toEqual([join(root, "a"), join(root, "b")]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
-  it("a ContentDirectory still REQUIRES a path — the loosening was reverted", () => {
-    expect(
-      CatHarnessDeclarationSchema.safeParse({ name: "x", directories: [{ id: "kg", graphs: ["cat-harness"] }] }).success,
-    ).toBe(false);
+  test("a kind the instance declares nowhere is empty, not a throw", () => {
+    // The third state its sibling already documents: undeclared is not the
+    // same as declared-at-the-convention, and defaulting here would hand a
+    // caller a path to a directory that is not there.
+    const root = twoHomes();
+    try {
+      expect(directoriesForGraph(root, "voices")).toEqual([]);
+      expect(directoryForGraph(root, "voices")).toBeUndefined();
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });
