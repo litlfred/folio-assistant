@@ -248,10 +248,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T05:36:20.999Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e6d9ef699eabf3f0fe6540905e89c22ed1eb5ee9",
-  "sourceCommitSha": "e6d9ef699eabf3f0fe6540905e89c22ed1eb5ee9",
-  "sourceCommitAt": "2026-09-20T05:34:49Z",
+  "generatedAt": "2026-09-20T06:01:18.818Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5f58ec8a3182757146088b06b912fe2a044630fb",
+  "sourceCommitSha": "5f58ec8a3182757146088b06b912fe2a044630fb",
+  "sourceCommitAt": "2026-09-20T05:59:18Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
@@ -262,8 +262,8 @@
     "Process": 36,
     "SequenceFlow": 498,
     "ProcessNode": 464,
-    "Tool": 30,
-    "Schema": 55,
+    "Tool": 31,
+    "Schema": 56,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -19142,6 +19142,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/kg-validate",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "kg-validate",
+      "title": "Validate a node in the graph",
+      "description": "Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:validate"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "path",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The node to check. Its graph kind is resolved from the declared directory that contains it.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "lenient",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Flag",
+            "description": "Accept partial coverage knowingly: downgrade could-not-determine from an error to a warning.",
+            "required": false,
+            "arg": {
+              "flag": "--lenient"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Text",
+            "description": "One line per file — valid, invalid with the failing paths, or could-not-determine with the reason. Exit 0 valid, 1 invalid or undetermined, 2 misuse."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/kg-navigation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-validate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/cat-harness-schema",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "cat-harness-schema",
@@ -20675,6 +20727,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kg-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/kind-validator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "kind-validator",
+      "title": "Resolving a graph kind's **validator** — the one parameter that turns",
+      "module": "schemas/kind-validator.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kind-validator"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/lean-packages",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "lean-packages",
@@ -21965,8 +22025,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "3bd3aa6586432d5cd70a1121fdb5ec1d1058e2a7",
-    "pr": "461/merge",
-    "run": "35492039977"
+    "sha": "0a2315f8992e46bd798c122a4a91fa60ec72f346",
+    "pr": "467/merge",
+    "run": "35493062656"
   }
 }
