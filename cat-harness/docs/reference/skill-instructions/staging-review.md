@@ -230,6 +230,14 @@ inferring it.** Listing `STAGING/<slug>/` on `gh-pages` and finding
 Pages has rebuilt. Those are different claims and only one of them is yours to
 make.
 
+**LIST the directory. Do not FETCH the page.** Found by doing it wrong within
+minutes of writing this rule: asking for `STAGING/<slug>/index.html` returns
+the file, and a staging page here is ~100 KB of rendered HTML — 107,844
+characters on the first try, which is a context window spent to learn a fact
+the directory listing gives for free. The listing returns a name and a byte
+count per entry; `index.html` present and non-zero is the whole check. Request
+only the `name` and `size` fields while you are at it.
+
 ### Say how long, and come back
 
 A person handed a URL with no timing either refreshes a 404 or walks away.
