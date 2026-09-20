@@ -3,8 +3,10 @@
 title: 'docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-20T20:54:07Z
+updated_at: 2026-09-20T21:12:03Z
+parent: folio-assistant-0lmb
 ---
 
 
@@ -78,3 +80,50 @@ session picking this bean up does not start it early.
 
 Queued. Related: `lqo9` (the glossary content kind + defined-terms index) is
 pieces 2–4 of its own ask; piece 1 of it is one `auto-doc-type` served here.
+
+## 4. What `<base-url>/<harness>/docs` must be, and what its navbar must hold
+
+Owner, 2026-09-20, same session:
+
+> when you are at `<base-url>/cat-harness/docs`, you see open i the main page the
+> main/home/landing documentation page (QA every harness needs at least one
+> meaningfully popualated doc page that outlines what the harness does/gives
+> overview of main business porcess, roles, tasks, etc... .use docs-auto) you see
+> documentation about cat-harness, but in the LHS navbar, there is index of all KG
+> assets that have a docs/ with assets in it. (so you could see that who-iris has
+> docs, but maybe not litlifred/qou... , they are all sub-harness docs. this
+> should be common functionalty,)
+
+Three requirements, and they are separable:
+
+**(a) A landing page, per harness.** `<base-url>/<harness>/docs` opens that
+harness's own home documentation page — what this harness does, with an
+overview of its main business processes, roles and tasks. Built by
+**referencing** the docs-auto indexes and writing the summary around them
+(§2 and §3 above), not by pasting a generated index in.
+
+**(b) A QA check with teeth: "at least one MEANINGFULLY POPULATED page".** The
+adjective is the requirement. A landing page that exists and says nothing
+passes a file-exists check and fails the reader, which is the `xom7` shape
+again — *it looks exactly like a working one from in here*. So the check has
+to be about content: does the page reference the harness's processes, roles
+and tasks, and does it say something about them that the index does not?
+**And it must report "could not determine" as a third state**, never as a
+pass, per the CI-health and health-check rules this repo already keeps.
+
+**(c) The LHS navbar indexes every KG asset that HAS a populated `docs/`.**
+Not every declared `docs` directory — one *with assets in it*. So `who-iris`
+appears and a dependency with an empty or absent `docs/` does not. That is
+the "declare only what exists" rule (`dh4f`) applied to navigation: a nav
+entry to an empty directory is a link that resolves to nothing while reading
+as a section.
+
+**This is common functionality, not who-iris's.** It belongs in the harness
+layer beside `mount-instance-docs.ts`, which already resolves which instance
+owns which route and already refuses collisions — the navbar is the same
+question asked for a listing rather than for a mount, so the two must agree by
+construction rather than by both being right.
+
+Note the dependency direction: (c) needs nothing from docs-auto and could ship
+first; (a) and (b) are what make docs-auto worth having, since an index with
+no authored summary around it is the thing §2 exists to forbid.

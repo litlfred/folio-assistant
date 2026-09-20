@@ -72,10 +72,33 @@ export const BitstreamSchema = z
     bundle: z.string().min(1).default("ORIGINAL"),
     bytes: z.number().int().nonnegative().optional(),
     mediaType: z.string().min(1).optional(),
+    /**
+     * Pixel dimensions, where the bitstream is a raster.
+     *
+     * A THUMBNAIL bitstream is laid out by a renderer that needs to reserve
+     * space before the image loads, and a listing that guesses gets a reflow.
+     * Absent is **unmeasured**, never square and never a default: the three
+     * WHO IRIS covers are 2:3, 0.705:1 and a scanned page, so any default
+     * would be wrong about at least two of them.
+     */
+    pixelWidth: z.number().int().positive().optional(),
+    pixelHeight: z.number().int().positive().optional(),
     /** Its own materialisation state. An item may be referenced while one of its bitstreams is materialised — which is exactly the worked example. */
     materialization: MaterializationSchema,
   })
-  .strict();
+  .strict()
+  .superRefine((b, ctx) => {
+    // One dimension alone cannot be used by anything that needs a box, and
+    // reads as measured. Both or neither.
+    if ((b.pixelWidth === undefined) !== (b.pixelHeight === undefined)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          "`pixelWidth` and `pixelHeight` come together: one alone cannot reserve a box, " +
+          "and a consumer that reads it will pair it with a guess",
+      });
+    }
+  });
 export type Bitstream = z.infer<typeof BitstreamSchema>;
 
 export const CatalogueNodeSchema = z
@@ -142,7 +165,25 @@ export const CatalogueSchema = z
     /** The source system, e.g. `DSpace 7`. */
     system: z.string().min(1),
     baseUrl: z.string().url(),
+    /**
+     * ITEMS upstream — the things a person cites, not the files they are made of.
+     *
+     * Distinct from {@link totalFilesUpstream} on purpose. DSpace groups
+     * bitstreams into bundles and an item carries several, so the two differ
+     * by a factor a catalogue cannot derive: measured on WHO IRIS, 273,559
+     * items against 1,057,223 files, a ratio of 3.86. Feeding the file count
+     * into this field — which who-iris did, with a note saying so — makes
+     * every completeness fraction read low by that factor.
+     */
     totalItemsUpstream: z.number().int().nonnegative().optional(),
+    /**
+     * FILES upstream, where the source publishes that separately.
+     *
+     * A size gate's denominator is bytes, and a *coverage* claim's denominator
+     * is items; the file count answers neither on its own, which is exactly
+     * why it needs its own field rather than the nearest one.
+     */
+    totalFilesUpstream: z.number().int().nonnegative().optional(),
     totalBytesUpstream: z.number().int().nonnegative().optional(),
     /** How the numbers above were arrived at. A denominator with no provenance is a denominator nobody can check. */
     sizeBasis: z.string().min(1).optional(),

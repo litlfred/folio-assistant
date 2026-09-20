@@ -114,6 +114,78 @@
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
+  /* ── IRIS home replica ────────────────────────────────────────────────
+     Bands in the capture's order: hero, search, Recent Submissions. Measured
+     against who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf page 1.
+
+     The hero bleeds to the wrap's edges rather than to the viewport: 100vw
+     inside a centred column is the classic horizontal-scrollbar bug, and a
+     replica that scrolls sideways on a phone is a worse infidelity than a
+     hero 32px narrower than the original. */
+  .hero {
+    margin: 0 calc(-1 * var(--iris-pad)) 1.6rem;
+    padding: 3.2rem var(--iris-pad) 2.4rem;
+    /* Colour only. The real hero is a photograph of the Geneva headquarters
+       with the WHO emblem on the facade; see landingPage() for why neither is
+       here. Both stops are theme roles, not literals. */
+    background: linear-gradient(135deg, var(--iris-dark) 0%, var(--iris-accent) 55%, var(--iris-deep) 100%);
+    color: #fff;
+  }
+  .hero-in { max-width: 34rem; }
+  .hero h1 { font-size: 3.6rem; line-height: 1; margin: 0 0 1.2rem; color: #fff; font-weight: 400; }
+  .hero p { font-size: 1.06rem; line-height: 1.5; margin: 0; color: rgba(255,255,255,0.95); }
+  /* Two classes, not one: the rule .hero p is class+element and beat the bare
+     .hero-note, so the margin below was declared and never applied -- the
+     replica note sat flush against the last line of the hero paragraph and
+     read as part of it. */
+  .hero .hero-note {
+    margin: 1.6rem 0 0; font-size: 0.8rem; color: rgba(255,255,255,0.8);
+    border-top: 1px solid rgba(255,255,255,0.25); padding-top: 0.9rem;
+  }
+  .hero-note code { color: #fff; }
+
+  .searchbar { display: flex; gap: 0; margin: 1.8rem 0 0.5rem; }
+  .searchbar input {
+    flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
+    border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
+    background: #fff; color: var(--iris-muted);
+  }
+  .searchbar button {
+    padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
+    border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
+    background: var(--iris-accent); color: #fff;
+  }
+  /* The disabled attribute already communicates this to a pointer; the cursor
+     says it to a reader who hovers before clicking. */
+  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
+  .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
+
+  .subs { display: flex; flex-direction: column; gap: 1.8rem; }
+  .sub { display: flex; gap: 1.2rem; align-items: flex-start; }
+  /* A fixed column so a landscape cover and a portrait one start on the same
+     line. The IMAGE keeps its own aspect -- pixelWidth and pixelHeight are on
+     the tag, so the box is reserved before the bytes arrive and nothing
+     reflows. */
+  .sub-cover { flex: 0 0 104px; }
+  .sub-cover img { width: 104px; height: auto; display: block; border: 1px solid var(--iris-edge); }
+  .sub-cover .nocover {
+    display: block; width: 104px; height: 140px; border: 1px dashed var(--iris-edge);
+    color: var(--iris-muted); font-size: 0.78rem; text-align: center; line-height: 140px;
+  }
+  .sub-body { flex: 1; min-width: 0; }
+  .sub-title { font-size: 1.02rem; line-height: 1.35; text-decoration: underline; }
+  .sub-by { margin: 0.35rem 0 0.4rem; font-size: 0.9rem; color: var(--iris-ink); }
+  .sub-abs {
+    margin: 0 0 0.5rem; font-size: 0.93rem; line-height: 1.5;
+    /* The capture truncates each abstract under a "Show more" control. This
+       clamps instead of shipping a disclosure widget -- the owner asked for a
+       replica of the look, not working functionality. */
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .sub-abs.none { display: block; font-style: italic; color: var(--iris-muted); }
+  .sub-links { margin: 0; font-size: 0.88rem; }
+
   p.lede { font-size: 1.05rem; line-height: 1.6; max-width: 46rem; }
 
   table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
@@ -158,6 +230,11 @@
     table.reqs thead { display: none; }
     table.reqs td, table.reqs th.rid { border-bottom: none; padding: 0.2rem 0; }
     table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+    .hero h1 { font-size: 2.6rem; }
+    .searchbar { flex-direction: column; }
+    .searchbar input { border-right: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
+    .searchbar button { border-radius: 0 0 4px 4px; }
+    .sub { flex-direction: column; }
   }
 </style>
 </head>
@@ -167,8 +244,7 @@
   <strong>INGESTED COPY — not WHO, and not live.</strong>
   This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
   from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
-  <em>by reference</em>: 12 nodes of a 361.55&nbsp;GiB repository, of which
-  <strong>3 items</strong> are held here. The WHO logo is deliberately omitted.
+  <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted.
 </div></div>
 
 <header class="mast"><div class="wrap">

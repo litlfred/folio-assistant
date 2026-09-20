@@ -48,9 +48,11 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { dirname, join, resolve } from "path";
 
 import { whoThemeById } from "../themes/themes.js";
+import { bytesFor, repoRelative } from "./lib/bytes.js";
+import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
-const REPO = resolve(INSTANCE, "..");
+
 const NODES = join(INSTANCE, "catalogue", "nodes");
 const OUT = join(INSTANCE, "docs");
 /**
@@ -129,29 +131,32 @@ function encPath(rel: string): string {
   return rel.split("/").map(encodeURIComponent).join("/");
 }
 
-type Node = {
-  id: string;
-  kind: string;
-  flavour: string;
-  title: string;
-  parents: string[][];
-  libraryId?: string;
-  metadataRef?: string;
-  childCountUpstream?: number;
-  materialization?: {
-    state: string;
-    of?: string;
-    note?: string;
-    collectionBytes?: number;
-  };
-  bitstreams?: {
-    name: string;
-    bundle: string;
-    bytes: number;
-    mediaType: string;
-    materialization?: { state: string; of?: string; localPath?: string };
-  }[];
-};
+/**
+ * A node, as the SCHEMA defines it — not a hand-written restatement of it.
+ *
+ * This was a local `type Node = { … }` listing about a dozen fields. It went
+ * stale the moment `pixelWidth`/`pixelHeight` were added to `BitstreamSchema`,
+ * and the way it went stale is the argument: `tsc` reported that
+ * `materialization.note` "does not exist" on a node that has carried a `note`
+ * since the catalogue was written. A second declaration of one type does not
+ * catch drift, it REPORTS drift as an error in the wrong file.
+ */
+type Node = CatalogueNode;
+
+/**
+ * The catalogue's own header — the upstream figures, read rather than restated.
+ *
+ * `totalItemsUpstream` and `totalFilesUpstream` are SEPARATE fields, and this
+ * page is the reason they are. The catalogue used to carry the file count in
+ * the items field with a note saying so, because the statistics page publishes
+ * files and IRIS's item count was not known. It is on the home page this mocks
+ * — the search placeholder — so both are now stored, and `1,057,223 files` was
+ * hard-coded into the old landing page's prose where neither this file nor
+ * anything else would have noticed it going stale.
+ */
+function catalogue(): { totalItemsUpstream?: number; totalFilesUpstream?: number; totalBytesUpstream?: number } {
+  return JSON.parse(readFileSync(join(INSTANCE, "catalogue", "catalogue.json"), "utf-8"));
+}
 
 /**
  * Every catalogue node, in a DETERMINISTIC order.
@@ -205,20 +210,58 @@ function gb(bytes: number): string {
   return `${(bytes / 2 ** 30).toFixed(2)} GiB`;
 }
 
+/**
+ * Bytes as megabytes — or the fact that nobody measured them.
+ *
+ * `Bitstream.bytes` is OPTIONAL in the schema, and this file's hand-written
+ * copy of the type said it was required. `(undefined / 1048576).toFixed(2)`
+ * is the string `"NaN"`, so a bitstream with no recorded size would have
+ * rendered `NaN MB` on the item page — a measurement-shaped hole, which is
+ * exactly the thing `unknown`-as-a-third-state exists to stop. Nothing in the
+ * catalogue hits it today; deleting the duplicate type is what surfaced it.
+ */
+function mb(bytes: number | undefined): string {
+  return bytes === undefined ? "not recorded" : `${(bytes / 1048576).toFixed(2)} MB`;
+}
+
 /** The bytes actually on disk for an item, or undefined when there are none. */
-function assetHref(n: Node): { href: string; cdn: string; name: string; bytes: number } | undefined {
-  const b = n.bitstreams?.find((x) => x.materialization?.state === "materialized");
+function assetHref(n: Node): { href: string; cdn: string; name: string; bytes?: number } | undefined {
+  const b = n.bitstreams?.find(
+    (x) => x.bundle !== "THUMBNAIL" && x.materialization?.state === "materialized",
+  );
   if (!b) return undefined;
-  // Resolved against the repository, not against the (broken) declared path —
-  // see RAW above and bean yl5w.
-  const candidates = [
-    join(REPO, "cat-harness", "uploads", b.name),
-    join(INSTANCE, "uploads", b.name),
-  ];
-  const found = candidates.find((p) => existsSync(p));
+  // Where the bytes ARE, which is not where the catalogue says — bean `yl5w`,
+  // and the resolution order is in `lib/bytes.ts` so the workaround has one
+  // home to be deleted from.
+  const found = bytesFor(b.materialization?.localPath, b.name);
   if (!found) return undefined;
-  const rel = encPath(found.slice(REPO.length + 1));
+  const rel = encPath(repoRelative(found));
   return { href: `${RAW}/${rel}`, cdn: `${CDN}/${rel}`, name: b.name, bytes: b.bytes };
+}
+
+/**
+ * The cover thumbnail, or nothing.
+ *
+ * A THUMBNAIL-bundle bitstream **this repository rendered itself** — not the
+ * one DSpace generates upstream. `who-iris/scripts/gen-covers.ts` writes the
+ * bytes and the node records the derivation; here it is only read.
+ *
+ * Nothing is invented when it is absent, and nothing is guessed when it is
+ * present: the box comes from `pixelWidth`/`pixelHeight` on the bitstream, so
+ * a listing reserves the right space before the image loads. The three covers
+ * are 2:3, 0.705:1 and a scanned page — any default would be wrong about two
+ * of them, and a wrong box is a reflow rather than a missing image, which is
+ * the harder failure to notice.
+ */
+function coverSrc(n: Node): { src: string; w: number; h: number } | undefined {
+  const b = n.bitstreams?.find((x) => x.bundle === "THUMBNAIL");
+  const lp = b?.materialization?.localPath;
+  if (!b || !lp || b.pixelWidth === undefined || b.pixelHeight === undefined) return undefined;
+  // Declared path honoured directly here, unlike `assetHref`: these bytes are
+  // ones this repository wrote, at the path the node names, so a fallback
+  // would be covering for a bug of our own making rather than for `yl5w`.
+  if (!existsSync(join(INSTANCE, lp))) return undefined;
+  return { src: encPath(lp.replace(/^docs\//, "")), w: b.pixelWidth, h: b.pixelHeight };
 }
 
 const THEME = whoThemeById("iris-web")!;
@@ -230,6 +273,36 @@ const THEME = whoThemeById("iris-web")!;
  * the colours, for the reason `schemas/theme.ts` exists: a rule that reads
  * `var(--iris-accent)` still means something when the accent changes.
  */
+/**
+ * The sticky banner's figures, COMPUTED.
+ *
+ * They were three literals — "12 nodes of a 361.55 GiB repository, of which 3
+ * items are held here" — and by the time the covers landed the first was
+ * wrong: the catalogue had thirteen nodes and every page said twelve. That is
+ * the failure this repository keeps naming in its own prose, *a count in prose
+ * is a claim rather than evidence*, committed on the one line that appears at
+ * the top of every page.
+ *
+ * Memoised because it appears on all of them and the inputs cannot change
+ * within a run.
+ */
+let BANNER: string | undefined;
+function banner(): string {
+  if (BANNER !== undefined) return BANNER;
+  const all = nodes();
+  const held = all.filter((n) => n.flavour === "item" && assetHref(n) !== undefined).length;
+  const c = catalogue();
+  const size = c.totalBytesUpstream !== undefined ? gb(c.totalBytesUpstream) : "an unmeasured";
+  const of =
+    c.totalItemsUpstream !== undefined
+      ? `${c.totalItemsUpstream.toLocaleString("en-US")}-item`
+      : "";
+  BANNER =
+    `${all.length} nodes of a ${of} ${size} repository, of which ` +
+    `<strong>${held} item${held === 1 ? "" : "s"}</strong> ${held === 1 ? "is" : "are"} held here`;
+  return BANNER;
+}
+
 function page(title: string, crumbs: { label: string; href?: string }[], body: string): string {
   const crumbHtml = crumbs
     .map((c, i) =>
@@ -355,6 +428,78 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
+  /* ── IRIS home replica ────────────────────────────────────────────────
+     Bands in the capture's order: hero, search, Recent Submissions. Measured
+     against who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf page 1.
+
+     The hero bleeds to the wrap's edges rather than to the viewport: 100vw
+     inside a centred column is the classic horizontal-scrollbar bug, and a
+     replica that scrolls sideways on a phone is a worse infidelity than a
+     hero 32px narrower than the original. */
+  .hero {
+    margin: 0 calc(-1 * var(--iris-pad)) 1.6rem;
+    padding: 3.2rem var(--iris-pad) 2.4rem;
+    /* Colour only. The real hero is a photograph of the Geneva headquarters
+       with the WHO emblem on the facade; see landingPage() for why neither is
+       here. Both stops are theme roles, not literals. */
+    background: linear-gradient(135deg, var(--iris-dark) 0%, var(--iris-accent) 55%, var(--iris-deep) 100%);
+    color: #fff;
+  }
+  .hero-in { max-width: 34rem; }
+  .hero h1 { font-size: 3.6rem; line-height: 1; margin: 0 0 1.2rem; color: #fff; font-weight: 400; }
+  .hero p { font-size: 1.06rem; line-height: 1.5; margin: 0; color: rgba(255,255,255,0.95); }
+  /* Two classes, not one: the rule .hero p is class+element and beat the bare
+     .hero-note, so the margin below was declared and never applied -- the
+     replica note sat flush against the last line of the hero paragraph and
+     read as part of it. */
+  .hero .hero-note {
+    margin: 1.6rem 0 0; font-size: 0.8rem; color: rgba(255,255,255,0.8);
+    border-top: 1px solid rgba(255,255,255,0.25); padding-top: 0.9rem;
+  }
+  .hero-note code { color: #fff; }
+
+  .searchbar { display: flex; gap: 0; margin: 1.8rem 0 0.5rem; }
+  .searchbar input {
+    flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
+    border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
+    background: #fff; color: var(--iris-muted);
+  }
+  .searchbar button {
+    padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
+    border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
+    background: var(--iris-accent); color: #fff;
+  }
+  /* The disabled attribute already communicates this to a pointer; the cursor
+     says it to a reader who hovers before clicking. */
+  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
+  .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
+
+  .subs { display: flex; flex-direction: column; gap: 1.8rem; }
+  .sub { display: flex; gap: 1.2rem; align-items: flex-start; }
+  /* A fixed column so a landscape cover and a portrait one start on the same
+     line. The IMAGE keeps its own aspect -- pixelWidth and pixelHeight are on
+     the tag, so the box is reserved before the bytes arrive and nothing
+     reflows. */
+  .sub-cover { flex: 0 0 104px; }
+  .sub-cover img { width: 104px; height: auto; display: block; border: 1px solid var(--iris-edge); }
+  .sub-cover .nocover {
+    display: block; width: 104px; height: 140px; border: 1px dashed var(--iris-edge);
+    color: var(--iris-muted); font-size: 0.78rem; text-align: center; line-height: 140px;
+  }
+  .sub-body { flex: 1; min-width: 0; }
+  .sub-title { font-size: 1.02rem; line-height: 1.35; text-decoration: underline; }
+  .sub-by { margin: 0.35rem 0 0.4rem; font-size: 0.9rem; color: var(--iris-ink); }
+  .sub-abs {
+    margin: 0 0 0.5rem; font-size: 0.93rem; line-height: 1.5;
+    /* The capture truncates each abstract under a "Show more" control. This
+       clamps instead of shipping a disclosure widget -- the owner asked for a
+       replica of the look, not working functionality. */
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .sub-abs.none { display: block; font-style: italic; color: var(--iris-muted); }
+  .sub-links { margin: 0; font-size: 0.88rem; }
+
   p.lede { font-size: 1.05rem; line-height: 1.6; max-width: 46rem; }
 
   table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
@@ -399,6 +544,11 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
     table.reqs thead { display: none; }
     table.reqs td, table.reqs th.rid { border-bottom: none; padding: 0.2rem 0; }
     table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+    .hero h1 { font-size: 2.6rem; }
+    .searchbar { flex-direction: column; }
+    .searchbar input { border-right: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
+    .searchbar button { border-radius: 0 0 4px 4px; }
+    .sub { flex-direction: column; }
   }
 </style>
 </head>
@@ -408,8 +558,7 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   <strong>INGESTED COPY — not WHO, and not live.</strong>
   This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
   from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
-  <em>by reference</em>: 12 nodes of a 361.55&nbsp;GiB repository, of which
-  <strong>3 items</strong> are held here. The WHO logo is deliberately omitted.
+  <em>by reference</em>: ${banner()}. The WHO logo is deliberately omitted.
 </div></div>
 
 <header class="mast"><div class="wrap">
@@ -509,7 +658,7 @@ function communityList(all: Node[]): string {
   <td class="dl">${upstreamCell(n)}</td>
   <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a>
       <br><a class="cdn" href="${esc(a!.cdn)}">via CDN</a>
-      <br><code>${(a!.bytes / 1048576).toFixed(2)} MB</code></td>
+      <br><code>${esc(mb(a!.bytes))}</code></td>
   <td class="dl">${metadataCell(n)}</td>
 </tr>`,
     )
@@ -630,6 +779,87 @@ function collectionCell(n: Node, all: Node[]): string {
  * schema and an item ingested without a captured DSpace record is the ordinary
  * case upstream; it just is not the case for these three.
  */
+/**
+ * The Dublin Core record behind a node, where one was captured.
+ *
+ * Read rather than summarised into the node. The catalogue node says what
+ * EXISTS and where; the record says what the source SAYS about it, and R8 is
+ * the rule that those two never get merged — the moment a title lives in both,
+ * one of them is a copy that can drift from the capture it was transcribed
+ * from.
+ */
+function record(n: Node): { fields: { schema: string; element: string; qualifier?: string; values: { value: string; language?: string }[] }[] } | undefined {
+  if (!n.metadataRef) return undefined;
+  const abs = join(INSTANCE, n.metadataRef);
+  if (!existsSync(abs)) return undefined;
+  const raw = JSON.parse(readFileSync(abs, "utf-8"));
+  for (const k of Object.keys(raw)) if (k.startsWith("_")) delete raw[k];
+  return raw;
+}
+
+/**
+ * Every value of one qualified field, IN ORDER and never deduplicated.
+ *
+ * R2 and R3 in one function. `dc.identifier.uri` appears twice in the WPRO
+ * record — the global Handle and a regional host that was merged away — and
+ * `dc.date.accessioned` twice for the same reason. A reader that returned the
+ * first, or a unique set, would be discarding the only evidence this
+ * repository holds that a source host can disappear.
+ */
+function dc(n: Node, element: string, qualifier?: string): string[] {
+  const r = record(n);
+  if (!r) return [];
+  return r.fields
+    .filter((f) => f.schema === "dc" && f.element === element && (f.qualifier ?? undefined) === qualifier)
+    .flatMap((f) => f.values.map((v) => v.value));
+}
+
+/**
+ * When IRIS took the item in — the key its own "Recent Submissions" sorts on.
+ *
+ * The LATEST of the accessions where a record carries several, which is the
+ * one a descending sort surfaces. The WPRO item has two, five days apart:
+ * 2020-05-12 and 2020-05-17, the second being the regional-IRIS merge. Taking
+ * the earlier would order this list by original deposit, which is a different
+ * and equally defensible list — so the choice is stated rather than left to be
+ * inferred from the output.
+ *
+ * Returns `undefined` rather than a date when nothing was captured. A node
+ * with no accession is not a node accessioned at the epoch.
+ */
+function accessioned(n: Node): string | undefined {
+  const all = dc(n, "date", "accessioned");
+  return all.length ? all.slice().sort()[all.length - 1] : undefined;
+}
+
+/**
+ * Recent submissions, in the order IRIS would show them.
+ *
+ * Descending accession, **with the catalogue id as the tie-break** — and the
+ * tie-break is not decoration. `readdirSync` order already produced a
+ * generator that emitted different bytes from identical inputs once this
+ * session (`gen-iris-pages.test.ts`); a sort with ties is the same defect with
+ * a smaller blast radius. Items with no captured accession sort last, together,
+ * by id: unknown is a position, not a zero.
+ */
+export function recentOrder(items: Node[]): Node[] {
+  return items.slice().sort((a, b) => {
+    const da = accessioned(a);
+    const db = accessioned(b);
+    if (da !== db) {
+      if (da === undefined) return 1;
+      if (db === undefined) return -1;
+      return db.localeCompare(da, "en");
+    }
+    return a.id.localeCompare(b.id, "en");
+  });
+}
+
+/** A date as IRIS prints it in a submission line: the day, not the timestamp. */
+function day(iso: string | undefined): string | undefined {
+  return iso?.slice(0, 10);
+}
+
 function metadataCell(n: Node): string {
   if (!n.metadataRef) return `<span class="none">none captured</span>`;
   const abs = join(INSTANCE, n.metadataRef);
@@ -669,7 +899,7 @@ function collectionPage(c: Node, all: Node[]): string {
   <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br><code>${esc(n.libraryId ?? n.id)}</code></td>
   <td>${stateBadge(a ? "materialized" : (n.materialization?.state ?? "unknown"))}</td>
   <td class="dl">${upstreamCell(n)}</td>
-  <td class="dl">${a ? `<a href="${esc(a.href)}">Download ${esc(a.name)}</a><br><a class="cdn" href="${esc(a.cdn)}">via CDN</a><br><code>${(a.bytes / 1048576).toFixed(2)} MB</code>` : "not held here"}</td>
+  <td class="dl">${a ? `<a href="${esc(a.href)}">Download ${esc(a.name)}</a><br><a class="cdn" href="${esc(a.cdn)}">via CDN</a><br><code>${esc(mb(a.bytes))}</code>` : "not held here"}</td>
   <td class="dl">${metadataCell(n)}</td>
 </tr>`;
     })
@@ -710,7 +940,7 @@ function itemPage(n: Node, all: Node[]): string {
       (b) => `<tr>
   <td><code>${esc(b.name)}</code></td>
   <td>${esc(b.bundle)}</td>
-  <td>${(b.bytes / 1048576).toFixed(2)} MB</td>
+  <td>${esc(mb(b.bytes))}</td>
   <td>${stateBadge(b.materialization?.state ?? "unknown")}</td>
 </tr>`,
     )
@@ -775,66 +1005,172 @@ ${
  * front door" is the difference between a built visualiser and a directory of
  * source files served under a URL that promises one.
  */
+/**
+ * The IRIS home page, replicated.
+ *
+ * Owner, 2026-09-20, on finding the generic index here:
+ *
+ * > *"i would have expected to go to the harness defaiult landing page = folio
+ * > show pages (or am i wrong), or to have a designated landing page whcih
+ * > mocks the iris landing page. … go back to orinal .pdf of iris pages and
+ * > validate look."*
+ *
+ * Validated against `who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf`,
+ * page 1, rendered at 900px on 2026-09-20. Five bands, in the source's order:
+ * masthead, hero, search, Recent Submissions, footer. Everything below is
+ * either read off that capture or read out of the catalogue; nothing is
+ * remembered.
+ *
+ * ## What is copied, and what deliberately is not
+ *
+ * **No WHO logo and no hero photograph.** The real page sets its hero over a
+ * photograph of the Geneva headquarters with the WHO emblem on the facade. A
+ * replica carrying either would be indistinguishable from the real site at a
+ * glance, which is the whole reason the instruction exists. The hero is a
+ * gradient in the `iris-web` theme's own measured colours instead — owner:
+ * *"just use colors."*
+ *
+ * **The item covers ARE the publications' real covers**, and those carry the
+ * WHO emblem, because it is printed on the documents. That is content rather
+ * than chrome: the instruction was about not branding OUR page as WHO's, and
+ * the same message that gave it also asked for the covers to be extracted.
+ * Reversible in one place if that reading is wrong — delete the `<img>` in
+ * `submission()` and the covers stop being shown, without touching the
+ * catalogue that records them.
+ *
+ * ## The numbers are real and the search box is not
+ *
+ * The placeholder reads `Search through the repository's 273559 items`,
+ * transcribed from the capture, because that is the sentence IRIS shows and it
+ * is where this repository's item count came from at all. The form does
+ * nothing: there is no index behind it, and a box that looks like it searches
+ * and silently returns nothing is worse than one that says it is a replica.
+ */
 function landingPage(all: Node[]): string {
   const items = all.filter((n) => n.flavour === "item");
-  const held = items.map((n) => ({ n, a: assetHref(n) })).filter((x) => x.a);
   const communities = all.filter((n) => n.flavour === "community");
   const collections = all.filter((n) => n.flavour === "collection");
+  const held = items.filter((n) => assetHref(n) !== undefined);
+  const cat = catalogue();
 
-  const rows = held
-    .map(
-      ({ n, a }) => `<tr>
-  <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br>
-      <code>${esc(n.libraryId ?? n.id)}</code></td>
-  <td>${collectionCell(n, all)}</td>
-  <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a>
-      <br><a class="cdn" href="${esc(a!.cdn)}">via CDN</a>
-      <br><code>${(a!.bytes / 1048576).toFixed(2)} MB</code></td>
-  <td class="dl">${metadataCell(n)}</td>
-</tr>`,
-    )
-    .join("\n");
+  const submissions = recentOrder(items).map((n) => submission(n)).join("\n");
 
-  return `<h1>who-iris</h1>
+  const itemsUpstream = cat.totalItemsUpstream;
+  const filesUpstream = cat.totalFilesUpstream;
 
-<p>An instance holding a catalogue of <a href="https://iris.who.int/">WHO IRIS</a>
-modelled <strong>by reference</strong>. ${all.length} nodes —
-${communities.length} communities, ${collections.length} collection,
-${items.length} items — of a repository whose own storage report gives
-1,057,223 files and 361.55&nbsp;GiB. <strong>${held.length} items are held
-here.</strong></p>
+  return `
+<section class="hero">
+  <div class="hero-in">
+    <h1>IRIS</h1>
+    <p>The primary objective of the Institutional Repository for Information Sharing
+    (IRIS) is to provide free digital access to the scientific and technical
+    publications of the World Health Organization (WHO), including contributions from
+    its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS
+    encompasses the mandates established by the Organization&rsquo;s Governing Bodies in
+    collaboration with its Member States.</p>
+  </div>
+  <p class="hero-note">Replica. No WHO emblem, no photograph &mdash; colour only,
+  from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p>
+</section>
 
-<h2>Held assets</h2>
-<p>Each carries the asset itself and its qualified Dublin Core record, both
-downloadable.</p>
+<div class="searchbar">
+  <input type="text" disabled
+    placeholder="Search through the repository&rsquo;s ${itemsUpstream !== undefined ? itemsUpstream.toLocaleString("en-US").replace(/,/g, "") : "?"} items"
+    aria-label="Search (disabled in this replica)">
+  <button type="button" disabled>Search</button>
+</div>
+<p class="searchnote">Disabled. ${itemsUpstream !== undefined ? `<strong>${itemsUpstream.toLocaleString("en-US")}</strong> items` : "The item count"}${
+    filesUpstream !== undefined ? ` across <strong>${filesUpstream.toLocaleString("en-US")}</strong> files` : ""
+  } is what IRIS reports; this catalogue holds <strong>${items.length}</strong> of them by
+reference and <strong>${held.length}</strong> by value. There is no index behind the box,
+and a box that returned nothing quietly would be worse than one that says so.</p>
 
-<table class="items">
-<thead><tr><th>Item</th><th>Collection</th><th>Asset</th><th>Metadata record</th></tr></thead>
-<tbody>
-${rows}
-</tbody>
-</table>
+<h2>Recent Submissions</h2>
+<p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
+IRIS&rsquo;s own list sorts on. Where a record carries several accessions the latest is
+used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.</p>
+
+<div class="subs">
+${submissions}
+</div>
 
 <h2>Browse</h2>
 <ul class="kids" style="margin-left:0">
-  <li><a href="community-list.html">List of Communities</a> — the replica of
-      <code>iris.who.int/community-list</code>, with every node's materialisation state</li>
+  <li><a href="community-list.html">List of Communities</a> &mdash; the replica of
+      <code>iris.who.int/community-list</code>, with every node&rsquo;s materialisation state
+      (${communities.length} communities, ${collections.length} collections)</li>
+  <li><a href="ingestion-notes.html">Ingestion notes</a> &mdash; what ingesting these
+      documents cost, generated from the skill that records it</li>
 ${collections
-  .map((c) => `  <li><a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a> — collection</li>`)
+  .map((c) => `  <li><a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a> &mdash; collection</li>`)
   .join("\n")}
 </ul>
 
 <div class="caveat">
   <p><strong>This is the front door, not the library visualiser.</strong> The
   full <code>library/</code> visualiser is bean <code>jbx2</code> and is being
-  built separately. This page lists what is held and links onward rather than
-  becoming a second answer to the same question.</p>
-  <p>Addressing follows the owner's rule —
-  <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that
-  instantiates a directory gets a visualiser mounted under that directory's
+  built separately. This page mocks the IRIS home page and links onward rather
+  than becoming a second answer to the same question.</p>
+  <p>Addressing follows the owner&rsquo;s rule &mdash;
+  <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> &mdash; so an instance that
+  instantiates a directory gets a visualiser mounted under that directory&rsquo;s
   kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
 </div>
 `;
+}
+
+/**
+ * One row of Recent Submissions, laid out as the capture lays it out.
+ *
+ * Cover at the left, title as a link, then the author line with the publication
+ * date in parentheses, then the abstract. The capture shows a "Show more"
+ * control under a truncated abstract; this truncates in CSS and says so in the
+ * title attribute rather than shipping a disclosure widget, because the owner
+ * asked for *"a special viusalize … dont need working functionality, just
+ * links to working assets."*
+ *
+ * Every string here comes from the Dublin Core record. **Where the record is
+ * silent the row says so rather than falling back to the node's title** — R15
+ * generalised: a plausible substitute is worse than a stated absence, because
+ * a reader cannot tell it apart from a transcription.
+ */
+function submission(n: Node): string {
+  const cov = coverSrc(n);
+  const a = assetHref(n);
+  const authors = dc(n, "contributor", "author");
+  const issued = day(dc(n, "date", "issued")[0]);
+  const abstract = dc(n, "description", "abstract")[0];
+  const cite = dc(n, "identifier", "citation")[0] ?? dc(n, "identifier", "govdoc")[0];
+
+  const byline = [
+    authors.length ? esc(authors.join("; ")) : `<span class="none">no author recorded</span>`,
+    `(${[cite ? esc(cite) : undefined, issued ? `Publication Date: ${esc(issued)}` : undefined]
+      .filter(Boolean)
+      .join(", ")})`,
+  ].join(" ");
+
+  return `<article class="sub">
+  <div class="sub-cover">${
+    cov
+      ? `<a href="item-${esc(slug(n.id))}.html"><img src="${esc(cov.src)}" width="${cov.w}" height="${cov.h}"
+        alt="Cover of ${esc(n.title)}, rendered here from page 1 of the held PDF" loading="lazy"></a>`
+      : `<span class="nocover" title="no cover rendered">no cover</span>`
+  }</div>
+  <div class="sub-body">
+    <a class="sub-title" href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a>
+    <p class="sub-by">${byline}</p>
+    ${
+      abstract
+        ? `<p class="sub-abs">${esc(abstract)}</p>`
+        : `<p class="sub-abs none">No <code>dc.description.abstract</code> in the captured record.</p>`
+    }
+    <p class="sub-links">${
+      a
+        ? `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">via CDN</a> &middot; <code>${esc(mb(a.bytes))}</code>`
+        : `<span class="none">not held here</span>`
+    }</p>
+  </div>
+</article>`;
 }
 
 /** Where the skill itself is readable, for a reader who wants the full text. */

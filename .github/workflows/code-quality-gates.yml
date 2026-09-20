@@ -632,6 +632,14 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The cover thumbnails, re-rendered and compared byte for byte against
+          # what is committed -- and against the sha256 and pixel dimensions the
+          # catalogue nodes declare. This is the narrow half of `yl5w` that is
+          # this script's own to answer: a `materialized` claim it makes is a
+          # claim it checks. It also refuses a THUMBNAIL that does not declare
+          # itself derived, so a cover we rasterised cannot read as one IRIS
+          # supplied.
+          bun run iris:covers:check
           bun run translation:block-qa:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
