@@ -65,7 +65,7 @@ import { log } from "../../src/core/logging.js";
 import { hasRole, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 
 /**
  * The declared `uploads` graph for a folio, or the convention.
@@ -75,12 +75,12 @@ import { directoryForGraph } from "../../schemas/cat-harness.js";
  * before one has happened would make the first ingest impossible.
  *
  * The fallback is deliberate and belongs at the call site rather than in
- * `directoryForGraph`: this adapter CREATES the queue on a first ingest, so
+ * `directoriesForGraph`: this adapter CREATES the queue on a first ingest, so
  * resolving to nothing before one has happened would make the first ingest
  * impossible rather than merely empty.
  */
 function uploadsRoot(repoRoot: string): string {
-  return directoryForGraph(repoRoot, "uploads") ?? join(repoRoot, "uploads");
+  return directoriesForGraph(repoRoot, "uploads")[0] ?? join(repoRoot, "uploads");
 }
 
 const CORS = { "Access-Control-Allow-Origin": "*" };

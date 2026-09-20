@@ -14,7 +14,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { NOT_DERIVABLE, checkAll, checkEntry, sidecarDocument, staleSidecars } from "../check-l1-complete.ts";
+import { NOT_DERIVABLE, checkAll, checkEntry, sidecarDocument, staleSidecars, NoDeclaredLibrary } from "../check-l1-complete.ts";
 import { OCR_THRESHOLD_CHARS, planFor, usableOutlineEntries } from "../ingest-document.ts";
 
 const made: string[] = [];
@@ -246,10 +246,21 @@ describe("L1 completeness", () => {
     expect(nd.every((r) => /bean \w+/.test(r.detail))).toBe(true);
   });
 
-  test("no library/ is 'nothing to check', not 'complete'", () => {
+  test("no library/ is 'nothing to check', not 'complete' — so it REFUSES", () => {
+    // This test's NAME was always right and its assertion was not: it expected
+    // `[]`, which every caller treats as complete. Stating a rule is not
+    // enforcing it, and the gap was not theoretical — `.github/workflows/
+    // code-quality-gates.yml` runs `bun run check:l1-complete` from the
+    // REPOSITORY root, which carries no `harness.json` (the declaration is one
+    // level down, in `cat-harness/`). So the gate found no `library` graph,
+    // printed "nothing to check" and exited 0 over four documents and 1,402
+    // files. `--check` passed too: an empty report list has no stale sidecars.
+    //
+    // "Could not determine" is never a pass, everywhere else in this
+    // repository. Now here as well.
     const root = mkdtempSync(join(tmpdir(), "l1-empty-"));
     made.push(root);
-    expect(checkAll(root)).toEqual([]);
+    expect(() => checkAll(root)).toThrow(NoDeclaredLibrary);
   });
 
   test("the real corpus passes every derivable requirement", () => {

@@ -37,7 +37,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 
 import { parsePoEntries } from "../../content/pipeline/po-inject.ts";
 import {
@@ -59,7 +59,7 @@ const ROOT = join(import.meta.dir, "../..");
 // is a reader that has to be edited every time the layout moves.
 // declared-path-literal: the convention fallback for an instance that declares
 // nothing, matching `translationSourcesDir` in src/tools/translation.ts.
-const TRANSLATIONS = directoryForGraph(ROOT, "translation-sources") ?? join(ROOT, "translations");
+const TRANSLATIONS = directoriesForGraph(ROOT, "translation-sources")[0] ?? join(ROOT, "translations");
 const GENERATOR = readFileSync(join(ROOT, "scripts/kg-viewer.ts"), "utf-8");
 
 /** A double-quoted JS string literal, with escapes. */

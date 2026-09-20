@@ -36,7 +36,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join, dirname, relative } from "path";
 import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../schemas/jsonld";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 
 export interface GraphNode {
   /** The `@id` — a relative IRI, minted by `resolveLabel` for authored blocks. */
@@ -457,7 +457,7 @@ export function defaultRoots(repoRoot: string): Array<{ name: string; dir: strin
     // declared-path-literal: the convention fallback, at the call site so the
     // choice is visible. The index is built over whatever is there; a root
     // that resolves to nothing yields fewer nodes rather than an error.
-    { name: "library", dir: directoryForGraph(repoRoot, "library") ?? join(repoRoot, "library") },
+    { name: "library", dir: directoriesForGraph(repoRoot, "library")[0] ?? join(repoRoot, "library") },
   ];
 }
 

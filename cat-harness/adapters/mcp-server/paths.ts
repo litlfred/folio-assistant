@@ -7,7 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -43,14 +43,14 @@ export const CONTENT_DIR = resolve(REPO_ROOT, "content");
 // CREATES this directory on its first run, and resolving to nothing before
 // then would make the first ingest impossible rather than merely empty.
 // declared-path-literal: the convention fallback for a WRITE target.
-// `directoryForGraph` returns undefined for a directory that is not there
+// `directoriesForGraph` returns undefined for a directory that is not there
 // yet, and the ingestion queue must be creatable before anything is in it.
 // The declared `uploads` graph — the ingestion queue, before anything is L1.
 // Write-target fallback, as above.
-export const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? resolve(REPO_ROOT, "uploads");
+export const UPLOADS_DIR = directoriesForGraph(REPO_ROOT, "uploads")[0] ?? resolve(REPO_ROOT, "uploads");
 
 // declared-path-literal: the convention fallback, at the call site so the choice is visible — ingestion CREATES library/ on its first run.
-export const LIBRARY_DIR = directoryForGraph(REPO_ROOT, "library") ?? resolve(REPO_ROOT, "library");
+export const LIBRARY_DIR = directoriesForGraph(REPO_ROOT, "library")[0] ?? resolve(REPO_ROOT, "library");
 
 /** LaTeX chapters output directory. */
 export const CHAPTERS_DIR = resolve(REPO_ROOT, "chapters");
@@ -80,7 +80,7 @@ export const PREFS_FILE = resolve(REPO_ROOT, ".folio-assistant-prefs.json");
 // `beans/`. Same write-target fallback as above.
 // `REPO_ROOT` is `findContentRepoRoot()` — a FOLIO's root, not this instance's.
 // The `repoRootFor` sweep sent the fallback to that folio's PARENT.
-export const TODOS_DIR = directoryForGraph(REPO_ROOT, "todos") ?? resolve(REPO_ROOT, "todos");
+export const TODOS_DIR = directoriesForGraph(REPO_ROOT, "todos")[0] ?? resolve(REPO_ROOT, "todos");
 
 /** Feedback directory — committed to main via worktree.
  *  Structure: feedback/<paper-dir>/<rootName>.ts */

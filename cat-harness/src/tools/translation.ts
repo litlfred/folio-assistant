@@ -29,13 +29,13 @@ import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject.js";
  * tree for a locale that has none yet.
  *
  * declared-path-literal: the convention fallback, stated at the call site
- * rather than inside `directoryForGraph` so the choice is visible.
+ * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
-  return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
+  return directoriesForGraph(repoRoot, "translation-sources")[0] ?? join(repoRoot, "translations");
 }
 
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 
 export function registerTranslationTools(server: McpServer, repoRoot: string): void {
 

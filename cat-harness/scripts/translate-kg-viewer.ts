@@ -43,7 +43,7 @@ import { join, resolve } from "node:path";
 
 import { formatPot } from "../content/pipeline/pot-extract.js";
 import { parsePo, parsePoEntries } from "../content/pipeline/po-inject.js";
-import { directoryForGraph } from "../schemas/cat-harness.js";
+import { directoriesForGraph } from "../schemas/cat-harness.js";
 import {
   STRINGS_SOURCE,
   UI_STRINGS,
@@ -59,10 +59,10 @@ const root = resolve(import.meta.dir, "..");
  * tree for a locale that has none yet.
  *
  * declared-path-literal: the convention fallback, stated at the call site
- * rather than inside `directoryForGraph` so the choice is visible.
+ * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
-  return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
+  return directoriesForGraph(repoRoot, "translation-sources")[0] ?? join(repoRoot, "translations");
 }
 const argv = process.argv.slice(2);
 

@@ -54,7 +54,7 @@ import { join } from "path";
 import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 
 interface StructureSection {
@@ -363,7 +363,7 @@ async function run(): Promise<number> {
   // declared-path-literal: the convention fallback, at the call site so the
   // choice is visible. An absent directory is already handled below as
   // "nothing to ingest", which is the determined-empty third state.
-  const libraryDir = directoryForGraph(root, "library") ?? join(root, "library");
+  const libraryDir = directoriesForGraph(root, "library")[0] ?? join(root, "library");
   if (!existsSync(libraryDir)) {
     console.log(`gen-library-jsonld: no library/ under ${root} — nothing to ingest.`);
     return 0;

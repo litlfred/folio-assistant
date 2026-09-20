@@ -46,7 +46,7 @@ import { directoriesForGraph } from "../schemas/cat-harness.js";
 /**
  * EVERY directory declaring the `schemas` graph, or the convention.
  *
- * It was `directoryForGraph(...)` — the FIRST one — until 2026-09-20, and by
+ * It was `directoriesForGraph(...)[0]` — the FIRST one — until 2026-09-20, and by
  * then three directories declared the graph: `schemas/`,
  * `folio-assistant-core/schemas/` and `large-datasets/schemas/`. So the gate
  * that exists to stop a module being silently absent from the published graph

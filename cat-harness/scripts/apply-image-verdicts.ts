@@ -36,7 +36,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { AttributionSchema } from "../schemas/attribution.ts";
-import { directoryForGraph } from "../schemas/cat-harness.js";
+import { directoriesForGraph } from "../schemas/cat-harness.js";
 import {
   DESCRIBABLE_ROLES,
   ImagesSidecarSchema,
@@ -55,7 +55,7 @@ const ROOT = resolve(import.meta.dir, "..");
  */
 // declared-path-literal: the convention fallback, at the call site so the
 // choice is visible. An absent directory is reported below, not assumed empty.
-const LIBRARY = directoryForGraph(ROOT, "library") ?? join(ROOT, "library");
+const LIBRARY = directoriesForGraph(ROOT, "library")[0] ?? join(ROOT, "library");
 
 interface Verdict {
   role: ImageRole;

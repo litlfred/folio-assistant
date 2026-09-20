@@ -2122,67 +2122,49 @@ export function renderableDirectories(
   return dirs.filter((d) => d.graphs.some((g) => isRenderable(g, registry)));
 }
 
-/**
- * The absolute path of the directory holding a given graph, read from the
- * instance's declaration.
- *
- * ## The literal this exists to replace
- *
- * `check:declared-paths` found **114** places where a directory
- * `harness.json` already declares is written out in code instead —
- * `join(root, "skills")`, `join(root, "translations", loc)`,
- * `join(root, "uploads")`. Every one of them is a place a topical or
- * relocated layout breaks silently, which is the whole defect the
- * declaration exists to remove.
- *
- * `resolveDirectories` already answered this; what was missing was a call
- * short enough that nobody reaches for the literal instead. One line, one
- * argument, and the caller does not have to build a chain.
- *
- * ## Three states, and the third is why this returns `undefined`
- *
- * A graph the instance does not declare is NOT the same as one declared at
- * the conventional path. `DEFAULT_DIRECTORIES` is existence-filtered, so an
- * instance with no `uploads/` genuinely has no `uploads` graph — and
- * defaulting here would hand a caller a path to a directory that is not
- * there, which is precisely the `dh4f` defect (a consumer scans nothing and
- * reports a clean run over it). Callers that legitimately want the
- * convention as a fallback say so at their own call site, where the choice
- * is visible.
- *
- * Returns the FIRST declaration carrying the graph. A graph declared by
- * several directories is legal and increasingly common — measured 2026-09-20,
- * `schemas` is declared by THREE (`schemas/`, `folio-assistant-core/schemas/`,
- * `large-datasets/schemas/`) and `cat-harness` by five — so a caller that
- * wants all of them must use {@link directoriesForGraph}.
- *
- * **Reaching for this one when a graph has several homes is a live defect
- * shape, not a hypothetical.** It cost three separate bugs in one day:
- * `check-tools.ts` scanned `kgRoots(ROOT)[0]` and reported a real skill as
- * dangling; `workflow-skill-refs.test.ts` hardcoded five directories and had
- * been blind to three packages for months; and `schema-nodes.ts` gated one of
- * three `schemas` directories, leaving modules in the other two silently
- * absent from the published graph. Prefer the plural accessor unless the
- * single-home case is genuinely what you mean.
- */
-export function directoryForGraph(
-  root: string,
-  graph: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
-): string | undefined {
-  return resolveDirectories([{ name: "(local)", root, own: true }], registry).find((d) =>
-    d.graphs.includes(graph as GraphKind),
-  )?.absPath;
-}
 
 /**
  * EVERY directory carrying a graph, in declaration order.
  *
- * The plural of {@link directoryForGraph}, and the one to reach for by
- * default. A graph with one home returns a single-element array, so a caller
- * written against this is correct before and after a second home appears —
- * which is the whole point, since every bug listed on `directoryForGraph` was
- * a caller that was correct until one did.
+ * ## There is no singular form, and that is deliberate
+ *
+ * `directoryForGraph` returned the FIRST declaration carrying a graph. It was
+ * removed on 2026-09-20, at the owner's instruction — *"excise singular"* —
+ * rather than deprecated, because deprecation leaves the wrong thing reachable
+ * and it had already cost three bugs **in one day**:
+ *
+ * - `check-tools.ts` scanned only the first knowledge-graph root and reported
+ *   a real skill (`kg-navigation`) as a dangling `satisfies`;
+ * - `workflow-skill-refs.test.ts` hardcoded five directories and had been
+ *   blind to three whole skill packages for months;
+ * - `schema-nodes.ts` gated one of three `schemas` directories — so the gate
+ *   whose entire purpose is to stop a module being silently absent from the
+ *   published graph was itself absent from two thirds of it.
+ *
+ * Every one of those callers was **correct when written** and became wrong the
+ * moment a second directory declared the same graph. That is not a mistake
+ * three people made; it is an accessor whose shape encodes an assumption the
+ * declaration format has never guaranteed. A graph may have many homes:
+ * measured the same day, `cat-harness` had five and `schemas` three.
+ *
+ * ## A single home is now something a call site SAYS
+ *
+ * A caller that genuinely wants one writes `directoriesForGraph(...)[0]`, so
+ * the assumption is visible where it is made and greppable across the repo —
+ * the same discipline the `declared-path-literal` fallbacks already follow
+ * ("the fallback is at the call site so the choice is visible").
+ *
+ * A graph with one home returns a single-element array, so a caller written
+ * against this stays correct when a second arrives.
+ *
+ * ## Three states, and the third is why this can return empty
+ *
+ * A graph the instance does not declare is NOT the same as one declared at the
+ * conventional path. `DEFAULT_DIRECTORIES` is existence-filtered, so an
+ * instance with no `uploads/` genuinely has no `uploads` graph — and
+ * defaulting here would hand a caller a path to a directory that is not there,
+ * which is precisely the `dh4f` defect. Callers that legitimately want the
+ * convention as a fallback say so at their own call site.
  */
 export function directoriesForGraph(
   root: string,

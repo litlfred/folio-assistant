@@ -42,13 +42,13 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import type { LedgerEntry, SourceLedger, SourceRef } from "../../schemas/bib-verification";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
 const LEDGER_PATH = join(REPO_ROOT, "content", "bib-qa-verifications.json");
 const REFERENCES_PATH = join(REPO_ROOT, "content", "schema", "references.ts");
 // declared-path-literal: the convention fallback, at the call site so the choice is visible.
-const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
+const UPLOADS_DIR = directoriesForGraph(REPO_ROOT, "uploads")[0] ?? join(REPO_ROOT, "uploads");
 
 const SCHEMA_ID = "source-ledger/v1";
 

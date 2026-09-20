@@ -50,7 +50,7 @@ import { fileURLToPath } from "node:url";
 
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
-import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../schemas/cat-harness.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -58,7 +58,7 @@ import { directoryForGraph } from "../schemas/cat-harness.ts";
  * `libraryRoot` defaulted to `resolve(".")`, the CWD, which read as "the
  * instance you are standing in" and was right while the instance and the
  * repository were one directory. After the move (bean `wggr`) the CWD is the
- * REPOSITORY root, which declares nothing, so `directoryForGraph` returned
+ * REPOSITORY root, which declares nothing, so `directoriesForGraph` returned
  * undefined and the ingest refused — correctly, by its own rule, for the wrong
  * reason: "this instance declares no `library` graph" was a true sentence
  * about a directory that is not this instance.
@@ -94,7 +94,7 @@ function pyHelper(name: string): string {
  * in the first draft, as it did for the bean store an hour earlier.
  */
 export function libraryRoot(root = INSTANCE_ROOT): string {
-  const abs = directoryForGraph(root, "library");
+  const abs = directoriesForGraph(root, "library")[0];
   if (!abs) {
     throw new Error(
       "this instance declares no `library` graph in harness.json — " +

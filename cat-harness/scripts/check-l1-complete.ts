@@ -57,7 +57,7 @@ import {
   TabularRecordsSchema,
   isTabularMimetype,
 } from "../schemas/tabular-records.ts";
-import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 export type State = "met" | "unmet" | "not-derivable";
@@ -454,11 +454,39 @@ export function checkEntry(dir: string): EntryReport {
   };
 }
 
+/**
+ * Thrown when the root handed in declares nothing, so "nothing to check" would
+ * be indistinguishable from "checked, and complete".
+ *
+ * This is not defensive programming; it is a bug this gate shipped with.
+ * `resolve(".")` is the CWD, `.github/workflows/code-quality-gates.yml` runs
+ * `bun run check:l1-complete` from the REPOSITORY root, and the repository root
+ * carries no `harness.json` — the declaration lives one level down in
+ * `cat-harness/`. So the gate found no `library` graph, printed "no library/
+ * entries — nothing to check", and **exited 0 over a corpus of four documents
+ * and 1,402 files**. `--check` passed for the same reason: an empty report list
+ * has no stale sidecars.
+ *
+ * The script's own comment had the rule right — *"Absent declaration is
+ * 'nothing to check', never 'complete'"* — and then returned `[]`, which every
+ * caller treats as complete. Stating a rule is not enforcing it.
+ */
+export class NoDeclaredLibrary extends Error {}
+
 export function checkAll(root: string): EntryReport[] {
   // Declared, not composed — see `libraryRoot` in `ingest-document.ts` for why.
-  // Absent declaration is "nothing to check", never "complete".
-  const lib = directoryForGraph(root, "library");
-  if (!lib || !existsSync(lib)) return [];
+  const lib = directoriesForGraph(root, "library")[0];
+  if (!lib) {
+    throw new NoDeclaredLibrary(
+      `${root} declares no \`library\` graph. This is UNKNOWN, not complete — see NoDeclaredLibrary. ` +
+        `Run from an instance root, or pass one.`,
+    );
+  }
+  // A declared directory that is not there is the dh4f defect and is also not a
+  // pass: the declaration says a corpus should be here.
+  if (!existsSync(lib)) {
+    throw new NoDeclaredLibrary(`${root} declares a \`library\` graph at ${lib}, which does not exist.`);
+  }
   return readdirSync(lib)
     .filter((d) => statSync(join(lib, d)).isDirectory())
     .sort()
@@ -583,19 +611,29 @@ function format(reports: EntryReport[]): string {
   return out.join("\n");
 }
 
+/** This instance's root — the directory holding the declaration, one level up from `scripts/`. */
+const INSTANCE_ROOT = resolve(import.meta.dir, "..");
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const target = argv.find((a) => !a.startsWith("--"));
+  // THE INSTANCE ROOT, not the CWD. `resolve(".")` made this gate a no-op in
+  // CI — see NoDeclaredLibrary. An explicit `--root` still wins, so a folio
+  // checking its own corpus is unaffected. Declared OUTSIDE the try: the
+  // sidecar reader below needs it too, and scoping it to the try is how the
+  // first cut of this fix threw `root is not defined` at the --check path.
+  const rootArg = argv.find((a) => a.startsWith("--root="))?.slice("--root=".length);
+  const root = rootArg ? resolve(rootArg) : INSTANCE_ROOT;
   let reports: EntryReport[];
   try {
-    reports = target ? [checkEntry(target)] : checkAll(resolve("."));
+    reports = target ? [checkEntry(target)] : checkAll(root);
   } catch (e) {
     console.error(`Could not check L1 completeness: ${e instanceof Error ? e.message : e}`);
     console.error("This is NOT a pass. Treat it as unknown.");
     process.exit(2);
   }
   if (argv.includes("--check")) {
-    const stale = staleSidecars(resolve("."), reports);
+    const stale = staleSidecars(root, reports);
     if (stale.length) {
       console.error("Committed L1 verdicts are out of date:");
       for (const x of stale) console.error(`  ✗ ${x}`);
@@ -605,7 +643,7 @@ if (import.meta.main) {
     console.log(`✓ ${reports.length} committed L1 verdict(s) current`);
   }
   if (argv.includes("--write")) {
-    for (const r of reports) console.log(`wrote ${sidecarFor(resolve("."), r)}`);
+    for (const r of reports) console.log(`wrote ${sidecarFor(root, r)}`);
   }
   console.log(argv.includes("--json") ? JSON.stringify(reports, null, 2) : format(reports));
   process.exit(reports.some((r) => r.requirements.some((q) => q.state === "unmet")) ? 1 : 0);

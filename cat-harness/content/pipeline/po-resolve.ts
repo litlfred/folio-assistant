@@ -25,7 +25,7 @@ import {
   flattenDependencies,
   type HarnessConfig,
 } from "../../schemas/harness-config";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph } from "../../schemas/cat-harness.js";
 
 // ── Types ───────────────────────────────────────────────────────
 
@@ -82,7 +82,7 @@ export interface PoResolveOptions {
 function translationDir(folioRoot: string, config?: HarnessConfig | null): string {
   const explicit = config?.translation?.translationDir;
   if (explicit) return join(folioRoot, explicit);
-  const declared = directoryForGraph(folioRoot, "translation-sources");
+  const declared = directoriesForGraph(folioRoot, "translation-sources")[0];
   // declared-path-literal: the convention fallback for a folio that declares
   // neither, matching `translationSourcesDir` in src/tools/translation.ts.
   return declared ?? join(folioRoot, "translations");

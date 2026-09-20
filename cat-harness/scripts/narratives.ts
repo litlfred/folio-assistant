@@ -32,7 +32,7 @@ import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { NarrativeSchema, REJECTION_REASONS, type Narrative } from "../schemas/narrative.ts";
-import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -55,7 +55,7 @@ export interface QueueItem {
  * `not-authored` slot has nothing to look at.
  */
 export function queue(root = ROOT): QueueItem[] {
-  const lib = directoryForGraph(root, "library");
+  const lib = directoriesForGraph(root, "library")[0];
   if (!lib || !existsSync(lib)) return [];
   const out: QueueItem[] = [];
   for (const slug of readdirSync(lib).sort()) {

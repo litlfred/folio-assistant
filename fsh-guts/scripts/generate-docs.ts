@@ -50,7 +50,7 @@ import type {
 // `skills/*/package-manifest.json` are the other thing of that name, matching
 // `SkillPackageManifestSchema` exactly on all nine keys.
 import type { SkillPackageManifest } from "../schemas/types.ts";
-import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 
 /**
@@ -71,11 +71,11 @@ function kgRoot(root: string): string {
  *
  * declared-path-literal: the fallback is at the call site so the choice is
  * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why `directoryForGraph` is asked for the
+ * the schema definitions — which is why `directoriesForGraph` is asked for the
  * `schemas` one by name rather than being handed a single-home guess.
  */
 function schemasRoot(root: string): string {
-  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+  return directoriesForGraph(root, "schemas")[0] ?? join(root, "schemas");
 }
 
 
