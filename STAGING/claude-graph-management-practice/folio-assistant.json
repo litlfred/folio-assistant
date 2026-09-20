@@ -255,10 +255,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T14:01:34.878Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/77903cc631da942fdfc8c8c656a66620995e6877",
-  "sourceCommitSha": "77903cc631da942fdfc8c8c656a66620995e6877",
-  "sourceCommitAt": "2026-09-20T13:59:18Z",
+  "generatedAt": "2026-09-20T14:06:36.587Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fb7855fe73feb1b2b54bba0fc971c101495bf795",
+  "sourceCommitSha": "fb7855fe73feb1b2b54bba0fc971c101495bf795",
+  "sourceCommitAt": "2026-09-20T14:03:42Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 201,
@@ -270,7 +270,7 @@
     "Process": 49,
     "SequenceFlow": 632,
     "ProcessNode": 599,
-    "Tool": 53,
+    "Tool": 59,
     "Schema": 68,
     "GraphKind": 20,
     "Directory": 21
@@ -1992,7 +1992,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 289,
+      "instructionLines": 319,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2417,7 +2417,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
-      "instructionLines": 142,
+      "instructionLines": 199,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -25047,6 +25047,317 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/log-message"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#tool/content-graph-build",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "content-graph-build",
+      "title": "Content graph",
+      "description": "Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/content-graph.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "targetPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Content root to walk; defaults to the folio's `content/`.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Text",
+            "description": "Block count, then edge counts reported separately and never summed: EDITORIAL (`uses[]`, `interprets` — author-maintained) and FORMAL (derived from `lean.ref`). The formal line distinguishes `0` from `cache ABSENT`, so an unavailable formal graph cannot be read as a graph with no formal edges."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#skill/content-validate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/content-graph-build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#tool/content-manifest-validate",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "content-manifest-validate",
+      "title": "Content manifest validation",
+      "description": "Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/validate.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "targetPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A paper or chapter directory; absent, every paper the folio declares.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Flag",
+            "description": "Treat warnings as errors.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "issues",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Text",
+            "description": "One line per issue, with its block and file. Exit 2 means NO FOLIO WAS FOUND — could-not-determine, never valid."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#skill/content-validate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/content-manifest-validate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#tool/glossary-build",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "glossary-build",
+      "title": "Glossary build",
+      "description": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/build-glossary.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "targetPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Flag",
+            "description": "Report drift and write nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "glossary",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/glossary-build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#tool/fsh-cone",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "fsh-cone",
+      "title": "FSH dependency cone",
+      "description": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/fsh-cone.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "igRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "csv",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Write the report as CSV to this path instead of printing it.",
+            "required": false,
+            "arg": {
+              "flag": "--csv"
+            }
+          },
+          {
+            "name": "top",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Count",
+            "description": "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero.",
+            "required": false,
+            "arg": {
+              "flag": "--top"
+            }
+          },
+          {
+            "name": "history",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Count",
+            "description": "Report the blast radius over the last N commits instead of a static cone.",
+            "required": false,
+            "arg": {
+              "flag": "--history"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "cone",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Text",
+            "description": "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#skill/fhir-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/fsh-cone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#tool/translation-roundtrip-record",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "translation-roundtrip-record",
+      "title": "Record a round-trip translation verdict",
+      "description": "Write a back-translation verdict, produced by a pair of translation agents, into a block's existing translation-QA sidecar. It records a judgement rather than making one, and refuses where no sidecar exists — a round trip cannot be what decides a block is translated.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/translation-roundtrip.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "payload",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "JSON carrying the block, locale, verdict and the agent pair. Absent, the command exits 2 with its usage — measured, not assumed.",
+            "required": true,
+            "arg": {
+              "flag": "--payload"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "sidecar",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The `<block>.<locale>.translation-qa.json` written, under criterion `translation-semantic-roundtrip`. An AGENT entry replaces a previous agent entry — a re-run is a re-measurement of the same pair on the same text, not another line in a log — while a human ruling already recorded is kept, because this process does not supersede one."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/translation-roundtrip-record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#tool/l1-complete-check",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "l1-complete-check",
+      "title": "L1 source completeness",
+      "description": "Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/check-l1-complete.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "targetPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One `library/<bib-slug>/` entry. Absent, every entry the declared `library` graph holds.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/tool-types.schema.json#/$defs/Text",
+            "description": "Per requirement: met, unmet, or `not-derivable` — the third distinguishes a document that CANNOT yield an artefact from one that simply has not. Exit 2 means no `library` graph is declared anywhere, which the script states as \"This is NOT a pass. Treat it as unknown.\""
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/l1-complete-check"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-graph-management-practice/folio-assistant.jsonld#tool/tabular-csv",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "tabular-csv",
@@ -28100,8 +28411,8 @@
   ],
   "staging": {
     "branch": "claude/graph-management-practice",
-    "sha": "10872bf7ca44ce0225d35ab8afaa2d2d018711b5",
+    "sha": "73736217788be9bcea74bb9c00681109ce4baa75",
     "pr": "523/merge",
-    "run": "35515124922"
+    "run": "35515404048"
   }
 }
