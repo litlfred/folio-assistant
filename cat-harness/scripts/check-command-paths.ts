@@ -629,7 +629,15 @@ function formatReport(r: CommandPathReport): string {
     out.push("      `--held` lists them. The basis is a LAYOUT, not a declaration — see FOLIO_OWNED.");
   }
   if (r.dead.length === 0) {
-    out.push("  ✓ every repository-relative path inside a fenced command resolves");
+    // The claim names its FRAME, because bean `7iog` is what a claim
+    // without one costs: `check:workflow-paths` said "every workflow script
+    // path resolves" over three calls that aborted their step, and the
+    // sentence was true of the repository and false of the run. Every path
+    // here is judged from the repository root, which is where a reader of a
+    // doc or a hook stands — and is NOT where a workflow step stands.
+    out.push("  ✓ every repository-relative path resolves — FROM THE REPOSITORY ROOT,");
+    out.push("    in prose, printed commands and hooks. A workflow step runs somewhere");
+    out.push("    else; that frame is `bun run check:workflow-paths` (bean `7iog`).");
     return out.join("\n");
   }
   for (const d of r.dead) {
