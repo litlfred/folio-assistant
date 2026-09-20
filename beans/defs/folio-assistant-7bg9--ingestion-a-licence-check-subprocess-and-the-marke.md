@@ -114,3 +114,24 @@ how the gap becomes permanent.
 - `uploads` is `holds: state`, `library` is `holds: content` — the licence
   question sits exactly on that boundary, which is why it belongs in the
   pipeline rather than beside it
+
+## RULED, owner, 2026-09-20 — EARLY
+
+> "3 early"
+
+The licence check goes **before `Process_ExtractStructure`**, between "a file
+lands in `uploads/`" and any derivation — not beside `Process_L1Gate`.
+
+That is the cheaper failure by the measure recorded above: `library/` is
+`holds: content`, so anything derived before the check is COMMITTED, and
+removing it afterwards is a deletion nobody may take on their own initiative.
+Refusing a file with nothing derived costs a refusal; refusing it after
+derivation costs a cleanup that needs permission.
+
+Consequence to carry into the implementation: an early gate sees only what is
+on the file itself — declared licence metadata, a LICENSE sibling, whatever the
+uploader supplied. It cannot use anything `ExtractStructure` would have found.
+If a licence can only be determined from extracted structure, the early gate
+must report **undetermined** and let the pipeline proceed to a second check,
+rather than passing it. Undetermined is never rendered as cleared; that rule
+holds here as everywhere else in this repository.
