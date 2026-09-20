@@ -39,6 +39,14 @@
  * per class, and `--auto` narrows the gate to the ones that fire without
  * somebody pressing a button.
  *
+ * `--strict` has NO package.json alias on purpose. A named script nothing
+ * runs is the defect bean `ot9a` records — `translate-kg-viewer:check` was red
+ * on `main` while CI was green, because nothing ran it — and `gates.test.ts`
+ * now fails on exactly that. An alias for a flag combination that no workflow
+ * uses yet is aspiration, not a check, and it is not what `SCRIPT_EXEMPTIONS`
+ * is for. Whoever wires the strict gate when coverage reaches zero adds the
+ * script and the workflow step in the same change.
+ *
  * Usage:  bun run check:workflow-coverage [--auto] [--strict]
  * Exit:   0 clean · 1 a declaration names a workflow that is not there
  *         2 a workflow could not be read — COULD NOT DETERMINE
