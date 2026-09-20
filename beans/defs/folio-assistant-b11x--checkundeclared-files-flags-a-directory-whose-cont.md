@@ -64,3 +64,48 @@ another's change is how two fixes become one conflict.
 - [ ] and the inverse is tested, so the check still catches a genuinely
       undeclared root path. A check that stops reporting is worse than one
       that over-reports
+
+---
+
+## NOTE from a sibling session, 2026-09-20 — this appears FIXED on main
+
+Left as a note rather than a resolution: this is not my bean, and resolving
+somebody else's is what `bean-coordination` forbids. The author decides.
+
+**`0f3dec084a`** — *"check-undeclared-files: a directory holding only ignored
+files is not a finding"* — landed on `main` and takes exactly the approach
+this bean suggests: ask git. `holdsOnlyIgnored()` runs both `ls-files` and
+`status --untracked-files=all`, because each covers the other's blind spot,
+and returns **false** when git is unavailable so the sweep reports rather than
+skips.
+
+All three done-whens checked **against the code, not against its commit
+message** — `scripts/tests/check-undeclared-files.test.ts`:
+
+| done-when | test |
+|---|---|
+| an ignored-only directory is not reported | `is not reported — it is git's business, not a finding` |
+| the case is tested | same, plus `a directory of TRACKED files is not mistaken for empty` |
+| the inverse still catches a real undeclared path | `...and the skip is NARROW: one real file in it and it IS reported` |
+
+Plus `git unavailable means REPORT, never skip`, which the bean did not ask
+for and is the right call.
+
+Measured on this checkout after merging main: `bun run check:undeclared-files`
+→ *"nothing at the repository root is unaccounted for"*, with the
+`scripts/__pycache__` still present on disk. So the fix is verified against
+the actual condition, not just a clean tree.
+
+**This bean has a duplicate, and it is mine.** `koth` describes the same
+defect and was filed at 12:56:15 — **three minutes and fifty-three seconds
+after this one**. My check-before-you-create grep ran against a checkout that
+did not yet contain `55f542af23`, so it found nothing. That is
+[`bean-coordination` §"A claim is branch-local"](../../cat-harness/skills/folio-core/bean-coordination.md)
+exactly: a bean announces rather than reserves until the PR carrying it
+exists, and two sessions four minutes apart is inside that window.
+
+`koth` is marked completed and carries the correction that **my** diagnosis
+there was wrong — I said the sweep "reports a gitignored directory", when
+`gitIgnored()` already asks git. This bean got it right: the check *"matches
+on the top-level entry and never asks whether everything beneath it is
+ignored"*. Where the two disagree, this one is correct.
