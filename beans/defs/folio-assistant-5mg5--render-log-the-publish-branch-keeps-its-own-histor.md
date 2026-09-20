@@ -73,7 +73,12 @@ pull requests — is how that gap looks from the far side.
 - [x] a removal and its record are ONE commit, in both removal paths
 - [x] `workflow-yaml.test.ts` asserts the wiring by job, so a future edit
       cannot silently drop a call
-- [ ] merged, and one real deploy observed writing an entry
+- [x] **a real deploy observed writing an entry** — run 35497542549,
+      2026-09-20T07:43:17Z, `_render-log/2026-09-20.jsonl` on `gh-pages`:
+      `rendered STAGING/claude-sleepy-babbage-ls90iz`, read back with
+      `render-log.ts --read` (exit 0, 1 entry, 0 skipped). The wiring is not
+      inferred from tests; it ran.
+- [ ] merged
 - [ ] the agent-memory entry, once there is room — bean `lnpe`. A six-line
       node evicted a TRAP from BOTH `ci-health-watcher` and
       `platform-boundary-guard`, so it was dropped rather than bought by
