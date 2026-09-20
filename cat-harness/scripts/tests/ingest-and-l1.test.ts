@@ -10,11 +10,19 @@
  * @module scripts/tests/ingest-and-l1
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { NOT_DERIVABLE, checkAll, checkEntry, sidecarDocument, staleSidecars } from "../check-l1-complete.ts";
+import {
+  NOT_DERIVABLE,
+  checkAll,
+  checkEntry,
+  expiredExceptions,
+  sidecarDocument,
+  staleSidecars,
+} from "../check-l1-complete.ts";
+import { NARRATIVE_BEARING } from "../narratives.ts";
 import { OCR_THRESHOLD_CHARS, planFor, usableOutlineEntries } from "../ingest-document.ts";
 
 const made: string[] = [];
@@ -153,7 +161,7 @@ describe("which rung a document needs", () => {
 });
 
 /** A library entry with every derivable requirement satisfied. */
-function entry(over: Partial<Record<"structure" | "manifest", unknown>> = {}, opts: { sections?: number; blocks?: number } = {}): string {
+function entry(over: Partial<Record<"structure" | "manifest" | "images", unknown>> = {}, opts: { sections?: number; blocks?: number } = {}): string {
   const root = mkdtempSync(join(tmpdir(), "l1-"));
   made.push(root);
   const dir = join(root, "doc");
@@ -188,6 +196,30 @@ function entry(over: Partial<Record<"structure" | "manifest", unknown>> = {}, op
   writeFileSync(
     join(dir, "manifest.jsonld"),
     JSON.stringify(over.manifest ?? { "@id": "x", "@type": ["folio:SourceDocument"], contains: ["a"], provenance: {} }),
+  );
+  // Bean `d5f1` shipped, so `image-descriptions` is CHECKED rather than
+  // not-derivable, and a fixture standing for "every derivable requirement
+  // satisfied" has to carry it — the same argument the `nso8` comment above
+  // makes for technical metadata. One page scan: geometry settles its role
+  // and a scan needs no narrative, so this is a complete entry rather than a
+  // described one.
+  writeFileSync(
+    join(dir, "images.json"),
+    JSON.stringify(
+      over.images ?? {
+        $schema: "folio-document-images/v1",
+        doc_id: "doc",
+        images: [
+          {
+            id: "img-p001-1",
+            file: "images/img-p001-1.png",
+            page: 1,
+            role: "page-scan",
+            basis: { method: "geometry", coverage: 0.99, imagesOnPage: 1, page: 1 },
+          },
+        ],
+      },
+    ),
   );
   return dir;
 }
@@ -242,7 +274,7 @@ describe("L1 completeness", () => {
     // The third state is the reason this gate can ship before the nine INGEST
     // arms exist. If any of these ever reads `met`, the gate is lying.
     const nd = checkEntry(entry()).requirements.filter((r) => r.state === "not-derivable");
-    expect(nd.map((r) => r.name).sort()).toEqual(NOT_DERIVABLE.map(([n]) => n).sort());
+    expect(nd.map((r) => r.name).sort()).toEqual(NOT_DERIVABLE.map((nd) => nd.name).sort());
     expect(nd.every((r) => /bean \w+/.test(r.detail))).toBe(true);
   });
 
@@ -340,5 +372,140 @@ describe("the verdict as a committed sidecar", () => {
     const all = checkAll(root);
     expect(all, "no `library` declared — staleness over nothing proves nothing").toBeDefined();
     expect(staleSidecars(root, all ?? [])).toEqual([]);
+  });
+});
+
+
+describe("the third state has to EXPIRE — bean `pn6j`", () => {
+  test("an expired claim is REPORTED: the probe exists, so the arm runs", () => {
+    // The failure this guards, measured 2026-09-20: `image-descriptions` sat
+    // in NOT_DERIVABLE naming `d5f1` while all four library entries carried a
+    // complete `images.json` — 2, 20, 121 and 21 images, every one with a
+    // role and a basis. The gate reported "no arm builds this yet" and
+    // checked none of it.
+    const found = expiredExceptions(["/x", "/y"], (d, f) => d === "/y" && f === "transcript.json");
+    expect(found.map((e) => e.name)).toEqual(["audio-transcripts"]);
+    expect(found[0].bean).toBe("1r0p");
+    expect(found[0].found).toBe("/y");
+  });
+
+  test("nothing expires when no probe is present", () => {
+    expect(expiredExceptions(["/x"], () => false)).toEqual([]);
+  });
+
+  test("the real corpus has no expired claim", () => {
+    // THE RATCHET. When an arm lands, this fails until its requirement moves
+    // into the checked set — which is what "shrinks by work rather than by
+    // editing" was always supposed to mean.
+    const root = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
+    const lib = join(root, "library");
+    const dirs = readdirSync(lib).map((d) => join(lib, d)).filter((d) => statSync(d).isDirectory());
+    expect(dirs.length).toBeGreaterThan(0);
+    expect(expiredExceptions(dirs, (d, f) => existsSync(join(d, f)))).toEqual([]);
+  });
+
+  test("every remaining entry carries a PROBE, so it can expire at all", () => {
+    // An entry with no probe is one that can never expire — the state the
+    // whole corpus was in before this change.
+    for (const nd of NOT_DERIVABLE) {
+      expect(nd.probe.trim().length).toBeGreaterThan(0);
+      expect(nd.bean.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  test("`image-descriptions` is CHECKED now, not excused", () => {
+    expect(NOT_DERIVABLE.map((nd) => nd.name)).not.toContain("image-descriptions");
+  });
+});
+
+describe("the bearing list is SHARED with the review queue", () => {
+  test("this gate reads `images.json` because the queue says it is bearing", () => {
+    // The list and the shape were RESTATED here — same three files, same
+    // `doc.narrative` single-narrative read — and went stale at the same time
+    // and for the same reason as the queue's copy did (bean `04vl`): 24
+    // drafts live at `images[i].narrative` in `images.json`, which has no
+    // top-level `narrative` at all. One rule in two places is two rules.
+    expect(NARRATIVE_BEARING).toContain("images.json");
+  });
+
+  test("the corpus's drafts are COUNTED, not reported as absent", () => {
+    // The symptom: "no narrative-bearing file in this entry", four times,
+    // over four entries holding 24 drafts between them.
+    const root = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
+    const reports = checkAll(root);
+    expect(reports).toBeDefined();
+    const details = reports!
+      .map((r) => r.requirements.find((q) => q.name === "narrative-review")?.detail ?? "")
+      .join(" | ");
+    const drafts = [...details.matchAll(/(\d+) draft/g)].reduce((n, m) => n + Number(m[1]), 0);
+    expect(drafts).toBeGreaterThan(0);
+  });
+});
+
+
+describe("image-descriptions has three states, and the third is not a pass", () => {
+  /** The `image-descriptions` verdict for a fixture with this sidecar. */
+  const imgState = (images: unknown): { state: string; detail: string } => {
+    const r = checkEntry(entry({ images })).requirements.find((q) => q.name === "image-descriptions");
+    return { state: r?.state ?? "(absent)", detail: r?.detail ?? "" };
+  };
+
+  const base = { $schema: "folio-document-images/v1", doc_id: "doc" };
+  const scan = {
+    id: "i1",
+    file: "images/i1.png",
+    page: 1,
+    role: "page-scan",
+    basis: { method: "geometry", coverage: 0.99, imagesOnPage: 1, page: 1 },
+  };
+
+  test("`images: null` is NOT-DERIVABLE, carrying the sidecar's own reason", () => {
+    // The sidecar's could-not-determine, passed through rather than
+    // flattened. `unmet` would ask somebody to fix a document that is not
+    // broken; `met` would be the pass-by-default this gate exists against.
+    const r = imgState({ ...base, images: null, undetermined_reason: "no backend available" });
+    expect(r.state).toBe("not-derivable");
+    expect(r.detail).toContain("no backend available");
+  });
+
+  test("an image with an UNDETERMINED role is unmet — nobody judged it", () => {
+    // The third state one level down: whether this image needs describing is
+    // unknown, so counting it as described is a pass by default.
+    const r = imgState({ ...base, images: [{ id: "i1", file: "images/i1.png", role: "undetermined" }] });
+    expect(r.state).toBe("unmet");
+    expect(r.detail).toContain("undetermined role");
+  });
+
+  test("a DESCRIBABLE image with no narrative is unmet", () => {
+    const logo = {
+      id: "i2",
+      file: "images/i2.png",
+      role: "logo",
+      basis: {
+        method: "inspection",
+        by: { kind: "agent", id: "claude", model: "claude-opus-5" },
+        at: "2026-09-20",
+        saw: "an organisation emblem",
+        page: 1,
+      },
+    };
+    expect(imgState({ ...base, images: [scan, logo] }).state).toBe("unmet");
+  });
+
+  test("a page scan needs no narrative — geometry settles it", () => {
+    // 140 of this corpus's 164 images are page scans. Requiring a description
+    // of each would be wrong six times out of seven.
+    expect(imgState({ ...base, images: [scan] }).state).toBe("met");
+  });
+
+  test("a missing images.json is UNMET, not not-derivable", () => {
+    // The arm exists now, so its absence is a defect in this entry rather
+    // than a gap in the platform. That distinction is the whole point of
+    // moving the requirement out of NOT_DERIVABLE.
+    const dir = entry();
+    rmSync(join(dir, "images.json"));
+    const r = checkEntry(dir).requirements.find((q) => q.name === "image-descriptions");
+    expect(r?.state).toBe("unmet");
+    expect(r?.detail).toContain("pdf-images.py");
   });
 });

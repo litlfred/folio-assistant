@@ -150,26 +150,38 @@ describe("this repository's own instances", () => {
     expect(r.nodeCount).toBeGreaterThan(10);
   });
 
-  test("the undeclared-kind finding is REPORTED and does not fail the verdict", async () => {
-    // Deliberate, and it is this repo's own rule: a check becomes an error
-    // once its count is zero. The count is 16 because `collectGraphKinds()`
-    // emits the global registry into every instance. Pinning the finding as
-    // non-fatal is what lets the check ship before that is settled — and this
-    // test is what will fail, correctly, on the day somebody makes it fatal
-    // without clearing the count.
+  test("an instance publishes only the kinds it declares — the count is now ZERO", async () => {
+    // THIS TEST PREDICTED ITS OWN REPLACEMENT. It read, in #463:
+    //
+    //   "a check becomes an error once its count is zero. The count is 16
+    //    because `collectGraphKinds()` emits the global registry into every
+    //    instance ... this test is what will fail, correctly, on the day
+    //    somebody makes it fatal without clearing the count."
+    //
+    // Bean `3jj9` cleared the count: `collectGraphKinds` now takes a root and
+    // filters by `declaredKinds`, so bootstrap publishes the one kind it
+    // declares instead of all 16. The finding is fatal from the same change,
+    // which is the repository's standing rule applied rather than deferred.
     const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
     const r = await renderInstance(boot);
     expect(r.verdict).toBe("rendered");
-    expect(r.undeclared.length).toBeGreaterThan(0);
-    expect(r.undeclared).toContain("beans");
+    expect(r.undeclared).toEqual([]);
+    // `beans` was the named example of a kind bootstrap advertised and could
+    // not reach. Keeping it named guards the specific regression.
+    expect(r.undeclared).not.toContain("beans");
   });
 
-  test("bootstrap declares far fewer kinds than it publishes — the measurement", async () => {
-    // The 18-vs-1 shape, asserted as an INEQUALITY rather than a pair of
-    // counts: pinning 1 and 16 would fail the day either legitimately moves,
-    // and what matters is that the gap exists and is visible.
+  test("...and the guard is not vacuous — bootstrap really does publish kinds", async () => {
+    // `undeclared: []` is satisfied trivially by publishing nothing at all,
+    // which is the `dh4f` defect this whole check exists to refuse. So assert
+    // the positive half too.
     const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
     const r = await renderInstance(boot);
-    expect(r.published.length).toBeGreaterThan(r.declared.length);
+    expect(r.published.length).toBeGreaterThan(0);
+    expect(r.declared.length).toBeGreaterThan(0);
+    // Was `published > declared` — the 16-vs-1 gap, asserted as an inequality
+    // so it would survive either number moving. The gap is closed, so the
+    // relation that matters now is containment.
+    for (const k of r.published) expect(r.declared).toContain(k);
   });
 });

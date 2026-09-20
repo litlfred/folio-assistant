@@ -11,7 +11,7 @@
     <bpmn:participant id="Participant_Process_InitializeHarness" name="Initialize a harness" processRef="Process_InitializeHarness"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_InitializeHarness" name="Initialize a harness" isExecutable="false">
-    <bpmn:documentation>THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS. An Initiator that has read bootstrap/README.md is at its start event and has nowhere else to begin. The second diagram here, `log-message`, is an independent SUB-PROCESS: it is called from a step and is never an entry point, so it cannot be confused with this one.
+    <bpmn:documentation>THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS. An Initiator that has read bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces.
 
 PRECONDITION: the Initiator understands tasks, roles, processes, actors and skills, has been told it is an Initiator, and is at the start of this process. BPMN has no precondition element and this schema adds none yet, so it is stated here in the documentation and tracked as bean `lv3j`.
 
@@ -66,7 +66,7 @@ already is">
       <bpmn:documentation>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `harness.json` present and parsing is the whole test, and `kg-navigation` says what the three answers mean — absent (not an instance yet, which is this process's case), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either.
 
 Before reading the chosen harness rather than after, deliberately: if the location is spoken for there is nothing to learn from the harness, and fetching it first only makes the failure more expensive.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_AlreadyInitialized" name="Already initialized?"/>
@@ -74,7 +74,7 @@ Before reading the chosen harness rather than after, deliberately: if the locati
     <bpmn:task id="A_ReadDeclaration" name="Read the harness's
 declaration and instructions">
       <bpmn:documentation>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `&lt;stub&gt;/docs/bootstrap/initialization.md`, the same for every harness, which is what lets an Initiator be pointed at one nobody has written yet.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:callActivity id="A_LogInstallStart" name="Log the start
@@ -90,7 +90,7 @@ A callActivity rather than a task: `log-message` is an independent sub-process, 
     <bpmn:task id="A_Install" name="Follow them, at
 each location">
       <bpmn:documentation>The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what f-a-sci or smart-guidelines requires, and does not need to.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:callActivity id="A_LogFailure" name="Log the failure" calledElement="Process_LogMessage">

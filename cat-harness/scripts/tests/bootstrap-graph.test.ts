@@ -42,6 +42,28 @@ describe("pure, because committed-and-gated demands it", () => {
     expect(a).toBe(b);
   });
 
+  test("the graph is ORDERED, so two machines agree byte for byte", async () => {
+    // The test above compares two builds in ONE process against ONE
+    // filesystem, so it compares an ordering against itself and cannot fail
+    // on ordering at all. It is a real guard for timestamps and a guard that
+    // structurally cannot fire for this.
+    //
+    // Bean `3jj9`, measured 2026-09-20: the collectors walk directories, so
+    // node order was `readdirSync` order — the FILESYSTEM's, not the
+    // repository's. The committed file held skills as `bootstrap-kg-
+    // navigation, discussion, confirm-harness, log-message`, stable on the
+    // container that wrote it and different on CI. `it is current` compares
+    // bytes, so it passed locally and failed in CI on identical inputs.
+    //
+    // Asserting the ORDER rather than re-running the build is the point: this
+    // fails on the machine that introduces the regression, not only on the
+    // one that disagrees with it later.
+    const doc = await buildBootstrapDocument();
+    const ids = (doc["@graph"] as Array<Record<string, unknown>>).map((n) => String(n["@id"]));
+    expect(ids.length).toBeGreaterThan(0); // not vacuous
+    expect(ids).toEqual([...ids].sort());
+  });
+
   test("it carries no timestamp and no commit SHA", async () => {
     // A committed generated file CANNOT carry its own commit: the best it
     // could name is the commit before the one containing it, which is wrong by
@@ -73,6 +95,30 @@ describe("what it contains, and what it admits it did not look at", () => {
     // worth defending.
     const doc = await buildBootstrapDocument();
     expect(skillIds(doc)).toEqual(skillFilesOnDisk());
+  });
+
+  test("bootstrap publishes only the graph kinds it DECLARES", async () => {
+    // Bean `3jj9`. `collectGraphKinds` emitted the UNIVERSAL registry into
+    // every instance, so bootstrap — whose premise is that it knows nothing
+    // yet — published 16 GraphKind nodes while its declaration names one.
+    // It advertised `folio`, `voices` and `library` (core's) and `beans` and
+    // `todos` (cat-harness's), none of which it can reach.
+    //
+    // Derived from the declaration rather than pinned to "cat-harness", for
+    // the reason the skill test above gives: a literal breaks on the change
+    // that was correct. What is defended is the RELATION — published is a
+    // subset of declared — not today's contents.
+    const doc = await buildBootstrapDocument();
+    const kinds = (doc["@graph"] as Array<Record<string, unknown>>)
+      .filter((n) => String(n["@type"]).endsWith("#GraphKind"))
+      .map((n) => String(n["name"]));
+    const declared = new Set(
+      (JSON.parse(readFileSync(join(BOOTSTRAP, "harness.json"), "utf-8")) as {
+        directories?: Array<{ graphs?: string[] }>;
+      }).directories?.flatMap((d) => d.graphs ?? []) ?? [],
+    );
+    expect(kinds.length).toBeGreaterThan(0); // not vacuous
+    for (const k of kinds) expect([...declared]).toContain(k);
   });
 
   test("the instance-bound collectors are named as NOT looked for", async () => {

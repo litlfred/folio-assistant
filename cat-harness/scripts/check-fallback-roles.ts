@@ -323,14 +323,17 @@ if (import.meta.main) {
   }
 
   if (circular.size > 0) {
-    // REPORTED, NOT GATED — and the precedent is this repo's own
-    // `check:agents-xref`, which "had a backlog and rightly reported before
-    // it gated". Gating today would fail CI on a contradiction whose
-    // correct side is not yet decided: either `lean-mcp` should not
-    // `requires` a local toolchain (likely — it is an `mcp-probe` against a
-    // service, and a remote Lean is the whole point of the fallback), or
-    // the fallback is wrong. Bean `folio-assistant-sym3` carries both
-    // readings. Whichever it is, the FINDING is sound.
+    // GATED as of 2026-09-20, once the one instance was resolved.
+    //
+    // It shipped reporting-only for a few hours, on `check:agents-xref`'s
+    // precedent — "had a backlog and rightly reported before it gated" —
+    // because the finding was sound while the correct SIDE was not yet
+    // decided. The owner decided it: `lean-mcp` does not require a local
+    // toolchain (its Lean runs server-side; detection is an `mcp-probe`),
+    // so that requirement came off and the backlog is empty.
+    //
+    // An empty backlog is the whole reason this can gate now. A check that
+    // fails on the day it lands teaches people to ignore it.
     const skills = new Set([...circular.values()].flatMap((v) => [...v]));
     console.log(
       `\n⚠ ${circular.size} fallback(s) can never fire — the substitute needs the missing ` +
@@ -344,8 +347,11 @@ if (import.meta.main) {
     console.log(
       `  \`probeAll\` computes present = requiresMet && probe(…), so a substitute that\n` +
         `  transitively requires the absent capability is absent in exactly the case it\n` +
-        `  exists for. Reported rather than gated while the correct side is undecided.`,
+        `  exists for — the fallback can never fire.\n\n` +
+        `  Fix ONE of the two: drop the requirement if the substitute does not really\n` +
+        `  need the missing thing, or stop calling it a fallback if it does.`,
     );
+    process.exit(1);
   }
 
   if (bad.length === 0) {
