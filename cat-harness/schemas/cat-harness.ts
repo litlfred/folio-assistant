@@ -2523,12 +2523,33 @@ export function ownDirectories(
       own: false,
     })).filter((d) => existsSync(d.absPath));
   }
-  return decl.directories.map((dir) => ({
-    ...dir,
-    declaredBy: decl.name,
-    absPath: resolve(link.root, dir.path),
-    own: link.own === true,
-  }));
+  return decl.directories
+    // A REPOSITORY-scoped entry is not inherited, for the reason
+    // `resolveDirectories` gives: a dependency's repository is a different
+    // checkout, so inheriting its entry points every consumer at somebody
+    // else's store. Stated in both resolvers because both are entry points.
+    .filter((dir) => dir.scope !== "repository" || link.own === true)
+    .map((dir) => ({
+      ...dir,
+      declaredBy: decl.name,
+      // THROUGH `rootForScope`, not `resolve(link.root, …)`. This function was
+      // the third consumer of a declared path and the one that did not go
+      // through the one place a scope turns into a directory — which made
+      // `rootForScope`'s own doc comment ("every consumer … goes through
+      // here") false from the day this was written.
+      //
+      // The consequence was silent and it was `dh4f`. `cat-harness/harness.json`
+      // declares `bootstrap/skills/` at `scope: "repository"`; resolving it
+      // against the INSTANCE gave `cat-harness/bootstrap/skills`, which is not
+      // there, and `resolveSkillDirs` drops a directory that does not exist.
+      // So `skill_fetch` answered "package not found" for every bootstrap
+      // skill while the declaration naming them was correct and present, and
+      // nothing reported a problem: a clean pass over an empty set. Eight
+      // entries here carry `scope: "repository"`; `bootstrap` is the one that
+      // was harmed, because it is the only kg-only one among them.
+      absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
+      own: link.own === true,
+    }));
 }
 
 // ── Materialisation ─────────────────────────────────────────────
