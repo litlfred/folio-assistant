@@ -189,3 +189,22 @@ Verified: `check:workflow-refs` 0 with 10/10 coverage on the diagram,
 `check:workflow-policy` 0, `render:bpmn:check` clean, `translate-bpmn:check`
 clean across 5 locales, `gen-docs-pages --check` clean, `kg:audit:check` no
 critical, 3311 tests 0 failures.
+
+### The merge added an obligation to the `methodology` kind
+
+Merging main (72 commits) revealed that the graph-kind registry had grown a
+LAYER AXIS — `holds: "content" | "context" | "state"` — after the kind landed.
+Two tests failed on it, and both were right to.
+
+`methodology` is **`context`**, by the axis's own criterion rather than by
+resemblance to `memory`: read during a process, never written by one. A step
+that amended an adopted standard would be rewriting the standard, and bringing a
+new one in is a human-directed act (`methodology-adoption`'s six-step ingestion),
+exactly as relocating something into `fsh-guts` is. Not `content`, though the
+files are prose a reader can follow: `content` is the folio's SUBJECT MATTER,
+and a methodology is how a decision about the subject gets made.
+
+That is the fourth obligation an added graph kind has turned out to carry here —
+an avatar, a `directory-conventions` table row, the pinned literal lists (now
+derived, so retired), and a layer. None is discoverable from the schema alone;
+each was found by a test failing.
