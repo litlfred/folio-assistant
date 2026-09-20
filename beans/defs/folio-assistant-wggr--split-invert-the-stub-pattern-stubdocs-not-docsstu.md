@@ -279,3 +279,60 @@ prose.
 Related: `z4mq` item 3 (session todo #8) — the conformance check that any
 instance can render its JSON-LD. A check that bootstrap publishes only what it
 declares belongs with it.
+
+### Correction to ruling 1 — `fsh-guts/` STAYS, and the original category 2 was right
+
+Owner, 2026-09-20: *"fsh-guts/ is created in tooling of cat-harness. keep it
+here (like beans and todos/) as this instance's own working memory."*
+
+**Ruling 1 above is wrong and this supersedes it.** I read "with exception of
+bootstrap/ beans/ and todos/" as an exhaustive list and concluded `fsh-guts/`
+must move. It does not. The exceptions are **four**: `bootstrap/`, `beans/`,
+`todos/`, `fsh-guts/` — which is exactly what this bean's §"What this settles"
+said before I "corrected" it. Left in place rather than deleted so the next
+reader sees the loose reading tried and rejected, twice now in this bean.
+
+**MEMORY is the reason, and it is a better rule than the one it replaces.**
+Category 2 justified these as "never overlaid", which is a criterion each
+reader applies — and two readers applied it to opposite answers. They are the
+instance's MEMORY: `beans/` the agent's work plan, `todos/` the person's
+outstanding items, `fsh-guts/` what was discarded and kept so the next agent
+cannot re-enter a dead end. **A repository has one memory, so it cannot be
+composed from per-instance parts.** "Never overlaid" is the consequence; being
+memory is the rule. `bootstrap/` is the fourth for a different reason entirely
+— resolution, not memory — which is why it is the one exception to "a
+top-level directory's name is a repository name" and these three are not
+exceptions to that rule at all: they are not instance-shaped in the first
+place.
+
+**Ruling 2 stands and now reads coherently with this.** The TOOLING and graph
+kinds for beans, todos and fsh-guts are introduced by cat-harness; the STORES
+stay at the top level. "beans is a cat-harness concept" and "`beans/` is not
+inside `cat-harness/`" are both true. `bootstrap/` must introduce none of the
+three, which is the violation ruling 2 measured (18 published graph kinds
+against 1 declared).
+
+**Net effect on PR #437: none — its `scope: "repository"` set was already
+correct.** `bootstrap/skills/`, `beans/`, `todos/`, `fsh-guts/` carry it and
+nothing else does. The field's MEANING improves: it is now a closed list of
+four rather than a judgement about overlaying.
+
+Re-measured under the corrected rule, tracked directories only:
+
+| tree | non-conforming top-level dirs |
+|---|---|
+| `origin/main` | **21** |
+| PR #437 | **2** — `tools/` (1 file) and `test-results/` (1 file) |
+
+`test-results/.last-run.json` is Playwright residue that is tracked and should
+not be; it is not a layout question. `tools/index.ts` is the real one, and it
+is NOT obviously a mover: its own header says the barrel stays at the top
+deliberately, because five modules import `../tools/index.js` and moving it
+would bake this instance's stub into five platform import paths — "the exact
+defect the stub pattern exists to remove, reintroduced one directory along".
+So it is either a fifth exception with a stated reason, or the five importers
+resolve through the declaration instead. Not decided here.
+
+Recorded in agent memory as `the-top-level-is-four-things-and-three-are-memory`
+(`platform-boundary-guard`), since "where does this belong" is that agent's
+lane and this rule has now been got wrong twice.
