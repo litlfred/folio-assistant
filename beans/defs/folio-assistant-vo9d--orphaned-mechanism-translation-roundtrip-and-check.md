@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-20T11:31:09Z
-updated_at: 2026-09-20T12:09:38Z
+updated_at: 2026-09-20T12:28:26Z
 parent: folio-assistant-d308
 ---
 
@@ -262,3 +262,18 @@ which were already done or wrong, and the usage string settled it in one line.
 - [ ] `check-l1-complete` given the same treatment, or recorded as deliberately manual
 - [ ] the general pattern (one mechanism, several dispatch points) written into a
       skill, since the owner has now had to say it twice
+
+
+
+## The pattern is written down — 2026-09-20
+
+`covered-is-not-reachable` gains §"Reachability is PLURAL". It sits in that skill
+rather than a new one because it is the same subject from the other side: the three
+cases there ask what is MISSING, this asks what shape the question has.
+
+It carries both of the owner's statements verbatim as the evidence that the choice
+was refused twice, the trigger-or-Tool table, the `alternativeTo`-stays-empty rule,
+and this bean as the worked example — three proposals, two already done or wrong,
+one action. Plus the failure underneath: describing a mechanism from its name and
+its position in a diagram, then reasoning about what it needs, when the usage string
+settles it in one line.
