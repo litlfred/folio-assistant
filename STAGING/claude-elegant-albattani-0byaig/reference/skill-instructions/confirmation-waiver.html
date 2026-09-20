@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(55)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(26)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(55) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(26) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(55) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(26) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(55) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(26) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Content Planning | folio-assistant</title>
+<title>A confirmation can be waived | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Content Planning" />
+<meta property="og:title" content="A confirmation can be waived" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Content Planning" />
+<meta property="twitter:title" content="A confirmation can be waived" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -645,7 +645,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Content Planning</span></li>
+    <li class="breadcrumb-nav-list-item"><span>A confirmation can be waived</span></li>
   </ol>
 </nav>
 
@@ -654,75 +654,250 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-plan.md"><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/content-plan.md</code></a> — do not edit here. Typed contract: <a href="../skills/content-plan.html">schema reference</a>.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/confirmation-waiver.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/confirmation-waiver.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-plan.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/confirmation-waiver.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="content-planning">
+<h1 id="a-confirmation-can-be-waived--by-the-person-who-is-owed-it">
   
   
-    <a href="#content-planning" class="anchor-heading" aria-labelledby="content-planning"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content Planning
+    <a href="#a-confirmation-can-be-waived--by-the-person-who-is-owed-it" class="anchor-heading" aria-labelledby="a-confirmation-can-be-waived--by-the-person-who-is-owed-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A confirmation can be waived — by the person who is owed it
   
   
 </h1>
     
 
-<p>Plan content development by defining scope, team, timeline, and sprint cadence.</p>
-<h2 id="responsibilities">
+<p>Several rules here stop an agent and hand a decision back: merging to <code class="language-plaintext highlighter-rouge">main</code>,
+removing a durable artefact, spawning a swarm, closing a bean whose evidence
+the session could not re-derive, re-entering a process it fell out of. Each is
+right, and each costs the owner a round trip.</p>
+
+<p><strong>The owner, 2026-09-20:</strong></p>
+
+<blockquote>
+  <p><em>“human can waive confirmation rights (e.g. for session, for process run)”</em>
+<em>“context dependent, should be in memories”</em></p>
+</blockquote>
+
+<p>So the gate is not the last word. <strong>The person who is owed a confirmation may
+give it in advance, for a stated scope.</strong> That is not an agent making an
+exception for itself — it is the same decision, made earlier, by the same
+person. The distinction is the whole rule, and every clause below exists to
+keep it true.</p>
+<h2 id="a-waiver-is-five-fields-and-none-is-optional">
   
   
-    <a href="#responsibilities" class="anchor-heading" aria-labelledby="responsibilities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Responsibilities
-  
-  
-</h2>
-    
-<ul>
-  <li>Define content scope and objectives</li>
-  <li>Form development team (roles, responsibilities)</li>
-  <li>Establish governance model (RASCI matrix)</li>
-  <li>Plan iteration/sprint cadence</li>
-  <li>Coordinate stakeholder engagement</li>
-  <li>Define acceptance criteria</li>
-</ul>
-<h2 id="actors">
-  
-  
-    <a href="#actors" class="anchor-heading" aria-labelledby="actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Actors
-  
-  
-</h2>
-    
-<ul>
-  <li>Programme Manager (lead)</li>
-  <li>Technical Officer (support)</li>
-</ul>
-<h2 id="inputs">
-  
-  
-    <a href="#inputs" class="anchor-heading" aria-labelledby="inputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs
+    <a href="#a-waiver-is-five-fields-and-none-is-optional" class="anchor-heading" aria-labelledby="a-waiver-is-five-fields-and-none-is-optional"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A waiver is five fields, and none is optional
   
   
 </h2>
     
-<ul>
-  <li>Stakeholder requirements</li>
-  <li>Existing guidelines or source material</li>
-  <li>Resource constraints</li>
-</ul>
-<h2 id="outputs">
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>what it carries</th>
+      <th>why it cannot be omitted</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">granted_by</code></td>
+      <td>the person, by the identity the repository already knows them by</td>
+      <td>a waiver with no grantor is an agent’s own decision wearing a hat</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">quote</code></td>
+      <td><strong>the grantor’s own words, verbatim</strong></td>
+      <td>the agent’s paraphrase is the thing under suspicion; a summary can widen a scope without anyone noticing</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gate</code></td>
+      <td>which gate class is waived (below) — never “everything”</td>
+      <td>a blanket waiver is indistinguishable from no rule, and nobody can audit what it covered</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scope</code></td>
+      <td><code class="language-plaintext highlighter-rouge">session:&lt;id&gt;</code>, <code class="language-plaintext highlighter-rouge">process:&lt;instance-id&gt;</code>, or <code class="language-plaintext highlighter-rouge">until:&lt;ISO-8601&gt;</code></td>
+      <td>an unscoped waiver outlives the situation that justified it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">expires</code></td>
+      <td>a timestamp, always</td>
+      <td>same argument <a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking.md</code></a> makes for a block: <strong>a waiver with no expiry cannot be told from one nobody remembered to withdraw</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>A waiver missing any field is <strong>not a waiver</strong>, and the gate stands. An agent
+that finds a malformed one asks, exactly as if none existed.</p>
+<h2 id="the-gates-that-can-be-waived-and-the-rules-that-cannot">
   
   
-    <a href="#outputs" class="anchor-heading" aria-labelledby="outputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Outputs
+    <a href="#the-gates-that-can-be-waived-and-the-rules-that-cannot" class="anchor-heading" aria-labelledby="the-gates-that-can-be-waived-and-the-rules-that-cannot"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The gates that can be waived, and the rules that cannot
   
   
 </h2>
     
+
+<blockquote>
+  <p><strong>A waiver relaxes a rule whose text is <em>ask first</em>. It can never relax a
+rule whose text is <em>never</em>.</strong></p>
+</blockquote>
+
+<p>That single line is what keeps this skill from being a hole in every other one.
+<code class="language-plaintext highlighter-rouge">AGENTS.md</code> says <strong>never delete ANY bean</strong>; no waiver reaches it, because the
+rule is not a confirmation the owner is owed — it is a prohibition, and the
+non-destructive move (<code class="language-plaintext highlighter-rouge">scrapped</code>, with reasons) is always available.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>gate class</th>
+      <th>the rule it relaxes</th>
+      <th>waivable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">merge-to-main</code></td>
+      <td><a href="../../methodologies/crdm/crdm-requirements-workflow.md"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a> §Phase 6 — explicit confirmation before merging</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bean-close</code></td>
+      <td><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”When you cannot re-derive it yourself” — the <code class="language-plaintext highlighter-rouge">ready-to-close</code> batch</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">deletion</code></td>
+      <td><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a> — report and wait</td>
+      <td>yes, <strong>per artefact class</strong>, never blanket</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">swarm-spawn</code></td>
+      <td><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/swarm-management.html"><code class="language-plaintext highlighter-rouge">swarm-management</code></a> — asked every time, per swarm</td>
+      <td>yes, with the agent count and model level named in the quote</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process-reentry</code></td>
+      <td><a href="../workflow/process-state.md"><code class="language-plaintext highlighter-rouge">process-state</code></a> — confirm before re-entering</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">issue-close</code></td>
+      <td><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/issue-working.html"><code class="language-plaintext highlighter-rouge">issue-working</code></a> — an agent never closes an issue on its own say-so</td>
+      <td>yes; the waiver names the issues</td>
+    </tr>
+    <tr>
+      <td><em>bean deletion</em></td>
+      <td><code class="language-plaintext highlighter-rouge">AGENTS.md</code>, “never delete ANY bean”</td>
+      <td><strong>no — a prohibition, not a gate</strong></td>
+    </tr>
+    <tr>
+      <td><em>fabricating evidence</em></td>
+      <td>anywhere a rule says re-derive rather than quote</td>
+      <td><strong>no</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>An <code class="language-plaintext highlighter-rouge">AGENTS.md</code>-level <em>never</em> that somebody wants waived is a change to the
+skill that owns it, argued and landed — not a waiver.</p>
+<h2 id="where-a-waiver-lives--the-context-graph-never-the-work-plan">
+  
+  
+    <a href="#where-a-waiver-lives--the-context-graph-never-the-work-plan" class="anchor-heading" aria-labelledby="where-a-waiver-lives--the-context-graph-never-the-work-plan"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a waiver lives — the context graph, never the work plan
+  
+  
+</h2>
+    
+
+<p>A waiver is <strong>context</strong>: read at the start of a turn, consulted by whatever gate
+is about to fire, and never produced by the work it governs. That is the
+<code class="language-plaintext highlighter-rouge">context</code> layer as <a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a>
+defines it, so a waiver is a node under <code class="language-plaintext highlighter-rouge">memory/waivers/</code> — the same graph an
+agent’s durable memory lives in, which is what the owner meant by <em>“should be
+in memories”</em>.</p>
+
+<p><strong>Not <code class="language-plaintext highlighter-rouge">beans/</code>.</strong> The work plan is <code class="language-plaintext highlighter-rouge">state</code>: it records what is being worked on
+and where it got to. A waiver is not work, has no Done-when, and must be
+readable by a gate that fires before any bean is opened. Putting it in the work
+plan would also make it branch-local, and a session-scoped waiver granted in
+chat would then be invisible to the very session it was granted for.</p>
+
+<p><strong>Not <code class="language-plaintext highlighter-rouge">interaction/</code> either</strong>, although it is the other <code class="language-plaintext highlighter-rouge">context</code> directory:
+that one is read at session start and <em>never written by a process</em>, and a
+waiver is granted mid-session by definition.</p>
+<h2 id="consulting-one--the-three-state-read-as-everywhere-else">
+  
+  
+    <a href="#consulting-one--the-three-state-read-as-everywhere-else" class="anchor-heading" aria-labelledby="consulting-one--the-three-state-read-as-everywhere-else"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Consulting one — the three-state read, as everywhere else
+  
+  
+</h2>
+    
+
+<p>Before a gate fires, look for a waiver in scope. There are <strong>three</strong> answers,
+not two, and the third is the one that gets skipped:</p>
+
+<ol>
+  <li><strong>A valid waiver covers this gate, in scope, unexpired</strong> → proceed, and say
+in the turn report <em>which</em> waiver you are acting under, quoting its words.
+A waived action is still an announced one.</li>
+  <li><strong>No waiver</strong> → ask, exactly as the gate’s own skill says.</li>
+  <li><strong>Could not determine</strong> — <code class="language-plaintext highlighter-rouge">memory/waivers/</code> unreadable, a malformed node, a
+clock you cannot trust → <strong>ask</strong>. A gate that cannot read its waivers has
+not been waived; it has failed to check, and the two are not the same.</li>
+</ol>
+
+<p>An expired waiver is <strong>kept, never deleted</strong> — same argument as a <code class="language-plaintext highlighter-rouge">scrapped</code>
+bean. The record of what was permitted, to whom and when, is what makes the
+next grant reviewable, and a deleted one leaves a reader unable to tell a
+withdrawn permission from one that never existed.</p>
+<h2 id="what-an-agent-may-never-do">
+  
+  
+    <a href="#what-an-agent-may-never-do" class="anchor-heading" aria-labelledby="what-an-agent-may-never-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What an agent may never do
+  
+  
+</h2>
+    
+
 <ul>
-  <li>Project plan document</li>
-  <li>Team roster with role assignments</li>
-  <li>Sprint/iteration schedule</li>
-  <li>Governance model (RASCI)</li>
+  <li><strong>Grant itself a waiver.</strong> A waiver whose <code class="language-plaintext highlighter-rouge">quote</code> is not the grantor’s own
+words does not exist. If you are composing the sentence, you are the grantor,
+and you are not allowed to be.</li>
+  <li><strong>Widen one.</strong> <code class="language-plaintext highlighter-rouge">session:</code> does not reach the next session; <code class="language-plaintext highlighter-rouge">process:</code> does not
+reach a sibling instance; <code class="language-plaintext highlighter-rouge">deletion</code> for build artefacts does not reach
+content. When the scope does not plainly cover the case in front of you, it
+does not cover it.</li>
+  <li><strong>Infer one from tone.</strong> “go ahead”, “yes”, “do it” discharge the gate they
+were said to — that is an ordinary confirmation, and it needs no waiver node.
+A <em>waiver</em> is a standing grant over future gates, and it is recorded only
+when the owner says something that plainly is one.</li>
+  <li><strong>Treat a waiver as a reason to skip the work.</strong> <code class="language-plaintext highlighter-rouge">merge-to-main</code> waived still
+means green CI and no conflict; <code class="language-plaintext highlighter-rouge">bean-close</code> waived still means the evidence
+is quoted in the bean. A waiver removes the <em>asking</em>, never the <em>doing</em>.</li>
 </ul>
+<h2 id="checked-not-trusted">
+  
+  
+    <a href="#checked-not-trusted" class="anchor-heading" aria-labelledby="checked-not-trusted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checked, not trusted
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">bun run check:waivers</code> reads every node under <code class="language-plaintext highlighter-rouge">memory/waivers/</code> and fails on a
+missing field, a <code class="language-plaintext highlighter-rouge">gate</code> outside the table above, a scope that names a
+non-existent session or instance, and a waiver over a non-waivable rule. It
+reports expired waivers as <strong>inert</strong>, never as findings — they are history.</p>
+
+<p>Because the check reads the same table this skill publishes, a gate class
+added here without a row is refused, which is the property that stops the
+vocabulary drifting into “everything”.</p>
 
           
 
