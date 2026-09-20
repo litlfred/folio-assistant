@@ -92,8 +92,23 @@ for (const { path, groupDepth } of SCAN) {
 const edges: DetangleEdge[] = [];
 const dangling: Array<{ from: string; ref: string; via: string }> = [];
 
+/**
+ * `enforced` means a build or engine breaks if the arrow is reversed. Only
+ * three extractors qualify; see `EdgeAuthority` for why the distinction
+ * decides the whole classification.
+ */
+const AUTHORITY: Record<string, "enforced" | "recorded"> = {
+  "ts-import": "enforced",
+  "bpmn-call": "enforced",
+  "bpmn-import": "enforced",
+  "bpmn-decision": "enforced",
+  "bpmn-skill": "recorded",
+  "json-skill": "recorded",
+  "md-link": "recorded",
+};
+
 function link(from: string, toId: string | undefined, ref: string, via: string) {
-  if (toId && byId.has(toId)) edges.push({ from, to: toId, via });
+  if (toId && byId.has(toId)) edges.push({ from, to: toId, via, authority: AUTHORITY[via] ?? "recorded" });
   else dangling.push({ from, ref, via });
 }
 
@@ -159,7 +174,7 @@ for (const n of nodes) {
     // mentioning a skill is prose, and prose is not a dependency.
     for (const m of text.matchAll(/"([a-z][a-z0-9-]{3,})"(?=\s*[,\]])/g)) {
       const t = byNameOfKind(n.id, m[1], [".md"]);
-      if (t && t !== n.id) edges.push({ from: n.id, to: t, via: "json-skill" });
+      if (t && t !== n.id) edges.push({ from: n.id, to: t, via: "json-skill", authority: "recorded" });
     }
   }
   if (n.id.endsWith(".ts")) {
@@ -186,7 +201,7 @@ if (process.argv.includes("--json")) {
   console.log(`\nDetangle — ${nodes.length} nodes, ${edges.length} edges, ${dangling.length} dangling\n`);
   console.log(
     "  " +
-      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "role".padEnd(9), "verdict"].join(" "),
+      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "enf".padStart(4), "role".padEnd(13), "verdict"].join(" "),
   );
   console.log("  " + "-".repeat(112));
   for (const r of results) {
@@ -202,7 +217,8 @@ if (process.argv.includes("--json")) {
           String(r.outbound).padStart(6),
           String(r.distinctTargetGroups).padStart(5),
           r.directionality.toFixed(2).padStart(6),
-          r.role.padEnd(9),
+          String(r.enforcedBoundary).padStart(4),
+          r.role.padEnd(13),
           v,
         ].join(" "),
     );

@@ -56,6 +56,44 @@ directionality = |2 · oneWayness − 1|
 | **tangled** | both, comparably | not separable without real work. The only role the word fits. |
 | **isolated** | none | trivially separable, and *not* the same as tangled however alike a bare `oneWayness` of 0.0 looks |
 
+## Arrows: is the direction even a fact?
+
+Asked in four words, 2026-09-20: *"are arrows in wrong direction somewhere?"*
+Measured the same hour:
+
+| extractor | cross-group edges | direction is |
+|---|---|---|
+| `bpmn-skill` | 340 | **recorded** |
+| `json-skill` | 125 | **recorded** |
+| `ts-import` | 28 | enforced |
+| `md-link` | 5 | **recorded** |
+
+**470 of 498 — 94% — are `recorded`.**
+
+- **`enforced`** — reverse it and something breaks. A TypeScript `import`, a
+  BPMN `calledElement`. The direction is a property of the system.
+- **`recorded`** — the direction is *where the author put the pointer*.
+  `<folio:skill ref="S">` is written on the diagram, so the arrow runs
+  diagram → skill. Had the repo put `workflows: [...]` in each skill's front
+  matter instead, the identical coupling would be stored the other way and
+  `skills/workflows` would measure as a **sink**.
+
+The test that settles it is **what breaks each way**. Delete a skill and
+`roles.json` has a dangling ref; delete `roles.json` and every skill still works
+but no lane can reach one. Both break — the coupling is **symmetric** and merely
+written down once, on one side.
+
+So `role` is now read off **enforced edges alone**, and a boundary made only of
+recorded ones is `undetermined`. Ten of twenty-two groups are, including both
+groups whose carve was under discussion. The first cut called them `source`
+with total confidence on 100% recorded evidence.
+
+This repository already names the same failure one graph over. `AGENTS.md`:
+*"Never populate `uses[]` from Lean — it destroys the signal every ordering
+metric is computed from."* `uses[]` is the editorial relation, the Lean graph is
+the formal one; they look alike, mean different things, and the rule exists
+because **where a fact is recorded determines what a metric over it means**.
+
 ## What the graph actually looks like
 
 Measured 2026-09-20, 443 nodes and 758 edges:

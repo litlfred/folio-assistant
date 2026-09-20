@@ -119,15 +119,53 @@ export interface DetangleNode {
  *   "entangled" should be used for.
  * - `isolated` — no boundary edges at all. Trivially separable, and NOT the
  *   same as tangled however similar the bare `oneWayness` of 0.0 looks.
+ * - `undetermined` — the boundary is made of `recorded` edges, whose direction
+ *   is a filing decision rather than a fact, so no role can be read off it.
+ *   This is the three-state rule the rest of this repository already runs on:
+ *   "could not determine" is a distinct answer from "determined to be a
+ *   source", and collapsing them is how a wrong partition looks like a clean
+ *   one. Under the first cut of this module `skills/workflows` and
+ *   `skills/roles` were both confidently `source` on 100% recorded edges.
  */
-export type BoundaryRole = "sink" | "source" | "tangled" | "isolated";
+export type BoundaryRole = "sink" | "source" | "tangled" | "isolated" | "undetermined";
+
+/**
+ * Whether an edge's DIRECTION is a fact or a filing decision.
+ *
+ * The owner, 2026-09-20, in four words: *"are arrows in wrong direction
+ * somewhere?"* Measured the same hour: **470 of 498 cross-group edges — 94% —
+ * are `recorded`.**
+ *
+ * - `enforced` — reverse it and something breaks. A TypeScript `import`, a
+ *   BPMN `calledElement`. The direction is a property of the system.
+ * - `recorded` — the direction is WHERE THE AUTHOR PUT THE POINTER.
+ *   `<folio:skill ref="S">` is written on the diagram, so the arrow runs
+ *   diagram → skill. Had the repository put `workflows: [...]` in each skill's
+ *   front matter instead, the identical coupling would be stored the other way
+ *   and `skills/workflows` would measure as a sink rather than a source.
+ *
+ * The test that settles it is **what breaks each way**. Delete a skill and
+ * `roles.json` has a dangling ref; delete `roles.json` and every skill still
+ * works but no lane can reach one. Both break — so the coupling is SYMMETRIC
+ * and merely written down once, on one side.
+ *
+ * This repository already names the same failure one graph over. `AGENTS.md`:
+ * *"Never populate `uses[]` from Lean — it destroys the signal every ordering
+ * metric is computed from."* `uses[]` is the editorial relation and the Lean
+ * graph is the formal one; they look alike and mean different things, and the
+ * rule exists because where a fact is recorded determines what a metric over it
+ * means. `bpmn-skill` and `ts-import` are that pair again.
+ */
+export type EdgeAuthority = "enforced" | "recorded";
 
 /** A directed edge. `from` depends on / references `to`. */
 export interface DetangleEdge {
   from: string;
   to: string;
-  /** How the edge was found, e.g. `md-link`, `bpmn-skill-ref`, `ts-import`. Provenance, so a surprising edge can be re-checked rather than argued with. */
+  /** How the edge was found, e.g. `md-link`, `bpmn-skill`, `ts-import`. Provenance, so a surprising edge can be re-checked rather than argued with. */
   via: string;
+  /** Whether {@link EdgeAuthority the direction} may be trusted. */
+  authority: EdgeAuthority;
 }
 
 /**
@@ -174,6 +212,14 @@ export interface DetangleMetrics {
   directionality: number;
   /** Which way the arrows point. See {@link BoundaryRole}. */
   role: BoundaryRole;
+  /** Boundary edges whose direction is a fact. `role` is read off these ALONE. */
+  enforcedBoundary: number;
+  /**
+   * Boundary edges whose direction is a filing decision. Reported as SYMMETRIC
+   * COUPLING — a real finding about how tied together two groups are — never as
+   * directed dependency.
+   */
+  recordedBoundary: number;
   /** Distinct nodes outside the group that are referenced. The DEPENDENCY count, as against the reference count. */
   distinctTargets: number;
   /** Distinct groups outside that are referenced. What a declared dependency list would actually hold. */
@@ -189,6 +235,8 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
   let internal = 0;
   let inbound = 0;
   const worklist: DetangleEdge[] = [];
+  /** Every boundary edge, either direction — needed to weigh enforced against recorded. */
+  const boundary: DetangleEdge[] = [];
   for (const e of edges) {
     // An edge to a node we do not know about is not an edge out of the group —
     // it is an unresolved reference, and counting it as outbound would make
@@ -198,16 +246,25 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
     const f = inGroup.has(e.from);
     const t = inGroup.has(e.to);
     if (f && t) internal += 1;
-    else if (!f && t) inbound += 1;
-    else if (f && !t) worklist.push(e);
+    else if (!f && t) { inbound += 1; boundary.push(e); }
+    else if (f && !t) { worklist.push(e); boundary.push(e); }
   }
   const outbound = worklist.length;
   const total = internal + inbound + outbound;
   const oneWayness = inbound + outbound === 0 ? 0 : inbound / (inbound + outbound);
+  // The role is read off ENFORCED edges only. A boundary made of recorded ones
+  // is undetermined, however lopsided it looks: the lopsidedness is then a fact
+  // about where pointers are filed, not about which side depends on the other.
+  const enforcedBoundary = boundary.filter((e) => e.authority === "enforced").length;
+  const recordedBoundary = boundary.length - enforcedBoundary;
+  const eIn = boundary.filter((e) => e.authority === "enforced" && !inGroup.has(e.from)).length;
+  const eOut = enforcedBoundary - eIn;
+  const eRatio = enforcedBoundary === 0 ? 0 : eIn / enforcedBoundary;
   const role: BoundaryRole =
     inbound + outbound === 0 ? "isolated"
-    : oneWayness >= 0.8 ? "sink"
-    : oneWayness <= 0.2 ? "source"
+    : enforcedBoundary === 0 ? "undetermined"
+    : eRatio >= 0.8 ? "sink"
+    : eRatio <= 0.2 ? "source"
     : "tangled";
   const targets = new Set(worklist.map((e) => e.to));
   const targetGroups = new Set(worklist.map((e) => known.get(e.to)!));
@@ -227,6 +284,8 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
     oneWayness,
     directionality: inbound + outbound === 0 ? 1 : Math.abs(2 * oneWayness - 1),
     role,
+    enforcedBoundary,
+    recordedBoundary,
     distinctTargets: targets.size,
     distinctTargetGroups: targetGroups.size,
     worklist,
@@ -268,7 +327,13 @@ export function failingClauses(m: DetangleMetrics, t: Thresholds = DEFAULT_THRES
       `cohesion ${m.cohesion.toFixed(2)} < ${t.minCohesion} — the members barely reference each other, ` +
         `so "thematically related" is asserted rather than shown`,
     );
-  if (m.directionality < t.minDirectionality)
+  if (m.role === "undetermined")
+    out.push(
+      `role undetermined — all ${m.recordedBoundary} boundary edges are RECORDED, so their direction is ` +
+        `where the author filed the pointer, not which side depends on the other. ${m.inbound} in / ` +
+        `${m.outbound} out describes the filing, not the coupling.`,
+    );
+  else if (m.directionality < t.minDirectionality)
     out.push(
       `directionality ${m.directionality.toFixed(2)} < ${t.minDirectionality} — arrows run both ways in ` +
         `comparable numbers (${m.inbound} in, ${m.outbound} out), so it is genuinely TANGLED. This is the ` +
