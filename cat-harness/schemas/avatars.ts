@@ -176,6 +176,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 176,
     reads: "a glyph and an A — one language against another",
   },
+  "session-state": {
+    // A marker on a line, with the line continuing past it — where one actor
+    // is RIGHT NOW, and still moving. Deliberately not a clock: a session is
+    // a position, not a duration. Distinct from `memory`'s knot, which is
+    // tied and does not move, and from `workflow-state`, which is one token
+    // in one diagram rather than an actor across several.
+    glyph: "M3 12h18M14 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0M18 9l3 3-3 3",
+    tone: 64,
+    reads: "a marker on a continuing line — where an actor is now",
+  },
   memory: {
     // A knot tied in a thread — the oldest mnemonic there is, and the right
     // read for a kind that is fixed rather than accumulating: the knot is

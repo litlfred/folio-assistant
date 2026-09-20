@@ -253,7 +253,7 @@
     "SequenceFlow": 20,
     "Role": 9,
     "ProcessNode": 20,
-    "GraphKind": 17,
+    "GraphKind": 18,
     "Directory": 2
   },
   "problems": [],
@@ -996,6 +996,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TodoFeedbackGraph",
       "renderable": false,
       "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/session-state",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "session-state",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SessionStateGraph",
+      "renderable": false,
+      "summary": "A session's context — the acting actor, the instances it has open, and what it waits on."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory",

@@ -589,6 +589,28 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // bean `07xs`. A kind registered ahead of a directory is the `folio`
   // situation, not the `dh4f` one — `dh4f` is a DIRECTORY declared and absent,
   // where a consumer scans nothing and reports clean. Nothing scans a kind.
+  // A SESSION's context — who is acting, which instances are open, what it
+  // waits on. `state`: the session writes it as it goes.
+  //
+  // Distinct from `workflow-state`, and the line is not a nicety.
+  // `workflow-state` is where ONE INSTANCE got to; a session SPANS processes —
+  // it starts before any instance, may open several, and outlives each. A
+  // session with nothing open is the commonest state there is, and would be
+  // unrepresentable as a field on an instance.
+  //
+  // REGISTERED AHEAD OF A DIRECTORY, like `memory` and like `folio`: nothing
+  // writes a session record yet (bean `3nfv` is the state machine that will),
+  // and declaring a directory before it exists is the `dh4f` defect, where a
+  // consumer scans nothing and reports a clean run. Nothing scans a kind.
+  "session-state": {
+    type: termIri("SessionStateGraph"),
+    renderable: false,
+    holds: "state",
+    skill: "session-context",
+    schema: "schemas/session-context.ts",
+    summary: "A session's context — the acting actor, the instances it has open, and what it waits on.",
+  },
+
   memory: {
     type: termIri("MemoryGraph"),
     renderable: false,
