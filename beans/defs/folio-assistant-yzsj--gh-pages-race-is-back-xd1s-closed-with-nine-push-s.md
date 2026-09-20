@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yzsj
 title: 'gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T20:02:00Z
-updated_at: 2026-09-20T20:33:25Z
+updated_at: 2026-09-20T21:48:19Z
 parent: folio-assistant-1xhc
 ---
 
@@ -290,15 +290,57 @@ logic touched, no committed state, and no file but the render log reachable.
 
 Still not done. Cheaper than first thought is not the same as ruled on.
 
+## SHIPPED, 2026-09-20 — the `merge=union` half, on the owner's ruling ("605b - go")
+
+`scripts/git-union-attr.sh`, called once per `gh-pages` checkout in all three
+jobs of `feature-staging.yml`. Plain shell rather than a `bun` script
+deliberately: `gatesFrom` extracts a gate from any line starting with `bun`,
+so a TypeScript helper would have needed a `SCRIPT_EXEMPTIONS` entry the way
+`backoff-sleep.ts` does. There are 41 `.sh` helpers already; this is house
+style, not an exception.
+
+**Verified before shipping, on a scratch repo, in both directions.** Two
+clones append to the same day's `_render-log/day.jsonl`; the loser rebases:
+
+- without the attribute — `CONFLICT (content)`, `UU _render-log/day.jsonl`,
+  `could not apply`: the CI failure reproduced exactly;
+- with it — rebase exit 0, **0 conflicts, both entries present**, three lines,
+  every one still valid JSON, no markers injected.
+
+**The script verifies itself and fails loudly.** It ends with `check-attr`
+and exits 1 unless git reports `merge: union`. Falsified by mutation: with the
+write neutered it exits **1** with `::error::git-union-attr: attribute did not
+take effect — … merge: unspecified`; unmutated it exits **0**. A silent no-op
+here is the exact failure this exists to prevent, so it is not left to trust.
+Idempotent: three runs leave one line.
+
+`--absolute-git-dir`, not `--git-dir`: the latter answers relative to the
+repository, so it is `.git` wherever the caller stands, and it also resolves
+the case where `actions/checkout` leaves `.git` as a file.
+
+### And the retry was broken anyway, in three of four loops
+
+Found in the loops this was going into, filed as **`7iog`**: three of the four
+`backoff-sleep.ts` calls name a path that does not exist at run time, because
+`cleanup` checks the platform out at `source/` and `cleanup-dispatch` runs with
+`working-directory: pages`. Under `bash -e` a missing module aborts the step —
+so those retries never retried, and the first lost race ended the job. Fixed
+here, since a retry that aborts survives nothing and this ruling was to make it
+survive.
+
+`check:command-paths` does **not** catch it, falsified directly: with one site
+reverted it still reports *"✓ every repository-relative path inside a fenced
+command resolves"* and exits 0. The path does resolve — from the repository
+root, which is not where it runs. That reader gap is `7iog`'s subject.
+
 ## Done when
 
 - [ ] A ruling on ONE shared publishing step vs four copies (see the
       correction above — `06kg` is the precedent against copying)
-- [ ] `*.jsonl merge=union` via `$GIT_DIR/info/attributes` in the `pages/`
+- [x] `*.jsonl merge=union` via `$GIT_DIR/info/attributes` in the `pages/`
       checkout — NOT a committed `.gitattributes`, which a full replace
-      deletes — so a same-day render-log append stops turning
-      `feature-staging`'s retry into a hard failure. Separable from the
-      `peaceiris` question and much smaller
+      deletes. **Done 2026-09-20** (`git-union-attr.sh`, three call sites),
+      with the three broken `backoff-sleep` paths fixed alongside (`7iog`)
 - [ ] `docs-site.yml`'s publish survives a losing race, with the failure
       reproduced before the fix and the fix shown to pass — **and the same for
       `blueprint.yml` and `lean_ci.yml`, which are equally exposed**
