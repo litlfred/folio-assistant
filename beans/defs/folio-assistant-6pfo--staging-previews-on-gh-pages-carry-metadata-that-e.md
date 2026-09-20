@@ -222,3 +222,17 @@ WHAT IS STILL A DECISION, and it is the owner's, not mine. Two forks, and they a
 2. WHO WRITES THE RECORD — bean question 1, still open and still the interesting part. Deploy time knows the PR and the issue; sweep time knows the size and the liveness; NEITHER knows both. The owner's "that's part of the behaviour of that node type" says the node owns the rule, but not which moment populates which fields.
 
 Not guessing either. Put to the owner before any code is written.
+
+_2026-09-20T04:53:02Z_ — UNBLOCKED. Owner picked option 1: make the change in `schemas/fsh-guts.ts` and flag the sibling. Done; the note is on `t0i3`, whose status I left `in-progress` and did not touch.
+
+The publishing half of this bean is now closed. A `staging-preview` record written as JSON under `fsh-guts/` reaches `<base>/fsh-guts.jsonld` with its `staging` block intact, under `data`. Three changes were needed, not one — the fields were being lost at the schema (`z.object` strips), at the reader (markdown front matter is flat, so a nested block becomes `[]`), and at the exporter (an explicit allowlist, so passthrough alone published nothing). Fixing any one alone would have changed nothing observable, which is why the first two limits looked like the whole problem when `6pfo` shipped.
+
+THE PINNED TESTS DID THEIR JOB. Both limits were pinned as failing-by-design constraints in `scripts/tests/staging-preview.test.ts`, on the stated grounds that a silent fix leaves a detour nobody can date. They failed the moment the fix landed. Rewritten rather than deleted: one now records FIXED, the other STILL TRUE — front matter is still flat, which is why the carrier stays JSON and why `readStagingPreview` remains a TYPED reader rather than a workaround.
+
+STILL OPEN, and it is the whole remaining half of this bean: **no workflow is wired.** Nothing writes a record at deploy time, nothing enriches it at sweep time, nothing retires it on cleanup. The owner's answer on shape was "deploy writes it, sweep enriches it" and "one document", and the node type implements exactly that — but the constraint recorded on 2026-09-19 has not changed and is the next thing to solve:
+
+- `feature-staging.yml` has `contents: write` and pushes only to `gh-pages`; it never writes to `main`.
+- `health-check.yml` is `contents: read` DELIBERATELY — AGENTS.md: "It reports and never acts." Granting it write to commit records would break a stated principle, so the sweep is not the writer without a decision.
+- Fourteen other workflows do have `contents: write`, so a scheduled writer is possible; which one, and whether per-preview commits to `main` are acceptable churn, is unanswered.
+
+Do not guess at that. It is a question for the owner, in the same shape as the two already answered.
