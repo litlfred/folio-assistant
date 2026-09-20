@@ -243,10 +243,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T03:39:49.498Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ea6f43aa14e858925693472c97977c109c970508",
-  "sourceCommitSha": "ea6f43aa14e858925693472c97977c109c970508",
-  "sourceCommitAt": "2026-09-20T05:38:31+02:00",
+  "generatedAt": "2026-09-20T04:02:13.826Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/260e7988f63802c55d3fb54ee90f3d3d07199068",
+  "sourceCommitSha": "260e7988f63802c55d3fb54ee90f3d3d07199068",
+  "sourceCommitAt": "2026-09-20T06:00:51+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
@@ -257,7 +257,7 @@
     "Process": 34,
     "SequenceFlow": 475,
     "ProcessNode": 444,
-    "Tool": 28,
+    "Tool": 30,
     "Schema": 53,
     "GraphKind": 16,
     "Directory": 13
@@ -890,7 +890,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 271,
+      "instructionLines": 337,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -16929,6 +16929,126 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-stdlib",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-stdlib",
+      "title": "Ingest, standard library only",
+      "description": "Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The upload to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Library root; defaults to the declared `library` graph.",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Report the chosen rung and stop.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-extended",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-extended",
+      "title": "Ingest, with PDF and image extensions",
+      "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
+      "install": {
+        "cli": "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils"
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "pymupdf",
+          "tesseract"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/github",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "github",
@@ -19689,8 +19809,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "ea6f43aa14e858925693472c97977c109c970508",
+    "sha": "260e7988f63802c55d3fb54ee90f3d3d07199068",
     "pr": "main",
-    "run": "35487101306"
+    "run": "35488047803"
   }
 }
