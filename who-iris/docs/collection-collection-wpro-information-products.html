@@ -199,6 +199,17 @@
   }
   table.reqs td.why { color: var(--iris-muted); }
   table.reqs code { font-size: 0.87em; }
+  table.reqs td .why { font-size: 0.88em; color: var(--iris-muted); }
+
+  /* The architecture drawing, inlined. Authored at 1000x432 and scaled down on
+     a narrow screen: an auto height keeps its aspect, which a figure of
+     labelled boxes cannot survive losing.
+     NOTE FOR ANYONE EDITING THESE COMMENTS: this whole stylesheet is inside a
+     JS template literal, so a backtick here ends the string and the generator
+     stops parsing. It has happened four times. Write CSS identifiers plainly. */
+  figure.arch { margin: 1.6rem 0; }
+  figure.arch svg { width: 100%; height: auto; max-width: 1000px; display: block; border: 1px solid var(--iris-edge); border-radius: 6px; }
+  figure.arch figcaption { font-size: 0.88rem; color: var(--iris-muted); margin-top: 0.6rem; }
 
   .caveat {
     border-left: 4px solid var(--iris-current); background: var(--iris-wash);
@@ -262,6 +273,7 @@
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
   <a href="ingestion-notes.html">Ingestion notes</a>
+  <a href="kg-to-portal.html">KG &rarr; portal</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 

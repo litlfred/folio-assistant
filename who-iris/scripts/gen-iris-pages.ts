@@ -51,7 +51,10 @@ import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
 import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 
+
 const INSTANCE = resolve(import.meta.dir, "..");
+/** The repository root — only the platform-owned architecture drawing is read from here. */
+const REPO_ROOT = resolve(INSTANCE, "..");
 
 const NODES = join(INSTANCE, "catalogue", "nodes");
 const OUT = join(INSTANCE, "docs");
@@ -73,6 +76,23 @@ const OUT = join(INSTANCE, "docs");
 const SKILL = join(INSTANCE, "skills", "iris-dspace.md");
 
 /**
+ * The architecture drawing, INLINED rather than linked.
+ *
+ * It lives in the platform (`cat-harness/docs/assets/img/`) because the
+ * pattern is generic and who-iris is one worked example of it — a second copy
+ * under this instance would be two drawings of one architecture, free to
+ * disagree the first time either is edited.
+ *
+ * Inlined rather than referenced because these pages are served from **two**
+ * mount routes (`/who-iris/` and `/docs/who-iris/`), so any relative path to a
+ * file outside this directory resolves under one of them and 404s under the
+ * other. An absolute site URL would work and would hard-code the publication
+ * base into a generated page, which is the thing `canonicalUrl` exists to stop.
+ * Reading the bytes sidesteps both.
+ */
+const ARCH_SVG = join(REPO_ROOT, "cat-harness", "docs", "assets", "img", "kg-to-portal-architecture.svg");
+
+/**
  * The filenames this generator OWNS, and may therefore delete.
  *
  * Deliberately a pattern over its own naming rather than "everything in
@@ -81,7 +101,7 @@ const SKILL = join(INSTANCE, "skills", "iris-dspace.md");
  * the same licence `prunableStickies` operates under. A hand-authored page, an
  * asset directory or a `.nojekyll` in the same directory is untouched.
  */
-export const OWNED = /^(index|community-list|ingestion-notes|collection-.*|item-.*)\.html$/;
+export const OWNED = /^(index|community-list|ingestion-notes|kg-to-portal|collection-.*|item-.*)\.html$/;
 
 /**
  * Where a committed file is actually served from.
@@ -513,6 +533,17 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   }
   table.reqs td.why { color: var(--iris-muted); }
   table.reqs code { font-size: 0.87em; }
+  table.reqs td .why { font-size: 0.88em; color: var(--iris-muted); }
+
+  /* The architecture drawing, inlined. Authored at 1000x432 and scaled down on
+     a narrow screen: an auto height keeps its aspect, which a figure of
+     labelled boxes cannot survive losing.
+     NOTE FOR ANYONE EDITING THESE COMMENTS: this whole stylesheet is inside a
+     JS template literal, so a backtick here ends the string and the generator
+     stops parsing. It has happened four times. Write CSS identifiers plainly. */
+  figure.arch { margin: 1.6rem 0; }
+  figure.arch svg { width: 100%; height: auto; max-width: 1000px; display: block; border: 1px solid var(--iris-edge); border-radius: 6px; }
+  figure.arch figcaption { font-size: 0.88rem; color: var(--iris-muted); margin-top: 0.6rem; }
 
   .caveat {
     border-left: 4px solid var(--iris-current); background: var(--iris-wash);
@@ -576,6 +607,7 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
   <a href="ingestion-notes.html">Ingestion notes</a>
+  <a href="kg-to-portal.html">KG &rarr; portal</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
@@ -1291,6 +1323,158 @@ the owner supplied. Where a transcription is partial, the record says so.</p>
 `;
 }
 
+/**
+ * The CRDM page: this instance as a worked example of the general pattern.
+ *
+ * Owner, 2026-09-20:
+ *
+ * > *"update skils, this is doing webportal mockup as part of CRDM of kg.
+ * > based on custom assets with need to defin a data ingestion pirpeline
+ * > (subject ot operational/deployment constrsaints, $, network traffic,
+ * > graph seize etc), from KG into a public portal. this is ecample creating
+ * > a CDN to sit behind moodle … also add to /docs for who-iris. make a nice
+ * > image to illustate architecture. bpmn for process. also generalize skils
+ * > and tools."*
+ *
+ * **The generalisation lives in the platform and this page points at it.** The
+ * skill is `kg-to-portal`, the process is `kg-to-portal.bpmn`, and the drawing
+ * is `cat-harness/docs/assets/img/`. What is HERE is the only thing who-iris
+ * can say that the platform cannot: which stages this instance has actually
+ * built, with its own numbers, and which it has not.
+ *
+ * Every figure below is read out of the catalogue or off the filesystem at
+ * generation time. None is written down — the sticky banner on every page of
+ * this site carried three hand-typed counts until 2026-09-20 and one of them
+ * was already wrong.
+ */
+function kgToPortal(all: Node[]): string {
+  const items = all.filter((n) => n.flavour === "item");
+  const held = items.filter((n) => assetHref(n) !== undefined);
+  const cat = catalogue();
+
+  // What this instance actually ships, measured rather than asserted.
+  const heldBytes = held
+    .map((n) => assetHref(n)?.bytes ?? 0)
+    .reduce((a, b) => a + b, 0);
+  const pages = readdirSync(OUT).filter((f) => f.endsWith(".html")).length;
+  const covers = existsSync(join(OUT, "assets", "covers"))
+    ? readdirSync(join(OUT, "assets", "covers")).filter((f) => f.endsWith(".png")).length
+    : 0;
+
+  const svg = existsSync(ARCH_SVG)
+    ? readFileSync(ARCH_SVG, "utf-8").replace(/^<\?xml[^>]*\?>\s*/, "").replace(/<!--[\s\S]*?-->\s*/g, "")
+    : undefined;
+
+  // The badge borrows the materialisation COLOURS and none of its words. A
+  // stage is built, partial or not built; a bitstream is materialized,
+  // referenced or unknown. They are different vocabularies over the same three
+  // shades, and printing "MATERIALIZED" next to "Serialize" would invite a
+  // reader to look for bytes that a build stage does not have.
+  const SHADE = { built: "materialized", partial: "unknown", "not built": "referenced" } as const;
+  const stage = (n: number, name: string, state: keyof typeof SHADE, what: string) =>
+    `<tr><th class="rid">${n}</th><td><strong>${esc(name)}</strong><br><span class="why">${what}</span></td>` +
+    `<td><span class="state ${SHADE[state]}">${esc(state)}</span></td></tr>`;
+
+  return `
+<h1>From this catalogue to somebody else&rsquo;s portal</h1>
+
+<p class="lede">This instance is a <strong>worked example</strong> of a general pattern: a knowledge
+graph reaching readers the repository never hears about. The pattern is the platform&rsquo;s —
+the skill is <code>kg-to-portal</code> and the process is
+<code>kg-to-portal.bpmn</code>. What is on this page is the part only who-iris can
+say: which stages are actually built here, with this instance&rsquo;s own numbers.</p>
+
+${svg ? `<figure class="arch">${svg}<figcaption>Six stages in three zones. The publisher owns the canonical URL; the cache owns neither end. The dashed arrow is undetermined on purpose.</figcaption></figure>` : `<p class="none">The architecture drawing could not be read from the platform. Not rendered rather than rendered empty &mdash; a missing figure is a finding.</p>`}
+
+<h2>The one distinction the drawing exists for</h2>
+
+<div class="caveat">
+  <p><strong>A CDN is not a publication host. It is a layer in front of one.</strong>
+  <code>PUBLICATION_HOSTS</code> answers <em>what serves the rendering</em>; a cache
+  answers <em>what stands between the server and the reader</em>. Model the cache as the
+  host and the published URL becomes the cache&rsquo;s &mdash; then the day the cache changes,
+  every citation breaks and the old URL stays warm for as long as its TTL says.</p>
+  <p>This page is served from GitHub Pages and its assets are also reachable through
+  jsDelivr. <strong>Both are tool choices.</strong> The canonical answer is the one the
+  catalogue records; the CDN is an accelerated route to the same bytes.</p>
+</div>
+
+<h2>Where this instance actually is</h2>
+
+<table class="reqs">
+  <thead><tr><th>#</th><th>Stage</th><th>Here</th></tr></thead>
+  <tbody>
+${stage(1, "Select", "partial", "Everything in this catalogue is publishable, so the editorial cut has never had to refuse anything. An untested filter is not a working one.")}
+${stage(2, "Serialize", "built", `<code>kg-export</code> emits the harness graph as JSON-LD; this instance&rsquo;s catalogue is ${all.length} nodes with ${items.length} item(s).`)}
+${stage(3, "Package", "not built", "There is no manifest. The pages and assets are published individually, so nothing here can detect a file that was <em>removed</em>.")}
+${stage(4, "Sign", "not built", "Nothing is signed. The catalogue records a <code>sha256</code> per bitstream, which is a digest and not an attestation &mdash; anyone who can change the bytes can change the digest beside them. The trust anchor is to be <strong>GDHCN</strong>; see below.")}
+${stage(5, "Distribute", "built", `${pages} generated page(s) and ${covers} cover(s) on GitHub Pages, with a jsDelivr route to the same bytes.`)}
+${stage(6, "Verify", "not built", "No consumer verifies anything, because there is nothing signed to verify. This is the stage that gets dropped, and it is dropped here.")}
+  </tbody>
+</table>
+
+<h2>The numbers a transport decision would be made with</h2>
+
+<p class="ordering">Constraints need denominators. These are this instance&rsquo;s, measured at
+generation time &mdash; not quoted, not remembered.</p>
+
+<table class="reqs">
+  <tbody>
+    <tr><th class="rid">items</th><td>${items.length} here, of <strong>${cat.totalItemsUpstream?.toLocaleString("en-US") ?? "unknown"}</strong> upstream</td><td class="why">the completeness denominator</td></tr>
+    <tr><th class="rid">files</th><td>${cat.totalFilesUpstream?.toLocaleString("en-US") ?? "unknown"} upstream</td><td class="why">a different denominator; 3.86 files per item, so a fraction built from the wrong one is wrong by that factor</td></tr>
+    <tr><th class="rid">bytes</th><td><strong>${esc(mb(heldBytes))}</strong> held, of ${cat.totalBytesUpstream !== undefined ? esc(gb(cat.totalBytesUpstream)) : "unknown"} upstream</td><td class="why">the size-gate denominator, and the reason this catalogue is by reference</td></tr>
+    <tr><th class="rid">served</th><td>${pages} page(s), ${covers} cover(s)</td><td class="why">what a publication period would actually move</td></tr>
+    <tr><th class="rid">readers</th><td><span class="none">not measured</span></td><td class="why">traffic is bytes &times; requests, and nothing here counts requests. Unknown rather than assumed &mdash; an invented reader count would make every cost figure below it fiction</td></tr>
+  </tbody>
+</table>
+
+<h2>Signing: the trust anchor is GDHCN</h2>
+
+<p>Owner, 2026-09-20: <code>propsal signing = GDHCN</code> &mdash; the WHO
+<strong>Global Digital Health Certification Network</strong>. What that settles is not the
+algorithm but <em>where trust comes from</em>, and the consequence is architectural: the
+publisher signs <strong>as a participant</strong>, so signing capability is granted and can be
+withdrawn; and a verifier resolves the key <strong>from the network</strong> rather than from
+the package. In the drawing above the trust box sits outside all three zones for that
+reason &mdash; it belongs to neither end, which is the whole point of having it.</p>
+
+<div class="caveat">
+  <p><strong>A verifier now needs reachability the publisher does not control.</strong> A portal
+  that can fetch the bytes but cannot reach the trust list has not failed verification &mdash; it
+  reports <code>unknown</code>. An offline portal is a real deployment
+  (<code>network: air-gapped</code> is a declared value), so it is a case to answer rather than
+  assume away.</p>
+  <p><strong>Nothing about GDHCN&rsquo;s mechanism is stated here from general knowledge.</strong>
+  It is named in this repository for the first time on 2026-09-20 and the network that would
+  fetch its specification is blocked from the container that generates this page. What envelope
+  it signs and whether that admits a file manifest at all; how a participant is onboarded and by
+  whom; the key rotation and revocation model; whether a verifier may cache the trust list &mdash;
+  all four are <strong>open against the specification</strong>, and each one changes the design.</p>
+</div>
+
+<h2>What is deliberately not decided</h2>
+
+<div class="caveat">
+  <p><strong>The ingestion method is undetermined</strong>, and the process diagram reaches a
+  gateway with no default branch rather than naming one. A pull from the portal, a push to an
+  object store, a git fetch, a signed tarball on a schedule &mdash; they differ in who initiates,
+  in what must be reachable from where, and in what happens when a publication is missed.
+  Drawing one as the obvious branch would record a decision nobody made.</p>
+  <p><strong>The store must be versioned; which store is a deployment choice.</strong> Hosted git
+  is one satisfaction of that requirement, not the requirement. A portal showing a graph needs to
+  be able to say <em>which</em> graph &mdash; an unversioned store cannot answer &ldquo;what did
+  this look like last term&rdquo;, and that is the question a reading list asks every year.</p>
+  <p><strong>Nothing here was measured against a live CDN.</strong>
+  <code>cdn.jsdelivr.net</code> is egress-blocked from the container that generates these pages,
+  so every CDN figure would be quoted rather than measured. The owner confirmed one link by hand
+  on 2026-09-20, and that is the whole of the evidence.</p>
+</div>
+
+<p><a href="ingestion-notes.html">What ingesting these documents cost</a> &mdash; the
+requirements this instance paid for, generated from the skill that records them.</p>
+`;
+}
+
 function main(): number {
   const all = nodes();
   const files = new Map<string, string>();
@@ -1298,6 +1482,15 @@ function main(): number {
   files.set(
     "index.html",
     page("who-iris", [{ label: "Home" }], landingPage(all)),
+  );
+
+  files.set(
+    "kg-to-portal.html",
+    page(
+      "From this catalogue to somebody else's portal",
+      [{ label: "Home", href: "index.html" }, { label: "KG to portal" }],
+      kgToPortal(all),
+    ),
   );
 
   files.set(

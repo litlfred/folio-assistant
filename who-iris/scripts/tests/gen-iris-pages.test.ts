@@ -97,7 +97,7 @@ describe("the generator owns its filenames, and prunes only those", () => {
     expect(html.length).toBeGreaterThan(3);
     const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
     const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
-    const wanted = new Set(["index.html", "community-list.html", "ingestion-notes.html", ...items, ...colls]);
+    const wanted = new Set(["index.html", "community-list.html", "ingestion-notes.html", "kg-to-portal.html", ...items, ...colls]);
     expect(html.filter((f) => !wanted.has(f))).toEqual([]);
     expect([...wanted].filter((f) => !html.includes(f))).toEqual([]);
   });
@@ -229,5 +229,43 @@ describe("recent submissions are ordered, and the order is total", () => {
       .map((f) => JSON.parse(readFileSync(join(NODES, f), "utf-8")))
       .filter((n) => n.flavour === "item");
     expect(itemOrderIn("index.html")).toEqual(recentOrder(all).map((n) => slug(n.id)));
+  });
+});
+
+describe("the KG-to-portal page keeps its claims honest", () => {
+  const page = readFileSync(join(DOCS, "kg-to-portal.html"), "utf-8");
+
+  it("inlines the architecture drawing rather than linking across mount routes", () => {
+    // These pages are served from BOTH `/who-iris/` and `/docs/who-iris/`, so
+    // a relative path to a file outside this directory resolves under one and
+    // 404s under the other. Inlined, there is no path to be wrong.
+    expect(page).toContain("<svg");
+    expect(page).toContain("GDHCN");
+    expect(page).not.toContain("cat-harness/docs/assets");
+  });
+
+  it("does not claim a stage this instance has not built", () => {
+    // The page's whole value is that it says where who-iris actually is.
+    // Package, sign and verify are not built here, and a page that quietly
+    // promoted one would be the `xom7` shape: it looks exactly like a working
+    // pipeline from in here.
+    for (const s of ["Package", "Sign", "Verify"]) {
+      const row = new RegExp(`<strong>${s}</strong>[\\s\\S]{0,600}?</tr>`);
+      const m = row.exec(page);
+      expect(m).not.toBeNull();
+      expect(m![0]).toContain("not built");
+    }
+  });
+
+  it("states the upstream figures from the catalogue, not from prose", () => {
+    const cat = JSON.parse(readFileSync(join(INSTANCE, "catalogue", "catalogue.json"), "utf-8"));
+    expect(page).toContain(cat.totalItemsUpstream.toLocaleString("en-US"));
+    expect(page).toContain(cat.totalFilesUpstream.toLocaleString("en-US"));
+  });
+
+  it("says readers are not measured rather than inventing a count", () => {
+    // Traffic is bytes x requests and nothing here counts requests. An
+    // invented reader count would make every cost figure under it fiction.
+    expect(page).toContain("not measured");
   });
 });

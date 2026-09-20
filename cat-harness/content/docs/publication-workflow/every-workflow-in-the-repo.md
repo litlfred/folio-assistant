@@ -194,6 +194,21 @@ workflow's jobs and reading as complete.
 | `atomic-mass-drift-check.bpmn` | Is `AtomicMass.lean` still in sync with its data table? The smallest workflow here and the one whose output a proof depends on: part company, and a Lean file that compiles is carrying numbers nothing produced. Same minimal-by-design note as above |
 | `pr-checks-present.bpmn` | Which open pull requests have **no CI run on their head** — bean `3pqn`. Measured 2026-09-20: two of six had none. The **15-minute age gate** is the difference between useful and ignored, since a head pushed moments ago legitimately has no run and reporting those is how a sweep gets muted. Only `unknown` fails the job; a finding records itself and the workflow stays green. Two channels: the issue **edited in place**, the PR comment **once per (PR, head sha)** |
 
+**Out to a public portal** — the stage after publishing, and the one this
+repository had built twice without naming. A portal that is not this
+repository — a Moodle site, a ministry intranet, a department page — needs the
+graph's contents, and the path there is six stages rather than a deploy:
+
+| Diagram | Answers |
+|---------|---------|
+| `kg-to-portal.bpmn` | How a knowledge graph reaches readers the repository never hears about: select → serialize → package → sign → distribute → verify. **`GW_Transport` has no default branch on purpose** — the owner stated the ingestion method as undetermined, so the diagram reaches a decision and stops; drawing one branch as the obvious one would record a decision nobody made. **A CDN is not a lane**: it is what `A_Distribute` may put in front of the origin, because modelling a cache as a participant makes its URL look like the published one, and a published URL is a promise (bean `xies`, *"EXTREME care in URL handling"*). Two gateways refuse rather than warn — over budget is an end event, not a warning, and a failed verification serves the **previous** version rather than nothing, since a portal that goes blank has turned an integrity problem into an outage |
+
+The verify stage is the one that gets dropped, and the reason is structural:
+every other stage produces something visible and this one produces nothing when
+it passes. A package that is signed and never verified is a package whose
+signature is decoration. Where the portal cannot verify, `unknown` is the
+answer — a portal nobody asked is not a portal that checked.
+
 **The publish branch** — what is on `gh-pages`, and what happened to it. The
 branch has six publishers and one of them is a full replace, so "the preview
 is gone" has never had an answer a reader could look up:
