@@ -45,11 +45,11 @@ import { expectedInstanceConfigPath } from "../schemas/harness-config";
 
 // ── Repo layout ──────────────────────────────────────────────────────────────
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
-const FOLIO_DIR = folioDir(REPO_ROOT);
-const PREAMBLE_PATH = join(REPO_ROOT, "latex", "preamble.tex");
-const BLOCK_PDFS_DIR = join(REPO_ROOT, "build", "block-pdfs");
-const GOOGLE_DRIVE_MCP = join(REPO_ROOT, "src", "google-drive-mcp.py");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..");
+const FOLIO_DIR = folioDir(INSTANCE_ROOT);
+const PREAMBLE_PATH = join(INSTANCE_ROOT, "latex", "preamble.tex");
+const BLOCK_PDFS_DIR = join(INSTANCE_ROOT, "build", "block-pdfs");
+const GOOGLE_DRIVE_MCP = join(INSTANCE_ROOT, "src", "google-drive-mcp.py");
 
 // ── Arg parsing ──────────────────────────────────────────────────────────────
 
@@ -76,7 +76,7 @@ const EXPLICIT_FILES = args.filter(a => !a.startsWith("--") && (a.endsWith(".ts"
 
 function resolveConfigDriveFolder(): string | undefined {
   // Read this instance's config (`<name>.config.json`) if present.
-  const cfgPath = expectedInstanceConfigPath(REPO_ROOT);
+  const cfgPath = expectedInstanceConfigPath(INSTANCE_ROOT);
   if (cfgPath === undefined || !existsSync(cfgPath)) return undefined;
   try {
     const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
@@ -109,12 +109,12 @@ function getChangedBlockFiles(): string[] {
   if (!base) {
     // Try to find the remote default branch merge-base
     const defaultBranch = spawnSync("git", ["remote", "show", "origin"], {
-      cwd: REPO_ROOT, stdio: "pipe",
+      cwd: INSTANCE_ROOT, stdio: "pipe",
     });
     const m = defaultBranch.stdout?.toString().match(/HEAD branch: (\S+)/);
     const defaultRef = m ? `origin/${m[1]}` : "origin/main";
     const mergeBase = spawnSync("git", ["merge-base", "HEAD", defaultRef], {
-      cwd: REPO_ROOT, stdio: "pipe",
+      cwd: INSTANCE_ROOT, stdio: "pipe",
     });
     base = mergeBase.status === 0
       ? mergeBase.stdout.toString().trim()
@@ -122,12 +122,12 @@ function getChangedBlockFiles(): string[] {
   }
 
   const diff = spawnSync("git", ["diff", "--name-only", `${base}...HEAD`], {
-    cwd: REPO_ROOT, stdio: "pipe",
+    cwd: INSTANCE_ROOT, stdio: "pipe",
   });
   if (diff.status !== 0) {
     // Fallback: uncommitted changes
     const status = spawnSync("git", ["diff", "--name-only"], {
-      cwd: REPO_ROOT, stdio: "pipe",
+      cwd: INSTANCE_ROOT, stdio: "pipe",
     });
     if (status.status !== 0) return [];
     return parseBlockPaths(status.stdout.toString(), paperDir);
@@ -146,7 +146,7 @@ function parseBlockPaths(diffOutput: string, paperDir: string): string[] {
   for (const line of diffOutput.split("\n")) {
     const rel = line.trim();
     if (!rel) continue;
-    const abs = join(REPO_ROOT, rel);
+    const abs = join(INSTANCE_ROOT, rel);
 
     // Must be under content/<paper>/
     if (!abs.startsWith(paperDir + "/")) continue;
@@ -220,7 +220,7 @@ async function loadAllBlocks(): Promise<{
       const blockName = tsFile.replace(/\.ts$/, "");
       const tsPath = join(chDir, tsFile);
       const mdPath = join(chDir, `${blockName}.md`);
-      const sourceDir = relative(REPO_ROOT, chDir);
+      const sourceDir = relative(INSTANCE_ROOT, chDir);
       entries.set(blockName, { blockName, tsPath, mdPath, chapterDir: chapterRef.dir, sourceDir });
     }
   }
@@ -353,7 +353,7 @@ async function renderBlock(entry: BlockEntry, paper: Paper): Promise<BlockResult
   // Generate .tex
   mkdirSync(BLOCK_PDFS_DIR, { recursive: true });
   const texPath = join(BLOCK_PDFS_DIR, `${entry.blockName}.tex`);
-  const bibPath = join(REPO_ROOT, "references");
+  const bibPath = join(INSTANCE_ROOT, "references");
 
   const tex = generateBlockStandaloneTex(
     paper, block, mdContent, entry.blockName, entry.sourceDir,
@@ -369,7 +369,7 @@ async function renderBlock(entry: BlockEntry, paper: Paper): Promise<BlockResult
     `-output-directory=${BLOCK_PDFS_DIR}`,
     texPath,
   ], {
-    cwd: REPO_ROOT,
+    cwd: INSTANCE_ROOT,
     stdio: "pipe",
     timeout: 120_000,
   });

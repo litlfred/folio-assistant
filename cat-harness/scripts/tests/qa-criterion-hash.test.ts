@@ -8,7 +8,7 @@ import {
 } from "../../content/pipeline/qa-criterion-hash";
 
 /**
- * The PLATFORM checkout — this file's own location, NOT `process.cwd()`.
+ * The INSTANCE_ROOT checkout — this file's own location, NOT `process.cwd()`.
  *
  * The real-module guard at the bottom of this file used to build its path with
  * `join(process.cwd(), ...)`, and `run-tests.sh` does `cd "$SCRIPT_DIR"` before
@@ -18,14 +18,14 @@ import {
  * with how checkers are written — the one thing the guard exists to watch. It
  * resolved only when the suite happened to be invoked from the repo root.
  *
- * Same anchor as `helpers.ts`'s `REPO_ROOT`, and the right one for a PLATFORM
+ * Same anchor as `helpers.ts`'s `REPO_ROOT`, and the right one for a INSTANCE_ROOT
  * file even when a folio embeds this repo as a `folio-assistant/` symlink:
  * `import.meta.dir` resolves back through the symlink to the real platform
  * path. (Anchoring CONTENT paths here would be the opposite mistake — see the
  * `FOLIO_ROOT` note in `helpers.ts`.)
  */
-const PLATFORM = resolve(import.meta.dir, "..", "..");
-const VOICE_CHECKERS = join(PLATFORM, "content/pipeline/qa-checkers-voice.ts");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
+const VOICE_CHECKERS = join(INSTANCE_ROOT, "content/pipeline/qa-checkers-voice.ts");
 
 // Each case writes a throwaway checker module. Hashes are memoized by absolute
 // path, so every fixture gets a fresh temp dir as well as a cache reset.

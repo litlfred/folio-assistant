@@ -112,11 +112,11 @@ function loadMoveTable(path: string): MoveTable {
   return (raw as MoveEntry[]).map(([o, n]) => [normalize(o), normalize(n)] as MoveEntry);
 }
 
-function discoverFiles(repoRoot: string): string[] {
+function discoverFiles(INSTANCE_ROOT: string): string[] {
   const seen = new Set<string>();
   for (const pattern of SCAN_GLOBS) {
-    const matches = globSync(pattern, { cwd: repoRoot, nodir: true });
-    for (const m of matches) seen.add(join(repoRoot, m));
+    const matches = globSync(pattern, { cwd: INSTANCE_ROOT, nodir: true });
+    for (const m of matches) seen.add(join(INSTANCE_ROOT, m));
   }
   return Array.from(seen).sort();
 }
@@ -142,8 +142,8 @@ function applyMoveTable(content: string, table: MoveTable): {
   return { out, hits };
 }
 
-function getCurrentBranch(repoRoot: string): string {
-  return execSync("git rev-parse --abbrev-ref HEAD", { cwd: repoRoot })
+function getCurrentBranch(INSTANCE_ROOT: string): string {
+  return execSync("git rev-parse --abbrev-ref HEAD", { cwd: INSTANCE_ROOT })
     .toString().trim();
 }
 
@@ -156,8 +156,8 @@ function main(argv: string[]): number {
   const movePath = args[0];
   const write = args.includes("--write");
 
-  const repoRoot = resolve(__dirname, "..");
-  const branch = getCurrentBranch(repoRoot);
+  const INSTANCE_ROOT = resolve(__dirname, "..");
+  const branch = getCurrentBranch(INSTANCE_ROOT);
   if (branch === "main" || branch === "master") {
     console.error(`refusing to run on protected branch: ${branch}`);
     return 2;
@@ -169,13 +169,13 @@ function main(argv: string[]): number {
   console.log(`Mode: ${write ? "WRITE" : "DRY-RUN"}`);
   console.log("");
 
-  const files = discoverFiles(repoRoot);
+  const files = discoverFiles(INSTANCE_ROOT);
   console.log(`Discovered ${files.length} candidate files.`);
 
   let totalChangedFiles = 0;
   let totalReplacements = 0;
   for (const f of files) {
-    const rel = relative(repoRoot, f);
+    const rel = relative(INSTANCE_ROOT, f);
     let stat;
     try { stat = statSync(f); } catch { continue; }
     if (stat.size > 5 * 1024 * 1024) {

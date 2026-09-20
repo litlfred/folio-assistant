@@ -64,7 +64,7 @@ import type {
   TranslationQaEntry,
 } from "./translation-block-qa.ts";
 
-const REPO_ROOT = join(import.meta.dir, "..", "..");
+const INSTANCE_ROOT = join(import.meta.dir, "..", "..");
 const CRITERION = "translation-semantic-roundtrip";
 
 /** Who ran, and under what. `model` is optional and absent means "not recorded". */
@@ -156,7 +156,7 @@ export function roundTripEntries(
   fieldHash: TranslationFieldHash,
 ): TranslationQaEntry[] {
   const at = payload.reviewedAt ?? new Date().toISOString();
-  const sha = payload.reviewedSha ?? gitHeadSha(REPO_ROOT);
+  const sha = payload.reviewedSha ?? gitHeadSha(INSTANCE_ROOT);
   const findings = payload.findings?.filter((f) => f.trim() && f.trim().toLowerCase() !== "none");
 
   const verdict: TranslationQaEntry = {
@@ -200,11 +200,11 @@ export function roundTripEntries(
  * record a verdict for a locale nothing has ever been translated into.
  */
 export function recordRoundTrip(payload: RoundTripPayload): string {
-  const mdAbs = join(REPO_ROOT, payload.block);
+  const mdAbs = join(INSTANCE_ROOT, payload.block);
   const sidecar = mdAbs.replace(/\.md$/, `.${payload.locale}.translation-qa.json`);
   if (!existsSync(sidecar)) {
     throw new Error(
-      `no ${relative(REPO_ROOT, sidecar)} — run translation-block-qa.ts first; ` +
+      `no ${relative(INSTANCE_ROOT, sidecar)} — run translation-block-qa.ts first; ` +
         `a round trip cannot be the thing that decides this block is translated`,
     );
   }
@@ -213,7 +213,7 @@ export function recordRoundTrip(payload: RoundTripPayload): string {
   const fieldHash: TranslationFieldHash = {
     md: hashFile(mdAbs),
     ts: existsSync(tsAbs) ? hashFile(tsAbs) : undefined,
-    po: hashFile(join(REPO_ROOT, doc.po)),
+    po: hashFile(join(INSTANCE_ROOT, doc.po)),
   };
 
   const fresh = roundTripEntries(payload, fieldHash);
@@ -225,7 +225,7 @@ export function recordRoundTrip(payload: RoundTripPayload): string {
   doc.criteria[CRITERION] = [...fresh, ...kept];
   doc.updated_at = new Date().toISOString();
   writeFileSync(sidecar, JSON.stringify(doc, null, 2) + "\n");
-  return relative(REPO_ROOT, sidecar);
+  return relative(INSTANCE_ROOT, sidecar);
 }
 
 if (import.meta.main) {
