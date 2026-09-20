@@ -137,7 +137,18 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                 entry["narrative"] = {"text": None, "state": "not-authored"}
             images.append(entry)
 
-            if not dry_run:
+            # Only a FIGURE gets its pixels written. A page scan IS the page:
+            # its content already reaches the library through the page tree
+            # that `pdf-pages.py` / `pdf-ocr.py` build, so a copy under
+            # `images/` is duplication a clone pays for forever. Measured
+            # 2026-09-20 on WHO_PUB_TPS_93.1: ~6 MB for its 121 page scans --
+            # not ruinous, which is why this is a design choice rather than an
+            # emergency, but nothing in `d5f1` reads those bytes.
+            #
+            # The ENTRY is still recorded for every image, scan included. The
+            # classification is the finding; suppressing the entry would make
+            # "not a figure" indistinguishable from "not seen".
+            if not dry_run and entry["role"] == "figure":
                 target = outdir / doc_id / rel
                 target.parent.mkdir(parents=True, exist_ok=True)
                 try:

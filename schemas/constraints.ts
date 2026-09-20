@@ -14,6 +14,7 @@ import type { Block } from "./types.js";
 // Leaf module — importing the kind list from `types.js` would be a runtime
 // cycle, and `appliesTo` is built at module init, exactly when that bites.
 import { BLOCK_KINDS, DAK_LABEL_PREFIXES } from "./block-kinds.js";
+import { NarrativeSchema } from "./narrative.ts";
 
 
 
@@ -79,6 +80,11 @@ export const LABEL_PREFIXES: Record<string, string> = {
   equation: "eq:",
   diagram: "fig:",
   table: "tbl:",
+  // Shares `fig:` with `diagram` on purpose. The prefix names what a reader
+  // CITES — "see fig:3" — and a reader does not care whether the figure was
+  // drawn in tikzcd or lifted out of a PDF. The two kinds differ in how they
+  // are produced and stored, not in how they are referred to.
+  figure: "fig:",
 };
 
 /**
@@ -431,6 +437,26 @@ export const TableSchema = BlockBaseSchema.extend({
   caption: z.string().optional(),
 });
 
+/**
+ * A figure EXTRACTED from a source document — bean `d5f1`.
+ *
+ * `file` is required and there is no `tex`, which is the whole distinction
+ * from {@link DiagramSchema}: a diagram is authored tikzcd source, a figure is
+ * an image somebody's document already contained. A figure block with no file
+ * is a claim about an image nobody can look at.
+ *
+ * `narrative` is a state machine rather than a string, so that who wrote a
+ * description and whether a human accepted it travel with it.
+ */
+export const FigureSchema = BlockBaseSchema.extend({
+  kind: z.literal("figure"),
+  label: labelForKind("figure").optional(),
+  file: z.string().min(1),
+  caption: z.string().optional(),
+  page: z.number().int().min(1).optional(),
+  narrative: NarrativeSchema.optional(),
+});
+
 /** Discriminated union — validates any Block. */
 export const BlockSchema = z
   .discriminatedUnion("kind", [
@@ -449,6 +475,7 @@ export const BlockSchema = z
     EquationSchema,
     DiagramSchema,
     TableSchema,
+    FigureSchema,
   ])
   .superRefine((block, ctx) => {
     // Cross-kind invariant: an `algorithm` block must cite at least
@@ -719,9 +746,14 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "uses-resolve",
     description: "All labels in uses[] must exist in the document (or be qualified cross-paper refs)",
     appliesTo: [
-      "definition", "theorem", "lemma", "proposition", "corollary",
-      "conjecture", "example", "remark", "simulator",
-      "algorithm", "proof", "prose", "equation", "diagram", "table",
+      // `uses` is a BlockBase field, so ANY kind can carry one — the same
+      // reason `cites-resolve` and `simulator-ref-resolve` derive theirs.
+      // This list was written out by hand and happened to name all fifteen
+      // kinds of the day, which is indistinguishable from a derived list
+      // right up to the moment a kind is added: `figure` (bean `d5f1`) was
+      // then silently unchecked, and `validate.ts` skips an unlisted kind
+      // without a word. Derived now, so that cannot recur.
+      ...BLOCK_KINDS,
     ],
     check: (block, ctx) => {
       if (!("uses" in block) || !block.uses) return null;

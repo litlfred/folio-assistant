@@ -11,6 +11,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { buildDocumentNodes } from "../../content/pipeline/gen-library-jsonld.ts";
 import {
   DESCRIBABLE_ROLES,
   DocumentImageSchema,
@@ -182,5 +183,84 @@ describe("the extractor's real output satisfies the schema", () => {
     expect(images.filter((i) => i.role === "figure")).toHaveLength(1);
     // Every decided entry shows its working, on REAL output.
     for (const i of images) expect(i.basis !== undefined).toBe(i.role !== "undetermined");
+  });
+});
+
+describe("figures reach the manifest as blocks", () => {
+  // Bean `d5f1`. Measured against `wpr-rdo-2020-003-eng`, whose 21 figures sit
+  // on pages 8, 9, 10, 26, 29, 30 and 31.
+  /** A minimal StructureSection; only the page range matters to these tests. */
+  const sec = (id: string, page: number) => ({
+    id, number: null, title: id, level: 1,
+    page_start: page, page_end: page, n_chars: 0, n_words: 0,
+  });
+  const structure = {
+    doc_id: "d",
+    sections: [
+      sec("page-008", 8), sec("page-009", 9), sec("page-012", 12),
+    ],
+  };
+  const sidecar = {
+    $schema: "folio-document-images/v1" as const,
+    doc_id: "d",
+    images: [
+      { id: "img-p008-1", file: "images/img-p008-1.png", role: "figure" as const,
+        basis: { coverage: 0.005, imagesOnPage: 4, page: 8 },
+        narrative: { text: null, state: "not-authored" as const } },
+      { id: "img-p009-1", file: "images/img-p009-1.png", role: "figure" as const,
+        basis: { coverage: 0.01, imagesOnPage: 1, page: 9 } },
+      // A page scan on a page that HAS a section. Must not become a block.
+      { id: "img-p012-1", file: "images/img-p012-1.png", role: "page-scan" as const,
+        basis: { coverage: 0.998, imagesOnPage: 1, page: 12 } },
+    ],
+  };
+  const build = (images?: typeof sidecar) =>
+    buildDocumentNodes("d", structure, undefined, () => false, images);
+
+  test("a figure becomes a block, typed as a figure in both vocabularies", () => {
+    const f = build(sidecar).find((o) => o.path === "blocks/figure-img-p008-1.jsonld");
+    expect(f).toBeDefined();
+    const node = JSON.parse(f!.content);
+    expect(node.kind).toBe("figure");
+    expect(node["@type"]).toEqual(["folio:Figure", "doco:Figure"]);
+    // Relative to the BLOCK, as prose's `text` already is.
+    expect(node.file).toBe("../images/img-p008-1.png");
+    expect(node.pageStart).toBe(8);
+  });
+
+  test("a PAGE SCAN never becomes a block, even on a page that has a section", () => {
+    // The measurement, enforced at the last step: 140 of 164 placed images in
+    // this corpus are scans, and a block for each would be 140 figure nodes
+    // describing pages.
+    const paths = build(sidecar).map((o) => o.path);
+    expect(paths).not.toContain("blocks/figure-img-p012-1.jsonld");
+    expect(paths.filter((p) => p.startsWith("blocks/figure-"))).toHaveLength(2);
+  });
+
+  test("the figure is contained by the section whose pages hold it", () => {
+    const sec = build(sidecar).find((o) => o.path === "sections/page-008.jsonld");
+    const node = JSON.parse(sec!.content);
+    expect(node.contains).toContain("library/d/blocks/figure-img-p008-1");
+    const other = JSON.parse(
+      build(sidecar).find((o) => o.path === "sections/page-009.jsonld")!.content,
+    );
+    expect(other.contains).not.toContain("library/d/blocks/figure-img-p008-1");
+  });
+
+  test("narrative STATE travels, so absence is distinguishable from rejection", () => {
+    const withN = JSON.parse(
+      build(sidecar).find((o) => o.path === "blocks/figure-img-p008-1.jsonld")!.content,
+    );
+    expect(withN.narrative).toEqual({ text: null, state: "not-authored" });
+    // And a figure carrying none says nothing rather than inventing a state.
+    const without = JSON.parse(
+      build(sidecar).find((o) => o.path === "blocks/figure-img-p009-1.jsonld")!.content,
+    );
+    expect(without.narrative).toBeUndefined();
+  });
+
+  test("no sidecar means no figure blocks — and no crash", () => {
+    // `images.json` is absent for every document ingested before `d5f1`.
+    expect(build(undefined).map((o) => o.path).filter((p) => p.includes("figure-"))).toEqual([]);
   });
 });

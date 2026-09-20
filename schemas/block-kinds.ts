@@ -55,6 +55,7 @@ export const BLOCK_KINDS = [
   "equation",
   "diagram",
   "table",
+  "figure",
 ] as const;
 
 export type BlockKind = (typeof BLOCK_KINDS)[number];
