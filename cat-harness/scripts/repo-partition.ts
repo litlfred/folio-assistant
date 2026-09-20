@@ -439,6 +439,18 @@ const RULES: Rule[] = [
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",
+      // The staging-preview record and the script that writes it — bean `6pfo`,
+      // arrived from `main` (#466) AFTER this pass began and was caught by the
+      // unassigned gate added in the same change, on its first real encounter.
+      // Before that gate it would have joined the 19 silently.
+      //
+      // Its two siblings `restore-staging.ts` and `staging-cleanup-preflight.ts`
+      // were already harness; the schema moves WITH the script for the reason
+      // the four shared targets above did, or classifying the script alone
+      // mints the edge it was meant to retire. `staging-preview.ts` imports
+      // only zod and `fsh-guts.ts` (harness), so it carries no content model.
+      "schemas/staging-preview.ts",
+      "scripts/staging-record.ts",
       "scripts/restore-staging.ts",
       "scripts/serve-rendering.ts",
       "scripts/staging-cleanup-preflight.ts",
