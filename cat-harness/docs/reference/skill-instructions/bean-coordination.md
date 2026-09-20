@@ -346,6 +346,39 @@ cannot see it by looking at its own history. A window with no commits **exits
 non-zero** rather than reporting "no siblings": a sweep over nothing has not
 found anything.
 
+### Worked example — the session that built this tool, tripping over it
+
+**2026-09-20, an hour after `ab3n` was written.** This session created three
+`milestone` beans for the owner's three goals, each carrying the `goal-review`
+sweep's **paraphrase**, because the verbatim words were not written down
+anywhere it could see — it searched the issue, its comments, the pull request
+and the whole store.
+
+A sibling session had created the same three milestones **with the owner's
+verbatim words** and merged them to `main` at 18:50, about an hour earlier. All
+three of this session's beans were scrapped as duplicates.
+
+Two things were true at once and both matter:
+
+- **The checkout is a snapshot.** A container fetched `main` when it started,
+  and everything merged since is invisible until it fetches again. An hour is
+  long enough here: 54 proposals merged in one four-hour window that same day.
+- **`beans create` is not idempotent and dedupes on nothing**, so the cost of
+  not looking is paid in duplicates somebody scraps one at a time. The
+  existence check in [`todo-manager`](todo-manager.md) §"Check before you
+  create" reads the LOCAL store, so it cannot catch this case: the duplicate is
+  not there yet.
+
+**So before creating a bean for a decision, or claiming one, do both:**
+
+```sh
+git fetch origin main
+bun run sessions --since 4h
+```
+
+The second is the one that gets skipped, and it is the one that answers *who
+else is on this right now*. It cost nothing and would have saved all three.
+
 ## A quiet claim — what `in-progress` does NOT tell you
 
 **Measured 2026-09-20, bean `fgnw`.** 60 beans were `in-progress`; **43 had no

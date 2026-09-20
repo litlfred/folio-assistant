@@ -329,6 +329,7 @@
   "directories": [
     {
       "id": "tools",
+      "coverage": {"docs": "cat-harness/docs/skills.md", "skill": "skills-and-tools"},
       "path": "tools/",
       "dependents": "skip",
       "description": "Tool definitions, one subdirectory per contributing instance (tools/<stub>/) so a composed instance adds its own without colliding on a filename. tools/index.ts merges them and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
@@ -367,6 +368,7 @@
     },
     {
       "id": "methodology-raci",
+      "theme": "analyst",
       "path": "methodologies/raci/",
       "dependents": "skip",
       "description": "RACI as its own subgraph beside CRDM. Three declared edge kinds \u2014 accountable, consulted, informed \u2014 over the BPMN activities and `roles.json` entries that already exist, NOT a new party registry: a second table of names would be a second answer to `who is the reviewer`, free to disagree with the registry, which is the drift the retired skill `roles:` field cost 260 dangling values (bean qif9). R is deliberately absent because a lane already declares it. Owner, 2026-09-20, bean 7o7i: exactly one Accountable per activity, ENFORCED by `check:raci`.",
@@ -376,6 +378,8 @@
     },
     {
       "id": "methodology-crdm",
+      "coverage": {"docs": "cat-harness/docs/crdm-methodology.md", "skill": "crdm-detect"},
+      "theme": "analyst",
       "path": "methodologies/crdm/",
       "dependents": "skip",
       "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in skills/workflows/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `cat-bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
@@ -385,6 +389,7 @@
     },
     {
       "id": "methodologies",
+      "theme": "analyst",
       "path": "methodologies/",
       "dependents": "skip",
       "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here — see smart-kg-methodologies.",
@@ -422,6 +427,7 @@
     },
     {
       "id": "beans",
+      "coverage": {"docs": "cat-harness/docs/beans-and-todos.md", "skill": "todo-manager"},
       "path": "beans/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -432,6 +438,7 @@
     },
     {
       "id": "todos",
+      "coverage": {"docs": "cat-harness/docs/beans-and-todos.md", "skill": "todo-manager"},
       "path": "todos/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -442,6 +449,7 @@
     },
     {
       "id": "memory",
+      "coverage": {"skill": "agent-memory"},
       "path": "memory/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -453,6 +461,7 @@
     },
     {
       "id": "interaction",
+      "coverage": {"docs": "cat-harness/docs/agentic-harness.md", "skill": "interaction-modality"},
       "path": "interaction/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -463,6 +472,7 @@
     },
     {
       "id": "issue-marks",
+      "coverage": {"skill": "issue-working"},
       "path": "issue-marks/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -475,6 +485,10 @@
       "id": "uploads",
       "path": "uploads/",
       "dependents": "reproduce",
+      "coverage": {
+        "docs": "cat-harness/docs/document-ingestion.md",
+        "skill": "library-ingestion"
+      },
       "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
       "graphs": [
         "uploads"
@@ -484,6 +498,10 @@
       "id": "library",
       "path": "library/",
       "dependents": "reproduce",
+      "coverage": {
+        "docs": "cat-harness/docs/document-ingestion.md",
+        "skill": "library-ingestion"
+      },
       "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assist-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
       "graphs": [
         "library"
@@ -521,6 +539,7 @@
     },
     {
       "id": "voices",
+      "coverage": {"skill": "one-voice-audit"},
       "path": "voices/",
       "dependents": "reproduce",
       "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
@@ -530,6 +549,7 @@
     },
     {
       "id": "translation-sources",
+      "coverage": {"docs": "cat-harness/docs/translation-support.md", "skill": "translation-manager"},
       "path": "translations/",
       "dependents": "reproduce",
       "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
@@ -548,6 +568,7 @@
     },
     {
       "id": "folio",
+      "coverage": {"docs": "cat-harness/docs/content-types.md", "skill": "content-profiles"},
       "path": "folio/",
       "dependents": "reproduce",
       "graphs": [
@@ -557,6 +578,7 @@
     },
     {
       "id": "smart-kg-methodologies",
+      "theme": "analyst",
       "path": "smart-kg/methodologies/",
       "dependents": "skip",
       "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",

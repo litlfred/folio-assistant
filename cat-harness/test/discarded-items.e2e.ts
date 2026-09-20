@@ -216,6 +216,12 @@ test.describe("selecting an item displays it", () => {
     // `fsh-guts/` is a dumping ground anyone may drop a file into. The safe
     // thing to do with content like that is not to interpret it — so there
     // is no markdown renderer and no sanitiser to get wrong.
+    //
+    // The DEPLOY TARGET is the second half of that reasoning: this ships to
+    // gh-pages, a STATIC host with no request-time sanitiser and no server to
+    // reject a payload before it reaches a browser. "No sanitiser to get
+    // wrong" is a virtue here precisely because there could not have been one
+    // anyway — the topology forbids it (bean `81vy`, epic `5a3l`).
     await stub(page, {
       "@graph": [{ name: "Hostile", nodeKind: "note",
                    body: "<img src=x onerror=alert(1)> and <b>bold</b>" }],

@@ -1,13 +1,13 @@
 ---
 # folio-assistant-wqht
 title: 'GOALS ARE NOT IN THE STORE: three owner goals exist as chat text; milestone type unused; every review reclassifies by hand'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T19:00:00Z
+updated_at: 2026-09-20T18:50:40Z
 parent: folio-assistant-ahvw
 ---
 
@@ -29,28 +29,27 @@ todo-manager and session-intent describe a "goal-scoped" queue, but nothing says
 - [ ] The three current goals exist there, verbatim
 - [ ] todo-manager says a goal is a milestone (or whatever was chosen) and how an epic joins one
 
----
 
-_2026-09-20T19:00Z_ — **Option 1 chosen** (PR #589, issue #588): a goal is a
-`milestone` bean, in the owner's own words, with the epics serving it parented
-to it. `todo-manager` §"A GOAL is a `milestone` bean" carries it, including how
-an epic joins one and why the wording must be verbatim.
+## OWNER: **"wqht - milesotne"**, 2026-09-20 — done
 
-**This bean's claim that `check:bean-parents` already allowed it was wrong, in
-both directions**, and finding out cost nothing only because the check ran. A
-`milestone` was an ordinary bean owing a parent, and an epic naming a milestone
-would have failed its rule 3. Both are fixed, with `ROOT_TYPES` naming the two
-root types rather than `epic` being spelled in three places. Recorded because a
-bean asserting a gate already permits something is a claim like any other.
+Three milestone beans created, each carrying the owner's words verbatim:
 
-**The verbatim words are the outstanding half, and they are genuinely absent.**
-They are not in issue #578, not in its comments, not in PR #579 and not in any
-bean — the sweep's paraphrase is all that was written down. Three milestone
-beans exist (`6e7b`, `uadc`, `a46u`), each titled with the paraphrase and each
-**marked as a paraphrase in its own body**, with the replacement as its first
-Done-when. No epic is parented to any of them yet: parenting asserts what the
-goal IS, which is the thing still outstanding.
+| milestone | goal |
+|---|---|
+| `vuip` | separation of repos into dir/repos, instantiation skilled/tooled/tested |
+| `p5wm` | LHS navbar with instantiated harness, folios, stickies that move |
+| `yg29` | showing who-iris with its materialised assets, themed |
 
-- [x] The owner has chosen where goals live
-- [ ] The three current goals exist there, verbatim
-- [x] todo-manager says a goal is a milestone (or whatever was chosen) and how an epic joins one
+Epics parented where the mapping is unambiguous: `vke6` → `vuip`; `yj32` and
+`o3xy` → `p5wm`; `kupb` → `yg29`. Epics that serve more than one goal
+(`zzmr`, `1xhc`, `slw1`) are listed in the milestone bodies rather than
+parented, because assigning them would claim a breadth they do not have.
+
+**`check:bean-parents` failed on the day they landed**, and the checker was
+wrong rather than the milestones. It excluded only `epic` from the
+"must carry a parent" rule and accepted only `epic` as a parent, while this
+store's own stated hierarchy is `milestone -> epic -> feature -> task/bug`.
+So the first three milestones ever created were asked for a parent that by the
+hierarchy cannot exist — the same shape the checker's own header warns about
+one level down. Fixed with `ROOT_TYPES` and `PARENT_TYPES`, three tests, and
+both mutations confirmed caught (4 and 2 failures).

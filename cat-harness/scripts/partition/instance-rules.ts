@@ -744,6 +744,7 @@ export const RULES: Rule[] = [
       "scripts/check-fallback-roles.ts",    // reads role-graph
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
+      "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/gates.ts",                   // the gate runner itself

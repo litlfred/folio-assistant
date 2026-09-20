@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-19T05:47:28Z
-updated_at: 2026-09-20T16:13:34Z
+updated_at: 2026-09-20T17:19:50Z
 parent: folio-assistant-zzmr
 ---
 
@@ -275,6 +275,28 @@ Both branches need the author:
 Nothing here is an agent's call. Brought back as a question rather than
 actioned.
 
+
+## OWNER: **"wlqd OK"**, 2026-09-20
+
+Approved to proceed. The remaining half is implementing the sync so
+`skill_fetch` can serve a declared remote package's skills — a **platform
+capability change**, so per `AGENTS.md` it takes a GitHub issue and the CRDM
+workflow before implementation, not a direct edit.
+
+Read as permission for that first step: scan for an existing issue, and open
+one only if none covers it. `AGENTS.md` §CRDM is explicit that an agent never
+creates an issue without permission, and this is it.
+
+**What must not be lost when it lands:** the `remote-skill-is-servable`
+criterion currently reports **5** findings, one per declared-and-unservable
+skill, and `scripts/tests/remote-skill-servable.test.ts` pins that set in BOTH
+directions — it cannot silently grow or silently vanish. Implementing the sync
+makes those five servable, which fails that test **by design**, and the test
+says so. Closing this bean means updating the expectation deliberately, not
+watching a green run.
+
+Also recorded there: both wrappers pin `ref: "main"` with `autoUpdate: true`,
+which would auto-ingest whatever upstream pushes. Prefer a pinned commit.
 ---
 
 ## Issue opened 2026-09-20 — CRDM entry
@@ -286,4 +308,3 @@ their costs. **No code was written**: CRDM Phase 1 starts from the issue, and
 the branch — implement, or retire the declaration — is the author's.
 
 Status stays `in-progress`; neither `## Done when` box has moved.
-
