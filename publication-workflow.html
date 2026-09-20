@@ -1014,6 +1014,30 @@ workflow’s jobs and reading as complete.</p>
       <td><code class="language-plaintext highlighter-rouge">upstream-pin-watch.bpmn</code></td>
       <td>Also <code class="language-plaintext highlighter-rouge">upstream-pins.yml</code> — see <strong>Upstream dependencies</strong> below. The declaration was added when the coverage check was written; the diagram already documented that workflow step for step</td>
     </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">docs-site-publish.bpmn</code></td>
+      <td>Publishing <code class="language-plaintext highlighter-rouge">gh-pages</code> is a <strong>full replace</strong>, so anything on that branch this build did not produce is gone unless something puts it back — bean <code class="language-plaintext highlighter-rouge">plj1</code>, every open PR’s preview deleted by an unrelated merge, silently, for months. The restore and the after-the-fact verification are a <strong>pair</strong>: a restore nobody checks is one that can quietly stop working, which is how the original defect lasted. Both gateways refuse rather than warn, and the second is three-state</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">code-quality-gates.bpmn</code></td>
+      <td><strong>Five independent jobs, and nothing in the YAML says so in one place.</strong> No job declares <code class="language-plaintext highlighter-rouge">needs:</code>, so the workflow’s wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one (<code class="language-plaintext highlighter-rouge">rust-wildcard</code>) is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ci-health-watch.bpmn</code></td>
+      <td>Is CI actually working on <code class="language-plaintext highlighter-rouge">main</code>? <strong>Only <code class="language-plaintext highlighter-rouge">unknown</code> fails the job</strong> — a red <code class="language-plaintext highlighter-rouge">main</code> records the issue and this workflow stays green, which is invisible from the run list. <code class="language-plaintext highlighter-rouge">Could we tell?</code> is not simply the exit code: <code class="language-plaintext highlighter-rouge">bun</code> exits 1 on a crash too, so the REPORT FILE separates “found something red” from “crashed”</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">repository-health-watch.bpmn</code></td>
+      <td>The same shape one level out — the repository rather than the workflows. <strong>It reports and never acts</strong>: there is no removal task on the diagram, and its absence is <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code> being followed rather than an omission</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">jsonld-drift-check.bpmn</code></td>
+      <td>Are the <code class="language-plaintext highlighter-rouge">.jsonld</code> siblings still in sync with their <code class="language-plaintext highlighter-rouge">.ts</code> manifests? <strong>Deliberately small, and says so</strong>: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one it carries no <code class="language-plaintext highlighter-rouge">&lt;folio:job&gt;</code>, so a job added here would tell nobody — not for exposition</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">atomic-mass-drift-check.bpmn</code></td>
+      <td>Is <code class="language-plaintext highlighter-rouge">AtomicMass.lean</code> still in sync with its data table? The smallest workflow here and the one whose output a proof depends on: part company, and a Lean file that compiles is carrying numbers nothing produced. Same minimal-by-design note as above</td>
+    </tr>
   </tbody>
 </table></div>
 
@@ -1824,7 +1848,7 @@ it belongs in <code class="language-plaintext highlighter-rouge">skills/workflow
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35513124995"><code>4ba8b7a</code></a> &middot; 2026-09-20T13:19:30Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35514915645"><code>16a28a1</code></a> &middot; 2026-09-20T13:56:11Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
