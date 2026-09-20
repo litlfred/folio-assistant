@@ -456,6 +456,12 @@ const RULES: Rule[] = [
       // folio contains.
       "schemas/health-report.ts",
       "schemas/todo-graph.ts",
+      // Imports `schemas/cat-harness.js` and nothing else, so unlike its
+      // neighbour `check-agent-entry-links.ts` it inherits no wrong-direction
+      // edge from the generic link auditor (bean `cp3l`). Harness by subject
+      // as well as by dependency: it reads THIS repository's `AGENTS.md`
+      // against THIS repository's source, and a folio has neither as content.
+      "scripts/check-agents-claims.ts",
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
       "scripts/check-declared-paths.ts",
