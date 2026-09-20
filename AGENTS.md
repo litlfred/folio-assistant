@@ -121,17 +121,28 @@ adapter-scoped tool would be unreachable in exactly the case it exists for.
 
 ```sh
 bun install                 # install deps
-bun run src/index.ts --http # run the assistant (HTTP);  --stdio for stdio MCP
+bun run gates               # EVERY fast gate CI runs — run this before you push
+bun run gates --all         # ...plus the browser jobs
+bun run cat-harness/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
 bun test                    # unit tests
 bunx playwright test        # e2e tests   (npm script: test:e2e)
 eslint .                    # lint
-bun run src/index.ts --check-deps   # probe environment capabilities
+bun run check-deps                  # probe environment capabilities
 bun run init-folio --help           # scaffold a new folio repository
 bun run readme:sync                 # refresh a folio README's generated sections
 bun run readme:sync:check           # ...and fail if any is stale (for CI)
 bun run readme:sections             # list the sections a README can opt into
 bun run readme:audit                # verify the README's links still resolve
 ```
+
+**`bun run gates` is the one to run before pushing, and it was missing from this
+list until 2026-09-20.** Its absence has a measured cost: a session ran `bun
+test`, `eslint`, `typecheck` and a dozen named `check:*` scripts, called that
+green, pushed, and CI went red on `docs:harness:check` — a gate nothing in this
+block named. **A subset of the gate set is not the gate set**, and choosing the
+subset by hand means choosing it from memory. `gates.ts` derives its list from
+`.github/workflows/code-quality-gates.yml`, so it cannot drift from what CI
+actually runs, which is the whole reason to prefer it over any list here.
 
 ## Where the harness keeps its state — `beans/` is a graph
 
@@ -207,8 +218,10 @@ open a topic with and the turn-report formats with their seven rules.
 [`skills/folio-core/bean-coordination.md`](cat-harness/skills/folio-core/bean-coordination.md)
 carries the cross-session half: **claim before you work** — and §"A claim is
 branch-local" for why a claim **announces rather than reserves** until your PR
-exists, with the two checks to run first — never resolve a sibling's bean, and
-**never delete ANY bean**. Unwanted work is `scrapped`, with its reasons,
+exists, with the two checks to run first; §"Closing a bean whose work has
+already landed" for who may close one — **evidence, not authorship**, with
+`ready-to-close` for the case you cannot re-derive; and **never delete ANY
+bean**. Unwanted work is `scrapped`, with its reasons,
 because a scrapped bean stops the next agent re-entering a dead end while a
 deleted one leaves a sibling unable to tell abandonment from accident.
 
@@ -428,11 +441,20 @@ The bean rule says *what* you are working on. This says **where in the process**
 and the task, and **say when you switch**, because switching changes who is
 accountable for the next step and which gates apply.
 
+**Naming the process is the report; the committed INSTANCE is the evidence.**
+54 merges in one window with `beans/workflows/` holding only `.gitkeep` (bean
+`vlhk`) — a STRICT rule whose breach looked exactly like compliance. The owner
+settled it 2026-09-20: the processes are real, so a turn inside one has an
+instance under the declared `workflow-state` graph, and the session-start sweep
+reports "no instance recorded" as a **finding** rather than as silence.
+
 **The discipline is in the skill, not here** —
 [`skills/workflow/process-state.md`](cat-harness/skills/workflow/process-state.md)
-§"Say which process you are in" carries the format, and the rest of that skill
-carries the five detectors for being out of process and the recovery that
-confirms with the user before re-entering.
+§"Say which process you are in" carries the format and §"Naming it is not the
+same as recording it" carries that rule, and the rest of that skill carries the
+five detectors for being out of process and the recovery that confirms with the
+user before re-entering — a confirmation the owner may waive for a session or a
+process run ([`confirmation-waiver`](cat-harness/skills/folio-core/confirmation-waiver.md)).
 
 ## Working an issue — announce, then re-check
 

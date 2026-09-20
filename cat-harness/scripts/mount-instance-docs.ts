@@ -16,18 +16,35 @@
  * rule on harnesses that instantiate a director like fsh-guts, docs/ library/
  * need to create a visualize for them."*
  *
- * So the mount point is keyed on the **graph kind**, not on the instance
- * alone: a harness that instantiates a directory gets a visualiser for it, and
- * that visualiser lives at
+ * So a mount point is keyed on the **graph kind**: a harness that instantiates
+ * a directory gets a visualiser for it, and that visualiser lives at
  *
  *     <base-url>/<kind>/<instance>/
  *
- * `who-iris` instantiating `library/` therefore renders at
- * `/library/who-iris/`, and the same rule covers `docs/`, `fsh-guts` and
- * anything else an instance declares. Keying on the instance alone — which an
- * earlier version of this file did — collapses every kind an instance declares
- * onto one path, so a folio with both a library and its own docs could publish
- * only one of them.
+ * Keying on the instance alone — which an earlier version of this file did —
+ * collapses every kind an instance declares onto one path, so a folio with
+ * both a library and its own docs could publish only one of them.
+ *
+ * ## TWO handlers register, not one, and they render different things
+ *
+ * Owner, 2026-09-20, looking at the deployed preview: *"`/docs/who-iris/`
+ * should be the cat-harness handler default for docs. who-iris themed at
+ * `/who-iris/`."*
+ *
+ * So each instance's content is reachable two ways, and the difference is
+ * **which handler produced it**:
+ *
+ * | route | handler | what it is |
+ * |---|---|---|
+ * | `/<kind>/<instance>/` | the KIND's handler, cat-harness's | the default rendering any instance declaring that kind gets |
+ * | `/<instance>/` | the INSTANCE itself | its own themed root — "default harness behaviour, themed" |
+ *
+ * The instance root is not a second copy of a page for its own sake: it is the
+ * instance acting as a handler for its own name, which is what makes
+ * `<base-url>/who-iris` mean something rather than 404. They are distinct
+ * routes, so the walk below never has to choose between them — and if an
+ * instance ever claims a path a kind handler already owns, it is refused and
+ * named rather than silently overwriting.
  *
  * The root of the site stays the main docs pipeline, unchanged.
  *
@@ -207,15 +224,26 @@ function main(): number {
   // root instance changes.
   const built = arg("built", "cat-harness");
 
-  const candidates = mountable()
-    .filter((m) => {
-      if (m.name === built && m.kind === "docs") {
-        console.log(`  skip ${m.kind}/${m.name} — already built at the site root`);
-        return false;
-      }
-      return true;
-    })
-    .map((m) => ({ ...m, route: `${m.kind}/${m.name}` }));
+  const found = mountable().filter((m) => {
+    if (m.name === built && m.kind === "docs") {
+      console.log(`  skip ${m.kind}/${m.name} — already built at the site root`);
+      return false;
+    }
+    return true;
+  });
+
+  // Both routes, per the owner's ruling above. The instance root is emitted
+  // ONCE per instance even when it declares several renderable kinds —
+  // `<base-url>/who-iris` is one place, and which of its kinds answers there
+  // is the instance's own business, not a thing to mint two claims for. First
+  // by the sort order in `mountable()`, which is deterministic.
+  const rootedInstances = new Set<string>();
+  const candidates = found.flatMap((m) => {
+    const byKind = { ...m, route: `${m.kind}/${m.name}` };
+    if (rootedInstances.has(m.name)) return [byKind];
+    rootedInstances.add(m.name);
+    return [byKind, { ...m, route: m.name }];
+  });
 
   const { mounts, refused } = resolve_(candidates);
 

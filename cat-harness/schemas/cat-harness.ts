@@ -860,6 +860,38 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
   },
 
+  // A confirmation the owner gave IN ADVANCE — `skills/folio-core/confirmation-waiver.md`.
+  //
+  // Owner, 2026-09-20: "human can waive confirmation rights (e.g. for session,
+  // for process run)", and "context dependent, should be in memories".
+  //
+  // `context` by exactly the test that settled `memory` above — a running
+  // process READS a waiver before a gate fires and no step writes one; it
+  // changes when a person grants or withdraws permission, which is an act
+  // OUTSIDE any instance. That is why it is declared over the SAME directory:
+  // `memory/` holds both, and the two are told apart by the `$schema` tag
+  // inside each file rather than by where it sits. A directory is a place to
+  // look and may hold more than one part of a graph.
+  //
+  // A kind of its own rather than a fourth memory label, and the reason is
+  // structural: `MemoryNodeSchema` carries NO status by design — "a TRAP is
+  // not open, and marking one done would assert that the failure it records
+  // has stopped being possible". A waiver's whole content is that it EXPIRES.
+  // Labelling one `stable` would assert the opposite of what the node says.
+  waiver: {
+    type: termIri("WaiverGraph"),
+    renderable: false,
+    holds: "context",
+    skill: "confirmation-waiver",
+    schema: "schemas/waiver.ts",
+    // declared-path-literal: as on `health` and `translation-sources` — this
+    // table IS the declaration, so resolving `validator` through one would be
+    // reading it from here. `check:kind-validators` proves it still loads.
+    validator: "schemas/waiver.ts#WaiverNodeSchema",
+    summary:
+      "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
+  },
+
   "fsh-guts": {
     type: termIri("FshGutsGraph"),
     renderable: false,
@@ -2336,6 +2368,74 @@ export const UNPUBLISHED_GRAPH_KINDS: readonly string[] = ["fsh-guts"] as const;
 /** Is this graph kind allowed into a published graph? */
 export function isPublishedGraphKind(name: string): boolean {
   return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+}
+
+/**
+ * Does an instance declaring a directory of this kind owe a **visualiser**?
+ *
+ * The owner, 2026-09-20: *"if there is active state directory in repo root/
+ * (**not part of the static KG**) like `beans/`, `todos/`, `fsh-guts/` those
+ * have their vuisalizers too as requiement of handler.... needs to render
+ * sometihng for each 'state' dir it declares/inits."*
+ *
+ * So the discriminator is the owner's own parenthetical: **is this the static
+ * knowledge graph, or is it active material about the work?** Authored
+ * subject matter you can read as itself; a record of where something got to
+ * you cannot, which is why it needs something that renders it.
+ *
+ * That is exactly `holds !== "content"`, and the phrasing is not a
+ * coincidence — `content` is defined on {@link GraphLayer} as *"authored
+ * nodes a reader or a tool consumes as the subject matter… It stands on its
+ * own"*. A graph that stands on its own does not need a viewer to be
+ * legible. Everything else does.
+ *
+ * ## The rule this is NOT, and why that matters
+ *
+ * The first derivation was `holds === "state"`, and it was falsified inside
+ * ten minutes: it covers `beans` and `todos` and **misses `fsh-guts`**, which
+ * the owner names in the same sentence. `mhh9` reclassified `fsh-guts` from
+ * `state` to `context` earlier the SAME DAY, on the ground that no running
+ * step writes it — relocating something there is a human-directed act.
+ *
+ * `holds !== "content"` survives that move, because both `state` and
+ * `context` are on the same side of it. That is the test a rule over this
+ * axis has to pass: a kind changing category within the non-content layers
+ * must not silently change what it owes.
+ *
+ * ## `renderable` is the one structural exemption
+ *
+ * A `renderable` kind is its own view — `docs` and `folio` render to pages,
+ * so demanding a separate viewer would be asking for a second rendering of
+ * the same thing. Both are already `holds: "content"`, so this is belt and
+ * braces rather than a second rule; it is stated because a future renderable
+ * kind that is not content would otherwise acquire an obligation it meets by
+ * construction.
+ *
+ * ## Bootstrap is exempt by INSTANCE, not by kind
+ *
+ * `hfkl` carries the owner's ruling that `cat-bootstrap` has no visualiser
+ * *"but it must have its json/jsonld... that is its existence"*. That
+ * exemption lives in the checker as `VISUALISER_EXEMPT_INSTANCES`, keyed on
+ * the instance name, so every other instance declaring the same kind keeps
+ * the obligation. An axis that dropped bootstrap by KIND would stop checking
+ * the one thing bootstrap must have.
+ */
+export function owesVisualiser(
+  kind: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): boolean {
+  const def = registry.get(kind);
+  // An UNKNOWN kind owes one, and that is deliberate rather than a fallback.
+  //
+  // `graphLayer` returns `undefined` here and its doc comment is explicit
+  // that callers must not collapse that into `content`. This one does not:
+  // it collapses the unknown into OWING, which is the opposite direction and
+  // the safe one. A kind nobody has classified must not escape an obligation
+  // by being unmentioned — the same reason `DOCUMENT_BLOCK_KINDS` is a
+  // derived complement rather than a list.
+  if (!def) return true;
+  if (def.renderable) return false;
+  return def.holds !== "content";
 }
 
 /**

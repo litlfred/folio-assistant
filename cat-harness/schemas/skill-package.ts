@@ -62,8 +62,25 @@ export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallba
 export const ScriptRuntimeSchema = z.enum(["bash", "python", "typescript", "bun"]);
 export const ScriptPhaseSchema = z.enum(["pre", "execute", "validate", "post"]);
 export const ValidatorScopeSchema = z.enum(["file", "block", "chapter", "project"]);
+/**
+ * The lifecycle points a hook can bind to.
+ *
+ * `PreToolUse` was MISSING until 2026-09-20 and its absence was not academic:
+ * `interaction-modality` §4.1 is a STRICT rule about how a question is put to
+ * a person, and the one moment it certainly applies is the instant before
+ * `AskUserQuestion` is invoked. With only `PostToolUse` here, the rule could be
+ * reminded of *after* the question had already been asked, which is no
+ * reminder at all.
+ *
+ * The general shape is worth naming, because this enum will grow again: an
+ * event the host supports and this schema does not is a class of enforcement
+ * the instance cannot express, and it fails at the REGISTRY rather than at the
+ * hook — `.claude/settings.json` accepted the entry and the generated skill
+ * registry refused it. That is the right order (the gate caught it) and it is
+ * still a gap: the hook was live and unrepresentable at the same time.
+ */
 export const HookEventSchema = z.enum([
-  "SessionStart", "PostToolUse", "PreCommit", "PostCommit", "UserPromptSubmit",
+  "SessionStart", "PreToolUse", "PostToolUse", "PreCommit", "PostCommit", "UserPromptSubmit",
 ]);
 export const IdentitySourceSchema = z.enum([
   "git-config", "github-oauth", "google-oauth", "env-var", "bearer-token", "default",

@@ -90,3 +90,27 @@ describe("the walk stops at the first handler that wants the path", () => {
     expect(refused.map((x) => x.route).sort()).toEqual(["docs/a", "library/x"]);
   });
 });
+
+describe("both handlers register: the kind's, and the instance's own", () => {
+  it("an instance root and its kind route are DISTINCT, so neither refuses the other", () => {
+    // Owner, 2026-09-20: "/docs/who-iris/ should be the cat-harness handler
+    // default for docs. who-iris themed at /who-iris/." Two handlers, two
+    // routes -- the walk never has to choose between them.
+    const { mounts, refused } = resolve_([r("docs/who-iris"), r("who-iris")]);
+    expect(mounts.map((m) => m.route).sort()).toEqual(["docs/who-iris", "who-iris"]);
+    expect(refused).toEqual([]);
+  });
+
+  it("but an instance root DOES own its own subtree", () => {
+    // `/who-iris/` is a claim on everything beneath it, like any other mount.
+    const { mounts, refused } = resolve_([r("who-iris"), r("who-iris/extra")]);
+    expect(mounts.map((m) => m.route)).toEqual(["who-iris"]);
+    expect(refused.map((x) => x.ownedBy)).toEqual(["who-iris"]);
+  });
+
+  it("an instance root does NOT own a same-prefixed sibling instance", () => {
+    const { mounts, refused } = resolve_([r("who-iris"), r("who-iris-extra")]);
+    expect(mounts).toHaveLength(2);
+    expect(refused).toEqual([]);
+  });
+});
