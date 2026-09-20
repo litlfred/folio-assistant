@@ -20,8 +20,11 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { CONTENT_CONTEXT } from "../schemas/jsonld";
 
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const OUT = join(resolve(import.meta.dir, ".."), "ns", "folio", "v1.jsonld");
+// NOT a folio root: `content` here names the content VOCABULARY, and this
+// file is served at `CONTENT_CONTEXT_URL`. The 2026-09-20 content/ -> folio/
+// excision renamed it by mistake — a published, dereferenceable URL, which
+// moving breaks every consumer of the context. Left as `content`.
+const OUT = join(resolve(import.meta.dir, ".."), "ns", "content", "v1.jsonld");
 
 function main(): number {
   const next = `${JSON.stringify({ "@context": CONTENT_CONTEXT }, null, 2)}\n`;

@@ -463,7 +463,6 @@ library/<doc-id>/
 **Nothing here is folio content.** Every node carries
 \`provenance: "ingested"\` and is attributed to its source, so a query can
 always separate *what that document claims* from *what this folio claims*.
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
 Promoting something into \`folio/\` is a separate, deliberate act — see the
 platform's \`document-intake\` skill.
 `;
