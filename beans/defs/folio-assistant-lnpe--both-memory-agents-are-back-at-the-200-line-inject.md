@@ -1,7 +1,7 @@
 ---
 # folio-assistant-lnpe
 title: Both memory agents are back at the 200-line injection budget, so any new entry evicts a TRAP
-status: todo
+status: completed
 type: bug
 parent: folio-assistant-8jt6
 created_at: 2026-09-20T07:32:20Z
@@ -124,7 +124,60 @@ target somebody can act on, which "get under budget" was not.
 - [x] the growth is understood: one 18-line entry, not a rate
 - [x] the candidates checked for supersession — both fail, and must stay
 - [x] boilerplate compacted, 4–5 lines recovered, no TRAP touched
-- [ ] **≥8 lines** freed, which now means shortening a substantive entry
-      rather than archiving one — a judgement on another session's content,
-      and the owner's call
-- [ ] the render-log entry re-added once there is room
+- [x] **≥8 lines** freed — 14–16, by PROMOTING the rule to a skill
+- [x] the render-log entry re-added
+
+_2026-09-20T11:50Z_ — Done, and the remedy was none of the three this bean
+listed.
+
+## The archiving strategy was exhausted, which is itself the finding
+
+`4kiw`'s move was *archive what a skill now supersedes*. Checked all three
+large entries against the skills — **none is superseded**. No skill carries
+`directory-conventions`' missing literals, and **no skill at all carried**
+*"never encode an unverified constraint"*, the 29-line TRAP tagged to BOTH
+agents and therefore costing 58 lines of budget.
+
+At that point "archive what a skill supersedes" has nothing left to offer, and
+the obvious next step — shorten somebody's entry on my own judgement — is the
+one this bean was right to hesitate over.
+
+## The move that was available all along
+
+`AGENTS.md`'s own banner: *"a rule that exists only in `AGENTS.md` is a rule
+with no home — not in the generated reference, not in the published skill docs,
+and not found by an agent that went looking for the skill first."*
+
+**That is equally true of a rule that exists only in agent memory.** The
+29-line entry was carrying a genuine platform rule that no skill stated. So
+the rule was promoted to `skills/folio-core/unverified-constraints.md` — the
+asymmetry table, the evidence test, the `deployment-topologies` §3 worked case,
+and the both-lanes note — and the memory entry became a 10-line pointer, which
+is exactly what `4kiw` did once `placement.md` existed.
+
+Nothing was lost, and the rule is now in the generated reference and findable
+by `skill_list`, where it never was.
+
+| | before | after |
+|---|---|---|
+| ci-health-watcher | 207 (7 over) | **200** |
+| platform-boundary-guard | 206 (8 over) | **199** |
+
+Both under budget with the render-log entry BACK IN.
+
+## The reusable rule, which is the part worth keeping
+
+> **When an entry is not superseded by a skill, that is a missing skill, not a
+> stuck budget.** Write the skill, then the entry becomes a pointer.
+
+Headroom is a side effect. The real gain is that a rule nobody could find by
+asking for a skill is now one somebody can.
+
+## Caught on the way
+
+The new skill carried `roles:` in its front matter, copied from the shape of
+older skills. A gate that landed on `main` this morning refuses it: `roles:` is
+RETIRED from skill markdown — 325 annotations across 140 files, read by nothing
+and dangling from its first commit — while staying a live axis in a
+`folio-memory/v1` entry. Removed. Two hours older and I would have copied a
+field that is still there in every neighbour.
