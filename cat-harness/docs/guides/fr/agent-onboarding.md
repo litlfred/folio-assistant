@@ -23,7 +23,7 @@ folio-assistant. Cette page est votre orientation : ce que vous regardez,
 ce qu'il faut faire en premier, et où chercher les informations.
 
 Pour l'architecture des compétences, des rôles et des capacités, lisez
-[Compétences & rôles](../skills.html). Cette page est la version pratique.
+[Compétences & rôles](../../skills.html). Cette page est la version pratique.
 
 1. TOC
 {:toc}
@@ -73,9 +73,9 @@ Les compétences sont l'unité de travail ici. Avant de créer une procédure
 | `skills/folio-core/` | indépendant du contenu : coordination, watchers, QA, rendu, bibliographie |
 | `skills/folio-paper-adapter/` | articles : Lean, LaTeX, preuves, simulateurs |
 | `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
-| [Référence du schéma de compétences](../reference/skills/) | contrat d'entrée/sortie typé par compétence |
-| [Instructions de compétences](../reference/skill-instructions/) | corps d'instructions complets générés |
-| [Compétences & rôles](../skills.html) | comment les compétences, rôles et capacités se composent |
+| [Référence du schéma de compétences](../../reference/skills/) | contrat d'entrée/sortie typé par compétence |
+| [Instructions de compétences](../../reference/skill-instructions/) | corps d'instructions complets générés |
+| [Compétences & rôles](../../skills.html) | comment les compétences, rôles et capacités se composent |
 
 Les deux répertoires `reference/` sont **générés** — ne les modifiez jamais
 à la main. Régénérez avec `bun run scripts/gen-schema-docs.ts` et
@@ -151,7 +151,7 @@ bun run content/pipeline/qa-staleness.ts content/<paper>
 | Question | Réponse |
 |---|---|
 | Commandes du projet, conventions | `AGENTS.md` (source de vérité générique pour les agents) |
-| Ce que fait une compétence | `skills/**/`, ou les [corps d'instructions](../reference/skill-instructions/) générés |
+| Ce que fait une compétence | `skills/**/`, ou les [corps d'instructions](../../reference/skill-instructions/) générés |
 | Le schéma des blocs | `schemas/types.ts` |
 
 ## 10. Habitudes pour éviter les ennuis

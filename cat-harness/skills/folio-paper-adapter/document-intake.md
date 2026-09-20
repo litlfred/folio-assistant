@@ -16,7 +16,7 @@ allowed-tools: Read Write Edit Bash Grep Glob Agent WebFetch
 > link each upload to the `references.ts` entry it sources. An upload that
 > supplies a cited source moves that ref to `source-in-repo` (agent-identified
 > passage; no human photo) and then through the
-> [`bib-human-review`](bib-human-review.md) ladder to `validated`. Existing
+> [`bib-human-review`](../folio-core/bib-human-review.md) ladder to `validated`. Existing
 > `uploads/` follow the same agent-sourced path.
 
 ## Overview
@@ -111,7 +111,7 @@ See [`paper-importer.md §Phase 1`](paper-importer.md#phase-1-acquisition)
 for the per-tool routing table. Sandboxed Claude-Code-on-the-web
 sessions (github-only allowlist) cannot reach those hosts; in
 those sessions, queue the fetch onto a normal-network machine
-per [`bib-qa.md §Batch intake pipeline`](bib-qa.md#batch-intake-pipeline).
+per [`bib-qa.md §Batch intake pipeline`](../folio-core/bib-qa.md#batch-intake-pipeline).
 
 ### Stage 2: Extraction (→ `extracted`)
 

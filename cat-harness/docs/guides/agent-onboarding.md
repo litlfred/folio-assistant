@@ -209,7 +209,7 @@ Watching a sibling PR: `/watch <pr|branch>`.
 | The block schema | `schemas/types.ts` |
 | The QA sidecar schema | `schemas/block-qa.ts` |
 | What this environment can do | `.claude/skills/capabilities/*.json`, `--check-deps` |
-| Lean tooling roadmap | [Lean tooling proposal](../proposals/llm-authoring-tool-integration.html) |
+| Lean tooling roadmap | [Lean tooling proposal](https://github.com/litlfred/folio-assistant/issues/198) |
 
 ## 10. Habits that keep you out of trouble
 
