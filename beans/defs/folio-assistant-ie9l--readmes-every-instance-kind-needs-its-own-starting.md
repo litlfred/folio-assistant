@@ -112,15 +112,55 @@ about.
 2. **Does `cat-harness` get its own README, or does the root's stop being
    cat-harness's?** Both fix the conflation; they differ in whether the root
    file keeps a second job.
-3. **"README as memory" — which trigger?** `AGENTS.md` is read natively by
-   several tools; a memory entry under `.claude/agent-memory/` is injected but
-   truncated at 200 lines. These have different reach and different failure
-   modes.
+3. ~~**"README as memory" — which trigger?**~~ **ANSWERED**, across three
+   owner messages, and the answer is sharper than the question:
+
+   > we are treateing README.md like meorty, right?
+   >
+   > maybe not "short" memotry, but fuctionally the same? its static content
+   > at process runtime and treated as an asset like memories.
+   >
+   > these are agent-instructions i guess. dont have as much length
+   > restictoins
+
+   **It is a `context` asset, delivered as `agent-instructions`.** Both halves
+   are existing machinery, not new design:
+
+   - **`context` is the graph layer** — `holds: "context"` means READ at
+     session start and never written by a running process. `memory` and
+     `interaction` already carry it; `beans` and `todos` are `state`. "Static
+     content at process runtime" is that classification word for word.
+   - **`agent-instructions` is the asset role**, and it already exists —
+     `bootstrap` and `cat-harness` both declare `AGENTS.md` under it. A README
+     is the same kind of thing: a file an agent READS, not a payload injected
+     into its context window.
+
+   **That distinction is what lifts the length restriction, and it is
+   mechanical rather than a matter of taste.** Agent memory is injected —
+   `MEMORY.md`'s first 200 lines, *with the overflow dropped silently*, and
+   `agent-memory.md` records one file sitting at 189 of its 200. An asset read
+   as a file has no such budget: nothing truncates it, because nothing is
+   splicing it into a prompt. So "functionally the same, without the length
+   restriction" is exactly right, and the reason is the delivery path.
+
+   ### And it resolves an apparent contradiction in the asks themselves
+
+   Ask 3 says bootstrap init **creates** `README.md` if absent — a write. Ask
+   6 says it is an asset **like memories** — `context`, never written by a
+   process. Both hold, because **initialisation is not process runtime.** The
+   file is created once when the harness is installed, read every session
+   after, and never written by a running process. That is the same line
+   `interaction/` sits on, and it should be stated wherever this lands rather
+   than left for somebody to trip over.
 
 ## Done when
 
 - [ ] A QA check reports any instance with no starting README of its own
 - [ ] The root README points to the four things, by query rather than by list
 - [ ] Bootstrap's init creates a root README when absent, with install status
-- [ ] README is a declared asset present in the published json/jsonld
-- [ ] Reached by every agent through a named trigger, and the trigger is tested
+- [ ] README is a declared asset present in the published json/jsonld —
+      role `agent-instructions`, layer `context`
+- [ ] Reached by every agent as a FILE rather than an injection, so no
+      truncation budget applies; the trigger is named and tested
+- [ ] Wherever this lands, it states that creation at INITIALISATION is not a
+      process write — otherwise ask 3 and ask 6 read as contradicting
