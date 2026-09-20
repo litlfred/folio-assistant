@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bqrg-lean-decl-divergence/skills/ig-publication/input.schema.json",
+  "title": "IG Publication Input",
+  "description": "Input schema for FHIR Implementation Guide publication.",
+  "type": "object",
+  "required": [
+    "igRoot",
+    "versionIncrement"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "description": "Semantic version increment type."
+    },
+    "releaseNotes": {
+      "type": "string",
+      "description": "Release notes for this publication."
+    },
+    "publicationTarget": {
+      "type": "string",
+      "enum": [
+        "github-pages",
+        "smart-who-int",
+        "both"
+      ],
+      "default": "github-pages"
+    }
+  },
+  "staging": {
+    "branch": "claude/bqrg-lean-decl-divergence",
+    "sha": "ce7336709bb57d6aee03bb7add24cc354dd98408",
+    "pr": "577/merge",
+    "run": "35526702421"
+  }
+}

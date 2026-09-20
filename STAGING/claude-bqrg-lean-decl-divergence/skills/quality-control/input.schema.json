@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bqrg-lean-decl-divergence/skills/quality-control/input.schema.json",
+  "title": "Quality Control Input",
+  "description": "Input schema for quality control checks across content lifecycle.",
+  "type": "object",
+  "required": [
+    "checkType",
+    "targetPath"
+  ],
+  "properties": {
+    "checkType": {
+      "type": "string",
+      "enum": [
+        "qa-report",
+        "publication-checklist",
+        "conformance-validation",
+        "functionality-test",
+        "cross-component-consistency"
+      ],
+      "description": "Type of QC check to perform."
+    },
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content being checked."
+    },
+    "checklistSections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "global"
+        ]
+      },
+      "description": "Publication checklist sections to review."
+    }
+  },
+  "staging": {
+    "branch": "claude/bqrg-lean-decl-divergence",
+    "sha": "ce7336709bb57d6aee03bb7add24cc354dd98408",
+    "pr": "577/merge",
+    "run": "35526702421"
+  }
+}

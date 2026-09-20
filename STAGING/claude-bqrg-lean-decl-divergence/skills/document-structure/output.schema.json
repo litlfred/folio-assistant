@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bqrg-lean-decl-divergence/skills/document-structure/output.schema.json",
+  "title": "Document Structure Output",
+  "type": "object",
+  "required": [
+    "manifestsChanged"
+  ],
+  "properties": {
+    "manifestsChanged": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Chapter directory names in their new reading order."
+    },
+    "forwardReferences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] now points forward in reading order. A real finding after a reorder, not a mechanical detail."
+    }
+  },
+  "staging": {
+    "branch": "claude/bqrg-lean-decl-divergence",
+    "sha": "ce7336709bb57d6aee03bb7add24cc354dd98408",
+    "pr": "577/merge",
+    "run": "35526702421"
+  }
+}

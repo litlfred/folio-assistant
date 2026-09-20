@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bqrg-lean-decl-divergence/skills/terminology-management/input.schema.json",
+  "title": "Terminology Management Input",
+  "description": "Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps.",
+  "type": "object",
+  "required": [
+    "operation"
+  ],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": [
+        "create-codesystem",
+        "create-valueset",
+        "create-conceptmap",
+        "validate-bindings",
+        "map-to-standard"
+      ],
+      "description": "Terminology operation to perform."
+    },
+    "targetStandard": {
+      "type": "string",
+      "enum": [
+        "ICD-11",
+        "SNOMED-CT",
+        "LOINC",
+        "IPS",
+        "WHO-FIC",
+        "WHO-ATC"
+      ],
+      "description": "Target standard terminology for mapping."
+    },
+    "inputFile": {
+      "type": "string",
+      "description": "Path to input terminology resource (FSH, JSON, CSV)."
+    }
+  },
+  "staging": {
+    "branch": "claude/bqrg-lean-decl-divergence",
+    "sha": "ce7336709bb57d6aee03bb7add24cc354dd98408",
+    "pr": "577/merge",
+    "run": "35526702421"
+  }
+}
