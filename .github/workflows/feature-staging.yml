@@ -616,6 +616,33 @@ jobs:
           # directory. `keep_files`/`force_orphan`/`exclude_assets` offer
           # nothing path-scoped, which is what `docs-site.yml`'s comment says
           # from the other end of the same tradeoff.
+          # THE BUILD, CHECKED BEFORE ANYTHING IS DELETED — bean `oisv`.
+          #
+          # `85im` traded a preview that OVER-reports (stale files linger) for
+          # one that MIRRORS the build, and that is the right trade because a
+          # reviewer can act on a mirror. The same property is what makes this
+          # check necessary: once the deploy deletes first, a build that failed
+          # WHILE STILL EXITING 0 — a generator that wrote nothing, a step
+          # whose `|| true` swallowed a failure, a path that moved — replaces a
+          # working preview with an empty one, and an empty preview 404s
+          # exactly like a page the author meant to delete. The reviewer then
+          # concludes their change took effect.
+          #
+          # That is *"could not determine"* wearing the costume of a determined
+          # answer, which this repository refuses everywhere else.
+          #
+          # ORDER IS THE WHOLE SAFETY ARGUMENT. This runs BEFORE the `rm`, so a
+          # refusal leaves the previous preview standing and a reviewer keeps
+          # the last thing that was known to build. A check after the delete
+          # protects nothing — it only reports the damage.
+          #
+          # Non-empty is a FLOOR, not a correctness check. A threshold ("at
+          # least N pages") would need calibration this has no basis for, which
+          # is the same argument that stopped `6xaz` from inventing one.
+          if [ -z "$(ls -A _site 2>/dev/null || true)" ]; then
+            echo "::error::the build produced an empty ./_site — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
+            exit 1
+          fi
           rm -rf "pages/STAGING/$STAGING_SLUG"
           mkdir -p "pages/STAGING/$STAGING_SLUG"
           cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
