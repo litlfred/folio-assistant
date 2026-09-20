@@ -268,8 +268,15 @@ jobs:
       # (could-not-determine) rather than passing, which is the state that matters:
       # this workflow failed all 30 runs over two months once, and a check that is
       # green where nobody built the site is how that stays invisible.
+      #
+      # Invoked by its DECLARED SCRIPT NAME rather than by its path, and that is
+      # load-bearing rather than tidy: `commandRunsScript` matches a script name
+      # at a token boundary, so a workflow that spells out the path runs the
+      # check while `unrunScripts` reports it as run by nothing — a gate that
+      # cannot fail, which is bean `ot9a` exactly. Found by that ratchet on its
+      # first encounter with this step.
       - name: Every maintained artefact is in the published tree
-        run: bun run cat-harness/scripts/check-maintained-artefacts.ts ./_site
+        run: bun run check:maintained-artefacts ./_site
 
       # The QA witnesses, published at the path the badges already point at.
       #

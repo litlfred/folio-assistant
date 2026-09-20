@@ -136,7 +136,7 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`workflow-yaml.test.ts`, both of which are in the gate set",
   },
   {
-    match: "scripts/check-maintained-artefacts.ts",
+    match: "check:maintained-artefacts",
     kind: "ci-only",
     reason:
       "reads the ASSEMBLED `_site/`, which exists only after the site build has run — the " +
