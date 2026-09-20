@@ -10,7 +10,7 @@
  * @module scripts/tests/attribution
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -93,11 +93,29 @@ describe("the origin registry is total over what actually exists", () => {
     // This is what stops a narrative arm landing an unclassified kind: the
     // moment one appears in the corpus, this fails until somebody decides
     // whether it is somebody's account or the source's own words.
+    // PARSED, not scraped. This regexed `"kind": "..."` out of the raw text
+    // until 2026-09-20, which matched every NESTED kind too: the moment a
+    // figure block carried `narrative.drafted_by.kind = "agent"`, the test
+    // demanded an origin classification for "agent", a value that is not a
+    // block kind at all. A regex over JSON cannot tell depth, and the thing
+    // being asserted here is specifically about the TOP-LEVEL kind.
     const kinds = new Set<string>();
-    for (const line of new TextDecoder()
-      .decode(Bun.spawnSync(["sh", "-c", `cat ${ROOT}/library/*/blocks/*.jsonld`]).stdout)
-      .matchAll(/"kind"\s*:\s*"([^"]+)"/g)) {
-      kinds.add(line[1]);
+    for (const f of new TextDecoder()
+      .decode(Bun.spawnSync(["sh", "-c", `ls ${ROOT}/library/*/blocks/*.jsonld`]).stdout)
+      .split("\n")
+      .filter(Boolean)) {
+      // Read and parse SEPARATELY, and let anything that is not a parse
+      // failure through untouched. A single try/catch around both reported a
+      // missing import as "could not parse" — a code defect dressed as a data
+      // problem, which is the costliest kind of wrong error message.
+      const body = readFileSync(f, "utf-8");
+      let k: unknown;
+      try {
+        k = JSON.parse(body).kind;
+      } catch (e) {
+        throw new Error(`${f} is not valid JSON, so the kind set would be incomplete: ${e}`);
+      }
+      if (typeof k === "string") kinds.add(k);
     }
     expect(kinds.size).toBeGreaterThan(0);
     for (const k of kinds) expect(LIBRARY_BLOCK_ORIGIN[k]).toBeDefined();

@@ -69,7 +69,7 @@ If the answer to the first is yes and to the second is no, it is durable.
 |---|---|---|
 | a **bean** (`beans/defs/*.md`) | records that something was considered; ids are referenced from commits, issues and other beans | set `status: scrapped` with the reasons; `beans archive` MOVES resolved ones |
 | a **todo** (`todos/items/*.md`) | it is a *person's* outstanding work, not an agent's | ask the person; an agent may neither close nor remove one |
-| a **staging preview** (`STAGING/<slug>/` on the publish branch) | it is the artefact a human assesses a rendered change from | while the PR is open, the `staging:cleanup` label, applied by a person; once it is closed, a `feature-staging.yml` dispatch with `cleanup_slug` + a matching `cleanup_confirm` — the label cannot reach a closed PR (bean `w2g5`) |
+| a **staging preview** (`STAGING/<slug>/` on the publish branch) | it is the artefact a human assesses a rendered change from — **unless the PR merged**, when the main site now shows the same thing | **merged → removed automatically; the merge IS the confirmation** (owner, 2026-09-20). Otherwise: while the PR is open, the `staging:cleanup` label applied by a person; once closed unmerged, a `feature-staging.yml` dispatch with `cleanup_slug` + a matching `cleanup_confirm`, since the label cannot reach a closed PR (bean `w2g5`) |
 | a **published page** on the site | a URL somebody has linked or bookmarked | say what would 404 and let the owner decide; a redirect is often the answer |
 | a **QA verdict or witness** (`test/results/**`) | the previous answer is what separates "this broke today" from "this has been broken since it was written" | regenerate it in place; never remove the file to make a sweep clean |
 | **library / uploads content** | every knowledge-graph reference to a source resolves through `library/`; a file in `uploads/` reads as absent to every consumer while still on disk | move it forward through the pipeline, or ask |
@@ -150,6 +150,15 @@ Four things about it are worth carrying forward:
    workflow deleted them. A deletion nobody decided is still a deletion that
    requires confirmation — and since there is nobody to ask at push time, the
    answer is that the workflow must not be shaped that way.
+
+   > **The policy changed on 2026-09-20 and this example is untouched by it.**
+   > A **merged** PR's preview is now removed without a label, because the
+   > merge is a person's decision that the content belongs on `main` — a
+   > stronger confirmation than a label. `plj1` deleted the previews of
+   > **open** PRs: work nobody had accepted, mid-review. Nothing in the new
+   > policy reaches an open PR, and the one-directory-at-a-time shape this
+   > bean forced on the job is unchanged. The lesson stands exactly as
+   > written.
 2. **It overrode a written policy that said the opposite.**
    `feature-staging.yml` removes a preview on PR close **only** with a
    `staging:cleanup` label, and otherwise posts *"Staging preview retained …

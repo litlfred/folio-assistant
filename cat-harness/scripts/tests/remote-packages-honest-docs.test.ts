@@ -2,7 +2,8 @@
  * The published docs must not claim a capability this repository does not have —
  * bean `wlqd`.
  *
- * `scripts/generate-docs.ts` wrote, into a page served on the docs site:
+ * `scripts/generate-docs.ts` — since retired to `fsh-guts/scripts/`, having
+ * never run — wrote, into a page it would have served on the docs site:
  *
  * > Agents can sync and update these automatically based on the sync
  * > configuration.
@@ -30,7 +31,21 @@ import { join } from "node:path";
 import { codeWithoutComments } from "../repo-files.js";
 
 const ROOT = join(import.meta.dir, "../..");
-const GEN = readFileSync(join(ROOT, "scripts/generate-docs.ts"), "utf8");
+/**
+ * RETIRED, and the guard outlives it — bean `folio-assistant-3w0i`.
+ *
+ * `generate-docs.ts` moved to `fsh-guts/scripts/` on 2026-09-20: it had been
+ * in this repository since the ROOT COMMIT and had never run once — never in
+ * a package.json script, never in a workflow, its output directory never
+ * committed in any commit in the history.
+ *
+ * This test is kept and repointed rather than retired with it, for one
+ * reason: `wlqd` corrected a false present-tense claim in that generator's
+ * output, and `fsh-guts` is a relocation, not a grave. Anyone who revives the
+ * script revives whatever it says — so the honesty property has to survive
+ * the move, or the fix silently un-fixes on the day it matters.
+ */
+const GEN = readFileSync(join(ROOT, "../fsh-guts/scripts/generate-docs.ts"), "utf8");
 
 /**
  * What the generator EMITS for the Remote Packages page — the `L.push(...)`
