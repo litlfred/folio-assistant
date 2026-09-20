@@ -1,0 +1,79 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CiHealth",
+    "path": "skills/workflows/ci-health-watch.bpmn"
+  },
+  "source_hash": "sha256:dd1e628687d897b45a31ff6bdbd222dda8ffe87d0c138c1ad428d0b97ae97203",
+  "criteria": {
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Check",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Label",
+          "detail": "\"Ensure the tracking&#10;label exists\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
+        },
+        {
+          "where": "Task_Close",
+          "detail": "\"Close the&#10;tracking issue\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
+        },
+        {
+          "where": "Task_Track",
+          "detail": "\"Open or EDIT the one&#10;tracking issue\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
+        }
+      ]
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 2,
+    "n/a": 4,
+    "unknown": 0
+  }
+}

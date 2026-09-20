@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7yvd
 title: Every GitHub Actions workflow should be documented as BPMN, and nothing checks that they are
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T06:52:21Z
-updated_at: 2026-09-20T13:06:15Z
+updated_at: 2026-09-20T13:16:18Z
 parent: folio-assistant-ahvw
 ---
 
@@ -96,11 +96,20 @@ reason**: without one they carry no `<folio:job>`, so if either gains a job
 nobody is told. That is drift detection rather than exposition, and each says
 so in its own documentation rather than pretending otherwise.
 
-## Still open — the six diagrams
+## Shipped — all six, 2026-09-20
 
-`atomic-mass-gen-check`, `ci-health`, `code-quality-gates`, `docs-site`,
-`health-check`, `jsonld-gen-check` still carry no diagram. Each will land
-green under the drift check, which is the point of doing it in this order.
+| diagram | the fact it makes visible |
+|---|---|
+| `docs-site-publish` | `gh-pages` is a FULL REPLACE; restore-then-verify is a pair (bean `plj1`) |
+| `code-quality-gates` | five INDEPENDENT jobs — wall-clock is the slowest, not the sum; four hard, one warn-only |
+| `ci-health-watch` | only `unknown` fails the job; a red `main` leaves it GREEN and speaks through the issue |
+| `repository-health-watch` | same shape one level out; NO removal task, and that absence is the rule |
+| `jsonld-drift-check` | minimal by design, and says so |
+| `atomic-mass-drift-check` | minimal by design, and says so |
+
+The two minimal ones carry a paragraph stating what they are: drift detection,
+not exposition. A reader who opens one expecting the second is told which they
+are getting, rather than meeting decoration that still has to be maintained.
 
 **Corrected count**: 8 auto-triggering, 30 dispatch/call-only — an earlier
 report of 7/31 came from reading a truncated tail, and `agent-review.yml` is
@@ -111,5 +120,5 @@ dispatch-only, not auto.
 A person can see the shape of every workflow that runs here without reading its YAML, and a workflow that changes shape without its diagram changing is a failure somebody is told about.
 
 - [x] a workflow that changes shape without its diagram changing fails
-- [ ] the six uncovered auto-triggering workflows carry a diagram
-      (1/6: `docs-site-publish.bpmn`)
+- [x] the six uncovered auto-triggering workflows carry a diagram —
+      **8/8 auto-triggering documented, every one "jobs match"**
