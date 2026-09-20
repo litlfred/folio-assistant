@@ -1,11 +1,11 @@
 ---
 # folio-assistant-85im
 title: 'feature-staging deploys with keep_files: true, so a staging preview can never show a deletion'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T13:19:51Z
-updated_at: 2026-09-20T16:11:38Z
+updated_at: 2026-09-20T16:41:12Z
 parent: folio-assistant-1xhc
 ---
 
@@ -109,3 +109,68 @@ every deletion. That is worth more than a wasted Pages build.
 The cost is unchanged and still real: hand-rolled git in the deploy path of
 every session's preview, **untestable from a checkout**. That is a decision for
 the author, not for me, and it is the question being brought back.
+
+## DONE 2026-09-20 — and it had become small, because a sibling moved the push
+
+This bean said the likely shape was *"an explicit clone + `rm -rf
+STAGING/<slug>` + copy + push, which feature-staging.yml already does in its
+cleanup job… so the primitive exists in this file."* By the time it was worked,
+the primitive was no longer only in the cleanup job: a sibling had already
+taken the DEPLOY off `peaceiris/actions-gh-pages` and onto an explicit
+checkout + copy + push (bean `bm6d`, one commit per deploy). Its comment named
+what was left:
+
+> `keep_files: true`, preserved exactly. A plain copy adds and overwrites and
+> never deletes… That second half is a defect — bean `85im` holds it — and
+> fixing it here would widen a change about push COUNT into one about preview
+> CONTENT.
+
+So the fix is one `rm -rf` of one named directory before the copy. Not a flag,
+not a wider clone: **path-scoped by construction**, naming exactly one slug.
+Every other branch's preview is untouched, so the `plj1` protection holds for
+the reason it always did — this deploy has no reason to reach outside its own
+slug.
+
+### The hazard, and why it is unreachable rather than unlikely
+
+An empty `$STAGING_SLUG` would make the removal `pages/STAGING/`, which is
+every open PR's preview — `plj1` exactly, from the other direction. Bean
+`fuzm` had already hardened the `slug` step to refuse `""`, `.` and `..` by
+value, and `/` is not in its permitted character class.
+
+But the value crosses a job boundary as an output between that check and this
+use, and this file's own rule is *"checked by VALUE, never trusted because of
+where it came from"*. So the deploy step re-checks it in four lines before the
+line that deletes anything.
+
+### Both ends of the tradeoff now point at each other
+
+The third box asked for this specifically. `docs-site.yml` recorded one end (a
+full replace deleting every preview) and `feature-staging.yml` the other (an
+overlay that cannot show a removal), and neither named the other. They do now,
+and a test asserts it — a reader who meets one end and fixes it without seeing
+the other reintroduces the one they did not read.
+
+### Pinned, because a stale preview is red nowhere
+
+The deploy is green, the bot comments the URL, the check run passes, and the
+content is wrong. Re-adding an overlay would be free and invisible. 5 tests,
+falsified both ways: reverting to an overlay fails 1, widening the `rm` to the
+STAGING root fails 2.
+
+One of them failed on its own prose first — the warning above the `rm` spells
+`pages/STAGING/` while explaining why that spelling must never be reached.
+Comment lines are stripped now, the same distinction `folio-root-is-asked` and
+`workflow-paths-resolve` both draw.
+
+## Done when
+
+- [x] a staging deploy reflects deletions as well as additions, without
+      touching any other branch's `STAGING/<slug>/`
+- [x] path-scoped by construction rather than by a flag the action does not offer
+- [x] the tradeoff written down where the next person meets it, at both ends
+
+Nothing was deleted from `gh-pages` by hand. The stale pages this bean
+measured will go on the branch's next deploy, by the mechanism rather than by
+an agent's initiative — which is what `deletion-requires-confirmation` asks
+for, and what `plj1` is the worked example of getting wrong.
