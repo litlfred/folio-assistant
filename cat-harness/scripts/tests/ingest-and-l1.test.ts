@@ -394,7 +394,7 @@ describe("the third state has to EXPIRE — bean `pn6j`", () => {
     // complete `images.json` — 2, 20, 121 and 21 images, every one with a
     // role and a basis. The gate reported "no arm builds this yet" and
     // checked none of it.
-    const found = expiredExceptions(["/x", "/y"], (d, f) => d === "/y" && f === "transcript.json");
+    const found = expiredExceptions(["/x", "/y"], (d, f) => d === "/y" && f === "transcript");
     expect(found.map((e) => e.name)).toEqual(["audio-transcripts"]);
     expect(found[0].bean).toBe("1r0p");
     expect(found[0].found).toBe("/y");
@@ -413,6 +413,30 @@ describe("the third state has to EXPIRE — bean `pn6j`", () => {
     const dirs = readdirSync(lib).map((d) => join(lib, d)).filter((d) => statSync(d).isDirectory());
     expect(dirs.length).toBeGreaterThan(0);
     expect(expiredExceptions(dirs, (d, f) => existsSync(join(d, f)))).toEqual([]);
+  });
+
+  test("the probe matches what the BEAN says its arm will write", () => {
+    // `1r0p`: "library/<slug>/transcript/ holds the source-language
+    // transcript and each translation" — a DIRECTORY. The first version of
+    // this probe guessed `transcript.json` and would never have fired, so the
+    // ratchet could not ratchet. A probe is a claim about another arm's
+    // output and has to be read from that arm's own statement.
+    const audio = NOT_DERIVABLE.find((nd) => nd.name === "audio-transcripts");
+    expect(audio?.probe).toBe("transcript");
+    expect(audio?.probe).not.toContain(".");
+  });
+
+  test("a DIRECTORY probe fires — existsSync is not file-only", () => {
+    // The mechanism the correction depends on: the probe is checked with
+    // `existsSync`, which is true for a directory. Asserted rather than
+    // assumed, because the whole fix rests on it.
+    const root = mkdtempSync(join(tmpdir(), "probe-"));
+    made.push(root);
+    const entry = join(root, "doc");
+    mkdirSync(join(entry, "transcript"), { recursive: true });
+    expect(expiredExceptions([entry], (d, f) => existsSync(join(d, f))).map((e) => e.name)).toEqual([
+      "audio-transcripts",
+    ]);
   });
 
   test("every remaining entry carries a PROBE, so it can expire at all", () => {

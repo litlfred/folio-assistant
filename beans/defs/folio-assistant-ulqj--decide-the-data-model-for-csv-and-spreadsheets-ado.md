@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ulqj
 title: 'DECIDE: the data model for CSV and spreadsheets — adopt a standard, not folio-tabular-records/v1'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T11:57:02Z
-updated_at: 2026-09-20T11:57:02Z
+updated_at: 2026-09-20T12:02:21Z
 parent: folio-assistant-0lmb
 ---
 
@@ -80,3 +80,31 @@ is a property no metadata choice can take away.
 
 Implementing the manifest. That waits on the answer here, and doing it first
 would bake in whichever shape got typed first.
+
+*2026-09-20* — **DECIDED by the owner: CSVW.**
+
+> "make csvw a skill and associated tool in document ingestion. part of
+> csv/excel processing is extract tabular metadata (tables, rows, headers,
+> cols, data types, location on sheet, row, col, etc) as best as can. generic
+> workflows, specific tools and skill depending on format"
+
+So the standard question is closed and the two falsifiers become implementation
+constraints rather than reasons to reconsider:
+
+- `shape_source: "undetermined"` must survive — "as best as can" is the owner's
+  own phrasing of the same three-state rule;
+- a multi-sheet workbook maps to a `csvw:TableGroup`.
+
+**One thing CSVW does not model, and the owner asked for it explicitly:
+LOCATION ON SHEET.** CSVW describes a table's columns and datatypes; it has no
+notion of "this table starts at B7 of sheet 3", because CSVW's world is a CSV
+file where the table IS the file. A real workbook has tables that do not start
+at A1, headers that are not row 1, and several tables on one sheet.
+
+That is the one place an extension is unavoidable, and it must be an
+ANNOTATION on CSVW rather than a replacement for it — CSVW permits additional
+properties, so `fac:` terms for the anchor cell and header row keep the
+standard intact while recording what it cannot say. Anything else re-invents
+the thing this bean exists to avoid.
+
+Implementation is `ulqj`'s child, not this bean: the decision is made.
