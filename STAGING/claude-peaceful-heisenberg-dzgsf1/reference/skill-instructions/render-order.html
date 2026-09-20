@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(178)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(150)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(178) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(150) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(178) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(150) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(178) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(150) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Translation manager | folio-assistant</title>
+<title>Render order | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Translation manager" />
+<meta property="og:title" content="Render order" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Translation manager" />
+<meta property="twitter:title" content="Render order" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -669,7 +669,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Translation manager</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Render order</span></li>
   </ol>
 </nav>
 
@@ -678,713 +678,131 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/translation-manager.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/translation-manager.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/render-order.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/render-order.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/translation-manager.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/render-order.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="translation-manager">
+<h1 id="render-order--flattening-a-dependency-hierarchy-and-the-two-stages">
   
   
-    <a href="#translation-manager" class="anchor-heading" aria-labelledby="translation-manager"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Translation manager
+    <a href="#render-order--flattening-a-dependency-hierarchy-and-the-two-stages" class="anchor-heading" aria-labelledby="render-order--flattening-a-dependency-hierarchy-and-the-two-stages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Render order — flattening a dependency hierarchy, and the two stages
   
   
 </h1>
     
 
-<blockquote>
-  <p>Skill id: <code class="language-plaintext highlighter-rouge">translation-manager</code> · Capability: <code class="language-plaintext highlighter-rouge">translation</code> · Package:
-<code class="language-plaintext highlighter-rouge">folio-core</code></p>
-</blockquote>
-
-<p>Manage the translation lifecycle for folio content. This skill covers the full
-round trip from source content to translated content, including extraction,
-translation, injection, quality assurance, sign-off, and automatic badge
-rendering.</p>
-<h2 id="reference">
-  
-  
-    <a href="#reference" class="anchor-heading" aria-labelledby="reference"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reference
-  
-  
-</h2>
-    
-
-<p>The authoritative documentation is
-<a href="../../docs/translation-support.md"><code class="language-plaintext highlighter-rouge">docs/translation-support.md</code></a>. Read it
-before using this skill. This file is the operational checklist, not the
-architecture.</p>
-<h2 id="the-two-axis-model">
-  
-  
-    <a href="#the-two-axis-model" class="anchor-heading" aria-labelledby="the-two-axis-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two-axis model
-  
-  
-</h2>
-    
-
-<p>A content node varies along two axes:</p>
-
-<ol>
-  <li><strong>Format</strong> — <code class="language-plaintext highlighter-rouge">.md</code> (Markdown), <code class="language-plaintext highlighter-rouge">.lean</code> (Lean 4), <code class="language-plaintext highlighter-rouge">.tex</code> (LaTeX), <code class="language-plaintext highlighter-rouge">.bpmn</code>,
-<code class="language-plaintext highlighter-rouge">.dmn</code>, etc.</li>
-  <li><strong>Language</strong> — BCP 47 locale tags (<code class="language-plaintext highlighter-rouge">en</code>, <code class="language-plaintext highlighter-rouge">fr</code>, <code class="language-plaintext highlighter-rouge">es</code>, <code class="language-plaintext highlighter-rouge">ar</code>, <code class="language-plaintext highlighter-rouge">zh</code>, <code class="language-plaintext highlighter-rouge">ru</code>).</li>
-</ol>
-
-<p>The format axis is handled by companions. The language axis is handled by the
-PO/POT pipeline with <code class="language-plaintext highlighter-rouge">TranslationNode</code> manifests in <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/</code>.</p>
-<h2 id="translationnode--popot-files-as-kg-nodes">
-  
-  
-    <a href="#translationnode--popot-files-as-kg-nodes" class="anchor-heading" aria-labelledby="translationnode--popot-files-as-kg-nodes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TranslationNode — .po/.pot files as KG nodes
-  
-  
-</h2>
-    
-
-<p>Each <code class="language-plaintext highlighter-rouge">.po</code>/<code class="language-plaintext highlighter-rouge">.pot</code> pair is wrapped by a <code class="language-plaintext highlighter-rouge">.ts</code> manifest that makes it a
-<strong>first-class node in the knowledge graph</strong>:</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="kd">type</span> <span class="p">{</span> <span class="nx">TranslationNode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../schemas/translation</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">node</span><span class="p">:</span> <span class="nx">TranslationNode</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">trans:fr/index</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">locale</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fr</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">sourceFile</span><span class="p">:</span> <span class="dl">"</span><span class="s2">docs/index.md</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">potFile</span><span class="p">:</span> <span class="dl">"</span><span class="s2">translations/fr/index.pot</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">poFile</span><span class="p">:</span> <span class="dl">"</span><span class="s2">translations/fr/index.po</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">status</span><span class="p">:</span> <span class="p">{</span> <span class="na">locale</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fr</span><span class="dl">"</span><span class="p">,</span> <span class="na">official</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">generatedBy</span><span class="p">:</span> <span class="dl">"</span><span class="s2">agent</span><span class="dl">"</span> <span class="p">},</span>
-  <span class="na">coverage</span><span class="p">:</span> <span class="p">{</span> <span class="na">translated</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="na">total</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="na">pct</span><span class="p">:</span> <span class="mi">100</span> <span class="p">},</span>
-<span class="p">};</span>
-<span class="k">export</span> <span class="k">default</span> <span class="nx">node</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>The manifest carries the status, coverage, and QA results inline — no
-separate <code class="language-plaintext highlighter-rouge">status.json</code> or <code class="language-plaintext highlighter-rouge">.qa.json</code> files.</p>
-<h2 id="po-source-resolution-fallback-behavior">
-  
-  
-    <a href="#po-source-resolution-fallback-behavior" class="anchor-heading" aria-labelledby="po-source-resolution-fallback-behavior"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PO source resolution (fallback behavior)
-  
-  
-</h2>
-    
-
-<p>Content blocks can declare explicit PO sources via <code class="language-plaintext highlighter-rouge">poSources[]</code> on
-<code class="language-plaintext highlighter-rouge">BlockBase</code>. When not declared, the pipeline resolves by convention:</p>
-
-<ol>
-  <li><strong>Block-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;block-stem&gt;.po</code></li>
-  <li><strong>Chapter-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;chapter-slug&gt;.po</code></li>
-  <li><strong>Folio-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/global.po</code></li>
-  <li><strong>Dependency walk:</strong> walk <code class="language-plaintext highlighter-rouge">harness.config.json</code> dependencies depth-first</li>
-</ol>
-
-<p>When <code class="language-plaintext highlighter-rouge">poSources</code> is declared, only the listed files are consulted (no
-fallback). Later entries override earlier for the same msgid.</p>
-<h2 id="what-is-translatable">
-  
-  
-    <a href="#what-is-translatable" class="anchor-heading" aria-labelledby="what-is-translatable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is translatable
-  
-  
-</h2>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Content</th>
-      <th>Translatable?</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Block titles</td>
-      <td>✅</td>
-      <td>From <code class="language-plaintext highlighter-rouge">.ts</code> manifests</td>
-    </tr>
-    <tr>
-      <td>Prose bodies (<code class="language-plaintext highlighter-rouge">.md</code>)</td>
-      <td>✅</td>
-      <td>Segmented by paragraph</td>
-    </tr>
-    <tr>
-      <td>Chapter/section titles</td>
-      <td>✅</td>
-      <td>From <code class="language-plaintext highlighter-rouge">chapter.ts</code> / <code class="language-plaintext highlighter-rouge">section.ts</code></td>
-    </tr>
-    <tr>
-      <td>Kind headings</td>
-      <td>✅</td>
-      <td>“Definition”, “Theorem”, etc. → locale catalogue</td>
-    </tr>
-    <tr>
-      <td>LaTeX math</td>
-      <td>❌</td>
-      <td>Universal notation</td>
-    </tr>
-    <tr>
-      <td>Block labels</td>
-      <td>❌</td>
-      <td>Structural identifiers</td>
-    </tr>
-    <tr>
-      <td>Code blocks</td>
-      <td>❌</td>
-      <td>Programming language content</td>
-    </tr>
-    <tr>
-      <td>Lean companions</td>
-      <td>❌</td>
-      <td>Formal mathematics</td>
-    </tr>
-    <tr>
-      <td>FHIR resources</td>
-      <td>⚠️</td>
-      <td>Use FHIR’s own <code class="language-plaintext highlighter-rouge">designation</code> system, not gettext</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="workflow">
-  
-  
-    <a href="#workflow" class="anchor-heading" aria-labelledby="workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow
-  
-  
-</h2>
-    
-<h3 id="1-extract-pot-generation">
-  
-  
-    <a href="#1-extract-pot-generation" class="anchor-heading" aria-labelledby="1-extract-pot-generation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Extract (POT generation)
-  
-  
-</h3>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/pot-extract.ts <span class="o">[</span><span class="nt">--chapter</span> &lt;<span class="nb">dir</span><span class="o">&gt;]</span> <span class="o">[</span><span class="nt">--block</span> &lt;label&gt;]
-</code></pre></div></div>
-
-<p>Or use the <code class="language-plaintext highlighter-rouge">translation_extract</code> MCP tool. Produces <code class="language-plaintext highlighter-rouge">.pot</code> files at the
-configured granularity.</p>
-<h3 id="2-translate">
-  
-  
-    <a href="#2-translate" class="anchor-heading" aria-labelledby="2-translate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Translate
-  
-  
-</h3>
-    
-
-<p>Options, in order of preference:</p>
-
-<ol>
-  <li><strong>Existing <code class="language-plaintext highlighter-rouge">.po</code> from smart-base</strong> — if the DAK already has translations
-from Weblate/Crowdin, use them.</li>
-  <li><strong>FHIR/translation-utils</strong> — the <code class="language-plaintext highlighter-rouge">po-translate</code> CLI for batch machine
-translation via DeepL/Google Translate. Tags results <code class="language-plaintext highlighter-rouge"># fuzzy</code>.</li>
-  <li><strong>Agent translation</strong> — LLM translation of <code class="language-plaintext highlighter-rouge">.pot</code> → <code class="language-plaintext highlighter-rouge">.po</code>. Also tagged
-unofficial.</li>
-  <li><strong>Human translation</strong> — the gold standard.</li>
-</ol>
-<h3 id="3-inject-po--translated-markdown">
-  
-  
-    <a href="#3-inject-po--translated-markdown" class="anchor-heading" aria-labelledby="3-inject-po--translated-markdown"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Inject (PO → translated Markdown)
-  
-  
-</h3>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/po-inject.ts <span class="nt">--locale</span> &lt;locale&gt; <span class="o">[</span><span class="nt">--chapter</span> &lt;<span class="nb">dir</span><span class="o">&gt;]</span>
-</code></pre></div></div>
-
-<p>Or use the <code class="language-plaintext highlighter-rouge">translation_inject</code> MCP tool. Reads <code class="language-plaintext highlighter-rouge">.po</code> files and produces
-translated <code class="language-plaintext highlighter-rouge">.md</code> in <code class="language-plaintext highlighter-rouge">docs/&lt;locale&gt;/</code> for docs pages, or in the content
-directory for content blocks.</p>
-<h3 id="4-create-translationnode-manifest">
-  
-  
-    <a href="#4-create-translationnode-manifest" class="anchor-heading" aria-labelledby="4-create-translationnode-manifest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Create TranslationNode manifest
-  
-  
-</h3>
-    
-
-<p>After injection, create or update the <code class="language-plaintext highlighter-rouge">.ts</code> manifest:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># The pipeline does this automatically, or create manually:</span>
-translations/&lt;locale&gt;/&lt;stem&gt;.ts
-</code></pre></div></div>
-
-<p>The manifest carries status, coverage, and round-trip QA results inline.
-Validate with <code class="language-plaintext highlighter-rouge">TranslationNodeSchema</code> from <code class="language-plaintext highlighter-rouge">schemas/translation.ts</code>.</p>
-<h3 id="5-round-trip-qa">
-  
-  
-    <a href="#5-round-trip-qa" class="anchor-heading" aria-labelledby="5-round-trip-qa"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Round-trip QA
-  
-  
-</h3>
-    
-
-<p>After injection, run round-trip translation QA:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/translation-qa.ts <span class="nt">--locale</span> &lt;locale&gt;
-</code></pre></div></div>
-
-<p>Or use the <code class="language-plaintext highlighter-rouge">translation_validate</code> MCP tool for coverage and staleness.
-<strong>Semantic verification is per block and lives in the sidecar</strong>, not in a
-node-level summary field: <code class="language-plaintext highlighter-rouge">TranslationNode.roundTripQA</code> was removed with the
-numbers it held. See §”Per-block translation QA” below, and route drift to a
-human reviewer.</p>
-<h3 id="6-sign-off">
-  
-  
-    <a href="#6-sign-off" class="anchor-heading" aria-labelledby="6-sign-off"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Sign-off
-  
-  
-</h3>
-    
-
-<p>A human reviewer signs off at the desired level:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/translation-signoff.ts <span class="nt">--locale</span> &lt;locale&gt; <span class="nt">--level</span> &lt;block|section|chapter|folio&gt; <span class="o">[</span><span class="nt">--path</span> &lt;content-path&gt;]
-</code></pre></div></div>
-
-<p>Or use the <code class="language-plaintext highlighter-rouge">translation_signoff</code> MCP tool. Updates the <code class="language-plaintext highlighter-rouge">TranslationNode</code>
-manifest with sign-off metadata and source hash.</p>
-<h3 id="7-staleness-watch">
-  
-  
-    <a href="#7-staleness-watch" class="anchor-heading" aria-labelledby="7-staleness-watch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Staleness watch
-  
-  
-</h3>
-    
-
-<p>On every content change, the pipeline checks whether any official translation’s
-<code class="language-plaintext highlighter-rouge">sourceHash</code> no longer matches the source <code class="language-plaintext highlighter-rouge">.md</code>. Stale translations are flagged
-in the viewer and in <code class="language-plaintext highlighter-rouge">translation_status</code> output.</p>
-<h2 id="per-block-translation-qa-and-the-agentic-round-trip">
-  
-  
-    <a href="#per-block-translation-qa-and-the-agentic-round-trip" class="anchor-heading" aria-labelledby="per-block-translation-qa-and-the-agentic-round-trip"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Per-block translation QA, and the agentic round trip
-  
-  
-</h2>
-    
-
-<p>Two sweeps, two subjects, and confusing them is how a site reports a
-translation nobody measured.</p>
-
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">translation-qa-sweep.ts</code></strong> measures the docs <strong>site</strong>: how much of each
-page exists in each language. It writes <code class="language-plaintext highlighter-rouge">docs/_data/translation-qa.json</code> and
-feeds the badge under a page title.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">translation-block-qa.ts</code></strong> measures a <strong>block</strong>, one sidecar per
-<code class="language-plaintext highlighter-rouge">(block, locale)</code>: <code class="language-plaintext highlighter-rouge">&lt;stem&gt;.&lt;locale&gt;.translation-qa.json</code>, in the
-<code class="language-plaintext highlighter-rouge">block-qa/v1</code> entry shape, which is what the per-block <code class="language-plaintext highlighter-rouge">TR</code> icon opens.</li>
-</ul>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run translation:block-qa          <span class="c"># write the sidecars</span>
-bun run translation:block-qa:check    <span class="c"># fail if any is stale</span>
-</code></pre></div></div>
-<h3 id="what-a-script-may-claim-and-what-it-may-not">
-  
-  
-    <a href="#what-a-script-may-claim-and-what-it-may-not" class="anchor-heading" aria-labelledby="what-a-script-may-claim-and-what-it-may-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a script may claim, and what it may not
-  
-  
-</h3>
-    
-
-<p>Three criteria are deterministic and carry a <code class="language-plaintext highlighter-rouge">script</code> witness:
-<code class="language-plaintext highlighter-rouge">translation-coverage</code>, <code class="language-plaintext highlighter-rouge">translation-terms-preserved</code> (acronyms, numbers and
-URLs that must survive translation and did not — the class a fluent
-mistranslation passes) and <code class="language-plaintext highlighter-rouge">translation-not-echo</code> (a “translation” identical to
-its source; a <em>warn</em>, because that is right for a proper noun and wrong for a
-sentence).</p>
-
-<p><code class="language-plaintext highlighter-rouge">translation-semantic-roundtrip</code> is written <strong>with no entry</strong>. A round trip
-asks whether the MEANING survived, and that needs a translator that has not
-seen the original. The only back-translation available to a script here is the
-PO’s own <code class="language-plaintext highlighter-rouge">msgid→msgstr</code> map read backwards, which returns the source exactly,
-always: a perfect similarity score measuring the lookup table. <strong>Do not fill
-this criterion mechanically.</strong> A green tick nobody should trust is worse than a
-gap that says it is a gap — a reader who sees the tick stops asking.</p>
+<p>Two things live here, and they are deliberately one skill: <strong>the general
+subprocess</strong> (flatten a hierarchy into one order) and <strong>the one pipeline this
+repository runs with it</strong>. The owner asked for the second and then generalised
+it in the same breath:</p>
 
 <blockquote>
-  <p>This was not hypothetical. <code class="language-plaintext highlighter-rouge">translations/fr/index.ts</code> carried
-<code class="language-plaintext highlighter-rouge">roundTripQA: { fail: 21, total: 36, method: "jaccard-word-overlap" }</code>, and
-its own <code class="language-plaintext highlighter-rouge">description</code> explained those failures away as expected “with limited
-vocabulary back-translator” — a measurement whose author has to explain it
-away is about the instrument, not the translation. The generator’s
-back-translation map held <strong>6 entries for 36 strings</strong>: every string nobody
-had back-translated scored 0 similarity and was counted as drift, so <code class="language-plaintext highlighter-rouge">fail:
-21</code> was a count of absences. A second script back-translated by applying a
-40-pair word-substitution table to the French and wrote the result as a
-<code class="language-plaintext highlighter-rouge">block-qa/v1</code> sidecar with an <strong>agent</strong> reviewer.</p>
-
-  <p>All of it is removed — the numbers, the <code class="language-plaintext highlighter-rouge">roundTripQA</code> field, the page badge
-that displayed them, and both scripts.</p>
+  <p>readme epid need to flattening of depndency hieracy, rulles + tools. as do
+other skills. this is a repeable subprocess</p>
 </blockquote>
-<h3 id="the-agentic-round-trip--a-pair-of-agents-and-the-separation-is-the-measurement">
-  
-  
-    <a href="#the-agentic-round-trip--a-pair-of-agents-and-the-separation-is-the-measurement" class="anchor-heading" aria-labelledby="the-agentic-round-trip--a-pair-of-agents-and-the-separation-is-the-measurement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agentic round trip — a PAIR of agents, and the separation is the measurement
-  
-  
-</h3>
-    
+
+<p><strong>A repeatable subprocess has one implementation.</strong> Four callers each wanting
+“run these in dependency order” is four topological sorts, three of them
+subtly different and none tested.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>agent</th>
-      <th>is given</th>
-      <th>produces</th>
+      <th> </th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>back-translator</strong></td>
-      <td>the target-language text, and nothing else</td>
-      <td>an independent rendering back into the source language</td>
+      <td>the rules + the flattener</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/scripts/dependency-order.ts</code></td>
     </tr>
     <tr>
-      <td><strong>adjudicator</strong></td>
-      <td>the original and the back-translation, never the target text</td>
-      <td><code class="language-plaintext highlighter-rouge">pass</code> / <code class="language-plaintext highlighter-rouge">warn</code> / <code class="language-plaintext highlighter-rouge">fail</code>, with each drift named</td>
+      <td>the pipeline that uses it</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/scripts/render-pipeline.ts</code></td>
+    </tr>
+    <tr>
+      <td>see the order without running it</td>
+      <td><code class="language-plaintext highlighter-rouge">bun run render:order</code></td>
+    </tr>
+    <tr>
+      <td>run it</td>
+      <td><code class="language-plaintext highlighter-rouge">bun run render</code></td>
     </tr>
   </tbody>
 </table></div>
-
-<p>Three rules make it a measurement rather than a ritual:</p>
-
-<ol>
-  <li><strong>Neither agent sees what would let it shortcut.</strong> A back-translator shown
-the English writes the English back and the check passes vacuously. An
-adjudicator shown the French can talk itself into any reading of the
-back-translation.</li>
-  <li><strong>The back-translator must use no tools, and must say so.</strong> The source is in
-the repository; an agent with filesystem access can find it, and then the
-verdict measures its search. Ask for a <code class="language-plaintext highlighter-rouge">TOOLS_USED</code> line and record the
-answer.</li>
-  <li><strong>One agent doing both halves is not this check.</strong> It compares a text with
-its own paraphrase of itself.</li>
-</ol>
-
-<p>Tell the adjudicator explicitly what is <em>not</em> drift — synonyms, articles,
-re-ordering — and what is: a claim added, dropped, weakened, strengthened or
-reversed; a term of art swapped for something that means a different thing; a
-named entity or a quantifier moved. Without that, a round trip degenerates into
-a style review, and every translation “fails”.</p>
-
-<p>Record the result with:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/translation-roundtrip.ts <span class="nt">--payload</span> &lt;file.json&gt;
-</code></pre></div></div>
-
-<p>It writes <strong>both</strong> agents as witnesses. The adjudicator’s entry carries the
-verdict and leads the criterion (the first entry is the operative one
-everywhere in this repo); the back-translator’s sits behind it with
-<code class="language-plaintext highlighter-rouge">result: "n/a"</code> and the back-translation itself in <code class="language-plaintext highlighter-rouge">notes</code>, because a reader
-asking “on what basis?” needs the intermediate text and a reader asking “who
-did this?” needs both names.</p>
-
-<p><strong>Record <code class="language-plaintext highlighter-rouge">model</code> with <code class="language-plaintext highlighter-rouge">modelSource</code>, or not at all.</strong> A subagent’s serving
-model is not directly observable from the session that dispatched it: it
-inherits the parent unless the harness overrides, and the hand-back does not
-say which model served the turn. A bare model string on an agent witness is
-therefore an inference printed as a fact — the same move as the round-trip
-numbers this skill tells you not to write. <code class="language-plaintext highlighter-rouge">modelSource</code> states how the
-identifier was established (for example: read from <code class="language-plaintext highlighter-rouge">get_session</code> at record
-time, subagent inheritance assumed, not independently observed), and the panel
-renders it beside the model. Absent both, the panel prints “not recorded”,
-which is a true statement and an acceptable one.</p>
-<h3 id="two-traps-this-process-has-already-sprung">
+<h2 id="the-four-rules-and-each-is-a-decision-rather-than-a-default">
   
   
-    <a href="#two-traps-this-process-has-already-sprung" class="anchor-heading" aria-labelledby="two-traps-this-process-has-already-sprung"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two traps this process has already sprung
-  
-  
-</h3>
-    
-
-<p><strong>A script sweep must not clobber an agent’s verdict.</strong> <code class="language-plaintext highlighter-rouge">translation-block-qa</code>
-writes <code class="language-plaintext highlighter-rouge">translation-semantic-roundtrip: []</code> on every run. Before
-<code class="language-plaintext highlighter-rouge">mergeCriteria</code>, the next unrelated re-run deleted the round trip a pair of
-agents had produced, silently and with nothing in the output to say so. The
-rule: <strong>a sweep replaces only entries whose reviewer is itself</strong>, and carries
-everything else through.</p>
-
-<p><strong>The verdict is hashed to the text it was about.</strong> The entries hash the <code class="language-plaintext highlighter-rouge">.md</code>,
-the <code class="language-plaintext highlighter-rouge">.ts</code> and the <code class="language-plaintext highlighter-rouge">.po</code>, so editing the source stales every locale’s round trip
-and editing a translation stales that locale’s. This matters more for an agent
-ruling than a script one: nobody can cheaply re-run it, so an agent verdict is
-exactly the kind that quietly outlives its subject.</p>
-<h2 id="automatic-badge-rendering">
-  
-  
-    <a href="#automatic-badge-rendering" class="anchor-heading" aria-labelledby="automatic-badge-rendering"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Automatic badge rendering
+    <a href="#the-four-rules-and-each-is-a-decision-rather-than-a-default" class="anchor-heading" aria-labelledby="the-four-rules-and-each-is-a-decision-rather-than-a-default"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four rules, and each is a decision rather than a default
   
   
 </h2>
     
 
-<p>Translation badges are <strong>automatically rendered</strong> on every docs page by
-<code class="language-plaintext highlighter-rouge">docs-ui.js</code>. There is no need to manually add badge includes or front matter.</p>
-<h3 id="how-it-works">
-  
-  
-    <a href="#how-it-works" class="anchor-heading" aria-labelledby="how-it-works"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it works
-  
-  
-</h3>
-    
-
 <ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">head_custom.html</code></strong> publishes a <code class="language-plaintext highlighter-rouge">&lt;script type="application/json"
-id="fa-translation-meta"&gt;</code> block on every page, reading from page front
-matter</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">docs-ui.js</code></strong> reads that block and auto-injects into the page title:
-    <ul>
-      <li><strong>🌐 Language coverage badge</strong> — <code class="language-plaintext highlighter-rouge">0/5 languages</code> (grey), <code class="language-plaintext highlighter-rouge">1/5</code> (amber),
-<code class="language-plaintext highlighter-rouge">5/5</code> (green)</li>
-      <li><strong>⚠️ Unverified warning</strong> — auto-injected when <code class="language-plaintext highlighter-rouge">translation_status:
-unverified</code></li>
-    </ul>
-  </li>
+  <li><strong>A node runs after everything it declares <code class="language-plaintext highlighter-rouge">needs</code>.</strong> Nothing else implies
+order — not position in the list, not the id.</li>
+  <li><strong>Ties break on declaration order.</strong> Sorting ties alphabetically makes the
+flattened order churn when a node is renamed, turning a no-op rename into a
+pipeline diff nobody can read.</li>
+  <li><strong>A cycle is reported, never broken.</strong> Breaking one picks a winner silently
+and the pipeline then runs in an order nobody chose. <strong>Every</strong> node in the
+cycle is named — naming one sends the reader to fix the wrong edge.</li>
+  <li><strong>A missing dependency is reported, never dropped.</strong> <code class="language-plaintext highlighter-rouge">needs: ["x"]</code> with no
+<code class="language-plaintext highlighter-rouge">x</code> is a claim that failed. Running the node anyway reports a clean pass
+over a broken graph, which is the <code class="language-plaintext highlighter-rouge">dh4f</code> defect in ordering form.</li>
 </ol>
-<h3 id="front-matter-for-the-translation-pipeline-to-stamp">
-  
-  
-    <a href="#front-matter-for-the-translation-pipeline-to-stamp" class="anchor-heading" aria-labelledby="front-matter-for-the-translation-pipeline-to-stamp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Front matter for the translation pipeline to stamp
-  
-  
-</h3>
-    
 
-<p>The translation pipeline stamps this front matter on generated pages:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Source pages (English):</span>
-<span class="na">lang</span><span class="pi">:</span> <span class="s">en</span>
-<span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>          <span class="c1"># locales with translations</span>
-
-<span class="c1"># Translated pages:</span>
-<span class="na">lang</span><span class="pi">:</span> <span class="s">fr</span>
-<span class="na">translation_status</span><span class="pi">:</span> <span class="s">unverified</span>     <span class="c1"># or "official"</span>
-<span class="na">translation_source</span><span class="pi">:</span> <span class="s">index.md</span>       <span class="c1"># source file</span>
-<span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>
-</code></pre></div></div>
-
-<p>The <code class="language-plaintext highlighter-rouge">qa_translation_*</code> keys are <strong>gone</strong>, along with the badge that read them.
-They were stamped from a node-level round trip whose back-translation map held
-6 entries for 36 strings, so every string nobody had back-translated was
-published as semantic drift. Per-block QA replaces them: the <code class="language-plaintext highlighter-rouge">TR</code> icon beside
-each block opens <code class="language-plaintext highlighter-rouge">&lt;stem&gt;.&lt;locale&gt;.translation-qa.json</code>, where a verdict names
-the witness that reached it.</p>
-
-<p><code class="language-plaintext highlighter-rouge">docs-ui.js</code> injects the unverified-translation warning itself, from the page’s
-own front matter. <strong>There is no include to add</strong>:
-<code class="language-plaintext highlighter-rouge">_includes/translation-warning.html</code> is deleted, not deprecated, as is
-<code class="language-plaintext highlighter-rouge">_includes/language-selector.html</code> — <code class="language-plaintext highlighter-rouge">buildLanguageBar</code> renders the six UN
-languages and greys out the ones not yet translated, which the include only
-promised in a comment. (<code class="language-plaintext highlighter-rouge">qa-translation-badge.html</code> went the same way: it
-rendered the removed numbers.)</p>
-<h2 id="the-navbar-filters-by-locale">
+<p>Rules 3 and 4 share a consequence worth stating on its own: <strong>a broken graph
+yields NO order at all</strong>, not a partial one. A partial order over a broken
+graph is the thing that gets run.</p>
+<h2 id="fatal-is-per-step-and-it-is-required">
   
   
-    <a href="#the-navbar-filters-by-locale" class="anchor-heading" aria-labelledby="the-navbar-filters-by-locale"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The navbar filters by locale
+    <a href="#fatal-is-per-step-and-it-is-required" class="anchor-heading" aria-labelledby="fatal-is-per-step-and-it-is-required"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">fatal</code> is per STEP, and it is required
   
   
 </h2>
     
 
-<p>Reported by the owner, 2026-09-19:</p>
+<p>The owner’s design, on the render pipeline:</p>
 
 <blockquote>
-  <p>translations are still not handled right. i have english selected, but i see
-the translated pages in LHS navbar. the <code class="language-plaintext highlighter-rouge">fr/</code> <code class="language-plaintext highlighter-rouge">ru/</code> etc. sub-dirs need to be
-explicitly labeled as translated content in the graph and not shown in navbar
-unless that locale is selected. (if not present, fall back to source
-language)</p>
+  <p>current state of KG renderered as json/jsonld failuer = fatal, readme updated
+faliure = fatal , dynamic parts (kg vierwe, visaluzers, etc) render in
+flattened depndency order, failures = skip/log/qa or so</p>
 </blockquote>
 
-<p>Three rules, and each is enforced somewhere different because each can break
-somewhere different.</p>
-<h3 id="1-a-page-is-a-translation-because-the-page-says-so">
+<p>So the runner cannot own one policy — two steps must stop the build and the
+rest must not. The field is <strong>required rather than defaulted</strong>, for the same
+reason a graph kind must state <code class="language-plaintext highlighter-rouge">holds</code>: a default lets a step ship without
+anybody deciding, and the two policies are not interchangeable.</p>
+
+<p><strong>A failure skips what NEEDED it</strong>, computed transitively from <code class="language-plaintext highlighter-rouge">needs</code> — not
+what merely follows it in the list. Two steps can be adjacent and unrelated,
+and skipping an unrelated one loses a rendering for no reason. A skipped step
+names the step that <strong>broke</strong>, not the nearest blocked neighbour.</p>
+<h3 id="three-outcomes-and-pending-is-the-third">
   
   
-    <a href="#1-a-page-is-a-translation-because-the-page-says-so" class="anchor-heading" aria-labelledby="1-a-page-is-a-translation-because-the-page-says-so"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. A page is a translation because the PAGE says so
+    <a href="#three-outcomes-and-pending-is-the-third" class="anchor-heading" aria-labelledby="three-outcomes-and-pending-is-the-third"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three outcomes, and <code class="language-plaintext highlighter-rouge">pending</code> is the third
   
   
 </h3>
     
 
-<p>Three fields in its own front matter, and nothing else anywhere:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">lang</span><span class="pi">:</span> <span class="s">fr</span>                              <span class="c1"># this page is French</span>
-<span class="na">nav_exclude</span><span class="pi">:</span> <span class="no">true</span>                     <span class="c1"># keep it OUT of the static nav</span>
-<span class="na">translation_source</span><span class="pi">:</span> <span class="s">index.md</span>          <span class="c1"># which page it expresses</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">content/pipeline/translation-index.ts</code> walks the site and reads those. A page
-with no <code class="language-plaintext highlighter-rouge">lang</code> is the instance’s <strong>source language</strong> — absent means the
-default, not unknown.</p>
-
-<p><strong>Never match a directory name against a list of language subtags.</strong> That is
-the <em>“distinguishable by extension … a coincidence of the current layout, not a
-contract”</em> defect #263 named, moved to directory names, and it is wrong in both
-directions: a folio with a <code class="language-plaintext highlighter-rouge">no/</code> chapter (Norwegian, or the English word) is
-silently hidden from its own navbar, and a <code class="language-plaintext highlighter-rouge">pt-BR/</code> or <code class="language-plaintext highlighter-rouge">translated-fr/</code>
-directory is silently shown as source. Neither announces itself — the navbar
-simply has the wrong entries in it. Put the French page at <code class="language-plaintext highlighter-rouge">accueil-fr.md</code>
-beside its source and it is indexed correctly; put an English page in a folder
-called <code class="language-plaintext highlighter-rouge">fr/</code> and it is left alone.</p>
-
-<p><strong>There is deliberately no <code class="language-plaintext highlighter-rouge">translated-content</code> graph kind.</strong> A first draft of
-PR #351 added one, with a <code class="language-plaintext highlighter-rouge">locale</code> field on <code class="language-plaintext highlighter-rouge">ContentDirectory</code> and one
-<code class="language-plaintext highlighter-rouge">cat-harness.json</code> entry per locale subtree — ten entries for five locales
-across two subtrees. It worked and it was the wrong axis: it restated what all
-ten files already said, and it grew as O(locales × subtrees). The owner’s
-framing is what settles it:</p>
-
-<blockquote>
-  <p>narrative/audio/visual content with text should be translatable. its not so
-much the node schema itself but its content (e.g. markdown, bpmn) should be
-translatable.</p>
-</blockquote>
-
-<p>Translatability is a property of a <strong>format within a content type</strong>, and that
-model already exists: <code class="language-plaintext highlighter-rouge">schemas/translation-tools.ts</code> declares, per content
-type, which formats have an extract/inject pair — Markdown, LaTeX, PlantUML,
-SVG, ArchiMate, Excel, BPMN, FSH, FHIR JSON — and <code class="language-plaintext highlighter-rouge">isTranslatable(contentType,
-extension)</code> is the predicate. The index asks it rather than inventing a second
-answer, so a <code class="language-plaintext highlighter-rouge">.json</code> beside a page is data and never a language.</p>
-
-<p><code class="language-plaintext highlighter-rouge">translations/</code> <strong>is</strong> declared, as <code class="language-plaintext highlighter-rouge">translation-sources</code>. That one earns a
-kind: a <code class="language-plaintext highlighter-rouge">.po</code> catalogue is not content in any language, so no file inside it
-can declare one.</p>
-
-<p><strong>There is no <code class="language-plaintext highlighter-rouge">nav_order</code> on a translated page.</strong> It stands where its <em>source</em>
-stands, because it replaces that item rather than joining the list. A
-<code class="language-plaintext highlighter-rouge">nav_order</code> beside a <code class="language-plaintext highlighter-rouge">nav_exclude</code> is two facts that contradict each other, and
-the check refuses it.</p>
-<h3 id="2-nav_exclude-is-the-half-that-javascript-cannot-do">
+<p><code class="language-plaintext highlighter-rouge">ran</code>, <code class="language-plaintext highlighter-rouge">failed</code>, <code class="language-plaintext highlighter-rouge">skipped</code> — plus a step that is <strong>declared but not yet
+performable</strong>, which the report marks <code class="language-plaintext highlighter-rouge">◻</code> and never a tick. It exists because
+the first draft did not have it: the bootstrap step was written as
+<code class="language-plaintext highlighter-rouge">kg-export --root cat-bootstrap</code>, and <code class="language-plaintext highlighter-rouge">kg-export</code> has no <code class="language-plaintext highlighter-rouge">--root</code> flag. The
+argument would have been ignored and the whole graph exported under
+bootstrap’s name — <strong>a step reporting success while doing something else.</strong>
+Naming the gap costs a line; finding it from a wrong artefact costs a release.</p>
+<h2 id="the-two-stages">
   
   
-    <a href="#2-nav_exclude-is-the-half-that-javascript-cannot-do" class="anchor-heading" aria-labelledby="2-nav_exclude-is-the-half-that-javascript-cannot-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. <code class="language-plaintext highlighter-rouge">nav_exclude</code> is the half that JavaScript cannot do
-  
-  
-</h3>
-    
-
-<p>just-the-docs builds the navbar <strong>at build time</strong>, from front matter, on a
-static site serving the same HTML to every reader. It cannot know which locale
-anybody chose, so a translated page left in the nav is in it <strong>for everybody</strong> —
-which is the reported bug exactly. A script can swap a nav item; it cannot
-un-render one without a flash of the wrong nav first.</p>
-
-<p>So the translations leave the static nav entirely, and a reader with no
-JavaScript gets the <strong>source-language</strong> navbar — the correct degraded answer
-rather than an arbitrary one.</p>
-<h3 id="3-the-swap-and-the-fallback-that-is-not-a-code-path">
-  
-  
-    <a href="#3-the-swap-and-the-fallback-that-is-not-a-code-path" class="anchor-heading" aria-labelledby="3-the-swap-and-the-fallback-that-is-not-a-code-path"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. The swap, and the fallback that is not a code path
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">content/pipeline/translation-index.ts</code> writes <code class="language-plaintext highlighter-rouge">docs/_data/translations.json</code>; <code class="language-plaintext highlighter-rouge">_includes/head_custom.html</code> publishes it
-into every page as <code class="language-plaintext highlighter-rouge">#fa-translation-index</code>; <code class="language-plaintext highlighter-rouge">mountNavLocale</code> in
-<code class="language-plaintext highlighter-rouge">docs/assets/js/docs-ui.js</code> reads it.</p>
-
-<p>With a non-source locale selected, each nav item that <strong>has</strong> a page in that
-locale is rewritten in place — same position, same parent, translated title,
-translated href, and its own <code class="language-plaintext highlighter-rouge">dir</code> so an Arabic item inside an English column
-is not laid out backwards.</p>
-
-<p><strong>Fallback is the absence of a rewrite.</strong> An item with no page in the selected
-locale is not touched, so it keeps its source-language title and link. There is
-deliberately no branch for it: a fallback implemented as its own code path is a
-code path that can be wrong, and this one cannot be.</p>
-
-<p>Which locale is “selected”, in precedence order: <code class="language-plaintext highlighter-rouge">?lang=</code> on the URL, then the
-page’s own <code class="language-plaintext highlighter-rouge">lang</code> when the page <em>is</em> a translation, then the remembered
-<code class="language-plaintext highlighter-rouge">fa-locale</code>, then the source language. A locale the index has never heard of is
-not honoured — labelling the navbar <code class="language-plaintext highlighter-rouge">tlh</code> while every item is in English is a
-claim the page cannot support.</p>
-<h3 id="three-states-and-the-third-is-why-the-index-is-published-as-null">
-  
-  
-    <a href="#three-states-and-the-third-is-why-the-index-is-published-as-null" class="anchor-heading" aria-labelledby="three-states-and-the-third-is-why-the-index-is-published-as-null"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three states, and the third is why the index is published as <code class="language-plaintext highlighter-rouge">null</code>
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th><code class="language-plaintext highlighter-rouge">data-fa-nav-index</code></th>
-      <th>when</th>
-      <th>what the navbar does</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">ok</code></td>
-      <td>the index parsed and holds pages</td>
-      <td>filter it</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">empty</code></td>
-      <td>it parsed and holds none</td>
-      <td>nothing to swap; every item is source language</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">unknown</code></td>
-      <td>no island, unparseable, or <code class="language-plaintext highlighter-rouge">index: null</code> because the data file was absent at build time</td>
-      <td>left <strong>exactly</strong> as built</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><code class="language-plaintext highlighter-rouge">empty</code> and <code class="language-plaintext highlighter-rouge">unknown</code> produce the same navbar and are <strong>not the same answer</strong>:
-one is <em>“this folio has no translations”</em>, the other is <em>“this build could not
-tell”</em>. A build that could not determine the translation set must never render
-as a folio that has none — so <code class="language-plaintext highlighter-rouge">translation:index</code> exits <strong>2</strong> rather than
-writing a partial index over a complete one, and the deploy fails rather than
-publishing it.</p>
-<h3 id="adding-a-locale">
-  
-  
-    <a href="#adding-a-locale" class="anchor-heading" aria-labelledby="adding-a-locale"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a locale
-  
-  
-</h3>
-    
-
-<ol>
-  <li>Write the pages, each carrying <code class="language-plaintext highlighter-rouge">lang</code>, <code class="language-plaintext highlighter-rouge">nav_exclude: true</code> and
-<code class="language-plaintext highlighter-rouge">translation_source</code>. Where they sit is up to you — the convention here is
-<code class="language-plaintext highlighter-rouge">&lt;dir&gt;/&lt;locale&gt;/&lt;page&gt;.md</code>, and nothing depends on it.</li>
-  <li><code class="language-plaintext highlighter-rouge">bun run translation:index</code> and commit <code class="language-plaintext highlighter-rouge">docs/_data/translations.json</code>.</li>
-</ol>
-
-<p>There is no third step and no declaration to remember. The thing that IS easy
-to forget is <code class="language-plaintext highlighter-rouge">nav_exclude</code>, which is why <code class="language-plaintext highlighter-rouge">translation:index:check</code> fails
-without it: a translated page left in the static nav is in it for every
-reader, whatever locale they chose, which is the bug this section records.</p>
-<h2 id="official-vs-unofficial">
-  
-  
-    <a href="#official-vs-unofficial" class="anchor-heading" aria-labelledby="official-vs-unofficial"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Official vs unofficial
+    <a href="#the-two-stages" class="anchor-heading" aria-labelledby="the-two-stages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two stages
   
   
 </h2>
@@ -1393,274 +811,78 @@ reader, whatever locale they chose, which is the bug this section records.</p>
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Attribute</th>
-      <th>Official</th>
-      <th>Unofficial</th>
+      <th>stage</th>
+      <th>renders</th>
+      <th>on failure</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Human sign-off</td>
-      <td>✅ Required</td>
-      <td>❌ Not required</td>
+      <td>1</td>
+      <td>the CURRENT declared state as json/jsonld, then the README from it</td>
+      <td><strong>fatal</strong></td>
     </tr>
     <tr>
-      <td>Viewer badge</td>
-      <td>✅ Green</td>
-      <td>🔄 Grey/amber</td>
+      <td>2</td>
+      <td>the dynamic parts — viewers, visualisers, doc pages, diagrams</td>
+      <td>skip + log + QA</td>
     </tr>
     <tr>
-      <td>Source hash tracking</td>
-      <td>✅ Yes</td>
-      <td>❌ No</td>
-    </tr>
-    <tr>
-      <td>Staleness detection</td>
-      <td>✅ Yes</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>Can be shown in viewer</td>
-      <td>Always</td>
-      <td>Configurable (<code class="language-plaintext highlighter-rouge">officialRequired</code> in config)</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="six-un-languages">
-  
-  
-    <a href="#six-un-languages" class="anchor-heading" aria-labelledby="six-un-languages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Six UN languages
-  
-  
-</h2>
-    
-
-<p>The default <code class="language-plaintext highlighter-rouge">supportedLocales</code> in <code class="language-plaintext highlighter-rouge">harness.config.json</code>:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Code</th>
-      <th>Language</th>
-      <th>Native</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">ar</code></td>
-      <td>Arabic</td>
-      <td>العربية</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">zh</code></td>
-      <td>Chinese</td>
-      <td>中文</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">en</code></td>
-      <td>English</td>
-      <td>English</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">fr</code></td>
-      <td>French</td>
-      <td>Français</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">ru</code></td>
-      <td>Russian</td>
-      <td>Русский</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">es</code></td>
-      <td>Spanish</td>
-      <td>Español</td>
+      <td>3</td>
+      <td>the DYNAMIC state, exported once stage 2 has contributed</td>
+      <td><strong>fatal</strong></td>
     </tr>
   </tbody>
 </table></div>
 
-<p>Folios may add or remove locales. The viewer reads the list from config.</p>
-<h2 id="translations-directory-rules">
+<p><strong>Two exports, not one</strong>, and that is what resolves what reads as a
+contradiction — <em>“json/jsonld rendered last as intermeridaay renderes may add
+to dynamic KG”</em> against <em>“current state of KG renderered as json/jsonld …
+fatal”</em>. They are different documents. The first is what the declarations say
+now; the second is what the graph became after the renderers ran.</p>
+
+<p><strong>Stage 1 is fatal because everything below is derived from it.</strong> A knowledge
+graph that does not render is not a degraded build, it is an unknown one, and
+a README generated from a half-read graph states a wrong fact in the file a
+reader opens first. <strong>Stage 2 is not</strong>, because a missing visualiser costs one
+rendering and nothing else.</p>
+
+<p><strong>Bootstrap is the exception, and it is declared as one.</strong> It depends on
+nothing and nothing depends on it — that is what “as an exception” means here:
+cat-bootstrap is read when no harness is installed, so it cannot wait on the
+graph and the graph must not wait on it. Same shape as its exemption from the
+<code class="language-plaintext highlighter-rouge">visualiser</code> criterion in <code class="language-plaintext highlighter-rouge">check:subgraph-coverage</code>, and a <strong>second criterion
+rather than a hole</strong>: it owes its own <code class="language-plaintext highlighter-rouge">.json</code>/<code class="language-plaintext highlighter-rouge">.jsonld</code> instead (bean <code class="language-plaintext highlighter-rouge">hfkl</code>).</p>
+<h2 id="what-stage-3-writes-is-not-settled-and-is-not-guessed">
   
   
-    <a href="#translations-directory-rules" class="anchor-heading" aria-labelledby="translations-directory-rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> translations/ directory rules
+    <a href="#what-stage-3-writes-is-not-settled-and-is-not-guessed" class="anchor-heading" aria-labelledby="what-stage-3-writes-is-not-settled-and-is-not-guessed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What stage 3 writes is not settled, and is not guessed
   
   
 </h2>
     
 
-<p>The <code class="language-plaintext highlighter-rouge">translations/</code> directory contains <strong>only</strong> three file types:</p>
-
-<ol>
-  <li><code class="language-plaintext highlighter-rouge">.pot</code> — POT templates (extractable strings)</li>
-  <li><code class="language-plaintext highlighter-rouge">.po</code> — PO translated strings</li>
-  <li><code class="language-plaintext highlighter-rouge">.ts</code> — TranslationNode manifests (KG nodes)</li>
-</ol>
-
-<p><strong>Do not</strong> put <code class="language-plaintext highlighter-rouge">.md</code>, <code class="language-plaintext highlighter-rouge">.qa.json</code>, or <code class="language-plaintext highlighter-rouge">status.json</code> files in <code class="language-plaintext highlighter-rouge">translations/</code>.
-Rendered output lives in <code class="language-plaintext highlighter-rouge">docs/&lt;locale&gt;/</code>; QA and status are properties of
-the TranslationNode manifest.</p>
-<h2 id="who-smart-base-integration">
+<p>The owner named it <em>“cat-harness/state.jsonld or so (whatever matches the
+dyanmic state vsualizesrs)”</em> — an explicit uncertainty. <strong>The step’s position
+is fixed; its output filename is not.</strong> It is settled when the dynamic-state
+visualisers say what they read, and until then the step re-exports the graph
+the stage-2 renderers contributed to, which is the part of the description
+that was never in question. Do not mint a published artefact name to close a
+gap the author left open.</p>
+<h2 id="this-declares-the-order-docs-siteyml-still-publishes">
   
   
-    <a href="#who-smart-base-integration" class="anchor-heading" aria-labelledby="who-smart-base-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WHO smart-base integration
+    <a href="#this-declares-the-order-docs-siteyml-still-publishes" class="anchor-heading" aria-labelledby="this-declares-the-order-docs-siteyml-still-publishes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> This declares the order; <code class="language-plaintext highlighter-rouge">docs-site.yml</code> still publishes
   
   
 </h2>
     
 
-<p>The WHO <code class="language-plaintext highlighter-rouge">smart-base</code> repository defines the formal actor
-<code class="language-plaintext highlighter-rouge">SGAuthoring.Persona.Translator</code> with skill requirements
-<code class="language-plaintext highlighter-rouge">SGAuthoring.Skills.TranslateContent</code> and
-<code class="language-plaintext highlighter-rouge">SGAuthoring.Skills.ReviewTranslations</code>.</p>
-
-<p>Follow the principle in
-<a href="../authoring-who-smart-guidelines/smart-base-tools.md"><code class="language-plaintext highlighter-rouge">smart-base-tools.md</code></a>:
-<strong>load it; never vendor it.</strong> The translation subsystem is invoked from the
-smart-base checkout, not copied.</p>
-<h2 id="ig-publisher-i18n">
-  
-  
-    <a href="#ig-publisher-i18n" class="anchor-heading" aria-labelledby="ig-publisher-i18n"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> IG Publisher i18n
-  
-  
-</h2>
-    
-
-<p>For FHIR IG folios, the IG Publisher’s own i18n system is used in parallel:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">i18n-default-lang</code> in <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> — source language.</li>
-  <li><code class="language-plaintext highlighter-rouge">i18n-lang</code> — target languages.</li>
-  <li><code class="language-plaintext highlighter-rouge">translation-sources</code> — path to <code class="language-plaintext highlighter-rouge">input/translations/{lang}/</code> containing
-per-resource <code class="language-plaintext highlighter-rouge">.po</code> files.</li>
-  <li>Run with <code class="language-plaintext highlighter-rouge">-generation-off -validation-off</code> flags for fast translation-only
-builds.</li>
-</ul>
-
-<p>The prose translation pipeline (this skill) and the FHIR resource translation
-pipeline (IG Publisher) are complementary and independent.</p>
-<h2 id="do-not">
-  
-  
-    <a href="#do-not" class="anchor-heading" aria-labelledby="do-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not
-  
-  
-</h2>
-    
-
-<ul>
-  <li><strong>Do not manually add badge includes.</strong> <code class="language-plaintext highlighter-rouge">docs-ui.js</code> renders them
-automatically from front matter. The include it replaced is <strong>deleted, not
-deprecated</strong> — an include that still exists is one somebody adds back.</li>
-  <li><strong>Do not publish a semantic-QA number a script cannot establish.</strong> A
-back-translation from this repo’s own PO map, or from a word-substitution
-table, scores the table rather than the translation — and a string with no
-back-translation at all scores 0 and reads as drift. If no independent
-back-translator has run, the criterion has no verdict, and saying so is the
-honest output.</li>
-  <li><strong>Do not infer a locale from a directory name.</strong> <code class="language-plaintext highlighter-rouge">docs/fr/index.md</code> is
-French because it says <code class="language-plaintext highlighter-rouge">lang: fr</code>. A subtag match is wrong in both
-directions and neither failure announces itself — see
-<a href="#the-navbar-filters-by-locale">The navbar filters by locale</a>.</li>
-  <li><strong>Do not add a graph kind for translated content.</strong> It is the same kind of
-thing as the page it translates, differing by a field the file declares.
-Translatability is a property of a FORMAT within a content type —
-<code class="language-plaintext highlighter-rouge">schemas/translation-tools.ts</code> and <code class="language-plaintext highlighter-rouge">isTranslatable</code> — not of a directory.</li>
-  <li><strong>Do not leave a translated page in the static nav.</strong> <code class="language-plaintext highlighter-rouge">nav_exclude: true</code> is
-what keeps it out, and no amount of client-side work substitutes for it: the
-nav is built once, for every reader, before anybody has chosen a locale.</li>
-  <li><strong>Do not put non-PO files in translations/.</strong> Only <code class="language-plaintext highlighter-rouge">.pot</code>, <code class="language-plaintext highlighter-rouge">.po</code>, and <code class="language-plaintext highlighter-rouge">.ts</code>
-manifests belong there. Rendered <code class="language-plaintext highlighter-rouge">.md</code> goes in <code class="language-plaintext highlighter-rouge">docs/&lt;locale&gt;/</code>.</li>
-  <li><strong>Do not vendor smart-base translation scripts.</strong> Load from checkout.</li>
-  <li><strong>Do not translate math, labels, or code.</strong> Exclude in extraction.</li>
-  <li><strong>Do not auto-sign-off.</strong> Official status requires a human.</li>
-  <li><strong>Do not treat staleness as “wrong”.</strong> A stale translation is still useful;
-it just needs re-review.</li>
-  <li><strong>Do not conflate FHIR resource translation with prose translation.</strong> They
-are different pipelines with different tooling.</li>
-  <li><strong>Do not auto-remove staging previews.</strong> Require <code class="language-plaintext highlighter-rouge">staging:cleanup</code> label.</li>
-</ul>
-<h2 id="content-type-specific-translation-tools">
-  
-  
-    <a href="#content-type-specific-translation-tools" class="anchor-heading" aria-labelledby="content-type-specific-translation-tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content-type-specific translation tools
-  
-  
-</h2>
-    
-
-<p>Each content type declares what formats it can translate and what scripts
-handle each format. See <code class="language-plaintext highlighter-rouge">schemas/translation-tools.ts</code> for the full
-registry.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Content type</th>
-      <th>Formats</th>
-      <th>RTL</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>document</strong></td>
-      <td>Markdown</td>
-      <td>✅</td>
-    </tr>
-    <tr>
-      <td><strong>paper</strong></td>
-      <td>Markdown + LaTeX</td>
-      <td>—</td>
-    </tr>
-    <tr>
-      <td><strong>dak</strong> (WHO L2)</td>
-      <td>Markdown + PlantUML + SVG + ArchiMate + Excel + BPMN</td>
-      <td>✅</td>
-    </tr>
-    <tr>
-      <td><strong>ig</strong> (WHO L3)</td>
-      <td>Markdown + FSH + FHIR JSON</td>
-      <td>✅</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>The generic pipeline (<code class="language-plaintext highlighter-rouge">pot-extract.ts</code>, <code class="language-plaintext highlighter-rouge">po-inject.ts</code>) handles Markdown.
-Adapter-specific tools extend it with format-specific extractors. The
-Python originals from smart-base live in <code class="language-plaintext highlighter-rouge">scripts/translation/</code> and are
-referenced in the registry.</p>
-<h3 id="rtl-support">
-  
-  
-    <a href="#rtl-support" class="anchor-heading" aria-labelledby="rtl-support"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RTL support
-  
-  
-</h3>
-    
-
-<p>Arabic (and Hebrew, Farsi, Urdu) pages are detected at load time by
-<code class="language-plaintext highlighter-rouge">docs-ui.js</code> and get <code class="language-plaintext highlighter-rouge">dir="rtl"</code> on <code class="language-plaintext highlighter-rouge">&lt;html&gt;</code>. The CSS in <code class="language-plaintext highlighter-rouge">docs-ui.css</code>
-provides smooth 0.4s transitions for sidebar and content layout:</p>
-
-<ul>
-  <li>Sidebar slides to the right side</li>
-  <li>Content flows RTL</li>
-  <li>Mermaid diagrams and badges stay LTR</li>
-  <li>BPMN diagrams need re-rendering with translated labels</li>
-</ul>
-<h3 id="staging-review">
-  
-  
-    <a href="#staging-review" class="anchor-heading" aria-labelledby="staging-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Staging review
-  
-  
-</h3>
-    
-
-<p>When presenting translated content for review, use the <code class="language-plaintext highlighter-rouge">staging-review</code>
-skill to provide before/after URL comparison tables. See
-<code class="language-plaintext highlighter-rouge">schemas/staging.ts</code> for the <code class="language-plaintext highlighter-rouge">StagingComparison</code> schema.</p>
+<p><code class="language-plaintext highlighter-rouge">render-pipeline.ts</code> is not a second CI workflow. It holds the order and the
+policy in one readable, testable place and gives CI one thing to call. <strong>A
+pipeline order that exists only as the sequence of steps in a YAML file is an
+order nobody can test</strong> — bean <code class="language-plaintext highlighter-rouge">xom7</code> is what a workflow’s behaviour costs when
+the repository holds no statement of it.</p>
 
           
 

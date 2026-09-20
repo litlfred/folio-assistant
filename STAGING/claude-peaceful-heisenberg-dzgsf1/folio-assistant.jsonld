@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T21:40:38.869Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0b0d37b52b5c0ea2489ba2e2079172ea8124e182",
-  "sourceCommitSha": "0b0d37b52b5c0ea2489ba2e2079172ea8124e182",
-  "sourceCommitAt": "2026-09-20T21:38:55Z",
+  "generatedAt": "2026-09-20T21:46:39.338Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3a35c46ad6df95156ea1cf96fe996bd791f7f1a9",
+  "sourceCommitSha": "3a35c46ad6df95156ea1cf96fe996bd791f7f1a9",
+  "sourceCommitAt": "2026-09-20T21:44:52Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 216,
+    "Skill": 217,
     "Actor": 27,
     "Capability": 28,
     "Role": 124,
@@ -275,7 +275,7 @@
     "Process": 54,
     "SequenceFlow": 697,
     "ProcessNode": 662,
-    "Tool": 67,
+    "Tool": 68,
     "Schema": 79,
     "GraphKind": 22,
     "Directory": 32,
@@ -1110,7 +1110,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/readme-sections.md",
-      "instructionLines": 98,
+      "instructionLines": 163,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1752,7 +1752,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 671,
+      "instructionLines": 730,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2144,6 +2144,22 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-overlay-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/render-order",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "render-order",
+      "title": "Render order — flattening a dependency hierarchy, and the two stages",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/render-order.md",
+      "instructionLines": 116,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-order"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/translation-manager",
@@ -2558,7 +2574,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/agent-memory.md",
-      "instructionLines": 125,
+      "instructionLines": 166,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5312,6 +5328,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/render-logging",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/render-order",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/role-model",
@@ -30102,6 +30119,52 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/readme-audit"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#tool/render-order",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "render-order",
+      "title": "The render pipeline, in dependency order",
+      "description": "Flatten the repository's renders into the order their `needs` imply, and optionally run them. Two stages: the current declared state as json/jsonld and the README derived from it are FATAL; the dynamic renderers (viewers, visualisers, doc pages, diagrams) skip and log; the dynamic-state export closes it. A cycle or a missing dependency yields NO order rather than a partial one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run render",
+        "mcp": {
+          "tool": "render_order"
+        },
+        "inProcess": {
+          "module": "src/tools/render-order.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dry_run",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/tool-types.schema.json#/$defs/Flag",
+            "description": "Print the flattened order and each step's failure policy without running anything.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/tool-types.schema.json#/$defs/Markdown",
+            "description": "Per step: ran, failed, skipped, or PENDING — declared with no implementation yet, which is never rendered as a pass."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/render-order"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#tool/readme-sync",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "readme-sync",
@@ -33235,8 +33298,8 @@
       "name": "agent-instructions",
       "path": "AGENTS.md",
       "assetRole": "agent-instructions",
-      "title": "AGENTS.md — folio-assistant",
-      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
+      "title": "AGENTS.md — cat-harness",
+      "description": "The cold-start file for an agent working IN this layer, and it is THIS LAYER'S own as of 2026-09-20 (issue #592). It was declared `scope: \"repository\"`, so it resolved to the repository root's AGENTS.md — one file answering both \"what binds everywhere\" and \"what binds in the harness layer\", which is the conflation `readmeFinding` calls MAJOR for a non-root instance and could not report, because the asset DID resolve. It resolved to the wrong file's job. No `source`: this file is authored here. The root's carries the cat-bootstrap provenance, because the root's is the file cat-bootstrap copies at initialisation.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/agent-instructions"
     },
     {
@@ -33245,8 +33308,8 @@
       "name": "instance-readme",
       "path": "README.md",
       "assetRole": "instance-readme",
-      "title": "folio-assistant",
-      "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link.",
+      "title": "cat-harness",
+      "description": "What this LAYER is, for a reader — as distinct from what the repository is, which is the root's README. Split from it on 2026-09-20 (issue #592); before that this instance had no README of its own and claimed the repository's. It does not list this instance's directories: `harness.json` is that list, and a second copy in prose is free to disagree with it the day a directory moves.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/instance-readme"
     },
     {
@@ -33263,8 +33326,8 @@
   ],
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "66873ef46b0a8879081198317ebab0f31a8ed513",
+    "sha": "42253ea7824a24a5aabda74a1fbc3fa92d98033f",
     "pr": "619/merge",
-    "run": "35539357302"
+    "run": "35539636949"
   }
 }
