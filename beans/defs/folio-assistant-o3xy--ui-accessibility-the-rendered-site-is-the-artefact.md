@@ -3,8 +3,10 @@
 title: 'UI & ACCESSIBILITY: the rendered site is the artefact a reader judges'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:44Z
-updated_at: 2026-09-19T11:43:44Z
+updated_at: 2026-09-20T18:48:38Z
+parent: folio-assistant-p5wm
 ---
 
 The rendered site is what a reader actually judges, and several of these are

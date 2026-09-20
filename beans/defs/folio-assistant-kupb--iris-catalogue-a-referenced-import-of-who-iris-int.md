@@ -5,7 +5,8 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-20T08:01:14Z
-updated_at: 2026-09-20T08:01:14Z
+updated_at: 2026-09-20T18:48:38Z
+parent: folio-assistant-yg29
 ---
 
 Owner ask, 2026-09-20, three messages in one session.

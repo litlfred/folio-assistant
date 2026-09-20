@@ -3,8 +3,10 @@
 title: 'HARNESS AS INTERFACE: a harness instance''s default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system'
 status: todo
 type: epic
+priority: normal
 created_at: 2026-09-20T13:47:14Z
-updated_at: 2026-09-20T13:47:14Z
+updated_at: 2026-09-20T18:48:38Z
+parent: folio-assistant-p5wm
 ---
 
 
