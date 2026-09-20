@@ -86,9 +86,21 @@ contract has to be something it can **read**, not something it must call.
 
 ## Why this is in bootstrap at all
 
-`bootstrap/` is meant to be as small as it can be, and every other optional
-thing has been kept out of it — logging among them. This one is not optional:
-an agent that cannot determine which harness and which repositories are
-involved cannot take the first step of `initialize-harness`, and no amount of
-reading will supply it. The exception is the point rather than a lapse from
-it.
+`bootstrap/` is meant to be as small as it can be, so anything in it has to
+earn its place against that.
+
+The owner's rule for the neighbouring case is worth stating exactly, because
+half of it decides nothing and the whole of it decides everything:
+
+> logging is optional, **unless indicated on tasks**.
+
+`log-message` is in `bootstrap/` for precisely that reason — the tasks in
+`initialize-harness` indicate it, and drawing the call is how a task says so.
+"Optional" is a property of the blanket feature, not of a step whose
+instructions require it.
+
+`discussion` earns its place on a different footing, and a narrower one: an
+agent that cannot determine which harness and which repositories are involved
+cannot take the first step of `initialize-harness` at all, and no amount of
+reading will supply it. Not indicated by a task — presupposed by every one of
+them.
