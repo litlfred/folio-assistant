@@ -50,9 +50,9 @@
 import { z } from "zod";
 
 import {
-  ContentDirectorySchema,
+  GraphNodeDirectorySchema,
   defaultGraphKinds,
-  type ContentDirectory,
+  type GraphNodeDirectory,
   type GraphKindRegistry,
 } from "./cat-harness";
 
@@ -66,8 +66,8 @@ import {
 export const TODO_NODE_KINDS = ["todo-items", "todo-feedback"] as const;
 export type TodoNodeKind = (typeof TODO_NODE_KINDS)[number];
 
-export const TodoGraphNodeSchema = ContentDirectorySchema;
-export type TodoGraphNode = ContentDirectory;
+export const TodoGraphNodeSchema = GraphNodeDirectorySchema;
+export type TodoGraphNode = GraphNodeDirectory;
 
 export const TodoGraphSchema = z.object({
   /** Display name — whose todos these are. */

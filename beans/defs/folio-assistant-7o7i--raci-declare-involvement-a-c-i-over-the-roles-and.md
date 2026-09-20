@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7o7i
 title: 'RACI: declare involvement (A, C, I) over the roles and activities that already exist'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T10:46:33Z
-updated_at: 2026-09-20T12:52:06Z
+updated_at: 2026-09-20T13:18:15Z
 parent: folio-assistant-ahvw
 ---
 

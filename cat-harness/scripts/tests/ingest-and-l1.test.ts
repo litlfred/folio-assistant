@@ -309,7 +309,7 @@ describe("L1 completeness", () => {
       join(root, "harness.json"),
       JSON.stringify({
         name: "t",
-        directories: [{ id: "library", path: "library/", graphs: ["library"] }],
+        directories: [{ id: "library", path: "library/", dependents: "reproduce", graphs: ["library"] }],
       }),
     );
     expect(checkAll(root)).toEqual([]);

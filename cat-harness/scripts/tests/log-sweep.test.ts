@@ -27,7 +27,7 @@ function instance(): string {
     JSON.stringify({
       name: "t",
       stub: "t",
-      directories: [{ id: "fsh-guts", path: "fsh-guts/", description: "trashcan", graphs: ["fsh-guts"] }],
+      directories: [{ id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", description: "trashcan", graphs: ["fsh-guts"] }],
     }),
   );
   return root;

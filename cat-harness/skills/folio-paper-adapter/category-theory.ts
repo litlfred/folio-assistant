@@ -6,7 +6,6 @@ export const categoryTheory: SkillDefinition = {
   description:
     "Diagram chasing, natural transformations, monoidal category reasoning, " +
     "and Mathlib CategoryTheory conventions.",
-  roles: ["collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "lean-toolchain", degradation: "fallback" },
   ],

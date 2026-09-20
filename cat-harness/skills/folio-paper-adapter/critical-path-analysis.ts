@@ -6,7 +6,6 @@ export const criticalPathAnalysis: SkillDefinition = {
   description:
     "Dependency DAG tracing, assumption audits, upstream/downstream impact analysis, " +
     "and statement/proof context separation.",
-  roles: ["collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

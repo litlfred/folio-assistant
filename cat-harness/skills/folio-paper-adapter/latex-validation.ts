@@ -6,7 +6,6 @@ export const latexValidation: SkillDefinition = {
   description:
     "LaTeX syntax checking, equation balance verification, and " +
     "unified-latex AST parsing.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

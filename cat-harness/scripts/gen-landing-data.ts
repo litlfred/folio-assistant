@@ -35,16 +35,31 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { instanceRootFor, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import { instanceRootFor, readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.js";
+import { detectRepoUrl } from "../src/core/git-refs.js";
 // `folio` is registered by CORE on import, and this instance declares a folio
 // graph; without it `readDeclaration` throws on a valid declaration.
 import "../schemas/folio-graph-kind.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { themeById } from "../schemas/themes.js";
 import { readLandingStickies } from "./ensure-landing-sticky.js";
-import { isExternalLink } from "../schemas/landing-sticky.js";
+import { isExternalLink, sourceLinks } from "../schemas/landing-sticky.js";
 
 const ROOT = instanceRootFor(import.meta.dir);
+
+/** The forge this checkout points at, or `undefined` when it has none. */
+const REPO_URL = detectRepoUrl(repoRootFor(ROOT));
+
+/**
+ * The branch the source links point at.
+ *
+ * `main` rather than the checked-out branch: this data file is generated into
+ * a PUBLISHED site, and a link to a feature branch dies when that branch does.
+ * A staging preview linking to `main` is right for the same reason — the thing
+ * a reader wants to edit is what is live, not what produced this preview.
+ */
+const SOURCE_BRANCH = "main";
+
 const OUT = join(ROOT, siteDirFor(ROOT), "_data/stickies.json");
 const check = process.argv.includes("--check");
 const decl = readDeclaration(ROOT);
@@ -211,6 +226,11 @@ const stickies = readLandingStickies(ROOT).map((st) => {
     // whatever is behind, and a sticky whose theme did not load still wants a
     // readable ground. Degrade toward legible.
     scrim: theme?.backdrop?.scrim ?? null,
+    // Absent when there is no github.com `origin`, which is what makes the
+    // control absent rather than dead. Spread so the key does not appear at
+    // all rather than appearing as `null` — a consumer testing truthiness and
+    // one testing presence should agree.
+    ...(sourceLinks(REPO_URL, st.declaredIn, SOURCE_BRANCH) ?? {}),
   };
 });
 
