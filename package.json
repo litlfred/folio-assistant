@@ -1,14 +1,15 @@
 {
-  "name": "@anthropic-ai/folio-assistant",
+  "_name_comment": "THE NAME THE RELEASE ALREADY PUBLISHES UNDER. This said `@anthropic-ai/folio-assistant` until 2026-09-20 while `release-folio-assistant.yml` carried `sed -i 's/@anthropic-ai/@litlfred/' package.json` immediately before `npm publish`, alongside an `.npmrc` writing `@litlfred:registry=...`. So the published identity was `@litlfred/folio-assistant` and the DECLARED one was not — two answers to one question, with the declaration losing at build time. Bean `frq2`. The sed is gone: an identity is declared, never patched on the way out.",
+  "name": "@litlfred/folio-assistant",
   "version": "0.1.0",
   "private": false,
   "type": "module",
   "description": "Content-agnostic assistant platform \u2014 MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
   "license": "Apache-2.0",
+  "_repository_comment": "`litlfred/folio-assistant`, not `litlfred/qou` with `directory: folio-assistant`. That was the pre-split layout, where this package was a subdirectory of the folio; it has been its own repository since, and the stale value pointed a consumer at a repo that does not contain it. Same class as every other defect in bean `frq2`: a literal that travelled at the split with its text unchanged.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/litlfred/qou.git",
-    "directory": "folio-assistant"
+    "url": "https://github.com/litlfred/folio-assistant.git"
   },
   "main": "cat-harness/src/index.ts",
   "exports": {

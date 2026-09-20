@@ -87,6 +87,21 @@ jobs:
           #
           # One command, errors visible, exit code honoured.
           bun pm pack
+          # RENAME to the asset name the release body advertises.
+          #
+          # `bun pm pack` names the file after the package: scope included, so
+          # `@litlfred/folio-assistant` packs as
+          # `litlfred-folio-assistant-<version>.tgz`. The release body has
+          # always told consumers to fetch `folio-assistant-<version>.tgz`,
+          # and the upload glob is `*.tgz` — so the asset went up under one
+          # name and the documented install URL asked for another. A 404, and
+          # the second way that URL was broken: #593 fixed it naming the wrong
+          # REPOSITORY, this fixes it naming the wrong FILE.
+          #
+          # Renaming rather than interpolating the scope into the body keeps
+          # the asset name a stable contract: it survives the package being
+          # renamed again, which is exactly what just happened.
+          mv *.tgz "folio-assistant-${{ steps.version.outputs.version }}.tgz"
           ls -la *.tgz
 
       - name: Create GitHub Release
@@ -129,7 +144,17 @@ jobs:
           cd $PKG_DIR
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
           echo "@litlfred:registry=https://npm.pkg.github.com/" >> .npmrc
-          # Update scope for GitHub Packages
-          sed -i 's/"@anthropic-ai\/folio-assistant"/"@litlfred\/folio-assistant"/' package.json
-          npm publish --registry=https://npm.pkg.github.com/ || echo "Publish to GPR skipped (may need scope setup)"
+          # NO `sed` on package.json. It rewrote the name from `@anthropic-ai`
+          # to `@litlfred` right here, which meant the PUBLISHED identity and
+          # the DECLARED one disagreed and the declaration lost at build time.
+          # `package.json` now declares `@litlfred/folio-assistant`, so there
+          # is one answer and nothing to patch. Bean `frq2`.
+          #
+          # `|| echo "...skipped"` removed too: it sat in front of
+          # `continue-on-error: true`, so a failed publish was swallowed twice
+          # and surfaced as a green step with a sentence in the log. The step
+          # stays OPTIONAL — `continue-on-error` keeps a GPR failure from
+          # failing the release — but it now reports as failed when it fails,
+          # which is the difference between optional and invisible.
+          npm publish --registry=https://npm.pkg.github.com/
         continue-on-error: true
