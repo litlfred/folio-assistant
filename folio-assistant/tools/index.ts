@@ -339,6 +339,65 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── The site's visual assets, which had no SKILL until 2026-09-20 ─────
+    //
+    // These two were blocked rather than missing. Both are committed, published,
+    // single-file artefacts — the exact shape `maintains` exists for — and
+    // neither could be declared, because `satisfies` requires a skill and no
+    // skill stated the capability. `kg-export` serializes the graph to JSON;
+    // `rendering-auditor` audits a content block's visual output; neither is
+    // "render the graph's asset nodes into the site's stylesheets".
+    //
+    // That is the THIRD mismatch in `covered-is-not-reachable`: a mechanism with
+    // no skill, invisible to `tools:coverage` by construction because it
+    // enumerates skills and asks which lack Tools. The skill was authored first,
+    // on the owner's decision (bean `yean`), and deliberately names no script —
+    // a skill written to give a command somewhere to point is a Tool with front
+    // matter that passes every check and teaches nothing.
+    //
+    // They are siblings rather than alternatives: one renders theme tokens and
+    // the other avatar glyphs, and a caller wanting either is not served by the
+    // other.
+    defineTool({
+      id: "themes-css",
+      title: "Theme stylesheet",
+      description:
+        "Render the declared theme nodes into the stylesheet the site serves. The nodes are the source: a colour has one home, and light and dark are two valuations of one token set rather than two hand-kept blocks.",
+      install: { none: true },
+      invoke: { shell: "bun run themes:css" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed copy and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "stylesheet", schema: t("RepoPath"), description: "The generated stylesheet. Build output that happens to be committed, so it is readable on the forge — never hand-edited." }],
+      },
+      satisfies: ["site-presentation-assets"],
+      maintains: [
+        { source: "schemas/themes.ts", artefact: "assets/css/themes.css", format: "css" },
+      ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "avatars-css",
+      title: "Avatar stylesheet",
+      description:
+        "Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves.",
+      install: { none: true },
+      invoke: { shell: "bun run avatars:css" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed copy and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "stylesheet", schema: t("RepoPath"), description: "The generated stylesheet. Never hand-edited." }],
+      },
+      satisfies: ["site-presentation-assets"],
+      maintains: [
+        { source: "schemas/avatars.ts", artefact: "assets/css/avatars.css", format: "css" },
+      ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     // ── The generated reference, which `docs-generation` did not reach ────
     //
     // `docs-generation` was already covered — by `readme-audit` and

@@ -5,7 +5,7 @@
     "id": "Process_CodeReview",
     "path": "skills/workflows/review-code.bpmn"
   },
-  "source_hash": "sha256:f228fefddaaac0a4fd5368b5363c54cb0b66376d0ab339cd2d66e1c8bb4392cf",
+  "source_hash": "sha256:f6799de7c9e6202652f71d4e12aecf26b5e0ef5f81b47f68f23d3fe3a28f2002",
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -37,6 +37,10 @@
         {
           "where": "Task_ReviewTool",
           "detail": "needs skill \"covered-is-not-reachable\", but its lane's role \"code-reviewer\" does not carry it."
+        },
+        {
+          "where": "Task_ReviewSchema",
+          "detail": "needs skill \"site-presentation-assets\", but its lane's role \"code-reviewer\" does not carry it."
         }
       ]
     },

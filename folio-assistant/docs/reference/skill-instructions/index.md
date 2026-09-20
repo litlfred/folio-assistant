@@ -133,6 +133,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
+| [Site presentation assets](site-presentation-assets.html) | `site-presentation-assets` | — | **A visual fact has one home, and it is a node in the knowledge graph.** A |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Capability: `review` · Package: `folio-core` |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
