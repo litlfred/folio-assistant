@@ -217,7 +217,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [What is this repository supposed to be?](determine-intent.html) | `determine-intent` | — | **The output of this skill is an instance reference** — `litlfred/f-a-sci`, |
+| [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Initiator.** You may narrow; only the Requestor may decide. |
 | [kg-navigation](kg-navigation.html) | `kg-navigation` | — | _also in Platform core (folio-core) (same page)_ |
 
 ## Agent skills

@@ -79,6 +79,14 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "bean-coordination", "todo-manager", "pending-show",
         "session-intent", "continual-progress", "idle-backlog",
       ],
+      alternativeTo: ["beans-manual"],
+      selection: {
+        when:
+          "The normal case, once `scripts/install-beans.sh` has run. It is the only arm that can answer what an item IS or what it waits on — the fallback gives titles and statuses and nothing else — so any work that involves choosing, claiming or reasoning about an item wants this one.",
+        limits:
+          "Absent on a fresh container until installed, and the install can fail. It is third-party, which is why `.beans.yml` is one of the two configuration paths `check:harness-dirs` cannot remove. When it is missing, `beans-manual` writes the same store in the same layout and this reads back everything it wrote.",
+        cost: "One install step per container, and it wants network to fetch. Nothing at runtime after that.",
+      },
       requires: { runtime: ["go"], network: true },
     }),
 
@@ -108,7 +116,93 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "bean-coordination", "todo-manager", "pending-show",
         "session-intent", "continual-progress", "idle-backlog",
       ],
+      alternativeTo: ["beans-cli"],
+      selection: {
+        when:
+          "When the CLI is not installed and cannot be — not a rare case: a fresh container has no `beans` on PATH. Equal standing, not a degraded mode. An agent that knows only the CLI reads the plan and touches nothing, which is exactly the 2026-09-18 session that completed two merged PRs' worth of durable work UNCLAIMED.",
+        limits:
+          "Titles and statuses only. It cannot say what an item is, what it depends on, or what it waits on — enough to CLAIM and to record, not enough to CHOOSE. Install `beans-cli` when the choice is the point.",
+        cost:
+          "None. The store is files in the repository, so this needs a filesystem and nothing else — which is also why it is the arm that survives an air-gapped or sovereign-compute instance.",
+      },
       requires: { network: false },
+    }),
+
+    // ── The ingest pair ────────────────────────────────────────────────
+    //
+    // Two Tools, one skill, deliberately. `library-ingestion` states the
+    // capability; these are the two mechanisms, and which one an agent can
+    // use is a fact about the MACHINE rather than about the document.
+    //
+    // The split is not stdlib-for-its-own-sake. It is where the dependency
+    // boundary actually falls: reading a zip's central directory, sniffing
+    // magic bytes and parsing an xlsx's XML are all in the Python standard
+    // library, while rendering a PDF's text layer is not and never will be.
+    // Measured 2026-09-19: reaching a working image extractor in a bare
+    // container took three installs (`pypdf`, then `cffi` — whose absence
+    // makes `cryptography` panic under pyo3 on IMPORT — then `Pillow`).
+    //
+    // Bean `68dt` asked whether to declare Python dependencies and install
+    // them in CI. This reframes it: the dependency posture becomes a property
+    // of a named Tool that an agent can read, instead of a repository-wide
+    // yes/no nobody can see from a skill.
+    defineTool({
+      id: "ingest-stdlib",
+      title: "Ingest, standard library only",
+      description:
+        "Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung.",
+      // Nothing to install: `zipfile`, `tarfile`, `csv`, `xml.etree` and
+      // `hashlib` ship with Python. Stated, so "needs nothing" is
+      // distinguishable from an unfinished record.
+      install: { none: true },
+      invoke: { shell: "bun run scripts/ingest-document.ts" },
+      requires: { runtime: ["python3"], network: false },
+      io: {
+        inputs: [
+          { name: "file", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The upload to ingest, under the declared `uploads` graph." },
+          { name: "outdir", schema: t("RepoPath"), required: false, arg: { flag: "--outdir" }, description: "Library root; defaults to the declared `library` graph." },
+          { name: "dryRun", schema: t("Flag"), required: false, arg: { flag: "--dry-run" }, description: "Report the chosen rung and stop." },
+        ],
+        outputs: [{ name: "slug", schema: t("Slug"), description: "The library entry written." }],
+      },
+      satisfies: ["library-ingestion"],
+      alternativeTo: ["ingest-extended"],
+      selection: {
+        when:
+          "Reach for this first, and in CI always. It is the only one of the pair that runs where nothing has been installed — which is every fresh container and every CI job here, since the workflow installs `ruff` and nothing else. It covers archives, CSV and spreadsheets, technical metadata, and the sniff that decides which rung a file takes, including the OOXML/ODF container check that stops a workbook being listed as a bag of XML parts.",
+        limits:
+          "It cannot read a PDF. Text layer, embedded outline, page rendering, OCR and image extraction all need a backend it deliberately does not have, so a PDF routes to `undetermined` and is REFUSED rather than half-ingested. `ingest-extended` is the sibling that does those.",
+        cost:
+          "None beyond `python3` itself. No wheels, no C toolchain, no network, nothing to keep current, and no CI minutes spent installing.",
+      },
+    }),
+
+    defineTool({
+      id: "ingest-extended",
+      title: "Ingest, with PDF and image extensions",
+      description:
+        "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
+      install: { cli: "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils" },
+      invoke: { shell: "bun run scripts/ingest-document.ts" },
+      requires: { runtime: ["python3", "pymupdf", "tesseract"], network: false },
+      io: {
+        inputs: [
+          { name: "file", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The PDF to ingest, under the declared `uploads` graph." },
+          { name: "outdir", schema: t("RepoPath"), required: false, arg: { flag: "--outdir" } },
+          { name: "dryRun", schema: t("Flag"), required: false, arg: { flag: "--dry-run" } },
+        ],
+        outputs: [{ name: "slug", schema: t("Slug"), description: "The library entry written." }],
+      },
+      satisfies: ["library-ingestion"],
+      alternativeTo: ["ingest-stdlib"],
+      selection: {
+        when:
+          "Reach for this when the upload is a PDF and you need its CONTENT — an outline-bearing document read at chapter granularity, a text-layer document read at page granularity, or a scan that must be OCR'd first. Confirm the backend is present before relying on it: `bun run src/index.ts --check-deps`, or simply run the pair's entry point, which reports `no PDF backend` rather than guessing.",
+        limits:
+          "It adds nothing for archives, spreadsheets or metadata — `ingest-stdlib` already does those, and does them where this cannot run. It is also NOT available in CI here, so anything gated on it is a path CI cannot test, which is the `5rfy` defect (a gate that never fires).",
+        cost:
+          "Three installs and a system package, and they are not independent: `pypdf` image extraction needs `Pillow`, and `cryptography` panics under pyo3 on import when `cffi` is missing. Measured 2026-09-19 in this container. Add CI minutes on every run if it is ever installed there, and a toolchain to keep current.",
+      },
     }),
 
     defineTool({

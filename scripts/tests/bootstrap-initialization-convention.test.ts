@@ -79,11 +79,13 @@ describe("the README tells an agent the same path the code computes", () => {
     expect(fenced).toContain(`<name>/docs/${BOOTSTRAP_INIT_DOC}`);
   });
 
-  test("so does the skill that produces the reference", () => {
-    const skill = readFileSync(
-      join(ROOT, "bootstrap", "skills", "determine-intent.md"),
-      "utf-8",
-    );
-    expect(skill).toContain(`/docs/${BOOTSTRAP_INIT_DOC}`);
+  test("the convention is stated in ONE place, not echoed into the skill", () => {
+    // `confirm-harness.md` deliberately does NOT repeat the path. It used to,
+    // and this test asserted it did — two copies of a convention are two
+    // things to keep in step, and the README is where an Initiator is sent.
+    // What the skill owns is the CONTRACT (at most one harness); what the
+    // README owns is WHERE that harness keeps its instructions.
+    const skill = readFileSync(join(ROOT, "bootstrap", "skills", "confirm-harness.md"), "utf-8");
+    expect(skill).not.toContain(BOOTSTRAP_INIT_DOC);
   });
 });
