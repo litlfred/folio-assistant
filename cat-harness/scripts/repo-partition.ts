@@ -781,6 +781,12 @@ const RULES: Rule[] = [
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/narratives.ts",              // the narrative review queue
+      // Same test, same answer: it reads `library/<bib-slug>/images.json`,
+      // which is a folio's own material, and imports `schemas/attribution.ts`
+      // and `schemas/document-image.ts` — the latter reaching `narrative.ts`
+      // in turn. Every one of those is core, so classifying it harness would
+      // buy three wrong-direction edges for the tidiness of one list.
+      "scripts/apply-image-verdicts.ts",    // agent verdicts → images.json
     ],
   },
 ];

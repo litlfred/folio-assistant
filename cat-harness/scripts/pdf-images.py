@@ -126,6 +126,10 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                 "file": rel,
                 "role": role_for(coverage, len(placed)),
                 "basis": {
+                    # Geometry, explicitly. A role assigned by LOOKING carries
+                    # `method: "inspection"` and names who looked -- see
+                    # schemas/document-image.ts. This script never looks.
+                    "method": "geometry",
                     "coverage": round(coverage, 6),
                     "imagesOnPage": len(placed),
                     "page": index + 1,
