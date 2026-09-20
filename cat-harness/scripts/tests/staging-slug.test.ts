@@ -144,10 +144,17 @@ describe("GUARD 3 — the workflow checks the VALUE, in every job that builds a 
     //
     // The exactness was there to catch a guard being REMOVED. A job-shaped
     // assertion still catches that, and additionally lets a job carry the
-    // guard more than once — which is the safe direction, and the direction
-    // the file is moving in: a second, differently spelled guard inside the
-    // deploy step re-checks the slug BY VALUE after it crosses a job boundary
-    // as an output. A count would have read that hardening as a defect.
+    // guard more than once — which the file now does. PR #563 added a SECOND
+    // guard inside `stage`'s deploy step, re-checking the slug by value after
+    // it crosses a job boundary as an output, immediately before the line
+    // that deletes a directory.
+    //
+    // The count survived that only because the two are spelled differently
+    // (`$STAGING_SLUG` and `""|.|..|*/*` against `$SLUG` and `""|.|..`), so
+    // the regex misses the new one. That is luck, not coverage: normalising
+    // the two spellings — an ordinary tidy-up — would take the count to four
+    // and fail a test that is measuring nothing wrong. A guard added is not a
+    // defect.
     const jobs = (
       Bun.YAML.parse(yml) as { jobs?: Record<string, { steps?: { run?: string }[] }> }
     ).jobs ?? {};
