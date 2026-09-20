@@ -443,8 +443,12 @@ jobs:
           bun run check:l1-complete -- --check
           bun run check:declared-paths
           bun run check:fallback-roles
+          bun run check:kind-validators
           bun run check:actor-reach
           bun run check:harness-dirs
+          # Every instance renders its OWN graph, and an unreadable one is
+          # `undetermined` rather than a pass (bean `z4mq` item 3).
+          bun run check:instance-render
           bun run harness:dirs:check
           bun run check:schema-nodes
           bun run check:xml-comments
