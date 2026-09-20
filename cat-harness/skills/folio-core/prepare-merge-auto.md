@@ -1,9 +1,6 @@
 ---
 name: prepare-merge-auto
 description: Full autonomous prepare-merge → resolve → merge pipeline. Coordinates with sibling PRs, resolves review comments, asks structured questions only when blocked, then merges.
-roles:
-  - collaborator
-  - owner
 ---
 
 # /prepare-merge-auto — Autonomous merge pipeline

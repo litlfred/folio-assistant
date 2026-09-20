@@ -1,6 +1,5 @@
 ---
 name: bean-coordination
-roles: [reader, collaborator, owner]
 description: >
   Pointer to the bean-based session work-plan system (the `beans` CLI
   flat-file issue tracker, data under `beans/`). Operational usage lives in

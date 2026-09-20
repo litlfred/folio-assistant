@@ -1,10 +1,11 @@
 ---
 # folio-assistant-qif9
 title: 'SKILL FRONT MATTER: `roles:` carries two vocabularies and nothing validates either'
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-19T19:15:37Z
-updated_at: 2026-09-19T19:15:37Z
+updated_at: 2026-09-20T09:16:26Z
 parent: folio-assistant-zzmr
 ---
 
@@ -167,3 +168,111 @@ binding on its authority.**
 
 This bean stays OPEN. Documenting is not fixing; 306 annotations still
 resolve to nothing, and `y1w9` is still blocked.
+
+---
+
+## RESOLVED 2026-09-20 — excised, after rescue, with one exemption the tests found
+
+Owner: *"three zero-reader fields — cleanup/excise"*, *"qif9 ok"*, and the
+standing *"retire → put in fsh-guts w/ as much metadata as known, do some git
+commit archaeology"*.
+
+### What was done
+
+| step | result |
+|---|---|
+| rescue | `fsh-guts/retired/skill-roles-front-matter.md` — per-file inventory of all 114 files, census, archaeology, the two open questions |
+| excise | `roles:` removed from **114** skill `.md`, **288** annotations |
+| KEPT | the **26** `folio-memory/v1` entries — different graph kind, real reader |
+| ratchet | `bun run check:retired-front-matter`, gate #44, 12 tests |
+| repoint | `src/impact/stakeholder-map.ts` now derives roles from LANES |
+| correct | `skills/folio-core/role-model.md` §"is GONE — do not bring it back" |
+
+### The archaeology (the clone was shallow; `git fetch --unshallow` first)
+
+Migrated from `qou` at `2734a70f`, 2026-06-15, in six files. The contract was
+explicit — `/** Actor IDs (roles) that may invoke this skill. */`, drawn as
+`roles──▶ ActorDefinition.id`. So it was an **access** declaration, which is
+why the vocabulary reads like forge permission tiers.
+
+**It never resolved, from the first commit.** `reader.json`,
+`collaborator.json` and `owner.json` have **0** adding commits each, across
+the entire history. The swimlane `Role` came later and took the word, which is
+how the second vocabulary got in.
+
+Growth was copy-paste, never a decision: 6 → 69 (2026-06-29) → 83 → 93 → 140.
+
+### Two readers the first probe missed, both caught by the corpus's own tests
+
+The bean's earlier measurement — *"the field is INERT"* — was **wrong twice**,
+and the way it was wrong is the reusable part.
+
+1. **`src/impact/stakeholder-map.ts`** read it through a local `rolesOf()` and
+   printed it as *"Roles reached"*. Missed because the probe was against the
+   **exported graph**, and this consumer reads the front matter directly.
+   Worse than the corpus: `rolesOf` matched only the inline `[a, b]` form, so
+   the 28 block-list files read as declaring nothing.
+2. **`folio-memory/v1` entries.** `memoryForRoles` filters on `tags.roles`.
+   Missed because `MemoryNodeSchema` does not declare `roles` at the top
+   level, so the schema probe came back clean. Found when
+   `agent-memory.test.ts` failed after the first pass excised all 140: every
+   entry untagged means every lane sees everything, and the axis stopped
+   discriminating.
+
+**The lesson: sharing a key name across graph kinds is not sharing a field**,
+and "nothing reads this" has to be measured per kind, by more than one probe.
+The check's exemption is therefore keyed on `$schema`, never on directory.
+
+### The numbers, corrected
+
+Over the 114 skill files: **288 annotations, 260 — 90 % — resolving against
+nothing** (`collaborator` 104, `owner` 99, `reader` 56, `auditor` 1). The
+earlier "325 / 80 %" figure counted the 26 memory entries, which were never
+this field.
+
+### What the repoint bought
+
+`Roles reached:` now prints `authoring-agent, build-pipeline, work-plan` —
+every value resolving in `roles.json` — instead of `collaborator, owner`
+alongside real roles with nothing telling them apart. A lane binding no
+declared role is now reported as *"unknown impact rather than absent
+impact"*; it previously contributed nothing and read as nobody affected.
+**One real unbound lane surfaced immediately** (`Authoring agent` in
+`code-change-review.bpmn`).
+
+### One blind spot found while building the ratchet
+
+`sweepRoots` went blind **twice**, and the same test caught both.
+
+1. It used `skillMdDirs`, which enumerates skill **packages** — and
+   `skills/memory/` is not one, nor is the repo-root `.claude/skills/`. 535
+   files swept, and the one directory the exemption exists for never opened.
+2. Rewritten to name `beans` and `fsh-guts` explicitly, it then missed
+   `memory` when `07xs` moved it to the repository root as its own declared
+   graph, hours later, on main.
+
+Naming graph kinds is the same hand-kept copy one level up. It now sweeps
+**every directory the declaration names**, honouring `scope`, read RAW
+rather than through `readDeclaration` — that loader throws on a graph kind
+no registry has seen, and a check that goes silent because an unrelated kind
+is unregistered is worse than one that fails. **1027** files. The test turns
+the exemption off and asserts the suppressed set is non-empty and is
+**entirely** memory entries; it is what caught both blindings.
+
+### Done when
+
+- [x] every value in a skill's `roles:` resolves against a declared
+      vocabulary — vacuously, the field is gone; the one consumer that
+      reported roles now resolves every value it prints
+- [x] a check enforces it, and fails on a value that resolves to nothing
+- [ ] `y1w9`'s triage re-run — **still open**, and now unblocked differently
+      than expected: the evidence is not the skills' own declarations (there
+      are none) but the **lane→skill** bindings the BPMN corpus already
+      carries, which `stakeholder-map` now resolves. Carried to `y1w9`.
+
+### Not decided, deliberately
+
+What `reader`/`collaborator`/`owner` MEAN. If they are forge permission tiers
+that is a deployment fact belonging to the topology axes (#363), not a skill
+fact. Either way the field gets declared before it is written — the step the
+original skipped.

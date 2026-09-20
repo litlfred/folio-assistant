@@ -12,12 +12,38 @@
  *
  * What does exist, and what this reads instead:
  *
- *   1. SKILLS declare `roles:` in their front matter — reader, collaborator,
- *      owner, auditor. A change to a skill affects whoever holds its roles.
- *   2. BPMN LANES name the actor accountable for each activity, and an
+ *   1. BPMN LANES name the actor accountable for each activity, and an
  *      activity names the skill that implements it (`<folio:skill ref>`). So
  *      a changed skill reaches a set of lanes across the process corpus —
  *      "editors and authoring agents", "publication manager", "clinical SMEs".
+ *   2. Each reached lane RESOLVES to a declared role, through
+ *      `roleForLane` against `skills/roles/roles.json` — the lane's own
+ *      `<folio:role ref>` where it has one, the lane-name table otherwise.
+ *
+ * ## The source this used to read, and why it went
+ *
+ * It read `roles:` from each skill's own front matter — *"reader,
+ * collaborator, owner, auditor"*. That field was **removed on 2026-09-20**
+ * (bean `folio-assistant-qif9`): across 114 skill files it carried 288
+ * annotations of which **260 — 90 % — resolved against no declared
+ * vocabulary**, and `reader`/`collaborator`/`owner` had never existed as
+ * actors in any commit. So "Roles reached: collaborator, owner" was not a
+ * thin answer, it was a confident wrong one — and the report gave no way to
+ * tell it from a real role, since the two vocabularies shared the field.
+ *
+ * The identically-named key in a `folio-memory/v1` entry is a DIFFERENT
+ * field with a real reader (`memoryForRoles`) and was kept. This module
+ * never read those files, so nothing here turns on it — it is noted because
+ * "`roles:` was removed" is the kind of sentence a later reader acts on.
+ *
+ * The local reader was worse than the corpus. `rolesOf` matched only the
+ * inline `roles: [a, b]` form, so the 28 files using a block list were read
+ * as declaring nothing at all.
+ *
+ * Lanes were always the better source and were already being computed here.
+ * They resolve, they are what the role model actually defines, and a lane
+ * that does not resolve is now REPORTED rather than passed through as if it
+ * were a role.
  *
  * ON DELIBERATELY NOT GUESSING PEOPLE. `crdm-requirements.bpmn` documents its
  * own stakeholder step as "The agent asks the BA who is affected by this
@@ -27,12 +53,13 @@
  * humans as "the stakeholders". The named-people half stays the BA's answer;
  * this exists so the BA is asked a sharper question than "who cares?".
  */
-import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { isSkillMd, skillMdDirs, workflowFiles } from "../../scripts/known-skills.js";
+import { existsSync, readdirSync } from "node:fs";
+import { isSkillMd, kgRoots, skillMdDirs, workflowFiles } from "../../scripts/known-skills.js";
 import { join, relative } from "node:path";
 import { loadProcessModel, isActivity } from "../workflow/process-model.js";
+import { readRoleGraph, roleForLane, type RoleGraph } from "../../schemas/role-graph.js";
 
-export interface SkillImpact { name: string; path: string; roles: string[] }
+export interface SkillImpact { name: string; path: string }
 export interface LaneImpact {
   process: string;
   lane: string;
@@ -47,17 +74,6 @@ export interface StakeholderMap {
   untraced: string[];
   /** The boundary of the mechanical part — always populated, never an error. */
   notDetermined: string[];
-}
-
-/** `roles: [a, b]` from a skill's YAML front matter. */
-function rolesOf(file: string): string[] {
-  if (!existsSync(file)) return [];
-  const text = readFileSync(file, "utf-8");
-  if (!text.startsWith("---")) return [];
-  const end = text.indexOf("\n---", 3);
-  const fm = end === -1 ? text : text.slice(0, end);
-  const m = fm.match(/^roles:\s*\[([^\]]*)\]/m);
-  return m ? m[1].split(",").map((r) => r.trim()).filter(Boolean) : [];
 }
 
 /**
@@ -117,7 +133,7 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
   for (const raw of changed) {
     const path = raw.replace(/^\.\//, "");
     const name = byPath.get(path);
-    if (name) skills.push({ name, path, roles: rolesOf(join(root, path)) });
+    if (name) skills.push({ name, path });
     else untraced.push(path);
   }
 
@@ -158,7 +174,31 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
     }
   }
 
-  const roles = [...new Set(skills.flatMap((s) => s.roles))].sort();
+  // Roles come from the LANES this change reached, resolved against the
+  // declared registry — not from anything a skill says about itself.
+  //
+  // Every declared knowledge-graph root, not `kgRoots(root)[0]`. Taking the
+  // first is the `dh4f` defect arriving through the helper written to
+  // prevent it: a topical layout would resolve nothing from the roots this
+  // never visited and report it as "no role reached", which is the one wrong
+  // answer this analysis must not give.
+  const graph: RoleGraph = { name: "stakeholder-map overlay", roles: [] };
+  const seenRole = new Set<string>();
+  for (const kgRoot of kgRoots(root)) {
+    for (const r of readRoleGraph(kgRoot)?.roles ?? []) {
+      if (seenRole.has(r.id)) continue;
+      seenRole.add(r.id);
+      graph.roles.push(r);
+    }
+  }
+  const reached = new Set<string>();
+  const unresolvedLanes = new Set<string>();
+  for (const l of lanes) {
+    const role = roleForLane(graph, l.lane);
+    if (role) reached.add(role.id);
+    else unresolvedLanes.add(`${l.lane} (${l.process})`);
+  }
+  const roles = [...reached].sort();
 
   const notDetermined = [
     "The PEOPLE. `crdm-requirements.bpmn` documents its stakeholder step as " +
@@ -171,11 +211,24 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
         `derivable from them. That is unknown impact, not absent impact.`,
     );
   }
-  const noRoles = skills.filter((s) => s.roles.length === 0).map((s) => s.name);
-  if (noRoles.length) {
+  if (unresolvedLanes.size > 0) {
+    // A lane that binds no declared role is UNDETERMINED, not roleless. It
+    // used to be neither: the lane simply contributed nothing and the report
+    // read as though the change reached no one there.
     notDetermined.push(
-      `Skill(s) declaring no \`roles:\`: ${noRoles.join(", ")}. Their audience ` +
-        `is undeclared rather than empty.`,
+      `Lane(s) binding no declared role: ${[...unresolvedLanes].sort().join(", ")}. ` +
+        `Somebody is accountable for those activities; \`roles.json\` does not yet ` +
+        `say who, so this is unknown impact rather than absent impact.`,
+    );
+  }
+  if (graph.roles.length === 0) {
+    // The vacuity case. With no registry every lane is "unresolved", and a
+    // report that then said "roles reached: none" would be describing a
+    // missing file as a finding about the change.
+    notDetermined.push(
+      `No role registry was readable under ${kgRoots(root).length} declared graph root(s), ` +
+        `so NO lane could be resolved to a role. The role section below is blank because ` +
+        `nothing could be determined, not because nobody is affected.`,
     );
   }
 
@@ -188,13 +241,14 @@ export function formatStakeholderMap(map: StakeholderMap): string {
 
   if (map.skills.length) {
     out.push("Skills changed");
-    for (const s of map.skills) {
-      out.push(`  ${s.name.padEnd(30)} ${s.roles.length ? s.roles.join(", ") : "(no roles declared)"}`);
-    }
+    for (const s of map.skills) out.push(`  ${s.name.padEnd(30)} ${s.path}`);
   } else {
     out.push("No changed path is a skill, so nothing maps to a role this way.");
   }
 
+  // Silent when empty, because `notDetermined` already carries WHY — either
+  // no lane was reached or none resolved. A bare "Roles reached: none" would
+  // read as a determined empty.
   if (map.roles.length) out.push(`\nRoles reached: ${map.roles.join(", ")}`);
 
   if (map.lanes.length) {

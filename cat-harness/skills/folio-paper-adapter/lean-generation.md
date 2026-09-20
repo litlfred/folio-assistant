@@ -1,6 +1,5 @@
 ---
 name: lean-generation
-roles: [collaborator, owner]
 description: >
   Extract theorem-like objects from LaTeX source and generate corresponding
   Lean 4 stub files with `sorry` placeholders.  Maintains the proof-objects.json

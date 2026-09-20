@@ -1,6 +1,5 @@
 ---
 name: latex-validation
-roles: [reader, collaborator, owner]
 ---
 
 # LaTeX Validation Skill

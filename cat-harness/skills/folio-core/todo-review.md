@@ -1,6 +1,5 @@
 ---
 name: todo-review
-roles: [reader, collaborator, owner]
 description: >
   Monitor and triage open feedback across all content blocks.
   At session start, ask the author if they'd like to work on feedback.

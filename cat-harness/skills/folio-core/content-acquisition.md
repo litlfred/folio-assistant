@@ -1,6 +1,5 @@
 ---
 name: content-acquisition
-roles: [ingestion-agent, authoring-agent, collaborator, owner]
 description: >
   Getting a resource INTO the graph in the first place — accepting one offered
   unprompted, or asking for one and then asking for it to be uploaded. The

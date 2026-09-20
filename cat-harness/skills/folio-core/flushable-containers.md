@@ -1,6 +1,5 @@
 ---
 name: flushable-containers
-roles: [reader, collaborator, owner]
 description: >
   A flushable container is a named store that accumulates by design — a trash
   you can recover from, a review preview, a console log. It declares a buffer

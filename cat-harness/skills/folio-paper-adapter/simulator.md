@@ -1,6 +1,5 @@
 ---
 name: simulator
-roles: [collaborator, owner]
 ---
 
 # Simulator Skill
