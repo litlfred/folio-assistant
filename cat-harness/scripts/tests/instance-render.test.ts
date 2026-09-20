@@ -127,10 +127,22 @@ describe("declared means TRANSITIVELY declared", () => {
 describe("this repository's own instances", () => {
   const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
 
-  test("both instances are found — otherwise everything below is vacuous", () => {
-    const found = instancesIn(REPO);
-    expect(found.length).toBeGreaterThan(1);
-    expect(found.map((p) => p.split("/").pop())).toEqual(["cat-harness", "bootstrap"]);
+  test("every instance is found — otherwise everything below is vacuous", () => {
+    // This asserted exactly `["cat-harness", "bootstrap"]`, and it PASSED for
+    // the whole period that list was wrong: `instancesIn` returned a literal
+    // and this test pinned the same literal, so the two agreed with each other
+    // and neither looked at the repository. `folio-assist-core` and the root
+    // were instances the gate never rendered (bean `6tkl`).
+    //
+    // The order is root-first then sorted, which is what `instanceRootsIn`
+    // promises so that a report is stable.
+    const found = instancesIn(REPO).map((p) => p.split("/").pop());
+    expect(found).toEqual(["folio-assistant", "bootstrap", "cat-harness", "folio-assist-core"]);
+    // Named individually rather than only as a list: these two are the ones
+    // the old literal omitted, so if a future edit narrows the set again, the
+    // failure should say which instance stopped being checked.
+    expect(found).toContain("folio-assist-core");
+    expect(found).toContain("folio-assistant");
   });
 
   test("every instance renders, and none renders nothing", async () => {

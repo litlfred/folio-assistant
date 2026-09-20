@@ -139,9 +139,33 @@ expensive to get wrong:
    three different answers with three different security postures.
 3. **Which subgraphs are "display" subgraphs?** Every declared `graphs` entry,
    or an opt-in subset?
-4. **What does "KG-DS" expand to?** Knowledge-graph datastore is the reading
-   the bean records, and it is unconfirmed. The term appears nowhere else in
-   this repository.
+*(A fourth, "what does KG-DS expand to", is now answered — see below.)*
+
+## KG-DS is the Knowledge Graph Data Store, and its machine is **git**
+
+Not a new concept: `bootstrap/skills/roles/roles.json` has declared a role with
+exactly this id and title all along. Its description names the machine:
+
+> A git repository, reached either through the git CLI or through a forge's
+> API. It is where a declaration and its graph are READ from and where a new
+> instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves,
+> and takes no part in deciding what should happen — which is why it carries no
+> skills and why naming one for it would be a lie about what it does.
+
+`actorKinds: ["system"]`, `skills: []`, `actedUpon: true`.
+
+**This is why "writable interface *if* writable datastore" is a real
+conditional rather than hedging.** The store is a git repository, so writing
+means a commit through the CLI or a forge API — which is available to an agent
+with a checkout and credentials, and *not* available to a reader browsing a
+static gh-pages site. The same page can therefore be readable to everyone and
+writable only to some, and that is a property of the store rather than of the
+rendering.
+
+**The role carries no skills on purpose.** It holds and serves and decides
+nothing, so giving it a skill would claim it participates in a decision it does
+not make — which is the `actedUpon` flag doing real work rather than
+decorating.
 
 ## Related
 

@@ -79,9 +79,29 @@ designing them separately is how they end up disagreeing:
 - **Which subgraphs are "display" subgraphs?** Every declared `graphs` entry,
   or an opt-in subset? `uploads` and `library` are declared and have no
   renderer today.
-- **"KG-DS"** — confirm this expands to knowledge-graph datastore. It appears
-  nowhere in the repository, and inventing an expansion for an acronym in a
-  published document is how a wrong one becomes canon.
+- ~~**"KG-DS"** — confirm this expands to knowledge-graph datastore. It appears
+  nowhere in the repository~~ **ANSWERED, and the second half was wrong.**
+
+  The owner confirmed **Knowledge Graph Data Store**, and pointed at the
+  sibling that already carries it: `bootstrap/skills/roles/roles.json`
+  declares a role with exactly that id and title. So the term was in the
+  repository all along — only the ACRONYM was absent, and I searched for the
+  acronym. Searching for the abbreviation and concluding the concept is
+  missing is the mistake to avoid repeating; the concept had a declared
+  node.
+
+  **And it names its machine: git.** The role's own description —
+
+  > A git repository, reached either through the git CLI or through a forge's
+  > API. It is where a declaration and its graph are READ from and where a new
+  > instance's declaration is WRITTEN to. It is `actedUpon`: it holds and
+  > serves, and takes no part in deciding what should happen.
+
+  `actorKinds: ["system"]`, `skills: []`, `actedUpon: true`. That bears
+  directly on the "what is the writable datastore?" question above: **git is
+  the store**, and the role is deliberately skill-less because it decides
+  nothing. A design that gave the datastore a skill would be claiming it
+  participates in the decision.
 
 ## Done when
 
