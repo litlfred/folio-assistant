@@ -16,7 +16,7 @@ import { join } from "node:path";
 
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { frontMatter, frontMatterValue, probeBranches, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
+import { frontMatter, frontMatterValue, probeBranches, probeBeans, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -311,5 +311,39 @@ describe("front matter", () => {
 
   it("returns undefined for a file with no front matter at all", () => {
     expect(frontMatter("# just a heading\n")).toBeUndefined();
+  });
+});
+
+describe("the root the sweep is given", () => {
+  it("is the REPOSITORY root, not the instance root", async () => {
+    // The probes above resolve their store from a declaration, and do it
+    // correctly. That was not enough: `run.ts` handed them the INSTANCE root,
+    // so from the moment `#437` moved the instance under `cat-harness/` both
+    // stores resolved to `cat-harness/beans/defs` and
+    // `cat-harness/todos/items`, neither of which exists.
+    //
+    // The three-state rule did its job — the sweep reported "could not be
+    // evaluated" and refused to call itself clean rather than reporting an
+    // empty store as healthy, which is the `dh4f` shape it exists to avoid.
+    // But a check that cannot see its subject is not doing the work either,
+    // and this one hid 215 inline completed beans and 449 MB of staging
+    // previews until it was repointed.
+    //
+    // Asserted against the real tree rather than a fixture: the defect was
+    // that a real path stopped existing, and a fixture would have passed
+    // throughout.
+    const { existsSync } = await import("node:fs");
+    const { join, resolve } = await import("node:path");
+    const { repoRootFor } = await import("../../schemas/cat-harness.ts");
+
+    const instanceRoot = resolve(import.meta.dir, "..", "..");
+    const repoRoot = repoRootFor(instanceRoot);
+
+    expect(existsSync(join(repoRoot, "beans", "beans.json"))).toBe(true);
+    expect(existsSync(join(instanceRoot, "beans", "beans.json"))).toBe(false);
+
+    // And the probes actually find something when given the right one.
+    const beans = probeBeans(repoRoot);
+    expect(beans.state).toBe("ok");
   });
 });
