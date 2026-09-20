@@ -310,3 +310,29 @@ abstract. Not re-litigated here; recorded so the trade-off has evidence.
       through a variable. Needs the constant's value at the use site, so it is
       light static analysis rather than a line scan.
 
+
+*2026-09-20T22:15Z* — **A sixth shape, from a sibling PR rather than from
+here.** [#623](https://github.com/litlfred/folio-assistant/pull/623) ran
+`bun pm pack` for the first time and found the release tarball held **4 files,
+16 KB, and no code**. The cause is this bean's subject in its purest form:
+every `exports` target and `main` in the package manifest named a pre-split
+`./src/...` path, and of the six entries in `files[]`, **two had moved and two
+do not exist anywhere in the repository**.
+
+The sentence worth keeping is theirs:
+
+> A `files` entry that does not resolve is not a warning; it is a smaller
+> package.
+
+That is the same failure mode as a printed command naming a path that is not
+there — a path literal in a **declaration** that no-ops silently instead of
+erroring — and it is **outside every reader built here**, because none of the
+three scans JSON manifest fields and `check:command-paths`'s `checkHooks()`
+reads only `command` keys. Recorded, not claimed: the fix is theirs and has
+landed on their branch; what belongs to this bean is the shape and the fact
+that our coverage does not reach it.
+
+- [ ] A reader for declared path literals in JSON manifests — `main`,
+      `exports`, `files` in `package.json`, and the same question for any
+      other declaration whose unresolvable entry is dropped rather than
+      refused. Depends on #623 merging first, so the fix is not re-derived.
