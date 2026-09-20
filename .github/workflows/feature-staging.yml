@@ -788,6 +788,9 @@ jobs:
               exit 1
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            # `merge=union` before the rebase, or this retry aborts on the
+            # render log every time two runs land on one day (`pb4n`).
+            bash cat-harness/scripts/render-log-union-attr.sh pages
             git -C pages pull --rebase origin gh-pages
             # Doubling with jitter, via the ONE implementation the repo has
             # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -1011,6 +1014,9 @@ jobs:
                 exit 1
               fi
               echo "push rejected; rebasing onto origin/gh-pages and retrying"
+              # `merge=union` before the rebase, or this retry aborts on the
+              # render log every time two runs land on one day (`pb4n`).
+              bash cat-harness/scripts/render-log-union-attr.sh pages
               git -C pages pull --rebase origin gh-pages
               # Doubling with jitter, via the ONE implementation the repo has
               # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -1076,6 +1082,9 @@ jobs:
               exit 1
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            # `merge=union` before the rebase, or this retry aborts on the
+            # render log every time two runs land on one day (`pb4n`).
+            bash cat-harness/scripts/render-log-union-attr.sh pages
             git -C pages pull --rebase origin gh-pages
             # Doubling with jitter, via the ONE implementation the repo has
             # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -1293,6 +1302,9 @@ jobs:
               exit 1
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            # `merge=union` before the rebase, or this retry aborts on the
+            # render log every time two runs land on one day (`pb4n`).
+            bash ../source/cat-harness/scripts/render-log-union-attr.sh .
             git pull --rebase origin gh-pages
             # Doubling with jitter, via the ONE implementation the repo has
             # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
