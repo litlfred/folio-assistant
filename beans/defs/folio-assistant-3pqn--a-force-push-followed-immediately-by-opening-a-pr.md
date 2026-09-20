@@ -206,8 +206,27 @@ the current head → exit 0 with its two runs listed.
 circularity**: a CI job asking whether this commit has a CI run has already
 answered it. It exists for the moment *before* the run.
 
+## Wired into `/prepare-merge` — and what that is and is not worth
+
+Step 6 now ends with `bun run check:head-has-run`, in both the command recipe
+and the skill that carries the discipline.
+
+**It does not change what you do next, and the entry says so.** Step 7 already
+dispatches CI unconditionally — *"local green is not CI green"* — so a run
+exists either way. What the check changes is **what you can honestly say**: a
+pull request showing zero checks is indistinguishable from one whose checks
+have not started, so a reviewer cannot tell *CI is coming* from *CI is never
+coming*. When the push produced no run, that fact goes in the PR body beside
+the dispatched run's URL, and the PR stops looking merely early.
+
+Overselling this would be easy and wrong. It is a labelling fix on top of a
+mitigation that was already there.
+
 ## Still open
 
-- wiring it into `/prepare-merge`, so shipping a branch checks it
-- whether anything should run it unattended — a PR with zero checks is
-  invisible precisely because nobody is looking
+- whether anything should run it unattended. A PR with zero checks is
+  invisible **precisely because nobody is looking**, so a check that only runs
+  when somebody remembers to look is the weakest possible placement. The
+  candidate shape is the `ci-health` one: a scheduled sweep over open PRs that
+  edits a single tracking issue. Not built, because "which PRs, how often, and
+  who reads the issue" are three decisions nobody has made.

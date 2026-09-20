@@ -29,7 +29,11 @@ Base branch: `$ARGUMENTS` if given, else the repo default (auto-detect:
 5. **Green check** — run the gates below; do not declare green while sitting on
    pre-existing failures.
 6. **Push** the feature branch: `git push -u origin <branch>` (with lease after a
-   rebase). Stop here unless explicitly asked to open/merge a PR.
+   rebase). Then `bun run check:head-has-run` — a push can silently produce no
+   run at all (bean `3pqn`), and zero checks looks exactly like checks-not-yet-
+   started. It does not change what you do; it changes what you can say in the
+   PR. `could not ask` is a third state, not a finding.
+   Stop here unless explicitly asked to open/merge a PR.
 
 ## Content-type-specific verification (the generalization point)
 
