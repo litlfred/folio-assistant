@@ -397,12 +397,12 @@ the *pointer*, with the skill as the text:
 
 | rule | where it lives |
 |---|---|
-| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](skills/folio-core/crdm-detect.md) §"Issue association" |
-| branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](skills/folio-core/continual-progress.md) invariant 1 |
-| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](skills/folio-core/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
-| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](skills/folio-core/issue-working.md), [`crdm-requirements-workflow`](skills/folio-core/crdm-requirements-workflow.md) |
-| issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](skills/folio-core/issue-working.md) §"What an issue is *for*, against its neighbours" |
-| an agent never closes an issue on its own say-so | [`issue-working`](skills/folio-core/issue-working.md), and `crdm-close.bpmn` executes it |
+| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](cat-harness/skills/folio-core/crdm-detect.md) §"Issue association" |
+| branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](cat-harness/skills/folio-core/continual-progress.md) invariant 1 |
+| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](cat-harness/skills/folio-core/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
+| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), [`crdm-requirements-workflow`](cat-harness/skills/folio-core/crdm-requirements-workflow.md) |
+| issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](cat-harness/skills/folio-core/issue-working.md) §"What an issue is *for*, against its neighbours" |
+| an agent never closes an issue on its own say-so | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), and `crdm-close.bpmn` executes it |
 
 Six rows for seven bullets: *"use a feature branch"* and *"always PR"* were
 two statements of one invariant, and `continual-progress` already states it as
