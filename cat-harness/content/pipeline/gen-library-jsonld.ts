@@ -55,6 +55,12 @@ import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
 import { directoryForGraph } from "../../schemas/cat-harness.js";
+// The `folio` graph kind is registered by CORE on import
+// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
+// exists. This module resolves this instance's directories, and the instance
+// DECLARES a folio graph — without this the read throws `unknown graph kind
+// "folio"` on a perfectly valid declaration (issue #464).
+import "../../schemas/folio-graph-kind.js";
 
 interface StructureSection {
   id: string;
