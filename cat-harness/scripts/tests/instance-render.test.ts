@@ -1,0 +1,175 @@
+/**
+ * The conformance check has to FAIL on each thing it claims to catch.
+ *
+ * Bean `z4mq` item 3. Written against temp instances rather than only this
+ * repository, because the repository currently passes — and a test that only
+ * asserts "the repo renders" would go on passing if the check were gutted to
+ * `return { verdict: "rendered" }`. Each case below perturbs one thing.
+ *
+ * @module scripts/tests/instance-render.test
+ */
+import { afterEach, describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+
+import { declaredKinds, instancesIn, renderInstance } from "../check-instance-render.ts";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+
+const made: string[] = [];
+afterEach(() => {
+  for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true });
+});
+
+/** A throwaway instance. `decl === null` writes no declaration at all. */
+function instance(decl: unknown | null, files: Record<string, string> = {}): string {
+  const root = mkdtempSync(join(tmpdir(), "render-"));
+  made.push(root);
+  if (decl !== null) writeFileSync(join(root, "harness.json"), JSON.stringify(decl));
+  for (const [rel, body] of Object.entries(files)) {
+    mkdirSync(join(root, rel, ".."), { recursive: true });
+    writeFileSync(join(root, rel), body);
+  }
+  return root;
+}
+
+describe("could not determine is a THIRD state, never a pass", () => {
+  test("no declaration is undetermined, not failed and not rendered", () => {
+    // The distinction that matters: an instance nobody declared has not been
+    // shown to render badly, it has not been shown at all. Calling it `failed`
+    // would be as wrong as calling it `rendered` — one invents a defect, the
+    // other invents a clean run.
+    return renderInstance(instance(null)).then((r) => {
+      expect(r.verdict).toBe("undetermined");
+      expect(r.reasons.join(" ")).toContain("nothing declares what this instance is");
+    });
+  });
+
+  test("a declaration that will not parse is undetermined too", async () => {
+    const root = mkdtempSync(join(tmpdir(), "render-bad-"));
+    made.push(root);
+    writeFileSync(join(root, "harness.json"), "{ not json");
+    const r = await renderInstance(root);
+    expect(r.verdict).toBe("undetermined");
+    expect(r.nodeCount).toBe(0);
+  });
+
+  test("undetermined carries NO published kinds — it never looked", async () => {
+    // Guard against the shape where an unreadable instance still reports an
+    // empty `published` that a consumer reads as "publishes nothing".
+    const r = await renderInstance(instance(null));
+    expect(r.published).toEqual([]);
+    expect(r.declared).toEqual([]);
+  });
+});
+
+describe("an empty render is a failure, not an empty success", () => {
+  test("zero nodes fails, and says why in those words", async () => {
+    // THE DEFECT THIS WHOLE MODULE EXISTS FOR. `collectSkills` resolved
+    // bootstrap's declared directory against the wrong root, found nothing,
+    // and continued — the export succeeded and the graph silently lost every
+    // skill. "Did it throw" cannot see that; a node count can.
+    const r = await renderInstance(instance({ name: "empty", directories: [] }));
+    expect(r.verdict).toBe("failed");
+    expect(r.nodeCount).toBe(0);
+    expect(r.reasons.join(" ")).toContain("empty graph is a failure");
+  });
+});
+
+describe("declared means TRANSITIVELY declared", () => {
+  test("a nested graph file's kinds count as the instance's", () => {
+    // `beans/beans.json` declares `bean-defs` and `workflow-state`; reading
+    // only `harness.json` reports them as kinds the instance smuggled in.
+    // Measured before this was written: that mistake gives cat-harness five
+    // undeclared kinds where the true figure is one.
+    const root = instance(
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }] },
+      {
+        "beans/beans.json": JSON.stringify({
+          name: "beans",
+          directories: [
+            { id: "defs", path: "defs", graphs: ["bean-defs"] },
+            { id: "workflows", path: "workflows", graphs: ["workflow-state"] },
+          ],
+        }),
+      },
+    );
+    const kinds = declaredKinds(root, JSON.parse(readFileSync(join(root, "harness.json"), "utf-8")));
+    expect([...kinds].sort()).toEqual(["bean-defs", "beans", "workflow-state"]);
+  });
+
+  test("`kinds` is read as well as `graphs` — the bean graph uses both spellings", () => {
+    const root = instance(
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }] },
+      {
+        "beans/beans.json": JSON.stringify({
+          name: "beans",
+          directories: [{ id: "defs", path: "defs", kinds: ["bean-defs"] }],
+        }),
+      },
+    );
+    const kinds = declaredKinds(root, JSON.parse(readFileSync(join(root, "harness.json"), "utf-8")));
+    expect([...kinds]).toContain("bean-defs");
+  });
+
+  test("an unparseable nested file does not manufacture an undeclared kind", () => {
+    // Understating `declared` would invent a finding. That file's problem is
+    // `check:harness-dirs`'s to report, and it does so loudly.
+    const root = instance(
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }] },
+      { "beans/beans.json": "{ not json" },
+    );
+    const kinds = declaredKinds(root, JSON.parse(readFileSync(join(root, "harness.json"), "utf-8")));
+    expect([...kinds]).toEqual(["beans"]);
+  });
+});
+
+describe("this repository's own instances", () => {
+  const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
+
+  test("both instances are found — otherwise everything below is vacuous", () => {
+    const found = instancesIn(REPO);
+    expect(found.length).toBeGreaterThan(1);
+    expect(found.map((p) => p.split("/").pop())).toEqual(["cat-harness", "bootstrap"]);
+  });
+
+  test("every instance renders, and none renders nothing", async () => {
+    for (const root of instancesIn(REPO)) {
+      const r = await renderInstance(root);
+      expect({ [r.name]: r.verdict }).toEqual({ [r.name]: "rendered" });
+      expect(r.nodeCount).toBeGreaterThan(0);
+    }
+  });
+
+  test("bootstrap's OWN skills are in its render — the silent drop, pinned", async () => {
+    // `confirm-harness` lives only in `bootstrap/skills/`. When `skillMdDirs`
+    // resolved that repository-scoped directory against the instance root, the
+    // skill vanished from the graph and `hasSkill` dangled. Nothing failed.
+    const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
+    const r = await renderInstance(boot);
+    expect(r.nodeCount).toBeGreaterThan(10);
+  });
+
+  test("the undeclared-kind finding is REPORTED and does not fail the verdict", async () => {
+    // Deliberate, and it is this repo's own rule: a check becomes an error
+    // once its count is zero. The count is 16 because `collectGraphKinds()`
+    // emits the global registry into every instance. Pinning the finding as
+    // non-fatal is what lets the check ship before that is settled — and this
+    // test is what will fail, correctly, on the day somebody makes it fatal
+    // without clearing the count.
+    const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
+    const r = await renderInstance(boot);
+    expect(r.verdict).toBe("rendered");
+    expect(r.undeclared.length).toBeGreaterThan(0);
+    expect(r.undeclared).toContain("beans");
+  });
+
+  test("bootstrap declares far fewer kinds than it publishes — the measurement", async () => {
+    // The 18-vs-1 shape, asserted as an INEQUALITY rather than a pair of
+    // counts: pinning 1 and 16 would fail the day either legitimately moves,
+    // and what matters is that the gap exists and is visible.
+    const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
+    const r = await renderInstance(boot);
+    expect(r.published.length).toBeGreaterThan(r.declared.length);
+  });
+});

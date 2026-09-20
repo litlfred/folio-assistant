@@ -20,23 +20,23 @@ on:
   push:
     branches: [main]
     paths:
-      - 'folio-assistant/docs/**'
+      - 'cat-harness/docs/**'
       # The BPMN/DMN sources moved OUT of docs/ into the `kg` graph, where the
       # roles and skills they reference live. The SVGs the site embeds are
       # still rendered from them at deploy time, so without this path a diagram
       # edit would not rebuild the site and the published page would serve a
       # stale render — exactly the "move the wiring with the script" failure.
-      - 'skills/workflows/**'
-      - 'schemas/**'
-      - 'scripts/gen-schema-docs.ts'
-      - 'scripts/gen-docs-pages.ts'
-      - 'content/docs/**'
-      - 'scripts/render-bpmn.ts'
+      - 'cat-harness/skills/workflows/**'
+      - 'cat-harness/schemas/**'
+      - 'cat-harness/scripts/gen-schema-docs.ts'
+      - 'cat-harness/scripts/gen-docs-pages.ts'
+      - 'cat-harness/content/docs/**'
+      - 'cat-harness/scripts/render-bpmn.ts'
       # The navbar's locale filter reads `docs/_data/translations.json`, built
       # by this module from the pages' own front matter. A change to how that
       # is derived changes the published navbar while touching nothing under
       # `docs/`, so without this path the site would not rebuild.
-      - 'content/pipeline/translation-index.ts'
+      - 'cat-harness/content/pipeline/translation-index.ts'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -79,10 +79,10 @@ jobs:
         run: bun install --frozen-lockfile || bun install
 
       - name: Regenerate skill schema reference
-        run: bun run scripts/gen-schema-docs.ts
+        run: bun run cat-harness/scripts/gen-schema-docs.ts
 
       - name: Regenerate skill instruction pages
-        run: bun run scripts/gen-skill-docs.ts
+        run: bun run cat-harness/scripts/gen-skill-docs.ts
 
       # Pages assembled from site-content/<slug>/. Regenerated here for the
       # same reason as the two above: the committed copy is browsable on
@@ -90,7 +90,7 @@ jobs:
       # pair. The --check form is the PR gate (code-quality-gates.yml); this is
       # the deploy-time refresh.
       - name: Regenerate content-backed docs pages
-        run: bun run scripts/gen-docs-pages.ts
+        run: bun run cat-harness/scripts/gen-docs-pages.ts
 
       # Same reasoning as the three regenerations above: the committed copy is
       # browsable on GitHub and the PUBLISHED one must never be the stale half
@@ -119,21 +119,21 @@ jobs:
       # the build cannot half-apply.
       - name: Stamp the build sha
         run: |
-          mkdir -p folio-assistant/docs/_data
+          mkdir -p cat-harness/docs/_data
           {
             echo "sha: \"${GITHUB_SHA}\""
             echo "short_sha: \"${GITHUB_SHA:0:7}\""
             echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
             echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
-          } > folio-assistant/docs/_data/build.yml
-          cat folio-assistant/docs/_data/build.yml
+          } > cat-harness/docs/_data/build.yml
+          cat cat-harness/docs/_data/build.yml
 
       # Build the Jekyll site from docs/ using the github-pages gem
       # (whitelists jekyll-remote-theme, so just-the-docs works).
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./folio-assistant/docs
+          source: ./cat-harness/docs
           destination: ./_site
 
       # actions/jekyll-build-pages runs Jekyll in a container as root, so _site/
@@ -154,10 +154,10 @@ jobs:
             --hideGenerator \
             --skipErrorChecking \
             --name "folio-assistant API" \
-            schemas/types.ts schemas/constraints.ts schemas/builders.ts \
-            schemas/assistant-types.ts schemas/assistant-package.ts \
-            schemas/assistant-workflow.ts schemas/formalization-types.ts \
-            schemas/lean-packages.ts 2>&1 | tail -20
+            cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
+            cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
+            cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \
+            cat-harness/schemas/lean-packages.ts 2>&1 | tail -20
 
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
@@ -187,10 +187,10 @@ jobs:
       # No --base-url: the declaration's canonicalUrl is correct for main.
       - name: Export the knowledge graph and its schema
         run: |
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
-          bun run scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"
-          bun run scripts/harness-schema-export.ts --out-dir ./_site
-          bun run scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
+          bun run cat-harness/scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"
+          bun run cat-harness/scripts/harness-schema-export.ts --out-dir ./_site
+          bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
           # THE TRASHCAN, reachable BY NAME and by nothing else.
@@ -210,7 +210,7 @@ jobs:
           # `.json` alongside for the same reason every other rendering has
           # one: Pages has no media type for `.jsonld` and serves it as
           # octet-stream.
-          bun run scripts/fsh-guts-export.ts --out "./_site/fsh-guts.jsonld"
+          bun run cat-harness/scripts/fsh-guts-export.ts --out "./_site/fsh-guts.jsonld"
           cp "./_site/fsh-guts.jsonld" "./_site/fsh-guts.json"
 
           # THE VOCABULARY — one document per namespace, plus the union.
@@ -233,7 +233,7 @@ jobs:
           #
           # Extensionless because the IRIs are; `.json` alongside because Pages
           # emits no correct Content-Type for `.jsonld`.
-          # `ns/` is a DIRECTORY, not a file. `schemas/jsonld.ts` declares the
+          # `ns/` is a DIRECTORY, not a file. `cat-harness/schemas/jsonld.ts` declares the
           # content `@context` at `<base>/ns/content/v1.jsonld`, and a static
           # host cannot serve both a file and a directory at `<base>/ns`.
           #
@@ -243,14 +243,14 @@ jobs:
           # it was written. Copied here, which is the eighth instance of the
           # defect bean `blv9` records and the cheapest one to have fixed.
           mkdir -p "./_site/ns/content"
-          cp ./ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
-          bun run scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
+          cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+          bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
           for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
-            bun run scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
+            bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
@@ -272,13 +272,13 @@ jobs:
       - name: Publish the QA witnesses and results
         run: |
           mkdir -p ./_site/assets
-          cp -rT test/results/witnesses ./_site/assets/qa
+          cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
-          find test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
           echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
@@ -298,7 +298,7 @@ jobs:
       # failure here too: at this point in the job there IS a build, so not
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
-        run: bun run scripts/site-links.ts --site ./_site
+        run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
@@ -344,7 +344,7 @@ jobs:
       # state that the verify step reads back, not a page, and writing it into
       # the publish directory would serve it at the site root.
       - name: Restore the open PRs' staging previews into the publish directory
-        run: bun run scripts/restore-staging.ts --site ./_site --state ./.staging-restored.json
+        run: bun run cat-harness/scripts/restore-staging.ts --site ./_site --state ./.staging-restored.json
 
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -369,4 +369,4 @@ jobs:
       # the accepted cost — the alternative is the silence this bean exists to
       # retire.
       - name: Verify the staging previews survived the deploy
-        run: bun run scripts/restore-staging.ts --verify --state ./.staging-restored.json
+        run: bun run cat-harness/scripts/restore-staging.ts --verify --state ./.staging-restored.json
