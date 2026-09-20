@@ -197,6 +197,12 @@ export const RULES: Rule[] = [
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
+      // Its tile half, and harness-level for the same reason: it reads every
+      // INSTANCE's declaration and the published viewer tree, and asks which
+      // harnesses exist and what each one has to look at. Nothing in it is
+      // about any folio's subject matter — a folio could not make it answer
+      // differently, only add a row.
+      "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
       // Same question, same answer: it projects the PLATFORM's own term
       // vocabulary — every class and property hanging off `FOLIO_NS` — and

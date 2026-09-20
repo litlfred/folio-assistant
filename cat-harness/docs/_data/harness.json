@@ -90,5 +90,502 @@
       "id": "source",
       "url": "https://github.com/litlfred/folio-assistant"
     }
+  ],
+  "harnesses": [
+    {
+      "name": "agent-skills",
+      "title": "agent-skills",
+      "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 2
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 2
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "library",
+          "path": "/cat-harness/library/agent-skills/"
+        },
+        {
+          "kind": "voices"
+        }
+      ],
+      "findings": [
+        "agent-skills: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
+        "agent-skills: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "cat-harness",
+      "title": "folio-assistant",
+      "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "footer": false,
+      "icon": {
+        "src": "docs/assets/img/icons/cat-mark.svg",
+        "title": "c@t"
+      },
+      "tone": 268,
+      "reads": "a framed face with ears — the harness the instance is held in",
+      "genericAvatar": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 33
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 19
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 8
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "beans",
+          "path": "/beans/"
+        },
+        {
+          "kind": "cat-harness"
+        },
+        {
+          "kind": "docs"
+        },
+        {
+          "kind": "folio"
+        },
+        {
+          "kind": "fsh-guts"
+        },
+        {
+          "kind": "health",
+          "path": "/health/"
+        },
+        {
+          "kind": "interaction"
+        },
+        {
+          "kind": "issue-marks",
+          "path": "/issue-marks/"
+        },
+        {
+          "kind": "library",
+          "path": "/cat-harness/library/cat-harness/"
+        },
+        {
+          "kind": "memory"
+        },
+        {
+          "kind": "methodology"
+        },
+        {
+          "kind": "qa",
+          "path": "/qa/"
+        },
+        {
+          "kind": "schemas",
+          "path": "/cat-harness/schemas/cat-harness/"
+        },
+        {
+          "kind": "todos",
+          "path": "/todos/"
+        },
+        {
+          "kind": "tools"
+        },
+        {
+          "kind": "translation-sources"
+        },
+        {
+          "kind": "uploads",
+          "path": "/uploads/"
+        },
+        {
+          "kind": "voices"
+        },
+        {
+          "kind": "waiver"
+        }
+      ],
+      "findings": [
+        "cat-harness: declares 11 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, tools, translation-sources, voices, waiver. Declared and not rendered is a gap, not a dead link."
+      ]
+    },
+    {
+      "name": "detangle",
+      "title": "detangle",
+      "description": "Is this candidate subgraph really a subgraph? Size, cohesion, and whether the arrows' direction is a fact or a filing decision.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 2
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "cat-harness"
+        },
+        {
+          "kind": "schemas",
+          "path": "/cat-harness/schemas/detangle/"
+        }
+      ],
+      "findings": [
+        "detangle: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
+        "detangle: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "folio-assistant",
+      "title": "folio-assistant",
+      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "uploads"
+        }
+      ],
+      "findings": [
+        "folio-assistant: declares 1 graph(s) with no published viewer — uploads. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
+        "folio-assistant: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "folio-assistant-core",
+      "title": "folio-assistant-core",
+      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 2
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 3
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "cat-harness"
+        },
+        {
+          "kind": "folio"
+        },
+        {
+          "kind": "schemas",
+          "path": "/cat-harness/schemas/folio-assistant-core/"
+        }
+      ],
+      "findings": [
+        "folio-assistant-core: declares 2 graph(s) with no published viewer — cat-harness, folio. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "folio-assistant-sci",
+      "title": "folio-assistant-sci",
+      "description": "Scientific source material used by folios that formalise mathematics — one document today.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "library",
+          "path": "/cat-harness/library/folio-assistant-sci/"
+        }
+      ],
+      "findings": [
+        "folio-assistant-sci: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "kg-navigation",
+      "title": "kg-navigation",
+      "description": "How an agent finds the knowledge graph, and the skill that governs its task, before it knows the layout.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "cat-harness"
+        }
+      ],
+      "findings": [
+        "kg-navigation: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
+        "kg-navigation: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "large-datasets",
+      "title": "large-datasets",
+      "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 3
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 2
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "cat-harness"
+        },
+        {
+          "kind": "schemas",
+          "path": "/cat-harness/schemas/large-datasets/"
+        }
+      ],
+      "findings": [
+        "large-datasets: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
+        "large-datasets: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "who-iris",
+      "title": "who-iris",
+      "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 6
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 6
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "cat-harness"
+        },
+        {
+          "kind": "catalogue"
+        },
+        {
+          "kind": "docs"
+        },
+        {
+          "kind": "library",
+          "path": "/cat-harness/library/who-iris/"
+        },
+        {
+          "kind": "themes"
+        },
+        {
+          "kind": "uploads"
+        }
+      ],
+      "findings": [
+        "who-iris: declares 5 graph(s) with no published viewer — cat-harness, catalogue, docs, themes, uploads. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "who-style-guide",
+      "title": "who-style-guide",
+      "description": "The WHO house voices — editorial style, guideline development, publication design — each derived from one IRIS publication and citing it by page.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "voices"
+        }
+      ],
+      "findings": [
+        "who-style-guide: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
+        "who-style-guide: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "cat-bootstrap",
+      "title": "cat-bootstrap",
+      "description": "The graph an agent reads before it knows what this repository is.",
+      "footer": true,
+      "icon": null,
+      "tone": 96,
+      "reads": "a seed germinating — the first thing, before anything else is known",
+      "genericAvatar": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 3
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "cat-harness"
+        }
+      ],
+      "findings": [
+        "cat-bootstrap: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link."
+      ]
+    }
   ]
 }
