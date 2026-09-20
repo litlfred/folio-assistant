@@ -888,36 +888,100 @@ describes, the artefact is carrying something it should not.</p>
 
 <p>The same reasoning removed the per-module declaration list: a declaration
 already names its module, so the list was one fact written twice.</p>
-<h2 id="where-a-viewer-publishes">
+<h2 id="where-a-viewer-publishes--two-rules-not-three">
   
   
-    <a href="#where-a-viewer-publishes" class="anchor-heading" aria-labelledby="where-a-viewer-publishes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a viewer publishes
+    <a href="#where-a-viewer-publishes--two-rules-not-three" class="anchor-heading" aria-labelledby="where-a-viewer-publishes--two-rules-not-three"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a viewer publishes — TWO rules, not three
   
   
 </h2>
     
 
-<p><strong>The URL is the handled directory’s repo-relative path</strong>, and a subject
-segment is optional (owner, 2026-09-20: <em>”<code class="language-plaintext highlighter-rouge">&lt;baseurl&gt;/&lt;path to kind in
-knowledge graph&gt;</code> or <code class="language-plaintext highlighter-rouge">&lt;path to dir handled&gt;/&lt;optional subject&gt;</code>“</em>). A viewer
-with no subject is the view over all of them.</p>
+<p>Owner, 2026-09-20:</p>
+
+<blockquote>
+  <p>i want two rules…. not three. one is cat-harness handling the <code class="language-plaintext highlighter-rouge">library/</code>
+dir which has who-iris assets in it. one is who-iris handler to mock current
+iris website.</p>
+</blockquote>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>rule</th>
+      <th>form</th>
+      <th>what it is</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1 — a handler renders a kind’s assets</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;handler&gt;/&lt;kind&gt;/&lt;optional subject&gt;</code></td>
+      <td>cat-harness’s machinery over some graph. <code class="language-plaintext highlighter-rouge">&lt;base&gt;/cat-harness/library/who-iris/</code></td>
+    </tr>
+    <tr>
+      <td><strong>2 — an instance presents itself</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;instance&gt;/</code></td>
+      <td>who-iris mocking the IRIS website</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The handler is the instance doing the rendering, the kind names what it
+renders, and the <strong>subject is optional</strong> — a page with no subject is the view
+over every subject.</p>
+
+<p><strong>A subject page must NEVER be published at <code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;subject&gt;/&lt;kind&gt;/</code>.</strong> That
+is rule 2’s namespace, and a viewer parked there squats on the instance’s own
+site. An earlier draft was about to publish <code class="language-plaintext highlighter-rouge">who-iris/library/</code> exactly there,
+on a misreading of “path to dir handled” as the page’s address rather than as
+what the page shows.</p>
 
 <p><code class="language-plaintext highlighter-rouge">viewerPlacement</code> in <code class="language-plaintext highlighter-rouge">gen-schema-viz.ts</code> is the single implementation, shared
-with the library viewer rather than restated — two statements of one placement
-rule are two answers the moment either moves. It also computes the page’s link
-back to its projection from the page’s own depth, because a literal
-<code class="language-plaintext highlighter-rouge">../assets/...</code> kept parsing and fetched nothing the first time a page moved a
-level down.</p>
+with the library viewer — two statements of one placement rule are two answers
+the moment either moves. It also computes the page’s link back to its
+projection from the page’s own depth, because a literal <code class="language-plaintext highlighter-rouge">../assets/…</code> keeps
+parsing and fetches nothing once a page gains a level.</p>
 
-<p><strong>Resolve, never compose.</strong> An earlier draft built the address from the
-rendering instance’s name plus the graph kind. That is right for
-<code class="language-plaintext highlighter-rouge">cat-harness/schemas/</code> by coincidence and wrong for anything not sitting at
-owner/kind — <code class="language-plaintext highlighter-rouge">who-iris/library/</code> would have been addressed as
-<code class="language-plaintext highlighter-rouge">cat-harness/library</code>, naming the machinery where the rule names the data.</p>
-<h2 id="editing-a-viewer--no-backticks">
+<p><strong>One projection serves every page.</strong> A scoped page filters client-side on a
+<code class="language-plaintext highlighter-rouge">SCOPE</code> constant; a second JSON per subject would be the same facts written
+N+1 times, free to disagree the moment one is regenerated. Counts are scoped
+too — reporting the graph-wide edge total on a page showing nine declarations
+claims 512 edges among those nine.</p>
+<h3 id="docs-is-the-same-shape-and-its-subject-means-something-specific">
   
   
-    <a href="#editing-a-viewer--no-backticks" class="anchor-heading" aria-labelledby="editing-a-viewer--no-backticks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editing a viewer — no backticks
+    <a href="#docs-is-the-same-shape-and-its-subject-means-something-specific" class="anchor-heading" aria-labelledby="docs-is-the-same-shape-and-its-subject-means-something-specific"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">docs/</code> is the same shape, and its subject means something specific
+  
+  
+</h3>
+    
+
+<p>Owner, same day:</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">&lt;base&gt;/cat-harness/docs/</code> is where all harness user documentation is… so
+documentation at <code class="language-plaintext highlighter-rouge">&lt;base&gt;/cat-harness/docs/who-iris/</code> is more documentation
+ABOUT iris, how it is ingested etc. <strong>not the iris content</strong>. source content
+is repo root <code class="language-plaintext highlighter-rouge">who-iris/docs</code>. part of cat-handler <code class="language-plaintext highlighter-rouge">docs/</code> handler is to look
+out for <code class="language-plaintext highlighter-rouge">docs/</code> directories in harness kinds.</p>
+</blockquote>
+
+<p>So a subject page under a handler is <strong>about</strong> its subject, rendered by the
+handler — never the subject’s own content relocated. The content stays in the
+subject’s own <code class="language-plaintext highlighter-rouge">docs/</code>, and the handler’s job includes looking for those
+directories.</p>
+
+<p><strong>Measured 2026-09-20 and not yet true:</strong> only <code class="language-plaintext highlighter-rouge">cat-harness</code> has a <code class="language-plaintext highlighter-rouge">docs/</code>
+directory and only it declares one, with <code class="language-plaintext highlighter-rouge">dependents: "skip"</code> — which is
+precisely what stops a dependent from getting its own. Nothing was declared
+against an absent directory here, because a declared-but-absent directory is
+the <code class="language-plaintext highlighter-rouge">dh4f</code> defect. Bean <code class="language-plaintext highlighter-rouge">n0nf</code> carries the same <code class="language-plaintext highlighter-rouge">skip</code> finding from the root’s
+side.</p>
+<h2 id="editing-a-viewer--no-backticks-editing-a-viewer--no-backticks">
+  
+  
+    <a href="#editing-a-viewer--no-backticks-editing-a-viewer--no-backticks" class="anchor-heading" aria-labelledby="editing-a-viewer--no-backticks-editing-a-viewer--no-backticks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editing a viewer — no backticks## Editing a viewer — no backticks
   
   
 </h2>
@@ -971,7 +1035,7 @@ not ship.</li>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35536789327"><code>c424e02</code></a> &middot; 2026-09-20T20:50:58Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35537416021"><code>420ef5e</code></a> &middot; 2026-09-20T21:02:57Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
