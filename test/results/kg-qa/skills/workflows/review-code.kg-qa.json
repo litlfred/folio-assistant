@@ -32,17 +32,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_ReviewTool",
-          "detail": "needs skill \"covered-is-not-reachable\", but its lane's role \"code-reviewer\" does not carry it."
-        },
-        {
-          "where": "Task_ReviewSchema",
-          "detail": "needs skill \"site-presentation-assets\", but its lane's role \"code-reviewer\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -58,8 +49,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 3,
     "unknown": 0
   }
