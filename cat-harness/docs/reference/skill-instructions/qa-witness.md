@@ -1,6 +1,6 @@
 ---
 layout: default
-title: QA witnesses
+title: 'QA witnesses'
 parent: Skill instructions
 ---
 

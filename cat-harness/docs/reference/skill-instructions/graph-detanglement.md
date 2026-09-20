@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Graph detanglement
+title: 'Graph detanglement'
 parent: Skill instructions
 ---
 

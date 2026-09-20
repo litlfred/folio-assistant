@@ -1,6 +1,6 @@
 ---
 layout: default
-title: LaTeX Validation
+title: 'LaTeX Validation'
 parent: Skill instructions
 ---
 

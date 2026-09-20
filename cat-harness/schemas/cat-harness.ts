@@ -1387,6 +1387,15 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * would hand one back.
    */
   stickies?: StickyContribution[];
+  /**
+   * What this instance is excused from rendering, and what it carries instead.
+   *
+   * See {@link RenderExemption}. **Absent is the normal case** — every
+   * instance owes a visualiser per declared subgraph, which is the `2krx` QA
+   * axis. Present means a layer has traded that obligation for another one it
+   * names, and it is refused without a `reason` and an `owes`.
+   */
+  renderExemption?: RenderExemption;
 }
 
 /**
@@ -1941,6 +1950,135 @@ export const RemoteGraphSchema = z
  * then has to guess which it got.
  */
 
+/**
+ * What a {@link RenderExemption} may excuse an instance from.
+ *
+ * Two entries, because the owner named two and they fail differently: a
+ * subgraph nobody can look at, and a process nobody can look at. Closed, so a
+ * declaration cannot excuse itself from an obligation nobody has defined.
+ */
+export const RENDER_OBLIGATIONS = ["visualiser", "workflow-visualiser"] as const;
+export type RenderObligation = (typeof RENDER_OBLIGATIONS)[number];
+
+/**
+ * An instance's declared exemption from the rendering obligations, with a
+ * reason and a substitute.
+ *
+ * ## The rule this encodes is a FLOOR THAT RISES, not a flat requirement
+ *
+ * [`cat-harness-minimum`](../docs/architecture/cat-harness-minimum.md) carries
+ * *"if it produces something a human looks at, it is not the harness"*, and
+ * the same architecture states that an instance renders by default. Read
+ * flatly the two cannot both hold. The owner settled it on 2026-09-20: the
+ * requirement **starts** at `cat-harness` rather than applying uniformly.
+ *
+ * | layer | visualiser | its own `.json` / `.jsonld` |
+ * |---|---|---|
+ * | `cat-bootstrap` | **exempt** — it is the navbar FOOTER | **required** |
+ * | `cat-harness` | required | required |
+ * | everything above | required | required |
+ *
+ * `cat-harness` is where the rest begins to apply for an obligation rather
+ * than a convention: it is what supplies the layers above with `folio/`, and a
+ * layer that hands its dependents a folio and renders nothing itself is asking
+ * of them what it did not do.
+ *
+ * ## Why `owes` is REQUIRED, when it could have been prose in a doc
+ *
+ * Because an exemption with no substitute is a hole, and a list of holes with
+ * no substitutes is a silence list — which is exactly what `2krx` says an
+ * opt-out must not become: *"an opt-out needs a REASON per entry … or it
+ * becomes a silence list."* cat-bootstrap does not simply drop out of the
+ * requirement; in the owner's words its `.json`/`.jsonld` *"is its
+ * existence"*, so it trades a criterion it could fail quietly for one it
+ * cannot. `owes` is where that trade is written down, and
+ * {@link renderExemptionProblems} refuses an empty one.
+ *
+ * ## Declared locally, validated globally
+ *
+ * The declaration is local because only the instance knows why. The guard
+ * against the exemption SPREADING is not — {@link renderExemptionProblems}
+ * takes the count of claimants across the repository, because "only the bottom
+ * layer may claim this" is a fact about the stack and cannot be seen from one
+ * file. A second claimant is a finding rather than a silent widening: that is
+ * the failure mode a self-declared exemption otherwise has, and it is the
+ * reason this is not simply a boolean.
+ */
+export interface RenderExemption {
+  /** Which obligations are excused. Non-empty. */
+  of: RenderObligation[];
+  /** Why this layer is the exception. Prose, and required. */
+  reason: string;
+  /**
+   * What it carries INSTEAD — the criterion it cannot fail quietly.
+   *
+   * Required. An exemption whose substitute is unstated is indistinguishable
+   * from a layer that simply never got round to rendering.
+   */
+  owes: string;
+}
+
+export const RenderExemptionSchema = z.object({
+  of: z.array(z.enum(RENDER_OBLIGATIONS)).min(1),
+  reason: z.string().min(1),
+  owes: z.string().min(1),
+});
+
+/**
+ * Is this instance excused from `obligation`?
+ *
+ * The predicate the `2krx` axis calls before raising a no-visualiser finding,
+ * so the exemption is read from the declaration rather than from a hardcoded
+ * instance name in the checker. A name literal would make the rule true only
+ * for the one instance somebody remembered.
+ */
+export function isExemptFrom(
+  d: Pick<CatHarnessDeclaration, "renderExemption">,
+  obligation: RenderObligation,
+): boolean {
+  return d.renderExemption?.of.includes(obligation) ?? false;
+}
+
+/**
+ * Everything wrong with the exemptions declared across a repository.
+ *
+ * Empty means every claim is well-formed AND there is at most one claimant.
+ * Takes the whole set rather than one declaration for the reason
+ * {@link RenderExemption} gives: the shape being guarded is a stack, and a
+ * second claimant cannot be seen from the first one's file.
+ *
+ * **At most one, not exactly one.** A repository that vendors no cat-bootstrap
+ * has nothing to exempt, and failing it for that would be asking it to declare
+ * something to stay green — which is how a declaration stops meaning anything.
+ */
+export function renderExemptionProblems(
+  claimants: ReadonlyArray<{ name: string; renderExemption?: RenderExemption }>,
+): string[] {
+  const problems: string[] = [];
+  const claiming = claimants.filter((c) => c.renderExemption !== undefined);
+  for (const c of claiming) {
+    const parsed = RenderExemptionSchema.safeParse(c.renderExemption);
+    if (!parsed.success) {
+      problems.push(
+        `${c.name}: renderExemption is malformed — ${parsed.error.issues
+          .map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`)
+          .join("; ")}`,
+      );
+    }
+  }
+  if (claiming.length > 1) {
+    problems.push(
+      `${claiming.length} instances claim a renderExemption (${claiming
+        .map((c) => c.name)
+        .sort()
+        .join(", ")}) — the exemption is the BOTTOM of the stack and there is ` +
+        `one bottom. A second claimant is the requirement spreading upward, ` +
+        `which is what this refuses to do quietly.`,
+    );
+  }
+  return problems;
+}
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -1967,6 +2105,7 @@ export const CatHarnessDeclarationSchema = z.object({
    */
   remoteGraphs: z.array(RemoteGraphSchema).default([]),
   stickies: z.array(StickyContributionSchema).optional(),
+  renderExemption: RenderExemptionSchema.optional(),
 });
 
 /**
@@ -2303,6 +2442,84 @@ export function siteDirFor(root: string): string {
     throw new Error(`cannot determine the site root: ${p} declares neither \`stub\` nor \`name\``);
   }
   return siteDir({ name: stub, stub });
+}
+
+/**
+ * A declared asset's path, as the PUBLISHED site serves it.
+ *
+ * `docs/assets/img/x.webp` → `/assets/img/x.webp`. An instance declares an
+ * image by its repo-relative path, and the site build copies the site
+ * directory's CONTENTS to the site root — so the declared prefix is exactly
+ * what a published URL does not carry.
+ *
+ * **Derived from {@link siteDirFor}, never from the literal `docs/`.** Two
+ * consumers needed this and the first wrote the literal; the second would have
+ * copied it, and an instance that moves its site directory would then serve
+ * two different answers — one correct, one a 404 that looks like a missing
+ * image. `site-dir-single-answer.test.ts` exists for exactly this class of
+ * duplicate.
+ *
+ * A path that does not start with the site directory is **passed through
+ * unchanged**: it is either already site-relative or points somewhere this
+ * function has no business rewriting, and guessing would turn a working
+ * external URL into a broken local one.
+ */
+export function publishedAssetPath(root: string, src: string): string {
+  const prefix = `${siteDirFor(root)}/`;
+  return src.startsWith(prefix) ? `/${src.slice(prefix.length)}` : src;
+}
+
+/**
+ * Where this sticky's declaration can be read and edited, on the forge.
+ *
+ * ## Both, because they are different acts
+ *
+ * The owner: *"edit tool = link to github pages edit directrly ... rendeding
+ * shows edit src icon (and also need view icon)"*. `/blob/` is reading and
+ * `/edit/` opens the editor; a reader who wants to check what a card says
+ * should not be taken to a text box, and one who wants to fix it should not
+ * have to find the button themselves.
+ *
+ * ## Absent, not broken, when there is no forge
+ *
+ * *"if github tools avaialable in rendering pipeline"* — so this is a real
+ * probe rather than a hardcoded address. `detectRepoUrl` reads `origin` and
+ * `upload-url.ts` already refuses a non-github.com remote for the same reason:
+ * the `/edit/<branch>/<path>` form is GitHub's, and emitting it for another
+ * forge is a guess wearing a URL's clothes.
+ *
+ * Returning `undefined` is what makes the control ABSENT rather than dead. A
+ * link that 404s is worse than no link: it invites a click, and on a private
+ * repository it 404s for exactly the reader who cannot edit, which reads as
+ * "this page is broken" rather than "you cannot do this".
+ *
+ * `declaredIn` is repo-relative and comes from the SUBJECT itself, so a card
+ * contributed by `cat-bootstrap` links to `cat-bootstrap/harness.json` rather
+ * than to whichever declaration happened to be read first — and a todo links
+ * to its own file.
+ *
+ * ## It lives HERE, below both callers
+ *
+ * It was in `landing-sticky.ts` until bean `pb04` gave the todo index the
+ * same two controls. The owner, 2026-09-20: *"notes exist lower down than
+ * folio. make sure arrows correct."* This is not about stickies — it is
+ * "where is this file on the forge" — and leaving it up there made a
+ * note-layer generator reach sideways into the folio-facing module.
+ * `repo-partition` allowed it, because both are `core`; the layer arrow was
+ * still wrong. Beside {@link publishedAssetPath}, which is the same shape of
+ * transform, both callers point DOWN at one answer instead of at each other.
+ */
+export function sourceLinks(
+  repoUrl: string | undefined,
+  declaredIn: string,
+  branch: string,
+): { viewHref: string; editHref: string } | undefined {
+  if (repoUrl === undefined) return undefined;
+  const path = declaredIn.split("/").map(encodeURIComponent).join("/");
+  return {
+    viewHref: `${repoUrl}/blob/${branch}/${path}`,
+    editHref: `${repoUrl}/edit/${branch}/${path}`,
+  };
 }
 
 /**

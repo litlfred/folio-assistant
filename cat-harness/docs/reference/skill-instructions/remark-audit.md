@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Remark Audit
+title: 'Remark Audit'
 parent: Skill instructions
 ---
 

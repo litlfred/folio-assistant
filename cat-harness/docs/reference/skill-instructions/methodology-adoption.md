@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Adopting a methodology, and choosing between them
+title: 'Adopting a methodology, and choosing between them'
 parent: Skill instructions
 ---
 

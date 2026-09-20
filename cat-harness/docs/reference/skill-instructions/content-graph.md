@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Graph
+title: 'Content Graph'
 parent: Skill instructions
 ---
 

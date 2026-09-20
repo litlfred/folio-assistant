@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The deterministic-to-agentic spectrum
+title: 'The deterministic-to-agentic spectrum'
 parent: Skill instructions
 ---
 

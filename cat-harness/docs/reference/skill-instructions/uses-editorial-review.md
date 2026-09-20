@@ -1,6 +1,6 @@
 ---
 layout: default
-title: `uses[]` Editorial Review
+title: '`uses[]` Editorial Review'
 parent: Skill instructions
 ---
 

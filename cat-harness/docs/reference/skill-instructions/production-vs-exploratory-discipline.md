@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Production vs exploratory vs numerology
+title: 'Production vs exploratory vs numerology'
 parent: Skill instructions
 ---
 

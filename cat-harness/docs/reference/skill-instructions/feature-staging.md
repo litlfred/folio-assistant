@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Feature-branch staging
+title: 'Feature-branch staging'
 parent: Skill instructions
 ---
 

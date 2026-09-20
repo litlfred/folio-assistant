@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean Build Fix
+title: 'Lean Build Fix'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Documentation Generation
+title: 'Documentation Generation'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: HTML Rendering QC
+title: 'HTML Rendering QC'
 parent: Skill instructions
 ---
 

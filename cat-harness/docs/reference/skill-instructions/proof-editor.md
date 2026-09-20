@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Proof Editor (Coordinator)
+title: 'Proof Editor (Coordinator)'
 parent: Skill instructions
 ---
 

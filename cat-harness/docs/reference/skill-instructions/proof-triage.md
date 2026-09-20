@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Proof Triage & Resolution
+title: 'Proof Triage & Resolution'
 parent: Skill instructions
 ---
 

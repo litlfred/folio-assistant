@@ -72,6 +72,37 @@ export type TodoGraphNode = GraphNodeDirectory;
 export const TodoGraphSchema = z.object({
   /** Display name — whose todos these are. */
   name: z.string().min(1),
+  /**
+   * The theme a todo takes when it does not choose one — an id from `THEMES`.
+   *
+   * ## Why the DEFAULT is declared here rather than picked at render time
+   *
+   * Bean `5y4b`, and the owner's ask was *"todos need grump cat themeing based
+   * on content too. used jugement"*. A theme chosen by keyword-matching a
+   * summary in JavaScript is a rule nobody can see, review or override, and it
+   * changes silently when somebody rewords a todo. So the theme is **data on
+   * the todo**, and this is the value it falls back to.
+   *
+   * ## Why a DEFAULT at all, rather than requiring every todo to choose
+   *
+   * Because **a wrong theme is worse than no theme.** A plain card says
+   * nothing; a card themed `operations` says *"this is operations work"* about
+   * a todo that may be nothing of the sort. A default that is the instance's
+   * own theme makes no claim — it says "this belongs to this folio" — so it is
+   * safe to apply to everything, which is exactly what a clever guess is not.
+   *
+   * ## Why it lives on the GRAPH and not in the code
+   *
+   * A folio's own theme is the folio's to choose, and a literal in the
+   * generator would be this repository's answer imposed on every downstream
+   * instance. Absent means **no default**: a todo that chooses nothing renders
+   * as a flat card, which is today's behaviour and a determined state rather
+   * than a failure.
+   */
+  defaultTheme: z
+    .string()
+    .regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case")
+    .optional(),
   directories: z.array(TodoGraphNodeSchema).min(1),
 });
 export type TodoGraph = z.infer<typeof TodoGraphSchema>;

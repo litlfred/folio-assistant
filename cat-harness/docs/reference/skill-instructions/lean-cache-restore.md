@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean cache: the authoring loop
+title: 'Lean cache: the authoring loop'
 parent: Skill instructions
 ---
 

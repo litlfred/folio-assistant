@@ -378,6 +378,15 @@ export const RULES: Rule[] = [
       // harness module. The pure check it drives, `schemas/theme-art-intake.ts`,
       // needs none of that and is left to the `schemas/` prefix.
       "scripts/check-theme-art.ts",          // theme/avatar art intake, run over what shipped
+      // The same shape as the entry above, arrived at independently: its
+      // subject is the avatar crop boxes (harness — site presentation), and
+      // its classification is decided by the import, because it reads THIS
+      // INSTANCE'S declaration and so must register core's `folio` kind.
+      "scripts/render-avatar-crops.ts",      // the declared avatarRegions, drawn so a person can look
+      // The theming subgraph's VISUALISER, and core for the same reason as the
+      // two above: it reads this instance's declaration to resolve each
+      // theme's backdrop, so it must register core's `folio` kind.
+      "scripts/render-theme-sheet.ts",       // every theme: palette, contrast, art, both regions
       // The reverse of `check-declared-assets` (declared -> disk): this walks
       // disk -> declared. Same reason it is core rather than harness — it reads
       // an instance's declaration, and this instance declares a `folio` graph,

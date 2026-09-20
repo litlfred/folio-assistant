@@ -1,6 +1,6 @@
 ---
 layout: default
-title: A falling-off retry rate, on every error
+title: 'A falling-off retry rate, on every error'
 parent: Skill instructions
 ---
 

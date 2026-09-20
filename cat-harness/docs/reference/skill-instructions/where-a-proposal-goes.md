@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Where a proposal goes
+title: 'Where a proposal goes'
 parent: Skill instructions
 ---
 

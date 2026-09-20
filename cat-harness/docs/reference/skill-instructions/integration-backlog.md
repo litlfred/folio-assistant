@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /integration-backlog
+title: '/integration-backlog'
 parent: Skill instructions
 ---
 

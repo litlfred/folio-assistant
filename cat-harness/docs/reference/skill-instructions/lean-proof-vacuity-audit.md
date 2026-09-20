@@ -1,6 +1,6 @@
 ---
 layout: default
-title: lean-proof-vacuity-audit
+title: 'lean-proof-vacuity-audit'
 parent: Skill instructions
 ---
 

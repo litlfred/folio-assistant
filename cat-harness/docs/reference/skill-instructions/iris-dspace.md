@@ -1,6 +1,6 @@
 ---
 layout: default
-title: IRIS, DSpace and Dublin Core
+title: 'IRIS, DSpace and Dublin Core'
 parent: Skill instructions
 ---
 

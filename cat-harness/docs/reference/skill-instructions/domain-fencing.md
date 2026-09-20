@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Domain fencing
+title: 'Domain fencing'
 parent: Skill instructions
 ---
 

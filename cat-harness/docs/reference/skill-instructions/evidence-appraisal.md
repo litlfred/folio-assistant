@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Evidence Appraisal
+title: 'Evidence Appraisal'
 parent: Skill instructions
 ---
 

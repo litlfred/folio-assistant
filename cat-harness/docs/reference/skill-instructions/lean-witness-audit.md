@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean Witness Audit
+title: 'Lean Witness Audit'
 parent: Skill instructions
 ---
 

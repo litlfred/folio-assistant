@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Serving a rendering
+title: 'Serving a rendering'
 parent: Skill instructions
 ---
 

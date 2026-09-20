@@ -230,15 +230,26 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     kind: "covered-by",
     reason: "`gen-docs-pages.ts --check` is in the gate set; the site build runs the writer",
   },
+  // The two projection writers are run by the SITE BUILD and by nothing else.
+  //
+  // Their `--check` twins are deliberately not in the gate set (owner,
+  // 2026-09-20): both projections derive from the whole repository, so the
+  // check reddens when somebody else merges rather than when the author
+  // forgets — which is not an omission, and not what a gate is for. Saying
+  // "covered-by" here would have been false the moment the gate came out.
   {
     match: "run schema:viz",
     kind: "covered-by",
-    reason: "`schema:viz:check` is in the gate set; the site build runs the writer",
+    reason:
+      "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
+      "`schema:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
     match: "run library:viz",
     kind: "covered-by",
-    reason: "`library:viz:check` is in the gate set; the site build runs the writer",
+    reason:
+      "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
+      "`library:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
     match: "run translation:index",
@@ -603,6 +614,18 @@ export interface ScriptExemption {
  * whole difference, since the comment silently covered six of nine.
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
+  {
+    script: "schema:viz:check",
+    kind: "covered-by",
+    reason:
+      "the site build runs the WRITER at deploy (`docs-site.yml`), so nothing published goes stale. Deliberately not gated (owner, 2026-09-20): the projection derives from the WHOLE repository, so the check reddens when somebody ELSE merges rather than when the author forgets. Measured on PR #583 — `main` moved four times in one session (120, 2, 2, 11 commits) and twice that reddened a branch whose own tree was correct. A red that is not an omission is the thing `gen-docs-pages --check` sets the standard against. Run it by hand, or from `/prepare-merge`",
+  },
+  {
+    script: "library:viz:check",
+    kind: "covered-by",
+    reason:
+      "same as `schema:viz:check` and for the same reason: the writer runs at deploy, and the projection derives from the whole repository, so its red means a sibling merged rather than that this diff forgot. Run it by hand, or from `/prepare-merge`",
+  },
   {
     script: "check:ci-health",
     kind: "report",

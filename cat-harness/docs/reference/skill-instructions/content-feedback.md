@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Feedback Collection
+title: 'Content Feedback Collection'
 parent: Skill instructions
 ---
 

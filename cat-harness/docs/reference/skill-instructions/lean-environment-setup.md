@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean Environment Setup
+title: 'Lean Environment Setup'
 parent: Skill instructions
 ---
 

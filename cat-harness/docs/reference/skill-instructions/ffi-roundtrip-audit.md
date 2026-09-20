@@ -1,6 +1,6 @@
 ---
 layout: default
-title: FFI roundtrip audit
+title: 'FFI roundtrip audit'
 parent: Skill instructions
 ---
 

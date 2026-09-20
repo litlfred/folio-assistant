@@ -1,6 +1,6 @@
 ---
 layout: default
-title: definition-clarity-audit
+title: 'definition-clarity-audit'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Playing a state machine
+title: 'Playing a state machine'
 parent: Skill instructions
 ---
 

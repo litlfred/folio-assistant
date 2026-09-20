@@ -5,6 +5,9 @@ summary: "The human-todos page still says 'Not built yet' — the store now exis
 status: open
 priority: high
 origin: agent
+# THEME, chosen by judgement from this todo's content (bean `5y4b`).
+# The subject is a DOCUMENTATION page whose text disagrees with the store behind it. `library` is the theme for knowledge-graph discussion, content and data modelling, which is what a docs page saying the wrong thing about a graph is.
+theme: library
 createdAt: 2026-09-19
 targetLabel: sec:beans-and-todos-human-todos
 identities:

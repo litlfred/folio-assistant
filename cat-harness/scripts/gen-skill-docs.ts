@@ -262,6 +262,14 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // holds its skills directly, so `discoverGroups` takes the
   // `SKILLS_CATEGORIES[decl.id]` branch — the same one `cat-bootstrap` uses
   // below. Keyed on `crdm` it threw, naming the id it actually wanted.
+  // `theming` is above, keyed by its package-subdirectory name. Two sessions
+  // built that package independently on 2026-09-20 and this entry was the
+  // duplicate: one put it at `skills/theming/` (a subdirectory, keyed by
+  // basename) and the other at a top-level `cat-harness/theming/` (a declared
+  // directory, keyed by id). Same key either way, so the object literal had
+  // it twice. The subdirectory won on evidence — bean `lps0` measured that
+  // `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so the top-level
+  // placement silently dropped its skills out of skill QA.
   "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
   "methodology-raci": "RACI involvement model (methodologies/raci)",
   "remote-stubs": "Declared but not implemented here (stubs)",
@@ -278,6 +286,13 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `cat-harness/` move, which is the next step on bean `wggr` and would turn
   // `src/skills` into `cat-harness/src/skills`.
   "cat-bootstrap": "CatBootstrap (read before anything else is known)",
+  // CatBootstrap's SECOND declared directory, and the one that constitutes its
+  // exemption rather than describing it: the layer is excused a visualiser and
+  // owes its own `.jsonld`/`.json` instead, so the skills governing that
+  // emission ARE the substitute. Its own heading, because a reader meeting
+  // "how cat-bootstrap emits its graph" under "read before anything else is
+  // known" would reasonably conclude they have to read it first. Bean `hfkl`.
+  "cat-bootstrap-render": "CatBootstrap rendering (cat-bootstrap/render)",
   "cat-harness-src": "Agent skills",
   // Two top-level named subgraphs, staged ahead of the split (#223) and both
   // keyed by DECLARED ID for the reason the comment above gives: their paths
@@ -569,7 +584,21 @@ function main(): void {
       const page: string[] = [];
       page.push("---");
       page.push("layout: default");
-      page.push(`title: ${title}`);
+      // QUOTED, always. A skill's title is its H1, which is prose — so it
+      // carries colons ("Contrast: measured over the darkest thing that could
+      // be there") and backticks, and YAML rejects both unquoted. The page
+      // then has front matter Jekyll cannot parse, which `translation:index`
+      // reports as *"it could not be translated as things stand"* and nothing
+      // else notices, because the page still renders.
+      //
+      // Measured 2026-09-20: SIX generated pages were in that state, four of
+      // them predating the skill that made the seventh. Quoting here fixes the
+      // class rather than renaming headings one at a time.
+      //
+      // Single quotes, with YAML's own escape (a doubled quote), because a
+      // title may contain a backtick and a double-quoted scalar would then
+      // need backslash rules a heading has no reason to obey.
+      page.push(`title: '${title.replace(/'/g, "''")}'`);
       page.push("parent: Skill instructions");
       page.push("---");
       page.push("");

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Semantic review scoping
+title: 'Semantic review scoping'
 parent: Skill instructions
 ---
 

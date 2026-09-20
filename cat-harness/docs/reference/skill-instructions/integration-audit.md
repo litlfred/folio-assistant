@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /integration-audit
+title: '/integration-audit'
 parent: Skill instructions
 ---
 

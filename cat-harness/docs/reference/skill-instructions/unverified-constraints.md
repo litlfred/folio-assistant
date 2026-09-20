@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Never encode a constraint you have not verified
+title: 'Never encode a constraint you have not verified'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Document Intake
+title: 'Document Intake'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Validation
+title: 'Content Validation'
 parent: Skill instructions
 ---
 

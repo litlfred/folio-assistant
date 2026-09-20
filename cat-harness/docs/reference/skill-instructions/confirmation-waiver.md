@@ -1,6 +1,6 @@
 ---
 layout: default
-title: A confirmation can be waived
+title: 'A confirmation can be waived'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: QA report signing
+title: 'QA report signing'
 parent: Skill instructions
 ---
 

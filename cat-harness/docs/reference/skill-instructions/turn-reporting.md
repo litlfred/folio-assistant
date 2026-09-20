@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Turn reporting
+title: 'Turn reporting'
 parent: Skill instructions
 ---
 
