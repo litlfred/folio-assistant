@@ -174,4 +174,115 @@ NO `folio:bean` on this step. It records that a claim happened; it does not clai
     <bpmn:sequenceFlow id="F_12" name="the session is ending" sourceRef="Gateway_TurnEffect" targetRef="A_CloseSession"/>
     <bpmn:sequenceFlow id="F_13" sourceRef="A_CloseSession" targetRef="End_Session"/>
   </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_SessionStateMachine">
+    <bpmndi:BPMNPlane id="Plane_SessionStateMachine" bpmnElement="Collab_SessionStateMachine">
+      <bpmndi:BPMNShape id="Shape_Participant_SessionStateMachine" bpmnElement="Participant_SessionStateMachine" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1200" height="610" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Machine" bpmnElement="Lane_Machine" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1170" height="320" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Human" bpmnElement="Lane_Human" isHorizontal="true">
+        <dc:Bounds x="190" y="400" width="1170" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Record" bpmnElement="Lane_Record" isHorizontal="true">
+        <dc:Bounds x="190" y="570" width="1170" height="120" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Start_Session" bpmnElement="Start_Session">
+        <dc:Bounds x="220" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_IdentifyActor" bpmnElement="A_IdentifyActor">
+        <dc:Bounds x="300" y="200" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_ActorKnown" bpmnElement="Gateway_ActorKnown" isMarkerVisible="true">
+        <dc:Bounds x="490" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_AskWhoIsActing" bpmnElement="A_AskWhoIsActing">
+        <dc:Bounds x="390" y="430" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_OpenSession" bpmnElement="A_OpenSession">
+        <dc:Bounds x="590" y="200" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_ReadTurn" bpmnElement="A_ReadTurn">
+        <dc:Bounds x="790" y="200" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_TurnEffect" bpmnElement="Gateway_TurnEffect" isMarkerVisible="true">
+        <dc:Bounds x="980" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Touch" bpmnElement="A_Touch">
+        <dc:Bounds x="1080" y="100" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_UpdateSession" bpmnElement="A_UpdateSession">
+        <dc:Bounds x="1080" y="200" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_CloseSession" bpmnElement="A_CloseSession">
+        <dc:Bounds x="1080" y="300" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Session" bpmnElement="End_Session">
+        <dc:Bounds x="1290" y="322" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Edge_F_1" bpmnElement="F_1">
+        <di:waypoint x="256" y="240" />
+        <di:waypoint x="300" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_2" bpmnElement="F_2">
+        <di:waypoint x="440" y="240" />
+        <di:waypoint x="490" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_3" bpmnElement="F_3">
+        <di:waypoint x="515" y="265" />
+        <di:waypoint x="515" y="470" />
+        <di:waypoint x="530" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_4" bpmnElement="F_4">
+        <di:waypoint x="390" y="470" />
+        <di:waypoint x="370" y="470" />
+        <di:waypoint x="370" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_5" bpmnElement="F_5">
+        <di:waypoint x="540" y="240" />
+        <di:waypoint x="590" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_6" bpmnElement="F_6">
+        <di:waypoint x="730" y="240" />
+        <di:waypoint x="790" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_7" bpmnElement="F_7">
+        <di:waypoint x="930" y="240" />
+        <di:waypoint x="980" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_8" bpmnElement="F_8">
+        <di:waypoint x="1005" y="215" />
+        <di:waypoint x="1005" y="140" />
+        <di:waypoint x="1080" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_9" bpmnElement="F_9">
+        <di:waypoint x="1080" y="140" />
+        <di:waypoint x="860" y="140" />
+        <di:waypoint x="860" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_10" bpmnElement="F_10">
+        <di:waypoint x="1030" y="240" />
+        <di:waypoint x="1080" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_11" bpmnElement="F_11">
+        <di:waypoint x="1150" y="280" />
+        <di:waypoint x="1150" y="360" />
+        <di:waypoint x="860" y="360" />
+        <di:waypoint x="860" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_12" bpmnElement="F_12">
+        <di:waypoint x="1005" y="265" />
+        <di:waypoint x="1005" y="340" />
+        <di:waypoint x="1080" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_13" bpmnElement="F_13">
+        <di:waypoint x="1220" y="340" />
+        <di:waypoint x="1290" y="340" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </bpmn:definitions>
