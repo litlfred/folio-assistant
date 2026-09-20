@@ -139,3 +139,47 @@ describe("the workflow this reads is the one CI runs", () => {
     expect(text).toMatch(/^\s*pull_request:/m);
   });
 });
+
+describe("a strict reader and a loose one agree", () => {
+  test("no `bun` line in the workflow is silently dropped", () => {
+    // ONE STRICT READER, ONE LOOSE ONE, AND AN ASSERTION THAT THEY AGREE.
+    //
+    // Carried over from `ci-gates.test.ts`, retired 2026-09-20 in favour of
+    // this module. That one read the YAML with a regex whose path branch had
+    // the directory written in, so the move (bean `wggr`) made it stop seeing
+    // three gates — silently, because a gate a reader cannot see is not a
+    // gate it reports as missing. This cross-check is what caught it.
+    //
+    // The parser here cannot narrow the same way; it walks every job, step
+    // and line. The drop it CAN suffer is a gate the workflow invokes in a
+    // shape the `^(bun|bunx) ` filter does not match — indented under a
+    // conditional, chained after a `cd`, wrapped in a shell function. That is
+    // a real possibility and nothing else here would notice it.
+    //
+    // Deliberately over `--all`: the fast set is a SUBSET by design, so
+    // comparing the loose scan against it would fail on every browser job
+    // step and say nothing about dropping.
+    //
+    // Comment lines are stripped first, and that is not a convenience — this
+    // workflow documents its own past defects in prose, and one comment
+    // quotes a folded line that once ran two commands as one (bean `d2kp`).
+    // Counting those would report gates nobody runs, which is a different
+    // lie from the one this guards but a lie all the same.
+    const yaml = readFileSync(join(ROOT, GATES_WORKFLOW), "utf-8")
+      .split("\n")
+      .filter((l) => !/^\s*#/.test(l))
+      .join("\n");
+    // BOTH SHAPES. A step's command is either its own line inside a folded
+    // `run: |` block, or it follows `run:` on one line — and a first draft of
+    // this matched only the former, finding 18 where the workflow runs 37.
+    // It passed, because a loose scan that sees half the file cannot disagree
+    // with the strict one about the half it never looked at. The floor below
+    // is what turned that into a failure instead of a green cross-check.
+    const loose = [...yaml.matchAll(/^\s*(?:run:\s*)?(bunx? .+?)\s*$/gm)].map((m) => m[1]!);
+    const found = new Set(loadGates(ROOT, { all: true }).map((g) => g.command));
+    expect(loose.filter((c) => !found.has(c))).toEqual([]);
+    // And the guard is not vacuous — a loose scan that matched nothing would
+    // pass the filter above while proving nothing at all.
+    expect(loose.length).toBeGreaterThan(30);
+  });
+});
