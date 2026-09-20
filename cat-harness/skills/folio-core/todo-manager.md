@@ -194,6 +194,69 @@ instead. The CLI's `create` does not, and that is the mechanism behind the
 14,688 duplicates in `qou`. `--force` exists for a genuinely intended duplicate
 and has to be typed.
 
+## Check before you WORK — a checkbox is a claim, not a measurement (STRICT)
+
+`beans create` is not idempotent, and §"Check before you create" above is the
+guard. This is its twin at the other end: **a bean's stated state is a claim
+somebody wrote down once, and the code has moved since.**
+
+> **Re-measure a bean's open items against the code before you act on them.**
+
+The cost is not wasted effort. It is *acting on a stale claim*, and twice in
+one session (2026-09-20) that came within a single edit of re-introducing a
+defect a test had been written to catch.
+
+### Measured, one session, four beans
+
+| bean | what the file said | what was true |
+|---|---|---|
+| `sa8y` | four items open | one open; two done, one a **deliberate** decision |
+| `vo9d` | five items open | one open; four done by siblings |
+| `30hn` | 16 of 33 undeclared | 14 of 41 — and the mover was **this session** |
+| `koth` / `b11x` | two beans | one defect, filed **3m53s apart** |
+
+### The two failures this prevents, and they are different
+
+**1. Doing work that exists.** The cheap one. `vo9d`'s four items were done by
+`11d43ce4fb` and `ca5ec3e373`, neither of which ticked a box.
+
+**2. Undoing a decision that was recorded elsewhere.** The expensive one.
+`sa8y`'s *"the three unbound lanes get roles"* reads like a gap. The roles
+exist; what is missing is `lanes`, and its absence is deliberate —
+`bootstrap/skills/roles/roles.json` carries a `_lanes_comment` explaining that
+binding them mints three dangling links in the root's graph, with bean `pve3`
+owning the question. **Doing the obvious thing would have re-created the exact
+shape of the wrong fix `sa8y` exists to record.**
+
+The decision was never in the bean. It was in the file the bean is about.
+
+### What "re-measure" means, concretely
+
+- **Run the thing.** `sa8y`'s headline finding was fixed hours earlier;
+  `kg:audit` says so in one command.
+- **Read the body, not just the boxes.** `vo9d` describes a Tool node its own
+  checkbox still shows unticked.
+- **Date it.** `git log -S` on the symbol or the file against the bean's
+  `created_at` separates *fixed since* from *wrong when written* — and `vo9d`
+  was the second: it listed `check-l1-complete.ts` as having no callers when
+  `ingest-document.ts` had imported from it 32 minutes earlier.
+- **Read the file the bean is about**, for a comment saying why it is the way
+  it is. That is where a deliberate absence lives.
+
+### And a bean you re-measure, you record
+
+Leave what you found in the bean, with the commits and the times — a stale
+checkbox you silently worked around is one the next agent meets unchanged.
+Tick what is done and name who did it; withdraw a done-when you no longer
+believe, with reasons, rather than leaving it unmet. Where the bean and the
+code disagree, **the code is what is true and the bean is what is wrong** —
+the same rule [`AGENTS.md`'s banner](../../../AGENTS.md) states for a skill
+against that file.
+
+This is the work-plan half. The cross-session half — why two sessions can file
+one defect four minutes apart — is
+[`bean-coordination`](bean-coordination.md) §"A claim is branch-local".
+
 ## Working with Beans
 
 **1. Finding Tasks**
