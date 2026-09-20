@@ -74,7 +74,53 @@ export function stripLeanComments(src: string): string {
   return out.join("");
 }
 
-const DECL_RE =
+/**
+ * What a declaration LOOKS like, lexically.
+ *
+ * EXPORTED so that the one other regex in this repository asking the same
+ * question — `LEAN_DECL_RE` in `qa-checkers-q-usage.ts` — can be compared
+ * against it by a test rather than by eye.
+ *
+ * ## They disagree, measured 2026-09-20 (bean `bqrg`)
+ *
+ * `stripLeanComments` was converged onto this module and is gated by
+ * `lean-lexer-is-the-only-stripper.test.ts`. The DECLARATION SPLITTER was the
+ * half left over, and it is not one duplicate but two functions answering
+ * different questions off two different regexes:
+ *
+ * - `splitDeclarations` here returns byte offsets and a signature/body split;
+ * - `leanDeclSpans` there returns 1-indexed inclusive LINE ranges, so a caller
+ *   can blank everything outside a declaration while preserving line numbers.
+ *
+ * Those are genuinely different projections and neither replaces the other.
+ * What IS duplicated is the pattern below, and the two copies have drifted in
+ * four ways — three of which are defects HERE:
+ *
+ * | source | `axiom` | `opaque` | `unsafe` | dotted name |
+ * |---|---|---|---|---|
+ * | this | ✗ missed | ✗ missed | ✗ missed | ✓ `Foo.bar` |
+ * | `LEAN_DECL_RE` | ✓ | ✓ | ✓ | ✗ truncates to `Foo` |
+ *
+ * **`axiom` is the sharp one.** `splitDeclarations` feeds `lean-signature.ts`
+ * and `lean-triviality-probe.ts`, and in a formal corpus an axiom is the
+ * declaration whose presence most changes what a proof is worth. A triviality
+ * probe that cannot see one is blind to exactly what it exists to find.
+ *
+ * ## Why this is not simply widened here and now
+ *
+ * The bean's own warning, and it is right: every copy feeds a QA checker, so a
+ * behavioural change is a corpus-wide re-sweep and a changed verdict on merged
+ * content — *"converging them blind is how a cleanup becomes a silent
+ * re-scoring."* **This repository holds 0 `.lean` files**, so the sweep cannot
+ * be run here at all; it has to happen in a folio that carries a Lean corpus.
+ *
+ * So the divergence is PINNED rather than blessed:
+ * `lean-decl-regex-divergence.test.ts` asserts all four differences by name
+ * and fails the moment either pattern changes. It does not approve of them —
+ * it makes the next edit deliberate, and it is the place the sweep's results
+ * land when somebody converges these onto one union pattern.
+ */
+export const DECL_RE =
   /^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputable\s+|partial\s+)*(theorem|lemma|def|abbrev|structure|inductive|instance|class|example)\s+([A-Za-z_][A-Za-z0-9_'.!?]*)/gm;
 
 export interface DeclSpan {

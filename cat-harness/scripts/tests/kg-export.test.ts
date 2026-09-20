@@ -36,7 +36,7 @@ import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
  *
  * It was `startsWith(FOLIO_NS)` against one namespace. That assertion passed
  * for as long as there was one, and the moment the vocabulary split by layer
- * it would have failed on every cat-bootstrap and core term — which is the test
+ * it would have failed on every bootstrap and core term — which is the test
  * doing its job, not a bug in it.
  */
 const inFolioNs = (iri: string): boolean => Object.values(NS_PREFIXES).some((ns) => iri.startsWith(ns));
@@ -468,7 +468,7 @@ describe("every self-URL the export publishes resolves to something published", 
     // new stems, and a stem nothing serves is the defect this whole check
     // exists for — so each is published and each is listed here, where
     // deleting an entry fails rather than 404s.
-    for (const dir of ["cat-bootstrap", "cat-harness", "folio-assist-core"]) {
+    for (const dir of ["cat-bootstrap", "cat-harness", "folio-assistant-core"]) {
       out.add(`${dir}/ns`);
       out.add(`${dir}/ns.jsonld`);
       out.add(`${dir}/ns.json`);

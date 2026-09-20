@@ -14,7 +14,7 @@ parent: Skill instructions
 
 **This skill assumes a text editor and nothing else.** No MCP server, no
 `skill_fetch`, no `beans`, no build. If those exist they are not yours to rely
-on yet — see [`AGENTS.md`](AGENTS.md).
+on yet — see [`AGENTS.md`](../AGENTS.md).
 
 That constraint is the reason this skill exists rather than a pointer to the
 harness's own navigation tooling: an agent here may have no connected server,

@@ -72,7 +72,31 @@ guess applied to everything.
 
 ## Done when
 
-- [ ] A todo carries its theme as declared data, with a default
+- [x] A todo carries its theme as declared data, with a default —
+      `TodoItemSchema.theme` / `TodoItem.theme`, shipped 2026-09-20. Optional
+      (absent = the instance's own theme), an OPEN string rather than an enum
+      of theme ids, and empty string refused because absent and blank are
+      different claims. Four tests, including that an unknown theme parses:
+      it is a rendering finding, not a parse error.
+
+      **Why an open string.** Closing the enum means building it at module
+      load and importing the theme table into the CONTENT model, which would
+      give every consumer of a todo a dependency on the palette. Same
+      precedent as `GraphNodeDirectorySchema.graphs`, checked against a
+      registry later rather than at parse.
+
+## Still open: the RENDER half
+
+The declaration exists; nothing applies it yet. A todo sticky still renders as
+a flat card, because `mountTodoBoard` (`docs-ui.js`) has no art to reach for —
+the landing stickies get theirs from generated landing data
+(`gen-landing-data.ts`), and there is no equivalent for todos. So the render
+half is: get per-theme art paths to the board, and apply
+`fa-sticky--backdrop` plus the measured scrim.
+
+Two constraints from above still bind it, and neither is solved by the field:
+a theme with no `card` crop cannot back a sticky, and a todo sticky gaining
+art inherits the AAA-over-pure-black measurement every other sticky pays.
 - [ ] Todo stickies render with backdrop art and a measured scrim, at AAA over
       pure black like every other sticky
 - [ ] Themes assigned by judgement from content, reviewable because the

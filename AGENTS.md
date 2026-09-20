@@ -1,6 +1,6 @@
 # AGENTS.md — folio-assistant
 
-**Cold start — run this before any durable work:** `scripts/install-beans.sh &&
+**Cold start — run this before any durable work:** `cat-harness/scripts/install-beans.sh &&
 export PATH="$HOME/.local/bin:$PATH" && beans prime`, then
 [§"At session start"](#at-session-start) for the rest; the session-start hook
 does it for you only where a hook runs.
@@ -189,7 +189,7 @@ stand up a separate todo store; `beans/` is committed, so the plan survives a
 resume in a fresh container.
 
 ```sh
-scripts/install-beans.sh                 # install the CLI if missing
+cat-harness/scripts/install-beans.sh                 # install the CLI if missing
 beans prime                              # emit work-plan priming for agents
 beans list                               # current open items
 beans create "<title>"                   # open a work-plan item
@@ -247,14 +247,20 @@ A workflow's outcome is invisible from a checkout, so one here fired on every
 push to `main` and **failed all 30 times over two months** with nothing in the
 repository saying so. Bean `xom7`.
 
-`bun run check:ci-health` reports each workflow's state on the default branch,
-and the session-start sweep prints it.
+`bun run check:ci-health` reports each workflow's state on the default branch
+**and, separately, whether the Pages previews are actually building** — a fact
+GitHub holds *about* this repository rather than one the repository holds, so
+it is asked externally every run and cached nowhere. The session-start sweep
+prints both.
 [`skills/folio-core/ci-health.md`](cat-harness/skills/folio-core/ci-health.md) carries the
 three rules for reading it — "could not check" is never green, a red that has
 not re-run in a week is *possibly stale*, and a red whose workflow file changed
 after the failing run is `superseded` — plus why a report alone cannot cover the
 quiet stretch it exists to guard, which is what the weekly run and its single
-tracking issue are for (beans `ynu8`, `lq7e`).
+tracking issue are for (beans `ynu8`, `lq7e`). It also carries the separate
+pair the Pages question needs — `cancelled` as a **third state**, and saying
+**whose** contention a cancellation was — and why the counts are reported but
+the share is not graded (bean `3yi4`).
 
 **Do not "fix" a dispatch-only workflow by dispatching it.** `qa-sweep` and
 `witness-refresh` fail by design in this repo: the first preflights on
@@ -348,10 +354,10 @@ it cannot tell you what an item is or what it waits on, and you cannot claim or
 create anything with it.
 
 ```sh
-scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
 ```
 
-**If it will not install you are still not read-only** — `scripts/beans-fallback.ts`
+**If it will not install you are still not read-only** — `cat-harness/scripts/beans-fallback.ts`
 writes the same store in the same layout, so the CLI reads everything it wrote
 once it is available. Run the pieces by hand with `beans prime`, `beans list`,
 `beans roadmap`.

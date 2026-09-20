@@ -9,7 +9,7 @@ updated_at: 2026-09-18T15:00:27Z
 ---
 
 The 101 sci / 94 WHO file counts in
-[current state](../docs/architecture/current-state.md) come from matching
+[current state](../../../cat-harness/docs/architecture/current-state.md) come from matching
 filenames. That is a **lower bound**: it finds `lean-build-bg.sh` and misses a
 Lean special case inside a generic validator.
 

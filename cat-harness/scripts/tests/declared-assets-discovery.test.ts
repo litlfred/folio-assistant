@@ -10,7 +10,7 @@
  * opened — a clean run across an empty set, in the one check whose whole
  * subject is a file nobody was looking at.
  *
- * **Second**, the list drifted again the moment `folio-assist-core` became a
+ * **Second**, the list drifted again the moment `folio-assistant-core` became a
  * real instance on 2026-09-20: four declarations existed and two were checked,
  * so that instance's `README.md` was declared with `role: "instance-readme"`
  * and never verified.
@@ -40,9 +40,17 @@ describe("instances are discovered, not listed", () => {
     expect(declaredInstances(ROOT).length).toBeGreaterThanOrEqual(3);
   });
 
-  test("folio-assist-core is among them — the instance that was silently unchecked", () => {
+  test("folio-assistant-core is among them — the instance that was silently unchecked", () => {
+    // `folio-assistant-core`, not `folio-assist-core`. The two spellings were a
+    // live disagreement between `main` and PR #477 until the owner settled it
+    // on 2026-09-20: the `cat-` prefix reaches the harness layer
+    // (`bootstrap` -> `cat-bootstrap`, taken from main) and does NOT extend to
+    // `folio-assistant-*`, which keeps the long form.
+    //
+    // The instance this test is ABOUT is unchanged — it is still the one that
+    // went silently unchecked while `declaredInstances` was a hardcoded pair.
     const names = declaredInstances(ROOT).map((p) => p.replace(ROOT + "/", ""));
-    expect(names).toContain("folio-assist-core");
+    expect(names).toContain("folio-assistant-core");
   });
 
   test("the root's own declaration counts, and carrying no assets is not a finding", () => {

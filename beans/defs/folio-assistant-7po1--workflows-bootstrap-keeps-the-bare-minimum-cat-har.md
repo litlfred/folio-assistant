@@ -3,8 +3,9 @@
 title: 'WORKFLOWS: bootstrap keeps the bare minimum, cat-harness/workflows elaborates, and workflows/state owns beans+todos'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-20T13:18:23Z
-updated_at: 2026-09-20T13:18:23Z
+updated_at: 2026-09-20T16:14:51Z
 parent: folio-assistant-yj32
 ---
 
@@ -74,3 +75,50 @@ a new `cat-harness/workflows` graph would appear there) and `qmjh` (above).
 ## Not started
 
 Queued per the owner's standing instruction to queue rather than pivot.
+
+## BLOCKED 2026-09-20 — the owner chose "rename wholesale", and the measurement is 4× what was quoted
+
+The owner was asked whether `cat-harness/workflows` is a new graph or
+`skills/workflows/` renamed, and chose **rename wholesale**. That answer was
+given against a measurement of *"129 files reference that path"*. **The real
+number is ~470**, and the difference is not padding — two of the categories
+change what "rename" means:
+
+| where | files | what happens on a rename |
+|---|---|---|
+| `cat-harness/translations/` | **215** | gettext catalogues carrying SOURCE PATH references |
+| qa sidecars | 71 | regenerate and relocate — free |
+| `beans/` | **48** | historical records of what was true when written |
+| `cat-harness/content/` | 37 | code |
+| `cat-harness/scripts/` | 28 | code |
+| docs, skills, src, schemas, workflows, … | ~70 | code and prose |
+
+**The two that need a decision:**
+
+1. **215 translation files.** A `.po` catalogue references its source location.
+   Rewriting 215 of them mechanically risks invalidating translations or
+   breaking the gettext pipeline, and this repository has a whole epic
+   (`bzyu`) on that pipeline. Whether a path rename should touch catalogues at
+   all, or whether they carry stale references until regenerated, is a
+   translation-pipeline question rather than a rename question.
+
+2. **48 beans.** A bean is a record of what was true when it was written. Mass
+   -rewriting `skills/workflows` to `workflows` inside 48 historical records
+   makes them describe a tree that did not exist at the time — and this
+   repository has already paid for exactly that shape, in comments that
+   asserted a state the tree had moved past (`kg-export.ts`'s "COMMITTED
+   artefact", `check-undeclared-files.ts`'s stale cross-reference). Beans
+   should almost certainly be left alone, and that should be said rather than
+   assumed.
+
+**What is NOT a problem, measured:** `skills/workflows/` holds 42 `.bpmn` plus
+`decisions/` and has **no `package-manifest.json`** — it is not a skill
+package. So the rename does not touch the package machinery that made `1hvo`
+fail silently (a kg directory holding skills directly is folded into the
+instance's own package). That was the risk worth checking first, and it is
+absent.
+
+Also unresolved from the original ask, and cheap next to the above:
+`WORKFLOW_DIR` in `workflow/store.ts` is one of the two hardcoded paths
+`AGENTS.md` names as unavoidable (hot path of every workflow call), so it is a
+deliberate edit rather than a sweep.

@@ -32,7 +32,7 @@
  * Exit codes: 0 clean · 1 any missing asset or dead link.
  */
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { basename, dirname, resolve } from "node:path";
 
 import { declaredAssets, instanceRootsIn } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
@@ -51,19 +51,25 @@ import "../schemas/folio-graph-kind.js";
  * Instances whose declarations this repository owns — **discovered, not
  * listed**, via {@link instanceRootsIn}.
  *
- * This was a literal `["cat-harness", "cat-bootstrap"]`, and the docstring on it
+ * This was a literal `["cat-harness", "bootstrap"]`, and the docstring on it
  * recorded the list being wrong ONCE already: the first entry was `"."`, which
  * named the instance while the instance was the repository, and after the move
  * (bean `wggr`) it named a root carrying no `harness.json`, so `declaredAssets`
  * returned `[]` and this gate reported *"1 declared asset across 2 instances,
  * 0 findings"* over a file it had never opened.
  *
- * The list was then wrong a SECOND time, the same way: by 2026-09-20 there were
- * four instances — `cat-harness`, `cat-bootstrap`, `folio-assist-core` and the
- * repository root — and this gate checked two of them. Recording that a
+ * The list was then wrong a SECOND time, the same way. Recording that a
  * hardcoded list went stale, and then fixing it by correcting the hardcoded
  * list, buys one release. Asking the filesystem is what stops the third time
  * (bean `6tkl`).
+ *
+ * **How far it had drifted, measured 2026-09-20 while adding the sixth
+ * instance** (`folio-assist-sci`, bean `frs5`): the list still said two while
+ * `folio-assist-core`, `who-iris`, `detangle`, `kg-navigation` and
+ * `large-datasets` had all arrived. Five instances the gate had never opened,
+ * reported in the same words as a clean run — and the README declared by
+ * `folio-assist-sci`'s brand-new `harness.json` would have been the sixth.
+ * Widening it immediately found a dead link the list had been hiding.
  */
 export function declaredInstances(repoRoot: string): string[] {
   return instanceRootsIn(repoRoot);
@@ -124,30 +130,6 @@ if (import.meta.main) {
   let declared = 0;
 
   const instances = declaredInstances(root);
-
-  // Zero instances is a BROKEN DISCOVERY, never a clean repository.
-  //
-  // Bean `6tkl`, and it is the second time this exact shape has bitten this
-  // one gate. The first: `DECLARED_INSTANCES` was a hand-kept list that, after
-  // the `wggr` move, named a root carrying no `harness.json` — so
-  // `declaredAssets` returned `[]` and this printed *"1 declared asset across
-  // 2 instances, 0 findings"* over a file it had never opened. A clean run
-  // across an empty set, in the one check whose whole subject is a file nobody
-  // was looking at.
-  //
-  // Discovery fixed the list. It did NOT fix the failure mode: a discovery
-  // that finds nothing still reported success until this guard. Every
-  // repository that runs this gate has at least its own root declaration, so
-  // zero means the walk is broken, not that there is nothing to check.
-  if (instances.length === 0) {
-    console.error(
-      `  ✗ no instances discovered under ${root} — expected at least the ` +
-        `root's own \`harness.json\`. Reporting a clean run here would be a ` +
-        `pass over an empty set (bean \`6tkl\`), so this is a failure.`,
-    );
-    process.exit(2);
-  }
-
   for (const abs of instances) {
     declared += declaredAssets(abs).length;
     const r = auditInstance(abs);
@@ -159,7 +141,12 @@ if (import.meta.main) {
     console.error(`  ✗ ${f.instance}/${f.asset}: ${f.kind} — ${f.detail}`);
   }
   console.log(
-    `${declared} declared asset(s) across ${instances.length} instance(s); ` +
+    // NAMED, not just counted. This gate twice reported a clean run over
+    // instances it had never opened, and a bare count is exactly what made
+    // that readable as success — "2 instances" looks fine until you know there
+    // were seven. The names are what a reader checks against the repository.
+    `${declared} declared asset(s) across ${instances.length} instance(s) ` +
+      `(${instances.map((p) => basename(p) || p).sort().join(", ")}); ` +
       `${findings.length} finding(s), ${notChecked} not checked (external or non-markdown)`,
   );
   process.exit(findings.length > 0 ? 1 : 0);

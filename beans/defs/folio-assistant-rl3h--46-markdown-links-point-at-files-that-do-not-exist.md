@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rl3h
 title: 46 markdown links point at files that do not exist
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:22:43Z
-updated_at: 2026-09-20T15:59:50Z
+updated_at: 2026-09-20T17:31:48Z
 parent: folio-assistant-zzmr
 ---
 
@@ -155,3 +155,19 @@ now resolve every relative link.
 
 The 7, all in `translations/fr/agent-onboarding.md` — bean `tc95`. Until
 that is settled the count cannot be gated, so this bean stays open.
+
+---
+
+## Closed 2026-09-20 — 0 dangling, and the count is finally worth gating
+
+The last seven were found only after bean `3ye4` fixed attribution: this
+sweep had been reporting **0** while six declared directories went unread, so
+"drained to zero" was true of what it looked at and not of the corpus.
+
+Those seven — six in `beans/`, one in `cat-bootstrap/` — were all **wrong
+paths, not dead references**; every target existed and each was repointed
+with the target asserted first.
+
+`check:subgraphs` now **gates** on dangling links, which is what this bean's
+last `## Done when` item asked for and what could not honestly be done until
+the number meant something.
