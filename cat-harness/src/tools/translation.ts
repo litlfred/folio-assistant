@@ -17,7 +17,7 @@
 
 // `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
 // and this module resolves a DECLARED directory. Without it the first
-// `directoryForGraph` throws `unknown graph kind "folio"`. Measured
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
 // 2026-09-20 across the 20 modules that resolve a declared directory: 10
 // threw, including `narratives.ts` and the `translation` MCP tool, while
 // every gate and all 3298 tests passed — nothing covered the path.
@@ -40,7 +40,7 @@ import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject.js";
  * tree for a locale that has none yet.
  *
  * declared-path-literal: the convention fallback, stated at the call site
- * rather than inside `directoryForGraph` so the choice is visible.
+ * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
   return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");

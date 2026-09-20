@@ -15,6 +15,7 @@
 import { describe, test, expect } from "bun:test";
 import { writeFileSync, mkdtempSync, readdirSync } from "fs";
 import { join } from "path";
+import { libraryEntry } from "./library-dirs.ts";
 import { tmpdir } from "os";
 import {
   checkEditorializing,
@@ -524,7 +525,14 @@ describe("checkEditorializing — proof economy is not an opinion (bean 2t41)", 
     // have meant over-correcting. A criterion that never fires on its own
     // exemplar has stopped measuring anything; the survivor is p194's
     // "Unfortunately", which is a real finding.
-    const dir = join(import.meta.dir, "../../library/milnorlink/sections");
+    // READ from the declaration. `milnorlink` went to `folio-assist-sci/` in
+    // bean `frs5` — it is not an IRIS item — and `readdirSync` on the old path
+    // throws, which is at least loud; a checker counting zero hits over a
+    // directory that is not there would have been worse, because the
+    // assertion is a count.
+    const entry = libraryEntry("milnorlink");
+    expect(entry, "milnorlink is not in any declared library").toBeDefined();
+    const dir = join(entry!, "sections");
     let hits = 0;
     for (const f of readdirSync(dir).sort()) {
       if (!f.endsWith(".md")) continue;

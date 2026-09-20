@@ -57,6 +57,71 @@ def slugify(s: str, maxlen: int = 48) -> str:
     return (s[:maxlen].rstrip("-")) or "section"
 
 
+#: The arXiv stamp, as it appears down the left margin of page one.
+#:
+#: DEFINED HERE, not in `pdf-structure.py`, because the doc-id depends on it
+#: and `pdf-structure.py` cannot be imported — its name has a hyphen, which is
+#: the same constraint that put `slugify` here in the first place. It lived
+#: there until 2026-09-20, so every arm that was not `pdf-structure` fell
+#: through to the basename slug and named the same paper differently.
+RE_ARXIV_NEW = re.compile(
+    r"ar\s*X\s*iv\s*[:.]?\s*(?P<id>\d{4}\.\d{4,5})\s*(?P<ver>v\d+)?"
+    r"(?:\s*\[(?P<cls>[a-zA-Z\-]+(?:\.[A-Za-z\-]{2,})?)\])?",
+    re.I,
+)
+RE_ARXIV_OLD = re.compile(
+    r"ar\s*X\s*iv\s*[:.]?\s*(?P<id>[a-zA-Z\-]+(?:\.[A-Z]{2})?/\d{7})\s*(?P<ver>v\d+)?",
+    re.I,
+)
+
+
+def arxiv_from_text(page1: str) -> dict[str, Any] | None:
+    """The arXiv identity in page-one text, or `None`.
+
+    The MINIMUM `derive_doc_id` needs — id and version. `pdf-structure.py`'s
+    `parse_front_matter` reads more from the same match (primary class, stamp
+    date) for the front matter it builds, and calls this for the part the
+    doc-id depends on, so the two cannot disagree about which paper it is.
+    """
+    for rx in (RE_ARXIV_NEW, RE_ARXIV_OLD):
+        m = rx.search(page1)
+        if m:
+            return {
+                "id": m.group("id"),
+                "version": (m.groupdict().get("ver") or "").lstrip("v") or None,
+                "primary_class": m.groupdict().get("cls"),
+                "_match": m,
+            }
+    return None
+
+
+def derive_doc_id_from_pdf(path: str) -> str:
+    """This document's id, asking the PDF itself.
+
+    For an arm that holds the file but no extracted front matter —
+    `pdf-images.py` was the case, and it named three arXiv papers by their
+    basename while `pdf-structure.py` named them `arxiv-<id>v<n>`. The images
+    sidecar then landed in a SIBLING directory of the entry it belonged to:
+    not an error, not a warning, and invisible to `check:l1-complete`, which
+    scans entries and saw the orphan as an entry of its own holding nothing
+    but an `images.json`.
+
+    Falls back to the basename slug when the text layer yields no stamp, which
+    is the same answer `derive_doc_id` gives with no meta at all.
+    """
+    try:
+        import pymupdf
+    except ImportError:
+        return derive_doc_id(path)
+    try:
+        with pymupdf.open(path) as d:
+            page1 = d[0].get_text() if d.page_count else ""
+    except Exception:
+        return derive_doc_id(path)
+    ax = arxiv_from_text(page1)
+    return derive_doc_id(path, {"arxiv": ax} if ax else None)
+
+
 def derive_doc_id(path: str, meta: dict[str, Any] | None = None) -> str:
     """This document's identity, as every step of the pipeline must spell it.
 

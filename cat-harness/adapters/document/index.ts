@@ -83,7 +83,7 @@ import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
  * before one has happened would make the first ingest impossible.
  *
  * The fallback is deliberate and belongs at the call site rather than in
- * `directoryForGraph`: this adapter CREATES the queue on a first ingest, so
+ * `directoriesForGraph`: this adapter CREATES the queue on a first ingest, so
  * resolving to nothing before one has happened would make the first ingest
  * impossible rather than merely empty.
  */

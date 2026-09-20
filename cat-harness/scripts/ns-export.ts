@@ -63,7 +63,7 @@ export function vocabularyIri(): string {
   //
   // Nothing is lost by moving: no term hangs off this document. Every term
   // lives in its layer's namespace (`cat-bootstrap/ns`, `cat-harness/ns`,
-  // `folio-assist-core/ns`), each of which IS a file and dereferences. The
+  // `folio-assistant-core/ns`), each of which IS a file and dereferences. The
   // union is a convenience for a person reading the whole vocabulary at once,
   // so it can sit anywhere that resolves.
   return `${LEGACY_FOLIO_NS.replace(/ns#$/, "")}ns/vocabulary.jsonld`;
@@ -121,15 +121,15 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
  * A kind absent from this map is `harness` — the middle. That default is
  * deliberate and is the safe direction: a term wrongly called harness is
  * merely carried by an instance that did not need it, while a term wrongly
- * called cat-bootstrap makes the base layer depend on something above it, which
+ * called bootstrap makes the base layer depend on something above it, which
  * is the one thing the direction rule forbids.
  */
 const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
   "cat-harness": "cat-bootstrap",
   schemas: "cat-bootstrap",
-  // Everything the owner named as NOT cat-bootstrap, plus the rest of the folio's
+  // Everything the owner named as NOT bootstrap, plus the rest of the folio's
   // own furniture: "we shouldnt need voicegraph or librarygrph or
-  // previewgrapjh in cat-bootstrap!!"
+  // previewgrapjh in bootstrap!!"
   voices: "core",
   library: "core",
   uploads: "core",
@@ -163,9 +163,9 @@ export function buildVocabulary(
   /**
    * Emit only this layer and the ones BELOW it, or the whole vocabulary.
    *
-   * "And below" rather than "only this": a harness consumer meets cat-bootstrap's
+   * "And below" rather than "only this": a harness consumer meets bootstrap's
    * terms constantly, so a harness slice that omitted them would document a
-   * vocabulary nobody actually uses. CatBootstrap's slice is the interesting one
+   * vocabulary nobody actually uses. Bootstrap's slice is the interesting one
    * and it is genuinely minimal — it is the bottom of the stack.
    */
   layer?: TermLayer,
@@ -174,7 +174,7 @@ export function buildVocabulary(
    *
    * The two modes answer different questions and conflating them would publish
    * a lie. `--layer harness` is what a HARNESS CONSUMER wants: it meets
-   * cat-bootstrap's terms constantly, so the document includes them. A NAMESPACE
+   * bootstrap's terms constantly, so the document includes them. A NAMESPACE
    * document is what `cat:Harness` dereferences to, and it must contain only
    * `cat:` terms — a `cat-harness/ns` that also defined `bs:Actor` would be
    * asserting ownership of a term in somebody else's namespace.
@@ -211,7 +211,7 @@ export function buildVocabulary(
   for (const [name, g] of [...kinds].sort(([a], [b]) => a.localeCompare(b))) emit(name, "class", g);
   for (const [name, g] of Object.entries(PROPERTY_GLOSSES)) emit(name, "property", g);
 
-  // Only a FULL build can say a term is undefined. A cat-bootstrap slice omits
+  // Only a FULL build can say a term is undefined. A bootstrap slice omits
   // core terms ON PURPOSE, and reporting those as missing would turn the
   // layering into a permanent wall of findings — the "check that cries wolf"
   // this repository switches off.
@@ -271,7 +271,7 @@ if (import.meta.main) {
   const layerIdx = argv.indexOf("--layer");
   const layer = layerIdx >= 0 ? (argv[layerIdx + 1] as TermLayer) : undefined;
   if (layer !== undefined && !["cat-bootstrap", "harness", "core"].includes(layer)) {
-    console.error(`--layer must be cat-bootstrap, harness or core (got ${String(layer)})`);
+    console.error(`--layer must be bootstrap, harness or core (got ${String(layer)})`);
     process.exit(2);
   }
   const outIdx = argv.indexOf("--out");

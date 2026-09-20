@@ -30,7 +30,7 @@
  */
 // `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
 // and this module resolves a DECLARED directory. Without it the first
-// `directoryForGraph` throws `unknown graph kind "folio"`. Measured
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
 // 2026-09-20 across the 20 modules that resolve a declared directory: 10
 // threw, including `narratives.ts` and the `translation` MCP tool, while
 // every gate and all 3298 tests passed — nothing covered the path.
@@ -43,7 +43,7 @@ import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { NarrativeSchema, REJECTION_REASONS, type Narrative } from "../schemas/narrative.ts";
-import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -143,10 +143,14 @@ function setAtPath(doc: Record<string, unknown>, path: NarrativePath, value: Nar
  * `not-authored` slot has nothing to look at.
  */
 export function queue(root = ROOT): QueueItem[] {
-  const lib = directoryForGraph(root, "library");
-  if (!lib || !existsSync(lib)) return [];
+  // EVERY declared library. This is a REVIEW QUEUE, and a queue that omits one
+  // library shows a person a shorter list and no sign that it is short —
+  // `04vl` is the bean for the last time this queue could not see 24% of what
+  // it was for. `directoriesForGraph(...)[0]` until bean `a02m`.
+  const libs = directoriesForGraph(root, "library").filter((d) => existsSync(d));
+  if (libs.length === 0) return [];
   const out: QueueItem[] = [];
-  for (const slug of readdirSync(lib).sort()) {
+  for (const lib of libs) for (const slug of readdirSync(lib).sort()) {
     for (const name of NARRATIVE_BEARING) {
       const f = join(lib, slug, name);
       if (!existsSync(f)) continue;

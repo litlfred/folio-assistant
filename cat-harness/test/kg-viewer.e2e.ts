@@ -45,6 +45,9 @@ for (const [file, script] of [
  */
 const PAGE = "/_kg/folio-assistant/index.html";
 
+/** Facet ids carry `(`, `)` and `-`; they are matched literally, not as patterns. */
+const escapeRe = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 const KG = JSON.parse(readFileSync("_kg/folio-assistant.jsonld", "utf-8")) as {
   "@graph": Array<Record<string, unknown>>;
   counts: Record<string, number>;
@@ -72,6 +75,78 @@ test.describe("kg viewer", () => {
       const facet = page.locator(".facet", { hasText: new RegExp(`^${type}${n}$`) });
       await expect(facet, `facet for ${type}`).toHaveCount(1);
     }
+  });
+
+  // ── The Subgraph facet ────────────────────────────────────────────────
+  //
+  // It shipped with no test at all, and the change that added it deleted the
+  // `renderMeta()` call from `renderAll`. The page then loaded 1687 nodes and
+  // sat on "loading …" forever — no console error, no failed request, nothing
+  // for a screenshot to look wrong about unless you read the provenance line.
+  // Nine tests in this file caught it; none of them was about the facet. The
+  // three below are, so the next such edit fails on its own terms.
+
+  /**
+   * The facet's values, computed from the document rather than listed here.
+   *
+   * It mirrors `subOf` in the viewer: `inSubgraph` is a link to a Directory
+   * node, so the readable id is the fragment, and a node without one is its
+   * own value rather than being folded into a default. Recomputing it here
+   * rather than hardcoding ids means the test follows a declaration being
+   * added or renamed, which is the whole point of a declaration-driven facet.
+   */
+  const UNSTAMPED = "(no declared subgraph)";
+  const subTally = (): Record<string, number> => {
+    const c: Record<string, number> = {};
+    for (const n of KG["@graph"]) {
+      const v = n.inSubgraph;
+      const k = typeof v === "string" && v.length > 0 ? String(v).split("/").pop()! : UNSTAMPED;
+      c[k] = (c[k] ?? 0) + 1;
+    }
+    return c;
+  };
+
+  test("every declared subgraph is offered as a facet, with its count", async ({ page }) => {
+    await page.goto(PAGE);
+    const tally = subTally();
+    // A floor, not the number: the count is a claim that goes stale, and the
+    // failure worth guarding is "the group rendered nothing".
+    expect(Object.keys(tally).length).toBeGreaterThan(2);
+    for (const [id, n] of Object.entries(tally)) {
+      const facet = page.locator("#subs .facet", { hasText: new RegExp(`^${escapeRe(id)}${n}$`) });
+      await expect(facet, `subgraph facet for ${id}`).toHaveCount(1);
+    }
+  });
+
+  test("a node in no declared subgraph gets its own facet, not a default", async ({ page }) => {
+    await page.goto(PAGE);
+    // The gap is the point. Vocabulary nodes are minted from the namespace
+    // rather than from a file, so they belong to no directory — absorbing them
+    // into whichever subgraph sorted first would report a clean partition over
+    // nodes nothing declared.
+    const tally = subTally();
+    expect(tally[UNSTAMPED], "nodes with no stamp").toBeGreaterThan(0);
+    await expect(
+      page.locator("#subs .facet", { hasText: new RegExp(`^${escapeRe(UNSTAMPED)}\\d+$`) }),
+    ).toHaveCount(1);
+  });
+
+  test("the two facet groups compose — picking a subgraph narrows the kinds", async ({ page }) => {
+    await page.goto(PAGE);
+    const before = await page.locator("#facets .facet").allTextContents();
+    // The largest subgraph other than the unstamped one, so there is certainly
+    // something to narrow to.
+    const [biggest] = Object.entries(subTally())
+      .filter(([id]) => id !== UNSTAMPED)
+      .sort((a, b) => b[1] - a[1])[0]!;
+    await page.locator("#subs .facet", { hasText: new RegExp(`^${escapeRe(biggest)}\\d+$`) }).click();
+    const after = await page.locator("#facets .facet").allTextContents();
+    // Composition, not merely "something changed": every node in the list must
+    // now be in the chosen subgraph, and the Kind counts are re-tallied over
+    // that subset rather than left at the whole-graph numbers.
+    expect(after).not.toEqual(before);
+    const kinds = await page.locator("#list li button .kind").allTextContents();
+    expect(kinds.length).toBeGreaterThan(0);
   });
 
   test("filtering by a facet narrows the list to that kind", async ({ page }) => {

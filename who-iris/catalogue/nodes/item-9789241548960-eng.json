@@ -1,0 +1,80 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/local:9789241548960-eng",
+  "kind": "item",
+  "flavour": "item",
+  "title": "WHO handbook for guideline development, 2nd ed.",
+  "parents": [],
+  "libraryId": "9789241548960-eng",
+  "bitstreams": [
+    {
+      "name": "9789241548960_eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2136157,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "materialized",
+        "of": "local:9789241548960-eng",
+        "localPath": "uploads/9789241548960_eng.pdf",
+        "purpose": "both",
+        "bytes": 2136157,
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "bfcd856e3ad7ab20408ee2fb097c6e9cb5c826f0926bccee4ebd708af924a651"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "2,136,157 bytes of a 361.55 GB catalogue (0.001%)"
+          },
+          "restrictions": {
+            "verdict": "unknown",
+            "basis": "no restriction stated on the captured item page"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "archival: kept indefinitely, by design"
+          },
+          "sourceLoss": {
+            "verdict": "permitted",
+            "basis": "original bytes held locally with a recorded sha256"
+          },
+          "copyright": {
+            "verdict": "unknown",
+            "basis": "no dc.rights field in the captured record"
+          }
+        }
+      }
+    }
+  ],
+  "materialization": {
+    "state": "materialized",
+    "of": "local:9789241548960-eng",
+    "localPath": "library/9789241548960-eng",
+    "purpose": "working",
+    "note": "IDENTIFIERS UNKNOWN, as above. The slug is an ISBN, which is a real identifier but not IRIS's -- it names the publication, not the repository item, and the two are not interchangeable for resolution.",
+    "gates": {
+      "size": {
+        "verdict": "permitted",
+        "basis": "one item of 1,057,223 files"
+      },
+      "restrictions": {
+        "verdict": "unknown",
+        "basis": "no restriction stated"
+      },
+      "retention": {
+        "verdict": "unknown",
+        "basis": "no lifetime agreed for the derived sections"
+      },
+      "sourceLoss": {
+        "verdict": "unknown",
+        "basis": "derived sections are not the publication; the archival bitstream answers this, not this node"
+      },
+      "copyright": {
+        "verdict": "unknown",
+        "basis": "no dc.rights field in the captured record"
+      }
+    }
+  },
+  "metadataRef": "catalogue/records/9789241548960-eng.dc.json"
+}
