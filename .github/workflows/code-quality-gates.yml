@@ -546,6 +546,13 @@ jobs:
           bun run check:schema-nodes
           bun run check:retired-front-matter
           bun run check:raci
+          # Subgraph containment, and how far the corpus is from the
+          # owner's "subgraphs should be disconnected" (bean `x4v4`). It
+          # REPORTS entanglement and broken links rather than refusing
+          # them — the disentangling is known-outstanding work, and a gate
+          # on that is one somebody switches off. Non-zero only on the
+          # third state: a file whose edges could not be read at all.
+          bun run check:subgraphs
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition

@@ -2264,6 +2264,137 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
   return o;
 }
 
+// ── Subgraphs ───────────────────────────────────────────────────
+
+/**
+ * A FOLDER CORRESPONDS TO A SUBGRAPH, and subgraphs should be DISCONNECTED.
+ *
+ * The owner, 2026-09-20, settling bean `x4v4`: *"`cat-harness/methodologies/`
+ * is a subgraph. should be disconnected. convention folder corresponds to
+ * subgraph (but may be in process of being disentangled). use schema
+ * declaration/definition."*
+ *
+ * The question it settles is not cosmetic. `methodologies/` is declared as a
+ * `methodology` graph, and `methodologies/crdm/` and `methodologies/raci/`
+ * are declared as `cat-harness` graphs INSIDE it. Nothing said whether the
+ * inner graphs' nodes were also the outer one's, and the two readings differ
+ * by every node underneath — a consumer scanning `methodologies/` either
+ * sees two methodologies or sees two methodologies plus three skills and
+ * eight diagrams.
+ *
+ * **They are not.** A subgraph's nodes are its own. `methodologies/` holds
+ * two nodes, and each of those is a graph in its own right.
+ *
+ * ## Containment is DERIVED, never declared
+ *
+ * A `parent` or `contains` field would restate what the paths already say,
+ * and this repository has paid for one fact in two places often enough to
+ * stop writing the second one: the retired skill `roles:` field cost 260
+ * dangling values, and `fallbackRole` was removed (bean `85e8`) for exactly
+ * this shape — two statements with nothing asserting they agree.
+ *
+ * So containment is computed from the declaration that already exists. The
+ * one thing a reader must know is that **`id` still governs overrides** —
+ * path governs only containment. Matching an override on path makes two
+ * graphs out of one relocation, which is the rule `resolveDirectories`
+ * already states and this does not weaken.
+ *
+ * ## "Should be" is an intent, and the corpus does not meet it yet
+ *
+ * Measured 2026-09-20: CRDM's skills reference **seven** skills in
+ * `folio-core` (`staging-review`, `interaction-modality`, `todo-manager`,
+ * `theme-ui-review`, `directory-conventions`, `decision-comparison`,
+ * `data-modelling`). So the methodology subgraphs are entangled today, which
+ * is what the owner's *"may be in process of being disentangled"*
+ * anticipates.
+ *
+ * That is why `check:subgraphs` REPORTS and does not gate. A gate that fails
+ * on seven edges nobody has yet decided about is the *"check that cries wolf
+ * is a check somebody switches off"* failure `known-skills.ts` names — and
+ * this session already reached it once by a different route, counting test
+ * literals in `check-declared-paths` (bean `dhol`).
+ */
+export interface SubgraphRelation {
+  /** The containing directory's `id`. */
+  parent: string;
+  /** Directories nested immediately inside it, by `id`. */
+  children: string[];
+}
+
+/** `a/b/` contains `a/b/c/`; a path never contains itself. */
+function pathContains(outer: string, inner: string): boolean {
+  const o = `${outer.replace(/\/+$/, "")}/`;
+  const i = inner.replace(/\/+$/, "");
+  return i !== o.replace(/\/$/, "") && `${i}/`.startsWith(o);
+}
+
+/**
+ * The subgraph tree, derived from declared paths.
+ *
+ * Only IMMEDIATE containment: with `a/`, `a/b/` and `a/b/c/` all declared,
+ * `a` has one child and not two. A transitive answer would make a node's
+ * owner ambiguous, which is the question this whole function exists to give
+ * one answer to.
+ *
+ * Scope matters and is honoured: a `repository`-scoped entry and an
+ * instance-relative one resolve against different roots, so they are
+ * compared by ABSOLUTE path where one is available. `smart-kg/methodologies/`
+ * is repository-scoped precisely so it lifts out whole, and reading it as a
+ * child of an instance-relative `methodologies/` would be wrong on both the
+ * path and the intent.
+ */
+export function subgraphTree(
+  dirs: ReadonlyArray<{ id: string; path: string; absPath?: string }>,
+): SubgraphRelation[] {
+  const key = (d: { path: string; absPath?: string }): string => d.absPath ?? d.path;
+  const out: SubgraphRelation[] = [];
+  for (const parent of dirs) {
+    const children = dirs
+      .filter((c) => c.id !== parent.id && pathContains(key(parent), key(c)))
+      // Immediate only: drop any child that is itself inside another child.
+      .filter((c, _i, all) => !all.some((m) => m.id !== c.id && pathContains(key(m), key(c))))
+      .map((c) => c.id)
+      .sort();
+    if (children.length > 0) out.push({ parent: parent.id, children });
+  }
+  return out.sort((a, b) => a.parent.localeCompare(b.parent));
+}
+
+/**
+ * The directory that owns a node at `path`, which is the DEEPEST containing
+ * declaration rather than the first one found.
+ *
+ * This is the function a consumer actually needs, and getting it wrong is the
+ * `x4v4` defect in its concrete form: a sweep over `methodologies/` that
+ * collects `methodologies/crdm/crdm-detect.md` has attributed a CRDM node to
+ * the methodology graph, and every count computed from it is then wrong in a
+ * way nothing reports.
+ */
+export function owningDirectory<T extends { id: string; path: string; absPath?: string }>(
+  dirs: readonly T[],
+  path: string,
+): T | undefined {
+  // Compare in the SPACE OF THE PATH GIVEN. `resolveDirectories` populates
+  // `absPath`, so keying on it unconditionally makes every relative query
+  // return `undefined` — measured on the first run of this function, where
+  // all four probes answered "no declaration contains it" over a corpus in
+  // which all four are declared.
+  //
+  // That failure mode is the reason this comment exists rather than a tidier
+  // one-liner: `undefined` is a LEGITIMATE answer (a node in no declared
+  // directory), so a mismatch does not look like a bug, it looks like a
+  // finding. A sweep built on it would have reported a clean, empty result
+  // over the whole corpus.
+  const absolute = path.startsWith("/");
+  const keyOf = (d: T): string | undefined => (absolute ? d.absPath : d.path);
+  const containing = dirs.filter((d) => {
+    const k = keyOf(d);
+    return k !== undefined && pathContains(k, path);
+  });
+  if (containing.length === 0) return undefined;
+  return containing.reduce((deep, d) => ((keyOf(d) ?? "").length > (keyOf(deep) ?? "").length ? d : deep));
+}
+
 // ── Inheritance ─────────────────────────────────────────────────
 
 /** A directory after inheritance, with the instance that declared it. */
