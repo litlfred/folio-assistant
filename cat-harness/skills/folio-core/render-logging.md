@@ -82,13 +82,54 @@ the whole branch, then copies `_site` in. It is the only one of this
 repository's six `gh-pages` publishers without `keep_files: true`, and it is
 the one that fires on every push to `main`.
 
-So **the log must be carried across that deploy by `restore-staging.ts`**,
+So **the log is carried across that deploy by `restore-staging.ts`**,
 unconditionally — not gated on open pull requests the way previews are. A
 preview belongs to an open PR; a log entry about a *closed* one is exactly
 what nothing would carry, and exactly what a reader needs most.
 
 A log a deploy truncates is worse than no log, because its whole value is that
 entries persist and a reader will believe they did.
+
+`CARRIED_PREFIXES` is where that is declared, and it is a **list** because
+this is the second tenant of one rule rather than a special case: bean `6pfo`'s
+retired-record store is the next, and adding it should be a row rather than a
+third code path free to disagree with the other two. The carry runs **before**
+the preview check, deliberately — the early `empty` return used to leave that
+function the moment there were no previews, which would have kept the record of
+the branch only on the days the branch happened to still hold previews.
+
+A carry that could not be determined is **not a warning**. It collapses into
+the restore's own `unknown`, exit 2, which fails the deploy step: continuing
+would run the full replace and delete the record. A determined *absence* — the
+branch is readable and has no log yet — is reported rather than omitted,
+because "there is no log yet" and "the carry never ran" look identical in a
+silent report and only the second is a defect.
+
+## Who writes an entry
+
+Every path that can change `STAGING/` writes one, and
+`scripts/tests/workflow-yaml.test.ts` asserts that by job rather than leaving
+it to be remembered:
+
+| path | event | how it lands |
+|---|---|---|
+| `feature-staging.yml` → `stage` | `rendered` | its **own commit**, after the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/<slug>/_render-log/` — inside the directory a cleanup removes |
+| `feature-staging.yml` → `cleanup`, confirmed | `removed` | the **same commit as the removal** |
+| `feature-staging.yml` → `cleanup`, unconfirmed | `retained` | its own commit |
+| `feature-staging.yml` → `cleanup-dispatch` | `removed` | the **same commit as the removal** |
+| `docs-site.yml` → restore | carried, not written | `restore-staging.ts` |
+
+**A removal and its record are one commit.** A separate log push can fail on
+its own and leave a preview that vanished with nothing saying why, which is
+precisely the state bean `plj1` left the branch in. Staging them together makes
+that impossible rather than unlikely.
+
+**The `rendered` and `retained` entries are `continue-on-error`.** A preview
+that deployed and whose entry did not is a gap in the record, not a failed
+deploy, and failing the job there would turn a logging problem into a lost
+review surface. The step goes red in the run, so the gap is visible. A
+`removed` entry has no such fallback and needs none: it cannot fail separately
+from the removal it describes.
 
 ## Writing an entry
 

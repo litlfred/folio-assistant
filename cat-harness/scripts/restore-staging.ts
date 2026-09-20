@@ -91,8 +91,30 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
+import { RENDER_LOG_DIR } from "../schemas/render-log.ts";
+
 /** Where the previews live on the publish branch. */
 export const STAGING_PREFIX = "STAGING";
+
+/**
+ * What else on the publish branch must survive a full replace.
+ *
+ * The previews above are carried because a reviewer's link would otherwise
+ * 404. These are carried because they are the branch's own RECORD of itself,
+ * and a record a deploy truncates is worse than no record — its whole value is
+ * that entries persist and a reader will believe they did.
+ *
+ * **Unconditionally, and that is the difference from a preview.** A preview
+ * belongs to an open pull request; a log entry about a CLOSED one is exactly
+ * what a liveness-gated carry would drop, and exactly what somebody asking
+ * "what happened to `STAGING/x`" needs most.
+ *
+ * A list rather than one constant because this is the second tenant of the
+ * same rule — `skills/folio-core/render-logging.md` for the first, and bean
+ * `6pfo`'s retired-record store for the next. Adding one should be a row here,
+ * not a third code path that can disagree with the other two.
+ */
+export const CARRIED_PREFIXES: readonly string[] = [RENDER_LOG_DIR];
 
 export interface RestoreOptions {
   /** Git working directory the commands run in. */
@@ -107,11 +129,25 @@ export interface RestoreOptions {
   site: string;
 }
 
+/**
+ * What happened to one {@link CARRIED_PREFIXES} entry.
+ *
+ * Two states here, not three: a carry that could not be DETERMINED collapses
+ * into the outcome's own `unknown`, because a deploy that cannot tell whether
+ * it kept the branch's record must not proceed. There is no third state a
+ * caller could read as "fine".
+ */
+export interface Carried {
+  prefix: string;
+  /** `absent` is a DETERMINED absence — the branch was read and has no such directory. */
+  state: "carried" | "absent";
+}
+
 export type RestoreOutcome =
-  | { state: "restored"; previews: string[] }
-  | { state: "empty"; previews: [] }
-  | { state: "no-branch"; previews: [] }
-  | { state: "unknown"; previews: []; reason: string };
+  | { state: "restored"; previews: string[]; carried: Carried[] }
+  | { state: "empty"; previews: []; carried: Carried[] }
+  | { state: "no-branch"; previews: []; carried: [] }
+  | { state: "unknown"; previews: []; carried: []; reason: string };
 
 export type VerifyOutcome =
   | { state: "ok"; expected: string[]; present: string[] }
@@ -149,60 +185,110 @@ function branchState(o: RestoreOptions): "present" | "absent" | { reason: string
 
 /** The preview directory names under `prefix` at `rev`, or a reason it could not be read. */
 function previewsAt(repo: string, rev: string, prefix: string): string[] | { reason: string } {
-  const has = git(repo, ["ls-tree", "--name-only", rev, `${prefix}`]);
-  if (has.code !== 0) return { reason: `git ls-tree ${rev} ${prefix} exited ${has.code}: ${has.err.trim()}` };
-  if (has.out.trim() === "") return [];
+  const has = prefixExists(repo, rev, prefix);
+  if (typeof has === "object") return has;
+  if (!has) return [];
   const kids = git(repo, ["ls-tree", "-d", "--name-only", `${rev}:${prefix}`]);
   if (kids.code !== 0) return { reason: `git ls-tree ${rev}:${prefix} exited ${kids.code}: ${kids.err.trim()}` };
   return kids.out.split("\n").map((s) => s.trim()).filter((s) => s !== "").sort();
 }
 
+/** Does `rev` carry anything at `prefix`? A reason rather than a bare false. */
+function prefixExists(repo: string, rev: string, prefix: string): boolean | { reason: string } {
+  const has = git(repo, ["ls-tree", "--name-only", rev, prefix]);
+  if (has.code !== 0) return { reason: `git ls-tree ${rev} ${prefix} exited ${has.code}: ${has.err.trim()}` };
+  return has.out.trim() !== "";
+}
+
 /**
- * Fetch the publish branch and copy its `STAGING/` into the publish directory.
+ * Copy one prefix out of `rev` into `into`, or say why it could not be.
  *
- * Nothing is written to `site` unless the branch was READ and carries
- * previews. An `unknown` leaves the tree exactly as it found it, so a caller
- * that ignores the exit code still does not publish a half-restored site.
+ * `git archive` piped through `tar` rather than a checkout: the branch is
+ * fetched at depth 1 into the CURRENT repository, which is the site's working
+ * tree, so checking it out would replace the tree the deploy is about to
+ * publish.
+ */
+function copyPrefix(repo: string, rev: string, prefix: string, into: string): true | { reason: string } {
+  mkdirSync(into, { recursive: true });
+  const work = mkdtempSync(join(tmpdir(), "restore-staging-"));
+  try {
+    const tar = join(work, "carry.tar");
+    const archived = git(repo, ["archive", "--format=tar", "-o", tar, rev, prefix]);
+    if (archived.code !== 0) {
+      return { reason: `git archive ${rev} ${prefix} exited ${archived.code}: ${archived.err.trim()}` };
+    }
+    const untar = spawnSync("tar", ["-xf", tar, "-C", into], { encoding: "utf-8" });
+    if (untar.error !== undefined || untar.status !== 0) {
+      return { reason: `tar -xf ${prefix} exited ${untar.status ?? "?"}: ${String(untar.error ?? untar.stderr ?? "").trim()}` };
+    }
+  } finally {
+    rmSync(work, { recursive: true, force: true });
+  }
+  return true;
+}
+
+/**
+ * Fetch the publish branch and copy what must survive into the publish directory.
+ *
+ * Two things, and the difference between them is the point:
+ *
+ * - **the previews**, `STAGING/`, because a reviewer's link would 404;
+ * - **{@link CARRIED_PREFIXES}**, UNCONDITIONALLY — before the preview check
+ *   and whatever it says. The early `empty` return used to leave this function
+ *   the moment there were no previews, which would carry the record of the
+ *   branch only on the days it happened to still hold previews. A log kept
+ *   only when something else is also kept is a log with no property worth
+ *   relying on.
+ *
+ * Nothing is written to `site` unless the branch was READ. An `unknown` leaves
+ * the tree exactly as it found it, so a caller that ignores the exit code
+ * still does not publish a half-restored site.
  */
 export function restoreStaging(o: RestoreOptions): RestoreOutcome {
   const present = branchState(o);
-  if (present === "absent") return { state: "no-branch", previews: [] };
-  if (typeof present === "object") return { state: "unknown", previews: [], reason: present.reason };
+  if (present === "absent") return { state: "no-branch", previews: [], carried: [] };
+  if (typeof present === "object") return { state: "unknown", previews: [], carried: [], reason: present.reason };
 
   const fetched = git(o.repo, ["fetch", "--depth=1", "--no-tags", o.remote, o.branch]);
   if (fetched.code !== 0) {
     return {
       state: "unknown",
       previews: [],
+      carried: [],
       reason: `git fetch ${o.remote} ${o.branch} exited ${fetched.code}: ${fetched.err.trim()}`,
     };
   }
 
-  const found = previewsAt(o.repo, "FETCH_HEAD", o.prefix);
-  if (!Array.isArray(found)) return { state: "unknown", previews: [], reason: found.reason };
-  if (found.length === 0) return { state: "empty", previews: [] };
-
   const into = resolve(o.site);
-  mkdirSync(into, { recursive: true });
-  const work = mkdtempSync(join(tmpdir(), "restore-staging-"));
-  try {
-    const tar = join(work, "staging.tar");
-    const archived = git(o.repo, ["archive", "--format=tar", "-o", tar, "FETCH_HEAD", o.prefix]);
-    if (archived.code !== 0) {
-      return { state: "unknown", previews: [], reason: `git archive exited ${archived.code}: ${archived.err.trim()}` };
+
+  // BEFORE the preview check, deliberately — see the note above.
+  const carried: Carried[] = [];
+  for (const prefix of CARRIED_PREFIXES) {
+    const exists = prefixExists(o.repo, "FETCH_HEAD", prefix);
+    if (typeof exists === "object") {
+      return { state: "unknown", previews: [], carried: [], reason: exists.reason };
     }
-    const untar = spawnSync("tar", ["-xf", tar, "-C", into], { encoding: "utf-8" });
-    if (untar.error !== undefined || untar.status !== 0) {
-      return {
-        state: "unknown",
-        previews: [],
-        reason: `tar -xf exited ${untar.status ?? "?"}: ${String(untar.error ?? untar.stderr ?? "").trim()}`,
-      };
+    if (!exists) {
+      carried.push({ prefix, state: "absent" });
+      continue;
     }
-  } finally {
-    rmSync(work, { recursive: true, force: true });
+    const copied = copyPrefix(o.repo, "FETCH_HEAD", prefix, into);
+    if (copied !== true) {
+      // A carry that failed is not a warning. The deploy that follows is a
+      // full replace, so continuing here DELETES the branch's own record of
+      // itself, which is the exact class of silent loss bean `plj1` names.
+      return { state: "unknown", previews: [], carried: [], reason: copied.reason };
+    }
+    carried.push({ prefix, state: "carried" });
   }
-  return { state: "restored", previews: found };
+
+  const found = previewsAt(o.repo, "FETCH_HEAD", o.prefix);
+  if (!Array.isArray(found)) return { state: "unknown", previews: [], carried: [], reason: found.reason };
+  if (found.length === 0) return { state: "empty", previews: [], carried };
+
+  const copied = copyPrefix(o.repo, "FETCH_HEAD", o.prefix, into);
+  if (copied !== true) return { state: "unknown", previews: [], carried: [], reason: copied.reason };
+  return { state: "restored", previews: found, carried };
 }
 
 /**
@@ -242,9 +328,15 @@ export function exitCodeFor(outcome: RestoreOutcome | VerifyOutcome): 0 | 1 | 2 
 export function describe(outcome: RestoreOutcome | VerifyOutcome): string {
   switch (outcome.state) {
     case "restored":
-      return `restored ${outcome.previews.length} preview(s) into the publish directory: ${outcome.previews.join(", ")}`;
+      return (
+        `restored ${outcome.previews.length} preview(s) into the publish directory: ` +
+        `${outcome.previews.join(", ")}${carriedNote(outcome.carried)}`
+      );
     case "empty":
-      return "the publish branch was read and carries no previews — a determined empty, nothing to restore";
+      return (
+        "the publish branch was read and carries no previews — a determined empty, nothing to restore" +
+        carriedNote(outcome.carried)
+      );
     case "no-branch":
       return "the publish branch does not exist yet — nothing to restore";
     case "ok":
@@ -260,6 +352,18 @@ export function describe(outcome: RestoreOutcome | VerifyOutcome): string {
     case "unknown":
       return `COULD NOT DETERMINE the state of the publish branch: ${outcome.reason}`;
   }
+}
+
+/**
+ * What the unconditional carries did, said out loud even when nothing moved.
+ *
+ * A determined absence is REPORTED rather than omitted: "there is no log on
+ * the branch yet" and "the carry never ran" look identical in a silent log,
+ * and only the second is a defect.
+ */
+function carriedNote(carried: Carried[]): string {
+  if (carried.length === 0) return "";
+  return `. Carried: ${carried.map((c) => `${c.prefix} (${c.state})`).join(", ")}`;
 }
 
 function arg(name: string, fallback: string): string {
@@ -306,7 +410,10 @@ if (import.meta.main) {
   // Not written on `unknown`: an absent state file is what makes `--verify`
   // report "could not determine" rather than "nothing to check".
   if (statePath !== "" && outcome.state !== "unknown") {
-    writeFileSync(statePath, `${JSON.stringify({ state: outcome.state, previews: outcome.previews }, null, 2)}\n`);
+    writeFileSync(
+      statePath,
+      `${JSON.stringify({ state: outcome.state, previews: outcome.previews, carried: outcome.carried }, null, 2)}\n`,
+    );
   }
   (code === 0 ? console.log : console.error)(`${code === 0 ? "✓" : "✗"} ${describe(outcome)}`);
   process.exit(code);

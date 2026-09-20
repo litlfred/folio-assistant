@@ -273,3 +273,98 @@ describe(".github/workflows/docs-site.yml", () => {
     expect(publishBlock.slice(0, publishBlock.indexOf("- name:"))).not.toContain("keep_files");
   });
 });
+
+describe("the render log is carried UNCONDITIONALLY — the property previews do not have", () => {
+  // A preview belongs to an open pull request, so gating its carry on liveness
+  // is defensible. A log entry about a CLOSED pull request is exactly what such
+  // a gate would drop and exactly what a reader asking "what happened to
+  // `STAGING/x`" needs most. These tests pin the difference.
+
+  const LOG = "_render-log/2026-09-20.jsonl";
+  const LINE = `{"$schema":"folio-render-log/v1","id":"e1","event":"rendered"}\n`;
+
+  test("the log survives a full replace when there are NO previews at all", () => {
+    // The case the early `empty` return would have dropped: this function used
+    // to leave the moment there were no previews, which would carry the record
+    // of the branch only on the days it happened to still hold previews.
+    const bare = remoteWith({ "index.html": "<p>home</p>", [LOG]: LINE });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(restored.state).toBe("empty");
+    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "carried" }]);
+
+    const after = publish(bare, built, { keepFiles: false });
+    expect(after).toContain(LOG);
+  });
+
+  test("CONTROL — with no restore, the full replace deletes the log", () => {
+    const bare = remoteWith({ "index.html": "<p>home</p>", [LOG]: LINE });
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const after = publish(bare, built, { keepFiles: false });
+    expect(after.filter((p) => p.startsWith("_render-log/"))).toEqual([]);
+  });
+
+  test("entries are kept byte-for-byte, and a day file is not merged into another", () => {
+    const other = "_render-log/2026-09-19.jsonl";
+    const bare = remoteWith({ "index.html": "<p>home</p>", [LOG]: LINE, [other]: LINE });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(readFileSync(join(built, LOG), "utf-8")).toBe(LINE);
+    expect(existsSync(join(built, other))).toBe(true);
+
+    const after = publish(bare, built, { keepFiles: false });
+    expect(after).toContain(LOG);
+    expect(after).toContain(other);
+  });
+
+  test("an absent log is a DETERMINED absence, reported rather than omitted", () => {
+    // "there is no log on the branch yet" and "the carry never ran" look
+    // identical in a silent report, and only the second is a defect.
+    const bare = remoteWith({ "index.html": "<p>home</p>", "STAGING/x/index.html": "<p>p</p>" });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(restored.state).toBe("restored");
+    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "absent" }]);
+    expect(exitCodeFor(restored)).toBe(0);
+  });
+
+  test("a log the deploy would have wiped is carried alongside the previews", () => {
+    const bare = remoteWith({
+      "index.html": "<p>home</p>",
+      "STAGING/claude-pr-9/index.html": "<p>preview</p>",
+      [LOG]: LINE,
+    });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(restored.state).toBe("restored");
+
+    const after = publish(bare, built, { keepFiles: false });
+    expect(after).toContain(LOG);
+    expect(after).toContain("STAGING/claude-pr-9/index.html");
+  });
+
+  test("an unreadable branch carries nothing and is exit 2 — never a silent pass", () => {
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({
+      repo,
+      remote: join(tmpdir(), "restore-staging-no-such-remote.git"),
+      site: built,
+      ...BRANCH,
+    });
+    expect(restored.state).toBe("unknown");
+    expect(restored.carried).toEqual([]);
+    expect(exitCodeFor(restored)).toBe(2);
+    expect(existsSync(join(built, "_render-log"))).toBe(false);
+  });
+});
