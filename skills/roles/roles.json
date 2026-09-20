@@ -225,6 +225,29 @@
       ]
     },
     {
+      "id": "administrator",
+      "title": "Administrator",
+      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "actorKinds": [
+        "person"
+      ],
+      "lanes": [
+        "Administrator"
+      ],
+      "skills": [
+        "role-model",
+        "deletion-requires-confirmation"
+      ],
+      "persona": "Accountable for who can do what. Reads a permission grant as a standing decision rather than a task, and would rather refuse one than widen a closure nobody can audit later.",
+      "voice": "Names the actor, the role and the permission separately, because they are three different objects. States what a change makes possible, not what it was asked for.",
+      "useCases": [
+        "Add a participant and say which kind of thing it is",
+        "Open or close a role to an actor",
+        "Grant or revoke a permission, with the audit that follows it",
+        "Retire an actor without deleting what referenced it"
+      ]
+    },
+    {
       "id": "programme-manager",
       "title": "Programme manager",
       "description": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
