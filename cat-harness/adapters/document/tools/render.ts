@@ -122,8 +122,8 @@ export function registerLatexRenderTools(server: McpServer): void {
           mkdirSync(blockPdfsDir, { recursive: true });
 
           // Find the block's .ts and .md in content/
-          const contentDir = folioDir(REPO_ROOT);
-          const found = spawnSync("find", [contentDir, "-name", `${target}.ts`, "-not", "-path", "*/node_modules/*"], {
+          const folioRoot = folioDir(REPO_ROOT);
+          const found = spawnSync("find", [folioRoot, "-name", `${target}.ts`, "-not", "-path", "*/node_modules/*"], {
             stdio: "pipe",
           });
           const tsPath = found.stdout?.toString().trim().split("\n").find(p => p);
@@ -135,9 +135,9 @@ export function registerLatexRenderTools(server: McpServer): void {
           const preamblePath = join(REPO_ROOT, "latex", "preamble.tex");
 
           // Load paper manifest (first parent .ts in the paper dir)
-          const paperDirParts = blockDir.replace(contentDir + "/", "").split("/");
+          const paperDirParts = blockDir.replace(folioRoot + "/", "").split("/");
           const paperSlug = paperDirParts[0];
-          const paperManifestPath = join(contentDir, paperSlug, `${paperSlug}.ts`);
+          const paperManifestPath = join(folioRoot, paperSlug, `${paperSlug}.ts`);
           let paper: Paper;
           try {
             const paperMod = await import(paperManifestPath);
@@ -484,28 +484,28 @@ const HTML_PDF_ENGINES = ["weasyprint", "prince", "wkhtmltopdf"] as const;
  * plausible artifact, which is worse than an error.
  */
 function resolveDocumentManifest(name?: string): { path: string; slug: string } | string {
-  const contentDir = folioDir(REPO_ROOT);
-  if (!existsSync(contentDir)) {
+  const folioRoot = folioDir(REPO_ROOT);
+  if (!existsSync(folioRoot)) {
     return `Error: no folio/ directory at ${REPO_ROOT}. Run folio_init first, or point --repo at your folio.`;
   }
-  const candidates = readdirSync(contentDir, { withFileTypes: true })
+  const candidates = readdirSync(folioRoot, { withFileTypes: true })
     .filter((d) => d.isDirectory())
     .map((d) => d.name)
-    .filter((slug) => existsSync(join(contentDir, slug, `${slug}.ts`)));
+    .filter((slug) => existsSync(join(folioRoot, slug, `${slug}.ts`)));
 
   if (candidates.length === 0) {
-    return `Error: no document manifest found. Expected folio/<slug>/<slug>.ts under ${contentDir}.`;
+    return `Error: no document manifest found. Expected folio/<slug>/<slug>.ts under ${folioRoot}.`;
   }
   if (name) {
     if (!candidates.includes(name)) {
       return `Error: no such document '${name}'. Available: ${candidates.join(", ")}`;
     }
-    return { path: join(contentDir, name, `${name}.ts`), slug: name };
+    return { path: join(folioRoot, name, `${name}.ts`), slug: name };
   }
   if (candidates.length > 1) {
     return `Error: ${candidates.length} documents in this folio — pass \`document\`. Available: ${candidates.join(", ")}`;
   }
-  return { path: join(contentDir, candidates[0], `${candidates[0]}.ts`), slug: candidates[0] };
+  return { path: join(folioRoot, candidates[0], `${candidates[0]}.ts`), slug: candidates[0] };
 }
 
 /** Format the issue list a build returns, or a clean bill of health. */

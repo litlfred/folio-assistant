@@ -27,15 +27,15 @@ import { paperArg } from "../content/pipeline/cli-args";
 /**
  * The paper to report on, and the folio's `content/` root.
  *
- * Both were wrong: `computeStats(paperDir, contentRoot)` takes two arguments
- * and was called with one — so `contentRoot` was `undefined` at runtime — and
+ * Both were wrong: `computeStats(paperDir, folioRoot)` takes two arguments
+ * and was called with one — so `folioRoot` was `undefined` at runtime — and
  * the paper was hardcoded to `quantum-observable-universe`, one folio's paper
  * name living in the platform. `--paper` wins; otherwise take the folio's sole
  * paper and refuse to guess when there are several.
  */
-function statsTarget(): { paper: string; contentRoot: string } {
+function statsTarget(): { paper: string; folioRoot: string } {
   const repoRoot = findContentRepoRoot();
-  const contentRoot = folioDir(repoRoot);
+  const folioRoot = folioDir(repoRoot);
   const paper = paperArg() ?? soleFolioPaper(repoRoot);
   if (!paper) {
     // Exit cleanly rather than throwing: this is a CLI entry point, and a raw
@@ -44,12 +44,12 @@ function statsTarget(): { paper: string; contentRoot: string } {
     const found = findPapers(repoRoot);
     console.error(
       found.length === 0
-        ? `no paper found under ${contentRoot} — run from a folio checkout, or pass --paper`
+        ? `no paper found under ${folioRoot} — run from a folio checkout, or pass --paper`
         : `this folio has ${found.length} papers (${found.join(", ")}) — pass --paper to choose one`,
     );
     process.exit(2);
   }
-  return { paper, contentRoot };
+  return { paper, folioRoot };
 }
 
 
@@ -95,7 +95,7 @@ function buildConjectureClause(s: ReturnType<typeof computeStats>): { count: str
 function main(): number {
   const check = process.argv.includes("--check");
   const target = statsTarget();
-  const stats = computeStats(target.paper, target.contentRoot);
+  const stats = computeStats(target.paper, target.folioRoot);
 
   const NOTE_PATH = notePathFor(target.paper);
   const src = readFileSync(NOTE_PATH, "utf-8");

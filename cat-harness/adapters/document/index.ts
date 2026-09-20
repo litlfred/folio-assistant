@@ -121,7 +121,7 @@ export class DocumentContentAdapter implements ContentAdapter {
   protected resolver: PaperResolver;
   protected gitHelper: GitHelper;
   protected feedbackStore: FeedbackStore;
-  protected contentDir: string;
+  protected folioRoot: string;
   protected leanDir: string;
   protected buildDir: string;
   protected mainTex: string;
@@ -141,7 +141,7 @@ export class DocumentContentAdapter implements ContentAdapter {
     this.gitHelper = gitHelper;
     this.feedbackStore = new FeedbackStore(feedbackDir);
     this.resolver = new PaperResolver(repoRoot, gitHelper, this.feedbackStore);
-    this.contentDir = folioDir(repoRoot);
+    this.folioRoot = folioDir(repoRoot);
     this.leanDir = resolve(repoRoot, "lean");
     this.buildDir = resolve(repoRoot, "build");
     this.mainTex = resolve(repoRoot, "main.tex");
@@ -185,7 +185,7 @@ export class DocumentContentAdapter implements ContentAdapter {
   // ── Editing ──────────────────────────────────────────────────
 
   async saveBlock(itemId: string, rootName: string, md: string): Promise<string> {
-    const paperDir = join(this.contentDir, itemId);
+    const paperDir = join(this.folioRoot, itemId);
     if (!existsSync(paperDir)) throw new Error("Paper not found");
 
     let mdPath: string | null = null;
@@ -716,7 +716,7 @@ End every response with suggested follow-ups:
     // Content assets
     if (path.startsWith("/api/content-asset/")) {
       const rel = path.slice("/api/content-asset/".length);
-      return serveFile(join(this.contentDir, rel)) || new Response("Asset not found", { status: 404 });
+      return serveFile(join(this.folioRoot, rel)) || new Response("Asset not found", { status: 404 });
     }
 
     // Uploads listing
@@ -797,7 +797,7 @@ End every response with suggested follow-ups:
             if (rootName) break;
           }
           if (rootName) {
-            const paperDir = join(this.contentDir, id || "");
+            const paperDir = join(this.folioRoot, id || "");
             for (const d of readdirSync(paperDir, { withFileTypes: true })) {
               if (d.isDirectory() && existsSync(join(paperDir, d.name, `${rootName}.ts`))) {
                 chapterDir = d.name; break;

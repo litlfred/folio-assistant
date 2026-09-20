@@ -28,7 +28,7 @@ export function getRepoRoot(): string {
 
 export const get = {
   REPO_ROOT: () => _repoRoot,
-  CONTENT_DIR: () => folioDir(_repoRoot),
+  FOLIO_DIR: () => folioDir(_repoRoot),
   CHAPTERS_DIR: () => resolve(_repoRoot, "chapters"),
   MAIN_TEX: () => resolve(_repoRoot, "main.tex"),
   /**
@@ -54,7 +54,7 @@ export const get = {
 // tools should import `get` above.
 
 export const REPO_ROOT = _repoRoot;
-export const CONTENT_DIR = folioDir(_repoRoot);
+export const FOLIO_DIR = folioDir(_repoRoot);
 export const CHAPTERS_DIR = resolve(_repoRoot, "chapters");
 export const MAIN_TEX = resolve(_repoRoot, "main.tex");
 export const LEAN_DIR = _repoRoot;

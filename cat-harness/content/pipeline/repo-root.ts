@@ -81,12 +81,12 @@ export function findContentRepoRoot(): string {
  */
 export function findPapers(repoRoot?: string): string[] {
   const root = repoRoot ?? findContentRepoRoot();
-  const contentDir = folioDir(root);
-  if (!existsSync(contentDir)) return [];
+  const folioRoot = folioDir(root);
+  if (!existsSync(folioRoot)) return [];
   const out: string[] = [];
-  for (const entry of readdirSync(contentDir)) {
+  for (const entry of readdirSync(folioRoot)) {
     if (entry.startsWith(".")) continue;
-    const d = join(contentDir, entry);
+    const d = join(folioRoot, entry);
     try {
       if (!statSync(d).isDirectory()) continue;
     } catch {

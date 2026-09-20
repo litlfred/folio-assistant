@@ -232,8 +232,8 @@ function matchTitle(src: string): string | undefined {
  * folio almost always is.
  */
 export function discoverPapers(root: string): PaperInfo[] {
-  const contentDir = folioDir(root);
-  const folioPath = join(contentDir, "folio.ts");
+  const folioRoot = folioDir(root);
+  const folioPath = join(folioRoot, "folio.ts");
   let entries: { dir: string; folioTitle?: string }[] = [];
 
   if (existsSync(folioPath)) {
@@ -248,7 +248,7 @@ export function discoverPapers(root: string): PaperInfo[] {
 
   const papers: PaperInfo[] = [];
   for (const { dir, folioTitle } of entries) {
-    const manifest = join(contentDir, dir, `${dir}.ts`);
+    const manifest = join(folioRoot, dir, `${dir}.ts`);
     if (!existsSync(manifest)) continue;
     const manifestTitle = matchTitle(readFileSync(manifest, "utf-8"));
     papers.push({ dir, title: manifestTitle ?? folioTitle ?? dir });

@@ -47,9 +47,9 @@ function graph(): ContentGraph | null {
   _graphTried = true;
   try {
     const repoRoot = findContentRepoRoot();
-    const contentDir = folioDir(repoRoot);
-    if (!existsSync(contentDir)) return null;
-    _graph = buildContentGraph(contentDir, repoRoot);
+    const folioRoot = folioDir(repoRoot);
+    if (!existsSync(folioRoot)) return null;
+    _graph = buildContentGraph(folioRoot, repoRoot);
     _graphLoaded = _graph.nodes.size > 0;
     return _graphLoaded ? _graph : null;
   } catch {

@@ -44,10 +44,10 @@ import { resolveHarnessConfigPath } from "../../schemas/harness-config";
 function existingFolio(root: string): string | undefined {
   const cfg = resolveHarnessConfigPath(root);
   if (cfg) return basename(cfg.path);
-  const contentDir = folioDir(root);
-  if (existsSync(contentDir)) {
-    const docs = readdirSync(contentDir, { withFileTypes: true })
-      .filter((d) => d.isDirectory() && existsSync(resolve(contentDir, d.name, `${d.name}.ts`)))
+  const folioRoot = folioDir(root);
+  if (existsSync(folioRoot)) {
+    const docs = readdirSync(folioRoot, { withFileTypes: true })
+      .filter((d) => d.isDirectory() && existsSync(resolve(folioRoot, d.name, `${d.name}.ts`)))
       .map((d) => d.name);
     if (docs.length) return `folio/${docs[0]}/${docs[0]}.ts`;
   }

@@ -275,11 +275,11 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
 
 // ── Content resolution (dynamic, no static JSON) ────────────────
 
-const CONTENT_DIR = folioDir(REPO_ROOT);
+const FOLIO_DIR = folioDir(REPO_ROOT);
 
 /** The two node populations the graph tools read. */
 const GRAPH_ROOTS = [
-  { name: "content", dir: CONTENT_DIR },
+  { name: "content", dir: FOLIO_DIR },
   { name: "library", dir: LIBRARY_DIR },
 ];
 import { leanPackageByName } from "../../schemas/lean-packages.js";
@@ -1604,7 +1604,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
         if (rootName) {
           // Get chapter dir from the chapter's label or directory listing
           const { readdirSync } = await import("fs");
-          const paperDir = join(CONTENT_DIR, id);
+          const paperDir = join(FOLIO_DIR, id);
           for (const d of readdirSync(paperDir)) {
             const candidate = join(paperDir, d, `${rootName}.ts`);
             if (existsSync(candidate)) { chapterDir = d; break; }
@@ -2108,7 +2108,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
   // URL pattern: /api/content-asset/<paper>/<chapter>/rendered/<file>
   if (path.startsWith("/api/content-asset/")) {
     const rel = path.slice("/api/content-asset/".length);
-    const assetPath = join(CONTENT_DIR, rel);
+    const assetPath = join(FOLIO_DIR, rel);
     return serveFile(assetPath)
       || new Response("Asset not found", { status: 404 });
   }
@@ -2157,7 +2157,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
       const { writeFileSync, readdirSync } = await import("fs");
 
       // Find the block's chapter directory
-      const paperDir = join(CONTENT_DIR, body.paperId);
+      const paperDir = join(FOLIO_DIR, body.paperId);
       if (!existsSync(paperDir)) {
         return Response.json({ error: "Paper not found" }, { status: 404 });
       }
@@ -2187,7 +2187,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
     try {
       const body = await req.json() as { paperId: string; rootName: string; sha: string };
       const { readdirSync } = await import("fs");
-      const paperDir = join(CONTENT_DIR, body.paperId);
+      const paperDir = join(FOLIO_DIR, body.paperId);
       if (!existsSync(paperDir)) {
         return Response.json({ error: "Paper not found" }, { status: 404 });
       }

@@ -93,7 +93,7 @@ export interface SectionContext {
  */
 export type LeanCoverageStats = (
   paperDir: string,
-  contentRoot: string,
+  folioRoot: string,
 ) => {
   provable: { total: number; with_lean_file: number; sorry_free: number; percent_sorry_free: number };
   conjectures: { total: number; with_lean_file: number; class_axiomatized: number; percent_class_axiomatized: number };
@@ -220,13 +220,13 @@ const leanCoverageSection: ReadmeSection = {
     const papers = papersWithLean(root);
     if (papers.length === 0) return empty("papers with Lean sources");
 
-    const contentRoot = folioDir(root);
+    const folioRoot = folioDir(root);
     const rows: string[] = [];
     const notes: string[] = [];
     for (const paper of papers) {
       let stats;
       try {
-        stats = leanCoverage(paper.dir, contentRoot);
+        stats = leanCoverage(paper.dir, folioRoot);
       } catch (e) {
         // A paper whose stats will not compute is named, not skipped: a table
         // silently missing a row reads as a paper with no Lean at all.

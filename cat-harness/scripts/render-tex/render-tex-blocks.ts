@@ -32,7 +32,7 @@ import { Glob } from "bun";
 // ── Config ───────────────────────────────────────────────────────
 
 const REPO_ROOT = join(import.meta.dir, "../..");
-const CONTENT_ROOT = folioDir(REPO_ROOT);
+const FOLIO_ROOT = folioDir(REPO_ROOT);
 const PREAMBLE_PATH = join(import.meta.dir, "preamble.tex");
 
 const args = process.argv.slice(2);
@@ -259,7 +259,7 @@ function updateManifest(
 // ── Main ─────────────────────────────────────────────────────────
 
 async function main() {
-  const paperDir = join(CONTENT_ROOT, PAPER);
+  const paperDir = join(FOLIO_ROOT, PAPER);
   if (!existsSync(paperDir)) {
     console.error(`Paper directory not found: ${paperDir}`);
     process.exit(1);

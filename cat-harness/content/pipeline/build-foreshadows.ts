@@ -54,9 +54,9 @@ import { findContentRepoRoot } from "./repo-root";
 // resolves to `folio-assistant/content` — which holds only `pipeline/` — so
 // every paper lookup would miss and this would cheerfully emit an empty
 // artifact. That exact mistake once left the whole detangler axis reporting
-// `n/a` while looking healthy; see the note on CONTENT_DIR in
+// `n/a` while looking healthy; see the note on FOLIO_DIR in
 // qa-checkers-extended.ts.
-const CONTENT_DIR = folioDir(findContentRepoRoot());
+const FOLIO_DIR = folioDir(findContentRepoRoot());
 
 interface BlockEntry {
   derived: string[];
@@ -72,7 +72,7 @@ export function buildForeshadows(paper: string): {
   totals: { blocks: number; derived: number; declared: number; effective: number };
   blocks: Record<string, BlockEntry>;
 } {
-  const paperDir = join(CONTENT_DIR, paper);
+  const paperDir = join(FOLIO_DIR, paper);
   const paperTs = join(paperDir, `${paper}.ts`);
   if (!existsSync(paperTs)) throw new Error(`no paper manifest: ${paperTs}`);
   const dirs = [...readFileSync(paperTs, "utf-8").matchAll(/dir:\s*"([^"]+)"/g)].map(
@@ -161,7 +161,7 @@ if (import.meta.main) {
     process.exit(2);
   }
   const built = buildForeshadows(paper);
-  const out = join(CONTENT_DIR, paper, "foreshadows.json");
+  const out = join(FOLIO_DIR, paper, "foreshadows.json");
   const text = `${JSON.stringify(built, null, 2)}\n`;
 
   if (check) {

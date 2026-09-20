@@ -23,7 +23,7 @@ import { findContentRepoRoot } from "./repo-root";
 // folio-assistant and made every content path below miss).
 const REPO_ROOT = findContentRepoRoot();
 // Content repo's content/, not folio-assistant's — see qa-checkers-extended.
-const CONTENT_DIR = folioDir(findContentRepoRoot());
+const FOLIO_DIR = folioDir(findContentRepoRoot());
 const args = process.argv.slice(2);
 const outIdx = args.indexOf("--out");
 const outPath = outIdx >= 0 ? resolve(args[outIdx + 1]) : join(REPO_ROOT, "references.bib");
@@ -48,7 +48,7 @@ interface VerifEntry {
   note?: string;
 }
 
-const verifPath = join(CONTENT_DIR, "bib-qa-verifications.json");
+const verifPath = join(FOLIO_DIR, "bib-qa-verifications.json");
 let verifMap: Map<string, VerifEntry> = new Map();
 if (existsSync(verifPath)) {
   const raw = JSON.parse(readFileSync(verifPath, "utf-8"));

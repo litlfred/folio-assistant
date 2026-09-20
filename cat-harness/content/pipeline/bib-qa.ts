@@ -30,8 +30,8 @@ import type { Data as CSLData, Person as CSLPerson } from "csl-json";
 // folio-assistant and made every content path below miss).
 const REPO_ROOT = findContentRepoRoot();
 // Content repo's content/, not folio-assistant's — see qa-checkers-extended.
-const CONTENT_DIR = folioDir(findContentRepoRoot());
-const IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
+const FOLIO_DIR = folioDir(findContentRepoRoot());
+const IMAGES_DIR = join(FOLIO_DIR, "bib-qa-images");
 
 const args = process.argv.slice(2);
 const checkUrls = args.includes("--check-urls");
@@ -39,7 +39,7 @@ const ciMode = args.includes("--ci");
 const outIdx = args.indexOf("--out");
 const outPath = outIdx >= 0 && args[outIdx + 1]
   ? resolve(args[outIdx + 1])
-  : join(CONTENT_DIR, "bib-qa.json");
+  : join(FOLIO_DIR, "bib-qa.json");
 
 // ── Types ───────────────────────────────────────────────────────
 
@@ -379,7 +379,7 @@ interface VerificationEntry {
 }
 
 function loadVerifications(): Map<string, VerificationEntry> {
-  const path = join(CONTENT_DIR, "bib-qa-verifications.json");
+  const path = join(FOLIO_DIR, "bib-qa-verifications.json");
   if (!existsSync(path)) return new Map();
   const raw = JSON.parse(readFileSync(path, "utf-8"));
   const arr: (VerificationEntry & { id: string | null })[] = raw.entries ?? [];

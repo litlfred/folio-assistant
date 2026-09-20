@@ -26,7 +26,7 @@ import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 export const REPO_ROOT = findContentRepoRoot();
 
 /** Content objects directory. */
-export const CONTENT_DIR = folioDir(REPO_ROOT);
+export const FOLIO_DIR = folioDir(REPO_ROOT);
 
 /**
  * Ingested documents directory — the `.jsonld` nodes and `sections/*.md` that

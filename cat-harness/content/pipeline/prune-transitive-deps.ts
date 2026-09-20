@@ -85,7 +85,7 @@ const argValue = (flag: string): string | undefined => {
 const PAPER_ARG = argValue("--paper");
 
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT_ROOT = folioDir(REPO_ROOT);
+const FOLIO_ROOT = folioDir(REPO_ROOT);
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
 // `--paper` matters in a MULTI-paper folio: `requirePaper()` with no argument
 // throws "5 papers found — name one explicitly", and until this flag existed
@@ -113,7 +113,7 @@ const CONTENT_ROOT = folioDir(REPO_ROOT);
 // (qou carries five papers: bach2013-double-slit, fred2005-formal-groups,
 // quantum-observable-universe, unital-groebner-bases, visualizer.)
 const PAPER_NAME = requirePaper(PAPER_ARG);
-const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
+const PAPER_DIR = join(FOLIO_ROOT, PAPER_NAME);
 
 // ── Load all blocks ─────────────────────────────────────────────
 
