@@ -62,6 +62,7 @@
  * @module content/pipeline/lean-atlas-ingest
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname, extname, resolve, sep } from "path";
 import { hashFile, walkBlocks } from "./qa-utils";
@@ -330,8 +331,7 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const repoRoot = findContentRepoRoot();
   const positional = args.find((a, i) => !a.startsWith("--") && !args[i - 1]?.startsWith("--ingest"));
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const root = positional ? join(repoRoot, positional) : join(repoRoot, "folio");
+  const root = positional ? join(repoRoot, positional) : folioDir(repoRoot);
 
   if (args[0] === "--ingest" && args[1]) ingestMode(repoRoot, args[1]);
   else if (args[0] === "--scan") scanMode(repoRoot, root);

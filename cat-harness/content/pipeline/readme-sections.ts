@@ -39,6 +39,7 @@
  * @module content/pipeline/readme-sections
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { basename, join, resolve } from "path";
 
@@ -92,7 +93,7 @@ export interface SectionContext {
  */
 export type LeanCoverageStats = (
   paperDir: string,
-  contentRoot: string,
+  folioRoot: string,
 ) => {
   provable: { total: number; with_lean_file: number; sorry_free: number; percent_sorry_free: number };
   conjectures: { total: number; with_lean_file: number; class_axiomatized: number; percent_class_axiomatized: number };
@@ -159,10 +160,8 @@ function undetermined(why: string): SectionOutput {
  */
 export function leanLibName(root: string, paper: string): string | undefined {
   for (const candidate of [
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    join(root, "folio", paper, "lean", "lakefile.toml"),
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    join(root, "folio", paper, "lakefile.toml"),
+    join(folioDir(root),  paper, "lean", "lakefile.toml"),
+    join(folioDir(root),  paper, "lakefile.toml"),
   ]) {
     if (!existsSync(candidate)) continue;
     const src = readFileSync(candidate, "utf-8");
@@ -174,8 +173,7 @@ export function leanLibName(root: string, paper: string): string | undefined {
 
 /** The directory holding a paper's Lean sources, if it has one. */
 function leanDir(root: string, paper: string): string | undefined {
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const dir = join(root, "folio", paper, "lean");
+  const dir = join(folioDir(root),  paper, "lean");
   return existsSync(dir) ? dir : undefined;
 }
 
@@ -222,14 +220,13 @@ const leanCoverageSection: ReadmeSection = {
     const papers = papersWithLean(root);
     if (papers.length === 0) return empty("papers with Lean sources");
 
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    const contentRoot = join(root, "folio");
+    const folioRoot = folioDir(root);
     const rows: string[] = [];
     const notes: string[] = [];
     for (const paper of papers) {
       let stats;
       try {
-        stats = leanCoverage(paper.dir, contentRoot);
+        stats = leanCoverage(paper.dir, folioRoot);
       } catch (e) {
         // A paper whose stats will not compute is named, not skipped: a table
         // silently missing a row reads as a paper with no Lean at all.

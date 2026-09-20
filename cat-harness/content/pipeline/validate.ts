@@ -16,6 +16,7 @@
  * @module content/pipeline/validate
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readdirSync, readFileSync, existsSync } from "fs";
 import { resolve, join, basename, dirname, relative, isAbsolute } from "path";
 import {
@@ -892,13 +893,11 @@ if (import.meta.main) {
   const repoRoot = findContentRepoRoot();
   const targets = positional.length > 0
     ? positional.map(p => resolve(p))
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    : findPapers(repoRoot).map(p => join(repoRoot, "folio", p));
+    : findPapers(repoRoot).map(p => join(folioDir(repoRoot),  p));
 
   if (targets.length === 0) {
     console.error(
-      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-      `✗ No paper found under ${join(repoRoot, "folio")} — expected at least ` +
+      `✗ No paper found under ${folioDir(repoRoot)} — expected at least ` +
       `one <paper>/<paper>.ts manifest.\n` +
       `  folio-assistant is the PLATFORM; run this from a folio checkout, or ` +
       `pass a paper/chapter directory explicitly.`,

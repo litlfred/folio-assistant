@@ -7,7 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -26,8 +26,7 @@ import { directoryForGraph } from "../../schemas/cat-harness.js";
 export const REPO_ROOT = findContentRepoRoot();
 
 /** Content objects directory. */
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-export const CONTENT_DIR = resolve(REPO_ROOT, "folio");
+export const FOLIO_DIR = folioDir(REPO_ROOT);
 
 /**
  * Ingested documents directory — the `.jsonld` nodes and `sections/*.md` that

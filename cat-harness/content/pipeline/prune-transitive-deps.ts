@@ -34,6 +34,7 @@
  * @module content/pipeline/prune-transitive-deps
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import type { Paper, Chapter, Section, Block } from "../../schemas/types";
@@ -84,8 +85,7 @@ const argValue = (flag: string): string | undefined => {
 const PAPER_ARG = argValue("--paper");
 
 const REPO_ROOT = findContentRepoRoot();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_ROOT = join(REPO_ROOT, "folio");
+const FOLIO_ROOT = folioDir(REPO_ROOT);
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
 // `--paper` matters in a MULTI-paper folio: `requirePaper()` with no argument
 // throws "5 papers found — name one explicitly", and until this flag existed
@@ -113,7 +113,7 @@ const CONTENT_ROOT = join(REPO_ROOT, "folio");
 // (qou carries five papers: bach2013-double-slit, fred2005-formal-groups,
 // quantum-observable-universe, unital-groebner-bases, visualizer.)
 const PAPER_NAME = requirePaper(PAPER_ARG);
-const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
+const PAPER_DIR = join(FOLIO_ROOT, PAPER_NAME);
 
 // ── Load all blocks ─────────────────────────────────────────────
 
