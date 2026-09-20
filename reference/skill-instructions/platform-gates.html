@@ -561,7 +561,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-document.html" class="nav-list-link">Writing a document</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Architecture submenu" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><a href="/folio-assistant/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/swarm-management.html" class="nav-list-link">Swarm management</a></li></ul>
+      </button><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/harness-instances.html" class="nav-list-link">Harness instances</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><a href="/folio-assistant/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/swarm-management.html" class="nav-list-link">Swarm management</a></li></ul>
   
 </nav>
 
@@ -801,6 +801,124 @@ there because bpmn-js renders through a browser.</li>
 browser had been staged earlier in the same session. Green on that machine,
 red on a clean runner — the exact gap these gates close, inside the gate
 tooling itself.</p><hr />
+<h2 id="running-the-gates-that-relate-to-my-change-is-not-running-the-gates">
+  
+  
+    <a href="#running-the-gates-that-relate-to-my-change-is-not-running-the-gates" class="anchor-heading" aria-labelledby="running-the-gates-that-relate-to-my-change-is-not-running-the-gates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running “the gates that relate to my change” is not running the gates
+  
+  
+</h2>
+    
+
+<p><strong>Pick the gate set by JOB MEMBERSHIP, never by which gates you judge
+relevant.</strong> <code class="language-plaintext highlighter-rouge">bun run gates --all</code> is the whole point of there being a command;
+choosing a subset re-introduces exactly the gap the command closes.</p>
+
+<p><strong>Measured 2026-09-20, PR #526.</strong> A change added two collectors to
+<code class="language-plaintext highlighter-rouge">kg-export.ts</code>. Before pushing, the author ran <code class="language-plaintext highlighter-rouge">bun test</code> (3902 pass), <code class="language-plaintext highlighter-rouge">tsc</code>,
+<code class="language-plaintext highlighter-rouge">eslint</code>, and then four gates chosen by hand as the ones the change touched —
+<code class="language-plaintext highlighter-rouge">check:instance-render</code>, <code class="language-plaintext highlighter-rouge">check:declared-assets</code>, <code class="language-plaintext highlighter-rouge">kg:audit:check</code>,
+<code class="language-plaintext highlighter-rouge">check:harness-dirs</code>. All green. <strong>CI failed on <code class="language-plaintext highlighter-rouge">ns:check</code></strong>, a gate not in
+that list, and the failure was a direct consequence of the change:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2 minted term(s) have no definition:
+  · Asset
+  · assetRole
+</code></pre></div></div>
+
+<p>The reasoning that produced the subset was sound and that is the trap: every
+gate in it really was related, and the one that failed was related in a way the
+author had not thought of. <strong>A subset chosen by an author tests the author’s
+model of the change, and CI tests the change.</strong> Those differ precisely where
+the bug is.</p>
+
+<p>The cost is asymmetric and small. <code class="language-plaintext highlighter-rouge">gates --all</code> takes minutes on one machine;
+a red CI run costs a push cycle, the reviewer’s trust, and an event that wakes
+somebody.</p>
+<h3 id="and-the-follow-up-push-failed-too-for-the-adjacent-reason">
+  
+  
+    <a href="#and-the-follow-up-push-failed-too-for-the-adjacent-reason" class="anchor-heading" aria-labelledby="and-the-follow-up-push-failed-too-for-the-adjacent-reason"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> And the follow-up push failed too, for the adjacent reason
+  
+  
+</h3>
+    
+
+<p>The fix for the above ran <code class="language-plaintext highlighter-rouge">gates --all</code> and reported <strong>60 of 60</strong>. CI then
+failed again, on <code class="language-plaintext highlighter-rouge">kg:audit:check</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 sidecar(s) are stale. Run `bun run kg:audit` and commit:
+  · test/results/kg-qa/skills/folio-core/platform-gates.kg-qa.json
+</code></pre></div></div>
+
+<p>The gates run was launched, and <em>while it ran</em> this very file was edited to
+record the first lesson. So the run verified a tree that did not contain the
+change being pushed, and its “60 of 60” was quoted as though it did.</p>
+
+<blockquote>
+  <p><strong>A verification names a TREE, not a branch.</strong> Anything edited after the run
+started is unverified, however green the run was.</p>
+</blockquote>
+
+<p>This is the harder half to notice, because nothing looks wrong: the command
+really did pass, the output really does say 60 of 60, and the number is simply
+about a different tree than the one that got pushed. <strong>Run the gates after the
+last edit, not alongside it</strong> — and if you must edit while they run, the run is
+spent and needs doing again.</p>
+
+<p>Editing a SKILL is the case most likely to produce this, because a skill body
+has <strong>two</strong> committed artefacts generated from it, and both go stale the moment
+the body changes. <strong>A skill edit is three files:</strong></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>file</th>
+      <th>regenerate with</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>the body, <code class="language-plaintext highlighter-rouge">skills/&lt;pkg&gt;/&lt;name&gt;.md</code></td>
+      <td>— you edit it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">test/results/kg-qa/.../&lt;name&gt;.kg-qa.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">bun run kg:audit</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">docs/reference/skill-instructions/&lt;name&gt;.md</code></td>
+      <td><code class="language-plaintext highlighter-rouge">bun run cat-harness/scripts/gen-skill-docs.ts</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>This paragraph said “at least two files” and was wrong on its first
+commit</strong> — it named the sidecar and missed the generated docs, and
+<code class="language-plaintext highlighter-rouge">gen-skill-docs --check</code> duly failed, 1 of 60. Which is the lesson about
+incomplete regeneration being itself incompletely regenerated, so it is left
+recorded rather than tidied away: <strong>“at least”</strong> is what a writer reaches for
+when they have not counted, and a gate counts.</p>
+<h3 id="the-specific-rule-that-was-missed">
+  
+  
+    <a href="#the-specific-rule-that-was-missed" class="anchor-heading" aria-labelledby="the-specific-rule-that-was-missed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The specific rule that was missed
+  
+  
+</h3>
+    
+
+<p><strong><code class="language-plaintext highlighter-rouge">termIri("X")</code> MINTS a term, and a minted term needs a gloss.</strong> Adding a new
+<code class="language-plaintext highlighter-rouge">@type</code> or a new property in <code class="language-plaintext highlighter-rouge">kg-export.ts</code> is therefore a TWO-file change:
+the emitter, and <code class="language-plaintext highlighter-rouge">schemas/vocabulary.ts</code> (<code class="language-plaintext highlighter-rouge">CLASS_GLOSSES</code> for a type,
+<code class="language-plaintext highlighter-rouge">PROPERTY_GLOSSES</code> for a property). <code class="language-plaintext highlighter-rouge">ns:check</code> is what refuses the half of it
+that was done alone, and it says so in one line.</p>
+
+<p>Note this is a <em>different</em> gate from the export’s own undeclared-term report,
+which the same change had already satisfied. Getting past that one reads like
+having satisfied the vocabulary, and does not: <strong>one checks that the JSON-LD
+<code class="language-plaintext highlighter-rouge">@context</code> binds the term, the other checks that the namespace DEFINES it.</strong>
+Both must pass, and passing the first is not evidence about the second.</p><hr />
 <h2 id="what-a-check-failure-is-telling-you">
   
   
@@ -912,7 +1030,7 @@ renamed or restructured and the reader needs fixing — not the gate list.</p><h
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35518962308"><code>0f2f520</code></a> &middot; 2026-09-20T15:15:34Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35519130211"><code>8d30978</code></a> &middot; 2026-09-20T15:18:41Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

@@ -195,6 +195,7 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "path": "https://litlfred.github.io/folio-assistant/cat-harness/ns#path",
+    "assetRole": "https://litlfred.github.io/folio-assistant/cat-harness/ns#assetRole",
     "version": "https://schema.org/softwareVersion",
     "hasCapability": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasCapability",
@@ -251,10 +252,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T15:16:06.418Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0f2f520a5e39c13e9413dd24dd94310a2f3b9395",
-  "sourceCommitSha": "0f2f520a5e39c13e9413dd24dd94310a2f3b9395",
-  "sourceCommitAt": "2026-09-20T17:14:41+02:00",
+  "generatedAt": "2026-09-20T15:19:14.791Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8d30978e36384c8d27b20435a067b41aaaee6da5",
+  "sourceCommitSha": "8d30978e36384c8d27b20435a067b41aaaee6da5",
+  "sourceCommitAt": "2026-09-20T17:17:50+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 201,
@@ -269,7 +270,8 @@
     "Tool": 59,
     "Schema": 68,
     "GraphKind": 20,
-    "Directory": 21
+    "Directory": 21,
+    "Asset": 3
   },
   "@graph": [
     {
@@ -1453,7 +1455,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 187,
+      "instructionLines": 272,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1882,7 +1884,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 382,
+      "instructionLines": 423,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -27036,12 +27038,39 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
       "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — folio-assistant",
+      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "folio-assistant",
+      "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/bootstrap-initialization",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "bootstrap-initialization",
+      "path": "docs/bootstrap/initialization.md",
+      "assetRole": "bootstrap-initialization",
+      "title": "Initializing into folio-assistant",
+      "description": "What bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours, composed by `initializationDoc()` rather than spelled, so bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not. The path is INSTANCE-relative here, not `<stub>/docs/...`: this instance has its own directory (`cat-harness/`), so `siteDir` is plain `docs`, and the stub names published artefacts rather than a directory. Whether bootstrap can still find it from one reference is open — see bean `wggr`."
     }
   ],
   "staging": {
     "branch": "main",
-    "sha": "0f2f520a5e39c13e9413dd24dd94310a2f3b9395",
+    "sha": "8d30978e36384c8d27b20435a067b41aaaee6da5",
     "pr": "main",
-    "run": "35518962308"
+    "run": "35519130211"
   }
 }

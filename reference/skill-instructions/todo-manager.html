@@ -561,7 +561,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-document.html" class="nav-list-link">Writing a document</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Architecture submenu" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><a href="/folio-assistant/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/swarm-management.html" class="nav-list-link">Swarm management</a></li></ul>
+      </button><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/harness-instances.html" class="nav-list-link">Harness instances</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><a href="/folio-assistant/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/swarm-management.html" class="nav-list-link">Swarm management</a></li></ul>
   
 </nav>
 
@@ -796,6 +796,65 @@ apparent 54 and nearly landing a false correction in a PR body.</li>
 
 <p>The runaway loop is not something a doc can prevent; an unguarded <code class="language-plaintext highlighter-rouge">create</code> is.
 This rule is platform-level so every folio inherits it.</p>
+<h2 id="which-parent--the-criterion-nobody-wrote-down">
+  
+  
+    <a href="#which-parent--the-criterion-nobody-wrote-down" class="anchor-heading" aria-labelledby="which-parent--the-criterion-nobody-wrote-down"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WHICH parent — the criterion nobody wrote down
+  
+  
+</h2>
+    
+
+<p><strong>A bean’s parent is the epic whose SUBJECT it is, not the epic you happen to
+be working in.</strong> That sentence was missing from this skill until 2026-09-20,
+and its absence is measurable: in one session six new beans were all filed
+under <code class="language-plaintext highlighter-rouge">yj32</code>, the epic that session was working in, while their subjects
+belonged to four different epics. The owner spotted it — <em>“beans misfiled…
+wrong skills guidance? tools guidance?”</em> — and the answer was yes, this file.</p>
+
+<p><strong>Nothing catches a wrong parent.</strong> <code class="language-plaintext highlighter-rouge">check-bean-parents</code> tests exactly two
+things: that an open bean HAS a <code class="language-plaintext highlighter-rouge">parent</code>, and that the parent NAMES A BEAN
+THAT EXISTS. A bean filed under the wrong epic satisfies both, so it is
+textually clean, the guard is green, and it is only findable by a person
+reading the roadmap. <strong>The check cannot distinguish a right parent from a
+wrong one, so the criterion has to live here or nowhere.</strong></p>
+<h3 id="how-to-choose">
+  
+  
+    <a href="#how-to-choose" class="anchor-heading" aria-labelledby="how-to-choose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to choose
+  
+  
+</h3>
+    
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">beans list</code> and read the EPICS first</strong> — there are many, each with a
+thematic scope in its title. Do this BEFORE <code class="language-plaintext highlighter-rouge">beans create</code>, at the same time
+as §”Check before you create”; both are questions about where a bean
+belongs, and both are cheaper before the file exists.</li>
+  <li><strong>Ask what the bean is ABOUT, not what you were doing when you wrote it.</strong>
+A visualiser whose blocker is an unrecorded ingest relation is an ingest
+bean. A sticky’s art is a rendering bean. The topic that makes the work hard
+is usually the right epic.</li>
+  <li><strong>When two epics both fit, pick the one whose OTHER children you would want
+read alongside it</strong>, and say in the body why the other was not chosen — a
+parent is a claim about where somebody should go looking.</li>
+</ol>
+<h3 id="this-conflicts-with-every-session-is-a-bean-and-the-conflict-is-real">
+  
+  
+    <a href="#this-conflicts-with-every-session-is-a-bean-and-the-conflict-is-real" class="anchor-heading" aria-labelledby="this-conflicts-with-every-session-is-a-bean-and-the-conflict-is-real"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> This conflicts with “every session is a Bean”, and the conflict is real
+  
+  
+</h3>
+    
+
+<p>Core Directive 1 above says to create a session milestone and parent children
+to it. That is filing by SESSION; the repository is organised by SUBJECT, in
+thematic epics that outlive any session. <strong>Where they disagree, file by
+subject</strong> — a session bean is a useful record of what one sitting did, and it
+is not where the next person looks for the work. If you keep a session
+milestone, it is a sibling record, not the parent of topical work.</p><hr />
 <h2 id="after-you-create--parent-it-and-re-run-the-guard-before-you-push">
   
   
@@ -1202,7 +1261,7 @@ even when the <code class="language-plaintext highlighter-rouge">beans</code> CL
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35518962308"><code>0f2f520</code></a> &middot; 2026-09-20T15:15:34Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35519130211"><code>8d30978</code></a> &middot; 2026-09-20T15:18:41Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

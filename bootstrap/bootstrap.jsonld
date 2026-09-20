@@ -195,6 +195,7 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "path": "https://litlfred.github.io/folio-assistant/cat-harness/ns#path",
+    "assetRole": "https://litlfred.github.io/folio-assistant/cat-harness/ns#assetRole",
     "version": "https://schema.org/softwareVersion",
     "hasCapability": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasCapability",
@@ -252,6 +253,7 @@
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "bootstrap",
   "counts": {
+    "Asset": 2,
     "Directory": 2,
     "Process": 3,
     "SequenceFlow": 29,
@@ -268,6 +270,24 @@
     "tools"
   ],
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — bootstrap",
+      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no beans. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/readme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "bootstrap",
+      "description": "The flow, with every term linked to the schema that defines it. Self-documenting on GitHub: a person landing on the directory reads the thing itself rather than a pointer to a site."
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/cat-harness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",

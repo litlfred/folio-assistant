@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(89)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(6)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(89) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(6) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(89) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(6) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(89) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list > li.nav-list-item:nth-child(6) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Lean Build Fix | folio-assistant</title>
+<title>Harness instances | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Lean Build Fix" />
+<meta property="og:title" content="Harness instances" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-build-fix.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-build-fix.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/architecture/harness-instances.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/architecture/harness-instances.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Lean Build Fix" />
+<meta property="twitter:title" content="Harness instances" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Lean Build Fix","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-build-fix.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Harness instances","url":"https://litlfred.github.io/folio-assistant/architecture/harness-instances.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -599,8 +599,8 @@
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Lean Build Fix</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/architecture.html">Architecture</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Harness instances</span></li>
   </ol>
 </nav>
 
@@ -608,635 +608,321 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/lean-build-fix.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/lean-build-fix.md</code></a> — do not edit here.</p>
-
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/lean-build-fix.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
-</blockquote>
-<h1 id="lean-build-fix-skill">
+            <h1 class="no_toc" id="what-a-harness-instance-is--schematics-visualisations-tools">
   
   
-    <a href="#lean-build-fix-skill" class="anchor-heading" aria-labelledby="lean-build-fix-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean Build Fix Skill
+    <a href="#what-a-harness-instance-is--schematics-visualisations-tools" class="anchor-heading" aria-labelledby="what-a-harness-instance-is--schematics-visualisations-tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a harness instance IS — schematics, visualisations, tools
   
   
 </h1>
     
-<h2 id="role">
+
+<ol id="markdown-toc">
+  <li><a href="#the-sentence" id="markdown-toc-the-sentence">The sentence</a></li>
+  <li><a href="#the-four-directories-every-instance-has" id="markdown-toc-the-four-directories-every-instance-has">The four directories every instance has</a></li>
+  <li><a href="#the-default-rendering" id="markdown-toc-the-default-rendering">The default rendering</a>    <ol>
+      <li><a href="#layout-is-chosen-not-fixed" id="markdown-toc-layout-is-chosen-not-fixed">Layout is chosen, not fixed</a></li>
+    </ol>
+  </li>
+  <li><a href="#where-the-requirement-starts--bootstrap-is-the-exception" id="markdown-toc-where-the-requirement-starts--bootstrap-is-the-exception">Where the requirement starts — bootstrap is the exception</a></li>
+  <li><a href="#open-and-named-rather-than-guessed" id="markdown-toc-open-and-named-rather-than-guessed">Open, and named rather than guessed</a></li>
+  <li><a href="#kg-ds-is-the-knowledge-graph-data-store-and-its-machine-is-git" id="markdown-toc-kg-ds-is-the-knowledge-graph-data-store-and-its-machine-is-git">KG-DS is the Knowledge Graph Data Store, and its machine is <strong>git</strong></a></li>
+  <li><a href="#related" id="markdown-toc-related">Related</a></li>
+</ol><hr />
+
+<blockquote>
+  <p><strong>Owner statement, 2026-09-20, recorded on bean <code class="language-plaintext highlighter-rouge">yj32</code>.</strong> This page is the
+settled part of it. The parts that are still the owner’s to decide are in
+§”Open, and named rather than guessed” — they are not written as if decided,
+because a guessed answer in a published document is how a wrong one becomes
+canon.</p>
+</blockquote>
+<h2 id="the-sentence">
   
   
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+    <a href="#the-sentence" class="anchor-heading" aria-labelledby="the-sentence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The sentence
   
   
 </h2>
     
 
-<p>Automate the iterative cycle of: build Lean project, diagnose errors,
-apply fixes, rebuild — until <code class="language-plaintext highlighter-rouge">lake build</code> passes with zero errors and
-zero fixable warnings.</p>
-<h2 id="when-to-use-this-skill">
-  
-  
-    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
-  
-  
-</h2>
-    
+<blockquote>
+  <p><strong>A harness instance adds schematics to a knowledge graph, builds
+visualisations for them, and describes the tools to use and manage them.</strong></p>
+</blockquote>
 
-<ul>
-  <li>“fix lean build errors”</li>
-  <li>“lean build is broken”</li>
-  <li>“lake build fails”</li>
-  <li>“fix build errors and warnings”</li>
-  <li>“make the lean build pass”</li>
-  <li>After Mathlib version bumps that introduce API renames</li>
-  <li>After bulk edits to <code class="language-plaintext highlighter-rouge">.lean</code> files that may have introduced syntax errors</li>
-</ul>
-<h2 id="prerequisite-working-lean-mcp">
-  
-  
-    <a href="#prerequisite-working-lean-mcp" class="anchor-heading" aria-labelledby="prerequisite-working-lean-mcp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prerequisite: working Lean MCP
-  
-  
-</h2>
-    
-
-<p>This skill assumes <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> returns real items, not
-timeouts. If your MCP queries return <code class="language-plaintext highlighter-rouge">success: false, items: []</code>
-(60 s timeout) OR <code class="language-plaintext highlighter-rouge">lake exe cache get</code> returns 403 on every shard,
-route to <strong><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html#mathlib-cache-403-fallback-proven-workaround"><code class="language-plaintext highlighter-rouge">lean-environment-setup</code> §”Mathlib cache 403 fallback”</a></strong>
-first — the proven workaround is a <code class="language-plaintext highlighter-rouge">git clone</code> of mathlib4 to a sibling
-directory plus a <code class="language-plaintext highlighter-rouge">git config --global url.insteadOf</code> redirect.
-Don’t start iterating blind — establish LSP feedback first.</p>
-<h2 id="lean-mcp-tools-paper-assistant">
-  
-  
-    <a href="#lean-mcp-tools-paper-assistant" class="anchor-heading" aria-labelledby="lean-mcp-tools-paper-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean MCP Tools (paper-assistant)
-  
-  
-</h2>
-    
-
-<p>When the MCP server is available, <strong>prefer MCP tools over shell commands</strong>:</p>
+<p>Each clause is a different obligation, and an instance that does one without
+the others is incomplete rather than minimal:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Old workflow</th>
-      <th>MCP tool</th>
-      <th>Why better</th>
+      <th>clause</th>
+      <th>what it obliges</th>
+      <th>where it is declared</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">lake build</code> + parse output</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_build</code></td>
-      <td>Triggers build, returns structured result</td>
+      <td><em>adds schematics to the KG</em></td>
+      <td>declare the directories it scans and each one’s graph kind</td>
+      <td><code class="language-plaintext highlighter-rouge">harness.json</code> — <a href="../../skills/folio-core/directory-conventions.md">directory conventions</a></td>
     </tr>
     <tr>
-      <td>grep for errors in output</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code></td>
-      <td>Per-file structured errors/warnings</td>
+      <td><em>builds visualisations for it</em></td>
+      <td>a declared subgraph a reader cannot see is a subgraph nobody checks</td>
+      <td>the renderer, per subgraph</td>
     </tr>
     <tr>
-      <td>manual hover to check types</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_hover_info</code></td>
-      <td>Type info at any position</td>
-    </tr>
-    <tr>
-      <td>grep Mathlib for API names</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_leansearch</code> / <code class="language-plaintext highlighter-rouge">lean_loogle</code></td>
-      <td>Semantic + type-signature search</td>
-    </tr>
-    <tr>
-      <td>edit-build-repeat</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_multi_attempt</code></td>
-      <td>Try multiple tactic alternatives in one call</td>
-    </tr>
-    <tr>
-      <td>manual axiom check</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_verify</code></td>
-      <td>Axiom dependency audit</td>
+      <td><em>describes the tools</em></td>
+      <td>a Tool is a KG node, not a shell string somebody remembers</td>
+      <td><code class="language-plaintext highlighter-rouge">tools/</code></td>
     </tr>
   </tbody>
 </table></div>
-<h3 id="mcp-first-workflow">
-  
-  
-    <a href="#mcp-first-workflow" class="anchor-heading" aria-labelledby="mcp-first-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> MCP-first workflow
-  
-  
-</h3>
-    
 
-<ol>
-  <li>Run <code class="language-plaintext highlighter-rouge">lean_build</code> to trigger a full build</li>
-  <li>Run <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> on each failing file to get structured errors</li>
-  <li>For each error, diagnose and fix (see error taxonomy below)</li>
-  <li>After fixing all errors in a file, run <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> on that
-file to verify before moving to the next</li>
-  <li>Once all files are clean, run <code class="language-plaintext highlighter-rouge">lean_build</code> to confirm full success</li>
-  <li>Address warnings (dupNamespace, unused variables) as a final pass</li>
-</ol>
-<h3 id="fallback-workflow-no-mcp">
+<p>That triple is why <code class="language-plaintext highlighter-rouge">2krx</code> exists as a QA axis: <strong>every time an instance names a
+directory as a subgraph, it needs a visualiser and a documentation entry</strong>, and
+it is a finding if there is no skill and no tool for it. The declaration is
+cheap to write and the other two are what make it real.</p>
+<h2 id="the-four-directories-every-instance-has">
   
   
-    <a href="#fallback-workflow-no-mcp" class="anchor-heading" aria-labelledby="fallback-workflow-no-mcp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fallback workflow (no MCP)
-  
-  
-</h3>
-    
-
-<p>When the MCP server is unavailable, parse <code class="language-plaintext highlighter-rouge">lake build</code> output directly
-<strong>from the repo root</strong> (the root workspace builds all paper packages
-in one pass):</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lake build 2&gt;&amp;1                       <span class="c"># build every paper</span>
-lake build MyPaper 2&gt;&amp;1               <span class="c"># or just one library</span>
-</code></pre></div></div>
-
-<p>Per-paper <code class="language-plaintext highlighter-rouge">cd content/&lt;paper&gt;/lean &amp;&amp; lake build</code> still works, but the
-root workspace resolves cross-paper imports in a single pass and is the
-standardized entry point.</p>
-
-<p>Parse the output for lines matching:</p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">error:</code> — build-breaking errors (must fix)</li>
-  <li><code class="language-plaintext highlighter-rouge">warning:</code> — linter warnings (fix if possible)</li>
-  <li><code class="language-plaintext highlighter-rouge">Building</code> / <code class="language-plaintext highlighter-rouge">Built</code> / <code class="language-plaintext highlighter-rouge">Replayed</code> — progress indicators</li>
-</ul>
-<h2 id="error-taxonomy-and-fix-patterns">
-  
-  
-    <a href="#error-taxonomy-and-fix-patterns" class="anchor-heading" aria-labelledby="error-taxonomy-and-fix-patterns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Error Taxonomy and Fix Patterns
+    <a href="#the-four-directories-every-instance-has" class="anchor-heading" aria-labelledby="the-four-directories-every-instance-has"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four directories every instance has
   
   
 </h2>
     
-<h3 id="1-unknown-identifier--unknown-constant">
-  
-  
-    <a href="#1-unknown-identifier--unknown-constant" class="anchor-heading" aria-labelledby="1-unknown-identifier--unknown-constant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Unknown identifier / Unknown constant
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">Unknown identifier 'foo'</code> or <code class="language-plaintext highlighter-rouge">Unknown constant 'foo'</code></p>
-
-<p><strong>Diagnosis</strong>: API was renamed in Mathlib or Lean core.</p>
-
-<p><strong>Fix strategy</strong> (try in order):</p>
-<ol>
-  <li><strong>MCP search</strong>: <code class="language-plaintext highlighter-rouge">lean_leansearch</code> or <code class="language-plaintext highlighter-rouge">lean_loogle</code> with the type signature</li>
-  <li><strong>Common renames</strong> (check this table first):</li>
-</ol>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Old name</th>
-      <th>New name / workaround</th>
-      <th>Version</th>
+      <th>directory</th>
+      <th>what it holds</th>
+      <th>who writes it</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.Topology.ContinuousFunction.Basic</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.Topology.ContinuousMap.Basic</code></td>
-      <td>Mathlib 2024+</td>
+      <td><code class="language-plaintext highlighter-rouge">docs/</code></td>
+      <td>the documentation pipeline — rendered to gh-pages through just-the-docs</td>
+      <td>the pipeline, from authored pages</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.Geometry.Manifold.SmoothManifoldWithCorners</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.Geometry.Manifold.IsManifold.Basic</code></td>
-      <td>Mathlib 2024+</td>
+      <td><code class="language-plaintext highlighter-rouge">library/</code></td>
+      <td>ingested L1 sources</td>
+      <td>ingestion</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.CategoryTheory.Monoidal.Basic</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.CategoryTheory.Monoidal.Category</code></td>
-      <td>Mathlib 2024+</td>
+      <td><code class="language-plaintext highlighter-rouge">uploads/</code></td>
+      <td>the incoming queue, before anything is decided about it</td>
+      <td>a person, or an agent on their behalf</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">lt_div_iff</code> / <code class="language-plaintext highlighter-rouge">div_lt_iff</code></td>
-      <td><strong>Nonexistent</strong> — use <code class="language-plaintext highlighter-rouge">by_contra</code> + <code class="language-plaintext highlighter-rouge">div_mul_cancel₀</code> pattern (see below)</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">div_lt_div_iff</code></td>
-      <td><strong>Nonexistent</strong> — same workaround</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">unfold_let x</code></td>
-      <td><strong>Nonexistent</strong> — use <code class="language-plaintext highlighter-rouge">show &lt;expanded&gt; ...</code> to unfold local <code class="language-plaintext highlighter-rouge">set</code> defs</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">sq_pos_of_ne_zero _ h</code></td>
-      <td><code class="language-plaintext highlighter-rouge">sq_pos_of_ne_zero h</code> (no underscore arg)</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">List.Lex.cons x proof</code></td>
-      <td><code class="language-plaintext highlighter-rouge">List.Lex.cons proof</code> (element arg now implicit)</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">List.Lex.wellFounded</code></td>
-      <td><strong>Nonexistent</strong> — use <code class="language-plaintext highlighter-rouge">sorry</code> pending MCP search</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">pow_le_pow_left</code></td>
-      <td>varies by type</td>
-      <td>Mathlib 2024+</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Finset.max'</code></td>
-      <td>varies</td>
-      <td>Mathlib 2024+</td>
+      <td><code class="language-plaintext highlighter-rouge">folio/</code></td>
+      <td><strong>the active workspace</strong></td>
+      <td>whoever is working</td>
     </tr>
   </tbody>
 </table></div>
 
-<ol>
-  <li><strong>Suffix conventions</strong>: Try adding <code class="language-plaintext highlighter-rouge">₀</code> suffix (e.g., <code class="language-plaintext highlighter-rouge">one_lt_pow₀</code>,
-<code class="language-plaintext highlighter-rouge">pow_lt_one₀</code>, <code class="language-plaintext highlighter-rouge">div_mul_cancel₀</code>) — Mathlib uses <code class="language-plaintext highlighter-rouge">₀</code> for variants
-with weaker hypotheses</li>
-  <li><strong>Division bound workaround</strong> (when <code class="language-plaintext highlighter-rouge">lt_div_iff</code>/<code class="language-plaintext highlighter-rouge">div_lt_iff</code> don’t exist):</li>
-</ol>
+<p><strong><code class="language-plaintext highlighter-rouge">folio/</code> is not <code class="language-plaintext highlighter-rouge">docs/</code>, and the difference is the point.</strong> <code class="language-plaintext highlighter-rouge">docs/</code> is what a
+reader browses after the work is done; <code class="language-plaintext highlighter-rouge">folio/</code> is where the work happens —
+publishing, managing the process, authoring and reviewing content. An instance
+with a populated <code class="language-plaintext highlighter-rouge">docs/</code> and an empty <code class="language-plaintext highlighter-rouge">folio/</code> has a published record and no
+workshop.</p>
 
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- To prove: a &lt; 1 / b  (given b &gt; 0)</span>
-<span class="k">have</span> <span class="n">key</span> : <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">1</span> := <span class="k">by</span> <span class="n">nlinarith</span><span class="cd">  -- prove multiplication form</span>
-<span class="n">by_contra</span> <span class="n">h</span><span class="o">;</span> <span class="n">push_neg</span> <span class="n">at</span> <span class="n">h</span><span class="cd">             -- assume 1/b ≤ a</span>
-<span class="k">have</span> : <span class="mi">1</span> <span class="o">≤</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> :=<span class="cd">                   -- derive contradiction</span>
-  <span class="k">calc</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span> := (<span class="n">div_mul_cancel</span><span class="err">₀</span> <span class="mi">1</span> (<span class="n">ne_of_gt</span> <span class="n">hb_pos</span>))<span class="o">.</span><span class="n">symm</span>
-    <span class="n">_</span> <span class="o">≤</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> := <span class="n">mul_le_mul_of_nonneg_right</span> <span class="n">h</span> (<span class="n">le_of_lt</span> <span class="n">hb_pos</span>)
-<span class="n">linarith</span><span class="cd">                               -- contradicts key</span>
-</code></pre></div></div>
-
-<ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">show</code> pattern for local <code class="language-plaintext highlighter-rouge">set</code> definitions</strong> (when <code class="language-plaintext highlighter-rouge">unfold_let</code> doesn’t exist):</li>
-</ol>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">set</span> <span class="n">r</span> := <span class="n">vol</span> <span class="o">/</span> <span class="n">ratio</span>
-<span class="k">have</span> <span class="n">hr_pos</span> : <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> := <span class="k">by</span>
-  <span class="k">show</span> <span class="n">vol</span> <span class="o">/</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="cd">        -- expand r to its definition</span>
-  <span class="n">apply</span> <span class="n">div_pos</span> <span class="o">&lt;;&gt;</span> <span class="n">positivity</span>
-</code></pre></div></div>
-
-<ol>
-  <li><strong>If unfound</strong>: Replace with <code class="language-plaintext highlighter-rouge">sorry</code> + bibliographic <code class="language-plaintext highlighter-rouge">-- Ref:</code> citation,
-noting the missing API in a comment</li>
-</ol>
-<h3 id="1b-import-ordering-and-hygiene">
+<p><code class="language-plaintext highlighter-rouge">uploads/</code> and <code class="language-plaintext highlighter-rouge">library/</code> are declared in this repository today and <strong>have no
+renderer</strong>, which is exactly the <code class="language-plaintext highlighter-rouge">2krx</code> finding above rather than an oversight
+to be quietly tolerated.</p>
+<h2 id="the-default-rendering">
   
   
-    <a href="#1b-import-ordering-and-hygiene" class="anchor-heading" aria-labelledby="1b-import-ordering-and-hygiene"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1b. Import ordering and hygiene
+    <a href="#the-default-rendering" class="anchor-heading" aria-labelledby="the-default-rendering"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The default rendering
   
   
-</h3>
+</h2>
     
 
-<p><strong>Imports must be at the very top of the file</strong>, before any content
-including <code class="language-plaintext highlighter-rouge">/-! ... -/</code> doc comments. Lean 4 rejects imports after
-non-import content:</p>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- WRONG: doc comment before imports</span>
-<span class="o">/-!</span> <span class="o">#</span> <span class="n">Module</span> <span class="n">docs</span> <span class="o">-/</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">Real</span><span class="o">.</span><span class="n">Basic</span><span class="cd">
-
--- RIGHT: imports first, then doc comment</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">Real</span><span class="o">.</span><span class="n">Basic</span>
-<span class="o">/-!</span> <span class="o">#</span> <span class="n">Module</span> <span class="n">docs</span> <span class="o">-/</span>
-</code></pre></div></div>
-
-<p><strong>Ambiguous identifiers from <code class="language-plaintext highlighter-rouge">open</code></strong>: When two opened namespaces
-export the same name (e.g., <code class="language-plaintext highlighter-rouge">Foo.my_lemma</code> vs <code class="language-plaintext highlighter-rouge">Bar.my_lemma</code>), remove
-the less-needed namespace from <code class="language-plaintext highlighter-rouge">open</code> or qualify the ambiguous name.</p>
-
-<p><strong>Explicit Mathlib imports</strong>: Prefer explicit imports for Mathlib
-features used directly (tactics, types) rather than relying on
-transitive imports. This protects against upstream import changes:</p>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- Defensive: import what you use</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">Nat</span><span class="o">.</span><span class="n">Prime</span><span class="o">.</span><span class="n">Basic</span><span class="cd">    -- for Nat.Prime</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">Omega</span><span class="cd">           -- for omega</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">Ring</span><span class="cd">            -- for ring</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">Linarith</span><span class="cd">        -- for linarith/nlinarith</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">NormNum</span><span class="cd">         -- for norm_num</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">Positivity</span><span class="cd">      -- for positivity</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">FieldSimp</span><span class="cd">       -- for field_simp</span>
-</code></pre></div></div>
-<h3 id="2-unexpected-token--parse-errors">
-  
-  
-    <a href="#2-unexpected-token--parse-errors" class="anchor-heading" aria-labelledby="2-unexpected-token--parse-errors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Unexpected token / Parse errors
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">unexpected token '⟨'; expected command</code></p>
-
-<p><strong>Common causes</strong>:</p>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">cases with</code> destructuring</strong>: Lean 4’s <code class="language-plaintext highlighter-rouge">cases ... with | inr ⟨a, b⟩ =&gt;</code>
-does NOT support anonymous constructor patterns. Fix: use <code class="language-plaintext highlighter-rouge">rcases</code> instead.</li>
-</ul>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- WRONG:</span>
-<span class="n">cases</span> <span class="n">h</span> <span class="k">with</span>
-<span class="o">|</span> <span class="n">inr</span> <span class="o">⟨</span><span class="n">heq</span>, <span class="n">hrest</span><span class="o">⟩</span> <span class="o">=&gt;</span> <span class="o">...</span><span class="cd">
-
--- RIGHT:</span>
-<span class="n">rcases</span> <span class="n">h</span> <span class="k">with</span> <span class="n">hrank</span> <span class="o">|</span> <span class="o">⟨</span><span class="n">heq</span>, <span class="n">hrest</span><span class="o">⟩</span>
-<span class="err">·</span> <span class="o">...</span>
-<span class="err">·</span> <span class="o">...</span>
-</code></pre></div></div>
+<p>A harness instance renders, by default, as one thing with two halves:</p>
 
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">set_option ... in</code> placement</strong>: Must come BEFORE doc comments, not between
-<code class="language-plaintext highlighter-rouge">/-- ... -/</code> and the declaration.</li>
+  <li><strong>LHS navigation + <code class="language-plaintext highlighter-rouge">docs/</code></strong> — the documentation pipeline, one themed section
+per instance in dependency order. Collapsed, a section is information about
+that instance; opened, it shows that instance’s docs navigation and the
+display subgraphs <strong>that instance declares</strong>. Attribution follows
+declaration, so a directory renders under the instance that declared it.</li>
+  <li><strong>A folio/Miro-like board</strong> — for accessing, authoring and reviewing content,
+with <code class="language-plaintext highlighter-rouge">beans/</code> and <code class="language-plaintext highlighter-rouge">todos/</code> managing the pipeline.</li>
 </ul>
 
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- WRONG:</span>
-<span class="o">/</span><span class="cd">-- Doc comment -/</span>
-<span class="k">set_option</span> <span class="n">linter</span><span class="o">.</span><span class="n">dupNamespace</span> <span class="n">false</span> <span class="n">in</span>
-<span class="n">abbrev</span> <span class="n">Foo</span> := <span class="n">Bar</span><span class="cd">
+<p>Both sit on the instance’s <strong>own theme’s ground</strong>: the theme’s avatar art is
+the background, the way a shared Miro board has one. This is why the scrim
+ratios were measured over <strong>pure black</strong> rather than over the art actually in
+use — arbitrary art sits behind that text, so the binding case is the darkest
+one, and the measured 9.25–9.36:1 clears AAA against it.</p>
 
--- RIGHT:</span>
-<span class="k">set_option</span> <span class="n">linter</span><span class="o">.</span><span class="n">dupNamespace</span> <span class="n">false</span> <span class="n">in</span>
-<span class="o">/</span><span class="cd">-- Doc comment -/</span>
-<span class="n">abbrev</span> <span class="n">Foo</span> := <span class="n">Bar</span>
-</code></pre></div></div>
-<h3 id="3-type-mismatch">
+<p>It is a <strong>readable</strong> interface. It is a writable one <em>only</em> where there is a
+writable datastore — a conditional, not a promise, and read-only is the floor.</p>
+<h3 id="layout-is-chosen-not-fixed">
   
   
-    <a href="#3-type-mismatch" class="anchor-heading" aria-labelledby="3-type-mismatch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Type mismatch
+    <a href="#layout-is-chosen-not-fixed" class="anchor-heading" aria-labelledby="layout-is-chosen-not-fixed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Layout is chosen, not fixed
   
   
 </h3>
     
 
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">Type mismatch ... has type X but is expected to have type Y</code></p>
-
-<p><strong>Fix strategy</strong>:</p>
-<ol>
-  <li>Read the full error to understand what type is expected vs provided</li>
-  <li>Check if a rewrite (<code class="language-plaintext highlighter-rouge">rw</code>, <code class="language-plaintext highlighter-rouge">▸</code>) can bridge the gap</li>
-  <li>Check if the wrong overload was selected (e.g., <code class="language-plaintext highlighter-rouge">ℕ</code> vs <code class="language-plaintext highlighter-rouge">ℝ</code> variant)</li>
-  <li>For <code class="language-plaintext highlighter-rouge">Prod.Lex.right</code>: requires equal first components — use <code class="language-plaintext highlighter-rouge">heq ▸</code> to
-rewrite before applying</li>
-</ol>
-<h3 id="4-unsolved-goals">
+<p>A folio page may carry its own theme, but layout <strong>defaults to choosing
+dynamically</strong> on display size and usability, best-fit among three:
+<strong>mobile</strong>, <strong>laptop</strong> and <strong>square</strong>. The same three the theme art is already
+cropped for, which is not a coincidence — a layout with no crop for it has
+nothing to render on.</p>
+<h2 id="where-the-requirement-starts--bootstrap-is-the-exception">
   
   
-    <a href="#4-unsolved-goals" class="anchor-heading" aria-labelledby="4-unsolved-goals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Unsolved goals
+    <a href="#where-the-requirement-starts--bootstrap-is-the-exception" class="anchor-heading" aria-labelledby="where-the-requirement-starts--bootstrap-is-the-exception"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the requirement starts — bootstrap is the exception
   
   
-</h3>
+</h2>
     
 
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">unsolved goals ... ⊢ &lt;goal&gt;</code></p>
+<p><a href="cat-harness-minimum.html">The minimum <code class="language-plaintext highlighter-rouge">cat-harness</code></a> carries a one-line
+admission test from the owner’s own #223 revision:</p>
 
-<p><strong>Fix strategy</strong>:</p>
-<ol>
-  <li>Read the goal state carefully</li>
-  <li>Check if the issue is <code class="language-plaintext highlighter-rouge">≤</code> vs <code class="language-plaintext highlighter-rouge">&lt;</code> (strict vs non-strict) — a common
-source of <code class="language-plaintext highlighter-rouge">linarith</code> failures</li>
-  <li>Try tactic alternatives per the standard tactic table:</li>
-</ol>
+<blockquote>
+  <p><strong>If it produces something a human looks at, it is not the harness.</strong></p>
+</blockquote>
+
+<p>Read flatly against “an instance renders by default”, the two cannot both
+hold. <strong>They are not flat.</strong> The owner settled this on 2026-09-20: the
+requirement is a <em>floor that rises</em>, not a rule applied uniformly.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Goal pattern</th>
-      <th>Try first</th>
-      <th>Then try</th>
+      <th>layer</th>
+      <th>visualiser / workflow visualiser</th>
+      <th>its own <code class="language-plaintext highlighter-rouge">.json</code> / <code class="language-plaintext highlighter-rouge">.jsonld</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Algebraic identity</td>
-      <td><code class="language-plaintext highlighter-rouge">ring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">field_simp; ring</code></td>
+      <td><code class="language-plaintext highlighter-rouge">bootstrap</code></td>
+      <td><strong>exempt</strong> — it is the navbar <strong>footer</strong></td>
+      <td><strong>required</strong></td>
     </tr>
     <tr>
-      <td>Non-negativity</td>
-      <td><code class="language-plaintext highlighter-rouge">positivity</code></td>
-      <td><code class="language-plaintext highlighter-rouge">linarith</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
+      <td>required</td>
+      <td>required</td>
     </tr>
     <tr>
-      <td>Numeric</td>
-      <td><code class="language-plaintext highlighter-rouge">norm_num</code></td>
-      <td><code class="language-plaintext highlighter-rouge">linarith</code></td>
-    </tr>
-    <tr>
-      <td>Definitional</td>
-      <td><code class="language-plaintext highlighter-rouge">rfl</code></td>
-      <td><code class="language-plaintext highlighter-rouge">unfold ...; rfl</code></td>
-    </tr>
-    <tr>
-      <td>Diagram/naturality</td>
-      <td><code class="language-plaintext highlighter-rouge">aesop_cat</code></td>
-      <td><code class="language-plaintext highlighter-rouge">slice_lhs</code>/<code class="language-plaintext highlighter-rouge">slice_rhs</code></td>
-    </tr>
-    <tr>
-      <td>Monotonicity</td>
-      <td><code class="language-plaintext highlighter-rouge">gcongr</code></td>
-      <td>explicit lemma</td>
-    </tr>
-    <tr>
-      <td>Anything else</td>
-      <td><code class="language-plaintext highlighter-rouge">simp</code></td>
-      <td><code class="language-plaintext highlighter-rouge">aesop</code></td>
+      <td>everything above</td>
+      <td>required</td>
+      <td>required</td>
     </tr>
   </tbody>
 </table></div>
 
-<ol>
-  <li>If <code class="language-plaintext highlighter-rouge">gcongr</code> closes the goal completely, don’t add further tactics
-(check for “No goals to be solved” on the next line)</li>
-</ol>
-<h3 id="5-application-type-mismatch">
+<p><strong>Bootstrap is the exception, and what it owes instead is its graph.</strong> In the
+owner’s words, its <code class="language-plaintext highlighter-rouge">.json</code>/<code class="language-plaintext highlighter-rouge">.jsonld</code> <em>“is its existence”</em> — a layer that cannot
+emit its own graph has not shown it is a graph. So bootstrap is not simply
+dropped from the requirement: it trades the visualiser for a criterion it
+cannot fail quietly.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">cat-harness</code> is where the rest begins to apply</strong>, and the reason is an
+obligation rather than a convention: cat-harness is what supplies the layers
+above with <code class="language-plaintext highlighter-rouge">folio/</code>. A layer that hands its dependents a folio and renders
+nothing itself is asking of them what it did not do. Concretely that means a
+minimal just-the-docs rendering in <code class="language-plaintext highlighter-rouge">cat-harness/folio/</code> describing what a folio
+is, and <code class="language-plaintext highlighter-rouge">cat-harness/folio/render/</code> for the rendering skills and tools.</p>
+
+<p>This is the <strong>same shape</strong> the workflow split already has — bootstrap keeps the
+bare minimum, <code class="language-plaintext highlighter-rouge">cat-harness/workflows</code> elaborates — so it is a second instance
+of one rule rather than a new one.</p>
+
+<p><em>Tracked: <code class="language-plaintext highlighter-rouge">hfkl</code> (bootstrap’s exemption and its <code class="language-plaintext highlighter-rouge">render/</code> subgraph), <code class="language-plaintext highlighter-rouge">ohx6</code>
+(<code class="language-plaintext highlighter-rouge">cat-harness/folio/</code>), <code class="language-plaintext highlighter-rouge">1hvo</code> (<code class="language-plaintext highlighter-rouge">cat-harness/theming/</code>), <code class="language-plaintext highlighter-rouge">7po1</code> (the workflow
+split this parallels).</em></p>
+<h2 id="open-and-named-rather-than-guessed">
   
   
-    <a href="#5-application-type-mismatch" class="anchor-heading" aria-labelledby="5-application-type-mismatch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Application type mismatch
+    <a href="#open-and-named-rather-than-guessed" class="anchor-heading" aria-labelledby="open-and-named-rather-than-guessed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Open, and named rather than guessed
   
   
-</h3>
+</h2>
     
 
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">Application type mismatch: The argument ... has type X but is
-expected to have type Y</code></p>
+<p>Four questions from <code class="language-plaintext highlighter-rouge">yj32</code>, unanswered at the time of writing. Two are
+expensive to get wrong:</p>
 
-<p><strong>Common causes</strong>:</p>
+<ol>
+  <li><strong>Where does the background live?</strong> A theme’s <code class="language-plaintext highlighter-rouge">backdrop</code> is a
+<em>sticky-scoped</em> concept today. Making it the page ground is a different CSS
+surface — <code class="language-plaintext highlighter-rouge">body</code>, or a board element — and probably a different crop set: a
+sticky’s crop is chosen for a <strong>card</strong>, and a page is a different aspect
+entirely.</li>
+  <li><strong>What is the writable datastore?</strong> gh-pages is static. The artifact
+database, a local server, and a GitHub write path through editor links are
+three different answers with three different security postures.</li>
+  <li><strong>Which subgraphs are “display” subgraphs?</strong> Every declared <code class="language-plaintext highlighter-rouge">graphs</code> entry,
+or an opt-in subset?
+<em>(A fourth, “what does KG-DS expand to”, is now answered — see below.)</em></li>
+</ol>
+<h2 id="kg-ds-is-the-knowledge-graph-data-store-and-its-machine-is-git">
+  
+  
+    <a href="#kg-ds-is-the-knowledge-graph-data-store-and-its-machine-is-git" class="anchor-heading" aria-labelledby="kg-ds-is-the-knowledge-graph-data-store-and-its-machine-is-git"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> KG-DS is the Knowledge Graph Data Store, and its machine is <strong>git</strong>
+  
+  
+</h2>
+    
+
+<p>Not a new concept: <code class="language-plaintext highlighter-rouge">bootstrap/skills/roles/roles.json</code> has declared a role with
+exactly this id and title all along. Its description names the machine:</p>
+
+<blockquote>
+  <p>A git repository, reached either through the git CLI or through a forge’s
+API. It is where a declaration and its graph are READ from and where a new
+instance’s declaration is WRITTEN to. It is <code class="language-plaintext highlighter-rouge">actedUpon</code>: it holds and serves,
+and takes no part in deciding what should happen — which is why it carries no
+skills and why naming one for it would be a lie about what it does.</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">actorKinds: ["system"]</code>, <code class="language-plaintext highlighter-rouge">skills: []</code>, <code class="language-plaintext highlighter-rouge">actedUpon: true</code>.</p>
+
+<p><strong>This is why “writable interface <em>if</em> writable datastore” is a real
+conditional rather than hedging.</strong> The store is a git repository, so writing
+means a commit through the CLI or a forge API — which is available to an agent
+with a checkout and credentials, and <em>not</em> available to a reader browsing a
+static gh-pages site. The same page can therefore be readable to everyone and
+writable only to some, and that is a property of the store rather than of the
+rendering.</p>
+
+<p><strong>The role carries no skills on purpose.</strong> It holds and serves and decides
+nothing, so giving it a skill would claim it participates in a decision it does
+not make — which is the <code class="language-plaintext highlighter-rouge">actedUpon</code> flag doing real work rather than
+decorating.</p>
+<h2 id="related">
+  
+  
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2>
+    
+
 <ul>
-  <li>Using a <code class="language-plaintext highlighter-rouge">ℕ</code>-specific lemma on <code class="language-plaintext highlighter-rouge">ℝ</code> (e.g., <code class="language-plaintext highlighter-rouge">pow_le_pow_left₀</code> is Nat-only)</li>
-  <li>Wrong arity or argument order after API rename</li>
-  <li>Need <code class="language-plaintext highlighter-rouge">le_of_lt</code> or <code class="language-plaintext highlighter-rouge">lt_of_le_of_lt</code> to convert between <code class="language-plaintext highlighter-rouge">&lt;</code> and <code class="language-plaintext highlighter-rouge">≤</code></li>
-</ul>
-<h3 id="6-tactic-made-no-progress">
-  
-  
-    <a href="#6-tactic-made-no-progress" class="anchor-heading" aria-labelledby="6-tactic-made-no-progress"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Tactic made no progress
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">'simp' made no progress</code> or <code class="language-plaintext highlighter-rouge">'rw' made no progress</code></p>
-
-<p><strong>Fix</strong>: The expression is already in the target form, or the rewrite
-rule doesn’t match syntactically. Remove the non-progressing tactic or
-replace with a different approach.</p>
-<h3 id="7-no-goals-to-be-solved">
-  
-  
-    <a href="#7-no-goals-to-be-solved" class="anchor-heading" aria-labelledby="7-no-goals-to-be-solved"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. No goals to be solved
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">No goals to be solved</code></p>
-
-<p><strong>Fix</strong>: A previous tactic closed the goal completely. Remove the
-subsequent tactic(s) that have nothing left to prove.</p>
-<h3 id="spurious-ℝ-specialisation-the-project-authoring-conventions">
-  
-  
-    <a href="#spurious-ℝ-specialisation-the-project-authoring-conventions" class="anchor-heading" aria-labelledby="spurious-ℝ-specialisation-the-project-authoring-conventions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spurious ℝ-specialisation (the project authoring conventions)
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: A categorical / algebraic identity is declared over <code class="language-plaintext highlighter-rouge">ℝ</code>
-without needing any archimedean operation (no <code class="language-plaintext highlighter-rouge">Real.sqrt</code>, <code class="language-plaintext highlighter-rouge">Real.rpow</code>,
-<code class="language-plaintext highlighter-rouge">Real.cos</code>, <code class="language-plaintext highlighter-rouge">Real.exp</code>, <code class="language-plaintext highlighter-rouge">Real.log</code>, no ordering predicate, no
-<code class="language-plaintext highlighter-rouge">linarith</code> / <code class="language-plaintext highlighter-rouge">positivity</code>). Build errors then cascade when a downstream
-consumer wants to instantiate the same identity over <code class="language-plaintext highlighter-rouge">ℚ</code>, <code class="language-plaintext highlighter-rouge">ℂ</code>, or a
-formal power series ring.</p>
-
-<p><strong>Fix</strong>: Refactor the declaration to use a generic type variable
-<code class="language-plaintext highlighter-rouge">{R : Type*}</code> with the weakest typeclass that admits the construction
-(<code class="language-plaintext highlighter-rouge">[CommRing R]</code>, <code class="language-plaintext highlighter-rouge">[Field R]</code>, <code class="language-plaintext highlighter-rouge">[GroupWithZero R]</code>, etc.). Concrete
-<code class="language-plaintext highlighter-rouge">ℝ</code>-evaluations live in a separate file (e.g. under an <code class="language-plaintext highlighter-rouge">evaluations/</code> or
-<code class="language-plaintext highlighter-rouge">observations/</code> subtree) that consumes the generic result via a
-<code class="language-plaintext highlighter-rouge">(R := ℝ)</code> instantiation.</p>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- Before — ℝ-specialised by accident</span>
-<span class="n">noncomputable</span> <span class="k">def</span> <span class="n">qBracket</span> (<span class="n">q</span> : <span class="err">ℝ</span>) (<span class="n">n</span> : <span class="o">ℕ</span>) : <span class="err">ℝ</span> :=
-  (<span class="n">q</span> <span class="err">^</span> <span class="n">n</span> <span class="o">-</span> <span class="n">q</span> <span class="err">^</span> (<span class="o">-</span>(<span class="n">n</span> : <span class="o">ℤ</span>))) <span class="o">/</span> (<span class="n">q</span> <span class="o">-</span> <span class="n">q</span><span class="o">⁻¹</span>)
-
-<span class="cd">-- After — generic</span>
-<span class="k">def</span> <span class="n">qBracket</span> <span class="err">{</span><span class="n">R</span> : <span class="kt">Type</span><span class="o">*</span><span class="err">}</span> [<span class="n">Field</span> <span class="n">R</span>] (<span class="n">q</span> : <span class="n">R</span>) (<span class="n">n</span> : <span class="o">ℕ</span>) : <span class="n">R</span> :=
-  (<span class="n">q</span> <span class="err">^</span> <span class="n">n</span> <span class="o">-</span> <span class="n">q</span> <span class="err">^</span> (<span class="o">-</span>(<span class="n">n</span> : <span class="o">ℤ</span>))) <span class="o">/</span> (<span class="n">q</span> <span class="o">-</span> <span class="n">q</span><span class="o">⁻¹</span>)
-</code></pre></div></div>
-
-<p>If the declaration <strong>does</strong> cross the archimedean wall, keep <code class="language-plaintext highlighter-rouge">ℝ</code> but
-document the specific archimedean construct in the docstring (e.g.
-<code class="language-plaintext highlighter-rouge">/-- … uses </code>Real.sqrt<code class="language-plaintext highlighter-rouge"> so this is ℝ-specific. -/</code>).</p>
-<h2 id="linter-warning-fixes">
-  
-  
-    <a href="#linter-warning-fixes" class="anchor-heading" aria-labelledby="linter-warning-fixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Linter Warning Fixes
-  
-  
-</h2>
-    
-<h3 id="dupnamespace">
-  
-  
-    <a href="#dupnamespace" class="anchor-heading" aria-labelledby="dupnamespace"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> dupNamespace
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">The namespace 'Foo' is duplicated in the declaration 'X.Foo.Foo'</code></p>
-
-<p><strong>Fix</strong>: When a structure/abbrev name matches its enclosing namespace
-(intentional), suppress with <code class="language-plaintext highlighter-rouge">set_option linter.dupNamespace false in</code>
-placed BEFORE the doc comment.</p>
-<h3 id="unused-variable">
-  
-  
-    <a href="#unused-variable" class="anchor-heading" aria-labelledby="unused-variable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Unused variable
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">unused variable 'x'</code></p>
-
-<p><strong>Fix</strong>: Prefix with underscore: <code class="language-plaintext highlighter-rouge">x</code> → <code class="language-plaintext highlighter-rouge">_x</code></p>
-<h3 id="declaration-uses-sorry">
-  
-  
-    <a href="#declaration-uses-sorry" class="anchor-heading" aria-labelledby="declaration-uses-sorry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Declaration uses sorry
-  
-  
-</h3>
-    
-
-<p><strong>Not a fix target</strong> — these are expected incomplete proofs with
-bibliographic citations. Only flag if the <code class="language-plaintext highlighter-rouge">sorry</code> lacks a <code class="language-plaintext highlighter-rouge">-- Ref:</code> comment.</p>
-<h2 id="iteration-protocol">
-  
-  
-    <a href="#iteration-protocol" class="anchor-heading" aria-labelledby="iteration-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Iteration Protocol
-  
-  
-</h2>
-    
-
-<ol>
-  <li><strong>Collect all errors</strong> from the build output before fixing anything</li>
-  <li><strong>Group by file</strong> — fix all errors in one file before moving to the next</li>
-  <li><strong>Fix errors before warnings</strong> — errors block the build; warnings don’t</li>
-  <li><strong>After each file’s fixes</strong>, verify with <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> (MCP)
-or a targeted rebuild</li>
-  <li><strong>Commit after each logical group</strong> of fixes with a descriptive message
-explaining what was broken and why</li>
-  <li><strong>Final full build</strong> to confirm zero errors</li>
-  <li><strong>Warning pass</strong> — address fixable warnings (dupNamespace, unused vars)</li>
-  <li><strong>Final commit and push</strong></li>
-</ol>
-<h2 id="commit-message-convention">
-  
-  
-    <a href="#commit-message-convention" class="anchor-heading" aria-labelledby="commit-message-convention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Commit Message Convention
-  
-  
-</h2>
-    
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Fix Lean build errors: &lt;summary&gt;
-
-&lt;File&gt;:
-- &lt;old API/syntax&gt; → &lt;new API/syntax&gt; (&lt;reason&gt;)
-
-&lt;File&gt;:
-- &lt;description of fix&gt;
-</code></pre></div></div>
-<h2 id="checklist">
-  
-  
-    <a href="#checklist" class="anchor-heading" aria-labelledby="checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist
-  
-  
-</h2>
-    
-
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All <code class="language-plaintext highlighter-rouge">error:</code> lines from build output are resolved</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All fixable <code class="language-plaintext highlighter-rouge">warning:</code> lines are resolved</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No new <code class="language-plaintext highlighter-rouge">sorry</code> introduced without <code class="language-plaintext highlighter-rouge">-- Ref:</code> citation</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">lake build</code> passes with zero errors</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changes committed with descriptive messages</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changes pushed to the working branch</li>
+  <li><a href="https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"><code class="language-plaintext highlighter-rouge">yj32</code></a>
+— the epic, with the owner’s statement verbatim</li>
+  <li>Its children: <code class="language-plaintext highlighter-rouge">603s</code> (the LHS navigation), <code class="language-plaintext highlighter-rouge">6lb8</code> (the board), <code class="language-plaintext highlighter-rouge">pb04</code> (edit
+and view affordances on content), <code class="language-plaintext highlighter-rouge">7po1</code> (<code class="language-plaintext highlighter-rouge">workflows/state</code> owning the beans
+and todos skills)</li>
+  <li><a href="cat-harness-minimum.html">Minimum <code class="language-plaintext highlighter-rouge">cat-harness</code></a> — the layering this page
+is in tension with</li>
+  <li><a href="../../skills/folio-core/directory-conventions.md">Directory conventions</a> —
+the declaration schema and every graph kind</li>
 </ul>
 
           
