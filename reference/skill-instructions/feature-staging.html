@@ -818,6 +818,29 @@ identify affected blocks and downstream implications</li>
   <li>Committee compares <code class="language-plaintext highlighter-rouge">main</code> vs <code class="language-plaintext highlighter-rouge">STAGING/feature-update-immunization-schedule/</code></li>
   <li>Committee approves → merge → staging cleaned up → main site updated</li>
 </ol>
+<h2 id="before-you-hand-a-staging-url-to-a-person">
+  
+  
+    <a href="#before-you-hand-a-staging-url-to-a-person" class="anchor-heading" aria-labelledby="before-you-hand-a-staging-url-to-a-person"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you hand a staging URL to a person
+  
+  
+</h2>
+    
+
+<p><strong>Check the ref, then say how long and come back.</strong> A preview push is not a
+served page, and the bot’s <em>“Staging preview deployed”</em> comment reports the
+first, not the second. List <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> on <code class="language-plaintext highlighter-rouge">refs/heads/gh-pages</code> before
+relaying the URL; say the <code class="language-plaintext highlighter-rouge">stage</code> job takes ~2 minutes and Pages adds up to ten
+on top; schedule the re-check rather than promising it.</p>
+
+<p>The reason it is a rule: an agent relayed one preview URL to the owner <strong>five
+times in a session</strong> without checking anything, each time straight off the
+bot’s comment. Whether the site served it was never established in either
+direction.</p>
+
+<p>The three states, and why the third is not yours to assert, are in
+<a href="/folio-assistant/reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a> §”Before you hand a staging URL to a
+person (STRICT)”. It is the same rule and it is written once, there.</p>
 <h2 id="before-you-report-a-staging-url-as-broken">
   
   
@@ -850,7 +873,7 @@ so a failed fetch is not evidence either way.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35511247791"><code>5fe9b49</code></a> &middot; 2026-09-20T12:40:38Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35511699502"><code>1911b64</code></a> &middot; 2026-09-20T12:49:47Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
