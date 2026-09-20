@@ -178,3 +178,13 @@ Related: `b963` (the three known classes; this is a fourth), `a6kl` (same root
 cause, different victim, `critical`), `06kg` (the sweep that introduced it),
 `yzsj` / #605 (the work that surfaced it), `dh4f` (a clean run reported over
 nothing).
+
+- [ ] A `bash <path>` step is outside the frame this fixed. `invokedPath`
+      takes `bun`/`bunx` only, so `bash source/cat-harness/scripts/
+      git-union-attr.sh pages` — a real path in a real execution context,
+      arriving on `main` 2026-09-20 with a sibling `render-log-union-attr.sh`
+      — is declined rather than judged. The cwd and layout machinery is
+      already there; this is a widening of the extractor, and it is the
+      same defect class one verb over. Not done here because the PR's
+      subject is the layout input, and widening the extractor in the same
+      change would mix a fix with a scope increase.
