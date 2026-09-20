@@ -222,6 +222,14 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:ThemeGraph",
+      "@type": "rdfs:Class",
+      "label": "ThemeGraph",
+      "comment": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:ToolGraph",
       "@type": "rdfs:Class",
       "label": "ToolGraph",
