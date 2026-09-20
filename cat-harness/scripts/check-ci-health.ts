@@ -20,9 +20,16 @@
  * and nothing surfaced it. See bean `xom7`.
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { assess, pushTriggerOf, render, type RunSummary } from "../src/workflow/ci-health.js";
+import {
+  assess,
+  describeWindow,
+  pushTriggerOf,
+  render,
+  type RunSummary,
+  type Window,
+} from "../src/workflow/ci-health.js";
 
 const argv = process.argv.slice(2);
 const markdown = argv.includes("--markdown");
@@ -181,6 +188,94 @@ async function fetchChangedFiles(sha: string): Promise<string[] | undefined> {
   }
 }
 
+/**
+ * Every workflow file in `.github/workflows/`, with the `name:` it declares.
+ *
+ * This is the second source of truth the report was missing. Everything else
+ * here derives from RUNS, so a workflow that did not run was not a quiet row —
+ * it was not a row. Measured 2026-09-20: 38 files, 3 rows, and a `✓`.
+ *
+ * The name is parsed rather than looked up because a file with no runs has no
+ * run to carry one. An unnamed or unreadable file falls back to its basename,
+ * which is what GitHub itself displays in that case.
+ */
+function knownWorkflows(): Array<{ path: string; name: string }> | undefined {
+  const dir = resolve(repoRoot, ".github/workflows");
+  if (!existsSync(dir)) return undefined;
+  let entries: string[];
+  try {
+    entries = readdirSync(dir);
+  } catch {
+    // Could not look. `undefined` — NOT `[]` — because an empty list would
+    // assert there are no workflows, and this module's whole discipline is
+    // that not knowing never renders as an answer.
+    return undefined;
+  }
+  const out: Array<{ path: string; name: string }> = [];
+  for (const f of entries.sort()) {
+    if (!/\.ya?ml$/.test(f)) continue;
+    const path = `.github/workflows/${f}`;
+    let name = f;
+    try {
+      const m = /^name:\s*(.+?)\s*$/m.exec(readFileSync(resolve(dir, f), "utf8"));
+      if (m) name = m[1].replace(/^['"]|['"]$/g, "");
+    } catch {
+      // Keep the basename.
+    }
+    out.push({ path, name });
+  }
+  return out;
+}
+
+/** Does this workflow file carry a `schedule:` trigger? `undefined` if unreadable. */
+function hasSchedule(path: string): boolean | undefined {
+  try {
+    return /^\s+schedule:/m.test(readFileSync(resolve(repoRoot, path), "utf8"));
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Runs of ONE workflow, asked for directly.
+ *
+ * The module header rejects fanning out to a request per workflow, and it is
+ * right: 38 requests at session start would exhaust the unauthenticated limit
+ * (60/hr). But the objection is to fanning out over ALL of them. This is used
+ * only for a workflow that carries a `schedule:` and produced nothing in the
+ * window — three files in this repository — and only when those two facts are
+ * both established.
+ *
+ * Why it must exist at all: `?per_page=100` is a page of runs, not a period.
+ * Measured 2026-09-20 on this repo, that page spanned **6.1 hours**. A weekly
+ * watchdog cannot appear in six hours however healthy or broken it is, so the
+ * report's silence about `ci-health.yml` — the workflow whose entire purpose
+ * is catching failures nobody sees — carried no information at all. Labelling
+ * that blindness is honest; this is the part that removes it.
+ */
+async function fetchWorkflowRuns(file: string): Promise<RunSummary[] | undefined> {
+  if (!slug) return undefined;
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${slug}/actions/workflows/${encodeURIComponent(file)}` +
+        `/runs?branch=${encodeURIComponent(branch)}&per_page=10`,
+      {
+        headers: {
+          accept: "application/vnd.github+json",
+          ...(token ? { authorization: `Bearer ${token}` } : {}),
+        },
+        signal: AbortSignal.timeout(20_000),
+      },
+    );
+    if (!res.ok) return undefined;
+    const body = (await res.json()) as { workflow_runs?: RunSummary[] };
+    return body.workflow_runs ?? [];
+  } catch {
+    return undefined;
+  }
+}
+
 const { runs, unreachable } = await fetchRuns();
 const headSha = unreachable ? undefined : await fetchHeadSha();
 const changedFiles = headSha ? await fetchChangedFiles(headSha) : undefined;
@@ -242,25 +337,88 @@ function triggersOnPush(p: string): boolean | undefined {
   }
 }
 
+const files = knownWorkflows();
+
+/**
+ * The window, described from the runs the page actually contained.
+ *
+ * `undefined` when there are none — a window with no runs has no span, and
+ * inventing one (`0h`) would read as "checked, nothing happened" rather than
+ * "nothing to check against".
+ */
+const window: Window | undefined =
+  runs && runs.length > 0
+    ? {
+        runs: runs.length,
+        from: runs.map((r) => r.created_at).reduce((a, b) => (a < b ? a : b)),
+        to: runs.map((r) => r.created_at).reduce((a, b) => (a > b ? a : b)),
+      }
+    : undefined;
+
+/**
+ * Top up the window with the scheduled workflows it could not reach.
+ *
+ * Bounded by construction: only files that carry a `schedule:` AND produced
+ * nothing in the page. On this repository that is three. The cap is a hard
+ * stop rather than a comment, because the bound is an assumption about a
+ * repository's workflows, and an assumption on the hot path of session start
+ * should fail visibly rather than quietly issue forty requests.
+ */
+const SCHEDULED_FETCH_CAP = 8;
+const topUp: RunSummary[] = [];
+const probes = new Map<string, "never-ran" | "unknown">();
+if (runs && files) {
+  const seen = new Set(runs.map((r) => r.path).filter((p): p is string => !!p));
+  const missing = files.filter((f) => !seen.has(f.path) && hasSchedule(f.path) === true);
+  for (const f of missing.slice(0, SCHEDULED_FETCH_CAP)) {
+    const rs = await fetchWorkflowRuns(f.path.replace(".github/workflows/", ""));
+    // Three outcomes, kept apart. `undefined` is a failed request and claims
+    // nothing; an empty array is a successful measurement of zero, which is a
+    // real finding (`5rfy`); anything else tops up the window.
+    if (rs === undefined) probes.set(f.path, "unknown");
+    else if (rs.length === 0) probes.set(f.path, "never-ran");
+    else topUp.push(...rs);
+  }
+  if (missing.length > SCHEDULED_FETCH_CAP) {
+    console.error(
+      `ci-health: ${missing.length} scheduled workflow(s) missing from the window, ` +
+        `only the first ${SCHEDULED_FETCH_CAP} were fetched; the rest are reported unjudged.`,
+    );
+  }
+}
+
 const health = runs
-  ? assess(runs, {
+  ? assess([...runs, ...topUp], {
       workflowExists: (p) => existsSync(resolve(repoRoot, p)),
       workflowChangedAt,
       headSha,
       triggersOnPush,
+      knownWorkflows: files,
+      hasSchedule,
+      probed: (p) => probes.get(p),
     })
   : [];
 
-if (outFile) writeFileSync(outFile, render(health, { unreachable, branch }));
+if (outFile) writeFileSync(outFile, render(health, { unreachable, branch, window }));
 
 if (markdown) {
-  console.log(render(health, { unreachable, branch }));
+  console.log(render(health, { unreachable, branch, window }));
 } else if (unreachable) {
   console.error(`CI health: NOT CHECKED — ${unreachable}`);
   console.error("Treat this as unknown, not as green.");
 } else {
-  console.log(`CI health on \`${branch}\` (${runs!.length} recent runs)\n`);
+  // The SPAN, not just the count. 100 runs is a page, not a period: measured
+  // here 2026-09-20 it reached back 6.1 hours, which cannot contain a weekly
+  // workflow. A reader given only "100 recent runs" reads the ticks below as a
+  // verdict on the repository.
+  console.log(
+    `CI health on \`${branch}\` (${window ? describeWindow(window) : `${runs!.length} recent runs`})\n`,
+  );
   for (const h of health) {
+    // `no-runs` rows are reported below, by name if scheduled and as a count
+    // otherwise. Leaving them in this loop printed a green ✓ beside the word
+    // `no-runs` on 32 lines — the exact misread the rows were added to fix.
+    if (h.noRunsInWindow) continue;
     const mark =
       h.health === "red" ? "✗" : h.health === "running" ? "…" : h.health === "superseded" ? "❔" : "✓";
     const detail =
@@ -282,6 +440,34 @@ if (markdown) {
         ? " (newest run has not reported — verdict may predate HEAD)"
         : "";
     console.log(`  ${pendingMark} ${h.workflow.padEnd(40)} ${detail}${pendingNote}`);
+  }
+  // The denominator. Three ticks over a repository of 38 workflow files read
+  // as a clean bill of health for 38 workflows, and that is the misread this
+  // whole change exists for — `xom7` reproduced inside the module written for
+  // `xom7`. A scheduled workflow that is still unjudged after the top-up is
+  // named; the rest are a count, because most are folio-vendored and naming
+  // them every run teaches the reader to skip the section.
+  const unjudged = health.filter((h) => h.noRunsInWindow);
+  for (const h of unjudged.filter((h) => h.scheduled)) {
+    const why =
+      h.probe === "never-ran"
+        ? "scheduled, and has NEVER run on this branch (asked directly)"
+        : h.probe === "unknown"
+          ? "scheduled; the direct request failed — state unknown"
+          : "scheduled, outside the window, and not asked directly";
+    console.log(`  ⚠ ${h.workflow.padEnd(40)} UNJUDGED — ${why}. Not green.`);
+  }
+  const other = unjudged.filter((h) => !h.scheduled).length;
+  if (other > 0) {
+    console.log(
+      `\n  ${other} further workflow file(s) produced no run in the window ` +
+        `(dispatch-only, or vendored for a folio) — unjudged, not green.`,
+    );
+  } else if (files === undefined) {
+    console.log(
+      "\n  (Could not read .github/workflows/ — this report covers the runs it " +
+        "saw and cannot say what it missed.)",
+    );
   }
 }
 
