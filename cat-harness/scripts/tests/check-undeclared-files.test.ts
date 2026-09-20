@@ -10,7 +10,7 @@ import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
 import {
   ROOT_INFRASTRUCTURE,
@@ -18,7 +18,6 @@ import {
   humanBytes,
   undeclaredAtRoot,
 } from "../check-undeclared-files.js";
-import { repoRootFor, instanceRootFor } from "../../schemas/cat-harness.js";
 import "../../schemas/folio-graph-kind.js";
 
 /** A repository with one instance, which declares a repository-scoped directory. */
@@ -157,7 +156,17 @@ describe("what is deliberately NOT reported", () => {
 });
 
 describe("this repository, as it stands", () => {
-  const REPO = repoRootFor(instanceRootFor(import.meta.dir));
+  // Resolved from THIS FILE'S OWN LOCATION, not by walking up for a
+  // `harness.json`. `instanceRootFor` walks up until it finds one, and this
+  // suite creates `harness.json` files — eight test files in this directory do
+  // — so a stray one left beside the tests moves the answer. Evaluated at
+  // module load, that made the result depend on which tests ran first, which
+  // is how this passed locally and failed in CI, where seven tests that skip
+  // here do run.
+  //
+  // The walk-up is right for runtime code, which has no idea where it is. A
+  // test does: tests/ -> scripts/ -> cat-harness/ -> the repository root.
+  const REPO = resolve(import.meta.dir, "..", "..", "..");
 
   test("the sweep runs over the real root without throwing", () => {
     expect(() => undeclaredAtRoot(REPO)).not.toThrow();
@@ -165,8 +174,12 @@ describe("this repository, as it stands", () => {
 
   test("cat-harness and bootstrap are accounted for as instances", () => {
     const accounted = accountedRootPaths(REPO);
-    expect(accounted.get("cat-harness")).toContain("declares itself");
-    expect(accounted.get("bootstrap")).toContain("declares itself");
+    // The diagnostic matters more than the assertion: when this fails, the
+    // first question is "what did it actually look at", and a bare `undefined`
+    // does not answer it.
+    const seen = [...accounted.keys()].sort().join(", ");
+    expect(accounted.get("cat-harness"), `REPO=${REPO}; saw: ${seen}`).toContain("declares itself");
+    expect(accounted.get("bootstrap"), `REPO=${REPO}; saw: ${seen}`).toContain("declares itself");
   });
 
   test("beans/ and todos/ are accounted for by declaration, not by a list", () => {
