@@ -20,7 +20,7 @@ import {
   resolveTranslationDirs,
   materialiseDeclaredDirectories,
 } from "./harness-config";
-import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../test/support/instance-fixture.js";
+import { instanceConfigPathIn, writeInstanceConfig } from "../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_folio_config__");
 

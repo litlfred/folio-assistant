@@ -23,7 +23,7 @@ import { readActiveVoices } from "../../schemas/voices";
 import { criterionDefHash } from "../../content/pipeline/qa-utils";
 import { QA_CRITERIA_BY_ID } from "../../content/pipeline/qa-criteria-registry";
 import { repoRootFor } from "../../schemas/cat-harness.js";
-import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 describe("criterionVoices", () => {
   test("absent means NOT voice-scoped — the opposite default from profiles", () => {

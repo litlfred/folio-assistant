@@ -18,8 +18,7 @@ import {
   PUBLICATION_HOSTS,
   publicationHost,
   publicationLinkStyleConflict,
-  repoRootFor,
-} from "../../schemas/cat-harness.ts";
+  } from "../../schemas/cat-harness.ts";
 import { resolveHarnessConfigPath } from "../../schemas/harness-config.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");

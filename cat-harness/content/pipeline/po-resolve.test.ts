@@ -6,7 +6,7 @@ import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { resolvePoSources, mergePoSources, availableLocales } from "./po-resolve";
 import { parsePo } from "./po-inject";
-import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_po_resolve__");
 

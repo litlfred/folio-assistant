@@ -17,7 +17,7 @@ import {
 } from "./contributions";
 import { loadContributions } from "./harness-config";
 import { adapterForKind } from "./block-kinds";
-import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../test/support/instance-fixture.js";
+import { writeInstanceConfig } from "../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_contributions__");
 

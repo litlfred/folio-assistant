@@ -35,7 +35,7 @@ import {
   updateBean,
 } from "../beans-fallback.js";
 import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
-import { configNameFor, declareInstance, writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { configNameFor, writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 // The REPOSITORY root, and it has to be said out loud now: `"..", ".."` from
 // here reaches the INSTANCE, and this file's subject — `.beans.yml`, `beans/`

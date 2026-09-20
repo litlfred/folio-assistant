@@ -10,7 +10,7 @@
  * @module folio-assistant/index
  */
 
-import { resolve, join } from "path";
+import { resolve } from "path";
 import { existsSync, readFileSync } from "fs";
 import { FolioServer } from "./server.js";
 import { resolveBuiltinAdapter } from "./builtin-adapters.js";

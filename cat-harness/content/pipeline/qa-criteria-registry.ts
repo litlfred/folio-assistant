@@ -1,5 +1,4 @@
 import { existsSync, readFileSync } from "fs";
-import { join } from "path";
 import { findContentRepoRoot } from "./repo-root";
 /**
  * Registry of QA criteria the per-block sweep recognises.

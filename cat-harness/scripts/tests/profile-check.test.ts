@@ -14,7 +14,7 @@ import { join } from "path";
 import { tmpdir } from "os";
 
 import { checkFolioProfile, readFolioProfile, formatProfileCheck } from "../../content/pipeline/profile-check";
-import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const dirs: string[] = [];
 

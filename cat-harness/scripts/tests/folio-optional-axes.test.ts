@@ -19,13 +19,13 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import "../../schemas/folio-graph-kind.js";
 import { folioDir } from "../../schemas/cat-harness.js";
-import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const REGISTRY = resolve(import.meta.dir, "../../content/pipeline/qa-criteria-registry.ts");
 

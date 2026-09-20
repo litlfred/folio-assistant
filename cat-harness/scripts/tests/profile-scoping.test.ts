@@ -28,7 +28,7 @@
  *    because a tool could not read its configuration.
  */
 import { describe, test, expect, afterEach } from "bun:test";
-import { mkdtempSync, rmSync, writeFileSync, appendFileSync, readFileSync } from "fs";
+import { mkdtempSync, rmSync, appendFileSync, readFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import { spawnSync } from "child_process";

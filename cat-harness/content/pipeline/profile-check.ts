@@ -28,7 +28,7 @@
 
 import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
-import { basename, join } from "path";
+import { basename } from "path";
 
 import {
   DOCUMENT_FORBIDS_LEAN,
