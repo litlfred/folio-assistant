@@ -1,5 +1,5 @@
 /**
- * The landing page, as a sticky note.
+ * The landing page, as a board of sticky notes.
  *
  * @module schemas/landing-sticky
  * @graphNode schema
@@ -8,7 +8,24 @@
  * it creates an empty folio (if none exists) and attaches to the folio a sticky
  * note with grumpy cat background that adds content of the intiatized harness'
  * description"* — the description **and the four onboarding links**, confirmed
- * the same day.
+ * the same day. Then, refining it: *"each intiator should create its own
+ * sticky."*
+ *
+ * ## The set is COMPOSED, not enumerated here
+ *
+ * This module shipped the board as a fixed set of three — `landingSticky()`,
+ * `catHarnessSticky()`, `subgraphsSticky()` and a `LANDING_STICKY_IDS` constant
+ * listing them. That was a list this repository owned, and the second ask
+ * inverts the ownership. What is left here is the **node type and one
+ * projection**: {@link stickyFromContribution} turns a layer's declared
+ * {@link StickyContribution} into a sticky. The layers declare; this builds.
+ *
+ * Where each sticky comes from now, and why that file rather than this one, is in
+ * `schemas/sticky-contribution.ts` — including why a declaration beats a code
+ * registry (bootstrap holds no TypeScript and may not import the layer composed
+ * on top of it) and why the text itself belongs in the declaration
+ * (`AGENTS.md`: subject matter in this repository *"belongs in the folio as
+ * data"*, and a sticky's words are subject matter).
  *
  * ## Why this is a note and not a todo
  *
@@ -65,63 +82,29 @@ import { z } from "zod";
 
 import { CarriedNoteSchema } from "./carried-note.js";
 import { PageAnchorSchema } from "./note-anchor.js";
+import {
+  StickyLinkSchema,
+  isExternalLink,
+  type DeclaredContribution,
+  type StickyLink,
+} from "./sticky-contribution.js";
+
+/**
+ * The link shape, and the external-link test, **re-exported**.
+ *
+ * Both moved to `schemas/sticky-contribution.ts` when the board became a
+ * composed set: the declaration field that carries contributions lives on
+ * `CatHarnessDeclarationSchema`, which is `agentic-harness`, and this module is
+ * `folio-assist-core` — so defining the shape here would make the harness import
+ * core, a wrong-direction edge. Re-exported rather than moved silently so that
+ * nothing which imported `LandingLinkSchema` has to change, and so a reader
+ * following the old name arrives at the new home.
+ */
+export { StickyLinkSchema as LandingLinkSchema, isExternalLink };
+export type LandingLink = StickyLink;
 
 /** The tag this node declares, per the `$schema` convention. */
 export const LANDING_STICKY_SCHEMA_TAG = "folio-landing-sticky/v1";
-
-/**
- * The sticky's id, fixed rather than generated.
- *
- * **This is the idempotency key, and that is its whole job.** Initiation runs
- * again — a re-initialisation, a second agent, a resumed container — and a
- * generated id would mint a second sticky every time, leaving a page with two
- * descriptions and no way to tell which is current. `beans create` dedupes on
- * nothing and one unguarded re-run produced **14,688** duplicates, 92 % of every
- * open bean in that repository; the same shape applied to a landing page is one
- * store's worth of the same defect.
- *
- * A fixed id makes the write an upsert by construction: {@link isLandingSticky}
- * finds the existing one, and there is nothing to deduplicate because there was
- * never a second.
- */
-export const LANDING_STICKY_ID = "landing";
-
-/**
- * The second sticky's id: the knowledge sub-graphs, in two sentences.
- *
- * The owner, 2026-09-20: *"add a second sticky note to the main page, regullar
- * grump cat theme that is 2 sentence overview of knoweldfe sub-graphs, content,
- * acquistion, tools, and skills."*
- *
- * A **second fixed id rather than a generated one**, for the same reason
- * {@link LANDING_STICKY_ID} is fixed: each sticky is its own upsert. Two stickies
- * on one page with generated ids would produce four after the second run, and a
- * board with two copies of one overview is indistinguishable from a board with
- * two different overviews until somebody reads both.
- */
-export const SUBGRAPHS_STICKY_ID = "subgraphs";
-
-/**
- * The third sticky's id: the introduction to the cat itself.
- *
- * The owner, 2026-09-20: *"plain old grumpy cat should just say 'please be
- * introduced to a cat who acires thing, for whatever purpose, maybe somebody
- * knows'. then provide link to cat-harness in the sticky."*
- */
-export const CAT_HARNESS_STICKY_ID = "cat-harness";
-
-/**
- * Every sticky this instance's landing page carries, in render order.
- *
- * Exported as a list so a consumer iterates rather than naming each — the
- * failure shape `BLOCK_KINDS` exists to prevent, where seven hand-maintained
- * lists of one enumeration were all short and 461 blocks went unswept.
- */
-export const LANDING_STICKY_IDS = [
-  LANDING_STICKY_ID,
-  CAT_HARNESS_STICKY_ID,
-  SUBGRAPHS_STICKY_ID,
-] as const;
 
 /**
  * The page a landing sticky is global to.
@@ -132,99 +115,6 @@ export const LANDING_STICKY_IDS = [
  * not surface on every other one.
  */
 export const LANDING_STICKY_PAGE = "index";
-
-/**
- * The theme a landing sticky takes when the instance does not choose.
- *
- * `grumpy-cat` because the owner asked for a grumpy cat background and that is
- * the theme carrying one. It is a **default, not a constant**: an instance
- * declaring its own `landing` art and preferring another palette sets `theme`,
- * and an instance declaring no landing art at all gets this theme rendering
- * palette-only — `resolveThemeBackdrop` reports that as `missing` rather than
- * serving art that is not there.
- */
-export const LANDING_STICKY_THEME = "engineer";
-
-/**
- * The theme the cat's own introduction takes.
- *
- * The owner, 2026-09-20, distinguishing the two: the landing sticky is *"the
- * engineer"*, and *"plain old grumpy cat"* is the one that introduces the cat.
- * So this is the original `grumpy-cat` — sage hoodie, the `landing` image role
- * — and {@link LANDING_STICKY_THEME} is the hi-vis one beside it. Two themes
- * rather than one, because they back different stickies and the art is the
- * difference.
- */
-export const CAT_HARNESS_STICKY_THEME = "grumpy-cat";
-
-/**
- * Where the cat's introduction points.
- *
- * Read from nothing — a literal, and the one link here that is absolute. The
- * instance's `canonicalUrl` is `https://litlfred.github.io/folio-assistant`,
- * which is THIS site: a sticky on the landing page linking to the landing page
- * is a link to itself. What the owner asked for is a link to **cat-harness**,
- * the layer, which is still to be split out of this repository (issue #223) and
- * therefore has no site of its own yet. The source is the honest destination
- * until it does.
- */
-export const CAT_HARNESS_URL = "https://github.com/litlfred/folio-assistant";
-
-/**
- * One link the sticky offers.
- *
- * ## `href` must be site-root-relative or absolute — never bare-relative
- *
- * This is the one validation here that is about a defect rather than a shape.
- * Bean `blv9`'s entire subject is **link-shaped values that resolve by luck**,
- * and it carries seven instances. The site is a *project* Pages site with
- * `baseurl: /folio-assistant`, so:
- *
- * | form | what happens |
- * |---|---|
- * | `/guides/index.html` | correct — the template adds the baseurl with `relative_url` |
- * | `guides/index.html` | resolves against **whatever page is rendering**, and works only by position |
- * | `https://…` | correct — and must NOT be passed through `relative_url` |
- *
- * The middle form is the trap, and it is live in the file this sticky replaces:
- * `docs/index.md` carries `[Install](installation.html)` and a second
- * `[Get started](getting-started.html)` written bare, beside four siblings that
- * go through `relative_url` properly. They work today because `index.md`
- * declares `permalink: /`, which is *position-safe rather than baseurl-safe* —
- * `alox` says so in as many words. Refusing the form here means a link moved
- * into a sticky cannot inherit that luck.
- *
- * `external` is DERIVED rather than declared, and the derivation is exact rather
- * than a guess: a URL scheme is what makes a link absolute, so reading it off
- * the scheme cannot disagree with the value the way a hand-set flag can. Same
- * reasoning `anchorOf` uses to read a legacy note's position off `targetLabel`.
- */
-export const LandingLinkSchema = z
-  .object({
-    /** The link text. Translatable — it is what a reader sees. */
-    label: z.string().min(1),
-    /**
-     * Site-root-relative (`/guides/index.html`) or absolute (`https://…`).
-     *
-     * A bare-relative path is refused; see the schema docs for why.
-     */
-    href: z
-      .string()
-      .min(1)
-      .refine((h) => h.startsWith("/") || /^[a-z][a-z0-9+.-]*:\/\//i.test(h), {
-        message:
-          "an href is site-root-relative (/path) or absolute (https://…); a bare-relative path resolves by position — see bean blv9",
-      }),
-    /** One line under the label, when the label alone is not enough. Translatable. */
-    note: z.string().min(1).optional(),
-  })
-  .strict();
-export type LandingLink = z.infer<typeof LandingLinkSchema>;
-
-/** Is this link off-site, and therefore NOT to be passed through `relative_url`? */
-export function isExternalLink(link: LandingLink): boolean {
-  return /^[a-z][a-z0-9+.-]*:\/\//i.test(link.href);
-}
 
 /**
  * The landing sticky.
@@ -251,30 +141,44 @@ export const LandingStickySchema = CarriedNoteSchema.extend({
    */
   theme: z.string().regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
   /**
-   * The onboarding links, in the order a reader should meet them.
+   * The links this sticky offers, in the order a reader should meet them.
    *
    * An **array rather than a map**, because the order is the content: `alox`
-   * records the block as *"Four things, in order"*, and the order is load-bearing
-   * — claim a bean before you work, then scaffold, then know which kind of thing
-   * you are writing. A map would lose it, and re-deriving an order from labels
-   * would invent one.
+   * records the onboarding block as *"Four things, in order"*, and the order is
+   * load-bearing — claim a bean before you work, then scaffold, then know which
+   * kind of thing you are writing. A map would lose it, and re-deriving an order
+   * from labels would invent one.
    *
-   * Empty is legitimate: an instance that wants only its description.
+   * Empty is legitimate: a sticky that is only words.
    */
-  links: z.array(LandingLinkSchema).default([]),
+  links: z.array(StickyLinkSchema).default([]),
+  /**
+   * Which layer contributed this sticky.
+   *
+   * Recorded on the node rather than left implicit, because the board is now
+   * composed and *"which layer put this here"* is the first question anyone
+   * debugging it asks. It is also what lets a test assert the owner's ruling
+   * structurally: a board composed over bootstrap alone carries only stickies
+   * whose `contributedBy` is `bootstrap`, and therefore no cat.
+   */
+  contributedBy: z.string().min(1),
 });
 export type LandingSticky = z.infer<typeof LandingStickySchema>;
 
 /**
- * The four links this platform's own landing sticky offers.
+ * The four onboarding links this platform offers, for `onboardingLinks: true`.
  *
  * Taken from the block `alox` shipped on `docs/index.md` rather than rewritten,
  * so the sticky says what the page already says. The fourth label is the owner's
  * own phrasing and is **kept rather than sanded off** — `alox` explains why, and
  * it is honestly true of every thorough docs site.
  *
- * Exported so `landing-sticky.test.ts` can check these against the live page and
- * a regeneration does not quietly drift from it.
+ * Kept in code rather than moved into the declaration with the rest of the text,
+ * and the reason is the flag: `onboardingLinks` exists so a layer asks for *the
+ * set* instead of copying it. A copy in each declaration would be the
+ * `BLOCK_KINDS` failure shape — one enumeration in several places, one of which
+ * goes short. The words are still checked against the live pages by
+ * `landing-sticky.test.ts`.
  */
 export const DEFAULT_ONBOARDING_LINKS: readonly LandingLink[] = [
   {
@@ -299,181 +203,69 @@ export const DEFAULT_ONBOARDING_LINKS: readonly LandingLink[] = [
   },
 ] as const;
 
-/**
- * The knowledge sub-graphs, in the two sentences the owner asked for.
- *
- * ## Why these four, and why `acquisition` is not a graph kind
- *
- * The owner named **content, acquisition, tools, skills**, and glossed the third
- * of those: *"acquistion = acquistion of new (un,semi-)structued
- * content/data-source/information into KG."*
- *
- * Three of the four map onto a declared graph kind — `folio` is content, `tools`
- * is tools, `cat-harness` is skills. **`acquisition` does not**, and the text
- * below is careful not to imply it does: what exists is `uploads/` (the
- * ingestion queue an adapter creates on first ingest) and `library/`. So this
- * describes a *grouping a reader needs* rather than asserting a kind the
- * registry would reject — the distinction matters because `readDeclaration`
- * throws on an unknown kind, and prose that names a fifth one would send the
- * next agent looking for it.
- *
- * Two sentences, not three, because that is what was asked for. The second
- * carries the fact that makes the first usable: these are **declared
- * directories, not conventions**, so a consumer reads the declaration rather
- * than walking the tree — which is the defect `findBpmnDirs` was repaired for
- * (it published bootstrap's process as folio-assistant's, 88 references).
- */
-export const SUBGRAPHS_OVERVIEW = [
-  "**Content** is what somebody authors and a reader reads; **acquisition** is how",
-  "unstructured and semi-structured sources — documents, data, loose information —",
-  "get into the graph in the first place; **tools** are what an agent can call; and",
-  "**skills** are the instructions for doing the work.",
-  "",
-  "All four are **declared directories** rather than conventions, so an instance",
-  "says which of them it holds and a consumer reads that declaration instead of",
-  "walking the tree.",
-].join("\n");
-
-/** What {@link landingSticky} needs to build one. */
-export interface LandingStickyInput {
+/** What {@link stickyFromContribution} needs beyond the contribution itself. */
+export interface StickyBuildContext {
   /**
-   * The instance's `description`, verbatim.
+   * ISO 8601. Supplied rather than read from the clock.
    *
-   * **Markdown, and it stays markdown.** The `c@t-harness` derivation chain is
-   * several lines rather than a sentence, and rendering it as real text is what
-   * keeps it selectable, translatable and readable by a screen reader. The
-   * composited path already did this — `landing.html` renders
-   * `h.description | markdownify` with the artwork `alt=""` — and this must not
-   * regress it into an image.
+   * **`createdAt` is an argument and not `new Date()`.** A function reading the
+   * clock cannot be tested for the thing that matters here — that running it
+   * twice produces the same node — and initiation is exactly the code that runs
+   * twice. It also makes the write diff-free on a re-run, which is what lets a
+   * check say *nothing changed* instead of *the timestamp moved*.
    */
-  description: string;
-  /** Defaults to {@link DEFAULT_ONBOARDING_LINKS}; pass `[]` for none. */
-  links?: readonly LandingLink[];
-  /** ISO 8601. Supplied rather than read from the clock — see below. */
   createdAt: string;
   /** Defaults to {@link LANDING_STICKY_PAGE}. */
   page?: string;
-  /** Defaults to {@link LANDING_STICKY_THEME}. */
-  theme?: string;
 }
 
 /**
- * Build the landing sticky for an instance.
+ * Build one sticky from the contribution a layer declared.
  *
- * **`createdAt` is an argument and not `new Date()`.** A function reading the
- * clock cannot be tested for the thing that matters here — that running it twice
- * produces the same node — and initiation is exactly the code that runs twice.
- * It also makes the write diff-free on a re-run, which is what lets a check say
- * *nothing changed* instead of *the timestamp moved*.
+ * `summary` is derived from the body's first line when the contribution does not
+ * give one. A second field the caller must keep in step with the first is a field
+ * that drifts, and the sticky renders `comment`; `summary` exists for the places
+ * that list notes.
  *
- * `summary` is derived from the description's first line rather than being asked
- * for. A second field the caller must keep in step with the first is a field
- * that drifts, and the sticky renders `comment`; `summary` exists for the
- * places that list notes.
+ * **The body stays markdown.** The `c@t-harness` derivation chain is several
+ * lines rather than a sentence, and rendering it as real text is what keeps it
+ * selectable, translatable and readable by a screen reader. The composited path
+ * already did this — `landing.html` renders `h.description | markdownify` with
+ * the artwork `alt=""` — and this must not regress it into an image.
  */
-export function landingSticky(input: LandingStickyInput): LandingSticky {
-  const firstLine = input.description.split("\n").find((l) => l.trim().length > 0)?.trim();
+export function stickyFromContribution(
+  declared: DeclaredContribution,
+  ctx: StickyBuildContext,
+): LandingSticky {
+  const { contribution: c, declaredBy, description } = declared;
+  // `body`, then the declaring instance's `description`, then its `name` — and
+  // the last step is a DELIBERATE non-failure, carried over from the fixed-set
+  // version rather than re-decided here: *"an instance with no description still
+  // gets a sticky: its `name` is what `displayTitle` already falls back to, and a
+  // landing page with no words is worse than one naming the instance."* Throwing
+  // instead would make initiation fail over a declaration nobody has filled in
+  // yet, and initiation failing is worse than a thin card. `name` is required by
+  // the declaration schema, so the chain always terminates in something.
+  const declaredBody = c.body ?? description;
+  const body =
+    declaredBody !== undefined && declaredBody.trim().length > 0 ? declaredBody : declaredBy;
+  const firstLine = body.split("\n").find((l) => l.trim().length > 0)?.trim();
   return LandingStickySchema.parse({
     $schema: LANDING_STICKY_SCHEMA_TAG,
-    id: LANDING_STICKY_ID,
-    // A description of only blank lines would leave this empty and `min(1)`
-    // would refuse the node. Falling back says what the object IS rather than
-    // failing initiation over a declaration nobody has filled in yet.
-    summary: firstLine && firstLine.length > 0 ? firstLine : "This instance",
-    comment: input.description,
-    createdAt: input.createdAt,
-    anchor: { kind: "page", page: input.page ?? LANDING_STICKY_PAGE },
-    theme: input.theme ?? LANDING_STICKY_THEME,
-    links: [...(input.links ?? DEFAULT_ONBOARDING_LINKS)],
+    id: c.id,
+    // The first non-blank line, when the contribution does not give one. The
+    // fallback beyond that cannot be reached — `body` is non-empty by the chain
+    // above — but says what the object IS rather than parsing as empty.
+    summary: c.summary ?? (firstLine && firstLine.length > 0 ? firstLine : declaredBy),
+    comment: body,
+    createdAt: ctx.createdAt,
+    anchor: { kind: "page", page: ctx.page ?? LANDING_STICKY_PAGE },
+    theme: c.theme,
+    // Declared links first, then the shared set. A layer that declares its own
+    // link to itself wants it read before the platform's onboarding four.
+    links: [...c.links, ...(c.onboardingLinks ? DEFAULT_ONBOARDING_LINKS : [])],
+    contributedBy: declaredBy,
   });
-}
-
-/**
- * The cat's own introduction.
- *
- * The owner's words are kept **verbatim**, down to the shape of the sentence.
- * *"please be introduced to a cat who acquires things, for whatever purpose,
- * maybe somebody knows"* is a joke that carries real information — it is a gloss
- * on what the instance's own description spells out as *"computable adjudication
- * and agentic test harness"*, arrived at by way of `caaat-harness`,
- * `ca&at-harness`, `.c&at-harness`, `c@t-harness`. Sanding it into a product
- * sentence would lose the only part that tells a reader the name is a pun.
- * `alox` records the same decision for *"the documentation you will never
- * read"*, and it was right there too.
- */
-export function catHarnessSticky(input: {
-  createdAt: string;
-  page?: string;
-  theme?: string;
-}): LandingSticky {
-  return LandingStickySchema.parse({
-    $schema: LANDING_STICKY_SCHEMA_TAG,
-    id: CAT_HARNESS_STICKY_ID,
-    summary: "Please be introduced to a cat",
-    comment:
-      "Please be introduced to a cat who acquires things, for whatever purpose \u2014 maybe somebody knows.",
-    createdAt: input.createdAt,
-    anchor: { kind: "page", page: input.page ?? LANDING_STICKY_PAGE },
-    // Plain grumpy cat, NOT the engineer: this is the one the owner called
-    // "plain old grumpy cat", and it is a different default from the landing
-    // sticky's on purpose.
-    theme: input.theme ?? CAT_HARNESS_STICKY_THEME,
-    links: [{ label: "cat-harness", href: CAT_HARNESS_URL }],
-  });
-}
-
-/**
- * The knowledge-sub-graphs sticky.
- *
- * Carries **no links**, deliberately. It is an orientation paragraph, and the
- * four things it names are graph *kinds* rather than pages — there is no single
- * URL for "tools" to point at, and inventing four would be four more
- * link-shaped values for bean `blv9` to collect. The sticky beside it is where
- * the links live.
- */
-export function subgraphsSticky(input: { createdAt: string; page?: string; theme?: string }): LandingSticky {
-  return LandingStickySchema.parse({
-    $schema: LANDING_STICKY_SCHEMA_TAG,
-    id: SUBGRAPHS_STICKY_ID,
-    summary: "The knowledge sub-graphs",
-    comment: SUBGRAPHS_OVERVIEW,
-    createdAt: input.createdAt,
-    anchor: { kind: "page", page: input.page ?? LANDING_STICKY_PAGE },
-    // The owner asked for "regullar grump cat theme" — the same theme as the
-    // description sticky, so the two read as one board rather than as two
-    // unrelated cards. Not a separate default: `LANDING_STICKY_THEME` is the
-    // one value, so changing it moves both.
-    theme: input.theme ?? LANDING_STICKY_THEME,
-    links: [],
-  });
-}
-
-/**
- * Every sticky an instance's landing page should carry, in render order.
- *
- * **The description comes first.** A reader needs to know what this instance IS
- * before an orientation paragraph about the graph's shape means anything — the
- * same ordering `carried-note.ts` records for tags before narrative, and the
- * same reason `alox` gives for "Four things, in order".
- */
-export function landingStickies(input: LandingStickyInput): LandingSticky[] {
-  const shared = {
-    createdAt: input.createdAt,
-    ...(input.page === undefined ? {} : { page: input.page }),
-  };
-  return [
-    landingSticky(input),
-    // The theme override, when given, is NOT forwarded to this one. The landing
-    // sticky and the cat's introduction take deliberately different themes, so a
-    // caller asking for "everything in pale-sage" gets it, while a caller asking
-    // for nothing gets the two the owner chose rather than one twice.
-    catHarnessSticky({ ...shared, ...(input.theme === undefined ? {} : { theme: input.theme }) }),
-    subgraphsSticky({
-      createdAt: input.createdAt,
-      ...(input.page === undefined ? {} : { page: input.page }),
-      ...(input.theme === undefined ? {} : { theme: input.theme }),
-    }),
-  ];
 }
 
 /**

@@ -108,7 +108,10 @@ const CONTENT_DIRS = new Set([
 
 /** Paths that are neither the author's material nor a question — just noise. */
 const SKIP_DIRS = new Set([
-  ".git", ".github", ".vscode", ".idea", "beans", ".harness", ".claude",
+  ".git", ".github", ".vscode", ".idea", "beans", ".claude",
+  // Moved out of `.harness/` on 2026-09-20 and DECLARED, so they are skipped
+  // by name rather than by a dot-prefix that no longer exists.
+  "interaction", "issue-marks",
   "node_modules", ".venv", "venv", "__pycache__", "dist", "build", "target",
   ".next", ".cache", "coverage", ".lake", ".pytest_cache", "vendor",
 ]);

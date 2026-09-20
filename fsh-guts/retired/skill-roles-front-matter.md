@@ -22,8 +22,10 @@ below, per file. Nothing was summarised away.
 ## Scope — 114 skill files, NOT the 26 memory entries
 
 140 markdown files carried a key spelled `roles:`. **Only 114 were this
-field.** The other 26 are `folio-memory/v1` entries under
-`cat-harness/skills/memory/`, where `roles:` is a **live axis**:
+field.** The other 26 are `folio-memory/v1` entries — under
+`cat-harness/skills/memory/` when this was measured, moved to `memory/` at
+the repository root the same day (bean `07xs`) — where `roles:` is a
+**live axis**:
 `memoryForRoles` in `schemas/memory.ts` filters on `tags.roles`, so an entry's
 roles decide which lane is handed it.
 

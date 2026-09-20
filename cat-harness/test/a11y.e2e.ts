@@ -31,7 +31,7 @@
  * ## Why the thresholds are above the floor
  *
  * This instance's declared interaction profile is low-dexterity
- * (`.harness/interaction.json`). WCAG 2.2 SC 2.5.8 asks for 24x24 CSS pixels;
+ * (`interaction/interaction.json`). WCAG 2.2 SC 2.5.8 asks for 24x24 CSS pixels;
  * a target that is barely legal is a target that is hard to hit. The page aims
  * at 32px for list and facet rows and 28px for inline edge controls, and the
  * assertion below holds the 24px line so a regression is caught even if the

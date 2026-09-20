@@ -35,7 +35,12 @@ import { resolve, relative, join } from "node:path";
 import { Glob } from "bun";
 
 import { parseFrontMatter } from "../schemas/front-matter.ts";
-import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.ts";
+import {
+  DECLARATION_FILENAME,
+  directoryForGraph,
+  repoRootFor,
+  rootForScope,
+} from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -98,36 +103,58 @@ export const RETIRED: Retired[] = [
 ];
 
 /**
- * Where to sweep — READ from the declaration, never listed here.
+ * Where to sweep — EVERY directory the instance declares, plus two
+ * conventions. Never a list written here.
  *
  * A hand-kept list is the failure `known-skills.ts` was extracted to remove:
  * its own header calls such a list "a copy that happens to match today", and
- * the copy it replaced had already stopped matching — two skill packages
- * were invisible to the stakeholder map for exactly that reason. A sweep
- * blind to a directory reports a clean run over files it never opened,
- * which is worse here than not running at all.
+ * the copy it replaced had already stopped matching. A sweep blind to a
+ * directory reports a clean run over files it never opened, which is worse
+ * than not running at all.
  *
- * **The graph ROOTS, not `skillMdDirs`.** `skillMdDirs` enumerates skill
- * PACKAGES, and `skills/memory/` is not one — the first version of this
- * function used it and never opened the 26 memory entries, which is the one
- * directory the `roles` exemption exists for. Sweeping the roots recursively
- * covers every package and everything else the graph holds.
+ * **Every declared directory, not a chosen few graph kinds.** Two earlier
+ * versions of this function each went blind within a day:
  *
- * `.claude/skills/` is looked for under the instance AND the repository
- * root. It is a local convention rather than a declared graph, and since
- * #437 it lives beside the instance rather than inside it — checking one
- * place would silently skip it, which is how `language-trap-agent-audit.md`
- * would have gone unswept.
+ * - `skillMdDirs` enumerates skill PACKAGES, and `skills/memory/` was not
+ *   one — the sweep never opened the 26 entries the `roles` exemption
+ *   exists for.
+ * - Naming `beans` and `fsh-guts` by hand missed `memory` when it moved to
+ *   the repository root as its own declared graph, hours later. The test
+ *   asserting the exemption is non-vacuous is what caught it.
  *
- * Absolute paths, because the declared graph directories are not all under
- * the instance: `fsh-guts/` and `beans/` are `scope: "repository"`.
+ * Naming kinds is the same copy one level up. Sweeping everything declared
+ * costs a directory walk over trees that hold no front matter and cannot go
+ * blind when a graph is added.
+ *
+ * **Read RAW, not through `readDeclaration`.** That loader throws on a graph
+ * kind no registry has seen yet — kinds are contributed at runtime, so which
+ * are known depends on what has been imported. A check that refuses to run
+ * because a kind it does not care about is unregistered is a check that goes
+ * silent for an unrelated reason.
+ *
+ * `scope: "repository"` is honoured through `rootForScope`, or `fsh-guts/`,
+ * `beans/` and `memory/` resolve inside the instance and find nothing.
  */
 function sweepRoots(instance: string, repo: string): string[] {
-  const dirs = [...kgRoots(instance)];
-  for (const graph of ["beans", "fsh-guts"] as const) {
-    const d = directoryForGraph(instance, graph);
-    if (d) dirs.push(d);
+  const dirs: string[] = [];
+  const declaration = join(instance, DECLARATION_FILENAME);
+  if (existsSync(declaration)) {
+    const decl = JSON.parse(readFileSync(declaration, "utf-8")) as {
+      directories?: { path?: string; scope?: "repository" | "instance" }[];
+    };
+    for (const d of decl.directories ?? []) {
+      if (typeof d.path !== "string") continue;
+      dirs.push(resolve(rootForScope(instance, d.scope), d.path));
+    }
+  } else {
+    // No declaration is not a reason to sweep nothing: an unmigrated
+    // instance falls back to the conventions, exactly as every other
+    // consumer does.
+    dirs.push(...kgRoots(instance));
   }
+  // `.claude/skills/` is a local convention rather than a declared graph,
+  // and since #437 it sits beside the instance rather than inside it.
+  // Checking one place would silently skip it.
   for (const base of new Set([instance, repo])) dirs.push(join(base, ".claude", "skills"));
   return [...new Set(dirs)].filter((d) => existsSync(d));
 }

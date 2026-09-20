@@ -24,12 +24,17 @@
  *
  * It read `roles:` from each skill's own front matter — *"reader,
  * collaborator, owner, auditor"*. That field was **removed on 2026-09-20**
- * (bean `folio-assistant-qif9`): across 140 files it carried 325
- * annotations of which **260 resolved against no declared vocabulary**, and
- * `reader`/`collaborator`/`owner` had never existed as actors in any commit.
- * So "Roles reached: collaborator, owner" was not a thin answer, it was a
- * confident wrong one — and the report gave no way to tell it from a real
- * role, since the two vocabularies shared the field.
+ * (bean `folio-assistant-qif9`): across 114 skill files it carried 288
+ * annotations of which **260 — 90 % — resolved against no declared
+ * vocabulary**, and `reader`/`collaborator`/`owner` had never existed as
+ * actors in any commit. So "Roles reached: collaborator, owner" was not a
+ * thin answer, it was a confident wrong one — and the report gave no way to
+ * tell it from a real role, since the two vocabularies shared the field.
+ *
+ * The identically-named key in a `folio-memory/v1` entry is a DIFFERENT
+ * field with a real reader (`memoryForRoles`) and was kept. This module
+ * never read those files, so nothing here turns on it — it is noted because
+ * "`roles:` was removed" is the kind of sentence a later reader acts on.
  *
  * The local reader was worse than the corpus. `rolesOf` matched only the
  * inline `roles: [a, b]` form, so the 28 files using a block list were read
@@ -111,7 +116,7 @@ function skillIndex(root: string): Map<string, string> {
     if (!existsSync(abs)) continue;
     for (const f of readdirSync(abs)) {
       // Per FILE, not per directory: a declared directory holds skills, never
-      // only skills — `skills/memory/`'s 25 agent-memory nodes are `.md` in
+      // only skills — the 25 agent-memory nodes then in `skills/memory/` were `.md` in
       // one, and a role's `roles:` front matter is not theirs to carry.
       if (f.endsWith(".md") && isSkillMd(join(abs, f))) index.set(`${dir}/${f}`, f.slice(0, -3));
     }

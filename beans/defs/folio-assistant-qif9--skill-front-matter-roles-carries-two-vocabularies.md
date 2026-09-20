@@ -242,12 +242,22 @@ impact"*; it previously contributed nothing and read as nobody affected.
 
 ### One blind spot found while building the ratchet
 
-`sweepRoots` first used `skillMdDirs`, which enumerates skill **packages** —
-and `skills/memory/` is not one, nor is the repo-root `.claude/skills/`. The
-sweep covered 535 files and never opened the one directory the exemption
-exists for. Now it sweeps `kgRoots` recursively plus both `.claude/skills`
-locations: **575** files. A test turns the exemption off and asserts the
-suppressed set is non-empty and is **entirely** memory entries.
+`sweepRoots` went blind **twice**, and the same test caught both.
+
+1. It used `skillMdDirs`, which enumerates skill **packages** — and
+   `skills/memory/` is not one, nor is the repo-root `.claude/skills/`. 535
+   files swept, and the one directory the exemption exists for never opened.
+2. Rewritten to name `beans` and `fsh-guts` explicitly, it then missed
+   `memory` when `07xs` moved it to the repository root as its own declared
+   graph, hours later, on main.
+
+Naming graph kinds is the same hand-kept copy one level up. It now sweeps
+**every directory the declaration names**, honouring `scope`, read RAW
+rather than through `readDeclaration` — that loader throws on a graph kind
+no registry has seen, and a check that goes silent because an unrelated kind
+is unregistered is worse than one that fails. **1027** files. The test turns
+the exemption off and asserts the suppressed set is non-empty and is
+**entirely** memory entries; it is what caught both blindings.
 
 ### Done when
 

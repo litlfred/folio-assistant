@@ -195,7 +195,7 @@ describe("the graph-kind exemption", () => {
   });
 
   test("the exemption matches the DECLARATION, not the directory", () => {
-    // A memory entry sitting outside `skills/memory/` is still exempt, and a
+    // A memory entry sitting outside the memory graph is still exempt, and a
     // skill sitting inside it is still caught. Location is a coincidence of
     // the current layout; the declaration is the contract (#263).
     const root = fixture({

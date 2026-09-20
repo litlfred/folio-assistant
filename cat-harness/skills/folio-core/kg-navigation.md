@@ -112,7 +112,7 @@ so they cannot disagree.
   Reading the tree as skills put 46 non-skills into the set, at which point
   `<folio:skill ref="viewer"/>` resolved — to a capability probe.
 - **A `.md` under the skills path that declares its own `$schema` is not a
-  skill.** The agent-memory nodes under `skills/memory/` declare
+  skill.** The agent-memory nodes under `memory/` declare
   `folio-memory/v1`. Without this rule the audit treated all 25 as skills and
   wrote 25 bogus QA sidecars beside them. Declaration over location.
 - **Some skills exist in three copies and only two are checked.**
