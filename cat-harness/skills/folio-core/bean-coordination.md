@@ -297,6 +297,93 @@ which case the batch closes under that waiver and the turn report names it:
 this session*; it never says *I would rather not*. Where you can run the check,
 run it and close the bean — that is still the rule this subsection sits under.
 
+## Where a sibling session is visible from (STRICT)
+
+**Measured 2026-09-20, bean `ab3n`.** Eight sibling sessions committed to this
+repository in one four-hour window. The session API returned **not found** for
+all eight lookups by id, and its listing showed only the asking session. So
+both of this skill's central instructions — claim before you work, and watch
+the open PRs — assume a visibility that did not exist, and nothing said so.
+
+> **A session is an ephemeral container, and nothing about it survives the
+> container except what it committed. The `Claude-Session:` trailer on a commit
+> is therefore the ONLY durable session identity this repository has, and a
+> branch tip is the only durable statement of where a session got to.**
+
+### A sibling's state is INFERRED, and the inference has a boundary
+
+| what the trailer and the branches DO tell you | what they do NOT |
+|---|---|
+| which commits a session authored | whether it is running now |
+| when it started and stopped committing | whether it is blocked, thinking, or gone |
+| which branches carry its work, and its latest subject | what it intends to do next |
+
+**"Stopped committing" is not "finished", and it is not "abandoned".** Those
+are three states and a checkout can distinguish only the first from the pair.
+Treat a recent tip as a live claim, treat silence as a question, and ask —
+never as licence.
+
+### One command, not a procedure
+
+```sh
+bun run sessions --since 4h
+```
+
+`sibling-sessions` is a **Tool node** (`tools/sessions.ts`), which is what
+`ab3n` asked for and for a reason: prose describing how to grep a trailer is a
+procedure every session re-derives slightly differently, the counts then
+disagree, and nobody can tell which sweep was wrong. It reads **all** branches,
+because a sibling's work is on ITS branch — precisely where the asking session
+cannot see it by looking at its own history. A window with no commits **exits
+non-zero** rather than reporting "no siblings": a sweep over nothing has not
+found anything.
+
+## A quiet claim — what `in-progress` does NOT tell you
+
+**Measured 2026-09-20, bean `fgnw`.** 60 beans were `in-progress`; **43 had no
+change in a four-hour window**, and 38 of those were last touched by a single
+bulk move at 09:37. Eight sessions were active in that window. So at most 17 of
+the 60 claims corresponded to a session actually working the item — and the
+`status` field cannot tell a reviewer which 17.
+
+That is the cost of §"A claim is branch-local" landing without its complement.
+`blocked` has an expiry ([`bean-blocking.md`](bean-blocking.md)); `in-progress`
+has nothing, so it carries **no information about activity** and a reader cannot
+tell a stalled agent from a claim nobody has thought about since a bulk edit.
+
+### The signal is liveness, not elapsed time
+
+> **A claim is LIVE when something outside the bean says so: an open PR naming
+> it, an unmerged branch touching it, or a note since. A claim with none of
+> those has announced nothing to anybody — and a claim that announces nothing
+> does not reserve anything.**
+
+That falls straight out of the rule above it. A claim becomes visible to a
+sibling when the PR opens, and this repository opens the PR at the first commit
+([`continual-progress`](continual-progress.md) invariant 1). So "claimed, with
+no PR and no branch" is not a claim a sibling could have seen even in
+principle.
+
+**Elapsed time is the fallback, not the rule**, because it is what a tool can
+compute offline. `bun run health` reports `bean-quiet-claims` at **72 hours**
+since `updated_at`, alongside `bean-claimed` as the denominator — *12 of 60* and
+*12* are different findings. Its count is an **upper bound**: a bean it lists
+may have an open PR the sweep cannot see. Read it as "check these", never as
+"take these".
+
+### Who may act
+
+- **Any session may TAKE a quiet claim** — check for a liveness signal first;
+  if there is none, work it, and say in the bean that you took it and what you
+  found. This is the unclaimed case, reached by a different route.
+- **Nothing re-statuses it automatically.** The check reports; a person or the
+  session taking the work acts. A tool that flipped `in-progress` back to
+  `todo` would be destroying the one record of who was where, which is the same
+  argument that makes a bean `scrapped` rather than deleted.
+- **Quiet is not evidence of completion.** Closing is governed by §"Closing a
+  bean whose work has already landed", and staleness is not evidence. A quiet
+  claim on unfinished work goes back to the pool; it does not get closed.
+
 ## The store on `main` is the one every sibling reads (STRICT)
 
 §"A claim is branch-local" states the fact. This says what to do about it.
