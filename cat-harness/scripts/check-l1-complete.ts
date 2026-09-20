@@ -91,6 +91,108 @@ export interface EntryReport {
  * else belongs in the not-derivable list below, with the bean that would move
  * it here.
  */
+/**
+ * What SHAPE of document is this entry? — measured 2026-09-20.
+ *
+ * ## The regression this exists to undo
+ *
+ * `derivableRequirements` applied every requirement to every entry. Two of
+ * them — `tabular-records` and `archive-contents` — already ask the entry
+ * what it is and answer *"not tabular (application/pdf)"*. The reverse was
+ * never done, so a CSV was asked for `structure.json`, `sections/`, `blocks/`
+ * and an `images.json`, with `image-descriptions` advising a reader to *"run
+ * scripts/pdf-images.py"* on a spreadsheet.
+ *
+ * That was a wrong report until `pn6j` gated promotion on it. Then it became
+ * a PERMANENT BLOCKER: a CSV cannot have a chapter tree, so it could never be
+ * promoted, and the gate I had just added made every non-paged document
+ * un-ingestable. Found by running a real CSV through the live pipeline rather
+ * than by reading the code.
+ *
+ * ## Why the sidecar and not the mimetype
+ *
+ * The obvious route is `source.mimetype_sniffed`, which the other two
+ * requirements use. It cannot work here: a CSV has **no magic bytes**, so its
+ * source block honestly records `mimetype_sniffed: null` and
+ * `mimetype_source: "unrecognised"` — `p67i` established that routing a CSV
+ * cannot be a sniff and must not become an extension guess.
+ *
+ * What an entry DOES carry is the sidecar its rung wrote. That is a fact
+ * about the entry rather than a claim about the file, which is the same
+ * argument `nso8` makes for sniffing over extensions, one level up.
+ */
+export type EntryKind = "paged" | "tabular" | "archive" | "undetermined";
+
+/** Which sidecar identifies which shape. One place, so a fourth rung adds one line. */
+export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
+  ["paged", "structure.json"],
+  ["tabular", "tabular.jsonld"],
+  ["archive", "contents.jsonld"],
+];
+
+/**
+ * The entry's shape, or `undetermined`.
+ *
+ * Third state, and it is NOT "assume paged". An entry with no sidecar at all
+ * is one no rung has run on, and asking it for a chapter tree would report a
+ * defect where the fact is that nothing has been derived yet.
+ */
+export function entryKind(has: (file: string) => boolean): EntryKind {
+  for (const [kind, file] of KIND_SIDECAR) if (has(file)) return kind;
+  return "undetermined";
+}
+
+/** Requirements that only make sense for a PAGED document. */
+export const PAGED_ONLY: readonly string[] = [
+  "structure",
+  "structure-note",
+  "sections",
+  "blocks",
+  "narrative-provenance",
+  "image-descriptions",
+];
+
+/**
+ * Does this requirement apply to an entry of this shape?
+ *
+ * `undetermined` keeps EVERYTHING, deliberately. An entry nothing has run on
+ * must not quietly satisfy the gate by having no applicable requirements —
+ * that is the vacuity this repository keeps paying for, and it would let an
+ * empty directory promote.
+ */
+export function appliesTo(requirement: string, kind: EntryKind): boolean {
+  if (kind === "paged" || kind === "undetermined") return true;
+  return !PAGED_ONLY.includes(requirement);
+}
+
+/**
+ * The `source` block, from whichever sidecar this entry actually has.
+ *
+ * ONE definition, deliberately. This logic existed THREE times —
+ * `tabular-records`, `archive-contents` and `technical-metadata` each rolled
+ * their own, all reading `structure.json` only. Teaching the first to look
+ * beyond it left the other two reporting `no source block — re-run the ingest
+ * rung` for a CSV whose `tabular.jsonld` carries a complete one: advice that
+ * was wrong, and that re-running would not have fixed.
+ *
+ * One rule in three places is three rules, and this file has already paid for
+ * that once today — `narrative-review` restated the review queue's bearing
+ * list and went stale at the same moment the queue's copy did (bean `04vl`).
+ */
+export function sourceBlockOf(dir: string): Record<string, unknown> | undefined {
+  for (const [, file] of KIND_SIDECAR) {
+    const f = join(dir, file);
+    if (!existsSync(f)) continue;
+    try {
+      const d = JSON.parse(readFileSync(f, "utf-8")) as Record<string, unknown>;
+      if (d.source) return d.source as Record<string, unknown>;
+    } catch {
+      continue; // the owning requirement reports an unparseable sidecar
+    }
+  }
+  return undefined;
+}
+
 function derivableRequirements(dir: string): Requirement[] {
   const out: Requirement[] = [];
   const has = (p: string) => existsSync(join(dir, p));
@@ -218,15 +320,11 @@ function derivableRequirements(dir: string): Requirement[] {
   // it when the mimetype declares a workbook. Requiring it of every
   // unrecognised entry would demand a dataset of every text file.
   {
-    const src = (() => {
-      try {
-        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
-          | Record<string, unknown>
-          | undefined;
-      } catch {
-        return undefined;
-      }
-    })();
+    // From whichever sidecar this entry actually has. Reading `structure.json`
+    // alone reported `no source block — re-run the ingest rung` for a CSV,
+    // whose `tabular.jsonld` carries a complete one; the advice was wrong and
+    // re-running would not have helped.
+    const src = sourceBlockOf(dir);
     const mime = src?.mimetype_sniffed;
     if (!has("tabular.jsonld")) {
       out.push(
@@ -277,15 +375,7 @@ function derivableRequirements(dir: string): Requirement[] {
   // ran" are different facts, and only one of them is a pass. The requirement
   // is proved to fire by fixtures in `scripts/tests/archive-contents.test.ts`.
   {
-    const src = (() => {
-      try {
-        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
-          | Record<string, unknown>
-          | undefined;
-      } catch {
-        return undefined;
-      }
-    })();
+    const src = sourceBlockOf(dir);
     const mime = src?.mimetype_sniffed;
     if (!isArchiveMimetype(mime)) {
       out.push({
@@ -408,15 +498,7 @@ function derivableRequirements(dir: string): Requirement[] {
   // file WAS looked at, which absence alone would not say. What fails is the
   // field being absent entirely, i.e. an older ingest that never sniffed.
   {
-    const src = (() => {
-      try {
-        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
-          | Record<string, unknown>
-          | undefined;
-      } catch {
-        return undefined;
-      }
-    })();
+    const src = sourceBlockOf(dir);
     if (!src) {
       out.push({
         name: "technical-metadata",
@@ -520,7 +602,10 @@ function derivableRequirements(dir: string): Requirement[] {
     }
   }
 
-  return out;
+  // Applied LAST, over the whole list, so a requirement cannot be silently
+  // skipped at its own call site and later look like it passed.
+  const kind = entryKind(has);
+  return out.filter((r) => appliesTo(r.name, kind));
 }
 
 /**
