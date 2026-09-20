@@ -4,18 +4,27 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { entryIsFresh, freshnessKeys } from "../../content/pipeline/qa-utils";
 import { usesGraphHash } from "../../content/pipeline/uses-graph-hash";
-import { QA_CRITERIA_BY_ID } from "../../content/pipeline/qa-criteria-registry";
+import {
+  DETANGLER_ARCHIMEDEAN_WALL,
+  QA_CRITERIA_BY_ID,
+  QA_CRITERIA_REGISTRY,
+} from "../../content/pipeline/qa-criteria-registry";
 import type { QaCriterionEntry } from "../../schemas/block-qa";
 
-const DETANGLER = [
-  "detangler-no-forward-ref",
-  "detangler-section-band",
-  "detangler-no-xchapter-fwd",
-  "detangler-archimedean-wall",
-  "detangler-block-tanglement",
-  "detangler-graph-energy",
-  "detangler-topic-coherence",
-  "detangler-no-dependency-cycle",
+/**
+ * Derived, not pinned. This list was eight hardcoded ids until
+ * `detangler-archimedean-wall` was fenced behind the `archimedean-wall`
+ * opt-in axis: the pin then named a criterion `QA_CRITERIA_BY_ID` no longer
+ * carries, and the failure read as "the rule broke" rather than "the list is
+ * stale". A pinned list tests the list.
+ *
+ * The fenced criteria are added back explicitly, because the rule under test
+ * is about the `detangler` DOMAIN and an opted-out criterion is still in it —
+ * it just is not registered in this process.
+ */
+const DETANGLER: string[] = [
+  ...QA_CRITERIA_REGISTRY.filter((c) => c.domain === "detangler").map((c) => c.id),
+  ...DETANGLER_ARCHIMEDEAN_WALL.map((c) => c.id),
 ];
 
 /** A chapter of blocks, each `<name>.ts` + `<name>.md`. */
@@ -68,10 +77,16 @@ describe("usesGraphHash", () => {
 
 describe("graph-scoped criteria", () => {
   test("every detangler criterion is graph-scoped", () => {
+    // A fenced criterion is absent from `QA_CRITERIA_BY_ID` by design, so
+    // look it up in its own array rather than asserting it is registered.
+    const byId = new Map(
+      [...QA_CRITERIA_REGISTRY, ...DETANGLER_ARCHIMEDEAN_WALL].map((c) => [c.id, c]),
+    );
+    expect(DETANGLER.length).toBeGreaterThan(0);
     for (const id of DETANGLER) {
-      const def = QA_CRITERIA_BY_ID[id];
+      const def = byId.get(id);
       expect(def, `${id} missing from registry`).toBeTruthy();
-      expect(freshnessKeys(def), id).toContain("graph");
+      expect(freshnessKeys(def!), id).toContain("graph");
     }
   });
 
