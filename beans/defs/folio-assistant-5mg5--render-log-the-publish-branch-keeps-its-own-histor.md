@@ -1,7 +1,7 @@
 ---
 # folio-assistant-5mg5
 title: 'RENDER LOG: the publish branch keeps its own history of what was published and removed'
-status: in-progress
+status: completed
 type: task
 parent: folio-assistant-5a3l
 created_at: 2026-09-20T07:19:52Z
@@ -93,7 +93,7 @@ pull requests — is how that gap looks from the far side.
       `STAGING/`. `verifyStaging` now takes the carried prefixes and reports a
       lost one as NOT recoverable by re-running. 5 tests, including a control
       pinning the old blind spot so the fix cannot be quietly reverted.
-- [ ] merged
+- [x] merged — PR #473, merge commit `0720657c79`, 2026-09-20T09:52Z
 - [ ] the agent-memory entry, once there is room — bean `lnpe`. A six-line
       node evicted a TRAP from BOTH `ci-health-watcher` and
       `platform-boundary-guard`, so it was dropped rather than bought by
@@ -108,3 +108,19 @@ pull requests — is how that gap looks from the far side.
 | a closed PR is not an abandoned branch | `w2g5` |
 | the slug path hazard | `fuzm` |
 | the retired-record store, next tenant of `CARRIED_PREFIXES` | `6pfo` |
+
+_2026-09-20T09:55Z_ — MERGED as #473 (`0720657c79`). Six commits, three merges
+of `main` (55 commits) along the way; every conflict was a generated file and
+every one was regenerated rather than hand-merged.
+
+**One claim left unverified at merge, deliberately named rather than assumed:**
+the carry itself. `restore-staging.ts` now carries `_render-log/` across a full
+replace, but that code only takes effect once it is ON `main` — which it now
+is. The next `docs(gh-pages)` full replace is the first run that exercises it.
+Until one is observed keeping the log, the carry is tested and not yet
+witnessed. Checked at the next check-in.
+
+`removed`, `retained` and `restored` are still unexercised in production for
+the same reason they were at the PR: they need a PR close, a refused close,
+and a full replace respectively. The tests cover each against a real git
+remote; today proved that is not the same thing.
