@@ -35,6 +35,15 @@ on:
       - 'cat-harness/skills/**'
       - 'cat-harness/scripts/gen-schema-docs.ts'
       - 'cat-harness/scripts/gen-docs-pages.ts'
+      # The state visualiser and the renderer it INLINES. Without these three a
+      # change to the dashboard produced no preview, so the one artefact a
+      # reviewer has to look at to judge it was the one the PR did not build.
+      # (`cat-harness/docs/**` already covers the two assets; they are named
+      # anyway because the path they live at is not the reason they matter.)
+      - 'cat-harness/scripts/state-visualizer.ts'
+      - 'cat-harness/scripts/beans.ts'
+      - 'cat-harness/docs/assets/js/work-plan.js'
+      - 'cat-harness/docs/assets/css/work-plan.css'
       - '.github/workflows/feature-staging.yml'
   pull_request_target:
     types: [closed]
@@ -494,6 +503,17 @@ jobs:
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json" 
+
+          # THE REGISTERED SUB-VISUALISATIONS, the same ones `docs-site.yml`
+          # publishes: `<stub>/dashboard/`, one page per declared state graph
+          # beside it, and `<stub>/<graph>.json` as their data.
+          #
+          # NO `--base-url`, and that is a property rather than an omission.
+          # Every page fetches its data relative to its own location, so the
+          # same bytes are correct at the canonical base and under
+          # `STAGING/<slug>/`. The two lines above need `$BASE` because a
+          # JSON-LD `@id` is an absolute IRI and has nowhere relative to be.
+          bun run cat-harness/scripts/state-visualizer.ts --out-dir ./_site
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.

@@ -63,6 +63,17 @@ describe("front matter is unescaped, not merely unquoted", () => {
   });
 });
 
+describe("`file` is relative to the root it was read with", () => {
+  test("no repository-name prefix, so an edit link resolves", () => {
+    // `repoRootFor` is an unconditional `join(root, "..")`. Recomputing it on
+    // a root the caller already resolved prefixed every path with the
+    // repository's own directory name, and every link built from it pointed
+    // one level too high.
+    const root = store({ a: bean("t-a", `title: a\nstatus: todo\ntype: task`) });
+    expect(readBeans(root)![0]!.file).toBe("beans/defs/a.md");
+  });
+});
+
 describe("no store is not an empty store", () => {
   test("a repository with no bean graph reads as null", () => {
     const root = mkdtempSync(join(tmpdir(), "beans-empty-"));

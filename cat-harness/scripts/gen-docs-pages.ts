@@ -46,6 +46,7 @@ import {
 import { readTodoFiles } from "./todos.js";
 import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+import { detectRepoUrl } from "../src/core/git-refs.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -61,7 +62,22 @@ const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // `content/` — without tripping the folio-emptiness gate.
 const SRC_DIR = join(REPO_ROOT, "content", "docs");
 const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
-const REPO_WEB = "https://github.com/litlfred/folio-assistant";
+/**
+ * The forge this checkout points at.
+ *
+ * DETECTED, not written down. This was the literal
+ * `https://github.com/litlfred/folio-assistant` until 2026-09-20 — one
+ * instance's address inside a generator every instance runs, which is exactly
+ * the genericity failure `AGENTS.md` catalogues (a platform script carrying
+ * `quantum-observable-universe`). Every edit link, every bean link and every
+ * QA link this file emits was composed from it, so a fork's published docs
+ * would have pointed at this repository.
+ *
+ * `gen-landing-data.ts` already resolved it this way; the two now agree.
+ * The fallback keeps the links working where there is no `origin` to ask —
+ * a sandbox, a tarball — rather than emitting hrefs that go nowhere.
+ */
+const REPO_WEB = detectRepoUrl(repoRootFor(REPO_ROOT)) ?? "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
 /** Matches gen-skill-docs.ts / gen-schema-docs.ts — one glyph, no inline SVG. */
 const EDIT_GLYPH = "✎";
@@ -864,7 +880,11 @@ function processHierarchy(): Record<string, string[]> {
   // `docs-ui.js` calls `JSON.parse`; it never sees the whitespace.
   emit(
     TODO_ASSET,
-    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }, null, 2) + "\n",
+    JSON.stringify(
+      { $schema: "folio-todo-index/v1", repoWeb: REPO_WEB, items, processes },
+      null,
+      2,
+    ) + "\n",
     "data",
   );
   console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
@@ -902,7 +922,10 @@ function processHierarchy(): Record<string, string[]> {
       // Published as a FACT, with no age computed from it. See `beanFindings`.
       updatedAt: b.updatedAt,
       preview: b.body.trim().slice(0, BEAN_BODY_PREVIEW),
-      editHref: `${EDIT_BASE}/${b.file}`,
+      // Repo-relative, and the renderer derives BOTH a view and an edit URL
+      // from it. Shipping two absolute URLs per bean would put the forge's URL
+      // shape in the data 283 times over, and they would then have to agree.
+      file: b.file,
     }));
     mkdirSync(dirname(BEANS_ASSET), { recursive: true });
     // Indented for the merge reason the todo index documents at length: a
@@ -912,7 +935,15 @@ function processHierarchy(): Record<string, string[]> {
     emit(
       BEANS_ASSET,
       JSON.stringify(
-        { $schema: "folio-bean-index/v1", items, findings: beanFindings(beans) },
+        {
+        $schema: "folio-bean-index/v1",
+        // The forge, so `work-plan.js` composes its links from DATA rather
+        // than carrying one instance's address in shared client code. Same
+        // reason `editHref` is composed here, one level further on.
+        repoWeb: REPO_WEB,
+        items,
+        findings: beanFindings(beans),
+      },
         null,
         2,
       ) + "\n",

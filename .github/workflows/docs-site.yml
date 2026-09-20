@@ -213,14 +213,17 @@ jobs:
           bun run cat-harness/scripts/fsh-guts-export.ts --out "./_site/fsh-guts.jsonld"
           cp "./_site/fsh-guts.jsonld" "./_site/fsh-guts.json"
 
-          # THE STATE VISUALISER, per instantiated harness.
+          # THE REGISTERED SUB-VISUALISATIONS, per instantiated harness.
           #
-          # `<base>/<stub>/state-visualizer/` and one page per state graph
-          # beneath it, plus `<base>/<stub>/state/<graph>.json` as their data.
-          # It writes under the SAME instance segment the two lines above
-          # established — the segment is what separates one instance's
-          # renderings from another's — so this adds a second kind of rendered
-          # content there rather than a second convention beside it.
+          # `<base>/<stub>/dashboard/`, one page per declared state graph
+          # beside it, and `<base>/<stub>/<graph>.json` as their data. NO
+          # intervening segment: a visualisation is registered against the
+          # harness that declares the functionality, so the harness's own path
+          # is the namespace — and the kg-viewer written at
+          # `<base>/<stub>/index.html` three lines up is the first of them.
+          #
+          # It never writes `<stub>/index.html`, and refuses a declared
+          # directory whose id collides with a route the layout has spent.
           #
           # It enumerates instances itself and reads each one's own
           # declaration, so a new instance appears here without this workflow

@@ -84,6 +84,86 @@
 
   var WORKPLAN_OPEN = { "todo": true, "in-progress": true };
 
+  /**
+   * The forge this data came from, or `""`.
+   *
+   * Read off the projection (`repoWeb`), never composed here. A literal
+   * repository URL in this file would be one instance's address inside code
+   * three instances share — the rule `editHref` already follows on the
+   * generator side. Empty is a real answer: a checkout with no `origin` still
+   * renders every panel, and its identifiers stay as text.
+   */
+  var repoWeb = "";
+
+  /** `<repo>/blob/main/<file>`, or `null` when either half is missing. */
+  function viewHref(file) {
+    return repoWeb && file ? repoWeb + "/blob/main/" + file : null;
+  }
+
+  /** `<repo>/edit/main/<file>` — where writing actually happens. */
+  function editHrefFor(file) {
+    return repoWeb && file ? repoWeb + "/edit/main/" + file : null;
+  }
+
+  /**
+   * A bean id looks like `<instance>-<four>`, and only IDS IN THE STORE link.
+   *
+   * Checking the shape alone would link any hyphenated token of the right
+   * length; checking membership means a token becomes a link exactly when
+   * there is something to open. A reference to a bean nobody has on disk stays
+   * as text, which is the third state `todoRelations` already reports as
+   * `dangling` against `not-checked` — "this points somewhere I could not
+   * reach" is not the same as "this points nowhere".
+   */
+  var BEAN_TOKEN = /`?\b([a-z][a-z0-9]*(?:-[a-z0-9]+)*-[a-z0-9]{4})\b`?/g;
+
+  /** `#123` — an issue or a PR. GitHub redirects `/issues/N` to whichever. */
+  var FORGE_REF = /#(\d+)\b/g;
+
+  /**
+   * Append `text` to `node`, turning bean ids and `#123` into links.
+   *
+   * Built with `createTextNode` and `createElement` throughout: a bean's title
+   * and a finding's detail are authored, travel through a JSON file and land
+   * here, so no input ever reaches `innerHTML`. That is the same rule the
+   * sticky board follows, and the reason is that the string which closes a tag
+   * is exactly the string somebody eventually writes.
+   */
+  function linkify(node, text, byId) {
+    var i = 0;
+    // One pass over both patterns, so a `#12` inside a bean id cannot be
+    // matched twice and the offsets never disagree.
+    var hits = [];
+    var m;
+    BEAN_TOKEN.lastIndex = 0;
+    while ((m = BEAN_TOKEN.exec(text)) !== null) {
+      if (byId[m[1]]) hits.push({ at: m.index, len: m[0].length, label: m[1], bean: byId[m[1]] });
+    }
+    FORGE_REF.lastIndex = 0;
+    while ((m = FORGE_REF.exec(text)) !== null) {
+      hits.push({ at: m.index, len: m[0].length, label: m[0], issue: m[1] });
+    }
+    hits.sort(function (a, b) { return a.at - b.at; });
+
+    for (var k = 0; k < hits.length; k++) {
+      var h = hits[k];
+      if (h.at < i) continue;                       // overlapped a previous hit
+      if (h.at > i) node.appendChild(document.createTextNode(text.slice(i, h.at)));
+      var href = h.bean ? viewHref(h.bean.file)
+                        : (repoWeb ? repoWeb + "/issues/" + h.issue : null);
+      var label = h.bean ? (h.bean.title || h.label) : h.label;
+      if (href) {
+        var a = el("a", { class: "fa-workplan-ref", href: href }, label);
+        node.appendChild(a);
+      } else {
+        node.appendChild(document.createTextNode(label));
+      }
+      i = h.at + h.len;
+    }
+    if (i < text.length) node.appendChild(document.createTextNode(text.slice(i)));
+    return node;
+  }
+
   /** Whole days since an ISO timestamp, or `null` when there is no usable one. */
   function daysSince(iso) {
     if (!iso) return null;
@@ -147,9 +227,12 @@
    */
   function epicDistribution(beans) {
     var titles = {};
+    var files = {};
     var i;
     for (i = 0; i < beans.length; i++) {
-      if (beans[i].type === "epic") titles[beans[i].id] = beans[i].title || beans[i].id;
+      if (beans[i].type !== "epic") continue;
+      titles[beans[i].id] = beans[i].title || beans[i].id;
+      files[beans[i].id] = beans[i].file;
     }
     var counts = {};
     for (i = 0; i < beans.length; i++) {
@@ -159,7 +242,7 @@
       counts[b.parent] = (counts[b.parent] || 0) + 1;
     }
     var rows = Object.keys(counts).map(function (id) {
-      return { id: id, title: titles[id], count: counts[id] };
+      return { id: id, title: titles[id], count: counts[id], file: files[id] };
     });
     // Descending by count, then by id — so two epics on the same count do not
     // swap places between builds. A chart that reorders on reload looks like
@@ -185,7 +268,15 @@
       var li = el("li", { class: "fa-workplan-bar-row" });
       // The epic's own title, in full, in the `title` attribute: the visible
       // label is clamped to two lines and these run long.
-      var label = el("span", { class: "fa-workplan-bar-label", title: row.title }, row.title);
+      //
+      // A LINK when the epic's file is known. A bar chart whose rows name
+      // something you cannot open is a picture of a work plan rather than a
+      // way into one — and the epic is the row a reader most wants to follow,
+      // because it is where the 19 beans behind the bar actually are.
+      var href = viewHref(row.file);
+      var label = href
+        ? el("a", { class: "fa-workplan-bar-label", href: href, title: row.title }, row.title)
+        : el("span", { class: "fa-workplan-bar-label", title: row.title }, row.title);
       var track = el("span", { class: "fa-workplan-bar-track" });
       var fill = el("span", { class: "fa-workplan-bar-fill" });
       // Percent of the LARGEST bar, not of the total: this is a magnitude
@@ -202,19 +293,45 @@
     return fig;
   }
 
-  /** One finding row: icon, role label, then the sentence. */
-  function findingRow(role, label, text, href) {
+  var EDIT_GLYPH =
+    '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" class="fa-workplan-icon">' +
+    '<path d="M11.2 2.4l2.4 2.4L5.6 12.8 2.4 13.6l0.8-3.2z" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linejoin="round"/></svg>';
+
+  /**
+   * One finding row: icon, role word, the sentence, then a pencil.
+   *
+   * The sentence is LINKIFIED rather than wrapped in a single anchor. A
+   * finding names two beans — the one holding the block and the one held — and
+   * making the whole row one link to one of them sends half the readers to the
+   * wrong bean. Each identifier is its own link to its own subject.
+   *
+   * The pencil is `.fa-node-edit`'s argument applied here: a published page
+   * cannot write back to the repository, so the honest control is the one that
+   * takes you where writing happens.
+   */
+  function findingRow(role, label, text, byId, editFile) {
     var li = el("li", { class: "fa-workplan-finding is-" + role });
     var badge = el("span", { class: "fa-workplan-finding-badge" });
     badge.innerHTML = WORKPLAN_GLYPH[role] || WORKPLAN_GLYPH.warning;  // static constant
     badge.appendChild(el("span", { class: "fa-workplan-finding-role" }, label));
     li.appendChild(badge);
-    if (href) {
-      var a = el("a", { class: "fa-workplan-finding-text", href: href }, text);
-      li.appendChild(a);
-    } else {
-      li.appendChild(el("span", { class: "fa-workplan-finding-text" }, text));
+
+    var body = el("span", { class: "fa-workplan-finding-text" });
+    linkify(body, text, byId || {});
+    var edit = editHrefFor(editFile);
+    if (edit) {
+      var a = el("a", {
+        class: "fa-workplan-edit",
+        href: edit,
+        title: "Edit " + editFile,
+        "aria-label": "Edit " + editFile,
+      });
+      a.innerHTML = EDIT_GLYPH;                                        // static constant
+      body.appendChild(document.createTextNode(" "));
+      body.appendChild(a);
     }
+    li.appendChild(body);
     return li;
   }
 
@@ -235,9 +352,11 @@
       var f = findings[i];
       var spec = WORKPLAN_FINDING[f.kind] || { role: "warning", label: f.kind };
       var subject = byId[f.bean];
-      var text = (subject && subject.title ? subject.title : f.bean) + " — " + f.detail;
-      list.appendChild(findingRow(spec.role, spec.label, text,
-                                  subject ? subject.editHref : null));
+      // The blocker's id is left IN the sentence rather than resolved to a
+      // title here, so `linkify` turns both ends into their own links.
+      var text = f.bean + " — " + f.detail;
+      list.appendChild(findingRow(spec.role, spec.label, text, byId,
+                                  subject ? subject.file : null));
     }
 
     // Computed here rather than in the projection. See the module note.
@@ -252,16 +371,16 @@
     for (i = 0; i < stale.length; i++) {
       list.appendChild(findingRow(
         "warning", WORKPLAN_FINDING["stale-in-progress"].label,
-        stale[i].bean.title + " — claimed in-progress and untouched for " +
+        stale[i].bean.id + " — claimed in-progress and untouched for " +
           stale[i].age + " days",
-        stale[i].bean.editHref));
+        byId, stale[i].bean.file));
     }
 
     if (list.childNodes.length === 0) {
       list.appendChild(findingRow(
         "good", "Clear",
         "No unlifted blocks, no block without an expiry, and nothing claimed " +
-        "and left for more than " + BEAN_STALE_DAYS + " days."));
+        "and left for more than " + BEAN_STALE_DAYS + " days.", byId, null));
     }
     section.appendChild(list);
     return section;
@@ -355,6 +474,11 @@
         // neither meta. The container's fallback prose stays put, because it
         // links the data directly and an empty box would not.
         if (!beanDoc && !todoDoc) return;
+
+        // Either projection carries it and both agree, because one generator
+        // detects it once. Taking the first that has it means a todos-only
+        // page still gets its links.
+        repoWeb = (beanDoc && beanDoc.repoWeb) || (todoDoc && todoDoc.repoWeb) || "";
 
         var todoItems = todoDoc === undefined ? undefined : (todoDoc ? todoDoc.items : null);
         var board = el("div", { class: "fa-workplan-board" });

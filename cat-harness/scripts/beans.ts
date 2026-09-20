@@ -64,7 +64,6 @@ import {
   nodeOfKind,
   parseBeanGraph,
 } from "../schemas/bean-graph.ts";
-import { repoRootFor } from "../schemas/cat-harness.js";
 
 export const ROOT = resolve(import.meta.dir, "..");
 
@@ -81,7 +80,19 @@ export const OPEN_STATUSES = new Set(["todo", "in-progress"]);
 export interface BeanNode {
   /** The bean id, e.g. `folio-assistant-km90`. */
   id: string;
-  /** Path relative to the repository root — what an edit link needs. */
+  /**
+   * Path relative to the `root` this was read with — what an edit link needs.
+   *
+   * Relative to the ARGUMENT, not to some root recomputed here. It was
+   * `relative(repoRootFor(root), …)` until 2026-09-20, and `repoRootFor` is an
+   * unconditional `join(root, "..")`, so a caller passing the repository root
+   * — which both callers do — got every path prefixed with the repository's
+   * own directory name. Every bean link and every edit link on the state
+   * visualiser pointed one level too high, and the committed docs projection
+   * carried the same prefix.
+   *
+   * Recomputing a root the caller already resolved is the bug, not the `..`.
+   */
   file: string;
   title: string;
   status: string;
@@ -182,7 +193,6 @@ export function beanDefsDir(root: string): string | null {
 export function readBeans(root: string): BeanNode[] | null {
   const dir = beanDefsDir(root);
   if (dir === null || !existsSync(dir)) return null;
-  const repoRoot = repoRootFor(root);
   const out: BeanNode[] = [];
   for (const name of readdirSync(dir).sort()) {
     if (!name.endsWith(".md")) continue;
@@ -193,7 +203,7 @@ export function readBeans(root: string): BeanNode[] | null {
     const fm = m[1]!;
     out.push({
       id: (/^#\s*(\S+)/m.exec(fm) ?? [, name.replace(/\.md$/, "")])[1]!,
-      file: relative(repoRoot, join(dir, name)),
+      file: relative(root, join(dir, name)),
       title: field(fm, "title"),
       status: field(fm, "status"),
       type: field(fm, "type"),

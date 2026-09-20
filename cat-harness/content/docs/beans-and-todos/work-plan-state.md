@@ -24,6 +24,20 @@ fires forever. So the projection publishes each bean's `updated_at` as a fact
 and the page computes age when you open it. Age therefore moves without the
 file moving, which is the right way round.
 
+**There is a fuller view, and it is browsable.** Every harness instance
+publishes its own registered sub-visualisations under its own path — the
+dashboard at `<base>/<stub>/dashboard/`, and one page per state graph beside
+it at `<base>/<stub>/beans/`, `<base>/<stub>/todos/` and so on. There is no
+intervening segment, because a visualisation is registered against the harness
+that declares the functionality, and the knowledge-graph viewer already sitting
+at `<base>/<stub>/` is a sub-visualisation of exactly the same harness.
+
+**Every identifier on those pages is a link.** A bean id resolves to the bean's
+file, an issue or pull-request number to the forge, and each finding carries a
+pencil to where writing actually happens. A reference that cannot be resolved
+stays as plain text, which is the visible difference between *"follow this"*
+and *"this points somewhere I could not reach"*.
+
 **What is not here.** Where a bean sits in a BPMN process, which is the other
 half of bean `v49e`. That join needs `beans/workflows/`, the declared
 `workflow-state` graph, and it is empty — so a position view would report
