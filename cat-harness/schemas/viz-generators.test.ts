@@ -18,13 +18,14 @@
  * the subtler version — a truncated document that still parses.
  */
 import { describe, expect, test } from "bun:test";
-import { join } from "node:path";
+import { readFileSync } from "node:fs";
+import { basename, join } from "node:path";
 
 import { viewerHtml as schemaViewer } from "../scripts/gen-schema-viz.ts";
 import { viewerHtml as libraryViewer } from "../scripts/gen-library-viz.ts";
 import { readSchemaGraph } from "../scripts/schema-graph.ts";
 import { readLibraryGraph } from "../scripts/library-graph.ts";
-import { repoRootFor } from "./cat-harness.ts";
+import { directoriesForGraph, repoRootFor, siteDirFor } from "./cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
 
@@ -93,5 +94,39 @@ describe("the readers agree with what the generators publish", () => {
       expect(q.uningested).toBe(q.total - q.ingested);
       expect(q.uningested).toBeGreaterThanOrEqual(0);
     }
+  });
+});
+
+describe("the projection is stable under edits that do not change the graph", () => {
+  test("no declaration carries a line number", () => {
+    // A line number is an editor coordinate, not a property of a declaration.
+    // Carrying it made the staleness gate fire whenever anything ABOVE a
+    // declaration moved: merging main shifted two declarations in
+    // `cat-harness.ts` by 36 lines, and the gate went red over two integers
+    // with nothing else in 895 KB different.
+    //
+    // A gate whose red means "somebody added a blank line" teaches
+    // contributors to regenerate reflexively instead of reading the finding,
+    // which is the opposite of what a gate is for.
+    // Both path halves are RESOLVED, not spelled out. `site-dir-single-answer`
+    // fails any source file that hardcodes the site root, and it caught the
+    // first draft of this test doing exactly that — the gate working on the
+    // test written to guard another gate. The published segment is the
+    // declared directory's own name, the same rule the generator follows.
+    const site = join(ROOT, siteDirFor(ROOT));
+    const own = directoriesForGraph(ROOT, "schemas").find((d) => d.startsWith(`${ROOT}/`));
+    expect(own).toBeDefined();
+    const published = JSON.parse(
+      readFileSync(join(site, "assets", basename(own!), "index.json"), "utf-8"),
+    ) as { decls: Array<Record<string, unknown>> };
+    expect(published.decls.length).toBeGreaterThan(0);
+    expect(published.decls.filter((d) => "line" in d)).toEqual([]);
+  });
+
+  test("the reader still knows the line, so a consumer that wants one can have it", () => {
+    // Dropped from the PROJECTION, kept on the reader. The two are different
+    // artefacts and conflating them would remove the information entirely.
+    const g = readSchemaGraph(ROOT)!;
+    expect(g.decls.every((d) => typeof d.line === "number" && d.line > 0)).toBe(true);
   });
 });

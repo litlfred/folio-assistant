@@ -118,7 +118,28 @@ function projection(g: SchemaGraph): unknown {
       refs: d.refs,
       unresolved: d.unresolved,
       external: d.external,
-      line: d.line,
+      // `line` is NOT carried, and the reader keeps it — the difference is
+      // the whole of this comment.
+      //
+      // A line number is an EDITOR COORDINATE, not a property of a
+      // declaration. Carrying it made the committed projection change
+      // whenever anything above a declaration moved, so the staleness gate
+      // fired on edits that changed nothing about the schema graph. Measured
+      // on this very branch: merging main shifted two declarations in
+      // `cat-harness.ts` by 36 lines and nothing else in 895 KB differed —
+      // the gate went red over two integers.
+      //
+      // That fails the standard this repository applies to its own gates. The
+      // comment on `gen-docs-pages --check` states what a red there means:
+      // "somebody added a node, renamed a block, ran a first sweep, or moved
+      // a sidecar, and did not regenerate. A real omission, every time." A red
+      // here would have meant "somebody added a blank line in a schema file",
+      // which is not an omission and teaches contributors to regenerate
+      // reflexively rather than to read the finding.
+      //
+      // The cost is the deep link: the viewer names the module and not the
+      // line. That is the right trade — a stale anchor is wrong silently,
+      // while a module path stays correct under every reformat.
       exported: d.exported,
     })),
     edges: g.edges,
@@ -343,7 +364,7 @@ function uml(d) {
 
 function detail(d) {
   var referrers = (G.edges || []).filter(function (e) { return e.to === d.id; });
-  var h = '<h2>' + esc(d.name) + '</h2><p class="sub">' + esc(d.module) + ":" + d.line +
+  var h = '<h2>' + esc(d.name) + '</h2><p class="sub">' + esc(d.module) +
     ' &middot; ' + esc(d.kind) + (d.exported ? "" : " &middot; not exported") + "</p>";
   if (d.doc) h += "<p>" + esc(d.doc) + "</p>";
   if (d.kind === "undetermined") {

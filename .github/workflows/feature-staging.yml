@@ -514,7 +514,7 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
+          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"

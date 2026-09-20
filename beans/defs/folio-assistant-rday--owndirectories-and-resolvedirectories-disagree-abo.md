@@ -1,7 +1,7 @@
 ---
 # folio-assistant-rday
 title: ownDirectories and resolveDirectories disagree about what an empty declaration means
-status: todo
+status: completed
 type: task
 parent: folio-assistant-zzmr
 created_at: 2026-09-20T16:55:43Z
@@ -57,3 +57,45 @@ fixture convenience and NOT what `folio_init` does — `folio_init` declares
       same declaration, or a test states why they must not.
 - [ ] The fixture's `conventionalDirectories()` is either removed or its
       comment updated to point at the settled rule.
+
+## Closed 2026-09-20
+
+`ownDirectories` now seeds `DEFAULT_DIRECTORIES` **unconditionally**,
+existence-filtered, and lets declared entries override by id in place —
+`resolveDirectories`' order, and now its own.
+
+Of the two fixes this bean named, this is the smaller: the other was teaching
+the schema to tell an ABSENT `directories` from an empty one, which is a
+migration. It is also the one that makes the rule sayable in a sentence:
+
+> **A declaration adds and overrides; it does not withdraw.**
+
+The existence filter is what makes that safe. An instance that genuinely owns
+none of the conventional directories gets none, because they are not on disk —
+and a declared-but-absent directory is `dh4f`, where a consumer scans nothing
+and reports a clean run over it.
+
+Measured after the change, both resolvers over the same roots:
+
+```
+cat-harness (declares 22)   own 22  resolve 22   agree
+repo checkout               own  4  resolve  4   agree
+```
+
+cat-harness is unchanged at 22 because every default id is already declared
+there — which is why the disagreement survived so long: the instance most
+often measured is the one where seeding defaults is a no-op.
+
+Four tests in `skill-overlay.test.ts`: a named-but-bare instance keeps its
+conventional directories; a default not on disk is NOT resolved; a declared
+entry overrides the default of the same id rather than adding a second; and
+the two functions return the same ids for one root, with a vacuity guard so
+two empty lists cannot pass for agreement.
+
+**The fixture workaround is kept, and its comment updated.**
+`test/support/instance-fixture.ts` → `conventionalDirectories()` still writes
+the existence-filtered set into each fixture declaration. It is now redundant
+with the resolver rather than compensating for it — but it costs nothing, it
+keeps a fixture's declaration explicit about what that fixture owns, and
+removing it would be a second change in a commit whose measurement is the
+resolvers agreeing.
