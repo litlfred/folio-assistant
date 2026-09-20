@@ -27,15 +27,19 @@
  *
  * ## Why the repository root is swept EXPLICITLY
  *
- * `check-declared-assets.ts` carries `DECLARED_INSTANCES = ["cat-harness",
- * "bootstrap"]`, and since the instance moved under `cat-harness/` the
- * repository root is deliberately **not an instance**. That is correct and it is
- * also exactly why the root is where an undeclared file survives: every sweep is
- * scoped to an instance, and the root is in none of them.
+ * This paragraph read that `check-declared-assets.ts` carries
+ * `DECLARED_INSTANCES = ["cat-harness", "bootstrap"]` and that "since the
+ * instance moved under `cat-harness/` the repository root is deliberately
+ * **not an instance**". **Both halves are now false**, and they became false
+ * a day apart: the root gained a `harness.json` of its own
+ * (`folio-assistant-checkout`), and the literal was replaced by
+ * `declaredInstances()`, which discovers instead of listing (bean `6tkl`).
  *
- * So the root is named here as its own subject rather than reached by accident.
- * A sweep that covered it only as a side effect of some other rule would stop
- * covering it the first time that rule changed.
+ * The CONCLUSION survives its premises, which is why the section stays. The
+ * root is named here as its own subject rather than reached by accident: a
+ * sweep that covered it only as a side effect of some other rule would stop
+ * covering it the first time that rule changed — and that rule has now changed
+ * twice while this sweep kept working.
  *
  * ## What counts as accounted for
  *

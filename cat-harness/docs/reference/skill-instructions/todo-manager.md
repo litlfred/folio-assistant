@@ -147,6 +147,47 @@ just clutter:
 The runaway loop is not something a doc can prevent; an unguarded `create` is.
 This rule is platform-level so every folio inherits it.
 
+## WHICH parent — the criterion nobody wrote down
+
+**A bean's parent is the epic whose SUBJECT it is, not the epic you happen to
+be working in.** That sentence was missing from this skill until 2026-09-20,
+and its absence is measurable: in one session six new beans were all filed
+under `yj32`, the epic that session was working in, while their subjects
+belonged to four different epics. The owner spotted it — *"beans misfiled...
+wrong skills guidance? tools guidance?"* — and the answer was yes, this file.
+
+**Nothing catches a wrong parent.** `check-bean-parents` tests exactly two
+things: that an open bean HAS a `parent`, and that the parent NAMES A BEAN
+THAT EXISTS. A bean filed under the wrong epic satisfies both, so it is
+textually clean, the guard is green, and it is only findable by a person
+reading the roadmap. **The check cannot distinguish a right parent from a
+wrong one, so the criterion has to live here or nowhere.**
+
+### How to choose
+
+1. **`beans list` and read the EPICS first** — there are many, each with a
+   thematic scope in its title. Do this BEFORE `beans create`, at the same time
+   as §"Check before you create"; both are questions about where a bean
+   belongs, and both are cheaper before the file exists.
+2. **Ask what the bean is ABOUT, not what you were doing when you wrote it.**
+   A visualiser whose blocker is an unrecorded ingest relation is an ingest
+   bean. A sticky's art is a rendering bean. The topic that makes the work hard
+   is usually the right epic.
+3. **When two epics both fit, pick the one whose OTHER children you would want
+   read alongside it**, and say in the body why the other was not chosen — a
+   parent is a claim about where somebody should go looking.
+
+### This conflicts with "every session is a Bean", and the conflict is real
+
+Core Directive 1 above says to create a session milestone and parent children
+to it. That is filing by SESSION; the repository is organised by SUBJECT, in
+thematic epics that outlive any session. **Where they disagree, file by
+subject** — a session bean is a useful record of what one sitting did, and it
+is not where the next person looks for the work. If you keep a session
+milestone, it is a sibling record, not the parent of topical work.
+
+---
+
 ## After you create — parent it, and re-run the guard before you push
 
 `check-bean-parents` fails on an **open bean with no `parent`**, because such a

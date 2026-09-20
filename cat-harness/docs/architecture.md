@@ -41,7 +41,7 @@ flowchart TD
 
 This repo is today a **Tool repo and a Content repo in one checkout**. Issue
 [#223](https://github.com/litlfred/folio-assistant/issues/223) plans the split
-into five composable folio-assistant instances. Four child pages carry it:
+into five composable folio-assistant instances. Child pages carry it:
 
 | page | what it answers |
 |---|---|
@@ -49,6 +49,15 @@ into five composable folio-assistant instances. Four child pages carry it:
 | [Current state](architecture/current-state.html) | What is actually in this repo today, measured, and where the mixture is |
 | [Future state](architecture/future-state.html) | The five target repos and which directory lands in which |
 | [Migration plan](architecture/migration-plan.html) | Phase 0/I/II/III, the gates, and what is still undecided |
+| [Minimum `cat-harness`](architecture/cat-harness-minimum.html) | What survives in the harness once "not self-documenting" is applied as a test |
+| [Harness instances](architecture/harness-instances.html) | What an instance IS — schematics, visualisations, tools; the four directories; the default rendering |
+
+The last two look like they disagree — the minimum says a harness produces
+nothing a human looks at, and the instance page says an instance renders by
+default. They do not: the requirement is a **floor that rises**, with
+`bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
+instead, and `cat-harness` the layer where the rest begins to apply. See
+[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 The rest of this page describes the architecture **as it is now**.
 

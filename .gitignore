@@ -118,6 +118,17 @@ bootstrap/bootstrap.jsonld
 # every `bunx playwright test`, so it dirties the tree mid-run and a `git stash`
 # taken then will carry it. That is a cost of tracking it, not an argument
 # against — but it is what made this branch untrack it in the first place.
+#
+# `git stash` is not the only way to be bitten, and the second way is worse
+# because it commits. On 2026-09-20 a `git add -A` run WHILE `gates --all` had
+# Playwright in flight staged this file's transient DELETION, and the merge
+# commit that followed removed a file both of its parents carried. Nothing
+# failed; it was found by a stop hook noticing the untracked file that the
+# next run recreated.
+#
+# So: do not `git add -A` while the e2e gates are running. Stage paths you
+# mean, or wait for the run to finish. The window is small and it is committed
+# history when you land in it.
 test-results/*/
 playwright-report/
 

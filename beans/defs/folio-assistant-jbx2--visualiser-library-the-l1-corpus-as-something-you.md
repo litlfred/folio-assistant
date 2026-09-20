@@ -49,3 +49,33 @@ builds the second one, not an assumption for the first.
 - [ ] `uploads/` entries that have not become slugs are visible as such.
 - [ ] It resolves at least one real reference through a slug, so the "everything
       resolves through here" property is demonstrated rather than asserted.
+
+## A quick upload+process action, on THIS visualiser — owner, 2026-09-20
+
+> bean up also to add a quick upload+process icon/funciton in libary/
+> visualtion to start doc ingest
+
+So the `library/` visualiser is **not read-only**: it carries an affordance
+that takes a file and starts document ingest in one action, from the place a
+person is already looking at the corpus.
+
+**Why it belongs here rather than only on `v1hw`.** `v1hw` is the `uploads/`
+visualiser — the QUEUE, and its own upload path. This is the same capability
+reached from the other end: somebody looking at the L1 corpus notices a gap
+and wants the document in it, without first learning that `uploads/` exists as
+a staging area. The queue is an implementation detail from this view.
+
+**Two things that follow, and neither is cosmetic:**
+
+1. **It must not become a second ingest path.** "Upload + process" starts the
+   SAME pipeline `slw1` defines; if it grows its own shortcut, a document
+   ingested from here and one ingested from the queue end up different, and
+   the difference is invisible afterwards. It is a trigger, not a pipeline.
+2. **It shares the write mechanism with `v1hw`**, so it inherits the same
+   unanswered question from `yj32`: git is confirmed as the store, and which
+   write path — forge API, local server, or a commit from a checkout — is the
+   owner's call. Two visualisers must not answer it twice.
+
+The ingest it starts is also what makes the uningested badge on `v1hw` tick
+down, which is the other reason these two are one design: the action here
+changes the number there.
