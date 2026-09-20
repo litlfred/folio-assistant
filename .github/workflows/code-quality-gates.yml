@@ -547,6 +547,7 @@ jobs:
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          bun run check:catalogue
           bun run check:declared-paths
           bun run check:fallback-roles
           bun run check:kind-validators
@@ -568,6 +569,14 @@ jobs:
           # fatal. `--strict` is the switch for the day the number is low
           # enough to hold.
           bun run check:subgraph-coverage
+
+          # The generators THIS FILE invokes directly, run as a set.
+          # Seven `--check` invocations live in workflow YAML and in no
+          # `package.json` script, so a local sweep of `check:*` came
+          # back clean while `gen-skill-docs --check` was red here
+          # (2026-09-20). It reads them out of the YAML rather than
+          # listing them, so a new one is covered the day it is added.
+          bun run check:ci-invocations
           bun run harness:dirs:check
           bun run check:schema-nodes
           bun run check:retired-front-matter
@@ -582,6 +591,12 @@ jobs:
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition
+          # Every XML namespace the corpus declares is reconciled against a
+          # specification record naming its EDITION. Added with the registry
+          # (2026-09-20): a diagram conforming to a spec nobody named is the
+          # defect that registry exists to end, and a registry nothing runs is
+          # the `xom7` shape one level along.
+          bun run external-schemas:check
           bun run docs:harness:check
           bun run gen:jsonld:check
           bun run readme:sync:check

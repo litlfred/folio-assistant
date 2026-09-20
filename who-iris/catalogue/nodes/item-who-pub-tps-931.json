@@ -1,0 +1,80 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/local:who-pub-tps-931",
+  "kind": "item",
+  "flavour": "item",
+  "title": "WHO Editorial Style Manual",
+  "parents": [],
+  "libraryId": "who-pub-tps-931",
+  "bitstreams": [
+    {
+      "name": "WHO_PUB_TPS_93.1.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 3293424,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "materialized",
+        "of": "local:who-pub-tps-931",
+        "localPath": "uploads/WHO_PUB_TPS_93.1.pdf",
+        "purpose": "both",
+        "bytes": 3293424,
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "ecc88eee9975675557d007de7acab9107d5bbd5e2b83cd15e483f1dfafe3f490"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "3,293,424 bytes of a 361.55 GB catalogue (0.001%)"
+          },
+          "restrictions": {
+            "verdict": "unknown",
+            "basis": "no restriction stated on the captured item page"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "archival: kept indefinitely, by design"
+          },
+          "sourceLoss": {
+            "verdict": "permitted",
+            "basis": "original bytes held locally with a recorded sha256"
+          },
+          "copyright": {
+            "verdict": "unknown",
+            "basis": "no dc.rights field in the captured record"
+          }
+        }
+      }
+    }
+  ],
+  "materialization": {
+    "state": "materialized",
+    "of": "local:who-pub-tps-931",
+    "localPath": "library/who-pub-tps-931",
+    "purpose": "working",
+    "note": "IDENTIFIERS UNKNOWN. This item was ingested from a PDF the owner uploaded, not from an IRIS capture, so no DSpace UUID, handle or collection path was ever recorded for it. iris.who.int is egress-blocked from this environment, so it cannot be looked up here. `unknown` rather than a plausible handle: a fabricated identifier is the `source: null` defect bean r1lz was opened over, and it would resolve to the wrong item rather than to nothing.",
+    "gates": {
+      "size": {
+        "verdict": "permitted",
+        "basis": "one item of 1,057,223 files"
+      },
+      "restrictions": {
+        "verdict": "unknown",
+        "basis": "no restriction stated"
+      },
+      "retention": {
+        "verdict": "unknown",
+        "basis": "no lifetime agreed for the derived sections"
+      },
+      "sourceLoss": {
+        "verdict": "unknown",
+        "basis": "derived sections are not the publication; the archival bitstream answers this, not this node"
+      },
+      "copyright": {
+        "verdict": "unknown",
+        "basis": "no dc.rights field in the captured record"
+      }
+    }
+  },
+  "metadataRef": "catalogue/records/who-pub-tps-931.dc.json"
+}

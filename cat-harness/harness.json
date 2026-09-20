@@ -1,7 +1,9 @@
 {
-  "_comment": "The CatHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `schemas/` declares TWO graphs — the first real use of the array. A directory is a place to look and may hold more than one part of the graph; it does not say how to tell them apart, because the files declare what they are (see bean xxxb: schemas/*.ts does not yet do this well). `beans/` is declared ONCE, as a single `beans` graph. Its internal split — `defs` for work items, `workflows` for running BPMN state — is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
+  "_comment": "THE AGENTIC HARNESS layer. Owner, 2026-09-20: \"cat-harness, folio-assistant-core, folio-assistant are distinct instances/schemas\" — so this declares itself `cat-harness` rather than `folio-assistant`. It carried the latter until the repository root gained a harness.json of its own, at which point TWO instances declared one name and `instanceRoots` — keyed on the declared name — could only hold one of them. The one it held was the root, so `folio-assistant` resolved to the checkout and the harness layer became unreachable by name. `stub` is UNCHANGED and stays `folio-assistant`: the stub names the PUBLISHED artefact (docs/folio-assistant/, _kg/folio-assistant.jsonld, the Pages path) and the name names the instance, which is the entire reason a declaration carries both. The CatHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `schemas/` declares TWO graphs — the first real use of the array. A directory is a place to look and may hold more than one part of the graph; it does not say how to tell them apart, because the files declare what they are (see bean xxxb: schemas/*.ts does not yet do this well). `beans/` is declared ONCE, as a single `beans` graph. Its internal split — `defs` for work items, `workflows` for running BPMN state — is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
   "_title": "No `title`, deliberately: `displayTitle` is title || name || id, so the sidebar and the landing page fall back to `name` — which the schema already requires to be the instance's identifier, the one artefacts are stub-named after. A title here said `c@t-harness` and overrode that, labelling THIS repository with the brand of the harness layer that is still to be split out of it. Setting the title to `folio-assistant` instead would be the same fact in two fields, free to drift. The c@t-harness derivation stays in the description, where it is a tagline rather than an identity.",
-  "name": "folio-assistant",
+  "name": "cat-harness",
+  "_title_comment": "THE PUBLISHED SITE'S TITLE, stated rather than inherited. `sync-docs-harness` renders `title ?? name` into `docs/_data/harness.json`, which just-the-docs draws at the top of every page's sidebar — so while this instance was NAMED `folio-assistant` the fallback happened to give the right answer. Renaming it to `cat-harness` on the owner's 2026-09-20 ruling retitled the whole published site, which is a user-visible change nobody asked for and which no test would have caught. The site's title is its PUBLISHED identity, the same fact `stub` carries; the name is the instance's.",
+  "title": "folio-assistant",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
   "icon": "mark",
   "images": [
@@ -66,8 +68,7 @@
       },
       "title": "Thinking about it — square",
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
-    }
-  ,
+    },
     {
       "id": "landing-engineer-laptop",
       "src": "docs/assets/img/harness/landing-engineer-laptop.webp",
@@ -97,8 +98,7 @@
       "height": 1254,
       "title": "The engineer, square",
       "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
-    }
-  ,
+    },
     {
       "id": "landing-architecture-laptop",
       "src": "docs/assets/img/harness/landing-architecture-laptop.webp",
@@ -118,8 +118,7 @@
       "height": 1254,
       "title": "The architect, square",
       "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content."
-    }
-  ,
+    },
     {
       "id": "landing-library-laptop",
       "src": "docs/assets/img/harness/landing-library-laptop.webp",
@@ -149,8 +148,7 @@
       "height": 1254,
       "title": "The librarian, square",
       "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
-    }
-  ,
+    },
     {
       "id": "landing-analyst-laptop",
       "src": "docs/assets/img/harness/landing-analyst-laptop.webp",
@@ -188,8 +186,8 @@
       "layout": "laptop",
       "width": 1536,
       "height": 1024,
-      "title": "CatBootstrap — wide",
-      "description": "A grumpy cat in a cowboy hat, bandana and boots, sitting in the rain in a Sonoran desert while a roadrunner shouts at it; a large thought cloud carries the @ mark. The frontier at the start of the trail — which is what cat-bootstrap is: the graph an agent reads before it knows what this repository is.",
+      "title": "Bootstrap — wide",
+      "description": "A grumpy cat in a cowboy hat, bandana and boots, sitting in the rain in a Sonoran desert while a roadrunner shouts at it; a large thought cloud carries the @ mark. The frontier at the start of the trail — which is what bootstrap is: the graph an agent reads before it knows what this repository is.",
       "textRegion": {
         "x": 0.15,
         "y": 0.2,
@@ -204,7 +202,7 @@
       "layout": "mobile",
       "width": 941,
       "height": 1672,
-      "title": "CatBootstrap — tall",
+      "title": "Bootstrap — tall",
       "description": "The same scene cropped portrait: the cloud fills the upper third, the cat and the roadrunner below it.",
       "textRegion": {
         "x": 0.07,
@@ -220,7 +218,7 @@
       "layout": "card",
       "width": 1254,
       "height": 1254,
-      "title": "CatBootstrap — square",
+      "title": "Bootstrap — square",
       "description": "The same scene cropped square.",
       "textRegion": {
         "x": 0.1,
@@ -354,7 +352,7 @@
       "path": "cat-bootstrap/skills/",
       "dependents": "skip",
       "scope": "repository",
-      "description": "The cat-bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `cat-bootstrap/skills/`, NOT `cat-bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `cat-bootstrap/README.md` and `cat-bootstrap/AGENTS.md` declare neither, and they are the cat-bootstrap instance's two DECLARED ASSETS — so a graph rooted at `cat-bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `cat-bootstrap/harness.json`; this entry is the same fact at the root, and it is stated twice BY DECISION (2026-09-20) rather than by necessity. THE EARLIER NOTE HERE WAS WRONG and the correction is the useful part: it said \"this instance depends on cat-bootstrap\" is not expressible because `HarnessConfigDependenciesSchema` knows only `folioAssistant`. That key does not mean the folio-assistant PACKAGE \u2014 its own doc comment reads \"Other folio-assistant instances this folio depends on\", and cat-bootstrap is such an instance by every test the code applies. MEASURED, not argued: writing `cat-harness/harness.config.json` with `{name: \"cat-bootstrap\", path: \"../cat-bootstrap\", provides: [\"skills\"]}` serves cat-bootstrap through `LOCAL_PACKAGES` with `folio-assistant` unmoved. The zod schema needs no change at all. WHAT ACTUALLY BLOCKS IT is one directory entry, and it is not in the dependency schema: cat-bootstrap declares `workflows/` with no `scope`, so cat-harness INHERITS it, and `materialiseDirectories` resolves an inherited path against the INHERITING instance by design \u2014 it wants `cat-harness/workflows/`, which does not exist, and `harness:dirs:check` reports `21 declared, 1 missing` and exits 1. The gap it exposes is general and this entry is only where it surfaced: a `ContentDirectory` cannot say whether it is a LAYOUT dependents should reproduce (`uploads/`, `library/`, `voices/`) or merely WHERE ITS OWN CONTENT LIVES (`workflows/`, `schemas/`, `tools/`). Simulated on a fresh folio depending on this instance, `init-folio` would create five directories it has no use for, each with a committed keep-marker \u2014 the `dh4f` shape, shipped downstream. Adding that distinction was considered and DECLINED for now: it is a schema change whose per-directory classification is a judgement about every directory here, not a cat-bootstrap workaround. So THIS entry stays, and the thing to fix before deleting it is the convention/content distinction \u2014 not the dependency schema. The earlier note here said `resolveSkillDirs` had no caller: it has one \u2014 `discoverLocalPackages` \u2014 and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
+      "description": "The cat-bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `cat-bootstrap/skills/`, NOT `cat-bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `cat-bootstrap/README.md` and `cat-bootstrap/AGENTS.md` declare neither, and they are the cat-bootstrap instance's two DECLARED ASSETS — so a graph rooted at `cat-bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `cat-bootstrap/harness.json`; this entry is the same fact at the root, and it is stated twice BY DECISION (2026-09-20) rather than by necessity. THE EARLIER NOTE HERE WAS WRONG and the correction is the useful part: it said \"this instance depends on cat-bootstrap\" is not expressible because `HarnessConfigDependenciesSchema` knows only `folioAssistant`. That key does not mean the folio-assistant PACKAGE — its own doc comment reads \"Other folio-assistant instances this folio depends on\", and cat-bootstrap is such an instance by every test the code applies. MEASURED, not argued: writing `cat-harness/harness.config.json` with `{name: \"cat-bootstrap\", path: \"../cat-bootstrap\", provides: [\"skills\"]}` serves cat-bootstrap through `LOCAL_PACKAGES` with `folio-assistant` unmoved. The zod schema needs no change at all. WHAT ACTUALLY BLOCKS IT is one directory entry, and it is not in the dependency schema: cat-bootstrap declares `workflows/` with no `scope`, so cat-harness INHERITS it, and `materialiseDirectories` resolves an inherited path against the INHERITING instance by design — it wants `cat-harness/workflows/`, which does not exist, and `harness:dirs:check` reports `21 declared, 1 missing` and exits 1. The gap it exposes is general and this entry is only where it surfaced: a `ContentDirectory` cannot say whether it is a LAYOUT dependents should reproduce (`uploads/`, `library/`, `voices/`) or merely WHERE ITS OWN CONTENT LIVES (`workflows/`, `schemas/`, `tools/`). Simulated on a fresh folio depending on this instance, `init-folio` would create five directories it has no use for, each with a committed keep-marker — the `dh4f` shape, shipped downstream. Adding that distinction was considered and DECLINED for now: it is a schema change whose per-directory classification is a judgement about every directory here, not a cat-bootstrap workaround. So THIS entry stays, and the thing to fix before deleting it is the convention/content distinction — not the dependency schema. The earlier note here said `resolveSkillDirs` had no caller: it has one — `discoverLocalPackages` — and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "graphs": [
         "cat-harness"
       ]
@@ -503,7 +501,37 @@
         "docs": "cat-harness/docs/document-ingestion.md",
         "skill": "library-ingestion"
       },
-      "description": "L1 source content — one <bib-slug>/ per ingested document, holding sections/*.md, structure.json and, where the source was scanned, ocr/page-NNN.txt. Every knowledge-graph reference to a source resolves THROUGH here, never to a loose path or a bare URL.",
+      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assist-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
+      "graphs": [
+        "library"
+      ]
+    },
+    {
+      "id": "who-iris-library",
+      "path": "who-iris/library/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The WHO IRIS instance's library, reached from here because this repository STAGES who-iris as a sibling top-level directory ahead of it becoming its own repo -- the same pattern as `folio-assist-core-schemas` and `detangle-schemas` above. Repository-scoped, so it resolves against the repository root rather than this instance's. Declared here as well as in who-iris/harness.json because the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, the MCP server's graph roots -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect).",
+      "graphs": [
+        "library"
+      ]
+    },
+    {
+      "id": "agent-skills-library",
+      "path": "agent-skills/library/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The agent-skill literature instance's library -- published guidance on authoring and operating agent skills, vendor documentation and arXiv papers alike. Same staging arrangement and same reason as `who-iris-library` and `folio-assist-sci-library` below: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect). It is NOT in cat-harness/library/ although its subject is this harness's own: `AGENTS.md` opens by saying the platform holds no content, and these are other publishers' documents.",
+      "graphs": [
+        "library"
+      ]
+    },
+    {
+      "id": "folio-assist-sci-library",
+      "path": "folio-assist-sci/library/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The science instance's library -- `milnorlink`, and nothing else. Same staging arrangement and same reason as `who-iris-library` above. Bean r1lz sent it here rather than to who-iris: it is not an IRIS item and never was.",
       "graphs": [
         "library"
       ]
@@ -545,18 +573,90 @@
       "graphs": [
         "folio"
       ],
-      "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky \u2014 the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop."
+      "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop."
     },
     {
       "id": "smart-kg-methodologies",
       "theme": "analyst",
       "path": "smart-kg/methodologies/",
       "dependents": "skip",
-      "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and cat-bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the cat-bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
+      "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
       "graphs": [
         "methodology"
       ],
       "scope": "repository"
+    },
+    {
+      "id": "docs",
+      "path": "docs/",
+      "dependents": "skip",
+      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`. `dependents` is `skip`, unlike the other renderable graph `folio`: this is documentation THIS instance publishes about the knowledge graph, so a dependent folio inherits the pages rather than an empty directory to refill \u2014 it authors its own subject matter under `folio/`, which is `reproduce`.",
+      "graphs": [
+        "docs"
+      ]
+    },
+    {
+      "id": "folio-assist-core-schemas",
+      "path": "folio-assistant-core/schemas/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The CONTENT layer's schema nodes, staged as a top-level directory ahead of the split (#223). Owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' A NAMED SUBGRAPH and not a second `schemas` entry: overrides match on the entry's id, so reusing `schemas` would REPLACE this instance's schema graph rather than add to it -- the same trap the `cat-harness-src` entry above documents from the other side. REPOSITORY-scoped, like `cat-bootstrap/skills/`: it sits at the top of the checkout, not inside this instance, and is deliberately never overlaid by a dependency. This entry is the mirror of `folio-assistant-core/harness.json`'s own, and it has to be stated twice only because `resolveSkillDirs` has no caller -- when that is wired, THIS entry is the one to delete.",
+      "graphs": [
+        "schemas",
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "kg-navigation",
+      "path": "kg-navigation/skills/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The TOOLED knowledge-graph navigation skill, lifted out of the `folio-core` package on 2026-09-20 at the owner's direction: '(kg-navigation should be similar named subgraph)'. Repository-scoped and a SIBLING of `skills/`, not a child: `skills/` is already declared as this instance's `cat-harness` graph in full, so a nested entry would be a declaration inside a declaration -- #263's own defect, where a consumer beneath the outer path cannot tell which declaration owns what it finds. The name is shared with `bootstrap/skills/kg-navigation.md`, which stays where it is and must: that one assumes NOTHING is installed, and a bootstrap reaching into another instance for its first skill would fail in the cold-start case it exists for. Two bodies under one name, each addressable -- see kg-navigation/README.md.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "large-datasets-skills",
+      "path": "large-datasets/skills/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/skills/workflows/ -- a skill ref resolves across the declared graphs, not within one directory.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "who-iris-skills",
+      "path": "who-iris/skills/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The who-iris instance's skills. ONE today -- `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, and what a later tool needs from a record stated as checkable requirements. Deliberately thin, per the owner's 'mionimal tools in who specific stuff': the Dublin Core TYPE is generic and lives in folio-assist-core, the enumeration/subsetting descriptor lives in large-datasets, and OCR stays a cat-harness platform tool. What is WHO-specific is only how IRIS uses those things.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "large-datasets-schemas",
+      "path": "large-datasets/schemas/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The `large-datasets` subgraph's schema nodes -- `source-descriptor` (how to enumerate a corpus and ask it for a subset) and `artifact-store` (where an artifact too large for the site tree goes, as a declaration rather than a hardcoded host). Repository-scoped, so the path resolves against the REPO ROOT and carries no `../` -- a `../` prefix resolved OUTSIDE the checkout and every consumer silently dropped the entry (caught by CI, 2026-09-20).",
+      "graphs": [
+        "schemas",
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "detangle-schemas",
+      "path": "detangle/schemas/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The detangle criterion's schema node -- size, cohesion, inbound/outbound and the enforced/recorded edge authority that decides whether a boundary's direction is a fact or a filing decision. Repository-scoped, staged ahead of the split. UNDECLARED until 2026-09-20 although committed days earlier, which is the dh4f defect in reverse: graph content no declaration mentioned, so every declaration-driven consumer scanned past it -- including `check:schema-nodes`, the gate whose whole job is to stop a schema being silently absent.",
+      "graphs": [
+        "schemas",
+        "cat-harness"
+      ]
     }
   ]
 }

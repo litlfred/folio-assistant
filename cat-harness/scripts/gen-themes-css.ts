@@ -50,7 +50,19 @@ export function renderThemesCss(): string {
  * channel.
  */\n`;
 
-  const blocks = THEMES.map((t) => {
+  // STICKY themes only, and the narrowing is the point rather than a cast.
+  //
+  // This emits `[data-fa-sticky-theme=...]` with `--fa-sticky-*` properties, so
+  // it was always about one surface; it just had no way to say so while every
+  // theme had the same geometry. A `publication` theme's layouts are `a4 | a5 |
+  // a5Landscape` with trim sizes and margins, and there is no sticky note to
+  // give them to — `tsc` refuses `g.laptop` on the union, which is the schema
+  // doing the job `data-modelling` step 7 gave it.
+  //
+  // A `webpage` theme shares the geometry but not this stylesheet: its CSS is
+  // the site's, not the note board's. Adding it here would emit sticky
+  // properties for a surface that has no stickies.
+  const blocks = THEMES.filter((t) => t.kind === "sticky").map((t) => {
     const g = t.layouts;
     return [
       `/* ${t.name}${t.description ? ` — ${t.description}` : ""} */`,

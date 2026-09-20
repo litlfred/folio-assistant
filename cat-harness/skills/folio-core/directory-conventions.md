@@ -105,10 +105,12 @@ decides it.
 | `memory` | **harness** | agent memory — durable facts an agent carries between sessions, one `"$schema": "folio-memory/v1"` node each. Read during a process and never written by one; it changes when a human directs an authoring agent. Declared at `memory/`, **repository-scoped** — these are facts about the repository carried by the agents working in it, and `.claude/agents/` sits at the repository root too. They were in `skills/memory/` until 2026-09-20 (bean `07xs`), where the containing kind was `content` and the contents were `context`. | no |
 | `fsh-guts` | **harness** | deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. | **no, on purpose** |
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
+| `catalogue` | **harness** | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
 | `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
 | `voices` | **harness** | editorial voice profiles — one JSON each, `"$schema": "folio-voice/v1"`. Every rule cites its source. **Opt-in**: shipping a voice does not apply it. | no |
 | `translation-sources` | **harness** | the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; there is deliberately **no kind for the rendered output**. Read with the [`translation-manager`](translation-manager.md) skill; shape in `schemas/translation.ts`. | no |
-| `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
+| `docs` | **harness** | documentation **about** the knowledge graph — how the harness works, what its directories hold, how a process runs. Distinct from `folio` by its SUBJECT, not its format. Added 2026-09-20: this table carried no renderable harness kind until the harness gained a plain just-the-docs renderer, and the rule reads in its true form — a layer owns the kinds it CAN render. | **yes** — the plain just-the-docs pipeline, no extensions |
+| `folio` | **`folio-assist-core`** | authored content an AUTHOR creates using the graph — a note, a visualization, a paper. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`. | **yes** — just-the-docs renders it to a website |
 
 > ### `test/` is the one test tree — resolved 2026-09-19
 >
@@ -306,7 +308,7 @@ a person looks for first were the two hardest to find.
 ## The conventional layout
 
 ```
-agentic-harness/          folio-assist-core/
+agentic-harness/          folio-assistant-core/
   harness.json        harness.json
   tools/     → tools        folio/     → folio
   kg/        → kg           (inherits tools/, kg/, schemas/)
@@ -328,7 +330,7 @@ that wants its knowledge graph somewhere other than `kg/` redeclares the `kg`
 id with a different path:
 
 ```jsonc
-{ "id": "kg", "path": "graph/knowledge/", "graph": "kg" }
+{ "id": "kg", "path": "graph/knowledge/", "graphs": ["kg"] }
 ```
 
 Matching on path instead would make two knowledge graphs out of one
@@ -409,11 +411,18 @@ every consumer scans nothing and reports a clean run over it — the same defect
 bean `dh4f` found in thirty pipeline scripts, where three were passing over a
 corpus they could not read.
 
-This repository's own declaration is the worked example. It is **pre-split**,
-so it declares `schemas/` and `skills/` — which exist — and deliberately does
-**not** declare `tools/`, `kg/` or `folio/`, which do not exist here yet. Note
-also that its `kg` id points at `skills/`: ids are stable across a relocation,
-paths are not.
+This repository's own declaration is the worked example, and **no count is
+given here on purpose**: `harness.json` is the list. That sentence said
+"declares `schemas/` and `skills/`" until 2026-09-20, by which point it
+declared **twenty-one** directories — a number in prose is a claim, and this
+one had been false for long enough that `AGENTS.md` carries its own flagged
+copy of the same rot.
+
+What is still true and worth reading off it: its `cat-harness` id points at
+`skills/` — **ids are stable across a relocation, paths are not** — and it
+declares nothing it does not have. A `library` entry appears in `who-iris`'s
+declaration only when the corpus moves there, because a declared-but-absent
+directory makes every consumer scan nothing and report a clean run over it.
 
 ## Naming — one fixed config, stub-named artefacts (STRICT)
 
@@ -653,7 +662,7 @@ where you answer it — including the bar for adding a value at all, why there i
 no "could not determine", and why it is compared by `sameKind` so two layers
 cannot register one name on different layers and have the first silently win.
 
-Note the declaration's `graph` field is validated **against the registry at
+Note the declaration's `graphs` field is validated **against the registry at
 read time**, not by a closed Zod enum. An enum would be built at module load —
 before core has registered `folio` — so it would reject the one kind the entire
 rendering pipeline depends on.

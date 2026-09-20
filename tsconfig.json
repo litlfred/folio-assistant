@@ -63,6 +63,20 @@
   // test trees were consolidated onto `test/`. The narrow glob is what keeps
   // the distinction intact across that move: `test/**` would have quietly
   // widened the program to the e2e specs.
-  "include": ["cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts"],
+  //
+  // THE SIBLING INSTANCES WERE OUTSIDE THE PROGRAM, and the comment above said
+  // "Every tree is now compiled" while four of them were not. `detangle/`,
+  // `large-datasets/`, `who-iris/`, `who-style-guide/`, `folio-assist-sci/`,
+  // `agent-skills/` and `folio-assistant-core/` are staged top-level instances
+  // of THIS repository, so their TypeScript is this repository's TypeScript.
+  //
+  // It was not a theoretical gap: `detangle/scripts/kg-detangle.ts` carried a
+  // live TS2322 (an `EdgeAuthority` table annotated with two of its three
+  // values) that tsc could not see, found 2026-09-20 by a review reading the
+  // include list rather than trusting a green run.
+  //
+  // Same `test/` and `*.e2e.ts` reasoning as above applies to each, which is
+  // why these are per-directory globs rather than a bare `*/**/*.ts`.
+  "include": ["cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts", "folio-assistant-core/schemas/**/*.ts", "detangle/schemas/**/*.ts", "detangle/scripts/**/*.ts", "large-datasets/schemas/**/*.ts", "large-datasets/scripts/**/*.ts", "who-iris/scripts/**/*.ts", "who-iris/schemas/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

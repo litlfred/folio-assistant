@@ -50,8 +50,10 @@ import { termLayer } from "../schemas/vocabulary.js";
 import {
   BASE_GRAPH_KINDS,
   declaredAssets,
+  declaredGraphs,
   declaredKinds,
   repoRootFor,
+  resolveDirectories,
 } from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
@@ -239,6 +241,12 @@ export function buildContext(): Record<string, unknown> {
 
     // Edges. Each of these is a LINK, not a string — see above.
     partOf: { "@id": termIri("partOf"), ...link },
+    // A LINK, not a literal, and the gate was right to demand the decision:
+    // the declared Directory nodes are already in this graph (they are what
+    // `collectDeclaration` emits), so a bare id would have been a second,
+    // unresolvable way of naming a node that is right there. As a link the
+    // viewer's subgraph facet and the declaration hierarchy are the same edge.
+    inSubgraph: { "@id": termIri("inSubgraph"), ...link },
     implementedBy: { "@id": termIri("implementedBy"), ...link },
     performedBy: { "@id": termIri("performedBy"), ...link },
     declaresSkill: { "@id": termIri("declaresSkill"), ...link },
@@ -1039,7 +1047,117 @@ function collectPackages(doc: string, problems: string[]): Node[] {
   return nodes;
 }
 
-async function collectProcesses(doc: string, problems: string[], root: string = ROOT): Promise<Node[]> {
+
+/**
+ * Stamp every node with the DECLARED DIRECTORY it came from.
+ *
+ * The owner, 2026-09-20, on the KG viewer: *"should show hierarchy of named
+ * subgraphs in the harness instance(s) ... I should see ability to filter by
+ * bootstrap/ cat-harness/ f-a-core/ f-a/ etc."* A reader cannot filter by
+ * something no node says, and until now no node said it: a skill carried
+ * `instructionsPath`, a schema carried `module`, and which *declared graph*
+ * either belonged to had to be re-derived by whoever looked.
+ *
+ * ## Derived from the declaration, in one pass, rather than threaded
+ *
+ * Every emitter could have been given the id. That is nine call sites to keep
+ * in step, and the tenth emitter added next week is the one that forgets —
+ * which is the shape this repository keeps paying for. Here the mapping is
+ * computed ONCE from `declaredGraphs()`, so a directory that moves takes its
+ * stamp with it and a directory that is added is covered without touching this
+ * function.
+ *
+ * ## Longest prefix wins, and that is load-bearing
+ *
+ * `src/skills/` sits inside `src/`, and `skills/workflows/` inside `skills/`.
+ * Matching the first declaration that fits would file a workflow under the
+ * skills graph. Sorting by descending path length makes the most specific
+ * declaration win, which is the same rule a router uses and the same one
+ * `resolveDirectories` relies on for overrides.
+ *
+ * A node whose path matches no declared directory is left UNSTAMPED rather
+ * than bucketed into a default — "could not determine" is a distinct answer
+ * from "belongs to the root graph", and the viewer shows it as its own facet
+ * so the gap is visible instead of absorbed.
+ */
+function stampSubgraph(graph: Node[], doc: string): void {
+  const dirs = declaredGraphs(ROOT)
+    .filter((d) => d.absPath !== undefined)
+    .map((d) => ({ id: d.id, rel: relative(ROOT, d.absPath!).replace(/\\/g, "/").replace(/\/$/, "") }))
+    // `..` is KEPT, and dropping it is what made this facet useless.
+    //
+    // Every repository-scoped entry — `who-iris/`, `folio-assistant-core/`,
+    // `bootstrap/`, `detangle/`, `large-datasets/`, `who-style-guide/` —
+    // resolves to `../<instance>/…` relative to this instance, so
+    // `!startsWith("..")` excluded the entire set the facet exists to offer.
+    //
+    // MEASURED after the fact, which is the part worth recording: the facet
+    // rendered, was screenshotted, and was reported as working, while its
+    // values were `cat-harness` (1,267 nodes) and a handful of this instance's
+    // own directories. Not one sibling instance appeared. The owner had asked
+    // to "filter by bootstrap/ cat-harness/ f-a-core/ etc"; the thing shipped
+    // could not.
+    //
+    // A path that leaves the instance is still a path this graph carries —
+    // `schema-nodes.ts` mints `../folio-assistant-core/schemas/…` — so the
+    // comparison below matches in the same space rather than excluding it.
+    .filter((d) => d.rel.length > 0)
+    .sort((a, b) => b.rel.length - a.rel.length);
+
+  const PATH_KEYS = ["instructionsPath", "module", "sourcePath", "path"] as const;
+  for (const n of graph) {
+    let p: string | undefined;
+    for (const k of PATH_KEYS) {
+      const v = n[k];
+      if (typeof v === "string" && v.length > 0) { p = v.replace(/\\/g, "/"); break; }
+    }
+    if (p === undefined) continue;
+    const hit = dirs.find((d) => p === d.rel || p!.startsWith(d.rel + "/"));
+    if (hit) n.inSubgraph = makeIri(doc, "directory", hit.id);
+  }
+
+  // INHERIT through `partOf`, for the nodes that have no path of their own.
+  //
+  // A Process carries `sourcePath`; the 1,092 ProcessNodes and SequenceFlows
+  // inside it do not — they are parts of a diagram, not files. Measured before
+  // this loop: 301 of 1,642 nodes stamped, and the 1,341 left were almost all
+  // process internals whose subgraph is simply their parent's.
+  //
+  // Iterated to a fixed point rather than done once, because `partOf` nests
+  // (a flow belongs to a process which belongs to a package), and a single
+  // pass would stamp only the first level. It terminates: every pass either
+  // stamps at least one node or stops.
+  const byIri = new Map(graph.map((n) => [String(n["@id"]), n]));
+  for (;;) {
+    let stamped = 0;
+    for (const n of graph) {
+      if (n.inSubgraph !== undefined) continue;
+      const parent = n.partOf;
+      const parentIri = Array.isArray(parent) ? parent[0] : parent;
+      if (typeof parentIri !== "string") continue;
+      const sub = byIri.get(parentIri)?.inSubgraph;
+      if (typeof sub === "string") { n.inSubgraph = sub; stamped += 1; }
+    }
+    if (stamped === 0) break;
+  }
+}
+
+async function collectProcesses(
+  doc: string,
+  problems: string[],
+  root: string = ROOT,
+  /**
+   * Determined empties. SEPARATE from `problems` because they are different
+   * facts with different consequences: a problem means this instance's graph
+   * could not be exported correctly, a note means it was exported correctly
+   * and something it might have had, it has none of.
+   *
+   * Optional so the two existing callers keep compiling; a caller that does
+   * not pass one still gets the finding, in `problems`, which is the old
+   * behaviour and the safe default for a sink nobody is reading.
+   */
+  notes?: string[],
+): Promise<Node[]> {
   const nodes: Node[] = [];
   const lanes = new Set<string>();
   const dirs = findBpmnDirs(root);
@@ -1074,10 +1192,75 @@ async function collectProcesses(doc: string, problems: string[], root: string = 
   // failure of the two: a reader checking the claim finds no gate, concludes
   // the constraint is imaginary, and makes the path absolute. The real reason
   // is above, and it does not depend on where the file is stored.
+  //
+  // A DECLARED DIRECTORY HOLDING NO DIAGRAMS IS A NOTE, NOT A PROBLEM, and
+  // until 2026-09-20 it was a problem. It has to be SAID either way —
+  // `instance-graph-isolation.test.ts` puts it exactly right, "it says it
+  // found none, rather than passing over in silence" — but saying it and
+  // FAILING the instance for it are different things, and only the first was
+  // ever wanted. Three instances arrived at once (`kg-navigation`,
+  // `large-datasets`, `who-iris`), each holding one skill and no workflow,
+  // each rendering its nodes, each failed on this message alone. A skills
+  // package with no process is an ordinary thing; requiring a diagram to stay
+  // green is asking an instance to carry something it never claimed.
+  //
+  // AND THE SAME DISTINCTION ONE LEVEL DOWN, which is what this asked for
+  // until 2026-09-20: a declared `kg` directory that HOLDS NO DIAGRAMS is a
+  // determined empty, not a failure. The condition above read
+  // `dirs.length === 0 && kgDirectories(root).length > 0` — "declares a
+  // knowledge graph and no .bpmn was found" — which is only a defect if
+  // declaring a knowledge graph meant declaring PROCESSES. It does not. An
+  // instance declaring `skills/` claims skills; a skills package with no
+  // workflow is an ordinary thing and three arrived at once
+  // (`kg-navigation`, `large-datasets`, `who-iris`), each holding one skill,
+  // each rendering its nodes, each failed on this message alone.
+  //
+  // That is the same shape the paragraph above rejects, one level in: asking
+  // an instance to carry a diagram it never claimed in order to stay green.
+  // The `dh4f` case it was reaching for — a declared directory nothing scans
+  // — is real and is caught by the ABSENCE check, which now runs over the
+  // DECLARED directories rather than only over the ones already known to hold
+  // a diagram. Before this it could not fire for a diagramless directory at
+  // all: `findBpmnDirs` never returned one, so the loop below never saw it.
+  // NOT `kgDirectories`, and that distinction is the whole check.
+  //
+  // `kgDirectories` ends with `.filter((d) => existsSync(d.absPath))`, so an
+  // absent directory is gone from its result and an absence check written
+  // over it can never fire. I wrote exactly that first, and it reported a
+  // clean run while `kg-navigation/skills/` was moved out from under it —
+  // a vacuous guard offered as the replacement for the one being removed,
+  // which is worse than removing it with nothing in its place.
+  //
+  // Reading the DECLARATION is the only way to compare what was claimed
+  // against what is there, because the filtered view has already thrown the
+  // discrepancy away.
   if (dirs.length === 0 && kgDirectories(root).length > 0) {
-    problems.push(
+    (notes ?? problems).push(
       `no directory containing .bpmn files was found under ${relative(ROOT, root) || "."}`,
     );
+  }
+
+  // NOT `kgDirectories`, and that distinction is the whole check.
+  //
+  // `kgDirectories` ends with `.filter((d) => existsSync(d.absPath))`, so an
+  // absent directory is gone from its result and an absence check written
+  // over it can never fire. I wrote exactly that first, and it reported a
+  // clean run while `kg-navigation/skills/` was moved out from under it —
+  // a vacuous guard offered as the replacement for the one being softened,
+  // which is worse than softening it with nothing in its place.
+  //
+  // Reading the DECLARATION is the only way to compare what was claimed
+  // against what is there, because the filtered view has already thrown the
+  // discrepancy away. This is the `dh4f` case the old condition was reaching
+  // for and could not reach: before this, a declared-but-absent directory and
+  // a declared-but-diagramless one produced the SAME message, so the test
+  // named "a declared-but-ABSENT directory is reported" passed while its
+  // fixture created the directory.
+  for (const d of resolveDirectories([{ name: "(local)", root, own: true }])) {
+    if (!d.graphs.includes("cat-harness")) continue;
+    if (!existsSync(d.absPath)) {
+      problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
+    }
   }
   for (const rel of dirs) {
   const dir = join(root, rel);
@@ -1488,7 +1671,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
 
 /** Every term in the context that is declared `{"@type": "@id"}`. */
 const LINK_TERMS = [
-  "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage",
+  "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage", "inSubgraph",
   "providesCapability", "requiresCapability", "holdsGraph", "startNode",
   "incoming", "outgoing", "from", "to", "satisfies", "hasCapability",
   "hasSkill", "bindsLane",
@@ -1556,16 +1739,17 @@ export async function collectInstanceNodes(
   doc: string,
   base: string,
   problems: string[],
-): Promise<{ nodes: Node[]; omitted: readonly string[] }> {
+): Promise<{ nodes: Node[]; omitted: readonly string[]; notes: string[] }> {
+  const notes: string[] = [];
   const nodes = [
     ...collectSkills(doc, base, problems, root),
-    ...(await collectProcesses(doc, problems, root)),
+    ...(await collectProcesses(doc, problems, root, notes)),
     ...collectGraphKinds(root),
     ...collectDeclaredRoles(doc, root),
     ...collectDeclaration(doc, problems, root),
     ...collectDeclaredAssets(doc, problems, root),
   ];
-  return { nodes, omitted: COLLECTOR_SCOPE.instanceBound };
+  return { nodes, omitted: COLLECTOR_SCOPE.instanceBound, notes };
 }
 
 function undeclaredTerms(
@@ -1819,6 +2003,8 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...collectDeclaration(docIri, problems),
     ...collectDeclaredAssets(docIri, problems),
   ].map(compact);
+
+  stampSubgraph(graph, docIri);
 
   // A preview's nodes say, explicitly and per node, which canonical node they
   // are an alternate presentation of.

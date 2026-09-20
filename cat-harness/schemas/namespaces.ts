@@ -83,7 +83,46 @@ export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
  */
 export const CAT_BOOTSTRAP_NS = "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#";
 export const CAT_HARNESS_NS = "https://litlfred.github.io/folio-assistant/cat-harness/ns#";
-export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#";
+export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#";
+
+/**
+ * The XML namespace our BPMN EXTENSION elements bind to — `folio:skill`,
+ * `folio:bean`, `folio:decision`.
+ *
+ * A different object from the three above, and the distinction is the whole
+ * reason this constant exists. Those are JSON-LD namespaces that TERMS hang
+ * off; this is an XML namespace that ELEMENTS are in, read by bpmn-moddle
+ * rather than by a `@context`. Nothing resolves one against the other.
+ *
+ * **It had no constant until 2026-09-20 and it drifted, which is bean
+ * `0d99`.** Measured on the corpus that day: 41 diagrams bound `folio:` to
+ * this IRI and 13 to `http://folio-assistant.dev/bpmn`, a domain this project
+ * does not own and has never published at. Two spellings of one namespace is
+ * not a cosmetic split — an XML namespace is compared by STRING, so a
+ * consumer matching on one silently skips every element in the other, and
+ * the diagrams that carried `folio:skill` under the wrong IRI were extension
+ * elements nothing could read while parsing without error.
+ *
+ * It is the published `docs/` stem, matching {@link LEGACY_FOLIO_NS} and the
+ * three layer namespaces, so every IRI this project mints is under a domain
+ * it controls.
+ */
+export const FOLIO_BPMN_NS = "https://litlfred.github.io/folio-assistant/bpmn";
+
+/**
+ * The spelling that was never ours, kept so a gate can NAME it rather than
+ * report an anonymous mismatch.
+ *
+ * Exported for `scripts/external-schemas.ts`, which partitions the namespaces
+ * a diagram binds into "ours" and "an external specification's" — an external
+ * one needs a record in the registry, ours needs to be spelt one way. Without
+ * this, the drift read as two undeclared external specifications and the
+ * finding told the reader to go and write records for them.
+ */
+export const LEGACY_FOLIO_BPMN_NS = "http://folio-assistant.dev/bpmn";
+
+/** Every XML namespace this project mints for itself. */
+export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, LEGACY_FOLIO_BPMN_NS] as const;
 
 /** The prefixes those namespaces bind to in a `@context`. */
 export const NS_PREFIXES = {

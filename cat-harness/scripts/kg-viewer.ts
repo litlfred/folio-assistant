@@ -337,6 +337,8 @@ export function viewerHtml(
   <nav class="facets" aria-labelledby="facets-h">
     <h2 id="facets-h">Kind</h2>
     <div id="facets" role="group" aria-labelledby="facets-h"></div>
+    <h2 id="subs-h" style="margin-top:18px">Subgraph</h2>
+    <div id="subs" role="group" aria-labelledby="subs-h"></div>
   </nav>
   <div class="list">
     <h2 id="list-h">Nodes</h2>
@@ -384,11 +386,27 @@ const LOCALE_KEY = "fa-locale";
 
 const el = (id) => document.getElementById(id);
 let G = [], byId = new Map(), backlinks = new Map(), declared = new Set(),
-    linkTerms = new Set(), kind = null, sel = null, undeclared = null,
+    linkTerms = new Set(), kind = null, sub = null, sel = null, undeclared = null,
     counts = {}, loaded = null, loadError = null, preview = false, LOC = "en";
 
 const short = (iri) => String(iri).includes("#") ? String(iri).split("#").pop() : String(iri);
 const typeOf = (n) => short(n["@type"] ?? "").split("/").pop();
+/**
+ * Which DECLARED SUBGRAPH a node belongs to, as the id a reader filters by.
+ *
+ * 'inSubgraph' is a link to a Directory node, so the readable id is its
+ * fragment. A node with no stamp answers UNSTAMPED rather than being folded
+ * into a default: vocabulary nodes are minted from the namespace rather than
+ * from any file, so they genuinely belong to no directory, and showing that as
+ * its own facet keeps the gap visible instead of absorbing it into whichever
+ * subgraph happened to be first.
+ */
+const UNSTAMPED = "(no declared subgraph)";
+const subOf = (n) => {
+  const v = n.inSubgraph;
+  if (typeof v !== "string" || v.length === 0) return UNSTAMPED;
+  return String(v).split("/").pop();
+};
 const label = (n) => n.title ?? n.name ?? n.localId ?? short(n["@id"]);
 
 const localeMeta = (loc) => LOCALES.filter((l) => l.locale === loc)[0] ?? LOCALES[0];
@@ -470,10 +488,16 @@ function setLocale(loc) {
 function renderAll() {
   applyChrome();
   drawLangs();
+  // renderMeta() is NOT optional and is NOT chrome. It was dropped from here
+  // when the Subgraph facet's heading was added, and the page then sat on
+  // "loading …" forever with the document loaded, 1687 nodes in hand, no
+  // console error and no failed request -- the provenance line simply never
+  // got its second call. Nine e2e tests said so; a local run that piped the
+  // suite through a pager hid the exit code and said nothing.
   renderMeta();
   if (loadError !== null) { renderDetail(); return; }
   if (loaded === null) return;
-  drawFacets(counts);
+  drawFacets();
   drawList();
   renderDetail();
 }
@@ -489,6 +513,7 @@ function applyChrome() {
   document.title = heading;
   el("skip").textContent = T("Skip to results");
   el("facets-h").textContent = T("Kind");
+  el("subs-h").textContent = T("Subgraph");
   el("list-h").textContent = T("Nodes");
   el("q-label").textContent = T("Search nodes by name, id or description");
   el("q").setAttribute("placeholder", T("search name, id, title…"));
@@ -684,14 +709,27 @@ function renderMeta() {
   }
 }
 
-function drawFacets(counts) {
-  const f = el("facets");
+/**
+ * One facet group. Two of them now — Kind and Subgraph — and the second is the
+ * owner's ask of 2026-09-20: *"should show hierarchy of named subgraphs in the
+ * harness instance(s) ... ability to filter by bootstrap/ cat-harness/
+ * f-a-core/ f-a/"*.
+ *
+ * The two are INDEPENDENT filters, deliberately, not a nested tree: a reader
+ * asking "every Skill" and a reader asking "everything in bootstrap" are both
+ * common, and nesting one inside the other would make the second a walk. The
+ * counts shown on each group are computed against the OTHER group's current
+ * selection, so a count is always what clicking it would actually give — a
+ * count that lies is worse than no count.
+ */
+function drawGroup(elementId, counts, selected, onPick) {
+  const f = el(elementId);
   f.innerHTML = "";
   const add = (name, n, value) => {
     const b = document.createElement("button");
     b.className = "facet";
     b.type = "button";
-    b.setAttribute("aria-pressed", String(kind === value));
+    b.setAttribute("aria-pressed", String(selected === value));
     // Name first, count second — in the DOM, not just visually.
     //
     // float:right used to place the count regardless of source order; flex
@@ -699,18 +737,35 @@ function drawFacets(counts) {
     // order would have left the ACCESSIBLE reading as "1112 All" too, which
     // is the wrong sentence. A screen reader follows the DOM.
     b.innerHTML = escape(name) + '<span class="n">' + n + "</span>";
-    b.onclick = () => { kind = kind === value ? null : value; drawFacets(counts); drawList(); };
+    b.onclick = () => { onPick(selected === value ? null : value); };
     f.appendChild(b);
   };
   // "All" is the page's own word and is translated. The kinds beside it are
   // the graph's own vocabulary and are not: they are the values a reader
   // types into a query, and a translated type name resolves to nothing.
-  add(T("All"), G.length, null);
+  add(T("All"), Object.values(counts).reduce((a, b) => a + b, 0), null);
   for (const [t, n] of Object.entries(counts).sort((a, b) => b[1] - a[1])) add(t, n, t);
+}
+
+/** Count a facet dimension over the nodes the OTHER dimension currently admits. */
+function tally(of, admits) {
+  const c = {};
+  for (const n of G) if (admits(n)) c[of(n)] = (c[of(n)] ?? 0) + 1;
+  return c;
+}
+
+function drawFacets() {
+  drawGroup("facets", tally(typeOf, (n) => sub === null || subOf(n) === sub), kind, (v) => {
+    kind = v; drawFacets(); drawList();
+  });
+  drawGroup("subs", tally(subOf, (n) => kind === null || typeOf(n) === kind), sub, (v) => {
+    sub = v; drawFacets(); drawList();
+  });
 }
 
 function matches(n, q) {
   if (kind !== null && typeOf(n) !== kind) return false;
+  if (sub !== null && subOf(n) !== sub) return false;
   if (!q) return true;
   return (label(n) + " " + short(n["@id"]) + " " + (n.description ?? "")).toLowerCase().includes(q);
 }

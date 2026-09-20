@@ -93,8 +93,8 @@ start:
 | [Skills & roles](../skills.html) | how skills, roles, and capabilities compose |
 
 Both `reference/` directories are **generated** — never hand-edit them.
-Regenerate with `bun run scripts/gen-schema-docs.ts` and
-`bun run scripts/gen-skill-docs.ts`.
+Regenerate with `bun run cat-harness/scripts/gen-schema-docs.ts` and
+`bun run cat-harness/scripts/gen-skill-docs.ts`.
 
 ## 4. The content object model, briefly
 

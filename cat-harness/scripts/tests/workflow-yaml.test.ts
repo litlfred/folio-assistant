@@ -238,11 +238,24 @@ describe("every path that publishes or removes a preview also LOGS it", () => {
     },
   );
 
-  test("the removal and its record are ONE commit, in both removal paths", () => {
+  test("the change and its record are ONE commit, on EVERY path", () => {
     // A separate log push can fail on its own and leave a preview that
-    // vanished with nothing saying why — the exact state bean `plj1` left the
-    // branch in. Staging them together is what makes that impossible.
-    for (const job of ["cleanup", "cleanup-dispatch"]) {
+    // vanished — or appeared — with nothing saying why, the exact state bean
+    // `plj1` left the branch in. Staging them together is what makes that
+    // impossible.
+    //
+    // `stage` became one commit in PR #552 (bean `bm6d`, 2026-09-20). It used
+    // to deploy with `peaceiris/actions-gh-pages` and then push the log in a
+    // SECOND commit ten seconds later, which cancelled Pages' own build on 6
+    // of the last 10 measured deploys.
+    //
+    // THE PROPERTY SHIPPED UNPINNED, which is what this line fixes. The list
+    // said "in both removal paths" and stopped at `cleanup` +
+    // `cleanup-dispatch`, so the one path that had just been MADE atomic was
+    // the one path nothing asserted — it could have been split again without
+    // failing anything. A property is not defended by the change that
+    // establishes it.
+    for (const job of ["stage", "cleanup", "cleanup-dispatch"]) {
       const runs = runsOf(job);
       expect(runs).toMatch(/git (?:-C pages )?add -A "STAGING\/\$\w+" _render-log/);
     }

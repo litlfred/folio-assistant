@@ -58,7 +58,11 @@ from pathlib import Path
 # output: the first draft of this file DID reimplement `slugify` and produced
 # `who-pub-tps-93-1` against `pdf-structure.py`'s `who-pub-tps-931`.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _pdf_doc_id import ocr_cache_dir, slugify as _slugify  # noqa: E402
+from _pdf_doc_id import (  # noqa: E402
+    derive_doc_id_from_pdf as _doc_id,
+    ocr_cache_dir,
+    slugify as _slugify,
+)
 
 
 def slug(text: str) -> str:
@@ -168,7 +172,21 @@ def main() -> int:
         ap.error("no PDFs given")
 
     for pdf in a.pdfs:
-        doc_id = slug(pdf.stem)
+        # THE DOC ID, which is not a section id, and the two differ in
+        # ways that both bit on 2026-09-20. `slug()` below is
+        # `slugify(text)` with its SECTION default of 48 characters, while a
+        # doc-id is `DOC_ID_MAXLEN` = 60 and may be an arXiv stamp rather than
+        # a filename at all. Using it here staged
+        # `Skill authoring best practices - Claude Platform Docs.pdf` as
+        # `...---claude-platform` (48) while every reader computed
+        # `...---claude-platform-docs` (60), and staged three arXiv papers
+        # under their basenames while `pdf-structure.py` used `arxiv-<id>v<n>`.
+        #
+        # Neither failed: `--promote` looked for a staging directory that was
+        # not there and reported SEVEN unmet requirements, with `blocks` among
+        # them, over an entry that had all of them. A wrong-directory error
+        # wearing the clothes of an incomplete ingestion.
+        doc_id = _doc_id(str(pdf))
         texts, source = page_texts(pdf, a.from_ocr, a.outdir)
         sha = hashlib.sha256(pdf.read_bytes()).hexdigest()[:16]
         secdir = a.outdir / doc_id / "sections"

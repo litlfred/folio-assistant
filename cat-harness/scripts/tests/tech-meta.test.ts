@@ -12,6 +12,7 @@ import { afterEach, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { libraryEntry } from "./library-dirs.ts";
 
 import { refreshMeta } from "../ingest-document.ts";
 
@@ -101,11 +102,15 @@ describe("the mechanical facts", () => {
   test("the real corpus agrees with what pdf-structure recorded independently", () => {
     // pdf-structure.py computed these digests with its own implementation
     // before this module existed. Agreement is the cross-check.
-    const s = JSON.parse(
-      new TextDecoder().decode(
-        Bun.spawnSync(["cat", join(ROOT, "library/who-pub-tps-931/structure.json")]).stdout,
-      ),
-    ) as { source: { sha256: string } };
+    // READ from the declaration: the corpus moved to `who-iris/` in bean
+    // `frs5`, and `cat` on a missing file returns empty stdout, so composing
+    // the path here would have turned a moved document into a JSON parse
+    // error rather than a clear "not found".
+    const entry = libraryEntry("who-pub-tps-931");
+    expect(entry, "who-pub-tps-931 is not in any declared library").toBeDefined();
+    const s = JSON.parse(readFileSync(join(entry!, "structure.json"), "utf-8")) as {
+      source: { sha256: string };
+    };
     expect(techMeta(join(ROOT, "uploads/WHO_PUB_TPS_93.1.pdf")).sha256).toBe(s.source.sha256);
   });
 });

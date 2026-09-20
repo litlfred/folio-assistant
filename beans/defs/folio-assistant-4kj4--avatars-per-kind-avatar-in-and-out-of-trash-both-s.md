@@ -213,3 +213,41 @@ it now asserts the property (under 0.05s), which is what "no transition"
 means and what distinguishes it from the 0.4s animated path.
 
 20 e2e specs.
+
+## Owner, 2026-09-20: there is always an avatar, even when there is none
+
+> (always have default blank/themecolor if no avatar. etc)
+
+So **absence of an avatar is not absence of a mark.** An instance, role or
+kind with no declared avatar gets a BLANK one drawn in its theme's colour,
+rather than a gap, a placeholder glyph, or a fallback to somebody else's
+avatar.
+
+Three reasons this is the right default rather than a cosmetic one, and each
+is a rule this repository already applies elsewhere:
+
+1. **A gap and a missing declaration look identical.** An avatar slot that
+   renders nothing cannot be told from one whose art failed to resolve — the
+   `dh4f` shape, in the navbar. A themed blank is a DETERMINED empty: it says
+   "this instance has no avatar" rather than saying nothing.
+2. **Falling back to another avatar is worse than blank.** `themes.test.ts`
+   already records the analogous case: a theme naming an image role nothing
+   declares renders palette-only, and `resolveThemeBackdrop` refuses an
+   INCOMPLETE backdrop wholesale rather than serving two thirds of it. The
+   same argument applies here — a borrowed avatar misattributes.
+3. **The theme colour is already resolved at that point.** A blank in the
+   theme's own colour needs no new art, no new asset pipeline and no new
+   declaration; it is the palette the surrounding chrome is already using.
+
+## Done when
+
+- [ ] Every avatar consumer has a no-avatar path that draws a themed blank —
+      the navbar, the landing stickies, and the KG viewer.
+- [ ] The blank takes the colour from the RESOLVED theme, so an instance
+      inheriting a parent theme gets the parent's colour rather than a
+      hardcoded neutral.
+- [ ] A test asserts the blank renders for an instance with no declared
+      avatar, and that it is NOT the same mark as any declared one — a
+      fallback that happens to pick a real avatar would pass a weaker test.
+- [ ] `check:avatar-coverage` reports "blank (no avatar declared)" as its own
+      state, distinct from both "declared" and "could not determine".

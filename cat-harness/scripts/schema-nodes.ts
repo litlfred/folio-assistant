@@ -40,8 +40,8 @@
  * @graphNode none — tooling that reads the declarations, not a schema itself
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, join } from "node:path";
-import { directoryForGraph } from "../schemas/cat-harness.js";
+import { basename, join, relative, sep } from "node:path";
+import { directoriesForGraph } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
 // renderable kind"), so the harness alone does not know it exists. This module
@@ -55,17 +55,25 @@ import { directoryForGraph } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 
 /**
- * The declared `schemas` graph, or the convention.
+ * EVERY directory declaring the `schemas` graph, or the convention.
+ *
+ * It was `directoriesForGraph(...)[0]` — the FIRST one — until 2026-09-20, and by
+ * then three directories declared the graph: `schemas/`,
+ * `folio-assistant-core/schemas/` and `large-datasets/schemas/`. So the gate
+ * that exists to stop a module being silently absent from the published graph
+ * was itself silently absent from two thirds of it. Bean `xxxb` is the defect
+ * this file was written for; this is that defect, in this file, one directory
+ * over.
  *
  * declared-path-literal: the fallback is at the call site so the choice is
  * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why `directoryForGraph` is asked for the
+ * the schema definitions — which is why the accessor is asked for the
  * `schemas` one by name rather than being handed a single-home guess.
  */
-function schemasRoot(root: string): string {
-  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+function schemasRoots(root: string): string[] {
+  const declared = directoriesForGraph(root, "schemas");
+  return declared.length > 0 ? declared : [join(root, "schemas")];
 }
-
 
 /** What a `schemas/*.ts` module declares itself to be. */
 export type SchemaNodeKind = "schema" | "none" | "undeclared";
@@ -94,36 +102,44 @@ const TAG = /@graphNode\s+(\S+)(?:\s*[—-]\s*(.*))?/;
  * thereby declare itself.
  */
 export function schemaModules(root: string): SchemaModule[] {
-  const dir = schemasRoot(root);
-  if (!existsSync(dir)) return [];
   const out: SchemaModule[] = [];
-  for (const f of readdirSync(dir).sort()) {
-    if (!f.endsWith(".ts")) continue;
-    const module = `schemas/${f}`;
-    const isTest = f.endsWith(".test.ts");
-    const text = readFileSync(join(dir, f), "utf-8");
-    const block = /^\/\*\*[\s\S]*?^ \*\//m.exec(text)?.[0] ?? "";
-    const m = TAG.exec(block);
-    const name = basename(f, ".ts");
-    if (!m) {
-      out.push({ module, name, kind: "undeclared", isTest });
-      continue;
+  for (const dir of schemasRoots(root)) {
+    if (!existsSync(dir)) continue;
+    // The module id carries the DIRECTORY, not a bare `schemas/` prefix: three
+    // directories declare this graph and two of them hold a `catalogue.ts` or an
+    // `index.ts`, so a flat `schemas/<stem>` id would collide across instances
+    // and the audit would report one module while another went unchecked. Same
+    // reason `kgQaSidecarPath` mirrors each subject's path instead of flattening.
+    const prefix = relative(root, dir).split(sep).join("/");
+    for (const f of readdirSync(dir).sort()) {
+      if (!f.endsWith(".ts")) continue;
+      const module = `${prefix}/${f}`;
+      const isTest = f.endsWith(".test.ts");
+      const text = readFileSync(join(dir, f), "utf-8");
+      const block = /^\/\*\*[\s\S]*?^ \*\//m.exec(text)?.[0] ?? "";
+      const m = TAG.exec(block);
+      const name = basename(f, ".ts");
+      if (!m) {
+        out.push({ module, name, kind: "undeclared", isTest });
+        continue;
+      }
+      const value =
+        m[1] === "none" ? "none" : m[1] === "schema" ? "schema" : "undeclared";
+      // The first prose line: skip the opening `/**` and any leading tag lines.
+      const summary = block
+        .split("\n")
+        .slice(1)
+        .map((l) => l.replace(/^\s*\*\s?/, "").trim())
+        .find((l) => l.length > 0 && !l.startsWith("@"));
+      out.push({
+        module,
+        name,
+        kind: value as SchemaNodeKind,
+        reason: m[2]?.trim() || undefined,
+        summary,
+        isTest,
+      });
     }
-    const value = m[1] === "none" ? "none" : m[1] === "schema" ? "schema" : "undeclared";
-    // The first prose line: skip the opening `/**` and any leading tag lines.
-    const summary = block
-      .split("\n")
-      .slice(1)
-      .map((l) => l.replace(/^\s*\*\s?/, "").trim())
-      .find((l) => l.length > 0 && !l.startsWith("@"));
-    out.push({
-      module,
-      name,
-      kind: value as SchemaNodeKind,
-      reason: m[2]?.trim() || undefined,
-      summary,
-      isTest,
-    });
   }
   return out;
 }
