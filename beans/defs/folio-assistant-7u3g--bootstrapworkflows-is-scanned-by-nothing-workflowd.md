@@ -103,31 +103,3 @@ decorative.
 
 This bean was "found while sampling for `y1w9`" — incidental. It is now on the
 critical path for `b5f0`.
-
-## x-ref — 2026-09-20: fixed / answered by the `bootstrap-workflows` declaration
-
-`cat-harness/harness.json` now declares `bootstrap/workflows/` beside
-`bootstrap/skills/`. That was the CAUSE — this file declared one of
-bootstrap's two directories, and `kgDirectories` resolves the local
-declaration only (root-only on purpose), so bootstrap's own declaration of its
-processes was never read from here.
-
-Measured: `workflowFiles(cat-harness)` 58 → 61, and the three bootstrap
-diagrams became visible for the first time. What that immediately surfaced:
-
-* `log-message.bpmn` had **no `BPMNDiagram` at all** — 0 shapes, 0 edges. A
-  process that could not be drawn, undetected because nothing scanned it. DI
-  authored; all three now render.
-* The three got their **first-ever `kg:audit` sidecars**.
-* `bootstrap/skills/roles/roles.json` carried a `_lanes_comment` saying
-  `lanes` was omitted *because* the root declared `bootstrap/skills/` but not
-  `bootstrap/workflows/`, producing three dangling links — and that **"whether
-  the root should declare both halves of bootstrap or neither is bean
-  `pve3`"**. Both halves are now declared, so the workaround is obsolete: the
-  four roles are bound to their lanes and the export carries them with **0
-  dangling `bindsLane` edges**, which is the falsifier that comment named.
-
-Still open, as bean `58yc`: `kg-audit` reads roles from a hardcoded
-`join(root, "skills")`, so it cannot see bootstrap's roles and reports four
-`lane-binds-role` failures about a file it never opens. The bindings are
-correct; the audit is blind. Deliberately not fixed inside this change.
