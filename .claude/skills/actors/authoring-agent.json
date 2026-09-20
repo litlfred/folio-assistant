@@ -5,7 +5,13 @@
   "description": "LLM agent that drafts and revises a PROPOSED change to a content block. It never commits: its output enters the HCI validation pipeline and the editor accepts, revises or discards it.",
   "roles": [
     "authoring-agent",
-    "sibling-session"
+    "sibling-session",
+    "compute-authoring-agent",
+    "docs-authoring-agent",
+    "editorial-authoring-agent",
+    "lean-authoring-agent",
+    "platform-authoring-agent",
+    "session-coordinator"
   ],
   "permissions": [
     "content-authoring"
