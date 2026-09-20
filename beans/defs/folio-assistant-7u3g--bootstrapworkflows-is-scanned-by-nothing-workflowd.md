@@ -1,9 +1,6 @@
 ---
 # folio-assistant-7u3g
 title: cat-bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows
-status: todo
-
-title: cat-bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows
 status: scrapped
 type: task
 priority: normal
@@ -24,7 +21,7 @@ exist. The diagrams are at **`cat-bootstrap/workflows/`**, a SIBLING of
 `cat-bootstrap/skills/`, not a child.
 
 So `workflowFiles(root)` returns 49 diagrams and **none of the three in
-`bootstrap/`**:
+`cat-bootstrap/`**:
 
 ```
 cat-bootstrap/workflows/discussion.bpmn
@@ -157,3 +154,21 @@ If `skill-in-role-or-process` names a skill you believe is bound, **read the
 finding's scope clause before concluding anything.** It tells you which
 directories were read and that a nested instance was not. Three sessions have
 now walked at this; two got as far as editing `harness.json`.
+
+
+## Front matter repaired, and the status is the SIBLING's
+
+A merge of main into this branch left TWO front-matter blocks in this file —
+mine (`todo`) and main's (`scrapped`) — because I stripped the conflict
+markers and kept both sides. My error; one block now, and it carries
+**`scrapped`**, which is main's.
+
+That status is NOT mine to change. A sibling scrapped this after reverting the
+declaration (`ec680daf57`), and `bean-coordination` is explicit: never resolve
+a sibling's bean. The body is kept as the fuller record of what was measured,
+because a scrapped bean's job is to stop the next agent re-entering the dead
+end, and it can only do that if it still says what was found.
+
+What did NOT die with it: the phantom `bootstrap.bpmn` index row and the
+`kgQaSidecarPath` escape both shipped in #540, and `pve3` carries the half of
+the decision nobody has made.
