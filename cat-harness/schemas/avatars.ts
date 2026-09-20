@@ -4,7 +4,7 @@
  *
  * Owner, 2026-09-19: *"each content type should have an avatar in and out of
  * trash. dark and light mode"*, and then: *"all kinds need an avatary.
- * bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
+ * cat-bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
  *
  * ## The glyph is a MASK, not an image or an inline `<svg>`
  *
@@ -64,9 +64,9 @@ export interface Avatar {
 export const AVATARS: Readonly<Record<string, Avatar>> = {
   // ── The layer identities the owner named ───────────────────────────
   //
-  // Owner: *"bootstrap has avatar, so does cat-harness, folio-asst"*. Two of
+  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*. Two of
   // these three are NOT graph kinds this repo declares — the split (#223) has
-  // not happened, so `bootstrap` and `folio-assist-core` exist as layers in
+  // not happened, so `cat-bootstrap` and `folio-assist-core` exist as layers in
   // the namespace and as nothing in `harness.json`.
   //
   // They are here anyway, and `check-avatar-coverage` reports them as
@@ -74,7 +74,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // layer before its directory exists is the right way round: the alternative
   // is a split that lands with three blank avatars, discovered by a reader.
   // The finding is the honest record that they are ahead of the declaration.
-  bootstrap: {
+  "cat-bootstrap": {
     // A seed with a shoot: the graph an agent reads before it knows anything.
     glyph: "M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z",
     tone: 96,

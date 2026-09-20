@@ -23,7 +23,7 @@ function folio(contentType?: string): string {
   dirs.push(d);
   mkdirSync(join(d, "folio", "doc", "ch"), { recursive: true });
   if (contentType !== undefined) {
-    writeInstanceConfig(d, JSON.stringify({ contentType }), "utf-8");
+    writeInstanceConfig(d, JSON.stringify({ contentType }));
   }
   return d;
 }
@@ -57,7 +57,7 @@ describe("readFolioProfile", () => {
     // Every other tool reading harness.config.json is equally in the dark here;
     // a report that says "paper" with no explanation hides that.
     const d = folio("document");
-    writeInstanceConfig(d, "{ not json", "utf-8");
+    writeInstanceConfig(d, "{ not json");
     const r = readFolioProfile(d);
     expect(r.profile).toBe("paper");
     expect(r.declaredBy).toContain("unreadable");
@@ -153,7 +153,7 @@ describe("an absent corpus", () => {
   test("no folio/ is zero blocks, not an error", () => {
     const d = mkdtempSync(join(tmpdir(), "folio-empty-"));
     dirs.push(d);
-    writeInstanceConfig(d, JSON.stringify({ contentType: "document" }), "utf-8");
+    writeInstanceConfig(d, JSON.stringify({ contentType: "document" }));
     const r = checkFolioProfile(d);
     expect(r.blocksChecked).toBe(0);
     expect(r.violations).toEqual([]);

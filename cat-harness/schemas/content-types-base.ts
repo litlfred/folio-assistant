@@ -68,6 +68,35 @@ import { termIri } from "./namespaces";
 /** The `@type` a harness declaration projects to. */
 export const HARNESS_TYPE = termIri("Instance");
 
+/**
+ * The folio marker's filename, resolved from the instance that declares it.
+ *
+ * HOISTED to module scope, and that is not tidiness. `sameType` compares
+ * `filename` by `===`, so a resolver defined inline inside
+ * {@link registerBaseContentTypes} is a fresh closure on every call and a
+ * second call — which `content-type.test.ts` makes deliberately, and which a
+ * diamond makes by accident — reads as a CONFLICTING redefinition of `folio`.
+ * The literal it replaced was equal to itself for free; a function has to be
+ * given that property on purpose.
+ *
+ * `undefined` on an unreadable declaration, NOT a throw. This resolver runs
+ * inside `describeRepository`, whose whole subject is markers that may be
+ * absent, present-and-unparseable, or present-and-invalid — and
+ * `readDeclaration` throws on the last two. Letting that escape turned "the
+ * harness marker is unreadable, so the folio marker's NAME is undetermined"
+ * into a crash that reported nothing at all about either marker, which is the
+ * third state collapsed in the loudest possible direction.
+ */
+function folioMarkerFilename(repoRoot: string): string | undefined {
+  let inst: ReturnType<typeof instanceConfigFor>;
+  try {
+    inst = instanceConfigFor(repoRoot);
+  } catch {
+    return undefined;
+  }
+  return inst === undefined ? undefined : instanceConfigFilename(inst.name);
+}
+
 export function registerBaseContentTypes(registry: ContentTypeRegistry = defaultContentTypes): void {
   registry.register("harness", {
     filename: DECLARATION_FILENAME,
@@ -90,10 +119,7 @@ export function registerBaseContentTypes(registry: ContentTypeRegistry = default
     // here would have gone on testing for a file no instance writes, and
     // `describeRepository` would have reported every folio as not-a-folio
     // while looking perfectly healthy.
-    filename: (repoRoot) => {
-      const inst = instanceConfigFor(repoRoot);
-      return inst === undefined ? undefined : instanceConfigFilename(inst.name);
-    },
+    filename: folioMarkerFilename,
     type: termIri("Folio"),
     summary:
       "A repository that authors folio content — it declares a content type, and `folio_init` wrote this file.",

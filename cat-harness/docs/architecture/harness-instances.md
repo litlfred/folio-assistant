@@ -86,7 +86,7 @@ dynamically** on display size and usability, best-fit among three:
 cropped for, which is not a coincidence — a layout with no crop for it has
 nothing to render on.
 
-## Where the requirement starts — bootstrap is the exception
+## Where the requirement starts — cat-bootstrap is the exception
 
 [The minimum `cat-harness`](cat-harness-minimum.html) carries a one-line
 admission test from the owner's own #223 revision:
@@ -99,13 +99,13 @@ requirement is a *floor that rises*, not a rule applied uniformly.
 
 | layer | visualiser / workflow visualiser | its own `.json` / `.jsonld` |
 |---|---|---|
-| `bootstrap` | **exempt** — it is the navbar **footer** | **required** |
+| `cat-bootstrap` | **exempt** — it is the navbar **footer** | **required** |
 | `cat-harness` | required | required |
 | everything above | required | required |
 
-**Bootstrap is the exception, and what it owes instead is its graph.** In the
+**CatBootstrap is the exception, and what it owes instead is its graph.** In the
 owner's words, its `.json`/`.jsonld` *"is its existence"* — a layer that cannot
-emit its own graph has not shown it is a graph. So bootstrap is not simply
+emit its own graph has not shown it is a graph. So cat-bootstrap is not simply
 dropped from the requirement: it trades the visualiser for a criterion it
 cannot fail quietly.
 
@@ -116,11 +116,11 @@ nothing itself is asking of them what it did not do. Concretely that means a
 minimal just-the-docs rendering in `cat-harness/folio/` describing what a folio
 is, and `cat-harness/folio/render/` for the rendering skills and tools.
 
-This is the **same shape** the workflow split already has — bootstrap keeps the
+This is the **same shape** the workflow split already has — cat-bootstrap keeps the
 bare minimum, `cat-harness/workflows` elaborates — so it is a second instance
 of one rule rather than a new one.
 
-*Tracked: `hfkl` (bootstrap's exemption and its `render/` subgraph), `ohx6`
+*Tracked: `hfkl` (cat-bootstrap's exemption and its `render/` subgraph), `ohx6`
 (`cat-harness/folio/`), `1hvo` (`cat-harness/theming/`), `7po1` (the workflow
 split this parallels).*
 
@@ -143,7 +143,7 @@ expensive to get wrong:
 
 ## KG-DS is the Knowledge Graph Data Store, and its machine is **git**
 
-Not a new concept: `bootstrap/skills/roles/roles.json` has declared a role with
+Not a new concept: `cat-bootstrap/skills/roles/roles.json` has declared a role with
 exactly this id and title all along. Its description names the machine:
 
 > A git repository, reached either through the git CLI or through a forge's

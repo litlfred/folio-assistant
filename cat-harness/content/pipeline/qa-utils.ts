@@ -14,6 +14,12 @@ import {
 } from "fs";
 import { join, resolve } from "path";
 import { execFileSync } from "child_process";
+import { graphLayer, readDeclaration } from "../../schemas/cat-harness.js";
+// The `folio` kind is registered by CORE as a load-time side effect. Without
+// it `graphLayer("folio")` is undefined and the folio directory would read as
+// "layer unknown" — which this walker treats as walkable, so the corpus is
+// still swept, but the reason would be luck rather than design.
+import "../../schemas/folio-graph-kind.js";
 import { criterionSourceHash } from "./qa-criterion-hash";
 import { maskStringsAndComments, parseStringField } from "./uses-field";
 import {
@@ -996,6 +1002,64 @@ export interface WalkBlocksOptions {
    * silent coverage hole, which is the `qou/3fui` mistake in reverse.
    */
   onLoadFailure?: (failure: BlockLoadFailure) => void;
+
+  /**
+   * Walk directories the instance declares as **not content** — `context` and
+   * `state` graphs.
+   *
+   * Default `false`. Owner, 2026-09-20: *"qa-sweep skips fsh-guts"*, and the
+   * general form in the same breath — *"qasweep is only on active/working
+   * content, unless explicit otherwise"*. This flag is that "unless".
+   *
+   * ## It is the EXISTING axis, not a new one
+   *
+   * `fsh-guts` declares `holds: "context"` — *"Read, never written by a
+   * process"* — because what is in it is deprecated or superseded. `graphLayer`
+   * already answers the question, so nothing here spells a directory name and a
+   * newly retired graph is skipped the day it is declared, with no edit.
+   *
+   * Measured on this instance 2026-09-20 — what the default excludes, and what
+   * it does NOT:
+   *
+   *     skipped (context/state)  fsh-guts/  memory/  interaction/  uploads/
+   *                              beans/  todos/  issue-marks/  test/results/
+   *                              test/health/results/  methodologies/
+   *     walked  (content)        folio/  library/  voices/  skills/  tools/
+   *                              schemas/  translations/  src/skills/ …
+   *
+   * `folio/` is the one that matters and it is kept: the active corpus is
+   * exactly what a sweep is for.
+   *
+   * ## Why a guard rather than a fix
+   *
+   * Nothing is wrong today. `walkBlocks` over `fsh-guts/` yields **0** blocks,
+   * because the only `.ts` in there is a script rather than a manifest. The
+   * rule exists for the day somebody retires a real block into it — which is
+   * what the directory is FOR — at which point a sweep would start reporting
+   * findings about material nobody maintains, and a reader could not tell
+   * those from live ones.
+   */
+  includeNonContent?: boolean;
+}
+
+/**
+ * The instance root whose declaration governs `dir` — the nearest ancestor
+ * carrying a `harness.json` or a `.git`.
+ *
+ * Deliberately NOT `findContentRepoRoot()`, which takes no argument and walks
+ * up from `process.cwd()`. That answers "where was I invoked", which is the
+ * same thing only when the walk target happens to sit under the caller's cwd.
+ * Falls back to `dir` itself, so an unrooted walk simply finds no declaration
+ * and skips nothing.
+ */
+function declaringRootFor(dir: string): string {
+  let d = resolve(dir);
+  for (;;) {
+    if (existsSync(join(d, "harness.json")) || existsSync(join(d, ".git"))) return d;
+    const parent = dirname(d);
+    if (parent === d) return resolve(dir);
+    d = parent;
+  }
 }
 
 export function* walkBlocks(
@@ -1020,6 +1084,50 @@ export function* walkBlocks(
   const verify = opts.verify ?? true;
   const report = makeFailureReporter(opts);
 
+  // Directories this instance declares as NOT content — `context` or `state`.
+  // See {@link WalkBlocksOptions.includeNonContent} for the ruling and the
+  // measurement. Computed once per walk and compared by absolute path, so a
+  // declared directory OUTSIDE `rootDir` simply never matches and costs
+  // nothing. Resolved from the declaration rather than from a name list: a
+  // graph retired tomorrow is skipped the day it is declared.
+  //
+  // A declaration that cannot be read yields an EMPTY skip set, not a throw.
+  // This is a walker, and refusing to enumerate a corpus because a declaration
+  // is malformed would turn a config fault into a total QA outage. The loud
+  // path for that is `kgDirectories`, which throws for exactly this reason.
+  //
+  // Resolved from the root being WALKED, not from `REPO_ROOT`. `REPO_ROOT`
+  // comes from `findContentRepoRoot()`, which takes no argument and walks up
+  // from `process.cwd()` — so it answers "where is the repo I was invoked in",
+  // not "which instance owns this corpus". Using it read THIS checkout's
+  // declaration while walking a temporary fixture, and the skip silently never
+  // matched. Caught by the fixture test, which is the only reason it is not
+  // still there.
+  const nonContentDirs = new Set<string>();
+  if (!opts.includeNonContent) {
+    try {
+      for (const e of readDeclaration(declaringRootFor(rootDir))?.directories ?? []) {
+        const layers = (e.graphs ?? []).map((g) => graphLayer(g));
+        // Skip only when the entry DECLARES graphs and none of them is
+        // content. An entry declaring none says nothing about being retired,
+        // so it stays walked — silence is not evidence.
+        //
+        // There is deliberately no `l !== undefined` arm. The first draft had
+        // one, on the reading that an unregistered kind should not count as
+        // non-content. It is unreachable: `readDeclaration` THROWS on an
+        // unknown kind ("declares unknown graph kind …"), and a registered one
+        // always has `holds`, which the schema requires. So the only way to
+        // reach this loop is with every kind registered and layered. Measured
+        // rather than reasoned — see the test that pins the throw.
+        if (layers.length > 0 && layers.every((l) => l !== "content")) {
+          nonContentDirs.add(resolve(declaringRootFor(rootDir), e.path));
+        }
+      }
+    } catch {
+      // Empty set: walk everything, as before.
+    }
+  }
+
   function* recurse(d: string): Generator<BlockPaths> {
     if (!existsSync(d)) return;
     for (const entry of readdirSync(d)) {
@@ -1028,6 +1136,7 @@ export function* walkBlocks(
       const full = join(d, entry);
       const st = statSync(full);
       if (st.isDirectory()) {
+        if (nonContentDirs.has(resolve(full))) continue;
         yield* recurse(full);
       } else if (entry.endsWith(".ts")) {
         // Skip chapter / paper manifests by checking the export shape. The

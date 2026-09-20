@@ -22,6 +22,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:flowNodeRef>Start_Process_CRDM_Deliver</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_OptionsAnalysis</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Implement</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CodeAudit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_DeployStaging</bpmn:flowNodeRef>
@@ -34,6 +35,17 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Process_CRDM_Deliver" name="Phase begins"/>
+    <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;how to implement" calledElement="Process_OptionsAnalysis">
+      <bpmn:documentation>On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code.
+
+Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look.
+
+The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`.
+
+Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged.
+
+`A_Implement` carries `folio:bean op="claim"`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.</bpmn:documentation>
+    </bpmn:callActivity>
     <bpmn:task id="A_Implement" name="Phase 6: Implement
 (feature branch + PR)">
       <bpmn:documentation>Inner loop: agent claims a bean, implements on
@@ -100,10 +112,10 @@ actionable direction: new beans or bean updates for the agent.</bpmn:documentati
     </bpmn:task>
     <bpmn:callActivity id="Call_ThemeUIReview" name="Post-MVP&#10;theme + UI review" calledElement="Process_ThemeUIReview">
       <bpmn:documentation>On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:endEvent id="End_Process_CRDM_Deliver" name="Phase complete"/>
-    <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_1" sourceRef="Start_Process_CRDM_Deliver" targetRef="A_Implement"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_1" sourceRef="Start_Process_CRDM_Deliver" targetRef="Call_OptionsAnalysis"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_1b" sourceRef="Call_OptionsAnalysis" targetRef="A_Implement"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_2" sourceRef="A_Implement" targetRef="A_CodeAudit"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_2b" sourceRef="A_CodeAudit" targetRef="A_Summary"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_3" sourceRef="A_Summary" targetRef="BA_ReviewIncrement"/>
@@ -137,17 +149,20 @@ actionable direction: new beans or bean updates for the agent.</bpmn:documentati
       <bpmndi:BPMNShape id="Shape_Start_Process_CRDM_Deliver" bpmnElement="Start_Process_CRDM_Deliver">
         <dc:Bounds x="310" y="317" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_A_Implement" bpmnElement="A_Implement">
+      <bpmndi:BPMNShape id="Shape_Call_OptionsAnalysis" bpmnElement="Call_OptionsAnalysis">
         <dc:Bounds x="510" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Implement" bpmnElement="A_Implement">
+        <dc:Bounds x="710" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_CodeAudit" bpmnElement="A_CodeAudit">
-        <dc:Bounds x="710" y="295" width="150" height="80" />
+        <dc:Bounds x="910" y="295" width="150" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_DeployStaging" bpmnElement="A_DeployStaging">
         <dc:Bounds x="1710" y="295" width="150" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Summary" bpmnElement="A_Summary">
-        <dc:Bounds x="910" y="295" width="140" height="80" />
+        <dc:Bounds x="1110" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_BA_ReviewIncrement" bpmnElement="BA_ReviewIncrement">
         <dc:Bounds x="1110" y="125" width="140" height="80" />

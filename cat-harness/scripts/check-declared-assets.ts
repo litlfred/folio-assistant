@@ -51,7 +51,7 @@ import "../schemas/folio-graph-kind.js";
  * Instances whose declarations this repository owns — **discovered, not
  * listed**, via {@link instanceRootsIn}.
  *
- * This was a literal `["cat-harness", "bootstrap"]`, and the docstring on it
+ * This was a literal `["cat-harness", "cat-bootstrap"]`, and the docstring on it
  * recorded the list being wrong ONCE already: the first entry was `"."`, which
  * named the instance while the instance was the repository, and after the move
  * (bean `wggr`) it named a root carrying no `harness.json`, so `declaredAssets`
@@ -59,7 +59,7 @@ import "../schemas/folio-graph-kind.js";
  * 0 findings"* over a file it had never opened.
  *
  * The list was then wrong a SECOND time, the same way: by 2026-09-20 there were
- * four instances — `cat-harness`, `bootstrap`, `folio-assist-core` and the
+ * four instances — `cat-harness`, `cat-bootstrap`, `folio-assist-core` and the
  * repository root — and this gate checked two of them. Recording that a
  * hardcoded list went stale, and then fixing it by correcting the hardcoded
  * list, buys one release. Asking the filesystem is what stops the third time

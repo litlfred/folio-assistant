@@ -38,14 +38,14 @@ beforeAll(() => {
   mkdirSync(join(depA, "translations", "fr"), { recursive: true });
   writeInstanceConfig(depA, JSON.stringify({
     translation: { translationDir: "translations" },
-  }), "utf-8");
+  }));
 
   // Dependency B (transitive dep of A)
   const depB = join(TMP, "dep-b");
   mkdirSync(join(depB, "skills"), { recursive: true });
   writeInstanceConfig(depB, JSON.stringify({
     translation: { translationDir: "translations" },
-  }), "utf-8");
+  }));
 
   // A depends on B
   writeInstanceConfig(depA, JSON.stringify({
@@ -55,7 +55,7 @@ beforeAll(() => {
         { name: "dep-b", path: depB },
       ],
     },
-  }), "utf-8");
+  }));
 
   // Root config
   writeInstanceConfig(TMP, JSON.stringify({
@@ -70,7 +70,7 @@ beforeAll(() => {
         { name: "dep-a", path: depA },
       ],
     },
-  }), "utf-8");
+  }));
 });
 
 afterAll(() => {
@@ -188,14 +188,14 @@ describe("resolveDependencyTree", () => {
       dependencies: {
         folioAssistant: [{ name: "root", path: TMP }],
       },
-    }), "utf-8");
+    }));
 
     // Should not infinite loop
     const tree = resolveDependencyTree(TMP);
     expect(tree).toHaveLength(1);
 
     // Restore original
-    writeInstanceConfig(depB, JSON.stringify(origConfig), "utf-8");
+    writeInstanceConfig(depB, JSON.stringify(origConfig));
   });
 });
 
@@ -268,15 +268,17 @@ describe("a dependent instance inherits the ingestion directories", () => {
 
   beforeAll(() => {
     mkdirSync(DOWN, { recursive: true });
-    writeFileSync(
-      join(DOWN, "harness.config.json"),
+    // The downstream folio is an INSTANCE — it declares itself, and its config
+    // is named after that declaration. A bare `harness.config.json` here would
+    // be a file `resolveHarnessConfigPath` no longer looks for.
+    writeInstanceConfig(
+      DOWN,
       JSON.stringify({
         contentType: "document",
         dependencies: {
           folioAssistant: [{ name: "folio-assistant", path: join(import.meta.dir, "..") }],
         },
       }),
-      "utf-8",
     );
   });
 

@@ -64,7 +64,7 @@ beforeAll(() => {
   mkpo(join(depRoot, "translations", "fr"), "my-block.po", DEP_PO);
   writeInstanceConfig(depRoot, JSON.stringify({
     translation: { translationDir: "translations" },
-  }), "utf-8");
+  }));
 
   // Folio config with dependency
   writeInstanceConfig(TMP, JSON.stringify({
@@ -74,7 +74,7 @@ beforeAll(() => {
         { name: "dep-folio", path: depRoot },
       ],
     },
-  }), "utf-8");
+  }));
 });
 
 afterAll(() => {

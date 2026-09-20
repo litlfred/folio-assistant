@@ -112,7 +112,7 @@ does claim → resolve — every one manufactures the condition and none
 discharges it, which is how **219** beans accumulated.
 
 Before reaching for an `archive` op, read
-[`todo-manager`](todo-manager.md) §"Archiving — two dispositions": an op and
+[`todo-manager`](../folio-core/todo-manager.md) §"Archiving — two dispositions": an op and
 a periodic sweep answer different questions, and for most processes the
 answer is the sweep. An op is worth an edge on your diagram only where your
 process's completion is *itself* the reason a bean is finished — and then the

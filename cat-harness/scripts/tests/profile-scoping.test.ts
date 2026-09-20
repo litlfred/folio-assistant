@@ -42,7 +42,8 @@ import { CONTENT_PROFILES, CONTENT_ADAPTERS } from "../../schemas/block-kinds";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry";
 import { readDeclaredFolioProfile, readFolioProfile } from "../../content/pipeline/profile-check";
 import { initFolio } from "../init-folio";
-import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { instanceConfigFilename } from "../../schemas/harness-config.js";
 
 const PLATFORM_ROOT = join(import.meta.dir, "..", "..");
 const SWEEP = join(PLATFORM_ROOT, "content", "pipeline", "qa-sweep.ts");
@@ -146,7 +147,7 @@ describe("readDeclaredFolioProfile — undetermined is not `paper`", () => {
   function folio(config?: string): string {
     const d = mkdtempSync(join(tmpdir(), "profile-scope-"));
     dirs.push(d);
-    if (config !== undefined) writeInstanceConfig(d, config, "utf-8");
+    if (config !== undefined) writeInstanceConfig(d, config);
     return d;
   }
 
@@ -258,7 +259,10 @@ describe("the sweep's profile gate, end to end", () => {
     // up to — and a test that changed two things at once would not show which
     // one the gate reacted to.
     const { root, blockRoot } = scaffoldFolio("document");
-    const configPath = instanceConfigPathIn(root);
+    // Named after the SLUG the scaffold declared, not after the temp
+    // directory it landed in: `folio_init` writes the declaration and the
+    // config together, and the declaration is what the filename comes from.
+    const configPath = join(root, instanceConfigFilename("cold-chain-guidance"));
     expect(readFileSync(configPath, "utf-8")).toContain("document");
     appendFileSync(configPath, "\n{ truncated", "utf-8");
     expect(readDeclaredFolioProfile(root).profile).toBeUndefined();

@@ -132,6 +132,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [A folio's README](readme-sections.html) | `readme-sections` | — | Two tools divide the file between them, and **between them no link in a folio |
 | [Render logging](render-logging.html) | `render-logging` | — | Owner, 2026-09-20: *"a specialised Logger skill for the gh-pages rendering |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn), |
+| [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
@@ -206,7 +207,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Proof Editor (Coordinator)](proof-editor.html) | `proof-editor` | — |  |
 | [Proof Exposition Review](proof-exposition-review.html) | `proof-exposition-review` | — |  |
 | [Proof Gap Audit](proof-gap-audit.html) | `proof-gap-audit` | — |  |
-| [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
+| [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](../folio-core/integration-watcher.md). |
 | [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | grep -rn ':= by \(rfl\\|trivial\\|True.intro\)' content/**/*.lean |
 | [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — | bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable |
 | [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
@@ -253,13 +254,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
 
-## Bootstrap (read before anything else is known)
+## CatBootstrap (read before anything else is known)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [Reading a knowledge graph before you have anything](bootstrap-kg-navigation.html) | `bootstrap-kg-navigation` | — | **This skill assumes a text editor and nothing else.** No MCP server, no |
+| [Reading a knowledge graph before you have anything](cat-bootstrap-kg-navigation.html) | `cat-bootstrap-kg-navigation` | — | **This skill assumes a text editor and nothing else.** No MCP server, no |
 | [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Initiator.** You may narrow; only the Requestor may decide. |
-| [discussion](discussion.html) | `discussion` | — | An agent that has just read `bootstrap/README.md` knows the shape of a |
+| [discussion](discussion.html) | `discussion` | — | An agent that has just read `cat-bootstrap/README.md` knows the shape of a |
 | [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
 
 ## RACI involvement model (methodologies/raci)

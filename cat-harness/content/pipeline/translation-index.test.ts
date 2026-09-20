@@ -65,7 +65,7 @@ function instance(
   config: Record<string, unknown> = { contentType: "document" },
 ): { root: string; dispose: () => void } {
   const root = mkdtempSync(join(tmpdir(), "translation-index-"));
-  writeInstanceConfig(root, JSON.stringify(config, null, 2), "utf-8");
+  writeInstanceConfig(root, JSON.stringify(config, null, 2));
   mkdirSync(join(root, SITE_DIR), { recursive: true });
   writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: t\n", "utf-8");
   for (const [rel, body] of Object.entries(files)) {

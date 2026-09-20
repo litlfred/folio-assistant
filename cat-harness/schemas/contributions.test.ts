@@ -40,7 +40,7 @@ beforeAll(() => {
      }`,
     "utf-8",
   );
-  writeInstanceConfig(dep, JSON.stringify({ contributes: "./contributions.ts" }), "utf-8");
+  writeInstanceConfig(dep, JSON.stringify({ contributes: "./contributions.ts" }));
 
   mkdirSync(join(TMP, "skills"), { recursive: true });
   writeInstanceConfig(TMP, JSON.stringify({ contentType: "document", dependencies: { folioAssistant: [{ name: "dep-sci", path: dep }] } }),
@@ -50,7 +50,7 @@ beforeAll(() => {
   // ── A dependency that declares a contributes module which is not there.
   const broken = join(TMP, "dep-broken");
   mkdirSync(broken, { recursive: true });
-  writeInstanceConfig(broken, JSON.stringify({ contributes: "./nope.ts" }), "utf-8");
+  writeInstanceConfig(broken, JSON.stringify({ contributes: "./nope.ts" }));
   const brokenRoot = join(TMP, "root-broken");
   mkdirSync(brokenRoot, { recursive: true });
   writeInstanceConfig(brokenRoot, JSON.stringify({ dependencies: { folioAssistant: [{ name: "dep-broken", path: broken }] } }),
@@ -170,7 +170,7 @@ describe("loadContributions — the Phase 0.1 gate", () => {
   it("a folio with no dependencies loads an empty registry, not an error", async () => {
     const bare = join(TMP, "bare");
     mkdirSync(bare, { recursive: true });
-    writeInstanceConfig(bare, JSON.stringify({ contentType: "document" }), "utf-8");
+    writeInstanceConfig(bare, JSON.stringify({ contentType: "document" }));
     const r = await loadContributions<FolioContribution, ContributionRegistry>(bare, new ContributionRegistry());
     expect(r.contributedKinds()).toEqual([]);
   });

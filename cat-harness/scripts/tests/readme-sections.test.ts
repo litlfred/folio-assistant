@@ -21,7 +21,7 @@ import {
   type SectionContext,
 } from "../../content/pipeline/readme-sections";
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc";
-import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance } from "../../test/support/instance-fixture.js";
 
 const dirs: string[] = [];
 
@@ -33,6 +33,11 @@ afterEach(() => {
 function folio(files: Record<string, string> = {}): string {
   const root = mkdtempSync(join(tmpdir(), "folio-sec-"));
   dirs.push(root);
+  // A config filename is composed from the instance's NAME, so a fixture that
+  // hands `folio()` a `FIXTURE_CONFIG` entry has to be an instance called
+  // `fixture` for that name to be the one anything looks for. Pinned rather
+  // than taken from the mkdtemp basename, which is random per run.
+  declareInstance(root, FIXTURE_INSTANCE);
   mkdirSync(join(root, "folio", "solo", "intro"), { recursive: true });
   writeFileSync(
     join(root, "folio", "solo", "solo.ts"),

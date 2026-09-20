@@ -23,7 +23,7 @@ binds you before you start.
 OWNER=<repo-owner>
 REPO=<repo-name>
 
-# Bootstrap the queue + ledger under beans/ (queue tracked as a bulk-JSON
+# CatBootstrap the queue + ledger under beans/ (queue tracked as a bulk-JSON
 # coordination queue; ledger gitignored — both survive branch switches)
 mkdir -p beans
 NAME="<your-watcher-name>"

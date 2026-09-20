@@ -15,6 +15,7 @@ import { join } from "node:path";
 
 import { ownDirectories, isKgOnlyDirectory, resolveDirectories } from "./cat-harness.js";
 import { resolveSkillDirs } from "./harness-config.js";
+import { writeInstanceConfig } from "../test/support/instance-fixture.js";
 
 const roots: string[] = [];
 afterAll(() => roots.forEach((r) => rmSync(r, { recursive: true, force: true })));
@@ -35,9 +36,11 @@ function instance(name: string, kgPath: string): string {
 }
 
 function dependsOn(root: string, dep: string, provides?: string[]): void {
-  writeFileSync(
-    // `root` is a FIXTURE instance root; its config belongs IN it.
-    join(root, "harness.config.json"),
+  // `root` is a FIXTURE instance root; its config belongs IN it, under the
+  // name `root`'s own `harness.json` declares — `instance()` above wrote one,
+  // and `writeInstanceConfig` reads that name rather than imposing a new one.
+  writeInstanceConfig(
+    root,
     JSON.stringify({
       dependencies: { folioAssistant: [{ name: "dep", path: dep, ...(provides ? { provides } : {}) }] },
     }),
@@ -148,7 +151,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
 describe("a REPOSITORY-scoped directory resolves against the repository", () => {
   /**
    * An instance nested one level inside a checkout, declaring a kg directory
-   * that lives BESIDE it rather than inside it — the `bootstrap/skills/` shape,
+   * that lives BESIDE it rather than inside it — the `cat-bootstrap/skills/` shape,
    * as a fixture, because the real tree has exactly one instance of it and an
    * assertion against the real tree would pin today's layout rather than the
    * rule.
@@ -176,7 +179,7 @@ describe("a REPOSITORY-scoped directory resolves against the repository", () => 
     // that is not there. Nothing threw: `resolveSkillDirs` existence-filters,
     // so the graph was dropped and the run reported clean over it. That is
     // `dh4f`, and in the real tree it is why `skill_fetch` answered "package
-    // not found" for every skill in `bootstrap/skills/` while the declaration
+    // not found" for every skill in `cat-bootstrap/skills/` while the declaration
     // naming them was present and correct.
     const { repo, inst } = nested("sibling", "repository");
     const dirs = ownDirectories({ name: "inst", root: inst, own: true });
@@ -203,8 +206,8 @@ describe("a REPOSITORY-scoped directory resolves against the repository", () => 
     // the dependency's checkout for the first time.
     const { repo, inst } = nested("sibling", "repository");
     const root = instance("scoped-root", "skills");
-    writeFileSync(
-      join(root, "harness.config.json"),
+    writeInstanceConfig(
+      root,
       JSON.stringify({ dependencies: { folioAssistant: [{ name: "dep", path: inst }] } }),
     );
     expect(resolveSkillDirs(root)).toEqual([join(root, "skills")]);

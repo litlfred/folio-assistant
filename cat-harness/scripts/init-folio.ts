@@ -36,6 +36,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { instanceConfigFilename } from "../schemas/harness-config";
 import { materialiseDeclaredDirectories } from "../schemas/harness-config";
+import { DECLARATION_FILENAME } from "../schemas/cat-harness";
 import { relative, dirname, join, resolve } from "path";
 import { spawnSync } from "child_process";
 
@@ -95,6 +96,54 @@ export function isValidSlug(slug: string): boolean {
 const RESERVED_SLUGS = new Set(["schema", "pipeline", "node_modules", "build"]);
 
 // ── Templates ────────────────────────────────────────────────────
+
+/**
+ * The instance DECLARATION — `harness.json`, and the reason the config beside
+ * it has the name it has.
+ *
+ * Writing `<slug>.config.json` without this was a `dh4f` in miniature: the
+ * file is on disk, and every reader answers "no config". A config filename is
+ * composed from the instance's NAME, and a name is something a directory only
+ * has by declaring one — `resolveHarnessConfigPath` refuses to guess a global
+ * filename back into existence, which is correct and which leaves an
+ * undeclared scaffold unconfigured in a way nothing reports.
+ *
+ * `directories` declares `folio/` and nothing else, which is not minimalism
+ * for its own sake. A folio's content root is the one directory the scaffold
+ * both CREATES and OWNS, and it is the only one whose meaning a dependent
+ * cannot get from anywhere else. `uploads/`, `library/`, `beans/` and the
+ * rest arrive two other ways — inherited from folio-assistant, which declares
+ * them `dependents: "reproduce"`, and present in the conventional set — and
+ * restating them here would be the same fact in two places, free to drift.
+ *
+ * Writing `directories: []` instead is a trap, and it is worth naming because
+ * it looks like the humbler choice. `ownDirectories` falls back to
+ * `DEFAULT_DIRECTORIES` only for a root with **no declaration at all**; an
+ * empty array is a declaration that the instance owns nothing, so adding a
+ * name would silently withdraw every convention the scaffold had before it.
+ */
+function instanceDeclaration(o: InitFolioOptions): string {
+  return JSON.stringify(
+    {
+      name: o.slug,
+      title: o.title,
+      directories: [
+        {
+          id: "folio",
+          // declared-path-literal: THE BASE CASE, same as `DEFAULT_DIRECTORIES`.
+          // This line IS the declaration being written; there is nothing to
+          // read it from in a repository that does not exist yet.
+          path: "folio/",
+          dependents: "reproduce",
+          graphs: ["folio"],
+          description: `The content of ${o.title} — its document, chapters and blocks.`,
+        },
+      ],
+    },
+    null,
+    2,
+  ) + "\n";
+}
 
 function harnessConfig(o: InitFolioOptions, assistant: string): string {
   return JSON.stringify(
@@ -524,6 +573,9 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   // Named after the folio, not after the harness: the config the scaffold
   // writes is THIS instance's, and `folio_init` is where a new instance's
   // name first becomes a filename (2026-09-20).
+  // The declaration comes FIRST, because it is what gives the next line's
+  // filename a meaning. See `instanceDeclaration` above.
+  write(DECLARATION_FILENAME, instanceDeclaration(o));
   write(instanceConfigFilename(o.slug), harnessConfig(o, assistant));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));

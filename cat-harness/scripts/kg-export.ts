@@ -148,13 +148,13 @@ const SKILL_IO_DIR = "schemas/skills";
  *
  * It walked the filesystem — every directory under the root to depth 4, minus
  * a skip list of *names*. That was right while this repository was the only
- * instance in the tree. `bootstrap/` is now a second one, with its own
+ * instance in the tree. `cat-bootstrap/` is now a second one, with its own
  * declaration, and the walk does not know that: measured 2026-09-19 on `main`,
  * `_kg/folio-assistant.jsonld` contained **88** references to
- * `Process_Bootstrap`. Bootstrap's process was being published as part of
+ * `Process_CatBootstrap`. CatBootstrap's process was being published as part of
  * folio-assistant's graph.
  *
- * The repair that suggests itself is `skip.add("bootstrap")` — a directory
+ * The repair that suggests itself is `skip.add("cat-bootstrap")` — a directory
  * name written in code, which is the defect `check:declared-paths` exists to
  * refuse, and which would need another line for every instance ever added.
  * Reading the declaration needs none: an instance's diagrams are the ones it
@@ -779,7 +779,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
       // `isSkillMd`, not a bare `.md` test. This carried its OWN copy of the
       // predicate — a third definition of "is this a skill" in a module whose
       // own header is about two definitions disagreeing — and it admitted
-      // `bootstrap/README.md` as a skill named `README` the moment a second
+      // `cat-bootstrap/README.md` as a skill named `README` the moment a second
       // knowledge-graph root existed. `skill-coverage.test.ts` caught it,
       // which is the only reason this is a comment rather than a published
       // graph node nobody could explain.
@@ -1041,7 +1041,7 @@ async function collectProcesses(doc: string, problems: string[], root: string = 
   // how a declaration stops meaning anything.
   //
   // REPO-RELATIVE, not absolute: this string is written into a COMMITTED
-  // artefact (`bootstrap/bootstrap.jsonld`), and an absolute path differs
+  // artefact (`cat-bootstrap/cat-bootstrap.jsonld`), and an absolute path differs
   // between a developer's machine and CI, so its staleness gate would fail
   // on a tree nobody touched.
   if (dirs.length === 0 && kgDirectories(root).length > 0) {
@@ -1287,7 +1287,7 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // EVERY declared `kg` root, not the literal `skills/` and not the first one
   // that answers. `kgRoots` is explicit that taking the first is the `dh4f`
   // defect arriving through the helper written to prevent it: a topical
-  // layout (`bootstrap/`, `crdm/`) would report a clean run over the roots
+  // layout (`cat-bootstrap/`, `crdm/`) would report a clean run over the roots
   // this never visited. First declaration of a role id wins, so a later root
   // cannot silently redefine one.
   const roles: RoleDef[] = [];
@@ -1325,14 +1325,14 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   // ── EMIT ONLY WHAT THIS INSTANCE DECLARES.
   //
   // `defaultGraphKinds` is the UNIVERSAL registry — every kind any layer
-  // defines. Emitting all of it into every instance's graph made `bootstrap`,
+  // defines. Emitting all of it into every instance's graph made `cat-bootstrap`,
   // whose whole premise is that it knows nothing yet, publish 16 GraphKind
   // nodes when its declaration names exactly ONE (`cat-harness`, across both
   // its directories). It advertised `folio`, `voices` and `library` — core's —
   // and `beans` and `todos` — cat-harness's — none of which it can reach.
   //
   // The comment below already recorded the layering ("`voices` and `library`
-  // are core's") without acting on it; this is the missing half. A bootstrap
+  // are core's") without acting on it; this is the missing half. A cat-bootstrap
   // that names a vocabulary it cannot resolve is the same defect as a `@type`
   // that does not dereference (`blv9`), one level up: the node is there, and
   // nothing behind it is.
@@ -1354,7 +1354,7 @@ function collectGraphKinds(root: string = ROOT): Node[] {
     return {
       // The instance sits in the SAME namespace as the class it instantiates,
       // which is not always the harness's: `cat-harness` and `schemas` are
-      // bootstrap's kinds, `voices` and `library` are core's. Derived from the
+      // cat-bootstrap's kinds, `voices` and `library` are core's. Derived from the
       // kind's own `type` rather than chosen here, so the two cannot drift.
       "@id": `${graphKindNamespace(name)}graphKind/${name}`,
       "@type": termIri("GraphKind"),
@@ -1386,7 +1386,7 @@ function collectGraphKinds(root: string = ROOT): Node[] {
  * instance: core had declared exactly one thing about itself, and the exporter
  * discarded it. The empty graph was manufactured here.
  *
- * This is also what makes the harness layer's floor checkable. Bootstrap owes
+ * This is also what makes the harness layer's floor checkable. CatBootstrap owes
  * its `.json`/`.jsonld` — *"that is its existence"* — and an existence claim
  * whose declared assets are dropped is thinner than the declaration that
  * produced it.
@@ -1498,7 +1498,7 @@ export const COLLECTOR_SCOPE = {
 } as const;
 
 /**
- * The nodes ANY declared instance contributes — bootstrap included.
+ * The nodes ANY declared instance contributes — cat-bootstrap included.
  *
  * ## Why this exists rather than a `--root` flag
  *

@@ -32,7 +32,7 @@ validation gate, the skills, and the shared work plan all named.
 
 Thirty-three BPMN 2.0 files, and **no longer all in one directory**: thirty-two
 under [`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
-and one under [`bootstrap/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/bootstrap/workflows)
+and one under [`cat-bootstrap/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/cat-bootstrap/workflows)
 (`bun -e 'console.log((await import("./scripts/known-skills.ts")).workflowFiles(process.cwd()).filter(f=>f.endsWith(".bpmn")).length)'`
 on 2026-09-19 — this line said "six", then "nineteen", then "thirty", then
 "thirty-two, all under `skills/workflows/`", each for long enough to be wrong,
@@ -46,11 +46,27 @@ throughout the docs are generated from these files by `bun run render:bpmn`;
 never hand-edit an SVG.
 
 **Before any of the rest** — the process a person meets first, and the only one
-that runs when there is no folio yet:
+that runs when there is no folio yet.
+
+This table named `bootstrap/workflows/bootstrap.bpmn` until 2026-09-20 — **a
+file that does not exist**, renamed to `initialize-harness.bpmn` long before —
+while all three real diagrams went unnamed. A dangling reference hiding behind a
+directory nothing scanned, which is exactly what the not-indexed check exists to
+catch and could not, because it could not see the directory either (bean `7u3g`).
+
+The rows are correct now. **The diagrams are still invisible to the tooling**,
+and deliberately so pending a decision: `bootstrap/workflows/` is declared by
+`bootstrap/harness.json` but not by the root, and declaring it there re-carries
+bootstrap's process into the root's published graph — which `#432` removed on
+purpose and a test still guards. Bean `pve3` holds that choice: **both halves of
+bootstrap, or neither.**
 
 | Diagram | Answers |
 |---------|---------|
-| `bootstrap/workflows/bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](../proposals/bootstrap.html) |
+| `cat-bootstrap/workflows/cat-bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`cat-bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/README.md) and the [proposal](../proposals/cat-bootstrap.html) |
+| `bootstrap/workflows/initialize-harness.bpmn` | An agent has been pointed at a repository and knows nothing. **The only process in bootstrap an actor STARTS** — an Initiator that has read `bootstrap/README.md` is at its start event and has nowhere else to begin. Three lanes: Initiator, Requestor, and the Knowledge Graph Data Store. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](../proposals/bootstrap.html) |
+| `bootstrap/workflows/discussion.bpmn` | Two facts have **no answer in any file an Initiator can reach** — which harness this repository should become, and which repositories are read from and written to. They are judgements held by whoever asked for the harness, so no instruction body produces them. Entered from within `initialize-harness` when such a fact is needed, which is why bootstrap holds a second process at all: it is *presupposed* by every task rather than indicated by one |
+| `bootstrap/workflows/log-message.bpmn` | **A sub-process, never an entry point** — reached by a call activity, never started, which is why bootstrap's README can still say there is one process you begin. Callable optionally from any task (an actor logging what it is doing needs no permission) or required by a diagram that draws the call explicitly; same sub-process either way, and the difference is whether the caller drew it. It lives in bootstrap rather than the harness because bootstrap may not import the harness, so a logger defined upstream would be unusable by the actor with the most need to say what it is doing |
 | `getting-started.bpmn` | Somebody said "create a folio". Which of the five things did they mean, and what has to be true before anything is written? |
 
 Its intent gateway is *computed*, not chosen: `decisions/folio-intent.dmn`
@@ -182,6 +198,7 @@ workflow's jobs and reading as complete.
 | `repository-health-watch.bpmn` | The same shape one level out — the repository rather than the workflows. **It reports and never acts**: there is no removal task on the diagram, and its absence is `deletion-requires-confirmation` being followed rather than an omission |
 | `jsonld-drift-check.bpmn` | Are the `.jsonld` siblings still in sync with their `.ts` manifests? **Deliberately small, and says so**: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one it carries no `<folio:job>`, so a job added here would tell nobody — not for exposition |
 | `atomic-mass-drift-check.bpmn` | Is `AtomicMass.lean` still in sync with its data table? The smallest workflow here and the one whose output a proof depends on: part company, and a Lean file that compiles is carrying numbers nothing produced. Same minimal-by-design note as above |
+| `pr-checks-present.bpmn` | Which open pull requests have **no CI run on their head** — bean `3pqn`. Measured 2026-09-20: two of six had none. The **15-minute age gate** is the difference between useful and ignored, since a head pushed moments ago legitimately has no run and reporting those is how a sweep gets muted. Only `unknown` fails the job; a finding records itself and the workflow stays green. Two channels: the issue **edited in place**, the PR comment **once per (PR, head sha)** |
 
 **The publish branch** — what is on `gh-pages`, and what happened to it. The
 branch has six publishers and one of them is a full replace, so "the preview

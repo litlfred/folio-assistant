@@ -277,15 +277,15 @@ jobs:
       - name: no undeclared files at the repository root
         run: bun run check:undeclared-files:check
 
-      # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
+      # `cat-bootstrap/cat-bootstrap.jsonld` HAD a staleness gate here, because it was
       # committed. It no longer is — it is built at render time into the
       # published site by `docs-site.yml` — so there is no committed copy to
       # go stale and nothing for a byte gate to compare against.
       #
       # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
       # assuming: the gate compared bytes, while every property it was
-      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
-      # against `buildBootstrapDocument()` — purity, id ordering, no absolute
+      # protecting is asserted directly in `scripts/tests/cat-bootstrap-graph.test.ts`
+      # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
       # build paths, skills derived from disk, graph kinds a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
       # the TypeScript job above already runs. Removing a check whose
@@ -420,6 +420,19 @@ jobs:
       - name: skill I/O schema addresses
         run: bun run kg:schema:check
 
+      # A WORKING validator that had lost its wiring — bean `shzs`. It validates
+      # every skill package manifest against `SkillPackageManifest` plus the
+      # `.claude/skills/` JSON, and it was in `package.json` once (two commits
+      # touched it there) and in no workflow now. That is `1xhc`'s class exactly:
+      # a gate that does not fire is indistinguishable from one that passed.
+      #
+      # Safe to wire because it is GREEN on this tree — 9 of 9 package manifests,
+      # 16 files, 0 errors — so this locks in a property the repo HAS rather than
+      # demanding work. Counted from the whole output, not from a `tail`: reading
+      # the last eight lines first made it look like 6 of 9, which was wrong.
+      - name: skill manifests and framework JSON
+        run: bun run check:skills
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
@@ -539,6 +552,11 @@ jobs:
           bun run check:kind-validators
           bun run check:actor-reach
           bun run check:harness-dirs
+          # One config per instance: `<name>.config.json` at the
+          # instantiation root. This repository instantiates more than
+          # one harness, so a single `harness.config.json` at the repo
+          # root had become an answer to a question with two answers.
+          bun run check:instance-config
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render
