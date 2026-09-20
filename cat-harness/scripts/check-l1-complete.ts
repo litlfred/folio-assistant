@@ -646,7 +646,14 @@ export interface NotDerivable {
 }
 
 export const NOT_DERIVABLE: readonly NotDerivable[] = [
-  { name: "audio-transcripts", bean: "1r0p", probe: "transcript.json" },
+  // `transcript`, NOT `transcript.json`. `1r0p`'s own Done-when says
+  // `library/<slug>/transcript/` holds the source-language transcript and
+  // each translation — a DIRECTORY. The first probe here guessed a filename
+  // and would therefore never have fired, which is a gate that cannot fail:
+  // the precise class of defect this probe was added to prevent, reproduced
+  // two PRs later by the person who added it. Read from the bean, not from
+  // the shape a sidecar usually takes.
+  { name: "audio-transcripts", bean: "1r0p", probe: "transcript" },
 ];
 
 /**
