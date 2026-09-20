@@ -151,6 +151,34 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    id: "library",
+    name: "Grumpy cat, librarian",
+    description: "Storm slate and a cool cream, behind the cat with the books.",
+    palette: {
+      // Sampled from the art rather than chosen: a 7px grid over the square crop
+      // gives #e4e4e4 / #e4e4d8 for the cloud at 20% of the frame, and a slate
+      // family — #6c8490, #78849c, #78909c, #90a8b4 — for the rain and the
+      // library behind it. The values below sit inside those clusters.
+      surface: "#e8e8e0", ink: "#1c2630", edge: "#c2ccd4",
+      // A slate blue, clear of the literal red and amber the critical/high
+      // priority stripes carry, so urgency still reads the same on this board.
+      // 3.98:1 against `surface` — past the 3:1 SC 1.4.11 floor for a non-text
+      // channel, which is what the stripe is.
+      accent: "#5c7484",
+    },
+    backdrop: {
+      imageRole: "landing-library",
+      // Measured over PURE BLACK like the others: 9.97:1 for this ink, 12.72:1
+      // over white. This art has the widest tonal range of the three — a
+      // near-black 4% of the frame beside lamplight — so the dark end is real.
+      scrim: "rgba(232, 232, 224, 0.90)",
+      description:
+        "The instance's declared librarian art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
     id: "high-contrast-light",
     name: "High contrast, light",
     description: "Black on white. No gradation, by design.",

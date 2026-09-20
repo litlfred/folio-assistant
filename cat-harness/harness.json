@@ -119,6 +119,37 @@
       "title": "The architect, square",
       "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content."
     }
+  ,
+    {
+      "id": "landing-library-laptop",
+      "src": "docs/assets/img/harness/landing-library-laptop.png",
+      "role": "landing-library",
+      "layout": "laptop",
+      "width": 1669,
+      "height": 942,
+      "title": "The librarian, wide",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    },
+    {
+      "id": "landing-library-mobile",
+      "src": "docs/assets/img/harness/landing-library-mobile.png",
+      "role": "landing-library",
+      "layout": "mobile",
+      "width": 1024,
+      "height": 1536,
+      "title": "The librarian, tall",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    },
+    {
+      "id": "landing-library-card",
+      "src": "docs/assets/img/harness/landing-library-card.png",
+      "role": "landing-library",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The librarian, square",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    }
   ],
   "assets": [
     {
