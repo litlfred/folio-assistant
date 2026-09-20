@@ -92,6 +92,7 @@ The vocabulary is **open**, and split across two layers.
 | `todo-feedback` | **harness** | feedback items — todos raised against a specific block, carrying the submitter's identity. Read by `todo-review`. | no |
 | `fsh-guts` | **harness** | deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. | **no, on purpose** |
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
+| `catalogue` | **harness** | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
 | `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
 | `voices` | **harness** | editorial voice profiles — one JSON each, `"$schema": "folio-voice/v1"`. Every rule cites its source. **Opt-in**: shipping a voice does not apply it. | no |
 | `translation-sources` | **harness** | the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; there is deliberately **no kind for the rendered output**. Read with the [`translation-manager`](translation-manager.md) skill; shape in `schemas/translation.ts`. | no |
@@ -316,7 +317,7 @@ that wants its knowledge graph somewhere other than `kg/` redeclares the `kg`
 id with a different path:
 
 ```jsonc
-{ "id": "kg", "path": "graph/knowledge/", "graph": "kg" }
+{ "id": "kg", "path": "graph/knowledge/", "graphs": ["kg"] }
 ```
 
 Matching on path instead would make two knowledge graphs out of one
@@ -341,11 +342,18 @@ every consumer scans nothing and reports a clean run over it — the same defect
 bean `dh4f` found in thirty pipeline scripts, where three were passing over a
 corpus they could not read.
 
-This repository's own declaration is the worked example. It is **pre-split**,
-so it declares `schemas/` and `skills/` — which exist — and deliberately does
-**not** declare `tools/`, `kg/` or `folio/`, which do not exist here yet. Note
-also that its `kg` id points at `skills/`: ids are stable across a relocation,
-paths are not.
+This repository's own declaration is the worked example, and **no count is
+given here on purpose**: `harness.json` is the list. That sentence said
+"declares `schemas/` and `skills/`" until 2026-09-20, by which point it
+declared **twenty-one** directories — a number in prose is a claim, and this
+one had been false for long enough that `AGENTS.md` carries its own flagged
+copy of the same rot.
+
+What is still true and worth reading off it: its `cat-harness` id points at
+`skills/` — **ids are stable across a relocation, paths are not** — and it
+declares nothing it does not have. A `library` entry appears in `who-iris`'s
+declaration only when the corpus moves there, because a declared-but-absent
+directory makes every consumer scan nothing and report a clean run over it.
 
 ## Naming — one fixed config, stub-named artefacts (STRICT)
 
@@ -539,7 +547,7 @@ Either way the definition is `@type` IRI + `renderable` + summary, and the
 JSON-LD projection and the reverse lookup both derive from it. A kind added
 without deciding `renderable` will not compile.
 
-Note the declaration's `graph` field is validated **against the registry at
+Note the declaration's `graphs` field is validated **against the registry at
 read time**, not by a closed Zod enum. An enum would be built at module load —
 before core has registered `folio` — so it would reject the one kind the entire
 rendering pipeline depends on.

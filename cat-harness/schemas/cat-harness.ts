@@ -2150,10 +2150,20 @@ export function renderableDirectories(
  * convention as a fallback say so at their own call site, where the choice
  * is visible.
  *
- * Returns the FIRST declaration carrying the graph. A graph declared by two
- * directories is legal — `cat-harness` is, by `schemas/` and `skills/` — so a
- * caller wanting all of them resolves the list itself; this is the accessor
- * for the single-home case, which is every other graph kind here.
+ * Returns the FIRST declaration carrying the graph. A graph declared by
+ * several directories is legal and increasingly common — measured 2026-09-20,
+ * `schemas` is declared by THREE (`schemas/`, `folio-assistant-core/schemas/`,
+ * `large-datasets/schemas/`) and `cat-harness` by five — so a caller that
+ * wants all of them must use {@link directoriesForGraph}.
+ *
+ * **Reaching for this one when a graph has several homes is a live defect
+ * shape, not a hypothetical.** It cost three separate bugs in one day:
+ * `check-tools.ts` scanned `kgRoots(ROOT)[0]` and reported a real skill as
+ * dangling; `workflow-skill-refs.test.ts` hardcoded five directories and had
+ * been blind to three packages for months; and `schema-nodes.ts` gated one of
+ * three `schemas` directories, leaving modules in the other two silently
+ * absent from the published graph. Prefer the plural accessor unless the
+ * single-home case is genuinely what you mean.
  */
 export function directoryForGraph(
   root: string,
@@ -2163,6 +2173,25 @@ export function directoryForGraph(
   return resolveDirectories([{ name: "(local)", root, own: true }], registry).find((d) =>
     d.graphs.includes(graph as GraphKind),
   )?.absPath;
+}
+
+/**
+ * EVERY directory carrying a graph, in declaration order.
+ *
+ * The plural of {@link directoryForGraph}, and the one to reach for by
+ * default. A graph with one home returns a single-element array, so a caller
+ * written against this is correct before and after a second home appears —
+ * which is the whole point, since every bug listed on `directoryForGraph` was
+ * a caller that was correct until one did.
+ */
+export function directoriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string[] {
+  return resolveDirectories([{ name: "(local)", root, own: true }], registry)
+    .filter((d) => d.graphs.includes(graph as GraphKind))
+    .map((d) => d.absPath);
 }
 
 // ── Graph projection ────────────────────────────────────────────

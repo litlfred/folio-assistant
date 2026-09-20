@@ -186,6 +186,16 @@
       ]
     },
     {
+      "id": "detangle-schemas",
+      "path": "detangle/schemas/",
+      "scope": "repository",
+      "description": "The detangle criterion's schema node -- size, cohesion, inbound/outbound and the enforced/recorded edge authority that decides whether a boundary's direction is a fact or a filing decision. Repository-scoped, staged ahead of the split. UNDECLARED until 2026-09-20 although committed days earlier, which is the dh4f defect in reverse: graph content no declaration mentioned, so every declaration-driven consumer scanned past it -- including `check:schema-nodes`, the gate whose whole job is to stop a schema being silently absent.",
+      "graphs": [
+        "schemas",
+        "cat-harness"
+      ]
+    },
+    {
       "id": "cat-harness",
       "path": "skills/",
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",
