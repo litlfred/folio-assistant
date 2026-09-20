@@ -39,7 +39,6 @@
     {
       "id": "logger",
       "title": "Logger",
-      "summary": "Receives what an actor says it is doing. Records; decides nothing.",
       "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
       "actorKinds": [
         "system"
