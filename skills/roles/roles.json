@@ -259,13 +259,15 @@
       ],
       "lanes": [
         "Publication manager",
-        "Publication manager — deploy and seed"
+        "Publication manager — deploy and seed",
+        "Human signer"
       ],
       "skills": [
         "content-publish",
         "content-review",
         "ig-publication",
-        "decision-audit"
+        "decision-audit",
+        "qa-report-signing"
       ],
       "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them.",
       "voice": "Release-shaped: what ships, what is held, what authorised it. Dates and refs, not adjectives.",
@@ -667,6 +669,20 @@
       "skills": [
         "fhir-validation",
         "ig-publication"
+      ]
+    },
+    {
+      "id": "attestation-service",
+      "title": "Attestation service",
+      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
+      "actorKinds": [
+        "system"
+      ],
+      "lanes": [
+        "Attestation service (API)"
+      ],
+      "skills": [
+        "qa-report-signing"
       ]
     },
     {

@@ -149,6 +149,28 @@ export interface ActorDefinition {
    * lane's role.
    */
   capabilities: string[];
+  /**
+   * What this participant can reach off its own machine — `internet`,
+   * `egress-restricted` or `air-gapped`.
+   *
+   * The same vocabulary the deployment declares ({@link Topology.network} in
+   * `cat-harness.ts`), at the level the owner asked for it: *"some of the
+   * machine actors may be air-gapped, it is a property of an actor"*.
+   *
+   * It is not a capability, and the distinction is the one bean `ind9`
+   * settled. A capability is an ENVIRONMENT PROBE — `detection: { method:
+   * "command", … }`, a thing you run to find out. Reach is an architectural
+   * fact about the host, declared by whoever built the site; probing for it
+   * would ask the network a question the network is precisely unable to
+   * answer on an air-gapped box, where the probe is indistinguishable from
+   * an outage. Capabilities that *need* egress say so with `requires`
+   * instead — see `.claude/skills/capabilities/network-egress.json`.
+   *
+   * Absent means UNDECLARED, which is not `internet`. Composition with the
+   * deployment value — asymmetric, and `unknown` as a third state — is in
+   * `schemas/actor-reach.ts`.
+   */
+  reach?: NetworkReach;
   /** Arbitrary metadata (e.g., MCP endpoint, config path). */
   meta?: Record<string, unknown>;
 }
@@ -313,6 +335,7 @@ export interface SkillValidator {
  * with their data models.
  */
 import type { ActorKind, LifecycleStage, SkillPackageManifest } from "./skill-package.js";
+import type { NetworkReach } from "./cat-harness.js";
 
 export interface SkillSchemaRef {
   /** Schema module (e.g., "schemas/types", "schemas/formalization-types"). */

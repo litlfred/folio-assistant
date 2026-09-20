@@ -1,10 +1,11 @@
 ---
 # folio-assistant-r0rq
 title: 'SIGNING: two routes — API signer vs human signer, branching on an actor''s reach'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T03:12:36Z
-updated_at: 2026-09-20T03:12:36Z
+updated_at: 2026-09-20T03:39:05Z
 parent: folio-assistant-ahvw
 ---
 

@@ -100,6 +100,7 @@ import { z } from "zod";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
+import { NETWORK_REACHES, type NetworkReach } from "./cat-harness";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
 export const ROLE_GRAPH_DIR = "roles";
@@ -479,6 +480,21 @@ export interface LoadedActor extends ActorDef {
   capabilities?: string[];
   /** Permission ids — what it may do. See {@link readPermissions}. */
   permissions?: string[];
+  /**
+   * What this participant can reach off its own machine.
+   *
+   * Carried on `LoadedActor` rather than on the thin {@link ActorDef} on
+   * purpose. That interface is identity only — *"everything about what it
+   * can do belongs to the role it takes on"* — and reach is not what the
+   * actor **does**; it is a fact about **where it sits**, exactly like the
+   * `capabilities` its machine has. Putting it on `ActorDef` would recreate
+   * the confusion that module exists to end; putting it beside
+   * `capabilities` is where the environment facts already live.
+   *
+   * Absent means UNDECLARED, which is not `internet`. See
+   * `schemas/actor-reach.ts` for how it composes with the deployment's.
+   */
+  reach?: NetworkReach;
   /** The file it came from, so a finding can name it. */
   path: string;
   /** Carries `inherits` — i.e. it is modelling a role, not an actor. */
@@ -505,6 +521,25 @@ function actorKindOf(raw: Record<string, unknown>, path: string): ActorKind {
   return raw.type === "person" ? "person" : "system";
 }
 
+/**
+ * An actor's declared reach, or `undefined` when it declares none.
+ *
+ * An unrecognised value throws, for the reason {@link actorKindOf} throws:
+ * a typo read permissively would route a signing task to an API the machine
+ * cannot call, and the failure would surface as a network error rather than
+ * as the declaration mistake it is.
+ */
+function actorReachOf(raw: Record<string, unknown>, path: string): NetworkReach | undefined {
+  if (raw.reach === undefined) return undefined;
+  if (typeof raw.reach !== "string" || !(NETWORK_REACHES as readonly string[]).includes(raw.reach)) {
+    throw new Error(
+      `${path}: reach ${JSON.stringify(raw.reach)} is not a network reach. ` +
+        `One of: ${NETWORK_REACHES.join(", ")}.`,
+    );
+  }
+  return raw.reach as NetworkReach;
+}
+
 export function readActors(actorsDir: string): LoadedActor[] {
   if (!existsSync(actorsDir)) return [];
   const out: LoadedActor[] = [];
@@ -524,6 +559,7 @@ export function readActors(actorsDir: string): LoadedActor[] {
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
       capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,
       permissions: Array.isArray(raw.permissions) ? (raw.permissions as string[]) : undefined,
+      reach: actorReachOf(raw, p),
       path: p,
       looksLikeRole: Array.isArray(raw.inherits) && raw.inherits.length > 0,
     });

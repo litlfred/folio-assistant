@@ -321,8 +321,13 @@ describe("the actor kind is three-way: human, agentic, mechanical", () => {
     // registry schema, which — unlike `readActors` — has no fallback. Its own
     // description settles the classification: "a mechanical participant … it
     // runs a fixed program and exercises no judgement".
+    // `attestation-service` (bean `folio-assistant-r0rq`) is mechanical for
+    // the same reason: it holds a key and signs what it is given. The lane
+    // that exercises judgement about whether a report SHOULD be signed is the
+    // human one, and the two are separate lanes precisely so that is visible.
     expect(by("system")).toEqual([
-      "ci-health-watcher", "ci-pipeline", "ig-publisher-service", "lean-mcp",
+      "attestation-service", "ci-health-watcher", "ci-pipeline",
+      "ig-publisher-service", "lean-mcp",
     ]);
   });
 
