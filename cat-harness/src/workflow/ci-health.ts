@@ -999,3 +999,142 @@ export function selfSupersedes(
   }
   return out;
 }
+
+/**
+ * Everything the caller managed to learn about the Pages deployments.
+ *
+ * Two independent questions, so two independent "could not look" fields. The
+ * runs and the publish-branch commits come from different endpoints and either
+ * can fail alone; one reason field would make a failure of one silence the
+ * other, which is the `xom7` shape at the level of the report itself.
+ */
+export interface PagesReport {
+  /** Absent when {@link PagesReport.unreachable} says why. */
+  health?: PagesHealth;
+  /** Why the deployment runs could not be read. Never rendered as green. */
+  unreachable?: string;
+  /**
+   * The branch the deployments actually ran against — **measured** from the
+   * runs, never assumed. `/repos/{slug}/pages` would say it outright and
+   * answers 403 without admin (checked 2026-09-20), so the publish branch is
+   * read off `head_branch`. A repository publishing from `main` or from a
+   * `docs/` folder therefore reports its own branch rather than a guess.
+   */
+  publishBranch?: string;
+  supersedes?: SelfSupersede[];
+  /** Why the publish-branch commits could not be read. */
+  commitsUnreachable?: string;
+  /** The span the commits covered, for the same reason the CI window exists. */
+  window?: Window;
+}
+
+/**
+ * The Pages section, rendered separately from {@link render} **on purpose**.
+ *
+ * `render` returns early when the default-branch API was unreachable and again
+ * when that branch had no runs. Folding this in would let a failure to read
+ * `main` silence a question about `gh-pages` — two independent facts collapsed
+ * into one verdict, which is the defect the whole module exists to prevent.
+ * Separate functions make that structurally impossible rather than carefully
+ * avoided.
+ *
+ * ## It reports; it does not grade a share
+ *
+ * Measured 2026-09-20 on this repository: **52 of the last 100** deployments
+ * cancelled, 48 succeeded, none failed. That is bad, and no number here says
+ * how bad, because no basis for a threshold exists — the same argument that
+ * stopped `6xaz` inventing one. The counts are stated and the reader judges.
+ *
+ * The one graded statement is a FLOOR rather than a threshold: deployments
+ * happened and **not one of them succeeded**. That is answerable without
+ * calibration, exactly as `-z` on `ls -A` is in `oisv`.
+ */
+export function renderPages(r: PagesReport): string {
+  const lines = ["## Pages deployments", ""];
+  lines.push(
+    "_A Pages build outcome is not repository state — it is a fact GitHub holds_",
+    "_about this repository, asked fresh every run and cached nowhere._",
+    "",
+  );
+  if (r.unreachable || !r.health) {
+    lines.push(
+      `**Not checked — treat as unknown, not as green.** ${r.unreachable ?? "no deployment runs were fetched."}`,
+      "",
+      "The previews may or may not be building. Nothing here can tell you which.",
+      "",
+    );
+    return lines.join("\n");
+  }
+  const h = r.health;
+  const on = r.publishBranch ? ` on \`${r.publishBranch}\`` : "";
+  if (h.total === 0) {
+    // NOT a green. A repository with no Pages, and a repository whose
+    // deployments this failed to see, look identical from here.
+    lines.push(
+      `_No \`${PAGES_WORKFLOW}\` runs in the window${on}._ Unjudged, not green —`,
+      "a repository that publishes nothing and one whose deployments went",
+      "unseen read the same from here.",
+      "",
+    );
+    return lines.join("\n");
+  }
+  lines.push(
+    `_Window: ${r.window ? describeWindow(r.window) : `${h.total} recent deployments`}${on}._`,
+    "",
+  );
+  lines.push(
+    `- ✓ **${h.success}** succeeded`,
+    `- ❔ **${h.cancelled}** cancelled — *neither shipped nor broken*: a superseded`,
+    "  build leaves the previous preview in place, so the site is stale rather",
+    "  than down, and nobody is sent to fix anything.",
+    `- ✗ **${h.failure}** failed`,
+    `- ⏳ **${h.unsettled}** not settled`,
+    "",
+  );
+  if (h.success === 0) {
+    // The floor. No calibration needed to say that nothing got through.
+    lines.push(
+      `**Not one of ${h.total} deployments succeeded.** The published site is`,
+      "whatever the last successful build left, and that is older than this window.",
+      "",
+    );
+  }
+  if (r.commitsUnreachable) {
+    lines.push(
+      `_Could not read the publish branch's commits (${r.commitsUnreachable}), so_`,
+      "_the cancellations below are uncategorised — not absent._",
+      "",
+    );
+    return lines.join("\n");
+  }
+  const self = r.supersedes ?? [];
+  if (self.length === 0) {
+    lines.push(
+      "No deployment superseded its own slug in the window — whatever cancelled",
+      "these builds, it was not one workflow pushing twice (`bm6d`).",
+      "",
+    );
+    return lines.join("\n");
+  }
+  // WHOSE contention. `bm6d` fixed one workflow pushing twice; `6pfo` is
+  // several sessions racing for one ref, and is not fixed. A merged count
+  // cannot show whether the first fix held, which is why these are named.
+  const bySlug = new Map<string, number>();
+  for (const s of self) bySlug.set(s.slug, (bySlug.get(s.slug) ?? 0) + 1);
+  lines.push(
+    `**${self.length}** cancellation(s) were self-inflicted: one deploy pushed`,
+    "twice and cancelled its own build. That is `bm6d`'s signature, and a slug",
+    "still showing it is running a workflow from before that fix.",
+    "",
+  );
+  for (const [slug, n] of [...bySlug.entries()].sort((a, b) => b[1] - a[1])) {
+    lines.push(`- \`${slug}\` — ${n}`);
+  }
+  lines.push(
+    "",
+    "Cancellations NOT listed here are several sessions racing for the publish",
+    "ref (`6pfo`), which is a different fix and is not done.",
+    "",
+  );
+  return lines.join("\n");
+}

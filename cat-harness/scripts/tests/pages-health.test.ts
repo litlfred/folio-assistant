@@ -33,9 +33,11 @@ import { describe, expect, test } from "bun:test";
 import {
   PAGES_WORKFLOW,
   pagesHealth,
+  renderPages,
   selfSupersedes,
   slugOfDeployCommit,
   type DeployCommit,
+  type PagesReport,
   type RunSummary,
 } from "../../src/workflow/ci-health";
 
@@ -295,5 +297,153 @@ describe("selfSupersedes — this repo's own contention, not a sibling's", () =>
   test("an empty or single-commit history finds nothing", () => {
     expect(selfSupersedes([])).toHaveLength(0);
     expect(selfSupersedes([c("aaa", "staging(eroyaz): from abc", "2026-09-20T12:00:00Z")])).toHaveLength(0);
+  });
+});
+
+describe("renderPages — what it refuses to say", () => {
+  const ok = (over: Partial<PagesReport> = {}): PagesReport => ({
+    health: { total: 10, success: 10, cancelled: 0, failure: 0, unsettled: 0 },
+    publishBranch: "gh-pages",
+    supersedes: [],
+    ...over,
+  });
+
+  test("an unreachable API is never rendered as green", () => {
+    // The `xom7` rule, one level up. A section that goes quiet when it cannot
+    // see reads as reassurance.
+    const out = renderPages({ unreachable: "GitHub API returned 403" });
+    expect(out).toContain("treat as unknown, not as green");
+    expect(out).toContain("403");
+    expect(out).not.toMatch(/✓/);
+  });
+
+  test("zero deployments is unjudged, not clean", () => {
+    // A repository that publishes nothing and one whose deployments went
+    // unseen are indistinguishable from here, so it says the weaker thing.
+    const out = renderPages(ok({ health: { total: 0, success: 0, cancelled: 0, failure: 0, unsettled: 0 } }));
+    expect(out).toContain("Unjudged, not green");
+    expect(out).not.toMatch(/✓ \*\*0\*\* succeeded/);
+  });
+
+  test("it states the cancelled count and grades no share", () => {
+    // Measured 2026-09-20: 51 of 100 cancelled. That is bad and nothing here
+    // says how bad, because no basis for a threshold exists — the argument
+    // that stopped `6xaz` inventing one. No percentage, no verdict word.
+    const out = renderPages(
+      ok({ health: { total: 100, success: 49, cancelled: 51, failure: 0, unsettled: 0 } }),
+    );
+    expect(out).toContain("**51** cancelled");
+    expect(out).not.toMatch(/\d+%/);
+    expect(out).not.toMatch(/\bunhealthy\b|\bRED\b|\btoo many\b/);
+  });
+
+  test("but a floor IS graded: deployments happened and none succeeded", () => {
+    // Answerable without calibration, exactly as `-z` on `ls -A` is in `oisv`.
+    const out = renderPages(
+      ok({ health: { total: 8, success: 0, cancelled: 8, failure: 0, unsettled: 0 } }),
+    );
+    expect(out).toContain("Not one of 8 deployments succeeded");
+  });
+
+  test("...and that floor does not fire when something got through", () => {
+    const out = renderPages(
+      ok({ health: { total: 8, success: 1, cancelled: 7, failure: 0, unsettled: 0 } }),
+    );
+    expect(out).not.toContain("Not one of");
+  });
+
+  test("unreadable commits leave the counts standing and say what is missing", () => {
+    // The two questions fail separately. Dropping the whole section because
+    // the SPLIT could not be computed would hide counts that were read fine.
+    const out = renderPages(
+      ok({
+        health: { total: 10, success: 4, cancelled: 6, failure: 0, unsettled: 0 },
+        commitsUnreachable: "GitHub API returned 409 for commits",
+        supersedes: undefined,
+      }),
+    );
+    expect(out).toContain("**6** cancelled");
+    expect(out).toContain("uncategorised — not absent");
+    expect(out).not.toContain("self-inflicted");
+  });
+
+  test("self-inflicted cancellations are named by slug, not merged into a count", () => {
+    // `bm6d` (one workflow pushing twice, fixed) and `6pfo` (sessions racing
+    // for the ref, not fixed) are different repairs. A merged count cannot
+    // show whether the first held; a named slug says which branch is still
+    // running the old workflow.
+    const out = renderPages(
+      ok({
+        health: { total: 10, success: 4, cancelled: 6, failure: 0, unsettled: 0 },
+        supersedes: [
+          { slug: "aaa", by: "1", superseded: "0", secondsApart: 9 },
+          { slug: "aaa", by: "3", superseded: "2", secondsApart: 9 },
+          { slug: "bbb", by: "5", superseded: "4", secondsApart: 10 },
+        ],
+      }),
+    );
+    expect(out).toContain("**3** cancellation(s) were self-inflicted");
+    expect(out).toContain("`aaa` — 2");
+    expect(out).toContain("`bbb` — 1");
+    expect(out).toContain("6pfo"); // the rest are pointed somewhere, not dropped
+  });
+
+  test("no self-supersede says so rather than going quiet", () => {
+    // Silence would read as "not checked". This is the measurement that shows
+    // `bm6d`'s fix holding, so it has to be stated when it is clean.
+    const out = renderPages(ok({ health: { total: 10, success: 4, cancelled: 6, failure: 0, unsettled: 0 } }));
+    expect(out).toContain("No deployment superseded its own slug");
+    expect(out).toContain("bm6d");
+  });
+
+  test("every state in the breakdown is printed, including the empty ones", () => {
+    // Four survivors in one mutation pass: dropping the success, failure or
+    // unsettled line changed nothing any test could see. That is the third-
+    // state discipline failing inside the function written for it — a real
+    // Pages FAILURE could vanish from the report and only the two states the
+    // author happened to care about would remain.
+    //
+    // Printed even at zero, on purpose. `✗ 0 failed` is a measurement; a
+    // missing line is an absence the reader fills in themselves.
+    const out = renderPages(
+      ok({ health: { total: 4, success: 1, cancelled: 1, failure: 1, unsettled: 1 } }),
+    );
+    for (const line of ["**1** succeeded", "**1** cancelled", "**1** failed", "**1** not settled"]) {
+      expect(out).toContain(line);
+    }
+    const zeros = renderPages(
+      ok({ health: { total: 2, success: 2, cancelled: 0, failure: 0, unsettled: 0 } }),
+    );
+    for (const line of ["**0** cancelled", "**0** failed", "**0** not settled"]) {
+      expect(zeros).toContain(line);
+    }
+  });
+
+  test("the section says the number is not cached", () => {
+    // The owner's correction, 2026-09-20: *"they are not. changes status of
+    // repo. tools need to look external."* A reader who believes this figure
+    // is repository state will trust a stale one — which is `xom7` with extra
+    // steps. Pinned as a claim rather than as wording: the substance is that
+    // it was asked externally and stored nowhere.
+    const out = renderPages(ok());
+    expect(out).toMatch(/not repository state/);
+    expect(out).toMatch(/cached nowhere/);
+  });
+
+  test("the publish branch is reported, never assumed", () => {
+    // `/repos/{slug}/pages` answers 403 without admin (checked 2026-09-20),
+    // so the branch is read off the runs. A repo publishing from `main` must
+    // say `main`, or the reader checks the wrong ref.
+    expect(renderPages(ok({ publishBranch: "main" }))).toContain("`main`");
+    expect(renderPages(ok({ publishBranch: "main" }))).not.toContain("gh-pages");
+  });
+
+  test("the window is stated, because a page of runs is not a period", () => {
+    // Same rule the CI section already follows: 100 deployments spanned 2.6h
+    // here. A reader given only a count reads it as a verdict on the repo.
+    const out = renderPages(
+      ok({ window: { runs: 100, from: "2026-09-20T14:50:58Z", to: "2026-09-20T17:29:03Z" } }),
+    );
+    expect(out).toMatch(/Window:.*100 recent run/);
   });
 });
