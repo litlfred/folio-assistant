@@ -251,21 +251,21 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T10:52:40.923Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/39a361a8799ceda379ec27806d42fddfad2cea72",
-  "sourceCommitSha": "39a361a8799ceda379ec27806d42fddfad2cea72",
-  "sourceCommitAt": "2026-09-20T12:51:14+02:00",
+  "generatedAt": "2026-09-20T11:06:15.142Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/883907da32b82c026e3460b5a28c1d82ac0555c6",
+  "sourceCommitSha": "883907da32b82c026e3460b5a28c1d82ac0555c6",
+  "sourceCommitAt": "2026-09-20T13:04:54+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 190,
+    "Skill": 192,
     "Actor": 27,
-    "Capability": 25,
+    "Capability": 26,
     "Role": 116,
     "Convention": 2,
     "SkillPackage": 9,
-    "Process": 41,
-    "SequenceFlow": 549,
-    "ProcessNode": 512,
+    "Process": 42,
+    "SequenceFlow": 558,
+    "ProcessNode": 521,
     "Tool": 51,
     "Schema": 63,
     "GraphKind": 20,
@@ -1065,6 +1065,21 @@
       ],
       "instructionsPath": "skills/folio-core/content-acquisition.md",
       "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/data-modelling",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "data-modelling",
+      "title": "Data modelling — the entities, before the fields",
+      "description": "Build a data model: identify the entities a body of work is actually about, the relations between them, and the cardinalities — then declare it where the tools can read it. Process-agnostic technique; the CRDM phase that invokes it is `crdm-data-model`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/data-modelling.md",
+      "instructionLines": 113,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -2026,6 +2041,21 @@
       ],
       "instructionsPath": "skills/folio-core/block-density.md",
       "instructionLines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-data-model",
+      "title": "CRDM — the data-modelling phase",
+      "description": "The CRDM data-modelling phase — when in the requirements process a model is built, what it is built from, who confirms it, and what it hands to the phases either side. The technique it invokes is `data-modelling`; this skill carries only the sequencing and the sign-off.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/crdm-data-model.md",
+      "instructionLines": 84,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3663,6 +3693,17 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/deploy-access",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "deploy-access",
+      "name": "Deployment Access",
+      "description": "Credentials and configuration to deploy this instance — the OAuth client id/secret and cookie secret that deploy/.env holds. Probed by CONFIGURATION rather than by attempting a deployment, the same reading signing-api takes: a probe that tried to deploy would be indistinguishable from an outage, and would act on an external host just to answer a question about setup. The path is not invented — deploy/deploy.sh gates on exactly this file ([ ! -f \"$DEPLOY_DIR/.env\" ]) before it will run, so the probe agrees with the script it describes. Declared 2026-09-20, bean folio-assistant-q6ud: it was referenced by deployment-auth and declared by nothing, which executing the degradation model found on its first run.",
+      "detection": {
+        "method": "file-exists",
+        "path": "cat-harness/deploy/.env"
+      }
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/ig-publisher",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
       "localId": "ig-publisher",
@@ -4204,12 +4245,14 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/covered-is-not-reachable",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-comparison",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/delivery-summary",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deployment-auth",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/detangler-integration-watcher",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/devils-advocate-watcher",
@@ -12608,6 +12651,228 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "CRDM data model",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/crdm-data-model.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/Start_Process_CRDM_DataModel"
+      ],
+      "nodeCount": 8,
+      "flowCount": 8
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/Start_Process_CRDM_DataModel",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Entities",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Relations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Relations",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/BA_ConfirmEntities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/BA_ConfirmEntities",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/S_ConfirmCardinality"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/S_ConfirmCardinality",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/GW_Model"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "revise",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/GW_Model",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/GW_Model",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Declare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Declare",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/End_Process_CRDM_DataModel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/Start_Process_CRDM_DataModel",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Requirements agreed",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Entities",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Identify entities from the BPA and requirements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_1",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Relations",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Relations and cardinalities, both ways",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_3"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/BA_ConfirmEntities",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Confirm the entities are the ones meant",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/S_ConfirmCardinality",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Confirm the cardinalities",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Stakeholders",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/GW_Model",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Entities recognised and every cardinality answered?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_6",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_7"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/A_Declare",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Declare the model where a tool can read it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_8"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/node/End_Process_CRDM_DataModel",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Model declared",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_DataModel/flow/SF_Process_CRDM_DataModel_8"
+      ],
+      "outgoing": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "QA report signing",
@@ -17909,8 +18174,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/node/Start_BA"
       ],
-      "nodeCount": 12,
-      "flowCount": 11
+      "nodeCount": 13,
+      "flowCount": 12
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/flow/SF_Process_CRDM_1",
@@ -17968,6 +18233,13 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/node/Call_Requirements",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/node/Call_DataModel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/flow/SF_Process_CRDM_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/node/Call_DataModel",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/node/Call_Signoff"
     },
     {
@@ -18143,6 +18415,26 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/node/Call_DataModel",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Data model Entities + cardinalities",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-requirements-workflow"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/flow/SF_Process_CRDM_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/flow/SF_Process_CRDM_12"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/node/Call_Signoff",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Phase 5 Beans + sign-off",
@@ -18156,7 +18448,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/flow/SF_Process_CRDM_8"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/flow/SF_Process_CRDM_12"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM/flow/SF_Process_CRDM_9"
@@ -23650,8 +23942,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "39a361a8799ceda379ec27806d42fddfad2cea72",
+    "sha": "883907da32b82c026e3460b5a28c1d82ac0555c6",
     "pr": "main",
-    "run": "35506217950"
+    "run": "35506839960"
   }
 }
