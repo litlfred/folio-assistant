@@ -143,6 +143,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Capability: `review` · Package: `folio-core` |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
+| [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
 | [Post-MVP, because there is nothing to check before there is a render](theme-ui-review.html) | `theme-ui-review` | — | The owner, 2026-09-20: theme choice is *"authoring (human/agentic) |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |

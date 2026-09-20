@@ -93,6 +93,20 @@ export const DCTERMS_NS = "http://purl.org/dc/terms/";
 export const FHIR_NS = "http://hl7.org/fhir/";
 
 /**
+ * CSV on the Web — W3C Recommendation, and the tabular model this instance
+ * adopts rather than inventing one (bean `ulqj`, decided by the owner).
+ *
+ * It models table → column → datatype and nothing else: no formulas, no
+ * merged cells, no styling. That is the reason it was chosen — "no full Excel
+ * complexity" is a property of the vocabulary, not a rule we have to enforce.
+ *
+ * What it CANNOT say is where a table sits, because in CSVW the table IS the
+ * file. `fac:anchor`, `fac:headerRow` and `fac:extent` carry that, as
+ * annotations ON a valid CSVW document rather than a replacement for one.
+ */
+export const CSVW_NS = "http://www.w3.org/ns/csvw#";
+
+/**
  * WHO's canonical base for the SMART Guidelines base IG.
  *
  * `smart-base` `sushi-config.yaml` declares `canonical: http://smart.who.int/base`,
@@ -537,6 +551,7 @@ export const CONTENT_CONTEXT = {
   skos: SKOS_NS,
   dcterms: DCTERMS_NS,
   fhir: FHIR_NS,
+  csvw: CSVW_NS,
 
   // Identity. `label` is the authored string, kept verbatim alongside the
   // minted `@id` so a grep hit in .jsonld matches a grep hit in .ts.
