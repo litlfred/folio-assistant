@@ -133,6 +133,7 @@ export const BLOCK_KIND_TO_FOLIO_TYPE: Record<BlockKind, string> = {
   equation: "folio:Equation",
   diagram: "folio:Diagram",
   table: "folio:Table",
+  figure: "folio:Figure",
 };
 
 /**
@@ -186,6 +187,10 @@ export function siteIri(slug: string, nodeId?: string): string {
 export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
   equation: "doco:Formula",
   diagram: "doco:Figure",
+  // A FACT, not a stretch: DoCO's Figure is a figure in a document, which is
+  // exactly what an extracted `figure` block is. `diagram` already maps here,
+  // and `SITE_ASSET_TYPES` already pairs `folio:Figure` with `doco:Figure`.
+  figure: "doco:Figure",
   table: "doco:Table",
   prose: "doco:Section",
   definition: "doco:Section",
