@@ -19,7 +19,13 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { DEP_TIERS, depsForTier, requirementsPath, type DepTier } from "../schemas/python-deps.ts";
+import {
+  DEP_TIERS,
+  depsForTier,
+  importNameOf,
+  requirementsPath,
+  type DepTier,
+} from "../schemas/python-deps.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -42,7 +48,13 @@ export function requirementsBody(tier: DepTier): string {
     // question they have — answering it in the source file only would make
     // this artefact the less useful of the two.
     const note = d.transitive ? `${d.why} (no direct import)` : d.why;
-    return [`# ${d.distribution}: ${note}`, d.distribution, ""];
+    // `imports:` is STRUCTURED, not prose — `scripts/tests/python-deps-importable.test.py`
+    // parses it. The mapping from a distribution to the module it provides was
+    // written down in English only ("Imports as `yaml`"), which is unreadable to
+    // the one check that could falsify it. Emitted for EVERY package, including
+    // the ones where it equals the distribution name: a parser with a default
+    // path cannot tell a missing line from an unremarkable one.
+    return [`# ${d.distribution}: ${note}`, `# imports: ${importNameOf(d)}`, d.distribution, ""];
   });
   return [...head, ...body].join("\n").replace(/\n{3,}/g, "\n\n").trimEnd() + "\n";
 }

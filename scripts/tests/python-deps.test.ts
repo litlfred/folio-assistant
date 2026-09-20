@@ -111,6 +111,38 @@ describe("the generated files cannot drift from the declaration", () => {
     }
   });
 
+  test("every package carries a machine-readable `# imports:` line", () => {
+    // The reason above is for a PERSON. This one is for
+    // `scripts/tests/python-deps-importable.test.py`, which reads the
+    // distribution -> module mapping back out and tries each import for real.
+    // Emitted for every package, including where it equals the distribution
+    // name: a parser with a default path cannot tell a missing line from an
+    // unremarkable one, so a dropped line would silently become a weaker check.
+    for (const tier of DEP_TIERS) {
+      const body = requirementsBody(tier);
+      const emitted = [...body.matchAll(/^# imports: (\S+)$/gm)].map((m) => m[1]);
+      expect(emitted).toEqual(
+        [...depsForTier(tier)]
+          .sort((a, b) => a.distribution.localeCompare(b.distribution))
+          .map(importNameOf),
+      );
+    }
+  });
+
+  test("the mapping that differs is the mapping that matters", () => {
+    // Three distributions here do not import under their own name. If this
+    // list ever went empty the importability check would still pass while
+    // testing nothing interesting, so name them.
+    const body = requirementsBody("lean");
+    for (const [dist, mod] of [
+      ["pillow", "PIL"],
+      ["PyYAML", "yaml"],
+      ["pdfminer.six", "pdfminer"],
+    ]) {
+      expect(body).toContain(`# imports: ${mod}\n${dist}\n`);
+    }
+  });
+
   test("every package's reason travels into the file with it", () => {
     // A requirements file is where somebody lands when an install fails, and
     // "what is this for" is the question they have.
