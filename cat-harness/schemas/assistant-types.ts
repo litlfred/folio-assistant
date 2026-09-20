@@ -236,7 +236,7 @@ export interface CapabilityDefinition {
  * | `fail` | Skill cannot execute — abort with error |
  * | `warn` | Log a warning but continue |
  * | `skip` | Silently skip this skill |
- * | `fallback` | Use `fallbackCapabilityId`, or `fallbackRole` |
+ * | `fallback` | Use the capability's `fallbackTo`, or a derived human lane |
  *
  * ## A fallback may be another ACTOR, not only another tool — and it is DERIVED
  *
@@ -300,8 +300,11 @@ export interface SkillCapabilityRef {
   capabilityId: string;
   /** What to do when the capability is unavailable. */
   degradation: "fail" | "warn" | "skip" | "fallback";
-  /** Alternative capability to use in fallback mode. */
-  fallbackCapabilityId?: string;
+  // No `fallbackCapabilityId`. What substitutes for a capability is a
+  // property of THAT capability — `CapabilityDefinition.fallbackTo`, bean
+  // `folio-assistant-sym3`. It was written in five skill modules, all
+  // identical, which is the duplicate-maintenance shape: a sixth Lean skill
+  // had to remember to repeat it.
   // NO `fallbackRole`. It existed for eight hours on 2026-09-20 and was
   // removed as a computable duplicate — see the header. The role that takes
   // over is `fallbackRoleFor(skill)`, read from the BPMN corpus, and

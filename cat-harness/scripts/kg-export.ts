@@ -233,6 +233,12 @@ export function buildContext(): Record<string, unknown> {
     inPackage: { "@id": termIri("inPackage"), ...link },
     providesCapability: { "@id": termIri("providesCapability"), ...link },
     requiresCapability: { "@id": termIri("requiresCapability"), ...link },
+    // `CapabilityDefinition.fallbackTo` — the capability that stands in for
+    // this one. A LINK for the same reason `requiresCapability` is: the
+    // value is a capability id and every Capability is a node in this
+    // document, so it resolves. Bean `folio-assistant-sym3`, which moved it
+    // off five skill modules onto the one capability it describes.
+    fallbackToCapability: { "@id": termIri("fallbackToCapability"), ...link },
     satisfies: { "@id": termIri("satisfies"), ...link },
     // The role REGISTRY's own two edges, as against the lane-derived view.
     // `hasSkill` is what the role knows; `bindsLane` is where it is bound.
@@ -872,12 +878,18 @@ function registryFields(
     };
   }
   if (group === "capabilities") {
-    const { requires, ...other } = rest;
+    const { requires, fallbackTo, ...other } = rest;
     return {
       ...other,
       ...(requires === undefined
         ? {}
         : { requiresCapability: names(requires).map((c) => makeIri(doc, "capability", c)) }),
+      // Renamed on the way out, like `requires` above: `fallbackTo` is a
+      // fine field name on a Capability and an ambiguous TERM in a shared
+      // vocabulary, where a Tool and a Role could each want one.
+      ...(typeof fallbackTo === "string"
+        ? { fallbackToCapability: makeIri(doc, "capability", fallbackTo) }
+        : {}),
     };
   }
   return rest;

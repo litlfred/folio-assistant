@@ -20,9 +20,11 @@ import { describe, expect, test } from "bun:test";
 import {
   SCANNED,
   declaredCapabilities,
+  declaredCapabilityFacts,
   declaredRoles,
   fallbackRoleFor,
   fallbackUses,
+  transitivelyRequires,
 } from "../check-fallback-roles.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -85,15 +87,14 @@ describe("the scan", () => {
     return root;
   }
 
-  test("finds a fallback and carries its capability ids", () => {
+  test("finds a fallback and the capability it is for", () => {
     const root = fixture({
-      "skills/a.ts": `const x = { capabilityId: "c1", degradation: "fallback", fallbackCapabilityId: "c2" };\n`,
+      "skills/a.ts": `const x = { capabilityId: "c1", degradation: "fallback" };\n`,
       "skills/b.ts": `const y = { capabilityId: "c3", degradation: "fail" };\n`,
     });
     try {
-      const uses = fallbackUses(root, ["skills"]);
-      expect(uses.map((u) => [u.skill, u.capabilityId, u.fallbackCapabilityId])).toEqual([
-        ["a", "c1", "c2"],
+      expect(fallbackUses(root, ["skills"]).map((u) => [u.skill, u.capabilityId])).toEqual([
+        ["a", "c1"],
       ]);
     } finally {
       rmSync(root, { recursive: true, force: true });
@@ -128,5 +129,57 @@ describe("the scan", () => {
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
+  });
+});
+
+describe("the capability-level fallback, and the contradiction it exposed", () => {
+  const facts = declaredCapabilityFacts(ROOT);
+
+  test("`fallbackTo` is declared ONCE, on the capability it is a property of", () => {
+    // Five skill modules each carried `fallbackCapabilityId: "lean-mcp"`.
+    // What substitutes for `lean-toolchain` is a fact about
+    // `lean-toolchain`, so a sixth Lean skill no longer has to remember it.
+    expect(facts.get("lean-toolchain")?.fallbackTo).toBe("lean-mcp");
+    for (const u of fallbackUses(ROOT, SCANNED)) {
+      expect(u).not.toHaveProperty("fallbackCapabilityId");
+    }
+  });
+
+  test("the declared fallback CANNOT FIRE, and the check says so", () => {
+    // Not a hypothetical. `lean-mcp` declares `requires: ["lean-toolchain"]`
+    // and `probeAll` computes `present = requiresMet && probe(…)`, so when
+    // `lean-toolchain` is absent `lean-mcp` is absent too — the substitute
+    // is unavailable in exactly the case it exists for.
+    //
+    // This test asserts the DEFECT, deliberately. It is reported rather than
+    // gated while the owner decides which side is wrong, and when that is
+    // fixed this test must be inverted rather than deleted — otherwise the
+    // finding disappears with no record that it was ever real.
+    expect(facts.get("lean-mcp")?.requires).toContain("lean-toolchain");
+    expect(transitivelyRequires(facts, "lean-mcp", "lean-toolchain")).toBe(true);
+  });
+
+  test("a substitute that does NOT need the missing thing is fine", () => {
+    // The negative case, or the assertion above would pass for a predicate
+    // that always returns true.
+    expect(transitivelyRequires(facts, "lean-toolchain", "lean-mcp")).toBe(false);
+  });
+
+  test("transitivity is followed, and a cycle terminates", () => {
+    const m = new Map([
+      ["a", { id: "a", requires: ["b"] }],
+      ["b", { id: "b", requires: ["c"] }],
+      ["c", { id: "c", requires: [] }],
+      ["x", { id: "x", requires: ["y"] }],
+      ["y", { id: "y", requires: ["x"] }],
+    ]);
+    expect(transitivelyRequires(m, "a", "c")).toBe(true);
+    expect(transitivelyRequires(m, "a", "z")).toBe(false);
+    // Same reading `probeAll` takes: on the stack is unmet, not infinite.
+    expect(transitivelyRequires(m, "x", "z")).toBe(false);
+  });
+
+  test("the id-set helper still agrees with the facts map", () => {
+    expect(declaredCapabilities(ROOT)).toEqual(new Set(facts.keys()));
   });
 });

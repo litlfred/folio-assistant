@@ -8,7 +8,7 @@ export const formalizer: SkillDefinition = {
     "and sorry-removal workflows.",
   roles: ["collaborator", "owner"],
   requiredCapabilities: [
-    { capabilityId: "lean-toolchain", degradation: "fallback", fallbackCapabilityId: "lean-mcp" },
+    { capabilityId: "lean-toolchain", degradation: "fallback" },
     { capabilityId: "lean-mcp", degradation: "warn" },
   ],
   dependsOn: [
