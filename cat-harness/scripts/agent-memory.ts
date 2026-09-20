@@ -69,7 +69,7 @@ import {
 import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
-// renderable kind"), and `directoryForGraph` reads the WHOLE declaration,
+// renderable kind"), and `directoriesForGraph` reads the WHOLE declaration,
 // which refuses an unregistered kind. Needed here the moment this module
 // started asking the declaration a question rather than composing a path —
 // and it surfaced the same hour, when `main` declared a `folio` directory.
@@ -91,7 +91,7 @@ export const ROOT = resolve(import.meta.dir, "..");
  * under `skills/`, and stopped finding anything the moment they moved out:
  * `kgRoots` filters to exactly-`cat-harness`, and `memory` is its own kind now.
  *
- * `directoryForGraph` is the question actually being asked — "where does this
+ * `directoriesForGraph` is the question actually being asked — "where does this
  * instance keep its memory graph" — and it survives the next relocation
  * without an edit, which composing a path does not.
  */

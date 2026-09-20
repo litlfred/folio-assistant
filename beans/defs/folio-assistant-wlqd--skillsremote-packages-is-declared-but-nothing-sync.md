@@ -274,3 +274,16 @@ Both branches need the author:
 
 Nothing here is an agent's call. Brought back as a question rather than
 actioned.
+
+---
+
+## Issue opened 2026-09-20 — CRDM entry
+
+Author authorised it. <https://github.com/litlfred/folio-assistant/issues/556>
+carries the context, the re-measurement, what is already done (so the
+requirements conversation does not re-litigate it) and the two branches with
+their costs. **No code was written**: CRDM Phase 1 starts from the issue, and
+the branch — implement, or retire the declaration — is the author's.
+
+Status stays `in-progress`; neither `## Done when` box has moved.
+

@@ -18,7 +18,50 @@ only. A file still sitting in `uploads/` does not merely go unread — it makes 
 *clean grep* mean "nobody has done this" when the source is right there. That is
 how a held result gets re-derived.
 
-## One entry point
+## TWO entry points, and this said "one" until 2026-09-20
+
+The owner, that day:
+
+> things can enter library through `uploads/` → `library/` document ingestion or
+> through retrieval / materialization of asset known through listed external KG
+> in one of the dependent harnesses
+
+Both land L1 content in `library/`. They differ in **where the bytes come from**
+and therefore in **what has to be decided first**.
+
+| | **drop** | **materialize** |
+|---|---|---|
+| the source is | a file somebody put in `uploads/` | an asset listed in a remote graph a dependency declares |
+| decided first | which rung reads it | the five gates, and a purpose |
+| entry | `bun run ingest uploads/FILE.pdf` | `materialize-remote.bpmn` |
+| owned by | this layer — the rungs are here | **`folio-assist-core`** — see below |
+
+**Neither is a shortcut past the other.** A materialized asset still arrives as
+bytes that have to be read, so it re-enters the rungs below at exactly the point
+a dropped file does. What materialization adds is everything that happens
+*before* there is a file: may we hold it, what does holding it cost, for what
+purpose, and what happens when the source goes away.
+
+### The layer split, and why it is not arbitrary
+
+The owner, same day: *"some in cat-harness, some in folio-asst-core (and
+further down dep tree)"*.
+
+- **This layer (`cat-harness`) owns the rungs.** `pdf-structure`, `pdf-pages`,
+  `pdf-ocr`, `pdf-tables` — reading bytes is platform work, and the owner's
+  standing instruction is that OCR stays here.
+- **`folio-assist-core` owns the remote half**, because `library/` is core's
+  graph and so are `materialization.ts` and `library-ref.ts`. A harness that
+  cannot hold content must not own the vocabulary for acquiring it.
+- **`large-datasets` owns the question before both**: how to enumerate a corpus
+  and ask it for a subset (`source-descriptor.ts`). Neither entry point can
+  start until something says what is out there.
+- **Further down the tree**, a dependency's declared `remoteGraphs` is what
+  makes the second path reachable at all: an instance discovers assets through
+  a graph it does not hold, and inherits that declaration the same way it
+  inherits directories.
+
+## Entry point one — a file in `uploads/`
 
 ```sh
 bun run ingest uploads/FILE.pdf          # choose the rung, run it, write the manifest
@@ -27,6 +70,23 @@ bun run ingest uploads/FILE.pdf --dry-run # say which rung it would pick, and wh
 
 It picks the rung, runs it, and writes the manifest. Everything below is what it
 decides **on your behalf** — read it when the answer surprises you, not before.
+
+## Entry point two — an asset in a remote graph
+
+An instance declares `remoteGraphs` in its `harness.json`: a graph it knows
+about and does not hold (`schemas/cat-harness.ts`, `RemoteGraph`). Assets listed
+there are `referenced` in exactly the sense
+`folio-assistant-core/schemas/materialization.ts` defines — we know they exist
+and where, and we hold none of them.
+
+Bringing one here runs `materialize-remote.bpmn` first: **purpose** (`working`
+or `archival`), then the five gates, then the fetch. It lands in `library/` with
+its provenance and its fixity, and a refusal leaves the node `referenced` rather
+than failing.
+
+**A reference is not a fetch.** The KG viewer follows a remote graph to show
+the hierarchy without materialising anything, and that separation is the point
+of declaring one: navigable without being held.
 
 ## Which rung, and why there is more than one
 

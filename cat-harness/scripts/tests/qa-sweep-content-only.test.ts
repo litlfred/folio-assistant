@@ -24,9 +24,18 @@
  * @module cat-harness/scripts/tests/qa-sweep-content-only.test
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+import {
+  graphLayer,
+  isContentGraph,
+  isContextGraph,
+  isDerivedGraph,
+  isStateGraph,
+  processMayWrite,
+  repoRootFor,
+} from "../../schemas/cat-harness.js";
 
 import { walkBlocks } from "../../content/pipeline/qa-utils.js";
 
@@ -153,5 +162,65 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     mkdirSync(join(root, "x"), { recursive: true });
     writeFileSync(join(root, "x", "probe.ts"), MANIFEST);
     expect(walked(root)).toEqual(["x/probe.ts"]);
+  });
+});
+
+describe("`derived` — the fourth layer, and why `library/` is on it (bean `hqku`)", () => {
+  /**
+   * Owner, 2026-09-20: *"library is static (only if we materialize assets or
+   * not)"*, *"can duplicate asset into a folio and work there"*.
+   *
+   * The interesting part is not the ruling, it is that BOTH existing
+   * candidates were ruled out by a rule rather than by taste — which is what
+   * `content-context-and-state-graphs.md` means by "say so rather than
+   * picking". These tests pin both eliminations, because a later reader who
+   * only sees the outcome will reach for one of them again.
+   */
+  test("`library` is `derived`", () => {
+    expect(graphLayer("library")).toBe("derived");
+    expect(isDerivedGraph("library")).toBe(true);
+  });
+
+  test("...so a sweep skips it, with no directory name written down", () => {
+    // The whole reason this is a declared layer rather than a hardcoded skip:
+    // a path in a checker is what the declaration exists to remove.
+    expect(isContentGraph("library")).toBe(false);
+  });
+
+  test("`context` is ruled out — a declared process WRITES library/", () => {
+    // `context` carries "a step that writes to it is a defect, not an update".
+    // `document-ingestion.bpmn` writes `library/`, so declaring it `context`
+    // would have made a declared process a defect by the axis's own rule.
+    // This is the elimination, asserted against the actual diagram.
+    const bpmn = readFileSync(
+      join(repoRootFor(resolve(import.meta.dir, "..", "..")), "cat-harness", "skills", "workflows", "document-ingestion.bpmn"),
+      "utf-8",
+    );
+    expect(bpmn).toContain("library");
+    expect(graphLayer("library")).not.toBe("context");
+  });
+
+  test("a `derived` graph is not writable-in-passing either — it is produced", () => {
+    // `processMayWrite` is about bookkeeping writes a step performs in
+    // passing. Producing a library section from a source is an ingestion
+    // OUTPUT, the same way authoring content is, so it stays false — adding a
+    // fourth layer must not quietly widen what a step may scribble on.
+    expect(processMayWrite("library")).toBe(false);
+  });
+
+  test("the layer predicates stay mutually exclusive, and none is a negation", () => {
+    // Narrowed deliberately when `context` arrived; the same must hold now
+    // that there are four. A caller asking "is this the subject matter" and a
+    // caller asking "may a step write this" must not share a predicate.
+    for (const kind of ["library", "folio", "beans", "memory"]) {
+      const hits = [isContentGraph(kind), isContextGraph(kind), isStateGraph(kind), isDerivedGraph(kind)].filter(
+        Boolean,
+      );
+      expect(hits.length).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test("an unregistered kind is still not `derived` — absence says nothing", () => {
+    expect(isDerivedGraph("not-a-kind")).toBe(false);
   });
 });

@@ -35,7 +35,13 @@
  * changes, this is a judgement to re-make there rather than a number to
  * recompute here — no test asserts the match, because none can.
  */
-import { THEME_SCHEMA_TAG, ThemeSchema, type Theme } from "./theme.js";
+import {
+  THEME_SCHEMA_TAG,
+  ThemeSchema,
+  explainThemeFailure,
+  resolveTheme,
+  type ResolvedTheme,
+} from "./theme.js";
 
 /** Geometry shared by every shipped theme: the sticky is the same sticky. */
 const LAYOUTS = {
@@ -47,6 +53,7 @@ const LAYOUTS = {
 const RAW = [
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "pale-sage",
     name: "Pale sage",
     description: "The default. Matches the staging banner.",
@@ -57,6 +64,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "pale-sage-fade",
     name: "Pale sage, fading",
     description: "The sage with a soft vertical gradation.",
@@ -68,6 +76,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "dusty-carolina",
     name: "Dusty Carolina blue",
     palette: {
@@ -77,6 +86,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "dusty-carolina-fade",
     name: "Dusty Carolina blue, fading",
     description: "The blue with a soft vertical gradation.",
@@ -88,6 +98,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "grumpy-cat",
     name: "Grumpy cat",
     description: "Warm greys and a sage accent, after the mark.",
@@ -128,20 +139,21 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "cat-bootstrap",
     name: "CatBootstrap",
     description: "Desert sand and sienna \u2014 the frontier at the start of the trail.",
     palette: {
       surface: "#f4f0e6", ink: "#26211a", edge: "#d8cdb6", accent: "#b1683c",
     },
-    // CAT_BOOTSTRAP'S OWN, which is the convention the owner set: "each harness
+    // BOOTSTRAP'S OWN, which is the convention the owner set: "each harness
     // hould have its own unique theme". It was the one harness with a sticky
     // and no art, so its card rendered palette-only while every other card
     // carried a cat \u2014 visible as a gap rather than as a choice.
     //
     // The art is a grumpy cat in a cowboy hat and boots, in the rain, in a
     // Sonoran desert with a roadrunner. That reads as the frontier at the start
-    // of the trail, which is what cat-bootstrap IS: "the graph an agent reads
+    // of the trail, which is what bootstrap IS: "the graph an agent reads
     // before it knows what this repository is".
     //
     // Its three crops each declare their own `textRegion`, measured by opening
@@ -160,6 +172,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "operations",
     name: "Grumpy cat, operations",
     description: "Steel and blueprint blue — building the thing, and running it.",
@@ -210,6 +223,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "engineer",
     name: "Grumpy cat, engineering",
     description: "The cloud cream and a working green, behind the cat in a hi-vis vest.",
@@ -244,6 +258,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "library",
     name: "Grumpy cat, librarian",
     description: "Storm slate and a cool cream, behind the cat with the books.",
@@ -272,6 +287,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "analyst",
     name: "Grumpy cat, analyst",
     description: "Daylight cream and a working blue, behind the cat with the charts.",
@@ -300,6 +316,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "high-contrast-light",
     name: "High contrast, light",
     description: "Black on white. No gradation, by design.",
@@ -308,6 +325,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "high-contrast-dark",
     name: "High contrast, dark",
     description: "White on black. No gradation, by design.",
@@ -316,8 +334,27 @@ const RAW = [
   },
 ] as const;
 
-/** Every shipped theme, parsed — so a malformed one fails at import, not at render. */
-export const THEMES: readonly Theme[] = RAW.map((t) => ThemeSchema.parse(t));
+/**
+ * Every shipped theme, RESOLVED — so a malformed one fails at import, not at
+ * render, and so consumers get the form that has all its fields.
+ *
+ * `ResolvedThemeSchema`, not `ThemeSchema`. The declared form went lax when
+ * themes gained inheritance (bean `j66n`): every field but identity is
+ * optional there, because a theme states only what it changes. That is the
+ * AUTHOR's form. A renderer needs the resolved one, where requiredness
+ * actually lives — `data-modelling` step 7.
+ *
+ * None of these eleven inherits from anything, so resolving them is a parse
+ * with `kind` defaulted to `sticky`. They go through the same function a
+ * who-iris theme will, rather than a shortcut that would stop exercising the
+ * path the moment it mattered.
+ */
+export const THEMES: readonly ResolvedTheme[] = RAW.map((t) => {
+  const declared = ThemeSchema.parse(t);
+  const r = resolveTheme({ instance: "cat-harness", theme: declared }, () => undefined);
+  if (!r.ok) throw new Error(`theme ${declared.id}: ${explainThemeFailure(r.failure)}`);
+  return r.theme;
+});
 
 /**
  * The default.
@@ -334,6 +371,6 @@ export const GRADATED_THEME_IDS = THEMES.filter((t) => t.palette.gradientFrom).m
 /** The high-contrast pair, which the accessibility clause requires to exist. */
 export const HIGH_CONTRAST_THEME_IDS = ["high-contrast-light", "high-contrast-dark"] as const;
 
-export function themeById(id: string): Theme | undefined {
+export function themeById(id: string): ResolvedTheme | undefined {
   return THEMES.find((t) => t.id === id);
 }

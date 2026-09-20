@@ -563,13 +563,31 @@ if (import.meta.main) {
 
   if (update) {
     const next: Baseline = {
+      // The text the committed baseline already carried. It described only
+      // `files` here while the JSON described BOTH records, because the better
+      // sentence was written INTO the artefact and never into the writer —
+      // so every `--update` silently reverted it, and the next reader learnt
+      // nothing about `resolves` from the file `resolves` lives in. Found
+      // 2026-09-20 by running `--update` for an unrelated relocation.
+      //
+      // A generated file's own header is generated; editing it in place is the
+      // same defect as hand-editing any other generated output, and it is
+      // invisible until somebody regenerates.
       _comment:
-        "Per-file counts of declared-path literals that neither resolve to a file " +
-        "nor carry a `declared-path-literal: <reason>` marker. WRITTEN by " +
-        "`bun run check:declared-paths --update`; a count may only go DOWN. This is " +
-        "recorded debt, not a list of exemptions: each entry is a place where code " +
-        "hardcodes a path `harness.json` already declares. See the module header of " +
-        "scripts/check-declared-paths.ts for why it ships as a ratchet.",
+        "TWO records, with different jobs. `files`: per-file counts of " +
+        "declared-path literals that neither resolve nor carry a " +
+        "`declared-path-literal: <reason>` marker — recorded debt for SOURCE " +
+        "files, which may only go DOWN. `resolves`: the WITNESS list — every " +
+        "literal that resolves to a real artefact today, as `<file>::<literal>`. " +
+        "A witness that stops resolving means the artefact moved and the code " +
+        "naming it did not follow; that fails the gate. *.test.ts files appear " +
+        "ONLY in `resolves`, never in `files`: a test that builds a mkdtemp " +
+        "fixture names declared directories by necessity, so counting its " +
+        "unresolved literals would fire on every new test (measured 2026-09-20 " +
+        "— a sibling's schemas/folio-dir.test.ts tripped it with two correct " +
+        "literals). Both are WRITTEN by `bun run check:declared-paths --update`; " +
+        "raising a count or dropping a witness is a diff somebody reviews. See " +
+        "the module header of scripts/check-declared-paths.ts.",
       files: Object.fromEntries(Object.entries(current).sort(([a], [b]) => a.localeCompare(b))),
       resolves: witnesses,
     };

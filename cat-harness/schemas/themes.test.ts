@@ -15,7 +15,12 @@ import { readDeclaration } from "./cat-harness.js";
 // `folio` is registered by core on import and this instance declares a folio
 // graph, so without this `readDeclaration` throws on a valid declaration.
 import "./folio-graph-kind.js";
-import { THEME_LAYOUTS, ThemeSchema, resolveThemeBackdrop } from "./theme.js";
+import {
+  THEME_LAYOUTS,
+  ResolvedThemeSchema,
+  ThemeSchema,
+  resolveThemeBackdrop,
+} from "./theme.js";
 import {
   DEFAULT_THEME_ID,
   GRADATED_THEME_IDS,
@@ -185,7 +190,11 @@ describe("every shipped backdrop resolves against THIS instance's declaration", 
   });
 
   test("the check CAN fire — a role nothing declares is reported missing", () => {
-    const bogus = ThemeSchema.parse({
+    // RESOLVED, not declared: `resolveThemeBackdrop` consumes a complete
+    // theme, and the declared form went lax when themes gained inheritance.
+    // Parsing the resolved schema here is what keeps this test about the
+    // BACKDROP rather than about which form it was handed.
+    const bogus = ResolvedThemeSchema.parse({
       ...themed[0]!,
       id: "not-shipped",
       backdrop: { imageRole: "no-such-role", scrim: "rgba(0,0,0,0.5)" },

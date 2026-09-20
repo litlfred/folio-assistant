@@ -30,12 +30,14 @@ validation gate, the skills, and the shared work plan all named.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="every-workflow-in-the-repo.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/every-workflow-in-the-repo.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-Thirty-three BPMN 2.0 files, and **no longer all in one directory**: thirty-two
+Thirty-nine BPMN 2.0 files, and **no longer all in one directory**: thirty-eight
 under [`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
 and one under [`cat-bootstrap/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/cat-bootstrap/workflows)
 (`bun -e 'console.log((await import("./scripts/known-skills.ts")).workflowFiles(process.cwd()).filter(f=>f.endsWith(".bpmn")).length)'`
-on 2026-09-19 — this line said "six", then "nineteen", then "thirty", then
-"thirty-two, all under `skills/workflows/`", each for long enough to be wrong,
+on 2026-09-20 — this line said "six", then "nineteen", then "thirty", then
+"thirty-two, all under `skills/workflows/`", each for long enough to be wrong.
+**It was wrong again when this was written:** it claimed thirty-three when
+`ls` counted thirty-six, so it had drifted by four with nobody noticing,
 which is why it now carries the command as well as the date. **The command
 changed too, and that is the point:** `ls skills/workflows/*.bpmn` counts one
 directory, so it would have gone on reporting thirty-two while a diagram sat
@@ -148,6 +150,17 @@ the outer process; the rest are its call activities:
 | `ingest-derive-content.bpmn` | Archive, technical metadata, images, audio, tabular data, provenance |
 | `ingest-build-l1-kg.bpmn` | Dublin Core, manifest, assets, binding, linking |
 | `ingest-l1-completeness-gate.bpmn` | Is the derived content complete enough to promote, and who says so? |
+
+**Remote content** — landing something that lives somewhere else, and keeping it
+current. Named on 2026-09-20 after this repository had been running the process
+twice without a word for it: `who-iris` taking three items out of a 361.55 GB
+catalogue, and `bootstrap` fetching a harness and landing it locally, with
+`upstream-pins.json` as half of that second one's refresh.
+
+| Diagram | Answers |
+|---------|---------|
+| `materialize-remote.bpmn` | May we hold a local copy, what does holding it cost, and for what purpose — `working` or `archival`? Five gates, three states, and a refusal leaves the node `referenced` rather than failing |
+| `refresh-materialized.bpmn` | What changed upstream, what changed locally, and what to do when both. An **archival** copy is never refreshed — re-fetching discards the state it exists to keep — so it gets a fixity check instead |
 
 **Post-MVP review** — what the delivered thing actually looks like, once
 stakeholders have accepted it and there is a render to judge:

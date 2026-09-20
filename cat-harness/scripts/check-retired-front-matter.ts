@@ -37,8 +37,8 @@ import { Glob } from "bun";
 import { parseFrontMatter } from "../schemas/front-matter.ts";
 import {
   DECLARATION_FILENAME,
-  directoryForGraph,
   repoRootFor,
+  directoryForGraph,
 } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 

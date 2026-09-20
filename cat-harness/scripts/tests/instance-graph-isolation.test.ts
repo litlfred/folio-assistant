@@ -61,12 +61,19 @@ describe("discovery reads the declaration rather than the tree", () => {
       }),
     );
     const problems: string[] = [];
-    const { nodes } = await collectInstanceNodes(root, DOC, "", problems);
+    const { nodes, notes } = await collectInstanceNodes(root, DOC, "", problems);
     rmSync(root, { recursive: true, force: true });
 
     expect(nodes.filter((n) => String(n["@type"]).endsWith("Process"))).toEqual([]);
     // And it says it found none, rather than passing over in silence.
-    expect(problems.some((p) => p.includes("bpmn"))).toBe(true);
+    //
+    // In `notes` since 2026-09-20, not `problems`. The assertion this test
+    // cares about is unchanged — the fact is SAID — and what changed is that
+    // saying it no longer fails the instance. A skills package with no
+    // workflow is ordinary; three of them arrived at once and each failed on
+    // this message alone while rendering all its nodes.
+    expect(notes.some((n) => n.includes("bpmn"))).toBe(true);
+    expect(problems.some((p) => p.includes("bpmn"))).toBe(false);
   });
 
   test("a DECLARED directory holding a .bpmn directly is collected", async () => {

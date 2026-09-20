@@ -1,0 +1,11 @@
+{
+  "$schema": "folio-catalogue/v1",
+  "id": "who-iris",
+  "title": "WHO IRIS — Institutional Repository for Information Sharing",
+  "system": "DSpace 7",
+  "baseUrl": "https://iris.who.int",
+  "totalItemsUpstream": 1057223,
+  "totalBytesUpstream": 388225126400,
+  "sizeBasis": "iris.who.int/statistics storage report, By Location, Entire Site, read 2026-09-20: 'Nb of files: 1,057,223', 'Storage used: 361.55 GB', 'Nb of top-level communities: 8'. NOTE TWO THINGS ABOUT THESE NUMBERS. (1) `totalItemsUpstream` holds the FILE count, not an item count: DSpace groups bitstreams into bundles and an item carries several, so the item count is strictly smaller and IRIS does not publish it on this page. The field is named for items and is being fed files, which OVERSTATES the denominator -- recorded here rather than silently corrected, because a guessed item count would be worse than a labelled wrong one. (2) `totalBytesUpstream` is 361.55 * 1024^3, i.e. GiB. DSpace does not say which it means; the GiB reading is the larger and is the conservative one for a size gate. THE FIGURE THIS REPLACES: every earlier note in this branch said '0.7 TB', which came from a chat message and was never measured. It is 361.55 GB -- about half. The size gate's denominator is now read off the source's own statistics page.",
+  "nodesDir": "nodes"
+}
