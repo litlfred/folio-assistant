@@ -55,11 +55,12 @@
 // `folio` is CORE's kind, so a content-side module may import it, while the
 // harness alone never sees it (schemas/folio-graph-kind.ts says so).
 import "../schemas/folio-graph-kind.ts";
-import { existsSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
+import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 
@@ -486,6 +487,36 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
   return `${slug}: ${new TextDecoder().decode(r.stdout).trim()}`;
 }
 
+/**
+ * Which half of the pipeline is being asked for — bean `pn6j`.
+ *
+ * Exported for the same reason as {@link mayPromote}: the first version read
+ * `argv.includes("--promote")` inline at two call sites, and a mutation that
+ * dropped the guard survived, because a source-text test still matched the
+ * OTHER occurrence. A decision worth testing is a decision worth naming.
+ */
+export function ingestMode(argv: readonly string[]): "stage" | "promote" {
+  return argv.includes("--promote") ? "promote" : "stage";
+}
+
+/**
+ * May this staged entry cross into `library/`? — bean `pn6j`.
+ *
+ * Pure and exported so the decision can be mutation-tested on its own. The
+ * first version of this lived inline in the CLI and was covered only by tests
+ * that grep the source, which catch a RENAME and miss an inversion — the two
+ * mutations that survived were `if (unmet.length)` → `if (false)` and
+ * dropping the `--promote` guard, both of which read fine textually.
+ *
+ * `not-derivable` does NOT block. It is the third state: no arm builds that
+ * requirement yet, and refusing every document until every arm exists would
+ * make the gate unusable, which is how a gate gets switched off. Only `unmet`
+ * — a defect in THIS entry, fixable by re-running a rung — refuses.
+ */
+export function mayPromote(requirements: readonly Requirement[]): boolean {
+  return requirements.every((r) => r.state !== "unmet");
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const dry = argv.includes("--dry-run");
@@ -502,8 +533,29 @@ if (import.meta.main) {
     console.log(refreshMeta(pdf));
     process.exit(0);
   }
-  const plan = planFor(pdf);
   const slug = bibSlug(pdf);
+  // ── Staged, then PROMOTED — bean `pn6j`, owner's decision 2026-09-20 ─────
+  //
+  // The arms write into `-o <dir>`, so the only change needed to gate this is
+  // which directory. They used to be handed `library/` itself, which meant a
+  // document that failed L1 completeness was already filed by the time
+  // anything could say so — the gate ran, printed, and the entry stayed. Its
+  // gap was then discovered by whoever next needed the missing artefact,
+  // which is the failure `pn6j` was written to prevent.
+  //
+  // Refuse-to-promote rather than move-back, which is why no standing rule is
+  // touched: nothing is ever moved OUT of `library/` and nothing is deleted,
+  // so `deletion-requires-confirmation` does not apply. A rejected document
+  // simply never arrives, and its staged output is left in place for
+  // inspection rather than cleaned up — an agent tidying away the evidence of
+  // its own refusal is the same act under another name.
+  // NOT dot-prefixed. This repository moved `.beans/` and `.harness/` out
+  // from behind dots in 2026-09-18 for exactly this reason — the artefacts a
+  // person looks for first were the hardest to find — and its own dot-prefix
+  // guard rejects such a segment. A staging tree holding a REFUSED document is
+  // precisely something somebody will come looking for.
+  const staging = join(resolve(INSTANCE_ROOT), "ingest-staging", slug);
+  const plan = planFor(pdf, undefined, staging);
   console.log(`${basename(pdf)} -> ${libraryRoot()}/${slug}/`);
   console.log(`  rung: ${plan.rung}`);
   console.log(`  why:  ${plan.why}`);
@@ -516,7 +568,7 @@ if (import.meta.main) {
     for (const s of plan.steps) console.log(`  would run: ${s.join(" ")}`);
     process.exit(0);
   }
-  for (const s of plan.steps) {
+  for (const s of ingestMode(argv) === "promote" ? [] : plan.steps) {
     console.log(`\n$ ${s.join(" ")}`);
     const r = Bun.spawnSync(s, { stdout: "inherit", stderr: "inherit" });
     if (r.exitCode !== 0) {
@@ -524,7 +576,58 @@ if (import.meta.main) {
       process.exit(1);
     }
   }
+  // ── Staging STOPS here unless `--promote` ───────────────────────────────
+  //
+  // Measured while building this: `planFor` runs ONE rung. `pdf-pages.py`
+  // alone yields 20 page files and none of `structure.json`, `sections/`,
+  // `blocks/`, `manifest.jsonld` or `images.json` — so gating right here
+  // refused the document on SEVEN unmet requirements, and would refuse every
+  // document ever ingested. A gate that always refuses is a gate somebody
+  // switches off, which is worse than no gate at all.
+  //
+  // So promotion is its own step. The arms accumulate in `ingest-staging/`,
+  // and `--promote` is the one moment anything crosses into `library/`. That
+  // is what "refuse to promote" has to mean when ingestion is a pipeline
+  // rather than a single command.
+  if (ingestMode(argv) === "stage") {
+    const staged = checkEntry(staging);
+    const pending = staged.requirements.filter((r) => r.state === "unmet");
+    console.log(`\n✓ staged at ${relative(resolve(INSTANCE_ROOT), staging)}/`);
+    if (pending.length) {
+      console.log(`  ${pending.length} requirement(s) still to satisfy before it can be promoted:`);
+      for (const r of pending) console.log(`    ${r.name.padEnd(22)} ${r.detail}`);
+    }
+    console.log(`\nNext: run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), staging)},`);
+    console.log(`then: bun run scripts/ingest-document.ts ${relative(resolve(INSTANCE_ROOT), pdf)} --promote`);
+    process.exit(0);
+  }
+
+  // THE GATE, and the only place anything enters `library/`.
+  const verdict = checkEntry(staging);
+  const unmet = verdict.requirements.filter((r) => r.state === "unmet");
+  if (!mayPromote(verdict.requirements)) {
+    console.error(`\n✗ NOT promoted — ${unmet.length} requirement(s) unmet:`);
+    for (const r of unmet) console.error(`    ${r.name.padEnd(22)} ${r.detail}`);
+    console.error(`\nStaged output is at ${relative(resolve(INSTANCE_ROOT), staging)}/ and was`);
+    console.error("left in place. Fix the cause and re-run; nothing was filed under");
+    console.error(`${libraryRoot()}/, so nothing reads as ingested.`);
+    // Reported, never acted on: the owner chose reporting-only over opening a
+    // bean here (2026-09-20). `beans create` dedupes on nothing and once
+    // produced 14,688 duplicates, so a gate that mints one per run against
+    // that store is a bad trade — and a person seeing this line has the
+    // context a bean would only approximate.
+    process.exit(1);
+  }
+
   const out = join(resolve(libraryRoot()), slug);
-  console.log(`\n${existsSync(out) ? "✓" : "✗"} ${libraryRoot()}/${slug}/`);
-  console.log(`Next: bun run check:l1-complete ${libraryRoot()}/${slug}`);
+  mkdirSync(dirname(out), { recursive: true });
+  // Only ever INTO the library. `renameSync` would fail across a filesystem
+  // boundary, and a staged tree the arms just wrote is small enough that the
+  // copy is not worth a fallback path nobody tests.
+  cpSync(staging, out, { recursive: true });
+  rmSync(staging, { recursive: true, force: true });
+  console.log(`\n${existsSync(out) ? "✓" : "✗"} ${libraryRoot()}/${slug}/  (L1 complete, promoted)`);
+  for (const r of verdict.requirements.filter((r) => r.state === "not-derivable")) {
+    console.log(`  · ${r.name}: ${r.detail}`);
+  }
 }

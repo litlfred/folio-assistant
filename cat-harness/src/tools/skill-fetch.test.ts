@@ -123,3 +123,61 @@ describe("a dependency's packages are served — the overlay", () => {
     rmSync(root, { recursive: true, force: true });
   });
 });
+
+describe("a directly-held set is named by ITS instance, not by the caller's root", () => {
+  test("two directly-held directories do not collapse onto one name", () => {
+    // The defect: the name came from `readDeclaration(root)` — the root passed
+    // IN — so every directly-held kg directory got the same key regardless of
+    // which instance contributed it. With one such directory that is
+    // indistinguishable from correct; with two, the later assignment wins and
+    // the earlier package is found and then silently dropped. No collision is
+    // reported, nothing throws, and `skill_fetch` answers "package not found"
+    // for a package discovery had in hand. `dh4f` one layer up from the scope
+    // defect that hid `bootstrap/skills/` in the first place.
+    const repo = mkdtempSync(join(tmpdir(), "held-"));
+
+    // The sibling, with its OWN declaration — this is what makes it nameable.
+    mkdirSync(join(repo, "sibling", "skills"), { recursive: true });
+    writeFileSync(
+      join(repo, "sibling", "harness.json"),
+      JSON.stringify({
+        name: "sibling",
+        directories: [{ id: "cat-harness", path: "skills", graphs: ["cat-harness"] }],
+      }),
+    );
+    writeFileSync(join(repo, "sibling", "skills", "s.md"), SKILL);
+
+    // The instance, declaring its own kg directory AND the sibling's, the
+    // second at repository scope — the `bootstrap/skills/` shape.
+    const inst = join(repo, "inst");
+    mkdirSync(join(inst, "kg"), { recursive: true });
+    writeFileSync(join(inst, "kg", "i.md"), SKILL);
+    writeFileSync(
+      join(inst, "harness.json"),
+      JSON.stringify({
+        name: "inst",
+        directories: [
+          { id: "sib", path: "sibling/skills", graphs: ["cat-harness"], scope: "repository" },
+          { id: "cat-harness", path: "kg", graphs: ["cat-harness"] },
+        ],
+      }),
+    );
+
+    const found = discoverLocalPackages(inst);
+    expect(Object.keys(found).sort()).toEqual(["inst", "sibling"]);
+    expect(found["sibling"]).toBe(join(repo, "sibling", "skills"));
+    expect(found["inst"]).toBe(join(inst, "kg"));
+
+    rmSync(repo, { recursive: true, force: true });
+  });
+
+  test("the live table still names src/skills `folio-assistant`", () => {
+    // The falsifier for the change above, stated as its own test because the
+    // whole claim is that this is a refactor: the name is now derived from
+    // where the skills LIVE rather than from who asked, and for `src/skills/`
+    // the nearest enclosing declaration is this instance's, so the answer must
+    // be the same one the hand-written table gave. If this goes red the change
+    // is a behaviour break, not a refactor.
+    expect(discoverLocalPackages(ROOT)["folio-assistant"]).toContain("src/skills");
+  });
+});
