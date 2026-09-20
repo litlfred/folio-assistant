@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T20:56:33.055Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2e77c93068593cb112da15ee61d235fbb67bdfc6",
-  "sourceCommitSha": "2e77c93068593cb112da15ee61d235fbb67bdfc6",
-  "sourceCommitAt": "2026-09-20T20:54:55Z",
+  "generatedAt": "2026-09-20T21:22:21.422Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e69b9627fbf79b5117336d0f3eae077e0994de45",
+  "sourceCommitSha": "e69b9627fbf79b5117336d0f3eae077e0994de45",
+  "sourceCommitAt": "2026-09-20T21:20:37Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 216,
@@ -275,7 +275,7 @@
     "Process": 54,
     "SequenceFlow": 697,
     "ProcessNode": 662,
-    "Tool": 67,
+    "Tool": 68,
     "Schema": 79,
     "GraphKind": 22,
     "Directory": 32,
@@ -1227,7 +1227,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/asset-extraction.md",
-      "instructionLines": 110,
+      "instructionLines": 156,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3944,7 +3944,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
-      "instructionLines": 170,
+      "instructionLines": 222,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -27375,6 +27375,86 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/beans-manual"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#tool/pdf-cover",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "pdf-cover",
+      "title": "PDF page raster",
+      "description": "Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer.",
+      "install": {
+        "cli": "pip install pymupdf"
+      },
+      "invoke": {
+        "shell": "python3 cat-harness/scripts/pdf-cover.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "pdf",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF to render from. Its bytes must be here; nothing is fetched.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PNG to write.",
+            "required": true,
+            "arg": {
+              "flag": "--out"
+            }
+          },
+          {
+            "name": "page",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/tool-types.schema.json#/$defs/Count",
+            "description": "1-based page to render, default 1. Asking for a page past the end is refused, not clamped.",
+            "required": false,
+            "arg": {
+              "flag": "--page"
+            }
+          },
+          {
+            "name": "width",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/tool-types.schema.json#/$defs/Count",
+            "description": "Output width in pixels, default 300. `Count` admits zero and a zero width does not; the script refuses it rather than writing a 0x0 PNG, which is the tighter bound stated at the port as `CountSchema` asks. Height follows the page's own aspect and is never forced.",
+            "required": false,
+            "arg": {
+              "flag": "--width"
+            }
+          },
+          {
+            "name": "checkOnly",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/tool-types.schema.json#/$defs/Flag",
+            "description": "Write nothing; exit non-zero if the target differs from what would be written.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "facts",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/tool-types.schema.json#/$defs/Text",
+            "description": "With `--json`: source path and sha256, page, page count, point geometry, pixel geometry, output bytes and sha256, media type, renderer version. Everything a provenance record needs and nothing it has to guess."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "pymupdf"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/asset-extraction"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/pdf-cover"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#tool/ingest-stdlib",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "ingest-stdlib",
@@ -33263,8 +33343,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "ae0843ed15aa86ba382fe696f8e5c7152182fedf",
+    "sha": "0e3e3daa450b356aa68fd7796230c40638073dad",
     "pr": "607/merge",
-    "run": "35537050054"
+    "run": "35538407891"
   }
 }

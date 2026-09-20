@@ -695,28 +695,53 @@ IRIS <em>does with them</em> is here.</p>
     <tr>
       <th> </th>
       <th> </th>
+      <th>source</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <td>items</td>
+      <td><strong>273,559</strong></td>
+      <td>the home page’s search placeholder</td>
+    </tr>
+    <tr>
       <td>files</td>
       <td><strong>1,057,223</strong></td>
+      <td>the storage report</td>
     </tr>
     <tr>
       <td>storage</td>
       <td><strong>361.55 GB</strong></td>
+      <td>the storage report</td>
     </tr>
     <tr>
       <td>top-level communities</td>
       <td><strong>8</strong></td>
+      <td>the storage report</td>
     </tr>
   </tbody>
 </table></div>
 
-<p><strong>That is a FILE count, not an item count.</strong> An item carries several bitstreams
-(below), so the item count is smaller and IRIS does not publish it. Any
-denominator built from this <strong>overstates</strong>, which is the safe direction for a
-size gate and the wrong direction for a completeness claim.</p>
+<p><strong>These are two different denominators and they were one field until
+2026-09-20.</strong> The storage report publishes files; <code class="language-plaintext highlighter-rouge">totalItemsUpstream</code> was fed
+the file count with a note saying so, because an item carries several
+bitstreams and IRIS — <em>on that page</em> — does not publish how many items there
+are. It publishes it on the <strong>home page</strong>, in the search box: <em>“Search through
+the repository’s 273559 items”</em>. So the catalogue now carries both, and
+<code class="language-plaintext highlighter-rouge">totalFilesUpstream</code> exists in the schema for exactly this.</p>
+
+<p><strong>3.86 files per item</strong>, which lands inside the 3–4× range this section
+predicted from the bundle structure before either number was known. The
+prediction is not the point; the point is that a <em>labelled</em> wrong denominator
+could be replaced the day the right one appeared, while a silently wrong one
+would still be in every fraction.</p>
+
+<p>The storage figure is <strong>derived, not transcribed</strong>: the report prints two
+decimals and no byte count, so <code class="language-plaintext highlighter-rouge">totalBytesUpstream</code> is <code class="language-plaintext highlighter-rouge">round(361.55 × 1024³)</code>
+and is good to about ±5 MiB. It is GiB rather than GB because that is the
+reading under which every per-community figure the same report prints —
+238.58, 19.72, 34.84, 26.14, 25.71 — reproduces <strong>exactly</strong>, and none of them
+does at 10⁹.</p>
 <h2 id="three-identifier-systems-and-the-one-in-our-slugs-is-the-weakest">
   
   
@@ -951,6 +976,16 @@ this way rather than as advice.</p>
       <td>Do not “correct” a record that looks wrong</td>
       <td>the English-titled editorial manual really does carry an <strong>Italian</strong> ISBN</td>
     </tr>
+    <tr>
+      <td><strong>R19</strong></td>
+      <td>A derived figure must round-trip the figure it was derived from</td>
+      <td>the site total claimed to be <code class="language-plaintext highlighter-rouge">361.55 × 1024³</code> and rendered as <strong>361.56</strong></td>
+    </tr>
+    <tr>
+      <td><strong>R20</strong></td>
+      <td>An item count and a file count are different denominators</td>
+      <td>273,559 against 1,057,223 — a fraction built from the wrong one is off by 3.86×</td>
+    </tr>
   </tbody>
 </table></div>
 <h3 id="r8-has-a-worked-failure-in-this-repository">
@@ -971,6 +1006,51 @@ catalogued the WHO Editorial Style Manual as a publication called <em>Abies</em>
 one title (<code class="language-plaintext highlighter-rouge">Handbook forGuideline Development 2nd edition</code> from joined title
 lines, <code class="language-plaintext highlighter-rouge">GRC Handbook - second edition</code> from PDF docinfo, and the real one), with
 no authority among them. That is what an IRIS record settles.</p>
+<h2 id="covers-an-artefact-we-made-filed-where-iris-files-its-own">
+  
+  
+    <a href="#covers-an-artefact-we-made-filed-where-iris-files-its-own" class="anchor-heading" aria-labelledby="covers-an-artefact-we-made-filed-where-iris-files-its-own"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Covers: an artefact we made, filed where IRIS files its own
+  
+  
+</h2>
+    
+
+<p>The replica’s Recent Submissions strip shows a cover beside each item, because
+the real page does. <strong>None of them came from IRIS.</strong> Each is page 1 of a PDF
+this repository already holds, rasterised by
+<code class="language-plaintext highlighter-rouge">cat-harness/scripts/pdf-cover.py</code> and filed as a <code class="language-plaintext highlighter-rouge">THUMBNAIL</code>-bundle bitstream
+— which is the bundle name DSpace uses for the thumbnails <strong>it</strong> generates.
+That collision is the whole hazard: nothing downstream can tell the two apart
+from the bundle name, so the node has to say.</p>
+
+<p><code class="language-plaintext highlighter-rouge">who-iris/scripts/gen-covers.ts</code> is the instance half. It renders only covers
+the <strong>catalogue asks for</strong> — a node declares the <code class="language-plaintext highlighter-rouge">THUMBNAIL</code> bitstream and
+this supplies the bytes, so adding one is a catalogue edit rather than a script
+quietly adding files to the repository. And it <strong>refuses</strong> to write bytes for a
+<code class="language-plaintext highlighter-rouge">THUMBNAIL</code> whose <code class="language-plaintext highlighter-rouge">materialization.note</code> does not declare the derivation:
+generating that sentence would make the check circular, since a tool cannot
+attest to its own output.</p>
+
+<p><code class="language-plaintext highlighter-rouge">--check</code> re-renders and compares bytes, the recorded <code class="language-plaintext highlighter-rouge">sha256</code> and the recorded
+pixel dimensions. That is R13 discharged for the one case this script is
+responsible for — the rest of <code class="language-plaintext highlighter-rouge">yl5w</code> is still open.</p>
+<h3 id="the-who-emblem-is-on-the-covers-and-that-is-not-the-chrome-rule">
+  
+  
+    <a href="#the-who-emblem-is-on-the-covers-and-that-is-not-the-chrome-rule" class="anchor-heading" aria-labelledby="the-who-emblem-is-on-the-covers-and-that-is-not-the-chrome-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The WHO emblem is on the covers, and that is not the chrome rule
+  
+  
+</h3>
+    
+
+<p>The site chrome carries no WHO mark, per the owner: <em>“leeav off WHO logo (as
+with all who-pages for now, not until published under WHO, just use colors).”</em>
+The <strong>covers do</strong> — the WPRO style guide’s cover is the emblem over a blue
+field, and both HQ items carry it in print. That is content, not branding: the
+instruction is about not dressing <em>our</em> page as WHO’s, and the same message
+that gave it also asked for the covers to be extracted. Reversible in one
+place — the <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code> in <code class="language-plaintext highlighter-rouge">submission()</code> — without touching the catalogue that
+records them.</p>
 <h2 id="getting-a-record--and-the-prediction-this-section-made-which-came-true">
   
   

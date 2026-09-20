@@ -790,6 +790,57 @@ quietly makes the asset count disagree with the container’s own, and a reader
 reconciling the two finds nothing to explain the gap. They go in <code class="language-plaintext highlighter-rouge">omitted[]</code>
 with a pattern, a reason and a count — measured on the IRIS zip: 11 real
 entries, 12 shadows.</p>
+<h2 id="derived-renderings--the-artefact-we-made-out-of-bytes-we-hold">
+  
+  
+    <a href="#derived-renderings--the-artefact-we-made-out-of-bytes-we-hold" class="anchor-heading" aria-labelledby="derived-renderings--the-artefact-we-made-out-of-bytes-we-hold"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Derived renderings — the artefact we MADE, out of bytes we hold
+  
+  
+</h2>
+    
+
+<p>A cover thumbnail, an OCR text layer, a page raster, a converted figure: none
+of these came from the source. They were produced here, from something the
+source supplied, and <strong>the catalogue records an artefact, not where it came
+from</strong> — so a derived file with a plausible name and a <code class="language-plaintext highlighter-rouge">materialized</code> state is
+indistinguishable from one the publisher shipped.</p>
+
+<p>DSpace makes this concrete. It generates a <code class="language-plaintext highlighter-rouge">THUMBNAIL</code> bundle of its own, so
+“a THUMBNAIL bitstream on an IRIS item” reads, to anything downstream, as
+IRIS’s thumbnail. The three WHO IRIS covers in this repository are <strong>not</strong>
+those: <code class="language-plaintext highlighter-rouge">iris.who.int</code> is egress-blocked here, nothing upstream was fetched, and
+each is page 1 of a PDF already held, rasterised by
+<code class="language-plaintext highlighter-rouge">cat-harness/scripts/pdf-cover.py</code>.</p>
+
+<p>Three rules, in the order they bite:</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">of</code> names what it was DERIVED FROM, not what it is ABOUT.</strong> The Handle
+identifies the item; putting it on a cover we rendered asserts IRIS supplied
+the image. <code class="language-plaintext highlighter-rouge">local:cat-harness/uploads/&lt;file&gt;.pdf#page=1</code> says the true thing
+and resolves to the true thing.</li>
+  <li><strong>The declaration is authored, and the tool refuses without it.</strong>
+<code class="language-plaintext highlighter-rouge">who-iris/scripts/gen-covers.ts</code> will not write bytes for a <code class="language-plaintext highlighter-rouge">THUMBNAIL</code>
+whose <code class="language-plaintext highlighter-rouge">materialization.note</code> does not declare the derivation. Generating
+that sentence would make the check circular — a tool cannot attest to its
+own output.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">purpose: working</code>, never <code class="language-plaintext highlighter-rouge">archival</code>.</strong> A rendering is regenerable from
+bytes already held and answers no source-loss question;
+<code class="language-plaintext highlighter-rouge">MaterializationSchema</code> already refuses a <code class="language-plaintext highlighter-rouge">working</code> copy that claims to
+discharge <code class="language-plaintext highlighter-rouge">sourceLoss</code>, and this is the case that rule was written for.</li>
+</ol>
+
+<p><strong>Take the determined division, not the clever one.</strong> <code class="language-plaintext highlighter-rouge">pdf-cover.py</code> renders
+page 1 and calls it the cover, for the same reason <code class="language-plaintext highlighter-rouge">pdf-pages.py</code> sections by
+page: page 1 is a determined answer and “the cover” is not. Measured across
+the three items, page 1 is the cover in all three and looks different in each
+— a portrait designed cover (2:3), a landscape one (0.705:1), and a scanned
+title page. A heuristic would have had to beat that on all three, with no way
+to say when it was unsure.</p>
+
+<p><strong>Record the geometry.</strong> <code class="language-plaintext highlighter-rouge">Bitstream.pixelWidth</code>/<code class="language-plaintext highlighter-rouge">pixelHeight</code> exist so a
+listing reserves the box before the bytes arrive. Absent is <em>unmeasured</em>, not
+square: any default would be wrong about two of those three.</p>
 <h2 id="where-the-record-lives">
   
   
@@ -819,6 +870,9 @@ read this way has not been ingested; it has been <em>described</em>.</li>
 field is optional or not.</li>
   <li><code class="language-plaintext highlighter-rouge">schemas/materialization.ts</code> — <code class="language-plaintext highlighter-rouge">materializedAt</code>, the timestamp this one is
 most often confused with.</li>
+  <li><code class="language-plaintext highlighter-rouge">cat-harness/scripts/pdf-cover.py</code> — the generic page raster, and
+<code class="language-plaintext highlighter-rouge">who-iris/scripts/gen-covers.ts</code> the instance wiring that decides which
+documents get one and checks every claim it makes about them.</li>
 </ul>
 
           
