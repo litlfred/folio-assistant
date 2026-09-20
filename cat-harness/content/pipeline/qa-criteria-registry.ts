@@ -45,7 +45,7 @@ import { findContentRepoRoot } from "./repo-root";
  */
 
 import type { QaCriterionDefinition } from "../../schemas/block-qa";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 
 // ── Domain: voice ───────────────────────────────────────────────
 
@@ -2276,8 +2276,12 @@ export function folioOptionalAxes(): string[] {
   const axes: string[] = [];
   _optionalAxes = axes;
   try {
-    const cfgPath = resolveHarnessConfigPath(findContentRepoRoot())?.path ?? join(findContentRepoRoot(), HARNESS_CONFIG);
-    if (existsSync(cfgPath)) {
+    // `undefined` when nothing declares an instance here — no name, so no
+    // filename, so no axes. Same answer as an absent config and for the same
+    // reason: a folio that has not asked for an axis is not audited against
+    // it, and neither is a directory that is not a folio.
+    const cfgPath = expectedInstanceConfigPath(findContentRepoRoot());
+    if (cfgPath !== undefined && existsSync(cfgPath)) {
       const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
       if (Array.isArray(cfg.qaAxes)) {
         axes.push(

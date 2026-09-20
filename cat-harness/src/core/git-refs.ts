@@ -28,7 +28,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 
 /**
  * Run a git command in `root`, or `undefined` if it fails.
@@ -120,9 +120,10 @@ export function publishTargets(root: string): {
   pagesBaseUrl?: string;
   publishRef: string;
 } {
-  const configPath = resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG);
+  const configPath = expectedInstanceConfigPath(root);
   let block: { repoUrl?: string; pagesBaseUrl?: string; publishRef?: string } = {};
-  if (existsSync(configPath)) {
+  // `undefined` = nothing declares an instance here; nothing to read.
+  if (configPath !== undefined && existsSync(configPath)) {
     try {
       const parsed = JSON.parse(readFileSync(configPath, "utf-8")) as {
         readme?: typeof block;

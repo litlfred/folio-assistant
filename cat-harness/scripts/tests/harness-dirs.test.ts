@@ -19,7 +19,6 @@
  */
 
 import { describe, expect, test } from "bun:test";
-import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -36,6 +35,7 @@ import {
   updateBean,
 } from "../beans-fallback.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 // The REPOSITORY root, and it has to be said out loud now: `"..", ".."` from
 // here reaches the INSTANCE, and this file's subject — `.beans.yml`, `beans/`
@@ -240,8 +240,8 @@ describe("the config name — harness.config.json, and only that", () => {
   test("the config is found by its name", () => {
     const root = scratchStore();
     try {
-      writeFileSync(join(root, HARNESS_CONFIG), JSON.stringify({ contentType: "document" }));
-      expect(resolveHarnessConfigPath(root)!.path.endsWith(HARNESS_CONFIG)).toBe(true);
+      writeInstanceConfig(root, JSON.stringify({ contentType: "document" }));
+      expect(resolveHarnessConfigPath(root)!.path.endsWith(FIXTURE_CONFIG)).toBe(true);
       expect(readHarnessConfig(root)?.contentType).toBe("document");
     } finally {
       rmSync(root, { recursive: true, force: true });
@@ -281,9 +281,7 @@ describe("the config name — harness.config.json, and only that", () => {
         { id: "defs", path: "defs", graphs: ["bean-defs"] },
         { id: "workflows", path: "workflows", graphs: ["workflow-state"] },
       ]);
-      writeFileSync(
-        join(root, HARNESS_CONFIG),
-        JSON.stringify({ harness: { workPlan: "ignored", workflowState: "also-ignored" } }),
+      writeInstanceConfig(root, JSON.stringify({ harness: { workPlan: "ignored", workflowState: "also-ignored" } }),
       );
       const r = checkHarnessDirs(root);
       expect(r.configured).toBe(true);

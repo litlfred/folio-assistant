@@ -24,8 +24,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import "../../schemas/folio-graph-kind.js";
-import { HARNESS_CONFIG } from "../../schemas/harness-config.js";
 import { folioDir } from "../../schemas/cat-harness.js";
+import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const REGISTRY = resolve(import.meta.dir, "../../content/pipeline/qa-criteria-registry.ts");
 
@@ -50,9 +50,7 @@ function folioRoot(qaAxes: string[] | undefined): string {
   // `folioDir` of an undeclared root IS the convention, so the temp folio
   // gets whatever directory the resolver will look for — no literal here.
   mkdirSync(folioDir(dir), { recursive: true });
-  writeFileSync(
-    join(dir, HARNESS_CONFIG),
-    JSON.stringify({ contentType: "paper", ...(qaAxes ? { qaAxes } : {}) }, null, 2),
+  writeInstanceConfig(dir, JSON.stringify({ contentType: "paper", ...(qaAxes ? { qaAxes } : {}) }, null, 2),
   );
   return dir;
 }

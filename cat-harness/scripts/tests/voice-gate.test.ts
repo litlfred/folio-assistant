@@ -11,7 +11,6 @@
  * cannot parse must not silently lose every voice check while reporting clean.
  */
 import { describe, test, expect } from "bun:test";
-import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -24,6 +23,7 @@ import { readActiveVoices } from "../../schemas/voices";
 import { criterionDefHash } from "../../content/pipeline/qa-utils";
 import { QA_CRITERIA_BY_ID } from "../../content/pipeline/qa-criteria-registry";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 describe("criterionVoices", () => {
   test("absent means NOT voice-scoped — the opposite default from profiles", () => {
@@ -81,15 +81,13 @@ describe("readActiveVoices", () => {
 
   test("a config with no voices key activates none", () => {
     const d = tmp();
-    writeFileSync(join(d, HARNESS_CONFIG), '{"contentType":"document"}');
+    writeInstanceConfig(d, '{"contentType":"document"}');
     expect(readActiveVoices(d)).toEqual([]);
   });
 
   test("a config listing voices returns them in order", () => {
     const d = tmp();
-    writeFileSync(
-      join(d, HARNESS_CONFIG),
-      '{"voices":{"active":["who-editorial","milnor"]}}',
+    writeInstanceConfig(d, '{"voices":{"active":["who-editorial","milnor"]}}',
     );
     expect(readActiveVoices(d)).toEqual(["who-editorial", "milnor"]);
   });
@@ -114,7 +112,7 @@ describe("readActiveVoices", () => {
 
   test("UNPARSEABLE config is undefined, not []", () => {
     const d = tmp();
-    writeFileSync(join(d, HARNESS_CONFIG), "{ not json");
+    writeInstanceConfig(d, "{ not json");
     expect(readActiveVoices(d)).toBeUndefined();
   });
 
@@ -122,7 +120,7 @@ describe("readActiveVoices", () => {
     // The author meant something; guessing which voices they meant is worse
     // than running every check.
     const d = tmp();
-    writeFileSync(join(d, HARNESS_CONFIG), '{"voices":{"active":"who-editorial"}}');
+    writeInstanceConfig(d, '{"voices":{"active":"who-editorial"}}');
     expect(readActiveVoices(d)).toBeUndefined();
   });
 

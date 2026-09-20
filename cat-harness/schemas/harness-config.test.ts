@@ -2,7 +2,6 @@
  * Tests for schemas/harness-config.ts — cross-folio dependency schema and resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import { HARNESS_CONFIG } from "./harness-config";
 // REQUIRED: cat-harness/harness.json declares a `folio` graph, and that kind is
 // registered by a load-time side effect in core. Without this, reading the
 // declaration under test throws `unknown graph kind "folio"`.
@@ -21,6 +20,7 @@ import {
   resolveTranslationDirs,
   materialiseDeclaredDirectories,
 } from "./harness-config";
+import { FIXTURE_CONFIG, declareInstance, instanceConfigPathIn, writeInstanceConfig } from "../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_folio_config__");
 
@@ -36,19 +36,19 @@ beforeAll(() => {
   const depA = join(TMP, "dep-a");
   mkdirSync(join(depA, "skills"), { recursive: true });
   mkdirSync(join(depA, "translations", "fr"), { recursive: true });
-  writeFileSync(join(depA, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(depA, JSON.stringify({
     translation: { translationDir: "translations" },
   }), "utf-8");
 
   // Dependency B (transitive dep of A)
   const depB = join(TMP, "dep-b");
   mkdirSync(join(depB, "skills"), { recursive: true });
-  writeFileSync(join(depB, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(depB, JSON.stringify({
     translation: { translationDir: "translations" },
   }), "utf-8");
 
   // A depends on B
-  writeFileSync(join(depA, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(depA, JSON.stringify({
     translation: { translationDir: "translations" },
     dependencies: {
       folioAssistant: [
@@ -58,7 +58,7 @@ beforeAll(() => {
   }), "utf-8");
 
   // Root config
-  writeFileSync(join(TMP, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(TMP, JSON.stringify({
     contentType: "document",
     translation: {
       defaultLocale: "en",
@@ -181,9 +181,9 @@ describe("resolveDependencyTree", () => {
     // Create a cycle: dep-b depends on root
     const depB = join(TMP, "dep-b");
     const origConfig = JSON.parse(
-      readFileSync(join(depB, HARNESS_CONFIG), "utf-8"),
+      readFileSync(instanceConfigPathIn(depB), "utf-8"),
     );
-    writeFileSync(join(depB, HARNESS_CONFIG), JSON.stringify({
+    writeInstanceConfig(depB, JSON.stringify({
       ...origConfig,
       dependencies: {
         folioAssistant: [{ name: "root", path: TMP }],
@@ -195,7 +195,7 @@ describe("resolveDependencyTree", () => {
     expect(tree).toHaveLength(1);
 
     // Restore original
-    writeFileSync(join(depB, HARNESS_CONFIG), JSON.stringify(origConfig), "utf-8");
+    writeInstanceConfig(depB, JSON.stringify(origConfig), "utf-8");
   });
 });
 

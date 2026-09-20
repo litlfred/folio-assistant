@@ -16,7 +16,7 @@ import { FolioServer } from "./server.js";
 import { resolveBuiltinAdapter } from "./builtin-adapters.js";
 import { GitHelper } from "./core/git.js";
 import { log } from "./core/logging.js";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../schemas/harness-config";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
 // ── Parse CLI args ───────────────────────────────────────────────
@@ -122,9 +122,11 @@ let adapterModule: string | undefined;
 let feedbackDir = resolve(repoRoot, ".folio-feedback");
 let viewerPort: number | undefined;
 
-// harness.config.json (preferred)
-const harnessConfigPath = resolveHarnessConfigPath(repoRoot)?.path ?? join(repoRoot, HARNESS_CONFIG);
-if (existsSync(harnessConfigPath)) {
+// The instance's own config — `<name>.config.json`, resolved outward from
+// the instance root (2026-09-20). `undefined` = nothing declares an instance
+// here, so there is no config to prefer and the defaults below stand.
+const harnessConfigPath = expectedInstanceConfigPath(repoRoot);
+if (harnessConfigPath !== undefined && existsSync(harnessConfigPath)) {
   try {
     const config = JSON.parse(readFileSync(harnessConfigPath, "utf-8"));
     adapterType = config.contentType || config.adapter || "paper";

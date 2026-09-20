@@ -62,7 +62,7 @@
  */
 import { defaultContentTypes, type ContentTypeRegistry } from "./content-type";
 import { DECLARATION_FILENAME } from "./cat-harness";
-import { HARNESS_CONFIG } from "./harness-config";
+import { instanceConfigFilename, instanceConfigFor } from "./harness-config";
 import { termIri } from "./namespaces";
 
 /** The `@type` a harness declaration projects to. */
@@ -85,7 +85,15 @@ export function registerBaseContentTypes(registry: ContentTypeRegistry = default
   });
 
   registry.register("folio", {
-    filename: HARNESS_CONFIG,
+    // COMPUTED, because the marker's name is the instance's own as of
+    // 2026-09-20 — `<name>.config.json` at the instantiation root. A literal
+    // here would have gone on testing for a file no instance writes, and
+    // `describeRepository` would have reported every folio as not-a-folio
+    // while looking perfectly healthy.
+    filename: (repoRoot) => {
+      const inst = instanceConfigFor(repoRoot);
+      return inst === undefined ? undefined : instanceConfigFilename(inst.name);
+    },
     type: termIri("Folio"),
     summary:
       "A repository that authors folio content — it declares a content type, and `folio_init` wrote this file.",

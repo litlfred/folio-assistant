@@ -34,7 +34,7 @@
  */
 
 import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { HARNESS_CONFIG } from "../schemas/harness-config";
+import { instanceConfigFilename } from "../schemas/harness-config";
 import { materialiseDeclaredDirectories } from "../schemas/harness-config";
 import { relative, dirname, join, resolve } from "path";
 import { spawnSync } from "child_process";
@@ -521,7 +521,10 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   if (!o.dryRun) mkdirSync(root, { recursive: true });
 
   // 1. Configuration and the platform link.
-  write(HARNESS_CONFIG, harnessConfig(o, assistant));
+  // Named after the folio, not after the harness: the config the scaffold
+  // writes is THIS instance's, and `folio_init` is where a new instance's
+  // name first becomes a filename (2026-09-20).
+  write(instanceConfigFilename(o.slug), harnessConfig(o, assistant));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
