@@ -201,6 +201,20 @@
       "file": "beans/defs/folio-assistant-1hvo--theming-a-cat-harnesstheming-subgraph-broken-up-th.md"
     },
     {
+      "id": "folio-assistant-1ity",
+      "title": "COVERAGE: four instances' library/ directories are rendered by the library viewer but do not declare it",
+      "status": "todo",
+      "type": "task",
+      "priority": "low",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T19:51:00Z",
+      "updatedAt": "2026-09-20T19:51:00Z",
+      "preview": "---\n\n## Coverage declared for what this work actually renders — 2026-09-20\n\nPR #594 landed `coverage: { visualiser, docs, skill }` on a directory entry\nwhile this branch was in flight, and `check:subgraph-coverage` immediately\nreported `schemas`, `library` and `uploads` as **owing a visualiser** — with\nthe pages sitting right there. The check reads a DECLARATION, not the\nexistence of a file, and i",
+      "file": "beans/defs/folio-assistant-1ity--coverage-four-instances-library-directories-are-re.md"
+    },
+    {
       "id": "folio-assistant-1le7",
       "title": "Action-icon tiles: one QR-sized tile template, expandable, for settings / languages / KG viewer / src",
       "status": "in-progress",
@@ -805,6 +819,20 @@
       "file": "beans/defs/folio-assistant-6366--gate-collapse-the-10-gate-scripts-behind-one-tool.md"
     },
     {
+      "id": "folio-assistant-6e7b",
+      "title": "GOAL 1 — repository separation and instantiation (PARAPHRASE, awaiting the owner's words)",
+      "status": "scrapped",
+      "type": "milestone",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:51:21Z",
+      "updatedAt": "2026-09-20T20:10:00Z",
+      "preview": "Created by the `wqht` fix, 2026-09-20, under the owner's decision that **a goal\nis a `milestone` bean, in the owner's own words, with the epics serving it\nparented to it** ([`todo-manager`](../../cat-harness/skills/folio-core/todo-manager.md)\n§\"A GOAL is a `milestone` bean\").\n\n## ⚠ THE TITLE IS A PARAPHRASE, NOT THE GOAL\n\nThe owner stated three goals in chat on 2026-09-20. **Those words are not in",
+      "file": "beans/defs/folio-assistant-6e7b--goal-1-repository-separation-and-instantiation-par.md"
+    },
+    {
       "id": "folio-assistant-6f1x",
       "title": "MAINTAINS: the unproduced check is now blind to every producer but one",
       "status": "completed",
@@ -1045,14 +1073,14 @@
     {
       "id": "folio-assistant-7uff",
       "title": "LOGGING: agents log task start/end to fsh-guts/logs/, off by default, as a mechanical role",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T11:23:31Z",
-      "updatedAt": "2026-09-19T12:24:54Z",
+      "updatedAt": "2026-09-20T20:00:00Z",
       "preview": "Owner, 2026-09-19:\n\n> under cat-harness i want to add a logging skill. the will live in\n> fsh-guts/logs/ by default. an agent whenever it starts or ends a task or\n> has a log message, they should add an entry to a log entry in the trash.\n> define skills, i/o, bpmn and connect it to existing agentic processes. by\n> default commit audit log to git data store is turned off - need explict\n> like (cpat",
       "file": "beans/defs/folio-assistant-7uff--logging-agents-log-task-startend-to-fsh-gutslogs-o.md"
     },
@@ -1125,6 +1153,20 @@
       "updatedAt": "2026-09-20T17:17:15Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> agent should be aware of how ui is deployed (e.g. ghpages , no XSS, etc),\n> local server, w/ or w/o mcp, chat discussion only.  part of skills to know\n> which tools\n\n## What this adds to the parent epic\n\n`5a3l` establishes that **topology** (where things live) and **operating\nmode** (what the harness is doing) are orthogonal, and that named scenarios\nare their produ",
       "file": "beans/defs/folio-assistant-81vy--deployment-awareness-the-agent-must-know-its-ui-su.md"
+    },
+    {
+      "id": "folio-assistant-8325",
+      "title": "RENDERED-ASSET URLs: every instance's rendered content is addressed at <base>/<instance>/<path>, registered and enabled-by-default",
+      "status": "scrapped",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:29:51Z",
+      "updatedAt": "2026-09-20T19:05:32Z",
+      "preview": "Owner, 2026-09-20, verbatim — asked as the answer to a narrow question\n(`schema/` or `schemas/` for one visualiser's URL) and answered as a general\nrule, which is why it is beaned here rather than inside `xgd8`:\n\n> rendered assets should be available at toplevel like `<baseULR>/` for main\n> jsut the docs pipleline, or `<baseurl>/<page>` where is registered rendered\n> page from a harness that was i",
+      "file": "beans/defs/folio-assistant-8325--rendered-asset-urls-every-instances-rendered-conte.md"
     },
     {
       "id": "folio-assistant-85e8",
@@ -1295,6 +1337,20 @@
       "file": "beans/defs/folio-assistant-a02m--sole-directory-excising-directoryforgraph-relocate.md"
     },
     {
+      "id": "folio-assistant-a46u",
+      "title": "GOAL 3 — WHO IRIS through a themed harness (PARAPHRASE, awaiting the owner's words)",
+      "status": "scrapped",
+      "type": "milestone",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:51:21Z",
+      "updatedAt": "2026-09-20T20:10:00Z",
+      "preview": "Created by the `wqht` fix, 2026-09-20 — see `6e7b` for the full note on why the\ntitle is a paraphrase and what is being asked for.\n\n## ⚠ THE TITLE IS A PARAPHRASE, NOT THE GOAL\n\nThe `goal-review` sweep's summary of one of the three goals the owner stated in\nchat. The owner's own words are not recorded anywhere in this repository.\n\n**This is the goal `cvab` measured the cost of.** Branch\n`claude/sl",
+      "file": "beans/defs/folio-assistant-a46u--goal-3-who-iris-through-a-themed-harness-paraphras.md"
+    },
+    {
       "id": "folio-assistant-a6kl",
       "title": "L1 GATE WAS A NO-OP IN CI: check:l1-complete ran from the repo root and found no declaration",
       "status": "todo",
@@ -1339,14 +1395,14 @@
     {
       "id": "folio-assistant-ab3n",
       "title": "SIBLING SESSIONS: the session API cannot see them, the commit trailer is the only identity, and nothing says so",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T19:45:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\nEight sibling sessions committed in the window (from the `Claude-Session:` trailer on 623 commits across all branches). The session API return",
       "file": "beans/defs/folio-assistant-ab3n--sibling-sessions-the-session-api-cannot-see-them-t.md"
     },
@@ -1451,28 +1507,28 @@
     {
       "id": "folio-assistant-b963",
       "title": "COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T20:40:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`AGENTS.md` line 3 (the cold-start line every agent runs first), lines 192 and 351, `README.md` lines 4 and 371, and `cat-harness/docs/guides/",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
     {
       "id": "folio-assistant-bbbl",
       "title": "TWO RULES COLLIDE on a finished sibling bean: 0pes closes on evidence, bean-coordination never resolves a sibling",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T20:00:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\nFour beans read as finished in their own bodies and are not `completed`: `7uff` (\"Everything on this bean is now done … Ready to resolve once ",
       "file": "beans/defs/folio-assistant-bbbl--two-rules-collide-on-a-finished-sibling-bean-0pes.md"
     },
@@ -1721,14 +1777,14 @@
     {
       "id": "folio-assistant-cvab",
       "title": "BRANCH-ONLY WORK PLAN: 12 of 13 IRIS beans live only on PR #477, so the store on main is blind to a whole goal",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T19:00:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\nBranch `claude/sleepy-rubin-mr6kdu` (PR #477, 65 commits ahead, 1,937 files) carries the `kupb` epic and 12 of its 13 children. None exist on ",
       "file": "beans/defs/folio-assistant-cvab--branch-only-work-plan-12-of-13-iris-beans-live-onl.md"
     },
@@ -1763,14 +1819,14 @@
     {
       "id": "folio-assistant-d1r6",
       "title": "STICKY: the close control discards to fsh-guts, with a crumpled-sticky icon",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T11:08:23Z",
-      "updatedAt": "2026-09-19T13:25:33Z",
+      "updatedAt": "2026-09-20T20:00:00Z",
       "preview": "Owner, 2026-09-19:\n\n> stikies have an [x] to close/restore to panel... that should now be\n> replaced with it going into the fsh-guts. icon there should be crumpled\n> sticky.\n\n## What changes\n\n`docs-ui.js` currently gives a board sticky two controls: `⇱ Pin` floats it\nonto the page, and `×` calls `onDock` to return it to the panel. **The `×`\nbecomes discard-to-`fsh-guts`**, with a crumpled-sticky i",
       "file": "beans/defs/folio-assistant-d1r6--sticky-the-close-control-discards-to-fsh-guts-with.md"
     },
@@ -1921,14 +1977,14 @@
     {
       "id": "folio-assistant-fgnw",
       "title": "IN-PROGRESS CARRIES NO ACTIVITY: 43 of 60 claims untouched in 4h and no rule says what that means",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T19:45:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n60 beans were `in-progress`; 43 had no change in the window, and 38 of those were last touched by one bulk move at 09:37. Eight sessions were ",
       "file": "beans/defs/folio-assistant-fgnw--in-progress-carries-no-activity-43-of-60-claims-un.md"
     },
@@ -2017,6 +2073,20 @@
       "file": "beans/defs/folio-assistant-g4dv--staging-compare-with-main-must-deep-link-to-the-sa.md"
     },
     {
+      "id": "folio-assistant-ga3q",
+      "title": "WAIVER: a human can waive a confirmation right, scoped to a session or a process run",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:51:21Z",
+      "updatedAt": "2026-09-20T18:51:53Z",
+      "preview": "The owner, 2026-09-20, while the `bbbl` decision was being implemented:\n\n> *\"human can waive cinfirmation rights (e.g. for session, for process run)\"*\n>\n> *\"context depedndent, should be in memories.  (update skills)\"*\n\n## What this changes\n\nSeveral rules here stop an agent and hand a decision back: merging to `main`,\nremoving a durable artefact, spawning a swarm, closing a bean whose evidence\nthe",
+      "file": "beans/defs/folio-assistant-ga3q--waiver-a-human-can-waive-a-confirmation-right-scop.md"
+    },
+    {
       "id": "folio-assistant-gjli",
       "title": "ALL UI must follow accessibility guidelines — standing rule, and the KG viewer has known gaps",
       "status": "in-progress",
@@ -2099,6 +2169,20 @@
       "updatedAt": "2026-09-20T11:24:04Z",
       "preview": "Group 12 of 13 in `d308`. **3 files, 0 entry points** — `fsh-cone`, `dak-pdf`,\n`qa-checkers-dak`.\n\n**BPMN:** `l3-fhir-pipeline · Task_Sushi · Task_Validate · Task_IgPublisher`, and\n`ig-incremental-build · Task_Cone` — which names `fsh-cone --changed` directly in\nits task label, so the binding is not inferred.\n\n**Target repo (#223):** `smart-base`.\n\n**Why it is `low` and not `normal`:** three files",
       "file": "beans/defs/folio-assistant-h588--tool-1213-l3-fhir-pipeline-ig-incremental-build-fh.md"
+    },
+    {
+      "id": "folio-assistant-hajp",
+      "title": "INTERACTION: the asking rule is enforced by three layers, not remembered",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T19:31:09Z",
+      "updatedAt": "2026-09-20T20:55:00Z",
+      "preview": "The owner, 2026-09-20, after four questions that broke the rule:\n\n> *\"ask specific questiosn w/ context/ recommendations/pros/cons (see skills,\n> why not invoked?)\"*\n>\n> *\"fix skills so interaction modality would be triggered\"*\n>\n> *\"can we struture schema better to help enforce?\"*\n\n## The measurement\n\n`interaction-modality` §4.1 was STRICT and complete, and was broken the same day\nby the agent im",
+      "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
     {
       "id": "folio-assistant-hfkl",
@@ -2327,16 +2411,16 @@
     {
       "id": "folio-assistant-jbx2",
       "title": "VISUALISER: library/ — the L1 corpus as something you can look at",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [
         "folio-assistant-cjtm"
       ],
       "createdAt": "2026-09-20T14:01:05Z",
-      "updatedAt": "2026-09-20T14:01:05Z",
+      "updatedAt": "2026-09-20T18:50:45Z",
       "preview": "Owner, 2026-09-20: *\"we also need library/ harness visualation\"*, and\n*\"bean up to do: library/ visualaiont. the fsh-gts/ has visualion beaned up\nalready/in-progress.\"*\n\n## Why this one first among the missing viewers\n\n`library/` is L1 — every knowledge-graph reference to a source resolves THROUGH\nit, never to a loose path or a bare URL. So it is the subgraph whose contents\nmost consumers depend o",
       "file": "beans/defs/folio-assistant-jbx2--visualiser-library-the-l1-corpus-as-something-you.md"
     },
@@ -2821,14 +2905,14 @@
     {
       "id": "folio-assistant-oh78",
       "title": "ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T19:00:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n54 proposals merged in the window; 2 issues changed (both newly opened). `issue-marks/` tracks two issues (#203, #223). Issue #558 (\"Sticky pi",
       "file": "beans/defs/folio-assistant-oh78--issue-discipline-assumes-every-change-has-an-issue.md"
     },
@@ -3231,14 +3315,14 @@
     {
       "id": "folio-assistant-sfhr",
       "title": "STORE DEFECTS the check does not see: an empty in-progress body, a title that ate its Done-when, a blocker on a scrapped bean",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T19:00:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`beans check` passes (\"No link issues found\"), and three beans are unreadable by the tooling or by a person: `70c7` is `in-progress` with an E",
       "file": "beans/defs/folio-assistant-sfhr--store-defects-the-check-does-not-see-an-empty-in-p.md"
     },
@@ -3315,14 +3399,14 @@
     {
       "id": "folio-assistant-t0i3",
       "title": "FSH-GUTS: a declared non-renderable graph for deprecated and throwaway content",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T10:48:00Z",
-      "updatedAt": "2026-09-19T12:43:12Z",
+      "updatedAt": "2026-09-20T20:00:00Z",
       "preview": "Owner, 2026-09-19:\n\n> do not pollute the KG with SDLC churn.... if you need to keep it, make a\n> folder called fsh-guts/ that you can put structured content in but that does\n> not enter into main render pipeline. [...] it is the trashcan that does not\n> get rendered but can where deprecated, throwaway stuff goes. [...] do not\n> delete unless explicit confirm. goes to fsh-guts. jsonld accessible vi",
       "file": "beans/defs/folio-assistant-t0i3--fsh-guts-a-declared-non-renderable-graph-for-depre.md"
     },
@@ -3411,6 +3495,20 @@
       "updatedAt": "2026-09-20T15:11:06Z",
       "preview": "The owner asked for the methodologies to be **beaned up to BPMN**, 2026-09-20. The\nfour sub-graphs and the adoption skill are done; the executable process is not.\n\n## What exists now\n\n- `methodology` graph kind, registered in `BASE_GRAPH_KINDS`\n- `cat-harness/methodologies/` — `kepner-tregoe`, `madr`, `dmn` (harness-owned)\n- `smart-kg/methodologies/` — `grade` (first content in smart-kg)\n- `method",
       "file": "beans/defs/folio-assistant-u4hs--methodology-the-bpmn-half-an-executable-options-an.md"
+    },
+    {
+      "id": "folio-assistant-uadc",
+      "title": "GOAL 2 — the LHS navbar with folios and moving stickies (PARAPHRASE, awaiting the owner's words)",
+      "status": "scrapped",
+      "type": "milestone",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:51:21Z",
+      "updatedAt": "2026-09-20T20:10:00Z",
+      "preview": "Created by the `wqht` fix, 2026-09-20 — see `6e7b` for the full note on why the\ntitle is a paraphrase and what is being asked for.\n\n## ⚠ THE TITLE IS A PARAPHRASE, NOT THE GOAL\n\nThe `goal-review` sweep's summary of one of the three goals the owner stated in\nchat. The owner's own words are not recorded anywhere in this repository, and a\nparaphrase is a different claim.\n\nCandidate epics for parentin",
+      "file": "beans/defs/folio-assistant-uadc--goal-2-the-lhs-navbar-with-folios-and-moving-stick.md"
     },
     {
       "id": "folio-assistant-ucb9",
@@ -3508,7 +3606,7 @@
         "folio-assistant-cjtm"
       ],
       "createdAt": "2026-09-20T15:00:40Z",
-      "updatedAt": "2026-09-20T15:09:14Z",
+      "updatedAt": "2026-09-20T18:50:25Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> like libray/ and foilio/ (should) and doc/ have visualtions as tools in the\n> harness that defines there schame, we need one for uploads/ that gives\n> count/badge of # uningested, lets you see what's there. lets you upload in\n> various ways.   defined in skills/tools.\n\n## What it asks for\n\nThe `uploads/` visualiser, **a sibling of `jbx2`** (the `library/` one) and o",
       "file": "beans/defs/folio-assistant-v1hw--visualiser-uploads-an-uningested-badge-a-browsable.md"
     },
@@ -3599,14 +3697,14 @@
     {
       "id": "folio-assistant-vlhk",
       "title": "PROCESS EVIDENCE: 54 merges and beans/workflows/ empty — \"say which process you are in\" leaves no trail",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T19:00:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n54 proposals merged in the window; `beans/workflows/` (the declared `workflow-state` graph) holds only `.gitkeep`. Not one session recorded a ",
       "file": "beans/defs/folio-assistant-vlhk--process-evidence-54-merges-and-beansworkflows-empt.md"
     },
@@ -3935,6 +4033,20 @@
       "file": "beans/defs/folio-assistant-xfoh--crdm-detect-add-missing-exclusions-and-re-measure.md"
     },
     {
+      "id": "folio-assistant-xgd8",
+      "title": "SCHEMA VISUALISER: schemas/ is a content kind with no renderer — options, and three generators that were never wired",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:21:04Z",
+      "updatedAt": "2026-09-20T19:29:13Z",
+      "preview": "Owner, 2026-09-20, verbatim — quoted because it sets both the requirement and\nthe URL shape, and a paraphrase of a URL shape is a second answer:\n\n> cat-harness rendeding pipeline should include a schema visualization\n> https://github.com/litlfred/folio-assistant/tree/main/cat-harness/schemas\n> should be content kind w/ skills on shcema mangment, data modeling, ingesting\n> shecmas into KG library, ",
+      "file": "beans/defs/folio-assistant-xgd8--schema-visualiser-schemas-is-a-content-kind-with-n.md"
+    },
+    {
       "id": "folio-assistant-xies",
       "title": "PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design",
       "status": "todo",
@@ -3979,14 +4091,14 @@
     {
       "id": "folio-assistant-y8as",
       "title": "simulators/ is qou's content sitting in the platform, and qou reaches into the submodule to find it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T15:03:52Z",
-      "updatedAt": "2026-09-19T15:11:36Z",
+      "updatedAt": "2026-09-20T20:00:00Z",
       "preview": "Owner, 2026-09-19: *\"all simulators/ need to go into qou\"*.\n\nQueued, not started — raised mid-turn, and the standing instruction is to\nqueue rather than pivot.\n\n## The defect, measured on `main` at `b833d8f92`\n\n`simulators/` in this repository holds **11 HTML files, 456 KB**, and they are\nnot ambiguous about whose they are:\n\n    beta_decay_braid.html        knot_atom_diagrams.html\n    beta_decay_h",
       "file": "beans/defs/folio-assistant-y8as--simulators-is-qou-s-content-sitting-in-the-platfor.md"
     },
@@ -4077,14 +4189,14 @@
     {
       "id": "folio-assistant-z9eb",
       "title": "session-intent names STATUS.md and docs/coordination/<goal>.md; neither exists in this instance",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T18:05:19Z",
+      "updatedAt": "2026-09-20T19:30:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`session-intent.md` (user-invocable, bound to `session-coordinator`) step 1 is \"Open `STATUS.md`\" and step 2 \"Open `docs/coordination/<goal>.m",
       "file": "beans/defs/folio-assistant-z9eb--session-intent-names-statusmd-and-docscoordination.md"
     },
