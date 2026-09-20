@@ -262,22 +262,16 @@
     {
       "id": "agent-instructions",
       "src": "AGENTS.md",
-      "scope": "repository",
       "role": "agent-instructions",
-      "title": "AGENTS.md — folio-assistant",
-      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
-      "source": {
-        "instance": "litlfred/folio-assistant",
-        "path": "cat-bootstrap/AGENTS.md"
-      }
+      "title": "AGENTS.md — cat-harness",
+      "description": "The cold-start file for an agent working IN this layer, and it is THIS LAYER'S own as of 2026-09-20 (issue #592). It was declared `scope: \"repository\"`, so it resolved to the repository root's AGENTS.md — one file answering both \"what binds everywhere\" and \"what binds in the harness layer\", which is the conflation `readmeFinding` calls MAJOR for a non-root instance and could not report, because the asset DID resolve. It resolved to the wrong file's job. No `source`: this file is authored here. The root's carries the cat-bootstrap provenance, because the root's is the file cat-bootstrap copies at initialisation."
     },
     {
       "id": "instance-readme",
       "src": "README.md",
-      "scope": "repository",
       "role": "instance-readme",
-      "title": "folio-assistant",
-      "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
+      "title": "cat-harness",
+      "description": "What this LAYER is, for a reader — as distinct from what the repository is, which is the root's README. Split from it on 2026-09-20 (issue #592); before that this instance had no README of its own and claimed the repository's. It does not list this instance's directories: `harness.json` is that list, and a second copy in prose is free to disagree with it the day a directory moves."
     },
     {
       "id": "cat-bootstrap-initialization",

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ie9l
 title: 'READMEs: every instance kind needs its own starting README, driven by the KG rather than listed — and the root README is cat-harness''s by accident'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T17:00:50Z
-updated_at: 2026-09-20T17:00:50Z
+updated_at: 2026-09-20T19:27:11Z
 parent: folio-assistant-zzmr
 ---
 
