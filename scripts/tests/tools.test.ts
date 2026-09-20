@@ -11,9 +11,16 @@ import { tools } from "../../tools/index.js";
 import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
 import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
+import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
 
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
 const BASE = "https://example.invalid/fa";
+
+/** This repository's root — two levels up from `scripts/tests/`. */
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 describe("tools", () => {
   test("there are tools to check — otherwise everything below is vacuous", () => {
@@ -134,6 +141,31 @@ describe("tools", () => {
     expect(s.has("smart-base-tools")).toBe(true); // skills/authoring-who-smart-guidelines
     expect(s.has("lean-formalization")).toBe(true); // schemas/skills/<name>/
     expect(s.has("kg-export")).toBe(true); // skills/folio-core
+  });
+
+  test("skill discovery is the ONE definition, not a second scan", () => {
+    // REGRESSION, 2026-09-20. This module had its own `knownSkills`: the first
+    // declared `cat-harness` root and its immediate subdirectories. It
+    // disagreed with `known-skills.ts` in both directions at once, and each
+    // direction is a different way for the check to be wrong.
+    const s = knownSkills();
+    const canonical = canonicalKnownSkills(REPO);
+    expect([...canonical].filter((n) => !s.has(n))).toEqual([]);
+    expect([...s].filter((n) => !canonical.has(n))).toEqual([]);
+
+    // The two halves, named, so a re-divergence says WHICH failure returned
+    // rather than only that the sets differ.
+    //
+    // Admitted 36 non-skills: `skills/memory/` holds agent-memory nodes, every
+    // one a `.md` in a declared directory. A directory scan cannot tell them
+    // apart; `isSkillMd` does, by their `$schema:` line. Under the old scan a
+    // Tool could have satisfied a memory entry and passed.
+    expect(s.has("the-complement")).toBe(false);
+    // Missed 2 real ones: `bootstrap/skills/` holds skills DIRECTLY rather
+    // than in packages, and a scan of a root's subdirectories never looks at
+    // the root. Both read as dangling, which is how this was found.
+    expect(s.has("confirm-harness")).toBe(true);
+    expect(s.has("log-message")).toBe(true);
   });
 
   test("io IRIs follow the publication base, not the declaration", async () => {

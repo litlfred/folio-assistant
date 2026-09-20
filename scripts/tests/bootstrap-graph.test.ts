@@ -4,10 +4,11 @@
  * @module scripts/tests/bootstrap-graph.test
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { buildBootstrapDocument } from "../gen-bootstrap-graph.js";
+import { isSkillMd } from "../known-skills.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const OUT = join(ROOT, "bootstrap", "bootstrap.jsonld");
@@ -57,9 +58,17 @@ describe("pure, because committed-and-gated demands it", () => {
 });
 
 describe("what it contains, and what it admits it did not look at", () => {
-  test("bootstrap's two skills are in the graph", async () => {
+  test("every skill bootstrap holds is in the graph", async () => {
+    // DERIVED, not pinned. It asserted `Skill` === 2 until 2026-09-20 and
+    // broke the moment `log-message` landed — a count makes "the export still
+    // works" and "somebody deleted a skill" indistinguishable, and the failure
+    // it produces is on the change that was correct.
+    //
+    // The property is that the export sees what is on disk. A new skill passes
+    // without an edit here; a skill the scan misses fails, which is the case
+    // worth defending.
     const doc = await buildBootstrapDocument();
-    expect((doc["counts"] as Record<string, number>)["Skill"]).toBe(2);
+    expect(skillIds(doc)).toEqual(skillFilesOnDisk());
   });
 
   test("the instance-bound collectors are named as NOT looked for", async () => {
@@ -88,14 +97,20 @@ describe("what it contains, and what it admits it did not look at", () => {
     // than about the code.
     //
     // What belongs here is the fact that is now true and worth defending.
+    //
+    // `Process: 1` was pinned here and broke when `log-message.bpmn` landed —
+    // the same count-vs-property failure as the skills above, and the count
+    // was ALSO stating a rule it could not enforce. "One process" was never
+    // the constraint; "one place to START" is. A sub-process is a second
+    // diagram and does not compete for being the thing an Initiator begins.
     const doc = await buildBootstrapDocument();
     const counts = doc["counts"] as Record<string, number>;
     expect({
-      Process: counts["Process"] ?? 0,
+      processes: processIds(doc),
       hasNodes: (counts["ProcessNode"] ?? 0) > 0,
       hasFlows: (counts["SequenceFlow"] ?? 0) > 0,
       hasRoles: (counts["Role"] ?? 0) > 0,
-    }).toEqual({ Process: 1, hasNodes: true, hasFlows: true, hasRoles: true });
+    }).toEqual({ processes: diagramsOnDisk(), hasNodes: true, hasFlows: true, hasRoles: true });
     // And nothing about the diagram is reported as a problem.
     expect((doc["problems"] as string[]).filter((p) => p.includes("bpmn"))).toEqual([]);
   });
@@ -103,4 +118,56 @@ describe("what it contains, and what it admits it did not look at", () => {
 
 function doc_omitted(doc: Record<string, unknown>): string[] {
   return [...(doc["omitted"] as readonly string[])];
+}
+
+/** Node ids of one `@type`, reduced to the fragment stem, sorted. */
+function idsOfType(doc: Record<string, unknown>, type: string): string[] {
+  const graph = (doc["@graph"] ?? []) as Array<Record<string, unknown>>;
+  return graph
+    .filter((n) => {
+      const t = n["@type"];
+      const ts = Array.isArray(t) ? t.map(String) : [String(t)];
+      // `@type` is the full minted IRI — `<base>/bootstrap/ns#Skill` — so the
+      // fragment is what names the class. Matched on the whole fragment
+      // rather than a suffix, so `ProcessNode` does not answer for `Process`.
+      return ts.some((x) => x.split("#")[1] === type);
+    })
+    .map((n) => String(n["@id"]).split("#")[1]!.split("/").slice(1).join("/"))
+    .sort();
+}
+
+function skillIds(doc: Record<string, unknown>): string[] {
+  return idsOfType(doc, "Skill");
+}
+
+function processIds(doc: Record<string, unknown>): string[] {
+  return idsOfType(doc, "Process");
+}
+
+/**
+ * The skill bodies actually sitting in `bootstrap/skills/`.
+ *
+ * Shares `isSkillMd` with the exporter deliberately — a README or a node
+ * declaring `$schema:` is not a skill, and a disk side that disagreed about
+ * THAT would fail on a correct tree. What the two sides do NOT share is which
+ * directory to look in: this one names it, the exporter resolves it from the
+ * declaration. That axis is the one worth defending, because a resolver that
+ * stops finding `bootstrap/skills/` exports an empty section and reports a
+ * clean run over it — the `dh4f` defect, verified by probe to fail here.
+ */
+function skillFilesOnDisk(): string[] {
+  const dir = join(ROOT, "bootstrap", "skills");
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".md") && isSkillMd(join(dir, f)))
+    .map((f) => f.slice(0, -3))
+    .sort();
+}
+
+/** The processes actually drawn in `bootstrap/workflows/`, by their BPMN id. */
+function diagramsOnDisk(): string[] {
+  const dir = join(ROOT, "bootstrap", "workflows");
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".bpmn"))
+    .map((f) => /<bpmn:process id="([^"]+)"/.exec(readFileSync(join(dir, f), "utf-8"))?.[1] ?? f)
+    .sort();
 }
