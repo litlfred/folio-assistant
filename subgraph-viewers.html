@@ -637,8 +637,7 @@ in each. Two of those graphs now have a page you can open.</p>
 <ol id="markdown-toc">
   <li><a href="#why-these-pages-exist" id="markdown-toc-why-these-pages-exist">Why these pages exist</a></li>
   <li><a href="#the-schema-graph" id="markdown-toc-the-schema-graph">The schema graph</a>    <ol>
-      <li><a href="#reading-it" id="markdown-toc-reading-it">Reading it</a></li>
-      <li><a href="#what-the-diagram-cannot-show" id="markdown-toc-what-the-diagram-cannot-show">What the diagram cannot show</a></li>
+      <li><a href="#the-relationship-diagram" id="markdown-toc-the-relationship-diagram">The relationship diagram</a></li>
     </ol>
   </li>
   <li><a href="#the-library--the-l1-corpus" id="markdown-toc-the-library--the-l1-corpus">The library — the L1 corpus</a>    <ol>
@@ -696,61 +695,83 @@ every declared <code class="language-plaintext highlighter-rouge">schemas</code>
   <li>A <strong>faceted index</strong>: search, filter by kind, filter by module.</li>
   <li>A <strong>detail panel</strong>: fields with their types, optionality and doc comments;
 what the declaration references and what references it.</li>
-  <li>A <strong>per-type UML neighbourhood</strong>, drawn as a class box with its
+  <li>
+    <p>A <strong>per-type UML neighbourhood</strong>, drawn as a class box with its
 generalisations above it and its field references below, each labelled with
-the field it goes through.</li>
+the field it goes through.</p>
+  </li>
+  <li>A <strong>relationship diagram</strong> at the top, collapsible and closed by default:
+the declarations this page is scoped to, as UML boxes wired by labelled
+edges — <em>what is defined here, and how it is linked?</em></li>
 </ul>
 
-<p>There is deliberately <strong>no whole-corpus class diagram</strong>. Hundreds of
-declarations and hundreds of edges render as a wall that looks like a data
-model and answers no question about one — the same argument the knowledge-graph
-viewer already made and won. The diagram is a <em>view over the projection</em>, so
-the projection carries every edge and another view costs nothing to add.</p>
-<h3 id="reading-it">
+<p>There is still <strong>no whole-corpus class diagram.</strong> Hundreds of labelled
+declaration boxes render as a wall that looks like a data model and answers no
+question about one — the same argument the knowledge-graph viewer made and won.
+The diagram obeys it by staying <strong>scoped</strong>, and by declining when the scope is
+too big rather than drawing it anyway.</p>
+<h3 id="the-relationship-diagram">
   
   
-    <a href="#reading-it" class="anchor-heading" aria-labelledby="reading-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading it
+    <a href="#the-relationship-diagram" class="anchor-heading" aria-labelledby="the-relationship-diagram"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The relationship diagram
   
   
 </h3>
     
 
-<p>Three of the states it shows are easy to mistake for noise:</p>
+<p>A collapsible panel at the top draws the declarations the page is scoped to as
+<strong>UML class boxes wired by their edges, each edge labelled with the field it
+goes through</strong> — so you can read not just that <code class="language-plaintext highlighter-rouge">Role</code> is linked to <code class="language-plaintext highlighter-rouge">Skill</code>, but
+that it goes through <code class="language-plaintext highlighter-rouge">skills</code>, and that it is a list.</p>
 
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">undetermined</code></strong> — the reader saw an expression it does not model, and
-<strong>says what it saw</strong>. This is never rendered as a type with no fields,
-because “no fields” and “could not be read” are different answers.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">unresolved</code></strong> — a name the module binds, from a module inside this graph,
-that resolves to no declaration. A real finding, usually a vocabulary
-constant.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">external</code></strong> — bound to something outside this graph. Resolved correctly;
-nothing to do.</li>
-</ul>
-<h3 id="what-the-diagram-cannot-show">
-  
-  
-    <a href="#what-the-diagram-cannot-show" class="anchor-heading" aria-labelledby="what-the-diagram-cannot-show"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the diagram cannot show
-  
-  
-</h3>
-    
+<p><strong>It is scoped, and refusing is an answer.</strong> The diagram draws the page’s scope
+narrowed by the module filter; above 40 declarations it declines and says to
+pick a module. Drawing 812 labelled boxes is the hairball the knowledge-graph
+viewer measured at 1111 nodes.</p>
 
-<p>A reference carried as a <strong>string id</strong> is not drawn, and this is a structural
-limit rather than a gap: a field declared as a plain string holds no link to
-the schema it names, so nothing syntactic — and nothing in JSON Schema or the
-type checker either — can recover it.</p>
+<p><strong>One hop of context is drawn, faded.</strong> A strict module filter cuts the edge
+most worth seeing — <code class="language-plaintext highlighter-rouge">RoleDefSchema --skills--&gt; SkillDefinitionSchema</code> spans two
+files — so a declaration just outside the filter that a drawn one touches is
+drawn too, dashed and dimmed. Counting a cut edge is not showing it.</p>
 
-<p>Measured against <code class="language-plaintext highlighter-rouge">schemas/assistant-schema.puml</code>, a hand-drawn UML diagram
-used as a control: <strong>14 of 15</strong> compositions reproduced, <strong>0 of 9</strong> id
-associations. The page says so permanently, and again on any type carrying
-id-style fields, because an undrawn association is <strong>invisible, not absent</strong>.</p>
+<p>Three edge kinds, and the third is drawn differently on purpose:</p>
 
-<p>The same comparison found the hand-drawn diagram wrong in one place, which is
-what a control is for.</p>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>kind</th>
+      <th>drawn</th>
+      <th>means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>generalisation</td>
+      <td>solid, hollow triangle</td>
+      <td><code class="language-plaintext highlighter-rouge">extends</code></td>
+    </tr>
+    <tr>
+      <td>field reference</td>
+      <td>solid, open arrow</td>
+      <td>a reference <strong>in the source</strong></td>
+    </tr>
+    <tr>
+      <td>id reference</td>
+      <td><strong>dashed</strong></td>
+      <td>an association <strong>declared</strong> with <code class="language-plaintext highlighter-rouge">@ref</code></td>
+    </tr>
+  </tbody>
+</table></div>
 
-<p>The data is at <code class="language-plaintext highlighter-rouge">assets/schemas/index.json</code> and is the same file the page
-reads; anything else may draw it.</p>
+<p>A field reference is something the reader <em>found</em>; an id reference is something
+an author <em>asserted</em>, because the target is a string id no syntactic reader can
+see. Drawing them alike would claim the reader saw something it did not.</p>
+
+<p>Clicking a box opens that declaration’s definition, which is what makes the
+panel navigation rather than a poster.</p>
+
+<p>The layout is <strong>static</strong>: computed once, deterministically, no simulation.
+Dragging and alternate arrangements are tracked separately.</p>
 <h2 id="the-library--the-l1-corpus">
   
   
@@ -975,7 +996,7 @@ data link together.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35540052623"><code>89d1b5b</code></a> &middot; 2026-09-20T21:54:50Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35541022807"><code>da8fc0f</code></a> &middot; 2026-09-20T22:14:47Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
