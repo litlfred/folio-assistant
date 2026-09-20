@@ -5,7 +5,8 @@ status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T09:21:33Z
-updated_at: 2026-09-20T09:25:21Z
+updated_at: 2026-09-20T09:27:48Z
+parent: folio-assistant-slw1
 blocking:
     - folio-assistant-d5f1
 ---

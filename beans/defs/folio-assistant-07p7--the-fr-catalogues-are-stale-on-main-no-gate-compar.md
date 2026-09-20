@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-20T09:26:40Z
-updated_at: 2026-09-20T09:26:40Z
+updated_at: 2026-09-20T09:27:48Z
+parent: folio-assistant-1xhc
 ---
 
 ## Measured 2026-09-20, on main at `d953f5da`
