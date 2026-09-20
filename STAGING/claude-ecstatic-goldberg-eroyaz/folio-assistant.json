@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T03:13:13.266Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7b0122fada3e8a275f300859a70b702d86055eea",
-  "sourceCommitSha": "7b0122fada3e8a275f300859a70b702d86055eea",
-  "sourceCommitAt": "2026-09-20T03:08:06Z",
+  "generatedAt": "2026-09-20T03:38:04.531Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f191f2f90e4e1845a3c08daecf4e7ef9a21fe9ee",
+  "sourceCommitSha": "f191f2f90e4e1845a3c08daecf4e7ef9a21fe9ee",
+  "sourceCommitAt": "2026-09-20T03:32:36Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
@@ -261,8 +261,8 @@
     "Process": 34,
     "SequenceFlow": 475,
     "ProcessNode": 444,
-    "Tool": 28,
-    "Schema": 52,
+    "Tool": 30,
+    "Schema": 53,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -934,7 +934,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 271,
+      "instructionLines": 337,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2886,7 +2886,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/rendering-fixes.md",
-      "instructionLines": 437,
+      "instructionLines": 442,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2934,7 +2934,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/skills"
       ],
       "instructionsPath": "bootstrap/skills/determine-intent.md",
-      "instructionLines": 71,
+      "instructionLines": 89,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -18183,6 +18183,128 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/beans-manual"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#tool/ingest-stdlib",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-stdlib",
+      "title": "Ingest, standard library only",
+      "description": "Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The upload to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Library root; defaults to the declared `library` graph.",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Flag",
+            "description": "Report the chosen rung and stop.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-stdlib"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#tool/ingest-extended",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-extended",
+      "title": "Ingest, with PDF and image extensions",
+      "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
+      "install": {
+        "cli": "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils"
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "pymupdf",
+          "tesseract"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-extended"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#tool/github",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "github",
@@ -19966,6 +20088,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/skill-package"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/staging-preview",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "staging-preview",
+      "title": "`staging-preview` — a node of the trashcan that describes one review preview.",
+      "module": "schemas/staging-preview.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging-preview"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/staging",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "staging",
@@ -21058,8 +21188,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "e53d02ef6a283f9aba7bc5493e616a102fc8ed89",
-    "pr": "436/merge",
-    "run": "35485941961"
+    "sha": "a77133408815c2e83b9d99700e8d5d0db28372eb",
+    "pr": "451/merge",
+    "run": "35487018824"
   }
 }
