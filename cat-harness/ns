@@ -500,6 +500,14 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:fallbackToCapability",
+      "@type": "rdf:Property",
+      "label": "fallbackToCapability",
+      "comment": "The capability that stands in for this one when it is absent. It must not transitively require the capability it replaces — such a substitute is unavailable in exactly the case it exists for.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:hasInstructions",
       "@type": "rdf:Property",
       "label": "hasInstructions",
