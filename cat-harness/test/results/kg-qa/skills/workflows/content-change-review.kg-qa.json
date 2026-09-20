@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "skills/workflows/content-change-review.bpmn"
   },
-  "source_hash": "sha256:1af503119fbe7797bcf7c97445450081049fe81cd7877b2fa8bc519657529fa9",
+  "source_hash": "sha256:252144c68fca430a4958aa10dda183444cb2c72946a90dc0e7e861d7d87453e4",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -48,8 +48,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_OptionsAnalysis",
+          "detail": "needs skill \"methodology-adoption\", but its lane's role \"authoring-agent\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -60,14 +65,14 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
-    "n/a": 7,
+    "fail": 1,
+    "n/a": 6,
     "unknown": 0
   }
 }

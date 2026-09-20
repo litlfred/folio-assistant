@@ -5,7 +5,7 @@
     "id": "Process_Editing",
     "path": "skills/workflows/editing-hci-validation.bpmn"
   },
-  "source_hash": "sha256:73904cab48d1e4cb861773651477307d498f9007af8560cd440768c04972bcbf",
+  "source_hash": "sha256:608cadf5182fead4ecc9716ba434c3dded575f776631942d077b0aa821e1a000",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -48,8 +48,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_OptionsAnalysis",
+          "detail": "needs skill \"methodology-adoption\", but its lane's role \"authoring-agent\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -65,8 +70,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 0,
+    "pass": 8,
+    "fail": 1,
     "n/a": 5,
     "unknown": 0
   }

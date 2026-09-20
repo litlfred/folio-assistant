@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Deliver",
     "path": "methodologies/crdm/workflows/crdm-deliver.bpmn"
   },
-  "source_hash": "sha256:bf701aebecb0b889ba580d8ba7b26af3d42daa54af64c284a61c119f6012cb3c",
+  "source_hash": "sha256:fb25a3d8a5dcbd934d87a017fb7d5729a0ce43b60fdd8d5bab9b7fac8a8a0c14",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -63,6 +63,10 @@
     "role-carries-activity-skill": {
       "result": "fail",
       "findings": [
+        {
+          "where": "Call_OptionsAnalysis",
+          "detail": "needs skill \"methodology-adoption\", but its lane's role \"authoring-agent\" does not carry it."
+        },
         {
           "where": "Call_ThemeUIReview",
           "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
