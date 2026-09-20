@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T10:45:46Z
-updated_at: 2026-09-20T10:46:10Z
+updated_at: 2026-09-20T11:56:01Z
 parent: folio-assistant-d308
 ---
 
@@ -84,3 +84,21 @@ unreachable from CI. Nothing regresses; the gap simply stays, now written down.
 - [ ] whichever is chosen, `covered-is-not-reachable` gains this as its worked
       example of the no-command case
 - [ ] `readFolioProfile` either gains a caller or is recorded as dead
+
+
+
+---
+
+## DECIDED 2026-09-20 — a `qa-sweep` axis
+
+Owner chose **option 2, the `qa-sweep` axis**, and then clarified across the whole
+set: **"all for triggers or tools as appropriate"**.
+
+So the axis is the trigger, and the question of whether `checkFolioProfile` also
+deserves a Tool node is answered by the same principle rather than by this bean's
+original either/or: if a caller should be able to invoke it by name, that is a
+Tool; the sweep firing it per block is a trigger. Both may exist.
+
+What the axis must carry, from this bean's own argument: the profile check catches
+what schema validation STRUCTURALLY cannot, so its verdict is not a refinement of
+the schema verdict and must not be folded into it.

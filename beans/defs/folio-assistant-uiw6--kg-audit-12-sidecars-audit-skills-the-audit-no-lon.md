@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uiw6
-title: 'KG AUDIT: 12 sidecars audit skills the audit no longer reaches — nested files and skills/workflow/'
+title: 'KG AUDIT: 12 STALE sidecars whose subjects are no longer subjects — my discovery diagnosis was wrong'
 status: todo
 type: task
 priority: high
 created_at: 2026-09-20T10:58:07Z
-updated_at: 2026-09-20T11:00:24Z
+updated_at: 2026-09-20T11:57:34Z
 parent: folio-assistant-d308
 ---
 
@@ -88,3 +88,100 @@ deletion skill uses as its worked example.
 - [ ] each of the twelve either has a current sidecar or a recorded reason it has none
 - [ ] a decision on whether this finding should fail the gate rather than print
 - [ ] no sidecar deleted without the owner saying so
+
+
+
+---
+
+## DECIDED 2026-09-20 — fix discovery, THEN make it fail
+
+Owner chose **"Fix discovery, then fail"**, and the order is the decision: make
+subject discovery reach the nested files and `skills/workflow/` so the twelve
+become audited, and only then make the finding exit non-zero. Failing first would
+turn the gate red until discovery was fixed, blocking every PR for a defect nobody
+had the fix for yet.
+
+Once both land, a future orphaned sidecar fails CI instead of printing `✗` beside
+an exit code of 0.
+
+
+---
+
+## CORRECTED 2026-09-20 — this bean's diagnosis was WRONG. Discovery is not broken.
+
+**Retracting the claim above that "12 skills are unaudited while wearing
+verdicts". It is false.** Every subject is audited. The twelve files are stale
+sidecars whose subjects stopped being subjects, which is the check's FIRST branch —
+*"the subject moved and the sidecar should go"* — the one this bean ruled out.
+
+### How the wrong conclusion was reached
+
+The check names two causes and I chose the second on one piece of evidence: I ran
+`test -f <subject>.md` for all twelve, found every file present, and concluded the
+subjects existed so discovery must be at fault.
+
+**Existence was never the relevant property. Subjecthood was.** `skillFiles()`
+already recurses — it walks with a `walk()` closure — so "nested files are not
+reached" was wrong about the code as well as about the conclusion. What excludes a
+file is `isPartOfASkill()`, and it excludes deliberately.
+
+### What is actually true, measured
+
+**The eight nested files all declare `part-of:`** — every one:
+
+| fragment | declares |
+|---|---|
+| `bib-qa/qa-tags.md` | `part-of: bib-qa` |
+| `coordinate/protocol.md` | `part-of: coordinate` |
+| `integration-watcher/idle-backlog.md` | `part-of: integration-watcher` |
+| `integration-watcher/lifecycle.md` | `part-of: integration-watcher` |
+| `formalizer/{conventions,integration,patterns}.md` | `part-of: formalizer` |
+| `lean-environment-setup/mathlib-cache-fallback.md` | `part-of: lean-environment-setup` |
+
+They are fragments of longer skills, split for length, and `isPartOfASkill`'s own
+comment says why excluding them is correct: *"splitting five over-length skills
+turned 5 findings into 4 new ones on their own fragments"* — each fragment would
+otherwise be measured against thresholds meant for a whole skill.
+
+**And all five parents ARE audited**: `bib-qa`, `coordinate`,
+`integration-watcher`, `formalizer`, `lean-environment-setup` each have a current
+sidecar. So no skill lost coverage when the split happened; only the fragments'
+old sidecars were left behind.
+
+**The four moved skills ARE audited at their new paths** —
+`test/results/kg-qa/skills/workflow/{bpmn-authoring,dmn-authoring,bpmn-processes,process-state}.kg-qa.json`
+all exist. The old-path sidecars are duplicates of live verdicts, not the only
+copy of anything.
+
+### So the correct disposition is deletion, and it needs authorising
+
+Twelve sidecars whose subjects are not subjects. Nothing is lost: the fragments'
+coverage lives in their parents' sidecars, and the moved skills' verdicts exist at
+the new paths. `deletion-requires-confirmation` applies, so this is reported
+rather than done — twelve files, ~1–3 KB each, dated before today's moves.
+
+### The owner's decision was made on my wrong premise
+
+Asked to choose, the owner said **"Fix discovery, then fail"**. The second half
+still stands and is still worth doing — once the stale sidecars are gone, making
+the finding exit non-zero would catch the NEXT leftover instead of printing beside
+an exit code of 0. **The first half has nothing to fix.** That has been put back to
+them rather than quietly reinterpreted.
+
+### The pattern, because this is not the first time
+
+*"I confirmed presence without checking whether presence was the relevant
+property."* Earlier in the same session: reading `echo`'s exit code as a script's;
+declaring a gate absent after running a similarly-named one; calling a directory
+declaration unchecked without enumerating what would have shown it checked. The
+common move is stopping at the first measurement that agrees with the hypothesis.
+
+Here the second measurement was two commands away — `grep "^part-of:"` on the
+eight, and `ls` for a sidecar at the new path — and it reversed the finding.
+
+## Done when — REVISED
+
+- [x] which branch of the check's diagnosis applies: the FIRST, not the second
+- [ ] the twelve stale sidecars removed, on the owner's authorisation
+- [ ] `kg:audit` exits non-zero on this finding, AFTER they are gone
+- [ ] ~~subject discovery reaches nested files~~ — it already does; there was nothing wrong

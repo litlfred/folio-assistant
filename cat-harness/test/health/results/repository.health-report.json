@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T11:45:16.930Z",
+  "updated_at": "2026-09-20T11:58:02.171Z",
   "verdict": "clean",
   "checks": [
     {
@@ -34,7 +34,7 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 388372445,
+          "value": 388978382,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
@@ -119,31 +119,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 86169905,
+          "value": 86175924,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 607923609,
+          "value": 615584463,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 572428288,
+          "value": 579511296,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 75,
+          "value": 77,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 7.05,
+          "value": 7.14,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
@@ -194,7 +194,7 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 182,
+          "value": 181,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -206,7 +206,7 @@
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 45,
+          "value": 44,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },

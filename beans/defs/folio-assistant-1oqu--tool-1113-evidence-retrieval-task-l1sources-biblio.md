@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:35:26Z
-updated_at: 2026-09-20T04:35:26Z
+updated_at: 2026-09-20T11:55:30Z
 parent: folio-assistant-d308
 ---
 
@@ -107,3 +107,17 @@ boundary in the other direction: an existing non-paper directory must still get
       deliberately claims NEITHER rather than flattening them
 - [x] `tool-coverage` reflects it
 - [x] and one defect fixed in the script the node runs, with the falsifier run
+
+
+
+---
+
+## The duplicate file is gone — owner-authorised 2026-09-20
+
+The typo artefact `…-bibliogr.md` was DELETED on the owner's explicit
+authorisation, after its content had been moved here. `beans update 1oqu` resolves
+unambiguously again, so this bean's fields no longer need editing by hand.
+
+Recorded because `deletion-requires-confirmation` is about who decides, not about
+never removing anything: the report went up with size, age and what would be lost
+(nothing), and the owner said delete.

@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-20T11:31:09Z
-updated_at: 2026-09-20T11:32:04Z
+updated_at: 2026-09-20T11:56:00Z
 parent: folio-assistant-d308
 ---
 
@@ -116,3 +116,62 @@ gap is simply now written down instead of inferable only by grepping for callers
 - [ ] `covered-is-not-reachable` gains this as the INVERSE of its third case —
       entry point present, callers absent
 - [ ] the `dw7v` hypothesis either confirmed from history or struck
+
+
+---
+
+## DECIDED 2026-09-20 — the question was wrong, not just the answer
+
+Owner, asked to choose between the three options: **"1 2 3 are all triggers"**,
+then **"all for triggers or tools as appropriate"**.
+
+**The options were not alternatives.** I framed them as a choice — script, or
+workflow step, or `qa-sweep` axis — and that framing was the error. There is ONE
+mechanism (`translation-roundtrip.ts`) and there are SEVERAL dispatch points, each
+of which is either a **trigger** (something fires it) or a **Tool** (something can
+invoke it), whichever fits:
+
+| dispatch point | trigger or tool | why that one |
+|---|---|---|
+| a named command | **Tool node** | a caller invokes it; that is what a Tool node IS |
+| the BPMN `serviceTask` | **trigger** | the process fires it at `Task_RoundTripQA` |
+| a `qa-sweep` axis | **trigger** | the sweep fires it per block |
+
+So all three, and `alternativeTo` stays empty between them for the same reason it
+does on the five translation nodes: they are not substitutable arms, they are
+different ways the same work gets started.
+
+### This is the same answer the owner gave once before
+
+From `what-kick-off-means-for-a-ci-watcher`, on the two CI-watcher dispatch points:
+*"kick off if like task or workflow initation or bean roast"*. Three dispatch
+points there too, and the same refusal to pick one. **That is a general pattern
+about this harness and it should be written down somewhere durable** rather than
+rediscovered each time an agent presents a mechanism as needing "a" caller.
+
+The shape: asking "which caller should this have?" presumes one. The question worth
+asking is "what should be able to start this, and is each of those a trigger or a
+Tool?"
+
+### What this changes about my recommendation
+
+I recommended the workflow step alone, on the argument that it "makes the existing
+assertion true rather than adding a new claim". That argument survives — but it
+argued for the workflow step being NECESSARY, not for it being sufficient, and I
+read it as the latter. The `qa-sweep` axis objection I raised (most runs would
+report could-not-determine when no agents are available) is not an objection at
+all: could-not-determine IS the correct verdict when the check cannot run, and
+recording it is better than recording nothing. I had the third-state rule in hand
+and argued against it.
+
+## Done when — REVISED
+
+- [x] the dispatch model settled: all three, each as trigger or Tool as fits
+- [ ] a Tool node over `translation-roundtrip.ts` with an honest `satisfies`
+- [ ] `Task_RoundTripQA` carries `<folio:skill ref>` so `workflow_next` hands an
+      agent the mechanism rather than only a step name
+- [ ] a `qa-sweep` axis that reports could-not-determine when no agent pair is
+      available, rather than passing or being absent
+- [ ] `check-l1-complete` given the same treatment, or recorded as deliberately manual
+- [ ] the general pattern (one mechanism, several dispatch points) written into a
+      skill, since this is the second time the owner has had to say it
