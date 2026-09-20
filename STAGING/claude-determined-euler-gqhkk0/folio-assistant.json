@@ -260,21 +260,21 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T21:22:21.422Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e69b9627fbf79b5117336d0f3eae077e0994de45",
-  "sourceCommitSha": "e69b9627fbf79b5117336d0f3eae077e0994de45",
-  "sourceCommitAt": "2026-09-20T21:20:37Z",
+  "generatedAt": "2026-09-20T21:47:39.880Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4472c64ebb5322de68e8f5817ff67f6b4177e643",
+  "sourceCommitSha": "4472c64ebb5322de68e8f5817ff67f6b4177e643",
+  "sourceCommitAt": "2026-09-20T21:44:29Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 216,
+    "Skill": 217,
     "Actor": 27,
     "Capability": 28,
-    "Role": 124,
+    "Role": 130,
     "Convention": 2,
     "SkillPackage": 18,
-    "Process": 54,
-    "SequenceFlow": 697,
-    "ProcessNode": 662,
+    "Process": 55,
+    "SequenceFlow": 714,
+    "ProcessNode": 680,
     "Tool": 68,
     "Schema": 79,
     "GraphKind": 22,
@@ -1216,6 +1216,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/upstream-version-adoption"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "kg-to-portal",
+      "title": "KG → package → distribution → portal",
+      "description": "Getting a knowledge graph out to a public portal — the six stages between \"the graph is in the repository\" and \"a reader's browser has the bytes\", why a CDN is a layer rather than a publication host, and which decisions are the deployment's to make rather than the pipeline's.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/kg-to-portal.md",
+      "instructionLines": 205,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-to-portal"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/asset-extraction",
@@ -5286,6 +5303,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-contribution-offer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/markdown-render-check",
@@ -15630,6 +15648,596 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/End_TUR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Process",
+      "name": "KG to public portal",
+      "enforcement": "advisory",
+      "sourcePath": "skills/workflows/kg-to-portal.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/Start_Graph"
+      ],
+      "nodeCount": 18,
+      "flowCount": 17,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/Start_Graph",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Constraints",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Constraints",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/E_Scope",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F3",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/E_Scope",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Select",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F4",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Select",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Serialize",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F5",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Serialize",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Package",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F6",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Package",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F7",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "within budget",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/S_Sign",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F8",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "over budget",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/End_OverBudget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F9",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/S_Sign",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/E_HumanEyes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F10",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/E_HumanEyes",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F11",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "a transport was chosen",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Distribute",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F12",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "still undetermined",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Undetermined",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F13",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Undetermined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Blocked",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F14",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Distribute",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/P_Verify",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F15",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/P_Verify",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F16",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "signature and digests match",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Served",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F17",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "mismatch",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Rejected",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Editorial",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Editorial",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Editorial"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Deployment%20owner",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Deployment owner",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Deployment%20owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Build%20pipeline",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Build pipeline",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Attestation%20(GDHCN%20trust%20network)",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Attestation (GDHCN trust network)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20(GDHCN%20trust%20network)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Publish%20target",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Publish target",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publish%20target"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Portal (external consumer)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Portal%20(external%20consumer)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/Start_Graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "A graph exists, and a portal needs it",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/Start_Graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Constraints",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "State the constraints, with denominators",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Constraints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/E_Scope",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Decide what may leave the repository",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Editorial",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/E_Scope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Select",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Cut the subgraph that leaves",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Select"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Serialize",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Serialize to JSON-LD",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Serialize"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Package",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Package: files plus a manifest of digests",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Within the stated budget?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/End_OverBudget",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Refused — over budget",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F8"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/End_OverBudget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/S_Sign",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Sign the package and/or each asset",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Attestation%20(GDHCN%20trust%20network)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/S_Sign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/E_HumanEyes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Human eyes on the rendered artefact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Editorial",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/continual-progress"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/E_HumanEyes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Which transport? (UNDETERMINED)",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Undetermined",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Record the decision as still open",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/bean-blocking"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Undetermined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Blocked",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Open — awaiting a deployment decision",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F13"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Blocked"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Distribute",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Publish to the origin (a cache may front it)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Publish%20target",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Distribute"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/P_Verify",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Verify what arrived against what was signed",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/P_Verify"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Verifies?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F16",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F17"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Rejected",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Rejected — serve the previous version",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F17"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Rejected"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Served",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Readers have the bytes",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal/flow/F16"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Served"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_RenderLog",
@@ -33343,8 +33951,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "0e3e3daa450b356aa68fd7796230c40638073dad",
+    "sha": "c3518589463a5c678b8ed263d975d339beab37f7",
     "pr": "607/merge",
-    "run": "35538407891"
+    "run": "35539691984"
   }
 }
