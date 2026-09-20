@@ -232,6 +232,15 @@
 <meta name="fa-todo-src" content="{{ '/assets/todos/index.json' | relative_url }}">
 
 <!--
+  The bean index — the AGENT work plan, published by the same generator beside
+  the todo index above, for the same reason and read the same way. Separate
+  files rather than one combined document because the two stores are separate
+  graphs with separate declarations, and a consumer that wants only the human
+  half should not fetch 239 beans to get three todos.
+-->
+<meta name="fa-beans-src" content="{{ '/assets/beans/index.json' | relative_url }}">
+
+<!--
   The discarded-items document — `fsh-guts.jsonld`, published at the base by
   `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
   then some: it carries every node's BODY, which is 64 KB against a 5 KB

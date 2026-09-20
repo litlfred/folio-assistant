@@ -167,3 +167,47 @@ entries are claimed by sessions, closed with change summaries and never
 deleted is the wrong shape for a reminder somebody wants to drop without
 ceremony — and mixing the two would put items in the agent work plan that no
 agent should be acting on.
+
+## What the work plan holds right now
+{: #work-plan-state data-fa-label="sec:beans-and-todos-work-plan-state" }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/work-plan-state.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/work-plan-state.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
+
+The rest of this page says what a bean **is**. This section says what the
+store currently **holds** — read live from
+[`/assets/beans/index.json`](../assets/beans/index.json), the projection
+`gen-docs-pages.ts` writes from `beans/defs/` on every build, beside the todo
+index it has published for longer.
+
+Until 2026-09-20 there was nothing to put here. `todos/` had a reader, a
+published index and a board over it; `beans/` had none of the three, though it
+is the larger store by two orders of magnitude. A work plan nobody can look at
+is one nobody checks.
+
+**What the dashboard shows, and why each panel is the shape it is.** The
+counts are a headline, so they are numbers rather than a chart of four bars
+saying the same thing. The epic distribution is magnitude across identities
+with long names, so it is a horizontal bar. The findings are three or four
+rows, so they are a list — with an icon and a label on every row, because a
+status colour never carries meaning alone.
+
+**The findings are computed from committed data only, and one of them is
+missing on purpose.** A stale `in-progress` detector would have to read the
+clock, and the projection is gated on exact content — anything computed
+against the clock changes the file on every build and the staleness gate then
+fires forever. So the projection publishes each bean's `updated_at` as a fact
+and the page computes age when you open it. Age therefore moves without the
+file moving, which is the right way round.
+
+**What is not here.** Where a bean sits in a BPMN process, which is the other
+half of bean `v49e`. That join needs `beans/workflows/`, the declared
+`workflow-state` graph, and it is empty — so a position view would report
+"nowhere" for every bean in the store. It waits for instance state to exist.
+
+<div class="fa-workplan" data-fa-workplan>
+  <p class="fa-workplan-fallback">
+    The live work-plan dashboard needs JavaScript. The projection it reads is
+    <a href="../assets/beans/index.json">a plain JSON file</a> and can be read
+    directly.
+  </p>
+</div>
