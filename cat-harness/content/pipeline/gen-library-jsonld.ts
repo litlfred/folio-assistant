@@ -49,7 +49,7 @@
  * @module content/pipeline/gen-library-jsonld
  */
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
 import { join } from "path";
 import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
@@ -316,6 +316,50 @@ function readJson<T>(path: string): T | undefined {
   }
 }
 
+/**
+ * Generated block files that nothing references any more — bean `d5f1`.
+ *
+ * This generator WRITES and never removed, so a block whose subject stopped
+ * qualifying stayed on disk indefinitely. Measured 2026-09-20: reclassifying
+ * 22 of 24 extracted images from `figure` to `logo` or `decorative` left 22
+ * orphaned block files asserting, among other things, that the JSTOR
+ * publisher mark is a figure of Milnor's paper. Nothing pointed at them, so
+ * nothing failed — the directory simply carried false statements.
+ *
+ * It REPORTS and never deletes. Four of the five repository-health checks are
+ * about artefacts accumulating and every one names a person as the actor; the
+ * worked example in `deletion-requires-confirmation` is `plj1`, a workflow
+ * whose shape deleted every open PR's preview without anybody deciding it.
+ * Pruning here is a `--prune` a person passes.
+ */
+export function orphanedBlocks(
+  dir: string,
+  listFiles: (d: string) => string[],
+  readText: (p: string) => string | undefined,
+): string[] {
+  const referenced = new Set<string>();
+  for (const f of listFiles(join(dir, "sections"))) {
+    if (!f.endsWith(".jsonld")) continue;
+    const body = readText(join(dir, "sections", f));
+    if (body === undefined) continue;
+    try {
+      for (const c of (JSON.parse(body).contains ?? []) as string[]) {
+        referenced.add(c.split("/").pop() ?? c);
+      }
+    } catch {
+      // An unreadable section means we cannot know what it references, and an
+      // unknown reference set would make every block look orphaned. Refuse to
+      // judge this directory rather than report a deletable list from it.
+      return [];
+    }
+  }
+  return listFiles(join(dir, "blocks"))
+    .filter((f) => f.endsWith(".jsonld"))
+    .map((f) => f.replace(/\.jsonld$/, ""))
+    .filter((id) => !referenced.has(id))
+    .sort();
+}
+
 async function run(): Promise<number> {
   const argv = process.argv.slice(2);
   const check = argv.includes("--check");
@@ -343,6 +387,9 @@ async function run(): Promise<number> {
     })
     .sort();
 
+  const prune = argv.includes("--prune");
+  const orphans: string[] = [];
+  let pruned = 0;
   let written = 0;
   let unchanged = 0;
   let docsDone = 0;
@@ -386,6 +433,25 @@ async function run(): Promise<number> {
     }
     docsDone++;
     blocks += files.filter((f) => f.path.startsWith("blocks/") && f.path.endsWith(".jsonld")).length;
+
+    // After writing: what is on disk that no section points at any more?
+    if (!check) {
+      const found = orphanedBlocks(
+        dir,
+        (d) => (existsSync(d) ? readdirSync(d) : []),
+        (f) => (existsSync(f) ? readFileSync(f, "utf-8") : undefined),
+      );
+      for (const id of found) {
+        orphans.push(`${docId}/blocks/${id}.jsonld`);
+        if (prune) {
+          rmSync(join(dir, "blocks", `${id}.jsonld`), { force: true });
+          // The `.md` sibling a typed block may carry goes with it, or it
+          // becomes an orphan of an orphan.
+          rmSync(join(dir, "blocks", `${id}.md`), { force: true });
+          pruned++;
+        }
+      }
+    }
   }
 
   if (skipped.length) {
@@ -412,8 +478,18 @@ async function run(): Promise<number> {
 
   console.log(
     `gen-library-jsonld: ${docsDone} document(s), ${blocks} block(s), ` +
-      `${written} file(s) written, ${unchanged} unchanged`,
+      `${written} file(s) written, ${unchanged} unchanged` +
+      (pruned ? `, ${pruned} orphan(s) pruned` : ""),
   );
+  if (orphans.length > 0 && !prune) {
+    // A finding, not a failure: the nodes that matter are correct, and what
+    // to do about the leftovers is a person's call.
+    console.log();
+    console.log(`  ${orphans.length} orphaned block file(s) — referenced by no section:`);
+    for (const o of orphans.slice(0, 10)) console.log(`      ${o}`);
+    if (orphans.length > 10) console.log(`      … and ${orphans.length - 10} more`);
+    console.log(`  These are stale generator output. Remove with --prune, once you have looked.`);
+  }
   return 0;
 }
 

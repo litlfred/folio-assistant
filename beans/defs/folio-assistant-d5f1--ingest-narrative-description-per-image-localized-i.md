@@ -199,3 +199,55 @@ An earlier note in this bean said 141 scans / 23 figures. The true split is
 **140 / 24** — `milnorlink`'s one small image (coverage 0.008) was tallied as a
 scan though the same table had already called it figure-shaped. Total of 164
 was right; the split was not.
+
+## 2026-09-20 (later) — the blocker I recorded does not exist, and the 24 are not 24
+
+### The "no vision backend" claim was WRONG
+
+The note above said the descriptions "need a vision backend, and nothing
+declares one", by analogy with `1r0p`'s missing audio transcription backend.
+**The analogy does not hold.** An audio backend is separate software that must
+be installed. For images the reading agent is itself vision-capable: reading
+`library/9789241548960-eng/images/img-p126-1.png` directly returns the GRADE
+evidence-assessment table — study design, initial confidence, reasons for
+lowering or raising, final confidence with the ⊕ ratings.
+
+So the honest declaration is a **Tool node naming the agent**, not a missing
+dependency. `1r0p` stays blocked; this one never was. A blocker recorded and
+not retested is how a capability goes unused — which is the `apui` shape from
+2026-09-19, one level out.
+
+### What the 24 "figures" actually are
+
+Read as one contact sheet rather than 24 files. The classification is
+`role: "figure"` for all of them, and that is far too coarse:
+
+| what it is | placements |
+|---|---|
+| **real data figures** (both tables, `9789241548960-eng` p126, p154) | **2** |
+| organisation logos — JSTOR, MSF ×2, FAO ×2, UNDP ×2, ILO, WHO ×4 (incl. 世界卫生组织 西太平洋区域) | **12** |
+| photographs — 7 of them the same children-on-a-road picture, plus one of a health worker | **8** |
+| unreplaced template text: "WPRO PUBLICATION / **SAMPLE TITLE** IN THE WESTERN PACIFIC" | **2** |
+
+Describing "every figure" would therefore produce **12 logo descriptions and
+seven descriptions of one photograph** against two that are actually about the
+document's content.
+
+### Measured
+
+* Only **2** placements are byte-identical (FAO, UNDP). The seven photographs
+  are different crops — 604×366 down to 263×308 — so a hash dedupe catches the
+  logos and misses the photo entirely.
+* Those seven crops are **3.83 MB of the 5.54 MB** on disk: **69 %** of the
+  extracted bytes are one picture a reader sees once.
+
+### Consequences to decide
+
+1. `figure` is not one role. A logo is publisher/organisational furniture; a
+   decorative photograph is not a figure of the document either. The geometric
+   rule cannot see the difference — only looking can.
+2. `milnorlink`'s single "figure" is the **JSTOR logo**, which completes
+   `8shg`: that document is wrapped in JSTOR furniture at every level — its
+   outline was a journal wrapper, and its one image is the publisher's mark.
+3. The **SAMPLE TITLE** placeholder is a defect in the published WHO document,
+   not in this pipeline. Worth reporting upward rather than describing.
