@@ -77,6 +77,7 @@ import {
   type KgNodeLabels,
 } from "./kg-node";
 import { NS_PREFIXES, termIri } from "./namespaces";
+import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
 
 /** Root-relative filename carrying an instance's declaration. */
 export const DECLARATION_FILENAME = "harness.json";
@@ -93,6 +94,44 @@ export const DECLARATION_FILENAME = "harness.json";
  * the point of making them all graphs — but only a renderable one is wired to
  * the site build.
  */
+/**
+ * What a running process does with a graph of this kind.
+ *
+ * **One question settles it: does a running process WRITE it, READ it, or is it
+ * the SUBJECT?**
+ *
+ * - `content` — the subject. A process may PRODUCE it, and that is usually the
+ *   point of the process.
+ * - `context` — **static state.** A record about content that a process reads
+ *   and never writes. Fixed for the duration of an instance. It changes only
+ *   when a human directs an authoring act, outside any process.
+ * - `state` — **live state.** A record the process itself writes as it runs. A
+ *   bean's status changes because a step completed.
+ *
+ * Three values and no fourth. There is no "could not determine" here, and that
+ * is a departure from this repo's usual three-state rule for a reason worth
+ * stating: a third state is right when a CHECK looked and could not tell, and
+ * wrong when an AUTHOR is registering a kind they are defining. Whoever adds a
+ * kind knows what a process does with it; letting them decline to say would put
+ * the burden on every consumer instead, which is the position the axis exists
+ * to end.
+ *
+ * ## `context` arrived by being needed, not by being symmetrical
+ *
+ * The axis shipped with two values and the owner refined it the same day,
+ * settling bean `mhh9`: *"put memory under state/context as static, during a
+ * process. it does not change. agents dont work on it (except when an authoring
+ * agent is directed by human). todos, beans are not static."*
+ *
+ * That is not a subdivision for tidiness. `content` and `state` alone forced
+ * two unlike things together: a bean, which a step rewrites, and a memory
+ * entry, which no step may touch. A consumer told only "this is state" cannot
+ * tell whether writing to it is normal or a bug.
+ *
+ * See `skills/folio-core/content-context-and-state-graphs.md`.
+ */
+export type GraphLayer = "content" | "context" | "state";
+
 /** What a declared directory's graph kind means. */
 export interface GraphKindDef {
   /** The `@type` IRI this kind projects to. */
@@ -108,6 +147,56 @@ export interface GraphKindDef {
    * here. See `schemas/folio-graph-kind.ts`.
    */
   renderable: boolean;
+  /**
+   * Does a graph of this kind say what the instance **IS**, or where something
+   * **GOT TO**?
+   *
+   * The second axis in this table, and the one the vocabulary was missing.
+   * `renderable` answers "does this become a website"; this answers "is this
+   * the subject matter, or a record about it". A consumer that needs one and
+   * is handed the other has no way to tell today.
+   *
+   * - **`content`** — authored nodes a reader or a tool consumes as the
+   *   subject matter. It is what the instance IS. It stands on its own: you
+   *   can read a skill, a schema or a library section without knowing what
+   *   anybody did with it.
+   * - **`context`** — STATIC state. A record about content that a running
+   *   process READS and never writes, fixed for the duration of an instance.
+   *   It changes only when a human directs an authoring act, outside any
+   *   process. A step that writes to a `context` graph is a defect.
+   * - **`state`** — LIVE state. A record the process itself WRITES as it
+   *   runs: a bean's status changes because a step completed, a workflow
+   *   instance's token moves. It REFERENCES content and is meaningless
+   *   without it.
+   *
+   * **REQUIRED, so a kind cannot go unclassified.** That is the
+   * `DOCUMENT_BLOCK_KINDS` discipline — derived as the complement of
+   * `MATH_BLOCK_KINDS` precisely so a new block kind cannot slip through
+   * unassigned. Here the same guarantee comes from the type being required
+   * rather than optional: `tsc` refuses a new kind that does not say, at the
+   * keyboard rather than at CI, and an optional field would have made "did
+   * not say" indistinguishable from "content".
+   *
+   * **The discipline is in the skill, not here** —
+   * `skills/folio-core/content-context-and-state-graphs.md` carries the definition,
+   * the classification of every kind with its reason, the two questions that
+   * settle a hard case, and what a consumer may assume about each side. The
+   * classification of `fsh-guts`, `qa`, `health` and `uploads` is the part
+   * worth reading before adding a kind: none of the four is obvious from its
+   * name, and each is decided by the same two questions rather than by taste.
+   *
+   * SETTLED, and DONE: agent memory is `context` — bean `mhh9`, decided by
+   * the owner 2026-09-20 — and the 36 nodes moved to the declared `memory/`
+   * graph the same day, as their own change (bean `07xs`), because relocating
+   * a directory as a SIDE EFFECT of adding a classification is the shape #395
+   * refused and bean `auap` did separately.
+   *
+   * The case is worth keeping because it proves the rule above: for the hours
+   * between, `cat-harness` was correctly `content` while something inside it
+   * was `context`, and both statements were true. Classifying the CONTAINING
+   * kind is not a ruling on its contents.
+   */
+  holds: GraphLayer;
   summary: string;
   /**
    * The skill that says how to READ a graph of this kind, by name.
@@ -227,6 +316,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   tools: {
     type: termIri("ToolGraph"),
     renderable: false,
+    // A Tool node is an authored definition of a mechanism. It says what this
+    // instance CAN DO, not what anybody did.
+    holds: "content",
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
   // Named for the LAYER that defines it, like every other harness concept.
@@ -242,11 +334,20 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "cat-harness": {
     type: termIri("KnowledgeGraph"),
     renderable: false,
+    // Skills, workflows, roles, requirements — the authored instruction bodies
+    // and the diagrams they are named from. See the note on `holds`:
+    // classifying the container was never a ruling on its contents — for a
+    // few hours on 2026-09-20 it held `memory` nodes, which are `context`
+    // (beans `mhh9`, `07xs`).
+    holds: "content",
     summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
   },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,
+    // A shape is the subject matter of the schema graph. It is true before
+    // anything is validated against it.
+    holds: "content",
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
   // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
@@ -263,6 +364,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   qa: {
     type: termIri("QaGraph"),
     renderable: false,
+    // A verdict is where a REVIEW got to on a subject that lives elsewhere.
+    // Detached from the artefact it judges it says nothing — which is the
+    // state test, and it is why the sidecar tree MIRRORS each subject's path.
+    holds: "state",
     summary:
       "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
       "families (`block`, `kg`, `translation`), projected for the docs site from the " +
@@ -293,6 +398,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   health: {
     type: termIri("HealthGraph"),
     renderable: false,
+    // The same shape one level out: where the REPOSITORY got to, measured
+    // against thresholds. A report is evidence about an instance, never part
+    // of it.
+    holds: "state",
     summary:
       "Repository health reports — one `health-report/v1` document per sweep, carrying every check's " +
       "three-state verdict, the thresholds it applied and the basis each threshold was chosen on. " +
@@ -311,6 +420,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   beans: {
     type: termIri("BeanGraph"),
     renderable: false,
+    // The work plan. Its own declaration already splits WHAT IS BEING WORKED
+    // ON from WHERE IT GOT TO — both are records about content, neither is
+    // content.
+    holds: "state",
     summary:
       "The work plan — what is being worked on, and where each running BPMN instance got to. " +
       "Its inner directories are declared by `beans/beans.json`.",
@@ -323,6 +436,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "bean-defs": {
     type: termIri("BeanDefsGraph"),
     renderable: false,
+    // What is being worked on. A bean names a change to something; it is not
+    // the something.
+    holds: "state",
     summary:
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
@@ -330,6 +446,17 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "workflow-state": {
     type: termIri("WorkflowStateGraph"),
     renderable: false,
+    // The clearest case in the table: a token's position in a process drawn in
+    // the `cat-harness` graph. It cannot be read at all without the diagram it
+    // references.
+    holds: "state",
+    // The kind's own reader, wired 2026-09-20. `skill` is a property of the
+    // KIND rather than of a directory because a `workflow-state` graph is read
+    // the same way wherever it sits — and it was absent while the skill it
+    // names did not exist. A consumer arriving at this kind had the shape and
+    // no account of what a token position MEANS, which stores sit beside it,
+    // or why a step may write here and not to `memory`.
+    skill: "workflow-state",
     summary:
       "Running BPMN instances — one JSON file each, carrying " +
       "`\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
@@ -344,6 +471,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   todos: {
     type: termIri("TodoGraph"),
     renderable: false,
+    // A person's outstanding items. Outstanding is the word that settles it —
+    // an item records a position, not a fact.
+    holds: "state",
     summary:
       "Human actors' outstanding work — content, owned by the folio, tagged by role, " +
       "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
@@ -351,6 +481,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "todo-items": {
     type: termIri("TodoItemsGraph"),
     renderable: false,
+    // As `todos`.
+    holds: "state",
     summary:
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
       "Authored by people and by agents on their behalf.",
@@ -366,6 +498,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   uploads: {
     type: termIri("UploadsGraph"),
     renderable: false,
+    // A QUEUE, and a queue is a position in a pipeline. The declaration
+    // already says these files are NOT L1 and read as absent to every corpus
+    // consumer: the file is on disk and the content does not exist yet.
+    holds: "state",
     summary:
       "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
       "greppable as corpus: a document here reads as absent to every consumer.",
@@ -373,6 +509,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   library: {
     type: termIri("LibraryGraph"),
     renderable: false,
+    // L1 source content. Every knowledge-graph reference to a source resolves
+    // through here, which is only possible because it stands on its own.
+    holds: "content",
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
       "`structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every " +
@@ -387,6 +526,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   voices: {
     type: termIri("VoiceGraph"),
     renderable: false,
+    // An authored rule set. A voice is true whether or not any prose has been
+    // written against it.
+    holds: "content",
     summary:
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
@@ -394,6 +536,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "todo-feedback": {
     type: termIri("TodoFeedbackGraph"),
     renderable: false,
+    // As `todos`, plus a submitter's identity — which makes it more obviously
+    // a record OF something rather than the something.
+    holds: "state",
     summary:
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
@@ -423,9 +568,112 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // WHO SMART folios this platform targets. The collision was raised and the
   // owner confirmed the spelling; it is recorded here so the overlap is met
   // as a known fact rather than rediscovered as a defect.
+  // Agent memory — durable facts an agent carries between sessions.
+  //
+  // `context`, and it is the kind the third value was added FOR. The owner,
+  // settling bean `mhh9` on 2026-09-20: "put memory under state/context as
+  // static, during a process. it does not change. agents dont work on it
+  // (except when an authoring agent is directed by human). todos, beans are
+  // not static."
+  //
+  // Every clause of that is the `context` definition. A running process READS
+  // memory and no step writes it; a step that did would be a defect rather
+  // than an update. It changes when a human directs an authoring agent to
+  // change it, which is an act OUTSIDE any instance.
+  //
+  // That is also what separates it from `todos`, its mirror in the 2x2
+  // `todos/todos.json` states. Both were called "memory" there — human and
+  // agent — and the axis cuts ACROSS that: a todo is an OUTSTANDING ITEM a
+  // process closes, so it is live `state`, while a memory entry is an
+  // ESTABLISHED FACT nothing mid-process revises. Same quadrant row, opposite
+  // sides of this line.
+  //
+  // DECLARED at `memory/`, repository-scoped, since bean `07xs` — the same
+  // day this kind was registered. It was registered ahead of its directory for
+  // a few hours, which is the `folio` situation rather than the `dh4f` one:
+  // `dh4f` is a DIRECTORY declared and absent, where a consumer scans nothing
+  // and reports clean, and nothing scans a kind.
+  // A SESSION's context — who is acting, which instances are open, what it
+  // waits on. `state`: the session writes it as it goes.
+  //
+  // Distinct from `workflow-state`, and the line is not a nicety.
+  // `workflow-state` is where ONE INSTANCE got to; a session SPANS processes —
+  // it starts before any instance, may open several, and outlives each. A
+  // session with nothing open is the commonest state there is, and would be
+  // unrepresentable as a field on an instance.
+  //
+  // REGISTERED AHEAD OF A DIRECTORY, like `memory` and like `folio`: nothing
+  // writes a session record yet (bean `3nfv` is the state machine that will),
+  // and declaring a directory before it exists is the `dh4f` defect, where a
+  // consumer scans nothing and reports a clean run. Nothing scans a kind.
+  "session-state": {
+    type: termIri("SessionStateGraph"),
+    renderable: false,
+    holds: "state",
+    skill: "session-context",
+    schema: "schemas/session-context.ts",
+    summary: "A session's context — the acting actor, the instances it has open, and what it waits on.",
+  },
+
+  // Interaction preferences — how a PERSON wants to be asked.
+  //
+  // `context`, by the same test as `memory`: an agent READS it at session
+  // start and no step writes it; it changes when a person states a
+  // preference, which is a human-directed act outside any instance. The two
+  // are the same shape at different subjects — what the agent knows, and what
+  // the person needs.
+  //
+  // It lived in `.harness/` until 2026-09-20, undeclared, which was not a
+  // choice anyone could have defended: this repository's own dot-prefix guard
+  // REJECTS a dot-prefixed segment, so the file was in the one place the
+  // conventions forbid while being read at the start of every session.
+  interaction: {
+    type: termIri("InteractionGraph"),
+    renderable: false,
+    holds: "context",
+    schema: "schemas/harness-config.ts",
+    summary: "How a person wants to be asked — read at session start, never written by a process.",
+  },
+  // The marks an agent leaves on an issue it has read.
+  //
+  // `state`: a running process writes one each time it checks an issue. NOT
+  // the comments — the files carry `lastCommentId`, `lastUpdatedAt` and
+  // `checkedAt`, and one of the two in this repository says so in its own
+  // note: "the mark records only that the newest was seen". A kind named for
+  // the comments would promise a reader the bodies.
+  //
+  // Two marks rather than one, because a comment EDITED after being read
+  // keeps its id: the id alone would call it seen, and an edited requirement
+  // is a changed requirement (`issue-working`).
+  "issue-marks": {
+    type: termIri("IssueMarkGraph"),
+    renderable: false,
+    holds: "state",
+    schema: "src/issue-watch/seen-comments.ts",
+    summary: "How far an agent has read an issue — the comment id and the edit time it accounted for.",
+  },
+
+  memory: {
+    type: termIri("MemoryGraph"),
+    renderable: false,
+    holds: "context",
+    summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
+  },
+
   "fsh-guts": {
     type: termIri("FshGutsGraph"),
     renderable: false,
+    // The one that reads like content, and the one `context` moved. What is
+    // in here is deprecated or superseded, so the fact it carries is WHERE
+    // SOMETHING GOT TO — which is why it is deliberately absent from the
+    // rendered site while being renderable in principle. But no running step
+    // writes it: relocating something here is a HUMAN-DIRECTED act, and
+    // `deletion-requires-confirmation` is the skill that says so in as many
+    // words. Read, never written by a process — which is `context`, and it
+    // was `state` for the few hours between the axis landing and `mhh9`
+    // being settled. Classified state by the owner 2026-09-20; the refinement
+    // the same day moved it, by the same criterion that moved memory.
+    holds: "context",
     summary:
       "Deprecated and throwaway structured content — kept, addressable and exported, and " +
       "deliberately absent from the rendered site. The destination for anything that would " +
@@ -462,6 +710,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "translation-sources": {
     type: termIri("TranslationSourceGraph"),
     renderable: false,
+    // A `.po` catalogue and its manifest are authored content in another
+    // language, not a record of a translation having happened.
+    holds: "content",
     summary:
       "POT templates, PO catalogues and their `TranslationNode` manifests, one directory " +
       "per target locale. The INPUT to injection; the rendered output is ordinary content " +
@@ -538,6 +789,31 @@ export function resolveGraphKind(name: string): { kind: string; deprecated?: str
   return to ? { kind: to, deprecated: name } : { kind: name };
 }
 
+/**
+ * Are two registrations of one name the SAME kind, or a conflict?
+ *
+ * Only the fields that change how a consumer behaves count. `type` is the
+ * projected identity, `renderable` decides whether the site build takes it, and
+ * `holds` decides whether a consumer asking for content may be handed this —
+ * three behavioural facts, and two definitions disagreeing on any of them are
+ * two different kinds wearing one name.
+ *
+ * `summary`, `skill` and `schema` are deliberately NOT compared. They are
+ * descriptive: a dependency wording its summary differently is not a conflict,
+ * and treating it as one would make a diamond fail on prose.
+ *
+ * **`holds` was the hole this function exists to close.** The comparison was
+ * inline and named `type` and `renderable` only, so when the axis landed, two
+ * layers registering one kind on opposite sides of the content/state line would
+ * have passed the diamond check and the first would silently have won — the
+ * exact "one name, two answers" failure the registry throws to prevent,
+ * reintroduced by the field that was added to end it. Named and extracted so
+ * the next field added to `GraphKindDef` has one place to be considered.
+ */
+function sameKind(a: GraphKindDef, b: GraphKindDef): boolean {
+  return a.type === b.type && a.renderable === b.renderable && a.holds === b.holds;
+}
+
 export class GraphKindRegistry {
   private kinds = new Map<string, GraphKindDef>();
 
@@ -548,7 +824,7 @@ export class GraphKindRegistry {
   register(name: string, def: GraphKindDef): void {
     const existing = this.kinds.get(name);
     if (existing) {
-      if (existing.type === def.type && existing.renderable === def.renderable) return; // diamond
+      if (sameKind(existing, def)) return; // diamond
       throw new GraphKindConflictError(name);
     }
     this.kinds.set(name, def);
@@ -583,6 +859,71 @@ export const defaultGraphKinds = new GraphKindRegistry();
 /** Is a graph of this kind expected to render as a website? */
 export function isRenderable(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
   return registry.get(kind)?.renderable === true;
+}
+
+/**
+ * What a running process does with a graph of this kind, or `undefined` for a
+ * kind this registry does not know.
+ *
+ * **`undefined` is a further state and callers must not collapse it.** An
+ * unregistered kind has not said `content`; it has not said anything, and a
+ * consumer that reads the absence as content will hand somebody a QA verdict
+ * where they asked for a skill. The predicates below are deliberately NOT each
+ * other's negations for the same reason.
+ */
+export function graphLayer(kind: string, registry: GraphKindRegistry = defaultGraphKinds): GraphLayer | undefined {
+  return registry.get(kind)?.holds;
+}
+
+/** Does this kind hold the subject matter? False for an unregistered kind. */
+export function isContentGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "content";
+}
+
+/**
+ * Is this STATIC state — read during a process and never written by one?
+ *
+ * False for an unregistered kind, and false for `content`. There is
+ * deliberately no `isNotContent` convenience: "is this the subject matter" and
+ * "may a step write this" are different questions, and one predicate answering
+ * both is how two call sites come to disagree about which they asked.
+ */
+export function isContextGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "context";
+}
+
+/**
+ * Is this LIVE state — a record a running process writes as it goes?
+ *
+ * **Narrowed when `context` arrived.** It previously answered for every
+ * non-content kind, so a caller asking "may a step write this" got `true` for
+ * a memory entry. Anything that meant "not content" must now say which of the
+ * two it meant.
+ */
+export function isStateGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "state";
+}
+
+/**
+ * May a running process WRITE to a graph of this kind?
+ *
+ * The question `isStateGraph` is usually being asked in service of, named so a
+ * caller does not have to know that `state` is the only writable layer — and
+ * so that adding a fourth value later is one edit here rather than a search
+ * for every `=== "state"`.
+ *
+ * `content` is `false` on purpose even though a process certainly produces
+ * content: writing content is the SUBJECT of an authoring process, governed by
+ * the HCI validation gate and the commit boundary, not a bookkeeping write a
+ * step performs in passing. Those are the writes this predicate is about.
+ */
+export function processMayWrite(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "state";
+}
+
+/** Every registered kind on one side of the line, sorted. */
+export function graphKindsOfLayer(layer: GraphLayer, registry: GraphKindRegistry = defaultGraphKinds): string[] {
+  return registry.names().filter((n) => graphLayer(n, registry) === layer).sort();
 }
 
 // ── The declaration ─────────────────────────────────────────────
@@ -718,6 +1059,24 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   topology?: Topology;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
+  /**
+   * Sticky notes this layer contributes to the landing board.
+   *
+   * **A contribution, not a list somebody else owns.** The owner's ask was
+   * *"each intiator should create its own sticky"*, and this is the seam that
+   * makes it true: the board is composed from whatever the layers present
+   * declare, so a new layer adds its card by declaring one rather than by
+   * editing a constant in the layer above. See
+   * {@link StickyContribution} for why this is a declaration rather than a
+   * code registry — bootstrap holds no TypeScript and may not import the
+   * layer composed on top of it, so a registry is a seam it cannot reach.
+   *
+   * Optional, and absent means **this layer contributes none** rather than
+   * "unmigrated". That is the honest reading and the useful one: a bare
+   * bootstrap instance with no cat is the owner's ruling, and a default here
+   * would hand one back.
+   */
+  stickies?: StickyContribution[];
 }
 
 export const ContentDirectorySchema = z.object({
@@ -1053,6 +1412,7 @@ export const CatHarnessDeclarationSchema = z.object({
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
+  stickies: z.array(StickyContributionSchema).optional(),
 });
 
 /**
@@ -2026,6 +2386,45 @@ export function materialiseDirectories(
           `(${dir.path} -> ${abs}); a directory outside the ${where} is not a directory of it`,
       );
     }
+    // ── The scope trap ────────────────────────────────────────────────
+    //
+    // `scope` is optional and its ABSENCE is meaningful: the path resolves
+    // against the instance rather than the repository. Omit it on an entry
+    // that meant `repository` and the declaration silently names a different
+    // directory — and this function then CREATES that directory, with a keep
+    // marker, turning declared-but-absent into declared-and-empty. The
+    // `dh4f` false pass, wearing a tidier face, manufactured by the tool
+    // written to prevent it.
+    //
+    // That is not hypothetical: it happened here on 2026-09-20, to the two
+    // entries (`interaction`, `issue-marks`) added the same day, and stood
+    // for about an hour with every gate green.
+    //
+    // So: before creating anything, look at the OTHER root. A directory of
+    // this name already sitting there, with content, is overwhelmingly a
+    // missing or wrong `scope` rather than a coincidence — and creating an
+    // empty twin beside it is the one outcome that helps nobody.
+    const otherBase = rootForScope(rootAbs, dir.scope === "repository" ? undefined : "repository");
+    if (otherBase !== base) {
+      const twin = resolve(otherBase, dir.path);
+      // The condition is "this one is EMPTY and the twin has content", not
+      // "this one is absent" — so it DETECTS the mistake already standing as
+      // well as preventing a new one. A first draft tested absence only, and
+      // would have refused to create the empty twin while saying nothing
+      // about the empty twin already sitting there from an hour earlier.
+      // A guard that cannot see the case that motivated it is half a guard.
+      const emptyish = !existsSync(abs) || readdirSync(abs).every((f) => f === ".gitignore");
+      if (emptyish && existsSync(twin) && readdirSync(twin).length > 0) {
+        throw new Error(
+          `declared directory "${dir.id}" is empty at ${abs}, ` +
+            `while ${twin} already holds content. That is what a missing or wrong ` +
+            `\`scope\` looks like: ${dir.scope === "repository" ? "the entry says `repository` and the content is in the instance" : "the entry omits `scope`, so it resolves against the instance, and the content is at the repository root"}. ` +
+            `A consumer following the declaration scans the empty one and reports a clean run. ` +
+            `Fix \`scope\` on the declaration rather than materialising both.`,
+        );
+      }
+    }
+
     const existed = existsSync(abs);
     const markerPath = join(abs, ".gitignore");
     const markerExisted = existed && existsSync(markerPath);

@@ -1,0 +1,107 @@
+---
+name: bpmn-processes
+description: >
+  Every process here is BPMN, the diagrams are executable, and the base
+  processes are strict. How to author one, how to run it, how a package relaxes
+  a step and what it may never relax, and which gateways are computed rather
+  than chosen.
+adapters: [document, paper, dak]
+profiles: [document, paper]
+---
+
+# Processes are BPMN, and the diagrams are executable
+
+**The `.bpmn` file is the source of truth.** The rendered SVGs are generated —
+regenerate after editing one, and the staleness check fails the build if you
+forget. Never hand-edit a rendered diagram.
+
+**Do not quote a count of diagrams from prose.** This repository's own
+`AGENTS.md` said "six `.bpmn` files" long after there were far more, in a file
+that elsewhere warns against exactly that. Count the directory.
+
+## Authoring: if it has actors, activities and a control flow, it is a process
+
+Author it as **BPMN**, not as a diagram-in-a-fence. Fenced diagrams stay for the
+things that are *not* processes — component maps, an inheritance lattice, a
+navigation graph.
+
+Every activity carries **`<folio:skill ref="…">`** naming the skill that
+implements it, and **`<folio:bean …>`** where it touches the work plan. Add both
+when you add an activity; the audit reports an activity that names no skill, and
+the exemptions for the legitimate cases are *declarations*, not silence — see
+[`role-model`](../folio-core/role-model.md).
+
+Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
+the duration. [`role-model`](../folio-core/role-model.md) carries that model.
+
+## Running one: the engine refuses work claimed out of order
+
+The list / start / next / complete calls run a process from its diagram.
+**"What is enabled now"** is the useful one: it reports the enabled step, the
+lane that owns it, **and the skill that implements it** — so the answer is
+something to act on rather than a bare step name.
+
+**Completion refuses a step that is not enabled.** That is what makes the
+diagram a control rather than a picture.
+
+**Instance state is committed**, alongside the work plan, so a sibling session
+sees the same position. That is the whole reason not to hand-roll a second
+tracker: a second answer to *where are we* is free to disagree with the first.
+
+## Strict by default, and what a package may never relax
+
+Base processes carry **`<folio:policy enforcement="strict"/>`** — the gate
+refuses a step that is not enabled. Per-content-type processes are **advisory**:
+their package owns what *adequate* means in that domain. **Absent policy means
+strict.**
+
+To relax a base step, a package **declares** it with a **reason**. No reason, no
+load — silencing a gate must cost more than satisfying it.
+
+**Some steps are marked unrelaxable and no package may touch them**: the editor
+*seeing* the findings, the decision itself, the write, and release
+authorisation. Those four are the gate; everything else is procedure around it.
+
+A validator checks every declared relaxation and runs in CI, so a relaxation
+naming a step that no longer exists fails rather than sitting in the file
+looking like policy while permitting nothing.
+
+## The commit boundary enforces what the diagram decided
+
+A corpus gate, run from a pre-commit hook or CI in a folio, **refuses a changed
+block that no instance records the editor having authorised** — no instance, not
+past the decision, or discarded.
+
+**It refuses when it cannot tell, too.** A file that reads as a manifest but
+will not import is refused rather than waved through: *could not determine* is
+never rendered as a pass. Sweep-written sidecars are excluded, and a warn-only
+mode exists for gradual adoption.
+
+## Some gateways are computed, not chosen
+
+A gateway carrying **`<folio:decision/>`** is backed by a decision table. Pass
+the facts — the counts a QA sweep already produced — and the table returns the
+branch.
+
+**Completion refuses a hand-supplied outcome there**, and that refusal is the
+point: asserting the answer would defeat having a table. Adding one means adding
+the table and the reference and nothing else; the loader checks that every
+outcome the table can return names a real branch.
+
+## A bean-marked step performs the operation, not a note about it
+
+An activity carrying a bean operation **does it** when you complete the step:
+
+| op | what happens |
+|---|---|
+| `claim` | sets in-progress, idempotent |
+| `note` | appends what you pass |
+| `resolve` | completes the bean **only once the instance itself has completed** |
+
+**That last row is a judgement guard, not a sequencing detail.** A still-running
+process gets a note instead, because whether work is done is a judgement and a
+bean is never closed on someone else's say-so — the same rule that stops you
+resolving a sibling's.
+
+Work-plan priming reports every instance's position next to its bean, so the
+plan and the process are one answer rather than two.

@@ -175,6 +175,7 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
 const SKILLS_CATEGORIES: Record<string, string> = {
   "content-lifecycle": "Lifecycle skills",
   "folio-core": "Platform core (folio-core)",
+  workflow: "Workflow & process (workflow)",
   "folio-document-adapter": "Document adapter (folio-document-adapter)",
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",

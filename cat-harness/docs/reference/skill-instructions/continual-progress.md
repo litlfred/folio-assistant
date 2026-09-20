@@ -83,6 +83,31 @@ Reversibility is what makes this safe — a docs or content change is one revert
 away, and the cost of reverting is far below the cost of a human blocked on a
 decision they have no artefact for.
 
+### A pipe discards the exit code — so a piped run cannot verify anything
+
+**`cmd | tail` makes `$?` the status of `tail`.** Every claim that a command
+PASSED must come from a run without a pipe, or from `${PIPESTATUS[0]}`.
+
+This is mechanical rather than a matter of care, and it is written down because
+care did not prevent it. Twice in one session, 2026-09-20:
+
+- `gen-site-jsonld --check` on a genuinely stale tree. `… | tail -8; echo $?`
+  printed **0**. Caught within the minute — and the commit message that fixed
+  it said "worth checking rather than assuming".
+- `site:links` from the repository root, two hours later. Read the message,
+  never checked `$?`, and **opened a bean** asserting a defect that does not
+  exist: the script exits 2 and always has. Scrapped as `ipth`.
+
+The second is the expensive shape. A command whose output *sounds* like a
+failure, run through a pipe, reads as a silent pass — and a silent pass is
+precisely what this repository treats as worse than a loud failure. The first
+cost a minute; the second cost a bean, a wrong diagnosis, and very nearly a
+"fix" to working code.
+
+**So: when the question is "did this pass", run it bare.** When you want both
+the output and the verdict, run it twice or capture the status first. Reading a
+verdict off prose you piped is the same error as quoting a count from prose.
+
 ### The exceptions, and none of them is "I am unsure"
 
 - **Never merge red.** A failing or unrun required check is a real blocker.

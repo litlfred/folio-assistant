@@ -154,6 +154,30 @@ export const InstanceIdSchema = z
   .refine((i) => !i.includes(".."), "an instance id may not contain `..`")
   .describe("A workflow instance id — the stem of a file in the bean graph's workflow-state node");
 
+/**
+ * An instant, as an ISO-8601 UTC timestamp — `2026-09-20T14:03:11Z`.
+ *
+ * **Required on a log line, which is the whole reason it is constrained rather
+ * than free text.** A log whose times are written three ways cannot be sorted,
+ * and a reader cannot tell "before" from "after" without knowing which writer
+ * produced which line. The pattern admits one spelling and refuses the rest.
+ *
+ * `Z` and not an offset, deliberately. An offset is a second fact — where the
+ * writer was — smuggled into a field that answers when, and two lines an hour
+ * apart in different offsets compare wrongly as strings. Where the local time
+ * matters it is prose, and prose has a home: the optional markdown body.
+ *
+ * Injection-safe by construction: digits, hyphens, colons, `T` and `Z`, and
+ * nothing else parses.
+ */
+export const TimestampSchema = z
+  .string()
+  .regex(
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?Z$/,
+    "a timestamp is an ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z",
+  )
+  .describe("An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z");
+
 /** A BCP-47 language tag, e.g. `en`, `fr-CA`. */
 export const LocaleSchema = z
   .string()
@@ -316,6 +340,7 @@ export const TOOL_TYPES = {
   NodeId: NodeIdSchema,
   InstanceId: InstanceIdSchema,
   Locale: LocaleSchema,
+  Timestamp: TimestampSchema,
   Flag: FlagSchema,
   BeanStatus: BeanStatusSchema,
   RepoPath: RepoPathSchema,
@@ -405,6 +430,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "NodeId",
   "InstanceId",
   "Locale",
+  "Timestamp",
   // Not a string at all, so it cannot carry a payload.
   "Flag",
   "BeanStatus",
