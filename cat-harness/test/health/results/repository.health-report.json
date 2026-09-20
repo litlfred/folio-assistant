@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T06:52:51.584Z",
+  "updated_at": "2026-09-20T07:30:20.796Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,20 +34,20 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 471242997,
+          "value": 304159961,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 11,
+          "value": 7,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
         {
-          "summary": "11 staging preview(s) total 449.4 MB, over the 100 MB warning point.",
+          "summary": "7 staging preview(s) total 290.1 MB, over the 100 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
@@ -56,7 +56,7 @@
     },
     {
       "id": "staging-preview-orphans",
-      "state": "finding",
+      "state": "ok",
       "summary": "A `STAGING/` preview that no liveness signal claims — no open pull request, no branch carrying unmerged work, no recent commit. Retained by policy, not by mistake: this is the list a person needs in order to decide, never a list to act on unasked.",
       "thresholds": [
         {
@@ -70,40 +70,24 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 3,
+          "value": 0,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 124513442,
+          "value": 0,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-live-count",
-          "value": 8,
+          "value": 7,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
       ],
-      "findings": [
-        {
-          "summary": "`STAGING/claude-4kiw-box3` (38.2 MB, 790 files) — no open pull request; `claude/4kiw-box3` is already in `main`, tip 18.2 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-4kiw-box3` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-4kiw-box3` and `cleanup_confirm: claude-4kiw-box3`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/dependabot-bundler-docs-folio-assistant-bundler-3567caad51` (38.9 MB, 776 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `dependabot-bundler-docs-folio-assistant-bundler-3567caad51` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: dependabot-bundler-docs-folio-assistant-bundler-3567caad51` and `cleanup_confirm: dependabot-bundler-docs-folio-assistant-bundler-3567caad51`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/dependabot-bundler-folio-assistant-docs-bundler-3567caad51` (41.7 MB, 795 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `dependabot-bundler-folio-assistant-docs-bundler-3567caad51` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: dependabot-bundler-folio-assistant-docs-bundler-3567caad51` and `cleanup_confirm: dependabot-bundler-folio-assistant-docs-bundler-3567caad51`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "repository-size",
@@ -142,31 +126,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 53534400,
+          "value": 60476621,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 82510427,
+          "value": 117918106,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 68501504,
+          "value": 96279552,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 24,
+          "value": 30,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 1.54,
+          "value": 1.95,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
@@ -175,7 +159,7 @@
     },
     {
       "id": "bean-store",
-      "state": "finding",
+      "state": "ok",
       "summary": "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, and the size of the open backlog.",
       "thresholds": [
         {
@@ -210,19 +194,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 324,
+          "value": 108,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 109,
+          "value": 108,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 215,
+          "value": 0,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -239,14 +223,7 @@
           "command": "beans/defs/*.md front matter"
         }
       ],
-      "findings": [
-        {
-          "summary": "215 completed or scrapped beans are still inline in `beans/defs/`.",
-          "metric": "bean-resolved-inline",
-          "severity": "minor",
-          "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "todo-store",
