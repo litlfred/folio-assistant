@@ -73,3 +73,44 @@ workflow pushing twice.
 
 The cross-session contention on `gh-pages`, and the `docs-site.yml` full-replace
 question. Different causes, and `6pfo` / `1feu` hold that ground.
+
+## Checked 2026-09-20 — the split IS load-bearing, exactly as this bean warned
+
+The precondition above ("check why they are separate") was checked, and the
+answer is written into the workflow itself:
+
+> It cannot ride in `_site`. The deploy above writes into `destination_dir`, so
+> the entry would land at `STAGING/<slug>/_render-log/` — inside the very
+> directory a cleanup removes, which is the one place a record of the removal
+> must not be.
+
+So the record must live OUTSIDE `STAGING/<slug>/`, and `peaceiris/actions-gh-pages`
+publishes into one `destination_dir` per invocation. **One payload push and one
+log push is not an oversight; it falls out of the deploy mechanism.**
+
+### So coalescing means changing the deploy mechanism, and both ways are real changes
+
+1. **Replace peaceiris with manual git in the existing `pages` checkout** —
+   copy `_site` into `pages/STAGING/<slug>/`, write the log into
+   `pages/_render-log/`, one commit, one push through the rebase-and-retry loop
+   the log step already has. Clean, and it reimplements whatever peaceiris does
+   about deletions and `keep_files` (see `85im`, which is about exactly that
+   flag) by hand.
+2. **Publish a tree containing both** — `publish_dir` holding
+   `STAGING/<slug>/…` *and* `_render-log/…`, `destination_dir` at the root,
+   `keep_files: true`. One invocation, one push, and it changes what a deploy
+   is scoped to delete — on a ref four concurrent sessions write to.
+
+### Why it stops here rather than being guessed
+
+`feature-staging.yml` deploys **every open PR's preview**, and there are nine.
+Neither option is verifiable beyond `check:workflows` (YAML parses) without
+driving a real runner, and both change deletion semantics on a shared ref.
+That is a different risk class from `35kc`, which was purely ADDITIVE — adding
+documents a preview did not publish could not break one that did, and its shell
+block was rehearsed end to end locally. This cannot be rehearsed the same way:
+the thing under test is what the deploy action deletes.
+
+**Needs the owner to pick the mechanism.** The diagnosis is complete and the
+fix is not a judgement call about correctness — it is a choice about which
+deploy machinery to own.
