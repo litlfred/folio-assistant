@@ -182,6 +182,40 @@
           ],
           "additionalProperties": false
         },
+        "topology": {
+          "type": "object",
+          "properties": {
+            "forge": {
+              "type": "string",
+              "enum": [
+                "none",
+                "github",
+                "self-hosted",
+                "jurisdiction-hosted"
+              ]
+            },
+            "network": {
+              "type": "string",
+              "enum": [
+                "internet",
+                "egress-restricted",
+                "air-gapped"
+              ]
+            },
+            "modelProvenance": {
+              "type": "string",
+              "enum": [
+                "open-weight-local",
+                "hosted",
+                "mixed"
+              ]
+            },
+            "outwardFacing": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
         "directories": {
           "type": "array",
           "items": {
@@ -235,8 +269,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "92aef7ec6985b635aeb87e4aea3906a193bb1597",
-    "pr": "408/merge",
-    "run": "35444419452"
+    "sha": "9f3ef649c819ba06b0ee525763f7056ef42abdbd",
+    "pr": "448/merge",
+    "run": "35486412675"
   }
 }

@@ -518,6 +518,480 @@
     return null;
   }
 
+
+  /* ── Discarded items — the fsh-guts viewer ─────────────────────────────
+   *
+   * Owner, 2026-09-19: *"only available under settings at dead fish icon.
+   * opening it shows a list of all the nodes in fsh-guts/ (has counter on
+   * icon) and use can open dialog to select and display them."*
+   *
+   * ## Why it is fetched when SETTINGS opens, not on page load
+   *
+   * The document carries every node's body. Measured: 64 KB with them
+   * against 5 KB without. The control lives inside Settings, so its count is
+   * not needed until Settings is opened — fetching 64 KB on every page view
+   * to populate a badge nobody has looked at would be indefensible. The
+   * result is cached for the page, so opening Settings twice fetches once.
+   *
+   * ## Three states, and the middle one is the whole point
+   *
+   * The todo tile hides itself when the count is zero, which is right for
+   * todos. Doing the same here would be wrong: a FAILED fetch and an empty
+   * trashcan would look identical, and they are opposite facts. So
+   *
+   *   loaded, n > 0   the control, with n in its accessible name
+   *   loaded, n === 0 a plain line saying the trashcan is empty
+   *   failed          a plain line saying it could not be read, and why
+   *
+   * ## The body is rendered as TEXT
+   *
+   * `renderBody` splits on blank lines and emits paragraphs via textContent.
+   * No markdown renderer and no sanitiser, deliberately: `fsh-guts/` is a
+   * dumping ground anyone may drop a file into, and the safe thing to do
+   * with content like that is not to interpret it. A link to the source on
+   * the forge is offered for anyone who wants it rendered.
+   */
+
+  var FISH_GLYPH =
+    '<svg class="fa-tile-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    // Body, tail, and an X for the eye — a dead fish, per the owner.
+    '<path d="M2 12c3-4 7-6 11-6s7 2 9 6c-2 4-5 6-9 6s-8-2-11-6z" fill="none" ' +
+    'stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+    '<path d="M22 12l-3-3v6z" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linejoin="round"/>' +
+    '<path d="M7.2 10.2l2 2m0-2l-2 2" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linecap="round"/></svg>';
+
+  /** `{ nodes }` on success, `{ error }` when it could not be read. Cached. */
+  var discardedCache = null;
+
+  function fetchDiscarded(done) {
+    if (discardedCache) return done(discardedCache);
+    var src = document.querySelector('meta[name="fa-fsh-guts-src"]');
+    var url = src && src.getAttribute("content");
+    if (!url) {
+      // Not an error and not an empty trashcan: this build published no
+      // document, so there is nothing to say a count about.
+      discardedCache = { absent: true };
+      return done(discardedCache);
+    }
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (doc) {
+        var g = doc && doc["@graph"];
+        if (!Array.isArray(g)) throw new Error("no @graph array");
+        discardedCache = { nodes: g };
+        done(discardedCache);
+      })
+      .catch(function (e) {
+        discardedCache = { error: e.message, url: url };
+        done(discardedCache);
+      });
+  }
+
+  /** One node's detail: what it was, where it came from, and its text. */
+  function buildDiscardedDetail(node, onBack) {
+    var wrap = el("div", { class: "fa-discarded-detail" });
+
+    var back = el("button", { type: "button", class: "fa-discarded-back" },
+                  "‹ All discarded items");
+    back.addEventListener("click", onBack);
+    wrap.appendChild(back);
+
+    var h = el("h4", { class: "fa-discarded-title", tabindex: "-1" },
+               String(node.name || node.sourcePath || "Untitled"));
+    wrap.appendChild(h);
+
+    // The metadata that makes it not an orphan. `movedFrom` first: a reader
+    // asking "what is this" is usually asking where it used to be.
+    var meta = el("dl", { class: "fa-discarded-meta" });
+    function row(label, value) {
+      if (!value) return;
+      meta.appendChild(el("dt", null, label));
+      meta.appendChild(el("dd", null, String(value)));
+    }
+    row("Was at", node.movedFrom);
+    row("Moved", node.movedOn);
+    row("Kind", node.nodeKind);
+    row("Issue", node.issue ? "#" + node.issue : "");
+    if (meta.childNodes.length) wrap.appendChild(meta);
+
+    if (node.description) {
+      wrap.appendChild(el("p", { class: "fa-discarded-summary" }, String(node.description)));
+    }
+
+    // NEVER A BLANK PANE. A node with no body says so; it does not render
+    // nothing and leave the reader wondering whether it failed.
+    if (node.body) {
+      wrap.appendChild(renderBody(node.body));
+    } else {
+      wrap.appendChild(el("p", { class: "fa-discarded-none" },
+        "This item carries no text — only the record of what it was and where it came from."));
+    }
+
+    var links = getSiteLinks();
+    if (links.source && node.sourcePath) {
+      wrap.appendChild(el("a", {
+        class: "fa-discarded-source",
+        href: String(links.source).replace(/\/$/, "") + "/blob/main/" + node.sourcePath,
+      }, "View the source of this item"));
+    }
+    return wrap;
+  }
+
+  /**
+   * Stickies THIS BROWSER discarded, with a way to get each one back.
+   *
+   * A separate section from the repository's own nodes, and labelled as
+   * such. They are different facts with different reach: one is committed
+   * and visible to everyone, the other is `localStorage` and visible to
+   * nobody else. Listing them together unlabelled would tell a reader they
+   * had cleared something for the team.
+   *
+   * RESTORE is not a nicety. `fsh-guts` is "the trashcan that is kept" and
+   * its rule is that a thing in it can be read, cited and restored — a
+   * one-way dismiss would wear the crumpled icon while breaking the rule the
+   * icon stands for.
+   */
+  function buildDiscardedTodos() {
+    var wrap = el("section", { class: "fa-discarded-local",
+                               "aria-label": "Todos you discarded in this browser" });
+    var ids = discardedTodoIds();
+    if (ids.length === 0) return wrap;   // nothing to say, and no empty heading
+
+    wrap.appendChild(el("h4", { class: "fa-discarded-local-title" },
+      ids.length === 1 ? "1 todo you discarded" : ids.length + " todos you discarded"));
+    wrap.appendChild(el("p", { class: "fa-discarded-local-note" },
+      "Discarded in this browser only — saved here, not sent anywhere, and not " +
+      "discarded for anyone else."));
+
+    var byId = {};
+    (todoState.items || []).forEach(function (t) { byId[t.id] = t; });
+
+    var ul = el("ul", { class: "fa-discarded-list" });
+    ids.forEach(function (id) {
+      var todo = byId[id];
+      var li = el("li", { class: "fa-discarded-local-row" });
+      // The id is the fallback, not a blank: a discarded todo whose entry has
+      // since left the published index still has to be nameable to be
+      // restorable.
+      li.appendChild(el("span", { class: "fa-discarded-item-name" },
+                        todo ? todo.summary : id));
+      var b = el("button", { type: "button", class: "fa-discarded-restore",
+                             "aria-label": "Restore " + (todo ? todo.summary : id) +
+                                           " to the todo board" }, "Restore");
+      b.addEventListener("click", function () {
+        restoreTodo(id);
+        li.parentNode.removeChild(li);
+      });
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+    wrap.appendChild(ul);
+    return wrap;
+  }
+
+  /** The list, and the detail it swaps to. */
+  function buildDiscardedView(state) {
+    var wrap = el("div", { class: "fa-discarded fa-tile-content" });
+
+    if (state.error) {
+      wrap.appendChild(el("p", { class: "fa-discarded-error" },
+        "The discarded-items document could not be read (" + state.error + "). " +
+        "This is not the same as there being nothing discarded."));
+      // The locally discarded stickies are a SEPARATE fact and are still
+      // known: they live in this browser, not in the document that failed.
+      wrap.appendChild(buildDiscardedTodos());
+      return wrap;
+    }
+    var nodes = state.nodes || [];
+    if (nodes.length === 0) {
+      wrap.appendChild(el("p", { class: "fa-discarded-none" },
+        "Nothing has been discarded in the repository. Items moved here instead of being deleted would appear in this list."));
+      wrap.appendChild(buildDiscardedTodos());
+      return wrap;
+    }
+
+    var list = el("ul", { class: "fa-discarded-list" });
+    var detail = el("div", { hidden: "hidden" });
+    wrap.appendChild(buildDiscardedTodos());
+
+    function showList() {
+      detail.setAttribute("hidden", "hidden");
+      detail.innerHTML = "";
+      list.removeAttribute("hidden");
+      var first = list.querySelector("button");
+      if (first) first.focus();
+    }
+
+    nodes.forEach(function (node) {
+      var li = el("li");
+      var b = el("button", { type: "button", class: "fa-discarded-item" });
+      b.appendChild(el("span", { class: "fa-discarded-item-name" },
+                       String(node.name || node.sourcePath || "Untitled")));
+      if (node.nodeKind) {
+        b.appendChild(el("span", { class: "fa-discarded-item-kind" }, String(node.nodeKind)));
+      }
+      b.addEventListener("click", function () {
+        list.setAttribute("hidden", "hidden");
+        detail.innerHTML = "";
+        detail.appendChild(buildDiscardedDetail(node, showList));
+        detail.removeAttribute("hidden");
+        // Focus the heading, not the top of the pane: the reader chose this
+        // item and the first thing they should be told is which one opened.
+        var h = detail.querySelector(".fa-discarded-title");
+        if (h) h.focus();
+      });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+
+    wrap.appendChild(list);
+    wrap.appendChild(detail);
+    return wrap;
+  }
+
+
+  /* ── The kind fan (bean `4kj4`) ────────────────────────────────────────
+   *
+   * Owner, 2026-09-19: *"each content type should have an avatar in and out
+   * of trash"*, *"if more than one kind then it fades through the avatars in
+   * a loop"*, *"openning fan is panel. shows the DECLared kinds for that
+   * instance, not inheritance"*, and — asked which of fan / autoplay-fade /
+   * hover-fade they wanted — **all three**.
+   *
+   * ## The three layer rather than conflict, and that is what makes it legal
+   *
+   *   the fan        every kind visible AT ONCE — the base presentation
+   *   the cycle      an emphasis moving through them, with a pause control
+   *   hover / focus  drives the same emphasis, user-initiated
+   *
+   * **Nothing is conveyed by the motion.** The fan is already complete when
+   * it is still: every avatar is present, and the accessible name lists
+   * every kind in one string. The cycle only moves a highlight over a
+   * display a reader can already read.
+   *
+   * That is what makes an autoplaying loop defensible here at all. WCAG
+   * 2.2.2 requires motion over five seconds to be pausable — hence the
+   * button — but the deeper requirement is that a reader who never sees the
+   * animation loses nothing, and a cycling BADGE (one slot, swapping) would
+   * have failed that no matter how many pause controls it carried.
+   *
+   * ## `prefers-reduced-motion` is checked in BOTH places
+   *
+   * The CSS suppresses the transition and the script never starts the timer.
+   * Either alone is a bug: CSS-only leaves a timer mutating the DOM for no
+   * visible reason, script-only leaves the transition running on whatever
+   * the script does change. The media query is also LIVE — a reader who
+   * turns the setting on mid-session has the loop stop, rather than having
+   * to reload.
+   */
+
+  var KIND_CYCLE_MS = 2200;
+
+  /** The kinds this instance declares, or [] when the page did not say. */
+  function declaredKinds() {
+    var node = document.getElementById("fa-declared-kinds");
+    if (!node) return [];
+    try {
+      var parsed = JSON.parse(node.textContent || "[]");
+      return Array.isArray(parsed) ? parsed.filter(function (k) { return typeof k === "string"; }) : [];
+    } catch (_e) {
+      console.warn("docs-ui: #fa-declared-kinds is not valid JSON; the kind fan was not mounted.");
+      return [];
+    }
+  }
+
+  function prefersReducedMotion() {
+    try {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch (_e) {
+      // No matchMedia is not "the reader wants motion". Unknown resolves to
+      // the safe answer, which is the same third-state rule as everywhere.
+      return true;
+    }
+  }
+
+  /**
+   * One avatar. `trash` gives the discarded treatment.
+   *
+   * `aria-hidden` on every tile: the NAME is on the group, listing every
+   * kind in one string. Sixteen focusable images would be sixteen stops for
+   * a screen-reader user to walk through to learn one fact.
+   */
+  function avatarTile(kind, trash) {
+    var a = el("span", { class: "fa-avatar", "data-fa-kind": kind, "aria-hidden": "true" });
+    if (trash) a.setAttribute("data-fa-trash", "true");
+    return a;
+  }
+
+  /**
+   * The fan: every declared kind, with a cycling emphasis and a pause.
+   *
+   * Returns null when there is nothing to show — a caller must not mount an
+   * empty control, and an instance that declares no kinds is a real state
+   * rather than an error.
+   */
+  function buildKindFan(kinds, opts) {
+    var list = (kinds || []).filter(Boolean);
+    if (list.length === 0) return null;
+    // Returns { fan, pause } rather than one element, and the caller places
+    // them. The pause CANNOT live inside the fan when the fan is the face of
+    // a button: a <button> inside a <button> is invalid, the parser closes
+    // the outer one, and the whole control is destroyed at parse time. A
+    // spec caught exactly that — after clicking pause, `.fa-kind-fan` was
+    // "element(s) not found", because it had never survived parsing.
+    //
+    // It is also an accessibility fault in its own right: nested interactive
+    // controls have no sane keyboard order and no agreed name computation.
+    var trash = Boolean(opts && opts.trash);
+
+    var wrap = el("div", {
+      class: "fa-kind-fan",
+      role: "img",
+      // EVERY kind, in one string. The cycle conveys nothing a reader with
+      // no sight of it would miss, because the name already said all of it.
+      "aria-label":
+        (trash ? "Discarded kinds: " : "Kinds this instance declares: ") + list.join(", "),
+    });
+
+    var strip = el("span", { class: "fa-kind-fan-strip" });
+    list.forEach(function (kind) {
+      var slot = el("span", { class: "fa-kind-fan-slot", "data-fa-kind-slot": kind });
+      slot.appendChild(avatarTile(kind, trash));
+      strip.appendChild(slot);
+    });
+    wrap.appendChild(strip);
+
+    var slots = strip.querySelectorAll(".fa-kind-fan-slot");
+    var at = 0;
+    var timer = null;
+
+    function paint(i) {
+      for (var n = 0; n < slots.length; n++) {
+        slots[n].setAttribute("data-fa-lit", n === i ? "true" : "false");
+      }
+    }
+
+    function step() {
+      at = (at + 1) % slots.length;
+      paint(at);
+    }
+
+    function stop() {
+      if (timer !== null) { clearInterval(timer); timer = null; }
+      wrap.setAttribute("data-fa-cycling", "false");
+    }
+
+    function start() {
+      // One kind has nothing to cycle THROUGH, and a "pause" on a still
+      // image is a control that does nothing.
+      if (slots.length < 2 || prefersReducedMotion() || timer !== null) return;
+      timer = setInterval(step, KIND_CYCLE_MS);
+      wrap.setAttribute("data-fa-cycling", "true");
+    }
+
+    paint(0);
+
+    // ── The pause control — WCAG 2.2.2 ──────────────────────────────
+    //
+    // Only when the loop can actually run. A button that says "pause" beside
+    // something already still is worse than no button: it tells a reader
+    // there is motion they cannot see.
+    var pause = null;
+    if (slots.length > 1 && !prefersReducedMotion()) {
+      pause = el("button", {
+        type: "button",
+        class: "fa-kind-fan-pause",
+        "aria-label": "Pause the cycling highlight",
+      }, "❙❙");
+      pause.addEventListener("click", function () {
+        if (timer === null) {
+          start();
+          pause.setAttribute("aria-label", "Pause the cycling highlight");
+          pause.textContent = "❙❙";
+        } else {
+          stop();
+          pause.setAttribute("aria-label", "Resume the cycling highlight");
+          pause.textContent = "▶";
+        }
+      });
+      start();
+    }
+
+    // ── Hover and focus drive it too ────────────────────────────────
+    //
+    // User-initiated, so it is outside 2.2.2 entirely — and it is why a
+    // reader who paused gets the emphasis back on demand without unpausing.
+    function nudge() {
+      if (prefersReducedMotion()) return;
+      step();
+    }
+    wrap.addEventListener("mouseenter", nudge);
+    strip.addEventListener("focusin", nudge);
+
+    // LIVE, not read once. A reader who turns reduced-motion on mid-session
+    // should have the loop stop, not have to reload the page to be heard.
+    try {
+      var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var onChange = function () {
+        if (mq.matches) {
+          stop();
+          if (pause) pause.remove();
+        }
+      };
+      if (mq.addEventListener) mq.addEventListener("change", onChange);
+      else if (mq.addListener) mq.addListener(onChange);
+    } catch (_e) {
+      // No matchMedia: `prefersReducedMotion` already returned true, so the
+      // loop never started and there is nothing to tear down.
+    }
+
+    return { fan: wrap, pause: pause, stop: stop };
+  }
+
+  /**
+   * The panel the fan opens: every declared kind, named.
+   *
+   * The fan says HOW MANY and gives them a face; this says WHICH, in words.
+   * A reader who cannot tell a spanner from a shield at 24px — which is
+   * most readers, most of the time — gets the answer here rather than by
+   * hovering each one.
+   *
+   * It states DECLARED vs INHERITED in the panel itself, because the
+   * distinction is the owner's and is invisible from the list: a reader
+   * seeing twelve kinds has no way to know the effective set is larger
+   * unless the panel says so.
+   */
+  function buildKindsPanel(kinds) {
+    var wrap = el("div", { class: "fa-kinds-panel fa-tile-content" });
+    wrap.appendChild(el("p", { class: "fa-kinds-note" },
+      "What this instance declares in its own harness. A dependency's kinds " +
+      "are inherited at resolve time and are deliberately not listed here."));
+
+    var ul = el("ul", { class: "fa-kinds-list" });
+    kinds.forEach(function (kind) {
+      var li = el("li", { class: "fa-kinds-row" });
+      li.appendChild(avatarTile(kind, false));
+      li.appendChild(el("span", { class: "fa-kinds-name" }, kind));
+      // The discarded treatment, beside the live one. The owner asked for
+      // an avatar "in and out of trash", and the pair is only legible as a
+      // pair — shown apart, nobody can tell muted from a different colour.
+      var t = avatarTile(kind, true);
+      t.classList.add("fa-kinds-trash");
+      li.appendChild(t);
+      ul.appendChild(li);
+    });
+    wrap.appendChild(ul);
+    wrap.appendChild(el("p", { class: "fa-kinds-legend" },
+      "Each kind is shown twice: as it appears normally, and as it appears " +
+      "once discarded to the trashcan."));
+    return wrap;
+  }
+
   /* ── Action tiles ────────────────────────────────────────────────────── */
 
   // A three-by-three of rounded squares: the launcher. It says "there are
@@ -777,6 +1251,130 @@
       var settings = el("div", { class: "fa-tile-content" });
       settings.appendChild(buildThemeTile());
       settings.appendChild(buildReadingPrefs());
+
+      // The discarded-items control — UNDER SETTINGS, per the owner, which is
+      // also why the 64 KB document is fetched here and not on page load.
+      //
+      // A placeholder goes in immediately and is replaced when the fetch
+      // settles. A control that appeared later would move the rows under a
+      // reader's cursor; one that showed a count of nothing and then changed
+      // is the flicker the todo tile's comment already records.
+      var discardedSlot = el("div", { class: "fa-discarded-slot" },
+                             "Checking for discarded items\u2026");
+      settings.appendChild(discardedSlot);
+
+      // REBUILT whenever a sticky is discarded or restored, not once.
+      //
+      // `buildViews` runs when the LAUNCHER opens and caches forever, so a
+      // reader who opens the launcher, discards a sticky and then opens
+      // Settings would find the control absent — with no way back until
+      // they reloaded the page. That is the one-way delete this whole
+      // feature exists not to be, arriving through a cache. Found by a spec
+      // that happened to open the launcher before discarding, which is also
+      // the order a person uses.
+      function paintDiscarded() {
+        fetchDiscarded(renderDiscardedSlot);
+      }
+      document.addEventListener("fa:todos-discarded", paintDiscarded);
+
+      function renderDiscardedSlot(state) {
+        discardedSlot.innerHTML = "";
+        // Re-attached because a previous pass may have removed it.
+        if (!discardedSlot.parentNode) settings.appendChild(discardedSlot);
+        var localCount = discardedTodoIds().length;
+        if (state.absent) {
+          // This build published no document. Not an error and not an empty
+          // trashcan — there is nothing to report a count ABOUT.
+          //
+          // But a sticky this reader discarded is a fact that does not
+          // depend on the document, and it has to stay reachable: `fsh-guts`
+          // is the trashcan that is KEPT, so a discard with no way back is
+          // a delete wearing a crumpled icon. Caught by a spec, in a harness
+          // that published no document — which is also every folio that has
+          // not deployed one yet.
+          if (localCount === 0) {
+            discardedSlot.remove();
+            return;
+          }
+          state = { nodes: [] };
+        }
+        if (state.error) {
+          // NOT hidden, and this is the case the todo tile's "count === 0 is
+          // not a tile" rule would have got wrong: a failed fetch and an
+          // empty trashcan are opposite facts.
+          discardedSlot.appendChild(el("p", { class: "fa-discarded-error" },
+            "Discarded items could not be read (" + state.error + ")."));
+          return;
+        }
+        // BOTH sources. A badge counting only the published nodes would
+        // read 0 on a site with no trashcan while the reader has three
+        // stickies in it.
+        var n = (state.nodes || []).length + localCount;
+        var label = n === 1 ? "1 item" : n + " items";
+        var btn = el("button", {
+          type: "button",
+          class: "fa-tile fa-discarded-open",
+          // The accessible name says WHAT it is and HOW MANY. "Dead fish" is
+          // the icon, not the name — a screen-reader user is told what the
+          // control does, and the count is in the name rather than conveyed
+          // by the badge alone.
+          "aria-label": "Discarded items \u2014 " + label,
+        });
+        btn.innerHTML = FISH_GLYPH;
+        btn.appendChild(el("span", { class: "fa-tile-caption" }, "Discarded"));
+        btn.appendChild(el("span", { class: "fa-tile-count" }, String(n)));
+        btn.addEventListener("click", function () {
+          // Rebuilt per open, so a restore made in this view is reflected
+          // the next time it is opened without a reload.
+          views.discarded = buildDiscardedView(state);
+          showView("discarded", "Discarded items", btn);
+        });
+        discardedSlot.appendChild(btn);
+      }
+
+      paintDiscarded();
+
+      // ── The kind fan, and the panel it opens ──────────────────────
+      //
+      // Owner: *"openning fan is panel."* The fan is the CLOSED state and
+      // the panel is the open one — not a tooltip, and not a badge that
+      // cycles in place. So the fan is the face of a button, and pressing
+      // it shows the same kinds listed with their names.
+      //
+      // Under Settings for the same reason the discarded control is: it is
+      // something a reader consults once, not a thing they act on.
+      var kinds = declaredKinds();
+      if (kinds.length) {
+        var fanBtn = el("button", {
+          type: "button",
+          class: "fa-kind-fan-open",
+          // Names the COUNT and the fact, not the picture. A fan of glyphs
+          // is meaningless to a screen reader; the panel behind it is not.
+          "aria-label":
+            "What this instance declares \u2014 " +
+            (kinds.length === 1 ? "1 kind" : kinds.length + " kinds"),
+        });
+        // NOT `built` — that is `buildViews`'s memoisation flag, and a `var`
+        // of the same name inside this function hoists over it, so
+        // `if (built) return` would read `undefined` and rebuild every view
+        // on every launcher open. eslint caught it by reporting the OUTER
+        // one as unused, which is a subtler symptom than the cause.
+        var fanParts = buildKindFan(kinds);
+        if (fanParts) fanBtn.appendChild(fanParts.fan);
+        fanBtn.appendChild(el("span", { class: "fa-tile-caption" }, "Declared kinds"));
+        fanBtn.addEventListener("click", function () {
+          views.kinds = buildKindsPanel(kinds);
+          showView("kinds", "Declared kinds", fanBtn);
+        });
+
+        // A ROW, because the pause control must sit BESIDE the button and
+        // not inside it — see `buildKindFan`. Two siblings, one subject.
+        var row = el("div", { class: "fa-kind-fan-row" });
+        row.appendChild(fanBtn);
+        if (fanParts && fanParts.pause) row.appendChild(fanParts.pause);
+        settings.appendChild(row);
+      }
+
       views.settings = settings;
 
       views.language = buildLanguageBar();
@@ -1205,7 +1803,88 @@
     return rows;
   }
 
-  function buildSticky(todo, onFloat, onDock, opts) {
+
+  /* ── Discarding a sticky (bean `d1r6`) ─────────────────────────────────
+   *
+   * Owner, 2026-09-19: *"stikies have an [x] to close/restore to panel...
+   * that should now be replaced with it going into the fsh-guts. icon there
+   * should be crumpled sticky."*
+   *
+   * ## What "into the fsh-guts" can mean on a static site
+   *
+   * The published `fsh-guts.jsonld` is built from the repository; a page has
+   * no way to write to it. So a discard here is **per-viewer and
+   * per-browser**, in `localStorage`, exactly like the reading preferences.
+   *
+   * **The UI says so, in words, wherever a discarded item appears.** A reader
+   * who thinks they have cleared a todo for the team when they have cleared
+   * it for themselves has been misled by the control, and that is a worse
+   * failure than not having the control.
+   *
+   * ## It is a discard, not a delete — `fsh-guts`'s whole rule
+   *
+   * "Delete means relocate", and a thing in the trashcan can be read, cited
+   * and restored. So a discarded sticky is listed in the Discarded view with
+   * a Restore control beside it. A one-way dismiss would carry the crumpled
+   * icon while breaking the rule the icon stands for.
+   *
+   * ## Removing the × does not strand anyone
+   *
+   * The × returned a FLOATING sticky to the board, and the board already
+   * offers that a second way: the greyed slot entry is a real button that
+   * docks it (owner: *"can also return the sticky note by clicking
+   * disabled"*). So the close control's old job survives without it.
+   */
+
+  var CRUMPLED_GLYPH =
+    '<svg class="fa-crumpled-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    // A sticky square with its corner turned in and creases across it.
+    '<path d="M4 5h13l3 3v11H4z" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linejoin="round"/>' +
+    '<path d="M17 5v3h3" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linejoin="round"/>' +
+    '<path d="M7 9l4 4-3 2 5 3M14 10l-2 3 4 1" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+
+  var DISCARDED_TODOS_KEY = "fa-discarded-todos";
+
+  /** Ids this browser has discarded. Never throws — storage may be blocked. */
+  function discardedTodoIds() {
+    try {
+      var raw = localStorage.getItem(DISCARDED_TODOS_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (_e) {
+      return [];
+    }
+  }
+
+  function setDiscardedTodoIds(ids) {
+    try {
+      localStorage.setItem(DISCARDED_TODOS_KEY, JSON.stringify(ids));
+      return true;
+    } catch (_e) {
+      // Saying nothing would be worse than a console note nobody reads: the
+      // reader will discard something, reload, and wonder why it came back.
+      console.warn("docs-ui: the discard could not be saved (storage blocked); " +
+                   "it applies to this page view only.");
+      return false;
+    }
+  }
+
+  function discardTodo(id) {
+    var ids = discardedTodoIds();
+    if (ids.indexOf(id) === -1) ids.push(id);
+    setDiscardedTodoIds(ids);
+    document.dispatchEvent(new CustomEvent("fa:todos-discarded", { detail: { id: id } }));
+  }
+
+  function restoreTodo(id) {
+    setDiscardedTodoIds(discardedTodoIds().filter(function (x) { return x !== id; }));
+    document.dispatchEvent(new CustomEvent("fa:todos-discarded", { detail: { id: id } }));
+  }
+
+  function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
     var card = el("article", {
       class: "fa-sticky fa-sticky-p-" + (todo.priority || "medium"),
@@ -1282,13 +1961,19 @@
       pin.addEventListener("click", function () { onFloat(todo); });
       tools.appendChild(pin);
 
-      var close = el("button", {
+      // WAS `×`, which returned a floating sticky to the board. It is now a
+      // discard, per the owner — and the old job survives on the greyed
+      // board slot, which is a real button that docks it.
+      var discard = el("button", {
         type: "button",
-        class: "fa-sticky-close",
-        "aria-label": "Close " + todo.summary,
-      }, "×");
-      close.addEventListener("click", function () { onDock(todo); });
-      tools.appendChild(close);
+        class: "fa-sticky-close fa-sticky-discard",
+        // The name says where it goes and that it is reversible. "Close"
+        // said neither, and a crumpled icon with no words is a guess.
+        "aria-label": "Discard " + todo.summary + " to the trashcan (restorable, this browser only)",
+      });
+      discard.innerHTML = CRUMPLED_GLYPH;
+      discard.addEventListener("click", function () { onDiscard(todo); });
+      tools.appendChild(discard);
     }
 
     head.appendChild(tools);
@@ -1382,9 +2067,23 @@
       }
     }
 
+    /** Crumple it into the trashcan, and take it off the board. */
+    function discard(todo) {
+      dock(todo);                      // if it was floating, bring it down first
+      var slot = slots[todo.id];
+      if (slot && slot.parentNode) slot.parentNode.removeChild(slot);
+      delete slots[todo.id];
+      discardTodo(todo.id);
+      if (Object.keys(slots).length === 0 && !grid.querySelector(".fa-sticky-empty")) {
+        grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
+      }
+      // Focus would otherwise land on <body>, which tells a reader nothing.
+      heading.focus();
+    }
+
     function float(todo) {
       if (todoState.floating[todo.id]) return;
-      var card = buildSticky(todo, float, dock);
+      var card = buildSticky(todo, float, dock, discard);
       card.classList.add("fa-sticky-floating");
       layer.appendChild(card);
       todoState.floating[todo.id] = card;
@@ -1411,7 +2110,12 @@
       if (t) t.focus();
     }
 
-    var rows = stackTodos(items, todoState.processes);
+    // Items this browser discarded are off the board. Filtered HERE rather
+    // than at fetch, so `fa:todos-discarded` can re-render without refetching
+    // and the published index stays the single source of what exists.
+    var hidden = discardedTodoIds();
+    var live = items.filter(function (t) { return hidden.indexOf(t.id) === -1; });
+    var rows = stackTodos(live, todoState.processes);
     for (var i = 0; i < rows.length; i++) {
       var row = rows[i];
       var slot = el("div", {
@@ -1424,11 +2128,11 @@
         slot.setAttribute("data-fa-depth", String(row.depth));
         slot.appendChild(el("span", { class: "fa-sticky-process" }, row.process));
       }
-      slot.appendChild(buildSticky(row.todo, float, dock));
+      slot.appendChild(buildSticky(row.todo, float, dock, discard));
       slots[row.todo.id] = slot;
       grid.appendChild(slot);
     }
-    if (items.length === 0) {
+    if (live.length === 0) {
       grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
     }
 
@@ -1448,7 +2152,7 @@
 
     return {
       toggle: function () { return setOpen(board.hasAttribute("hidden")); },
-      count: items.length,
+      count: live.length,
     };
   }
 
@@ -1495,7 +2199,7 @@
       var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
       (function (list, mine) {
         for (var k = 0; k < mine.length; k++) {
-          list.appendChild(buildSticky(mine[k], function () {}, function () {}, { compact: true }));
+          list.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
         }
       })(list, mine);
 
