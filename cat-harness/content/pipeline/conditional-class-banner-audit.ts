@@ -27,6 +27,7 @@
  * with `--strict`).
  */
 import { folioDir } from "../../schemas/cat-harness.js";
+import { stripLeanComments } from "./lean-lexer.js";
 import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
@@ -110,11 +111,7 @@ async function loadAll(): Promise<Map<string, Block>> {
 }
 
 /** Strip Lean comments (`/-! … -/`, `/- … -/`, `-- …`) from text. */
-function stripLeanComments(s: string): string {
-  return s
-    .replace(/\/-[\s\S]*?-\//g, "")
-    .replace(/--[^\n]*/g, "");
-}
+
 
 /** Find the `.lean` file backing a block.
  *
