@@ -166,6 +166,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "are covered by `render-log.test.ts` in `bun test`, and the WIRING by " +
       "`workflow-yaml.test.ts`, both of which are in the gate set",
   },
+  {
+    match: "check:maintained-artefacts",
+    kind: "ci-only",
+    reason:
+      "reads the ASSEMBLED `_site/`, which exists only after the site build has run — the " +
+      "whole point of the check is that a `maintains` claim is verified against what actually " +
+      "shipped, not against the source it was generated from, so there is nothing for a " +
+      "contributor to run locally and no `--check` twin to gate. Its three-state behaviour " +
+      "(exit 2 for could-not-determine, never folded into a pass) is covered by " +
+      "`check-maintained-artefacts.test.ts` in `bun test`, which is in the gate set",
+  },
   // ── Generators whose `--check` twin is gated ────────────────────────
   {
     match: "scripts/gen-schema-docs.ts",
@@ -476,6 +487,144 @@ export function unclassifiedSteps(root: string): ForeignStep[] {
   );
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+ * The OTHER direction: a check script no workflow runs.
+ *
+ * `unclassifiedSteps` asks "CI runs this — does the local set?". Its domain
+ * is steps found IN WORKFLOWS, which makes it structurally unable to report a
+ * check that appears in no workflow at all. Measured 2026-09-20: **9 of 46**
+ * `check:` / `:check` scripts here are in no workflow, and one of them,
+ * `translate-kg-viewer:check`, was RED on main for an unknown stretch while
+ * CI stayed green — bean `ot9a`, which is bean `xom7`'s shape one level down.
+ *
+ * ## This does NOT make `package.json` the authority
+ *
+ * The module header's argument stands and is not being re-litigated: the
+ * RUNNER derives from the workflow, because the question it answers is *"what
+ * will CI run against my change"* and only the workflow knows that. Running
+ * every script in `package.json` would fail on things CI does not gate.
+ *
+ * This asks a different question — *"is there a check nobody runs?"* — and a
+ * different question needs a different domain. Six of the nine already had
+ * reasons, written as a COMMENT in `code-quality-gates.yml`. A comment cannot
+ * be compared against the set it describes, which is why the other three
+ * (`health:check`, `landing:data:check`, `landing:sticky:check`) had no reason
+ * anywhere and nothing said so.
+ *
+ * And a reason nothing checks is free to be false. The comment excluded
+ * `translate-*:check` as needing *"a translation toolchain not installed on
+ * this runner"*; both run clean on a bare checkout, measured. That exclusion
+ * kept two working gates out of CI on a premise no longer true.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/** Why a check script is not wired into a workflow. */
+export interface ScriptExemption {
+  /** The script name, matched EXACTLY. Never a substring — see below. */
+  script: string;
+  kind: "report" | "covered-by" | "no-folio" | "scheduled";
+  reason: string;
+}
+
+/**
+ * The check scripts CI deliberately does not gate, each with its reason.
+ *
+ * Lifted out of a comment in `code-quality-gates.yml`. Same reasons, now in
+ * a place a test can compare against the actual script list — which is the
+ * whole difference, since the comment silently covered six of nine.
+ */
+export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
+  {
+    script: "check:ci-health",
+    kind: "report",
+    reason:
+      "a REPORT, not a gate: it reads the DEFAULT BRANCH, so on a PR it describes main rather than the diff. `ci-health.yml` runs it",
+  },
+  {
+    script: "check:corpus-gate",
+    kind: "no-folio",
+    reason: "runs over a folio's content tree; the platform carries none",
+  },
+  {
+    script: "check:upstream-pins",
+    kind: "scheduled",
+    reason: "`upstream-pins.yml` runs it weekly; pins do not move with a diff",
+  },
+  {
+    script: "check:partition:edges",
+    kind: "report",
+    reason: "prints the edge list; `check:partition` is the gate and is wired",
+  },
+  {
+    script: "health:check",
+    kind: "covered-by",
+    reason:
+      "`health-check.yml` runs `test/health/run.ts` directly rather than through this script name — daily, and it commits its results",
+  },
+];
+
+/** Thrown when the script scan finds nothing — never reported as full coverage. */
+export class NoCheckScriptsFound extends Error {
+  constructor(path: string) {
+    super(
+      `${path}: no \`check:\` or \`:check\` scripts were found. That is not ` +
+        `full coverage, it is a broken reader — a filter over nothing passes. ` +
+        `Fix the scan; do not treat this as green.`,
+    );
+    this.name = "NoCheckScriptsFound";
+  }
+}
+
+/** The exemption covering this script, if any. Exact name, never a substring. */
+export function scriptExemptionFor(script: string): ScriptExemption | undefined {
+  return SCRIPT_EXEMPTIONS.find((e) => e.script === script);
+}
+
+/** Every `check:` / `:check` script this repository declares. */
+export function checkScriptNames(root: string): string[] {
+  const path = join(root, "package.json");
+  const pkg = JSON.parse(readFileSync(path, "utf-8")) as { scripts?: Record<string, string> };
+  const names = Object.keys(pkg.scripts ?? {})
+    .filter((n) => n.startsWith("check:") || n.endsWith(":check"))
+    .sort();
+  if (names.length === 0) throw new NoCheckScriptsFound("package.json");
+  return names;
+}
+
+/**
+ * Does this command invoke that script?
+ *
+ * The name must end at a token boundary. A substring match would read
+ * `bun run check:partition` as running `check:partition:edges` — two scripts
+ * that differ precisely in that one is the gate and the other is a report —
+ * and the ungated one would report as covered.
+ */
+export function commandRunsScript(command: string, script: string): boolean {
+  const escaped = script.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(^|\\s)bun run ${escaped}(\\s|$)`).test(command);
+}
+
+/** Every `bun` command any workflow runs, the gate set included. */
+export function commandsCiRuns(root: string): string[] {
+  const out = gatesFrom(readFileSync(join(root, GATES_WORKFLOW), "utf-8"), { all: true }).map(
+    (g) => g.command,
+  );
+  for (const { step } of otherWorkflowSteps(root)) out.push(step.command);
+  return out;
+}
+
+/**
+ * Check scripts no workflow runs and no exemption covers.
+ *
+ * **Never empty-by-accident:** {@link checkScriptNames} throws on an empty
+ * scan rather than returning `[]`, which would read as total coverage.
+ */
+export function unrunScripts(root: string): string[] {
+  const commands = commandsCiRuns(root);
+  return checkScriptNames(root).filter(
+    (n) => !commands.some((c) => commandRunsScript(c, n)) && !scriptExemptionFor(n),
+  );
+}
+
 if (import.meta.main) {
   const all = process.argv.includes("--all");
   const listOnly = process.argv.includes("--list");
@@ -494,6 +643,16 @@ if (import.meta.main) {
     console.log("UNCLASSIFIED — CI runs these and the local set does not:");
     for (const u of unclassified) console.log(`  ? ${u.file}: ${u.step.command}`);
     console.log("  Add each to the gate set, or to STEP_EXEMPTIONS with a reason.\n");
+  }
+
+  // The other direction, and reported just as loudly: a check script no
+  // workflow runs is a gate that cannot fail. `translate-kg-viewer:check` was
+  // red on main while CI was green, because nothing ran it (bean `ot9a`).
+  const unrun = unrunScripts(ROOT);
+  if (unrun.length) {
+    console.log("UNRUN — declared in package.json and in NO workflow:");
+    for (const u of unrun) console.log(`  ? bun run ${u}`);
+    console.log("  Wire each into a workflow, or add it to SCRIPT_EXEMPTIONS with a reason.\n");
   }
 
   if (listOnly) {

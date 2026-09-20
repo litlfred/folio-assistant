@@ -39,6 +39,15 @@ export interface Capability {
   description: string;
   detection: CapabilityDetection;
   requires?: string[];
+  /**
+   * The capability that stands in for this one — `CapabilityDefinition.fallbackTo`.
+   *
+   * Read here so `src/tools/degradation.ts` can resolve a skill's
+   * `degradation: "fallback"` without a second loader. Bean
+   * `folio-assistant-sym3` moved it off five skill modules onto the one
+   * capability it describes.
+   */
+  fallbackTo?: string;
 }
 
 export interface CapabilityStatus {

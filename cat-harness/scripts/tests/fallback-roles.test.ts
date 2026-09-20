@@ -1,131 +1,203 @@
 /**
- * A `fallbackRole` resolves, and an empty scan is not reported as a pass.
+ * A `fallback` resolves to something real, and the derivation is exact.
  *
- * Bean `folio-assistant-85e8`. Two properties, and the second is the one
- * this repository keeps paying to relearn.
+ * The property worth pinning is not "the check finds a bad string" — the
+ * old version of this file did that, over a field that no longer exists.
+ * It is that **the fallback role is recoverable from the diagram**, which
+ * is the whole argument for having removed the declaration (bean
+ * `folio-assistant-85e8`, on the owner's question about duplicate data).
+ * If that derivation ever stops returning `publication-manager` for
+ * `qa-report-signing`, the removal was wrong and this says so.
  *
  * @module scripts/tests/fallback-roles.test
  */
-import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 
-import { SCANNED, declaredRoles, fallbackRoleUses } from "../check-fallback-roles.ts";
+import { describe, expect, test } from "bun:test";
+
+import {
+  SCANNED,
+  declaredCapabilities,
+  declaredCapabilityFacts,
+  declaredRoles,
+  fallbackRoleFor,
+  fallbackUses,
+  transitivelyRequires,
+} from "../check-fallback-roles.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
-/** A throwaway tree with one scanned dir holding `files`. */
-function fixture(files: Record<string, string>): string {
-  const dir = mkdtempSync(join(tmpdir(), "fallback-roles-"));
-  for (const [rel, body] of Object.entries(files)) {
-    const p = join(dir, rel);
-    mkdirSync(join(p, ".."), { recursive: true });
-    writeFileSync(p, body);
+describe("the registries it resolves against", () => {
+  test("both are non-empty, or every resolution below is vacuous", () => {
+    expect(declaredRoles(ROOT).size).toBeGreaterThan(10);
+    expect(declaredCapabilities(ROOT).size).toBeGreaterThan(5);
+  });
+
+  test("roles are read through the declaration, so relocating the kg graph cannot blind it", () => {
+    // `check:declared-paths` refused a hardcoded `skills/roles/roles.json`
+    // in the first draft. Asserting a known id is present is what makes the
+    // declaration-reading path testable at all.
+    expect(declaredRoles(ROOT).has("publication-manager")).toBe(true);
+  });
+});
+
+describe("the derivation that replaced the declaration", () => {
+  test("qa-report-signing falls back to publication-manager, from the DIAGRAM", async () => {
+    // The exact value `fallbackRole` used to declare. `Task_HumanSign` is a
+    // `userTask` in `Lane_Human`, which binds `publication-manager`; the
+    // declaration was a second copy of this with nothing asserting they
+    // agreed.
+    expect(await fallbackRoleFor(ROOT, "qa-report-signing")).toEqual(["publication-manager"]);
+  });
+
+  test("a skill with no human-only lane derives nothing, rather than guessing", async () => {
+    // The failure that would make the whole approach unsafe is a derivation
+    // that returns SOMETHING for every skill — then a fallback with no
+    // route would silently resolve.
+    expect(await fallbackRoleFor(ROOT, "formalizer")).toEqual([]);
+    expect(await fallbackRoleFor(ROOT, "no-such-skill-anywhere")).toEqual([]);
+  });
+
+  test("the retired field is gone from both declarations and from the corpus", async () => {
+    // A field removed from the type but left in a module would still be
+    // read by nothing AND invisible to the type checker, since the schema
+    // is not applied to these modules at build time.
+    const { readFileSync } = await import("node:fs");
+    for (const f of ["schemas/assistant-types.ts", "schemas/skill-package.ts"]) {
+      const src = readFileSync(resolve(ROOT, f), "utf-8");
+      // Mentioned in prose (the record of why it went), never re-declared.
+      expect(src).not.toMatch(/^\s*fallbackRole[?]?:/m);
+    }
+    const uses = fallbackUses(ROOT, SCANNED);
+    expect(uses.length).toBeGreaterThan(0);
+    for (const u of uses) expect(u).not.toHaveProperty("fallbackRole");
+  });
+});
+
+describe("the scan", () => {
+  function fixture(files: Record<string, string>): string {
+    const root = mkdtempSync(resolve(tmpdir(), "fallback-"));
+    for (const [rel, body] of Object.entries(files)) {
+      const abs = resolve(root, rel);
+      mkdirSync(resolve(abs, ".."), { recursive: true });
+      writeFileSync(abs, body);
+    }
+    return root;
   }
-  return dir;
-}
 
-describe("the roles it checks against are the real registry", () => {
-  test("reads skills/roles/roles.json and finds a substantial set", () => {
-    const r = declaredRoles(ROOT);
-    // A floor, not a pinned count — pinning would make every added role a
-    // failing test, which is the hand-maintained-list defect one level up.
-    expect(r.size).toBeGreaterThan(10);
-    expect(r.has("code-reviewer")).toBe(true);
-    expect(r.has("collaborator")).toBe(false); // a tier word, not a role — qif9
-  });
-});
-
-describe("finding uses", () => {
-  test("a literal fallbackRole is found, with its file", () => {
-    const dir = fixture({
-      "skills/a.ts": `export default { requiredCapabilities: [\n` +
-        `  { capabilityId: "x", degradation: "fallback", fallbackRole: "reviewer" },\n] };\n`,
+  test("finds a fallback and the capability it is for", () => {
+    const root = fixture({
+      "skills/a.ts": `const x = { capabilityId: "c1", degradation: "fallback" };\n`,
+      "skills/b.ts": `const y = { capabilityId: "c3", degradation: "fail" };\n`,
     });
     try {
-      const uses = fallbackRoleUses(dir, ["skills"]);
-      expect(uses).toHaveLength(1);
-      expect(uses[0]!.role).toBe("reviewer");
-      expect(uses[0]!.file).toBe("skills/a.ts");
+      expect(fallbackUses(root, ["skills"]).map((u) => [u.skill, u.capabilityId])).toEqual([
+        ["a", "c1"],
+      ]);
     } finally {
-      rmSync(dir, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true });
     }
   });
 
-  test("test files are skipped — a fixture is not a declaration", () => {
-    const dir = fixture({
-      "skills/a.test.ts": `const x = { fallbackRole: "not-a-real-role" };\n`,
-    });
-    try {
-      expect(fallbackRoleUses(dir, ["skills"])).toEqual([]);
-    } finally {
-      rmSync(dir, { recursive: true, force: true });
-    }
-  });
-
-  test("dot-directories are skipped at EVERY segment, not just the first", () => {
-    const dir = fixture({
-      "skills/.hidden/a.ts": `const x = { fallbackRole: "reviewer" };\n`,
-      "skills/ok/b.ts": `const x = { fallbackRole: "editor" };\n`,
-    });
-    try {
-      const uses = fallbackRoleUses(dir, ["skills"]);
-      expect(uses.map((u) => u.role)).toEqual(["editor"]);
-    } finally {
-      rmSync(dir, { recursive: true, force: true });
-    }
-  });
-
-  test("several uses in one file are all found", () => {
-    const dir = fixture({
+  test("does NOT read its own documentation as corpus", () => {
+    // The first run of the rewritten check reported `assistant-types.ts` as
+    // a skill with an unresolvable fallback: it had matched a JSDoc table
+    // describing the very field being removed. A scanner that reads prose
+    // as declarations is this repo's "measured the wrong thing" in
+    // miniature.
+    const root = fixture({
       "skills/a.ts":
-        `const a = { fallbackRole: "reviewer" };\nconst b = { fallbackRole: "editor" };\n`,
+        `/**\n * | \`fallback\` | see below |\n * A ref reads degradation: "fallback" and resolves.\n */\n` +
+        `// const dead = { capabilityId: "old", degradation: "fallback" };\n` +
+        `export const real = 1;\n`,
     });
     try {
-      expect(fallbackRoleUses(dir, ["skills"]).map((u) => u.role)).toEqual([
-        "reviewer",
-        "editor",
-      ]);
+      expect(fallbackUses(root, ["skills"])).toEqual([]);
     } finally {
-      rmSync(dir, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a .test.ts file is not corpus", () => {
+    const root = fixture({
+      "skills/a.test.ts": `const x = { capabilityId: "c", degradation: "fallback" };\n`,
+    });
+    try {
+      expect(fallbackUses(root, ["skills"])).toEqual([]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
     }
   });
 });
 
-describe("an empty scan is not a pass — the vacuity guard", () => {
-  test("a tree with no uses yields an empty list, distinguishably", () => {
-    // `fallbackRoleUses` reports what it found; the CLI is what decides an
-    // empty result is worth SAYING. Splitting them keeps the reader usable
-    // for asking "does anything use this yet".
-    const dir = fixture({ "skills/a.ts": `export const x = 1;\n` });
-    try {
-      expect(fallbackRoleUses(dir, ["skills"])).toEqual([]);
-    } finally {
-      rmSync(dir, { recursive: true, force: true });
+describe("the capability-level fallback, and the contradiction it exposed", () => {
+  const facts = declaredCapabilityFacts(ROOT);
+
+  test("`fallbackTo` is declared ONCE, on the capability it is a property of", () => {
+    // Five skill modules each carried `fallbackCapabilityId: "lean-mcp"`.
+    // What substitutes for `lean-toolchain` is a fact about
+    // `lean-toolchain`, so a sixth Lean skill no longer has to remember it.
+    expect(facts.get("lean-toolchain")?.fallbackTo).toBe("lean-mcp");
+    for (const u of fallbackUses(ROOT, SCANNED)) {
+      expect(u).not.toHaveProperty("fallbackCapabilityId");
     }
   });
 
-  test("a missing scanned directory does not throw — it contributes nothing", () => {
-    // A tree that is not there and a tree with nothing in it are the same
-    // to this reader, and neither may crash the sweep.
-    const dir = fixture({ "skills/a.ts": `const x = { fallbackRole: "author" };\n` });
-    try {
-      expect(fallbackRoleUses(dir, ["skills", "does-not-exist"]).map((u) => u.role)).toEqual([
-        "author",
-      ]);
-    } finally {
-      rmSync(dir, { recursive: true, force: true });
+  test("the fallback CAN fire — inverted 2026-09-20, and that is the point", () => {
+    // This test asserted the DEFECT for a few hours: `lean-mcp` declared
+    // `requires: ["lean-toolchain"]`, so `probeAll`'s
+    // `present = requiresMet && probe(…)` made it absent in exactly the case
+    // the fallback existed for.
+    //
+    // The owner resolved it — `lean-mcp`'s Lean runs server-side, detection
+    // is an `mcp-probe`, so the requirement was wrong — and the test is
+    // INVERTED rather than deleted. Deleting it would leave no evidence the
+    // finding was ever real, and the next person to add that `requires` back
+    // would get a green suite and a dead fallback.
+    expect(facts.get("lean-mcp")?.requires ?? []).not.toContain("lean-toolchain");
+    expect(transitivelyRequires(facts, "lean-mcp", "lean-toolchain")).toBe(false);
+  });
+
+  test("no declared fallback anywhere needs the thing it replaces", () => {
+    // The general form, now that the corpus is clean and the check gates on
+    // it. Written over every capability rather than the one pair, so a new
+    // `fallbackTo` cannot reintroduce the shape without failing here first.
+    for (const [id, c] of facts) {
+      if (!c.fallbackTo) continue;
+      expect(`${id} → ${c.fallbackTo}: ${transitivelyRequires(facts, c.fallbackTo, id)}`).toBe(
+        `${id} → ${c.fallbackTo}: false`,
+      );
     }
   });
-});
 
-describe("the real repository", () => {
-  test("every fallbackRole in the tree resolves, or there are none yet", () => {
-    // The live assertion. Today it is the second case, and the CLI says so
-    // rather than printing a tick.
-    const roles = declaredRoles(ROOT);
-    const bad = fallbackRoleUses(ROOT, SCANNED).filter((u) => !roles.has(u.role));
-    expect(bad).toEqual([]);
+  test("the predicate is not vacuously false — it fires on a real chain", () => {
+    // With the corpus clean, every assertion above expects `false`, which a
+    // predicate that ALWAYS returns false would satisfy. This is the guard
+    // against that, on a constructed chain rather than the corpus.
+    const m = new Map([
+      ["missing", { id: "missing", requires: [] }],
+      ["substitute", { id: "substitute", requires: ["missing"] }],
+    ]);
+    expect(transitivelyRequires(m, "substitute", "missing")).toBe(true);
+  });
+
+  test("transitivity is followed, and a cycle terminates", () => {
+    const m = new Map([
+      ["a", { id: "a", requires: ["b"] }],
+      ["b", { id: "b", requires: ["c"] }],
+      ["c", { id: "c", requires: [] }],
+      ["x", { id: "x", requires: ["y"] }],
+      ["y", { id: "y", requires: ["x"] }],
+    ]);
+    expect(transitivelyRequires(m, "a", "c")).toBe(true);
+    expect(transitivelyRequires(m, "a", "z")).toBe(false);
+    // Same reading `probeAll` takes: on the stack is unmet, not infinite.
+    expect(transitivelyRequires(m, "x", "z")).toBe(false);
+  });
+
+  test("the id-set helper still agrees with the facts map", () => {
+    expect(declaredCapabilities(ROOT)).toEqual(new Set(facts.keys()));
   });
 });
