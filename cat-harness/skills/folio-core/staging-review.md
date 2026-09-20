@@ -200,8 +200,69 @@ the remote carrying work not in the default branch, or a tip commit in the last
 30 minutes. `scripts/staging-cleanup-preflight.ts --slug <slug>` answers the
 same question on demand, and the dispatch above runs it before removing.
 
+## Before you hand a staging URL to a person (STRICT)
+
+**A staging URL is not a deliverable until you have checked the ref, and it is
+never "live" on your say-so.** The rule exists because it was broken here: in
+one session an agent relayed the same preview URL to the owner **five times**
+without once checking anything, each time off the back of the bot's comment —
+which says a workflow *pushed*, not that a site *serves*.
+
+Three states, and conflating any two of them is the defect:
+
+| | observable from a container? | how |
+|---|---|---|
+| the `stage` job succeeded | **yes** | the check run on the PR's head |
+| the files are in `gh-pages` | **yes** | read `STAGING/<slug>/` on `refs/heads/gh-pages` |
+| the URL serves them | **NO** | see below |
+
+**The third is not available to you, and `curl` will not make it available.**
+The proxy blocks `github.io`, so a fetch returns `000` and says nothing either
+way. And where Pages is configured as *Deploy from a branch* — as it is here —
+its builds produce **no workflow runs at all**: measured 2026-09-20,
+`event: page_build` returns `total_count: 0` and there is no
+`pages-build-deployment` workflow to query. So there is no API answer either.
+
+So: **verify the ref, and report the third state as unverified rather than
+inferring it.** Listing `STAGING/<slug>/` on `gh-pages` and finding
+`index.html` proves the build ran and what it published; it does not prove
+Pages has rebuilt. Those are different claims and only one of them is yours to
+make.
+
+**LIST the directory. Do not FETCH the page.** Found by doing it wrong within
+minutes of writing this rule: asking for `STAGING/<slug>/index.html` returns
+the file, and a staging page here is ~100 KB of rendered HTML — 107,844
+characters on the first try, which is a context window spent to learn a fact
+the directory listing gives for free. The listing returns a name and a byte
+count per entry; `index.html` present and non-zero is the whole check. Request
+only the `name` and `size` fields while you are at it.
+
+### Say how long, and come back
+
+A person handed a URL with no timing either refreshes a 404 or walks away.
+Give them the number and the follow-up, in the same breath as the link:
+
+- **The `stage` job takes ~2 minutes.** Measured 2026-09-20 over three
+  consecutive runs: 1m44s, 1m58s, 2m17s. That is the push to `gh-pages`, and
+  it is the part the check run tells you about.
+- **Pages propagation is on top of that**, and GitHub documents it as up to
+  ten minutes. Since it is unobservable from here, quote the bound rather than
+  a guess: *"give it ~5 minutes; up to 10 if Pages is slow."*
+- **Then actually check back.** Schedule it rather than promising it — the
+  same mechanism that watches a PR. Re-list the ref, and if the person reports
+  a 404 after the window, that is a real finding worth chasing; before it, it
+  is the window.
+
+Never present a URL as though it is already serving. *"Deployed to `gh-pages`,
+should be live in ~5 minutes"* is the honest sentence and costs nothing.
+
 ## Do not
 
+- **Do not hand over a staging URL without listing `STAGING/<slug>/` on
+  `gh-pages` first.** The bot's comment says a workflow pushed, not that a
+  site serves, and relaying it unchecked is what this section exists for.
+- **Do not say a preview is "live", "up" or "deployed and ready"** unless
+  someone has loaded it. You cannot see that from here.
 - **Do not provide before/after URLs without checking the staging workflow
   has run.** A URL that 404s is worse than no URL.
 - **Do not auto-remove staging previews.** A person confirms every removal —

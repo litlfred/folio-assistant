@@ -161,6 +161,51 @@ no uniform rule can ever cover the set), and the alternative costs the silent
 *declare your filename in your type* — rather than a spelling. Not decided;
 this is the recommendation the owner asked for, and question 2 is untouched.
 
+## Shipped 2026-09-20 — the marker set is iterable, and q2 answered itself
+
+`schemas/content-type.ts` + `schemas/content-types-base.ts`.
+`describeRepository(repoRoot)` returns the SET of types a repository asserts,
+each with the IRI a consumer dereferences to learn what the membership means.
+Three registered: `harness` (`harness.json`), `dak` (`dak.json`), `sushi`
+(`sushi-config.yaml`) — and registering is not claiming: the latter two carry
+their owners' type IRIs and move to a WHO adapter unchanged when one exists.
+
+Deliberately the same shape as `GraphKindRegistry` — open, seeded, `register`
+refusing a conflicting redefinition and tolerating a diamond, a layer
+registering what it owns at load time. A second registry shape would be a
+second set of rules about redefinition, lookup and diamonds.
+
+**QUESTION 2 WAS ALREADY ANSWERED BY THIS BEAN'S OWN "Done when",** which is
+worth recording because it had been sitting open as though it were not:
+*"a disagreement between two markers reported rather than silently resolved"*
+is option (a) of the three listed as unanswered. So `describeRepository`
+reports and resolves nothing — ranking markers would make a repository's truth
+depend on which layer loaded first. Guarded by a test that asserts BOTH claims
+survive, since "reports it" and "reports it and quietly picks one" look
+identical to a caller reading only the type list.
+
+**THREE STATES, not two.** A marker present but unparseable comes back as a
+membership with `parsed: false` and no facts — not dropped (which under-counts
+what the repository asserts) and not reported as clean (which hands a consumer
+facts nothing backs). `sushi-config.yaml` is in that state permanently for now:
+it is YAML, `describeRepository` parses JSON, and its MEMBERSHIP is still real
+because the file's presence is the assertion.
+
+**Still open, and each said rather than left to look finished:**
+
+- **Closure under the dependency tree.** `describeRepository` reads the ROOT
+  only. The resolver lives a layer up and importing it here would invert the
+  dependency.
+- **`ig` is not registered.** Nothing declares an IG instance, so there is no
+  marker to recognise; registering it would mint a type whose membership can
+  never be asserted — an entry that looks like coverage and detects nothing.
+- **`getting-started.md` still branches on the `isFolio` boolean.** It now
+  points at the set and says why it stays a boolean: the table has five
+  branches keyed on two values, and what they should do for a repository that
+  is a harness AND a DAK is a real question nobody has answered.
+- **Existing repos are not migrated**, and `sushi` has no facts until
+  something in its import closure can read YAML.
+
 ## Done when
 
 A consumer can ask a repository "what are you?" and get a resolved **set** of

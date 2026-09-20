@@ -86,6 +86,27 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss:
       "One item in the trashcan: something deprecated or thrown away, kept and addressable rather than deleted, and deliberately absent from the rendered site. Carries where it used to live, so it is not an orphan.",
   },
+  /**
+   * The two CONTENT-TYPE markers — what a repository asserts it is.
+   *
+   * Distinct from a graph kind, which says what is in a DIRECTORY. These say
+   * what the REPOSITORY is, and a repository is a set of them: `smart-base` is
+   * a DAK and a SUSHI project at once. `DAK` is not here because it is WHO's
+   * term in WHO's namespace, which is the point — a marker's type IRI belongs
+   * to whoever defines the type, and only the ones we mint need glossing here.
+   */
+  Instance: {
+    layer: "harness",
+    gloss:
+      "A repository carrying a harness declaration — it names itself, its published stub, and the directories it holds.",
+    seeAlso: "/agentic-harness.html",
+  },
+  SushiProject: {
+    layer: "harness",
+    gloss:
+      "A repository SUSHI will build — FSH compiled to a FHIR implementation guide. Minted here because SUSHI publishes no logical model for its own config; this is our name for the membership, not a claim to define SUSHI.",
+  },
+
   Actor: {
     layer: "bootstrap",
     gloss:

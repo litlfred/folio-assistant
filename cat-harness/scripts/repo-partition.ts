@@ -340,6 +340,14 @@ const RULES: Rule[] = [
       // on that module: a layer that cannot render must not own the renderable
       // kind. Classifying it harness would put core's own kind registration
       // behind a harness module.
+      // CORE, and my first classification of it was WRONG. I filed it with
+      // the harness because it reads the TOOL declarations, and `--edges`
+      // immediately reported the consequence: a harness module importing
+      // `schemas/tabular-csvw.ts`, which is core's. The table's own test
+      // settles it — does it need a folio to have anything to do? It scans
+      // `library/` for tabular records, so yes. Reading the tool graph is
+      // core importing harness, which is the allowed direction.
+      "scripts/check-tabular-stubs.ts",      // a stubbed tool must not read as a working one
       "scripts/ensure-landing-sticky.ts",    // creates folio/ and mints its landing stickies
       // Same repo and the same reason: it reads the folio graph's sticky nodes
       // and writes the data file the landing page renders from. It was part of
@@ -484,6 +492,7 @@ const RULES: Rule[] = [
       // as well as by dependency: it reads THIS repository's `AGENTS.md`
       // against THIS repository's source, and a folio has neither as content.
       "scripts/check-agents-claims.ts",
+      "scripts/check-agent-entry-links.ts",
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
       "scripts/check-declared-paths.ts",
@@ -724,16 +733,6 @@ const RULES: Rule[] = [
     repo: "core",
     triaged: true,
     exact: [
-      // A thin wrapper over `content/pipeline/readme-links.ts`, and classified
-      // WITH IT rather than by its own subject — which is `AGENTS.md`, and so
-      // harness. The edge the partition caught is real and is not this
-      // script's: a generic markdown-link auditor lives wholly in core, so ANY
-      // harness-level link check inherits a wrong-direction edge from it.
-      // Lifting the generic half of that auditor is a re-layering of somebody
-      // else's module and a larger change than the bean that found it
-      // (`v8gh`); recorded as bean `cp3l`. Until then this ships where its
-      // dependency ships.
-      "scripts/check-agent-entry-links.ts",
       "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
       // Statement-level hashing for `.lean` files, by the same test: the
       // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in
