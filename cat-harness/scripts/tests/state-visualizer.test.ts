@@ -1,0 +1,263 @@
+/**
+ * The state dashboards: their route, and what each page can and cannot claim.
+ *
+ * @module scripts/tests/state-visualizer
+ *
+ * The generator writes COMMITTED pages under this instance's site dir, so
+ * `state:visualizer:check` is the staleness gate and this file is the
+ * behaviour gate. It reads what the generator produced rather than re-deriving
+ * it the same way, and it must never assert a COUNT of beans or epics — those
+ * move whenever anybody works, and a test that fails because somebody closed a
+ * bean is a test that gets deleted.
+ */
+import { describe, expect, test } from "bun:test";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import { declaredVisualiserFor } from "../state-visualizer.ts";
+import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
+import "../../schemas/folio-graph-kind.ts";
+
+const ROOT = instanceRootFor(import.meta.dir);
+const SITE = join(ROOT, siteDirFor(ROOT));
+
+/** A dashboard's committed page. */
+const read = (graph: string) =>
+  readFileSync(join(SITE, graph, "index.html"), "utf-8");
+const has = (graph: string) => existsSync(join(SITE, graph, "index.html"));
+
+describe("the route is the policy, not this generator's choice", () => {
+  test("the visualiser is AT the directory's own URL, one per declared state graph", () => {
+    for (const id of ["beans", "todos", "qa", "health", "issue-marks", "uploads"]) {
+      expect(has(id)).toBe(true);
+    }
+  });
+
+  test("no stub segment, and no invented one", () => {
+    // Bean `o7eq` ruling 1: the segment is the instance's NAME, never its
+    // stub. Two earlier drafts published under `folio-assistant`, which names
+    // the published graph DOCUMENT and not the instance. Ruling 3 then elides
+    // this instance's own name, because its docs are the published root.
+    expect(existsSync(join(SITE, "folio-assistant"))).toBe(false);
+    expect(existsSync(join(SITE, "state"))).toBe(false);
+    expect(existsSync(join(SITE, "state-visualizer"))).toBe(false);
+    // And no segment BENEATH the directory either. `harness-requirements`
+    // names `<base-url>/beans` as the obligation, so a page one level deeper
+    // leaves that URL a 404 and does not meet it.
+    expect(existsSync(join(SITE, "beans", "dashboard"))).toBe(false);
+  });
+
+  test("the segment is the declared ID, because two paths basename alike", () => {
+    // `qa` is `test/results/` and `health` is `test/health/results/`. Taking
+    // the basename — which the sibling schema visualiser does, correctly, for
+    // its own graph — would give both the segment `results`, and one dashboard
+    // would silently overwrite the other.
+    expect(has("qa")).toBe(true);
+    expect(has("health")).toBe(true);
+    expect(existsSync(join(SITE, "results", "index.html"))).toBe(false);
+  });
+});
+
+describe("each page reads the projection that already exists", () => {
+  test("relative to itself, at the depth its own route implies", () => {
+    expect(read("beans")).toContain('content="../assets/beans/index.json"');
+    expect(read("todos")).toContain('content="../assets/todos/index.json"');
+  });
+
+  test("and that projection is really there", () => {
+    // The generator publishes no data of its own — `gen-docs-pages.ts` does.
+    // A second copy would be two answers to what the work plan holds.
+    expect(existsSync(join(SITE, "assets", "beans", "index.json"))).toBe(true);
+    expect(existsSync(join(SITE, "assets", "todos", "index.json"))).toBe(true);
+  });
+
+  test("a graph page names only its own graph", () => {
+    // Asserted on the META TAG, not the bare string: the renderer is INLINED
+    // into every page and its source names both metas, because querying for
+    // them is its job. An earlier draft asserted the string and failed on the
+    // renderer's own code — a true fact about the file and nothing about the
+    // page.
+    const meta = (html: string, name: string) => new RegExp(`<meta name="${name}"`).test(html);
+    expect(meta(read("beans"), "fa-beans-src")).toBe(true);
+    expect(meta(read("beans"), "fa-todo-src")).toBe(false);
+    expect(meta(read("todos"), "fa-todo-src")).toBe(true);
+    expect(meta(read("todos"), "fa-beans-src")).toBe(false);
+  });
+});
+
+describe("what a page may claim", () => {
+  test("a graph with no projection says so instead of rendering zeros", () => {
+    const html = read("qa");
+    expect(html).toContain("declared");
+    expect(html).toContain("2krx");
+    // No container in the BODY, so the renderer never mounts. Matched as the
+    // element rather than the attribute name, which the inlined renderer also
+    // contains.
+    expect(/<div class="fa-workplan" data-fa-workplan>/.test(html)).toBe(false);
+    expect(/<meta name="fa-(beans|todo)-src"/.test(html)).toBe(false);
+  });
+
+  test("every page carries the registry, so the set is navigable from any of them", () => {
+    // There is no index above these: `<base>/` is the documentation site's.
+    // The way across is on each page, which is what makes them registered
+    // sub-visualisations rather than six unrelated pages.
+    for (const id of ["beans", "todos", "qa"]) {
+      expect(read(id)).toContain("State graphs this harness declares");
+    }
+    // The link to beans is on every page EXCEPT the beans page, which is the
+    // next assertion and the reason this one cannot simply check all three.
+    expect(read("todos")).toContain('href="../beans/"');
+    expect(read("qa")).toContain('href="../beans/"');
+  });
+
+  test("a page never links to itself", () => {
+    // A link to here is a control that does nothing, and a reader who clicks
+    // it learns only that it did nothing. The current row is plain text.
+    expect(read("beans")).not.toContain('href="../beans/"');
+    expect(read("todos")).not.toContain('href="../todos/"');
+    expect(read("beans")).toContain('<span class="sv-here">beans</span>');
+  });
+
+  test("the renderer and its styles are inlined, so no asset is fetched", () => {
+    const html = read("beans");
+    expect(html).toContain("mountWorkPlan");
+    expect(html).toContain("--fa-wp-surface");
+    expect(html).not.toContain("<script src=");
+    expect(html).not.toContain("cdn.");
+  });
+
+  test("every page carries the do-not-hand-edit notice", () => {
+    for (const id of ["beans", "todos", "qa"]) {
+      expect(read(id)).toContain("Do not hand-edit");
+    }
+  });
+});
+
+describe("no projection here is not the same as nothing renders this", () => {
+  // Bean `flh4`, issue #618. The generator asked "is there a projection at MY
+  // path?" and published the answer as "nothing renders this graph". `uploads`
+  // is where the two diverge: its queue block lives inside
+  // `assets/library/index.json`, because it is one dataset with `library/` and
+  // two projections over it would be two answers to "how many are queued".
+
+  test("a graph whose declaration names a visualiser says so, and links to it", () => {
+    const html = read("uploads");
+    expect(html).toContain("rendered elsewhere");
+    expect(html).not.toContain("nothing publishes a projection for it yet");
+  });
+
+  test("the link is a real directory under this site, not a fabricated path", () => {
+    // Asserted by RESOLVING it, not by matching the string. The declared value
+    // is repo-root relative and the page is two levels into the site, so a
+    // plausible-looking href is exactly the defect that would survive a
+    // string assertion.
+    const html = read("uploads");
+    const href = /rendered elsewhere[\s\S]*?href="([^"]+)"/.exec(html)?.[1];
+    expect(href).toBeTruthy();
+    const target = join(SITE, "uploads", href!);
+    expect(existsSync(join(target, "index.html"))).toBe(true);
+  });
+
+  test("it is labelled with the URL a reader sees, never the repo path", () => {
+    // The declared value is `cat-harness/docs/...`, which is correct on disk
+    // and meaningless in an address bar.
+    const label = /rendered elsewhere[\s\S]*?<a [^>]*>([^<]+)<\/a>/.exec(read("uploads"))?.[1];
+    expect(label).toBeTruthy();
+    expect(label!.startsWith("/")).toBe(true);
+    expect(label).not.toContain("docs/");
+  });
+
+  test("and the graph that page renders really is the one being pointed at", () => {
+    // Falsification the other way: if the target stopped carrying queue data,
+    // "rendered elsewhere" would be a link to a page that does not render it.
+    const href = /rendered elsewhere[\s\S]*?href="([^"]+)"/.exec(read("uploads"))![1]!;
+    const target = readFileSync(join(SITE, "uploads", href, "index.html"), "utf-8");
+    expect(target).toContain("uningested");
+  });
+
+  test("a graph with NO declared visualiser still says nothing renders it", () => {
+    // The other direction, and the reason this change is scoped rather than a
+    // blanket rewrite: `qa`, `health` and `issue-marks` declare no visualiser,
+    // so their pages were right and must not move.
+    for (const id of ["qa", "health", "issue-marks"]) {
+      expect(read(id)).toContain("nothing publishes a projection for it yet");
+      expect(read(id)).not.toContain("rendered elsewhere");
+    }
+  });
+
+  test("no page claims a visualiser that is not there", () => {
+    // `unresolved` fires on nothing today — 27 of 27 coverage paths resolve —
+    // so this asserts the CORPUS is clean rather than that the state works.
+    // The state itself is exercised in the unit test below, because a test
+    // that can only pass is not a test.
+    for (const id of ["beans", "todos", "qa", "health", "issue-marks", "uploads"]) {
+      expect(read(id)).not.toContain("not there");
+    }
+  });
+});
+
+describe("declaredVisualiserFor — the four outcomes, against fixtures", () => {
+  // The site segment comes from the SINGLE ANSWER, never a literal — the rule
+  // `site-dir-single-answer` enforces, and which this block broke on its first
+  // draft. A hardcoded site root once unignored 3,080 files.
+  const SEG = siteDirFor(ROOT);
+  const page = (...parts: string[]) => ["inst", SEG, ...parts].join("/");
+
+  /** A repo root with a site in it, and whichever pages the case needs. */
+  function roots(pages: string[] = []): { site: string; repoRoot: string } {
+    const repoRoot = mkdtempSync(join(tmpdir(), "sv-cov-"));
+    const site = join(repoRoot, "inst", SEG);
+    mkdirSync(site, { recursive: true });
+    for (const rel of pages) {
+      const f = join(repoRoot, rel);
+      mkdirSync(join(f, ".."), { recursive: true });
+      writeFileSync(f, "<html></html>");
+    }
+    return { site, repoRoot };
+  }
+
+  test("no declared visualiser is `declared` — unchanged, and the common case", () => {
+    expect(declaredVisualiserFor("qa", undefined, roots()).state).toBe("declared");
+  });
+
+  test("a declared visualiser that resolves is `elsewhere`, with a page-relative href", () => {
+    const rel = page("lib", "x", "index.html");
+    const got = declaredVisualiserFor("uploads", rel, roots([rel]));
+    expect(got.state).toBe("elsewhere");
+    expect(got.href).toBe(join("..", "lib", "x", "index.html"));
+    expect(got.declaredVisualiser).toBe(rel);
+  });
+
+  test("a declared visualiser that is NOT there is `unresolved`, never `elsewhere`", () => {
+    // The branch the corpus cannot reach: 27 of 27 coverage paths resolve. If
+    // this collapsed into `elsewhere`, the page would publish a link to a 404
+    // — which is the defect this whole change exists to avoid, one level down.
+    const rel = page("lib", "gone", "index.html");
+    const got = declaredVisualiserFor("uploads", rel, roots());
+    expect(got.state).toBe("unresolved");
+    expect(got.href).toBeUndefined();
+    expect(got.declaredVisualiser).toBe(rel);
+  });
+
+  test("a visualiser OUTSIDE the site is `elsewhere` but carries no href", () => {
+    // It exists, so it is not `unresolved`; it is not published, so any href
+    // would be a control that resolves to nothing once the site is served.
+    const got = declaredVisualiserFor("uploads", "other/place/index.html", roots(["other/place/index.html"]));
+    expect(got.state).toBe("elsewhere");
+    expect(got.href).toBeUndefined();
+  });
+
+  test("resolution is against the REPO root, not the instance root", () => {
+    // The trap that would have marked all 27 missing. Measured 2026-09-20: 25
+    // of 27 coverage paths resolve ONLY from the repo root, 0 only from the
+    // instance. The same page, spelled both ways: the repo-root spelling must
+    // resolve and the instance-relative one must not, or the assertion above
+    // is not discriminating.
+    const rel = page("lib", "x", "index.html");
+    const r = roots([rel]);
+    expect(declaredVisualiserFor("uploads", rel, r).state).toBe("elsewhere");
+    expect(declaredVisualiserFor("uploads", "lib/x/index.html", r).state).toBe("unresolved");
+  });
+});

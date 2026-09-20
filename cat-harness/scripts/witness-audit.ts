@@ -11,10 +11,10 @@
  *   - Identifies witnesses without structured format (legacy)
  *
  * Usage:
- *   bun run scripts/witness-audit.ts              # full audit
- *   bun run scripts/witness-audit.ts --json       # JSON output
- *   bun run scripts/witness-audit.ts --lean-only  # only Lean witnesses
- *   bun run scripts/witness-audit.ts --py-only    # only Python witnesses
+ *   bun run cat-harness/scripts/witness-audit.ts              # full audit
+ *   bun run cat-harness/scripts/witness-audit.ts --json       # JSON output
+ *   bun run cat-harness/scripts/witness-audit.ts --lean-only  # only Lean witnesses
+ *   bun run cat-harness/scripts/witness-audit.ts --py-only    # only Python witnesses
  *
  * @module scripts/witness-audit
  */

@@ -95,3 +95,68 @@ table listed two directories that had never existed on its publish branch —
 both rows dead in both columns. But its labels were prose a generator would have
 had to invent. **The defect was never a stale layout; it was targets that do not
 resolve.** So that half is audited, not generated.
+
+## `cat-harness:instances` — the root README indexes every instance
+
+Added 2026-09-20 (issue #592). The owner:
+
+> find beans related to readme, associated to harness instances, they must add
+> to main one. should provide both Agent links (agents.md , memories) AND human
+> docuemntaion (docs/) link for each harness.
+
+One row per instance declaring a `harness.json`, with **two entries because two
+readers arrive**: an agent entry (`AGENTS.md`, memories) and a human one
+(README, docs). Both halves are resolved from that instance's own declaration —
+declared assets for the file links, declared `graphs` for the directory links.
+
+**Never composed from a convention.** `join(root, "AGENTS.md")` would link a
+file that may not be declared, and the criterion in `check:subgraph-coverage`
+rests on an undeclared file being one no checker has a reason to look at.
+Scope is honoured too: a directory declared `scope: "repository"` is linked at
+the repository root, which is how `memory/` was first rendered dead as
+`./cat-harness/memory/`. **A dead link in a generated table is worse than a
+missing row — the row asserts the entry exists.**
+
+**A gap is rendered AS a gap**: an em dash plus a counted note under the table,
+naming the check that lists them. Never a blank cell, never a guessed path.
+Eight of eleven instances had no agent entry when this was written, and a table
+that quietly omitted them would have read as though the work were done.
+
+### Which README, and the `--dir` flag
+
+`readme:sync` with no `--dir` resolves to whichever instance carries a `folio/`
+— **which is `cat-harness`, not the repository root.** Before #592 the two were
+one file (`cat-harness` declared the root's README with `scope: "repository"`),
+so the difference could not show. Use the pair:
+
+| | |
+|---|---|
+| `readme:sync` · `readme:audit` | the cat-harness instance's README |
+| `readme:sync:root` · `readme:audit:root` | the REPOSITORY's README |
+
+Both are gated in `code-quality-gates.yml`, and that is not belt and braces:
+when the split landed, the bare `readme:audit` silently narrowed to
+cat-harness's and took the root README's 41 links out of the gate **without
+failing anything**. A gate that stops covering something still reports green.
+
+### Where the README render sits in the pipeline
+
+Stage 1, **after** the current-state json/jsonld and **before** every other
+harness render, and **fatal** on failure — it is the file a reader opens first.
+The order and the reasoning are in
+[`render-order`](render-order.md); do not restate them here.
+
+## Maintaining these files is memory work, not documentation work
+
+`README.md` and `AGENTS.md` are **declared assets with a declared purpose**
+(`ASSET_ROLE_PURPOSE` in `schemas/cat-harness.ts` — one place, per ROLE, not
+per asset). Keeping them true is part of
+[`agent-memory`](agent-memory.md), and the owner put them there:
+
+> it is an asset and has a defined purpose (that is part of skills of mantiaing
+> agent memroies)
+
+The one distinction that governs how each is written: **a file is read, memory
+is injected.** Nothing truncates a file, so `AGENTS.md` carries what an agent
+must be able to look up; `MEMORY.md` carries what must arrive unasked and pays
+a 200-line budget for it.

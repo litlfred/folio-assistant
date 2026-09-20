@@ -41,7 +41,7 @@
 
 import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
-import { basename, join, resolve } from "path";
+import { basename, join, relative, resolve } from "path";
 
 /** The PLATFORM root — where the science layer would be installed. */
 const ROOT = resolve(import.meta.dir, "../..");
@@ -55,7 +55,14 @@ import {
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
 import { expectedInstanceConfigPath } from "../../schemas/harness-config";
-import { INSTANCE_README_ROLE, declaredAssetPath } from "../../schemas/cat-harness";
+import {
+  AGENT_INSTRUCTIONS_ROLE,
+  ASSET_ROLE_PURPOSE,
+  INSTANCE_README_ROLE,
+  declaredAssetPath,
+  instanceRootsIn,
+  readDeclaration,
+} from "../../schemas/cat-harness";
 
 // ── Section contract ────────────────────────────────────────────────────────
 
@@ -397,8 +404,173 @@ const workflowsSection: ReadmeSection = {
   },
 };
 
+// ── Harness instances ───────────────────────────────────────────────────────
+
+/**
+ * Two entries per instance, because two different readers arrive.
+ *
+ * The owner, 2026-09-20:
+ *
+ * > find beans related to readme, associated to harness instances, they must
+ * > add to main one. should provide both Agent links (agents.md , memories)
+ * > AND human docuemntaion (docs/) link for each harness.
+ *
+ * ## Why this is generated rather than written
+ *
+ * The same instruction carried its own constraint — *"be careful to do this to
+ * minimize drift, maybe tool to use json/jsonld queries for aaplicable KGs"* —
+ * and this repository has paid for the other shape repeatedly: a hardcoded
+ * list of instances in two gates (bean `6tkl`), a hardcoded skills catalogue,
+ * a comment asserting a committed artefact that was gitignored. **A table of
+ * instances written by hand is wrong the day an instance is added**, and
+ * nobody finds out, because a README is the one file no check reads.
+ *
+ * So every cell here is resolved from the instance's own `harness.json`: its
+ * declared assets for the two file links, its declared `graphs` for the two
+ * directory links. Nothing is composed from a convention — `join(root,
+ * "AGENTS.md")` would render a link to a file that may not be declared, and
+ * the whole point of the criterion in `check:subgraph-coverage` is that an
+ * undeclared file is one no checker has a reason to look at.
+ *
+ * ## A gap is rendered AS a gap
+ *
+ * An instance with no `agent-instructions` asset gets an em dash and a
+ * footnote count, never a blank cell and never a guessed path. Eight of eleven
+ * instances were in that state when this was written, and a table that quietly
+ * omitted them would have read as though the work were done. Same rule as
+ * every other section here: not-looked-at is never reported as nothing-found,
+ * and a KNOWN gap is not reported as an absence either.
+ */
+const instancesSection: ReadmeSection = {
+  marker: "cat-harness:instances",
+  summary: "Every harness instance in this repository, with its agent entry and its human entry",
+  render(ctx) {
+    // `ctx.root` and NOT `repoRootFor(ctx.root)`: this section indexes the
+    // instances held by the instance whose README is being written, and
+    // `repoRootFor` is `instanceRoot/..` — correct for a nested instance
+    // asking "which repository am I in", and one level too far for the
+    // repository root itself, which is exactly the instance that carries this
+    // section. Called that way it enumerated the CONTAINING directory and
+    // rendered a one-row table listing this repository as its own child.
+    const repo = ctx.root;
+    const roots = instanceRootsIn(repo);
+    // Zero instances is UNDETERMINED, not "this repository has none": the
+    // reader is holding a README that sits in a repository which, by
+    // construction, contains at least the instance that declared it.
+    if (roots.length === 0) {
+      return { markdown: "", notes: ["no instance declares a harness.json — nothing was read"], skip: true };
+    }
+
+    const notes: string[] = [];
+    const rows: string[] = [];
+    let mute = 0;
+    let undocumented = 0;
+
+    for (const root of roots) {
+      const rel = relative(repo, root);
+      const here = rel === "" ? "." : rel;
+      let decl;
+      try {
+        decl = readDeclaration(root);
+      } catch (e) {
+        notes.push(`${here}: declaration unreadable — ${e instanceof Error ? e.message : String(e)}`);
+        continue;
+      }
+      if (decl === undefined) continue;
+
+      // A declared `src` or `path` is relative to the root its SCOPE names —
+      // this instance's by default, the repository's when `scope` says so —
+      // which is the one rule `rootForScope` exists to hold. Composing
+      // `./<instance>/<path>` instead rendered cat-harness's `memory/` as
+      // `./cat-harness/memory/`, and it is declared `scope: "repository"`, so
+      // the real directory is at the repository root and the link was dead.
+      // A dead link in a generated table is worse than a missing row: the row
+      // asserts the entry exists.
+      const link = (label: string, target: string, scope?: string): string => {
+        const base = scope === "repository" || rel === "" ? "" : `./${rel}/`;
+        return `[${label}](${base}${target})`;
+      };
+
+      // A file link is the DECLARED src, never a composed path.
+      const asset = (role: string): { src: string; scope?: string } | undefined => {
+        const a = (decl.assets ?? []).find((x) => x.role === role);
+        return a === undefined ? undefined : { src: a.src, scope: a.scope };
+      };
+      // A directory link is any directory this instance declares as holding
+      // that graph kind. Several is possible and all of them are rendered:
+      // picking one would be this file choosing on the instance's behalf.
+      const dirs = (kind: string): Array<{ path: string; scope?: string }> =>
+        (decl.directories ?? [])
+          .filter((d) => (d.graphs ?? []).includes(kind))
+          .map((d) => ({ path: d.path, scope: d.scope }));
+
+      const agents = asset(AGENT_INSTRUCTIONS_ROLE);
+      const readme = asset(INSTANCE_README_ROLE);
+      const memory = dirs("memory");
+      const docs = dirs("docs");
+
+      if (agents === undefined) mute += 1;
+      if (docs.length === 0) undocumented += 1;
+
+      const agentCell = [
+        agents === undefined ? undefined : link("AGENTS.md", agents.src, agents.scope),
+        ...memory.map((m) => link("memory", m.path, m.scope)),
+      ].filter((x) => x !== undefined);
+      const humanCell = [
+        readme === undefined ? undefined : link("README", readme.src, readme.scope),
+        ...docs.map((d) => link("docs", d.path, d.scope)),
+      ].filter((x) => x !== undefined);
+
+      rows.push(
+        `| \`${cell(decl.name ?? here)}\` | ${cell(here)} | ` +
+          `${agentCell.length === 0 ? "—" : agentCell.join(" · ")} | ` +
+          `${humanCell.length === 0 ? "—" : humanCell.join(" · ")} |`,
+      );
+    }
+
+    if (rows.length === 0) {
+      return { markdown: "", notes: [...notes, "every declaration was unreadable"], skip: true };
+    }
+
+    // The gaps are stated under the table rather than left as em dashes a
+    // reader has to count. `check:subgraph-coverage` is named because it is
+    // the thing that will tell them WHICH instance, and a README that reports
+    // a number without saying where to get the list is the "count in prose"
+    // failure this repository already has a rule about.
+    const gaps: string[] = [];
+    if (mute > 0) {
+      gaps.push(
+        `**${mute} of ${rows.length}** declare no \`agent-instructions\` asset — readable by a person, ` +
+          "mute to an agent. `bun run check:subgraph-coverage` names them.",
+      );
+    }
+    if (undocumented > 0) {
+      gaps.push(
+        `**${undocumented} of ${rows.length}** declare no \`docs\` graph of their own; their reader-facing ` +
+          "documentation is the harness layer's site.",
+      );
+    }
+
+    return {
+      markdown:
+        [
+          "| Instance | Path | For an agent | For a person |",
+          "|----------|------|--------------|--------------|",
+          ...rows,
+        ].join("\n") +
+        "\n" +
+        (gaps.length === 0 ? "" : "\n" + gaps.map((g) => `> ${g}`).join("\n>\n") + "\n") +
+        "\n" +
+        `*\`AGENTS.md\` — ${ASSET_ROLE_PURPOSE[AGENT_INSTRUCTIONS_ROLE]}*  \n` +
+        `*\`README\` — ${ASSET_ROLE_PURPOSE[INSTANCE_README_ROLE]}*\n`,
+      notes,
+    };
+  },
+};
+
 export const SECTIONS: readonly ReadmeSection[] = [
   tocSection,
+  instancesSection,
   leanCoverageSection,
   leanModulesSection,
   simulatorsSection,
@@ -581,6 +753,17 @@ if (import.meta.main) {
 
   try {
     const result = await runReadmeSync({
+      // `--dir` names the INSTANCE whose README is being synced, and it is not
+      // a convenience. The Tool node has declared a `dir` input since it was
+      // written; the CLI never accepted one, so the two disagreed and the flag
+      // was silently ignored. It became load-bearing when the repository's
+      // README and cat-harness's were split (issue #592): before that,
+      // cat-harness declared the root's file with `scope: "repository"`, so
+      // "this instance's README" and "the repository's README" were one file
+      // and the difference could not show. They are now two, and
+      // `findContentRepoRoot()` resolves to whichever instance carries a
+      // `folio/` — which is cat-harness, not the root.
+      root: flag("dir") === undefined ? undefined : resolve(flag("dir")!),
       check: argv.includes("--check"),
       fetch: argv.includes("--fetch"),
       only,

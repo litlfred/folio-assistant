@@ -33,10 +33,10 @@
  * more useful than a script that silently invents one.
  *
  * Usage:
- *   bun run scripts/pages-bootstrap.ts               # derive + report, no probe
- *   bun run scripts/pages-bootstrap.ts --wait        # probe until live, bounded
- *   bun run scripts/pages-bootstrap.ts --wait --timeout 300
- *   bun run scripts/pages-bootstrap.ts --json        # facts for the DMN gate
+ *   bun run cat-harness/scripts/pages-bootstrap.ts               # derive + report, no probe
+ *   bun run cat-harness/scripts/pages-bootstrap.ts --wait        # probe until live, bounded
+ *   bun run cat-harness/scripts/pages-bootstrap.ts --wait --timeout 300
+ *   bun run cat-harness/scripts/pages-bootstrap.ts --json        # facts for the DMN gate
  *
  * Exit codes: 0 live, 0 not-yet (it is not an error to be early), 2 unknown.
  *

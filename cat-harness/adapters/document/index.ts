@@ -47,6 +47,7 @@ import { registerPreviewTools } from "../../src/tools/preview.js";
 import { registerSkillFetchTools } from "../../src/tools/skill-fetch.js";
 import { registerFolioInitTools } from "../../src/tools/folio-init.js";
 import { registerReadmeSyncTools } from "../../src/tools/readme-sync.js";
+import { registerRenderOrderTools } from "../../src/tools/render-order.js";
 import { registerReadmeAuditTools } from "../../src/tools/readme-audit.js";
 
 import type {
@@ -1126,6 +1127,10 @@ End every response with suggested follow-ups:
     // links the author wrote. Between them nothing in the file is unaccounted
     // for.
     registerReadmeAuditTools(server);
+    // Where the README render SITS, and what else is derived from the same
+    // graph. Generic for the same reason: the order comes from the instance's
+    // declarations, and no block kind enters into it.
+    registerRenderOrderTools(server);
   }
 
   /**

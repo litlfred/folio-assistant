@@ -976,7 +976,7 @@ export interface SelfSupersede {
  *
  * Two commits naming the SAME slug within `withinSeconds` are one deploy
  * writing twice; the second cancels the first's Pages build. Different slugs
- * are two sessions, which is `6pfo`'s ground and not counted here.
+ * are two sessions, which is `yzsj`'s ground and not counted here.
  *
  * `commits` is newest-first, as the API returns it.
  */
@@ -1116,9 +1116,17 @@ export function renderPages(r: PagesReport): string {
     );
     return lines.join("\n");
   }
-  // WHOSE contention. `bm6d` fixed one workflow pushing twice; `6pfo` is
+  // WHOSE contention. `bm6d` fixed one workflow pushing twice; `yzsj` is
   // several sessions racing for one ref, and is not fixed. A merged count
   // cannot show whether the first fix held, which is why these are named.
+  //
+  // This cited `6pfo` until 2026-09-20, in four places across two files. It
+  // does not fit: `6pfo` is "publish staging metadata as a KG graph", and all
+  // 290 lines of it contain no mention of contention, racing or a rejected
+  // push. An agent reading the report below was sent to a bean about
+  // metadata when the problem in front of it was a race — the `b963` shape,
+  // one level up: a reference inside printed output that resolves to the
+  // wrong thing. `yzsj` (issue #605) is the bean that measured it.
   const bySlug = new Map<string, number>();
   for (const s of self) bySlug.set(s.slug, (bySlug.get(s.slug) ?? 0) + 1);
   lines.push(
@@ -1133,7 +1141,7 @@ export function renderPages(r: PagesReport): string {
   lines.push(
     "",
     "Cancellations NOT listed here are several sessions racing for the publish",
-    "ref (`6pfo`), which is a different fix and is not done.",
+    "ref (`yzsj`), which is a different fix and is not done.",
     "",
   );
   return lines.join("\n");

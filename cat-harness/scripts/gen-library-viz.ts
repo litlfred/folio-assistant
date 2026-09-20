@@ -48,10 +48,11 @@
  *   bun run library:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative, sep } from "node:path";
+import { basename, dirname, join } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
 import { viewerPlacement } from "./gen-schema-viz.ts";
+import { readDeclaration } from "../schemas/cat-harness.ts";
 import { directoriesForGraph, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
 
@@ -63,7 +64,7 @@ function projection(g: LibraryGraph): unknown {
   return { $schema: "folio-library-index/v1", ...g };
 }
 
-export function viewerHtml(dataHref: string): string {
+export function viewerHtml(dataHref: string, scope = ""): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
   //
   // The whole page is one template literal, so a backtick anywhere inside it
@@ -173,6 +174,11 @@ p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
 "use strict";
 var G = null, SORT = { key: "id", dir: 1 }, VIEW = "list";
 var DATA_HREF = "${dataHref}";
+/* The SUBJECT this page is scoped to, or "" for the handler's whole view.
+   One projection serves both — a second JSON per subject would be the same
+   facts written N+1 times, free to disagree the moment one is regenerated. */
+var SCOPE = "${scope}";
+function inScope(x){ return !SCOPE || x.instance === SCOPE; }
 function $(i){ return document.getElementById(i); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
@@ -214,6 +220,7 @@ var COLS = [
 function rows(){
   var q = $("q").value.trim().toLowerCase();
   var r = G.entries.filter(function(e){
+    if (!inScope(e)) return false;
     if (!q) return true;
     return (e.id+" "+e.title+" "+e.sourceFile+" "+e.docId+" "+e.instance).toLowerCase().indexOf(q) >= 0;
   });
@@ -264,7 +271,7 @@ function renderDesk(){
 
 function renderQueue(){
   var h = "<table><thead><tr><th>unit</th><th>queue</th><th>kind</th><th>size</th><th>state</th></tr></thead><tbody>";
-  h += G.uploads.map(function(u){
+  h += G.uploads.filter(inScope).map(function(u){
     /* An intake is ONE queued document however many files it declares, and
        the row says so — otherwise a four-file capture reads as four things
        waiting. The count comes from the intake's own declared file list. */
@@ -277,7 +284,7 @@ function renderQueue(){
       "</span></td><td>" + kind + '</td><td class="num">' + kb(u.bytes) + "</td><td>" +
       (u.ingestedBy ? '<span class="pill ok">ingested → ' + esc(u.ingestedBy) + "</span>"
                     : '<span class="pill warn">uningested</span>') + "</td></tr>";
-  }).join("") || '<tr><td colspan="5"><p class="empty">No uploads queue.</p></td></tr>';
+  }).join("") || '<tr><td colspan="5"><p class="empty">No uploads queue for this subject.</p></td></tr>';
   $("queue").innerHTML = h + "</tbody></table>";
 }
 
@@ -297,10 +304,13 @@ fetch(DATA_HREF).then(function(r){
   return r.json();
 }).then(function(data){
   G = data;
-  var words = G.entries.reduce(function(n,e){ return n + e.words; }, 0);
-  $("status").textContent = G.entries.length + " entries · " + words.toLocaleString() + " words · " +
-    G.entries.reduce(function(n,e){ return n + e.sections; }, 0) + " sections";
-  $("badges").innerHTML = G.queues.map(function(q){
+  var scoped = G.entries.filter(inScope);
+  var words = scoped.reduce(function(n,e){ return n + e.words; }, 0);
+  $("status").textContent = (SCOPE ? SCOPE + " · " : "") + scoped.length + " entries · " +
+    words.toLocaleString() + " words · " +
+    scoped.reduce(function(n,e){ return n + e.sections; }, 0) + " sections";
+  if (SCOPE) document.title = SCOPE + " — library";
+  $("badges").innerHTML = G.queues.filter(inScope).map(function(q){
     return '<span class="badge q"><b>'+q.uningested+"</b> uningested in <code>"+esc(q.dir)+
       "</code> <span style=\\"color:var(--muted)\\">of "+q.total+"</span></span>";
   }).join("");
@@ -362,18 +372,50 @@ if (import.meta.main) {
     console.log("  · no library directory declared by this instance — nothing to publish");
     process.exit(0);
   }
-  // The handled directory's own repo-relative path is the URL — owner,
-  // 2026-09-20: "<baseurl>/<path to kind in knowledge graph>". Shared with the
-  // schema viewer through `viewerPlacement` rather than restated, because two
-  // statements of one placement rule are two answers the moment either moves.
-  const dirPath = relative(repoRootFor(ROOT), libDirs[0]!).split(sep).join("/");
-  const { pageDir, dataDir, dataHref } = viewerPlacement(site, dirPath, seg);
+  // ── Rule 1: a HANDLER rendering a kind's assets ────────────────────────
+  //
+  // Owner, 2026-09-20, reducing three cases to two:
+  //
+  //   > i want two rules.... not three. one is cat-harness handling the
+  //   > library/ dir which has who-iris assets in it. one is who-iris handler
+  //   > to mock current iris website.
+  //
+  // So the form is `<base>/<handler>/<kind>/<optional subject>` — which is the
+  // owner's own first example, `<base>/cat-harness/docs/who-iris/`. The
+  // handler is THIS instance (the machinery), the kind names what it renders,
+  // and the subject scopes it to one instance's assets.
+  //
+  // **A subject page must NOT be published at `<base>/<subject>/<kind>/`.**
+  // That is rule 2's namespace — `<base>/who-iris/` is who-iris presenting
+  // ITSELF, mocking the IRIS website — and a viewer parked there would squat
+  // on the instance's own site. An earlier draft of this file was about to do
+  // exactly that.
+  const handler = readDeclaration(ROOT)?.name;
+  if (!handler) {
+    console.log("  · this instance declares no name — no handler segment to publish under");
+    process.exit(0);
+  }
+  const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
   emit(join(pageDir, "index.html"), viewerHtml(dataHref));
+
+  // One page per SUBJECT — the instances whose assets this handler renders.
+  // Read from the entries and the queues rather than from the directory list,
+  // so a declared-but-empty directory gets no page claiming to show it.
+  const subjects = [...new Set([
+    ...g.entries.map((e) => e.instance),
+    ...g.queues.map((q) => q.instance),
+  ])].sort();
+  for (const subject of subjects) {
+    const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
+    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+  }
+
   if (!check) {
     console.log(
       `  ${g.entries.length} entr(ies), ${g.queues.length} queue(s), ` +
-        `${g.queues.reduce((n, q) => n + q.uningested, 0)} uningested`,
+        `${g.queues.reduce((n, q) => n + q.uningested, 0)} uningested, ` +
+        `${subjects.length} subject page(s)`,
     );
   }
   if (stale > 0) {

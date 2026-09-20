@@ -4,9 +4,9 @@ title: 'gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three a
 status: todo
 type: task
 priority: normal
-parent: folio-assistant-1xhc
 created_at: 2026-09-20T20:02:00Z
-updated_at: 2026-09-20T20:02:00Z
+updated_at: 2026-09-20T20:33:25Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) after merging #589, whose
@@ -102,10 +102,206 @@ an opt-out with silence is what made this invisible.
 re-diagnose it from the same log. `xd1s` is `completed` and is **not** this
 bean's to reopen; this is the residue after it, not a claim that it was wrong.
 
+## CORRECTION, same session: the fix above understates it, and the exposure is wider
+
+The section above recommends *"give `docs-site.yml` the fetch-rebase-retry
+`feature-staging` already has"*. Measured before starting, that is **not a
+transplant**, and `docs-site` is **not the only one exposed**.
+
+### Why it is not a transplant
+
+`feature-staging` checks `gh-pages` out itself into `pages/`, commits, and
+pushes — so it *can* wrap its own `git push` in a loop
+(`feature-staging.yml:738`, three attempts, `pull --rebase` between, backing
+off through `scripts/backoff-sleep.ts`).
+
+`docs-site` hands the whole clone-replace-commit-push to
+`peaceiris/actions-gh-pages@v4` in one step. **The race window is inside the
+action**, so there is nothing to wrap. Adding a retry means replacing the
+publish step with a manual loop — on a path that carries documented
+full-replace semantics (`docs-site.yml:384`, *"`keep_files: true` is NOT the
+fix"*) and a post-push verifier that reads `.staging-restored.json` and
+deliberately fails the job to avoid the `plj1` silence. That is surgery on the
+publish path, not a robustness tweak, and it is why this bean stays **filed,
+not started** rather than being done on an agent's own judgement.
+
+### The exposure is ONE workflow, not four — measured, not read
+
+A first pass here said four workflows publish through `peaceiris` with no retry
+(`blueprint`, `docs-site`, `lean_ci`, `discoverability-docs`) and called
+`discoverability-docs` the sharpest case for being outside the group as well.
+**That was read off the workflow FILES and is wrong about this repository.**
+`xd1s` already said so in prose; this bean's own rule is never to quote a count
+from prose, so it was measured:
+
+| workflow | runs EVER in this repo | retry | in `gh-pages-push` |
+|---|---|---|---|
+| `feature-staging.yml` | **1210** | yes (8) | **no — deliberately** |
+| `docs-site.yml` | **313** | **none** | yes |
+| `blueprint.yml` | **0** | none | yes |
+| `lean_ci.yml` | **0** | none | yes |
+| `discoverability-docs.yml` | **0** | none | no |
+| `publish.yml` | 1, in June | partial | yes |
+
+A workflow that has never run cannot lose a race and cannot cause one. So
+three of the four "exposed" files are not exposed to anything, and
+`discoverability-docs` — named above as the worst case — is pushing to nothing.
+
+### What is actually true, and it is worse than the first reading
+
+**Two workflows contend for `gh-pages` here. The lock separates them.**
+
+- `docs-site` is **inside** `gh-pages-push`, where its only fellow members are
+  three workflows that have never run. The lock holds it against **nobody**.
+- `feature-staging` is **outside** the lock, by a deliberate and measured
+  trade, and runs **1210** times against `docs-site`'s 313 — roughly four
+  pushes to `gh-pages` for every one of docs-site's.
+
+So `docs-site` carries the cost of a serialisation group that protects it from
+zero actual pushers, and meets the one real contender with no lock and no
+retry. That is why 19:53 was fatal: the group was never going to help, and
+there was nothing else.
+
+It also means **completing the group cannot fix this**. Adding the three
+never-run workflows changes nothing, and adding `feature-staging` is the trade
+already measured and rejected (a pending job is cancelled, not queued). The
+lock is not an incomplete fix; on this repository it is the wrong instrument.
+
+### What this does to the fix
+
+It shrinks it to one workflow and confirms the one hard part. `docs-site` has
+to survive losing to `feature-staging`, and the only way to do that is to make
+its push retryable — which means replacing the `peaceiris` step, because the
+race window is inside the action.
+
+There is **no cheap half** on this repository. The obvious cheap moves —
+adding `discoverability-docs` to the group, giving `deploy-folio` a
+`concurrency` block — are edits to workflows that have never run. They would
+look like progress in the diff and change nothing that happens, which is the
+failure this whole bean is about.
+
+`06kg` still applies to HOW, not to how many: whatever loop is written reuses
+`scripts/backoff-sleep.ts` rather than open-coding `sleep`, since that is the
+one backoff implementation and it was made one for this exact ref.
+
+## CORRECTION 2, 2026-09-20 21:09 — the compensation is defeated by the render log
+
+Above, twice, this bean says `feature-staging` *"opted out **and compensated**
+— three attempts, rebasing between"*, and rests the whole asymmetry on that.
+**Measured on a live failure, the compensation does not hold.** `stage` on
+PR #612 (`0da595551b`):
+
+```
+   82ccc62..e870503  gh-pages   -> origin/gh-pages
+Auto-merging _render-log/2026-09-20.jsonl
+CONFLICT (content): Merge conflict in _render-log/2026-09-20.jsonl
+Rebasing (1/1)
+error: could not apply f2a2836... staging(claude-sharp-fermi-xvs06i)
+```
+
+The retry **ran**, lost the race as designed, attempted its
+`pull --rebase origin gh-pages`, and the rebase **conflicted** — so the loop
+exited 1 on attempt **1** rather than retrying twice more.
+
+### The mechanism, and why it is structural rather than a bug
+
+`renderLogPath(at)` (`schemas/render-log.ts:287`) returns
+`_render-log/${day}.jsonl`: **one file per calendar day, shared by every
+session.** `feature-staging.yml:753-758` commits it in the SAME commit as the
+deploy, deliberately:
+
+> THE LOG IS NOW ATOMIC WITH THE DEPLOY … a preview can no longer exist with
+> no entry saying where it came from.
+
+Two sessions append at EOF of the same day's file; the loser rebases onto the
+winner; git cannot merge two appends to the last line.
+
+**The property that makes the log trustworthy is the one that defeats the
+retry.** Neither half is wrong on its own, and the file already half-knows it:
+`feature-staging.yml:643` records the render log as *"a ~38% rise in write
+volume, after which attempt 2 started losing the race"*, and fixed the VOLUME
+by folding the log into one commit — which made the conflict **certain**
+rather than merely likely, because every deploy commit now always touches the
+shared file.
+
+### What it changes
+
+- **Worse than stated:** it is not one exposed workflow. `docs-site` loses the
+  race with no retry; `feature-staging` loses to the *conflict* despite one.
+  Two publishers, two different failures, both dropping pushes.
+- **Better than stated:** this half has a cheap standard fix the other does
+  not — a `.gitattributes` **`merge=union`** driver for `*.jsonl`. An
+  append-only log is the textbook case: both sides' lines are kept, order
+  within a day is not load-bearing, and the rebase resolves itself with no
+  change to deploy logic.
+
+That is small enough to split from the `peaceiris` question rather than wait on
+it. **Not done** — it changes the conflict semantics of the path the site ships
+from, which is why the rest of this bean waits on a ruling. Raised on #605.
+
+**One re-run, spent, and it passed**: the push carrying the main merge
+re-triggered `stage` on `a3b9a0c28d`, all 8 checks green. So the failure was
+contention, not #612's comment-only diff — which could not touch
+`_render-log/` at all.
+
+## The `merge=union` half, measured — and the carrier that would have failed
+
+Scoped 2026-09-20 so the ruling needs no investigation.
+
+**The risk is smaller than it looks.** A union merge can corrupt a file that
+is not append-only, so the question is how many `.jsonl` files it would reach:
+
+| | |
+|---|---|
+| `.jsonl` tracked on `main` | **0** |
+| `.jsonl` on `gh-pages` | **1** — `_render-log/2026-09-20.jsonl` |
+
+It would apply to exactly the one append-only file it is meant for. Nothing
+else can be affected, which removes the only real objection.
+
+**But a committed `.gitattributes` is the WRONG carrier, and it would fail
+silently.** The rebase happens in `feature-staging`'s `pages/` checkout of
+`gh-pages`, so the attribute has to be in effect on that branch — and
+`gh-pages` is the one branch that cannot hold it. `docs-site` publishes with
+`peaceiris` as a **full replace**, and `restore-staging.ts:311` already records
+that exact mechanism deleting exactly this file:
+
+> `docs(gh-pages)` full replace, deleted `_render-log/2026-09-20.jsonl`
+
+So a committed `.gitattributes` on `gh-pages` would be removed by the next full
+replace and quietly stop applying — and the conflict would return looking like
+a NEW defect rather than a regression. **A fix that disappears is worse than
+none**, which is this bean's own theme one turn later.
+
+**The carrier that survives** is `$GIT_DIR/info/attributes`, written into the
+`pages/` checkout by the workflow immediately before the rebase:
+
+```
+*.jsonl merge=union
+```
+
+Local to that checkout, never committed, nothing for a full replace to delete,
+and re-established every run by construction rather than by anybody
+remembering. `merge=union` is a built-in driver, so nothing joins the trust
+boundary.
+
+That makes this half **one line written in one workflow step** — no deploy
+logic touched, no committed state, and no file but the render log reachable.
+
+Still not done. Cheaper than first thought is not the same as ruled on.
+
 ## Done when
 
-- [ ] `docs-site.yml`'s publish survives a losing race (retry + rebase), with
-      the failure reproduced before the fix and the fix shown to pass
+- [ ] A ruling on ONE shared publishing step vs four copies (see the
+      correction above — `06kg` is the precedent against copying)
+- [ ] `*.jsonl merge=union` via `$GIT_DIR/info/attributes` in the `pages/`
+      checkout — NOT a committed `.gitattributes`, which a full replace
+      deletes — so a same-day render-log append stops turning
+      `feature-staging`'s retry into a hard failure. Separable from the
+      `peaceiris` question and much smaller
+- [ ] `docs-site.yml`'s publish survives a losing race, with the failure
+      reproduced before the fix and the fix shown to pass — **and the same for
+      `blueprint.yml` and `lean_ci.yml`, which are equally exposed**
 - [ ] `discoverability-docs.yml` and `deploy-folio.yml` either name the group
       or carry a stated reason, the way `feature-staging.yml:94` does
 - [ ] `check-workflows`' `gh-pages-ungrouped` finding is re-checked — `xd1s`
@@ -116,3 +312,32 @@ bean's to reopen; this is the residue after it, not a claim that it was wrong.
 Related: `xd1s` (completed, the group), `eoix` and `pdxk` (archived, the
 pending-cancellation measurement), `bm6d` (self-inflicted double-push), `6pfo`
 (mis-cited here), `1xhc` (parent).
+
+
+
+---
+
+## The retry's own failure mode is `pb4n`, not covered here — 2026-09-20
+
+Opened from PR #603, whose `stage` job failed differently from the runs above:
+the push was rejected as expected, the retry rebased as designed, and then
+
+```
+CONFLICT (content): Merge conflict in _render-log/2026-09-20.jsonl
+error: could not apply e415631... staging(claude-elegant-albattani-0byaig)
+```
+
+**This bean is about preventing the race; `pb4n` is about the retry surviving
+it.** The retry handles a REJECTION and cannot handle a CONTENT CONFLICT, and
+every run appends to the same day's `_render-log/<date>.jsonl`, so two
+interleaved runs on one day conflict by construction rather than by luck.
+
+That matters for scoping the fix here: the table above records
+`feature-staging.yml` as outside `gh-pages-push` **deliberately, with a
+measurement**, so the retry is load-bearing by design and cannot be assumed
+away. Restoring the concurrency invariant makes the collision rarer, not
+impossible.
+
+Proposed there: `.gitattributes` on `gh-pages` scoping `merge=union` to
+`_render-log/*.jsonl` — correct semantics for an append-only log, and narrow
+on purpose.

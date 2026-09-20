@@ -33,11 +33,11 @@
  *                 separately so it cannot be mistaken for evidence.
  *
  * Usage:
- *   bun run scripts/repo-partition.ts                 # summary to stdout
- *   bun run scripts/repo-partition.ts --edges         # + every cross-edge
- *   bun run scripts/repo-partition.ts --markdown      # report as Markdown
- *   bun run scripts/repo-partition.ts --repo sci      # one repo's modules
- *   bun run scripts/repo-partition.ts --strict        # exit 1 if cross-edges
+ *   bun run cat-harness/scripts/repo-partition.ts                 # summary to stdout
+ *   bun run cat-harness/scripts/repo-partition.ts --edges         # + every cross-edge
+ *   bun run cat-harness/scripts/repo-partition.ts --markdown      # report as Markdown
+ *   bun run cat-harness/scripts/repo-partition.ts --repo sci      # one repo's modules
+ *   bun run cat-harness/scripts/repo-partition.ts --strict        # exit 1 if cross-edges
  *
  * @module scripts/repo-partition
  */

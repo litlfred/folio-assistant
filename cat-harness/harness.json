@@ -69,7 +69,7 @@
       "title": "Thinking about it — square",
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught.",
       "avatarRegion": {
-        "x": 0.0,
+        "x": 0,
         "y": 0.46,
         "w": 0.5,
         "h": 0.5
@@ -105,7 +105,7 @@
       "title": "The engineer, square",
       "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three.",
       "avatarRegion": {
-        "x": 0.0,
+        "x": 0,
         "y": 0.4,
         "w": 0.46,
         "h": 0.46
@@ -131,7 +131,7 @@
       "title": "The architect, square",
       "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content.",
       "avatarRegion": {
-        "x": 0.0,
+        "x": 0,
         "y": 0.36,
         "w": 0.46,
         "h": 0.46
@@ -320,22 +320,16 @@
     {
       "id": "agent-instructions",
       "src": "AGENTS.md",
-      "scope": "repository",
       "role": "agent-instructions",
-      "title": "AGENTS.md — folio-assistant",
-      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
-      "source": {
-        "instance": "litlfred/folio-assistant",
-        "path": "cat-bootstrap/AGENTS.md"
-      }
+      "title": "AGENTS.md — cat-harness",
+      "description": "The cold-start file for an agent working IN this layer, and it is THIS LAYER'S own as of 2026-09-20 (issue #592). It was declared `scope: \"repository\"`, so it resolved to the repository root's AGENTS.md — one file answering both \"what binds everywhere\" and \"what binds in the harness layer\", which is the conflation `readmeFinding` calls MAJOR for a non-root instance and could not report, because the asset DID resolve. It resolved to the wrong file's job. No `source`: this file is authored here. The root's carries the cat-bootstrap provenance, because the root's is the file cat-bootstrap copies at initialisation."
     },
     {
       "id": "instance-readme",
       "src": "README.md",
-      "scope": "repository",
       "role": "instance-readme",
-      "title": "folio-assistant",
-      "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
+      "title": "cat-harness",
+      "description": "What this LAYER is, for a reader — as distinct from what the repository is, which is the root's README. Split from it on 2026-09-20 (issue #592); before that this instance had no README of its own and claimed the repository's. It does not list this instance's directories: `harness.json` is that list, and a second copy in prose is free to disagree with it the day a directory moves."
     },
     {
       "id": "cat-bootstrap-initialization",
@@ -408,7 +402,7 @@
         "cat-harness"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/index.html",
+        "visualiser": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html",
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "schema-management"
       }
@@ -580,7 +574,7 @@
       "coverage": {
         "docs": "cat-harness/docs/document-ingestion.md",
         "skill": "library-ingestion",
-        "visualiser": "cat-harness/docs/cat-harness/library/index.html"
+        "visualiser": "cat-harness/docs/cat-harness/library/cat-harness/index.html"
       },
       "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
       "graphs": [
@@ -594,7 +588,7 @@
       "coverage": {
         "docs": "cat-harness/docs/document-ingestion.md",
         "skill": "library-ingestion",
-        "visualiser": "cat-harness/docs/cat-harness/library/index.html"
+        "visualiser": "cat-harness/docs/cat-harness/library/cat-harness/index.html"
       },
       "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assistant-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
       "graphs": [
@@ -609,7 +603,12 @@
       "description": "The WHO IRIS instance's library, reached from here because this repository STAGES who-iris as a sibling top-level directory ahead of it becoming its own repo -- the same pattern as `folio-assist-core-schemas` and `detangle-schemas` above. Repository-scoped, so it resolves against the repository root rather than this instance's. Declared here as well as in who-iris/harness.json because the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, the MCP server's graph roots -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect).",
       "graphs": [
         "library"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
     },
     {
       "id": "agent-skills-library",
@@ -619,7 +618,12 @@
       "description": "The agent-skill literature instance's library -- published guidance on authoring and operating agent skills, vendor documentation and arXiv papers alike. Same staging arrangement and same reason as `who-iris-library` and `folio-assistant-sci-library` below: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect). It is NOT in cat-harness/library/ although its subject is this harness's own: `AGENTS.md` opens by saying the platform holds no content, and these are other publishers' documents.",
       "graphs": [
         "library"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/agent-skills/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
     },
     {
       "id": "folio-assistant-sci-library",
@@ -629,7 +633,12 @@
       "description": "The science instance's library -- `milnorlink`, and nothing else. Same staging arrangement and same reason as `who-iris-library` above. Bean r1lz sent it here rather than to who-iris: it is not an IRIS item and never was.",
       "graphs": [
         "library"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
     },
     {
       "id": "voices",
@@ -707,7 +716,12 @@
       "graphs": [
         "schemas",
         "cat-harness"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "schema-management"
+      }
     },
     {
       "id": "kg-navigation",
@@ -748,7 +762,12 @@
       "graphs": [
         "schemas",
         "cat-harness"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "schema-management"
+      }
     },
     {
       "id": "detangle-schemas",
@@ -759,7 +778,12 @@
       "graphs": [
         "schemas",
         "cat-harness"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/schemas/detangle/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "schema-management"
+      }
     }
   ]
 }

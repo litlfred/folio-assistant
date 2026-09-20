@@ -472,12 +472,28 @@ jobs:
       # form, and it is why `main` carried eight dead README paths after the
       # site root moved to `docs/<stub>/`.
       #
-      # `readme:sync:check` is deliberately NOT added beside it: this README
-      # carries zero `<!-- folio:*:begin -->` markers, because generated
-      # sections belong to a folio and this repository is the platform. Wiring
-      # it here would pass over nothing and read as coverage.
+      # TWO READMEs are audited, and that is not belt and braces. Until
+      # 2026-09-20 there was one file: `cat-harness` declared the repository's
+      # README as its own with `scope: "repository"`, so `readme:audit` with no
+      # argument resolved to the root's. Issue #592 split them — every instance
+      # now owns its own — and the bare command silently narrowed to
+      # cat-harness's, taking the root README's 41 links out of this gate
+      # without failing anything. A gate that stops covering something is worse
+      # than one that never did: it still reports green.
+      #
+      # `readme:sync:root:check` IS wired now, and the comment that used to sit
+      # here saying otherwise was true when written: this README carried zero
+      # markers, because generated sections belong to a folio. It carries
+      # `cat-harness:instances` as of #592 — the table of instances, generated
+      # from the declarations — and an unchecked generated section is exactly
+      # the hand-kept list that section exists to replace.
       - name: README links resolve
-        run: bun run readme:audit
+        run: |
+          bun run readme:audit:root
+          bun run readme:audit
+
+      - name: The root README's generated sections are current
+        run: bun run readme:sync:root:check
 
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
@@ -594,6 +610,7 @@ jobs:
           # fatal. `--strict` is the switch for the day the number is low
           # enough to hold.
           bun run check:subgraph-coverage
+          bun run check:published-refs
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no
@@ -602,6 +619,11 @@ jobs:
           # (2026-09-20). It reads them out of the YAML rather than
           # listing them, so a new one is covered the day it is added.
           bun run check:ci-invocations
+          # The per-kind state dashboards under `<base>/<graph>/dashboard/`.
+          # COMMITTED pages, so a difference is somebody who changed the
+          # generator, the renderer it inlines, or the declaration, and did
+          # not regenerate — the same contract `schema:viz:check` uses.
+          bun run state:visualizer:check
           bun run harness:dirs:check
           bun run check:schema-nodes
           bun run check:retired-front-matter

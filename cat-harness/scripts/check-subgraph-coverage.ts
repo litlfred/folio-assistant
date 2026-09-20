@@ -55,6 +55,9 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import {
+  AGENT_INSTRUCTIONS_ROLE,
+  ASSET_ROLE_PURPOSE,
+  INSTANCE_README_ROLE,
   instanceRootsIn,
   readDeclaration,
   repoRootFor,
@@ -69,7 +72,22 @@ import {
 import "../schemas/folio-graph-kind.js";
 
 /** The three obligations, in the order the owner named them. */
-export const CRITERIA = ["visualiser", "docs", "skill"] as const;
+export const CRITERIA = ["visualiser", "docs", "skill", "serialisations"] as const;
+
+/**
+ * What each criterion is asking, in the words the finding prints.
+ *
+ * A LOOKUP rather than the ternary chain this replaced: that chain had one arm
+ * per criterion and no else, so a fourth criterion silently printed the third
+ * criterion's question. A map cannot do that — an entry is required by the
+ * type, and `tsc` says so at the point a criterion is added.
+ */
+const ASKS: Record<Criterion, string> = {
+  visualiser: "renders it",
+  docs: "documents it",
+  skill: "governs it",
+  serialisations: "serves its json, jsonld and schema.json",
+};
 export type Criterion = (typeof CRITERIA)[number];
 
 export type Severity = "major" | "minor";
@@ -89,6 +107,8 @@ export interface InstanceCoverage {
   findings: CoverageFinding[];
   /** The instance-level README finding, when there is one. */
   readme?: { severity: Severity; detail: string };
+  /** The instance-level `agent-instructions` finding — the AGENT half of the same pair. */
+  agentInstructions?: { severity: Severity; detail: string };
   /** Waivers honoured, with the reason each one gave. */
   exempted: Array<{ directory: string; criterion: Criterion; reason: string }>;
   reason?: string;
@@ -157,22 +177,68 @@ export function readmeFinding(
   decl: { assets?: Array<{ role?: string; src: string; scope?: string }> } | undefined,
   isRepositoryRoot: boolean,
 ): { severity: Severity; detail: string } | undefined {
-  const readme = (decl?.assets ?? []).find((a) => a.role === "instance-readme");
-  if (readme === undefined) {
-    return { severity: "major", detail: "declares no `instance-readme` asset — nothing says what this instance IS" };
+  return assetRoleFinding(root, decl, isRepositoryRoot, INSTANCE_README_ROLE);
+}
+
+/**
+ * The same question, asked about the AGENT half of the pair.
+ *
+ * Added 2026-09-20 (issue #592) because the axis had only ever asked about the
+ * README, and the number that argument rests on is the measurement: ten of
+ * eleven instances declared `instance-readme` and **two** declared
+ * `agent-instructions`. Nine instances were readable by a person and mute to
+ * an agent, and nothing said so — not because the check disagreed, but because
+ * it was never asked.
+ *
+ * Same severity as the README's, and for the owner's reason rather than by
+ * symmetry: *"agents.md should give good coldstart instructions (dont
+ * duplicatae readme.md) but augment"*. An augment that does not exist is not a
+ * thinner answer to the reader's question; it is no answer to a different
+ * question. See {@link ASSET_ROLE_PURPOSE}, which is where each role says what
+ * it is for, once.
+ */
+export function agentInstructionsFinding(
+  root: string,
+  decl: { assets?: Array<{ role?: string; src: string; scope?: string }> } | undefined,
+  isRepositoryRoot: boolean,
+): { severity: Severity; detail: string } | undefined {
+  return assetRoleFinding(root, decl, isRepositoryRoot, AGENT_INSTRUCTIONS_ROLE);
+}
+
+/**
+ * One implementation, asked once per role in {@link REQUIRED_ASSET_ROLES}.
+ *
+ * Written generically rather than copied because the three failure modes are
+ * identical for both roles and the copy is where they drift: the `scope`
+ * clause in particular is subtle enough that a second hand-written version
+ * would plausibly omit it, and its absence reads as a clean instance.
+ */
+export function assetRoleFinding(
+  root: string,
+  decl: { assets?: Array<{ role?: string; src: string; scope?: string }> } | undefined,
+  isRepositoryRoot: boolean,
+  role: string,
+): { severity: Severity; detail: string } | undefined {
+  const purpose = ASSET_ROLE_PURPOSE[role] ?? role;
+  const asset = (decl?.assets ?? []).find((a) => a.role === role);
+  if (asset === undefined) {
+    return {
+      severity: "major",
+      detail: `declares no \`${role}\` asset — nothing provides: ${purpose}`,
+    };
   }
-  // The repository root legitimately owns the repository's README; every other
+  // The repository root legitimately owns the repository's files; every other
   // instance reaching for a repository-scoped one is borrowing it.
-  if (readme.scope === "repository" && !isRepositoryRoot) {
+  if (asset.scope === "repository" && !isRepositoryRoot) {
     return {
       severity: "major",
       detail:
-        `declares its README \`scope: "repository"\`, so it resolves to the repository root's — ` +
+        `declares its \`${role}\` \`scope: "repository"\`, so it resolves to the repository root's — ` +
         "one file doing two jobs, and a reader of either question gets the other's answer",
     };
   }
-  if (!existsSync(resolve(root, readme.src))) {
-    return { severity: "major", detail: `declares README \`${readme.src}\` and it is not there` };
+  if (!existsSync(resolve(root, asset.src))) {
+    return { severity: "major", detail: `declares \`${role}\` \`${asset.src}\` and it is not there` };
   }
   return undefined;
 }
@@ -211,7 +277,16 @@ export function auditInstance(root: string): InstanceCoverage {
     for (const criterion of CRITERIA) {
       if (criterion === "visualiser" && VISUALISER_EXEMPT_INSTANCES.has(instance)) continue;
 
-      const waiver = dir.coverage?.exempt?.[criterion];
+      // SERIALISATIONS take no waiver, and `tsc` is what says so: dropping
+      // the key from `exempt` in the schema turned this lookup into a type
+      // error the moment the criterion was added, rather than into a silent
+      // `undefined` that would have read as "not exempted" and worked by luck.
+      //
+      // The owner's ruling, 2026-09-20: *"harnesses cannot override there
+      // being in the KG."* Rendering, documenting and governing are choices
+      // about effort; addressability is the claim that the nodes are in the
+      // graph at all.
+      const waiver = criterion === "serialisations" ? undefined : dir.coverage?.exempt?.[criterion];
       if (waiver !== undefined) {
         exempted.push({ directory: dir.id, criterion, reason: waiver });
         continue;
@@ -232,16 +307,29 @@ export function auditInstance(root: string): InstanceCoverage {
         // this file's own header says somebody switches off. What changes is
         // that the 20 stop being indistinguishable from the kinds that never
         // owed anything.
-        const unmetObligation = criterion === "visualiser" && dir.graphs.some((g) => owesVisualiser(g));
+        // SERIALISATIONS are owed by every declared directory, with no
+        // by-kind test — the owner's rule is "all dir urls". That is not the
+        // usual shape here and `hfkl` is the reason it is right: bootstrap is
+        // excused a VISUALISER precisely because its json/jsonld "is its
+        // existence", so the thing it is excused into cannot itself be
+        // excusable by kind. The visualiser is the courtesy; the serialisation
+        // is the existence claim.
+        const unmetObligation =
+          criterion === "serialisations" ||
+          (criterion === "visualiser" && dir.graphs.some((g) => owesVisualiser(g)));
         findings.push({
           instance,
           directory: dir.id,
           criterion,
           severity: unmetObligation ? "major" : "minor",
-          detail: unmetObligation
-            ? `no visualiser declared, and ${dir.graphs.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
-              `an instance renders what it declares`
-            : `no ${criterion} declared — nobody has said what ${criterion === "visualiser" ? "renders it" : criterion === "docs" ? "documents it" : "governs it"}`,
+          detail:
+            criterion === "serialisations"
+              ? `no serialisations declared — every declared directory owes json, jsonld and ` +
+                `schema.json at its own URL, and this one is excused nothing`
+              : unmetObligation
+                ? `no visualiser declared, and ${dir.graphs.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
+                  `an instance renders what it declares`
+                : `no ${criterion} declared — nobody has said what ${ASKS[criterion]}`,
         });
         continue;
       }
@@ -257,8 +345,10 @@ export function auditInstance(root: string): InstanceCoverage {
     }
   }
 
-  const readme = readmeFinding(root, decl, resolve(root) === resolve(repoRootFor(root)));
-  return { instance, verdict: "checked", declared: dirs.length, findings, exempted, readme };
+  const isRoot = resolve(root) === resolve(repoRootFor(root));
+  const readme = readmeFinding(root, decl, isRoot);
+  const agentInstructions = agentInstructionsFinding(root, decl, isRoot);
+  return { instance, verdict: "checked", declared: dirs.length, findings, exempted, readme, agentInstructions };
 }
 
 export function auditAll(repoRoot: string): InstanceCoverage[] {
@@ -266,7 +356,7 @@ export function auditAll(repoRoot: string): InstanceCoverage[] {
 }
 
 export function formatReport(rs: InstanceCoverage[]): string {
-  const out: string[] = ["Subgraph coverage — visualiser, documentation, governing skill", ""];
+  const out: string[] = ["Subgraph coverage — visualiser, docs, governing skill, serialisations", ""];
   for (const r of rs) {
     if (r.verdict === "undetermined") {
       out.push(`  ? ${r.instance.padEnd(22)} undetermined — ${r.reason ?? "no reason given"}`);
@@ -279,6 +369,9 @@ export function formatReport(rs: InstanceCoverage[]): string {
         (major ? `, ${major} MAJOR` : "") +
         (r.exempted.length ? `, ${r.exempted.length} exempt` : ""),
     );
+    if (r.agentInstructions !== undefined) {
+      out.push(`      ✗ ${r.instance} / agent-instructions: ${r.agentInstructions.detail}`);
+    }
     if (r.readme !== undefined) {
       out.push(`      ✗ ${r.instance} / readme: ${r.readme.detail}`);
     }
@@ -291,6 +384,7 @@ export function formatReport(rs: InstanceCoverage[]): string {
   }
 
   const noReadme = rs.filter((r) => r.readme !== undefined).length;
+  const noAgents = rs.filter((r) => r.agentInstructions !== undefined).length;
   const undet = rs.filter((r) => r.verdict === "undetermined").length;
   const all = rs.flatMap((r) => r.findings);
   const major = all.filter((f) => f.severity === "major").length;
@@ -301,6 +395,11 @@ export function formatReport(rs: InstanceCoverage[]): string {
   if (noReadme) {
     out.push(
       `${noReadme} instance(s) have no starting README OF THEIR OWN — an instance a reader cannot enter.`,
+    );
+  }
+  if (noAgents) {
+    out.push(
+      `${noAgents} instance(s) have no \`AGENTS.md\` OF THEIR OWN — readable by a person, mute to an agent.`,
     );
   }
   if (undet) {
@@ -331,7 +430,12 @@ if (import.meta.main) {
   // defect rather than a backlog item.
   if (
     process.argv.includes("--strict") &&
-    rs.some((r) => r.readme !== undefined || r.findings.some((f) => f.severity === "major"))
+    rs.some(
+      (r) =>
+        r.readme !== undefined ||
+        r.agentInstructions !== undefined ||
+        r.findings.some((f) => f.severity === "major"),
+    )
   ) {
     process.exit(1);
   }

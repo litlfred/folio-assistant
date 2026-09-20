@@ -58,10 +58,10 @@ function instance(
 }
 
 describe("the falsifier the bean asks for", () => {
-  it("a subgraph with all three declared and resolving is NOT reported", () => {
+  it("a subgraph with all four declared and resolving is NOT reported", () => {
     const { root, cleanup } = instance(
-      { visualiser: "viz.html", docs: "doc.md", skill: "some-skill" },
-      { realTargets: ["viz.html", "doc.md"] },
+      { visualiser: "viz.html", docs: "doc.md", skill: "some-skill", serialisations: "thing.jsonld" },
+      { realTargets: ["viz.html", "doc.md", "thing.jsonld"] },
     );
     const r = auditInstance(root);
     expect(r.verdict).toBe("checked");
@@ -75,12 +75,18 @@ describe("the falsifier the bean asks for", () => {
         visualiser: "viz.html",
         docs: "doc.md",
         skill: "some-skill",
+        serialisations: "thing.jsonld",
       };
       delete full[missing];
-      const { root, cleanup } = instance(full, { realTargets: ["viz.html", "doc.md"] });
+      const { root, cleanup } = instance(full, {
+        realTargets: ["viz.html", "doc.md", "thing.jsonld"],
+      });
       const r = auditInstance(root);
       expect(r.findings.map((f) => f.criterion)).toEqual([missing]);
-      expect(r.findings[0]?.severity).toBe("minor");
+      // SERIALISATIONS are owed by every declared directory, so a missing one
+      // is an unmet obligation rather than an unanswered question. The other
+      // three are minor here because this fixture's kind owes none of them.
+      expect(r.findings[0]?.severity).toBe(missing === "serialisations" ? "major" : "minor");
       cleanup();
     });
   }
@@ -125,9 +131,10 @@ describe("exemption carries a reason and is honoured", () => {
       {
         docs: "doc.md",
         skill: "s",
+        serialisations: "thing.jsonld",
         exempt: { visualiser: "read by an agent at session start; a human page would be pointless" },
       },
-      { realTargets: ["doc.md"] },
+      { realTargets: ["doc.md", "thing.jsonld"] },
     );
     const r = auditInstance(root);
     expect(r.findings).toEqual([]);
@@ -139,10 +146,42 @@ describe("exemption carries a reason and is honoured", () => {
 
   it("the reason reaches the report — a waiver nobody sees is a silence list", () => {
     const { root, cleanup } = instance(
-      { docs: "doc.md", skill: "s", exempt: { visualiser: "BECAUSE-THIS-STRING" } },
-      { realTargets: ["doc.md"] },
+      {
+        docs: "doc.md",
+        skill: "s",
+        serialisations: "thing.jsonld",
+        exempt: { visualiser: "BECAUSE-THIS-STRING" },
+      },
+      { realTargets: ["doc.md", "thing.jsonld"] },
     );
     expect(formatReport([auditInstance(root)])).toContain("BECAUSE-THIS-STRING");
+    cleanup();
+  });
+});
+
+describe("serialisations take no waiver — harnesses cannot override being in the KG", () => {
+  it("a waiver smuggled past the schema is IGNORED, not honoured", () => {
+    // `SubgraphCoverageSchema.exempt` has no `serialisations` key, so `tsc`
+    // stops this at the type level and a declaration carrying it does not
+    // parse. This pins the RUNTIME half: if one ever reached the checker —
+    // through a cast, a hand-written JSON file, or a future schema change
+    // made without reading the ruling — it must still not suppress the
+    // finding. The owner, 2026-09-20: "harnesses cannot override there being
+    // in the KG."
+    const { root, cleanup } = instance(
+      {
+        visualiser: "viz.html",
+        docs: "doc.md",
+        skill: "s",
+        exempt: { serialisations: "we would rather not" },
+      } as unknown,
+      { realTargets: ["viz.html", "doc.md"] },
+    );
+    const r = auditInstance(root);
+    expect(r.findings.map((f) => f.criterion)).toEqual(["serialisations"]);
+    expect(r.findings[0]?.severity).toBe("major");
+    // And it is not quietly filed as an exemption either.
+    expect(r.exempted.map((e) => e.criterion)).not.toContain("serialisations");
     cleanup();
   });
 });
@@ -151,14 +190,19 @@ describe("bootstrap's exemption is by layer, and is a second criterion not a hol
   it("bootstrap is never asked for a visualiser", () => {
     const { root, cleanup } = instance(undefined, { name: "bootstrap" });
     const r = auditInstance(root);
-    expect(r.findings.map((f) => f.criterion).sort()).toEqual(["docs", "skill"]);
+    // `serialisations` is present even here, and that is the ruling rather
+    // than an oversight: bootstrap is excused a visualiser precisely because
+    // its json/jsonld "is its existence", so it cannot be excused that.
+    expect(r.findings.map((f) => f.criterion).sort()).toEqual(["docs", "serialisations", "skill"]);
     cleanup();
   });
 
   it("any other instance with the same shape IS asked", () => {
     const { root, cleanup } = instance(undefined, { name: "not-bootstrap" });
     const r = auditInstance(root);
-    expect(r.findings.map((f) => f.criterion).sort()).toEqual(["docs", "skill", "visualiser"]);
+    expect(r.findings.map((f) => f.criterion).sort()).toEqual([
+      "docs", "serialisations", "skill", "visualiser",
+    ]);
     cleanup();
   });
 
@@ -285,8 +329,8 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // Vacuity guard. Without it, a bug making every visualiser finding major
     // would pass all four tests above.
     const { root, cleanup } = instance(
-      { visualiser: "viz.html", docs: "doc.md", skill: "some-skill" },
-      { realTargets: ["viz.html", "doc.md"], graphs: ["beans"] },
+      { visualiser: "viz.html", docs: "doc.md", skill: "some-skill", serialisations: "thing.jsonld" },
+      { realTargets: ["viz.html", "doc.md", "thing.jsonld"], graphs: ["beans"] },
     );
     expect(auditInstance(root).findings.filter((f) => f.criterion === "visualiser")).toHaveLength(0);
     cleanup();
@@ -334,7 +378,7 @@ describe("every instance needs a starting README OF ITS OWN (bean `ie9l`)", () =
   it("declaring no instance-readme at all is MAJOR", () => {
     const r = readmeFinding("/nowhere", decl([]), false);
     expect(r?.severity).toBe("major");
-    expect(r?.detail).toContain("nothing says what this instance IS");
+    expect(r?.detail).toContain("What this instance IS, for a reader");
   });
 
   it("BORROWING the repository's README is MAJOR — the case check-declared-assets cannot see", () => {
@@ -369,13 +413,31 @@ describe("every instance needs a starting README OF ITS OWN (bean `ie9l`)", () =
     rmSync(base, { recursive: true, force: true });
   });
 
-  it("this repository has exactly the two known offenders", () => {
-    // Against the real tree: the root declares no assets at all, and
-    // cat-harness borrows the root's README. bootstrap and folio-assist-core
-    // each own theirs. If this changes, the check should say so rather than
-    // quietly track it.
+  it("this repository has no README offender left", () => {
+    // It had exactly two — the root declared no assets at all, and cat-harness
+    // borrowed the root's README. Issue #592 split them, so every instance now
+    // owns its own. Asserted as EMPTY rather than deleted: a list that went to
+    // zero and a check that stopped looking are indistinguishable from a
+    // deleted test, and this is the fix's only durable witness.
     const repo = resolve(import.meta.dir, "..", "..", "..");
     const offenders = auditAll(repo).filter((r) => r.readme !== undefined).map((r) => r.instance);
-    expect(offenders.sort()).toEqual(["cat-harness", "folio-assistant"]);
+    expect(offenders.sort()).toEqual([]);
+  });
+
+  it("the AGENT half is asked about too, and no instance is mute any more", () => {
+    // Measured 2026-09-20 when the criterion was added: ten of eleven
+    // instances declared `instance-readme` and TWO declared
+    // `agent-instructions`. Eight were readable by a person and mute to an
+    // agent — including `folio-assistant-core`, which HAD an AGENTS.md on disk
+    // and did not declare it (a finding, not an exemption: an undeclared file
+    // is one no checker has a reason to look at — the `v8gh` property).
+    //
+    // All eight were written and declared. Asserted as EMPTY rather than
+    // deleted, for the same reason as the README list above: a list that went
+    // to zero and a check that stopped looking are indistinguishable once the
+    // assertion is gone, and this is the fix's only durable witness.
+    const repo = resolve(import.meta.dir, "..", "..", "..");
+    const mute = auditAll(repo).filter((r) => r.agentInstructions !== undefined).map((r) => r.instance);
+    expect(mute.sort()).toEqual([]);
   });
 });

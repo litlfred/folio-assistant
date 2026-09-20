@@ -3,6 +3,13 @@
   "name": "large-datasets",
   "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
   "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — large-datasets",
+      "description": "Cold start for work in this layer, and the boundary it exists to hold: this layer does NOT decide whether to take something — that is `materialize-remote`'s five gates in core. Here the deliverable is the descriptor, because no source's enumeration API is guessable and an answer given to a human once is recorded nowhere."
+    },
     { "id": "readme", "src": "README.md", "role": "instance-readme", "title": "large-datasets",
       "description": "The two worked descriptors and why the second one is what makes the abstraction real." }
   ],
@@ -12,7 +19,12 @@
       "path": "schemas/",
       "dependents": "skip",
       "description": "`source-descriptor` — how to enumerate a corpus and ask it for a subset. `artifact-store` — where an artifact too large for the site tree goes, as a DECLARATION rather than a hardcoded host, per the owner's 'make tool that can be done another way potentially if not github cdn'.",
-      "graphs": ["schemas", "cat-harness"]
+      "graphs": ["schemas", "cat-harness"],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "schema-management"
+      }
     },
     {
       "id": "large-datasets-sources",

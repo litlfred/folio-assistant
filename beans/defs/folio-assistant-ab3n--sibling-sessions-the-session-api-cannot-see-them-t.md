@@ -1,13 +1,13 @@
 ---
 # folio-assistant-ab3n
 title: 'SIBLING SESSIONS: the session API cannot see them, the commit trailer is the only identity, and nothing says so'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T19:45:00Z
+updated_at: 2026-09-20T21:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -20,8 +20,8 @@ Eight sibling sessions committed in the window (from the `Claude-Session:` trail
 "Watch all open PRs for incoming insights" and "claim before you work" both assume an agent can see who else is working. Today the only durable session identity is the commit trailer, and the only state readable for a sibling is its branch and proposal. The `goal-review` skill records this as its §Sibling sessions; the general rule has no home.
 
 ## Done when
-- [ ] bean-coordination (or session-context) says where a sibling session is visible from, and that a session's state is *inferred* from its branch when the API cannot see it
-- [ ] A one-command sweep exists (a Tool node, not prose) that lists sessions in a window by trailer, with branch tips and first/last commit
+- [x] bean-coordination (or session-context) says where a sibling session is visible from, and that a session's state is *inferred* from its branch when the API cannot see it
+- [x] A one-command sweep exists (a Tool node, not prose) that lists sessions in a window by trailer, with branch tips and first/last commit
 
 ---
 
@@ -58,5 +58,13 @@ express a shell payload on a command line. The second is fixed the way this
 repository prefers — a new `TimeWindow` type whose grammar admits a count with
 a unit or an ISO date, so a payload is unrepresentable rather than rejected.
 
-- [x] bean-coordination says where a sibling session is visible from, and that a session's state is *inferred* from its branch when the API cannot see it
-- [x] A one-command sweep exists (a Tool node, not prose) that lists sessions in a window by trailer, with branch tips and first/last commit
+_2026-09-20T21:15Z_ — **Closed.** Both Done-when boxes above are ticked against
+the work recorded in this bean, and the status now says so.
+
+**It should have said so an hour ago.** This bean was finished, its evidence
+written into its own body, and left `in-progress` — while the session that left
+it there was closing `bbbl`, whose entire subject is *a bean finished in its
+body and left open*. Worse, the ticks were appended as a SECOND copy of the
+checklist at the foot of the file, so the canonical `## Done when` still read
+0 of 2 and any reader or tool consulting it saw an untouched bean.
+
