@@ -270,6 +270,13 @@
       "description": "What a translation sign-off covers.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "Count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000,
+      "description": "A non-negative count — how many of something, or how many to show. Zero is a real answer.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "Dpi": {
       "type": "integer",
       "minimum": 24,
@@ -299,8 +306,8 @@
   },
   "staging": {
     "branch": "main",
-    "sha": "16a28a10445767e54c22fa488297b712d8a5d9db",
+    "sha": "706ec02b821c86613e4354004cb65aaf07e5b3da",
     "pr": "main",
-    "run": "35514915645"
+    "run": "35515259134"
   }
 }
