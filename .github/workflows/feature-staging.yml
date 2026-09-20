@@ -305,9 +305,34 @@ jobs:
       - name: Strip SEO identity claims from the preview
         run: bun run cat-harness/scripts/strip-preview-seo.ts --site ./_site
 
+      # `--gitRevision` pins the source links to the BRANCH, not the commit.
+      # Bean `g196`, third cause.
+      #
+      # TypeDoc defaults `gitRevision` to the current commit SHA and writes it
+      # into every "Defined in" link:
+      #
+      #   <a href="https://github.com/…/blob/<40-hex-sha>/…/builders.ts#L85">
+      #
+      # So every API page changed on every build, for the same reason the
+      # banner and the footer did — and it OUTLIVED both fixes. Measured on
+      # two consecutive deploys of one branch whose only source difference was
+      # a bean file: 1193 insertions, 1192 deletions, and the changed set
+      # began at `api/` where it used to begin at `accessibility.html`. The
+      # Jekyll half was fixed; this half was not.
+      #
+      # The branch name is stable across rebuilds of one preview, which is
+      # what makes the pages deduplicate. The cost is that a source link
+      # follows the branch rather than freezing a commit — correct for a
+      # PREVIEW, whose whole purpose is to show the branch as it stands, and
+      # the reason `docs-site.yml` is deliberately NOT changed: the published
+      # site keeps SHA-pinned links, where there is one copy, nothing to
+      # deduplicate, and a permanent link is worth more than a live one.
       - name: Generate TypeDoc API reference
+        env:
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
         run: |
           npx --yes typedoc \
+            --gitRevision "$STAGING_BRANCH" \
             --out ./_site/api \
             --entryPointStrategy expand \
             --readme none \

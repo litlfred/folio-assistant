@@ -294,3 +294,60 @@ describe("the STAGING build does not bake a per-run stamp into the footer", () =
     expect(main).toContain("built_at:");
   });
 });
+
+describe("the THIRD per-build source: TypeDoc's source links", () => {
+  /**
+   * Found only by measuring the deployed artefact, after both the banner and
+   * the footer had been fixed and the page still changed every build.
+   *
+   * TypeDoc defaults `gitRevision` to the current commit SHA and writes it
+   * into every "Defined in" link:
+   *
+   *     <a href="https://github.com/…/blob/<40-hex-sha>/…/builders.ts#L85">
+   *
+   * Measured on two consecutive deploys of one branch whose only source
+   * difference was a **bean file** — which reaches no HTML page, since the
+   * sticky board fetches `docs/assets/todos/index.json` at runtime:
+   *
+   *     1193 insertions(+), 1192 deletions(-)
+   *
+   * and the changed set began at `api/`, where before the banner and footer
+   * fixes it began at `accessibility.html`. The Jekyll half had been fixed;
+   * this had not.
+   *
+   * Three causes, three fixes, and each one was invisible until the one in
+   * front of it was removed. That is the argument for measuring the artefact
+   * rather than the part: no test of the banner could have found the footer,
+   * and no test of either could have found this.
+   */
+  const WORKFLOW = readFileSync(
+    join(repoRootFor(resolve(import.meta.dir, "..", "..")), ".github", "workflows", "feature-staging.yml"),
+    "utf-8",
+  );
+  const MAIN = readFileSync(
+    join(repoRootFor(resolve(import.meta.dir, "..", "..")), ".github", "workflows", "docs-site.yml"),
+    "utf-8",
+  );
+
+  /** The TypeDoc invocation, comments stripped. */
+  function typedocCall(yml: string): string {
+    const m = yml.match(/npx --yes typedoc[\s\S]*?(?=\n\n|\n      - name:)/);
+    if (!m) throw new Error("no typedoc invocation");
+    return m[0]
+      .split("\n")
+      .filter((l) => !/^\s*#/.test(l))
+      .join("\n");
+  }
+
+  test("the staging build pins source links to the branch, not the commit", () => {
+    expect(typedocCall(WORKFLOW)).toMatch(/--gitRevision\s+"\$STAGING_BRANCH"/);
+  });
+
+  test("the MAIN site does not — a published link should freeze its commit", () => {
+    // Not an oversight and not symmetry for its own sake. There is one copy of
+    // the published site, nothing to deduplicate, and a source link that
+    // follows a moving branch is worth less there than one that names the
+    // commit it documented.
+    expect(typedocCall(MAIN)).not.toContain("--gitRevision");
+  });
+});

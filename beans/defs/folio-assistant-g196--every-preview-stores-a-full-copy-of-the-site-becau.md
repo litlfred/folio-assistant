@@ -363,3 +363,81 @@ names the line.
 **Until that number exists, this bean claims nothing about deduplication.**
 The banner and footer are each pinned constant by tests; whether the PAGE is
 constant has been asserted twice in this bean and measured false once.
+
+---
+
+*2026-09-20* — **The probe fired. There was a THIRD cause, and the fix was still incomplete.**
+
+## The measurement, at last
+
+`9cda2235` was bean-only — one file, and a bean reaches no HTML page. Its
+deploy `d7a09ee` (17:25:19) directly follows `63a8016` (17:21:47) on the same
+branch, with nothing else in between. Exactly the controlled pair this bean
+asked for:
+
+```
+1193 insertions(+), 1192 deletions(-)
+```
+
+**Still every page, still one line.** Two claims made, two claims false.
+
+## Cause 3: TypeDoc writes the commit SHA into every source link
+
+Fetched the actual page rather than guessing again:
+
+```html
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/
+    9cda2235164f598e1d7197a39628ac47f141eb80/cat-harness/schemas/builders.ts#L85">
+```
+
+TypeDoc defaults `gitRevision` to the current commit, so every `api/` page
+carries a fresh 40-hex SHA on every build.
+
+## What the same measurement says about the first two fixes — they WORKED
+
+The diff is path-sorted, and its first entry moved:
+
+| deploy | first changed file |
+|---|---|
+| `bbd5989` (before) | `STAGING/…/accessibility.html` |
+| `d7a09ee` (after) | `STAGING/…/api/functions/…actor.html` |
+
+`accessibility.html` and `agentic-harness.html` sort **before** `api/` and led
+the old diff. They are absent from the new one, so those Jekyll pages are now
+byte-identical across rebuilds where they previously changed every time.
+
+**Stated no wider than that.** GitHub caps a commit's file list, so the tail
+was not readable and this bean does NOT claim every Jekyll page is constant —
+only that the two it can name are, and that the changed set now begins at
+`api/`.
+
+## Fixed
+
+`--gitRevision "$STAGING_BRANCH"` on the staging TypeDoc invocation. The branch
+is stable across rebuilds of one preview, which is what deduplicates.
+
+The cost is named rather than hidden: a source link now follows the branch
+instead of freezing a commit. That is right for a **preview**, whose purpose is
+to show the branch as it stands. `docs-site.yml` is deliberately unchanged —
+one copy, nothing to deduplicate, and a permanent link is worth more there than
+a live one. Both halves are pinned by tests, and the second ratchets against
+somebody "tidying up" the asymmetry.
+
+## The lesson, sharpened
+
+Three causes, three fixes, and **each was invisible until the one in front of
+it was removed.** No test of the banner could have found the footer; no test of
+either could have found TypeDoc. Every unit test passed at every stage, and
+every stage was still wrong.
+
+The only thing that ever found a cause was **measuring the deployed artefact**
+— and it took a deliberately controlled experiment (a bean-only commit, to
+hold rendered content fixed) to make the measurement mean anything. Two
+earlier attempts failed: one deploy never ran, cancelled by the next push; the
+other was a transition contaminated by a `main` merge.
+
+**This bean still claims nothing about deduplication.** The fix is now three
+deep and the fourth measurement has not been taken.
+
+- [ ] Re-measure with another controlled pair. Zero `.html` files changed is
+      the pass; anything else names the fourth cause.
