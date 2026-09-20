@@ -184,10 +184,73 @@ failure this whole bean is about.
 `scripts/backoff-sleep.ts` rather than open-coding `sleep`, since that is the
 one backoff implementation and it was made one for this exact ref.
 
+## CORRECTION 2, 2026-09-20 21:09 — the compensation is defeated by the render log
+
+Above, twice, this bean says `feature-staging` *"opted out **and compensated**
+— three attempts, rebasing between"*, and rests the whole asymmetry on that.
+**Measured on a live failure, the compensation does not hold.** `stage` on
+PR #612 (`0da595551b`):
+
+```
+   82ccc62..e870503  gh-pages   -> origin/gh-pages
+Auto-merging _render-log/2026-09-20.jsonl
+CONFLICT (content): Merge conflict in _render-log/2026-09-20.jsonl
+Rebasing (1/1)
+error: could not apply f2a2836... staging(claude-sharp-fermi-xvs06i)
+```
+
+The retry **ran**, lost the race as designed, attempted its
+`pull --rebase origin gh-pages`, and the rebase **conflicted** — so the loop
+exited 1 on attempt **1** rather than retrying twice more.
+
+### The mechanism, and why it is structural rather than a bug
+
+`renderLogPath(at)` (`schemas/render-log.ts:287`) returns
+`_render-log/${day}.jsonl`: **one file per calendar day, shared by every
+session.** `feature-staging.yml:753-758` commits it in the SAME commit as the
+deploy, deliberately:
+
+> THE LOG IS NOW ATOMIC WITH THE DEPLOY … a preview can no longer exist with
+> no entry saying where it came from.
+
+Two sessions append at EOF of the same day's file; the loser rebases onto the
+winner; git cannot merge two appends to the last line.
+
+**The property that makes the log trustworthy is the one that defeats the
+retry.** Neither half is wrong on its own, and the file already half-knows it:
+`feature-staging.yml:643` records the render log as *"a ~38% rise in write
+volume, after which attempt 2 started losing the race"*, and fixed the VOLUME
+by folding the log into one commit — which made the conflict **certain**
+rather than merely likely, because every deploy commit now always touches the
+shared file.
+
+### What it changes
+
+- **Worse than stated:** it is not one exposed workflow. `docs-site` loses the
+  race with no retry; `feature-staging` loses to the *conflict* despite one.
+  Two publishers, two different failures, both dropping pushes.
+- **Better than stated:** this half has a cheap standard fix the other does
+  not — a `.gitattributes` **`merge=union`** driver for `*.jsonl`. An
+  append-only log is the textbook case: both sides' lines are kept, order
+  within a day is not load-bearing, and the rebase resolves itself with no
+  change to deploy logic.
+
+That is small enough to split from the `peaceiris` question rather than wait on
+it. **Not done** — it changes the conflict semantics of the path the site ships
+from, which is why the rest of this bean waits on a ruling. Raised on #605.
+
+**One re-run, spent, and it passed**: the push carrying the main merge
+re-triggered `stage` on `a3b9a0c28d`, all 8 checks green. So the failure was
+contention, not #612's comment-only diff — which could not touch
+`_render-log/` at all.
+
 ## Done when
 
 - [ ] A ruling on ONE shared publishing step vs four copies (see the
       correction above — `06kg` is the precedent against copying)
+- [ ] `*.jsonl merge=union` in `.gitattributes`, so a same-day render-log
+      append stops turning `feature-staging`'s retry into a hard failure —
+      separable from the `peaceiris` question and much smaller
 - [ ] `docs-site.yml`'s publish survives a losing race, with the failure
       reproduced before the fix and the fix shown to pass — **and the same for
       `blueprint.yml` and `lean_ci.yml`, which are equally exposed**
