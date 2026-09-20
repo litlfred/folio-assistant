@@ -2438,3 +2438,85 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 }
 
 .fa-kind-fan-row .fa-kind-fan-open { margin-top: 0; }
+
+/* ── The landing board ──────────────────────────────────────────────
+ *
+ * The landing page is a board of stickies (issue #464). The sticky card
+ * itself, its backdrop art and its scrim are all `.fa-sticky` rules above;
+ * these are the landing-specific ones. */
+
+/* CLIPPED TO A PIXEL, NOT REMOVED. `display: none` takes a node out of the
+ * accessibility tree, and each landing sticky's accessible name comes from a
+ * heading referenced by `aria-labelledby` — remove it and the board is three
+ * anonymous `<article>` regions. The neighbouring `.fa-tiles .search-label`
+ * rule carries the long version of why, found by reading real Jekyll output
+ * rather than by a gate: axe accepts a non-empty placeholder as a last-resort
+ * pass and does not flag the demotion.
+ *
+ * Generalised here rather than copied: it was scoped to one selector, and this
+ * is the second caller. */
+.fa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* One column on a phone, side by side when there is room. `auto-fit` rather
+ * than `auto-fill`: with three cards and a wide viewport, `auto-fill` leaves
+ * empty phantom tracks and the board drifts left of centre. */
+.fa-landing-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--fa-sticky-min-width, 17rem), 1fr));
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+/* The landing stickies are read, not scanned, so they get more room than a
+ * board card and their text is not scaled down. */
+.fa-landing-sticky {
+  padding: 1.1em 1.2em;
+}
+
+/* A markdown body sets its own margins on the first and last child, which
+ * doubles the card's padding at top and bottom. */
+.fa-landing-sticky__body > :first-child { margin-top: 0; }
+.fa-landing-sticky__body > :last-child { margin-bottom: 0; }
+
+/* The derivation chain is several short lines. Left as separate blocks rather
+ * than run together, because the rungs ARE the content — and the NO-BREAK SPACE
+ * opening the last one is load-bearing typography, asserted by a test in
+ * `kg-node.test.ts`. Nothing here may collapse whitespace. */
+.fa-landing-sticky__body p { margin: 0 0 0.45em; }
+
+.fa-landing-sticky__links {
+  margin: 0.9em 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5em;
+}
+
+/* The link inherits the theme's ink rather than the site's link colour: on a
+ * scrimmed photograph the site blue is the one value whose contrast was never
+ * measured against this ground. Underlined so it is still identifiable as a
+ * link without relying on hue (SC 1.4.1), which is the same rule the priority
+ * stripe follows by carrying a width as well as a colour. */
+.fa-landing-sticky__links a {
+  color: var(--fa-sticky-ink, inherit);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  font-weight: 600;
+}
+
+.fa-landing-sticky__note {
+  display: block;
+  font-size: 0.88em;
+  opacity: 0.85;
+}

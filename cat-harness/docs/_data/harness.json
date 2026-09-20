@@ -54,9 +54,119 @@
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     }
   },
+  "stickies": [
+    {
+      "id": "landing",
+      "summary": "computable adjudication and agentic test harness",
+      "comment": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "theme": "engineer",
+      "links": [
+        {
+          "label": "The work plan is where you say what you are doing",
+          "href": "/beans-and-todos.html",
+          "note": "Claim a bean before you work, so a sibling session does not pick up the same item.",
+          "external": false
+        },
+        {
+          "label": "Make your first folio",
+          "href": "/getting-started.html",
+          "note": "This repository is the platform; your content lives in its own.",
+          "external": false
+        },
+        {
+          "label": "Know which kind of thing you are writing",
+          "href": "/content-types.html",
+          "note": "A document is structured prose; a paper adds the block kinds whose assertion is a formal claim.",
+          "external": false
+        },
+        {
+          "label": "The documentation you will never read",
+          "href": "/guides/index.html",
+          "note": "All of it. The honest expectation is that you arrive from a search engine when something breaks.",
+          "external": false
+        }
+      ],
+      "art": {
+        "laptop": {
+          "src": "/assets/img/harness/landing-engineer-laptop.png",
+          "width": 1672,
+          "height": 941
+        },
+        "mobile": {
+          "src": "/assets/img/harness/landing-engineer-mobile.png",
+          "width": 942,
+          "height": 1670
+        },
+        "card": {
+          "src": "/assets/img/harness/landing-engineer-card.png",
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "scrim": "rgba(253, 251, 239, 0.86)"
+    },
+    {
+      "id": "cat-harness",
+      "summary": "Please be introduced to a cat",
+      "comment": "Please be introduced to a cat who acquires things, for whatever purpose — maybe somebody knows.",
+      "theme": "grumpy-cat",
+      "links": [
+        {
+          "label": "cat-harness",
+          "href": "https://github.com/litlfred/folio-assistant",
+          "note": "",
+          "external": true
+        }
+      ],
+      "art": {
+        "laptop": {
+          "src": "/assets/img/harness/landing-laptop.webp",
+          "width": 1671,
+          "height": 941
+        },
+        "mobile": {
+          "src": "/assets/img/harness/landing-mobile.webp",
+          "width": 941,
+          "height": 1670
+        },
+        "card": {
+          "src": "/assets/img/harness/landing-card.webp",
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "scrim": "rgba(237, 234, 228, 0.86)"
+    },
+    {
+      "id": "subgraphs",
+      "summary": "The knowledge sub-graphs",
+      "comment": "**Content** is what somebody authors and a reader reads; **acquisition** is how\nunstructured and semi-structured sources — documents, data, loose information —\nget into the graph in the first place; **tools** are what an agent can call; and\n**skills** are the instructions for doing the work.\n\nAll four are **declared directories** rather than conventions, so an instance\nsays which of them it holds and a consumer reads that declaration instead of\nwalking the tree.",
+      "theme": "engineer",
+      "links": [],
+      "art": {
+        "laptop": {
+          "src": "/assets/img/harness/landing-engineer-laptop.png",
+          "width": 1672,
+          "height": 941
+        },
+        "mobile": {
+          "src": "/assets/img/harness/landing-engineer-mobile.png",
+          "width": 942,
+          "height": 1670
+        },
+        "card": {
+          "src": "/assets/img/harness/landing-engineer-card.png",
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "scrim": "rgba(253, 251, 239, 0.86)"
+    }
+  ],
   "declaredKinds": [
     "beans",
     "cat-harness",
+    "folio",
     "fsh-guts",
     "health",
     "library",

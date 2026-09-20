@@ -74,6 +74,7 @@ import { instanceRootFor, readDeclaration, type ContentDirectory } from "../sche
 // registration to have happened.
 import "../schemas/folio-graph-kind.js";
 import {
+  LANDING_STICKY_IDS,
   LandingStickySchema,
   landingStickies,
   type LandingSticky,
@@ -270,6 +271,31 @@ export function stickiesFor(root: string, dir: string, now: string): LandingStic
     const existing = readExistingSticky(join(dir, stickyFile(wanted.id)));
     return existing ? { ...wanted, createdAt: existing.createdAt } : wanted;
   });
+}
+
+/**
+ * Every landing sticky currently on disk, in the declared render order.
+ *
+ * Reads the FILES rather than rebuilding from `landingStickies()`, because the
+ * two answer different questions: the builder says what an instance *should*
+ * have, and a renderer must draw what it *does* have. If initiation has not run,
+ * or has run against an older set, drawing the builder's answer would render a
+ * page that does not exist on disk — and the `--check` gate that exists to
+ * report exactly that divergence would be bypassed by the renderer agreeing
+ * with the builder instead of with the files.
+ *
+ * Order comes from {@link LANDING_STICKY_IDS} rather than from directory
+ * listing, which is alphabetical and would put `cat-harness` before `landing`.
+ * A sticky whose file is absent or unparseable is skipped rather than faked.
+ */
+export function readLandingStickies(root: string): LandingSticky[] {
+  const decl = JSON.parse(readFileSync(join(root, "harness.json"), "utf8")) as {
+    directories?: ContentDirectory[];
+  };
+  const dir = join(root, folioDirPath(decl));
+  return LANDING_STICKY_IDS.map((id) => readExistingSticky(join(dir, stickyFile(id)))).filter(
+    (s): s is LandingSticky => s !== undefined,
+  );
 }
 
 export function ensureLandingSticky(
