@@ -251,10 +251,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T06:51:08.888Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3fda9bac4039cec27f129e7a1188d42c8bc8cc5a",
-  "sourceCommitSha": "3fda9bac4039cec27f129e7a1188d42c8bc8cc5a",
-  "sourceCommitAt": "2026-09-20T06:48:47Z",
+  "generatedAt": "2026-09-20T06:57:45.804Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/604b9be2a7ffdb2366fde03eaa4894426e67dbce",
+  "sourceCommitSha": "604b9be2a7ffdb2366fde03eaa4894426e67dbce",
+  "sourceCommitAt": "2026-09-20T06:56:11Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 173,
@@ -268,8 +268,8 @@
     "ProcessNode": 464,
     "Tool": 32,
     "Schema": 59,
-    "GraphKind": 18,
-    "Directory": 13
+    "GraphKind": 20,
+    "Directory": 15
   },
   "@graph": [
     {
@@ -1287,7 +1287,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 557,
+      "instructionLines": 559,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -21306,6 +21306,22 @@
       "summary": "A session's context — the acting actor, the instances it has open, and what it waits on."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "interaction",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#InteractionGraph",
+      "renderable": false,
+      "summary": "How a person wants to be asked — read at session start, never written by a process."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/issue-marks",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "issue-marks",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#IssueMarkGraph",
+      "renderable": false,
+      "summary": "How far an agent has read an issue — the comment id and the edit time it accounted for."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "memory",
@@ -22205,6 +22221,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/todos"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#directory/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "interaction",
+      "path": "interaction/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction"
+      ],
+      "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/interaction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#directory/issue-marks",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "issue-marks",
+      "path": "issue-marks/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/issue-marks"
+      ],
+      "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/issue-marks"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#directory/uploads",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "uploads",
@@ -22262,8 +22300,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "e9b233e8d380f3768ef33834df12640e58b76cde",
+    "sha": "51e55f4db4a5015d681e8d732c4502382790c7ce",
     "pr": "458/merge",
-    "run": "35495237417"
+    "run": "35495530816"
   }
 }
