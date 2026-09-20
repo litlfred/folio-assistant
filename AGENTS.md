@@ -46,11 +46,19 @@ are thin stubs pointing here.
 > Conventions for the declaration and its graph kinds:
 > [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
 >
-> **Known gap, so you are not surprised:** `resolveSkillDirs` in
-> `schemas/harness-config.ts` computes the cross-instance skill overlay and has
-> **no caller** — so today skill discovery is root-only in practice, and a
-> dependency's skills are not yet reachable. Wiring it is outstanding Phase 0.1
-> work.
+> **A dependency's skills ARE reachable** — `resolveSkillDirs` in
+> `schemas/harness-config.ts` computes the cross-instance overlay and
+> `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` is built from it, so
+> `skill_list` and `skill_fetch` serve a dependency's packages. This entry said
+> the opposite until 2026-09-19 — *"no caller … not yet reachable"* — and a
+> stale gap notice is worse than none, because an agent that believes it either
+> avoids the feature or rebuilds it.
+>
+> Two nearby call sites stay root-only **on purpose**, and the reasons are on
+> `resolveSkillDirs` itself: `kgDirectories` composes repo-relative skill IDS,
+> so a dependency's directory would mint ids resolving into another checkout;
+> and `kgRoots(root)[0]` is read as "the root's graph" while overlay order is
+> deepest-dependency-first.
 >
 > Start here: [`folio-assistant/docs/guides/agent-onboarding.md`](folio-assistant/docs/guides/agent-onboarding.md),
 > then ask for the skill that governs your task.
@@ -541,7 +549,12 @@ to spend the words: **do not start the topic.**
   conventions); a present-but-unreadable one throws. **Declare only what
   exists** — a declared-but-absent directory is the bean `dh4f` defect, where a
   consumer scans nothing and reports a clean run over it. This repo is
-  pre-split and declares `schemas/` and `skills/` only. Schema:
+  pre-split, and **`harness.json` is the list — not this sentence.** It said
+  "declares `schemas/` and `skills/` only" until 2026-09-20, by which point
+  neither half was true: there are many more entries, and `src/skills/` is a
+  SECOND knowledge-graph directory holding a skill beside the `.ts` that
+  implements it. No count is given here on purpose, because a count in prose is
+  the same failure one turn later. Schema:
   `schemas/cat-harness.ts`; conventions:
   [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.

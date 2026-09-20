@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6pfo
-title: 'Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph'
-status: todo
+title: Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
-updated_at: 2026-09-19T12:28:52Z
+updated_at: 2026-09-19T15:49:43Z
 parent: folio-assistant-zzmr
 ---
 
@@ -193,3 +193,32 @@ is visible and the next reader does not re-derive the same mistake. What
 misled me: I checked `artefactStub()` and `renderingPath()` and found they fit,
 and stopped — a path convention that FITS is not evidence that the thing in
 the path is a stub. I never grepped for `fsh-guts` itself.
+
+_2026-09-19T15:50:04Z_ — CLAIMED and investigated. Grounded against main at 14cbeef5e (post-merge working tree). Nothing is built yet; this note records what the code already does, because two of my earlier notes guessed and one of them was wrong.
+
+THE APPARENT CONTRADICTION IS NOT ONE, and I checked rather than reasoned. uv09 is `completed` — "strip every fsh-guts reference from the KG before publication" — which looked like it forbade the owner's own `<base-url>/fsh-guts/...` example URL. schemas/cat-harness.ts:911 settles it in the source:
+
+  "This is not a contradiction of `<base>/fsh-guts.jsonld`. They are different
+   documents: that one IS the trashcan's graph and is asked for by name; every
+   other published artefact must contain no path to it. A consumer may go there
+   deliberately and must never arrive by following an edge."
+
+So fsh-guts IS published, as its own document, reachable by name only. UNPUBLISHED_GRAPH_KINDS (:919) is the single list every emitter reads. docs-site.yml:213 runs scripts/fsh-guts-export.ts --out ./_site/fsh-guts.jsonld and copies it to .json, satisfying the same-bytes rule in serving-a-rendering.json.
+
+THE MECHANICAL HALF MAY BE FREE, and this is the finding that changes the cost:
+
+- FshGutsNodeSchema.kind (schemas/fsh-guts.ts:44) is `z.string().min(1)` — OPEN, deliberately, with the comment "a closed enum would mean a schema change stands between an agent and not deleting something."
+- fsh-guts-export.ts includes a file if and only if it DECLARES `folio-fsh-guts/v1` — by declaration, not by extension or location.
+
+Therefore a staging-preview record written under fsh-guts/ as a file declaring folio-fsh-guts/v1 with kind: "staging-preview" is published ALREADY, with ZERO change to the exporter, the schema, or the strip list. The publishing half of this bean may require no new machinery at all.
+
+WHAT schemas/staging.ts IS NOT. It exists (208 lines) but its subject is StagingComparison — before/after URL PAIRS for review. That is not the preview's own record and does not grow into it. Reusable from it: branchToSlug() and stagingBaseUrl(), which already mirror the sed transform in feature-staging.yml.
+
+SIBLING CHECK, per bean-coordination. No open PR is on this: #433 on claude/brave-hypatia-r820sf — the branch this bean names as working 1lfx — is "qa-results: stop every QA producer dirtying the tree on a clean run", a different subject. 1lfx is back to `todo`. t0i3 (the fsh-guts graph itself) is in-progress and NOT mine; this bean must not touch its declaration. Also in flight and worth watching for conflict: #434 "wggr: the rest of the stub inversion, one directory at a time" moves published paths around, which is the same surface a new published artefact lands on.
+
+WHAT IS STILL A DECISION, and it is the owner's, not mine. Two forks, and they are independent:
+
+1. DOCUMENT SHAPE. staging-preview nodes inside the existing fsh-guts.jsonld (free, per the finding above, but one document mixes every churn kind), OR a separate <base>/staging.jsonld (closer to the owner's literal example, needs a second exporter and a second entry in docs-site.yml).
+2. WHO WRITES THE RECORD — bean question 1, still open and still the interesting part. Deploy time knows the PR and the issue; sweep time knows the size and the liveness; NEITHER knows both. The owner's "that's part of the behaviour of that node type" says the node owns the rule, but not which moment populates which fields.
+
+Not guessing either. Put to the owner before any code is written.

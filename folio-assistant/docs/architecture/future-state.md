@@ -28,7 +28,7 @@ Five folio-assistant instances, composed through the
 flowchart TD
     AH[agentic-harness<br/><i>Roles · Skills · Tools · BPMN</i><br/>does nothing itself]
     CORE[folio-assist-core<br/><i>document/webpage schema + KG</i><br/>authoring · ingestion · render · QA]
-    SCI[folio-asst-sci<br/><i>Lean · LaTeX · simulators</i>]
+    SCI[folio-asst-sci<br/><i>Lean · LaTeX · proofs</i>]
     KG[smart-kg<br/><i>WHO L1 document + KG schemas</i>]
     BASE[smart-base<br/><i>L2–L3 skills · adaptation · OCL</i>]
 
@@ -123,7 +123,7 @@ scientific-authoring skills. Per the issue, it depends **only** on
 | `adapters/paper/` and `PaperContentAdapter` | `folio-asst-sci` |
 | the Lean lifecycle tools — `lean_setup` / `build` / `check` / `status` | `folio-asst-sci` |
 | `paper_render_pdf` / `paper_render_html` / `formula_render`, `latex/`, `scripts/render-tex/`, `scripts/docker-latex-build/` | `folio-asst-sci` |
-| `simulators/`, `computations/`, `src/sage-mcp-server.py` | `folio-asst-sci` |
+| `computations/`, `src/sage-mcp-server.py` | `folio-asst-sci` |
 | `schemas/{formalization-types,lean-packages,precision-scalar,refactor-strategy}.ts` | `folio-asst-sci` |
 | `skills/{authoring-math,folio-paper-adapter}/` | `folio-asst-sci` |
 | witness/proof-status tooling, `scripts/lean-*` (16 files) | `folio-asst-sci` |
