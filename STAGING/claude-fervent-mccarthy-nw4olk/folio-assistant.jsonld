@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:58:06.332Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ca4435c99e7847b5ca4899edd3077aedc3398bac",
-  "sourceCommitSha": "ca4435c99e7847b5ca4899edd3077aedc3398bac",
-  "sourceCommitAt": "2026-09-20T04:56:25Z",
+  "generatedAt": "2026-09-20T05:01:22.579Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ee3f9fda21c53b12f298ad19bfcb270ee8e43f15",
+  "sourceCommitSha": "ee3f9fda21c53b12f298ad19bfcb270ee8e43f15",
+  "sourceCommitAt": "2026-09-20T04:59:43Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
@@ -261,7 +261,7 @@
     "Process": 34,
     "SequenceFlow": 475,
     "ProcessNode": 444,
-    "Tool": 33,
+    "Tool": 35,
     "Schema": 53,
     "GraphKind": 16,
     "Directory": 13
@@ -18524,6 +18524,92 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-graph-export"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/schema-docs",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "schema-docs",
+      "title": "Skill contract reference",
+      "description": "Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/gen-schema-docs.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed pages and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The generated reference directory. Never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/schema-docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/skill-docs",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "skill-docs",
+      "title": "Skill instruction reference",
+      "description": "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/gen-skill-docs.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed pages and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The generated instruction directory. Never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/skill-docs"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/ns-vocabulary",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "ns-vocabulary",
@@ -21405,8 +21491,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "c5dbcd0cec5f96f955f181d6f5dc39ea640e6bdb",
+    "sha": "e406b9a55d414c5ad92e693b2b5d80d60823da93",
     "pr": "454/merge",
-    "run": "35490398489"
+    "run": "35490525318"
   }
 }
