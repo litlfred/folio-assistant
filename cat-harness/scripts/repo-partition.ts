@@ -274,6 +274,11 @@ const RULES: Rule[] = [
       // for where diagrams and roles live, and needs no folio to have
       // anything to do.
       "scripts/raci-chart.ts",
+      // Subgraph containment and entanglement (bean `x4v4`). Harness for the
+      // same reason as the block above, and more plainly than most: it reads
+      // `harness.json` for the directories, DERIVES the nesting from their
+      // declared paths, and has nothing to say about any folio's content.
+      "scripts/check-subgraphs.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",

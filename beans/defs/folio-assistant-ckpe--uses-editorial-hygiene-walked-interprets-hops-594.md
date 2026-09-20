@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ckpe
 title: uses-editorial-hygiene walked interprets hops; 594 of 594 redundancy reports were wrong
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-24T20:27:21Z
-updated_at: 2026-09-19T00:41:01Z
+updated_at: 2026-09-20T14:37:12Z
 parent: folio-assistant-1swy
 ---
 
@@ -103,3 +103,12 @@ Now verified on all four gates, not two: tsc --noEmit clean, bun test
 1214/38/0, eslint clean, generated docs no diff.
 
 _2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. content/pipeline/qa-checkers-uses.ts no longer walks cone(other,'editorial') — it calls g.usesCone(other), and carries the reasoning inline at lines 180-196 including the owner's 2026-08-24 ruling and the measured cost (374 blocks, 594 reports, all interprets-only). This bean's defect is closed. NOT closing it — not my bean to resolve.
+
+
+## 2026-09-20 — closed on re-measurement (`0pes`)
+
+Re-derived, not read off the note above: `content/pipeline/qa-checkers-uses.ts`
+calls `g.usesCone(other)` at line 201 — no `cone(other, "editorial")` anywhere —
+and carries the reasoning inline at 180–196, including why a path leaving a
+block by `interprets` carries nothing forward. The widening `i8ad` introduced
+in 2026-08-15 is closed.

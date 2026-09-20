@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r1lz
 title: Ingest the three WHO style guides to library/ as KG, then derive the three WHO voices
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T23:46:13Z
-updated_at: 2026-09-19T16:24:01Z
+updated_at: 2026-09-20T14:19:25Z
 parent: folio-assistant-slw1
 ---
 
@@ -122,6 +122,34 @@ declaration in full.
 #210 is the owner's own PR. Closing it is theirs to do; nothing in it is
 unported except the bean above, which is deliberate.
 
+
+## 2026-09-20 — done: the last item closed overnight, and it was not mine to close
+
+The note above left ONE item — *"reconciled with PR #210"* — and recorded that
+closing it was the owner's, not an agent's. **#210 is closed**, 2026-09-20
+03:16:13Z, by the owner. Nothing in it was unported except bean `nd1m`, which
+was deliberately not imported (it covers this bean, and `beans create` dedupes
+on nothing).
+
+**Re-measured all five, not read off the note above** — the note itself was
+written because the previous one was stale, and a second-hand pass would
+repeat exactly that:
+
+| item | measured |
+|---|---|
+| three PDFs ingested to `library/` as L1 KG | ✓ `9789241548960-eng`, `who-pub-tps-931`, `wpr-rdo-2020-003-eng` |
+| the L1 completeness gate passes | ✓ `check:l1-complete` exit 0. One requirement `audio-transcripts` is NOT DERIVABLE (`1r0p`) and is reported as *not a pass* |
+| every voice rule cites a resolving source | ✓ `check:voices` — 4 voices, 37 rules, *"every rule cites a source that resolves, with a quote long enough to check"* |
+| folio-assistant's own docs carry NO voice | ✓ `readActiveVoices()` run over this repo returns `[]`, and `harness.json` says why: *"ships four and activates none"* |
+| reconciled with #210 | ✓ closed |
+
+`source: null` — the defect this bean was opened over — is gone.
+
+**NOT closed by this, and each has its own home:** the move of the three WHO
+bundles to `who-style-guide` and of `milnorlink` to `folio-asst-sci` (owner's
+2026-09-19 decision), and the second ingestion pipeline. Those are partition
+work, not this bean's Done-when, and the notes above carry the eight
+consumers of `library/` that any such move has to bring with it.
 
 ## 2026-09-20 — the destination this bean named now exists
 
