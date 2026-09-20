@@ -60,7 +60,7 @@ const FIXITY = {
 } as const;
 
 const GATES_OK = {
-  size: { verdict: "permitted", basis: "2.68 MB of a ~0.7 TB catalogue" },
+  size: { verdict: "permitted", basis: "2.68 MB of a 361.55 GB catalogue" },
   restrictions: { verdict: "unknown", basis: "no restrictions stated on the item page" },
   retention: { verdict: "permitted", basis: "kept until the next refresh" },
   // `unknown`, and the first draft of this fixture had it `permitted` with the

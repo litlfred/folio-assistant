@@ -18,7 +18,7 @@ much of it is actually present.
 
 They are one chain, read in that order. The third is the load-bearing one:
 **materialising remote content is a process this repository already runs twice
-and has never named** — `who-iris` taking three items out of ~0.7 TB, and
+and has never named** — `who-iris` taking three items out of 361.55 GB, and
 `bootstrap` fetching a harness and landing it locally. `upstream-pins.json` is
 half of that second one's refresh.
 

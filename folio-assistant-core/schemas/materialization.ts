@@ -17,7 +17,7 @@
  *
  * | instance | remote source | materialised locally | refresh today |
  * |---|---|---|---|
- * | `who-iris` | IRIS, ~0.7 TB | three items under `library/` | nothing |
+ * | `who-iris` | IRIS, 361.55 GB | three items under `library/` | nothing |
  * | `bootstrap` | a harness | the `cat-harness` checkout | `upstream-pins.json` + `check:upstream-pins` |
  *
  * The second row is the one that makes this a discovery rather than a design.
@@ -55,7 +55,7 @@
  * saying so.
  *
  *   - **size** — what fraction is being taken and what the whole would cost.
- *     0.7 TB is the measured reason the IRIS import is by reference.
+ *     361.55 GB is the measured reason the IRIS import is by reference.
  *   - **restrictions** — the owner's phrase is *"no restrictions known in
  *     context"*, and that is a STATE, not a green light. {@link GateVerdict}
  *     has `unknown` for exactly this, and it is never rendered as `permitted`.
@@ -199,7 +199,7 @@ export const MaterializationSchema = z
     bytes: z.number().int().nonnegative().optional(),
     /**
      * Bytes the WHOLE remote collection holds, where it is known. This is what
-     * makes a `size` gate answerable: 3 items of ~0.7 TB is a fraction, and
+     * makes a `size` gate answerable: 3 items of 361.55 GB is a fraction, and
      * "3 items" alone is not.
      */
     collectionBytes: z.number().int().nonnegative().optional(),

@@ -21,7 +21,7 @@ OWNER DECISIONS, 2026-09-20, verbatim where short:
 - `git mv` the three WHO library entries now, re-wire consumers in the same PR.
 - ONE `Theme` node with a `kind` discriminator (sticky | webpage | publication), not three node kinds.
 - 'keep OCR as platform tool of cat-harness. mionimal tools in who specific stuff.'
-- 'mock up the full iris catalog as having been in the KG (by referenced, not slurped up, its .7tb)'
+- 'mock up the full iris catalog as having been in the KG (by referenced, not slurped up, its 361.55 GB)'
 - 'break up working bits (like .ts record for dublin core) etc. fully worked for the three examples'
 - 'stub out their hierachy (collections, etc,) and put this in there. as if this is test import.'
 - 'this is also a SDLC process to be developed for testing a sample import into a KG (or generally structued data store), issues of data size, retention - what happens if data srouce goes away, copyright'

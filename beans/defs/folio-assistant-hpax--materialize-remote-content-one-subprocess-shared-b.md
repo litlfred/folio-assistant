@@ -14,7 +14,7 @@ Owner, 2026-09-20: 'so if large remote collection, and no restrictions known in 
 THIS IS THE LOAD-BEARING BEAN OF THE EPIC. It says the IRIS import is not a special case: it is one instance of a process this repository ALREADY RUNS and has never named.
 
 THE TWO INSTANCES, and they are genuinely the same shape:
-- `who-iris` -> `library/`. A remote collection (0.7 TB measured by the owner), of which three items are materialised and the rest stay referenced.
+- `who-iris` -> `library/`. A remote collection (361.55 GB measured by the owner), of which three items are materialised and the rest stay referenced.
 - `bootstrap` -> `cat-harness`. `bootstrap/workflows/initialize-harness.bpmn` fetches a harness that is REMOTE CONTENT and lands it locally. `upstream-pins.json` and `check:upstream-pins` exist precisely because that materialised copy can go stale, which is the refresh half already half-built and not named as such.
 
 THE THREE STATES ARE THE SAME THREE. Referenced (we know it exists and where, we hold no bytes) / materialised (bytes are here) / unknown. `readme-sections.ts` enforces this one level down and the argument transfers verbatim: collapsing 'could not determine' into either neighbour is how a clean scan gets reported over content nobody fetched.

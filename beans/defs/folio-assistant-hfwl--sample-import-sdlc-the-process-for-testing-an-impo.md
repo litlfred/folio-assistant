@@ -14,7 +14,7 @@ Owner: 'this is also a SDLC process to be developed for testing a sample import 
 GENERAL, NOT WHO-SPECIFIC. The subject is 'a sample import into a structured data store'; IRIS is the worked instance. So the BPMN and the skill are cat-harness nodes and `who-iris/` is what they are exercised on.
 
 FOUR GATES THE CURRENT INGESTION HAS NONE OF, each of which is a real decision somebody makes and none of which is answerable from a file:
-- SIZE. 0.7 TB is the measured reason this import is by reference. A gate asks what fraction is being taken and what the whole would cost, and REFUSES when it cannot tell — the `check-corpus-gate` shape.
+- SIZE. 361.55 GB is the measured reason this import is by reference. A gate asks what fraction is being taken and what the whole would cost, and REFUSES when it cannot tell — the `check-corpus-gate` shape.
 - RETENTION. How long the materialised copy is kept and what expires it. A copy with no expiry cannot be told from an abandoned one, which is exactly the argument `bean-blocking` already makes about blocks.
 - SOURCE LOSS. What survives if `iris.who.int` goes away. This is not hypothetical here: the legacy `iris.wpro.who.int` host in the measured record is ALREADY a merged-away instance, so one of the two URIs on the one item we have is evidence of the failure mode.
 - COPYRIGHT. What the licence permits, per bitstream, and whether it permits the derived work. `LICENSE-CONTENT.md` exists in this repo and the import does not read it.

@@ -7,7 +7,7 @@
  * ## The ask, and why it is not "import IRIS"
  *
  * The owner, 2026-09-20: *"in just the docs rendering, mock up the full iris
- * catalog as having been in the KG (by referenced, not slurped up, its .7tb)"*
+ * catalog as having been in the KG (by referenced, not slurped up, its 361.55 GB)"*
  * and *"stub out their hierachy (collections, etc,) and put this in there. as
  * if this is test import."*
  *
@@ -131,7 +131,7 @@ export type CatalogueNode = z.infer<typeof CatalogueNodeSchema>;
  *
  * `totalBytesUpstream` and `totalItemsUpstream` are what make a `size` gate
  * answerable. Without them "three items are materialised" is a number with no
- * denominator, and the whole reason this import is by reference — 0.7 TB — is
+ * denominator, and the whole reason this import is by reference — 361.55 GB — is
  * a fact held only in a chat message.
  */
 export const CatalogueSchema = z
