@@ -15,6 +15,7 @@ export { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "./constraints.js";
  */
 
 import type { BlockKind } from "./block-kinds.js";
+import type { Narrative } from "./narrative.ts";
 
 // The skill-framework vocabulary moved to `skill-package.ts` — see that
 // module's header. Re-exported so existing importers are unaffected; harness
@@ -974,6 +975,40 @@ export interface TableBlock extends OptionalLabelBlockBase {
   caption?: string;
 }
 
+/**
+ * Figure block — a raster image PLACED on a page of a source document, as
+ * distinct from a `diagram`, which is authored.
+ *
+ * Bean `d5f1`. The two are genuinely different things and conflating them
+ * would put a lie in the data model: `DiagramBlock` carries `tex`, meaning
+ * tikzcd source somebody wrote, and a consumer reading `diagram.tex` on an
+ * extracted bitmap finds nothing. A figure has a FILE and no source.
+ *
+ * Only images the extractor judged to be figures reach this block kind. Of
+ * 164 placed images measured across this corpus on 2026-09-20, **140 are page
+ * scans** — one near-full-bleed image per page, which is the page itself —
+ * against 24 figures. `scripts/pdf-images.py` makes that call and records the
+ * numbers it made it from; see `schemas/document-image.ts`.
+ *
+ * `narrative` is deliberately NOT a string. A description has a state and an
+ * author, and only a human may confirm one — `schemas/narrative.ts` enforces
+ * that an agent cannot accept its own draft.
+ */
+export interface FigureBlock extends OptionalLabelBlockBase {
+  kind: "figure";
+  /** Figure label (e.g. "fig:incidence-by-region"). */
+  label?: string;
+  /** The extracted image, relative to the library entry. NOT optional: a
+   *  figure block with no file is a claim about an image nobody can see. */
+  file: string;
+  /** Caption text as printed in the source, where one was found. */
+  caption?: string;
+  /** Which page of the source document it sits on, 1-based as a reader counts. */
+  page?: number;
+  /** The authored description and its state. See `schemas/narrative.ts`. */
+  narrative?: Narrative;
+}
+
 // ── The discriminated union ──────────────────────────────────────
 
 export type Block =
@@ -991,7 +1026,8 @@ export type Block =
   | ProseBlock
   | EquationBlock
   | DiagramBlock
-  | TableBlock;
+  | TableBlock
+  | FigureBlock;
 
 /**
  * `BLOCK_KINDS`, `BlockKind` and `BLOCK_KIND_ALT` now live in the leaf

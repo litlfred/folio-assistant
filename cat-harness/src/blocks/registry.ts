@@ -101,6 +101,11 @@ const BLOCK_KINDS: Array<Pick<BlockModuleEntry, "kind" | "displayName" | "viewer
   // other hand-maintained kind lists too; see `BLOCK_KINDS` in schemas/types.
   { kind: "algorithm", displayName: "Algorithm" },
   { kind: "table", displayName: "Table" },
+  // `figure` — an image extracted from a source document, bean `d5f1`. Listed
+  // here by hand like the rest; the list is checked against the schema's
+  // `BLOCK_KINDS` by `scripts/tests/block-kinds.test.ts`, which is what caught
+  // `algorithm` and `table` going unrendered and what caught this one.
+  { kind: "figure", displayName: "Figure" },
 ];
 
 // Register all built-in kinds with stub loaders.

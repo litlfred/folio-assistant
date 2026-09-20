@@ -158,8 +158,8 @@ describe("routing happens on CONTENT, with no PDF backend needed", () => {
 
   test("the mimetype can be supplied, so the decision is testable in isolation", () => {
     expect(planFor("x", undefined, "library", "application/zip").rung).toBe("archive");
-    expect(planFor("x", { outline: 3, chars: 9000 }, "library", null).rung).toBe("pdf-structure");
-    expect(planFor("x", { outline: 3, chars: 9000 }, "library", "application/pdf").rung).toBe("pdf-structure");
+    expect(planFor("x", { outline: 3, outlineUsable: 3, chars: 9000 }, "library", null).rung).toBe("pdf-structure");
+    expect(planFor("x", { outline: 3, outlineUsable: 3, chars: 9000 }, "library", "application/pdf").rung).toBe("pdf-structure");
   });
 
   test("isArchiveMimetype refuses everything else", () => {
