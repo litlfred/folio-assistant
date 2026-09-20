@@ -1,0 +1,34 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "crdm--issue-607-kg-to-cdn-portal",
+  "processId": "Process_CRDM",
+  "source": "/home/user/folio-assistant/cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn",
+  "subject": "issue-607-kg-to-cdn-portal",
+  "bean": "folio-assistant-xies",
+  "tokens": [
+    "GW_Feature"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-20T21:22:42.004Z",
+      "node": "Start_BA",
+      "note": "instance started"
+    },
+    {
+      "at": "2026-09-20T21:22:54.164Z",
+      "node": "BA_Submit",
+      "actor": "litlfred",
+      "note": "Owner described the need in chat, 2026-09-20: a webportal mockup as part of CRDM of the KG — a data-ingestion pipeline from the KG into a public portal, subject to operational and deployment constraints ($, network traffic, graph size), example being a CDN sitting behind Moodle. Explicitly UNDETERMINED: the ingestion method. Explicitly REQUIRED: hosted git or suitable versioned storage for the graph, switchable by deployment considerations."
+    },
+    {
+      "at": "2026-09-20T21:23:04.162Z",
+      "node": "A_Detect",
+      "actor": "claude",
+      "note": "Detected as a feature request, not content work: it asks for platform capability (a generalized ingestion pipeline, skills, tools and a BPMN), not for subject matter in a folio. Issue association: PR #607 is the working PR; bean folio-assistant-xies already carries the owner's four-gate publication pipeline and is claimed for this."
+    }
+  ],
+  "status": "running",
+  "startedAt": "2026-09-20T21:22:42.004Z",
+  "updatedAt": "2026-09-20T21:23:04.162Z"
+}

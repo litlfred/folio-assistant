@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xies
 title: 'PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-09-20T09:01:32Z
+updated_at: 2026-09-20T21:23:04Z
 parent: folio-assistant-kupb
 ---
 
