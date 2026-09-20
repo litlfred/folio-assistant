@@ -729,8 +729,23 @@ only (advisory); exits 2 on setup problems — including <strong>no local
 did <strong>not run</strong>; report it that way rather than folding it into a green,
 per the same honesty rule as the build above.</p>
   </li>
-  <li><strong>Push</strong> the feature branch (retry/backoff as in step 2):
-<code class="language-plaintext highlighter-rouge">git push -u origin &lt;branch&gt;</code>.</li>
+  <li>
+    <p><strong>Push</strong> the feature branch (retry/backoff as in step 2):
+<code class="language-plaintext highlighter-rouge">git push -u origin &lt;branch&gt;</code>. Then <strong>ask whether the push produced a run</strong>:
+<code class="language-plaintext highlighter-rouge">bun run check:head-has-run</code>.</p>
+
+    <p>This does not change what you do next — step 7 dispatches either way. It
+changes what you can honestly SAY. A push here can silently produce no run
+at all (bean <code class="language-plaintext highlighter-rouge">3pqn</code>, observed three times), and a pull request showing zero
+checks is indistinguishable from one whose checks have not started, so a
+reviewer cannot tell “CI is coming” from “CI is never coming”. If the check
+reports <strong>no run</strong>, write that in the PR body alongside the dispatched run’s
+URL — otherwise the PR looks like it is merely early.</p>
+
+    <p>Three states, and the third is not a finding: <code class="language-plaintext highlighter-rouge">could not ask</code> (no remote, no
+network, 403, 404) means nothing was established, and it must not be
+reported as either answer.</p>
+  </li>
   <li>
     <p><strong>Dispatch the repo’s CI on the pushed branch, and fold the result into the
 PR.</strong> Local green is not CI green — CI runs on a cold cache, its own
@@ -853,7 +868,7 @@ not a deletion.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35519130211"><code>8d30978</code></a> &middot; 2026-09-20T15:18:41Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35520094090"><code>b1a6178</code></a> &middot; 2026-09-20T15:36:49Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
