@@ -251,13 +251,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T12:21:52.543Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/881b96d04841d92f954f3bf5178fc46a7ef33cd8",
-  "sourceCommitSha": "881b96d04841d92f954f3bf5178fc46a7ef33cd8",
-  "sourceCommitAt": "2026-09-20T14:20:43+02:00",
+  "generatedAt": "2026-09-20T12:41:13.961Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5fe9b4989dc3fbc28a293035340642d59c7bbf0b",
+  "sourceCommitSha": "5fe9b4989dc3fbc28a293035340642d59c7bbf0b",
+  "sourceCommitAt": "2026-09-20T14:39:28+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 194,
+    "Skill": 196,
     "Actor": 27,
     "Capability": 26,
     "Role": 116,
@@ -267,7 +267,7 @@
     "SequenceFlow": 582,
     "ProcessNode": 547,
     "Tool": 51,
-    "Schema": 63,
+    "Schema": 64,
     "GraphKind": 20,
     "Directory": 19
   },
@@ -1307,6 +1307,21 @@
       "ambiguous": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note",
+      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/create-sticky-note.md",
+      "instructionLines": 154,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/continual-progress",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "continual-progress",
@@ -1316,7 +1331,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 151,
+      "instructionLines": 200,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1406,7 +1421,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 148,
+      "instructionLines": 187,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1420,7 +1435,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 560,
+      "instructionLines": 600,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1952,7 +1967,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/github-state-inspection.md",
-      "instructionLines": 128,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -2189,6 +2204,21 @@
       ],
       "instructionsPath": "skills/folio-core/prepare-merge-auto.md",
       "instructionLines": 172,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "theme-art-intake",
+      "title": "Theme art intake",
+      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/theme-art-intake.md",
+      "instructionLines": 131,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -4278,6 +4308,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-comparison",
@@ -4345,6 +4376,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/test-engineer",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-review",
@@ -23416,6 +23448,13 @@
       "module": "schemas/test-run.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "theme-art-intake",
+      "title": "Theme art arriving as three files — accepted, or refused with a reason.",
+      "module": "schemas/theme-art-intake.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "theme",
@@ -24649,8 +24688,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "881b96d04841d92f954f3bf5178fc46a7ef33cd8",
+    "sha": "5fe9b4989dc3fbc28a293035340642d59c7bbf0b",
     "pr": "main",
-    "run": "35510346622"
+    "run": "35511247791"
   }
 }
