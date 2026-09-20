@@ -8,7 +8,7 @@
 import { describe, expect, test } from "bun:test";
 
 import { tools } from "../../tools/index.js";
-import { ToolDefinitionSchema } from "../../schemas/tool.js";
+import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
 import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
@@ -166,5 +166,72 @@ describe("tools", () => {
         expect(p.schema.startsWith(`${B}/tool-types.schema.json`)).toBe(true);
       }
     }
+  });
+});
+
+describe("substitutable Tools declare it, and say how to choose", () => {
+  const all = tools("https://example.org/");
+  const byId = new Map(all.map((t) => [t.id, t]));
+
+  test("the relation is symmetric across the real tool set", () => {
+    // Asymmetry is the failure this relation exists to prevent, occurring
+    // exactly half the time — and the half that works makes it look
+    // maintained, which is worse than not declaring it at all.
+    for (const t of all) {
+      for (const other of t.alternativeTo ?? []) {
+        expect(`${t.id} -> ${other}`).toBe(`${t.id} -> ${byId.get(other)?.id ?? "MISSING"}`);
+        expect(byId.get(other)?.alternativeTo ?? []).toContain(t.id);
+      }
+    }
+  });
+
+  test("every declared alternative carries all three selection fields", () => {
+    for (const t of all) {
+      if ((t.alternativeTo?.length ?? 0) === 0) continue;
+      // `limits` is the one an author is tempted to skip. Without it an agent
+      // reaches for the tool and discovers the boundary by failing.
+      for (const k of ["when", "limits", "cost"] as const) {
+        expect(`${t.id}.${k}`).toBe(t.selection?.[k] ? `${t.id}.${k}` : `${t.id}.${k} MISSING`);
+      }
+    }
+  });
+
+  test("the schema refuses an alternative with no selection", () => {
+    const base = byId.get("ingest-stdlib");
+    expect(base).toBeDefined();
+    if (!base) return;
+    const { selection: _drop, ...without } = base;
+    expect(() => defineTool(without as typeof base)).toThrow(/selection/);
+  });
+
+  test("a Tool cannot be an alternative to itself", () => {
+    const base = byId.get("ingest-stdlib");
+    if (!base) return;
+    expect(() => defineTool({ ...base, alternativeTo: [base.id] })).toThrow(/itself/);
+  });
+
+  test("sharing a skill does NOT imply substitutability", () => {
+    // The measurement that refuted deriving this from `satisfies`: 12 of 25
+    // skills carry more than one Tool and nearly all are COMPLEMENTARY. The
+    // five `process-state` tools are steps, not choices, and must stay free
+    // of a relation that would demand comparative prose about nothing.
+    const processState = all.filter((t) => t.satisfies.includes("process-state"));
+    expect(processState.length).toBeGreaterThan(1);
+    for (const t of processState) expect(t.alternativeTo ?? []).toEqual([]);
+  });
+
+  test("the ingest pair is declared, and splits on the dependency boundary", () => {
+    const std = byId.get("ingest-stdlib");
+    const ext = byId.get("ingest-extended");
+    expect([std?.id, ext?.id]).toEqual(["ingest-stdlib", "ingest-extended"]);
+    // The whole point of the pair: one needs nothing, the other needs a
+    // toolchain. `install.none` states "needs nothing" rather than leaving it
+    // to absence, which is the distinction that flag exists for.
+    expect(std?.install.none).toBe(true);
+    expect(ext?.install.cli).toBeTruthy();
+    expect(std?.satisfies).toEqual(ext?.satisfies);
+    // Each names the other as where its limits are picked up.
+    expect(std?.selection?.limits).toContain("ingest-extended");
+    expect(ext?.selection?.limits).toContain("ingest-stdlib");
   });
 });

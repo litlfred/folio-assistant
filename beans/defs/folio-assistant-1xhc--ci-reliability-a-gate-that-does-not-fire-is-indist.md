@@ -56,3 +56,35 @@ The gate caught a defect in the commit that was adding gates, for the second
 time in one PR — first `check:declared-paths` on the hardcoded bean path, now
 this.
 
+
+_2026-09-20T03:05Z_ — **Converged two gate runners into one. `scripts/ci-gates.ts` retired; `scripts/gates.ts` (`n60j`) is the single answer.**
+
+Two sessions built the same tool within hours of each other, both deriving the
+gate list from `code-quality-gates.yml`, both for the same stated reason
+(locally green, red in CI). That is this epic's own defect wearing a new hat:
+two answers to "what will CI run" are free to disagree, and `rlp5` is the
+standing record of what a second spelling costs.
+
+`gates.ts` is a strict superset, so the choice was not close:
+
+| | `ci-gates` (retired) | `gates` (kept) |
+|---|---|---|
+| gates run | 35 | **40** — includes the `e2e` job |
+| browser handling | detect-and-report `UNDET` + a `--with-browser` flag | derived from **job membership** |
+| parsing | regex over YAML | a real YAML parser |
+| vacuity guard | **none** | fails when the extraction finds nothing |
+| skill doc | none | `platform-gates.md` |
+
+The vacuity guard is the one worth naming: a runner that silently executes an
+empty list exits 0 and reads as a clean sweep — precisely the silence this
+epic exists to remove, and the retired runner did not have it.
+
+Removed with the owner's explicit say-so, per
+`deletion-requires-confirmation`: reported first with sizes and ages (4 985 B /
+114 lines, and 4 520 B / 107 lines, both a day old), then deleted. Nothing
+referenced them outside `package.json`.
+
+The `UNDET` third state was NOT ported. `gates.ts` answers the same question
+structurally — it does not run browser gates unless asked — so there is nothing
+to detect, and adding a detector would be a second mechanism for a case the
+first design does not have.

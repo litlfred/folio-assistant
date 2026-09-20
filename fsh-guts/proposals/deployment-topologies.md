@@ -251,6 +251,17 @@ than quietly accepted.
 > in the suite is that this repository's own declaration still reads.
 > Bean `folio-assistant-g7vb`.
 >
+> **`air-gapped` × `mixed` settled 2026-09-20, and not by the reason I gave.**
+> Owner: *"no air-gapped-mixed. that is mixed already. its a spectrum, based
+> on the deployment archicutectur of each machine actor."* At deployment
+> level **`mixed` means the actors differ from each other**, so refusing it
+> would refuse the normal case. The deployment value is an aggregate over
+> participants that are each individually consistent — which is also why
+> reach belongs on the **actor** (see
+> [Actor facts and their processes](actor-facts-and-their-processes.html)),
+> and why a `network` × `provenance` rule is sound only where the provenance
+> value admits no local participant.
+>
 > Two things stayed out, both on §3's own bar — *is a counter-example
 > conceivable?* Private repo × Pages, settled above. And `air-gapped` ×
 > `modelProvenance: mixed`, where the entailment looks identical to the

@@ -47,6 +47,7 @@
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:declared-paths": "bun run scripts/check-declared-paths.ts",
+    "check:fallback-roles": "bun run scripts/check-fallback-roles.ts",
     "check:declared-assets": "bun run scripts/check-declared-assets.ts",
     "bootstrap:graph": "bun run scripts/gen-bootstrap-graph.ts",
     "bootstrap:graph:check": "bun run scripts/gen-bootstrap-graph.ts --check",
@@ -124,8 +125,9 @@
     "translation:index": "bun run content/pipeline/translation-index.ts",
     "translation:index:check": "bun run content/pipeline/translation-index.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "ci:gates": "bun run scripts/ci-gates.ts",
-    "ci:gates:list": "bun run scripts/ci-gates.ts --list"
+    "narratives": "bun run scripts/narratives.ts",
+    "narratives:confirm": "bun run scripts/narratives.ts confirm",
+    "narratives:reject": "bun run scripts/narratives.ts reject"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
