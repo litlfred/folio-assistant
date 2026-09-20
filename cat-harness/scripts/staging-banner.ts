@@ -54,6 +54,28 @@
  * (`navKey()` strips the baseurl; the switcher rebuilds hrefs from it), so
  * they are one change and not this one.
  *
+ * ## The footer carries the same stamp, and it is filled the same way
+ *
+ * `docs/_includes/footer_custom.html` renders `short_sha`, `built_at` and
+ * `run_url` from `docs/_data/build.yml` into the footer of EVERY page. A fresh
+ * `date -u` there made every page unique on every run — the same defect as the
+ * banner, one include away — and it SURVIVED the banner fix. Measured on two
+ * deploys of one branch three minutes apart, both already shipping the
+ * constant banner: **1466 insertions, 1465 deletions across 613 files, every
+ * page changed by exactly one line**.
+ *
+ * So the staging build no longer writes those three keys; Jekyll renders the
+ * footer identically every time, and {@link CLIENT}'s `stamp()` fills the real
+ * values from the same `staging.json` the banner already fetches. The reader
+ * loses nothing — only the moment the value is bound moves from build time to
+ * load time. `docs-site.yml` still stamps the MAIN site, where there is one
+ * copy and nothing to deduplicate.
+ *
+ * That this was missed until the deployed artefact was measured is the point
+ * worth keeping: the unit test proved the FRAGMENT constant and was right,
+ * and the page still was not. A test of the part is not a measurement of the
+ * whole.
+ *
  * ## Two rules the client script must not break
  *
  * **A failed fetch must still say PREVIEW.** The banner exists so a reviewer
@@ -195,7 +217,15 @@ function fill(d,f,r){
     d.appendChild(link(f.mainSite+'/'+rel,'compare with main \\u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
   measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' \u00b7 '+f.built));
 }
 function go(){
   measure();

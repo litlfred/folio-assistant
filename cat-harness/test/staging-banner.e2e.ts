@@ -48,7 +48,15 @@ const FACTS = {
   newPages: ["guides/brand-new.html"],
 };
 
-const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"></head><body>${FRAGMENT}<h1>page</h1></body></html>`;
+// The footer include renders CONSTANTLY on a staging build — `short_sha`,
+// `built_at` and `run_url` are no longer written to `docs/_data/build.yml`
+// there, so Liquid's `| default: 'dev'` is what ships and the client fills the
+// real values in. This fixture reproduces exactly that output.
+const FOOTER =
+  `<p class="text-small mb-0 fa-build-stamp">deployed ` +
+  `<a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p>`;
+
+const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"></head><body>${FRAGMENT}<h1>page</h1>${FOOTER}</body></html>`;
 
 /**
  * Serve a page at `path` and, unless `json` is null, a `staging.json` at the
@@ -171,4 +179,31 @@ test("a branch name containing markup is rendered as TEXT", async ({ page }) => 
   await expect(banner).toContainText(`x<img src=q onerror="window.__pwned=1">y`);
   expect(await banner.locator("img").count()).toBe(0);
   expect(await page.evaluate(() => (window as unknown as { __pwned?: number }).__pwned)).toBeUndefined();
+});
+
+
+test("the footer build stamp is filled from staging.json too", async ({ page }) => {
+  // Bean `g196`, second half. `footer_custom.html` renders `short_sha` and
+  // `built_at` into EVERY page, so a fresh `date -u` made every page unique on
+  // every run — the same defect as the banner, one include away, and it
+  // survived the banner fix. Measured on two deploys of one branch three
+  // minutes apart, both already shipping a constant banner: 1466 insertions,
+  // 1465 deletions across 613 files, every page changed by exactly one line.
+  await serve(page, `${ROOT}index.html`, FACTS);
+  const stamp = page.locator(".fa-build-stamp");
+  await expect(stamp).toContainText("abc1234");
+  await expect(stamp).toContainText("2026-09-20T18:00:00Z");
+  await expect(stamp).not.toContainText("dev");
+  await expect(stamp.locator("a")).toHaveAttribute(
+    "href",
+    "https://github.com/litlfred/folio-assistant/actions/runs/9",
+  );
+});
+
+test("a failed fetch leaves the footer as Jekyll rendered it, not blank", async ({ page }) => {
+  // The same third-state rule as the banner: "could not determine" degrades to
+  // the honest placeholder rather than to an empty footer that looks like a
+  // page with no build at all.
+  await serve(page, `${ROOT}index.html`, null);
+  await expect(page.locator(".fa-build-stamp")).toContainText("dev");
 });

@@ -244,3 +244,82 @@ than a banner test, so it is not wrong today — but it is the shape `bqrg`
 measured, where six copies of one function had three broken and nothing said
 so. Left alone rather than changed blind, and recorded here so it is a known
 copy rather than a forgotten one.
+
+---
+
+*2026-09-20, same session* — **The claim above was FALSE as deployed, and the deployed artefact is what found it.**
+
+## What I claimed, and what the previews actually did
+
+The entry above says pages "no longer differ **across rebuilds of one
+preview**". Two deploys of this branch, **three minutes apart**, both already
+shipping the constant banner:
+
+```
+b56b960  17:00:26  staging(claude-wonderful-bohr-6kxh7b)
+bbd5989  17:03:27  staging(claude-wonderful-bohr-6kxh7b)
+   1466 insertions(+), 1465 deletions(-)  across 613 files
+   every HTML page: 1 insertion, 1 deletion
+```
+
+Every page still changed, on every deploy. The only source difference between
+those two runs was a QA sidecar that is not rendered at all.
+
+## Cause: the footer carries the same stamp, one include away
+
+`docs/_includes/footer_custom.html` renders `site.data.build.short_sha`,
+`built_at` and `run_url` into the footer of **every** page, and the staging
+build's "Stamp the build" step wrote a fresh `date -u` into
+`docs/_data/build.yml` on every run.
+
+**It is the same defect as the banner and it survived the banner fix**, because
+it lives in a Jekyll include rather than in the workflow's injection step. The
+bean's three named causes did not include it: cause 1 was scoped to "the build
+timestamp and commit SHA **in the staging banner**".
+
+## Fixed the same way
+
+The staging build no longer writes `short_sha`, `built_at` or `run_url`, so
+Jekyll renders the footer identically every time, and the client's `stamp()`
+fills the real values from the **same** `staging.json` the banner already
+fetches — one request, two consumers. `docs-site.yml` still stamps the MAIN
+site, where there is one copy and nothing to deduplicate, and where the
+include's own reason stands: *"a stale browser cache and a deploy that has not
+run look identical"*.
+
+A failed fetch leaves Jekyll's `| default: 'dev'` in place rather than blanking
+the footer — the same third state as the banner.
+
+## The lesson, which is the part worth keeping
+
+**Every unit test above was correct and the page was still wrong.** They assert
+things about `FRAGMENT`, and `FRAGMENT` is genuinely constant. A test of the
+part is not a measurement of the whole, and the only thing that caught this was
+reading the deploy commits on `gh-pages` — the artefact, not the code.
+
+That is this bean's own Done-when row talking: *"Re-measure STAGING… A
+projection that was not checked is a guess."* The projection was not the only
+guess; the **mechanism** was one too.
+
+Now guarded by 6 more tests: the workflow must not write those three keys on a
+staging build, the keys it does write must be the per-preview-constant ones,
+the client must CALL `stamp`, `docs-site.yml` must keep stamping the main site,
+and two browser tests over a fixture reproducing the real Liquid output.
+
+## Four tests that could not fail, in one change
+
+Worth recording together, because the pattern is identical each time — **an
+assertion naming what two things share rather than what distinguishes them**:
+
+1. `toContain("build details unavailable")` over the whole fragment — matched
+   the *other* unavailability message, stayed green with the catch path
+   emptied.
+2. "carries no copy of the arithmetic" in `06kg` — matched the *comment*
+   explaining why it carries no copy.
+3. `toContain("fa-build-stamp")` — matched the function *definition*, stayed
+   green with the call deleted.
+4. `/\bstamp\(f\)/` — the fix for (3), and it matched `function stamp(f){`
+   too. The call ends in `;`, the definition in `{`.
+
+All four were found by **ratcheting**, none by review. A test written and not
+falsified is a test whose failure mode is unknown.

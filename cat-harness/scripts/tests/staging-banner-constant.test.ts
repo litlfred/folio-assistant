@@ -23,8 +23,9 @@
  */
 import { describe, test, expect } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { tmpdir } from "os";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 import {
   run,
   injectInto,
@@ -217,5 +218,79 @@ describe("newPages is the SHORT list, and absent is not empty", () => {
     const listAt = client.indexOf("newPages.indexOf");
     expect(flagAt).toBeGreaterThan(-1);
     expect(listAt).toBeGreaterThan(flagAt);
+  });
+});
+
+describe("the STAGING build does not bake a per-run stamp into the footer", () => {
+  /**
+   * The gap this file had, and the reason it is worth stating plainly.
+   *
+   * Every test above asserts things about `FRAGMENT`, and they were all
+   * correct: the fragment IS constant. The deployed page was not, because
+   * `docs/_includes/footer_custom.html` renders `short_sha`, `built_at` and
+   * `run_url` from `docs/_data/build.yml` into every page's footer, and the
+   * staging build wrote a fresh `date -u` into it on every run.
+   *
+   * Measured on two deploys of ONE branch three minutes apart, both already
+   * shipping the constant banner: **1466 insertions, 1465 deletions across 613
+   * files, every page changed by exactly one line.** A unit test of the part
+   * is not a measurement of the whole, and this is what that costs.
+   */
+  const WORKFLOW = readFileSync(
+    join(repoRootFor(resolve(import.meta.dir, "..", "..")), ".github", "workflows", "feature-staging.yml"),
+    "utf-8",
+  );
+
+  /** The `Stamp the build` step's body, comments stripped. */
+  const stampStep = (() => {
+    const m = WORKFLOW.match(/- name: Stamp the build\n([\s\S]*?)(?=\n      - name: )/);
+    if (!m) throw new Error("no `Stamp the build` step in feature-staging.yml");
+    return m[1]!
+      .split("\n")
+      .filter((l) => !/^\s*#/.test(l))
+      .join("\n");
+  })();
+
+  test.each(["short_sha", "built_at", "run_url"])(
+    "`%s` is not written on a staging build — the footer renders it on every page",
+    (key) => {
+      expect(stampStep).not.toContain(key);
+    },
+  );
+
+  test("the keys that ARE written are constant for a preview", () => {
+    // branch, slug and PR number do not change between rebuilds of one
+    // preview, so they cost nothing and stay where Jekyll can use them.
+    for (const key of ["branch:", "staging_slug:", "pr_number:"]) {
+      expect(stampStep).toContain(key);
+    }
+  });
+
+  test("the client fills the stamp from the facts it already fetched", () => {
+    const client = FRAGMENT.slice(FRAGMENT.indexOf("<script"));
+    expect(client).toContain("fa-build-stamp");
+    // The definition existing is not the same as it being CALLED. Checking
+    // only for `fa-build-stamp` passed with the `stamp(f)` call deleted —
+    // caught by ratcheting, and by the browser test rather than this one.
+    // Third variant of this trap in this change alone.
+    // `stamp(f);` — the CALL, which ends in a semicolon. `\bstamp\(f\)`
+    // also matches the DEFINITION `function stamp(f){`, so it stayed green
+    // with the call deleted. Fourth variant of this trap in this one change:
+    // the assertion must name what distinguishes the two, not what they share.
+    expect(client).toMatch(/stamp\(f\);/);
+    // From the same one fetch, not a second request.
+    expect((client.match(/fetch\(/g) ?? []).length).toBe(1);
+  });
+
+  test("the MAIN site still stamps — there is one copy and nothing to dedup", () => {
+    // `footer_custom.html`'s own comment: without a stamp "a stale browser
+    // cache and a deploy that has not run look identical". Removing it
+    // everywhere would fix the storage problem by destroying the signal.
+    const main = readFileSync(
+      join(repoRootFor(resolve(import.meta.dir, "..", "..")), ".github", "workflows", "docs-site.yml"),
+      "utf-8",
+    );
+    expect(main).toContain("short_sha:");
+    expect(main).toContain("built_at:");
   });
 });
