@@ -1511,11 +1511,46 @@ export const SubgraphCoverageSchema = z.object({
   visualiser: z.string().min(1).optional(),
   docs: z.string().min(1).optional(),
   skill: z.string().min(1).optional(),
+  /**
+   * What produces this directory's SERIALISATIONS — `json`, `jsonld` and
+   * `schema.json` at the directory's own URL.
+   *
+   * The owner, 2026-09-20: *"all dir urls should have json, jsonld,
+   * schema.json like `<base-url>/beans.jsonld`"*.
+   *
+   * **This is the one obligation with no by-kind exemption, and `hfkl` is why.**
+   * `cat-bootstrap` is excused a visualiser — *"it is exception to
+   * harness/layer not having visualtion/workflow visualizer. but it must have
+   * its json/jsonld… that is its existence."* The thing it is excused INTO is
+   * this. So a directory may be exempt from being LOOKED at and is never
+   * exempt from being READABLE BY A MACHINE: the visualiser is the courtesy,
+   * the serialisation is the existence claim.
+   *
+   * ## It is NOT WAIVABLE, and that is the one asymmetry in this object
+   *
+   * Every other criterion here takes an `exempt.<criterion>` reason, because a
+   * waiver with a reason is how this repository records a considered exception
+   * rather than a silence. This one does not, on the owner's ruling,
+   * 2026-09-20: *"harnesses cannot override there being in the KG."*
+   *
+   * An instance may decide nothing renders a directory, nothing documents it
+   * and nothing governs it — those are choices about EFFORT. Whether its nodes
+   * are addressable is not a choice about effort, it is the claim that they
+   * are in the graph at all. A harness that could waive it could declare a
+   * directory into the knowledge graph and then make its contents
+   * unreachable, which is the `dh4f` defect with a signature on it.
+   *
+   * So `exempt` below carries three keys and not four, deliberately. If this
+   * ever grows a fourth, that ruling has been reversed and the reversal
+   * belongs here.
+   */
+  serialisations: z.string().min(1).optional(),
   exempt: z
     .object({
       visualiser: z.string().min(1).optional(),
       docs: z.string().min(1).optional(),
       skill: z.string().min(1).optional(),
+      // NO `serialisations` — see the field above. Not an omission.
     })
     .optional(),
 });

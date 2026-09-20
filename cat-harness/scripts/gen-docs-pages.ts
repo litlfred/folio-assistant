@@ -44,6 +44,7 @@ import {
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
 import { readTodoFiles, todoDefaultTheme } from "./todos.js";
+import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -69,7 +70,22 @@ const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // `content/` — without tripping the folio-emptiness gate.
 const SRC_DIR = join(REPO_ROOT, "content", "docs");
 const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
-const REPO_WEB = "https://github.com/litlfred/folio-assistant";
+/**
+ * The forge this checkout points at.
+ *
+ * DETECTED, not written down. This was the literal
+ * `https://github.com/litlfred/folio-assistant` until 2026-09-20 — one
+ * instance's address inside a generator every instance runs, which is exactly
+ * the genericity failure `AGENTS.md` catalogues (a platform script carrying
+ * `quantum-observable-universe`). Every edit link, every bean link and every
+ * QA link this file emits was composed from it, so a fork's published docs
+ * would have pointed at this repository.
+ *
+ * `gen-landing-data.ts` already resolved it this way; the two now agree.
+ * The fallback keeps the links working where there is no `origin` to ask —
+ * a sandbox, a tarball — rather than emitting hrefs that go nowhere.
+ */
+const REPO_WEB = detectRepoUrl(repoRootFor(REPO_ROOT)) ?? "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
 
 /**
@@ -232,6 +248,33 @@ const QA_ASSET_DIR = join(REPO_ROOT, "test", "results", "witnesses");
  * number.
  */
 const TODO_ASSET = join(OUT_DIR, "assets", "todos", "index.json");
+
+/**
+ * The bean board's data — the AGENT work plan, published the same way.
+ *
+ * Same argument as `TODO_ASSET` one file rather than N: the badge needs a
+ * COUNT before anybody opens anything. The difference is scale, and it is two
+ * orders of magnitude — 239 beans against 3 todos on 2026-09-20 — which is
+ * why the projection carries a TRIMMED body rather than the whole of one.
+ * Every bean here runs to hundreds of lines of prose; shipping all of it would
+ * put roughly a megabyte on the page to render a status column.
+ */
+const BEANS_ASSET = join(OUT_DIR, "assets", "beans", "index.json");
+
+/**
+ * How much of a bean's body the projection carries.
+ *
+ * Enough for a sticky's preview and no more. A reader who wants the argument
+ * follows `editHref` to the file, which is the same affordance every other
+ * node gets.
+ *
+ * **Measured at this length, 2026-09-20:** 239 beans project to 235 KB raw and
+ * **62 KB gzipped** — 0.26 KB per bean against the todo index's 1.5 KB per
+ * todo, so the per-item cost is already the lower of the two. The number is
+ * recorded because the next person to change this constant should be changing
+ * a measurement rather than a guess.
+ */
+const BEAN_BODY_PREVIEW = 400;
 const emittedQa = new Set<string>();
 
 /** Every published witness JSON currently on disk, for orphan detection. */
@@ -721,16 +764,24 @@ function todoRelations(tags: {
   return out;
 }
 
-/** The bean's file, or `undefined` when nothing on disk carries that id. */
+/**
+ * The bean's file, or `undefined` when nothing on disk carries that id.
+ *
+ * The directory is RESOLVED from `beans/beans.json` rather than composed. It
+ * was `join(repoRootFor(REPO_ROOT), "beans", "defs")` until 2026-09-20 — a
+ * second answer to a question the graph already answers, which would have gone
+ * on resolving to nothing the moment the store moved, and reported every bean
+ * reference as unlinkable while looking correct.
+ */
 function beanFile(id: string): string | undefined {
-  const dir = join(repoRootFor(REPO_ROOT), "beans", "defs");
-  if (!existsSync(dir)) return undefined;
+  const dir = beanDefsDir(repoRootFor(REPO_ROOT));
+  if (dir === null || !existsSync(dir)) return undefined;
   // Sorted for the same reason `processHierarchy` sorts: raw directory order
   // is filesystem state, and `find` over it makes the FIRST match a property of
   // where the file landed on disk. Two beans sharing a prefix would resolve to
   // different files on two machines.
   const hit = readdirSync(dir).sort().find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
-  return hit ? `beans/defs/${hit}` : undefined;
+  return hit ? relative(repoRootFor(REPO_ROOT), join(dir, hit)) : undefined;
 }
 
 /**
@@ -948,7 +999,11 @@ function processHierarchy(): Record<string, string[]> {
 
   emit(
     TODO_ASSET,
-    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes, themeArt }, null, 2) + "\n",
+    JSON.stringify(
+      { $schema: "folio-todo-index/v1", repoWeb: REPO_WEB, items, processes, themeArt },
+      null,
+      2,
+    ) + "\n",
     "data",
   );
   const themed = items.filter((i) => i.theme !== undefined).length;
@@ -956,6 +1011,91 @@ function processHierarchy(): Record<string, string[]> {
     `  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s), ` +
       `${themed} themed, ${Object.keys(themeArt).length} theme(s) with art)`,
   );
+}
+
+// The bean board's data. Sibling of the todo block above, and deliberately the
+// same shape: one indented JSON file, emitted through the same `--check`
+// contract, with `editHref` composed HERE for the same reason — the client
+// would otherwise need the repository's web address, and a literal in
+// `docs-ui.js` is one folio's own address inside shared client code.
+{
+  const beans = readBeans(repoRootFor(REPO_ROOT));
+  // `null` is "no bean store", which is NOT the same as a store with nothing
+  // in it, and rendering them alike is how a consumer reports a clean run over
+  // a repository it never looked at. A folio with no work plan simply gets no
+  // projection; the board reads the absent file as "no store" rather than as
+  // an empty one.
+  if (beans === null) {
+    console.log(`  · assets/beans/index.json — no bean store`);
+  } else {
+    const blockers = blockedBy(beans);
+    const items = beans.map((b) => ({
+      id: b.id,
+      title: b.title,
+      status: b.status,
+      type: b.type,
+      priority: b.priority,
+      parent: b.parent,
+      // Both directions, resolved once. A client given only `blocking` would
+      // have to invert the whole set to answer "what is holding THIS bean up",
+      // which is the question a board is actually asked.
+      blocking: b.blocking,
+      blockedBy: blockers.get(b.id) ?? [],
+      createdAt: b.createdAt,
+      // Published as a FACT, with no age computed from it. See `beanFindings`.
+      updatedAt: b.updatedAt,
+      preview: b.body.trim().slice(0, BEAN_BODY_PREVIEW),
+      // Repo-relative, and the renderer derives BOTH a view and an edit URL
+      // from it. Shipping two absolute URLs per bean would put the forge's URL
+      // shape in the data 283 times over, and they would then have to agree.
+      file: b.file,
+    }));
+    mkdirSync(dirname(BEANS_ASSET), { recursive: true });
+    // Indented for the merge reason the todo index documents at length: a
+    // minified projection is one line, git merges by line, and two branches
+    // each adding a bean would conflict on the whole file every time. At 239
+    // beans that argument is stronger here than it was there.
+    emit(
+      BEANS_ASSET,
+      JSON.stringify(
+        {
+        $schema: "folio-bean-index/v1",
+        // The forge, so `work-plan.js` composes its links from DATA rather
+        // than carrying one instance's address in shared client code. Same
+        // reason `editHref` is composed here, one level further on.
+        repoWeb: REPO_WEB,
+        items,
+        findings: beanFindings(beans),
+      },
+        null,
+        2,
+      ) + "\n",
+      // EXISTENCE-gated, not content-gated, and the asymmetry with the todo
+      // index above is the whole point.
+      //
+      // `emit`'s own note says a `data` projection is gated on exact content
+      // because it projects files a human authored, so a difference is
+      // somebody who forgot to regenerate. That holds for three todos. It does
+      // not hold for the bean store: EVERY agent session writes to `beans/`,
+      // so the projection moves whenever anybody works — which nobody forgot
+      // to do.
+      //
+      // Measured, 2026-09-20, and this is why the gating changed: this branch
+      // carried 296 bean files while `main` carried 522, four hours apart.
+      // CI tests the MERGE ref, so a content gate went red on a projection
+      // that was fresh on the branch and fresh on main and stale only against
+      // their union. Every open PR would have to regenerate on every merge, to
+      // fix nothing a reader could see.
+      //
+      // That is exactly the shape bean `d2kp` exists to stop: "gating them
+      // could only ever fire on a graph that changed". A missing file is still
+      // an omission — the board would fetch a 404 forever — so existence is
+      // gated and contents are not, and `docs-site.yml` regenerates before
+      // publishing so what a reader fetches is current regardless.
+      "verdict",
+    );
+    console.log(`  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s))`);
+  }
 }
 
 // A subject that loses its sidecar — or a page that loses a node — must lose its

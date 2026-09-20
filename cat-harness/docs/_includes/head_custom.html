@@ -232,6 +232,15 @@
 <meta name="fa-todo-src" content="{{ '/assets/todos/index.json' | relative_url }}">
 
 <!--
+  The bean index — the AGENT work plan, published by the same generator beside
+  the todo index above, for the same reason and read the same way. Separate
+  files rather than one combined document because the two stores are separate
+  graphs with separate declarations, and a consumer that wants only the human
+  half should not fetch 239 beans to get three todos.
+-->
+<meta name="fa-beans-src" content="{{ '/assets/beans/index.json' | relative_url }}">
+
+<!--
   The discarded-items document — `fsh-guts.jsonld`, published at the base by
   `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
   then some: it carries every node's BODY, which is 64 KB against a 5 KB
@@ -250,6 +259,13 @@
 -->
 <meta name="fa-fsh-guts-src" content="{{ '/fsh-guts.json' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}">
+
+<!--
+  The work-plan dashboard's styles, split from docs-ui.css so that
+  `state-visualizer.ts` can inline exactly these bytes into the generated
+  `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
+-->
+<link rel="stylesheet" href="{{ '/assets/css/work-plan.css' | relative_url }}">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
@@ -278,6 +294,14 @@
 <script src="{{ '/assets/js/vendor/qrcode.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/vendor/qrcode_UTF8.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/docs-ui.js' | relative_url }}" defer></script>
+
+<!--
+  The work-plan dashboard. SELF-MOUNTING on any page carrying
+  `[data-fa-workplan]`, so docs-ui.js neither calls it nor knows it exists; a
+  page without that container pays one failed querySelector. The same file is
+  inlined verbatim into the generated state-visualiser pages.
+-->
+<script src="{{ '/assets/js/work-plan.js' | relative_url }}" defer></script>
 
 <!--
   The landing panel — the instance's declared description drawn inside the

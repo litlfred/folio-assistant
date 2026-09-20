@@ -602,6 +602,11 @@ jobs:
           # (2026-09-20). It reads them out of the YAML rather than
           # listing them, so a new one is covered the day it is added.
           bun run check:ci-invocations
+          # The per-kind state dashboards under `<base>/<graph>/dashboard/`.
+          # COMMITTED pages, so a difference is somebody who changed the
+          # generator, the renderer it inlines, or the declaration, and did
+          # not regenerate — the same contract `schema:viz:check` uses.
+          bun run state:visualizer:check
           bun run harness:dirs:check
           bun run check:schema-nodes
           bun run check:retired-front-matter

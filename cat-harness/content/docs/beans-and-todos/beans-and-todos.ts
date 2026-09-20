@@ -42,5 +42,10 @@ export default webpage({
       title: "Human todos — not built yet",
       block: "human-todos",
     },
+    {
+      id: "work-plan-state",
+      title: "What the work plan holds right now",
+      block: "work-plan-state",
+    },
   ],
 });

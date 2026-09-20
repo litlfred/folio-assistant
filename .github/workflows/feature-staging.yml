@@ -41,6 +41,17 @@ on:
       - 'cat-harness/skills/**'
       - 'cat-harness/scripts/gen-schema-docs.ts'
       - 'cat-harness/scripts/gen-docs-pages.ts'
+      # The state-dashboard generator and the bean reader behind it.
+      #
+      # Their OUTPUT is committed under `cat-harness/docs/`, which the first
+      # entry in this list already matches, so a correct change trips the
+      # preview through the pages alone. These two are named for the incorrect
+      # case: a commit that edits the generator and forgets to regenerate
+      # touches no `docs/` path, gets no preview, and the reviewer sees a green
+      # PR with nothing to look at. `state:visualizer:check` then fails in the
+      # gates — this makes the preview available while that is diagnosed.
+      - 'cat-harness/scripts/state-visualizer.ts'
+      - 'cat-harness/scripts/beans.ts'
       - '.github/workflows/feature-staging.yml'
   pull_request_target:
     types: [closed]
