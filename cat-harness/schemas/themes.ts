@@ -179,6 +179,34 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    id: "analyst",
+    name: "Grumpy cat, analyst",
+    description: "Daylight cream and a working blue, behind the cat with the charts.",
+    palette: {
+      // Sampled from the art, and the numbers say why this is not a variation
+      // on the others: a 7px grid over the square crop gives #f0f0e4 across 28%
+      // of the frame, against #e4e4e4 for the librarian, with sky blues
+      // (#a8ccfc, #b4d8fc, #c0d8fc, #9cccfc) where the others have rain-grey.
+      // This is the ONLY sunny backdrop in the set.
+      surface: "#f2f2e8", ink: "#1e2a3a", edge: "#cbd6e2",
+      // The tie blue. 4.76:1 against `surface`, past the 3:1 SC 1.4.11 floor
+      // for a non-text channel, and clear of the literal red and amber the
+      // critical/high stripes carry so urgency reads the same on every board.
+      accent: "#2f6ea8",
+    },
+    backdrop: {
+      imageRole: "landing-analyst",
+      // Measured over PURE BLACK like the rest: 10.29:1 for this ink, 13.04:1
+      // over white. The art is bright, so the dark end is the one that could
+      // have been assumed and was not.
+      scrim: "rgba(242, 242, 232, 0.90)",
+      description:
+        "The instance's declared analyst art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
     id: "high-contrast-light",
     name: "High contrast, light",
     description: "Black on white. No gradation, by design.",
