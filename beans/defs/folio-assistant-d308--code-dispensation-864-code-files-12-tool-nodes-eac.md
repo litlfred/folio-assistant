@@ -287,3 +287,95 @@ judgement stays."
 independent confirmation of the `w5h0` correction above. Its judgement half is an
 agent writing a manifest and will never be a Tool. Its mechanical half is the
 render path. That is why `w5h0` carries a question rather than a node.
+
+---
+
+## RE-DERIVED after the `cat-harness` inversion, 2026-09-20
+
+`main` moved the whole tree into `cat-harness/` — `wggr`'s stub inversion landed —
+so every path in the table above is stale. Re-derived rather than carried, which
+is this bean's own rule about counts turned on itself.
+
+**The groupings held. Only the addresses moved.** 888 code files (was 868), 231
+loose (was 229), **still 13 groups**. The categoriser needed no new rules: its
+predicates key on FUNCTION, so stripping the `cat-harness/` prefix was the whole
+change. That is the sharpest evidence available that the grouping is about what
+code DOES rather than where it sits — a relocation that renamed every path left
+the table's shape intact.
+
+### The guard fired a fourth time, and one of the three was real
+
+Two were my own regexes requiring a leading `/docs/` and `/translations/`, which
+the prefix strip removed. The third, `cat-harness/scripts/kg-validate.ts`, is
+**new from main** — a KG validation script added in the inversion, filed under the
+audit family.
+
+Four firings now, and only one was noise. A catch-all bucket would have absorbed
+all four silently.
+
+### What changed in the numbers, and why
+
+| | before | after | why |
+|---|--:|--:|---|
+| code files | 868 | 888 | main added 20 |
+| TOOL | 229 | 231 | `kg-validate` + one more |
+| GATE | 10 | 14 | main added gates; the fast set went 38 → 43 |
+| CARRY | 224 | 229 | main added schema and content nodes |
+| TEST | 242 | 252 | main's new tests |
+
+### The layout goal is substantially met
+
+Top level is now `cat-harness/`, `beans/`, `.claude/`, `.github/`, `fsh-guts/`,
+`bootstrap/`, `todos/` and a handful of config files — **4047 of ~4600 tracked
+files sit under `cat-harness/`.** The owner's direction on `wggr` was *"so there
+would be in top-level only bootstrap/ cat-harness/ f-a-core/ etc."*, and that is
+close to done. `tools/index.ts` stays at the root deliberately: it is the overlay
+barrel, and the whole reason it is there is that no consumer should bake a stub
+into an import path.
+
+## The table, re-derived
+
+| group | files | run here | mode 755 | can't tell | dispensation | BPMN process · task | target repo (#223) |
+|---|--:|--:|--:|--:|---|---|---|
+| Publication & export (site, JSON-LD, previews) | 35 | 17 | 3 | 15 | **TOOL** | authoring-a-paper · Task_Publish [content-publish] | folio-assist-core (site) / agentic-harness (kg-export) |
+| Lean formalisation & proof status | 33 | 0 | 16 | 17 | **TOOL** | authoring-a-paper · Task_Formalize [lean-formalization] | folio-asst-sci |
+| QA sweep & witnesses | 27 | 2 | 0 | 25 | **TOOL** | content-lifecycle · Task_Test [content-test] | agentic-harness (sidecar infra) / core (checkers) |
+| Translation (POT / PO / round-trip QA) | 24 | 5 | 0 | 19 | **TOOL** | human-translation-workflow · Task_ExtractPOT / Task_InjectPO / Task_RoundTripQA | folio-assist-core |
+| Knowledge-graph audit & rendering | 21 | 12 | 0 | 9 | **TOOL** | review-code · Task_RunNodeAudits · Task_ReviewTool | agentic-harness |
+| Content graph & dependency analysis | 19 | 1 | 0 | 18 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assist-core |
+| LaTeX / PDF rendering | 16 | 0 | 3 | 13 | **TOOL** | authoring-a-paper · Task_Render [latex-authoring] | folio-asst-sci |
+| Document ingestion (PDF → text → claims) | 15 | 2 | 5 | 8 | **TOOL** | ingest-extract-structure · Task_ExtractText / Task_Ocr / Task_Candidates | folio-assist-core |
+| Block authoring & prose structure | 14 | 1 | 0 | 13 | **TOOL** | authoring-a-paper · Task_AuthorBlocks [content-author] | folio-assist-core |
+| Schema & constraint validation | 12 | 3 | 0 | 9 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assist-core |
+| Bibliography, evidence & glossary | 11 | 0 | 3 | 8 | **TOOL** | evidence-retrieval · Task_L1Sources [document-intake] | folio-assist-core |
+| FHIR / IG / DAK build | 3 | 0 | 0 | 3 | **TOOL** | l3-fhir-pipeline · Task_Sushi · Task_Validate; ig-incremental-build · Task_Cone | smart-base |
+| Narrative confirmation queue (human gate) | 1 | 1 | 0 | 0 | **TOOL** | editing-hci-validation · Task_SmeReview · Task_RecordDecision | folio-assist-core |
+| MCP server / routing / adapters | 43 | 1 | 1 | 41 | **IS** | — (the Tool projection) | agentic-harness |
+| Scaffolding & environment setup | 13 | 1 | 10 | 2 | **IS** | authoring-a-paper · Task_Scaffold; getting-started | agentic-harness |
+| Work plan & session coordination | 12 | 6 | 6 | 0 | **IS** | authoring-a-paper · Task_SeedPlan [todo-manager] | agentic-harness |
+| MCP Tool handlers | 12 | 0 | 0 | 12 | **IS** | — (already Tool nodes) | agentic-harness |
+| BPMN engine | 8 | 0 | 0 | 8 | **IS** | — (runs every process) | agentic-harness |
+| CI health, gates & upstream pins | 14 | 10 | 4 | 0 | **GATE** | code-change-review · Task_RunGates · Task_RunCI; upstream-pin-watch · Task_ReadPins | agentic-harness |
+| Doc-page content objects | 133 | 0 | 0 | 133 | **CARRY** | authoring-a-document · Task_AuthorBlocks | stays — this instance's own folio |
+| Schema carrier (zod → JSON Schema / JSON-LD) | 62 | 0 | 0 | 62 | **CARRY** | authoring-a-paper · Task_Validate | agentic-harness (harness/tool/role) / core (block/content) |
+| Skill-adjacent code (in the kg graph) | 24 | 0 | 0 | 24 | **CARRY** | — (the graph itself) | agentic-harness |
+| Translated content objects | 7 | 0 | 0 | 7 | **CARRY** | human-translation-workflow · Task_InjectPO | stays — this instance's own folio |
+| Tool node declarations | 3 | 0 | 0 | 3 | **CARRY** | — (the graph itself) | every instance declares its own |
+| Content-type adapters | 14 | 0 | 1 | 13 | **LIB** | authoring-a-paper · Task_AuthorBlocks | folio-assist-core |
+| Shared library (no entry point) | 11 | 0 | 1 | 10 | **LIB** | — (behind every Tool) | follows its callers |
+| One-shot migration / codemod | 17 | 0 | 5 | 12 | **SCRAP** | — | — |
+| Tests | 252 | 1 | 1 | 250 | **TEST** | code-change-review · Task_RunGates | follows its subject |
+| CI workflow glue | 20 | 0 | 1 | 19 | **HOST** | code-change-review · Task_RunGates | agentic-harness |
+| Deploy / container build | 5 | 0 | 4 | 1 | **HOST** | authoring-a-paper · Task_Render | folio-asst-sci |
+| Docs-site browser JS | 4 | 0 | 0 | 4 | **HOST** | authoring-a-paper · Task_Publish | agentic-harness |
+| Host config | 3 | 0 | 0 | 3 | **HOST** | — | every instance |
+
+## Progress: 7 of 13 groups have a node
+
+`kg-graph-export`, `ns-vocabulary`, `content-context`, `schema-docs`,
+`skill-docs`, `themes-css`, `avatars-css` — plus two new skills
+(`covered-is-not-reachable`, `site-presentation-assets`), one new QA criterion
+(`skill-is-a-stub`), and five stubs closing the unservable remote declarations.
+
+Remaining, in verifiable-here order: `shzs` the audit family (12 run here — now
+the highest), then the six that need a folio to prove.
