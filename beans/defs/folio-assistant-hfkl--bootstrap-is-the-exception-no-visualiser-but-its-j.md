@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hfkl
 title: 'BOOTSTRAP IS THE EXCEPTION: no visualiser, but its .json/.jsonld IS its existence — and it needs a render/ subgraph'
-status: completed
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:28:23Z
-updated_at: 2026-09-20T18:27:08Z
+updated_at: 2026-09-20T15:37:22Z
 parent: folio-assistant-vke6
 ---
 

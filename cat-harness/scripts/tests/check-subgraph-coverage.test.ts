@@ -20,12 +20,16 @@ import {
   VISUALISER_EXEMPT_INSTANCES,
   readmeFinding,
 } from "../check-subgraph-coverage";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness";
+import {
+  DECLARATION_FILENAME,
+  owesVisualiser,
+  GraphKindRegistry,
+} from "../../schemas/cat-harness";
 
 /** A throwaway instance whose one directory carries `coverage`. */
 function instance(
   coverage: unknown,
-  opts: { name?: string; realTargets?: string[] } = {},
+  opts: { name?: string; realTargets?: string[]; graphs?: string[] } = {},
 ): { root: string; cleanup: () => void } {
   const base = mkdtempSync(join(tmpdir(), "coverage-"));
   const root = join(base, opts.name ?? "inst");
@@ -44,7 +48,7 @@ function instance(
           id: "thing",
           path: "thing/",
           dependents: "reproduce",
-          graphs: ["cat-harness"],
+          graphs: opts.graphs ?? ["cat-harness"],
           ...(coverage === undefined ? {} : { coverage }),
         },
       ],
@@ -180,6 +184,112 @@ describe("bootstrap's exemption is by layer, and is a second criterion not a hol
     const real = auditAll(repo).map((r) => r.instance);
     const matched = [...VISUALISER_EXEMPT_INSTANCES].filter((n) => real.includes(n));
     expect(matched.length).toBeGreaterThan(0);
+  });
+});
+
+describe("an unmet OBLIGATION outranks an unanswered question", () => {
+  // The owner, 2026-09-20: a directory an instance declares or initiates and
+  // writes to — `beans/`, `todos/`, `fsh-guts/` — owes a visualiser "as
+  // requiement of handler". So a missing one there is a promise unkept, not a
+  // question nobody has answered, and the axis has to rank them apart.
+
+  it("a kind that OWES a visualiser and has none is MAJOR", () => {
+    const { root, cleanup } = instance(
+      { docs: "doc.md", skill: "some-skill" },
+      { realTargets: ["doc.md"], graphs: ["beans"] },
+    );
+    const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
+    expect(viz).toHaveLength(1);
+    expect(viz[0]?.severity).toBe("major");
+    expect(viz[0]?.detail).toContain("owes one");
+    cleanup();
+  });
+
+  it("a SELF-RENDERING kind with none is minor — it never owed one", () => {
+    // `docs` is `renderable`, so its pages ARE the view. Reporting it as an
+    // unmet obligation would demand a second rendering of the same thing.
+    const { root, cleanup } = instance(
+      { docs: "doc.md", skill: "some-skill" },
+      { realTargets: ["doc.md"], graphs: ["docs"] },
+    );
+    const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
+    expect(viz).toHaveLength(1);
+    expect(viz[0]?.severity).toBe("minor");
+    cleanup();
+  });
+
+  it("the obligation does NOT key on `holds`, because fsh-guts moved category", () => {
+    // The load-bearing case, and the one that falsified the first design.
+    // "holds: state owes a visualiser" covers beans and todos and MISSES
+    // `fsh-guts`, which the owner names in the same sentence — `mhh9`
+    // reclassified it from `state` to `context` the same day. A rule derived
+    // from `holds` would have silently stopped requiring it.
+    //
+    // Asserted together so the pair cannot drift: both owe one, and they do
+    // not share a `holds` value.
+    for (const kind of ["beans", "fsh-guts"]) {
+      const { root, cleanup } = instance(
+        { docs: "doc.md", skill: "some-skill" },
+        { realTargets: ["doc.md"], graphs: [kind] },
+      );
+      const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
+      expect({ kind, severity: viz[0]?.severity }).toEqual({ kind, severity: "major" });
+      cleanup();
+    }
+  });
+
+  it("an UNKNOWN kind owes one by default — tested on the function, not a fixture", () => {
+    // Tested directly because it cannot be reached through a declaration: the
+    // schema rejects an unregistered graph kind, so `auditInstance` never sees
+    // one. The branch is still the load-bearing default — a kind nobody has
+    // classified must not escape the obligation by being unmentioned — and a
+    // test routed through a fixture would have quietly asserted nothing.
+    expect(owesVisualiser("a-kind-invented-for-this-test")).toBe(true);
+  });
+
+  it("the three layers land where the owner's parenthetical puts them", () => {
+    // "not part of the static KG" is the discriminator, so `content` is the
+    // only layer exempt. Asserted as a table so a kind changing layer shows up
+    // here rather than as a severity that quietly moved.
+    expect({
+      state: owesVisualiser("beans"),
+      context: owesVisualiser("fsh-guts"),
+      derived: owesVisualiser("library"),
+      content: owesVisualiser("schemas"),
+      renderable: owesVisualiser("docs"),
+    }).toEqual({ state: true, context: true, derived: true, content: false, renderable: false });
+  });
+
+  it("a RENDERABLE kind is exempt even when it is not content", () => {
+    // Found by a surviving mutation: deleting the `renderable` branch broke
+    // nothing, because every renderable kind today is ALSO `holds: "content"`
+    // and the second check covered for the first. A branch no test can reach
+    // is a claim nobody has checked, so this builds the case that separates
+    // them — a renderable kind that is not content — rather than leaving the
+    // line as untested intent.
+    const registry = new GraphKindRegistry({
+      "live-board": {
+        type: "https://example.invalid/ns#LiveBoardGraph",
+        renderable: true,
+        holds: "state",
+        summary: "A state graph that renders itself. Hypothetical, and the point.",
+      },
+    });
+    // Exempt because it renders itself, NOT because of its layer: `state`
+    // would otherwise owe one, which is what makes this case discriminating.
+    expect(owesVisualiser("live-board", registry)).toBe(false);
+    expect(owesVisualiser("beans")).toBe(true);
+  });
+
+  it("a declared visualiser that resolves is not a finding, whatever the kind owes", () => {
+    // Vacuity guard. Without it, a bug making every visualiser finding major
+    // would pass all four tests above.
+    const { root, cleanup } = instance(
+      { visualiser: "viz.html", docs: "doc.md", skill: "some-skill" },
+      { realTargets: ["viz.html", "doc.md"], graphs: ["beans"] },
+    );
+    expect(auditInstance(root).findings.filter((f) => f.criterion === "visualiser")).toHaveLength(0);
+    cleanup();
   });
 });
 

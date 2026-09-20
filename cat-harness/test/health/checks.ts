@@ -263,6 +263,19 @@ function minutesSince(now: Date, iso: string | undefined): number | undefined {
   return (now.getTime() - t) / 60_000;
 }
 
+/**
+ * Whole hours between an ISO timestamp and `now`, or `undefined` if unreadable.
+ *
+ * Floored, and never negative: clock skew on a runner can date a write in the
+ * future, and a claim written "in the future" is the most recent claim there
+ * is. Reading it as 0 hours is the safe direction — the error spares a claim
+ * rather than accusing one of being quiet.
+ */
+function hoursBetween(later: Date, iso: string | undefined): number | undefined {
+  const m = minutesSince(later, iso);
+  return m === undefined ? undefined : Math.max(0, Math.floor(m / 60));
+}
+
 /** An age a person reads, from minutes. */
 export function formatAge(minutes: number): string {
   const m = Math.max(0, minutes);
@@ -392,6 +405,20 @@ export const GIT_DIR_FLOOR_BYTES = 100 * MB;
 
 /** See {@link beanStoreCheck}. */
 export const BEAN_STALE_DAYS = 14;
+/**
+ * Hours of silence after which an in-progress claim is **quiet**.
+ *
+ * A DIFFERENT question from {@link BEAN_STALE_DAYS}, not a tighter version of
+ * it. Fourteen days asks whether a claim has been ABANDONED. This asks whether
+ * anybody is on it RIGHT NOW — which is what a session about to pick up an
+ * item needs to know, and what 14 days cannot answer.
+ *
+ * Bean `fgnw`, measured 2026-09-20: 60 beans `in-progress`, **43 with no change
+ * in a four-hour window**, and 38 of those last touched by one bulk move at
+ * 09:37. Eight sessions were active, so at most 17 claims corresponded to a
+ * session working them — and `status` cannot tell a reviewer which 17.
+ */
+export const BEAN_QUIET_HOURS = 72;
 export const BEAN_RESOLVED_INLINE_LIMIT = 100;
 export const BEAN_OPEN_LIMIT = 150;
 
@@ -929,6 +956,24 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "0 of them older than 14 days.",
   },
   {
+    metric: "bean-quiet-claims",
+    value: BEAN_QUIET_HOURS,
+    unit: "hours",
+    severity: "minor",
+    basis:
+      "NO EXTERNAL STANDARD; calibrated here, and the number is the weaker half of the rule. What " +
+      "actually settles whether a claim is live is a LIVENESS SIGNAL — an open PR naming the bean, an " +
+      "unmerged branch touching it, a note since. `skills/folio-core/bean-coordination.md` " +
+      "§\"A claim is branch-local\" is why: a claim becomes visible to a sibling when the PR opens, so " +
+      "a claim with no PR and no branch has announced nothing to anybody. **This check computes only " +
+      "the offline half** — time since `updated_at` — so its count is an UPPER BOUND on quiet claims " +
+      "and must be read as one: a bean here may have an open PR this sweep cannot see. " +
+      "72 hours because a claim is meant to become visible at the FIRST commit " +
+      "(`continual-progress` invariant 1), sessions are container-scoped and reclaimed, and three days " +
+      "spans a weekend without firing on one. It is deliberately far below the 14-day abandonment " +
+      "threshold and answers a different question, so both are reported.",
+  },
+  {
     metric: "bean-resolved-inline",
     value: BEAN_RESOLVED_INLINE_LIMIT,
     unit: "count",
@@ -982,10 +1027,19 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   // rather than a truthiness test, because 0 is a real and reportable count.
   const decisionRecords = beans.filter((b) => b.consideredOptions !== undefined);
   const thin = decisionRecords.filter((b) => (b.consideredOptions ?? 0) < 2);
-  const stale = beans
-    .filter((b) => b.status === "in-progress" || b.status === "in_progress")
+  const claimed = beans.filter((b) => b.status === "in-progress" || b.status === "in_progress");
+  const stale = claimed
     .map((b) => ({ bean: b, age: daysBetween(ctx.now, b.updatedAt) }))
     .filter((x): x is { bean: BeanEvidence; age: number } => x.age !== undefined && x.age > BEAN_STALE_DAYS);
+  // Quiet, not abandoned — see BEAN_QUIET_HOURS. The already-stale ones are
+  // excluded so one bean does not produce two findings saying the same thing
+  // at two timescales; the 14-day finding is the stronger claim and wins.
+  const quiet = claimed
+    .map((b) => ({ bean: b, hours: hoursBetween(ctx.now, b.updatedAt) }))
+    .filter(
+      (x): x is { bean: BeanEvidence; hours: number } =>
+        x.hours !== undefined && x.hours > BEAN_QUIET_HOURS && !stale.some((s) => s.bean.id === x.bean.id),
+    );
 
   const cmd = "beans/defs/*.md front matter";
   const bodyCmd = "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading";
@@ -995,6 +1049,12 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
     { metric: "bean-resolved-inline", value: resolved.length, unit: "count", command: cmd },
     { metric: "bean-duplicate-title-groups", value: dupGroups.length, unit: "count", command: cmd },
     { metric: "bean-stale-in-progress", value: stale.length, unit: "count", command: cmd },
+    // The DENOMINATOR, reported so the next number is legible. "12 quiet" means
+    // nothing without it; "12 of 60 claimed" is a finding a person can act on,
+    // and `fgnw` is the bean that measured why — 43 of 60 read very differently
+    // from 43.
+    { metric: "bean-claimed", value: claimed.length, unit: "count", command: cmd },
+    { metric: "bean-quiet-claims", value: quiet.length, unit: "count", command: cmd },
     // REPORTED EVEN THOUGH NOTHING THRESHOLDS IT, and that is the point. The
     // finding below can only fire on a bean this count includes, so a detector
     // that stops matching — a heading respelled, the regex narrowed — shows up
@@ -1044,7 +1104,24 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
       summary: `\`${s.bean.id}\` has been \`in-progress\` for ${s.age} days ("${s.bean.title}").`,
       action:
         "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a " +
-        "note saying the claim expired — do not resolve a sibling's bean, and do not delete it.",
+        "note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by " +
+        "evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it.",
+    });
+  }
+  for (const q of quiet) {
+    findings.push({
+      metric: "bean-quiet-claims",
+      severity: "minor",
+      summary:
+        `\`${q.bean.id}\` has been \`in-progress\` with no change for ${q.hours} hours ` +
+        `("${q.bean.title}") — ${quiet.length} of ${claimed.length} claims are quiet.`,
+      action:
+        "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged " +
+        "branch touching it. If there is one, the claim is live and there is nothing to do. If there is " +
+        "none, the claim has announced nothing to anybody and the item is fair game — take it, and say " +
+        "in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: " +
+        "this check reports, and a person or the session taking the work acts. " +
+        "See `skills/folio-core/bean-coordination.md` §\"A quiet claim\".",
     });
   }
   if (resolved.length > BEAN_RESOLVED_INLINE_LIMIT) {

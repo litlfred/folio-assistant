@@ -180,6 +180,29 @@ export const TimestampSchema = z
   )
   .describe("An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z");
 
+/**
+ * A time window for a history sweep — `4h`, `2d`, `1w`, or a calendar date.
+ *
+ * Bean `ab3n`'s sweep takes one, and `check:tools` refused the first draft for
+ * declaring it `Text`: free text on a command line can express a shell
+ * payload, and `--since "$(...)"` is the whole of the objection. The remedy
+ * this repository prefers is not escaping but **unrepresentability** — the
+ * grammar here admits a count with a unit, or an ISO date, and nothing else
+ * parses.
+ *
+ * Deliberately NARROWER than `git log --since`, which also accepts
+ * "yesterday", "last monday" and much else. A tool's declared input type is a
+ * contract, not a description of what the underlying program tolerates, and
+ * the phrase forms buy nothing a count with a unit does not already give.
+ */
+export const TimeWindowSchema = z
+  .string()
+  .regex(
+    /^(\d{1,4}[hdw]|\d{4}-\d{2}-\d{2})$/,
+    'a time window is a count with a unit (4h, 2d, 1w) or an ISO date (2026-09-20)',
+  )
+  .describe("A history window: a count with a unit (4h, 2d, 1w) or an ISO date.");
+
 /** A BCP-47 language tag, e.g. `en`, `fr-CA`. */
 export const LocaleSchema = z
   .string()
@@ -484,6 +507,7 @@ export const TOOL_TYPES = {
   InstanceId: InstanceIdSchema,
   Locale: LocaleSchema,
   Timestamp: TimestampSchema,
+  TimeWindow: TimeWindowSchema,
   Flag: FlagSchema,
   BeanStatus: BeanStatusSchema,
   RepoPath: RepoPathSchema,
@@ -579,6 +603,8 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "InstanceId",
   "Locale",
   "Timestamp",
+  // A count with a unit or an ISO date; nothing else parses. See the schema.
+  "TimeWindow",
   // Not a string at all, so it cannot carry a payload.
   "Flag",
   "BeanStatus",

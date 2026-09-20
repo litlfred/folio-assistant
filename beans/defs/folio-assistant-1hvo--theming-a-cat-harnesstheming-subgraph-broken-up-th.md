@@ -1,11 +1,12 @@
 ---
 # folio-assistant-1hvo
+title: 'THEMING: a cat-harness/theming/ subgraph, broken up thematically'
 title: 'THEMING: a cat-harness theming subgraph, broken up thematically'
 status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:28:56Z
-updated_at: 2026-09-20T19:00:02Z
+updated_at: 2026-09-20T16:03:06Z
 parent: folio-assistant-o3xy
 ---
 

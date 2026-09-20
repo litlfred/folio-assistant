@@ -238,6 +238,18 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 108,
     reads: "a knot in a thread — a fact tied down, read and not rewritten",
   },
+  waiver: {
+    // A key handed over, not a key held: the bow is drawn toward the reader.
+    // Deliberately NOT a lock or a shield, which say "this is guarded" — a
+    // waiver is the opposite act, a gate's owner giving the gate away. The
+    // short tail says it opens ONE thing: the gate class it names, never
+    // everything. Hue sits beside `memory`, because it is declared over the
+    // same directory and a reader should see the kinship before the
+    // difference.
+    glyph: "M14 10a3 3 0 11-6 0 3 3 0 016 0M14 10h7M18 10v3M21 10v2",
+    tone: 132,
+    reads: "a key passed across — a confirmation given before it was asked for",
+  },
   "fsh-guts": {
     // The trashcan itself is a kind. Distinct from the trash STATE below.
     glyph: "M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13M11 11v6M14 11v6",

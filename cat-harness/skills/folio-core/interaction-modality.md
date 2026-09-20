@@ -203,6 +203,29 @@ than silence.
 decision has handed it over, whatever the framing sentence says. Either the
 options and their costs are there, or the name comes out and a count goes in.
 
+#### Enforced, not remembered — the three layers added 2026-09-20
+
+This section was STRICT and complete on 2026-09-20, and was broken the same day
+by the agent implementing its neighbours. The owner: *"ask specific questiosn w/
+context/ recommendations/pros/cons (see skills, why not invoked?)"* — and the
+"why not" is mechanical rather than a lapse of care. The rule lives here, in the
+knowledge graph; `AGENTS.md` carries a **summary** of it; the summary omits the
+clause that was broken (the comparison goes in the prose, not in the selection
+tool's labels); and nothing sat between the agent and the question tool.
+
+**A rule that depends on being remembered is not enforced.** So:
+
+| layer | what it does | what it cannot do |
+|---|---|---|
+| `.claude/skills/interaction-modality/` | makes this skill **offerable by name**, which it was not — an agent looking for the rule found only the summary | triggering is probabilistic; it helps an agent already thinking about asking well |
+| `PreToolUse` on `AskUserQuestion` → `scripts/ask-well.sh` | prints the six parts at the one moment the rule certainly applies, on every agent and every session | it sees the tool call, not the prose written before it, so it REMINDS and never blocks — a gate that cannot tell must not refuse |
+| `schemas/decision-request.ts` | makes the comparison **unomittable**: no optionals, so a decision with two options and one comparison does not parse, and `renderDecision` emits the prose table and the selection from ONE object so they cannot drift | it cannot tell a good `con` from a lazy one, and does not try — it checks that the question was asked, never that the answer is honest |
+
+None of the three is sufficient and the omissions are stated rather than
+implied, which is the same three-state discipline the rest of this skill asks
+for. `bun test cat-harness/scripts/tests/decision-request.test.ts` asserts each
+refusal, because a schema whose refusals are untested quietly stops refusing.
+
 ### 4.2 Form — the checklist
 
 Before any question, all five:

@@ -67,6 +67,7 @@ import {
 const OPEN = new Set(["todo", "in-progress"]);
 
 /**
+/**
  * The types that are ROOTS of the roadmap, so "open with no parent" is not a
  * defect for them.
  *
@@ -80,6 +81,13 @@ const OPEN = new Set(["todo", "in-progress"]);
  * That is the same shape this file's own header warns about one level down:
  * a rule that forces a bean to declare something it never claimed, in order
  * to stay green.
+ *
+ * TWO SESSIONS FIXED THIS INDEPENDENTLY on 2026-09-20, from opposite ends —
+ * one from `beans prime`'s stated hierarchy, one from `wqht`'s own claim that
+ * the check "already allows epics under milestones", which it did not. The
+ * corroboration is worth keeping: the same defect found twice by different
+ * routes is evidence the hierarchy was genuinely unrepresentable here, not
+ * that one session misread the check.
  */
 const ROOT_TYPES = new Set(["milestone", "epic"]);
 
@@ -181,6 +189,16 @@ export function checkBeanParents(root: string): BeanParentsReport {
       problems.push(
         `${where}: \`parent: ${b.parent}\` is a ${p.type || "bean with no type"}, not an epic or a milestone`,
       );
+    } else if (b.type === "epic" && p.type === "epic") {
+      // Epics nest under a GOAL, not under each other, and `beans prime`'s
+      // hierarchy says so: milestone -> epic -> feature -> task/bug. Its own
+      // case rather than a narrower PARENT_TYPES, because the two are not the
+      // same rule — a task's parent may be an epic, and this one may not — and
+      // because the message can then say WHY instead of "wrong type".
+      problems.push(
+        `${where}: an epic's parent is a \`milestone\` (a goal), not another epic — ` +
+          `\`${b.parent}\` is an epic`,
+      );
     }
   }
   return { store: beanDefsDir(root), open: open.length, problems };
@@ -190,11 +208,13 @@ function formatReport(r: BeanParentsReport): string {
   if (r.store === null) return "Bean parents\n  · no bean store — nothing to check";
   const out = [`Bean parents (${r.open} open, below the roadmap roots)`];
   if (r.problems.length === 0) {
-    out.push("  ✓ every open bean is placed under an epic or a milestone");
+    out.push("  ✓ every open bean is placed under an epic or a milestone, and no epic hangs from another");
   } else {
     for (const p of r.problems) out.push(`  ✗ ${p}`);
     out.push("");
     out.push("  Set `parent: <epic-id>` in the bean's front matter, or open an epic for it.");
+    out.push("  An epic's parent, if it has one, is the `milestone` bean for the goal it serves");
+    out.push("  — skills/folio-core/todo-manager.md §\"A GOAL is a `milestone` bean\".");
     out.push("  `beans roadmap` shows the current structure.");
   }
   return out.join("\n");

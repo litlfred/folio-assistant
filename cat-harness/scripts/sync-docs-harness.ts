@@ -170,7 +170,7 @@ if (check) {
   }
   console.error(
     `docs/_data/harness.json is stale.\n` +
-      `Run \`bun run scripts/sync-docs-harness.ts\` and commit the result.`,
+      `Run \`bun run docs:harness\` and commit the result.`,
   );
   process.exit(1);
 }
