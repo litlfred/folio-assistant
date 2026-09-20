@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/output.schema.json",
+  "$id": "https://litlfred.github.io/folio-assistant/cat-bootstrap/skills/discussion/output.schema.json",
   "title": "Discussion Output",
   "description": "What the exchange determined: which harness, which repositories, on whose word, and by what means. This document existing and conforming is what finishes the task — not that a conversation took place.",
   "type": "object",
@@ -13,7 +13,7 @@
     },
     "harness": {
       "type": "string",
-      "description": "The harness this repository is to become — `bootstrap`, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Required when `outcome` is `settled` and `harness` was open."
+      "description": "The harness this repository is to become — `cat-bootstrap`, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Required when `outcome` is `settled` and `harness` was open."
     },
     "repositories": {
       "type": "array",

@@ -155,7 +155,7 @@ the branch with `/` replaced by `-`.
 `docs/<stub>/proposals/x.md` publishes to `/proposals/x.html` — the stub
 segment is a source-tree convention Jekyll does not carry into the site, so a
 composed URL 404s on a page that is there. Measured 2026-09-19 on
-`bootstrap.md`.
+`cat-bootstrap.md`.
 
 **A failed fetch from an agent container is a proxy result.** Outbound HTTPS
 is proxied and `github.io` is blocked: `curl` returns `000` with `CONNECT

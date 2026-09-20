@@ -76,7 +76,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       description:
         "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks.",
       install: bundled,
-      invoke: { ...inProcess("src/tools/check-deps.ts", "check_dependencies"), shell: "bun run src/index.ts --check-deps" },
+      invoke: { ...inProcess("src/tools/check-deps.ts", "check_dependencies"), shell: "bun run cat-harness/src/index.ts --check-deps" },
       io: {
         inputs: [
           {

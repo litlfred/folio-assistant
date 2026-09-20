@@ -71,9 +71,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // Bean `3jj9`, and the owner's ruling that human/agent and agent/agent
     // interaction is documented as a skill plus a tool. The SKILL lives in
-    // `bootstrap/skills/discussion.md`, because an Initiator must be able to
+    // `cat-bootstrap/skills/discussion.md`, because an Initiator must be able to
     // READ it with nothing installed; the typed node lives here, because a
-    // Tool is cat-harness's vocabulary and bootstrap may not import it.
+    // Tool is cat-harness's vocabulary and cat-bootstrap may not import it.
     //
     // `invoke: { manual: true }` — "performed by a person following the
     // skill, with no command", and the `beans-manual` precedent is explicit
@@ -214,7 +214,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // `hashlib` ship with Python. Stated, so "needs nothing" is
       // distinguishable from an unfinished record.
       install: { none: true },
-      invoke: { shell: "bun run scripts/ingest-document.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/ingest-document.ts" },
       requires: { runtime: ["python3"], network: false },
       io: {
         inputs: [
@@ -247,7 +247,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // own checker caught. `requirements.txt` is generated from the
       // declaration; the apt packages are not pip-installable and stay named.
       install: { cli: "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils" },
-      invoke: { shell: "bun run scripts/ingest-document.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/ingest-document.ts" },
       requires: { runtime: ["python3", "pymupdf", "tesseract"], network: false },
       io: {
         inputs: [
@@ -582,7 +582,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
       install: { none: true },
-      invoke: { shell: "scripts/lean-build-all.sh" },
+      invoke: { shell: "cat-harness/scripts/lean-build-all.sh" },
       io: {
         inputs: [
           { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "Build one paper instead of all of them." },
@@ -619,7 +619,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
       install: { none: true },
-      invoke: { shell: "scripts/lake-cache.sh" },
+      invoke: { shell: "cat-harness/scripts/lake-cache.sh" },
       io: {
         inputs: [
           { name: "action", schema: t("LakeCacheAction"), required: true, arg: { positional: 0 }, description: "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked." },
@@ -640,7 +640,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // It IS the install step, so `install.cli` names itself: an agent that needs
       // Lean runs this, and `install.none` would say no step exists.
       install: { cli: "scripts/setup-lean-toolchain.sh" },
-      invoke: { shell: "scripts/setup-lean-toolchain.sh" },
+      invoke: { shell: "cat-harness/scripts/setup-lean-toolchain.sh" },
       io: {
         inputs: [],
         outputs: [{ name: "toolchain", schema: t("Text"), description: "The linked toolchain name, and the per-repo override that selects it." }],
@@ -870,7 +870,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-schema-docs.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-schema-docs.ts" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
@@ -887,7 +887,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-skill-docs.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-skill-docs.ts" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
@@ -925,7 +925,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "bun run ns:export" },
       io: {
         inputs: [
-          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
+          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `cat-bootstrap` for the layer that must resolve before anything else does." },
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults under `_kg/`, which is build output." },
         ],
         outputs: [{ name: "vocabulary", schema: t("RepoPath"), description: "The written namespace document." }],
@@ -949,7 +949,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-jsonld-context.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-jsonld-context.ts" },
       io: {
         inputs: [
           // `--check` is the CI arm: it compares against the committed copy and
@@ -1019,6 +1019,105 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "It runs what the workflow declares, so a check CI does not run is a check this does not run — that is the point, not a gap. The default omits the browser jobs; `--all` adds them, and `render:bpmn:check` needs Chromium.",
         cost: "The fast set is about a minute, dominated by `bun test`. `--all` adds a browser render.",
+      },
+    }),
+
+    // ── The two audits over the `tools` graph itself ──────────────────────
+    //
+    // Bean `shzs`. I nearly filed these as a capability-vocabulary question for
+    // the owner, on the grounds that no skill states "audit the Tool graph's own
+    // contracts". That was wrong, and wrong in a way worth naming: I searched for
+    // a skill NAMED for the capability instead of reading the skills'
+    // descriptions. `code-node-review` states it outright —
+    //
+    //   "Review the knowledge graph's CODE nodes — Tool definitions in the
+    //    `tools` graph and schema definition nodes under `schemas/` — for the
+    //    joins a reader cannot see: that a node declares what it is, that what it
+    //    names resolves, and that the mechanism it describes is the one that
+    //    actually runs."
+    //
+    // — and its §"The audits to run" NAMES `bun run check:tools` in a fenced
+    // block. So this is case 1 of `covered-is-not-reachable` in its plainest
+    // form: a mechanism inlined in its skill's prose, and giving it a node is
+    // exactly the remedy.
+    defineTool({
+      id: "check-tools",
+      title: "Do the Tool nodes agree with their skills?",
+      description:
+        "Check every Tool node's joins: that each `satisfies` resolves to a real skill and agrees with that skill's declared contract, that every io port names a declared type, and that no argv input has a type able to express a shell payload.",
+      install: { none: true },
+      invoke: { shell: "bun run check:tools" },
+      io: {
+        inputs: [],
+        outputs: [{ name: "report", schema: t("Text"), description: "The satisfies map, the count of skills with and without a Tool, then the verdict. Exit 0 every join holds, 1 at least one does not. A skill with NO Tool is reported and is deliberately NOT a failure — many are pure judgement, and failing on them would make the report unusable." }],
+      },
+      satisfies: ["code-node-review"],
+      requires: { runtime: ["bun"], network: false },
+      selection: {
+        when:
+          "Before pushing any change to `tools/`, and as the first of the three audits `code-node-review` lists. It is the check that refuses a contract nobody could satisfy.",
+        limits:
+          "It checks the JOINS, not the truth. The skill says so itself: \"what no audit can tell you: whether the mechanism a Tool describes is the one that runs\". A node can pass this while its `invoke` names a command that does something else entirely — that is what a reviewer is for, and why the skill exists rather than a check script alone.",
+        cost: "Seconds. Loads the Tool graph and the skill corpus in-process.",
+      },
+    }),
+
+    defineTool({
+      id: "tool-coverage",
+      title: "Which uncovered skills warrant a Tool?",
+      description:
+        "Triage the skills that have no Tool by EVIDENCE rather than by grep: a serviceTask naming it or an I/O contract puts it in tier A, a userTask only in B, a shell block or a declared script in C, and nothing in D. The answer to \"which of these still have their mechanism inlined in their prose\".",
+      install: { none: true },
+      invoke: { shell: "bun run tools:coverage" },
+      io: {
+        inputs: [],
+        outputs: [{ name: "triage", schema: t("Text"), description: "Four tiers with A, B and C listed by name and their evidence, D as a count. Always exit 0: this REPORTS a judgement queue and never gates — an uncovered skill is not a defect, and failing on one would make stubbing a gap turn CI red." }],
+      },
+      satisfies: ["code-node-review"],
+      requires: { runtime: ["bun"], network: false },
+      selection: {
+        when:
+          "When choosing what to give a Tool node next. Tier C is the read: its own label says THE READ GOES HERE, and tier A is the list to act on.",
+        limits:
+          "It enumerates SKILLS and asks which lack Tools, so a capability nobody has stated generically is absent from the list it walks — that blindness is structural, not an oversight, and bean `yean` is the case that proved it. It also cannot see a folio's entry points: `content/pipeline/*.ts` are invoked from a FOLIO's package.json, which is not readable from the platform.",
+        cost: "Seconds, plus loading every BPMN diagram to read task types.",
+      },
+    }),
+
+    // ── What the MCP server actually serves ───────────────────────────────
+    //
+    // Bean `shzs`. The script NAMES its own skill, so this needed no judgement
+    // about capability vocabulary: "it is the comparison side `mcp-contract`
+    // needs: that skill's schema-equivalence check compares a Tool node's `io`
+    // against what is served, and this is what 'what is served' means before a
+    // projector exists."
+    //
+    // One Tool among several for that skill rather than the whole of it —
+    // `mcp-contract` is an equivalence in both directions and this supplies one
+    // side. `skills-and-tools` is explicit that several Tools may satisfy one
+    // skill and be complementary rather than alternative, so `alternativeTo`
+    // stays empty.
+    defineTool({
+      id: "mcp-capture",
+      title: "What this instance's MCP server serves",
+      description:
+        "Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source.",
+      install: { none: true },
+      invoke: { shell: "bun run mcp:capture" },
+      io: {
+        inputs: [
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit `{tools, problems}` as JSON for a consumer, instead of the table for a reader." },
+        ],
+        outputs: [{ name: "surface", schema: t("Text"), description: "One row per served tool with its module and its required/optional keys. Three exit codes: 0 the surface was captured whole, 2 one or more modules COULD NOT BE READ so the capture is incomplete, and no equivalence verdict may be drawn from it. There is no exit 1 — this tool reports what is served and never judges it." }],
+      },
+      satisfies: ["mcp-contract"],
+      requires: { runtime: ["bun"], network: false },
+      selection: {
+        when:
+          "Before trusting any claim that a Tool node's `io` matches what the server serves — and as the input to that comparison. Also the source data for migrating `src/tools/` into Tool nodes (bean `ce65`).",
+        limits:
+          "INTROSPECTION, deliberately, not source parsing. The first attempt read `server.tool(...)` with a regex and produced wrong input lists — words followed by a colon inside a DESCRIPTION came back as parameter names, so `skill_fetch` appeared to take `Examples` and `Local`. Authoring a node's `io` from that would ship a contract agreeing with nothing, which is worse than no contract because a contract is what the next check trusts.",
+        cost: "Mounts every registrar in-process. No network, no server needs to be running.",
       },
     }),
 
@@ -1208,11 +1307,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // ── Logging ────────────────────────────────────────────────────────
     //
     // Declared HERE although the skill and the sub-process it serves live in
-    // `bootstrap/`, and that is a limitation rather than a decision. Tool
+    // `cat-bootstrap/`, and that is a limitation rather than a decision. Tool
     // collection is import-bound — `tools/index.ts` merges what it imports —
     // so a Tool node contributed by a nested instance is not reachable from
     // the barrel yet. Bean `gn4l`. When it is, this node moves to
-    // `bootstrap/tools/` unchanged, and nothing that references it by id
+    // `cat-bootstrap/tools/` unchanged, and nothing that references it by id
     // notices.
     defineTool({
       id: "log-message",

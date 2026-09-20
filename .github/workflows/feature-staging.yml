@@ -530,93 +530,61 @@ jobs:
       #
       # `continue-on-error` on the first attempt only. If the retry fails too,
       # it fails the job — a lost staging deploy must stay visible.
-      - name: Deploy to gh-pages/STAGING/<slug>
-        id: deploy
-        continue-on-error: true
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          destination_dir: STAGING/${{ steps.slug.outputs.slug }}
-          publish_branch: gh-pages
-          keep_files: true
-          commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }}'
-
-      # THREE attempts, not two, and the third was bought by a measurement
-      # rather than by caution. The render log (bean `5mg5`) added a SECOND
-      # push to `gh-pages` per staging run, and the branch was already the
-      # most contended ref here. Counted over 35 minutes on 2026-09-20:
+      # ── Deploy and log, in ONE commit ────────────────────────
       #
-      #   20  staging(...)      the deploys themselves
-      #   14  render-log: ...   added by the log, where there were none
-      #    3  docs(gh-pages)    the main site
+      # Bean `bm6d`. This used to be a `peaceiris` deploy (plus two retries)
+      # followed by a separate render-log commit, and the two pushes landed
+      # about ten seconds apart. **GitHub Pages starts a build on the first
+      # and the second cancels it**, so the first was always wasted: measured
+      # 2026-09-20, 6 of the last 10 `pages build and deployment` runs were
+      # `cancelled`, in an exact pattern rather than a random one. A cancelled
+      # deployment is red nowhere — `check:ci-health` reads the DEFAULT
+      # branch, and these are bot-triggered runs on `gh-pages` — which is the
+      # `xom7` shape: a thing failing repeatedly with nothing saying so.
       #
-      # — a ~38% rise in write volume, after which attempt 2 started losing
-      # the race and failing the job (run 35504532974). The action re-clones
-      # `gh-pages` on each attempt, so another attempt is a real remedy and
-      # not a longer wait: it picks up whoever won and adds this branch's
-      # directory beside it, which `keep_files: true` makes safe.
-      #
-      # `continue-on-error` on attempts 1 and 2 only. If the third fails it
-      # fails the job — a lost staging deploy must stay visible.
-      - name: Retry deploy (another workflow pushed to gh-pages first)
-        id: retry
-        continue-on-error: true
-        if: steps.deploy.outcome == 'failure'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          destination_dir: STAGING/${{ steps.slug.outputs.slug }}
-          publish_branch: gh-pages
-          keep_files: true
-          commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }} (retry)'
-
-      - name: Retry deploy once more (gh-pages is the most contended ref here)
-        if: steps.deploy.outcome == 'failure' && steps.retry.outcome == 'failure'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          destination_dir: STAGING/${{ steps.slug.outputs.slug }}
-          publish_branch: gh-pages
-          keep_files: true
-          commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }} (retry 2)'
-
-      # ── The render log ───────────────────────────────────────
-      # *What happened to `STAGING/<slug>`, and why?* Nothing could answer
-      # that: a preview appears, a bot comments the URL below, and some time
-      # later the link 404s — cleaned up, dispatched away, or deleted by an
-      # unrelated merge to `main` (bean `plj1`, which really happened, on
-      # every deploy, for months). The publish branch now keeps its own
-      # record. Discipline: `cat-harness/skills/folio-core/render-logging.md`.
-      #
-      # It cannot ride in `_site`. The deploy above writes into
-      # `destination_dir`, so the entry would land at
+      # The split had a real reason, recorded here so it is not reintroduced:
+      # the log CANNOT ride in `_site`, because the old deploy wrote into
+      # `destination_dir`, which would put the entry at
       # `STAGING/<slug>/_render-log/` — inside the very directory a cleanup
-      # removes, which is the one place a record of the removal must not be.
-      # So it gets its own commit, with the rebase-and-retry loop every other
-      # writer of this ref uses.
-      - name: Check out the publish branch, to log the render
+      # removes, the one place a record of the removal must not be.
+      #
+      # Checking the branch out and committing by hand removes that
+      # constraint: the payload goes to `STAGING/<slug>/` and the entry to
+      # `_render-log/` at the root, in one `git add` and one commit. The
+      # cleanup job below already does exactly this — "The record rides in the
+      # SAME commit as the removal" — so this is the proven pattern in this
+      # file rather than a new one.
+      #
+      # It also removes the reason the third attempt was bought. The note that
+      # bought it counted the render log adding a SECOND push per run, "a ~38%
+      # rise in write volume, after which attempt 2 started losing the race".
+      # Halving this workflow's writes attacks that cause rather than
+      # absorbing it. The three-attempt rebase loop is kept regardless: the
+      # contention BETWEEN sessions is untouched, and is `6pfo`'s ground.
+      - name: Check out the publish branch
         uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: pages
           persist-credentials: true
 
-      # `continue-on-error`, deliberately: a preview that deployed and whose
-      # entry did not is a GAP IN THE RECORD, not a failed deploy, and failing
-      # here would turn a logging problem into a lost review surface. The step
-      # goes red in the run, so the gap is visible rather than silent.
-      - name: Log the render
-        continue-on-error: true
+      - name: Deploy the preview and log the render, in one commit
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -eu
-          # The tool writes into a directory and never pushes: this job already
+          mkdir -p "pages/STAGING/$STAGING_SLUG"
+          # `keep_files: true`, preserved exactly. A plain copy adds and
+          # overwrites and never deletes, which is what the flag did: every
+          # OTHER branch's preview survives (the `plj1` protection), and so do
+          # this slug's own files that the build no longer produces. That
+          # second half is a defect — bean `85im` holds it — and fixing it
+          # here would widen a change about push COUNT into one about preview
+          # CONTENT.
+          cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
+          # Writes into the directory and never pushes: this step already
           # holds the checkout and the retry loop, and a second pusher racing
           # those is a new way to lose a deploy.
           # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
@@ -635,15 +603,30 @@ jobs:
             --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git -C pages add -A _render-log
-          git -C pages commit -m "render-log: rendered STAGING/$STAGING_SLUG" || exit 0
+          git -C pages add -A "STAGING/$STAGING_SLUG" _render-log
+          git -C pages commit \
+            -m "staging($STAGING_SLUG): from $GITHUB_SHA" \
+            -m "render-log: rendered STAGING/$STAGING_SLUG" \
+            -m "$RUN_URL" || exit 0
+          # THE LOG IS NOW ATOMIC WITH THE DEPLOY, and that is a deliberate
+          # change of failure mode. The old log step was `continue-on-error`
+          # on the argument that a gap in the record is not a failed deploy.
+          # One commit cannot offer that: there is no deploy to succeed
+          # without it. The stronger property is worth more — a preview can no
+          # longer exist with no entry saying where it came from, which is the
+          # question the log was added (`5mg5`) to answer at all.
+          #
+          # Three attempts, rebasing between: `gh-pages` is the most contended
+          # ref here and a queue does not help, because a PENDING job is
+          # cancelled by the next arrival rather than waiting. A rebase picks
+          # up whoever won and lands this branch's directory beside it.
           for attempt in 1 2 3; do
             if git -C pages push origin gh-pages; then
               echo "pushed on attempt $attempt"
               exit 0
             fi
             if [ "$attempt" = 3 ]; then
-              echo "::error::could not append the render log after 3 attempts"
+              echo "::error::could not deploy the staging preview after 3 attempts"
               exit 1
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
