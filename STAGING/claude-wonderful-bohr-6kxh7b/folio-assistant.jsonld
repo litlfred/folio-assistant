@@ -140,6 +140,9 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "bpmnType": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bpmnType",
+    "statement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#statement",
+    "rationale": "https://litlfred.github.io/folio-assistant/cat-harness/ns#rationale",
+    "applies": "https://litlfred.github.io/folio-assistant/cat-harness/ns#applies",
     "nodeKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeKind",
     "enforcement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#enforcement",
     "workPlanOp": "https://litlfred.github.io/folio-assistant/cat-harness/ns#workPlanOp",
@@ -248,22 +251,23 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T05:53:03.408Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/db36fc91e86ac79825ce694150a1f2edddd734c1",
-  "sourceCommitSha": "db36fc91e86ac79825ce694150a1f2edddd734c1",
-  "sourceCommitAt": "2026-09-20T05:51:31Z",
+  "generatedAt": "2026-09-20T06:36:04.707Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/baec25679fe1af159d19d351cd8478192ff3774b",
+  "sourceCommitSha": "baec25679fe1af159d19d351cd8478192ff3774b",
+  "sourceCommitAt": "2026-09-20T06:34:29Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 171,
+    "Skill": 172,
     "Actor": 27,
     "Capability": 24,
     "Role": 110,
-    "SkillPackage": 7,
+    "Convention": 2,
+    "SkillPackage": 8,
     "Process": 36,
     "SequenceFlow": 498,
     "ProcessNode": 464,
-    "Tool": 31,
-    "Schema": 55,
+    "Tool": 32,
+    "Schema": 58,
     "GraphKind": 17,
     "Directory": 13
   },
@@ -620,6 +624,54 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/latex-authoring"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/process-state",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "process-state",
+      "title": "Process state — the task you are in, inside the process you are running",
+      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/process-state.md",
+      "instructionLines": 179,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bpmn-processes",
+      "title": "Processes are BPMN, and the diagrams are executable",
+      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/bpmn-processes.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/workflow-state",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "workflow-state",
+      "title": "State in a running process",
+      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<folio:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/workflow-state.md",
+      "instructionLines": 126,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/workflow-state"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/document-authoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "document-authoring",
@@ -828,22 +880,6 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bib-human-review"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/process-state",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "process-state",
-      "title": "Process state — the task you are in, inside the process you are running",
-      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/process-state.md",
-      "instructionLines": 179,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/ui-accessibility",
@@ -1240,22 +1276,6 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/directory-conventions"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bpmn-processes",
-      "title": "Processes are BPMN, and the diagrams are executable",
-      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/bpmn-processes.md",
-      "instructionLines": 108,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-navigation",
@@ -3923,6 +3943,35 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/role-assignments"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#convention/no-clean-run-over-an-empty-set",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Convention",
+      "localId": "no-clean-run-over-an-empty-set",
+      "title": "A check that examined nothing does not report a pass",
+      "description": "Every scan, filter or audit states what it looked at, so an empty result can be told from an empty subject.",
+      "statement": "A check that found no files, no nodes or no candidates must say so and exit non-zero or `undetermined` — never 0 with a clean report. Assert a non-vacuity floor alongside the property itself.",
+      "rationale": "Measured repeatedly in this repository: `check-declared-assets` reported 0 findings over 45 dead links; `check-agents-xref` printed a census of 0 where it had been 8, at exit 0; `bean-store-hygiene` asserted over an empty list; ruff reported a clean baseline over missing paths. The verified count of this defect in one session was eight.",
+      "applies": [
+        "typescript",
+        "python",
+        "workflow-yaml"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#convention/no-clean-run-over-an-empty-set"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#convention/comment-why-not-what",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Convention",
+      "localId": "comment-why-not-what",
+      "title": "A comment says WHY, and names the measurement",
+      "description": "The convention this repository actually follows in code it keeps: a comment records the defect the line prevents and what was measured, not a restatement of the line.",
+      "statement": "A comment explains why the code is as it is — the defect it prevents, the alternative that was tried, the number that was measured. Never a paraphrase of what the line already says.",
+      "rationale": "This repository's own modules are unusually heavily commented and the comments earn it: `ci-gates.ts` records the 27-of-33 miscount that produced it, `known-skills.ts` records the silent drop. A comment restating the code goes stale invisibly, because nothing contradicts it; a comment naming a measurement can be checked and can be wrong out loud.",
+      "applies": [
+        "typescript",
+        "python"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#convention/comment-why-not-what"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/skills",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "skills",
@@ -4018,6 +4067,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/authoring-math"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/workflow",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "workflow",
+      "version": "0.1.0",
+      "description": "BPMN navigation and workflow management: how a process is authored, where an instance keeps its position, and which store answers which question. Split out of folio-core, which held 97 skills — a package that holds everything is one nobody can be pointed at.",
+      "path": "skills/workflow",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/workflow-state"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-document-adapter",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "folio-document-adapter",
@@ -4060,7 +4126,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bib-qa",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/block-density",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/canonical-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/chapter-complexity-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/ci-health",
@@ -4119,7 +4184,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/prepare-merge-auto",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/production-vs-exploratory-discipline",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/qa-report-signing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/qa-witness",
@@ -19175,6 +19239,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#tool/kg-validate",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "kg-validate",
+      "title": "Validate a node in the graph",
+      "description": "Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:validate"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "path",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The node to check. Its graph kind is resolved from the declared directory that contains it.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "lenient",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/tool-types.schema.json#/$defs/Flag",
+            "description": "Accept partial coverage knowingly: downgrade could-not-determine from an error to a warning.",
+            "required": false,
+            "arg": {
+              "flag": "--lenient"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/tool-types.schema.json#/$defs/Text",
+            "description": "One line per file — valid, invalid with the failing paths, or could-not-determine with the reason. Exit 0 valid, 1 invalid or undetermined, 2 misuse."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-navigation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/kg-validate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#tool/cat-harness-schema",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "cat-harness-schema",
@@ -20695,6 +20811,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/contributions"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/convention",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "convention",
+      "title": "A coding convention — context attached to a PROCESS, not loaded everywhere.",
+      "module": "schemas/convention.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/convention"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/dak-blocks",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "dak-blocks",
@@ -20709,6 +20833,14 @@
       "title": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
       "module": "schemas/dak.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/document-image",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "document-image",
+      "title": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "module": "schemas/document-image.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/document-image"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/folio-graph-kind",
@@ -20773,6 +20905,14 @@
       "title": "Knowledge-graph QA sidecars — what is dangling in the process/role/skill graph.",
       "module": "schemas/kg-qa.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kg-qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/kind-validator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "kind-validator",
+      "title": "Resolving a graph kind's **validator** — the one parameter that turns",
+      "module": "schemas/kind-validator.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kind-validator"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/lean-packages",
@@ -22089,8 +22229,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "6df51f4ff88d04269890873c3d2cfaf625813b87",
+    "sha": "8b476312a4fbddf02e17fb647ee126608614e67a",
     "pr": "458/merge",
-    "run": "35492739327"
+    "run": "35494585585"
   }
 }
