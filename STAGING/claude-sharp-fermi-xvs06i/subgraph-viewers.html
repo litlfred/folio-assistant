@@ -318,6 +318,15 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/todos/index.json">
 
 <!--
+  The bean index — the AGENT work plan, published by the same generator beside
+  the todo index above, for the same reason and read the same way. Separate
+  files rather than one combined document because the two stores are separate
+  graphs with separate declarations, and a consumer that wants only the human
+  half should not fetch 239 beans to get three todos.
+-->
+<meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/beans/index.json">
+
+<!--
   The discarded-items document — `fsh-guts.jsonld`, published at the base by
   `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
   then some: it carries every node's BODY, which is 64 KB against a 5 KB
@@ -336,6 +345,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 -->
 <meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/fsh-guts.json">
 <link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/css/docs-ui.css">
+
+<!--
+  The work-plan dashboard's styles, split from docs-ui.css so that
+  `state-visualizer.ts` can inline exactly these bytes into the generated
+  `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
+-->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/css/work-plan.css">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
@@ -364,6 +380,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <script src="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/js/docs-ui.js" defer></script>
+
+<!--
+  The work-plan dashboard. SELF-MOUNTING on any page carrying
+  `[data-fa-workplan]`, so docs-ui.js neither calls it nor knows it exists; a
+  page without that container pays one failed querySelector. The same file is
+  inlined verbatim into the generated state-visualiser pages.
+-->
+<script src="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/js/work-plan.js" defer></script>
 
 <!--
   The landing panel — the instance's declared description drawn inside the
@@ -668,7 +692,12 @@ in each. Two of those graphs now have a page you can open.</p>
       <li><a href="#it-is-read-only" id="markdown-toc-it-is-read-only">It is read-only</a></li>
     </ol>
   </li>
-  <li><a href="#where-they-are-published--the-url-is-the-directorys-path" id="markdown-toc-where-they-are-published--the-url-is-the-directorys-path">Where they are published — the URL is the directory’s path</a></li>
+  <li><a href="#where-they-are-published--two-rules-not-three" id="markdown-toc-where-they-are-published--two-rules-not-three">Where they are published — two rules, not three</a>    <ol>
+      <li><a href="#the-subject-pages" id="markdown-toc-the-subject-pages">The subject pages</a></li>
+      <li><a href="#docs-is-the-same-shape-and-its-subject-means-something-specific" id="markdown-toc-docs-is-the-same-shape-and-its-subject-means-something-specific"><code class="language-plaintext highlighter-rouge">docs/</code> is the same shape, and its subject means something specific</a></li>
+      <li><a href="#nothing-composes-a-path" id="markdown-toc-nothing-composes-a-path">Nothing composes a path</a></li>
+    </ol>
+  </li>
 </ol><hr />
 <h2 id="why-these-pages-exist">
   
@@ -859,41 +888,124 @@ one is.</p>
 ingest from the corpus view, and materialising an entry into a folio of choice
 — are open work, because the write path is a decision the repository owner has
 not yet made.</p>
-<h2 id="where-they-are-published--the-url-is-the-directorys-path">
+<h2 id="where-they-are-published--two-rules-not-three">
   
   
-    <a href="#where-they-are-published--the-url-is-the-directorys-path" class="anchor-heading" aria-labelledby="where-they-are-published--the-url-is-the-directorys-path"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where they are published — the URL is the directory’s path
+    <a href="#where-they-are-published--two-rules-not-three" class="anchor-heading" aria-labelledby="where-they-are-published--two-rules-not-three"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where they are published — two rules, not three
   
   
 </h2>
     
 
-<p>Owner, 2026-09-20:</p>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>rule</th>
+      <th>form</th>
+      <th>what it is</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1 — a handler renders a kind’s assets</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">/&lt;handler&gt;/&lt;kind&gt;/&lt;optional subject&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/cat-harness/library/who-iris/</code></td>
+    </tr>
+    <tr>
+      <td><strong>2 — an instance presents itself</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">/&lt;instance&gt;/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/who-iris/</code> mocking the IRIS website</td>
+    </tr>
+  </tbody>
+</table></div>
 
-<blockquote>
-  <p>it <code class="language-plaintext highlighter-rouge">&lt;baseurl&gt;/&lt;path to kind in knowledge graph&gt;</code> or
-<code class="language-plaintext highlighter-rouge">&lt;path to dir handled&gt;/&lt;optional subject&gt;</code></p>
-</blockquote>
+<p>The handler is the instance doing the rendering; the kind names what it
+renders; the <strong>subject is optional</strong>, and a page without one is the view over
+every subject.</p>
 
-<p>So a viewer’s address <strong>is the repo-relative path of the directory it
-handles</strong>, and <code class="language-plaintext highlighter-rouge">&lt;subject&gt;</code> is optional — a viewer with no subject is the view
-over all of them. These two handle <code class="language-plaintext highlighter-rouge">cat-harness/schemas/</code> and
-<code class="language-plaintext highlighter-rouge">cat-harness/library/</code>, so they sit at <code class="language-plaintext highlighter-rouge">/cat-harness/schemas/</code> and
-<code class="language-plaintext highlighter-rouge">/cat-harness/library/</code>.</p>
+<p>A subject page is never published at <code class="language-plaintext highlighter-rouge">/&lt;subject&gt;/&lt;kind&gt;/</code> — that is rule 2’s
+namespace, and a viewer there would squat on the instance’s own site.</p>
+<h3 id="the-subject-pages">
+  
+  
+    <a href="#the-subject-pages" class="anchor-heading" aria-labelledby="the-subject-pages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The subject pages
+  
+  
+</h3>
+    
 
-<p><strong>That is a resolution, not a composition, and the difference is not
-cosmetic.</strong> An earlier draft composed the address from the rendering
-instance’s name plus the graph kind. It gives the right answer for
-<code class="language-plaintext highlighter-rouge">cat-harness/schemas/</code> by coincidence — that directory happens to sit at
-owner/kind — and the wrong one for every directory that does not:
-<code class="language-plaintext highlighter-rouge">who-iris/library/</code> would have been addressed as <code class="language-plaintext highlighter-rouge">cat-harness/library</code>, naming
-the machinery where the rule names the data. Taking the path means the two can
-never disagree, because there is only one of them.</p>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>page</th>
+      <th>shows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/cat-harness/library/</code></td>
+      <td>every declared <code class="language-plaintext highlighter-rouge">library/</code>, and every queue</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/cat-harness/library/who-iris/</code></td>
+      <td>who-iris’s three entries and its queue</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/cat-harness/library/agent-skills/</code></td>
+      <td>its two entries</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/cat-harness/library/folio-assistant-sci/</code></td>
+      <td>its one entry</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/cat-harness/schemas/</code></td>
+      <td>every declared <code class="language-plaintext highlighter-rouge">schemas/</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/cat-harness/schemas/&lt;instance&gt;/</code></td>
+      <td>that instance’s modules and declarations</td>
+    </tr>
+  </tbody>
+</table></div>
 
-<p>Neither generator writes a path down. The rendered-content root is resolved
-from the declaration, the segment is the handled directory’s resolved path,
-and the page’s link back to its projection is computed from its own depth — so
-moving a directory moves its source, its URL and its data link together.</p>
+<p>One projection serves all of them — a scoped page filters client-side.
+A second file per subject would be the same facts written N+1 times, free to
+disagree the moment one is regenerated. <strong>Counts are scoped too</strong>: reporting
+the graph-wide edge total on a page showing nine declarations would claim 512
+edges among those nine.</p>
+<h3 id="docs-is-the-same-shape-and-its-subject-means-something-specific">
+  
+  
+    <a href="#docs-is-the-same-shape-and-its-subject-means-something-specific" class="anchor-heading" aria-labelledby="docs-is-the-same-shape-and-its-subject-means-something-specific"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">docs/</code> is the same shape, and its subject means something specific
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">/cat-harness/docs/</code> is where the harness user documentation lives, so
+<code class="language-plaintext highlighter-rouge">/cat-harness/docs/who-iris/</code> is documentation <strong>about</strong> IRIS — how it is
+ingested, what the handler does with it — and <strong>not IRIS content relocated</strong>.
+The content stays in that instance’s own <code class="language-plaintext highlighter-rouge">docs/</code>, and part of the handler’s
+job is to look for those directories.</p>
+
+<p>Measured 2026-09-20: only <code class="language-plaintext highlighter-rouge">cat-harness</code> has a <code class="language-plaintext highlighter-rouge">docs/</code> directory today, and its
+declaration carries <code class="language-plaintext highlighter-rouge">dependents: "skip"</code> — which is exactly what prevents a
+dependent from getting one. Nothing is declared against a directory that does
+not exist.</p>
+<h3 id="nothing-composes-a-path">
+  
+  
+    <a href="#nothing-composes-a-path" class="anchor-heading" aria-labelledby="nothing-composes-a-path"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Nothing composes a path
+  
+  
+</h3>
+    
+
+<p>The rendered-content root is resolved from the declaration, the handler from
+the instance’s declared name, and the page’s link back to its projection from
+the page’s own depth — so moving a directory moves its source, its URL and its
+data link together.</p>
 
           
 

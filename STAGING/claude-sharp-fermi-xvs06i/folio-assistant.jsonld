@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T20:53:26.511Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3a823a54a09aa29b46a6396d5d758564ab67346c",
-  "sourceCommitSha": "3a823a54a09aa29b46a6396d5d758564ab67346c",
-  "sourceCommitAt": "2026-09-20T20:49:49Z",
+  "generatedAt": "2026-09-20T21:12:58.792Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a3b9a0c28de1263f8c38e2b0dc122444bafd9908",
+  "sourceCommitSha": "a3b9a0c28de1263f8c38e2b0dc122444bafd9908",
+  "sourceCommitAt": "2026-09-20T21:07:55Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 216,
@@ -1899,12 +1899,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "harness-requirements",
       "title": "Harness requirements — what an instance owes for what it declares",
-      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, and why the discriminator is \"is this the static knowledge graph\".",
+      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/harness-requirements.md",
-      "instructionLines": 178,
+      "instructionLines": 253,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2490,7 +2490,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
-      "instructionLines": 221,
+      "instructionLines": 258,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -33263,8 +33263,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-fermi-xvs06i",
-    "sha": "8dd5f4f6a3beebd759666ca6baf55803ad5fc6cb",
-    "pr": "608/merge",
-    "run": "35536906391"
+    "sha": "d02d04db6ccb2a16f6e160b890ff7ecfa7221104",
+    "pr": "612/merge",
+    "run": "35537923604"
   }
 }

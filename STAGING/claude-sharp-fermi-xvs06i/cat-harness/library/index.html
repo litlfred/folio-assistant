@@ -148,6 +148,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 "use strict";
 var G = null, SORT = { key: "id", dir: 1 }, VIEW = "list";
 var DATA_HREF = "../../assets/library/index.json";
+/* The SUBJECT this page is scoped to, or "" for the handler's whole view.
+   One projection serves both — a second JSON per subject would be the same
+   facts written N+1 times, free to disagree the moment one is regenerated. */
+var SCOPE = "";
+function inScope(x){ return !SCOPE || x.instance === SCOPE; }
 function $(i){ return document.getElementById(i); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
@@ -189,6 +194,7 @@ var COLS = [
 function rows(){
   var q = $("q").value.trim().toLowerCase();
   var r = G.entries.filter(function(e){
+    if (!inScope(e)) return false;
     if (!q) return true;
     return (e.id+" "+e.title+" "+e.sourceFile+" "+e.docId+" "+e.instance).toLowerCase().indexOf(q) >= 0;
   });
@@ -239,7 +245,7 @@ function renderDesk(){
 
 function renderQueue(){
   var h = "<table><thead><tr><th>unit</th><th>queue</th><th>kind</th><th>size</th><th>state</th></tr></thead><tbody>";
-  h += G.uploads.map(function(u){
+  h += G.uploads.filter(inScope).map(function(u){
     /* An intake is ONE queued document however many files it declares, and
        the row says so — otherwise a four-file capture reads as four things
        waiting. The count comes from the intake's own declared file list. */
@@ -252,7 +258,7 @@ function renderQueue(){
       "</span></td><td>" + kind + '</td><td class="num">' + kb(u.bytes) + "</td><td>" +
       (u.ingestedBy ? '<span class="pill ok">ingested → ' + esc(u.ingestedBy) + "</span>"
                     : '<span class="pill warn">uningested</span>') + "</td></tr>";
-  }).join("") || '<tr><td colspan="5"><p class="empty">No uploads queue.</p></td></tr>';
+  }).join("") || '<tr><td colspan="5"><p class="empty">No uploads queue for this subject.</p></td></tr>';
   $("queue").innerHTML = h + "</tbody></table>";
 }
 
@@ -272,10 +278,13 @@ fetch(DATA_HREF).then(function(r){
   return r.json();
 }).then(function(data){
   G = data;
-  var words = G.entries.reduce(function(n,e){ return n + e.words; }, 0);
-  $("status").textContent = G.entries.length + " entries · " + words.toLocaleString() + " words · " +
-    G.entries.reduce(function(n,e){ return n + e.sections; }, 0) + " sections";
-  $("badges").innerHTML = G.queues.map(function(q){
+  var scoped = G.entries.filter(inScope);
+  var words = scoped.reduce(function(n,e){ return n + e.words; }, 0);
+  $("status").textContent = (SCOPE ? SCOPE + " · " : "") + scoped.length + " entries · " +
+    words.toLocaleString() + " words · " +
+    scoped.reduce(function(n,e){ return n + e.sections; }, 0) + " sections";
+  if (SCOPE) document.title = SCOPE + " — library";
+  $("badges").innerHTML = G.queues.filter(inScope).map(function(q){
     return '<span class="badge q"><b>'+q.uningested+"</b> uningested in <code>"+esc(q.dir)+
       "</code> <span style=\"color:var(--muted)\">of "+q.total+"</span></span>";
   }).join("");
