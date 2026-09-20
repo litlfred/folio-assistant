@@ -1,4 +1,4 @@
-# folio-assist-sci
+# folio-assistant-sci
 
 Scientific source material used by folios that formalise mathematics. Staged as
 a top-level directory ahead of becoming its own repository — the same
@@ -46,7 +46,7 @@ library through the declaration rather than through a path anyone wrote down.
 
 `harness.json` here declares `library/` under the conventional id, so this
 instance's own tooling resolves it directly. `cat-harness/harness.json`
-additionally declares it as `folio-assist-sci-library`, repository-scoped,
+additionally declares it as `folio-assistant-sci-library`, repository-scoped,
 because the consumers that scan libraries — `check:l1-complete`, the narrative
 queue, `gen-library-jsonld`, the MCP server's graph roots — run from that root
 and a library they cannot see is a corpus they pass silently.

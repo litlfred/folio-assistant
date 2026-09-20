@@ -708,6 +708,31 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
   },
+  // Themes an instance DERIVED from a source it holds — a served stylesheet or
+  // a style guide's stated rules. A separate kind from `folio` because a theme
+  // is not read: it dresses what is. Separate from `kg` for the reason `voices`
+  // is, one step further along — a voice is opt-in per folio, and a theme is
+  // opt-in per SURFACE, so neither belongs in the graph of things simply
+  // available.
+  //
+  // The platform's own twelve themes are NOT this graph. They are furniture in
+  // `cat-harness/schemas/themes.ts`, and the root AGENTS.md draws the line they
+  // would cross: a palette read off a WHO style guide is subject matter, and
+  // subject matter does not live in the platform. This kind is what gives it
+  // somewhere else to live that a declaration-driven consumer can still find.
+  themes: {
+    type: termIri("ThemeGraph"),
+    renderable: false,
+    // Authored-from-a-source, like `voices` and for the same reason: a theme is
+    // true whether or not anything has been rendered with it. The DERIVATION
+    // does not make it state — `catalogue` settles that argument two entries
+    // up, and the same answer holds here.
+    holds: "content",
+    summary:
+      "Themes derived from an instance's own sources — one Theme node each, carrying " +
+      "`kind: sticky | webpage | publication`. The palette vocabulary is shared across " +
+      "every kind and only the geometry varies; every value cites where it was measured.",
+  },
   "todo-feedback": {
     type: termIri("TodoFeedbackGraph"),
     renderable: false,
@@ -3622,7 +3647,7 @@ export function renderableDirectories(
  * who had not been written yet, which is the one `wggr` was.
  *
  * **That caller arrived the same day.** Bean `frs5` moved the corpus out of
- * the platform into `who-iris/library/` and `folio-assist-sci/library/`, so
+ * the platform into `who-iris/library/` and `folio-assistant-sci/library/`, so
  * `library` has TWO homes and `schemas` has FOUR (`cat-harness/`,
  * `folio-assistant-core/`, `large-datasets/`, `detangle/`). The paragraph
  * above is kept as written and corrected here rather than edited, because

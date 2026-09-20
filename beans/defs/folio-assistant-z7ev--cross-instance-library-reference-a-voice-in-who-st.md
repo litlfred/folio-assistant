@@ -1,11 +1,11 @@
 ---
 # folio-assistant-z7ev
 title: 'CROSS-INSTANCE LIBRARY REFERENCE: a voice in who-style-guide citing a source in who-iris'
-status: todo
+status: completed
 type: task
 priority: critical
 created_at: 2026-09-20T08:02:10Z
-updated_at: 2026-09-20T08:02:10Z
+updated_at: 2026-09-20T18:24:21Z
 parent: folio-assistant-kupb
 ---
 
@@ -21,3 +21,21 @@ DO NOT SOLVE IT WITH A RELATIVE PATH. `../who-iris/library/...` hardcodes a chec
 - A source may cite `{ instance, libraryId, sectionId }`; the bare two-field form still validates and still means 'this instance'.
 - `check:voices` resolves both forms and stays GREEN across the boundary — that is the falsifier for the whole split.
 - An unresolvable instance FAILS; it is never silently treated as local.
+
+## Closed 2026-09-20 — verified, not assumed
+
+All three clauses checked against disk on `main` after #477 merged:
+
+- **Both forms validate.** `library-ref.test.ts` "resolves a bare reference
+  against the citing instance" and "resolves the SAME reference when the
+  instance is named explicitly".
+- **`check:voices` is GREEN across the boundary** — the falsifier for the whole
+  split. Ran it: 4 voices, 37 rules, *"every rule cites a source that resolves,
+  with a quote long enough to check"*, exit 0. The three `who-*` voices sit in
+  `who-style-guide/voices/` and each carries `"instance": "who-iris"`.
+- **An unresolvable instance FAILS.** `library-ref.ts` returns a typed
+  `unknown-instance` failure, pinned by "an unknown instance is never silently
+  treated as local".
+
+Solved the way the bean asked for and not with a relative path:
+`resolveLibraryRef` reads the target instance's own declaration.

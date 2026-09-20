@@ -62,7 +62,7 @@ than one standing in for the other.
 
 **`milnorlink` did not come here.** It was the fourth entry under
 `cat-harness/library/` and it is not an IRIS item; it went to
-`folio-assist-sci/library/` instead (bean `r1lz`). A repository named for one
+`folio-assistant-sci/library/` instead (bean `r1lz`). A repository named for one
 catalogue is not a place to put things that belong to another.
 
 **`image-verdicts.json` was split rather than moved.** It judged documents that

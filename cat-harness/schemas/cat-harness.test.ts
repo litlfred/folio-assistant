@@ -607,7 +607,7 @@ describe("materialiseDirectories", () => {
     // The two ends are no longer symmetric. `uploads` is still the platform's
     // own — the queue is where a file arrives before anything knows what it
     // is, and that is a platform concern. `library` is NOT: bean `frs5` moved
-    // the corpus into `who-iris/` and `folio-assist-sci/`, and the platform's
+    // the corpus into `who-iris/` and `folio-assistant-sci/`, and the platform's
     // own `library` entry was REMOVED rather than left pointing at an emptied
     // directory, which is the `dh4f` defect.
     //
@@ -1083,7 +1083,7 @@ describe("instanceRootsIn — discovered, never listed", () => {
     //
     // It fired as designed on 2026-09-20 and the list below is the updated
     // truth, not a widened assertion: seven instances arrived on one branch
-    // (`who-iris`, `who-style-guide`, `folio-assist-sci`, `kg-navigation`,
+    // (`who-iris`, `who-style-guide`, `folio-assistant-sci`, `kg-navigation`,
     // `detangle`, `large-datasets`, `agent-skills`) and `folio-assist-core`
     // became `folio-assistant-core` under the owner's ruling that cat-harness,
     // folio-assistant-core and folio-assistant are three distinct instances.
@@ -1096,8 +1096,12 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "cat-bootstrap",
       "cat-harness",
       "detangle",
-      "folio-assist-sci",
+      // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
+      // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
+      // `folio-assistant-sci` sorts after it. The list is the assertion, so
+      // the swap is the visible half of the rename.
       "folio-assistant-core",
+      "folio-assistant-sci",
       "kg-navigation",
       "large-datasets",
       "who-iris",
