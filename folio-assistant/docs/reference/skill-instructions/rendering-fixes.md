@@ -376,13 +376,18 @@ simulator: { type: "html", source: "file.html" }
 
 **Current format** (required):
 ```ts
-html: "folio-assistant/simulators/file.html",
+html: "simulators/file.html",
 defaultView: {
   name: "default",
   title: "Default view",
   params: { ... },
 },
 ```
+
+The path is relative to the **folio's** root, and the directory is whatever
+that folio declares as `simulators.dir` in `harness.config.json` — not a
+platform path. It read `folio-assistant/simulators/…` until 2026-09-19, when
+the simulators moved to the folio that owns them.
 
 **Fix**: Replace the `simulator:` field with `html:` + `defaultView:`.
 Use an existing simulator block (e.g. `<simulator-name>.ts`) as a template.

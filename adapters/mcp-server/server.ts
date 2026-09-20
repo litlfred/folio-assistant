@@ -2112,7 +2112,10 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
     return serveFile(join(VIEWER_DIR, path.slice("/viewer/".length)));
   }
 
-  // Standalone HTML simulators served from repo root
+  // Standalone HTML pages sitting at the folio root — REPO_ROOT is the
+  // FOLIO's root, not the platform's. Not the simulators: those live under the
+  // folio's configured `simulators.dir`, so their paths carry a slash and the
+  // no-slash test below has always excluded them.
   if (path.endsWith(".html") && !path.slice(1).includes("/")) {
     const fileName = path.slice(1); // strip leading /
     if (/^[\w.-]+\.html$/.test(fileName)) {

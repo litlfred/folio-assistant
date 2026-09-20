@@ -11,7 +11,7 @@ licensed separately under the Apache License, Version 2.0 — see
 | Covered by CC BY 3.0 | Covered by Apache-2.0 |
 |---|---|
 | `docs/` — the published documentation site | everything else in the repository |
-| `skills/**/*.md` — skill instruction bodies | including `schemas/`, `src/`, `scripts/`, `content/`, `adapters/`, `tools/`, `ui/`, `viewer/`, `simulators/` |
+| `skills/**/*.md` — skill instruction bodies | including `schemas/`, `src/`, `scripts/`, `content/`, `adapters/`, `tools/`, `ui/`, `viewer/` |
 | `.claude/skills/**/*.md` — local skill instruction bodies | including every `.ts`, `.py`, `.sh`, `.json`, `.yml` and `.bpmn` file, wherever it sits |
 | `README.md`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` | |
 
