@@ -274,6 +274,11 @@ const RULES: Rule[] = [
       // for where diagrams and roles live, and needs no folio to have
       // anything to do.
       "scripts/raci-chart.ts",
+      // Subgraph containment and entanglement (bean `x4v4`). Harness for the
+      // same reason as the block above, and more plainly than most: it reads
+      // `harness.json` for the directories, DERIVES the nesting from their
+      // declared paths, and has nothing to say about any folio's content.
+      "scripts/check-subgraphs.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -676,6 +681,19 @@ const RULES: Rule[] = [
       "schemas/avatars.ts",         // an avatar for every declared kind
       "schemas/kind-validator.ts",  // a graph kind's validator
       "schemas/actor-reach.ts",     // which actors a declaration can reach
+      // WHAT A REPOSITORY IS — the markers it carries. The word "content" in
+      // the filename is what sends it to core by keyword, and it is a false
+      // signal: this is not a content MODEL, it is machinery for recognising
+      // marker files, and `harness-config.ts` composes it into
+      // `describeRepositoryClosure`. The harness importing core was the edge
+      // this gate caught the moment closure was wired.
+      "schemas/content-type.ts",
+      // The two markers the harness itself owns: `harness.json` says "an
+      // instance", `harness.config.json` says "authors folio content". Both
+      // are harness files even though one of them is what makes something a
+      // FOLIO — a folio is recognised BY the harness, which is why
+      // `cat-harness/` carries the first and not the second.
+      "schemas/content-types-base.ts",
 
       // ── The 19 modules still reported `unassigned` on 2026-09-20, at
       //    `5b8277ea9b`. `scripts/` is in no prefix rule, so a top-level

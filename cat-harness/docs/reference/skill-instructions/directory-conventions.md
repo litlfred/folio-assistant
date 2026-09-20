@@ -344,6 +344,62 @@ relocation, and every consumer would scan a directory that is not there. An
 override also **keeps the inherited position** in the scan order rather than
 moving to the end — a relocation should not reshuffle what is scanned first.
 
+### `dependents` — whether an inheriting instance gets one of its OWN
+
+`scope` says where a path RESOLVES. `dependents` says whether a folio depending
+on this instance **materialises its own copy**, and the two are independent:
+
+- **`reproduce`** — part of the SHAPE a folio has. `uploads/`, `library/`,
+  `folio/`, `voices/`, `translations/`. A dependent gets its own, empty, with a
+  keep marker.
+- **`skip`** — merely WHERE THIS INSTANCE'S CONTENT LIVES. `schemas/`,
+  `tools/`, `src/skills/`, `methodologies/`. A dependent reads it through the
+  overlay and creates nothing.
+
+Before this existed, a fresh folio depending on `cat-harness` resolved **12**
+directories and created all 12 — six of them the platform's own, each with a
+committed keep marker. That is `dh4f` shipped downstream: a consumer scanning a
+directory that exists and is empty, reporting a clean run over it.
+
+**It suppresses `mkdirSync` and nothing else.** A `skip` entry is still
+RESOLVED, because that is how the cross-instance overlay serves a dependency's
+skills to `skill_list` and `skill_fetch`. Suppressing resolution instead would
+break the overlay to fix a directory-creation problem.
+
+**And it never governs the declaring instance.** `dependents` says what a
+DEPENDENT does; an instance always materialises what it declared itself.
+Otherwise marking `schemas/` as `skip` would stop the platform creating its own.
+
+## Making a field REQUIRED is a change other branches pay for
+
+`dependents` has no default, deliberately: `reproduce` ships junk downstream and
+`skip` silently denies a folio its ingestion queue, so a field whose wrong value
+is invisible either way has to be written down. That reasoning is sound and the
+**cost lands somewhere else**, which is the part worth knowing before you do it
+again.
+
+Measured 2026-09-20, within an hour of the change: `main` added
+`methodology-crdm` and `methodology-raci` while the field was in review. Neither
+carried it — that branch's author had no reason to know it existed. On the
+merged tree **every** `readDeclaration` threw, and CI reported **166 failures
+and 35 errors** whose only visible cause was a raw Zod dump repeated across
+every test that reads a declaration.
+
+Nothing was wrong with either side. So when you add a required field to a
+declaration several sessions are editing at once:
+
+1. **Write the error before the field.** The two-line classification was
+   trivial; what cost the time was that the message said
+   `expected: 'reproduce' | 'skip', received: undefined` and nothing else.
+   `readDeclaration` now names the offending entries and gives both values with
+   a one-line test for choosing between them.
+2. **Expect to pay it more than once**, and treat that as an argument for
+   landing quickly rather than as a defect to fix. Every day the branch sits
+   open, another entry arrives without the field.
+3. **A conflict-free merge is not a passing merge.** Git had nothing to
+   reconcile — main added entries, this branch added a field — and the result
+   was still unparseable. Verify the merged tree, never the merge.
+
 ## Three states, as everywhere else here
 
 - **No `harness.json`** → `readDeclaration` returns `undefined`. An

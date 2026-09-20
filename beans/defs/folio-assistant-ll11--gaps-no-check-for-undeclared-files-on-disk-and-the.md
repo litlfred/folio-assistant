@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ll11
 title: 'GAPS: no check for undeclared files on disk, and the engineer art is 16x heavier than its siblings'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T06:23:14Z
-updated_at: 2026-09-20T09:09:09Z
+updated_at: 2026-09-20T12:40:27Z
 parent: folio-assistant-o3xy
 ---
 

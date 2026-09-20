@@ -11,7 +11,8 @@
 import { describe, expect, test } from "bun:test";
 import { resolve } from "node:path";
 
-import { declaredRoles, raciBreaches, raciRows, type RaciRow } from "../raci-chart.ts";
+import { declaredRoles, raciBreaches, raciRows, type RaciBreachKind, type RaciRow } from "../raci-chart.ts";
+import { KG_CRITERIA } from "../../schemas/kg-qa.ts";
 import { RACI_INVOLVEMENTS } from "../../src/workflow/process-model.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -108,5 +109,66 @@ describe("the parser", () => {
         expect(role.length).toBeGreaterThan(0);
       }
     }
+  });
+});
+
+/**
+ * Bean `3kbd`. The rule is read by two consumers — `bun run check:raci`, which
+ * gates, and `kg-audit`, which commits a sidecar. Until 2026-09-20 a breach
+ * was only ever PRINTED, and a printed verdict cannot distinguish "unsound
+ * since the diagram was drawn" from "broken in the commit under review".
+ *
+ * What these pin is that the two consumers cannot come apart. `raciBreaches`
+ * is the single implementation; `kg-audit` partitions on `kind` rather than
+ * re-deriving anything, so the tags are load-bearing and an untagged breach
+ * would vanish from every sidecar while still failing the gate.
+ */
+describe("breaches carry the kind kg-audit partitions on", () => {
+  const roles = new Set(["a-role", "b-role"]);
+  const row = (o: Partial<RaciRow> = {}): RaciRow => ({
+    process: "p",
+    activity: "A_X",
+    activityName: "X",
+    accountable: ["a-role"],
+    consulted: [],
+    informed: [],
+    ...o,
+  });
+
+  test("every breach is tagged, and with a kind kg-qa registers a criterion for", () => {
+    const breaches = [
+      ...raciBreaches([row({ accountable: [] })], roles),
+      ...raciBreaches([row({ accountable: ["a-role", "b-role"] })], roles),
+      ...raciBreaches([row({ informed: ["nope"] })], roles),
+      ...raciBreaches([row({ consulted: ["a-role"] })], roles),
+    ];
+    expect(breaches.length, "the four shapes below produce no breaches — this is vacuous").toBe(4);
+
+    const registered = new Set(KG_CRITERIA.filter((c) => c.id.startsWith("raci-")).map((c) => c.id));
+    expect(registered.size, "kg-qa registers no raci criteria").toBe(3);
+
+    const criterionFor: Record<RaciBreachKind, string> = {
+      "accountable-count": "raci-single-accountable",
+      "role-undeclared": "raci-role-resolves",
+      "accountable-also-consulted": "raci-accountable-not-consulted",
+    };
+    for (const b of breaches) {
+      expect(b.kind, `untagged breach: ${b.detail}`).toBeTruthy();
+      expect(registered.has(criterionFor[b.kind]), `no criterion for kind ${b.kind}`).toBe(true);
+    }
+  });
+
+  /**
+   * A dangling RACI role is `role-ref-resolves` on a different edge, and the
+   * registry grades every dangling reference `critical`. Grading it lower
+   * would say the same defect matters less depending on which attribute
+   * carries it. The other two are gaps between roles that all exist.
+   */
+  test("severities follow the registry's dangling-vs-structural split", () => {
+    const sev = (id: string): string | undefined => KG_CRITERIA.find((c) => c.id === id)?.severity;
+    expect(sev("raci-role-resolves")).toBe(sev("role-ref-resolves"));
+    expect(sev("raci-role-resolves")).toBe("critical");
+    expect(sev("raci-single-accountable")).toBe("major");
+    expect(sev("raci-accountable-not-consulted")).toBe("major");
   });
 });

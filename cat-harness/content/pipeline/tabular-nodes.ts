@@ -40,6 +40,7 @@
  * @module content/pipeline/tabular-nodes
  */
 import { LIBRARY_BLOCK_ORIGIN } from "../../schemas/attribution.ts";
+import { CONTENT_CONTEXT_URL } from "../../schemas/jsonld.ts";
 
 /** All a manifest needs to know, from either record. */
 export interface TabularShape {
@@ -49,6 +50,12 @@ export interface TabularShape {
    */
   hasSheets: boolean;
   sheets: { name: string; headers: readonly string[] }[];
+  /**
+   * What to call the document, when the record says. `undefined` means the
+   * record carries no name — the caller falls back to the entry id rather
+   * than this inventing one.
+   */
+  title?: string;
 }
 
 /** Formats that genuinely have sheets. A CSV is the one that does not. */
@@ -68,8 +75,10 @@ export function tabularShapeOf(doc: unknown): TabularShape | undefined {
   // ── folio-tabular-records/v1 — what runs today ──────────────────────────
   if (d.$schema === "folio-tabular-records/v1" && Array.isArray(d.sheets)) {
     const format = typeof d.format === "string" ? d.format : "";
+    const src = d.source as { file?: unknown } | undefined;
     return {
       hasSheets: SHEETED_FORMATS.includes(format),
+      title: typeof src?.file === "string" && src.file ? src.file : undefined,
       sheets: d.sheets.map((s) => {
         const sh = s as Record<string, unknown>;
         return {
@@ -200,7 +209,20 @@ export function buildTabularNodes(
   return out;
 }
 
-/** Serialise, dropping undefined so output is byte-stable. */
+/**
+ * Serialise, dropping undefined so output is byte-stable.
+ *
+ * The `@context` goes FIRST and is not optional: every other node under
+ * `library/` carries {@link CONTENT_CONTEXT_URL}, and a node without it is one
+ * a JSON-LD loader cannot type — `kind`, `contains` and `headers` would stay
+ * bare strings. This was missing while nothing called the emitter, which is
+ * precisely the class of defect an unreached function hides.
+ */
 function node(doc: Record<string, unknown>): string {
-  return JSON.stringify(doc, (_k, v) => (v === undefined ? undefined : v), 2) + "\n";
+  const clean: Record<string, unknown> = { "@context": CONTENT_CONTEXT_URL };
+  for (const [k, v] of Object.entries(doc)) {
+    if (v === undefined) continue;
+    clean[k] = v;
+  }
+  return JSON.stringify(clean, null, 2) + "\n";
 }

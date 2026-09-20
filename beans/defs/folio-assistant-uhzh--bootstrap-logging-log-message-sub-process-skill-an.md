@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uhzh
 title: 'BOOTSTRAP LOGGING: log-message sub-process, skill and Tool an Initiator can reach'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T04:29:39Z
-updated_at: 2026-09-20T04:32:23Z
+updated_at: 2026-09-20T14:37:12Z
 parent: folio-assistant-8jt6
 ---
 
@@ -59,3 +59,21 @@ compete for it.
 - [x] One Tool: the discussion with the human actor, `invoke: manual`.
 - [x] `initialize-harness` calls it at both points where logging is a step.
 - [x] The already-initialized failure mode.
+
+
+## 2026-09-20 — closed on re-measurement (`0pes`)
+
+All six Done-when boxes were ticked and the bean was still open. Verified each
+independently rather than trusting the boxes:
+
+| item | measured |
+|---|---|
+| `logger` role | `bootstrap/skills/roles/roles.json` — `actorKinds: ["system"]`, `skills: []`, `actedUpon` in its description |
+| the sub-process | `bootstrap/workflows/log-message.bpmn` — `Lane_Actor`, `Lane_Logger`, `GW_Complete`, `End_NotLogged` |
+| the skill | `bootstrap/skills/log-message.md` |
+| one Tool, manual | `cat-harness/tools/index.ts:1093` — `invoke: { manual: true }`, `install: { none: true }`, five required fields + optional `body: Markdown`, `satisfies: ["log-message"]` |
+| called at both logging steps | `initialize-harness.bpmn` — `A_LogInstallStart` and `A_LogFailure`, both `callActivity` → `Process_LogMessage` |
+| the already-initialized failure mode | `GW_AlreadyInitialized`, with the three logged ways in documented |
+
+This one carried no *"not my bean"* note — it was simply finished and left open,
+which is the same end state the six reached by a different route.

@@ -19,7 +19,14 @@ import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
-import { buildDocumentNodes, sectionKey, blockId } from "../../content/pipeline/gen-library-jsonld";
+import {
+  buildDocumentNodes,
+  sectionKey,
+  blockId,
+  ingestRungOf,
+  RUNG_INPUT,
+  buildEntryNodes,
+} from "../../content/pipeline/gen-library-jsonld";
 
 const DIR = mkdtempSync(join(tmpdir(), "gen-library-"));
 afterAll(() => {
@@ -178,5 +185,161 @@ describe("determinism", () => {
         if (Array.isArray(v)) expect(v.length).toBeGreaterThan(0);
       }
     }
+  });
+});
+
+describe("which ingest rung an entry is on — bean `p67i`", () => {
+  const has = (...files: string[]) => (f: string) => files.includes(f);
+
+  test("Stage A output puts it on the paged rung", () => {
+    expect(ingestRungOf(has("structure.json"))).toBe("paged");
+  });
+
+  test("a tabular record puts it on the tabular rung", () => {
+    // The whole point of the branch: before it, this entry fell into
+    // `skipped` and was reported "not ingested" while being fully ingested.
+    expect(ingestRungOf(has("tabular.jsonld"))).toBe("tabular");
+  });
+
+  test("the CSVW record puts it there too, for when eief's extractors land", () => {
+    expect(ingestRungOf(has("tabular.csvw.jsonld"))).toBe("tabular");
+  });
+
+  test("neither input is a DETERMINED `none`, not an unreadable one", () => {
+    // `none` says the entry has no ingest input. An entry WITH an input that
+    // did not parse is the other state, and the walk reports it separately
+    // and exits non-zero — "could not determine" is never a pass.
+    expect(ingestRungOf(has("manifest.jsonld"))).toBe("none");
+    expect(ingestRungOf(has())).toBe("none");
+  });
+
+  test("paged wins when both are present — the table is ordered, not a set", () => {
+    expect(ingestRungOf(has("structure.json", "tabular.jsonld"))).toBe("paged");
+    expect(RUNG_INPUT[0]?.[0]).toBe("paged");
+  });
+
+  test("every rung in the table is reachable from its own input", () => {
+    // A rung whose input the walk never checks is a branch that cannot fire —
+    // which is what the emitter itself was until this wiring.
+    for (const [rung, inputs] of RUNG_INPUT) {
+      for (const f of inputs) expect(ingestRungOf(has(f))).toBe(rung);
+    }
+  });
+});
+
+describe("a whole library entry, through the real branch — bean `p67i`", () => {
+  // Against a temp directory rather than `library/`, because a dataset in
+  // THIS repository would be content in the platform. That is exactly why the
+  // tabular branch had no CI coverage until it was extracted from the walk.
+  const entry = (files: Record<string, unknown>) => {
+    const dir = mkdtempSync(join(tmpdir(), "entry-"));
+    for (const [name, body] of Object.entries(files)) {
+      writeFileSync(join(dir, name), typeof body === "string" ? body : JSON.stringify(body));
+    }
+    return dir;
+  };
+  const record = (format: string, sheets: { name: string; headers: string[] }[]) => ({
+    $schema: "folio-tabular-records/v1",
+    "@id": "library/d/tabular",
+    source: { file: `d.${format}` },
+    format,
+    sheets: sheets.map((s) => ({ ...s, rows: 2, columns: s.headers.length, shape_source: "counted" })),
+    n_sheets: sheets.length,
+    header_vocabulary: [...new Set(sheets.flatMap((s) => s.headers))].sort(),
+    narrative: { text: null, state: "not-authored" },
+  });
+
+  test("a CSV entry yields manifest + ONE table, and no sheet", () => {
+    const dir = entry({ "tabular.jsonld": record("csv", [{ name: "d", headers: ["iso3", "cases"] }]) });
+    const out = buildEntryNodes("d", dir);
+    expect(out.state).toBe("built");
+    if (out.state !== "built") return;
+    expect(out.rung).toBe("tabular");
+    expect(out.files.map((f) => f.path).sort()).toEqual(["blocks/table-001.jsonld", "manifest.jsonld"]);
+    const manifest = JSON.parse(out.files.find((f) => f.path === "manifest.jsonld")!.content);
+    expect(manifest.contains).toEqual(["library/d/blocks/table-001"]);
+    expect(manifest.meta.tabular_depth).toBe("table");
+    expect(manifest.meta.tabular_record).toBe("folio-tabular-records/v1");
+    expect(manifest.title).toBe("d.csv");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a two-sheet workbook yields a sheet node per sheet", () => {
+    const dir = entry({
+      "tabular.jsonld": record("xlsx", [
+        { name: "Coverage", headers: ["iso3", "mcv1_pct"] },
+        { name: "Notes", headers: ["iso3", "note"] },
+      ]),
+    });
+    const out = buildEntryNodes("d", dir);
+    expect(out.state).toBe("built");
+    if (out.state !== "built") return;
+    expect(out.files.map((f) => f.path).sort()).toEqual([
+      "blocks/table-001.jsonld",
+      "blocks/table-002.jsonld",
+      "manifest.jsonld",
+      "sheets/sheet-001.jsonld",
+      "sheets/sheet-002.jsonld",
+    ]);
+    const manifest = JSON.parse(out.files.find((f) => f.path === "manifest.jsonld")!.content);
+    expect(manifest.contains).toEqual(["library/d/sheets/sheet-001", "library/d/sheets/sheet-002"]);
+    expect(manifest.meta.tabular_depth).toBe("sheet");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a record that is THERE and unreadable is `unreadable`, never `no-input`", () => {
+    // The failure this separation exists to prevent: reported as "not
+    // ingested", it names the wrong cause and sends a reader to the wrong fix.
+    const dir = entry({ "tabular.jsonld": "{ not json" });
+    expect(buildEntryNodes("d", dir).state).toBe("unreadable");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a record of an unrecognised schema is unreadable too, not an empty document", () => {
+    const dir = entry({ "tabular.jsonld": { $schema: "something-else/v9", sheets: [] } });
+    expect(buildEntryNodes("d", dir).state).toBe("unreadable");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("an entry with no ingest input at all is `no-input`, which PASSES", () => {
+    const dir = entry({ "README.md": "nothing here" });
+    expect(buildEntryNodes("d", dir).state).toBe("no-input");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("an unreadable structure.json is `unreadable` on the PAGED rung too", () => {
+    // The third state is not a tabular-only concern: a paged entry whose
+    // Stage A output is there and does not parse has the same two wrong
+    // answers available to it.
+    const dir = entry({ "structure.json": "{ not json" });
+    expect(buildEntryNodes("d", dir).state).toBe("unreadable");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a record naming no file falls back to the ENTRY ID, not to nothing", () => {
+    // `tabularShapeOf` refuses to invent a title because it cannot know the
+    // entry id. The caller can, and does — a manifest with no title at all
+    // would be the emitter's ignorance showing up as a missing fact.
+    const r = record("csv", [{ name: "d", headers: ["iso3"] }]) as Record<string, unknown>;
+    delete r.source;
+    const dir = entry({ "tabular.jsonld": r });
+    const out = buildEntryNodes("an-entry-id", dir);
+    expect(out.state).toBe("built");
+    if (out.state !== "built") return;
+    const manifest = JSON.parse(out.files.find((f) => f.path === "manifest.jsonld")!.content);
+    expect(manifest.title).toBe("an-entry-id");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a paged entry still goes down the paged rung, untouched", () => {
+    const dir = entry({
+      "structure.json": { doc_id: "d", title: "A paper", pages: [], sections: [] },
+    });
+    const out = buildEntryNodes("d", dir);
+    expect(out.state).toBe("built");
+    if (out.state !== "built") return;
+    expect(out.rung).toBe("paged");
+    expect(out.files.some((f) => f.path.startsWith("sheets/"))).toBe(false);
+    rmSync(dir, { recursive: true, force: true });
   });
 });

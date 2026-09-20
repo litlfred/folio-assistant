@@ -61,9 +61,10 @@
  * Exit codes: 0 up to date or written · 1 stale/absent under `--check`.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import {
+  DECLARATION_FILENAME,
   findInstanceRoot,
   instanceRootFor,
   readDeclaration,
@@ -127,6 +128,10 @@ export function stickyFile(id: string): string {
 export const FOLIO_DIRECTORY_ENTRY: ContentDirectory = {
   id: FOLIO_DIR_ID,
   path: FOLIO_DIR_PATH,
+  // `reproduce`, and it is the least arguable classification in the set: a
+  // folio's authored content is the whole point of a folio, so a dependent
+  // gets its own rather than inheriting somebody else's chapters.
+  dependents: "reproduce",
   graphs: [FOLIO_GRAPH_KIND],
   description:
     "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop.",
@@ -404,6 +409,12 @@ export function declaredContributions(root: string): DeclaredContribution[] {
       declared.push({
         contribution: StickyContributionSchema.parse(raw),
         declaredBy: decl.name,
+        // The FILE, not just the layer's name. `layer` is the contributing
+        // instance's root and was being discarded here; a consumer wanting to
+        // link to the source had only a name, which is not resolvable — and
+        // resolving one by searching is how two instances sharing a `name`
+        // silently attribute a card to the wrong file.
+        declaredIn: relative(repoRootFor(root), join(layer, DECLARATION_FILENAME)) || DECLARATION_FILENAME,
         ...(decl.description === undefined ? {} : { description: decl.description }),
       });
     }

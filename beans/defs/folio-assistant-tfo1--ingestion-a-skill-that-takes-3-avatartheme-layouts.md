@@ -203,3 +203,14 @@ The duplicate finding was independently confirmed in the process: `sha256
 Nothing else here is touched, and the status stays `todo` — the question of
 whether the third avatar is missing or the duplicate was an upload slip is
 still the owner's, and this bean is still the argument for the ingestion skill.
+
+_2026-09-20_ — **MERGED** in [#481](https://github.com/litlfred/folio-assistant/pull/481)
+(`5fe9b498`).
+
+**Kept open on the two questions that were always the owner's**, both unchanged
+by the merge: whether the third avatar in `1b62b57` is missing or the duplicate
+was an upload slip, and the `landing-architecture` mobile crop that has never
+been supplied. The second is the only thing standing between
+`check:theme-art:check` and being a CI gate — the exemption in `gates.ts` names
+it as the exact unblocking condition, so the gate arrives the moment the crop
+does.

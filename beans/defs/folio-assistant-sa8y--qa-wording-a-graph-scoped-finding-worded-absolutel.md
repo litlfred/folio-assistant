@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sa8y
 title: 'QA WORDING: a graph-scoped finding worded absolutely sent a session to a wrong fix'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T05:52:43Z
-updated_at: 2026-09-20T05:52:43Z
+updated_at: 2026-09-20T14:17:35Z
 parent: folio-assistant-d308
 ---
 
@@ -149,8 +149,33 @@ compose", applied to a diagnostic rather than to a link.
       function and `manifestEntries()` now derive from `kgDirectories` and accept
       either shape, through one shared walk so they cannot drift apart again.
       `skill-has-entry-point` went 1 → 0
-- [ ] the three unbound lanes in `initialize-harness.bpmn`
-- [ ] that diagram has no `BPMNDiagram`, so `render:bpmn` cannot draw it
+- [~] the three unbound lanes — **NOT work, a recorded decision.** The four
+      roles exist in `bootstrap/skills/roles/roles.json` with the right flags
+      (`knowledge-graph-data-store` and `logger` `actedUpon`, `requestor`
+      `judgementOnly`); what is missing is `lanes` on each, and that absence is
+      **deliberate**. The file's own `_lanes_comment` records why: the root
+      declares `bootstrap/skills/` but NOT `bootstrap/workflows/`, so a `lanes`
+      entry mints `bindsLane -> role/Initiator` in folio-assistant's graph
+      pointing at a lane node only bootstrap's export produces — **three
+      dangling links, measured 2026-09-20**. Whether the root should declare
+      both halves or neither is bean `pve3`.
+
+      **Binding them would have re-created the shape of the wrong fix that
+      started this bean** — one instance's graph carrying another's nodes.
+      Left alone, deliberately.
+- [x] that diagram has no `BPMNDiagram` — **added 2026-09-20.** The premise
+      about the renderer was also stale: `render:bpmn` exits 0 and never lists
+      it, because `workflowFiles(ROOT)` reads cat-harness's declared graph and
+      the root does not declare `bootstrap/workflows/`. Same isolation, again.
+
+      Worth doing anyway, and the reason is not this repository's renderer: a
+      BPMN file with no DI opens as an **empty canvas in any editor**, so a
+      person opening it to read the process saw nothing. 14 shapes, 3 lanes,
+      15 edges. Validated by round-tripping through `bpmn-moddle`: 1 diagram,
+      33 plane elements, **0 warnings and 0 unresolved `bpmnElement`
+      references**. Not rendered to SVG here — `bpmn-js` is one of the
+      `--all` browser jobs and is not installed in this container — so that
+      half is stated as unverified rather than claimed.
 - [ ] the stale `bootstrap.bpmn` sidecar — owner's call, still untouched
 
 

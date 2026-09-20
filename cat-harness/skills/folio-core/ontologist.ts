@@ -4,7 +4,6 @@ export const ontologist: SkillDefinition = {
   id: "ontologist",
   name: "Ontologist",
   description: "Term disambiguation, glossary generation, and formal-naming alignment.",
-  roles: ["collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

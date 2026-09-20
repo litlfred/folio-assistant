@@ -4,7 +4,6 @@ export const testEngineer: SkillDefinition = {
   id: "test-engineer",
   name: "Test Engineer",
   description: "Unit testing, coverage metrics, and test infrastructure for content pipelines.",
-  roles: ["collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

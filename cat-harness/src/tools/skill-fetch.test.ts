@@ -19,7 +19,7 @@ function instance(pkgs: Record<string, string>, kgPath = "skills"): string {
     join(root, "harness.json"),
     JSON.stringify({
       name: "t",
-      directories: [{ id: "cat-harness", path: kgPath, graphs: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"] }],
     }),
   );
   for (const [name, body] of Object.entries(pkgs)) {
@@ -142,7 +142,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
       join(repo, "sibling", "harness.json"),
       JSON.stringify({
         name: "sibling",
-        directories: [{ id: "cat-harness", path: "skills", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
     );
     writeFileSync(join(repo, "sibling", "skills", "s.md"), SKILL);
@@ -157,8 +157,8 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
       JSON.stringify({
         name: "inst",
         directories: [
-          { id: "sib", path: "sibling/skills", graphs: ["cat-harness"], scope: "repository" },
-          { id: "cat-harness", path: "kg", graphs: ["cat-harness"] },
+          { id: "sib", path: "sibling/skills", dependents: "reproduce", graphs: ["cat-harness"], scope: "repository" },
+          { id: "cat-harness", path: "kg", dependents: "reproduce", graphs: ["cat-harness"] },
         ],
       }),
     );

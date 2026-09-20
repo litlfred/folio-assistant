@@ -50,7 +50,6 @@
  *
  * @module scripts/gates
  */
-import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -688,7 +687,82 @@ export function undeterminedReport(e: unknown, root: string): string[] {
   ];
 }
 
+/**
+ * Run a command, streaming its output AND keeping a copy.
+ *
+ * `stdio: "inherit"` was here, and the summary could say nothing about WHY a
+ * gate failed because nothing was captured — bean `ucb9`. Capturing with
+ * `spawnSync` and printing afterwards would have worked and is wrong: `bun
+ * test` runs for the best part of a minute, and a contributor watching a
+ * blank terminal for that long is a regression traded for a recap.
+ *
+ * So both. The child's streams are pumped to this process as they arrive,
+ * which keeps the live output a reader already relies on, and accumulated so
+ * the summary can quote the failing lines back at the end.
+ */
+async function runTee(cmd: string, args: string[]): Promise<{ code: number; output: string }> {
+  const child = Bun.spawn([cmd, ...args], { cwd: ROOT, stdout: "pipe", stderr: "pipe" });
+  const chunks: string[] = [];
+  const pump = async (stream: ReadableStream<Uint8Array>, to: NodeJS.WriteStream): Promise<void> => {
+    const decoder = new TextDecoder();
+    for await (const chunk of stream) {
+      const text = decoder.decode(chunk, { stream: true });
+      chunks.push(text);
+      to.write(text);
+    }
+  };
+  await Promise.all([pump(child.stdout, process.stdout), pump(child.stderr, process.stderr)]);
+  return { code: await child.exited, output: chunks.join("") };
+}
+
+/**
+ * The lines from a failed gate's output worth repeating in the summary.
+ *
+ * NOT a `bun test` parser. Several shapes matter and each names a different
+ * kind of drift, so the patterns are listed rather than one runner being
+ * special-cased:
+ *
+ *   `(fail) <name>`   a test, by name — the shape that started this
+ *   `✗ …` / `✘ …`     what most `*:check` scripts print
+ *   `error: …`        a script that threw
+ *
+ * Capped, because a gate can fail in hundreds of places and a summary that
+ * reprints all of them is the scrollback it was meant to replace. The cap is
+ * reported rather than silent: "and N more" is a different statement from
+ * showing everything, and a reader who sees the first is told to scroll.
+ *
+ * Returns EMPTY when nothing matched, and the caller says so out loud rather
+ * than printing the gate alone as though there were nothing to say. An
+ * unrecognised shape is not an absence of one — the same rule the rest of
+ * this repository applies to could-not-determine.
+ */
+export function salientFailures(output: string, cap = 6): string[] {
+  const shapes = [
+    /^\(fail\)\s/,
+    /^\s*(✗|✘)\s/,
+    /^error:\s/i,
+  ];
+  const hits: string[] = [];
+  const seen = new Set<string>();
+  for (const raw of output.split("\n")) {
+    const line = raw.replace(/\u001b\[[0-9;]*m/g, "").trimEnd();
+    if (!shapes.some((re) => re.test(line))) continue;
+    const t = line.trim();
+    // A gate that fails a hundred files prints the same shape a hundred
+    // times; the SUMMARY wants the distinct ones.
+    if (seen.has(t)) continue;
+    seen.add(t);
+    hits.push(t.length > 160 ? `${t.slice(0, 157)}…` : t);
+    if (hits.length === cap) {
+      hits.push(`…and more — scroll up for this gate's full output`);
+      break;
+    }
+  }
+  return hits;
+}
+
 if (import.meta.main) {
+  // `await` below — the gate loop tees each child's output (bean `ucb9`).
   const all = process.argv.includes("--all");
   const listOnly = process.argv.includes("--list");
 
@@ -755,12 +829,12 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  const failed: Gate[] = [];
+  const failed: { gate: Gate; why: string[] }[] = [];
   for (const g of gates) {
     process.stdout.write(`▸ ${g.command}\n`);
     const [cmd, ...args] = g.command.split(/\s+/);
-    const r = spawnSync(cmd!, args, { cwd: ROOT, stdio: "inherit" });
-    if (r.status !== 0) failed.push(g);
+    const r = await runTee(cmd!, args);
+    if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
   }
 
   console.log("");
@@ -770,6 +844,21 @@ if (import.meta.main) {
     process.exit(0);
   }
   console.log(`✗ ${failed.length} of ${gates.length} failed:`);
-  for (const g of failed) console.log(`  · ${g.command}   (${g.job} / ${g.step})`);
+  for (const { gate, why } of failed) {
+    console.log(`  · ${gate.command}   (${gate.job} / ${gate.step})`);
+    // The whole point of bean `ucb9`. Without these lines a gate that is
+    // ALREADY red for a reason you know stays byte-identical when a second
+    // failure joins it, and red -> red-for-a-new-reason is invisible where
+    // green -> red is loud. The invisible transition is the one that reaches
+    // CI: it did, on bean `7yvd`, 2026-09-20.
+    for (const line of why) console.log(`      ${line}`);
+  }
+  if (failed.some(({ why }) => why.length === 0)) {
+    console.log(
+      `\n  A gate with no lines quoted above printed nothing this tool recognised as a\n` +
+        `  failure. Scroll up and read its output — an unrecognised shape is not an\n` +
+        `  absence of one.`,
+    );
+  }
   process.exit(1);
 }

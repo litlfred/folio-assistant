@@ -127,6 +127,14 @@
           "detail": "no role carries \"docs-generation\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
+          "where": "domain-fencing",
+          "detail": "no role carries \"domain-fencing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "edge-kinds-and-blast-radius",
+          "detail": "no role carries \"edge-kinds-and-blast-radius\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
           "where": "editor",
           "detail": "no role carries \"editor\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -153,6 +161,10 @@
         {
           "where": "glossary-build",
           "detail": "no role carries \"glossary-build\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "graph-detanglement",
+          "detail": "no role carries \"graph-detanglement\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "groebner-basis",
@@ -445,7 +457,7 @@
         },
         {
           "where": "harness.json",
-          "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+          "detail": "nested instance \"folio-assistant-checkout\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         }
       ]
     }

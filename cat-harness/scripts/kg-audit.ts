@@ -80,6 +80,7 @@ import {
   type LoadedActor,
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
+import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import {
   consultedSkills,
@@ -411,7 +412,29 @@ async function auditProcess(
     }
   }
 
+  // RACI. ONE implementation, shared with `bun run raci` — `raciBreaches`
+  // tags each breach with its kind, so three severities can be filed
+  // separately without a second copy of the rule. Two answers to "is this
+  // chart sound" is the drift this whole cluster exists to prevent.
+  //
+  // Rows come from the model already loaded here rather than from re-reading
+  // the diagram: the sidecar records that file's content hash, so a second
+  // parse would be filed under the first one's hash and free to disagree.
+  const raciRows = raciRowsOf(m);
+  const raciAll = graph
+    ? raciBreaches(raciRows, new Set((graph.roles ?? []).map((r) => r.id)))
+    : [];
+  const raciOf = (k: RaciBreachKind): KgFinding[] =>
+    raciAll.filter((b) => b.kind === k).map((b) => ({ where: b.activity, detail: b.detail }));
+  // Applicable only where the diagram CLAIMS something. An activity with no
+  // RACI is `n/a`, never a failure: annotation is incremental by design and
+  // the rule is on what a diagram claims, not on how much it has claimed.
+  const raciApplies = Boolean(graph) && raciRows.length > 0;
+
   const criteria: Record<string, KgCriterionEntry> = {
+    "raci-role-resolves": entry(raciOf("role-undeclared"), raciApplies),
+    "raci-single-accountable": entry(raciOf("accountable-count"), raciApplies),
+    "raci-accountable-not-consulted": entry(raciOf("accountable-also-consulted"), raciApplies),
     // `n/a` when the diagram binds none, which is most of them — distinct
     // from `pass`, because a process with nothing to resolve has not been
     // shown to resolve anything.
@@ -437,7 +460,18 @@ async function auditProcess(
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
-    for (const id of ["role-ref-resolves", "lane-binds-role", "role-carries-activity-skill", "activity-fulfilment-kind"]) {
+    for (const id of [
+      "role-ref-resolves",
+      "lane-binds-role",
+      "role-carries-activity-skill",
+      "activity-fulfilment-kind",
+      // Every RACI value IS a role, so with no registry none of the three can
+      // be resolved. `unknown` rather than `pass` — the third state, and the
+      // reason this audit writes sidecars rather than printing a verdict.
+      "raci-role-resolves",
+      "raci-single-accountable",
+      "raci-accountable-not-consulted",
+    ]) {
       criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at skills/roles/roles.json." }] };
     }
   }

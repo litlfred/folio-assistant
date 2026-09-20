@@ -188,7 +188,22 @@ export const SkillDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   description: z.string(),
-  roles: z.array(z.string()),
+  /**
+   * RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing.
+   *
+   * Required until today, which is why making it optional is part of the
+   * retirement rather than a separate tidy: removing the 23 declarations
+   * without this makes `skill()` throw on every definition.
+   *
+   * Record: `fsh-guts/retired/skill-definition-roles.md`. Short version — it
+   * mixed an HTTP access tier (`owner`, `collaborator`, and `reader`, which
+   * is not even a `UserRole`) with BPMN roles, and `src/core/rbac.ts` never
+   * consulted it: routes hardcode `hasRole(req, "collaborator")`. A field
+   * that reads as enforcement and enforces nothing is worse than an absent
+   * one. Reinstating it means writing the consumer first, and deciding which
+   * of the two vocabularies it speaks.
+   */
+  roles: z.array(z.string()).optional(),
   requiredCapabilities: z.array(SkillCapabilityRefSchema),
   dependsOn: z.array(SkillDependencySchema).optional(),
   allowedTools: z.array(z.string()).optional(),

@@ -8,7 +8,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -31,8 +31,8 @@ function repo(): string {
       {
         name: "an-instance",
         directories: [
-          { id: "work", path: "work/", graphs: ["beans"], scope: "repository" },
-          { id: "own", path: "own/", graphs: ["schemas"] },
+          { id: "work", path: "work/", dependents: "reproduce", graphs: ["beans"], scope: "repository" },
+          { id: "own", path: "own/", dependents: "reproduce", graphs: ["schemas"] },
         ],
       },
       null,
@@ -82,7 +82,7 @@ describe("the ROOT may itself be an instance", () => {
     writeFileSync(
       join(root, "harness.json"),
       JSON.stringify(
-        { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", graphs: ["uploads"] }] },
+        { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] }] },
         null,
         2,
       ),
@@ -131,7 +131,7 @@ describe("the ROOT may itself be an instance", () => {
     writeFileSync(
       join(root, "harness.json"),
       JSON.stringify(
-        { name: "the-repo", directories: [{ id: "x", path: "an-instance/", graphs: ["uploads"] }] },
+        { name: "the-repo", directories: [{ id: "x", path: "an-instance/", dependents: "reproduce", graphs: ["uploads"] }] },
         null,
         2,
       ),
@@ -234,6 +234,32 @@ describe("this repository, as it stands", () => {
   // test does: tests/ -> scripts/ -> cat-harness/ -> the repository root.
   const REPO = resolve(import.meta.dir, "..", "..", "..");
 
+  test("no two declarations in this repository share a `name`", () => {
+    // MEASURED, not imagined: adding `harness.json` at the repository root
+    // gave it `name: "folio-assistant"`, which `cat-harness/harness.json`
+    // already used. Nothing failed. `resolveDirectories` sets
+    // `declaredBy: decl.name` and a landing sticky carries `contributedBy`, so
+    // both read `folio-assistant` with no way to tell WHICH — a directory can
+    // be attributed to the wrong instance while the string looks right.
+    //
+    // Over the real repository on purpose. A fixture would pin the collision I
+    // already fixed; this pins the property for whatever is declared next.
+    const names = new Map<string, string[]>();
+    for (const entry of readdirSync(REPO, { withFileTypes: true })) {
+      const rel = entry.isDirectory() ? join(entry.name, "harness.json") : null;
+      for (const p of [rel, entry.name === "harness.json" ? "harness.json" : null]) {
+        if (!p || !existsSync(join(REPO, p))) continue;
+        const name = (JSON.parse(readFileSync(join(REPO, p), "utf-8")) as { name?: string }).name;
+        if (name) names.set(name, [...(names.get(name) ?? []), p]);
+      }
+    }
+    // The vacuity guard this repository asks for everywhere: a clean run over
+    // zero declarations proves nothing, and there are at least three.
+    expect(names.size).toBeGreaterThanOrEqual(3);
+    const shared = [...names.entries()].filter(([, files]) => files.length > 1);
+    expect(shared).toEqual([]);
+  });
+
   test("the sweep runs over the real root without throwing", () => {
     expect(() => undeclaredAtRoot(REPO)).not.toThrow();
   });
@@ -300,7 +326,7 @@ describe("an instance's own declaration outranks another instance naming it", ()
     const root = mkdtempSync(join(tmpdir(), "outrank-"));
     // `outer` declares a repository-scoped directory INSIDE `inner`, which is
     // itself an instance.
-    const outer = { name: "outer", directories: [{ id: "inner-skills", path: `${secondName}/skills/`, graphs: ["cat-harness"], scope: "repository" }] };
+    const outer = { name: "outer", directories: [{ id: "inner-skills", path: `${secondName}/skills/`, dependents: "reproduce", graphs: ["cat-harness"], scope: "repository" }] };
     const inner = { name: "inner", directories: [] };
     const byName: Record<string, unknown> = { [firstName]: outer, [secondName]: inner };
     for (const [dir, decl] of Object.entries(byName)) {

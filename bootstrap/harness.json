@@ -55,6 +55,7 @@
     {
       "id": "cat-harness",
       "path": "skills/",
+      "dependents": "skip",
       "graphs": [
         "cat-harness"
       ]
@@ -62,6 +63,7 @@
     {
       "id": "cat-harness-workflows",
       "path": "workflows/",
+      "dependents": "skip",
       "description": "The bootstrap PROCESSES — `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_Bootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace bootstrap's skills with its workflows.",
       "graphs": [
         "cat-harness"

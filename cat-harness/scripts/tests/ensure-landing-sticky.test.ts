@@ -5,6 +5,8 @@
  * run is easy to get right and is not where this breaks.
  */
 import { describe, expect, test } from "bun:test";
+
+import type { ContentDirectory } from "../../schemas/cat-harness.js";
 import { mkdtempSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -64,6 +66,7 @@ const DECL = `{
     {
       "id": "schemas",
       "path": "schemas/",
+      "dependents": "skip",
       "graphs": [
         "schemas",
         "cat-harness"
@@ -113,7 +116,7 @@ describe("the declaration is edited surgically, not re-serialised", () => {
 
   test("the result is still valid JSON, with the entry present", () => {
     const parsed = JSON.parse(insertDirectoryEntry(DECL, FOLIO_DIRECTORY_ENTRY)) as {
-      directories: Array<{ id: string; path: string; graphs: string[] }>;
+      directories: ContentDirectory[];
     };
     expect(parsed.directories).toHaveLength(2);
     expect(declaresFolio(parsed)).toBe(true);
@@ -263,7 +266,7 @@ describe("a malformed sticky is repaired, not fatal", () => {
     // folio anywhere and call the entry what it likes.
     const custom = DECL.replace(
       '"directories": [',
-      '"directories": [\n    {\n      "id": "content",\n      "path": "authored/",\n      "graphs": [\n        "folio"\n      ]\n    },',
+      '"directories": [\n    {\n      "id": "content",\n      "path": "authored/",\n      "dependents": "reproduce",\n      "graphs": [\n        "folio"\n      ]\n    },',
     );
     const root = instance(custom);
     mkdirSync(join(root, "authored"), { recursive: true });
@@ -291,7 +294,7 @@ describe("a nested instance contributes its own stickies", () => {
           // so `harness.json` is not in the directory named here. That is what
           // `bootstrap/skills/` looks like, and a composer that looked for a
           // declaration inside the declared directory would find nothing.
-          directories: [{ id: "inner", path: "inner/skills/", graphs: ["cat-harness"] }],
+          directories: [{ id: "inner", path: "inner/skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
         },
         null,
         2,
@@ -333,7 +336,7 @@ describe("a nested instance contributes its own stickies", () => {
     writeFileSync(
       join(root, "harness.json"),
       JSON.stringify(
-        { name: "only", directories: [{ id: "s", path: "sub/", graphs: ["cat-harness"] }] },
+        { name: "only", directories: [{ id: "s", path: "sub/", dependents: "reproduce", graphs: ["cat-harness"] }] },
         null,
         2,
       ),

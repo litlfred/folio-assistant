@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vo9d
 title: 'ORPHANED MECHANISM: translation-roundtrip and check-l1-complete have entry points and no callers, while the BPMN asserts the step runs'
-status: completed
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T11:31:09Z
-updated_at: 2026-09-20T14:12:51Z
+updated_at: 2026-09-20T14:23:53Z
 parent: folio-assistant-d308
 ---
 
@@ -404,3 +404,71 @@ reason: the useful question for this shape is not *what is missing* but **how ma
 dispatch points it should have**, which §Reachability is PLURAL already answers
 with the owner's own words. A second section would have said it twice, and the
 skill is at 260 lines against a 280-line `skill-is-brief` threshold.
+
+---
+
+## Two sessions met on this bean — both records kept, and the sibling is right
+
+Merged 2026-09-20. I marked this **completed** at 14:12; a sibling marked it
+**in-progress** at 14:23 and re-measured. **Their status stands**, because their
+re-measurement found an item my four checkboxes did not cover — an *aggregate*
+round-trip question, distinct from the per-block one — and a bean closed over an
+open item sends the next agent past real work.
+
+The two records do not overlap and neither supersedes the other:
+
+- **mine** strikes the `dw7v` hypothesis from history (criterion 4), which their
+  pass does not address;
+- **theirs** corrects this bean's OWN OPENING MEASUREMENT — `check-l1-complete.ts`
+  already had a caller when the bean was filed (`ingest-document.ts` imported
+  `checkEntry` from it since `0dc6c492a7`, thirty-two minutes earlier) — and
+  names the one item still open.
+
+Worth noting what the two findings have in common, since they were reached
+independently: **both are corrections to a claim this bean made about history.**
+Mine, that a caller was lost; theirs, that there was none to begin with at the
+moment of filing. The bean was wrong about its subject's past in two different
+directions, and neither error was visible from the file.
+
+---
+
+## Re-measured 2026-09-20, and FOUR of the five remaining items were already done
+
+Not by me. Checked against the code and dated against this bean (filed
+**11:31:09**), because four stale checkboxes is a bean that sends the next
+agent to work that exists.
+
+| item | state | evidence |
+|---|---|---|
+| Tool node over the recorder | **done** | `11d43ce4fb` (12:14) — `translation-roundtrip-record`, `satisfies: ["translation-manager"]` |
+| `Task_RoundTripQA` carries a skill ref | **done** | it already did |
+| a `qa-sweep` axis for the round trip | **refused, correctly** | the sweep cannot back-translate |
+| `check-l1-complete` given the same treatment | **done** | `ca5ec3e373` (12:58) — Tool `l1-complete-check`, plus `check:l1-complete` in `package.json` |
+| the pattern written into a skill | **done** | [`covered-is-not-reachable`](../../cat-harness/skills/folio-core/covered-is-not-reachable.md) §"one mechanism, several dispatch points" (line 145), citing this bean at 168 |
+
+**And this bean's own opening measurement was already wrong when it was
+filed.** It lists `check-l1-complete.ts` as having "none" for callers;
+`scripts/ingest-document.ts` has imported `checkEntry` from it since
+`0dc6c492a7` at **10:59:25**, thirty-two minutes earlier. The table's column
+is headed *callers of the entry point*, so the narrow reading — nothing
+dispatches its `import.meta.main` — was true and is the one the fix answered.
+Worth writing down, because the wide reading is the one a skim takes.
+
+## The one item genuinely open, and what already exists for it
+
+> a sweep-side criterion for the different question — does this block HAVE a
+> round-trip verdict?
+
+**Partly answered already, per block.** `translation-semantic-roundtrip` is
+declared in `TRANSLATION_CRITERIA` and deliberately carries **no entry**, so
+the panel reads *"no witness recorded — nobody has ruled on it"*. That IS the
+per-block third state, and `translation-block-qa.ts` argues at length why a
+script-computed score there would be worse than the gap: reversing the PO's own
+msgid→msgstr map returns the source exactly, always — a similarity of 1.0 that
+measures the lookup table.
+
+So what is missing is not the per-block question but an **aggregate**: across
+the corpus, how many translated blocks carry a round-trip verdict and how many
+do not. Left unbuilt rather than guessed at — the bean says "worth having on
+its own terms" without saying which shape, and inventing scope here is the
+failure this session has already met several times.

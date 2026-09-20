@@ -166,6 +166,15 @@ export const LandingStickySchema = CarriedNoteSchema.extend({
    */
   contributedBy: z.string().min(1),
   /**
+   * The declaration this sticky came from, relative to the REPOSITORY.
+   *
+   * `contributedBy` says which layer, which is what attribution needs.
+   * This says which FILE, which is what a link to the source needs — and
+   * they are different questions: a name is not resolvable, and two
+   * instances sharing one is a collision this repository has already had.
+   */
+  declaredIn: z.string().min(1),
+  /**
    * The crop this sticky takes, when it chooses rather than being derived.
    *
    * Absent means *derive it from the content*, which is what the generator does.
@@ -298,6 +307,7 @@ export function stickyFromContribution(
     // link to itself wants it read before the platform's onboarding four.
     links: [...c.links, ...(c.onboardingLinks ? DEFAULT_ONBOARDING_LINKS : [])],
     contributedBy: declaredBy,
+    declaredIn: declared.declaredIn,
     // Carried only when declared. Writing `shape: undefined` into the node would
     // make every existing sticky file differ by a key, which `--check` reports
     // as stale and an author reads as a change they did not make.
@@ -323,3 +333,45 @@ export function stickyFromContribution(
 export function isLandingSticky(note: unknown): note is LandingSticky {
   return (note as { $schema?: unknown } | null)?.$schema === LANDING_STICKY_SCHEMA_TAG;
 }
+
+/**
+ * Where this sticky's declaration can be read and edited, on the forge.
+ *
+ * ## Both, because they are different acts
+ *
+ * The owner: *"edit tool = link to github pages edit directrly ... rendeding
+ * shows edit src icon (and also need view icon)"*. `/blob/` is reading and
+ * `/edit/` opens the editor; a reader who wants to check what a card says
+ * should not be taken to a text box, and one who wants to fix it should not
+ * have to find the button themselves.
+ *
+ * ## Absent, not broken, when there is no forge
+ *
+ * *"if github tools avaialable in rendering pipeline"* — so this is a real
+ * probe rather than a hardcoded address. `detectRepoUrl` reads `origin` and
+ * `upload-url.ts` already refuses a non-github.com remote for the same reason:
+ * the `/edit/<branch>/<path>` form is GitHub's, and emitting it for another
+ * forge is a guess wearing a URL's clothes.
+ *
+ * Returning `undefined` is what makes the control ABSENT rather than dead. A
+ * link that 404s is worse than no link: it invites a click, and on a private
+ * repository it 404s for exactly the reader who cannot edit, which reads as
+ * "this page is broken" rather than "you cannot do this".
+ *
+ * `declaredIn` is repo-relative and comes from the sticky itself, so a card
+ * contributed by `bootstrap` links to `bootstrap/harness.json` rather than to
+ * whichever declaration happened to be read first.
+ */
+export function sourceLinks(
+  repoUrl: string | undefined,
+  declaredIn: string,
+  branch: string,
+): { viewHref: string; editHref: string } | undefined {
+  if (repoUrl === undefined) return undefined;
+  const path = declaredIn.split("/").map(encodeURIComponent).join("/");
+  return {
+    viewHref: `${repoUrl}/blob/${branch}/${path}`,
+    editHref: `${repoUrl}/edit/${branch}/${path}`,
+  };
+}
+

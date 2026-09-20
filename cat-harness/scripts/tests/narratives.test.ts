@@ -126,7 +126,7 @@ function repo(entries: Record<string, unknown>): string {
   made.push(root);
   writeFileSync(
     join(root, "harness.json"),
-    JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", graphs: ["library"] }] }),
+    JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }),
   );
   for (const [slug, narrative] of Object.entries(entries)) {
     mkdirSync(join(root, "library", slug), { recursive: true });
@@ -344,7 +344,7 @@ function imagesRepo(): string {
   made.push(root);
   writeFileSync(
     join(root, "harness.json"),
-    JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", graphs: ["library"] }] }),
+    JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }),
   );
   mkdirSync(join(root, "library", "x"), { recursive: true });
   writeFileSync(

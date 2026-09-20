@@ -44,7 +44,7 @@ requirements, impact, sign-off, feedback — and each one is the agent handing a
 decision to a person who was not inside the analysis that produced it.
 
 **So the ordering rule in
-[`interaction-modality.md` §4.1](interaction-modality.md) governs this whole
+[`interaction-modality.md` §4.1](../../skills/folio-core/interaction-modality.md) governs this whole
 workflow, not just its explicit checkpoints: context → options → recommendation
 → question.** Its test applies unchanged:
 
@@ -172,7 +172,7 @@ Three checks that catch most of it:
 This is also why the declaration file keeps a fixed name while artefacts are
 stub-named: a consumer must be able to open a repository it has never seen
 without first deriving a filename. See
-[`directory-conventions`](directory-conventions.md) §Naming.
+[`directory-conventions`](../../skills/folio-core/directory-conventions.md) §Naming.
 
 **Post to the issue:** structured requirements with acceptance criteria.
 
@@ -202,7 +202,7 @@ without first deriving a filename. See
 Phase 4 often ends with a **choice** rather than a plan, and that is the moment
 the BA is handed a decision. Not a list of approach names with the analysis
 linked: a **comparison**, per
-[`decision-comparison`](decision-comparison.md) — per option its pro, its con,
+[`decision-comparison`](../../skills/folio-core/decision-comparison.md) — per option its pro, its con,
 what it changes **downstream** and how reversible it is, laid out where the rows
 can be read against each other, then one recommendation and a stated default.
 
@@ -254,14 +254,14 @@ For each bean:
    PR that will not be merged is open, the user adds the `staging:cleanup`
    label; **once it is closed the label can no longer reach it**, and removal
    is a `feature-staging.yml` dispatch the user runs with `cleanup_slug` and a
-   matching `cleanup_confirm` (see [`staging-review`](staging-review.md)).
+   matching `cleanup_confirm` (see [`staging-review`](../../skills/folio-core/staging-review.md)).
    **Never remove a staging preview any other way, and never on your own
    initiative.**
 
 ### After the MVP is accepted — review what it RENDERS
 
 Acceptance is not the last step for anything with a UI.
-[`theme-ui-review`](theme-ui-review.md) sits on the single edge out of it in
+[`theme-ui-review`](../../skills/folio-core/theme-ui-review.md) sits on the single edge out of it in
 `crdm-deliver.bpmn`: accessibility **measured** rather than asserted, branding
 against the instance's own declaration, every declared locale. Post-MVP because
 nothing could have been checked earlier — theme choice is an authoring judgement
@@ -281,12 +281,12 @@ When a round of implementation is complete (one or more beans resolved):
 ## Cross-references
 
 - [CRDM methodology page](https://litlfred.github.io/folio-assistant/crdm-methodology.html) — the documentation page for users
-- [`interaction-modality.md`](interaction-modality.md) §4.1 — context before the question; the ordering rule this workflow runs on
+- [`interaction-modality.md`](../../skills/folio-core/interaction-modality.md) §4.1 — context before the question; the ordering rule this workflow runs on
 - [`crdm-detect.md`](crdm-detect.md) — feature-request detection skill
-- [`staging-review.md`](staging-review.md) — before/after staging comparison skill
-- [`todo-manager.md`](todo-manager.md) — bean creation protocol
-- [`bean-coordination.md`](bean-coordination.md) — cross-session bean coordination
-- [`coordinate.md`](coordinate.md) — session coordination
+- [`staging-review.md`](../../skills/folio-core/staging-review.md) — before/after staging comparison skill
+- [`todo-manager.md`](../../skills/folio-core/todo-manager.md) — bean creation protocol
+- [`bean-coordination.md`](../../skills/folio-core/bean-coordination.md) — cross-session bean coordination
+- [`coordinate.md`](../../skills/folio-core/coordinate.md) — session coordination
 - [Publication workflow](https://litlfred.github.io/folio-assistant/publication-workflow.html) — the content lifecycle this fits within
 - Issue [#203](https://github.com/litlfred/folio-assistant/issues/203)
 

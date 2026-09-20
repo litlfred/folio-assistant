@@ -142,3 +142,55 @@ describe("either record reduces to the same shape — two readers, on purpose", 
     expect(SHEETED_FORMATS).toContain("ods");
   });
 });
+
+// ── the wiring exposed two things nothing could see while nothing called it ──
+
+describe("every node is loadable JSON-LD", () => {
+  // `@context` was missing while the emitter was unreached. Every other node
+  // under `library/` carries it, and without it `kind`, `contains` and
+  // `headers` stay bare strings to a loader.
+  test("@context is on EVERY emitted node, not just the manifest", () => {
+    const files = buildTabularNodes(
+      { hasSheets: true, sheets: [{ name: "Coverage", headers: ["iso3"] }] },
+      { iri: (r) => `library/d/${r}` },
+    );
+    expect(files.length).toBe(3); // block, sheet, manifest
+    for (const f of files) {
+      expect(JSON.parse(f.content)["@context"]).toBe(
+        "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+      );
+    }
+  });
+});
+
+describe("the title comes from the record, or from nowhere", () => {
+  test("`source.file` is the document's name", () => {
+    const shape = tabularShapeOf({
+      $schema: "folio-tabular-records/v1",
+      format: "csv",
+      source: { file: "coverage.csv" },
+      sheets: [{ name: "coverage", headers: ["iso3"] }],
+    });
+    expect(shape?.title).toBe("coverage.csv");
+  });
+
+  test("a record with no `source.file` names nothing — the CALLER falls back", () => {
+    // Not the entry id invented here: this module cannot know it, and a title
+    // guessed at this level would be indistinguishable from one the record
+    // actually carried.
+    const shape = tabularShapeOf({
+      $schema: "folio-tabular-records/v1",
+      format: "csv",
+      sheets: [{ name: "coverage", headers: ["iso3"] }],
+    });
+    expect(shape?.title).toBeUndefined();
+  });
+
+  test("CSVW carries no document title, and that is not an empty string", () => {
+    const shape = tabularShapeOf({
+      $schema: "folio-tabular-csvw/v1",
+      tables: [{ url: "coverage.csv", tableSchema: { columns: [{ name: "iso3" }] } }],
+    });
+    expect(shape?.title).toBeUndefined();
+  });
+});
