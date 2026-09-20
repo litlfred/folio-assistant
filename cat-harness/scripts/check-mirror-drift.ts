@@ -70,12 +70,12 @@
  *
  * Usage
  * -----
- *   bun run scripts/check-mirror-drift.ts                  # summary to stdout
- *   bun run scripts/check-mirror-drift.ts --json           # machine-readable
- *   bun run scripts/check-mirror-drift.ts --tsv drift.tsv  # one row per pair
- *   bun run scripts/check-mirror-drift.ts --baseline 50    # fail only on growth
- *   bun run scripts/check-mirror-drift.ts --max 0          # fail on any drift
- *   bun run scripts/check-mirror-drift.ts --package qou    # one package only
+ *   bun run cat-harness/scripts/check-mirror-drift.ts                  # summary to stdout
+ *   bun run cat-harness/scripts/check-mirror-drift.ts --json           # machine-readable
+ *   bun run cat-harness/scripts/check-mirror-drift.ts --tsv drift.tsv  # one row per pair
+ *   bun run cat-harness/scripts/check-mirror-drift.ts --baseline 50    # fail only on growth
+ *   bun run cat-harness/scripts/check-mirror-drift.ts --max 0          # fail on any drift
+ *   bun run cat-harness/scripts/check-mirror-drift.ts --package qou    # one package only
  *
  * ## Parser limits — read these before quoting a number
  *

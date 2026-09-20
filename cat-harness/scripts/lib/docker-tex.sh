@@ -13,7 +13,7 @@
 # Usage:
 #   source "$(dirname "$0")/lib/docker-tex.sh"
 #   if tex_available; then
-#     tex_exec bun run scripts/render-tex/render-tex-blocks.ts
+#     tex_exec bun run cat-harness/scripts/render-tex/render-tex-blocks.ts
 #   fi
 
 # ── Repo root ──────────────────────────────────────────────────────

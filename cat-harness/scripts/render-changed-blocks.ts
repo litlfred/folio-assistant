@@ -15,13 +15,13 @@
  * so it is opt-in at the call site.
  *
  * Usage:
- *   bun run scripts/render-changed-blocks.ts
- *   bun run scripts/render-changed-blocks.ts --paper quantum-observable-universe
- *   bun run scripts/render-changed-blocks.ts --base main
- *   bun run scripts/render-changed-blocks.ts --files content/paper/ch/block.ts
- *   bun run scripts/render-changed-blocks.ts --upload-drive
- *   bun run scripts/render-changed-blocks.ts --upload-drive --drive-folder "QOU/blocks"
- *   bun run scripts/render-changed-blocks.ts --all   # render every block in paper
+ *   bun run cat-harness/scripts/render-changed-blocks.ts
+ *   bun run cat-harness/scripts/render-changed-blocks.ts --paper quantum-observable-universe
+ *   bun run cat-harness/scripts/render-changed-blocks.ts --base main
+ *   bun run cat-harness/scripts/render-changed-blocks.ts --files content/paper/ch/block.ts
+ *   bun run cat-harness/scripts/render-changed-blocks.ts --upload-drive
+ *   bun run cat-harness/scripts/render-changed-blocks.ts --upload-drive --drive-folder "QOU/blocks"
+ *   bun run cat-harness/scripts/render-changed-blocks.ts --all   # render every block in paper
  *
  * Exit codes:
  *   0  all blocks rendered clean (or only warnings)

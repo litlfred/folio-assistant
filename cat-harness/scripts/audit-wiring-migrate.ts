@@ -29,8 +29,8 @@
  *
  * Usage
  * -----
- *   bun run scripts/audit-wiring-migrate.ts          # apply (writes in place)
- *   bun run scripts/audit-wiring-migrate.ts --dry    # preview only
+ *   bun run cat-harness/scripts/audit-wiring-migrate.ts          # apply (writes in place)
+ *   bun run cat-harness/scripts/audit-wiring-migrate.ts --dry    # preview only
  *
  * Pre-conditions: clean working tree (recommended).  The script does
  * not stage or commit; the operator commits the stamped witnesses in

@@ -142,7 +142,7 @@ echo "" >&2
 if $CHECK_ONLY; then
   if $USE_NEW; then
     cd "$ASSISTANT_DIR"
-    exec bun run src/index.ts --check-deps
+    exec bun run cat-harness/src/index.ts --check-deps
   else
     cd "$MCP_DIR"
     exec bun run server.ts --check-deps
@@ -154,7 +154,7 @@ fi
 if $USE_NEW; then
   echo "[start-folio-assistant] Starting folio-assistant (new architecture)..." >&2
   cd "$ASSISTANT_DIR"
-  exec bun run src/index.ts "$MODE" --repo "$TARGET_REPO"
+  exec bun run cat-harness/src/index.ts "$MODE" --repo "$TARGET_REPO"
 else
   echo "[start-folio-assistant] Starting legacy MCP server..." >&2
   cd "$MCP_DIR"

@@ -10,7 +10,7 @@
  * GitHub directly) and re-generated in CI before the docs site is deployed to
  * GitHub Pages. Run locally with:
  *
- *     bun run scripts/gen-schema-docs.ts
+ *     bun run cat-harness/scripts/gen-schema-docs.ts
  *
  * This generator is intentionally dependency-free (no external JSON-Schema
  * tooling) so it runs in any environment that has `bun`.

@@ -4,7 +4,7 @@
  * @description Validates all skill package manifests against SkillPackageManifest schema
  * and all .claude/skills/ JSON files against their respective schemas.
  *
- * Usage: npx ts-node scripts/validate-skills.ts
+ * Usage: npx ts-node cat-harness/scripts/validate-skills.ts
  */
 
 import type { z } from "zod";

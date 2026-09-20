@@ -32,8 +32,8 @@
  * PDF that silently drops the decision tables looks complete and is not.
  *
  * Usage:
- *   bun run scripts/dak-pdf.ts <dak-repo> -o out.pdf
- *   bun run scripts/dak-pdf.ts <dak-repo> --html-only -o out.html
+ *   bun run cat-harness/scripts/dak-pdf.ts <dak-repo> -o out.pdf
+ *   bun run cat-harness/scripts/dak-pdf.ts <dak-repo> --html-only -o out.html
  *
  * @module scripts/dak-pdf
  */
