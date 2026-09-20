@@ -231,6 +231,27 @@ interface StateGraph {
   href?: string;
 }
 
+/**
+ * A declared description, as HTML: escaped, with its backticked spans as code.
+ *
+ * ORDER IS THE WHOLE FIX. Escape first, so a `<` already in the description
+ * becomes an entity, and only THEN turn the surviving backtick pairs into
+ * `<code>`. The angle brackets this function emits are the only raw ones, so
+ * a description cannot inject markup through either path. Reversed, the
+ * corpus would do it to us unaided: `library` is declared as
+ * "one `<bib-slug>/` per ingested document".
+ *
+ * Not a markdown parser, deliberately — only the one span type that appears
+ * in this field. Measured 2026-09-20: 12 of 34 declared descriptions carry a
+ * backtick in the first sentence, which is the part the registry shows, so a
+ * third of the rows on every state dashboard were rendering them literally.
+ * An UNPAIRED backtick is left as a backtick rather than swallowing the rest
+ * of the line, which is what a greedy match would do.
+ */
+export function describe(text: string): string {
+  return esc(text).replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+
 /** HTML-escape. Every interpolation below goes through it. */
 function esc(s: string): string {
   return s
@@ -448,7 +469,7 @@ function registry(graphs: StateGraph[], current: string): string {
       : `<a href="../${esc(g.id)}/">${esc(g.id)}</a>`;
     return `  <li class="sv-item${here ? " is-here" : ""}">
     <h2>${name}<span class="sv-tag is-${g.state}">${g.state}</span></h2>
-    <p>${esc(g.description || g.path)}</p>
+    <p>${g.description ? describe(g.description) : esc(g.path)}</p>
   </li>`;
   }).join("\n");
   return `<h2 class="sv-h2">State graphs this harness declares</h2>

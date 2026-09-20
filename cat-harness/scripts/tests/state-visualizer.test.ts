@@ -16,7 +16,7 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { declaredVisualiserFor } from "../state-visualizer.ts";
+import { declaredVisualiserFor, describe as describeText } from "../state-visualizer.ts";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
 import "../../schemas/folio-graph-kind.ts";
 
@@ -261,3 +261,52 @@ describe("declaredVisualiserFor — the four outcomes, against fixtures", () => 
     expect(declaredVisualiserFor("uploads", "lib/x/index.html", r).state).toBe("unresolved");
   });
 });
+
+describe("a declared description is escaped BEFORE its code spans are made", () => {
+  // Bean `xo3t`. The registry wrote descriptions through `esc()` alone, so the
+  // markdown backticks in them reached the page as backticks. Measured across
+  // both declarations: 12 of 34 carry one in the first sentence, which is the
+  // part the registry shows.
+
+  test("a backticked span becomes code", () => {
+    expect(describeText("what the sweep under `test/health/` wrote"))
+      .toBe("what the sweep under <code>test/health/</code> wrote");
+  });
+
+  test("several spans on one line each become their own code element", () => {
+    expect(describeText("`a`, `b` and `c`"))
+      .toBe("<code>a</code>, <code>b</code> and <code>c</code>");
+  });
+
+  test("ANGLE BRACKETS INSIDE a span stay escaped — the order is the fix", () => {
+    // This is the case the corpus would exploit unaided: `library` is declared
+    // as "one `<bib-slug>/` per ingested document". Escaping AFTER the code
+    // substitution would turn the emitted <code> into text and leave the
+    // description's own brackets live.
+    expect(describeText("one `<bib-slug>/` per document"))
+      .toBe("one <code>&lt;bib-slug&gt;/</code> per document");
+  });
+
+  test("markup outside a span is escaped, never emitted", () => {
+    expect(describeText('<img src=x onerror="alert(1)">'))
+      .toBe("&lt;img src=x onerror=&quot;alert(1)&quot;&gt;");
+    expect(describeText("a & b")).toBe("a &amp; b");
+  });
+
+  test("an UNPAIRED backtick is left alone, not greedy to end of line", () => {
+    // A greedy or unanchored match would swallow the rest of the text into a
+    // code element that the author never opened.
+    expect(describeText("a ` b")).toBe("a ` b");
+    expect(describeText("`open and never closed")).toBe("`open and never closed");
+  });
+
+  test("the corpus renders with no literal backtick left in a registry row", () => {
+    // The end-to-end half: whatever the declarations say today, no dashboard
+    // shows a raw backtick in the descriptions it lists.
+    for (const id of ["beans", "todos", "qa", "health", "issue-marks", "uploads"]) {
+      const body = read(id).slice(read(id).indexOf('<ul class="sv-list">'));
+      expect(/<p>[^<]*`/.test(body)).toBe(false);
+    }
+  });
+});
+
