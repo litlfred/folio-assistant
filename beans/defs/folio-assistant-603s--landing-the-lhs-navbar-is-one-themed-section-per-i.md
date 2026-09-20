@@ -120,3 +120,68 @@ own card — but the **root** instance declares no `stickies` at all, and
 
 So the gap is not the seam. It is that instantiation **permits** a slot rather
 than **producing** one, and there is no navbar for the slot to be in.
+
+---
+
+## Slice 1 done, 2026-09-20 — `avatarRegion` is declared, and the boxes were RENDERED
+
+`avatarRegion?: ImageRegion` sits beside `textRegion` on `KgImage`, and all
+seven measured boxes are declared in `cat-harness/harness.json`. Nothing
+consumes it yet: the navbar does not exist, and this slice is the declaration
+the navbar will read.
+
+**The squareness rule is checked against PIXELS, not fractions**, and that
+turned out to be the part worth building rather than asserting. The bean says
+the box must be square because the clip scales `w` and `h` independently. Equal
+FRACTIONS are square only on a square image — on the 1671x941 landscape crops
+the same numbers are a box 1.78x wider than tall, and a fraction-only check
+passes it. So the refinement lives on `KgImageSchema` rather than on
+`ImageRegionSchema`, because squareness needs `width` and `height`, which are
+siblings of the region and invisible from inside it. All seven cards are
+1254x1254 with dimensions declared, so every box is checkable.
+
+**An image with no declared dimensions may not declare an `avatarRegion` at
+all.** Refused rather than accepted unchecked: an unverifiable box sitting
+among six verified ones reads as verified and is not. Tolerance is 1px, because
+fractions authored to three decimals against 1254px land on sub-pixel
+boundaries that an exact comparison would reject for no visible reason — and
+the stretch worth catching is tens of pixels.
+
+`textRegion` is deliberately NOT subject to it. Every one declared today is
+wide and shallow, because a quiet interior for a sentence is; applying the
+avatar rule to both would have failed the entire existing corpus.
+
+The out-of-bounds message was `"textRegion extends past the edge of the
+image"`. Now `"region extends past…"` — a message naming one of two callers is
+wrong half the time, and the half it is wrong about is the newer one, whose
+author most needs it right.
+
+### Rendered, because no assertion can answer the question that matters
+
+The schema guarantees each box is square and in bounds. **It cannot tell
+whether the box is on the cat**, which is exactly how two of the first seven
+landed on scenery. So `bun run avatar:crops` emits a self-contained contact
+sheet — each card with its box drawn, the clip at 120px, and the clip at 46px
+navbar size — with the art inlined as `data:` URIs so the page opens in a
+review comment or a chat panel rather than rendering seven broken images the
+moment it leaves the repository.
+
+**Verified by looking, this session: all seven frame the cat's head and torso.
+None is on scenery.** The tightest are `cat-bootstrap` and `operations` (0.24)
+and they read best at 46px; `landing-card` (0.50) carries the most chest.
+
+It PRINTS and never gates, on purpose — it answers a question no assertion can
+carry. `--out` defaults under `_kg/`, which is gitignored.
+
+17 tests, falsified in both directions: a non-square box is refused and a
+square one is not; equal fractions on a non-square image are refused and the
+matching pixel-square box on that same image is accepted; a box with no
+dimensions is refused and an image with no `avatarRegion` needs none.
+
+### Still open in this bean, and untouched by this slice
+
+The four navigation questions — discovery by scan, dependency ordering,
+collapsed-vs-open, and the local/remote tab — and the three open questions
+(which file marks an instance, what a "display subgraph" is, where
+`.fa-landing-board` fits). This slice deliberately does not guess at any of
+them.

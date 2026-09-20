@@ -151,6 +151,44 @@ export interface KgImage extends KgNodeLabels {
    * guesswork lands on the cat.
    */
   textRegion?: ImageRegion;
+  /**
+   * Where the SUBJECT of this image is, as fractions of its size — the box a
+   * square avatar frame clips to.
+   *
+   * **Authored data, exactly like {@link textRegion}, and for a sharper
+   * reason.** The navbar avatar is this image *clipped to the cat*, not the
+   * card scaled down: scaling a whole 1:1 card into a 46px frame makes the cat
+   * about four pixels tall and every theme reads as grey mush. The cat sits in
+   * a different place in every composition, so **the box is per-image and
+   * cannot be derived** — measured off a 10% grid overlay of each card.
+   *
+   * A literal in a stylesheet was the alternative and is worse in three ways
+   * at once: no schema, no validation, and no way for a new theme to supply
+   * its own — which is how the next avatar silently frames a patch of sky.
+   * Two of the first seven boxes did land on scenery rather than on the cat,
+   * and only a render caught it, so **whatever declares one should be looked
+   * at rather than diffed**.
+   *
+   * ## It must be SQUARE IN PIXELS, and that is checked
+   *
+   * The frame is square and the clip scales width and height by `1/w` and
+   * `1/h` independently, so a non-square box stretches the subject by `w/h`.
+   * {@link KgImageSchema} refuses one, computing squareness from the declared
+   * {@link width} and {@link height} rather than from the fractions — equal
+   * fractions are square only on a square image, and believing that of a
+   * portrait crop is the same silent stretch by another route.
+   *
+   * **An image that declares no dimensions may not declare one at all.** That
+   * is a determined refusal rather than a gap: a box whose squareness cannot
+   * be checked is exactly the case this field exists to stop, and accepting it
+   * unchecked would put the one unverifiable box among six verified ones.
+   *
+   * **Absent means no avatar can be cut from this image** — a renderer must
+   * skip it rather than fall back to the whole frame, for the same reason
+   * `textRegion` absent means "do not overlay text" rather than "anywhere is
+   * fine".
+   */
+  avatarRegion?: ImageRegion;
 }
 
 /**
@@ -182,19 +220,72 @@ export const ImageRegionSchema = z
   // silently moves the text somewhere nobody chose, which is the failure this
   // field exists to prevent.
   .refine((r) => r.x + r.w <= 1 && r.y + r.h <= 1, {
-    message: "textRegion extends past the edge of the image",
+    // FIELD-NEUTRAL since `avatarRegion` joined `textRegion` on this schema
+    // (bean `603s`). A message naming one of two callers is a message that is
+    // wrong half the time, and the half it is wrong about is the newer one —
+    // which is the half whose author most needs it to be right.
+    message: "region extends past the edge of the image",
   });
 
-export const KgImageSchema = z.object({
-  id: z.string().min(1),
-  src: z.string().min(1),
-  role: z.string().min(1).optional(),
-  layout: z.string().min(1).optional(),
-  width: z.number().int().positive().optional(),
-  height: z.number().int().positive().optional(),
-  textRegion: ImageRegionSchema.optional(),
-  ...kgNodeLabelShape,
-});
+/**
+ * How far from square an {@link KgImage.avatarRegion} may be, in pixels.
+ *
+ * One pixel, not zero: the fractions are authored to two or three decimals
+ * against a 1254px card, so `0.505` and `0.24` land on sub-pixel boundaries
+ * that an exact comparison would reject for no visible reason. A pixel is
+ * below what any avatar frame can show; a stretch worth catching is tens of
+ * pixels, and the two boxes that were wrong on the first pass were wrong by
+ * far more than that.
+ */
+export const AVATAR_SQUARENESS_TOLERANCE_PX = 1;
+
+export const KgImageSchema = z
+  .object({
+    id: z.string().min(1),
+    src: z.string().min(1),
+    role: z.string().min(1).optional(),
+    layout: z.string().min(1).optional(),
+    width: z.number().int().positive().optional(),
+    height: z.number().int().positive().optional(),
+    textRegion: ImageRegionSchema.optional(),
+    avatarRegion: ImageRegionSchema.optional(),
+    ...kgNodeLabelShape,
+  })
+  // THE AVATAR BOX IS SQUARE IN PIXELS, checked here rather than on
+  // `ImageRegionSchema` because squareness needs `width` and `height`, which
+  // are siblings of the region and invisible from inside it.
+  //
+  // `textRegion` is deliberately NOT subject to this: a quiet interior for a
+  // sentence is a wide shallow box by nature, and every one declared today is.
+  .superRefine((img, ctx) => {
+    if (img.avatarRegion === undefined) return;
+    if (img.width === undefined || img.height === undefined) {
+      // COULD NOT DETERMINE, refused rather than passed. Accepting an
+      // unverifiable box would leave exactly one unchecked among the checked
+      // ones, which is the state that reads as verified and is not.
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["avatarRegion"],
+        message:
+          "avatarRegion needs `width` and `height` on the same image — its squareness " +
+          "cannot be checked from fractions alone, and an unchecked box silently " +
+          "stretches the subject by w/h",
+      });
+      return;
+    }
+    const wPx = img.avatarRegion.w * img.width;
+    const hPx = img.avatarRegion.h * img.height;
+    if (Math.abs(wPx - hPx) > AVATAR_SQUARENESS_TOLERANCE_PX) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["avatarRegion"],
+        message:
+          `avatarRegion is ${wPx.toFixed(1)}x${hPx.toFixed(1)}px, not square — ` +
+          `a square frame scales w and h independently, so this stretches the ` +
+          `subject by ${(wPx / hPx).toFixed(3)}`,
+      });
+    }
+  });
 
 /**
  * Where a declared asset was copied from, for the staleness question.

@@ -58,6 +58,12 @@
       "layout": "card",
       "width": 1254,
       "height": 1254,
+      "avatarRegion": {
+        "x": 0.0,
+        "y": 0.46,
+        "w": 0.5,
+        "h": 0.5
+      },
       "textRegion": {
         "x": 0.3,
         "y": 0.255,
@@ -95,6 +101,12 @@
       "layout": "card",
       "width": 1254,
       "height": 1254,
+      "avatarRegion": {
+        "x": 0.0,
+        "y": 0.4,
+        "w": 0.46,
+        "h": 0.46
+      },
       "title": "The engineer, square",
       "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
     }
@@ -116,6 +128,12 @@
       "layout": "card",
       "width": 1254,
       "height": 1254,
+      "avatarRegion": {
+        "x": 0.0,
+        "y": 0.36,
+        "w": 0.46,
+        "h": 0.46
+      },
       "title": "The architect, square",
       "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content."
     }
@@ -147,6 +165,12 @@
       "layout": "card",
       "width": 1254,
       "height": 1254,
+      "avatarRegion": {
+        "x": 0.14,
+        "y": 0.4,
+        "w": 0.42,
+        "h": 0.42
+      },
       "title": "The librarian, square",
       "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
     }
@@ -178,6 +202,12 @@
       "layout": "card",
       "width": 1254,
       "height": 1254,
+      "avatarRegion": {
+        "x": 0.05,
+        "y": 0.48,
+        "w": 0.36,
+        "h": 0.36
+      },
       "title": "The analyst, square",
       "description": "The grumpy cat as analyst: pinstripe suit, blue tie carrying the c@t mark, glasses, a tablet, printed bar and pie charts, books with chart devices on the spines, a marked mug. Backdrop for the `analyst` theme - SDLC, CRDM, business analysis and data engineering. Reached by ROLE rather than by path, so an instance declaring its own `landing-analyst` art gets its own. THE ONLY SUNNY ONE. Blue sky and flowering shrubs where grumpy-cat, engineer, architecture and library are all storm-grey, which is why its palette is warmer and brighter than theirs rather than a variation on one: the sampled cloud is #f0f0e4 over 28% of the frame, against #e4e4e4 for the librarian. The wide crop is 1536x1024 (aspect 1.50) where the other landscape crops are 1671x941 (1.78). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface instead of cropping the subject. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2 MB a crop; one is loaded per viewport, not all three. Conversion is bean ll11."
     },
@@ -220,6 +250,12 @@
       "layout": "card",
       "width": 1254,
       "height": 1254,
+      "avatarRegion": {
+        "x": 0.27,
+        "y": 0.615,
+        "w": 0.24,
+        "h": 0.24
+      },
       "title": "CatBootstrap — square",
       "description": "The same scene cropped square.",
       "textRegion": {
@@ -246,6 +282,12 @@
       "layout": "card",
       "width": 1254,
       "height": 1254,
+      "avatarRegion": {
+        "x": 0.19,
+        "y": 0.505,
+        "w": 0.24,
+        "h": 0.24
+      },
       "title": "Operations — square",
       "textRegion": { "x": 0.1, "y": 0.31, "w": 0.58, "h": 0.12 }
     },
