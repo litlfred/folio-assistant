@@ -6,17 +6,17 @@
  * dataset not having that column. `tabular.jsonld` records sheet names,
  * headers and shape, so the header vocabulary joins the L1 source graph.
  *
- * ## The narrative is declared empty, never fabricated
+ * ## The narrative is a state machine, and starts empty
  *
  * The bean also asks for "a narrative description of what the data is about".
  * That cannot be produced mechanically — it is somebody's account and it needs
- * an author. `narrative: null` with `narrative_state: "not-authored"` records
- * the slot as empty; when something fills it, it carries an `Attribution`
- * (bean `iqim`) naming the human, or the agent and its model.
+ * an author. `narrative` is a {@link module:schemas/narrative} record, which
+ * starts `not-authored` with no text, moves to `draft` when an agent writes
+ * one, and reaches `confirmed` only when a HUMAN accepts it (bean `ju0u`).
  *
- * Generating a summary from the header names and stamping it as agent-written
+ * Generating a summary from the header names and shipping it as the answer
  * would be a claim nobody made, which is the failure the provenance arm exists
- * to prevent.
+ * to prevent. Drafting one and saying so is not — that is what `draft` is.
  *
  * ## A null shape is not an empty sheet
  *
@@ -29,6 +29,8 @@
  * @graphNode schema
  */
 import { z } from "zod";
+
+import { NarrativeSchema } from "./narrative";
 
 /** Sniffed/declared types that route to the tabular rung. */
 export const TABULAR_MIMETYPES = [
@@ -52,9 +54,6 @@ export type TabularSheet = z.infer<typeof TabularSheetSchema>;
 
 export const TABULAR_RECORDS_SCHEMA_ID = "folio-tabular-records/v1";
 
-/** Whether a narrative has been written, and by whom — never implied by absence. */
-export const NARRATIVE_STATES = ["not-authored", "authored"] as const;
-
 export const TabularRecordsSchema = z
   .object({
     $schema: z.literal(TABULAR_RECORDS_SCHEMA_ID),
@@ -65,20 +64,18 @@ export const TabularRecordsSchema = z
     n_sheets: z.number().int().nonnegative(),
     /** Every distinct header across every sheet — what a grep lands in. */
     header_vocabulary: z.array(z.string()),
-    narrative: z.string().nullable(),
-    narrative_state: z.enum(NARRATIVE_STATES),
+    // Bean `ju0u`: one object with its own state machine, replacing the
+    // `narrative: string|null` + `narrative_state` pair. Two loose fields
+    // needed a cross-field refinement here to stop them contradicting each
+    // other, and had nowhere to record WHO drafted or confirmed the text —
+    // which is the whole substance of the owner's choice.
+    narrative: NarrativeSchema,
   })
   .refine((d) => d.n_sheets === d.sheets.length, {
     message: "`n_sheets` disagrees with `sheets.length` — one of them is wrong",
     path: ["n_sheets"],
   })
-  // The two halves of the narrative fact cannot contradict each other. A
-  // `narrative_state: "authored"` with no text, or text filed as
-  // "not-authored", is a record that says two things at once.
-  .refine((d) => (d.narrative_state === "authored") === (d.narrative !== null), {
-    message: "`narrative_state` disagrees with whether `narrative` is present",
-    path: ["narrative_state"],
-  });
+  ;
 
 export type TabularRecords = z.infer<typeof TabularRecordsSchema>;
 

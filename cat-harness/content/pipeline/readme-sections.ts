@@ -107,13 +107,18 @@ export interface SectionOutput {
    * "I could not determine this" — leave whatever the README already has.
    *
    * Distinct from an empty result, and the distinction is the whole point.
-   * The folio this was built against configures its simulators under
-   * `folio-assistant/simulators`, a directory that only exists once the
-   * platform submodule is checked out. In a clone without it, "the directory
+   * The folio this was built against configured its simulators under
+   * `folio-assistant/simulators`, a directory that only existed once the
+   * platform submodule was checked out. In a clone without it, "the directory
    * is not there" was rendered as "this folio has no simulators", and a
    * correct nine-row table was replaced by a sentence saying it did not
    * exist. Same rule as the TOC's unreadable publish ref: not-looked-at is
    * never reported as nothing-found.
+   *
+   * That folio now owns its simulators outright, so the submodule case is
+   * gone — but a configured directory can be absent for other reasons (a
+   * sparse or partial checkout, a folio mid-migration), and this state is
+   * what keeps any of them from being reported as "no simulators".
    */
   skip?: boolean;
 }
@@ -298,8 +303,11 @@ const simulatorsSection: ReadmeSection = {
   render({ root }) {
     // The directory is config, not convention: the predecessor read
     // `folio-assistant/simulators` literally, which is only where a folio that
-    // embeds the platform under that name puts them.
-    let dir = "folio-assistant/simulators";
+    // embeds the platform under that name puts them. The fallback is now the
+    // folio-root convention, because simulators are the FOLIO's content — a
+    // default naming the platform is how they came to live in the platform in
+    // the first place.
+    let dir = "simulators";
     const configPath = resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG);
     if (existsSync(configPath)) {
       try {
@@ -315,11 +323,11 @@ const simulatorsSection: ReadmeSection = {
     const abs = join(root, dir);
     if (!existsSync(abs)) {
       // Not `empty`: the directory being absent from THIS checkout says
-      // nothing about whether the folio has simulators — most often it means
-      // the platform submodule holding them is not checked out here.
+      // nothing about whether the folio has simulators — it may be a sparse or
+      // partial checkout, or a folio that has not declared its directory.
       return undetermined(
         `simulators directory '${dir}' is not present in this checkout ` +
-          `(is the platform submodule checked out?)`,
+          `(is it declared in ${HARNESS_CONFIG}, and is the checkout complete?)`,
       );
     }
     const files = readdirSync(abs)

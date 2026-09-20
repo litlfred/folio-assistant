@@ -8,8 +8,13 @@
   "source_hash": null,
   "criteria": {
     "skill-has-entry-point": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "confirm-harness",
+          "detail": "skill \"confirm-harness\" is listed by no package manifest, carried by no role and named by no activity."
+        }
+      ]
     },
     "skill-in-role-or-process": {
       "result": "fail",
@@ -79,6 +84,10 @@
           "detail": "no role carries \"compute-integration-watcher\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
+          "where": "confirm-harness",
+          "detail": "no role carries \"confirm-harness\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "content-block-review",
           "detail": "no role carries \"content-block-review\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -105,10 +114,6 @@
         {
           "where": "definition-clarity-audit",
           "detail": "no role carries \"definition-clarity-audit\" and no activity names it — reached, if at all, by direct invocation."
-        },
-        {
-          "where": "deletion-requires-confirmation",
-          "detail": "no role carries \"deletion-requires-confirmation\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
           "where": "deployment-auth",
@@ -383,10 +388,6 @@
           "detail": "no role carries \"rendering-fixes\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
-          "where": "role-model",
-          "detail": "no role carries \"role-model\" and no activity names it — reached, if at all, by direct invocation."
-        },
-        {
           "where": "scientific-accuracy",
           "detail": "no role carries \"scientific-accuracy\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -495,8 +496,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 2,
+    "pass": 5,
+    "fail": 3,
     "n/a": 0,
     "unknown": 0
   }

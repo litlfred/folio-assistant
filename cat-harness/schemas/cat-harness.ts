@@ -881,11 +881,28 @@ export interface TopologyConflict {
  * `visibility` is not even declared, so there is nothing to trip over.
  *
  * **`air-gapped` with `modelProvenance: "mixed"` is NOT refused**, although
- * `hosted` is. The same entailment appears to apply — but only if `mixed`
- * necessarily includes a live hosted component, and a deployment could
- * reasonably mean "local models, with a hosted path that is configured and
- * disabled here". A counter-example is conceivable, so by the bar above the
- * rule does not go in. Raised for the owner rather than decided quietly.
+ * `hosted` is. **Settled by the owner 2026-09-20**, and for a better reason
+ * than the one this comment used to give:
+ *
+ * > "no air-gapped-mixed. that is mixed already. its a spectrum, based on
+ * > the deployment archicutectur of each machine actor."
+ *
+ * At deployment level `mixed` MEANS THE ACTORS DIFFER FROM EACH OTHER.
+ * Refusing it would refuse the normal case — a site where some machine
+ * actors reach out and some do not. There is no contradiction to catch,
+ * because the deployment value is an aggregate over participants that are
+ * individually consistent.
+ *
+ * That also says what this axis is and is not. Reach is a property of each
+ * MACHINE ACTOR; the deployment value describes the population. So a rule
+ * pairing `network` with `modelProvenance` can only be sound where the
+ * deployment value is UNIFORM — `air-gapped` × `hosted` is refused because
+ * `hosted` admits no local participant, and `mixed` is refused by nothing
+ * because it asserts variety.
+ *
+ * The earlier reasoning here — "a counter-example is conceivable" — reached
+ * the right answer by a weaker route, and is kept only in the test that
+ * records the decision. See `folio-assistant-r0rq` for the per-actor model.
  */
 export function topologyConflicts(
   topology: Topology | undefined,
@@ -1179,6 +1196,71 @@ export function instanceRootFor(start: string): string {
  * nameless. A site root guessed wrong writes 278 pages into a directory
  * nothing serves, and "could not determine" is never rendered as an answer.
  */
+/**
+ * Where an instance publishes the instructions for BOOTSTRAPPING INTO IT,
+ * relative to that instance's own docs root.
+ *
+ * ## Why a fixed convention rather than a lookup
+ *
+ * §5 of the bootstrap proposal has the agent obtain exactly ONE reference —
+ * `litlfred/f-a-sci` — and read everything else from that instance's own
+ * declaration. That answers *which* instance. It does not answer *where in it*
+ * the initialization steps are, and without a fixed answer the agent needs
+ * per-instance knowledge of every harness it might be pointed at, which is
+ * precisely what one reference was meant to remove.
+ *
+ * So every cat-harness instance, and every instance that depends on one,
+ * publishes them at the SAME place. Bootstrap then needs no special case per
+ * target: `f-a-sci`, `smart-base` and a specialised harness nobody has written
+ * yet are all read the same way. That is what lets bootstrap initialise into a
+ * *specialised* kind rather than only into the one it was written against.
+ *
+ * ## Composed, never spelled
+ *
+ * Built from {@link siteDir} rather than written as `docs/bootstrap/...`,
+ * because the stub pattern INVERTED on 2026-09-19 — `docs/<stub>` became
+ * `<stub>/docs` (bean `wggr`) — and every literal spelling of the old layout
+ * had to be found and changed. A convention composed from the one function
+ * that knows the site root survives the next relocation; a literal does not.
+ */
+export const BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
+
+/**
+ * The path to an instance's initialization instructions, relative to that
+ * INSTANCE's root — `docs/bootstrap/initialization.md`.
+ *
+ * THE one answer, so the README that tells an agent where to look and the
+ * check that verifies the file is there cannot disagree about the spelling.
+ *
+ * ## It was repo-relative, and the move narrowed it
+ *
+ * This arrived composing `<stub>/docs/...` and its docstring said "full
+ * repo-relative path", which was true while {@link siteDir} returned
+ * `<stub>/docs`. It returns plain `docs` now, because the instance has a
+ * directory of its own and the stub level inside it would repeat the name.
+ *
+ * So the suffix is IDENTICAL for every instance, which is a stronger version
+ * of the property bootstrap relies on than "differs only by site root".
+ *
+ * ## The open half, stated rather than papered over
+ *
+ * Bootstrap is handed ONE reference and must reach this file, so it needs the
+ * instance's DIRECTORY, and this function no longer supplies it. On this
+ * repository the directory is `cat-harness/` while the stub is
+ * `folio-assistant` — deliberately different, since the stub names published
+ * artefacts and the directory is a filesystem fact — so `<stub>/` would name
+ * nothing.
+ *
+ * Resolving it by scanning the top level for a `harness.json` is the
+ * declaration-driven answer and is what {@link findInstanceRoot} already does
+ * in the other direction, but it is NOT implemented and is not assumed here.
+ * Recorded on bean `wggr`; until then bootstrap can compose this suffix and
+ * still needs told which directory to hang it off.
+ */
+export function initializationDoc(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
+  return `${siteDir(d)}/${BOOTSTRAP_INIT_DOC}`;
+}
+
 export function siteDirFor(root: string): string {
   const p = join(root, "harness.json");
   let raw: unknown;

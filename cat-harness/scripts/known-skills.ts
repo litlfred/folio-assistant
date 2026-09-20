@@ -13,7 +13,7 @@
  * @module scripts/known-skills
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, join, join as joinPath } from "node:path";
+import { basename, join, join as joinPath, relative } from "node:path";
 
 import { resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
 
@@ -232,15 +232,36 @@ export function skillMdDirs(root: string): string[][] {
   // `resolveDirectories` supplies the defaults too, so an instance that
   // follows the convention still resolves `skills/` without declaring it.
   for (const d of kgDirectories(root)) {
+    // RELATIVE TO `root`, computed from the absPath the resolver already
+    // produced — not from `d.path`, which is relative to whatever root the
+    // entry's SCOPE names. Those were the same directory until the move (bean
+    // `wggr`); afterwards `bootstrap/skills/` is repository-scoped, so `d.path`
+    // said `bootstrap/skills` while `root` was the instance, and every caller
+    // resolved `<instance>/bootstrap/skills`. kg-export's `collectSkills`
+    // skips a directory that is not there as "a package this instance does not
+    // carry", so bootstrap's skills left the published graph IN SILENCE —
+    // `confirm-harness` became a dangling `hasSkill` and `kg-navigation` only
+    // looked fine because a second copy exists under `skills/` (bean `v3se`).
+    //
+    // `relative()` may yield a `../` prefix, and that is correct here: it is a
+    // COMPUTED path between two known roots, not a declared one. The
+    // dot-prefix guard in `check-harness-dirs.ts` governs what a declaration
+    // may SAY, which is still `bootstrap/skills/` with a scope beside it.
+    // SPLIT back into segments, preserving this function's contract: callers
+    // index them (`p[0] === "skills"`, `p[1]` is the package name) as well as
+    // joining them. Returning one joined string fixed the root and broke the
+    // shape, which `skill-coverage.test.ts` caught by asserting set equality
+    // against the filesystem.
+    const rel = (abs: string): string[] => relative(root, abs).split("/");
     // The directory itself, when it holds skills directly — the shape a
     // topical directory has (`bootstrap/getting-started.md`).
-    if (holdsMarkdown(d.absPath)) dirs.push([d.path.replace(/\/+$/, "")]);
+    if (holdsMarkdown(d.absPath)) dirs.push(rel(d.absPath));
     // ...and its immediate subdirectories, which is how `skills/` is laid out
     // today: one package per subdirectory.
     for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
       if (!e.isDirectory()) continue;
       const inner = join(d.absPath, e.name);
-      if (holdsMarkdown(inner)) dirs.push([d.path.replace(/\/+$/, ""), e.name]);
+      if (holdsMarkdown(inner)) dirs.push(rel(inner));
     }
   }
   // Not under `skills/`, so not reachable by the scan above.

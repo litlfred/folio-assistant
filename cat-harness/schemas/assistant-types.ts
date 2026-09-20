@@ -149,6 +149,28 @@ export interface ActorDefinition {
    * lane's role.
    */
   capabilities: string[];
+  /**
+   * What this participant can reach off its own machine — `internet`,
+   * `egress-restricted` or `air-gapped`.
+   *
+   * The same vocabulary the deployment declares ({@link Topology.network} in
+   * `cat-harness.ts`), at the level the owner asked for it: *"some of the
+   * machine actors may be air-gapped, it is a property of an actor"*.
+   *
+   * It is not a capability, and the distinction is the one bean `ind9`
+   * settled. A capability is an ENVIRONMENT PROBE — `detection: { method:
+   * "command", … }`, a thing you run to find out. Reach is an architectural
+   * fact about the host, declared by whoever built the site; probing for it
+   * would ask the network a question the network is precisely unable to
+   * answer on an air-gapped box, where the probe is indistinguishable from
+   * an outage. Capabilities that *need* egress say so with `requires`
+   * instead — see `.claude/skills/capabilities/network-egress.json`.
+   *
+   * Absent means UNDECLARED, which is not `internet`. Composition with the
+   * deployment value — asymmetric, and `unknown` as a third state — is in
+   * `schemas/actor-reach.ts`.
+   */
+  reach?: NetworkReach;
   /** Arbitrary metadata (e.g., MCP endpoint, config path). */
   meta?: Record<string, unknown>;
 }
@@ -214,7 +236,42 @@ export interface CapabilityDefinition {
  * | `fail` | Skill cannot execute — abort with error |
  * | `warn` | Log a warning but continue |
  * | `skip` | Silently skip this skill |
- * | `fallback` | Use `fallbackCapabilityId` instead |
+ * | `fallback` | Use `fallbackCapabilityId`, or `fallbackRole` |
+ *
+ * ## A fallback may be another ACTOR, not only another tool
+ *
+ * Until 2026-09-20 the only fallback was `fallbackCapabilityId` — always
+ * another capability. So the model could express *use a different tool* and
+ * could not express *use a different kind of participant*, and the case the
+ * owner raised was unrepresentable:
+ *
+ * > "some of the machine actors may be air-gapped, it is a property of an
+ * > actor. depending on the propeorty, different tools might not work. in
+ * > this case an API wouldnt wokr and a human actor is needed."
+ *
+ * When no tool can do it, the answer is a **person**, and that is a
+ * different kind of answer. `fallbackRole` says which lane takes over.
+ *
+ * **Why a ROLE and not an actor id.** A role is the swimlane — the thing a
+ * process can route to. Naming a concrete actor would bind a skill to one
+ * participant, which is the `role-model.md` rule that nothing IS a
+ * reviewer; somebody ACTS AS one for the duration of a lane.
+ *
+ * **Why not model "a human is available" as a capability**, which would have
+ * reused the existing field: a `CapabilityDefinition` carries
+ * `detection: { method: "command", … }` — a thing you PROBE the environment
+ * for. A person is not probeable by a command, and bean
+ * `folio-assistant-ind9` fixed exactly the error of putting non-probeable
+ * things in `capabilities[]`. Reusing it would undo a completed fix.
+ *
+ * **What reads this, honestly.** Measured 2026-09-20: 24 skill modules
+ * declare `requiredCapabilities` with 23 degradation values (17 `fail`,
+ * 5 `fallback`, 1 `warn`), and the only reader is `scripts/generate-docs.ts`,
+ * which RENDERS them. Nothing enforces degradation at runtime. This field is
+ * therefore a DECLARATION; the thing that executes a two-route process today
+ * is a BPMN gateway. `check:fallback-roles` keeps the declaration from
+ * drifting into the inert pile the way skill front-matter `roles:` did
+ * (bean `folio-assistant-qif9`).
  */
 export interface SkillCapabilityRef {
   /** The capability this skill needs. */
@@ -223,6 +280,13 @@ export interface SkillCapabilityRef {
   degradation: "fail" | "warn" | "skip" | "fallback";
   /** Alternative capability to use in fallback mode. */
   fallbackCapabilityId?: string;
+  /**
+   * The ROLE that performs this instead, when no capability can.
+   *
+   * An id in `skills/roles/roles.json`. Checked by
+   * `bun run check:fallback-roles`.
+   */
+  fallbackRole?: string;
 }
 
 /**
@@ -271,6 +335,7 @@ export interface SkillValidator {
  * with their data models.
  */
 import type { ActorKind, LifecycleStage, SkillPackageManifest } from "./skill-package.js";
+import type { NetworkReach } from "./cat-harness.js";
 
 export interface SkillSchemaRef {
   /** Schema module (e.g., "schemas/types", "schemas/formalization-types"). */

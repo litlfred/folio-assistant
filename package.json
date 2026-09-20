@@ -123,7 +123,12 @@
     "translation:block-qa:check": "bun run cat-harness/content/pipeline/translation-block-qa.ts --check",
     "translation:index": "bun run cat-harness/content/pipeline/translation-index.ts",
     "translation:index:check": "bun run cat-harness/content/pipeline/translation-index.ts --check",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "check:fallback-roles": "bun run cat-harness/scripts/check-fallback-roles.ts",
+    "check:actor-reach": "bun run cat-harness/scripts/check-actor-reach.ts",
+    "narratives": "bun run cat-harness/scripts/narratives.ts",
+    "narratives:confirm": "bun run cat-harness/scripts/narratives.ts confirm",
+    "narratives:reject": "bun run cat-harness/scripts/narratives.ts reject"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

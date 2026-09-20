@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_Process_InitializeHarness"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/bootstrap/workflows"
+                  exporter="bootstrap" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_InitializeHarness">
+    <bpmn:participant id="Participant_Process_InitializeHarness" name="Initialize a harness" processRef="Process_InitializeHarness"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_InitializeHarness" name="Initialize a harness" isExecutable="false">
+    <bpmn:documentation>THE ONLY PROCESS IN BOOTSTRAP. An Initiator that has read bootstrap/README.md is at its start event and has nowhere else to go, which is the point: one diagram cannot be confused with another.
+
+PRECONDITION: the Initiator understands tasks, roles, processes, actors and skills, has been told it is an Initiator, and is at the start of this process. BPMN has no precondition element and this schema adds none yet, so it is stated here in the documentation and tracked as bean `lv3j`.
+
+NO folio:bean on any activity: a bean is work-plan machinery and an Initiator runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data an Initiator reads, not a process bootstrap can drive.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_Process_InitializeHarness">
+      <bpmn:lane id="Lane_Initiator" name="Initiator">
+        <bpmn:flowNodeRef>Start_InitializeHarness</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_ListHarnesses</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_ListLocations</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_HarnessChosen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_ReadInstructions</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_InstructionsFound</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_Install</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Installed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Failed</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Requestor" name="Requestor">
+        <bpmn:flowNodeRef>A_ConfirmHarness</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store">
+        <bpmn:flowNodeRef>A_ReadDeclaration</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_InitializeHarness" name="Asked to initialize a harness"/>
+
+    <bpmn:task id="A_ListHarnesses" name="List the harnesses
+this could be">
+      <bpmn:documentation>Zero or more. The DEFAULT is bootstrap itself. Context may name others — "please initialize litlfred/folio-assistant" in a discussion is one, and so is a derivative such as cat-harness or smart-guidelines. This step narrows; it does not decide.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="confirm-harness"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:task id="A_ListLocations" name="List the locations
+this could install to">
+      <bpmn:documentation>Zero or more. Is this a git repository already, or were one or more URLs to repositories supplied? Both are Knowledge Graph Data Stores; the difference is only how they are reached.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="confirm-harness"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:userTask id="A_ConfirmHarness" name="Confirm WHICH harness,
+and where">
+      <bpmn:documentation>The only step needing a person, and the only place a judgement is made. IN, from the Initiator: a list of zero or more harnesses and a list of zero or more locations. OUT, from the Requestor: zero or ONE harness, and a list of zero or more locations. One at most — a list of two is not an answer, and the Initiator may not break the tie itself.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="confirm-harness"/></bpmn:extensionElements>
+    </bpmn:userTask>
+
+    <bpmn:exclusiveGateway id="GW_HarnessChosen" name="One harness?"/>
+
+    <bpmn:task id="A_ReadDeclaration" name="Read the harness's
+declaration and instructions">
+      <bpmn:documentation>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `&lt;stub&gt;/docs/bootstrap/initialization.md`, the same for every harness, which is what lets an Initiator be pointed at one nobody has written yet.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:task id="A_ReadInstructions" name="Log the start
+of the install">
+      <bpmn:documentation>Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_InstructionsFound" name="Instructions there?"/>
+
+    <bpmn:task id="A_Install" name="Follow them, at
+each location">
+      <bpmn:documentation>The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what f-a-sci or smart-guidelines requires, and does not need to.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_Installed" name="Harness installed"/>
+    <bpmn:endEvent id="End_Failed" name="Logged as failed">
+      <bpmn:documentation>Two ways in, and both are logged rather than retried: no harness was chosen, or the instructions were not at the predetermined spot. Guessing a harness produces a repository set up as the wrong thing, which is worse than one not set up at all.</bpmn:documentation>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="SF_IH_1" sourceRef="Start_InitializeHarness" targetRef="A_ListHarnesses"/>
+    <bpmn:sequenceFlow id="SF_IH_2" sourceRef="A_ListHarnesses" targetRef="A_ListLocations"/>
+    <bpmn:sequenceFlow id="SF_IH_3" sourceRef="A_ListLocations" targetRef="A_ConfirmHarness"/>
+    <bpmn:sequenceFlow id="SF_IH_4" sourceRef="A_ConfirmHarness" targetRef="GW_HarnessChosen"/>
+    <bpmn:sequenceFlow id="SF_IH_5" name="none" sourceRef="GW_HarnessChosen" targetRef="End_Failed"/>
+    <bpmn:sequenceFlow id="SF_IH_6" name="one" sourceRef="GW_HarnessChosen" targetRef="A_ReadDeclaration"/>
+    <bpmn:sequenceFlow id="SF_IH_7" sourceRef="A_ReadDeclaration" targetRef="GW_InstructionsFound"/>
+    <bpmn:sequenceFlow id="SF_IH_8" name="no" sourceRef="GW_InstructionsFound" targetRef="End_Failed"/>
+    <bpmn:sequenceFlow id="SF_IH_9" name="yes" sourceRef="GW_InstructionsFound" targetRef="A_ReadInstructions"/>
+    <bpmn:sequenceFlow id="SF_IH_10" sourceRef="A_ReadInstructions" targetRef="A_Install"/>
+    <bpmn:sequenceFlow id="SF_IH_11" sourceRef="A_Install" targetRef="End_Installed"/>
+  </bpmn:process>
+</bpmn:definitions>

@@ -5,11 +5,16 @@
     "id": "skills-and-tools",
     "path": "skills/folio-core/skills-and-tools.md"
   },
-  "source_hash": "9a598c71c8b5",
+  "source_hash": "472adbb1c7f3",
   "criteria": {
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/skills-and-tools.md",
+          "detail": "337 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -21,8 +26,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 0,
+    "pass": 2,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }

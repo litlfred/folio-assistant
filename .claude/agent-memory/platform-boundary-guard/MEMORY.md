@@ -79,26 +79,23 @@ session-start hook and the beans store.
   back to the paper adapter, so an adapter-scoped tool would be unreachable
   in exactly the case it exists for.
 
-## STABLE — top level = bootstrap/ + one directory per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
+## STABLE — top level = bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
 
 Owner, 2026-09-20: the top level is *"the contents of repos"* except
-`bootstrap/`, `beans/`, `todos/`, and `fsh-guts/` — the last *"created in
-tooling of cat-harness. keep it here (like beans and todos/) as this instance's
-own working memory."*
+`bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
+of cat-harness. keep it here (like beans and todos/) as this instance's own
+working memory."*
 
-**Memory is the reason, and it beats the one previously written down.** These
-three were justified as "never overlaid" — a criterion two readers answered
-differently. They are the instance's MEMORY: `beans/` the agent's plan,
-`todos/` the person's items, `fsh-guts/` what was discarded and kept. One
-repository has one memory, so it cannot be composed from parts; "never
-overlaid" is the consequence, not the rule.
+**Memory is the reason, and it beats "never overlaid"** — a criterion two
+readers answered differently about `fsh-guts/`. A repository has ONE memory
+(`beans/` the agent's plan, `todos/` the person's items, `fsh-guts/` what was
+discarded and kept), so it cannot be composed from parts. Never-overlaid is the
+consequence.
 
-**Tooling and store separate.** The tools and graph kinds for all three are
-introduced by **cat-harness**; the stores stay top-level. So "beans is a
-cat-harness concept" and "beans/ is not inside cat-harness/" are both true.
-`bootstrap/` introduces none of them — it is read before any harness resolves.
-
-`scope: "repository"` means exactly these four. A closed list, not a judgement.
+**Tooling and store separate.** All three kinds are introduced by cat-harness;
+the stores stay top-level. So "beans is a cat-harness concept" and "`beans/` is
+not inside `cat-harness/`" are both true. `bootstrap/` introduces none — it is
+read before any harness resolves. `scope: "repository"` means exactly these four.
 
 ## STABLE — there is no `recommendation` block kind
 
@@ -117,10 +114,12 @@ folio, where `definition`'s `lean` field is required.
 A section that cannot read its source returns `skip` and the region is left
 exactly as it was. Not decoration:
 
-- qou configures its simulators under `folio-assistant/simulators`, which
-  exists only once the platform submodule is checked out. The first version
+- qou configured its simulators under `folio-assistant/simulators`, which
+  existed only once the platform submodule was checked out. The first version
   rendered "directory absent" as "this folio has no simulators" — replacing a
-  correct nine-row table with a sentence.
+  correct nine-row table with a sentence. qou owns them outright since
+  2026-09-19, so that cause is gone and the third state is what still
+  covers a sparse checkout or an undeclared directory.
 - A shallow clone with no `gh-pages` must not silently blank a contents table
   that was right yesterday.
 
@@ -194,7 +193,8 @@ Each shipped once:
 2. **Workflow descriptions from a hardcoded map of twelve `qou` filenames**,
    consulted *before* the workflow's own `name:`. Now always the `name:`.
 3. **The simulator directory as the literal `folio-assistant/simulators`.**
-   Now `harness.config.json`.
+   Now `harness.config.json`, and the fallback is the folio-root `simulators`
+   — the platform has no such directory since 2026-09-19.
 
 <!-- folio:memory:end -->
 

@@ -1,0 +1,40 @@
+{
+  "_comment": "Bootstrap's three roles. Declared rather than left implicit in the diagram's lanes, which is where they lived until 2026-09-20 — a lane name is a string the audit cannot bind to anything, so `Bootstrapping agent` and `Person asking (judgement only)` appeared in the graph as roles nobody had defined. A role is the swimlane; an actor takes it on for the duration.",
+  "name": "bootstrap",
+  "roles": [
+    {
+      "id": "initiator",
+      "title": "Initiator",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "kg-navigation",
+        "confirm-harness"
+      ],
+      "persona": "Knows nothing about this repository and cannot look anything up. Reads files, follows one process, and asks exactly one question when it must."
+    },
+    {
+      "id": "knowledge-graph-data-store",
+      "title": "Knowledge Graph Data Store",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "actedUpon": true
+    },
+    {
+      "id": "requestor",
+      "title": "Requestor",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [],
+      "judgementOnly": true
+    }
+  ],
+  "_lanes_comment": "NO `lanes` on any role, and the reason is an asymmetry this file cannot fix from here. The ROOT instance declares `bootstrap/skills/` as one of its own kg directories, so it reads these roles — but it does NOT declare `bootstrap/workflows/`, so it does not carry the process those lanes live in. A `lanes` entry therefore produced `bindsLane -> role/Initiator` in folio-assistant's graph, pointing at a lane node only bootstrap's own export mints: three dangling links, measured 2026-09-20. Bootstrap's own graph binds correctly either way (0 dangling), because it carries both halves. Whether the root should declare both halves of bootstrap or neither is bean `pve3` — omitting `lanes` keeps the graph honest meanwhile rather than widening the dangling-link allowance, which would record new debt as progress."
+}

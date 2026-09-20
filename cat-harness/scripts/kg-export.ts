@@ -313,6 +313,12 @@ export function buildContext(): Record<string, unknown> {
     // itself some third kind of actor.
     actorKind: termIri("actorKind"),
     actorKinds: termIri("actorKinds"),
+    // A LITERAL, not a link. It is a value from a closed vocabulary
+    // (`NETWORK_REACHES`), not a node — minting `#reach/air-gapped` would
+    // create an IRI nobody declared and invite a consumer to dereference it.
+    // It is also NOT the deployment's `network`, although the vocabulary is
+    // shared: that one describes a population, this one a participant.
+    reach: termIri("reach"),
     // The two declared exemptions, and they are NOT one flag with two names.
     // `actedUpon` says the role never acts, so `role-has-actor` is `n/a`;
     // `judgementOnly` says it acts but no procedure yields its answer, so

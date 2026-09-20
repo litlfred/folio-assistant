@@ -118,3 +118,26 @@ NOT VERIFIED, and stated on the PR rather than implied away: qou's own content v
 ALSO NOTED ON THE PR: editing the 11 content manifests stales their *.qa.json sidecars by hash. Expected, and for the QA sweep to regenerate rather than for me to hand-edit.
 
 STILL TO DO — half 2, in this repository, and ONLY after qou#7444 merges: drop simulators/, and fix what names the literal. Found so far: content/pipeline/readme-sections.ts:301 defaults to it, adapters/mcp-server/server.ts:2115 serves from repo root, scripts/repo-partition.ts:530 lists it in a package prefix array (which would then name nothing — the same silent-miss shape the test/ move hit), LICENSE-CONTENT.md and README.md name it as platform code, and platform-boundary-guard's memory carries two TRAPs about it that should change from 'live hazard' to 'fixed'.
+
+_2026-09-19T15:45:20Z_ — HALF 2 DONE, in this repository. qou#7444 merged at 4827c00fc; this branch removes the platform's copy and repairs what named it.
+
+THE FALSIFIER DID NOT FIRE. Before deleting, all 11 files were sha256-compared between /home/user/folio-assistant/simulators and qou main at 4827c00fc: 11 SAME, 0 DIFF, 0 missing. Had any differed, the platform would have held an edit qou never received and the deletion would have lost work — that was the stated stop condition.
+
+WHAT WAS REPAIRED, and two of them were NOT on the list carried in the note above — they were found by a final sweep after the planned six were done:
+
+1. harness.config.example.json:15 — "dir": "folio-assistant/simulators". This is the example a NEW folio scaffolds from, so it would have taught the wrong path to every folio created after the move. Now "simulators", with a comment contrasting it against `viewer`, which legitimately does point into the platform because the viewer IS platform code.
+2. skills/folio-paper-adapter/rendering-fixes.md:376 — documented `html: "folio-assistant/simulators/file.html"` under the heading "Current format (required)". That is the skill an author reads to learn how to write a simulator block. Now "simulators/file.html" plus a line saying the path is folio-relative. Its generated copy under docs/reference/skill-instructions/ was regenerated with gen-skill-docs.ts, not hand-edited.
+
+The planned six: content/pipeline/readme-sections.ts (default is now the folio-root `simulators`, and the undetermined-state hint no longer asks "is the platform submodule checked out?" — it asks whether the directory is declared and the checkout complete), adapters/mcp-server/server.ts:2115, scripts/repo-partition.ts:530, LICENSE-CONTENT.md:14, README.md:387, and the two platform-boundary-guard TRAPs.
+
+server.ts:2115 IS NOT WHAT THE NOTE ABOVE SAID. It was recorded as "serves standalone HTML simulators from repo root". Read: the route tests `!path.slice(1).includes("/")`, so a path with a slash never reaches it — it could never have served `/simulators/x.html` or `/folio-assistant/simulators/x.html`. Its REPO_ROOT is findContentRepoRoot(), the FOLIO's root, and qou has a real root-level ruby-3d-viewer.html that it does serve. So the route is generic and live; only its COMMENT claimed simulators. The comment was the defect, and deleting the route would have broken a live page.
+
+HOW SIMULATORS ARE ACTUALLY SERVED, since the above raised it: viewer/index.html:5039 sets simFrame.src = simUrl(simBlock.html, ...), i.e. straight from the block's `html` field, resolved relative to wherever the viewer is hosted. So `simulators/x.html` resolves exactly as `folio-assistant/simulators/x.html` did. The move is transparent to the viewer and no viewer change was needed.
+
+repo-partition.ts kept its `declared-path-literal` comment and lost only the `simulators/` prefix: a simulator is subject matter, so NO platform package is its target — not folio-asst-sci either. docs/architecture/future-state.md was corrected the same way in two places.
+
+VERIFIED: tsc --noEmit exit 0; bun test 2755 pass / 0 fail / 56 skip across 201 files; eslint clean on the three changed .ts; check:declared-paths, check:declared-assets, check:harness-dirs, readme:audit, agent-memory:check all PASS; readme-sections.test.ts 17 pass. Boundary-guard memory went 185 -> 189 lines, inside the 200-line injection budget bean 4kiw is about.
+
+NOTED, NOT FIXED — ci-health-watcher's MEMORY.md is 206 lines on main, 7 over the budget, and this branch does not touch it. agent-memory.ts reports the overflow is the hand-written tail rather than an entry, so nothing is silently dropped. Pre-existing and someone else's; recorded here rather than widening this PR.
+
+WHAT REMAINS NAMING THE OLD LITERAL, all deliberate: readme-sections.ts's two comments and both memory nodes now read in the PAST tense as the worked example; placement.md says "until it"; two test files describe the regression they guard. These are records of why the rule exists, and rewriting them would erase the evidence for it.

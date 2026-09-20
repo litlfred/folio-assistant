@@ -33,6 +33,7 @@
  */
 
 import { z } from "zod";
+import { NETWORK_REACHES } from "./cat-harness";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
 
@@ -100,6 +101,11 @@ export const ActorDefinitionSchema = z.object({
   /** Permission ids — what it may do, regardless of lane. See `skills/permissions/`. */
   permissions: z.array(z.string()).optional(),
   capabilities: z.array(z.string()),
+  /**
+   * Network reach — see `ActorDefinition.reach` in `assistant-types.ts`, and
+   * `schemas/actor-reach.ts` for how it composes with the deployment's.
+   */
+  reach: z.enum(NETWORK_REACHES).optional(),
   meta: z.record(z.unknown()).optional(),
 });
 
@@ -119,6 +125,13 @@ export const SkillCapabilityRefSchema = z.object({
   capabilityId: z.string(),
   degradation: DegradationStrategySchema,
   fallbackCapabilityId: z.string().optional(),
+  /**
+   * The ROLE that performs this instead, when no capability can — the
+   * air-gapped case, where an API cannot be reached and a person signs.
+   * See {@link SkillCapabilityRef} for why a role rather than an actor,
+   * and why this is not modelled as a capability.
+   */
+  fallbackRole: z.string().min(1).optional(),
 });
 
 export const SkillDependencySchema = z.object({

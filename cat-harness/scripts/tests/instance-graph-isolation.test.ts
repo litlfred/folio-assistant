@@ -6,7 +6,7 @@
  * The defect these guard was LIVE on `main` on 2026-09-19, not hypothetical:
  * `findBpmnDirs` walked the filesystem, so `bootstrap/workflows/bootstrap.bpmn`
  * was discovered from the repository root as well as from bootstrap, and
- * `_kg/folio-assistant.jsonld` carried **88** references to `Process_Bootstrap`.
+ * `_kg/folio-assistant.jsonld` carried **88** references to `Process_InitializeHarness`.
  * Bootstrap's process was published as part of folio-assistant's graph.
  */
 import { describe, expect, test } from "bun:test";
@@ -26,14 +26,14 @@ const ids = (nodes: Array<Record<string, unknown>>): string[] => nodes.map((n) =
 describe("a second instance in the tree stays out of the first's graph", () => {
   test("the root instance's nodes include none of bootstrap's process", async () => {
     const { nodes } = await collectInstanceNodes(ROOT, DOC, "", []);
-    expect(ids(nodes).filter((i) => i.includes("Process_Bootstrap"))).toEqual([]);
+    expect(ids(nodes).filter((i) => i.includes("Process_InitializeHarness"))).toEqual([]);
   });
 
   test("and bootstrap's own graph DOES carry it", async () => {
     // Isolation that achieved itself by losing the node would be worse than
     // the leak: the process would simply be gone.
     const { nodes } = await collectInstanceNodes(BOOT, DOC, "", []);
-    expect(ids(nodes).some((i) => i.includes("Process_Bootstrap"))).toBe(true);
+    expect(ids(nodes).some((i) => i.includes("Process_InitializeHarness"))).toBe(true);
   });
 
   test("the root instance keeps every process it declares", async () => {

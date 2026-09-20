@@ -162,6 +162,134 @@ measurement over `.ts` only.** Every config format in the repo spells the site
 root a second time, none is covered by the guard that made pass 1 look cheap,
 and one of them looks like it needs updating when it must be left alone.
 
+## Claimed, first slice landed — and the scope list contradicts the owner's quote
+
+_2026-09-19, PR #434, branch `claude/fervent-mccarthy-nw4olk`._ #413 landed
+`docs/` and `tools/`. `voices/` -> `folio-assistant/voices/` is in.
+
+**One declaration edit, nothing else.** `harness.json`'s `voices` path, and no
+consumer needed touching — `check-voices.ts` resolves through
+`directoryForGraph`, so 36 voice rules kept resolving. That is this bean's
+"declaration and readers first" paying off as a measurement: the readers were
+already done, so the move was the cheap half exactly as predicted.
+
+**`DEFAULT_DIRECTORIES` was deliberately NOT changed**, and the reasoning
+generalises to every remaining slice. The defaults are the fallback for an
+instance that declares nothing; moving this instance's directory is a fact about
+THIS declaration. Editing the default would relocate the voices directory of
+every unmigrated downstream folio — and the breakage would appear in their
+repository, not in the commit that caused it. So: `harness.json` changes, the
+defaults do not, and **a consumer that needs an edit is telling you it hardcodes
+a path.**
+
+### The hazard for the next slice is a YAML trigger, not code
+
+`.github/workflows/docs-site.yml` fires on `folio-assistant/docs/**` (correct
+after #413) and ALSO on `skills/workflows/**`, `schemas/**` and
+`content/docs/**`. Move any of those three without moving the trigger and the
+site silently stops rebuilding on a skill or schema edit — green CI, stale
+site, nothing saying so. The `xom7` shape, and no code guard covers it. This is
+the same class as the `.gitignore` finding above: pass 1's "it was one function"
+was a measurement over `.ts` only, and every config format spells the root a
+second time. `voices/` is in no trigger, which is part of why it went first.
+
+### The scope list and the owner's quote disagree — NOT resolved here
+
+§"What this settles for the migration" names the movers as the per-instance
+parts of `docs/`, `tools/`, `skills/`, `schemas/`, `library/`, `voices/`,
+`translations/`. It omits `src/`, `scripts/`, `content/` and `adapters/`.
+
+The owner's direction quoted at the top of this bean is *"so there would be in
+top-level only bootstrap/ cat-harness/ f-a-core/ etc. all content migrated to
+respective expexted dirs"* — and those four are neither instance stubs nor
+category-2 stores (`beans/`, `todos/`, `fsh-guts/`) nor `bootstrap/`. Under the
+rule as restated above they have no category to sit in, so either the list is
+incomplete or the rule needs a fourth category for shared platform code.
+
+~1000 tracked files of difference. Put to the owner rather than picked.
+
+Blast radius, measured, so the answer can be priced:
+
+| directory | tracked | ts literals | in the list? |
+|---|---|---|---|
+| `skills/` | 290 | 64 | yes |
+| `schemas/` | 122 | 65 | yes |
+| `library/` | 1402 | 26 | yes |
+| `translations/` | 199 | 24 | yes |
+| `scripts/` | 375 | 153 | **no** |
+| `content/` | 593 | 156 | **no** |
+| `src/` | 54 | 96 | **no** |
+| `adapters/` | 30 | 25 | **no** |
+
+## `skills/` was attempted and REVERTED — the inventory is the deliverable
+
+_2026-09-19, on `c22b561b4`._ Tried as slice three, reverted rather than pushed.
+`voices/` and `translations/` stand; `skills/` stays at top level for now.
+
+**Why reverted:** the move left `kg:audit` generating **243 sidecars where main
+generates 251**, and I could not explain the 8. Measured both ways rather than
+assumed — main regenerated from scratch keeps all 251 and its own
+`kg:audit:check` exits 0, so those 8 are audited there and my tree lost them.
+The 8 are all one level deeper than a package (`folio-core/bib-qa/qa-tags`,
+`folio-core/coordinate/protocol`, `folio-paper-adapter/formalizer/*`,
+`folio-paper-adapter/lean-environment-setup/mathlib-cache-fallback`), which
+points at `isPartOfASkill()` in `scripts/kg-audit.ts` classifying them
+differently under the new path. Not chased further.
+
+**A green gate over 243 of 251 subjects is worse than a red one**, so it was not
+going to be pushed either way.
+
+### The defect I introduced and fixed, because it will be re-introduced
+
+`kg-audit.ts` hardcodes `KG_ROOT = join(root, "skills")`. My first fix was
+`directoryForGraph(root, "cat-harness")` and it was **wrong in the silent
+direction**: `harness.json` has TWO entries declaring that graph, because
+`schemas/` carries `["schemas", "cat-harness"]` (a schema IS a KG node), and a
+by-graph lookup returns the first. The audit walked `schemas/`, wrote **37**
+sidecars, and exited **0**.
+
+`kgDirectories()` in `scripts/known-skills.ts` already guards exactly this and
+its comment names this very collision. The correct form is
+`kgDirectories(root).find((d) => d.id === "cat-harness")?.absPath`.
+
+This is the SECOND time today the id-vs-graph distinction has bitten this
+migration — #413's session hit it in `gen-skill-docs` and recorded that
+`harness.json` says "ids are stable across a relocation, paths are not". **A
+by-graph lookup is not a weaker version of a by-id lookup; for `cat-harness` it
+resolves to a different directory.**
+
+### What `skills/` actually costs, measured — for whoever takes it next
+
+Not 290 files and one declaration edit. Eight distinct surfaces:
+
+| surface | what | found by |
+|---|---|---|
+| `harness.json` | `cat-harness` path | — |
+| 2 workflow triggers | `docs-site.yml` `skills/workflows/**`, `feature-staging.yml` `skills/**` | nothing; YAML has no guard |
+| `scripts/kg-audit.ts` | hardcoded `KG_ROOT`, resolve BY ID | `kg:audit` ENOENT |
+| `src/skills/corpus-grep.ts` | imports `../../skills/framework/types.js` | `tsc` |
+| `folio-assistant/skills/framework/types.ts` | outward import depth `../../` -> `../../../` | `tsc` |
+| README/AGENTS markdown | 37 link targets (8 + 28 + 1) | `readme:audit`, `check:declared-assets` |
+| 2 `.ts` path lists | `schemas/translation-tools.ts` (4), `content/docs/publication-workflow/publication-workflow.ts` (3) | `check:workflow-refs` |
+| `test/results/kg-qa/` tree | 250 sidecars MIRROR the subject path, so they relocate | `kg:audit:check` stale |
+
+**My earlier "`skills/` has 0 imports" was a measurement artefact** — the grep
+pattern `from "\.\./*skills/` cannot match `../../skills/`. It has at least one,
+and one file inside the tree imports outward, so the depth changes. `skills/` is
+not a data-only directory.
+
+### Order for what remains, from the trigger survey
+
+`voices/` and `translations/` appear in no workflow trigger, which is why they
+landed. Everything left is named in at least one, and a stale trigger is silent:
+
+- `skills/` — `docs-site.yml`, `feature-staging.yml`
+- `schemas/` — `docs-site.yml` (`schemas/**`), plus **93 relative imports**
+- `library/` — `jsonld-gen-check.yml` (`library/**/structure.json`, `candidates.json`)
+- `content/` — `docs-site.yml` (`content/docs/**`), if it is in scope at all
+
+`schemas/` is the genuinely hard one and should go last: 93 imports is the
+"rewrites every relative import" step #413 deferred.
 
 ## Progress — PR #437
 
