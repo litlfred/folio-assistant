@@ -255,13 +255,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T10:55:27.869Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b6225be39b48e1d7e5a69337d92f5ce97dffca29",
-  "sourceCommitSha": "b6225be39b48e1d7e5a69337d92f5ce97dffca29",
-  "sourceCommitAt": "2026-09-20T10:49:31Z",
+  "generatedAt": "2026-09-20T11:03:24.679Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ac6cc6d86a6f240b3cea448a46a4dda5f8fe43ea",
+  "sourceCommitSha": "ac6cc6d86a6f240b3cea448a46a4dda5f8fe43ea",
+  "sourceCommitAt": "2026-09-20T10:58:09Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 188,
+    "Skill": 190,
     "Actor": 27,
     "Capability": 25,
     "Role": 116,
@@ -270,9 +270,9 @@
     "Process": 41,
     "SequenceFlow": 549,
     "ProcessNode": 512,
-    "Tool": 50,
+    "Tool": 51,
     "Schema": 63,
-    "GraphKind": 21,
+    "GraphKind": 20,
     "Directory": 19
   },
   "@graph": [
@@ -1496,14 +1496,13 @@
       "title": "Reading the knowledge graph — how to find the skill you need",
       "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-navigation.md",
       "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
-      "ambiguous": true,
+      "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation"
     },
     {
@@ -3233,6 +3232,37 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-simplifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "discussion",
+      "title": "discussion — settling what an agent cannot read off disk",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/skills"
+      ],
+      "instructionsPath": "../bootstrap/skills/discussion.md",
+      "instructionLines": 107,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bootstrap-kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bootstrap-kg-navigation",
+      "title": "Reading a knowledge graph before you have anything",
+      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/skills"
+      ],
+      "instructionsPath": "../bootstrap/skills/bootstrap-kg-navigation.md",
+      "instructionLines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bootstrap-kg-navigation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/confirm-harness",
@@ -20621,6 +20651,47 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/node/EndEvent_Published"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#tool/discuss",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "discuss",
+      "title": "discussion",
+      "description": "Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "question",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/tool-types.schema.json#/$defs/Text",
+            "description": "The question as put, with its candidates named. One question where one will do.",
+            "required": true
+          },
+          {
+            "name": "askedOf",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/tool-types.schema.json#/$defs/Text",
+            "description": "`person` or `agent` — symmetric participants, recorded because the answers are evidence of different weight.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "answer",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/tool-types.schema.json#/$defs/Text",
+            "description": "The reply as received. Absent is a real result: it routes to `outcome: unsettled`, never to a guess."
+          }
+        ]
+      },
+      "requirements": {},
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/discussion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/discuss"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#tool/beans-cli",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "beans-cli",
@@ -24120,14 +24191,6 @@
       "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/session-state",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "session-state",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SessionStateGraph",
-      "renderable": false,
-      "summary": "A session's context — the acting actor, the instances it has open, and what it waits on."
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "interaction",
@@ -24923,14 +24986,15 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "initiator",
       "title": "Initiator",
-      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "agent"
       ],
       "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-navigation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bootstrap-kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/confirm-harness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/discussion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/log-message"
       ],
       "bindsLane": [],
@@ -25194,8 +25258,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "3c4d1760c67b3974368eac2c29abb3a13aa3f8a8",
+    "sha": "f97ab03ce139b91698e498138397eefdb775c531",
     "pr": "484/merge",
-    "run": "35506335609"
+    "run": "35506693830"
   }
 }
