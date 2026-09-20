@@ -92,6 +92,21 @@ skill exists to prevent. A user who says "I want to add a chapter" has stated
 `new-content`; a user who says "create a folio" has stated **nothing**, because
 that sentence is what the five requests have in common.
 
+> **`isFolio` is a NARROWING of a larger answer, and the larger one exists.**
+> A repository is a *set* of content types — the markers it carries — and
+> `describeRepository()` (`schemas/content-type.ts`) returns it: `harness`,
+> `dak`, `sushi`, with the facts each marker states and any disagreement
+> between them. `smart-base` is a DAK *and* a SUSHI project, so a boolean is
+> wrong about the first repository anybody asks it about.
+>
+> The probe above stays a boolean **on purpose**, because the table below
+> branches on two values and widening it to a set is a change to the table's
+> logic rather than to this line: what the five branches should do for a
+> repository that is a harness AND a DAK is a real question and nobody has
+> answered it. Bean `79t3`. Use `describeRepository` when you want to know
+> what a repository *is*; use `isFolio` when you want to know which branch of
+> this table to take.
+
 > **`isFolio` is about the working directory, not about the user.** Somebody
 > who has used folio-assistant before, in another repo, is still in an
 > `isFolio=false` directory. Their experience is not a fact this table reads —
