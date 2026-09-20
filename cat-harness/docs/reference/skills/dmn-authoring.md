@@ -8,7 +8,7 @@ parent: Skill schema reference
 
 > Skill id: `dmn-authoring`
 
-_Generated from JSON Schema — do not edit by hand. Run `bun run scripts/gen-schema-docs.ts`._
+_Generated from JSON Schema — do not edit by hand. Run `bun run cat-harness/scripts/gen-schema-docs.ts`._
 
 ## Input
 
