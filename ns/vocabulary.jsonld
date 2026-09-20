@@ -31,6 +31,23 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:Instance",
+      "@type": "rdfs:Class",
+      "label": "Instance",
+      "comment": "A repository carrying a harness declaration — it names itself, its published stub, and the directories it holds.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness",
+      "seeAlso": "https://litlfred.github.io/agentic-harness.html"
+    },
+    {
+      "@id": "cat:SushiProject",
+      "@type": "rdfs:Class",
+      "label": "SushiProject",
+      "comment": "A repository SUSHI will build — FSH compiled to a FHIR implementation guide. Minted here because SUSHI publishes no logical model for its own config; this is our name for the membership, not a claim to define SUSHI.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "bs:Actor",
       "@type": "rdfs:Class",
       "label": "Actor",

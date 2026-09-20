@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(55)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(148)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(55) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(148) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(55) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(148) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(55) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(148) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Content Review | folio-assistant</title>
+<title>Tabular metadata | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Content Review" />
+<meta property="og:title" content="Tabular metadata" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-review.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-review.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/tabular-metadata.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/tabular-metadata.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Content Review" />
+<meta property="twitter:title" content="Tabular metadata" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Content Review","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-review.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Tabular metadata","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/tabular-metadata.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -600,7 +600,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Content Review</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Tabular metadata</span></li>
   </ol>
 </nav>
 
@@ -609,85 +609,192 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-review.md"><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/content-review.md</code></a> — do not edit here. Typed contract: <a href="../skills/content-review.html">schema reference</a>.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/tabular-metadata.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/tabular-metadata.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-review.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/tabular-metadata.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="content-review">
+<h1 id="tabular-metadata--csvw-annotated-and-honest-about-what-it-could-not-read">
   
   
-    <a href="#content-review" class="anchor-heading" aria-labelledby="content-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content Review
+    <a href="#tabular-metadata--csvw-annotated-and-honest-about-what-it-could-not-read" class="anchor-heading" aria-labelledby="tabular-metadata--csvw-annotated-and-honest-about-what-it-could-not-read"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tabular metadata — CSVW, annotated, and honest about what it could not read
   
   
 </h1>
     
 
-<p>Formal review and approval of validated content before publication.</p>
-<h2 id="responsibilities">
+<p><strong>The model is CSVW and nothing custom.</strong> Bean <code class="language-plaintext highlighter-rouge">ulqj</code>, decided by the owner:
+<em>“not new/custom thing.”</em> This graph already speaks doco, deo, cito, oa, prov,
+skos, dcterms and fhir — eight published vocabularies, zero folio inventions.
+<code class="language-plaintext highlighter-rouge">folio-tabular-records/v1</code> was the one exception and is being retired.</p>
+
+<p>CSVW is a W3C Recommendation, it is already JSON-LD, and it models
+<strong>table → column → datatype</strong> and nothing else. That last part is the feature:
+<em>“no full Excel complexity”</em> is a property of the vocabulary, not a rule anyone
+has to remember. CSVW cannot express a formula, a merged cell or a fill colour,
+so nobody can add one by accident.</p>
+<h2 id="the-one-thing-csvw-cannot-say-and-the-only-place-we-extend-it">
   
   
-    <a href="#responsibilities" class="anchor-heading" aria-labelledby="responsibilities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Responsibilities
-  
-  
-</h2>
-    
-<ul>
-  <li>Review L2 content before L3 begins (phase gate)</li>
-  <li>Review L3 content before publication (phase gate)</li>
-  <li>Assess breaking vs. non-breaking changes</li>
-  <li>Ensure alignment with source guidelines</li>
-  <li>Approve draft publications for stakeholder circulation</li>
-  <li>Provide final publication release sign-off</li>
-</ul>
-<h2 id="actors">
-  
-  
-    <a href="#actors" class="anchor-heading" aria-labelledby="actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Actors
+    <a href="#the-one-thing-csvw-cannot-say-and-the-only-place-we-extend-it" class="anchor-heading" aria-labelledby="the-one-thing-csvw-cannot-say-and-the-only-place-we-extend-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The one thing CSVW cannot say, and the only place we extend it
   
   
 </h2>
     
-<ul>
-  <li>Content Reviewer (lead, approval authority)</li>
-  <li>Technical Officer (first-pass review)</li>
-  <li>Clinical SME (clinical sign-off)</li>
-  <li>Programme Manager (governance oversight)</li>
-</ul>
-<h2 id="inputs">
-  
-  
-    <a href="#inputs" class="anchor-heading" aria-labelledby="inputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs
-  
-  
-</h2>
-    
-<ul>
-  <li>Validated content artifacts</li>
-  <li>Validation reports</li>
-  <li>Change log / diff from previous version</li>
-</ul>
-<h2 id="outputs">
-  
-  
-    <a href="#outputs" class="anchor-heading" aria-labelledby="outputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Outputs
-  
-  
-</h2>
-    
-<p>Findings and a decision — two things, not one. See
-<a href="../folio-core/decision-audit.md"><code class="language-plaintext highlighter-rouge">decision-audit</code></a> and
-<a href="../../schemas/qa-review.ts"><code class="language-plaintext highlighter-rouge">schemas/qa-review.ts</code></a>.</p>
+
+<p><strong>Where the table is.</strong> In CSVW the table <em>is</em> the file, so a CSVW document has
+no way to say <em>“this table starts at B7 of sheet 3”</em>. A real workbook breaks
+that assumption three ways:</p>
 
 <ul>
-  <li><strong>Findings</strong> — one per observation, each carrying the axis this reviewer can
-speak on: <code class="language-plaintext highlighter-rouge">blocking | suggestion | praise</code> for a person, <code class="language-plaintext highlighter-rouge">critical | major |
-minor</code> for a checker. Neither defaults into the other, and <code class="language-plaintext highlighter-rouge">praise</code> has no
-machine equivalent.</li>
-  <li><strong>A decision</strong> — <code class="language-plaintext highlighter-rouge">approve | request-changes | reject</code>, naming every finding it
-weighed and every one it overruled. An overruled finding stays on the record.</li>
-  <li><strong>Audit notes</strong> — why this outcome, and why each overruled finding was left.
-At least one per decision, each citing corpus evidence. Approving over an open
-<code class="language-plaintext highlighter-rouge">critical</code> or <code class="language-plaintext highlighter-rouge">blocking</code> finding without overruling it is a reported problem.</li>
+  <li>a table that does not start at A1,</li>
+  <li>a header row that is not row 1,</li>
+  <li>several tables on one sheet.</li>
+</ul>
+
+<p>So three <code class="language-plaintext highlighter-rouge">fac:</code> terms, and <strong>only</strong> these three: <code class="language-plaintext highlighter-rouge">fac:anchor</code> (sheet, cell, row,
+column), <code class="language-plaintext highlighter-rouge">fac:headerRow</code>, <code class="language-plaintext highlighter-rouge">fac:extent</code>.</p>
+
+<blockquote>
+  <p><strong>They are annotations ON a valid CSVW document, never a replacement for
+one.</strong> A reader with a standard CSVW parser ignores the <code class="language-plaintext highlighter-rouge">fac:</code> keys and still
+gets a correct table description. That property is the entire reason for
+adopting a standard rather than inventing a schema, so it is <strong>tested</strong>
+(<code class="language-plaintext highlighter-rouge">csvwOnly()</code> in <code class="language-plaintext highlighter-rouge">schemas/tabular-csvw.ts</code>) rather than asserted.</p>
+</blockquote>
+
+<p>Adding a fourth <code class="language-plaintext highlighter-rouge">fac:</code> term is the moment to stop and ask whether CSVW really
+cannot express it. Usually it can.</p>
+<h2 id="as-best-as-can-means-three-states-never-two">
+  
+  
+    <a href="#as-best-as-can-means-three-states-never-two" class="anchor-heading" aria-labelledby="as-best-as-can-means-three-states-never-two"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> “As best as can” means three states, never two
+  
+  
+</h2>
+    
+
+<p>The owner’s phrase, and this repository’s oldest rule wearing different
+clothes. Every field is <strong>determined</strong>, or <strong>explicitly undetermined with a
+reason</strong>. Nothing defaults.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>determined when</th>
+      <th>undetermined looks like</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datatype</code></td>
+      <td>the column’s values classify</td>
+      <td><code class="language-plaintext highlighter-rouge">"any"</code> + <code class="language-plaintext highlighter-rouge">datatypeSource: "undetermined"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fac:extent</code></td>
+      <td>rows AND columns are both known</td>
+      <td>both <code class="language-plaintext highlighter-rouge">null</code> + <code class="language-plaintext highlighter-rouge">source: "undetermined"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fac:anchor.sheet</code></td>
+      <td>the format has sheets</td>
+      <td><code class="language-plaintext highlighter-rouge">null</code> — a CSV has none, and that is DETERMINED</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fac:anchor.cell</code></td>
+      <td>the format has A1 refs</td>
+      <td><code class="language-plaintext highlighter-rouge">null</code> for a CSV</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two of those nulls are worth separating carefully. <strong>A CSV’s <code class="language-plaintext highlighter-rouge">sheet: null</code> is a
+determined answer</strong> — a CSV genuinely has no sheet, and writing <code class="language-plaintext highlighter-rouge">"Sheet1"</code>
+would invent one. An <code class="language-plaintext highlighter-rouge">undetermined</code> extent is the opposite: we looked and could
+not tell. The schema enforces the difference; <code class="language-plaintext highlighter-rouge">source</code> is what tells them
+apart, and a half-known extent is refused outright because it reads as a
+measurement.</p>
+
+<p><strong>Never guess a datatype to avoid an <code class="language-plaintext highlighter-rouge">undetermined</code>.</strong> A column of <code class="language-plaintext highlighter-rouge">1, 2, 3,
+N/A</code> is not an integer column. <code class="language-plaintext highlighter-rouge">any</code> with a recorded reason is a better answer
+than <code class="language-plaintext highlighter-rouge">integer</code> with a silent coercion, because the second one is indis-
+tinguishable from a correct reading.</p>
+<h2 id="generic-workflow-format-specific-tools">
+  
+  
+    <a href="#generic-workflow-format-specific-tools" class="anchor-heading" aria-labelledby="generic-workflow-format-specific-tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Generic workflow, format-specific tools
+  
+  
+</h2>
+    
+
+<p>The <em>process</em> does not change between formats; <em>reading the bytes</em> does.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sniff → route → extract → annotate → validate
+</code></pre></div></div>
+
+<p>One workflow. One tool per format — <code class="language-plaintext highlighter-rouge">tabular-csv</code>, <code class="language-plaintext highlighter-rouge">tabular-xlsx</code> — each
+declared in <code class="language-plaintext highlighter-rouge">tools/index.ts</code> and naming this skill in <code class="language-plaintext highlighter-rouge">satisfies</code>. A CSV has one
+table and no cells outside it; a workbook has sheets, possibly several tables
+per sheet, and a table that may start anywhere. That difference lives in the
+tool, never in the workflow and never in the schema.</p>
+
+<p>Routing a CSV is <strong>not</strong> a sniff: a CSV has no magic bytes, and bean <code class="language-plaintext highlighter-rouge">p67i</code>
+established that it must not become an extension guess either. The content
+question is the only one available — do the first rows split into the same
+number of fields, more than one?</p>
+<h2 id="a-stub-must-be-impossible-to-mistake-for-a-result">
+  
+  
+    <a href="#a-stub-must-be-impossible-to-mistake-for-a-result" class="anchor-heading" aria-labelledby="a-stub-must-be-impossible-to-mistake-for-a-result"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A stub must be impossible to mistake for a result
+  
+  
+</h2>
+    
+
+<p>No extractor ships today (the owner: <em>“no tooling needed, stub out, make QA to
+catch absence”</em>). A tool that has not been built records <code class="language-plaintext highlighter-rouge">fac:stub</code> with the
+tool’s name, a reason, and a <strong>date</strong> — undated, a stub cannot be told from
+abandoned work, which is the same argument <code class="language-plaintext highlighter-rouge">bean-blocking</code> makes for an expiry.</p>
+
+<p>Three rules, each one paid for:</p>
+
+<ol>
+  <li><strong>A stub is never <code class="language-plaintext highlighter-rouge">met</code>.</strong> It is <code class="language-plaintext highlighter-rouge">not-derivable</code>, naming the tool. A stub
+that reports success is worse than no tool at all.</li>
+  <li><strong>A half-stub is refused.</strong> <code class="language-plaintext highlighter-rouge">fac:stub</code> alongside non-empty <code class="language-plaintext highlighter-rouge">columns</code> fails
+schema validation, because a thin-but-present extraction reads as a working
+one. This is the <code class="language-plaintext highlighter-rouge">6xaz</code> shape: sheet names right, headers empty, output
+looking like a workbook that simply had no headers.</li>
+  <li><strong>A stub expires.</strong> When the real tool lands, <code class="language-plaintext highlighter-rouge">fac:stub</code> must go. <code class="language-plaintext highlighter-rouge">bun run
+check:tabular-stubs</code> fails CI when a record carries both a stub and real
+columns, and reports every outstanding stub on every run.</li>
+</ol>
+
+<p>Rule 3 is the one that rots if nobody writes it down. This session fixed the
+same defect four times — a restated list, a reason in a YAML comment, a
+backlog keyed to the wrong thing, a third state with no expiry — and then
+introduced a fifth: a probe that looked for <code class="language-plaintext highlighter-rouge">transcript.json</code> when the arm
+writes <code class="language-plaintext highlighter-rouge">transcript/</code>, so the ratchet could never have fired. <strong>A declared
+exception must carry something a test can re-derive.</strong></p>
+<h2 id="what-this-skill-does-not-cover">
+  
+  
+    <a href="#what-this-skill-does-not-cover" class="anchor-heading" aria-labelledby="what-this-skill-does-not-cover"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this skill does not cover
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>The narrative</strong> — what a dataset is <em>about</em>. That needs an author; bean
+<code class="language-plaintext highlighter-rouge">p67i</code> stopped there deliberately, and the headers being right there is
+exactly why assembling one from them would be fabrication.</li>
+  <li><strong>Migrating <code class="language-plaintext highlighter-rouge">folio-tabular-records/v1</code>.</strong> Bean <code class="language-plaintext highlighter-rouge">eief</code> carries it.</li>
+  <li><strong>What a sheet IS in the document graph</strong> — whether a sheet is a grouping
+node or a <code class="language-plaintext highlighter-rouge">table</code> block. That is <code class="language-plaintext highlighter-rouge">0lmb</code> territory and blocks <code class="language-plaintext highlighter-rouge">p67i</code>’s
+manifest.</li>
 </ul>
 
           
