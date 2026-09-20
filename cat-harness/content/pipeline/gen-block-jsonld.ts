@@ -37,6 +37,7 @@
  * @module content/pipeline/gen-block-jsonld
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname, basename } from "path";
 import {
@@ -221,8 +222,7 @@ async function run(): Promise<number> {
   let anyLoadFailure = false;
 
   for (const paper of papers) {
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    const paperDir = join(root, "folio", paper);
+    const paperDir = join(folioDir(root),  paper);
     if (!existsSync(paperDir)) {
       console.error(`gen-block-jsonld: no such paper directory: ${paperDir}`);
       return 2;

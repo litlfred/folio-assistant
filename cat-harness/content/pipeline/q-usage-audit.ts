@@ -23,6 +23,7 @@
  * @module content/pipeline/q-usage-audit
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, relative } from "node:path";
@@ -163,8 +164,7 @@ const REPO_ROOT = findContentRepoRoot();
  * the pipeline).
  */
 const PAPERS: string[] = paperFilter ? [paperFilter] : findPapers(REPO_ROOT);
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const PAPER_ROOTS: string[] = PAPERS.map((p) => join(REPO_ROOT, "folio", p));
+const PAPER_ROOTS: string[] = PAPERS.map((p) => join(folioDir(REPO_ROOT),  p));
 
 // ── Walk block files ────────────────────────────────────────────
 

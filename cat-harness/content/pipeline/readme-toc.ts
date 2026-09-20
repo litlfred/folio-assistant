@@ -43,6 +43,7 @@
  * @module content/pipeline/readme-toc
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
@@ -175,9 +176,8 @@ function matchTitle(src: string): string | undefined {
  * folio almost always is.
  */
 export function discoverPapers(root: string): PaperInfo[] {
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const contentDir = join(root, "folio");
-  const folioPath = join(contentDir, "folio.ts");
+  const folioRoot = folioDir(root);
+  const folioPath = join(folioRoot, "folio.ts");
   let entries: { dir: string; folioTitle?: string }[] = [];
 
   if (existsSync(folioPath)) {
@@ -192,7 +192,7 @@ export function discoverPapers(root: string): PaperInfo[] {
 
   const papers: PaperInfo[] = [];
   for (const { dir, folioTitle } of entries) {
-    const manifest = join(contentDir, dir, `${dir}.ts`);
+    const manifest = join(folioRoot, dir, `${dir}.ts`);
     if (!existsSync(manifest)) continue;
     const manifestTitle = matchTitle(readFileSync(manifest, "utf-8"));
     papers.push({ dir, title: manifestTitle ?? folioTitle ?? dir });
@@ -208,15 +208,13 @@ export function discoverPapers(root: string): PaperInfo[] {
  * numbered nor an appendix.
  */
 export function chaptersOf(root: string, paper: string): ChapterInfo[] {
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const manifest = join(root, "folio", paper, `${paper}.ts`);
+  const manifest = join(folioDir(root),  paper, `${paper}.ts`);
   if (!existsSync(manifest)) return [];
   const src = readFileSync(manifest, "utf-8");
   const dirs = [...src.matchAll(/chapterRef\(\s*\{\s*dir:\s*["']([^"']+)["']/g)].map((m) => m[1]);
 
   return dirs.map((dir) => {
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    const chapterTs = join(root, "folio", paper, dir, `${dir}.ts`);
+    const chapterTs = join(folioDir(root),  paper, dir, `${dir}.ts`);
     let title = dir;
     if (existsSync(chapterTs)) title = matchTitle(readFileSync(chapterTs, "utf-8")) ?? dir;
     const kind = dir.startsWith("appendix-")

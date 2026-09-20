@@ -47,7 +47,7 @@ import "../../schemas/folio-graph-kind.ts";
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join, dirname, relative } from "path";
 import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../schemas/jsonld";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 export interface GraphNode {
   /** The `@id` — a relative IRI, minted by `resolveLabel` for authored blocks. */
@@ -464,8 +464,7 @@ export function graphStats(index: GraphIndex): Record<string, unknown> {
 /** The standard roots: authored blocks and ingested documents. */
 export function defaultRoots(repoRoot: string): Array<{ name: string; dir: string }> {
   return [
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    { name: "folio", dir: join(repoRoot, "folio") },
+    { name: "folio", dir: folioDir(repoRoot) },
     // declared-path-literal: the convention fallback, at the call site so the
     // choice is visible. The index is built over whatever is there; a root
     // that resolves to nothing yields fewer nodes rather than an error.

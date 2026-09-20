@@ -42,6 +42,7 @@
  *   - publish.yml (per-build coverage badge)
  */
 
+import { folioDir } from "../schemas/cat-harness.js";
 import { readdirSync, readFileSync, existsSync, writeFileSync } from "fs";
 import { join, resolve, relative, dirname, basename } from "path";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
@@ -418,11 +419,9 @@ function flagValue(args: string[], flag: string): string | null {
 function resolveContentRoot(args: string[]): string {
   const explicit = flagValue(args, "--content-root");
   if (explicit) return resolve(explicit);
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const cwdContent = resolve(process.cwd(), "folio");
+  const cwdContent = folioDir(process.cwd());
   if (existsSync(cwdContent)) return cwdContent;
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  return join(SCRIPT_REPO_ROOT, "folio");
+  return folioDir(SCRIPT_REPO_ROOT);
 }
 
 if (import.meta.main) {
