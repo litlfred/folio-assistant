@@ -585,6 +585,7 @@ jobs:
           # fatal. `--strict` is the switch for the day the number is low
           # enough to hold.
           bun run check:subgraph-coverage
+          bun run check:published-refs
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no

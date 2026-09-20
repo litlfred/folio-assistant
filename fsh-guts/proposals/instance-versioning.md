@@ -154,12 +154,13 @@ same one. Today's floating `ref` is `current` **by accident**, which is the
 defect: the pre-release choice is being made by a default rather than written
 down.
 
-**Proposed gate — `check:published-refs`.** Every reference in a published
+**Gate — `check:published-refs`, implemented 2026-09-20.** Every reference in a published
 artefact resolves to a semver version. A SHA, a branch name, or `current`
 reaching the published tier fails it. This is the narrowest possible
 expression of the owner's rule, and it is the one gate this proposal would
 ask for first — before `id`, before `publishable`, before anything in §4 —
-because it is the one that can be written against today's data.
+because it is the one that can be written against today's data. It is
+`bun run check:published-refs`; advisory by default, `--strict` to fail.
 
 ### 3.4 The published graph carries a `dependsOn`-shaped record
 
@@ -232,8 +233,9 @@ and §3.3 leaves it alone.
 3. **Is `0.1.0` in `package.json` the same version as `cat-harness`'s?**
    Today one number stands for the whole monorepo. Under this scheme they are
    different objects and should not share a field.
-4. **What does a staging preview publish?** This repository builds a preview
-   per open PR, and a preview is externally reachable while being, by §3.3's
-   own definition, staging. Either a preview is not "published" — the reading
-   this proposal assumes — or previews need a pre-release version rather than
-   a SHA. It should be decided rather than discovered from a failing gate.
+4. ~~**What does a staging preview publish?**~~ **SETTLED 2026-09-20** —
+   owner: *"preview is staging, not published"*. A preview is externally
+   reachable and provisional, which is what made it ambiguous; the tier is
+   decided by whether a consumer may DEPEND on it, not by whether they can
+   reach it. So a SHA in a preview is correct, and `check:published-refs`
+   excludes `/STAGING/` by design rather than by omission.

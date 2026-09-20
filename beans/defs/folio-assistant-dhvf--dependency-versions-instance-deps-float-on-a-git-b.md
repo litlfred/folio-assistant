@@ -3,8 +3,10 @@
 title: 'DEPENDENCY VERSIONS: instance deps float on a git branch, and nothing declares a version — SUSHI/FHIR vs semver options'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-20T20:03:30Z
-updated_at: 2026-09-20T20:03:30Z
+updated_at: 2026-09-20T20:14:22Z
+parent: folio-assistant-vke6
 ---
 
 

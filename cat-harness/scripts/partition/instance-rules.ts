@@ -722,6 +722,7 @@ export const RULES: Rule[] = [
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
+      "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
