@@ -101,6 +101,12 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A repository carrying a harness declaration — it names itself, its published stub, and the directories it holds.",
     seeAlso: "/agentic-harness.html",
   },
+  Folio: {
+    layer: "harness",
+    gloss:
+      "A repository that authors folio content — it declares a content type, and `folio_init` wrote its config. Distinct from an Instance: this repository's `cat-harness/` is an Instance and is not a Folio.",
+    seeAlso: "/getting-started.html",
+  },
   SushiProject: {
     layer: "harness",
     gloss:
