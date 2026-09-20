@@ -68,7 +68,7 @@ function contributionsOf(rel: string): DeclaredContribution[] {
 // sees the structure rather than a list of historical ids.
 const CAT = contributionsOf("cat-harness");
 const CORE = contributionsOf("folio-assist-core");
-const BOOT = contributionsOf("bootstrap");
+const BOOT = contributionsOf("cat-bootstrap");
 const ALL = [...CAT, ...CORE, ...BOOT];
 
 function built(declared: DeclaredContribution[]): LandingSticky[] {
@@ -82,17 +82,17 @@ function sticky(declared: DeclaredContribution[], id: string): LandingSticky {
 }
 
 describe("a sticky is a CONTRIBUTION from a layer, not an entry in one list", () => {
-  test("cat-harness contributes its own, and bootstrap contributes its own", () => {
+  test("cat-harness contributes its own, and cat-bootstrap contributes its own", () => {
     // The property the whole change exists for. Neither list is empty, and
     // neither layer appears in the other's declaration.
     expect(CAT.length).toBeGreaterThan(0);
     expect(BOOT.length).toBeGreaterThan(0);
     expect(CAT.every((c) => c.declaredBy === "folio-assistant")).toBe(true);
-    expect(BOOT.every((c) => c.declaredBy === "bootstrap")).toBe(true);
+    expect(BOOT.every((c) => c.declaredBy === "cat-bootstrap")).toBe(true);
   });
 
   test("the built sticky records which layer contributed it", () => {
-    expect(sticky(BOOT, "bootstrap").contributedBy).toBe("bootstrap");
+    expect(sticky(BOOT, "cat-bootstrap").contributedBy).toBe("cat-bootstrap");
     expect(sticky(CAT, "cat-harness").contributedBy).toBe("folio-assistant");
   });
 
@@ -102,17 +102,17 @@ describe("a sticky is a CONTRIBUTION from a layer, not an entry in one list", ()
   });
 });
 
-describe("bootstrap has its OWN cat, not cat-harness's", () => {
+describe("cat-bootstrap has its OWN cat, not cat-harness's", () => {
   // SUPERSEDED, and the supersession is the point. This block asserted that
-  // every theme bootstrap declared resolved to NO backdrop at all — which was
-  // how the ruling *"i want the grumpy cat moved out of bootstrap and into cat
-  // harness"* was satisfied while bootstrap had no art of its own: by having no
+  // every theme cat-bootstrap declared resolved to NO backdrop at all — which was
+  // how the ruling *"i want the grumpy cat moved out of cat-bootstrap and into cat
+  // harness"* was satisfied while cat-bootstrap had no art of its own: by having no
   // cat.
   //
-  // The owner supplied bootstrap art on 2026-09-20, so the ruling is now
+  // The owner supplied cat-bootstrap art on 2026-09-20, so the ruling is now
   // satisfied the better way. What must hold is not "no cat" but "not
   // cat-harness's cat", and that is what these check.
-  test("bootstrap declares a theme, and it is not the one cat-harness uses", () => {
+  test("cat-bootstrap declares a theme, and it is not the one cat-harness uses", () => {
     expect(BOOT.length).toBeGreaterThan(0);
     const catThemes = new Set(CAT.map((c) => c.contribution.theme));
     for (const b of BOOT) {
@@ -128,8 +128,8 @@ describe("bootstrap has its OWN cat, not cat-harness's", () => {
       const resolved = resolveThemeBackdrop(theme!, images);
       expect(resolved.none).toBe(false);
       expect(resolved.art.size).toBe(3);
-      // The role is bootstrap's, so a reader can tell whose cat it is.
-      for (const [, img] of resolved.art) expect(img.src).toContain("bootstrap");
+      // The role is cat-bootstrap's, so a reader can tell whose cat it is.
+      for (const [, img] of resolved.art) expect(img.src).toContain("cat-bootstrap");
     }
   });
 
@@ -157,13 +157,13 @@ describe("bootstrap has its OWN cat, not cat-harness's", () => {
 });
 
 describe("order is DECLARED, not inherited from dependency resolution", () => {
-  test("the description comes first and bootstrap's card comes last", () => {
+  test("the description comes first and cat-bootstrap's card comes last", () => {
     // The cost the work-plan item named before any of this was written: a
     // composed set with no declared order renders deepest-dependency-first,
-    // which would put bootstrap above the instance's own description.
+    // which would put cat-bootstrap above the instance's own description.
     const ids = built([...BOOT, ...CORE, ...CAT]).map((s) => s.id);
     expect(ids[0]).toBe("cat-harness");
-    expect(ids.at(-1)).toBe("bootstrap");
+    expect(ids.at(-1)).toBe("cat-bootstrap");
   });
 
   test("the order survives the layers being read in the other sequence", () => {
@@ -186,7 +186,7 @@ describe("order is DECLARED, not inherited from dependency resolution", () => {
     ]);
   });
 
-  test("bootstrap declares the trailing order, and it is the shared constant", () => {
+  test("cat-bootstrap declares the trailing order, and it is the shared constant", () => {
     expect(BOOT.map((b) => b.contribution.order)).toEqual([STICKY_ORDER_TRAILING]);
     expect(CAT[0]!.contribution.order).toBe(STICKY_ORDER_LEADING);
   });
@@ -267,15 +267,15 @@ describe("`body` and `bodyFrom` are exclusive — both is a contradiction, neith
 });
 
 describe("`bodyFrom: description` reads the DECLARING layer's description", () => {
-  test("bootstrap's card carries bootstrap's sentence, not this instance's", () => {
+  test("cat-bootstrap's card carries cat-bootstrap's sentence, not this instance's", () => {
     // The defect that would make the seam pointless: a board of one sentence
     // repeated.
-    const boot = sticky(BOOT, "bootstrap");
+    const boot = sticky(BOOT, "cat-bootstrap");
     // `startsWith` rather than equality: a card may APPEND to its description
     // (`bodyAppend`), which is how the scope line is added without copying the
     // sentence above it. What must hold is that the description is read from
     // the DECLARING instance and comes first, verbatim.
-    expect(boot.comment.startsWith(decl("bootstrap").description!)).toBe(true);
+    expect(boot.comment.startsWith(decl("cat-bootstrap").description!)).toBe(true);
     expect(boot.comment.startsWith(decl("cat-harness").description!)).toBe(false);
   });
 
@@ -594,7 +594,7 @@ describe("the cat's introduction keeps the owner's own words", () => {
     expect([...themes]).toEqual(["grumpy-cat"]);
   });
 
-  test("bootstrap does NOT share it, which is what makes the theme the harness's own", () => {
+  test("cat-bootstrap does NOT share it, which is what makes the theme the harness's own", () => {
     const boot = new Set(BOOT.map((c) => c.contribution.theme));
     for (const t of boot) expect(t).not.toBe("grumpy-cat");
   });
@@ -616,20 +616,20 @@ describe("the cat's introduction keeps the owner's own words", () => {
   });
 });
 
-describe("bootstrap's card links to its source and does NOT invent a site", () => {
+describe("cat-bootstrap's card links to its source and does NOT invent a site", () => {
   test("it offers a source link", () => {
-    const links = sticky(BOOT, "bootstrap").links;
+    const links = sticky(BOOT, "cat-bootstrap").links;
     expect(links.length).toBeGreaterThan(0);
-    expect(links.some((l) => isExternalLink(l) && l.href.includes("/bootstrap"))).toBe(true);
+    expect(links.some((l) => isExternalLink(l) && l.href.includes("/cat-bootstrap"))).toBe(true);
   });
 
-  test("it offers no link to a bootstrap site, because there is none", () => {
+  test("it offers no link to a cat-bootstrap site, because there is none", () => {
     // The owner asked for "link back to the source code + ghpaghes for boot
-    // strrap". Bootstrap has no site — this instance's canonicalUrl is
+    // strrap". CatBootstrap has no site — this instance's canonicalUrl is
     // cat-harness's — and a declared link to a page that does not exist is a
     // 404 on the landing page.
     const site = decl("cat-harness").canonicalUrl!;
-    for (const l of sticky(BOOT, "bootstrap").links) expect(l.href.startsWith(site)).toBe(false);
+    for (const l of sticky(BOOT, "cat-bootstrap").links) expect(l.href.startsWith(site)).toBe(false);
   });
 });
 
@@ -650,9 +650,9 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // shows edit src icon (and also need view icon)". `/blob/` reads and
     // `/edit/` opens the editor; a reader checking what a card says should not
     // land in a text box.
-    expect(sourceLinks(REPO, "bootstrap/harness.json", "main")).toEqual({
-      viewHref: `${REPO}/blob/main/bootstrap/harness.json`,
-      editHref: `${REPO}/edit/main/bootstrap/harness.json`,
+    expect(sourceLinks(REPO, "cat-bootstrap/harness.json", "main")).toEqual({
+      viewHref: `${REPO}/blob/main/cat-bootstrap/harness.json`,
+      editHref: `${REPO}/edit/main/cat-bootstrap/harness.json`,
     });
   });
 
@@ -661,7 +661,7 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // worse than no link: it invites a click, and on a private repository it
     // 404s for exactly the reader who cannot edit — which reads as "this page
     // is broken" rather than "you cannot do this".
-    expect(sourceLinks(undefined, "bootstrap/harness.json", "main")).toBeUndefined();
+    expect(sourceLinks(undefined, "cat-bootstrap/harness.json", "main")).toBeUndefined();
   });
 
   test("the path is the CONTRIBUTING instance's, not a default", () => {

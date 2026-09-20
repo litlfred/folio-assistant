@@ -114,7 +114,7 @@ Queued per the owner's standing instruction to queue rather than pivot.
 That makes the slot a **consequence of instantiating**, not a thing an instance
 may opt into. Measured against that (`b5f0` §6): the contribution seam already
 exists and already inverts ownership the right way
-(`schemas/sticky-contribution.ts`), and `bootstrap/harness.json` declares its
+(`schemas/sticky-contribution.ts`), and `cat-bootstrap/harness.json` declares its
 own card — but the **root** instance declares no `stickies` at all, and
 `grep -rln "navbar" cat-harness/schemas cat-harness/src` returns nothing.
 

@@ -521,63 +521,46 @@ jobs:
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 
-      # ── ONE commit: stage the preview, REMOVE what it no longer
-      #    produces, and log it. Beans `85im` and `bm6d`. ────────
+      # The queue above covers staging-vs-staging. It does NOT cover the five
+      # OTHER workflows that push to `gh-pages` — blueprint, discoverability-docs,
+      # docs-site, lean_ci and publish — because a concurrency group only
+      # serialises the jobs that name it, and none of them do. So the push is
+      # also retried once: the action re-fetches `gh-pages` on the second run,
+      # which is exactly what the rejection asked for.
       #
-      # This replaced three `peaceiris/actions-gh-pages` attempts plus a
-      # separate render-log commit, and it closes two defects that turned out
-      # to be one defect seen from both ends.
+      # `continue-on-error` on the first attempt only. If the retry fails too,
+      # it fails the job — a lost staging deploy must stay visible.
+      # ── Deploy and log, in ONE commit ────────────────────────
       #
-      # `85im` — the action offers NO PATH-SCOPED CLEAR. `keep_files: true`
-      # was required so a deploy would not wipe every sibling branch's preview
-      # (bean `plj1`, which really happened, for months), and the same flag
-      # that protects a sibling's directory also protects THIS branch's dead
-      # files. A preview was therefore structurally incapable of showing a
-      # REMOVAL — it could only ever answer "did my change take effect?" for
-      # additions. `rm -rf` on one slug is precisely what the action cannot
-      # express: `keep_files`, `force_orphan` and `exclude_assets` are all
-      # branch-wide, which `docs-site.yml` already records from the other end.
+      # Bean `bm6d`. This used to be a `peaceiris` deploy (plus two retries)
+      # followed by a separate render-log commit, and the two pushes landed
+      # about ten seconds apart. **GitHub Pages starts a build on the first
+      # and the second cancels it**, so the first was always wasted: measured
+      # 2026-09-20, 6 of the last 10 `pages build and deployment` runs were
+      # `cancelled`, in an exact pattern rather than a random one. A cancelled
+      # deployment is red nowhere — `check:ci-health` reads the DEFAULT
+      # branch, and these are bot-triggered runs on `gh-pages` — which is the
+      # `xom7` shape: a thing failing repeatedly with nothing saying so.
       #
-      # `bm6d` — the log could not ride in `_site`, because the action wrote
-      # into `destination_dir` and the entry would have landed inside the very
-      # directory a cleanup removes. So it took a second commit ten seconds
-      # after the first, and Pages cancelled its own build on every deploy —
-      # 6 of the last 10 measured. Here the log is written into the CHECKOUT,
-      # at the branch root, and rides the same commit.
+      # The split had a real reason, recorded here so it is not reintroduced:
+      # the log CANNOT ride in `_site`, because the old deploy wrote into
+      # `destination_dir`, which would put the entry at
+      # `STAGING/<slug>/_render-log/` — inside the very directory a cleanup
+      # removes, the one place a record of the removal must not be.
       #
-      # WHY NOT STAGE BOTH AND KEEP THE ACTION: it copies `publish_dir` over a
-      # fresh clone, so a `_render-log/<date>.jsonl` read at checkout time and
-      # written at deploy time OVERWRITES whatever landed in between.
-      # `render-log.ts` appends and never read-modify-writes, for exactly that
-      # reason. Trading a wasted build for a lost record of a deleted preview
-      # is the `plj1` failure a second time.
+      # Checking the branch out and committing by hand removes that
+      # constraint: the payload goes to `STAGING/<slug>/` and the entry to
+      # `_render-log/` at the root, in one `git add` and one commit. The
+      # cleanup job below already does exactly this — "The record rides in the
+      # SAME commit as the removal" — so this is the proven pattern in this
+      # file rather than a new one.
       #
-      # THE LOOP REBUILDS RATHER THAN REBASES. Each attempt resets to the
-      # current remote and redoes both the copy and the append, so the entry
-      # is appended to the file as it stands NOW. A rebase would replay a
-      # stale append and can conflict; this cannot. Backoff doubles with
-      # jitter — the owner's rule, 2026-09-20, and
-      # `cat-harness/skills/folio-core/retry-backoff.md`: several sessions
-      # write this ref and lockstep retries are a herd.
-      #
-      # ONE BEHAVIOUR CHANGED, AND IT IS WORTH NAMING. The log step used to be
-      # `continue-on-error`, because a preview whose entry did not land was a
-      # gap in the record rather than a failed deploy. They are one commit
-      # now, so that state cannot occur — the entry can no longer be missing
-      # while the preview is present. The cost is that a fault in the logging
-      # fails the deploy, and that is the right way round: `plj1` is what an
-      # unlogged change to this branch costs.
-
-      # ── The render log ───────────────────────────────────────
-      # *What happened to `STAGING/<slug>`, and why?* Nothing could answer
-      # that: a preview appears, a bot comments the URL below, and some time
-      # later the link 404s — cleaned up, dispatched away, or deleted by an
-      # unrelated merge to `main` (bean `plj1`, which really happened, on
-      # every deploy, for months). The publish branch now keeps its own
-      # record. Discipline: `cat-harness/skills/folio-core/render-logging.md`.
-      #
-      # It rides at the BRANCH ROOT, never inside `STAGING/<slug>/` — a record
-      # of a removal must not live in the directory the removal takes with it.
+      # It also removes the reason the third attempt was bought. The note that
+      # bought it counted the render log adding a SECOND push per run, "a ~38%
+      # rise in write volume, after which attempt 2 started losing the race".
+      # Halving this workflow's writes attacks that cause rather than
+      # absorbing it. The three-attempt rebase loop is kept regardless: the
+      # contention BETWEEN sessions is untouched, and is `6pfo`'s ground.
       - name: Check out the publish branch
         uses: actions/checkout@v4
         with:
@@ -585,73 +568,70 @@ jobs:
           path: pages
           persist-credentials: true
 
-      - name: Stage the preview and log it, in ONE commit
+      - name: Deploy the preview and log the render, in one commit
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -eu
-          SLUG="$STAGING_SLUG"
-          # The same guard `cleanup` carries, and for the same reason: this is
-          # the step that runs `rm -rf` on the result. An empty slug, `.` or
-          # `..` names no preview and would scope the removal to the branch.
-          case "$SLUG" in
-            ""|.|..)
-              echo "::error::staging slug resolved to '$SLUG', which names no preview. Refusing."
-              exit 1
-              ;;
-          esac
+          mkdir -p "pages/STAGING/$STAGING_SLUG"
+          # `keep_files: true`, preserved exactly. A plain copy adds and
+          # overwrites and never deletes, which is what the flag did: every
+          # OTHER branch's preview survives (the `plj1` protection), and so do
+          # this slug's own files that the build no longer produces. That
+          # second half is a defect — bean `85im` holds it — and fixing it
+          # here would widen a change about push COUNT into one about preview
+          # CONTENT.
+          cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
+          # Writes into the directory and never pushes: this step already
+          # holds the checkout and the retry loop, and a second pusher racing
+          # those is a new way to lose a deploy.
+          # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+          # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+          # safe, because shell parameter expansion inside double quotes does
+          # not re-tokenize. The reason is the Tool contract — prose may not be
+          # an argv word — and `jq --arg` builds the JSON without concatenation.
+          #
+          # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+          # a gate from a line starting with `bun`, so piping `jq | bun run`
+          # would hide this step from the gate set and orphan its exemption.
+          PROSE=$(jq -n --arg s 'staging preview published' '{summary:$s}')
+          bun run cat-harness/scripts/render-log.ts --dir pages \
+            --event rendered --kind staging-preview \
+            --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
+            --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          for attempt in 1 2 3 4 5; do
-            # REBUILD, do not rebase. Each attempt resets to the current remote
-            # and redoes both the copy and the append, so the entry lands in
-            # the log as it stands NOW. A rebase would replay a stale append.
-            git -C pages fetch --depth=1 origin gh-pages
-            git -C pages reset --hard FETCH_HEAD
-            git -C pages clean -fd
-            # The path-scoped clear the action cannot express (bean `85im`):
-            # `keep_files`, `force_orphan` and `exclude_assets` are all
-            # branch-wide, so a preview could never show a REMOVAL.
-            rm -rf "pages/STAGING/$SLUG"
-            mkdir -p "pages/STAGING/$SLUG"
-            cp -rT ./_site "pages/STAGING/$SLUG"
-            # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
-            # `ru6i`: prose may not be an argv word, and `jq --arg` builds the
-            # JSON without concatenation.
-            #
-            # `bun run` stays the LEADING token deliberately: `gatesFrom`
-            # extracts a gate from a line starting with `bun`, so piping
-            # `jq | bun run` would hide this step from the gate set and orphan
-            # its exemption.
-            PROSE=$(jq -n --arg s 'staging preview published' '{summary:$s}')
-            bun run cat-harness/scripts/render-log.ts --dir pages \
-              --event rendered --kind staging-preview \
-              --path "STAGING/$SLUG" --slug "$SLUG" \
-              --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
-            git -C pages add -A "STAGING/$SLUG" _render-log
-            if git -C pages diff --cached --quiet; then
-              echo "nothing to publish for $SLUG"
-              exit 0
-            fi
-            git -C pages commit -m "staging($SLUG): from $GITHUB_SHA"
+          git -C pages add -A "STAGING/$STAGING_SLUG" _render-log
+          git -C pages commit \
+            -m "staging($STAGING_SLUG): from $GITHUB_SHA" \
+            -m "render-log: rendered STAGING/$STAGING_SLUG" \
+            -m "$RUN_URL" || exit 0
+          # THE LOG IS NOW ATOMIC WITH THE DEPLOY, and that is a deliberate
+          # change of failure mode. The old log step was `continue-on-error`
+          # on the argument that a gap in the record is not a failed deploy.
+          # One commit cannot offer that: there is no deploy to succeed
+          # without it. The stronger property is worth more — a preview can no
+          # longer exist with no entry saying where it came from, which is the
+          # question the log was added (`5mg5`) to answer at all.
+          #
+          # Three attempts, rebasing between: `gh-pages` is the most contended
+          # ref here and a queue does not help, because a PENDING job is
+          # cancelled by the next arrival rather than waiting. A rebase picks
+          # up whoever won and lands this branch's directory beside it.
+          for attempt in 1 2 3; do
             if git -C pages push origin gh-pages; then
-              echo "published on attempt $attempt"
+              echo "pushed on attempt $attempt"
               exit 0
             fi
-            if [ "$attempt" = 5 ]; then
-              echo "::error::could not publish STAGING/$SLUG after 5 attempts"
+            if [ "$attempt" = 3 ]; then
+              echo "::error::could not deploy the staging preview after 3 attempts"
               exit 1
             fi
-            # Backoff DOUBLES with jitter — the owner's rule, 2026-09-20, and
-            # `cat-harness/skills/folio-core/retry-backoff.md`. Five other
-            # workflows push this ref; lockstep retries are a herd, so the
-            # jitter is the part that matters, not the doubling.
-            delay=$(( 2 ** attempt ))
-            [ "$delay" -gt 16 ] && delay=16
-            echo "push rejected; rebuilding onto origin/gh-pages in ~${delay}s"
-            sleep $(( delay * ((RANDOM % 1000) + 500) / 1000 ))
+            echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            git -C pages pull --rebase origin gh-pages
+            sleep $((attempt * 5))
           done
 
       - name: Comment staging URL on PR

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-3025
 title: 'folio-paper-adapter: 44 of 47 skills have no role — the package is unmodelled, not untriaged'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T14:49:49Z
-updated_at: 2026-09-20T14:49:49Z
+updated_at: 2026-09-20T16:18:25Z
 parent: folio-assistant-8jt6
 ---
 
@@ -71,3 +72,50 @@ not the model.
 
 `folio-core`'s 43, which ARE a genuine triage: 64 of its 107 are bound, so
 roles exist and these sit outside them. That stays on `y1w9`.
+
+---
+
+## Clustered 2026-09-20 — 44 skills are SEVEN decisions
+
+Same treatment as `y1w9`'s folio-core 41: the bean said this needs a
+modelling decision, so the useful preparation is to make that decision cheap
+rather than to guess at it.
+
+Every one of the 44 clusters, nothing left over:
+
+| cluster | n | obvious home? |
+|---|---:|---|
+| **Lean formalization** — `formalizer`, `chapter-analysis`, `lean-generation`, `lean-substantive-pass`, `lean-build-fix`, `lean-cache-restore`, `lean-environment-setup`, `lean-mathlibext-curator`, `lean-formal-graph`, `proof-triage`, `category-theory`, `groebner-basis` | 12 | **no existing role** |
+| **Proof review & audit** — `lean-proof-review`, `lean-proof-vacuity-audit`, `proof-gap-audit`, `proof-conciseness`, `proof-editor`, `proof-exposition-review`, `proof-simplifier`, `proof-narrative-lean-equivalence`, `lean-completeness-audit`, `remark-audit`, `definition-clarity-audit`, `proposition-consolidation-audit`, `critical-path-analysis` | 13 | **no existing role** |
+| **Compute, witnesses & simulators** — `compute-audit`, `compute-author`, `ffi-roundtrip-audit`, `lean-witness-audit`, `witnessed-values`, `verify-local-substrate`, `simulator`, `simulator-math-audit` | 8 | **no existing role** |
+| **Build & toolchain** — `build-docs`, `build-pdf`, `latex-build-cache`, `latex-validation` | 4 | **`build-pipeline`**, which already carries 14 |
+| **Content QA** — `content-block-review`, `content-validation`, `rendering-auditor` | 3 | `reviewer` (9) or `content-reviewer` |
+| **Integration watchers** — `proof-integration-watcher`, `q-usage-watcher` | 2 | same question as `y1w9`'s nine watchers |
+| **Ingestion & status** — `paper-importer`, `proof-status-tracking` | 2 | `ingestion-agent` exists (2) |
+
+### What this changes about the bean's framing
+
+It said the package is **unmodelled**, and that stands — three of the seven
+clusters, covering **33 of the 44**, have no existing role that plausibly
+performs them. This repository has no formalizer lane, no proof-reviewer
+lane and no compute lane, while the work plainly happens.
+
+But four clusters (11 skills) have homes already, so the decision is not
+uniformly hard. `build-pipeline` taking the four build skills is close to
+uncontroversial.
+
+### The caution still holds, and clustering makes it concrete
+
+Do **not** create one paper role for 44. The three unhomed clusters are
+three different performers: somebody who *writes* Lean, somebody who
+*reviews* proofs, and somebody who *runs and audits computations*. Merging
+them asserts one actor does all three, which is a lane no diagram would
+draw — and `authoring-agent` at 34 is what that looks like when it happens
+by accident rather than by decision.
+
+### Done when
+
+- [ ] the seven clusters are bound — three of them to roles that must first
+      be written, with a `persona` saying what that performer already knows
+- [ ] the watcher cluster is answered **consistently with `y1w9`'s nine**;
+      eleven watchers across two packages is one question, not two

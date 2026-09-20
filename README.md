@@ -34,7 +34,7 @@ not, do not.
 
 ## Bootstrapping — setting up a repository to write in
 
-**`bootstrap litlfred/cat-harness`** means *set this repository up the same way
+**`cat-bootstrap litlfred/cat-harness`** means *set this repository up the same way
 that one is set up.*
 
 A repository that has been bootstrapped carries a small file saying what kind
@@ -47,11 +47,11 @@ which editorial style are all read from **that** repository's setup file, so
 there is nothing else to ask.
 
 An agent pointed at a repository that is not set up yet starts at
-**[`bootstrap/README.md`](bootstrap/README.md)**, which is written for someone
+**[`cat-bootstrap/README.md`](cat-bootstrap/README.md)**, which is written for someone
 who knows none of the above.
 
 Why it is built this way, and the questions still open:
-[proposals/bootstrap](fsh-guts/proposals/bootstrap.md) — in `fsh-guts/`, which
+[proposals/cat-bootstrap](fsh-guts/proposals/cat-bootstrap.md) — in `fsh-guts/`, which
 is kept and addressable but deliberately not published as a page, so that is a
 repository link rather than a site one.
 

@@ -52,6 +52,71 @@ function schemasRoot(root: string): string {
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
+/** The repository, one level above the instance. `invoke.shell` runs from here. */
+const REPO = join(ROOT, "..");
+
+/**
+ * Does every path a Tool node declares actually exist?
+ *
+ * ## The defect this exists for
+ *
+ * **Nine of the forty-four checkable `invoke.shell` values named a command that
+ * does not run.** Every one was missing the `cat-harness/` prefix — stale since
+ * the instance moved under that directory — and `bun run scripts/ingest-document.ts`
+ * failed with `Module not found`. Two Tool nodes, `ingest-stdlib` and
+ * `ingest-extended`, had been unreachable through their own declared invocation
+ * for as long as the inversion has been in.
+ *
+ * Nothing caught it, and `code-node-review` says why it expected not to: *"what
+ * no audit can tell you: whether the mechanism a Tool describes is the one that
+ * runs"*. That is true of WHAT the command does. It is **not** true of whether
+ * the command exists, which is a path and a filesystem — so the honest split is
+ * to check the part that is mechanical and leave the rest to a reviewer.
+ *
+ * ## Two roots, because the two fields mean different things
+ *
+ * | field | resolved against | why |
+ * |---|---|---|
+ * | `invoke.shell` | the **repository** | it is a command a caller types, and `package.json` and `.github/` are at the repo root |
+ * | `invoke.*.module` | the **instance** | it is loaded by this instance's own server, and matches `maintains.source` |
+ *
+ * Getting that backwards would have "fixed" twenty correct paths. The `module`
+ * field's own docstring said *"Repo-relative"* while giving `src/tools/workflow.ts`
+ * as its example — which is instance-relative and is where the file actually is —
+ * so the word was stale and the values were right.
+ *
+ * A bare command (`beans`, `jq`) is a RUNTIME DEPENDENCY rather than a path, and
+ * is reported as not-checkable rather than as passing: `requires.runtime` is where
+ * that claim lives, and this check has no business ruling on it.
+ */
+export function unresolvedPaths(): { field: string; tool: string; value: string; expected: string }[] {
+  const out: { field: string; tool: string; value: string; expected: string }[] = [];
+  for (const t of tools()) {
+    const inv = t.invoke as Record<string, unknown> | undefined;
+    if (!inv) continue;
+
+    const shell = typeof inv.shell === "string" ? inv.shell : undefined;
+    if (shell !== undefined) {
+      // `bun run X` where X is a path, or a bare path to a script or workflow.
+      const m = /^(?:bun|bunx) run ([^\s]+)/.exec(shell);
+      const target = m?.[1] ?? (/^[.\w][\w./-]*\.(?:ts|sh|ya?ml)$/.test(shell) ? shell : undefined);
+      // A `package.json` script name, not a path — `check:tools` and friends.
+      if (target !== undefined && /\.(?:ts|sh|ya?ml)$/.test(target) && !existsSync(join(REPO, target))) {
+        out.push({ field: "invoke.shell", tool: t.id, value: shell, expected: `${target} under the repository root` });
+      }
+    }
+
+    for (const arm of ["inProcess", "container", "mcp"]) {
+      const a = inv[arm] as { module?: unknown } | undefined;
+      const mod = a && typeof a.module === "string" ? a.module : undefined;
+      if (mod !== undefined && !existsSync(join(ROOT, mod))) {
+        out.push({ field: `invoke.${arm}.module`, tool: t.id, value: mod, expected: `${mod} under the instance root` });
+      }
+    }
+  }
+  return out.sort((x, y) => x.tool.localeCompare(y.tool));
+}
+
 /**
  * Skill names, from the ONE definition of where a skill lives.
  *
@@ -70,7 +135,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  *    {@link isSkillMd} excludes them by their `$schema:` line; a directory
  *    scan cannot. So `satisfies: ["the-complement"]` would have RESOLVED —
  *    a Tool claiming to implement a memory entry, checked and passed.
- *  - **2 real skills missed.** `bootstrap/skills/` holds its skills DIRECTLY
+ *  - **2 real skills missed.** `cat-bootstrap/skills/` holds its skills DIRECTLY
  *    rather than in packages, and a scan of one root's subdirectories never
  *    looks at the root itself. `confirm-harness` and `log-message` read as
  *    dangling — which is how this was found: a Tool naming a skill that is
@@ -304,9 +369,20 @@ if (import.meta.main) {
     console.error(`\n✗ ${r.unreadableContracts.length} skill contract(s) present but unreadable:`);
     for (const s of r.unreadableContracts) console.error(`    schemas/skills/${s}/input.schema.json`);
   }
+  const unresolved = unresolvedPaths();
+  if (unresolved.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${unresolved.length} declared path(s) that do not exist:`);
+    for (const u of unresolved) console.error(`    ${u.tool}.${u.field} = ${u.value}\n      expected ${u.expected}`);
+    console.error(
+      "\n    A node naming a command that does not run is unreachable through its own\n" +
+        "    declaration, which is the one thing a Tool node is for.",
+    );
+  }
   if (bad) process.exit(1);
   console.log(
     "\n✓ every satisfies resolves and agrees with its skill's contract; " +
-      "every io type is declared; every argv input is injection-safe",
+      "every io type is declared; every argv input is injection-safe; " +
+      "every declared path exists",
   );
 }

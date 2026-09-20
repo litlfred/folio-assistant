@@ -134,14 +134,20 @@ describe("GUARD 3 — the workflow checks the VALUE, in every job that builds a 
     // dispatch input, which is the case where guard 1 (git's ref rules) does
     // not hold at all.
     //
-    // Asserted PER JOB, not as a count of occurrences. It was a count of
-    // occurrences until 2026-09-20 (`expect(guards.length).toBe(3)`), and
-    // beans `85im` + `bm6d` broke it by ADDING a guard: `stage` grew a second
-    // one in the step that now runs `rm -rf`, so the file carried four and the
-    // test read that as a defect. The exactness was there to catch a guard
-    // being REMOVED, and a job-shaped assertion still catches that while
-    // letting a job carry the guard more than once — which is the safe
-    // direction. A count is a proxy for the property; this is the property.
+    // Asserted PER JOB, not as a count of occurrences
+    // (`expect(guards.length).toBe(3)`, until 2026-09-20). Both forms pass
+    // today, so this is not a bug fix; it is the weaker claim replaced by the
+    // one the test's own NAME makes. A count cannot tell whether the guard
+    // sits in the job that builds a path from the slug or in some other job
+    // entirely, and three jobs now do — `stage` joined them once the deploy
+    // moved off `peaceiris` and gained an `rm -rf` of its own slug.
+    //
+    // The exactness was there to catch a guard being REMOVED. A job-shaped
+    // assertion still catches that, and additionally lets a job carry the
+    // guard more than once — which is the safe direction, and the direction
+    // the file is moving in: a second, differently spelled guard inside the
+    // deploy step re-checks the slug BY VALUE after it crosses a job boundary
+    // as an output. A count would have read that hardening as a defect.
     const jobs = (
       Bun.YAML.parse(yml) as { jobs?: Record<string, { steps?: { run?: string }[] }> }
     ).jobs ?? {};
