@@ -5,6 +5,8 @@ description: >-
   Read before writing any call that can fail transiently, and before deciding
   that a failure is worth retrying at all. Exhausting the retries does not
   change the verdict.
+# consulted: reference material nobody performs — a PRINCIPLE, not a procedure: every heading is an argument ("Retrying a definitive answer is not caution", "Jitter is not decoration here"), and it names no actor and no trigger. It is read when writing retry code, never performed as a step.
+consulted: true
 ---
 
 # A falling-off retry rate, on every error
