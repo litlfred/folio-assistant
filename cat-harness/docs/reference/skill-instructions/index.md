@@ -73,7 +73,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
 | [Covered is not reachable](covered-is-not-reachable.html) | `covered-is-not-reachable` | — | **A skill can be satisfied by the *neighbours* of its mechanism while the |
-| [Create a sticky note](create-sticky-note.html) | `create-sticky-note` | — | A sticky note is a **carried note**: something a person or agent sticks onto the |
 | [Data modelling](data-modelling.html) | `data-modelling` | — | **One question, and everything else follows from it:** |
 | [A decision is not a finding, and neither is a substitute for the other](decision-audit.html) | `decision-audit` | — | A **finding** is an observation — a checker, an agent or a person saw something. |
 | [The comparison goes BEFORE the question, not inside the options](decision-comparison.html) | `decision-comparison` | — | [`interaction-modality`](interaction-modality.md) §4.1 fixes the *order* — |
@@ -136,14 +135,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
-| [Site presentation assets](site-presentation-assets.html) | `site-presentation-assets` | — | **A visual fact has one home, and it is a node in the knowledge graph.** A |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Capability: `review` · Package: `folio-core` |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
-| [Theme art intake](theme-art-intake.html) | `theme-art-intake` | — | Art arrives — three crops for a theme or an avatar — and the answer is either |
 | [Post-MVP, because there is nothing to check before there is a render](theme-ui-review.html) | `theme-ui-review` | — | The owner, 2026-09-20: theme choice is *"authoring (human/agentic) |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
@@ -239,6 +236,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [scientific-critical-thinking](scientific-critical-thinking.html) | `scientific-critical-thinking` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
 | [scientific-visualization](scientific-visualization.html) | `scientific-visualization` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
 | [smart-launch](smart-launch.html) | `smart-launch` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
+
+## Theming (theming)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Create a sticky note](create-sticky-note.html) | `create-sticky-note` | — | A sticky note is a **carried note**: something a person or agent sticks onto the |
+| [Site presentation assets](site-presentation-assets.html) | `site-presentation-assets` | — | **A visual fact has one home, and it is a node in the knowledge graph.** A |
+| [Theme art intake](theme-art-intake.html) | `theme-art-intake` | — | Art arrives — three crops for a theme or an avatar — and the answer is either |
 
 ## Workflow & process (workflow)
 
