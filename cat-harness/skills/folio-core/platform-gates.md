@@ -158,6 +158,34 @@ The cost is asymmetric and small. `gates --all` takes minutes on one machine;
 a red CI run costs a push cycle, the reviewer's trust, and an event that wakes
 somebody.
 
+### And the follow-up push failed too, for the adjacent reason
+
+The fix for the above ran `gates --all` and reported **60 of 60**. CI then
+failed again, on `kg:audit:check`:
+
+```
+1 sidecar(s) are stale. Run `bun run kg:audit` and commit:
+  · test/results/kg-qa/skills/folio-core/platform-gates.kg-qa.json
+```
+
+The gates run was launched, and *while it ran* this very file was edited to
+record the first lesson. So the run verified a tree that did not contain the
+change being pushed, and its "60 of 60" was quoted as though it did.
+
+> **A verification names a TREE, not a branch.** Anything edited after the run
+> started is unverified, however green the run was.
+
+This is the harder half to notice, because nothing looks wrong: the command
+really did pass, the output really does say 60 of 60, and the number is simply
+about a different tree than the one that got pushed. **Run the gates after the
+last edit, not alongside it** — and if you must edit while they run, the run is
+spent and needs doing again.
+
+Editing a SKILL is the case most likely to produce this, because a skill body
+has a committed QA sidecar that goes stale the moment the body changes. So a
+skill edit is always at least two files: the body, and `bun run kg:audit`'s
+regenerated output.
+
 ### The specific rule that was missed
 
 **`termIri("X")` MINTS a term, and a minted term needs a gloss.** Adding a new
