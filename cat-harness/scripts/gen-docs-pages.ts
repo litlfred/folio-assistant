@@ -32,7 +32,7 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
 import { workflowFiles } from "./known-skills.js";
-import { join, dirname } from "node:path";
+import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
@@ -44,6 +44,7 @@ import {
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
 import { readTodoFiles } from "./todos.js";
+import { beanDefsDir, blockedBy, hasExpiry, isOpen, readBeans, type BeanNode } from "./beans.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -189,6 +190,33 @@ const QA_ASSET_DIR = join(REPO_ROOT, "test", "results", "witnesses");
  * number.
  */
 const TODO_ASSET = join(OUT_DIR, "assets", "todos", "index.json");
+
+/**
+ * The bean board's data — the AGENT work plan, published the same way.
+ *
+ * Same argument as `TODO_ASSET` one file rather than N: the badge needs a
+ * COUNT before anybody opens anything. The difference is scale, and it is two
+ * orders of magnitude — 239 beans against 3 todos on 2026-09-20 — which is
+ * why the projection carries a TRIMMED body rather than the whole of one.
+ * Every bean here runs to hundreds of lines of prose; shipping all of it would
+ * put roughly a megabyte on the page to render a status column.
+ */
+const BEANS_ASSET = join(OUT_DIR, "assets", "beans", "index.json");
+
+/**
+ * How much of a bean's body the projection carries.
+ *
+ * Enough for a sticky's preview and no more. A reader who wants the argument
+ * follows `editHref` to the file, which is the same affordance every other
+ * node gets.
+ *
+ * **Measured at this length, 2026-09-20:** 239 beans project to 235 KB raw and
+ * **62 KB gzipped** — 0.26 KB per bean against the todo index's 1.5 KB per
+ * todo, so the per-item cost is already the lower of the two. The number is
+ * recorded because the next person to change this constant should be changing
+ * a measurement rather than a guess.
+ */
+const BEAN_BODY_PREVIEW = 400;
 const emittedQa = new Set<string>();
 
 /** Every published witness JSON currently on disk, for orphan detection. */
@@ -678,16 +706,24 @@ function todoRelations(tags: {
   return out;
 }
 
-/** The bean's file, or `undefined` when nothing on disk carries that id. */
+/**
+ * The bean's file, or `undefined` when nothing on disk carries that id.
+ *
+ * The directory is RESOLVED from `beans/beans.json` rather than composed. It
+ * was `join(repoRootFor(REPO_ROOT), "beans", "defs")` until 2026-09-20 — a
+ * second answer to a question the graph already answers, which would have gone
+ * on resolving to nothing the moment the store moved, and reported every bean
+ * reference as unlinkable while looking correct.
+ */
 function beanFile(id: string): string | undefined {
-  const dir = join(repoRootFor(REPO_ROOT), "beans", "defs");
-  if (!existsSync(dir)) return undefined;
+  const dir = beanDefsDir(repoRootFor(REPO_ROOT));
+  if (dir === null || !existsSync(dir)) return undefined;
   // Sorted for the same reason `processHierarchy` sorts: raw directory order
   // is filesystem state, and `find` over it makes the FIRST match a property of
   // where the file landed on disk. Two beans sharing a prefix would resolve to
   // different files on two machines.
   const hit = readdirSync(dir).sort().find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
-  return hit ? `beans/defs/${hit}` : undefined;
+  return hit ? relative(repoRootFor(REPO_ROOT), join(dir, hit)) : undefined;
 }
 
 /**
@@ -832,6 +868,151 @@ function processHierarchy(): Record<string, string[]> {
     "data",
   );
   console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
+}
+
+/**
+ * The stuck states a bean store can be in, computed from committed data only.
+ *
+ * ## Why these three and not the obvious fourth
+ *
+ * Bean `v49e` names the interesting states as *"the ones that look like
+ * nothing"* — a step enabled but not taken, a block with no expiry, an
+ * instance whose position has not moved. Two of those need
+ * `beans/workflows/`, the declared `workflow-state` graph, which was **empty**
+ * when this was written: a BPMN-position finding would have had no data on one
+ * side of its join and would have reported "nowhere" for all 239 beans. They
+ * are not here, and their absence is the honest answer rather than an
+ * oversight.
+ *
+ * The obvious fourth — **a stale `in-progress` bean** — is missing for a
+ * different and sharper reason, and it is about this file rather than about
+ * beans. `emit(..., "data")` gates the projection on EXACT CONTENT, so
+ * anything computed against the clock changes the file on every run and the
+ * staleness gate fires forever. So the projection publishes each bean's
+ * `updatedAt` and the CLIENT computes age at view time. That is the same rule
+ * the todo index's own sort comment states: an artefact reproducible only
+ * where it was generated is a snapshot, not a generated file. A build-time
+ * `Date.now()` would have made this one exactly that.
+ *
+ * ## Each finding's basis, measured 2026-09-20 over 239 beans
+ *
+ * | finding | fired on |
+ * |---|---|
+ * | `blocked-without-expiry` | 4 of the 4 beans holding a block |
+ * | `blocker-closed` | 1 — `04vl`, completed, still blocking an open bean |
+ * | `blocking-unknown` | 0 |
+ *
+ * `blocked-without-expiry` firing on **all** of its subjects is the one
+ * result worth arguing with, because this repository's own rule is that a
+ * check firing on every one of its subjects is a check that is wrong. It is
+ * kept, and the reason is that the rule is about a check with no discriminating
+ * power over a LARGE population: 4 subjects out of 239 is a finding about four
+ * specific beans, not a wall somebody switches off. If the count of blocks
+ * grows and this still fires on all of them, that is the point to reconsider.
+ *
+ * The other two fire on 1 and 0 respectively, which is the shape
+ * `check-bean-parents.ts` describes as locking in a property the corpus HAS
+ * rather than demanding work to reach one.
+ */
+function beanFindings(beans: BeanNode[]): Array<{
+  kind: "blocked-without-expiry" | "blocker-closed" | "blocking-unknown";
+  bean: string;
+  blocks: string;
+  detail: string;
+}> {
+  const byId = new Map(beans.map((b) => [b.id, b]));
+  const out: Array<{ kind: "blocked-without-expiry" | "blocker-closed" | "blocking-unknown"; bean: string; blocks: string; detail: string }> = [];
+  for (const b of beans) {
+    for (const target of b.blocking) {
+      const t = byId.get(target);
+      if (!t) {
+        out.push({
+          kind: "blocking-unknown",
+          bean: b.id,
+          blocks: target,
+          detail: `blocks \`${target}\`, which is not a bean in this store`,
+        });
+        continue;
+      }
+      // A CLOSED bean still holding a block on an OPEN one. The work finished
+      // and nobody lifted the block, so the blocked bean reads as waiting on
+      // something that already happened — indistinguishable, from the blocked
+      // end, from waiting on something that never will.
+      if (!isOpen(b) && isOpen(t)) {
+        out.push({
+          kind: "blocker-closed",
+          bean: b.id,
+          blocks: target,
+          detail: `is ${b.status} but still blocks \`${target}\`, which is ${t.status}`,
+        });
+      }
+      // `bean-blocking`: a real block carries what it waits on, since when, an
+      // EXPIRY and a handoff — because a block with no expiry cannot be told
+      // from abandoned work. Only live blocks are worth reporting; a closed
+      // blocker is already the finding above.
+      if (isOpen(b) && !hasExpiry(b)) {
+        out.push({
+          kind: "blocked-without-expiry",
+          bean: b.id,
+          blocks: target,
+          detail: `blocks \`${target}\` and states no expiry, so the block cannot be told from abandoned work`,
+        });
+      }
+    }
+  }
+  return out.sort((a, b) => a.kind.localeCompare(b.kind) || a.bean.localeCompare(b.bean) || a.blocks.localeCompare(b.blocks));
+}
+
+// The bean board's data. Sibling of the todo block above, and deliberately the
+// same shape: one indented JSON file, emitted through the same `--check`
+// contract, with `editHref` composed HERE for the same reason — the client
+// would otherwise need the repository's web address, and a literal in
+// `docs-ui.js` is one folio's own address inside shared client code.
+{
+  const beans = readBeans(repoRootFor(REPO_ROOT));
+  // `null` is "no bean store", which is NOT the same as a store with nothing
+  // in it, and rendering them alike is how a consumer reports a clean run over
+  // a repository it never looked at. A folio with no work plan simply gets no
+  // projection; the board reads the absent file as "no store" rather than as
+  // an empty one.
+  if (beans === null) {
+    console.log(`  · assets/beans/index.json — no bean store`);
+  } else {
+    const blockers = blockedBy(beans);
+    const items = beans.map((b) => ({
+      id: b.id,
+      title: b.title,
+      status: b.status,
+      type: b.type,
+      priority: b.priority,
+      parent: b.parent,
+      // Both directions, resolved once. A client given only `blocking` would
+      // have to invert the whole set to answer "what is holding THIS bean up",
+      // which is the question a board is actually asked.
+      blocking: b.blocking,
+      blockedBy: blockers.get(b.id) ?? [],
+      createdAt: b.createdAt,
+      // Published as a FACT, with no age computed from it. See `beanFindings`.
+      updatedAt: b.updatedAt,
+      preview: b.body.trim().slice(0, BEAN_BODY_PREVIEW),
+      editHref: `${EDIT_BASE}/${b.file}`,
+    }));
+    mkdirSync(dirname(BEANS_ASSET), { recursive: true });
+    // Indented for the merge reason the todo index documents at length: a
+    // minified projection is one line, git merges by line, and two branches
+    // each adding a bean would conflict on the whole file every time. At 239
+    // beans that argument is stronger here than it was there.
+    emit(
+      BEANS_ASSET,
+      JSON.stringify(
+        { $schema: "folio-bean-index/v1", items, findings: beanFindings(beans) },
+        null,
+        2,
+      ) + "\n",
+      "data",
+    );
+    console.log(`  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s))`);
+  }
 }
 
 // A subject that loses its sidecar — or a page that loses a node — must lose its
