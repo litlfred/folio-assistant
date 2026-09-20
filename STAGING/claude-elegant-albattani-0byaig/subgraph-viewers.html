@@ -659,6 +659,7 @@ in each. Two of those graphs now have a page you can open.</p>
   <li><a href="#why-these-pages-exist" id="markdown-toc-why-these-pages-exist">Why these pages exist</a></li>
   <li><a href="#the-schema-graph" id="markdown-toc-the-schema-graph">The schema graph</a>    <ol>
       <li><a href="#reading-it" id="markdown-toc-reading-it">Reading it</a></li>
+      <li><a href="#what-the-diagram-cannot-show" id="markdown-toc-what-the-diagram-cannot-show">What the diagram cannot show</a></li>
     </ol>
   </li>
   <li><a href="#the-library--the-l1-corpus" id="markdown-toc-the-library--the-l1-corpus">The library — the L1 corpus</a>    <ol>
@@ -742,6 +743,27 @@ constant.</li>
   <li><strong><code class="language-plaintext highlighter-rouge">external</code></strong> — bound to something outside this graph. Resolved correctly;
 nothing to do.</li>
 </ul>
+<h3 id="what-the-diagram-cannot-show">
+  
+  
+    <a href="#what-the-diagram-cannot-show" class="anchor-heading" aria-labelledby="what-the-diagram-cannot-show"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the diagram cannot show
+  
+  
+</h3>
+    
+
+<p>A reference carried as a <strong>string id</strong> is not drawn, and this is a structural
+limit rather than a gap: a field declared as a plain string holds no link to
+the schema it names, so nothing syntactic — and nothing in JSON Schema or the
+type checker either — can recover it.</p>
+
+<p>Measured against <code class="language-plaintext highlighter-rouge">schemas/assistant-schema.puml</code>, a hand-drawn UML diagram
+used as a control: <strong>14 of 15</strong> compositions reproduced, <strong>0 of 9</strong> id
+associations. The page says so permanently, and again on any type carrying
+id-style fields, because an undrawn association is <strong>invisible, not absent</strong>.</p>
+
+<p>The same comparison found the hand-drawn diagram wrong in one place, which is
+what a control is for.</p>
 
 <p>The data is at <code class="language-plaintext highlighter-rouge">assets/schemas/index.json</code> and is the same file the page
 reads; anything else may draw it.</p>

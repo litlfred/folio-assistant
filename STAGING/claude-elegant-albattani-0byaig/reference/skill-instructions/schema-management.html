@@ -785,6 +785,69 @@ second, drifting statement of this graph’s vocabulary. The fix was to ask what
 the module BINDS: <code class="language-plaintext highlighter-rouge">z</code> is bound, to <code class="language-plaintext highlighter-rouge">zod</code>, which is not a relative import and
 therefore not part of this graph. Distinct unresolved names fell from 150 to 6,
 and the 6 are real.</p>
+<h2 id="what-the-graph-structurally-cannot-see--measured-not-guessed">
+  
+  
+    <a href="#what-the-graph-structurally-cannot-see--measured-not-guessed" class="anchor-heading" aria-labelledby="what-the-graph-structurally-cannot-see--measured-not-guessed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the graph structurally CANNOT see — measured, not guessed
+  
+  
+</h2>
+    
+
+<p>The reader sees a reference when one schema names another. It sees nothing when
+a reference is carried as a <strong>string id</strong>, because <code class="language-plaintext highlighter-rouge">actorId: z.string()</code> holds
+no syntactic link to the schema it names. Neither would JSON Schema, and
+neither would the type checker: the information is not in the types at all.</p>
+
+<p><strong>Measured against <code class="language-plaintext highlighter-rouge">schemas/assistant-schema.puml</code></strong>, 266 lines of UML a person
+drew by hand, used as a control:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>relation the diagram draws</th>
+      <th>reproduced by the reader</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>composition (<code class="language-plaintext highlighter-rouge">*--</code>) — a nested schema</td>
+      <td><strong>14 of 15</strong></td>
+    </tr>
+    <tr>
+      <td>association (<code class="language-plaintext highlighter-rouge">--&gt;</code>) — a foreign key by id</td>
+      <td><strong>0 of 9</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>A clean split, and it names the limit exactly. So the viewer states it —
+permanently in the header, and again on any type carrying id-style fields —
+because a diagram that omitted a whole class of relation <em>silently</em> would be
+the “rendered as nothing” failure this repository works to avoid. An
+undrawn association is <strong>invisible, not absent</strong>.</p>
+
+<p>If you want those edges drawn, they have to be <strong>declared</strong>: the id field must
+say what it points at. That is a modelling change, not a reader change, and it
+belongs to <a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/data-modelling.html"><code class="language-plaintext highlighter-rouge">data-modelling</code></a>.</p>
+<h3 id="the-control-worked-in-both-directions">
+  
+  
+    <a href="#the-control-worked-in-both-directions" class="anchor-heading" aria-labelledby="the-control-worked-in-both-directions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The control worked in both directions
+  
+  
+</h3>
+    
+
+<p>The same run found the hand-drawn diagram wrong: it draws
+<code class="language-plaintext highlighter-rouge">SkillDefinition *-- SkillSchemaRef : schemas</code>, and <code class="language-plaintext highlighter-rouge">SkillDefinitionSchema</code>
+has no <code class="language-plaintext highlighter-rouge">schemas</code> field at all. That corroborates bean <code class="language-plaintext highlighter-rouge">3lbz</code>, which found
+<code class="language-plaintext highlighter-rouge">SkillDefinition.schemas</code> had no readers and its only referencing code was a
+script nothing invokes.</p>
+
+<p><strong>That is why the <code class="language-plaintext highlighter-rouge">.puml</code> is kept rather than retired.</strong> A hand-drawn model is
+a cheap control for a generated one, and in one run it found a blind spot in
+the reader <em>and</em> a stale relation in itself.</p>
 <h2 id="adding-or-changing-a-schema--the-loop">
   
   
@@ -839,6 +902,23 @@ describes, the artefact is carrying something it should not.</p>
 
 <p>The same reasoning removed the per-module declaration list: a declaration
 already names its module, so the list was one fact written twice.</p>
+<h2 id="editing-a-viewer--no-backticks">
+  
+  
+    <a href="#editing-a-viewer--no-backticks" class="anchor-heading" aria-labelledby="editing-a-viewer--no-backticks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editing a viewer — no backticks
+  
+  
+</h2>
+    
+
+<p>Both viewers are a whole HTML document inside one TypeScript template literal.
+A backtick <strong>anywhere</strong> inside it — including in a JavaScript comment in the
+embedded script — terminates the string, and the failure surfaces as a parse
+error a couple of hundred lines from the mistake. It has happened twice.</p>
+
+<p><code class="language-plaintext highlighter-rouge">schemas/viz-generators.test.ts</code> imports both generators, so a stray backtick
+reddens the suite rather than only the next person’s generator run. Run it
+before assuming a generator change is fine.</p>
 <h2 id="where-the-boundaries-are">
   
   
