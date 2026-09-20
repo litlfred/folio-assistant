@@ -259,13 +259,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T13:08:11.141Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0162ec710d330397fc4b1e8bd011ab69f6aab073",
-  "sourceCommitSha": "0162ec710d330397fc4b1e8bd011ab69f6aab073",
-  "sourceCommitAt": "2026-09-20T13:06:30Z",
+  "generatedAt": "2026-09-20T13:10:29.134Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/10e730549fb8f2da88a0bbb0bd8b50b73bc927d9",
+  "sourceCommitSha": "10e730549fb8f2da88a0bbb0bd8b50b73bc927d9",
+  "sourceCommitAt": "2026-09-20T13:08:54Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 198,
+    "Skill": 199,
     "Actor": 27,
     "Capability": 26,
     "Role": 116,
@@ -274,8 +274,8 @@
     "Process": 45,
     "SequenceFlow": 604,
     "ProcessNode": 569,
-    "Tool": 51,
-    "Schema": 71,
+    "Tool": 53,
+    "Schema": 75,
     "GraphKind": 21,
     "Directory": 28
   },
@@ -1080,6 +1080,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bib-human-review"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/tabular-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "tabular-metadata",
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read",
+      "description": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/tabular-metadata.md",
+      "instructionLines": 125,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/tabular-metadata"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/ui-accessibility",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "ui-accessibility",
@@ -1679,7 +1696,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/getting-started.md",
-      "instructionLines": 190,
+      "instructionLines": 205,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1848,7 +1865,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/feature-staging.md",
-      "instructionLines": 130,
+      "instructionLines": 147,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2099,7 +2116,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 228,
+      "instructionLines": 289,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4870,6 +4887,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/symbiotic-interaction",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/test-engineer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/theme-art-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/theme-ui-review",
@@ -25553,6 +25571,80 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/log-message"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/tabular-csv",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "tabular-csv",
+      "title": "CSV tabular metadata (STUB)",
+      "description": "STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Text",
+            "description": "Path to the delimited text file.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "record",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Text",
+            "description": "A `folio-tabular-csvw/v1` document. While stubbed, one table carrying `fac:stub` and NO columns — a half-stub is refused by the schema because it reads as a working extraction."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/tabular-metadata"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/tabular-csv"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/tabular-xlsx",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "tabular-xlsx",
+      "title": "Spreadsheet tabular metadata (STUB)",
+      "description": "STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (`fac:anchor`, `fac:headerRow`, `fac:extent`) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Text",
+            "description": "Path to the workbook.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "record",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Text",
+            "description": "A `folio-tabular-csvw/v1` document, one table per sheet. While stubbed, every table carries `fac:stub` and no columns."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/tabular-metadata"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/tabular-xlsx"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/check-dependencies",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-dependencies",
@@ -26890,6 +26982,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/constraints"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/content-type",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "content-type",
+      "title": "What a repository IS — the markers it carries, as a resolvable set.",
+      "module": "schemas/content-type.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/content-type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/content-types-base",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "content-types-base",
+      "title": "The content types this layer owns, registered at load time.",
+      "module": "schemas/content-types-base.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/content-types-base"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/contributions",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "contributions",
@@ -26915,6 +27025,15 @@
       "module": "schemas/dak-blocks.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/dak-blocks"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/dak-content-type",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "dak-content-type",
+      "title": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "module": "schemas/dak-content-type.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/dak-content-type"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/dak",
@@ -27188,6 +27307,15 @@
       "module": "schemas/sticky-contribution.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/sticky-contribution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/tabular-csvw",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "tabular-csvw",
+      "title": "A tabular source as CSVW, annotated with what CSVW cannot say — bean `eief`.",
+      "module": "schemas/tabular-csvw.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tabular-csvw"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/tabular-records",
@@ -28724,8 +28852,8 @@
   ],
   "staging": {
     "branch": "claude/sleepy-rubin-mr6kdu",
-    "sha": "0cb627b997a811be6e29f16386e5556a96908f27",
+    "sha": "303fb74c99dbf88dcf78108ea821150b2dc90d6c",
     "pr": "477/merge",
-    "run": "35512546275"
+    "run": "35512654701"
   }
 }
