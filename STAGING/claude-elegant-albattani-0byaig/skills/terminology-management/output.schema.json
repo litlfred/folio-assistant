@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/skills/terminology-management/output.schema.json",
+  "title": "Terminology Management Output",
+  "description": "Output schema for terminology management operations.",
+  "type": "object",
+  "required": [
+    "resources"
+  ],
+  "properties": {
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "resourceType"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string",
+            "enum": [
+              "CodeSystem",
+              "ValueSet",
+              "ConceptMap"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "conceptCount": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "unmappedConcepts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Concepts that could not be mapped to the target standard."
+    }
+  },
+  "staging": {
+    "branch": "claude/elegant-albattani-0byaig",
+    "sha": "588370b41a2de8193c742d2a8b5ef32a329c9d07",
+    "pr": "583/merge",
+    "run": "35531220244"
+  }
+}
