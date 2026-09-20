@@ -60,13 +60,14 @@
  *
  * Exit codes: 0 up to date or written · 1 stale/absent under `--check`.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import {
   findInstanceRoot,
   instanceRootFor,
   readDeclaration,
+  repoRootFor,
   rootForScope,
   type ContentDirectory,
 } from "../schemas/cat-harness.js";
@@ -241,6 +242,40 @@ export interface EnsureReport {
   createdDir: boolean;
   /** One per sticky, in render order. */
   stickies: StickyReport[];
+  /**
+   * Sticky files no layer declares any more, removed by this run.
+   *
+   * Reported rather than done silently: this is the one place the tool deletes
+   * anything, and a deletion nobody is told about is the shape
+   * `deletion-requires-confirmation` exists to stop.
+   */
+  pruned: string[];
+}
+
+/**
+ * Sticky files in the folio directory that no layer declares any more.
+ *
+ * **Narrow on purpose.** A file is a candidate only when it is in the folio
+ * directory, parses as a landing sticky (so it carries the
+ * `folio-landing-sticky/v1` tag this tool writes), and its id is in no current
+ * contribution. Anything else in that directory — a file somebody put there,
+ * a file of another kind, one that does not parse — is left alone.
+ *
+ * That narrowness is why pruning here does not violate the rule that an agent
+ * never removes a durable artefact on its own initiative: these are files this
+ * tool minted, identified by the tag it wrote, and the alternative is worse.
+ * Retiring a card left `landing.json` and `subgraphs.json` behind as orphans
+ * that nothing rendered and nothing reported — content that had been removed
+ * from the board but not from the graph, which is the `dh4f` shape inverted
+ * one more time.
+ */
+export function prunableStickies(dir: string, wantedIds: readonly string[]): string[] {
+  if (!existsSync(dir)) return [];
+  const keep = new Set(wantedIds.map((id) => stickyFile(id)));
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json") && !keep.has(f))
+    .filter((f) => readExistingSticky(join(dir, f)) !== undefined)
+    .sort();
 }
 
 /**
@@ -311,6 +346,39 @@ export function contributingRoots(root: string): string[] {
     const owner = findInstanceRoot(abs);
     if (owner !== undefined && resolve(owner) !== own) nested.push(resolve(owner));
   }
+  // SIBLINGS AT THE REPOSITORY ROOT, and this is the third source rather than a
+  // tidier way of writing the second.
+  //
+  // The walk above finds a layer only when THIS instance declares a directory
+  // inside it — which is how `bootstrap/` is found, since cat-harness declares
+  // `bootstrap/skills/`. `folio-assist-core/` is declared by nobody: it is a
+  // sibling directory that declares itself, and under the rule everywhere else
+  // here — an instance is a directory holding its own `harness.json` — it is an
+  // instance the moment it exists.
+  //
+  // Without this, adding a layer meant ALSO editing the layer above to mention
+  // it, which is the ownership inversion the whole contribution design undoes.
+  // Measured: `folio-assist-core/` declared its card and the board did not show
+  // it.
+  // GUARDED ON `.git`, and the guard is not belt-and-braces — without it this
+  // scan is actively wrong. `repoRootFor` is just `instanceRoot/..`, so for a
+  // throwaway instance at `/tmp/xyz/` the "repository root" is `/tmp`, and
+  // scanning it picks up every other temp instance on the machine. Measured:
+  // 22 tests failed the moment this scan was added, each one reading somebody
+  // else's fixture as a contributing layer.
+  //
+  // `.git` is the honest marker of "this directory is a checkout". A real
+  // repository has one; a temp directory does not.
+  const repoRoot = repoRootFor(own);
+  if (repoRoot !== own && existsSync(join(repoRoot, ".git"))) {
+    for (const entry of readdirSync(repoRoot, { withFileTypes: true })) {
+      if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
+      const abs = resolve(repoRoot, entry.name);
+      if (abs === own) continue;
+      if (existsSync(join(abs, "harness.json"))) nested.push(abs);
+    }
+  }
+
   // The instance LAST, so its own contributions are read after its nested
   // layers'. Order here does not decide the board — `order` does — but a stable
   // read order makes the duplicate-id error message name the layers in a
@@ -458,17 +526,20 @@ export function ensureLandingSticky(
     return { abs, wantedText, currentText, report: { id: w.id, path: join(folioDir, stickyFile(w.id)), state } };
   });
 
+  const prunable = prunableStickies(absDir, wanted.map((w) => w.id));
   const report: EnsureReport = {
     declaredFolio: already ? "already" : "added",
     folioDir,
     createdDir: !existsSync(absDir),
     stickies: planned.map((p) => p.report),
+    pruned: prunable,
   };
   if (opts.check) return report;
 
   if (!already) writeFileSync(join(root, "harness.json"), insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY));
   mkdirSync(absDir, { recursive: true });
   for (const p of planned) if (p.currentText !== p.wantedText) writeFileSync(p.abs, p.wantedText);
+  for (const f of prunable) unlinkSync(join(absDir, f));
   return report;
 }
 
@@ -519,6 +590,7 @@ if (import.meta.main) {
       ...report.stickies
         .filter((st) => st.state !== "already")
         .map((st) => `${st.path} is ${st.state === "written" ? "missing" : "stale"}`),
+      ...report.pruned.map((f) => `${join(report.folioDir, f)} is declared by no layer`),
     ].filter((p): p is string => p !== undefined);
     if (problems.length === 0) {
       console.log(`✓ folio declared at ${report.folioDir}, ${report.stickies.length} sticky/ies up to date`);
@@ -531,7 +603,8 @@ if (import.meta.main) {
 
   console.log(
     `folio graph ${report.declaredFolio === "added" ? "DECLARED" : "already declared"} at ${report.folioDir}; ` +
-      report.stickies.map((st) => `${st.id} ${st.state}`).join(", "),
+      report.stickies.map((st) => `${st.id} ${st.state}`).join(", ") +
+      (report.pruned.length > 0 ? `; pruned ${report.pruned.join(", ")}` : ""),
   );
   if (initiation) {
     console.log(

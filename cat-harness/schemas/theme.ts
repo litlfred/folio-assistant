@@ -63,9 +63,18 @@
  * computes it**: `harness.json` still names an id, and no code maps a harness to
  * a theme. The convention lives in the declarations and in this comment.
  *
- * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `engineer` is reserved
- * for testing surfaces, and bootstrap's is still to come — which is why its
- * sticky is palette-only rather than borrowing somebody else's cat.
+ * **A THEME IS REQUIRED; ART IS NOT.** The owner, 2026-09-20: *"who-voice-styess
+ * and iris, will have its own theme (eaech harness gets one, but maybe not
+ * avatar)"*. `backdrop` is already optional, so a palette-only theme is a
+ * COMPLETE theme rather than an unfinished one — it names the harness's colours
+ * and carries no cat. That is the right default for a layer whose art has not
+ * been drawn, and it is not the same state as a theme whose backdrop is
+ * declared but whose crops are missing, which `resolveThemeBackdrop` refuses
+ * wholesale.
+ *
+ * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `bootstrap` (the
+ * cowboy in the desert) is bootstrap's, `library` is folio-assist-core's, and
+ * `engineer` is reserved for testing surfaces.
  *
  * ## Choosing a theme is an AUTHORING judgement — there is no mapping
  *

@@ -365,6 +365,21 @@ export const StickyContributionSchema = z
     /** Read the body from the declaring instance instead. See {@link STICKY_BODY_SOURCES}. */
     bodyFrom: z.enum(STICKY_BODY_SOURCES).optional(),
     /**
+     * Markdown appended after the body, whichever way the body was obtained.
+     *
+     * Exists for one case, and it is a real one: a card that must carry the
+     * instance's `description` VERBATIM and then say something more. The owner:
+     * *"dont lose acronym definitions"* — this instance's description is the
+     * `c@t-harness` derivation chain, and the alternative to composing was
+     * copying it into a literal `body`, which is the same words in two places
+     * and free to drift the moment one is edited.
+     *
+     * Deliberately NOT a general template mechanism. One append, at the end, in
+     * markdown. Anything richer belongs in the declaring instance's own
+     * description or in its own card.
+     */
+    bodyAppend: z.string().min(1).optional(),
+    /**
      * Links the sticky offers, written out.
      *
      * **Declared rather than composed, including a link to the layer's own

@@ -277,8 +277,11 @@ export function stickyFromContribution(
   // yet, and initiation failing is worse than a thin card. `name` is required by
   // the declaration schema, so the chain always terminates in something.
   const declaredBody = c.body ?? description;
-  const body =
+  const base =
     declaredBody !== undefined && declaredBody.trim().length > 0 ? declaredBody : declaredBy;
+  // Appended AFTER the fallback chain, so a card that reads its instance's
+  // description verbatim can still add to it without copying the words.
+  const body = c.bodyAppend === undefined ? base : `${base}\n\n${c.bodyAppend}`;
   const firstLine = body.split("\n").find((l) => l.trim().length > 0)?.trim();
   return LandingStickySchema.parse({
     $schema: LANDING_STICKY_SCHEMA_TAG,
