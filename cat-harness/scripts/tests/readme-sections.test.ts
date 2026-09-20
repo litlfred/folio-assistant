@@ -8,9 +8,9 @@
  * no-markers-at-all — is really asserting that no code path writes outside a
  * region the folio explicitly marked.
  */
-import { describe, test, expect, afterEach } from "bun:test";
+import { describe, test, it, expect, afterEach } from "bun:test";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { tmpdir } from "os";
 
 import {
@@ -21,6 +21,12 @@ import {
   type SectionContext,
 } from "../../content/pipeline/readme-sections";
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc";
+import {
+  AGENT_INSTRUCTIONS_ROLE,
+  ASSET_ROLE_PURPOSE,
+  INSTANCE_README_ROLE,
+  instanceRootsIn,
+} from "../../schemas/cat-harness.js";
 import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance } from "../../test/support/instance-fixture.js";
 
 const dirs: string[] = [];
@@ -242,5 +248,60 @@ describe("runReadmeSync", () => {
   test("a missing README is an error, not a silently created file", async () => {
     const root = folio();
     expect((await runReadmeSync({ root })).exitCode).toBe(2);
+  });
+});
+
+describe("cat-harness:instances — both entries, per instance (issue #592)", () => {
+  const repo = resolve(import.meta.dir, "..", "..", "..");
+  const section = SECTIONS.find((s) => s.marker === "cat-harness:instances")!;
+  const out = section.render({ root: repo, cfg: loadReadmeConfig(repo), fetch: false });
+
+  it("renders a row for every instance that declares a harness.json", () => {
+    const declared = instanceRootsIn(repo).length;
+    const rows = out.markdown.split("\n").filter((l) => l.startsWith("| `"));
+    expect(rows).toHaveLength(declared);
+    expect(declared).toBeGreaterThan(1);
+  });
+
+  it("indexes the instances INSIDE this repository, not the directory holding it", () => {
+    // `repoRootFor(root)` is `root/..`, which for the repository root itself
+    // walks out of the repository: the first draft rendered a one-row table
+    // listing this repository as its own child.
+    expect(out.markdown).toContain("| `cat-harness` |");
+    expect(out.markdown).toContain("| `cat-bootstrap` |");
+  });
+
+  it("a declared `scope: \"repository\"` directory is linked at the REPOSITORY root", () => {
+    // cat-harness declares `memory/` with `scope: "repository"`. Composing
+    // `./cat-harness/memory/` rendered a link to a directory that is not
+    // there — and a dead link in a generated table is worse than a missing
+    // row, because the row asserts the entry exists.
+    expect(out.markdown).toContain("[memory](memory/)");
+    expect(out.markdown).not.toContain("./cat-harness/memory/");
+  });
+
+  it("an instance with no agent entry gets an em dash, never a guessed path", () => {
+    const row = out.markdown.split("\n").find((l) => l.startsWith("| `who-style-guide`"))!;
+    expect(row).toContain("| — |");
+    expect(row).not.toContain("who-style-guide/AGENTS.md");
+  });
+
+  it("states the gap as a count AND says which check names them", () => {
+    // A count in prose is a claim; this one has to carry where the list is.
+    expect(out.markdown).toMatch(/\*\*\d+ of \d+\*\* declare no `agent-instructions`/);
+    expect(out.markdown).toContain("check:subgraph-coverage");
+  });
+
+  it("carries each role's purpose from the one place it is declared", () => {
+    expect(out.markdown).toContain(ASSET_ROLE_PURPOSE[AGENT_INSTRUCTIONS_ROLE]!);
+    expect(out.markdown).toContain(ASSET_ROLE_PURPOSE[INSTANCE_README_ROLE]!);
+  });
+
+  it("an unreadable tree is UNDETERMINED, not 'this repository has no instances'", () => {
+    const empty = mkdtempSync(join(tmpdir(), "no-instances-"));
+    const r = section.render({ root: empty, cfg: loadReadmeConfig(empty), fetch: false });
+    expect(r.skip).toBe(true);
+    expect(r.markdown).toBe("");
+    rmSync(empty, { recursive: true, force: true });
   });
 });

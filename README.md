@@ -32,6 +32,42 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
+## Harness instances
+
+This repository holds several **instances**, each declaring its own
+`harness.json`. Every one has two entry points on purpose: a **README** saying
+what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments
+the first rather than restating it.
+
+The table is generated from the declarations themselves by `bun run
+readme:sync`; it is not a list anybody keeps. Add an instance and it appears;
+rename a directory and the links follow.
+
+<!-- cat-harness:instances:begin -->
+
+| Instance | Path | For an agent | For a person |
+|----------|------|--------------|--------------|
+| `folio-assistant` | . | [AGENTS.md](AGENTS.md) | [README](README.md) |
+| `agent-skills` | agent-skills | — | [README](./agent-skills/README.md) |
+| `cat-bootstrap` | cat-bootstrap | [AGENTS.md](./cat-bootstrap/AGENTS.md) | [README](./cat-bootstrap/README.md) |
+| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
+| `detangle` | detangle | — | [README](./detangle/README.md) |
+| `folio-assist-sci` | folio-assist-sci | — | [README](./folio-assist-sci/README.md) |
+| `folio-assistant-core` | folio-assistant-core | — | [README](./folio-assistant-core/README.md) |
+| `kg-navigation` | kg-navigation | — | [README](./kg-navigation/README.md) |
+| `large-datasets` | large-datasets | — | [README](./large-datasets/README.md) |
+| `who-iris` | who-iris | — | [README](./who-iris/README.md) |
+| `who-style-guide` | who-style-guide | — | [README](./who-style-guide/README.md) |
+
+> **8 of 11** declare no `agent-instructions` asset — readable by a person, mute to an agent. `bun run check:subgraph-coverage` names them.
+>
+> **10 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+
+*`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
+*`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
+
+<!-- cat-harness:instances:end -->
+
 ## Bootstrapping — setting up a repository to write in
 
 **`cat-bootstrap litlfred/cat-harness`** means *set this repository up the same way
