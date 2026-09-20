@@ -106,6 +106,15 @@ one. The tool says so itself and the phrasing is worth keeping: *"these are not
 cross-edges — they are edges this tool declined to judge. Do not read them as
 clean."*
 
+> The same false comfort at a different join, and it has its own skill —
+> `covered-is-not-reachable`: *"A skill showing as covered is not evidence that
+> its code is reachable."* Coverage is a relation between a Tool and a **skill**,
+> never between a Tool and a command, so `check:tools` answers green over
+> mechanisms nothing can reach. Found three times in one session, and measured
+> by hand at **229 of 868 code files reachable from no node, collapsing to 13
+> groups** — which is a partition measurement in everything but name. Read that
+> skill before concluding a corpus is covered; it is not restated here.
+
 **2. The count rises when the measurement improves, and that is correct.**
 Wrong-direction edges went **43 → 49** when thirteen previously-unjudged edges
 were folded in. The commit that did it is titled *"judge the last six modules —
@@ -228,6 +237,21 @@ too low — an `export {}` block the grep pattern missed, which `tsc` caught."*
 
 **A grep that under-reports reads exactly like a clean result.**
 
+And the same failure once more, from a sibling session two days later, stated
+in its most compact form yet: *"describing a mechanism from its name and its
+position in a diagram, then reasoning about what it needs. `--payload
+<file.json>` settled in one line what three proposals had guessed at. A name
+says what something is for; an argument list says what it does."*
+
+That is move 9 and move 12 with the cost attached. Three proposals were made
+about a mechanism nobody had opened; **one of the three was accepted and two
+were wasted**, and reading the argument list first would have produced the
+accepted one directly. Which is also why the enumeration was still worth doing:
+*"as a choice that is one proposal accepted and two wasted, while as an audit it
+is three lines and one action."* **Enumerating dispatch points is how you find
+the ones already built** — the audit framing survives a bad hit rate, the
+choice framing does not.
+
 ## What the metric will not tell you
 
 From the editorial side, measured on a real corpus:
@@ -248,6 +272,11 @@ auto-dischargeable — they rename things and ripple through every reference.
 
 - `placement.md` — the sibling SOP, for where a NEW node goes. Same shape:
   numbered steps, a stop, a closing checklist.
+- `covered-is-not-reachable` — the reachability half, and the rule that
+  "reachability is PLURAL": the question is not which caller a mechanism should
+  have but what should be able to START it. Pointed at rather than absorbed,
+  per `AGENTS.md`'s warning against minting something to take over what an
+  existing object already owns.
 - `docs/architecture/migration-plan.md` — the phased plan for this
   repository's own five-repo cut, including the Phase II per-repo gate.
 - `scripts/repo-partition.ts` — the instrument. Its comment prose is where much
