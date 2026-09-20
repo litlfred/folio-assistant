@@ -251,13 +251,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T11:46:48.858Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a38fc2e3a3e72ee8e913c13a7d19dd9ffe6b75f7",
-  "sourceCommitSha": "a38fc2e3a3e72ee8e913c13a7d19dd9ffe6b75f7",
-  "sourceCommitAt": "2026-09-20T13:44:56+02:00",
+  "generatedAt": "2026-09-20T12:01:09.555Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e1e68f73e709ca20d6c140e7489aac68673a40ef",
+  "sourceCommitSha": "e1e68f73e709ca20d6c140e7489aac68673a40ef",
+  "sourceCommitAt": "2026-09-20T13:59:39+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 193,
+    "Skill": 194,
     "Actor": 27,
     "Capability": 26,
     "Role": 116,
@@ -1095,6 +1095,21 @@
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
       "instructionLines": 353,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/unverified-constraints",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "unverified-constraints",
+      "title": "Never encode a constraint you have not verified",
+      "description": "Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something \"is not supported\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/unverified-constraints.md",
+      "instructionLines": 75,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -4263,11 +4278,11 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-data-model",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-comparison",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/delivery-summary",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deployment-auth",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/detangler-integration-watcher",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/devils-advocate-watcher",
@@ -4337,6 +4352,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/untrusted-input",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/unverified-constraints",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/uploads-watch",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/uses-editorial-review",
@@ -24633,8 +24649,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "a38fc2e3a3e72ee8e913c13a7d19dd9ffe6b75f7",
+    "sha": "e1e68f73e709ca20d6c140e7489aac68673a40ef",
     "pr": "main",
-    "run": "35508687247"
+    "run": "35509349082"
   }
 }

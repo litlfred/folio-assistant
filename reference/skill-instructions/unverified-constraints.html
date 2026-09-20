@@ -13,10 +13,29 @@
 
   <style id="jtd-nav-activation">
   
-    .site-nav ul li a {
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(99)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(99) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(99) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(99) > ul.nav-list {
+      display: block;
+    }
   </style>
 
   
@@ -34,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Введение для агента (RU) | folio-assistant</title>
+<title>Never encode a constraint you have not verified | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Введение для агента (RU)" />
-<meta property="og:locale" content="ru" />
+<meta property="og:title" content="Never encode a constraint you have not verified" />
+<meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/guides/ru/agent-onboarding.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/guides/ru/agent-onboarding.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/unverified-constraints.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/unverified-constraints.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Введение для агента (RU)" />
+<meta property="twitter:title" content="Never encode a constraint you have not verified" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Введение для агента (RU)","url":"https://litlfred.github.io/folio-assistant/guides/ru/agent-onboarding.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Never encode a constraint you have not verified","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/unverified-constraints.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -193,11 +212,11 @@
   this block publishes it to the client. No manual editing needed.
 -->
 <script type="application/json" id="fa-translation-meta">{
-  "lang": "ru",
-  "translationStatus": "unverified",
-  "translationSource": "guides/agent-onboarding.md",
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
   "supportedLocales": ["ar","zh","en","fr","ru","es"],
-  "availableLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
   "sweep": {
     "run": true,
     "sweptAt": "2026-09-18T13:35:56.610Z",
@@ -580,8 +599,8 @@
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/guides/">Authoring guides</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Введение для агента (RU)</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Never encode a constraint you have not verified</span></li>
   </ol>
 </nav>
 
@@ -589,280 +608,121 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="введение-для-агента">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/unverified-constraints.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/unverified-constraints.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/unverified-constraints.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="never-encode-a-constraint-you-have-not-verified">
   
   
-    <a href="#введение-для-агента" class="anchor-heading" aria-labelledby="введение-для-агента"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Введение для агента
+    <a href="#never-encode-a-constraint-you-have-not-verified" class="anchor-heading" aria-labelledby="never-encode-a-constraint-you-have-not-verified"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Never encode a constraint you have not verified
   
   
 </h1>
     
 
-<p>Вы — LLM-агент, только что добавленный в репозиторий, использующий
-folio-assistant. Эта страница поможет вам сориентироваться: что перед вами
-находится, с чего начать и где искать нужную информацию.</p>
-
-<p>Архитектура навыков, ролей и возможностей описана в документе
-<a href="../skills.html">Навыки и роли</a>. Данная страница представляет собой практическое руководство.</p>
-
-<ol id="markdown-toc">
-  <li><a href="#1-определите-в-каком-репозитории-вы-находитесь" id="markdown-toc-1-определите-в-каком-репозитории-вы-находитесь">1. Определите, в каком репозитории вы находитесь</a></li>
-  <li><a href="#2-ваши-первые-пять-минут" id="markdown-toc-2-ваши-первые-пять-минут">2. Ваши первые пять минут</a></li>
-  <li><a href="#3-найдите-подходящий-навык--не-импровизируйте" id="markdown-toc-3-найдите-подходящий-навык--не-импровизируйте">3. Найдите подходящий навык — не импровизируйте</a></li>
-  <li><a href="#4-объектная-модель-контента-кратко" id="markdown-toc-4-объектная-модель-контента-кратко">4. Объектная модель контента, кратко</a></li>
-  <li><a href="#5-две-связи-зависимостей--не-смешивайте-их" id="markdown-toc-5-две-связи-зависимостей--не-смешивайте-их">5. Две связи зависимостей — не смешивайте их</a></li>
-  <li><a href="#6-отслеживайте-работу-в-beans-а-не-в-голове" id="markdown-toc-6-отслеживайте-работу-в-beans-а-не-в-голове">6. Отслеживайте работу в beans, а не в голове</a></li>
-  <li><a href="#7-файлы-qa-и-оси" id="markdown-toc-7-файлы-qa-и-оси">7. Файлы QA и оси</a></li>
-  <li><a href="#8-отправка-работы" id="markdown-toc-8-отправка-работы">8. Отправка работы</a></li>
-  <li><a href="#9-где-искать-информацию" id="markdown-toc-9-где-искать-информацию">9. Где искать информацию</a></li>
-  <li><a href="#10-привычки-которые-уберегут-вас-от-проблем" id="markdown-toc-10-привычки-которые-уберегут-вас-от-проблем">10. Привычки, которые уберегут вас от проблем</a></li>
-</ol><hr />
-<h2 id="1-определите-в-каком-репозитории-вы-находитесь">
+<p>Owner, 2026-09-19: <strong>“dont encode rules against a working setup.”</strong></p>
+<h2 id="the-asymmetry-which-is-the-whole-argument">
   
   
-    <a href="#1-определите-в-каком-репозитории-вы-находитесь" class="anchor-heading" aria-labelledby="1-определите-в-каком-репозитории-вы-находитесь"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Определите, в каком репозитории вы находитесь
+    <a href="#the-asymmetry-which-is-the-whole-argument" class="anchor-heading" aria-labelledby="the-asymmetry-which-is-the-whole-argument"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The asymmetry, which is the whole argument
   
   
 </h2>
     
 
-<p>Существует два вида репозиториев, и перепутать их — самая частая ошибка на начальном этапе.</p>
+<p>A constraint in a schema, validator or gate is a <strong>refusal</strong>, and the two ways
+it can be wrong are not symmetric:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
       <th> </th>
-      <th><strong>folio-assistant</strong> (платформа)</th>
-      <th><strong>Фолио</strong> (репозиторий контента)</th>
+      <th>what happens</th>
+      <th>who finds out</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Содержит</td>
-      <td>навыки, схемы, пайплайн, MCP-сервер</td>
-      <td>саму статью / руководство / IG</td>
+      <td>a <strong>missing</strong> constraint</td>
+      <td>a bad setup gets through</td>
+      <td>it fails at the point of use, with the real error</td>
     </tr>
     <tr>
-      <td>Имеет <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/</code></td>
-      <td>нет — только <code class="language-plaintext highlighter-rouge">content/pipeline/</code></td>
-      <td>да</td>
-    </tr>
-    <tr>
-      <td>Вы редактируете здесь, чтобы</td>
-      <td>изменить работу процесса создания контента</td>
-      <td>изменить то, какой контент создается</td>
+      <td>a <strong>wrong</strong> constraint</td>
+      <td>a good setup is refused at the gate</td>
+      <td><strong>nobody</strong> — the message asserts the thing is impossible, and nobody investigates a settled question</td>
     </tr>
   </tbody>
 </table></div>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls </span>content/          <span class="c"># pipeline/ only  ⇒ platform;  paper dirs ⇒ folio</span>
-</code></pre></div></div>
+<p>The second is the expensive one precisely because it looks like the system
+working. Same asymmetry as rendering “could not check” as green
+(<a href="/folio-assistant/reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a>): a confident wrong answer costs more than a
+visible absence.</p>
 
-<p><strong>folio-assistant не содержит контента.</strong> Если вы собираетесь добавить в
-него предметный материал — главу, константу, список ключевых слов главы —
-вы находитесь не в том репозитории, либо то, что вы пишете, должно быть
-данными, предоставляемыми фолио. См. §7.</p>
-<h2 id="2-ваши-первые-пять-минут">
+<p>So an <strong>asserted but unverified</strong> constraint is left OUT of the gate and
+written down as an open question. Not encoded “provisionally” — a provisional
+refusal refuses exactly as hard as a permanent one.</p>
+<h2 id="the-test-is-the-evidence-not-the-confidence">
   
   
-    <a href="#2-ваши-первые-пять-минут" class="anchor-heading" aria-labelledby="2-ваши-первые-пять-минут"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Ваши первые пять минут
+    <a href="#the-test-is-the-evidence-not-the-confidence" class="anchor-heading" aria-labelledby="the-test-is-the-evidence-not-the-confidence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The test is the evidence, not the confidence
   
   
 </h2>
     
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans prime <span class="o">&amp;&amp;</span> beans list      <span class="c"># the work-plan — see §6</span>
-scripts/session-start-coord-sweep.sh   <span class="c"># CLI-independent equivalent</span>
-bun run src/index.ts <span class="nt">--check-deps</span>      <span class="c"># what this environment can do</span>
-</code></pre></div></div>
-
-<p>Флаг <code class="language-plaintext highlighter-rouge">--check-deps</code> важнее, чем кажется. Многие проверки деградируют до <code class="language-plaintext highlighter-rouge">n/a</code>,
-а не завершаются сбоем при отсутствии какого-либо инструмента (нет инструментария Lean,
-нет Atlas, нет LaTeX). <strong>Значение <code class="language-plaintext highlighter-rouge">n/a</code> не означает успешное прохождение.</strong> Если вы
-сообщаете, что «все чисто», не зная, что именно было пропущено, вы выдаете отсутствие
-данных за результат.</p>
-<h2 id="3-найдите-подходящий-навык--не-импровизируйте">
-  
-  
-    <a href="#3-найдите-подходящий-навык--не-импровизируйте" class="anchor-heading" aria-labelledby="3-найдите-подходящий-навык--не-импровизируйте"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Найдите подходящий навык — не импровизируйте
-  
-  
-</h2>
-    
-
-<p>Навыки — это основная единица работы. Прежде чем создавать процедуру
-вручную, проверьте, существует ли уже готовая.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Где</th>
-      <th>Что это дает</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></td>
-      <td>не зависит от контента: координация, наблюдатели, QA, рендеринг, библиография</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/</code></td>
-      <td>статьи: Lean, LaTeX, доказательства, симуляторы</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/authoring-who-smart-guidelines/</code></td>
-      <td>WHO SMART DAK / IG</td>
-    </tr>
-    <tr>
-      <td><a href="../reference/skills/">Справочник по схемам навыков</a></td>
-      <td>сгенерированный контракт ввода/вывода для каждого навыка</td>
-    </tr>
-    <tr>
-      <td><a href="../reference/skill-instructions/">Инструкции по навыкам</a></td>
-      <td>сгенерированные полные тексты инструкций</td>
-    </tr>
-    <tr>
-      <td><a href="../skills.html">Навыки и роли</a></td>
-      <td>композиция навыков, ролей и возможностей</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>Оба каталога <code class="language-plaintext highlighter-rouge">reference/</code> являются <strong>сгенерированными</strong> — никогда не редактируйте
-их вручную. Перегенерируйте их с помощью <code class="language-plaintext highlighter-rouge">bun run scripts/gen-schema-docs.ts</code> и
-<code class="language-plaintext highlighter-rouge">bun run scripts/gen-skill-docs.ts</code>.</p>
-<h2 id="4-объектная-модель-контента-кратко">
-  
-  
-    <a href="#4-объектная-модель-контента-кратко" class="anchor-heading" aria-labelledby="4-объектная-модель-контента-кратко"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Объектная модель контента, кратко
-  
-  
-</h2>
-    
-
-<p>Блок контента представляет собой <strong>тройку</strong> с общим корневым именем:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;block&gt;.ts     manifest — label, kind, uses[], lean.ref, cites[]
-&lt;block&gt;.md     the narrative a reader actually reads
-&lt;block&gt;.lean   the formalisation (when the kind requires one)
-&lt;block&gt;.qa.json  QA sidecar — audit results, per criterion
-</code></pre></div></div>
-
-<p>Манифест <code class="language-plaintext highlighter-rouge">.ts</code> — единственный источник истины для структуры. <em>Статус</em>
-формализации определяется во время сборки и никогда не хранится в манифесте.</p>
-<h2 id="5-две-связи-зависимостей--не-смешивайте-их">
-  
-  
-    <a href="#5-две-связи-зависимостей--не-смешивайте-их" class="anchor-heading" aria-labelledby="5-две-связи-зависимостей--не-смешивайте-их"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Две связи зависимостей — не смешивайте их
-  
-  
-</h2>
-    
-
-<p>Это постоянно сбивает агентов с толку.</p>
+<p>Encode either of these and nothing else:</p>
 
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">uses[]</code> носит редакционный характер.</strong> «Что читатель должен был прочесть,
-чтобы понять этот блок?» Создается автором — поддерживается агентом или человеком.</li>
-  <li><strong>Формальный граф вычисляется автоматически</strong> на основе <code class="language-plaintext highlighter-rouge">lean.ref</code> и никогда не
-пишется вручную.</li>
+  <li><strong>An entailment of the mechanism.</strong> GitHub Pages has no per-file media-type
+configuration; air-gapped compute cannot reach hosted inference. These follow
+from how the thing works, and you can say why.</li>
+  <li><strong>Something measured here, with the command shown.</strong> Not “someone said so”,
+not what was true of one account, one plan or one version.</li>
 </ul>
 
-<p>Они закономерно расходятся в обоих направлениях: доказательство вызывает леммы <code class="language-plaintext highlighter-rouge">simp</code>,
-о которых читателю не нужно знать; теорема мотивируется примером, на который она
-формально никогда не ссылается.</p>
-
-<p><strong>Никогда не заполняйте <code class="language-plaintext highlighter-rouge">uses[]</code> из Lean.</strong> Это разрушает сигнал, на основе которого
-рассчитывается любая метрика упорядочивания. Для анализа влияния («что сломается, если это
-изменится?») используйте объединение:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/content-graph.ts content/&lt;paper&gt;
-</code></pre></div></div>
-
-<p>Аудит правильности использования <code class="language-plaintext highlighter-rouge">uses[]</code> — отдельный навык:
-<code class="language-plaintext highlighter-rouge">uses-editorial-review</code>, плюс механическая ось QA <code class="language-plaintext highlighter-rouge">uses</code>.</p>
-<h2 id="6-отслеживайте-работу-в-beans-а-не-в-голове">
+<p>If you cannot produce one of those, you have a question, not a constraint.</p>
+<h2 id="the-worked-case">
   
   
-    <a href="#6-отслеживайте-работу-в-beans-а-не-в-голове" class="anchor-heading" aria-labelledby="6-отслеживайте-работу-в-beans-а-не-в-голове"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Отслеживайте работу в beans, а не в голове
+    <a href="#the-worked-case" class="anchor-heading" aria-labelledby="the-worked-case"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked case
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">beans</code> — это <strong>единственный</strong> механизм задач — как локальный для сессии, <em>так и</em>
-межагентский. Каталог <code class="language-plaintext highlighter-rouge">beans/</code> фиксируется в репозитории, поэтому план сохраняется при
-возобновлении работы в чистом контейнере.</p>
+<p><code class="language-plaintext highlighter-rouge">docs/proposals/deployment-topologies.md</code> §3 leaves <code class="language-plaintext highlighter-rouge">private repo</code> ×
+<code class="language-plaintext highlighter-rouge">github-pages</code> <strong>out</strong> of its incompatibility table. Issue #363 states it as
+flatly unavailable — but GitHub has offered Pages on private repositories on
+paid plans, and the account’s entitlement was never checked. Encoding #363’s
+claim would have refused a topology that may well work, with a message saying
+it cannot.</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans list
-beans create <span class="s2">"&lt;title&gt;"</span>
-beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>    <span class="c"># CLAIM before you work</span>
-</code></pre></div></div>
-
-<p>Резервируйте (claim) задачу перед началом работы, чтобы две сессии не взяли один и тот
-же элемент, и никогда не закрывайте и не удаляйте bean другого агента. Не создавайте
-параллельное хранилище задач. Не используйте <code class="language-plaintext highlighter-rouge">beans create</code> для массовых машинно-генерируемых
-очередей (<code class="language-plaintext highlighter-rouge">*.qa.json</code>, файлы свидетельств) — они остаются в виде массового JSON.</p>
-
-<p>Полные правила работы: <code class="language-plaintext highlighter-rouge">skills/folio-core/todo-manager.md</code>,
-<code class="language-plaintext highlighter-rouge">skills/folio-core/bean-coordination.md</code>.</p>
-<h2 id="7-файлы-qa-и-оси">
+<p>The absence in that table is the rule being followed, not an oversight.</p>
+<h2 id="it-reads-the-same-in-both-lanes">
   
   
-    <a href="#7-файлы-qa-и-оси" class="anchor-heading" aria-labelledby="7-файлы-qa-и-оси"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Файлы QA и оси
+    <a href="#it-reads-the-same-in-both-lanes" class="anchor-heading" aria-labelledby="it-reads-the-same-in-both-lanes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It reads the same in both lanes
   
   
 </h2>
     
 
-<p>Каждый блок может сопровождаться файлом <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code>, фиксирующим по каждому
-критерию найденное рецензентом — <code class="language-plaintext highlighter-rouge">script</code>, <code class="language-plaintext highlighter-rouge">agent</code> или <code class="language-plaintext highlighter-rouge">human</code>. Записи содержат
-хеши исходных файлов на момент аудита, поэтому при редактировании блока запись
-становится <strong>устаревшей</strong> (stale) и требует повторной проверки.</p>
+<ul>
+  <li>A <strong>watcher</strong> must not render “could not check” as green.</li>
+  <li>A <strong>boundary guard</strong> must not encode a constraint that refuses a folio
+nobody has tried.</li>
+</ul>
 
-<p>Критерии сгруппированы по <strong>осям</strong> (<code class="language-plaintext highlighter-rouge">proof</code>, <code class="language-plaintext highlighter-rouge">voice</code>, <code class="language-plaintext highlighter-rouge">detangler</code>,
-<code class="language-plaintext highlighter-rouge">uses</code>, <code class="language-plaintext highlighter-rouge">canonical</code>, <code class="language-plaintext highlighter-rouge">compute</code>, <code class="language-plaintext highlighter-rouge">bibliography</code>, …). Запуск проверки:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/qa-sweep.ts <span class="nt">--axis</span> uses content/&lt;paper&gt;
-bun run content/pipeline/qa-staleness.ts content/&lt;paper&gt;
-</code></pre></div></div>
-
-<p>Некоторые критерии имеют <code class="language-plaintext highlighter-rouge">automated: true</code> (решение принимает скрипт), а некоторые —
-<code class="language-plaintext highlighter-rouge">automated: false</code> (решение должен принимать агент или человек). Второй тип
-требует реальных затрат шагов диалога — см. <code class="language-plaintext highlighter-rouge">semantic-cone.ts</code> для ограничения их области
-только тем, на что они действительно могут повлиять.</p>
-
-<p><strong>Опциональные для фолио оси.</strong> Ось, кодирующая специфику предметной области фолио,
-регистрируется только в том случае, если фолио явно ее подключает:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">harness.config.json</span><span class="w">
-</span><span class="p">{</span><span class="w"> </span><span class="nl">"qaAxes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"q-usage"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Аналогично, специфичные для фолио <em>данные</em> должны находиться в фолио, а не на платформе —
-например, <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/topic-keywords.json</code> управляет проверкой
-<code class="language-plaintext highlighter-rouge">detangler-topic-coherence</code>, и при его отсутствии средство проверки сообщает <code class="language-plaintext highlighter-rouge">n/a</code>.</p>
-<h2 id="8-отправка-работы">
+<p>Both are the same refusal to convert absence of evidence into a confident
+answer.</p>
+<h2 id="related">
   
   
-    <a href="#8-отправка-работы" class="anchor-heading" aria-labelledby="8-отправка-работы"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Отправка работы
-  
-  
-</h2>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/prepare-merge <span class="o">[</span>base]
-</code></pre></div></div>
-
-<p>Запускает общий сценарий плюс проверки для конкретного типа контента (paper →
-content_validate / qa_sweep / proof_status / latex_preflight /
-lean_build), затем выполняет push. <strong>Слияние (merge) при этом не выполняется.</strong></p>
-
-<p>Отслеживание связанного PR коллеги: <code class="language-plaintext highlighter-rouge">/watch &lt;pr|branch&gt;</code>.</p>
-<h2 id="9-где-искать-информацию">
-  
-  
-    <a href="#9-где-искать-информацию" class="anchor-heading" aria-labelledby="9-где-искать-информацию"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Где искать информацию
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
   
   
 </h2>
@@ -871,65 +731,25 @@ lean_build), затем выполняет push. <strong>Слияние (merge) 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Вопрос</th>
-      <th>Ответ</th>
+      <th> </th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Команды проекта, соглашения</td>
-      <td><code class="language-plaintext highlighter-rouge">AGENTS.md</code> (общий источник истины для агентов)</td>
+      <td>the three states, and never rendering the third as clean</td>
+      <td><a href="/folio-assistant/reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a></td>
     </tr>
     <tr>
-      <td>Что делает навык</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/**/</code> или сгенерированные <a href="../reference/skill-instructions/">тексты инструкций</a></td>
+      <td>where a new rule belongs before you write it</td>
+      <td><a href="/folio-assistant/reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a></td>
     </tr>
     <tr>
-      <td>Типизированный контракт навыка</td>
-      <td><a href="../reference/skills/">Справочник по схемам навыков</a></td>
-    </tr>
-    <tr>
-      <td>Что означает критерий QA</td>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code> — описания служат спецификацией</td>
-    </tr>
-    <tr>
-      <td>Схема блока</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/types.ts</code></td>
-    </tr>
-    <tr>
-      <td>Схема файла QA</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/block-qa.ts</code></td>
-    </tr>
-    <tr>
-      <td>Что умеет данное окружение</td>
-      <td><code class="language-plaintext highlighter-rouge">.claude/skills/capabilities/*.json</code>, <code class="language-plaintext highlighter-rouge">--check-deps</code></td>
-    </tr>
-    <tr>
-      <td>План развития инструментов Lean</td>
-      <td><a href="../proposals/llm-authoring-tool-integration.html">Предложение по инструментам Lean</a></td>
+      <td>re-measure rather than quoting a number</td>
+      <td><a href="/folio-assistant/reference/skill-instructions/uses-editorial-review.html"><code class="language-plaintext highlighter-rouge">uses-editorial-review</code></a></td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="10-привычки-которые-уберегут-вас-от-проблем">
-  
-  
-    <a href="#10-привычки-которые-уберегут-вас-от-проблем" class="anchor-heading" aria-labelledby="10-привычки-которые-уберегут-вас-от-проблем"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. Привычки, которые уберегут вас от проблем
-  
-  
-</h2>
-    
-
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">n/a</code> не означает успешное прохождение.</strong> Указывайте, что именно было пропущено и почему.</li>
-  <li><strong>Резервируйте bean перед длительной работой.</strong> Параллельно могут выполняться другие задачи.</li>
-  <li><strong>Не прописывайте имя статьи жестко в коде.</strong> В фолио их может быть несколько; определяйте
-через <code class="language-plaintext highlighter-rouge">findPapers()</code> / <code class="language-plaintext highlighter-rouge">soleFolioPaper()</code> из <code class="language-plaintext highlighter-rouge">content/pipeline/repo-root.ts</code>.</li>
-  <li><strong>Не пишите контент в репозиторий платформы.</strong> Если упоминается глава, константа или
-терминологический словарь — это данные фолио.</li>
-  <li><strong>Перегенерируйте, а не редактируйте вручную</strong> все, что находится в каталоге <code class="language-plaintext highlighter-rouge">docs/reference/</code>.</li>
-  <li><strong>Прочтите описание критерия перед тем, как реагировать на замечание.</strong> В нем указаны
-критичность, назначение и то, что явно <em>не</em> считается нарушением.</li>
-</ul>
 
           
 
