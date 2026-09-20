@@ -1057,10 +1057,21 @@ async function collectProcesses(doc: string, problems: string[], root: string = 
   // never claimed is asking it to declare something to stay green, which is
   // how a declaration stops meaning anything.
   //
-  // REPO-RELATIVE, not absolute: this string is written into a COMMITTED
-  // artefact (`cat-bootstrap/cat-bootstrap.jsonld`), and an absolute path differs
-  // between a developer's machine and CI, so its staleness gate would fail
-  // on a tree nobody touched.
+  // REPO-RELATIVE, not absolute: this string is written into a PUBLISHED
+  // artefact (`_site/cat-bootstrap/cat-bootstrap.jsonld`), and an absolute path
+  // names a directory that exists only on the machine that built it.
+  //
+  // It said COMMITTED until bean `hfkl` measured it, and by then that was
+  // false in a way worth recording rather than just correcting. The document
+  // WAS tracked, with a byte-staleness gate in `code-quality-gates.yml` that
+  // an absolute path would have failed on a tree nobody touched — which is the
+  // argument this comment carried. On 2026-09-20 (bean `blv9`) the file became
+  // a build artefact published by `docs-site.yml`, the gate went with it, and
+  // the reason here survived its own premise: nothing compares bytes any more,
+  // but `scripts/tests/cat-bootstrap-graph.test.ts` asserts that no value in
+  // the document is an absolute build path, and a leaked `/home/...` would now
+  // ship to readers instead of merely failing CI. Same constraint, worse
+  // failure. See `cat-bootstrap/render/cat-bootstrap-graph-publication.md`.
   if (dirs.length === 0 && kgDirectories(root).length > 0) {
     problems.push(
       `no directory containing .bpmn files was found under ${relative(ROOT, root) || "."}`,

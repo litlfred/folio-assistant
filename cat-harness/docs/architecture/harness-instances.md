@@ -109,6 +109,36 @@ emit its own graph has not shown it is a graph. So cat-bootstrap is not simply
 dropped from the requirement: it trades the visualiser for a criterion it
 cannot fail quietly.
 
+### The exemption is declared data, not a special case in a checker
+
+`cat-bootstrap/harness.json` carries a `renderExemption` — `of`, `reason` and
+`owes` — and `2krx`'s axis reads it through `isExemptFrom` rather than testing
+an instance name. A name literal would state a rule true only for the instance
+somebody remembered, and a vendored or renamed bootstrap would silently
+reacquire the obligation it was excused from.
+
+**`owes` is required by the schema**, because an exemption with no substitute
+is a hole and a list of holes is the silence list `2krx` says an opt-out must
+not become. cat-bootstrap's names the two skills that govern its emission, and
+a test asserts the files it names exist.
+
+**The guard against spreading is global, not local.** The declaration is local
+because only the instance knows why; `renderExemptionProblems` takes every
+instance in the repository, because *"only the bottom layer may claim this"* is
+a fact about the stack that a per-instance check structurally cannot see. A
+second claimant fails `check:instance-render`. At most one, not exactly one — a
+repository that vendors no cat-bootstrap has nothing to exempt, and failing it
+for that would be asking it to declare something to stay green.
+
+What it owes lives in **`cat-bootstrap/render/`**, a declared subgraph holding
+[`cat-bootstrap-graph-emission`](https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/render/cat-bootstrap-graph-emission.md)
+and
+[`cat-bootstrap-graph-publication`](https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/render/cat-bootstrap-graph-publication.md).
+Until that directory existed the emission discipline lived in a code comment in
+`kg-export.ts` and a YAML comment in `docs-site.yml` — which is why it was
+rediscovered rather than read, and why one of those comments still called the
+document *committed* four days after it stopped being.
+
 **`cat-harness` is where the rest begins to apply**, and the reason is an
 obligation rather than a convention: cat-harness is what supplies the layers
 above with `folio/`. A layer that hands its dependents a folio and renders
@@ -120,7 +150,7 @@ This is the **same shape** the workflow split already has — cat-bootstrap keep
 bare minimum, `cat-harness/workflows` elaborates — so it is a second instance
 of one rule rather than a new one.
 
-*Tracked: `hfkl` (cat-bootstrap's exemption and its `render/` subgraph), `ohx6`
+*Tracked: `hfkl` (cat-bootstrap's exemption and its `render/` subgraph — **done**), `ohx6`
 (`cat-harness/folio/`), `1hvo` (`cat-harness/theming/`), `7po1` (the workflow
 split this parallels).*
 

@@ -245,10 +245,20 @@ function processIds(doc: Record<string, unknown>): string[] {
  * clean run over it — the `dh4f` defect, verified by probe to fail here.
  */
 function skillFilesOnDisk(): string[] {
-  const dir = join(CAT_BOOTSTRAP, "skills");
-  return readdirSync(dir)
-    .filter((f) => f.endsWith(".md") && isSkillMd(join(dir, f)))
-    .map((f) => f.slice(0, -3))
+  // TWO directories, named. `render/` joined `skills/` with bean `hfkl`: it
+  // holds the skills governing cat-bootstrap's own `.jsonld`/`.json` emission,
+  // which is the obligation cat-bootstrap carries INSTEAD of a visualiser.
+  //
+  // Adding it here is the axis working rather than a maintenance tax — the
+  // disk side names its directories on purpose, so a resolver that silently
+  // stopped seeing one would fail here instead of exporting an empty section.
+  return ["skills", "render"]
+    .flatMap((name) => {
+      const dir = join(CAT_BOOTSTRAP, name);
+      return readdirSync(dir)
+        .filter((f) => f.endsWith(".md") && isSkillMd(join(dir, f)))
+        .map((f) => f.slice(0, -3));
+    })
     .sort();
 }
 

@@ -1183,6 +1183,15 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * would hand one back.
    */
   stickies?: StickyContribution[];
+  /**
+   * What this instance is excused from rendering, and what it carries instead.
+   *
+   * See {@link RenderExemption}. **Absent is the normal case** — every
+   * instance owes a visualiser per declared subgraph, which is the `2krx` QA
+   * axis. Present means a layer has traded that obligation for another one it
+   * names, and it is refused without a `reason` and an `owes`.
+   */
+  renderExemption?: RenderExemption;
 }
 
 /**
@@ -1581,6 +1590,135 @@ export class TopologyConflictError extends Error {
   }
 }
 
+/**
+ * What a {@link RenderExemption} may excuse an instance from.
+ *
+ * Two entries, because the owner named two and they fail differently: a
+ * subgraph nobody can look at, and a process nobody can look at. Closed, so a
+ * declaration cannot excuse itself from an obligation nobody has defined.
+ */
+export const RENDER_OBLIGATIONS = ["visualiser", "workflow-visualiser"] as const;
+export type RenderObligation = (typeof RENDER_OBLIGATIONS)[number];
+
+/**
+ * An instance's declared exemption from the rendering obligations, with a
+ * reason and a substitute.
+ *
+ * ## The rule this encodes is a FLOOR THAT RISES, not a flat requirement
+ *
+ * [`cat-harness-minimum`](../docs/architecture/cat-harness-minimum.md) carries
+ * *"if it produces something a human looks at, it is not the harness"*, and
+ * the same architecture states that an instance renders by default. Read
+ * flatly the two cannot both hold. The owner settled it on 2026-09-20: the
+ * requirement **starts** at `cat-harness` rather than applying uniformly.
+ *
+ * | layer | visualiser | its own `.json` / `.jsonld` |
+ * |---|---|---|
+ * | `cat-bootstrap` | **exempt** — it is the navbar FOOTER | **required** |
+ * | `cat-harness` | required | required |
+ * | everything above | required | required |
+ *
+ * `cat-harness` is where the rest begins to apply for an obligation rather
+ * than a convention: it is what supplies the layers above with `folio/`, and a
+ * layer that hands its dependents a folio and renders nothing itself is asking
+ * of them what it did not do.
+ *
+ * ## Why `owes` is REQUIRED, when it could have been prose in a doc
+ *
+ * Because an exemption with no substitute is a hole, and a list of holes with
+ * no substitutes is a silence list — which is exactly what `2krx` says an
+ * opt-out must not become: *"an opt-out needs a REASON per entry … or it
+ * becomes a silence list."* cat-bootstrap does not simply drop out of the
+ * requirement; in the owner's words its `.json`/`.jsonld` *"is its
+ * existence"*, so it trades a criterion it could fail quietly for one it
+ * cannot. `owes` is where that trade is written down, and
+ * {@link renderExemptionProblems} refuses an empty one.
+ *
+ * ## Declared locally, validated globally
+ *
+ * The declaration is local because only the instance knows why. The guard
+ * against the exemption SPREADING is not — {@link renderExemptionProblems}
+ * takes the count of claimants across the repository, because "only the bottom
+ * layer may claim this" is a fact about the stack and cannot be seen from one
+ * file. A second claimant is a finding rather than a silent widening: that is
+ * the failure mode a self-declared exemption otherwise has, and it is the
+ * reason this is not simply a boolean.
+ */
+export interface RenderExemption {
+  /** Which obligations are excused. Non-empty. */
+  of: RenderObligation[];
+  /** Why this layer is the exception. Prose, and required. */
+  reason: string;
+  /**
+   * What it carries INSTEAD — the criterion it cannot fail quietly.
+   *
+   * Required. An exemption whose substitute is unstated is indistinguishable
+   * from a layer that simply never got round to rendering.
+   */
+  owes: string;
+}
+
+export const RenderExemptionSchema = z.object({
+  of: z.array(z.enum(RENDER_OBLIGATIONS)).min(1),
+  reason: z.string().min(1),
+  owes: z.string().min(1),
+});
+
+/**
+ * Is this instance excused from `obligation`?
+ *
+ * The predicate the `2krx` axis calls before raising a no-visualiser finding,
+ * so the exemption is read from the declaration rather than from a hardcoded
+ * instance name in the checker. A name literal would make the rule true only
+ * for the one instance somebody remembered.
+ */
+export function isExemptFrom(
+  d: Pick<CatHarnessDeclaration, "renderExemption">,
+  obligation: RenderObligation,
+): boolean {
+  return d.renderExemption?.of.includes(obligation) ?? false;
+}
+
+/**
+ * Everything wrong with the exemptions declared across a repository.
+ *
+ * Empty means every claim is well-formed AND there is at most one claimant.
+ * Takes the whole set rather than one declaration for the reason
+ * {@link RenderExemption} gives: the shape being guarded is a stack, and a
+ * second claimant cannot be seen from the first one's file.
+ *
+ * **At most one, not exactly one.** A repository that vendors no cat-bootstrap
+ * has nothing to exempt, and failing it for that would be asking it to declare
+ * something to stay green — which is how a declaration stops meaning anything.
+ */
+export function renderExemptionProblems(
+  claimants: ReadonlyArray<{ name: string; renderExemption?: RenderExemption }>,
+): string[] {
+  const problems: string[] = [];
+  const claiming = claimants.filter((c) => c.renderExemption !== undefined);
+  for (const c of claiming) {
+    const parsed = RenderExemptionSchema.safeParse(c.renderExemption);
+    if (!parsed.success) {
+      problems.push(
+        `${c.name}: renderExemption is malformed — ${parsed.error.issues
+          .map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`)
+          .join("; ")}`,
+      );
+    }
+  }
+  if (claiming.length > 1) {
+    problems.push(
+      `${claiming.length} instances claim a renderExemption (${claiming
+        .map((c) => c.name)
+        .sort()
+        .join(", ")}) — the exemption is the BOTTOM of the stack and there is ` +
+        `one bottom. A second claimant is the requirement spreading upward, ` +
+        `which is what this refuses to do quietly.`,
+    );
+  }
+  return problems;
+}
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -1601,6 +1739,7 @@ export const CatHarnessDeclarationSchema = z.object({
   topology: TopologySchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
   stickies: z.array(StickyContributionSchema).optional(),
+  renderExemption: RenderExemptionSchema.optional(),
 });
 
 /**

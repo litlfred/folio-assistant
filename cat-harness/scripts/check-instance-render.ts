@@ -54,13 +54,14 @@
  * @module scripts/check-instance-render
  */
 
-import { basename, resolve } from "node:path";
+import { basename, relative, resolve } from "node:path";
 
 import {
   instanceRootFor,
   instanceRootsIn,
   declaredKinds,
   readDeclaration,
+  renderExemptionProblems,
   repoRootFor,
   type CatHarnessDeclaration,
 } from "../schemas/cat-harness.js";
@@ -277,6 +278,29 @@ if (import.meta.main) {
   }
   const reports = await Promise.all(roots.map((r) => renderInstance(r)));
   console.log(process.argv.includes("--json") ? JSON.stringify(reports, null, 2) : formatReport(reports));
+
+  // THE EXEMPTION, checked here because this is the gate it is an exemption
+  // FROM. Bean `hfkl`: cat-bootstrap is excused the visualiser and the
+  // workflow visualiser, and owes its own `.jsonld`/`.json` instead.
+  //
+  // Checked across every instance in ONE call rather than per instance,
+  // because the property that matters is not "is this claim well-formed" but
+  // "how many layers claim it". The exemption is the bottom of the stack and
+  // there is one bottom; a second claimant is the requirement spreading
+  // upward, which a per-instance check structurally cannot see. See
+  // `renderExemptionProblems`.
+  const exemptionProblems = renderExemptionProblems(
+    roots.map((r) => {
+      const d = readDeclaration(r);
+      return { name: d?.name ?? (relative(repoRoot, r) || "."), renderExemption: d?.renderExemption };
+    }),
+  );
+  if (exemptionProblems.length) {
+    console.error("");
+    for (const p of exemptionProblems) console.error(`  \u2717 ${p}`);
+    process.exit(1);
+  }
+
   if (reports.some((r) => r.verdict === "failed")) process.exit(1);
   // Bean `3jj9`: fatal now that the count is zero. See the report text above
   // for why it was advisory until this change, and why leaving it advisory
