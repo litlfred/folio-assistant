@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T21:06:29.893Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/82bbdc6ae4b63c46f9ac6bd4971058b9ab35258d",
-  "sourceCommitSha": "82bbdc6ae4b63c46f9ac6bd4971058b9ab35258d",
-  "sourceCommitAt": "2026-09-19T21:04:46Z",
+  "generatedAt": "2026-09-20T03:28:14.171Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8f2eba8403d67d708727e04736f10b7a944f9675",
+  "sourceCommitSha": "8f2eba8403d67d708727e04736f10b7a944f9675",
+  "sourceCommitAt": "2026-09-20T03:26:34Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
@@ -262,7 +262,7 @@
     "SequenceFlow": 475,
     "ProcessNode": 444,
     "Tool": 28,
-    "Schema": 51,
+    "Schema": 53,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -2138,7 +2138,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 275,
+      "instructionLines": 314,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2886,7 +2886,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/rendering-fixes.md",
-      "instructionLines": 437,
+      "instructionLines": 442,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -19894,6 +19894,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/memory"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/narrative",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "narrative",
+      "title": "A generated narrative, and who stands behind it — bean `ju0u`.",
+      "module": "schemas/narrative.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/narrative"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/note-anchor",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "note-anchor",
@@ -19956,6 +19964,14 @@
       "title": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
       "module": "schemas/skill-package.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/skill-package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/staging-preview",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "staging-preview",
+      "title": "`staging-preview` — a node of the trashcan that describes one review preview.",
+      "module": "schemas/staging-preview.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging-preview"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/staging",
@@ -21018,7 +21034,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#directory/voices",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "voices",
-      "path": "voices/",
+      "path": "folio-assistant/voices/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/voices"
       ],
@@ -21029,7 +21045,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#directory/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "translation-sources",
-      "path": "translations/",
+      "path": "folio-assistant/translations/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources"
       ],
@@ -21050,8 +21066,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "82685eb58c46563c491aff439509a2f73925fa9e",
-    "pr": "445/merge",
-    "run": "35469333235"
+    "sha": "628c280cd79083de552bbefb5922f087a084c83c",
+    "pr": "449/merge",
+    "run": "35486588693"
   }
 }
