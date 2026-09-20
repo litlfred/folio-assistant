@@ -1,10 +1,11 @@
 ---
 # folio-assistant-6tkl
 title: 'STALE LIST: check-declared-assets hardcodes two instances and there are four'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-20T13:35:24Z
-updated_at: 2026-09-20T13:35:24Z
+updated_at: 2026-09-20T16:25:08Z
 parent: folio-assistant-1xhc
 ---
 
@@ -68,3 +69,46 @@ Two things a fix must keep:
 - [ ] A test asserts the count of instances checked is at least 3, so the next
       instance is covered without anybody remembering.
 - [ ] Zero discovered instances fails rather than passes.
+
+## 2026-09-20 — two of four were ALREADY DONE by a sibling; the other two are now
+
+Re-measured before working it, which changed what the work was.
+
+**Already fixed:** `DECLARED_INSTANCES` is gone. `declaredInstances()` calls
+`instanceRootsIn()`, and the gate reports *"6 declared asset(s) across 4
+instance(s)"* — `cat-harness`, `bootstrap`, `folio-assist-core` and the root.
+So the first two boxes were closed by someone else, including the concrete
+one: folio-assist-core's README is verified and its links audited.
+
+**Still open, and the more important half.** Discovery fixed the *list*; it did
+not fix the *failure mode*. Measured in a directory with no declarations:
+
+    0 declared asset(s) across 0 instance(s); 0 finding(s), 0 not checked
+    EXIT=0
+
+A clean run across an empty set — which is the exact incident this bean cites
+as the reason the hand-kept list was dangerous. Swapping a list for a walk
+moved where the zero comes from and left the zero passing.
+
+Now:
+
+    ✗ no instances discovered under <dir> — expected at least the root's own
+      `harness.json`. Reporting a clean run here would be a pass over an empty
+      set (bean `6tkl`), so this is a failure.
+    EXIT=2
+
+Verified without a pipe, because `cmd | tail` reports tail's status — a trap
+hit three times in this session.
+
+6 tests: the count floor (≥ 3, a floor not an equality, so adding an instance
+does not fail a test whose whole subject is that adding one needs no edit),
+folio-assist-core present, the root counted with no assets and that not being
+a finding, a directory without `harness.json` not counted, a nested one
+counted, and an empty repository discovering none.
+
+## Done when
+
+- [x] check:declared-assets discovers instances instead of listing them — by a sibling
+- [x] folio-assist-core's README verified and links audited — by the same
+- [x] a test asserts the count is at least 3
+- [x] zero discovered instances fails rather than passes
