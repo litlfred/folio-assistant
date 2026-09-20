@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T10:45:46Z
-updated_at: 2026-09-20T11:56:01Z
+updated_at: 2026-09-20T12:07:31Z
 parent: folio-assistant-d308
 ---
 
@@ -102,3 +102,90 @@ Tool; the sweep firing it per block is a trigger. Both may exist.
 What the axis must carry, from this bean's own argument: the profile check catches
 what schema validation STRUCTURALLY cannot, so its verdict is not a refinement of
 the schema verdict and must not be folded into it.
+
+
+---
+
+## 2026-09-20: BUILT — the `profile-conformance` axis
+
+Registered in `EXTENDED_AUTOMATED_CHECKERS` as `profile-conformance`, wrapping
+`checkFolioProfile`. So the conformance check now has a caller outside MCP, and a
+sweep writes its verdict into the per-block sidecar where it outlives the run.
+
+### Its own criterion, never folded into the schema verdict
+
+This bean's own argument required it: the profile check answers a question schema
+validation cannot reach, so a combined verdict would report one judgement where
+there are two — and the hidden one is the one with no other source.
+
+### Cached per process, and that is not an optimisation
+
+`checkFolioProfile` walks the whole folio. Calling it per block would re-walk once
+per block, which is bean `4n37`'s defect — `probeAll` re-spawning 25 subprocesses
+per call — in a different costume. The profile and the manifests cannot change
+mid-sweep, so one walk is not a cache of something volatile; it is not repeating
+work. Same shape as the existing lazy `bib-qa` report load in that file.
+
+### The bug my first version shipped, found by RUNNING it
+
+I guarded could-not-determine on `ProfileCheckResult.profile === undefined`. **That
+field is never `undefined.`** `checkFolioProfile` resolves through
+`readFolioProfile`, which turns an undeclared profile into `"paper"` — correct for
+a validator, since the wider vocabulary is the safe thing to validate against. So
+the guard never fired, and the axis reported:
+
+```
+{"result":"pass","notes":"conforms to the declared `paper` profile (default (no harness.config.json))"}
+```
+
+**A pass on a folio that declares nothing** — exactly the laundering the axis
+exists to prevent, and the note contradicted itself in the same breath
+("declared … (no harness.config.json)").
+
+Fixed by asking `readDeclaredFolioProfile`, whose documented purpose is keeping
+declared apart from resolved. **Not** by matching on `declaredBy`'s wording: that
+is prose, and a check that silently stops firing when a sentence is reworded is
+worse than one that never existed.
+
+Now reports, on this repository: `n/a` — *"the folio declares no content profile
+(undetermined (no harness.config.json)) — could not determine, not conformant"*.
+
+### All three states reached, because n/a alone proves nothing
+
+The platform declares no `contentType`, so an axis tested only here would return
+`n/a` forever and look implemented while checking nothing. Four tests over
+temporary folios:
+
+| fixture | result |
+|---|---|
+| `contentType: document`, holding a `theorem` | **fail** — `kind-outside-profile`, 2 blocks checked, remedy names `contentType: "paper"` |
+| `contentType: paper`, the SAME blocks | **pass** — the control; profiles nest, so `theorem` is inside `paper` |
+| no `harness.config.json` | **n/a**, and the test asserts declared-undefined WHILE resolved-`paper` |
+
+The `paper` control earns its place: without it the violation could have come from
+a broken walk or a bad kind table rather than from the kind being outside THIS
+profile.
+
+**One fixture mistake worth recording**: my first fixture used
+`export default { kind: "theorem" }`, a plain object literal, and
+`readBlockManifest` requires `export default <builder>({ … })`. It reported
+`blocksChecked: 0`, so every assertion would have passed over nothing. The test
+file says so, because the next person writing a block fixture will reach for the
+object literal too.
+
+### A correction to this bean's own measurement
+
+It recorded `readFolioProfile` as having **0 non-test callers**. That was an
+artefact of my grep excluding `profile-check.ts` itself: `checkFolioProfile` calls
+it internally, so it is not a dead export. The "dead or unfinished?" question the
+bean raised does not arise.
+
+## Done when
+
+- [x] one of the three chosen, by the owner — the `qa-sweep` axis
+- [x] built, registered, and its verdict written per block
+- [x] all three states reached in tests, not just the one this repo produces
+- [x] could-not-determine kept distinct from pass, with the trap that broke it recorded
+- [ ] `covered-is-not-reachable` gains this as its worked example of the no-command case
+- [ ] whether `checkFolioProfile` also wants a Tool node, per "triggers or tools as
+      appropriate" — the axis is the trigger; a named command would be the Tool
