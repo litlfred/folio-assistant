@@ -1175,10 +1175,23 @@ async function collectProcesses(
   // never claimed is asking it to declare something to stay green, which is
   // how a declaration stops meaning anything.
   //
-  // REPO-RELATIVE, not absolute: this string is written into a COMMITTED
-  // artefact (`cat-bootstrap/cat-bootstrap.jsonld`), and an absolute path differs
-  // between a developer's machine and CI, so its staleness gate would fail
-  // on a tree nobody touched.
+  // REPO-RELATIVE, not absolute: this string is written into a PUBLISHED
+  // artefact, and an absolute path differs between a developer's machine and
+  // CI — so it would leak a runner's filesystem layout into a public document
+  // and change on every build.
+  //
+  // It said "a COMMITTED artefact (`cat-bootstrap/cat-bootstrap.jsonld`) ... so its
+  // staleness gate would fail on a tree nobody touched". **That file is not
+  // committed and has no staleness gate.** `.gitignore:108` ignores it
+  // deliberately — it was committed once, on a rationale citing a README step
+  // that no prose file under `cat-bootstrap/` actually contains, and it was 52 %
+  // of `cat-bootstrap/` by line count. `docs-site.yml:274` builds it into
+  // `_site/cat-bootstrap/cat-bootstrap.jsonld` at render time instead.
+  //
+  // The CHOICE was right and its stated reason was not, which is the worse
+  // failure of the two: a reader checking the claim finds no gate, concludes
+  // the constraint is imaginary, and makes the path absolute. The real reason
+  // is above, and it does not depend on where the file is stored.
   //
   // A DECLARED DIRECTORY HOLDING NO DIAGRAMS IS A NOTE, NOT A PROBLEM, and
   // until 2026-09-20 it was a problem. It has to be SAID either way —

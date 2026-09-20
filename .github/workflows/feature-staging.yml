@@ -493,7 +493,44 @@ jobs:
           bun run cat-harness/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
-          cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json" 
+          cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
+
+          # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
+          #
+          # Staging published NONE of these while the live site published all
+          # of them. That is not a missing file, it is a preview that cannot
+          # show the artefact it exists to review: the export above stamps every
+          # node with an `@id` under `$BASE`, and the vocabulary those nodes
+          # reference then dereferenced to 404. A reviewer opening a staged
+          # knowledge-graph change got a graph whose own terms resolved to
+          # nothing.
+          #
+          # The namespace documents are deployment-INDEPENDENT on purpose — a
+          # vocabulary's IRIs are the vocabulary, and they are the same document
+          # at any base — so these are copied from the live build's step
+          # unchanged.
+          mkdir -p "./_site/ns/content"
+          cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+          bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
+          cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
+
+          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
+            LAYER="${pair%%:*}"; DIR="${pair##*:}"
+            mkdir -p "./_site/${DIR}"
+            bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
+            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
+            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
+          done
+
+          # THE BOOTSTRAP GRAPH, with `--base-url` so the staged copy names
+          # ITSELF rather than the live document. `gen-cat-bootstrap-graph.ts` took
+          # no such flag until this change — it minted `@id` from the canonical
+          # URL whatever tree it wrote into, so a staged copy would have
+          # asserted it lives on the live site. That is worse than the 404 it
+          # replaces: a reader following the `@id` lands on a different document
+          # that looks correct.
+          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --base-url "$BASE" --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
+          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.

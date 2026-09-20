@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/theme-art-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/theme-art-intake.md) — do not edit here.
+> Generated from [`skills/theming/theme-art-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/theming/theme-art-intake.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/theme-art-intake.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/theming/theme-art-intake.md){: .fa-edit-source }
 
 {% raw %}
 # Theme art intake
@@ -135,4 +135,49 @@ Three rules for reading it, the same three `ci-health` states:
 5. Check it against **art already shipped**. The aspect bands are deliberately
    wide because the shipped laptop crops run 1.50–1.78; a tighter band would
    have looked rigorous and refused work that is fine.
+
+---
+
+## The structure this grows into
+
+The owner chose the axis on 2026-09-20, as **"1 + 2, then specialized to 3"** —
+three levels rather than a choice between three options:
+
+1. **Pipeline stage** is the primary division — **intake → declaration →
+   generation → contrast**. This is how the failures actually arrived: each of
+   the four rounds of *"still not image"* was one stage.
+2. **Producer vs consumer** cross-cuts it, saying which direction a stage
+   faces. It is what makes *"a theme with no CSS rule falls back to an opaque
+   surface and paints over its own art"* a **consumer** fact rather than a
+   generation detail.
+3. **Per artefact** is the specialisation, last and narrowest — sticky, landing
+   board, docs background, navbar avatar. Specialised rather than duplicated:
+   the general rule lives in its stage and the artefact package carries only
+   what differs.
+
+**The ordering matters more than the names.** Artefact-first would duplicate
+intake and contrast into every artefact, which is the shape that put the scrim
+rule in one skill's prose and let it be rediscovered rather than read.
+
+## Why this is one package today and not four
+
+**Measured before splitting: the corpus is three skills.** Four stage packages
+over three skills would declare directories with nothing in them — the `dh4f`
+defect, where a consumer scans an empty tree and reports a clean run over it —
+and this repository's own rule is to **declare only what exists**.
+
+So the axis above is written down and the split waits for the content to reach
+it. The move that *was* worth making now is the one that fixes findability: a
+theming skill is no longer one of 107 general ones. When the stage packages
+earn their own directories, the order is already decided and nobody has to
+re-litigate it.
+
+## What is NOT here
+
+The theming **code** — `schemas/themes.ts`, `schemas/theme-art-intake.ts`,
+`scripts/check-theme-art.ts`, `scripts/gen-themes-css.ts`,
+`scripts/gen-avatars-css.ts` — stays where it is. This is the `kg` graph: the
+instructions an agent follows, not the implementation. A skill and the code it
+describes are different node kinds, and moving code to sit beside its
+documentation is how a partition stops meaning anything.
 {% endraw %}

@@ -158,6 +158,37 @@ export const TodoItemSchema = z.object({
   updatedBy: z.string().optional(),
   data: z.record(z.string(), z.unknown()).optional(),
   related: z.array(z.string()).optional(),
+  /**
+   * Which theme's art backs this todo's sticky.
+   *
+   * The owner, 2026-09-20: *"todos need grump cat themeing based on content
+   * too. used jugement"*. Bean `5y4b`.
+   *
+   * ## Declared, never inferred at render time
+   *
+   * The obvious implementation is to keyword-match the summary in the renderer
+   * — "ingest" takes `library`, "deploy" takes `operations`. That is a rule
+   * nobody can see, review or override, and it **changes silently when
+   * somebody rewords a todo**. A theme is a claim about what the todo IS, so it
+   * belongs on the todo as data.
+   *
+   * ## Why a bare string rather than an enum of theme ids
+   *
+   * Same reason `GraphNodeDirectorySchema.graphs` is an open string checked
+   * against the registry later: a closed enum has to be built at module load,
+   * and this module is the CONTENT model — importing the theme table here
+   * would drag rendering into the content schema and give every consumer of a
+   * todo a dependency on the palette. Unknown values are a rendering finding,
+   * not a parse error.
+   *
+   * ## Absent means the instance's own theme, and that is the safe default
+   *
+   * A wrong theme is worse than no theme: a plain card says nothing, while a
+   * card themed `operations` asserts the todo is operations work. So the
+   * default is inherited rather than guessed, and a theme here is something
+   * somebody chose.
+   */
+  theme: z.string().min(1).optional(),
 });
 
 // ── Feedback schema ──────────────────────────────────────────

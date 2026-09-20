@@ -561,6 +561,15 @@ jobs:
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render
+          # ADVISORY by design, so it exits 0 on findings (bean `2krx`): of 22
+          # directories this instance declares, 2 have a renderer, and a hard
+          # gate on day one is a wall somebody switches off. It is here so the
+          # count is visible on every run and cannot drift unnoticed — the same
+          # path `undeclared` took in check:instance-render before it became
+          # fatal. `--strict` is the switch for the day the number is low
+          # enough to hold.
+          bun run check:subgraph-coverage
+
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no
           # `package.json` script, so a local sweep of `check:*` came
