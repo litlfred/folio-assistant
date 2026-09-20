@@ -2089,14 +2089,14 @@
     {
       "id": "folio-assistant-frq2",
       "title": "RELEASE PATH: release-please names config files that do not exist, and both release workflows document another repository's behaviour",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:46:25Z",
-      "updatedAt": "2026-09-20T20:46:25Z",
+      "updatedAt": "2026-09-20T22:49:46Z",
       "preview": "Found while establishing the ground for bean `dhvf` (instance versioning,\nissue #592). Not that bean's to fix, but a versioning scheme built on this\nrelease path would inherit all of it.\n\n## Measured 2026-09-20 on branch `claude/sharp-ptolemy-6qxh77`\n\n### 1. `release-please` is passed config files that are not in the repository\n\n`.github/workflows/release-please.yml` ends with:\n\n```yaml\nconfig-fil",
       "file": "beans/defs/folio-assistant-frq2--release-path-release-please-names-config-files-tha.md"
     },
@@ -2681,7 +2681,7 @@
     {
       "id": "folio-assistant-lcwz",
       "title": "WORK-PLAN CHART: the epic bars are a picture, not a way in — 21 beans behind a bar with no route to them",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-o3xy",
@@ -3173,14 +3173,14 @@
     {
       "id": "folio-assistant-pb4n",
       "title": "STAGING: the gh-pages retry handles a rejection but not a CONFLICT — the daily render log collides by construction",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:32:53Z",
-      "updatedAt": "2026-09-20T20:33:25Z",
+      "updatedAt": "2026-09-20T22:19:30Z",
       "preview": "Measured on PR #603, 2026-09-20, and the log is unambiguous:\n\n```\n! [rejected]        gh-pages -> gh-pages (fetch first)\npush rejected; rebasing onto origin/gh-pages and retrying\nCONFLICT (content): Merge conflict in _render-log/2026-09-20.jsonl\nerror: could not apply e415631... staging(claude-elegant-albattani-0byaig)\n```\n\n## The gap, stated precisely\n\n`feature-staging.yml` already carries the an",
       "file": "beans/defs/folio-assistant-pb4n--staging-the-gh-pages-retry-handles-a-rejection-but.md"
     },
@@ -3239,6 +3239,20 @@
       "updatedAt": "2026-09-20T04:03:21Z",
       "preview": "## Measured 2026-09-20\n\nThe root `harness.json` declares `bootstrap` → `cat-bootstrap/skills/`, so\nfolio-assistant's graph carries **bootstrap's skills and roles**. It does NOT\ndeclare `cat-bootstrap/workflows/`, so it does not carry **bootstrap's process** —\nthat isolation was deliberate (#432, where bootstrap's process was leaking into\nthe root graph 88 times).\n\nSo the root carries half of boots",
       "file": "beans/defs/folio-assistant-pve3--the-root-declares-half-of-bootstrap-its-skills-but.md"
+    },
+    {
+      "id": "folio-assistant-py74",
+      "title": "QA PROJECTION: six schemas, three incompatible verdict shapes — no honest roll-up exists yet",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T23:09:04Z",
+      "updatedAt": "2026-09-20T23:09:04Z",
+      "preview": "`<base>/qa/` says \"declared and nothing publishes a projection for it yet\" over **592 committed JSON files**. A reader was attempted 2026-09-20 and STOPPED at the measurement, deliberately.\n\n## What the graph actually holds\n\n| schema | files | where a verdict lives |\n|---|---|---|\n| `kg-qa/v1` | 316 | `criteria` as a DICT keyed by criterion id, plus `totals` |\n| `qa-witness/v1` | 134 | `state` (to",
+      "file": "beans/defs/folio-assistant-py74--qa-projection-six-schemas-three-incompatible-verdi.md"
     },
     {
       "id": "folio-assistant-q0tc",
@@ -4257,6 +4271,20 @@
       "file": "beans/defs/folio-assistant-xies--publish-to-cdn-editor-signoff-merge-human-eyes-cdn.md"
     },
     {
+      "id": "folio-assistant-xo3t",
+      "title": "STATE PAGES: a third of the registry descriptions render markdown backticks literally",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:53:52Z",
+      "updatedAt": "2026-09-20T22:53:52Z",
+      "preview": "`registry()` in `state-visualizer.ts` writes each graph's declared description through `esc()` only, so the markdown backticks in it reach the page as literal characters: \"what the daily sweep under \\`test/health/\\` wrote\".\n\nMeasured 2026-09-20 across both declarations: **12 of 34** declared descriptions carry a backtick in the first sentence — the part the registry shows — so this is a third of t",
+      "file": "beans/defs/folio-assistant-xo3t--state-pages-a-third-of-the-registry-descriptions-r.md"
+    },
+    {
       "id": "folio-assistant-xxku",
       "title": "Flushable containers: a named store with a buffer limit, an over-full badge, and three flush actions",
       "status": "todo",
@@ -4353,6 +4381,20 @@
       "updatedAt": "2026-09-20T18:49:27Z",
       "preview": "MEASURED 2026-09-20, on `main` after #477 merged. Every `bitstreams[].materialization.localPath` in `who-iris/catalogue/nodes/` names a file that does not exist:\n\n| node | localPath | resolves to | state |\n|---|---|---|---|\n| `item/18892cf3-…` | `uploads/WPR-RDO-2020-003-eng.pdf` | `who-iris/uploads/WPR-RDO-2020-003-eng.pdf` | **MISSING** |\n| `item/local:9789241548960-eng` | `uploads/9789241548960",
       "file": "beans/defs/folio-assistant-yl5w--catalogue-localpath-is-an-unchecked-edge-and-all-t.md"
+    },
+    {
+      "id": "folio-assistant-yt7j",
+      "title": "SCHEMA: coverage.* is repo-root relative while a directory's path is instance-relative, and nothing says so",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:53:52Z",
+      "updatedAt": "2026-09-20T22:53:52Z",
+      "preview": "Found while building the `elsewhere` state (bean `flh4`, PR #619). A `ContentDirectory`'s `path` resolves against the INSTANCE root; its `coverage.visualiser` / `coverage.docs` resolve against the REPO root. Nothing in `SubgraphCoverageSchema` or `ContentDirectorySchema` says so.\n\nMeasured 2026-09-20 across `harness.json` and `cat-harness/harness.json`: of 27 coverage paths, **25 resolve only from",
+      "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-dire.md"
     },
     {
       "id": "folio-assistant-yv4z",
