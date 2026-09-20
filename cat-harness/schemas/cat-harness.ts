@@ -2649,15 +2649,44 @@ export function ownDirectories(
   registry: GraphKindRegistry = defaultGraphKinds,
 ): ResolvedDirectory[] {
   const decl = readDeclaration(link.root, registry);
-  if (!decl) {
-    return DEFAULT_DIRECTORIES.map((dir) => ({
-      ...dir,
-      declaredBy: "(default)",
-      absPath: resolve(link.root, dir.path),
-      own: false,
-    })).filter((d) => existsSync(d.absPath));
+
+  // The conventional set FIRST, existence-filtered, and then declared entries
+  // override it by id — which is `resolveDirectories`' order, and now this
+  // function's too.
+  //
+  // ## The disagreement this closes (bean `rday`)
+  //
+  // These were the same declaration read by two resolvers that answered
+  // differently. `resolveDirectories` seeded `DEFAULT_DIRECTORIES` at the root
+  // link whatever the declaration said; this one applied them ONLY to a root
+  // with no declaration at all. So a declaration's mere EXISTENCE withdrew
+  // every convention from this function's callers, and `directories` defaults
+  // to `[]` in the schema — meaning the minimal honest declaration,
+  // `{ "name": "x" }`, silently emptied the result.
+  //
+  // Measured 2026-09-20: `resolveSkillDirs` over a fixture with a `skills/`
+  // directory on disk went from 3 to 0 the moment the fixture was given a
+  // name. Nothing failed except the tests that happened to assert an overlay;
+  // a consumer would have read it as "this instance has no skills".
+  //
+  // Seeding unconditionally is the smaller of the two fixes the bean named
+  // (the other was teaching the schema to tell an ABSENT `directories` from an
+  // empty one, which is a migration). It is also the one that makes the rule
+  // sayable in a sentence: **a declaration adds and overrides; it does not
+  // withdraw.** An instance that genuinely owns none of the conventional
+  // directories says so by not having them on disk — the existence filter is
+  // what makes that the same answer either way, and it is the same reason
+  // `DEFAULT_DIRECTORIES` carries: a declared-but-absent directory is `dh4f`,
+  // where a consumer scans nothing and reports a clean run over it.
+  const byId = new Map<string, ResolvedDirectory>();
+  for (const dir of DEFAULT_DIRECTORIES) {
+    const absPath = resolve(link.root, dir.path);
+    if (!existsSync(absPath)) continue;
+    byId.set(dir.id, { ...dir, declaredBy: "(default)", absPath, own: false });
   }
-  return decl.directories
+  if (!decl) return [...byId.values()];
+
+  for (const dir of decl.directories
     // A REPOSITORY-scoped entry is not inherited, for the reason
     // `resolveDirectories` gives: a dependency's repository is a different
     // checkout, so inheriting its entry points every consumer at somebody
@@ -2683,7 +2712,14 @@ export function ownDirectories(
       // was harmed, because it is the only kg-only one among them.
       absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
       own: link.own === true,
-    }));
+    }))) {
+    // Override by id, replacing IN PLACE so the conventional order survives a
+    // relocation — the same rule and the same reason as `resolveDirectories`:
+    // a consumer should not have its scan order reshuffled because a
+    // declaration moved one directory.
+    byId.set(dir.id, dir);
+  }
+  return [...byId.values()];
 }
 
 // ── Materialisation ─────────────────────────────────────────────

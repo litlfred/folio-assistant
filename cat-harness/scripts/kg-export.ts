@@ -849,7 +849,10 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
     title: s.title,
     description: s.description,
     // A link per package, not a bare string: the skill's package is an edge.
-    inPackage: s.packages.map((d) => makeIri(doc, "package", d.split("/").pop()!)),
+    // Through `packageIdFor`, so a skill's edge lands on the node its package
+    // actually emits. Composing the id here independently is what let the two
+    // sides agree on a name neither package had declared (bean `r1vw`).
+    inPackage: s.packages.map((d) => makeIri(doc, "package", packageIdFor(d))),
     // `packagePaths` was here, repeating each package's directory beside the
     // link that already reaches it. REMOVED as denormalised: `inPackage` lands
     // on a SkillPackage node carrying `path`, every one of those links resolves
@@ -978,23 +981,84 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   return nodes;
 }
 
+/**
+ * A package's id — from its MANIFEST's `name`, not from its directory.
+ *
+ * ## The collision this replaces, measured 2026-09-20 (bean `r1vw`)
+ *
+ * The id was `dir.split("/").pop()`, and eleven of the twelve packages here
+ * hid that, because their directory is named after the package. The twelfth
+ * is `cat-bootstrap/skills/`, whose manifest declares `"name": "cat-bootstrap"`
+ * and whose node was `package/skills`, **named `skills`** — the manifest's own
+ * name was never read.
+ *
+ * `cat-harness/src/skills/` has the same basename. Both wanted `package/skills`,
+ * and the `seen` set below silently dropped whichever came second while its
+ * skills kept emitting `inPackage -> package/skills`. So `corpus-grep`, a
+ * cat-harness skill in a directory with no manifest at all, was published as a
+ * member of cat-bootstrap's package. Nothing reported it: both sides resolved,
+ * no link dangled, and the audit's `skill-servable` criterion was SATISFIED by
+ * the collision — a skill served by a package it was never listed in.
+ *
+ * An id derived from a path is an id two paths can agree on by accident. Read
+ * from the declaration and the accident needs two authors to choose one name.
+ *
+ * The basename remains the fallback, and that is not a hedge: `src/skills/` and
+ * `.claude/skills/local` carry no manifest, and a package with no declared name
+ * has nothing else to be called. What changes is that the name is only INFERRED
+ * where nothing was declared.
+ */
+function packageIdFor(dirRelToRoot: string): string {
+  const leaf = dirRelToRoot.split("/").pop()!;
+  const mf = join(ROOT, dirRelToRoot, "package-manifest.json");
+  if (!existsSync(mf)) return leaf;
+  try {
+    const name = (JSON.parse(readFileSync(mf, "utf-8")) as { name?: unknown }).name;
+    return typeof name === "string" && name.length > 0 ? name : leaf;
+  } catch {
+    // An unparseable manifest is reported by `collectPackages` below, which
+    // reads the same file. Falling back here keeps one defect from becoming
+    // two: the package still gets a node, under the only name left.
+    return leaf;
+  }
+}
+
 function collectPackages(doc: string, problems: string[]): Node[] {
   const nodes: Node[] = [];
-  const seen = new Set<string>();
 
   // Every directory that holds skills is a package node, manifest or not.
   // `src/skills` and `.claude/skills/local` carry no `package-manifest.json`,
   // and skipping them left 9 `inPackage` links pointing at nodes that were
   // never emitted — a dangling link in a published graph, which is the defect
   // this export exists to make visible rather than to commit.
+  // Which directory claimed each id, so a second claimant can be NAMED rather
+  // than dropped. `seen` was a bare Set of basenames and its `continue` was
+  // the whole bug: two directories wanting one id was indistinguishable from
+  // the same directory seen twice.
+  const claimedBy = new Map<string, string>();
   for (const dir of skillMdDirs()) {
-    const leaf = dir.split("/").pop()!;
-    if (!existsSync(join(ROOT, dir)) || seen.has(leaf)) continue;
-    seen.add(leaf);
+    if (!existsSync(join(ROOT, dir))) continue;
+    const id = packageIdFor(dir);
+    const prior = claimedBy.get(id);
+    if (prior !== undefined) {
+      // NOT a silent skip. One node is still emitted — dropping it would
+      // dangle every `inPackage` edge pointing at it — but the graph no
+      // longer pretends the second directory does not exist.
+      if (prior !== dir) {
+        problems.push(
+          `two skill directories claim package id "${id}": ${prior} and ${dir}. ` +
+            `A package's id comes from its manifest's \`name\`, or from its directory ` +
+            `basename when it declares none — so give one of them a manifest that ` +
+            `names it, rather than letting both resolve to the same node.`,
+        );
+      }
+      continue;
+    }
+    claimedBy.set(id, dir);
     nodes.push({
-      "@id": makeIri(doc, "package", leaf),
+      "@id": makeIri(doc, "package", id),
       "@type": termIri("SkillPackage"),
-      name: leaf,
+      name: id,
       path: dir,
       hasManifest: existsSync(join(ROOT, dir, "package-manifest.json")),
     });
@@ -1012,11 +1076,18 @@ function collectPackages(doc: string, problems: string[]): Node[] {
     if (!existsSync(mf)) continue;
     try {
       const m = JSON.parse(readFileSync(mf, "utf-8")) as Record<string, unknown>;
+      // The SAME id the stub loop minted — from the manifest's `name`, via the
+      // one resolver. Composing `d.name` here was harmless only because every
+      // package under `skills/` happens to sit in a directory of its own name;
+      // the moment one does not, this pushed a second node beside the stub
+      // instead of replacing it (bean `r1vw`).
+      const id = packageIdFor(`skills/${d.name}`);
+      const iri = makeIri(doc, "package", id);
       // Replace the stub emitted above with the manifest-backed node.
-      const stubAt = nodes.findIndex((n) => n["@id"] === makeIri(doc, "package", d.name));
+      const stubAt = nodes.findIndex((n) => n["@id"] === iri);
       if (stubAt !== -1) nodes.splice(stubAt, 1);
       nodes.push({
-        "@id": makeIri(doc, "package", d.name),
+        "@id": iri,
         "@type": termIri("SkillPackage"),
         name: m.name ?? d.name,
         version: m.version,
