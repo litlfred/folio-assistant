@@ -80,8 +80,8 @@
  *
  * Usage:
  * ```sh
- * bun run scripts/restore-staging.ts --site ./_site --state ./.staging-state.json
- * bun run scripts/restore-staging.ts --verify --state ./.staging-state.json
+ * bun run cat-harness/scripts/restore-staging.ts --site ./_site --state ./.staging-state.json
+ * bun run cat-harness/scripts/restore-staging.ts --verify --state ./.staging-state.json
  * ```
  *
  * @module scripts/restore-staging

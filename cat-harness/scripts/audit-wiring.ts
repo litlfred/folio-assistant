@@ -30,12 +30,12 @@
  *
  * Usage
  * -----
- *   bun run scripts/audit-wiring.ts                       # summary to stdout
- *   bun run scripts/audit-wiring.ts --out-dir audit-out   # write all 3 files
- *   bun run scripts/audit-wiring.ts --warn-only           # never exit non-zero
- *   bun run scripts/audit-wiring.ts --max-per-dir 5
- *   bun run scripts/audit-wiring.ts --baseline 480 --max-growth 0.20
- *   bun run scripts/audit-wiring.ts --triage-by-age 90    # quarterly sweep
+ *   bun run cat-harness/scripts/audit-wiring.ts                       # summary to stdout
+ *   bun run cat-harness/scripts/audit-wiring.ts --out-dir audit-out   # write all 3 files
+ *   bun run cat-harness/scripts/audit-wiring.ts --warn-only           # never exit non-zero
+ *   bun run cat-harness/scripts/audit-wiring.ts --max-per-dir 5
+ *   bun run cat-harness/scripts/audit-wiring.ts --baseline 480 --max-growth 0.20
+ *   bun run cat-harness/scripts/audit-wiring.ts --triage-by-age 90    # quarterly sweep
  *
  * Scope
  * -----

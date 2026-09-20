@@ -30,7 +30,22 @@ const SLUG = "cold-chain-guidance";
 const SCAFFOLD_CONFIG = instanceConfigFilename(SLUG);
 const scaffoldConfigIn = (dir: string): string => join(dir, SCAFFOLD_CONFIG);
 
-const PLATFORM = resolve(import.meta.dir, "../..");
+/**
+ * The platform as a folio links it: the REPOSITORY root, which contains
+ * `cat-harness/`.
+ *
+ * Bean `b963`. This read `resolve(import.meta.dir, "../..")`, which was the
+ * repository root while these tests lived at `scripts/tests/` and silently
+ * became the `cat-harness/` directory when they moved to
+ * `cat-harness/scripts/tests/`. The test went on passing — by modelling a
+ * layout that no longer exists, and thereby asserting that `init-folio` should
+ * emit the pre-split paths.
+ *
+ * What a folio actually does is `git submodule add …/folio-assistant.git
+ * folio-assistant`, so the linked directory is the repository root and the
+ * platform's code is under `cat-harness/` inside it.
+ */
+const PLATFORM = resolve(import.meta.dir, "../../..");
 const dirs: string[] = [];
 
 function tmp(): string {
@@ -139,7 +154,9 @@ describe("what gets written", () => {
   test("the builder shim is the only place the platform path is written", () => {
     const d = tmp();
     initFolio(opts(d, { assistantPath: "vendor/fa" }));
-    expect(readFileSync(join(d, "folio/schema/builders.ts"), "utf-8")).toContain("../../vendor/fa/schemas/builders");
+    expect(readFileSync(join(d, "folio/schema/builders.ts"), "utf-8")).toContain(
+      "../../vendor/fa/cat-harness/schemas/builders",
+    );
     // Manifests reach the platform only through the shim, so re-linking the
     // platform is a two-file edit rather than a sweep over the corpus.
     const manifest = readFileSync(join(d, "folio/cold-chain-guidance/cold-chain-guidance.ts"), "utf-8");

@@ -60,7 +60,7 @@
  * could-not-determine is its own answer.
  *
  * Usage:
- *   bun run translation:index          # write docs/_data/translations.json
+ *   bun run translation:index          # write cat-harness/docs/_data/translations.json
  *   bun run translation:index:check    # fail if stale, invalid, or unreadable
  *
  * @module content/pipeline/translation-index

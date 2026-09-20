@@ -32,7 +32,7 @@
  * gives no way to tell "the trashcan has three things in it" from "eleven
  * things failed to parse".
  *
- * Usage:  bun run scripts/fsh-guts-export.ts [--out FILE] [--base-url URL]
+ * Usage:  bun run cat-harness/scripts/fsh-guts-export.ts [--out FILE] [--base-url URL]
  *
  * @module scripts/fsh-guts-export
  */

@@ -5,7 +5,7 @@ source content, and the voices read out of it.
 
 This instance is staged as a top-level directory ahead of becoming its own
 repository — the same arrangement as `who-iris/`, `who-style-guide/`,
-`folio-assist-sci/` and `folio-assistant-core/`.
+`folio-assistant-sci/` and `folio-assistant-core/`.
 
 ## Why it is not in `cat-harness/`
 

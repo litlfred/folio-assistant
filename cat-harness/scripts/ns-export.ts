@@ -30,7 +30,7 @@
  * keeps paying for. Everything else is glossed in `vocabulary.ts`. A term
  * defined in both is an error, not a preference.
  *
- * Usage:  bun run scripts/ns-export.ts [--out FILE] [--check]
+ * Usage:  bun run cat-harness/scripts/ns-export.ts [--out FILE] [--check]
  *
  * `--check` writes nothing and exits non-zero if any minted term has no
  * definition, naming each one.
