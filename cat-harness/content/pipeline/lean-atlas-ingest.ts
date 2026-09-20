@@ -330,7 +330,8 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const repoRoot = findContentRepoRoot();
   const positional = args.find((a, i) => !a.startsWith("--") && !args[i - 1]?.startsWith("--ingest"));
-  const root = positional ? join(repoRoot, positional) : join(repoRoot, "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const root = positional ? join(repoRoot, positional) : join(repoRoot, "folio");
 
   if (args[0] === "--ingest" && args[1]) ingestMode(repoRoot, args[1]);
   else if (args[0] === "--scan") scanMode(repoRoot, root);

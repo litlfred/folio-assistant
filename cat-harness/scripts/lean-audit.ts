@@ -33,7 +33,8 @@ import { leanModuleChapter } from "../content/pipeline/chapter-profile-registry-
 // for those globs. `findContentRepoRoot()` walks up from the real cwd;
 // `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT_ROOT = resolve(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_ROOT = resolve(REPO_ROOT, "folio");
 
 // ── Types ────────────────────────────────────────────────────────
 

@@ -20,6 +20,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { CONTENT_CONTEXT } from "../schemas/jsonld";
 
+// NOT a folio root: `content` here names the content VOCABULARY, and this
+// file is served at `CONTENT_CONTEXT_URL`. The 2026-09-20 content/ -> folio/
+// excision renamed it by mistake — a published, dereferenceable URL, which
+// moving breaks every consumer of the context. Left as `content`.
 const OUT = join(resolve(import.meta.dir, ".."), "ns", "content", "v1.jsonld");
 
 function main(): number {

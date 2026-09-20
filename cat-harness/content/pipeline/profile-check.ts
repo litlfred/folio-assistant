@@ -144,7 +144,8 @@ function declaresLean(tsPath: string, root: string): string | undefined {
  */
 export function checkFolioProfile(repoRoot: string, contentRoot?: string): ProfileCheckResult {
   const { profile, declaredBy } = readFolioProfile(repoRoot);
-  const root = contentRoot ?? join(repoRoot, "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const root = contentRoot ?? join(repoRoot, "folio");
   const violations: ProfileViolation[] = [];
   let blocksChecked = 0;
 

@@ -549,7 +549,8 @@ if (import.meta.main) {
   const repoRoot = findContentRepoRoot();
   const rootDir = rootArg
     ? join(repoRoot, rootArg)
-    : join(repoRoot, "content");
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    : join(repoRoot, "folio");
 
   const g = buildContentGraph(rootDir, repoRoot);
   const editorial = g.edges.filter((e) => e.kind === "editorial").length;

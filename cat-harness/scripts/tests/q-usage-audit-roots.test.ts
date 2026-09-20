@@ -21,10 +21,10 @@ let root: string;
 
 beforeAll(() => {
   root = mkdtempSync(join(tmpdir(), "folio-roots-"));
-  const content = join(root, "content");
+  const content = join(root, "folio");
   mkdirSync(content, { recursive: true });
 
-  // Two papers, by the `content/<name>/<name>.ts` manifest convention.
+  // Two papers, by the `folio/<name>/<name>.ts` manifest convention.
   for (const p of ["alpha-paper", "beta-paper"]) {
     mkdirSync(join(content, p), { recursive: true });
     writeFileSync(join(content, p, `${p}.ts`), "export default {};\n");
@@ -62,7 +62,7 @@ describe("findPapers", () => {
     }
   });
 
-  test("returns [] for a root with no content/ at all", () => {
+  test("returns [] for a root with no folio/ at all", () => {
     expect(findPapers(join(root, "nope"))).toEqual([]);
   });
 });
@@ -75,8 +75,8 @@ describe("soleFolioPaper", () => {
 
   test("names the paper when there is exactly one", () => {
     const one = mkdtempSync(join(tmpdir(), "folio-one-"));
-    mkdirSync(join(one, "content", "only-paper"), { recursive: true });
-    writeFileSync(join(one, "content", "only-paper", "only-paper.ts"), "export default {};\n");
+    mkdirSync(join(one, "folio", "only-paper"), { recursive: true });
+    writeFileSync(join(one, "folio", "only-paper", "only-paper.ts"), "export default {};\n");
     expect(soleFolioPaper(one)).toBe("only-paper");
     rmSync(one, { recursive: true, force: true });
   });

@@ -451,7 +451,8 @@ function formatWarningsLog(report: ValidationReport): string {
 
 // Was `join(import.meta.dir, "..")` — `<platform>/content`, which holds only
 // `pipeline/`. The papers this validates live in the folio.
-const CONTENT_ROOT = join(findContentRepoRoot(), "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_ROOT = join(findContentRepoRoot(), "folio");
 
 if (import.meta.main) {
   const args = process.argv.slice(2);

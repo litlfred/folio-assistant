@@ -294,7 +294,8 @@ function main(): void {
   const positional = args.filter((a) => !a.startsWith("--"));
   const root = positional[0]
     ? resolve(positional[0])
-    : resolve(REPO_ROOT, "content");
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    : resolve(REPO_ROOT, "folio");
   const write = flags.has("--write");
   const check = flags.has("--check");
   if (write && check) usage();

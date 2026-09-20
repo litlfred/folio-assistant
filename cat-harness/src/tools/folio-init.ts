@@ -43,12 +43,13 @@ import { resolveHarnessConfigPath } from "../../schemas/harness-config";
 function existingFolio(root: string): string | undefined {
   const cfg = resolveHarnessConfigPath(root);
   if (cfg) return basename(cfg.path);
-  const contentDir = resolve(root, "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const contentDir = resolve(root, "folio");
   if (existsSync(contentDir)) {
     const docs = readdirSync(contentDir, { withFileTypes: true })
       .filter((d) => d.isDirectory() && existsSync(resolve(contentDir, d.name, `${d.name}.ts`)))
       .map((d) => d.name);
-    if (docs.length) return `content/${docs[0]}/${docs[0]}.ts`;
+    if (docs.length) return `folio/${docs[0]}/${docs[0]}.ts`;
   }
   return undefined;
 }
@@ -57,7 +58,7 @@ export function registerFolioInitTools(server: McpServer): void {
   server.tool(
     "folio_init",
     "Scaffold a new folio (content repository) that uses folio-assistant: " +
-    "content/, uploads/, library/, the document + chapter + first block " +
+    "folio/, uploads/, library/, the document + chapter + first block " +
     "manifests, harness.config.json, the builder shim, AGENTS.md with CLAUDE.md " +
     "and GEMINI.md stubs, .mcp.json, and the beans work plan. Run this in an " +
     "empty repo before authoring anything. Pass content_type 'paper' for a " +
@@ -77,7 +78,7 @@ export function registerFolioInitTools(server: McpServer): void {
           "elan and texlive as dependencies.",
         ),
       slug: z.string().optional()
-        .describe("Directory name under content/. Derived from the title when omitted."),
+        .describe("Directory name under folio/. Derived from the title when omitted."),
       dir: z.string().default(".")
         .describe("Folio root to scaffold into, relative to the repo the server was pointed at."),
       link: z.enum(["submodule", "sibling"]).default("submodule")
@@ -119,7 +120,7 @@ export function registerFolioInitTools(server: McpServer): void {
             text:
               `This is already a folio — ${already} exists at ${root}.\n\n` +
               `folio_init scaffolds a new one and will not modify what is here. If you ` +
-              `meant to add a document to this folio, add a directory under content/ and ` +
+              `meant to add a document to this folio, add a directory under folio/ and ` +
               `a manifest named after it; if you meant to re-scaffold, pass force (it ` +
               `overwrites AGENTS.md, harness.config.json and the starter block). ` +
               `Pass dry_run to see exactly what would change.`,
