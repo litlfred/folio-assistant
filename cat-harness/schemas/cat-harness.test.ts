@@ -36,6 +36,7 @@ import {
   directoriesForGraph,
   resolveDirectories,
   resolveGraphKind,
+  instanceRootsIn,
   toJsonLd,
   type ResolvedDirectory,
 } from "./cat-harness";
@@ -959,5 +960,71 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
     }).toEqual({ beans: BEAN_GRAPH_FILE, todos: TODO_GRAPH_FILE });
     expect(BEAN_GRAPH_FILE).toBe("beans.json");
     expect(TODO_GRAPH_FILE).toBe("todos.json");
+  });
+});
+
+describe("instanceRootsIn — discovered, never listed", () => {
+  it("finds the root itself and every declaring subdirectory, root first", () => {
+    const base = mkdtempSync(join(tmpdir(), "roots-"));
+    const decl = JSON.stringify({ name: "x", directories: [] });
+    writeFileSync(join(base, DECLARATION_FILENAME), decl);
+    for (const d of ["beta", "alpha"]) {
+      mkdirSync(join(base, d), { recursive: true });
+      writeFileSync(join(base, d, DECLARATION_FILENAME), decl);
+    }
+    // declares nothing — present, but not an instance
+    mkdirSync(join(base, "plain"), { recursive: true });
+
+    expect(instanceRootsIn(base)).toEqual([
+      resolve(base),
+      join(resolve(base), "alpha"),
+      join(resolve(base), "beta"),
+    ]);
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("omits the root when the root does not declare", () => {
+    const base = mkdtempSync(join(tmpdir(), "roots-"));
+    mkdirSync(join(base, "only"), { recursive: true });
+    writeFileSync(
+      join(base, "only", DECLARATION_FILENAME),
+      JSON.stringify({ name: "only", directories: [] }),
+    );
+    expect(instanceRootsIn(base)).toEqual([join(resolve(base), "only")]);
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("skips dot-prefixed directories, like every other path guard here", () => {
+    const base = mkdtempSync(join(tmpdir(), "roots-"));
+    mkdirSync(join(base, ".hidden"), { recursive: true });
+    writeFileSync(
+      join(base, ".hidden", DECLARATION_FILENAME),
+      JSON.stringify({ name: "hidden", directories: [] }),
+    );
+    expect(instanceRootsIn(base)).toEqual([]);
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("does not descend — a declaration two levels down is not an instance here", () => {
+    const base = mkdtempSync(join(tmpdir(), "roots-"));
+    mkdirSync(join(base, "outer", "inner"), { recursive: true });
+    writeFileSync(
+      join(base, "outer", "inner", DECLARATION_FILENAME),
+      JSON.stringify({ name: "inner", directories: [] }),
+    );
+    expect(instanceRootsIn(base)).toEqual([]);
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("finds all four instances of THIS repository, which is the defect it fixes", () => {
+    // The gates carried `["cat-harness", "bootstrap"]`. Asserting against the
+    // real repository is the point: a fixture would have passed for the whole
+    // period the literal was wrong. If an instance is added or removed this
+    // test SHOULD fail — that is the signal the literal never gave.
+    const repo = resolve(import.meta.dir, "..", "..");
+    const found = instanceRootsIn(repo).map((r) => r.slice(repo.length + 1) || ".");
+    expect(found).toEqual([".", "bootstrap", "cat-harness", "folio-assist-core"]);
+    expect(found).toContain("folio-assist-core");
+    expect(found).toContain(".");
   });
 });

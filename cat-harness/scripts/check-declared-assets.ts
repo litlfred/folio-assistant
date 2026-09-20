@@ -32,9 +32,9 @@
  * Exit codes: 0 clean · 1 any missing asset or dead link.
  */
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 
-import { declaredAssets } from "../schemas/cat-harness.js";
+import { declaredAssets, instanceRootsIn } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
 // renderable kind"), so the harness alone does not know it exists. This module
@@ -48,17 +48,26 @@ import { declaredAssets } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 
 /**
- * Instances whose declarations this repository owns, as REPOSITORY-relative
- * paths — `import.meta.main` resolves them against the repository root.
+ * Instances whose declarations this repository owns — **discovered, not
+ * listed**, via {@link instanceRootsIn}.
  *
- * The first entry was `"."`, which named the instance while the instance was
- * the repository. After the move (bean `wggr`) it named the repository root,
- * which carries no `harness.json`, so `declaredAssets` returned `[]` and this
- * gate reported "1 declared asset across 2 instances, 0 findings" over a file
- * it had not opened — a clean run across an empty set, which is `dh4f` in the
- * one check whose whole subject is a file nobody was looking at.
+ * This was a literal `["cat-harness", "bootstrap"]`, and the docstring on it
+ * recorded the list being wrong ONCE already: the first entry was `"."`, which
+ * named the instance while the instance was the repository, and after the move
+ * (bean `wggr`) it named a root carrying no `harness.json`, so `declaredAssets`
+ * returned `[]` and this gate reported *"1 declared asset across 2 instances,
+ * 0 findings"* over a file it had never opened.
+ *
+ * The list was then wrong a SECOND time, the same way: by 2026-09-20 there were
+ * four instances — `cat-harness`, `bootstrap`, `folio-assist-core` and the
+ * repository root — and this gate checked two of them. Recording that a
+ * hardcoded list went stale, and then fixing it by correcting the hardcoded
+ * list, buys one release. Asking the filesystem is what stops the third time
+ * (bean `6tkl`).
  */
-export const DECLARED_INSTANCES = ["cat-harness", "bootstrap"] as const;
+export function declaredInstances(repoRoot: string): string[] {
+  return instanceRootsIn(repoRoot);
+}
 
 export interface AssetFinding {
   instance: string;
@@ -114,8 +123,8 @@ if (import.meta.main) {
   let notChecked = 0;
   let declared = 0;
 
-  for (const inst of DECLARED_INSTANCES) {
-    const abs = join(root, inst);
+  const instances = declaredInstances(root);
+  for (const abs of instances) {
     declared += declaredAssets(abs).length;
     const r = auditInstance(abs);
     findings = findings.concat(r.findings);
@@ -126,7 +135,7 @@ if (import.meta.main) {
     console.error(`  ✗ ${f.instance}/${f.asset}: ${f.kind} — ${f.detail}`);
   }
   console.log(
-    `${declared} declared asset(s) across ${DECLARED_INSTANCES.length} instance(s); ` +
+    `${declared} declared asset(s) across ${instances.length} instance(s); ` +
       `${findings.length} finding(s), ${notChecked} not checked (external or non-markdown)`,
   );
   process.exit(findings.length > 0 ? 1 : 0);
