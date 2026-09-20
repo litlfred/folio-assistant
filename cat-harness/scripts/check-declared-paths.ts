@@ -44,6 +44,58 @@
  * a template is not a path a declaration could have answered without also
  * answering the placeholder.
  *
+ * ## Tests ARE scanned, and were not until 2026-09-20
+ *
+ * `*.test.ts` was skipped from this module's first commit. Read the history
+ * and there is no reason recorded anywhere: not a comment on the clause, not
+ * a line in a 71-line commit message that argues every other scoping decision
+ * with measurements, not a mention in the section above that exists to list
+ * exclusions. **It was written, never argued** — so it cost three breakages
+ * (bean `dhol`) before anyone asked.
+ *
+ * The worst was not a test failing. `scripts/tests/log-writer.test.ts`
+ * composed a path to a diagram that had moved, went ENOENT, and reported
+ * *"the process does not declare folio:log"* — **a false finding about the
+ * corpus**, from a test that was itself broken. A gate that reads the
+ * declaration is the thing that catches that, and it was looking away.
+ *
+ * ### Why the obvious fix was wrong, and what replaced it
+ *
+ * Scanning tests adds **407** literals to 18. So the bean proposed narrowing
+ * the exemption to FIXTURES — a literal inside a `mkdtemp` tree names nothing
+ * in this repository and must not be resolved against the declaration.
+ *
+ * Measured 2026-09-20, that is under-resolved. The 443 test literals are four
+ * populations, not two: fixture trees; **test VECTORS** (`check(["folio/paper/
+ * ch/x.qa.json"])` — path-shaped data passed to the function under test, and
+ * `"@id": "library/who-anc-2016/nodes/rec-007"`, which is an identifier and
+ * not a path at all); layout ASSERTIONS pinning that the declaration yields
+ * `src/skills`; and real corpus references. A line-local fixture heuristic
+ * scored 161 of 407 and misfiled the rest.
+ *
+ * **No heuristic was needed.** The ratchet already separates them, and does
+ * it dynamically, which a static rule cannot:
+ *
+ *  - a fixture or vector names nothing that resolves, scores once into its
+ *    file's baseline, and never moves again;
+ *  - a corpus reference RESOLVES, so it is an `artefact` — and the moment
+ *    somebody relocates the file it names, it stops resolving, its file goes
+ *    above baseline, and the gate fires.
+ *
+ * That is the case a fixture heuristic provably cannot catch: a literal that
+ * LOOKS like a fixture path today because the file it named was moved
+ * yesterday. **36 test literals currently resolve** — among them the CRDM
+ * diagrams in `bpmn-translate.test.ts` and `editing-hci-validation.bpmn` five
+ * times in `corpus-gate.test.ts` — and each is now protected.
+ *
+ * Falsified rather than assumed: renamed `crdm-deliver.bpmn`, watched
+ * `bpmn-translate.test.ts` go 0 → 1 with the literal named, restored it,
+ * watched the gate go quiet.
+ *
+ * The cost is honest and is the same one the 152 bought: the baseline jumps
+ * to 425 across 98 files. It is recorded debt that can only go down, and the
+ * protection above is what it buys.
+ *
  * ## Why it ships as a ratchet and not as a wall
  *
  * First run, 2026-09-19: **152** unaccounted literals across 40 files. That
@@ -369,7 +421,7 @@ export function scanDeclaredPaths(root: string): Scan {
       if (e.name === "node_modules" || e.name.startsWith(".")) continue;
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".ts") && !e.name.endsWith(".test.ts")) scan(p);
+      else if (e.name.endsWith(".ts")) scan(p);
     }
   };
 

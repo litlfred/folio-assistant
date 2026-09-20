@@ -60,4 +60,37 @@ describe("declared-path literals", () => {
     const dead = scan.artefacts.filter((a) => !existsSync(join(root, a.literal)));
     expect(dead.map((d) => `${d.file}:${d.line} → ${d.literal}`)).toEqual([]);
   });
+
+  /**
+   * `*.test.ts` was skipped from this module's first commit with no reason
+   * recorded anywhere, and cost three breakages before anyone asked (bean
+   * `dhol`). The worst was a test that composed a path to a moved diagram,
+   * went ENOENT, and reported a FALSE FINDING ABOUT THE CORPUS.
+   *
+   * An exclusion that was never argued can be re-added by anyone who finds
+   * the 407 test literals startling, and the startle is legitimate — so the
+   * argument has to be pinned somewhere a re-adder trips over. The module
+   * header carries it; this carries the consequence.
+   */
+  test("tests are scanned — the exclusion cost three breakages and had no reason", () => {
+    const fromTests = [...scan.refused, ...scan.artefacts, ...scan.marked]
+      .filter((s) => s.file.endsWith(".test.ts"));
+    expect(fromTests.length, "*.test.ts is being skipped again — read the module header").toBeGreaterThan(100);
+  });
+
+  /**
+   * The protection the inclusion actually buys, as a property rather than as
+   * one run's result: a test naming a real artefact is checked to dereference,
+   * so relocating that artefact without updating the test raises the file
+   * above baseline. Verified by moving `crdm-deliver.bpmn` and watching
+   * `bpmn-translate.test.ts` go 0 → 1.
+   *
+   * Asserted as a floor and not a count: the number churns with every test
+   * that names a diagram, and a count in a test is the claim this repo
+   * already refuses in prose.
+   */
+  test("test literals naming real artefacts are checked to dereference", () => {
+    const guarded = scan.artefacts.filter((a) => a.file.endsWith(".test.ts"));
+    expect(guarded.length, "no test names a real artefact — the relocation guard is vacuous").toBeGreaterThan(20);
+  });
 });
