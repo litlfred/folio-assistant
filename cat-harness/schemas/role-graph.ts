@@ -380,7 +380,18 @@ export const RoleDefSchema = z.object({
   description: z.string().min(1),
   actorKinds: z.array(z.enum(ACTOR_KINDS)).min(1),
   lanes: z.array(z.string()).default([]),
+  /**
+   * Skills available to an actor in this role, before inheritance.
+   *
+   * @ref SkillDefinitionSchema
+   */
   skills: z.array(z.string()).default([]),
+  /**
+   * Roles this one IS-A, outermost last. Static composition, not the scoped
+   * subprocess stack.
+   *
+   * @ref RoleDefSchema
+   */
   inherits: z.array(z.string()).optional(),
   actedUpon: z.boolean().optional(),
   judgementOnly: z.boolean().optional(),
