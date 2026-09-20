@@ -135,3 +135,34 @@ choice matters as much.
 [ ] A gate fails a dependency that floats
 [ ] `directory-conventions` states the rule; the SUSHI claim in
     `harness-config.ts` is corrected to name the half that is true
+
+## ANSWERED 2026-09-20, and the answers close two of the four options
+
+Owner, in sequence:
+
+> \[consumed outside the monorepo?\] **Yes — some are consumed externally.**
+>
+> downstream we need to align to fhir, sushi. **hard constraint.**
+>
+> sha is for staging, regernecing in published SEMVER
+
+**Option D is dead and option C is dead.** D relied on a SHA being a
+sufficient pin; the third message bars a SHA from a published reference. C is
+npm-style ranges; FHIR pins exact versions and a downstream aligning to FHIR
+cannot be handed ranges. **Option A, on the rules rather than the registry.**
+
+Full scheme drafted: [`fsh-guts/proposals/instance-versioning.md`](../../fsh-guts/proposals/instance-versioning.md).
+
+Three defects found while establishing the ground, all the `xom7` shape and
+none of them this bean's to fix:
+
+1. `release-please.yml` runs on every push to `main` against
+   `.github/release-please-config.json` and `.github/release-please-manifest.json` —
+   **neither is in the repository**.
+2. Its stated scope is another repository's: *"the 7 published packages under
+   `tools/`"*, naming `pyhecke` and `qou-substrate`.
+3. **Zero tags.** The release path has never been exercised.
+
+The proposal's own first ask is the narrowest one: a `check:published-refs`
+gate failing a SHA, a branch name or `current` in a published artefact. It can
+be written against today's data, before `id`, `version` or `publishable` exist.
