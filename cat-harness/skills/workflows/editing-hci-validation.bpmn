@@ -228,7 +228,6 @@ In the Agent lane, and this diagram makes the reason sharp. `Task_RecordDecision
 `CallActivity_Evidence` sits in `Lane_Editor` instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider.
 
 On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached `Task_ReviewFindings` with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:userTask id="Task_RecordDecision" name="Record the decision and its audit note&#10;[decision-audit]">
       <bpmn:documentation>A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as `proposed_by`; the author is whoever decided.</bpmn:documentation>

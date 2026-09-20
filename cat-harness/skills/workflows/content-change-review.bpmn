@@ -214,7 +214,6 @@ NOT between `Task_AssessImpact` and `Task_ReviewImpact`, although that is the ha
 In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process.
 
 On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since `Task_EditLogic` feeds straight into the assessment.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:task id="Task_CommitPush" name="Commit, push, update PR">
       <bpmn:extensionElements>

@@ -45,7 +45,6 @@ The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP
 Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged.
 
 `A_Implement` carries `folio:bean op="claim"`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:task id="A_Implement" name="Phase 6: Implement
 (feature branch + PR)">
@@ -113,7 +112,6 @@ actionable direction: new beans or bean updates for the agent.</bpmn:documentati
     </bpmn:task>
     <bpmn:callActivity id="Call_ThemeUIReview" name="Post-MVP&#10;theme + UI review" calledElement="Process_ThemeUIReview">
       <bpmn:documentation>On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:endEvent id="End_Process_CRDM_Deliver" name="Phase complete"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_1" sourceRef="Start_Process_CRDM_Deliver" targetRef="Call_OptionsAnalysis"/>

@@ -325,3 +325,60 @@ proved the *contract*.
 - both existing drivers updated to take the early exit
   (`drainSubprocess(..., { GW_Trigger: "no" })`), 63 pass
 - SVGs, docs pages, `.pot` catalogues and kg-qa sidecars regenerated
+
+
+---
+
+## CORRECTION 2026-09-20 — I put the CALLEE's skill on the CALLER's activity, four times
+
+Caught by reading `role-carries-activity-skill` after the wiring, not by the
+gates, which were **green with all four findings present** because
+`kg:audit:check` fails only on `critical`.
+
+Every one of my four call activities carried
+`<folio:skill ref="methodology-adoption"/>`, and every one produced:
+
+> needs skill `"methodology-adoption"`, but its lane's role `"authoring-agent"`
+> does not carry it.
+
+Including `upstream-version-adoption`, so this was **latent from the first call
+site** and I did not notice when I wired the other three — I propagated it.
+
+### The rule the corpus actually follows
+
+Two precedents, and they look contradictory until you read what each names:
+
+| call activity | skill ref | its lane's role carries it? |
+|---|---|---|
+| CRDM's seven (`Call_Issue` … `Call_Close`) | `crdm-requirements-workflow` | **yes** — the ORCHESTRATING skill |
+| `CallActivity_Evidence` | none | n/a |
+
+So: **a call activity may name a skill its own lane's role carries — the skill of
+orchestrating the call — and must never name the callee's internal skill.** The
+subprocess declares its own; `Process_OptionsAnalysis`'s `business-analyst` lane
+already carries `methodology-adoption`, which is exactly why the caller naming it
+was redundant at best and false at worst.
+
+Fixed by dropping the ref from all four, not by adding `methodology-adoption` to
+`authoring-agent`. Adding it would have made the audit pass by asserting the
+authoring agent performs methodology selection — diluting the lane distinction
+this platform is built on (*"nothing IS a reviewer; somebody ACTS AS reviewer
+inside a process"*). The audit was right and my annotation was wrong.
+
+Also fixed, same line and same class, in the same file: `Call_ThemeUIReview`
+carried `theme-ui-review`, the callee's skill, with the same finding. Pre-existing
+rather than mine, and left failing it would have kept `crdm-deliver`'s sidecar red
+in a file I was already editing.
+
+`role-carries-activity-skill` is now `pass` on all four diagrams.
+`crdm-deliver` keeps one pre-existing `skill-servable` failure —
+`crdm-requirements-workflow` is served by no local package — which is the same
+family as `sa8y`'s manifest item and not this bean's.
+
+### Why the gates did not catch it, which is the part worth keeping
+
+`role-carries-activity-skill` is not `critical`, so `bun run gates` passed 60 of
+60 with four false claims in the graph. That is the `ci-health` shape one level
+in: **a green gate set is not a clean audit, and this session shipped four
+findings on a green run before reading the sidecars.** Read the sidecar after
+touching a diagram; the gate does not stand in for it.
