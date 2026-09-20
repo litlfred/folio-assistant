@@ -125,6 +125,12 @@ export function pipeline(scratch: string): RenderStep[] {
     { id: "skill-docs", needs: ["readme"], fatal: false, label: "skill instruction pages", run: ["bun", "run", "cat-harness/scripts/gen-skill-docs.ts"] },
     { id: "docs-pages", needs: ["readme"], fatal: false, label: "content-backed docs pages", run: ["bun", "run", "cat-harness/scripts/gen-docs-pages.ts"] },
     { id: "bpmn", needs: ["readme"], fatal: false, label: "BPMN workflow diagrams", run: ["bun", "run", "render:bpmn"] },
+    // `needs: ["docs-pages"]`, and it is a REAL dependency rather than a
+    // tidy-looking one: the state visualiser decides each graph's state by
+    // asking whether `assets/<id>/index.json` is on disk, and `docs-pages` is
+    // what writes it. Run the other way round, `beans` and `todos` render as
+    // "declared" — wrong pages, exit 0, nothing to notice. Bean `flh4`.
+    { id: "state-dashboards", needs: ["docs-pages"], fatal: false, label: "state graph dashboards", run: ["bun", "run", "cat-harness/scripts/state-visualizer.ts"] },
 
     // ── Stage 3: the dynamic state, after stage 2 has contributed ───────
     //
