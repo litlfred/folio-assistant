@@ -251,10 +251,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T12:01:09.555Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e1e68f73e709ca20d6c140e7489aac68673a40ef",
-  "sourceCommitSha": "e1e68f73e709ca20d6c140e7489aac68673a40ef",
-  "sourceCommitAt": "2026-09-20T13:59:39+02:00",
+  "generatedAt": "2026-09-20T12:06:24.195Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ecfe0dc5cd00de7f36ec0bb2ac107e81290024ce",
+  "sourceCommitSha": "ecfe0dc5cd00de7f36ec0bb2ac107e81290024ce",
+  "sourceCommitAt": "2026-09-20T14:05:05+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 194,
@@ -24484,7 +24484,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
       ],
-      "description": "The bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `bootstrap/skills/`, NOT `bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `bootstrap/README.md` and `bootstrap/AGENTS.md` declare neither, and they are the bootstrap instance's two DECLARED ASSETS — so a graph rooted at `bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `bootstrap/harness.json`; this entry is the same fact at the root, and it has to be stated twice because bootstrap is not a DECLARED DEPENDENCY — `HarnessConfigDependenciesSchema` knows only `folioAssistant`, so \"this instance depends on bootstrap\" is not expressible and `resolveSkillDirs` reaches bootstrap only through this entry. When that IS expressible, THIS entry is the one to delete. The earlier note here said `resolveSkillDirs` had no caller: it has one — `discoverLocalPackages` — and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency."
+      "description": "The bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `bootstrap/skills/`, NOT `bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `bootstrap/README.md` and `bootstrap/AGENTS.md` declare neither, and they are the bootstrap instance's two DECLARED ASSETS — so a graph rooted at `bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `bootstrap/harness.json`; this entry is the same fact at the root, and it is stated twice BY DECISION (2026-09-20) rather than by necessity. THE EARLIER NOTE HERE WAS WRONG and the correction is the useful part: it said \"this instance depends on bootstrap\" is not expressible because `HarnessConfigDependenciesSchema` knows only `folioAssistant`. That key does not mean the folio-assistant PACKAGE — its own doc comment reads \"Other folio-assistant instances this folio depends on\", and bootstrap is such an instance by every test the code applies. MEASURED, not argued: writing `cat-harness/harness.config.json` with `{name: \"bootstrap\", path: \"../bootstrap\", provides: [\"skills\"]}` serves bootstrap through `LOCAL_PACKAGES` with `folio-assistant` unmoved. The zod schema needs no change at all. WHAT ACTUALLY BLOCKS IT is one directory entry, and it is not in the dependency schema: bootstrap declares `workflows/` with no `scope`, so cat-harness INHERITS it, and `materialiseDirectories` resolves an inherited path against the INHERITING instance by design — it wants `cat-harness/workflows/`, which does not exist, and `harness:dirs:check` reports `21 declared, 1 missing` and exits 1. The gap it exposes is general and this entry is only where it surfaced: a `ContentDirectory` cannot say whether it is a LAYOUT dependents should reproduce (`uploads/`, `library/`, `voices/`) or merely WHERE ITS OWN CONTENT LIVES (`workflows/`, `schemas/`, `tools/`). Simulated on a fresh folio depending on this instance, `init-folio` would create five directories it has no use for, each with a committed keep-marker — the `dh4f` shape, shipped downstream. Adding that distinction was considered and DECLINED for now: it is a schema change whose per-directory classification is a judgement about every directory here, not a bootstrap workaround. So THIS entry stays, and the thing to fix before deleting it is the convention/content distinction — not the dependency schema. The earlier note here said `resolveSkillDirs` had no caller: it has one — `discoverLocalPackages` — and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness",
@@ -24649,8 +24649,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "e1e68f73e709ca20d6c140e7489aac68673a40ef",
+    "sha": "ecfe0dc5cd00de7f36ec0bb2ac107e81290024ce",
     "pr": "main",
-    "run": "35509349082"
+    "run": "35509615455"
   }
 }
