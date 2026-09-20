@@ -122,6 +122,11 @@ const stickies = readLandingStickies(ROOT).map((st) => {
     summary: st.summary,
     comment: st.comment,
     theme: st.theme,
+    // WHICH LAYER contributed this card. Carried through to the data file rather
+    // than left in the node, because the board is composed and "which layer put
+    // this here" is the first question anyone debugging it asks — and the answer
+    // has to be available where the page is, not only where the schema is.
+    contributedBy: st.contributedBy,
     // Split so the template never has to ask whether to apply `relative_url`:
     // doing so to an absolute URL breaks it, and omitting it on a site path
     // drops the baseurl. `isExternalLink` reads it off the URL scheme, which

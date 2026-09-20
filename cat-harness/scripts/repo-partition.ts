@@ -589,6 +589,14 @@ const RULES: Rule[] = [
       "schemas/front-matter.ts",    // "this repository's self-declaring files"
       "schemas/test-run.ts",        // what was measured, with what; only eval-crdm-detect reads it
       "schemas/note-anchor.ts",     // read only by `carried-note.ts`, already harness
+      // Declaration vocabulary, by the same test as the four above: it imports
+      // only zod, and it carries no part of the content model. The direction is
+      // what forces it — `CatHarnessDeclarationSchema` (harness) holds the
+      // `stickies` field, so defining the shape in `landing-sticky.ts` (core)
+      // would make the harness import core. That wrong-direction edge was the
+      // falsifier the contribution design was measured against, and this is
+      // where it is answered rather than absorbed.
+      "schemas/sticky-contribution.ts",
       "schemas/fsh-guts.ts",        // the trashcan, not FHIR Shorthand
       "schemas/python-deps.ts",     // the repository's own Python toolchain
       "schemas/avatars.ts",         // an avatar for every declared kind
