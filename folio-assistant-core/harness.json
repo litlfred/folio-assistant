@@ -1,0 +1,17 @@
+{
+  "_comment": "folio-assist-core, staged as a top-level directory ahead of the repository split (#223). The owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' That correction is a layering call, not a filing preference, and BASE_GRAPH_KINDS already records the rule it applies: 'skills/ schemas beans all in cat-harness, voices, uploads library in folio-asst-core.' Dublin Core, a catalogue and a materialisation are all about CONTENT the instance holds or points at — the same side of the line as library/ and uploads/ — so they are core's, not the harness's. The harness layer must not own a vocabulary describing content it cannot render; that is the same argument schemas/folio-graph-kind.ts makes for `folio` itself.",
+  "name": "folio-assist-core",
+  "description": "The content layer — what a folio holds, where it came from, and how much of it is actually here.",
+  "_directories_comment": "One entry today, and it is a NAMED SUBGRAPH rather than a second `schemas` pile: the id is `core-schemas`, distinct from cat-harness's `schemas`, because overrides match on the entry's id and reusing that id would REPLACE the harness's schema graph rather than add to it. That is the same trap the `cat-harness-src` entry in cat-harness/harness.json documents. Declaring only what exists, per the dh4f rule: there is no library/, voices/ or uploads/ here yet, and a declared-but-absent directory makes every consumer scan nothing and report a clean run over it.",
+  "directories": [
+    {
+      "id": "core-schemas",
+      "path": "schemas/",
+      "description": "The content layer's own schema nodes. Three today, and they are one chain: `dublin-core` is what a source system SAYS about an item, `catalogue` is the shape of the collection that item sits in, and `materialization` is whether any of its bytes are actually here. The third is the load-bearing one — see its module doc for why bootstrap fetching a harness and who-iris fetching three items out of 0.7 TB are the same process with two names.",
+      "graphs": [
+        "schemas",
+        "cat-harness"
+      ]
+    }
+  ]
+}
