@@ -42,6 +42,15 @@ graph**. `folio` is one graph kind among several.
 
 The vocabulary is **open**, and split across two layers.
 
+**A kind answers two questions, and only one of them is here.** `renderable`
+— does this become a website — is below. The other is whether the graph holds
+the subject matter or a record about it, and
+[`content-and-state-graphs`](content-and-state-graphs.md) owns it: the
+definition, the two questions that settle a hard case, the reasoning for the
+four kinds whose side is not obvious from their name, and what a consumer may
+assume about each. **Read it before adding a kind** — `holds` is required, so
+a kind that has not decided does not compile.
+
 > ### `kg` was renamed to `cat-harness` (2026-09-19)
 >
 > Every other harness concept is named for the **layer that defines it** —
@@ -534,9 +543,15 @@ Decide which layer owns it first — **if it renders, it is not the harness's.**
   `schemas/folio-graph-kind.ts` that calls `registry.register(name, def)` at
   import, so the harness never learns the name until that layer is loaded.
 
-Either way the definition is `@type` IRI + `renderable` + summary, and the
-JSON-LD projection and the reverse lookup both derive from it. A kind added
-without deciding `renderable` will not compile.
+Either way the definition is `@type` IRI + `renderable` + `holds` + summary,
+and the JSON-LD projection and the reverse lookup both derive from it. A kind
+added without deciding **either** axis will not compile.
+
+`holds` is the content/state one, and
+[`content-and-state-graphs`](content-and-state-graphs.md) is where you answer
+it — including why there is no third value, and why it is compared by
+`sameKind` so two layers cannot register one name on opposite sides of the
+line and have the first silently win.
 
 Note the declaration's `graph` field is validated **against the registry at
 read time**, not by a closed Zod enum. An enum would be built at module load —

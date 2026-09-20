@@ -91,6 +91,20 @@ export const DECLARATION_FILENAME = "harness.json";
  * the point of making them all graphs — but only a renderable one is wired to
  * the site build.
  */
+/**
+ * Which side of the content/state line a graph kind sits on.
+ *
+ * Two values and no third. There is no "could not determine" here, and that is
+ * a departure from this repo's usual three-state rule for a reason worth
+ * stating: a third state is right when a CHECK looked and could not tell, and
+ * wrong when an AUTHOR is registering a kind they are defining. Whoever adds a
+ * kind knows what it holds; letting them decline to say would put the burden on
+ * every consumer instead, which is the position the axis exists to end.
+ *
+ * See `skills/folio-core/content-and-state-graphs.md`.
+ */
+export type GraphLayer = "content" | "state";
+
 /** What a declared directory's graph kind means. */
 export interface GraphKindDef {
   /** The `@type` IRI this kind projects to. */
@@ -106,6 +120,47 @@ export interface GraphKindDef {
    * here. See `schemas/folio-graph-kind.ts`.
    */
   renderable: boolean;
+  /**
+   * Does a graph of this kind say what the instance **IS**, or where something
+   * **GOT TO**?
+   *
+   * The second axis in this table, and the one the vocabulary was missing.
+   * `renderable` answers "does this become a website"; this answers "is this
+   * the subject matter, or a record about it". A consumer that needs one and
+   * is handed the other has no way to tell today.
+   *
+   * - **`content`** — authored nodes a reader or a tool consumes as the
+   *   subject matter. It is what the instance IS. It stands on its own: you
+   *   can read a skill, a schema or a library section without knowing what
+   *   anybody did with it.
+   * - **`state`** — a record of where a process, a participant or an artefact
+   *   GOT TO. It REFERENCES content and is meaningless without it: a bean
+   *   names work on something, a QA verdict judges something, a workflow
+   *   instance holds a token in a process drawn somewhere else.
+   *
+   * **REQUIRED, so a kind cannot go unclassified.** That is the
+   * `DOCUMENT_BLOCK_KINDS` discipline — derived as the complement of
+   * `MATH_BLOCK_KINDS` precisely so a new block kind cannot slip through
+   * unassigned. Here the same guarantee comes from the type being required
+   * rather than optional: `tsc` refuses a new kind that does not say, at the
+   * keyboard rather than at CI, and an optional field would have made "did
+   * not say" indistinguishable from "content".
+   *
+   * **The discipline is in the skill, not here** —
+   * `skills/folio-core/content-and-state-graphs.md` carries the definition,
+   * the classification of every kind with its reason, the two questions that
+   * settle a hard case, and what a consumer may assume about each side. The
+   * classification of `fsh-guts`, `qa`, `health` and `uploads` is the part
+   * worth reading before adding a kind: none of the four is obvious from its
+   * name, and each is decided by the same two questions rather than by taste.
+   *
+   * NOT yet settled, and deliberately left open: `skills/memory/` holds agent
+   * memory inside `cat-harness`, which is classified `content` here, while its
+   * human mirror `todos/` is `state`. Whether those 36 nodes are on the right
+   * side is bean `mhh9`, and the answer changes where they live. Classifying
+   * the CONTAINING kind is not a ruling on its contents.
+   */
+  holds: GraphLayer;
   summary: string;
   /**
    * The skill that says how to READ a graph of this kind, by name.
@@ -183,6 +238,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   tools: {
     type: termIri("ToolGraph"),
     renderable: false,
+    // A Tool node is an authored definition of a mechanism. It says what this
+    // instance CAN DO, not what anybody did.
+    holds: "content",
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
   // Named for the LAYER that defines it, like every other harness concept.
@@ -198,11 +256,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "cat-harness": {
     type: termIri("KnowledgeGraph"),
     renderable: false,
+    // Skills, workflows, roles, requirements — the authored instruction bodies
+    // and the diagrams they are named from. See the note on `holds`:
+    // classifying the container is not a ruling on `skills/memory/` (bean
+    // `mhh9`).
+    holds: "content",
     summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
   },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,
+    // A shape is the subject matter of the schema graph. It is true before
+    // anything is validated against it.
+    holds: "content",
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
   // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
@@ -219,6 +285,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   qa: {
     type: termIri("QaGraph"),
     renderable: false,
+    // A verdict is where a REVIEW got to on a subject that lives elsewhere.
+    // Detached from the artefact it judges it says nothing — which is the
+    // state test, and it is why the sidecar tree MIRRORS each subject's path.
+    holds: "state",
     summary:
       "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
       "families (`block`, `kg`, `translation`), projected for the docs site from the " +
@@ -245,6 +315,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   health: {
     type: termIri("HealthGraph"),
     renderable: false,
+    // The same shape one level out: where the REPOSITORY got to, measured
+    // against thresholds. A report is evidence about an instance, never part
+    // of it.
+    holds: "state",
     summary:
       "Repository health reports — one `health-report/v1` document per sweep, carrying every check's " +
       "three-state verdict, the thresholds it applied and the basis each threshold was chosen on. " +
@@ -258,6 +332,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   beans: {
     type: termIri("BeanGraph"),
     renderable: false,
+    // The work plan. Its own declaration already splits WHAT IS BEING WORKED
+    // ON from WHERE IT GOT TO — both are records about content, neither is
+    // content.
+    holds: "state",
     summary:
       "The work plan — what is being worked on, and where each running BPMN instance got to. " +
       "Its inner directories are declared by `beans/beans.json`.",
@@ -270,6 +348,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "bean-defs": {
     type: termIri("BeanDefsGraph"),
     renderable: false,
+    // What is being worked on. A bean names a change to something; it is not
+    // the something.
+    holds: "state",
     summary:
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
@@ -277,6 +358,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "workflow-state": {
     type: termIri("WorkflowStateGraph"),
     renderable: false,
+    // The clearest case in the table: a token's position in a process drawn in
+    // the `cat-harness` graph. It cannot be read at all without the diagram it
+    // references.
+    holds: "state",
     summary:
       "Running BPMN instances — one JSON file each, carrying " +
       "`\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
@@ -291,6 +376,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   todos: {
     type: termIri("TodoGraph"),
     renderable: false,
+    // A person's outstanding items. Outstanding is the word that settles it —
+    // an item records a position, not a fact.
+    holds: "state",
     summary:
       "Human actors' outstanding work — content, owned by the folio, tagged by role, " +
       "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
@@ -298,6 +386,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "todo-items": {
     type: termIri("TodoItemsGraph"),
     renderable: false,
+    // As `todos`.
+    holds: "state",
     summary:
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
       "Authored by people and by agents on their behalf.",
@@ -313,6 +403,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   uploads: {
     type: termIri("UploadsGraph"),
     renderable: false,
+    // A QUEUE, and a queue is a position in a pipeline. The declaration
+    // already says these files are NOT L1 and read as absent to every corpus
+    // consumer: the file is on disk and the content does not exist yet.
+    holds: "state",
     summary:
       "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
       "greppable as corpus: a document here reads as absent to every consumer.",
@@ -320,6 +414,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   library: {
     type: termIri("LibraryGraph"),
     renderable: false,
+    // L1 source content. Every knowledge-graph reference to a source resolves
+    // through here, which is only possible because it stands on its own.
+    holds: "content",
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
       "`structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every " +
@@ -334,6 +431,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   voices: {
     type: termIri("VoiceGraph"),
     renderable: false,
+    // An authored rule set. A voice is true whether or not any prose has been
+    // written against it.
+    holds: "content",
     summary:
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
@@ -341,6 +441,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "todo-feedback": {
     type: termIri("TodoFeedbackGraph"),
     renderable: false,
+    // As `todos`, plus a submitter's identity — which makes it more obviously
+    // a record OF something rather than the something.
+    holds: "state",
     summary:
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
@@ -373,6 +476,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "fsh-guts": {
     type: termIri("FshGutsGraph"),
     renderable: false,
+    // The one that reads like content and is not. What is in here is
+    // deprecated or superseded: the fact it carries is WHERE SOMETHING GOT TO
+    // — abandoned, replaced, decided against — which is why it is deliberately
+    // absent from the rendered site while being rendarable in principle. The
+    // owner classified it as state, 2026-09-20, and the two questions agree.
+    holds: "state",
     summary:
       "Deprecated and throwaway structured content — kept, addressable and exported, and " +
       "deliberately absent from the rendered site. The destination for anything that would " +
@@ -409,6 +518,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "translation-sources": {
     type: termIri("TranslationSourceGraph"),
     renderable: false,
+    // A `.po` catalogue and its manifest are authored content in another
+    // language, not a record of a translation having happened.
+    holds: "content",
     summary:
       "POT templates, PO catalogues and their `TranslationNode` manifests, one directory " +
       "per target locale. The INPUT to injection; the rendered output is ordinary content " +
@@ -478,6 +590,31 @@ export function resolveGraphKind(name: string): { kind: string; deprecated?: str
   return to ? { kind: to, deprecated: name } : { kind: name };
 }
 
+/**
+ * Are two registrations of one name the SAME kind, or a conflict?
+ *
+ * Only the fields that change how a consumer behaves count. `type` is the
+ * projected identity, `renderable` decides whether the site build takes it, and
+ * `holds` decides whether a consumer asking for content may be handed this —
+ * three behavioural facts, and two definitions disagreeing on any of them are
+ * two different kinds wearing one name.
+ *
+ * `summary`, `skill` and `schema` are deliberately NOT compared. They are
+ * descriptive: a dependency wording its summary differently is not a conflict,
+ * and treating it as one would make a diamond fail on prose.
+ *
+ * **`holds` was the hole this function exists to close.** The comparison was
+ * inline and named `type` and `renderable` only, so when the axis landed, two
+ * layers registering one kind on opposite sides of the content/state line would
+ * have passed the diamond check and the first would silently have won — the
+ * exact "one name, two answers" failure the registry throws to prevent,
+ * reintroduced by the field that was added to end it. Named and extracted so
+ * the next field added to `GraphKindDef` has one place to be considered.
+ */
+function sameKind(a: GraphKindDef, b: GraphKindDef): boolean {
+  return a.type === b.type && a.renderable === b.renderable && a.holds === b.holds;
+}
+
 export class GraphKindRegistry {
   private kinds = new Map<string, GraphKindDef>();
 
@@ -488,7 +625,7 @@ export class GraphKindRegistry {
   register(name: string, def: GraphKindDef): void {
     const existing = this.kinds.get(name);
     if (existing) {
-      if (existing.type === def.type && existing.renderable === def.renderable) return; // diamond
+      if (sameKind(existing, def)) return; // diamond
       throw new GraphKindConflictError(name);
     }
     this.kinds.set(name, def);
@@ -523,6 +660,35 @@ export const defaultGraphKinds = new GraphKindRegistry();
 /** Is a graph of this kind expected to render as a website? */
 export function isRenderable(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
   return registry.get(kind)?.renderable === true;
+}
+
+/**
+ * Which side of the content/state line a kind sits on, or `undefined` for a
+ * kind this registry does not know.
+ *
+ * **`undefined` is a third state and callers must not collapse it.** An
+ * unregistered kind has not said `content`; it has not said anything, and a
+ * consumer that reads the absence as content will hand somebody a QA verdict
+ * where they asked for a skill. The paired predicates below are deliberately
+ * NOT each other's negation for the same reason.
+ */
+export function graphLayer(kind: string, registry: GraphKindRegistry = defaultGraphKinds): GraphLayer | undefined {
+  return registry.get(kind)?.holds;
+}
+
+/** Does this kind hold the subject matter? False for an unregistered kind. */
+export function isContentGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "content";
+}
+
+/** Does this kind hold a record of where something got to? False for an unregistered kind. */
+export function isStateGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "state";
+}
+
+/** Every registered kind on one side of the line, sorted. */
+export function graphKindsOfLayer(layer: GraphLayer, registry: GraphKindRegistry = defaultGraphKinds): string[] {
+  return registry.names().filter((n) => graphLayer(n, registry) === layer).sort();
 }
 
 // ── The declaration ─────────────────────────────────────────────

@@ -12,9 +12,13 @@ import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
 import { registerFolioGraphKind } from "./folio-graph-kind";
 import {
-  BASE_GRAPH_KINDS,
   defaultGraphKinds,
   GraphKindRegistry,
+  graphLayer,
+  isContentGraph,
+  isStateGraph,
+  graphKindsOfLayer,
+  BASE_GRAPH_KINDS,
   GraphKindConflictError,
   DECLARATION_FILENAME,
   isRenderable,
@@ -296,8 +300,80 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
   it("registering a DIFFERENT definition under one name throws", () => {
     const reg = new GraphKindRegistry();
     registerFolioGraphKind(reg);
-    expect(() => reg.register("folio", { type: "urn:other", renderable: false, summary: "x" }))
+    expect(() => reg.register("folio", { type: "urn:other", renderable: false, holds: "content", summary: "x" }))
       .toThrow(GraphKindConflictError);
+  });
+
+  it("every registered kind says which side of the content/state line it is on", () => {
+    // `tsc` enforces this for a kind written as a literal; this catches one
+    // built dynamically, where the type is erased. A kind that has not said is
+    // the `dh4f` shape on a new axis: every consumer asking for content is
+    // handed it, and reports a clean run.
+    for (const name of defaultGraphKinds.names()) {
+      expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|state)$/)]);
+    }
+  });
+
+  it("the two predicates are not each other's negation", () => {
+    // An unregistered kind has not said `content` — it has not said anything.
+    // Collapsing the third state is how somebody asking for a skill is handed
+    // a QA verdict.
+    expect(graphLayer("not-a-kind")).toBeUndefined();
+    expect(isContentGraph("not-a-kind")).toBe(false);
+    expect(isStateGraph("not-a-kind")).toBe(false);
+  });
+
+  it("the two sides partition the registry and neither is empty", () => {
+    // No pinned counts: the property is that every kind lands on exactly one
+    // side. A count would break on the change that was correct.
+    const content = graphKindsOfLayer("content");
+    const state = graphKindsOfLayer("state");
+    expect(content.length + state.length).toBe(defaultGraphKinds.names().length);
+    expect(content.filter((k) => state.includes(k))).toEqual([]);
+    expect(content.length).toBeGreaterThan(0);
+    expect(state.length).toBeGreaterThan(0);
+  });
+
+  it("the classification of the four non-obvious kinds is pinned", () => {
+    // These four are the ones a reader would guess wrong from the name, so
+    // they are the ones worth defending against a silent flip. Named
+    // individually rather than counted, so a failure says WHICH moved.
+    // Reasoning: skills/folio-core/content-and-state-graphs.md.
+    expect({
+      // A verdict is where a REVIEW got to; detached from its subject it
+      // asserts nothing.
+      qa: graphLayer("qa"),
+      // The same shape about the repository rather than its artefacts.
+      health: graphLayer("health"),
+      // A QUEUE — a position in a pipeline. Same file, different side of the
+      // line from `library`, which is what ingestion produced.
+      uploads: graphLayer("uploads"),
+      library: graphLayer("library"),
+      // Renderable in principle and withheld on purpose: what it carries is
+      // abandoned/superseded, which is a fact about where something got to.
+      "fsh-guts": graphLayer("fsh-guts"),
+    }).toEqual({
+      qa: "state",
+      health: "state",
+      uploads: "state",
+      library: "content",
+      "fsh-guts": "state",
+    });
+  });
+
+  it("a diamond differing only in `holds` is a CONFLICT, not a no-op", () => {
+    // REGRESSION GUARD for the hole the axis opened. `register`'s diamond
+    // check compared `type` and `renderable` only, so two layers registering
+    // one name on opposite sides of the line would have passed and the first
+    // would silently have won — the "one name, two answers" failure the
+    // registry throws to prevent, reintroduced by the field added to end it.
+    const reg = new GraphKindRegistry();
+    const def = { type: "urn:probe", renderable: false, holds: "content", summary: "x" } as const;
+    reg.register("probe", def);
+    expect(() => reg.register("probe", def)).not.toThrow();
+    expect(() => reg.register("probe", { ...def, holds: "state" })).toThrow(GraphKindConflictError);
+    // ...while prose differing is still a diamond: `summary` is descriptive.
+    expect(() => reg.register("probe", { ...def, summary: "worded differently" })).not.toThrow();
   });
 
   it("every registered kind projects to a distinct @type", () => {

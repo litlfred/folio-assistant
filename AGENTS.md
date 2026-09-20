@@ -538,8 +538,16 @@ to spend the words: **do not start the topic.**
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
   `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,
-  roles) or `schemas`. `renderable` is the only behavioural difference in that
-  table, and it is what makes `folio` special — the rest are graphs tools read.
+  roles) or `schemas`. A kind answers TWO questions: `renderable` — is it wired
+  to the site build, which is what makes `folio` special — and `holds`, whether
+  the graph says what the instance **IS** (`content`) or where something **GOT
+  TO** (`state`). Both are required, so a kind that has not decided does not
+  compile. **The discipline is in the skill, not here** —
+  [`skills/folio-core/content-and-state-graphs.md`](skills/folio-core/content-and-state-graphs.md)
+  carries the definition, the two questions that settle a hard case, the four
+  kinds whose side is not obvious from their name, what a consumer may assume
+  about each side, and the open question about where agent memory belongs
+  (bean `mhh9`).
   An instance **inherits its dependencies' directories**: `agentic-harness`
   declares `tools/`, `kg/` and `schemas/`; `folio-assist-core` declares only
   `folio/` and gets the other three. **Overrides match on the entry's `id`, not
