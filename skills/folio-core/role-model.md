@@ -509,11 +509,22 @@ uniquely was had no picture.
 
 ## Adding a role
 
-1. Add it to `skills/roles/roles.json` with a `summary` that says what the
-   **position** is, not what it is called. `actorKind` is `person`, `agent`,
-   `system` or `external` — human, agentic, mechanical, or outside this
-   instance. It is what `activity-fulfilment-kind` checks the lane's steps
-   against, so it is a claim about who can actually stand there, not a label.
+1. Add it to `skills/roles/roles.json` with a **`description`** that says what
+   the **position** is, not what it is called. **`actorKinds` is a SET** drawn
+   from `person`, `agent`, `system` and `external` — human, agentic,
+   mechanical, or outside this instance. It is what `activity-fulfilment-kind`
+   checks the lane's steps against, so it is a claim about who can actually
+   stand there, not a label.
+
+   > **This step said `summary` and `actorKind` until 2026-09-20, and both
+   > were wrong in the way that costs something.** `title`/`description` are
+   > the two labels EVERY knowledge-graph node carries — the reason is on
+   > `RoleDef.title` — and `actorKinds` is plural because the corpus settled
+   > it (see §"An actor is one of three kinds"). Neither is a spelling
+   > preference: **Zod strips an unknown key**, so a role written to this
+   > instruction type-checks, parses, and silently loses the field. That is
+   > bean `zdrf`'s failure class, and it happened — the three roles added in
+   > #453 each carry a `summary` that reaches no graph.
 2. Bind its lanes — `<folio:role ref>` in new diagrams, `lanes[]` for an
    existing name you are not renaming.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
