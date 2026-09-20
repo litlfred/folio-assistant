@@ -1,7 +1,7 @@
 ---
 # folio-assistant-eq01
 title: Web 'Add files via upload' lands at the repo ROOT; 6.0 MB of images sit outside cat-harness/uploads/
-status: todo
+status: completed
 type: bug
 parent: folio-assistant-5a3l
 created_at: 2026-09-20T10:00:22Z
@@ -82,8 +82,8 @@ and the owner has not said to
 ## Done when
 
 - [x] initialization creates a missing declared directory, with its marker
-- [ ] the five root-level files are moved into `cat-harness/uploads/` — or
-      the owner says leave them
+- [x] the root-level files are moved into `cat-harness/uploads/` — owner,
+      2026-09-20: *"move/leave root level uplaods in uploads/"*
 
 ## Related
 
@@ -92,3 +92,31 @@ and the owner has not said to
 | the keep-marker convention | `keepMarker()`, `schemas/cat-harness.ts` |
 | declared-but-absent directories | `dh4f` |
 | the report-never-act rule | `deletion-requires-confirmation` |
+
+_2026-09-20T11:15Z_ — Moved, with `git mv`, and **the count was four times what
+this bean recorded.**
+
+This bean measured 5 files / 6.0 MB at 10:00Z. By 11:10Z it was **11 files /
+17.2 MB** — more web uploads had landed in the hour between writing the bean
+and acting on it. Re-measured before moving rather than trusting the number I
+had written down an hour earlier, which is this repository's own rule turned on
+its own bean.
+
+`cat-harness/uploads/` now holds 15 files, 27 MB. No collisions; every move was
+a rename, so history follows.
+
+**One of them is referenced by a SIBLING's open bean**, `tfo1` (*"INGESTION: a
+skill that takes 3 avatar/theme layouts"*), which records these files as
+EVIDENCE — their sizes, their sha256s, and the finding that two are
+byte-identical. Moving them does not undercut that argument; it is that
+argument, since `uploads/` is the ingestion queue those files were never put
+through. A dated note was added to `tfo1` saying where they went. Its status is
+untouched: never resolve a sibling's bean.
+
+While moving, `tfo1`'s duplicate finding was independently confirmed —
+`sha256 30dad51dfc691587…` for BOTH `ChatGPT Image Sep 20, 2026, 08_26_47
+AM.png` and `d1a26515-9bde-455d-84bc-2e5fc196b004.png`, exactly as it recorded.
+
+**The habit is not fixed, only its output tidied.** GitHub's web "Add files via
+upload" still commits to the path being viewed, so the next batch lands at the
+root again. That is what `tfo1`'s ingestion skill is for.
