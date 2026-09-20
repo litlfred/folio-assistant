@@ -73,6 +73,35 @@ repository that does not host it.**
 either is known to work — including §1's missing config and §3's install URL,
 both of which would surface on the first real attempt.
 
+### 5. The release path is broken BELOW the config — measured 2026-09-20
+
+Found while about to write the two missing config files. **Writing them would
+have configured a release for a package that cannot be built.**
+
+| | |
+|---|---|
+| `release-folio-assistant.yml` `PKG_DIR` | `folio-assistant` — **no such directory** |
+| what the workflow does with it | `cd $PKG_DIR && bun install`, then `bun pack` |
+| `package.json` `name` | `@anthropic-ai/folio-assistant` — a scope this repository presumably does not own |
+| `package.json` `files[]` | `src/`, `ui/`, `viewer/sw-pyodide-cache.js`, `viewer/register-sw.js`, `harness.config.example.json`, `README.md` |
+| how many resolve at the root | **2 of 6** — the four missing ones live under `cat-harness/` since the split |
+
+So the workflow fails at its first real step (`cd folio-assistant`), and if that
+were fixed it would pack a tarball missing most of what it claims to ship.
+Every one of these is the same root cause as §§1–3: **files inherited at the
+split with their contents unchanged.**
+
+**This is why the two config files were NOT written.** `release-please`'s job
+is to compute a version and open a release PR for a package; a config naming a
+package whose own `files[]` does not resolve makes the release path *look*
+configured while leaving it exactly as broken. It would tick this bean's first
+box and fix nothing — the shape this repository calls `xom7`.
+
+It also collides with an unbuilt decision: `fsh-guts/proposals/instance-versioning.md`
+§3.1 says **publishability is DECLARED and most instances are not publishable**,
+and which ones are is that proposal's first open question. Writing a
+release-please config now answers it by accident.
+
 ## What is NOT this bean
 
 - **"The workflow never fires on its own."** That is `5rfy` (archived), which
@@ -86,7 +115,11 @@ both of which would surface on the first real attempt.
 
 ## Done when
 
-[ ] `release-please` either has its two config files or stops naming them
+[ ] `release-please` either has its two config files or stops naming them —
+    **blocked on §5**: neither is right while the package it would release
+    cannot be built. Fix the package first, or decide the path is unused.
+[ ] `release-folio-assistant.yml`'s `PKG_DIR` names a directory that exists,
+    and `package.json`'s `files[]` resolves — 2 of 6 do today
 [x] The install URL in `release-folio-assistant.yml` names this repository.
     **Done 2026-09-20** (`90ebd7c5`): the release body now interpolates
     `${{ github.repository }}` rather than a corrected literal — the workflow
