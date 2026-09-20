@@ -60,9 +60,23 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <li><a href="../modules/_folio-assistant_schemas_constraints.html">@folio-assistant/schemas/constraints</a></li>
 <li><a href="" aria-current="page">HookEventSchema</a></li></ul>
 <h1>Variable HookEventSchema<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">HookEventSchema</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodEnum</span><span class="tsd-signature-symbol">&lt;</span><br/>    <span class="tsd-signature-symbol">[</span><br/>        <span class="tsd-signature-type">&quot;SessionStart&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;PostToolUse&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;PreCommit&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;PostCommit&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;UserPromptSubmit&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-variable">HookEventSchema</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodEnum</span><span class="tsd-signature-symbol">&lt;</span><br/>    <span class="tsd-signature-symbol">[</span><br/>        <span class="tsd-signature-type">&quot;SessionStart&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;PreToolUse&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;PostToolUse&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;PreCommit&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;PostCommit&quot;</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-type">&quot;UserPromptSubmit&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>The lifecycle points a hook can bind to.</p>
+<p><code>PreToolUse</code> was MISSING until 2026-09-20 and its absence was not academic:
+<code>interaction-modality</code> §4.1 is a STRICT rule about how a question is put to
+a person, and the one moment it certainly applies is the instant before
+<code>AskUserQuestion</code> is invoked. With only <code>PostToolUse</code> here, the rule could be
+reminded of <em>after</em> the question had already been asked, which is no
+reminder at all.</p>
+<p>The general shape is worth naming, because this enum will grow again: an
+event the host supports and this schema does not is a class of enforcement
+the instance cannot express, and it fails at the REGISTRY rather than at the
+hook — <code>.claude/settings.json</code> accepted the entry and the generated skill
+registry refused it. That is the right order (the gate caught it) and it is
+still a gap: the hook was live and unrepresentable at the same time.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/eager-thompson-3bb3kq/cat-harness/schemas/skill-package.ts#L65">skill-package.ts:65</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/eager-thompson-3bb3kq/cat-harness/schemas/skill-package.ts#L82">skill-package.ts:82</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

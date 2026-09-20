@@ -956,6 +956,56 @@ than silence.</p>
 <p><strong>There is no “just listing what’s open” exemption.</strong> A wrap-up that names a
 decision has handed it over, whatever the framing sentence says. Either the
 options and their costs are there, or the name comes out and a count goes in.</p>
+<h4 id="enforced-not-remembered--the-three-layers-added-2026-09-20">
+  
+  
+    <a href="#enforced-not-remembered--the-three-layers-added-2026-09-20" class="anchor-heading" aria-labelledby="enforced-not-remembered--the-three-layers-added-2026-09-20"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Enforced, not remembered — the three layers added 2026-09-20
+  
+  
+</h4>
+    
+
+<p>This section was STRICT and complete on 2026-09-20, and was broken the same day
+by the agent implementing its neighbours. The owner: <em>“ask specific questiosn w/
+context/ recommendations/pros/cons (see skills, why not invoked?)”</em> — and the
+“why not” is mechanical rather than a lapse of care. The rule lives here, in the
+knowledge graph; <code class="language-plaintext highlighter-rouge">AGENTS.md</code> carries a <strong>summary</strong> of it; the summary omits the
+clause that was broken (the comparison goes in the prose, not in the selection
+tool’s labels); and nothing sat between the agent and the question tool.</p>
+
+<p><strong>A rule that depends on being remembered is not enforced.</strong> So:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>layer</th>
+      <th>what it does</th>
+      <th>what it cannot do</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.claude/skills/interaction-modality/</code></td>
+      <td>makes this skill <strong>offerable by name</strong>, which it was not — an agent looking for the rule found only the summary</td>
+      <td>triggering is probabilistic; it helps an agent already thinking about asking well</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">PreToolUse</code> on <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> → <code class="language-plaintext highlighter-rouge">scripts/ask-well.sh</code></td>
+      <td>prints the six parts at the one moment the rule certainly applies, on every agent and every session</td>
+      <td>it sees the tool call, not the prose written before it, so it REMINDS and never blocks — a gate that cannot tell must not refuse</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">schemas/decision-request.ts</code></td>
+      <td>makes the comparison <strong>unomittable</strong>: no optionals, so a decision with two options and one comparison does not parse, and <code class="language-plaintext highlighter-rouge">renderDecision</code> emits the prose table and the selection from ONE object so they cannot drift</td>
+      <td>it cannot tell a good <code class="language-plaintext highlighter-rouge">con</code> from a lazy one, and does not try — it checks that the question was asked, never that the answer is honest</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>None of the three is sufficient and the omissions are stated rather than
+implied, which is the same three-state discipline the rest of this skill asks
+for. <code class="language-plaintext highlighter-rouge">bun test cat-harness/scripts/tests/decision-request.test.ts</code> asserts each
+refusal, because a schema whose refusals are untested quietly stops refusing.</p>
 <h3 id="42-form--the-checklist">
   
   

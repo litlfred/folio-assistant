@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T19:24:55.180Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/66c144f1d1df38eafcc3d1329304a9c44e77358a",
-  "sourceCommitSha": "66c144f1d1df38eafcc3d1329304a9c44e77358a",
-  "sourceCommitAt": "2026-09-20T19:21:52Z",
+  "generatedAt": "2026-09-20T19:34:13.731Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b4c4d2fd5b4b3bab0b5b264e45f27a8a5ab89a80",
+  "sourceCommitSha": "b4c4d2fd5b4b3bab0b5b264e45f27a8a5ab89a80",
+  "sourceCommitAt": "2026-09-20T19:32:38Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 207,
@@ -276,7 +276,7 @@
     "SequenceFlow": 687,
     "ProcessNode": 652,
     "Tool": 67,
-    "Schema": 78,
+    "Schema": 79,
     "GraphKind": 22,
     "Directory": 31,
     "Asset": 3
@@ -1768,7 +1768,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 320,
+      "instructionLines": 343,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -30630,6 +30630,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/dak"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/folio-assistant.jsonld#schema/decision-request",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "decision-request",
+      "title": "A decision handed to a person, as a shape rather than as a habit.",
+      "module": "schemas/decision-request.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/decision-request"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/folio-assistant.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -32760,8 +32769,8 @@
   ],
   "staging": {
     "branch": "claude/eager-thompson-3bb3kq",
-    "sha": "b8ad1ad9e27ac83045e2bcf3fa6b7c695d1422c9",
+    "sha": "ac5ac5a3f995d5d7612faf09faa00638b5eef239",
     "pr": "589/merge",
-    "run": "35532142425"
+    "run": "35532645021"
   }
 }
