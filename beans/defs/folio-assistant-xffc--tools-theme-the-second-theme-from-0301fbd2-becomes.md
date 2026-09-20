@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T06:05:13Z
-updated_at: 2026-09-20T06:11:39Z
+updated_at: 2026-09-20T07:53:16Z
 parent: folio-assistant-o3xy
 ---
 
@@ -108,3 +108,26 @@ So *"use this theme on tools in the KG"* needs a **bridge that does not exist**.
 ## A gap the assets themselves expose
 
 The three PNGs are **undeclared, at a path no gate scans.** `check-declared-assets.ts` walks declared→disk only, and its `DECLARED_INSTANCES` is `["cat-harness", "bootstrap"]` — the repository root is deliberately not an instance since the move. There is no reverse "a file on disk that nothing declares" check for images. So these three are invisible to every declaration gate, and would have stayed invisible indefinitely. Worth its own bean.
+
+
+_2026-09-20_ — OWNER RULING, verbatim: **"no formal role/theme mapping per se. that is authoring (human/agentic) decision/judgement."**
+
+This **removes the central premise of this bean as I framed it**, and the framing was mine rather than the owner's. I wrote, here and in `d3yq` and again in the `analyst` commit message, that *"no per-role, per-process or per-kind theme SELECTION exists"* and treated that as the gap to fill — that a mechanism was needed to bind a theme to a role, a process, a kind or a skill.
+
+**There is no such mechanism to build.** A theme is chosen by whoever authors the note. `ThemedTodoFields.theme` and the landing sticky's required `theme` are the entire selection surface: an id, set by an author, arguable per note.
+
+**The absence was the design, and I read it as an omission.** The evidence was already in `theme.ts`, which says a todo with no theme is *"one nobody has chosen for"* — a sentence that presupposes a chooser. I read past it three times.
+
+Three reasons the mapping would have been wrong rather than merely unnecessary, now recorded in `schemas/theme.ts`:
+
+1. **A role is a swimlane, not a property of a thing.** `role-model.md`: nothing *is* a reviewer; somebody *acts as* one for the duration of a lane, and the same actor is a different role in another diagram. A theme keyed on role would make one note's appearance depend on which process happened to be reading it.
+2. **It makes the choice unarguable and invisible.** With a table, "this one should look different" means editing something that governs everything else. With a field, the argument is local to the note.
+3. **It is the conflation this repository already refuses twice** — themes live in the harness layer while their todos stay in `todos/`, and the owner's *"beans no anchor"* rule keeps a rendering position out of the work plan. A role→theme table would put presentation into the role graph.
+
+## What is left of this bean
+
+The THEME half stands and is done where the art exists: a theme is a declared node with a measured scrim, and `themes.test.ts` resolves every shipped backdrop against the instance's declaration. What does NOT stand is *"and then tools/testing surfaces select it"* as engineering work. An author picks it, one note at a time.
+
+**Still open and genuinely unanswered**: whether the `tools` graph has a rendered surface at all to carry a sticky on. Measured 2026-09-20: `docs/reference/` holds `skills/` and `skill-instructions/` only, Tools appear as prose, and every consumer of `tools/index.js` is non-visual. A theme cannot be chosen for a surface that does not exist, which is a different question from the one this bean was opened on.
+
+**Recommend the owner scrap or re-scope this bean and `d3yq`** rather than leaving them open against a premise that has been withdrawn. Not doing so unilaterally: `bean-coordination` says unwanted work is scrapped WITH ITS REASONS by whoever owns the call, and a bean quietly emptied of its premise is worse than one that says what happened to it.

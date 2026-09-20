@@ -43,6 +43,41 @@
  * second is noticed. Same reason `resolveGraphKind` refuses an unknown kind
  * rather than guessing.
  *
+ * ## Choosing a theme is an AUTHORING judgement — there is no mapping
+ *
+ * The owner, 2026-09-20: *"no formal role/theme mapping per se. that is
+ * authoring (human/agentic) decision/judgement."*
+ *
+ * So a theme is picked by whoever writes the note, and **nothing derives one**
+ * from a role, a process, a skill or a graph kind. `ThemedTodoFields.theme` and
+ * the landing sticky's required `theme` are the whole selection surface: an id,
+ * set by an author.
+ *
+ * **This is a rule, not a gap**, and it is worth saying so because the absence
+ * reads like one. It did to this agent twice: shipping the `library` and
+ * `analyst` themes, I recorded that "no per-role, per-process or per-kind theme
+ * SELECTION exists" and pointed at two beans as the mechanism that would supply
+ * it. There is no such mechanism to supply.
+ *
+ * Three reasons the mapping would be wrong rather than merely absent:
+ *
+ * 1. **A role is a swimlane, not a property of a thing.** `role-model.md`:
+ *    nothing *is* a reviewer; somebody *acts as* one for the duration of a lane,
+ *    and the same actor is a different role in another diagram. A theme keyed on
+ *    role would make one note's appearance depend on which process happened to
+ *    be reading it.
+ * 2. **It makes the choice unarguable and invisible.** With a table, "this one
+ *    should look different" requires editing something that governs everything
+ *    else; without one, it is a field on the note and the argument is local.
+ * 3. **It is the conflation this file already refuses.** Themes live in the
+ *    harness layer while the todos referencing them stay in `todos/`, and the
+ *    owner's *"beans no anchor"* rule keeps a rendering position out of the work
+ *    plan. A role→theme table would put presentation back into the role graph.
+ *
+ * The optional `theme` on {@link ThemedTodoFieldsSchema} already encodes this:
+ * absent means *nobody has chosen*, which is a statement about an author rather
+ * than about a lookup that failed.
+ *
  * ## What the palette may NOT be asked to carry
  *
  * The sticky CSS already records the constraint, and a theme must not break it:
