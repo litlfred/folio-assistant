@@ -74,7 +74,8 @@ if (MODES.size === 0) {
 // so the `**/*.lean` glob below had nothing to walk. Never noticed, because
 // this file threw `Cannot find module` at import and could not run at all.
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT_ROOT = path.join(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_ROOT = path.join(REPO_ROOT, "folio");
 
 /**
  * The year from a CSL `issued` date, as a number.

@@ -20,7 +20,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { CONTENT_CONTEXT } from "../schemas/jsonld";
 
-const OUT = join(resolve(import.meta.dir, ".."), "ns", "content", "v1.jsonld");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const OUT = join(resolve(import.meta.dir, ".."), "ns", "folio", "v1.jsonld");
 
 function main(): number {
   const next = `${JSON.stringify({ "@context": CONTENT_CONTEXT }, null, 2)}\n`;

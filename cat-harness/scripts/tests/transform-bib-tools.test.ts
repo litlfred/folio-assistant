@@ -65,7 +65,7 @@ describe("registerTransformTools", () => {
   });
 
   test("codemod degrades gracefully when no target resolves", async () => {
-    // No content/<paper> in this repo → auto-detect yields nothing.
+    // No folio/<paper> in this repo → auto-detect yields nothing.
     const res = await reg["codemod"].handler({ name: "refterm" });
     expect(res.content[0].type).toBe("text");
     expect(res.content[0].text.toLowerCase()).toContain("target");

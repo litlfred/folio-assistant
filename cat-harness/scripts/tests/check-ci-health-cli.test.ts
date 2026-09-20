@@ -157,22 +157,22 @@ describe("a filtered push trigger is decided, not waved away", () => {
   });
 
   const jsonld =
-    "on:\n  push:\n    paths:\n      - 'content/**/*.ts'\n" +
+    "on:\n  push:\n    paths:\n      - 'folio/**/*.ts'\n" +
     "      - 'schemas/jsonld.ts'\n      - 'library/**/structure.json'\njobs: {}\n";
 
   test("`a/**/b` matches zero directories as well as many", () => {
-    // The case a naive `.*` gets wrong: GitHub runs this for `content/a.ts`.
+    // The case a naive `.*` gets wrong: GitHub runs this for `folio/a.ts`.
     const ctx = (files: string[]) => ({ changedFiles: files });
-    expect(pushTriggerOf(jsonld, ctx(["content/a.ts"]))).toBe(true);
-    expect(pushTriggerOf(jsonld, ctx(["content/deep/er/a.ts"]))).toBe(true);
+    expect(pushTriggerOf(jsonld, ctx(["folio/a.ts"]))).toBe(true);
+    expect(pushTriggerOf(jsonld, ctx(["folio/deep/er/a.ts"]))).toBe(true);
     expect(pushTriggerOf(jsonld, ctx(["library/x/structure.json"]))).toBe(true);
     expect(pushTriggerOf(jsonld, ctx(["library/structure.json"]))).toBe(true);
   });
 
   test("`*` does not cross a slash", () => {
-    const one = "on:\n  push:\n    paths: ['content/*.ts']\njobs: {}\n";
-    expect(pushTriggerOf(one, { changedFiles: ["content/a.ts"] })).toBe(true);
-    expect(pushTriggerOf(one, { changedFiles: ["content/deep/a.ts"] })).toBe(false);
+    const one = "on:\n  push:\n    paths: ['folio/*.ts']\njobs: {}\n";
+    expect(pushTriggerOf(one, { changedFiles: ["folio/a.ts"] })).toBe(true);
+    expect(pushTriggerOf(one, { changedFiles: ["folio/deep/a.ts"] })).toBe(false);
   });
 
   test("an exact path is exact", () => {

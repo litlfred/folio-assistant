@@ -24,7 +24,7 @@ import {
 import { resolvePipelineScript } from "./_pipeline.js";
 // Note: paths are resolved from the document adapter's paths module.
 
-/** Find all paper directories under content/. */
+/** Find all paper directories under folio/. */
 function discoverPapers(): string[] {
   if (!existsSync(CONTENT_DIR)) return [];
   return readdirSync(CONTENT_DIR, { withFileTypes: true })
@@ -113,7 +113,7 @@ export function registerValidateTools(server: McpServer): void {
         const papers = discoverPapers();
         if (papers.length === 0) {
           return {
-            content: [{ type: "text" as const, text: "No papers found in content/" }],
+            content: [{ type: "text" as const, text: "No papers found in folio/" }],
           };
         }
 
@@ -217,7 +217,7 @@ export function registerValidateTools(server: McpServer): void {
     "it per document.",
     {
       document: z.string().optional()
-        .describe("Restrict to one document under content/ (default: the whole folio)"),
+        .describe("Restrict to one document under folio/ (default: the whole folio)"),
     },
     async ({ document }) => {
       try {
@@ -334,7 +334,7 @@ export function registerPaperBuildTools(server: McpServer): void {
         const paperName = paper || papers[0];
         if (!paperName) {
           return {
-            content: [{ type: "text" as const, text: "No papers found in content/" }],
+            content: [{ type: "text" as const, text: "No papers found in folio/" }],
           };
         }
 

@@ -1715,7 +1715,8 @@ const BIBLIOGRAPHY: QaCriterionDefinition[] = [
     domain: "bibliography",
     description:
       "Every `\\cite{key}` and `-- Ref: [key]` in the block resolves to a " +
-      "registered entry in `content/schema/references.ts`. Mirrors the " +
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      "registered entry in `folio/schema/references.ts`. Mirrors the " +
       "`validate-bib` skill's resolution check at block granularity.",
     default_severity: "critical",
     depends_on: ["md", "lean"],
@@ -1747,7 +1748,8 @@ const BIBLIOGRAPHY: QaCriterionDefinition[] = [
     domain: "bibliography",
     description:
       "Every reference the block cites has a screenshot under " +
-      "`content/bib-qa-images/<id>.*` per `bib-qa.ts` tag " +
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      "`folio/bib-qa-images/<id>.*` per `bib-qa.ts` tag " +
       "`has_screenshot`. Provides provenance for the citation.",
     default_severity: "minor",
     depends_on: ["md", "lean"],
@@ -2577,10 +2579,14 @@ export const CRITERION_EXTRA_INPUTS: Record<string, string[]> = {
   "proof-lean-compiles": [
     "docs/audits/lean-compile-diagnostics.json",
   ],
-  "bib-cite-resolves": ["content/schema/references.ts"],
-  "bib-cited-ref-has-url": ["content/schema/references.ts"],
-  "bib-cited-ref-metadata-ok": ["content/schema/references.ts"],
-  "bib-cited-ref-has-screenshot": ["content/schema/references.ts"],
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "bib-cite-resolves": ["folio/schema/references.ts"],
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "bib-cited-ref-has-url": ["folio/schema/references.ts"],
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "bib-cited-ref-metadata-ok": ["folio/schema/references.ts"],
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "bib-cited-ref-has-screenshot": ["folio/schema/references.ts"],
 };
 
 /** Resolve a criterion's extra-input list (`[]` if none). */

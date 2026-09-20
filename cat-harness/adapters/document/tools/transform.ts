@@ -34,16 +34,16 @@ export function registerTransformTools(server: McpServer): void {
           "leanval = lean-validation migration",
       ),
       target: z.string().optional().describe(
-        "Paper or chapter dir under content/ (default: auto-detected single paper)",
+        "Paper or chapter dir under folio/ (default: auto-detected single paper)",
       ),
       apply: z.boolean().default(false).describe("Write changes (default: dry-run)"),
     },
     async ({ name, target, apply }) => {
-      const dir = target ?? (autoPaper() ? `content/${autoPaper()}` : undefined);
+      const dir = target ?? (autoPaper() ? `folio/${autoPaper()}` : undefined);
       if (!dir) {
         return asToolText("codemod", {
           ok: false, script: CODEMODS[name], exitCode: null, stdout: "", stderr: "",
-          error: "specify target (no single paper auto-detected under content/)",
+          error: "specify target (no single paper auto-detected under folio/)",
         });
       }
       const args = [dir];

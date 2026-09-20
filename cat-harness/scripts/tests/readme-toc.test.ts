@@ -34,7 +34,7 @@ afterEach(() => {
 function folio(papers: Record<string, string[]>, opts: { folioTs?: boolean } = {}): string {
   const root = mkdtempSync(join(tmpdir(), "folio-toc-"));
   dirs.push(root);
-  const content = join(root, "content");
+  const content = join(root, "folio");
   mkdirSync(content, { recursive: true });
 
   for (const [paper, chapters] of Object.entries(papers)) {
@@ -205,7 +205,7 @@ describe("every paper in the folio gets a table", () => {
     const root = folio({ p: ["one"] });
     publish(root, "gh-pages", ["index.html"]);
     const md = renderToc(root, config()).markdown;
-    expect(md).toContain("[`one/`](content/p/one/)");
+    expect(md).toContain("[`one/`](folio/p/one/)");
   });
 });
 

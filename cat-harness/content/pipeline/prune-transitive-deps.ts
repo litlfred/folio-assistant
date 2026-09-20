@@ -84,7 +84,8 @@ const argValue = (flag: string): string | undefined => {
 const PAPER_ARG = argValue("--paper");
 
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT_ROOT = join(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_ROOT = join(REPO_ROOT, "folio");
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
 // `--paper` matters in a MULTI-paper folio: `requirePaper()` with no argument
 // throws "5 papers found — name one explicitly", and until this flag existed
