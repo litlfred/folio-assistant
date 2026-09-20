@@ -1,6 +1,5 @@
 ---
 name: proof-conciseness
-roles: [collaborator, owner]
 description: >
   Tighten narrative (human-readable) proofs without changing
   mathematical content. Targets verbose prose patterns in

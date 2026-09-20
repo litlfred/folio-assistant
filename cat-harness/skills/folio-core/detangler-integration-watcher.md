@@ -1,6 +1,5 @@
 ---
 name: detangler-integration-watcher
-roles: [reader, collaborator, owner]
 user_invocable: true
 inherits: local/integration-watcher
 description: >

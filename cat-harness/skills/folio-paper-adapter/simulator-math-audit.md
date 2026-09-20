@@ -1,6 +1,5 @@
 ---
 name: simulator-math-audit
-roles: [collaborator, owner, auditor]
 description: >
   Audit simulator content objects against the formal mathematics they
   visualise — formulas and physical constants must be derived from the

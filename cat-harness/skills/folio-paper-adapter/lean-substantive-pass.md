@@ -1,6 +1,5 @@
 ---
 name: lean-substantive-pass
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   Convert abstract `holds : Prop` / `claim : Prop` placeholder Lean

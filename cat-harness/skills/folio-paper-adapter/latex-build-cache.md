@@ -1,6 +1,5 @@
 ---
 name: latex-build-cache
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   LaTeX build performance — findings + what's safe. The headline goal was

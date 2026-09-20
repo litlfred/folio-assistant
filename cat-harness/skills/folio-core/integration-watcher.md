@@ -1,6 +1,5 @@
 ---
 name: integration-watcher
-roles: [reader, collaborator, owner]
 user_invocable: false
 description: >
   Abstract parent skill for domain-specific **integration watchers**.

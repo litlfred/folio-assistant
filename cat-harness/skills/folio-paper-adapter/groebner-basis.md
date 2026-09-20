@@ -1,6 +1,5 @@
 ---
 name: groebner-basis
-roles: [collaborator, owner]
 description: >
   Compute Gröbner bases and normal forms for (possibly non-commutative)
   algebraic structures using a CAS (e.g. Singular letterplace) or an

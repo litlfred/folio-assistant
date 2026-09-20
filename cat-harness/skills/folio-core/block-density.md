@@ -1,6 +1,5 @@
 ---
 name: block-density
-roles: [reader, collaborator, owner]
 description: >
   Audits individual content blocks for single-topic coherence, length,
   and embedded tables.  Blocks that cover multiple topics or exceed ~2/3

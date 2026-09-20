@@ -1,6 +1,5 @@
 ---
 name: verify-local-substrate
-roles: [reader, collaborator, owner]
 description: >
   Verify that every result block of a designated class traces back to a
   designated anchor definition through the uses[] dependency graph.

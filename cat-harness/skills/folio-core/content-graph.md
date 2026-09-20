@@ -1,6 +1,5 @@
 ---
 name: content-graph
-roles: [reader, collaborator, owner]
 description: >
   Editorial graph analysis skill — builds a content graph from uses[],
   interprets, proofs, and examples relationships; builds a chapter/section

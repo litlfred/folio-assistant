@@ -1,6 +1,5 @@
 ---
 name: code-node-review
-roles: [code-reviewer, admin]
 description: >
   Review the knowledge graph's CODE nodes — Tool definitions in the `tools`
   graph and schema definition nodes under `schemas/` — for the joins a reader

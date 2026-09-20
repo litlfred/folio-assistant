@@ -305,14 +305,50 @@ export function formatAge(minutes: number): string {
  * in the browser instead of baking them into 390 pages, which turns 390
  * differing files into one small differing file. Bean `xxku`.
  *
- * **The threshold stays at 100 MB regardless**, because it is doing its job:
- * it is not a target the previews are failing to hit, it is a statement that
- * the current arrangement is not sustainable, and it is correct.
+ * ## 100 MB → 500 MB, 2026-09-20, and WHY the old reasoning stopped applying
+ *
+ * This comment used to end *"the threshold stays at 100 MB regardless… it is
+ * a statement that the current arrangement is not sustainable, and it is
+ * correct."* That was sound **under the retention policy of the day**, and
+ * the owner changed that policy the same afternoon.
+ *
+ * The old argument turned on the total being **monotonic**. Previews were
+ * retained on close as well as on merge, so nothing ever left: any threshold
+ * was breached eventually and stayed breached, and "over" carried no
+ * information after the first time. A number that can only ever be exceeded
+ * is a statement about the arrangement, which is exactly what that paragraph
+ * said it was.
+ *
+ * `folio-assistant-1feu` removed the monotonicity. A merged pull request's
+ * preview is now removed automatically — the merge is the confirmation, since
+ * the main site then shows what the preview showed — so the store **drains**.
+ * What remains is bounded by CONCURRENT REVIEWS rather than by cumulative
+ * history, and a threshold over a draining quantity is a live signal again
+ * rather than a permanent verdict.
+ *
+ * So the number now answers a different question: *how many reviews can be
+ * open at once before this is a problem?* At the measured ~38 MB per preview,
+ * **500 MB is about thirteen** — above any concurrency this repository has
+ * reached (eleven, on 2026-09-20, of which three were prunable) and half the
+ * documented 1 GB Pages ceiling, leaving the main site the other half.
+ *
+ * The floor argument above is unchanged and still governs: a preview whose
+ * branch is live must not be removed, so pruning cannot be the action. What
+ * changed is that draining is now automatic, so the floor falls on its own
+ * as work merges instead of being carried forever.
+ *
+ * Owner, 2026-09-20: *"set stagfing to 500mb. drain if branches merged"*.
  */
-export const STAGING_WARN_BYTES = 100 * MB;
+export const STAGING_WARN_BYTES = 500 * MB;
 
 /**
  * Three-quarters of the documented Pages ceiling.
+ *
+ * UNCHANGED by the 100 → 500 MB move, and the gap between them is now 250 MB
+ * rather than 650 MB. That is deliberate: `critical` is a property of the
+ * PLATFORM (a Pages build over 1 GB does not publish) while the warning point
+ * is a property of this repository's working style, so only one of them moves
+ * when the retention policy does.
  *
  * At this point the previews alone occupy most of the budget the main site
  * also has to fit inside, and the next deploy is the one that fails outright.
@@ -357,17 +393,22 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
     unit: "bytes",
     severity: "major",
     basis:
-      "The owner's explicit instruction, 2026-09-19 (\"issue warning to user when exceeds > 100mb\"). " +
-      "It is also a tenth of GitHub's documented 1 GB limit for a published Pages site, which the " +
-      "previews share with the main site — an early-warning point that leaves room to act rather " +
-      "than a limit in itself. One preview measured 37.5–39.0 MB on 2026-09-19, so the third " +
-      "concurrent review breaches it. THE FLOOR IS ABOVE THE THRESHOLD AND THAT IS DELIBERATE: a " +
-      "live branch's preview must not be pruned, so N concurrent reviews floor the total at " +
-      "N x ~38 MB, and on 2026-09-19 only 2 of 9 previews were prunable orphans (76.7 MB, leaving " +
-      "269 MB). The action this finding names is therefore never \"prune more\" but preview SIZE: " +
-      "27.5 MB of each preview is HTML that shares ZERO blobs with any other preview, because the " +
-      "build timestamp and the slug appear on every page. See STAGING_WARN_BYTES for the four " +
-      "sources and bean `xxku` for the arithmetic.",
+      "The owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches " +
+      "merged\"), RAISED from the 100 MB they set on 2026-09-19 — and the raise went with a policy " +
+      "change that made the old number mean something different. Until `folio-assistant-1feu`, " +
+      "previews were retained on close AND on merge, so the total was monotonic: any threshold was " +
+      "breached eventually and stayed breached, and \"over\" carried no information after the first " +
+      "time. Now a merged pull request's preview is removed automatically, so the store DRAINS and " +
+      "what remains is bounded by concurrent reviews rather than by cumulative history. At the " +
+      "measured ~38 MB per preview, 500 MB is about thirteen concurrent reviews — above the most " +
+      "this repository has reached (eleven on 2026-09-20, three of them prunable) and half the " +
+      "documented 1 GB Pages ceiling, leaving the main site the other half. " +
+      "THE FLOOR IS STILL REAL AND STILL ABOVE PRUNING: a live branch's preview must not be " +
+      "removed, so N concurrent reviews floor the total at N x ~38 MB. What changed is that the " +
+      "floor now falls on its own as work merges. The action this finding names is therefore " +
+      "never \"prune more\" but preview SIZE: 27.5 MB of each preview is HTML that shares ZERO " +
+      "blobs with any other, because the build timestamp and the slug appear on every page. See " +
+      "STAGING_WARN_BYTES for the four sources and bean `xxku` for the arithmetic.",
   },
   {
     metric: "staging-total-bytes",
@@ -426,7 +467,14 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
     findings.push({
       metric: "staging-total-bytes",
       severity: "major",
-      summary: `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, over the 100 MB warning point.`,
+      // DERIVED, not written out. This said "over the 100 MB warning point"
+      // with the number as a literal, so raising STAGING_WARN_BYTES to 500 MB
+      // left the finding reporting a threshold that no longer existed — the
+      // constant and the sentence describing it are one fact, and the summary
+      // is the copy a reader sees first.
+      summary:
+        `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, ` +
+        `over the ${formatBytes(STAGING_WARN_BYTES)} warning point.`,
       action:
         "Report the list below to the owner and ask which are finished with. Removal is by adding " +
         "`staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative.",

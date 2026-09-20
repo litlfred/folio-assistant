@@ -1,6 +1,5 @@
 ---
 name: opening-brief
-roles: [reader, collaborator, owner]
 description: >
   Brief a bean or a topic BEFORE touching anything: what you are doing and why
   it is worth doing, what you already know and with what provenance, how you

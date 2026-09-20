@@ -9,8 +9,5 @@ export const testEngineer: SkillDefinition = {
     { capabilityId: "git-read", degradation: "fail" },
   ],
   routingPatterns: ["test", "unit\\s+test", "coverage"],
-  schemas: [
-    { module: "schemas/formalization-types", types: ["TestDefinition", "TestResult", "TestReport", "CoverageManifest"], access: "read-write" },
-  ],
   tags: ["testing", "coverage"],
 };
