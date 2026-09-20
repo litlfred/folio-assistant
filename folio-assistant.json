@@ -256,13 +256,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T18:23:14.096Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a9ca094a6ab7b78fa05e2d8a0c687ef952eeee26",
-  "sourceCommitSha": "a9ca094a6ab7b78fa05e2d8a0c687ef952eeee26",
-  "sourceCommitAt": "2026-09-20T20:21:44+02:00",
+  "generatedAt": "2026-09-20T18:31:05.485Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3a9557b14b1b9a15a9301abadf6767f402a1eda4",
+  "sourceCommitSha": "3a9557b14b1b9a15a9301abadf6767f402a1eda4",
+  "sourceCommitAt": "2026-09-20T20:29:34+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 205,
+    "Skill": 206,
     "Actor": 27,
     "Capability": 26,
     "Role": 124,
@@ -2522,6 +2522,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/goal-review",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "goal-review",
+      "title": "Goal review — cold start, sweep a window, prioritise against stated goals",
+      "description": "Cold start, then review a time window of activity — sibling sessions, the work plan, issues, change proposals, branches, CI — and prioritise what it finds against goals stated in the owner's words. Inputs are the window, the goals, the scope and the axes; the output is a synopsis (closed, open, needs doing, with effort), a priority queue per goal with selectable next actions, and the instruction gaps met on the way, each recorded as a work item. Use when asked \"what happened\", \"what is stalled\", \"what should we do next for X\", or at the start of a session that inherits parallel work.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/goal-review.md",
+      "instructionLines": 207,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-graph",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "content-graph",
@@ -4720,6 +4736,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/glossary-build",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/goal-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/integration-audit",
@@ -30079,6 +30096,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/goal-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/diff",
@@ -30607,8 +30625,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "a9ca094a6ab7b78fa05e2d8a0c687ef952eeee26",
+    "sha": "3a9557b14b1b9a15a9301abadf6767f402a1eda4",
     "pr": "main",
-    "run": "35528810971"
+    "run": "35529230069"
   }
 }
