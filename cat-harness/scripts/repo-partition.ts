@@ -315,6 +315,16 @@ const RULES: Rule[] = [
       // inversion alone just relocated them here, measured.
       "scripts/check-corpus-gate.ts",        // runs in the folio repo, over its content
       "scripts/gen-schema-docs.ts",          // content-object model → reference
+      // CORE, not harness, and the test is the one this table uses elsewhere:
+      // does it need a folio to have anything to do? This one CREATES the
+      // folio graph and writes content nodes into it — the landing stickies —
+      // so it does not merely need a folio, it is where one comes from. It also
+      // imports `schemas/landing-sticky.ts` (a content node) and
+      // `schemas/folio-graph-kind.ts`, which is core's by the argument written
+      // on that module: a layer that cannot render must not own the renderable
+      // kind. Classifying it harness would put core's own kind registration
+      // behind a harness module.
+      "scripts/ensure-landing-sticky.ts",    // creates folio/ and mints its landing stickies
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
@@ -438,6 +448,17 @@ const RULES: Rule[] = [
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",
+      // Both read the DECLARATION and write a string; neither needs a folio to
+      // have anything to do, which is the same test `sync-docs-harness.ts` and
+      // `harness-schema-export.ts` pass above.
+      //
+      // `upload-url.ts` sits here rather than with content tooling for a reason
+      // worth keeping: it is the acquisition QUEUE's address, and the address is
+      // a fact about the instance's layout — an instance-scoped declared path
+      // resolved against the REPOSITORY root. What eventually lands in that
+      // queue is content; where the queue IS, is not.
+      "scripts/print-stub.ts",
+      "scripts/upload-url.ts",
       // The staging-preview record and the script that writes it — bean `6pfo`,
       // arrived from `main` (#466) AFTER this pass began and was caught by the
       // unassigned gate added in the same change, on its first real encounter.
