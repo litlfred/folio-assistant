@@ -1,6 +1,5 @@
 ---
 name: lean-cache-restore
-roles: [reader, collaborator, owner]
 user_invocable: true
 description: >
   The Lean build loop — restore a warm cache before working, and

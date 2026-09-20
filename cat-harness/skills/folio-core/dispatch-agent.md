@@ -1,7 +1,6 @@
 ---
 name: dispatch-agent
 description: Dispatch one or more background sub-agents against parallel research/build fronts with a STANDARDIZED live progress contract, and monitor them on a 2-minute heartbeat. Every dispatched agent emits consistent DID/DOING/NEXT/BLOCKERS blocks with real log output (not static "still running"); the parent extracts the latest block from each agent every ~120 s and posts one consolidated synthesis table. Use when the user says "dispatch agents", "fan out", "run these in parallel with monitoring", "give me status every 2 minutes", or when you are about to launch ≥ 2 background Agents on independent work.
-roles: [collaborator]
 user_invocable: true
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, SendMessage, ScheduleWakeup, ToolSearch, AskUserQuestion
 ---

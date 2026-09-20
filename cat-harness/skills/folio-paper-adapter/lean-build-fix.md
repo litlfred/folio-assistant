@@ -1,6 +1,5 @@
 ---
 name: lean-build-fix
-roles: [collaborator, owner]
 description: >
   Iteratively fix Lean build errors and linter warnings until the build
   passes cleanly. Uses MCP diagnostics when available, falls back to

@@ -1,6 +1,5 @@
 ---
 name: deletion-requires-confirmation
-roles: [reader, collaborator, owner]
 description: >
   An agent never removes a durable artefact on its own initiative. Report what
   would go, with sizes and ages, and wait for the user to say so. Covers what

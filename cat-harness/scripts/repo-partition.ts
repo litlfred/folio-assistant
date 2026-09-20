@@ -253,6 +253,11 @@ const RULES: Rule[] = [
       // part of the content model.
       "scripts/schema-nodes.ts",
       "scripts/check-schema-nodes.ts",
+      // The retired-front-matter ratchet. Harness for the same reason: it
+      // reads `harness.json` for where to sweep and for where the trashcan
+      // is, and the keys it retires are the harness's own vocabulary. It
+      // needs no folio to have anything to do.
+      "scripts/check-retired-front-matter.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",

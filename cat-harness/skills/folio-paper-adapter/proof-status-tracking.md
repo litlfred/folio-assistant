@@ -1,6 +1,5 @@
 ---
 name: proof-status-tracking
-roles: [reader, collaborator, owner]
 description: >
   Maintain the proof-objects.json manifest tracking formalization status,
   review records, and LaTeX-to-Lean linkages.  Generate status dashboards

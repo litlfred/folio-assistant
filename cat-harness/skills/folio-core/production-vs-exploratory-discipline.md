@@ -1,6 +1,5 @@
 ---
 name: production-vs-exploratory-discipline
-roles: [reader, collaborator, owner]
 description: >
   Distinguish PRODUCTION (derived-only, no fits) from EXPLORATORY
   (empirical-fit probes OK as shape-hints) from NUMEROLOGY (post-hoc

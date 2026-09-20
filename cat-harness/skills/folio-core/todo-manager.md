@@ -1,6 +1,5 @@
 ---
 name: todo-manager
-roles: [reader, collaborator, owner]
 description: >
   Maintain and display work-in-progress task lists using the `beans` CLI
   issue tracker. Track implementation progress, open tasks, missing
