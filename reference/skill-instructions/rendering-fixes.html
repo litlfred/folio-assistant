@@ -1137,13 +1137,18 @@ errors about missing <code class="language-plaintext highlighter-rouge">html</co
 </code></pre></div></div>
 
 <p><strong>Current format</strong> (required):</p>
-<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">html</span><span class="p">:</span> <span class="dl">"</span><span class="s2">folio-assistant/simulators/file.html</span><span class="dl">"</span><span class="p">,</span>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">html</span><span class="p">:</span> <span class="dl">"</span><span class="s2">simulators/file.html</span><span class="dl">"</span><span class="p">,</span>
 <span class="nx">defaultView</span><span class="p">:</span> <span class="p">{</span>
   <span class="nl">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">,</span>
   <span class="nx">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Default view</span><span class="dl">"</span><span class="p">,</span>
   <span class="nx">params</span><span class="p">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span>
 <span class="p">},</span>
 </code></pre></div></div>
+
+<p>The path is relative to the <strong>folio’s</strong> root, and the directory is whatever
+that folio declares as <code class="language-plaintext highlighter-rouge">simulators.dir</code> in <code class="language-plaintext highlighter-rouge">harness.config.json</code> — not a
+platform path. It read <code class="language-plaintext highlighter-rouge">folio-assistant/simulators/…</code> until 2026-09-19, when
+the simulators moved to the folio that owns them.</p>
 
 <p><strong>Fix</strong>: Replace the <code class="language-plaintext highlighter-rouge">simulator:</code> field with <code class="language-plaintext highlighter-rouge">html:</code> + <code class="language-plaintext highlighter-rouge">defaultView:</code>.
 Use an existing simulator block (e.g. <code class="language-plaintext highlighter-rouge">&lt;simulator-name&gt;.ts</code>) as a template.</p><hr />
@@ -1227,7 +1232,7 @@ instead of raw text. This is automatic — no content change needed.</p><hr />
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35485655962"><code>2fa838b</code></a> &middot; 2026-09-20T03:05:47Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35485865399"><code>1a466c6</code></a> &middot; 2026-09-20T03:11:01Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
