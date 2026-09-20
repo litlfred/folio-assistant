@@ -268,7 +268,7 @@ silently. When in doubt, start generic.
 `lake build` / `lean`-direct passing says **nothing** about §7c — a
 gratuitous `(q : ℝ)` compiles fine.
 
-> **Quickest path — run [`scripts/check-sidecars.sh`](../../../scripts/check-sidecars.sh)
+> **Quickest path — run `scripts/check-sidecars.sh` (no longer in this repository)
 > on your changed files.** It maps each changed file to the QA sidecar
 > criteria that apply (`q-usage-*`, `wall-side-correct`, one-voice, …)
 > and runs the §7c base-ring check on standalone library Lean that has
