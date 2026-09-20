@@ -59,7 +59,7 @@
  *   bun run schema:viz          # write
  *   bun run schema:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
@@ -199,6 +199,75 @@ export function viewerPlacement(
   const dataDir = join(site, "assets", kind);
   const dataHref = relative(pageDir, join(dataDir, "index.json")).split(sep).join("/");
   return { pageDir, dataDir, dataHref };
+}
+
+/**
+ * The line a generated viewer page uses to say WHICH SUBJECT it is for.
+ *
+ * `viewerHtml` emits it into every page it writes, so a page carries its own
+ * identity rather than borrowing one from the directory it sits in. That is
+ * what makes pruning safe: ownership is read off the file.
+ */
+const SCOPE_LINE = /^var SCOPE = "([^"]*)";$/m;
+
+/**
+ * Subject pages under `parentPageDir` that no longer answer to a subject.
+ *
+ * **Bean `ankg`, and it was found live rather than hypothesised.** #604
+ * renamed `folio-assist-sci/` to `folio-assistant-sci/`. Subject slugs come
+ * from the entry's path, so regeneration correctly produced the new page and
+ * left the old one behind — a page serving a subject the declaration no longer
+ * describes, at a URL nothing links to. It was removed by hand in #603.
+ *
+ * `--check` could not see it, and the reason is structural: `emit()` compares
+ * only the files it is ABOUT TO WRITE, so a file the generator no longer
+ * writes is outside what it looks at. It can find a page that is wrong; it can
+ * never find a page that should not exist. That is the `yl5w` shape pointed
+ * the other way — there a claim resolved to no file, here a file answers to no
+ * claim.
+ *
+ * ## Ownership is READ, never assumed from the directory
+ *
+ * `deletion-requires-confirmation` is about artefacts an agent did not create,
+ * so "everything under `parentPageDir` that is not wanted" would be the wrong
+ * rule — it would delete a page somebody hand-added. A directory is prunable
+ * only when its `index.html` **declares itself the subject page for that very
+ * directory**: `var SCOPE = "<dirname>";`. Anything else is returned as
+ * `foreign`, reported, and left alone.
+ *
+ * Precedent: `OWNED` in `who-iris/scripts/gen-iris-pages.ts` (#607) and
+ * `prunableStickies` before it. This is the third instance of one rule, and
+ * the bean asked for the shape to be reused rather than a third one invented —
+ * hence one helper, shared by both viewer generators, rather than a copy in
+ * each.
+ *
+ * The data directory is NOT at risk: `viewerPlacement` puts it at
+ * `<site>/assets/<kind>/`, outside this tree entirely.
+ */
+export function orphanSubjectPages(
+  parentPageDir: string,
+  wanted: readonly string[],
+): { owned: string[]; foreign: string[] } {
+  if (!existsSync(parentPageDir)) return { owned: [], foreign: [] };
+  const keep = new Set(wanted);
+  const owned: string[] = [];
+  const foreign: string[] = [];
+
+  for (const e of readdirSync(parentPageDir, { withFileTypes: true })) {
+    if (!e.isDirectory() || keep.has(e.name)) continue;
+    const page = join(parentPageDir, e.name, "index.html");
+    if (!existsSync(page)) {
+      foreign.push(e.name);
+      continue;
+    }
+    const m = SCOPE_LINE.exec(readFileSync(page, "utf-8"));
+    // The page must name ITSELF. A page whose SCOPE says something else is a
+    // page this generator did not write for this location, and guessing is
+    // exactly what the scoping rule exists to stop.
+    if (m && m[1] === e.name) owned.push(e.name);
+    else foreign.push(e.name);
+  }
+  return { owned: owned.sort(), foreign: foreign.sort() };
 }
 
 export function viewerHtml(dataHref: string, scope = ""): string {
@@ -982,6 +1051,29 @@ if (import.meta.main) {
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+  }
+
+
+  // ── ORPHANS (bean `ankg`) ──────────────────────────────────────────────
+  //
+  // A subject page the declaration no longer describes. `emit()` cannot see
+  // one — it compares only the files it is about to write — so this is asked
+  // separately, and in `--check` an orphan is a FINDING rather than silence.
+  const { owned, foreign } = orphanSubjectPages(pageDir, subjects);
+  for (const name of foreign) {
+    // Reported and LEFT. Ownership could not be established from the file, and
+    // `deletion-requires-confirmation` is about exactly this case.
+    console.error(`  ! ${join(pageDir, name)} is not a subject and does not identify itself — left in place`);
+  }
+  for (const name of owned) {
+    const dir = join(pageDir, name);
+    if (check) {
+      console.error(`  ✗ ${dir} is an orphan — it serves a subject the declaration no longer describes`);
+      stale++;
+      continue;
+    }
+    rmSync(dir, { recursive: true });
+    console.log(`  ✗ pruned ${dir}`);
   }
 
   if (!check) {
