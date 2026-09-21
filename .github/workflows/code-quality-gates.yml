@@ -452,6 +452,15 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # The detangle measurements are PINNED, not graded. This fails on a STALE
+      # sidecar or an orphaned one — never on a number being "wrong", because
+      # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
+      # declared step"). Bean `sb6z`: the model was correct and unexercised, so
+      # a regression in it was invisible until somebody ran it by hand AND
+      # remembered last time's numbers.
+      - name: detangle measurements are current
+        run: bun run kg:detangle:check
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
@@ -605,6 +614,14 @@ jobs:
           # counted rather than failed -- and `docs/_data/harness.json` is a
           # different file that must NOT be renamed.
           bun run check:declaration-filename
+          # Bean `hrv2`: the sibling above hunts the RETIRED name, so it is blind
+          # to a filename that is wrong but real -- AGENTS.md named
+          # `folio-assistant.config.json`, a file that exists and declares no
+          # graph. This one checks the CLAIM: prose pairing a declared graph id
+          # with a declaration file, verified against the declarations. Its
+          # vocabulary is derived from them, so an empty result is reported as
+          # unknown rather than as a pass.
+          bun run check:declaration-claims
           bun run check:bean-parents
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`

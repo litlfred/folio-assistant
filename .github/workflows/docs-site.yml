@@ -280,8 +280,9 @@ jobs:
       # is published as DATA rather than as a page. Something else may draw it.
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
-      # Both artefacts are named after the repository (the `stub` in
-      # harness.json) and land AT THE BASE, at the URLs their own
+      # Both artefacts are named after the repository (the `stub` in the
+      # instance's own declaration -- `cat-harness/cat-harness.json` here)
+      # and land AT THE BASE, at the URLs their own
       # `@id`/`$id` claim. There is no `kg/` subdirectory: the repository IS
       # its declaration that it holds a graph, and the stub is what separates
       # one instance's renderings from another's in a tree that overlays

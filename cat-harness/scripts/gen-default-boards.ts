@@ -69,7 +69,7 @@ const check = process.argv.includes("--check");
  * declarations, and `check:declared-paths` is what stops either becoming a
  * literal — it caught this function composing `todos/` by hand.
  */
-export function boardsDir(_repoRoot: string, todoRoot: string = TODO_ROOT): string {
+export function boardsDir(_repoRoot: string, todoRoot: string = TODO_ROOT()): string {
   const graph = parseTodoGraph(JSON.parse(readFileSync(join(todoRoot, TODO_GRAPH_FILE), "utf8")));
   const entry = graph.directories.find((d) => (d.graphs ?? []).includes("boards"));
   if (entry === undefined) {
