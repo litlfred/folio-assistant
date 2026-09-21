@@ -148,6 +148,8 @@ export interface BeanEvidence {
    * a record of probes at all.
    */
   consideredOptions?: number;
+  /** Carries a decision rendered through `renderDecision` — see `hasRenderedDecision`. */
+  renderedDecision?: boolean;
 }
 
 export interface TodoEvidence {
@@ -1027,6 +1029,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   // rather than a truthiness test, because 0 is a real and reportable count.
   const decisionRecords = beans.filter((b) => b.consideredOptions !== undefined);
   const thin = decisionRecords.filter((b) => (b.consideredOptions ?? 0) < 2);
+  const rendered = beans.filter((b) => b.renderedDecision === true);
   const claimed = beans.filter((b) => b.status === "in-progress" || b.status === "in_progress");
   const stale = claimed
     .map((b) => ({ bean: b, age: daysBetween(ctx.now, b.updatedAt) }))
@@ -1065,6 +1068,12 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
     // that misreports where it came from sends whoever re-derives it to the
     // wrong place, which is the whole reason `command` is on the record.
     { metric: "bean-decision-records", value: decisionRecords.length, unit: "count", command: bodyCmd },
+    {
+      metric: "bean-rendered-decision-records",
+      value: rendered.length,
+      unit: "count",
+      command: "beans/defs/*.md — the five-row table `renderDecision` emits",
+    },
     { metric: "bean-thin-decision-records", value: thin.length, unit: "count", command: bodyCmd },
   ];
   const findings: HealthFinding[] = [];

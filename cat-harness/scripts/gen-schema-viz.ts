@@ -211,22 +211,6 @@ export function viewerPlacement(
 const SCOPE_LINE = /^var SCOPE = "([^"]*)";$/m;
 
 /**
- * How a generated page says WHICH SUBJECT it is for, read out of its bytes.
- *
- * A reader, not a regex, because the marker's SHAPE is the generator's and
- * only the rule is shared. `viewerHtml` writes a `var SCOPE` line into a page
- * that is mostly script; `state-visualizer.ts` writes a `<meta>` into a page
- * that has none, and forcing either to adopt the other's syntax would be a
- * marker chosen for the helper's convenience rather than for the page.
- *
- * Returning `undefined` is the third state and it is never "not mine": a page
- * whose owner cannot be read is `foreign`, which is reported and LEFT.
- */
-export type OwnerReader = (html: string) => string | undefined;
-
-const scopeOwner: OwnerReader = (html) => SCOPE_LINE.exec(html)?.[1];
-
-/**
  * Subject pages under `parentPageDir` that no longer answer to a subject.
  *
  * **Bean `ankg`, and it was found live rather than hypothesised.** #604
@@ -263,7 +247,6 @@ const scopeOwner: OwnerReader = (html) => SCOPE_LINE.exec(html)?.[1];
 export function orphanSubjectPages(
   parentPageDir: string,
   wanted: readonly string[],
-  readOwner: OwnerReader = scopeOwner,
 ): { owned: string[]; foreign: string[] } {
   if (!existsSync(parentPageDir)) return { owned: [], foreign: [] };
   const keep = new Set(wanted);
@@ -277,11 +260,11 @@ export function orphanSubjectPages(
       foreign.push(e.name);
       continue;
     }
-    const owner = readOwner(readFileSync(page, "utf-8"));
-    // The page must name ITSELF. A page whose marker says something else is a
+    const m = SCOPE_LINE.exec(readFileSync(page, "utf-8"));
+    // The page must name ITSELF. A page whose SCOPE says something else is a
     // page this generator did not write for this location, and guessing is
     // exactly what the scoping rule exists to stop.
-    if (owner === e.name) owned.push(e.name);
+    if (m && m[1] === e.name) owned.push(e.name);
     else foreign.push(e.name);
   }
   return { owned: owned.sort(), foreign: foreign.sort() };
