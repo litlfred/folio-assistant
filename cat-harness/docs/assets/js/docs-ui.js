@@ -1753,7 +1753,7 @@
     'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
-  var todoState = { items: [], floating: {}, processes: {}, themeArt: {} };
+  var todoState = { items: [], floating: {}, floatGeom: {}, processes: {}, themeArt: {} };
 
   /* ═══ Semantic zoom and windows — TWO mechanisms, kept apart ═══════════
    *
@@ -2115,6 +2115,60 @@
     g.top = Math.max(0, g.top);
     applyGeometry(panel, g);
     return true;
+  }
+
+  /**
+   * The whole move interaction, wired onto one panel. ONE implementation.
+   *
+   * Bean `ivfw` is the second surface that needs this — a sticky lifted onto
+   * the page, which until now had nowhere to go. The bean's own warning is
+   * against giving it a second one: *"the two must agree rather than ship two
+   * notions of position"*. So the board window and the floating sticky call
+   * this, and neither owns the behaviour.
+   *
+   * `panel` takes the keyboard path and the geometry; `handle` is the region a
+   * pointer may drag by, which is the title bar on a window and the head on a
+   * sticky. They differ because dragging a card by its BODY would fight text
+   * selection, and a reader who cannot select the text of a note cannot quote
+   * it.
+   */
+  function wireMove(panel, handle, live) {
+    // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
+    // go on scrolling the page, which is what a reader expects of them.
+    panel.addEventListener("keydown", function (e) {
+      if (panel.getAttribute("data-fa-moving") !== "true") return;
+      if (e.key === "Escape" || e.key === "Enter") {
+        e.preventDefault();
+        e.stopPropagation();
+        setMoveMode(panel, false, live);
+        return;
+      }
+      if (nudge(panel, e.key, e.shiftKey)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+
+    /* THE ACCELERATOR, over the top of the path above rather than instead of
+     * it. Everything it can do, the keyboard can already do. */
+    var from = null;
+    handle.addEventListener("mousedown", function (e) {
+      // Not on a control: a drag that started on `[x]` would fight the click
+      // that closes the panel.
+      if (e.target.closest("[data-fa-control]") || e.target.closest("button")) return;
+      from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
+      e.preventDefault();
+    });
+    document.addEventListener("mousemove", function (e) {
+      if (!from) return;
+      applyGeometry(panel, {
+        left: Math.max(0, from.g.left + (e.clientX - from.x)),
+        top: Math.max(0, from.g.top + (e.clientY - from.y)),
+        width: from.g.width,
+        height: from.g.height,
+      });
+    });
+    document.addEventListener("mouseup", function () { from = null; });
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -2842,6 +2896,13 @@
     function dock(todo) {
       var f = todoState.floating[todo.id];
       if (f) {
+        // REMEMBER WHERE IT WAS, because dock DESTROYS the card and float
+        // CONSTRUCTS a new one — the same round-trip that drops a theme
+        // carried on the DOM node. A reader who moves a sticky, docks it and
+        // pins it again has not asked for it to jump back to the corner.
+        // Session-only and this-reader-only, like the window stack: a position
+        // a published page cannot write is not the folio's.
+        todoState.floatGeom[todo.id] = geometryOf(f);
         layer.removeChild(f);
         delete todoState.floating[todo.id];
       }
@@ -2869,11 +2930,76 @@
       heading.focus();
     }
 
+    /**
+     * Where a newly pinned sticky lands, and why it is computed rather than
+     * left to the cascade.
+     *
+     * The layer used to be a small `inset: auto 1rem 1rem auto` box that
+     * stacked its children in flow, which is exactly the defect the owner
+     * reported as *"you cant move around dispaly"*: the layer decided, and the
+     * sticky had no say. It is a full-viewport frame now, so each card carries
+     * its own geometry — and the default reproduces the old bottom-right pile,
+     * offset per card, so nothing MOVES until a reader moves it.
+     *
+     * `Math.max(0, …)` for the same reason `nudge` clamps: a card placed past
+     * the origin is a card whose controls cannot be reached.
+     */
+    function placeFloating(card, todo) {
+      var saved = todoState.floatGeom[todo.id];
+      if (saved) { applyGeometry(card, saved); return; }
+      var n = Object.keys(todoState.floating).length;
+      var w = Math.min(352, Math.max(240, window.innerWidth - 32));
+      var h = card.getBoundingClientRect().height || 120;
+      applyGeometry(card, {
+        left: Math.max(0, window.innerWidth - w - 16),
+        top: Math.max(0, window.innerHeight - h - 16 - n * 12),
+        width: w,
+        height: h,
+      });
+    }
+
     function float(todo) {
       if (todoState.floating[todo.id]) return;
       var card = buildSticky(todo, float, dock, discard);
       card.classList.add("fa-sticky-floating");
+      // Focusable so the move mode has somewhere to put focus and the arrow
+      // keys have a target. `-1`: it is reached BY the Move control, not by
+      // tabbing past every pinned note on the way to the page.
+      card.setAttribute("tabindex", "-1");
+
+      // The live region the move mode announces through. One per card, so a
+      // reader is told about the sticky they are in rather than the last one
+      // anybody touched — the same reason the board window has its own.
+      var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+      card.appendChild(live);
+
+      /* THE MOVE CONTROL. `move` is already declared for the `todo` kind in
+       * `panel-chrome.ts` and already mirrored in `KIND_CONTROLS` above — this
+       * surface simply never asked for it. Declared and unoffered is the gap
+       * `t4my`'s three states are about, and this closes it for the one card
+       * that had nowhere to go. */
+      var tools = card.querySelector(".fa-sticky-tools");
+      if (tools) {
+        var moveBtn = el("button", {
+          type: "button",
+          class: "fa-sticky-move",
+          "data-fa-control": "move",
+          // Words, not just the glyph: "✜" alone is a guess, and the mode it
+          // enters changes what the arrow keys do, which a reader must be told.
+          "aria-label": "Move " + todo.summary + " around the page",
+          "aria-pressed": "false",
+        }, CONTROL_GLYPHS.move);
+        moveBtn.addEventListener("click", function () {
+          var on = card.getAttribute("data-fa-moving") !== "true";
+          setMoveMode(card, on, live);
+          moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        tools.insertBefore(moveBtn, tools.firstChild);
+      }
+
+      wireMove(card, card.querySelector(".fa-sticky-head") || card, live);
       layer.appendChild(card);
+      placeFloating(card, todo);
       todoState.floating[todo.id] = card;
 
       var slot = slots[todo.id];
@@ -3113,45 +3239,11 @@
         renderStack();
       });
 
-      // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
-      // go on scrolling the page, which is what a reader expects of them.
-      panel.addEventListener("keydown", function (e) {
-        if (panel.getAttribute("data-fa-moving") !== "true") return;
-        if (e.key === "Escape" || e.key === "Enter") {
-          e.preventDefault();
-          e.stopPropagation();
-          setMoveMode(panel, false, live);
-          return;
-        }
-        if (nudge(panel, e.key, e.shiftKey)) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      });
-
-      /* THE ACCELERATOR, over the top of the path above rather than instead of
-       * it. Dragging the title bar moves the window; everything it can do, the
-       * keyboard can already do. */
-      (function () {
-        var from = null;
-        bar.addEventListener("mousedown", function (e) {
-          // Not on a control: a drag that started on `[x]` would fight the
-          // click that closes the window.
-          if (e.target.closest("[data-fa-control]")) return;
-          from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
-          e.preventDefault();
-        });
-        document.addEventListener("mousemove", function (e) {
-          if (!from) return;
-          applyGeometry(panel, {
-            left: Math.max(0, from.g.left + (e.clientX - from.x)),
-            top: Math.max(0, from.g.top + (e.clientY - from.y)),
-            width: from.g.width,
-            height: from.g.height,
-          });
-        });
-        document.addEventListener("mouseup", function () { from = null; });
-      })();
+      // The keyboard path and the drag accelerator, both from `wireMove`.
+      // They were written inline here first; `ivfw` needed the same behaviour
+      // on a floating sticky, and two copies of a move interaction is two
+      // notions of position waiting to disagree.
+      wireMove(panel, bar, live);
       windows.appendChild(panel);
       windowEls[todo.id] = panel;
       renderStack();
