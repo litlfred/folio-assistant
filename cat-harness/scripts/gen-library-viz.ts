@@ -47,11 +47,11 @@
  *   bun run library:viz          # write
  *   bun run library:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
-import { viewerPlacement } from "./gen-schema-viz.ts";
+import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
 import { directoriesForGraph, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
@@ -409,6 +409,29 @@ if (import.meta.main) {
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+  }
+
+
+  // ── ORPHANS (bean `ankg`) ──────────────────────────────────────────────
+  //
+  // A subject page the declaration no longer describes. `emit()` cannot see
+  // one — it compares only the files it is about to write — so this is asked
+  // separately, and in `--check` an orphan is a FINDING rather than silence.
+  const { owned, foreign } = orphanSubjectPages(pageDir, subjects);
+  for (const name of foreign) {
+    // Reported and LEFT. Ownership could not be established from the file, and
+    // `deletion-requires-confirmation` is about exactly this case.
+    console.error(`  ! ${join(pageDir, name)} is not a subject and does not identify itself — left in place`);
+  }
+  for (const name of owned) {
+    const dir = join(pageDir, name);
+    if (check) {
+      console.error(`  ✗ ${dir} is an orphan — it serves a subject the declaration no longer describes`);
+      stale++;
+      continue;
+    }
+    rmSync(dir, { recursive: true });
+    console.log(`  ✗ pruned ${dir}`);
   }
 
   if (!check) {

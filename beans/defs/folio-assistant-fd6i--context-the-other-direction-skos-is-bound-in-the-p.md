@@ -81,14 +81,59 @@ overturned, the honest consequence is that `skos:` comes **out** of both context
 and out of `tabular-csvw.ts:10`. A bound prefix nothing emits should not survive
 that decision in either direction.
 
+## WIDENED BY MEASUREMENT, 2026-09-20 — it is three vocabularies, not one
+
+`skos:` is now emitted (below). **The eight-vocabulary sentence is still
+false**, and this bean understated the problem because it measured five of the
+eight rather than all of them.
+
+Re-measured across source, excluding `node_modules`, `.git`, `beans/`, the
+gitignored `_kg/` and the generated `docs/assets/`:
+
+| bound prefix | emitting sites | in the sentence? |
+|---|---|---|
+| `doco:` | 1112 | yes |
+| `skos:` | **10** (135 nodes) — was **0** | yes |
+| `dcterms:` | 5 | yes |
+| `cito:` | 2 | yes |
+| `prov:` | 2 | yes |
+| **`deo:`** | **0** | yes |
+| **`oa:`** | **0** | yes |
+| **`fhir:`** | **0** | yes |
+| `csvw:` | 0 prefixed | no — bound, not in the sentence |
+
+Checked in BOTH forms rather than by one grep, because a vocabulary can be
+spoken through a `@context` term alias instead of a `prefix:value` literal —
+`title` → `dcterms:title` is exactly that, and a scan for the prefix alone
+would miss it. `deo:` and `oa:` occur only at their own `const` and their
+binding line. `fhir:`'s only hits are a PROSE comment explaining why a block is
+deliberately **not** typed `fhir:ValueSet`, and an unrelated `fhir:` object key
+in `fsh-guts/scripts/generate-docs.ts`. No `@context` term maps to any of the
+three.
+
+**Stated limit.** `csvw:` is counted 0 here on prefixed values, but
+`csvwOnly()` emits CSVW-native KEYS that resolve through the context, so csvw
+may be genuinely spoken by alias. It is out of the sentence either way and is
+left for whoever builds the bidirectional check; the point is that "0 prefixed
+occurrences" and "not spoken" are different claims, and this table reports the
+first.
+
+So the repair `lqo9` slice 1 makes is **one of four**, and saying the sentence
+is now true would be the same unearned claim in the other direction. The
+honest positions are: emit `deo:`/`oa:`/`fhir:`, or correct the sentence to
+name what is actually spoken.
+
 ## Done when
 
 - [ ] Every prefix bound in the published `@context` is counted against the nodes
       that emit it, in the same place `ovkk`'s direction is reported
 - [ ] A deliberate forward declaration carries a **declared reason**, not a
       silence
-- [ ] `tabular-csvw.ts:10`'s eight-vocabulary sentence is true, or corrected
-- [ ] `skos:` is either emitted (via `lqo9`) or removed from both contexts
+- [ ] `tabular-csvw.ts:10`'s eight-vocabulary sentence is true, or corrected —
+      **still false**: `deo:`, `oa:` and `fhir:` each emit 0, measured above
+- [x] `skos:` is either emitted (via `lqo9`) or removed from both contexts —
+      **emitted**, 2026-09-20: 135 `skos:Concept` nodes in 3 `skos:ConceptScheme`s
+      from `ns-export.ts`, falsified by five mutations
 
 Related: `ovkk` (the other direction, in-progress, PR #330), `lqo9` (the glossary
 roast that surfaced this), `zzmr` (KG structure and publication), `ulqj`/`eief`

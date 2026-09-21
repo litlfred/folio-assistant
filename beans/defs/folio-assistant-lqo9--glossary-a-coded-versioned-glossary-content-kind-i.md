@@ -1,13 +1,13 @@
 ---
 # folio-assistant-lqo9
 title: 'GLOSSARY: a coded, versioned glossary content kind in core, a defined-terms index in docs/ from every KG asset, translatable — roast first'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 tags:
     - roast
 created_at: 2026-09-20T18:03:45Z
-updated_at: 2026-09-20T18:03:45Z
+updated_at: 2026-09-20T23:04:43Z
 parent: folio-assistant-0lmb
 ---
 
@@ -144,6 +144,88 @@ Two remain genuinely open and are the owner's to rule on:
 4. `defines[]`'s measured-zero coverage is the honest baseline for the coverage
    axis, and is reported rather than gated.
 
+## SLICE 1 SHIPPED, 2026-09-20 — and the roast had missed a THIRD mechanism
+
+The roast enumerated two glossary mechanisms and warned that `GlossaryEntry` was
+taken twice. **There is a third, and it is the one that mattered**:
+`schemas/vocabulary.ts`, 421 lines, `CLASS_GLOSSES` + `PROPERTY_GLOSSES` —
+**110 authored terms**, each a `TermGloss` with a one-sentence definition and a
+layer. `scripts/ns-export.ts` already emits one node per term with an `@id`, a
+type, a label and a definition, and `ns:check` already gates it.
+
+That is a glossary. The roast's own instruction — *"check what it already does
+before adding a second mechanism"* — was followed for `build-glossary.ts` and
+not for this, which is the failure mode the instruction exists to catch, one
+level over.
+
+**It changes the slice, and for the better.** `TermGloss` maps onto SKOS almost
+term for term:
+
+| `TermGloss` | SKOS |
+|---|---|
+| the key (`FshGutsNode`) | `skos:prefLabel` |
+| `gloss` | `skos:definition` |
+| `layer` | which `skos:ConceptScheme` it is `skos:inScheme` of |
+| the prefixed name (`cat:FshGutsNode`) | `skos:notation` — **the owner's "coded", already present** |
+
+So slice 1 is not a new schema with zero content. It is **135 real concepts in
+3 concept schemes**, no new authoring burden, and `notation` answers the coded
+requirement with a value that is structurally unique rather than one somebody
+has to remember to type.
+
+### The ruling turned out not to be load-bearing here
+
+`lqo9` listed *"where does a term's IRI live"* as blocking. Sourcing slice 1
+from `vocabulary.ts` **dissolves it**: those terms already live in the instance
+namespaces (`bs:`, `cat:`, `fac:`), so the recommendation — instance namespace —
+is the status quo rather than a choice being made. The ruling still matters for
+terms extracted from BPMN lanes and DMN decisions, which is slice 2. It is not
+owed before slice 1, and this bean said it was.
+
+### What shipped
+
+`ns-export.ts` only. Each term node gains `skos:Concept` alongside its
+`rdfs:Class`/`rdf:Property` type, plus `prefLabel`, `definition`, `notation`
+and `inScheme`. Three `ConceptScheme` nodes are emitted, **derived from the
+terms actually present** rather than from the three layers that exist — a
+scheme with no members is `dh4f` in miniature, so a `--layer cat-bootstrap`
+slice carries exactly one. In `--exact` mode the document IS its layer's
+scheme and carries both types, rather than a node sharing its own `@id`.
+
+**The punning is named rather than hidden.** A term is both a thing the graph
+has instances OF and a unit of meaning a reader looks UP. Two types on one node
+is sound in RDFS and OWL-Full and is what published vocabularies do; it is
+**not** sound under an OWL-DL reasoner. Nothing here runs one. The line to
+revisit is marked in the source, with the usual repair named.
+
+**The RDFS facts are untouched.** `prefLabel`/`definition` restate
+`label`/`comment` rather than replacing them — `skos:prefLabel` is a declared
+sub-property of `rdfs:label`, so the two agreeing is the spec's expectation —
+and a test asserts they cannot drift.
+
+### Falsified by mutation, five ways
+
+| mutation | tests red |
+|---|---|
+| drop `skos:Concept` from `@type` | 7 of 10 |
+| drop `inScheme` | 4 |
+| stop emitting scheme nodes | 3 |
+| let `prefLabel` drift from `label` | 1 |
+| make `notation` non-unique | 1 |
+
+Every count is checked against **zero before anything else**, because a suite
+asserting "every concept has a definition" passes perfectly over a document
+with no concepts — which is precisely the state `fd6i` measured and this change
+exists to make impossible. That is `6tkl`, already introduced once this evening
+by a change whose own tests were meant to guard it.
+
+### Not done, and named
+
+`fd6i` is **widened, not closed**: re-measuring all eight bound vocabularies
+rather than the five it had showed `deo:`, `oa:` and `fhir:` each emit **0**.
+The eight-vocabulary sentence in `tabular-csvw.ts` is still false; this repairs
+one quarter of it. Recorded there.
+
 ## Standards — what fits a knowledge graph, and what does not
 
 | standard | what it is for | fit here |
@@ -177,3 +259,33 @@ Two remain genuinely open and are the owner's to rule on:
 - [ ] The standards choice above is recorded as a decision (or overturned with reasons) — and either way `skos:` stops being a bound prefix that nothing emits
 
 Related: `0lmb` (content model), `zzmr` (KG structure and publication), `bzyu` (translation pipeline), the who-iris catalogue work on PR #477, the existing `glossary-build` skill (folio-core) — check what it already does before adding a second mechanism.
+
+## `docs-auto` — the owner's framing for where this lands, 2026-09-20
+
+Owner (this session), reframing the ask as a HANDLER rather than a one-off page:
+
+> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`
+> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.
+> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could clarify
+> it lives at `cat-harness/docs-auto/glossary/<path>`
+
+So piece 1 of this bean (*"a defined-terms index in the docs/ rendering"*) is not
+its own renderer: it is **one `auto-doc-type` among several**, served by a single
+handler that takes a sub-graph path and emits derived documentation for it. The
+glossary index for a sub-graph lives at `cat-harness/docs-auto/glossary/<path>`.
+
+Proposed `auto-doc-type` values, as the owner gave them:
+`glossary`, `index`, `index/bpmn`, `index/dmn`, `index/skills`, `index/tasks`,
+`index/processes`, `index/roles`.
+
+**`toc` is OUT.** It was in the owner's first list and withdrawn in the same
+session: *"no toc,... ther is no meanging at folio level/. (mayber later)"* — a
+table of contents is a document-order notion and a folio has no single order to
+take one over. Recorded here rather than dropped silently, because the next
+agent reading the original list would otherwise re-add it.
+
+Pieces 2–4 (the `glossary` content kind in core, coded + versioned in the
+schema, translatable) are unchanged by this and are still this bean's.
+
+**Not started.** Queued behind the who-iris ingestion work; the roast above still
+holds and still gates any build.

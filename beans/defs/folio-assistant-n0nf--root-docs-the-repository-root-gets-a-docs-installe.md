@@ -1,11 +1,11 @@
 ---
 # folio-assistant-n0nf
 title: 'ROOT DOCS: the repository root gets a docs/ installed by cat-harness, the way a dependent gets uploads/ and library/'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-20T19:01:17Z
-updated_at: 2026-09-20T19:01:17Z
+updated_at: 2026-09-21T05:18:07Z
 parent: folio-assistant-yj32
 ---
 
@@ -62,12 +62,59 @@ that is the machinery this wants, pointed at `docs`.
   root's `docs/` is installed BY cat-harness, both exist and the same page
   may be reachable at two URLs. Which is canonical?
 
+## RULED, 2026-09-21 — COMPOSE, and it makes the risky half cheap
+
+Owner, asked with the three options and their costs: **compose — overlay.**
+
+> The site build merges the platform's `docs/` with the instance's own
+> overlay, deepest-dependency-first. An instance overrides one page without
+> forking the rest.
+
+**It is not a new mechanism, which is why it was recommended.**
+`resolveSkillDirs` in `schemas/harness-config.ts` already computes exactly
+this overlay for skills — deepest-dependency-first, an instance's package
+shadowing its dependency's. The rule an agent learns once then applies twice
+instead of twice differently.
+
+### It answers the second question too, and reverses this bean's estimate
+
+This bean called step 2 *"the load-bearing half and the risky one"* because
+**241 files under `cat-harness/docs/`** would move. **Under compose they do
+not move at all.** `cat-harness/docs/` STAYS and becomes the base layer; the
+root's `docs/` starts effectively empty and holds only what the root adds or
+overrides. So the answer to *"what happens to `cat-harness/docs/`?"* is
+**it is the source that is composed from**, and the expensive half of this
+bean evaporates rather than being paid for.
+
+That also keeps `ohx6` unaffected: cat-harness keeps renderable content of
+its own, which is what that bean wants beside `cat-harness/folio/`.
+
+### And it narrows the third
+
+*"Does this change the published URL?"* — under compose the built site serves
+each page **once**, at `<baseurl>/<path>`. `cat-harness/docs/<page>` is a
+SOURCE location, not a published one, so the same page is not reachable at
+two URLs by construction. What still needs deciding is whether the platform's
+docs are ALSO published separately under `o7eq`'s per-layer segment; that is
+`o7eq`'s question rather than this bean's, and it is no longer blocking here.
+
+### What compose costs, stated rather than skipped
+
+The site build gains a resolution step, and **"which file won" has to be
+reportable** — an overlay that silently shadows a page is the `dh4f` shape
+again: a consumer reads the composed tree, sees one file, and cannot tell an
+override from the only copy. The build must be able to say, for any page,
+which layer supplied it. That is a requirement of this work, not a nicety.
+
 ## Done when
 
-- [ ] Copy, link or compose is chosen
+- [x] Copy, link or compose is chosen — **COMPOSE (overlay)**, owner, 2026-09-21
 - [ ] `docs` is declared so a dependent instance materialises its own
 - [ ] A newly initiated instance gets a `docs/` without being told to
-- [ ] The site builds from the root's `docs/`
+- [ ] The site builds from the COMPOSED tree — root overlay over
+      `cat-harness/docs/`, which stays where it is
+- [ ] The build can say WHICH LAYER supplied any given page, so an override
+      is distinguishable from the only copy
 - [ ] A test asserts a dependent gets one, falsified by flipping the
       declaration back — `wwi6`'s tests are the model, and they were
       falsified before they were trusted
