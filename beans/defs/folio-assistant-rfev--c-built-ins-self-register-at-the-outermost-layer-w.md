@@ -4,7 +4,7 @@ title: 'C: built-ins self-register at the outermost layer — wire the Contribut
 status: in-progress
 type: task
 created_at: 2026-09-21T13:21:31Z
-updated_at: 2026-09-21T16:30:00Z
+updated_at: 2026-09-21T16:55:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -240,3 +240,32 @@ unassigned; `bun run gates` 87 of 87.
   Not reachable by a contributed criterion today, and the throw above makes a
   future one loud rather than silent — but it is the same shape discovery
   replaced.
+
+### The next move is NOT another vertical slice — measured
+
+`render-latex.ts` looked like the obvious repeat. It is not, and the numbers
+say why rather than a hunch:
+
+- It is **already classified `sci`**, and so are all four of its importers —
+  `generate-block-tex.ts`, `generate-main-tex.ts`, `audit-tex-source.ts` and
+  `build.ts`. (`zlmp` records `build.ts` as *core* calling into sci; that has
+  since been reclassified, so the entry there is stale.)
+- Moving it alone would leave four sci modules in `cat-harness` importing it
+  across an instance boundary — four new cross-instance imports in exchange for
+  one drained runtime edge. That is precisely the trap `zlmp` documents twice:
+  *"inverting a dependency does not remove a cross-layer edge if the new holder
+  sits in the same layer"*, and the feedback cluster that measured 10 → 11.
+- The cluster is **39 modules** — every module the partition tool classifies
+  `sci`, from `content/pipeline/` through `adapters/` to a dozen `scripts/`.
+
+So the renderer half of the seam waits for `zmdo` / `wggr`, which is the
+wholesale move and the owner's call. What changed today is that it now has a
+destination and a proven mechanism: `folio-assistant-sci` carries a
+`contributes` module, the root carries a dependency edge, and a contributed
+checker is freshness-hashed across the instance boundary with its commit SHA
+resolved in the contributing repository.
+
+`qa-checkers-dak.ts` (base, 5 criteria) is blocked differently and for a
+simpler reason: there is **no `smart-base` instance** in this checkout at all.
+`instanceRootsIn` lists ten, and neither `smart-base` nor `smart-kg` is among
+them. Creating one is a bigger decision than this bean's.

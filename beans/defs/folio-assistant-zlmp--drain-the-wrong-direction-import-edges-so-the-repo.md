@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-21T14:40:00Z
+updated_at: 2026-09-21T16:55:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -417,3 +417,21 @@ also records the first thing that had to be fixed before any registration was
 possible: a contributed QA checker had no source file, so it could not be
 freshness-hashed, and every one would have arrived with verdicts that can never
 go stale.
+
+### One of the five runtime edges is drained, and one entry above is stale
+
+`rfev`'s vertical slice moved `qa-checkers-cost.ts` into `folio-assistant-sci`,
+which now contributes its two checkers through the repository's first
+dependency edge. `qa-checker-discovery` resolves **no sci path** any more: a
+contributed checker arrives as a function, so the contributor imported its own
+module and core names nothing. Four of the five remain.
+
+**Stale entry, corrected:** the table above records `build.ts` as *core*
+calling `renderChapter` in sci. `build.ts` is classified **sci** today, and so
+are all four importers of `render-latex.ts`. That changes what draining the
+renderer edge costs — moving `render-latex.ts` alone would trade one runtime
+edge for four cross-instance imports, the same trap this bean records twice.
+The sci cluster is 39 modules and moves as a unit, under `zmdo` / `wggr`.
+
+`qa-checkers-dak.ts` is blocked on something simpler: there is no `smart-base`
+instance in this checkout at all.
