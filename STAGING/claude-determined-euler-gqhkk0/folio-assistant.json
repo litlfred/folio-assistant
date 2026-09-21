@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T07:58:07.388Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9ae01fe3ef9d3cabb2bb90dad8fe6ffb2efe0d28",
-  "sourceCommitSha": "9ae01fe3ef9d3cabb2bb90dad8fe6ffb2efe0d28",
-  "sourceCommitAt": "2026-09-21T07:56:22Z",
+  "generatedAt": "2026-09-21T08:49:28.969Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/635a7216a227c916a343f1b5a4defcfb27931690",
+  "sourceCommitSha": "635a7216a227c916a343f1b5a4defcfb27931690",
+  "sourceCommitAt": "2026-09-21T08:44:28Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 220,
+    "Skill": 222,
     "Actor": 27,
     "Capability": 28,
     "Role": 130,
@@ -276,7 +276,7 @@
     "SequenceFlow": 714,
     "ProcessNode": 680,
     "Tool": 69,
-    "Schema": 83,
+    "Schema": 84,
     "GraphKind": 22,
     "Directory": 34,
     "Asset": 3
@@ -1828,6 +1828,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/instance-kinds",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "instance-kinds",
+      "title": "Instance kinds — naming one, and what a new kind must declare",
+      "description": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/instance-kinds.md",
+      "instructionLines": 289,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/instance-kinds"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/glossary-build",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "glossary-build",
@@ -2540,7 +2557,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
-      "instructionLines": 364,
+      "instructionLines": 414,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2608,7 +2625,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/agent-memory.md",
-      "instructionLines": 166,
+      "instructionLines": 192,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2844,7 +2861,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/content-context-and-state-graphs.md",
-      "instructionLines": 216,
+      "instructionLines": 257,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3781,6 +3798,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-simplifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/root-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "root-readme",
+      "title": "The root README, and the one fact it must carry",
+      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. The last thing initialize-harness does before it ends installed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/cat-bootstrap"
+      ],
+      "instructionsPath": "../cat-bootstrap/skills/root-readme.md",
+      "instructionLines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-bootstrap",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/root-readme"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/discussion",
@@ -5345,6 +5379,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/harness-requirements",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/idle-backlog",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/instance-kinds",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/integration-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/integration-backlog",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/integration-watch",
@@ -32276,6 +32311,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/todo-graph"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#schema/todo-index",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "todo-index",
+      "title": "The published todo index — `folio-todo-index/v1`, described at last.",
+      "module": "schemas/todo-index.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/todo-index"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#schema/todo",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "todo",
@@ -34110,8 +34154,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "66f1fb5f7329ecd37d8ca64a709a764f7eb653d2",
+    "sha": "643276cede1c5a8fe0929aa70784496faa841f90",
     "pr": "664/merge",
-    "run": "35575348678"
+    "run": "35579788101"
   }
 }
