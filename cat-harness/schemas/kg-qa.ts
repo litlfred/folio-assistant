@@ -189,6 +189,17 @@ export interface OrphanSidecar {
   /** `subject.path` as the sidecar records it, or `undefined` if it records none. */
   subject?: string;
   /**
+   * `subject.kind` and `subject.id`, when the sidecar records them.
+   *
+   * The PATH is what changes when a subject moves; these two do not. Carried
+   * so a relocation can be told from a deletion — see `relocateSidecars` in
+   * `scripts/kg-audit.ts`. Optional for the same reason `subjectExists` is:
+   * a sidecar that could not be read has no identity to offer, and guessing
+   * one would move a verdict onto a subject it never audited.
+   */
+  kind?: string;
+  id?: string;
+  /**
    * Whether that subject is on disk. `undefined` means the sidecar could not
    * be read or names no path — a THIRD state, kept because "could not tell"
    * rendered as either answer is how the eight fragment sidecars below got
@@ -245,12 +256,18 @@ export function sweepOrphans(root: string, written: ReadonlySet<string>): Orphan
       if (written.has(resolve(full))) continue;
       const row: OrphanSidecar = { sidecar: relative(root, full) };
       try {
-        const doc = JSON.parse(readFileSync(full, "utf-8")) as { subject?: { path?: unknown } };
+        const doc = JSON.parse(readFileSync(full, "utf-8")) as {
+          subject?: { path?: unknown; kind?: unknown; id?: unknown };
+        };
         const sp = doc.subject?.path;
         if (typeof sp === "string" && sp.length > 0) {
           row.subject = sp;
           row.subjectExists = existsSync(join(root, sp));
         }
+        // Read whether or not a path was recorded: the identity is what a
+        // relocation matches on, and it is independent of the path that moved.
+        if (typeof doc.subject?.kind === "string") row.kind = doc.subject.kind;
+        if (typeof doc.subject?.id === "string") row.id = doc.subject.id;
       } catch {
         // Leave `subjectExists` undefined: unreadable is its own answer.
       }

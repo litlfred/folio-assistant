@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: draft-to-publication\n"
-"POT-Creation-Date: 2026-09-19T11:52:32.816Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.457Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,67 +14,72 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/draft-to-publication.bpmn:161
+#: skills/workflows/draft-to-publication.bpmn:168
 #. Diagram label
 msgid "Approved?"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:176
+#: skills/workflows/draft-to-publication.bpmn:183
 #. Diagram label
 msgid "Authorise the release [content-publish]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:91
+#: skills/workflows/draft-to-publication.bpmn:98
 #. Diagram label
 msgid "Build the draft publication [content-publish]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:127
+#: skills/workflows/draft-to-publication.bpmn:45
+#. Diagram element documentation
+msgid "Carries the release's own state across the cycle: the release bean opened at the start says what is in the draft and who holds it, a rejected review becomes one change bean per finding before the loop back to editing, and only this lane's close marks a release actually done rather than merely built."
+msgstr ""
+
+#: skills/workflows/draft-to-publication.bpmn:134
 #. Diagram label
 msgid "Circulate the draft [content-review]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:148
+#: skills/workflows/draft-to-publication.bpmn:155
 #. Diagram label
 msgid "Clinical / scientific sign-off [content-review]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:66
+#: skills/workflows/draft-to-publication.bpmn:71
 #. Diagram label
 msgid "Clinical / scientific SMEs"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:196
+#: skills/workflows/draft-to-publication.bpmn:203
 #. Diagram label
 msgid "Close the release beans [todo-manager]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:141
+#: skills/workflows/draft-to-publication.bpmn:148
 #. Diagram element documentation
 msgid "Content reviewer, QC reviewer and technical officer review the draft as a whole — coherence, phase-gate criteria, breaking vs non-breaking change."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:48
+#: skills/workflows/draft-to-publication.bpmn:50
 #. Diagram label
 msgid "Corpus + build pipeline (system)"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:73
+#: skills/workflows/draft-to-publication.bpmn:80
 #. Diagram label
 msgid "Corpus updated"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:149
+#: skills/workflows/draft-to-publication.bpmn:156
 #. Diagram element documentation
 msgid "Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:108
+#: skills/workflows/draft-to-publication.bpmn:115
 #. Diagram label
 msgid "Draft QA green?"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:135
+#: skills/workflows/draft-to-publication.bpmn:142
 #. Diagram label
 msgid "Draft under review"
 msgstr ""
@@ -84,12 +89,12 @@ msgstr ""
 msgid "Draft, review and publish"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:167
+#: skills/workflows/draft-to-publication.bpmn:174
 #. Diagram element documentation
 msgid "Each requested change becomes a bean, so the editors and agents picking the work up next see exactly what review asked for and what is still open."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:116
+#: skills/workflows/draft-to-publication.bpmn:123
 #. Diagram label
 msgid "Editing and HCI validation [content-author]"
 msgstr ""
@@ -97,6 +102,11 @@ msgstr ""
 #: skills/workflows/draft-to-publication.bpmn:40
 #. Diagram label
 msgid "Editors + authoring agents"
+msgstr ""
+
+#: skills/workflows/draft-to-publication.bpmn:59
+#. Diagram element documentation
+msgid "Fans the QA-gated draft out to review and SME sign-off in parallel, then — once the programme manager authorises — is the only lane that actually presses publish, so both the review verdict and the release authority pass through this one hand before anything goes live."
 msgstr ""
 
 #: skills/workflows/draft-to-publication.bpmn:24
@@ -109,107 +119,132 @@ msgstr ""
 msgid "folio-assistant — corpus to draft publication to officially published. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:213
+#: skills/workflows/draft-to-publication.bpmn:220
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:74
+#: skills/workflows/draft-to-publication.bpmn:81
 #. Diagram element documentation
 msgid "One or more content blocks have landed in the corpus through the editing process."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:166
+#: skills/workflows/draft-to-publication.bpmn:173
 #. Diagram label
 msgid "Open beans for the change requests [todo-manager]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:77
+#: skills/workflows/draft-to-publication.bpmn:84
 #. Diagram label
 msgid "Open or claim the release bean [todo-manager]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:69
+#: skills/workflows/draft-to-publication.bpmn:51
+#. Diagram element documentation
+msgid "Owns the one gate that decides whether the draft is fit to be circulated: Task_BuildDraft turns the corpus into a draft and the DMN-backed Gateway_QaGreen decides whether Task_CirculateDraft ever runs, so a red result here is caught before Lane_ReviewTeam or Lane_Sme spend time on a draft that was never fit to review."
+msgstr ""
+
+#: skills/workflows/draft-to-publication.bpmn:67
+#. Diagram element documentation
+msgid "Owns the single approved/not-approved gateway the whole review rests on: it fires only after Lane_Sme's sign-off has also reached the join, but the call is this lane's alone, and a rejection here is what turns into the change beans Lane_WorkPlan opens next."
+msgstr ""
+
+#: skills/workflows/draft-to-publication.bpmn:75
 #. Diagram label
 msgid "Programme manager (release authority)"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:55
+#: skills/workflows/draft-to-publication.bpmn:58
 #. Diagram label
 msgid "Publication manager"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:177
+#: skills/workflows/draft-to-publication.bpmn:184
 #. Diagram element documentation
 msgid "Publication requires authorisation by the programme manager or designated authority."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:100
+#: skills/workflows/draft-to-publication.bpmn:107
 #. Diagram element documentation
 msgid "Publication-readiness QA across layers — QC reports, IG Publisher QA, proof status, broken links, build warnings."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:205
+#: skills/workflows/draft-to-publication.bpmn:212
 #. Diagram label
 msgid "Published officially"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:92
+#: skills/workflows/draft-to-publication.bpmn:99
 #. Diagram element documentation
 msgid "Render the corpus into the draft form of the folio: PDF, HTML site, or FHIR IG."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:62
+#: skills/workflows/draft-to-publication.bpmn:66
 #. Diagram label
 msgid "Review team (content · QC · technical officer)"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:140
+#: skills/workflows/draft-to-publication.bpmn:147
 #. Diagram label
 msgid "Review the draft publication [content-review]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:99
+#: skills/workflows/draft-to-publication.bpmn:106
 #. Diagram label
 msgid "Run publication QA gates [content-test]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:128
+#: skills/workflows/draft-to-publication.bpmn:72
+#. Diagram element documentation
+msgid "Runs in parallel with Lane_ReviewTeam, not after it — Gateway_ReviewJoin waits on both — but does not own the approve/reject gateway that follows: sign-off here is necessary for the join to complete and nothing more, which keeps a clinical judgement from also becoming the phase-gate call."
+msgstr ""
+
+#: skills/workflows/draft-to-publication.bpmn:76
+#. Diagram element documentation
+msgid "Sits between review's approval and the actual publish — a second, distinct gate on an already-approved draft, because content being right and a release being authorised to ship are two different questions, and only this lane answers the second one."
+msgstr ""
+
+#: skills/workflows/draft-to-publication.bpmn:135
 #. Diagram element documentation
 msgid "The draft publication is circulated to the review team for formal review."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:117
+#: skills/workflows/draft-to-publication.bpmn:124
 #. Diagram element documentation
 msgid "The editing sub-process. Every change to the corpus goes through its HCI validation gate — a red draft is fixed there, never by patching the built artifact."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:78
+#: skills/workflows/draft-to-publication.bpmn:41
+#. Diagram element documentation
+msgid "The one call activity both rejection paths loop back to — a red QA gate directly, and a review rejection only once Lane_WorkPlan has turned each finding into a bean — so a fix here never needs to know which failure sent it back."
+msgstr ""
+
+#: skills/workflows/draft-to-publication.bpmn:85
 #. Diagram element documentation
 msgid "The release itself is a bean: it carries what is in this draft, what is outstanding, and who is holding it."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:186
+#: skills/workflows/draft-to-publication.bpmn:193
 #. Diagram element documentation
 msgid "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:185
+#: skills/workflows/draft-to-publication.bpmn:192
 #. Diagram label
 msgid "Version, tag and publish [content-publish]"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:197
+#: skills/workflows/draft-to-publication.bpmn:204
 #. Diagram element documentation
 msgid "What shipped is resolved; what slipped stays open and carries into the next cycle."
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:43
+#: skills/workflows/draft-to-publication.bpmn:44
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: skills/workflows/draft-to-publication.bpmn:215
+#: skills/workflows/draft-to-publication.bpmn:222
 #. Diagram label
 msgid "yes"
 msgstr ""

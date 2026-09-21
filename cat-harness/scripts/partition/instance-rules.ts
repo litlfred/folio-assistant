@@ -187,6 +187,12 @@ export const RULES: Rule[] = [
       // opens the files only to copy bytes, and never asks what a page says.
       "scripts/compose-docs.ts",             // docs layers -> one composed tree
       "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
+      // Whether a swimlane DEFINES itself — `name`, `<documentation>`, and
+      // both reaching the translation templates. Harness by subject for the
+      // same reason as its neighbour above: a lane is a ROLE boundary, which
+      // is a platform concept, and the diagrams it reads are the platform's
+      // own processes. A folio that draws none still inherits the rule.
+      "scripts/check-lane-documentation.ts", // a lane has a name AND a definition
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       // ...and the signals themselves, lifted out of it by bean `xfoh` so the
       // patterns could be checked against the skill prose they transcribe.
@@ -627,6 +633,7 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
       "scripts/check-ready-to-close.ts",

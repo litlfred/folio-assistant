@@ -13,6 +13,7 @@
     <bpmn:documentation>One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_CRDM_Deliver">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
+        <bpmn:documentation>Every signal that can send the loop back to A_Implement is filtered through this lane first: BA_ReviewIncrement judges behaviour rather than code, GW_MVPReady decides whether accumulated increments are worth showing stakeholders at all, and BA_TranslateFeedback is the only step that turns S_TestMVP's raw findings into direction the agent can act on. Nothing stakeholder-facing reaches Lane_Agent without passing through here.</bpmn:documentation>
         <bpmn:flowNodeRef>BA_ReviewIncrement</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_IncrementOK</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_MVPReady</bpmn:flowNodeRef>
@@ -21,6 +22,7 @@
         <bpmn:flowNodeRef>End_Process_CRDM_Deliver</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:documentation>Every loop-back in this phase — a rejected increment, an MVP not ready, stakeholder feedback — lands on A_Implement rather than on Call_OptionsAnalysis, so this lane always reworks an approach already chosen and never re-selects one. Deciding that the APPROACH itself is wrong is not this lane's call: that belongs to the calling step in crdm-requirements.bpmn, one level up.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Process_CRDM_Deliver</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_OptionsAnalysis</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Implement</bpmn:flowNodeRef>
@@ -30,6 +32,7 @@
         <bpmn:flowNodeRef>A_Summary</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
+        <bpmn:documentation>Tests in the stakeholder's own workflow and data rather than against the acceptance criteria BA_ReviewIncrement already checked — a second, independent pass rather than a repeat of the first. GW_StakeholderOK's `findings` branch does not hand the agent anything directly; it hands raw results to BA_TranslateFeedback, which is this lane's boundary: it reports what works and what does not, and translating that into direction is somebody else's lane.</bpmn:documentation>
         <bpmn:flowNodeRef>S_TestMVP</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_StakeholderOK</bpmn:flowNodeRef>
       </bpmn:lane>
