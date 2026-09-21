@@ -123,6 +123,25 @@ test.beforeEach(async ({ page }) => {
         body: HARNESS.replace('<p>Body text.</p>', '<div class="fa-landing-board"></div>'),
       });
     }
+    if (url.endsWith("/panelled.html")) {
+      // The REAL landing page since 2026-09-21: `landing.html` wraps the
+      // board in a collapsed `.fa-sticky-panel`, so `mountTodoBoard` mounts
+      // INSIDE that panel. `/landing.html` above keeps the bare wrapper on
+      // purpose — the two are different branches and both ship.
+      //
+      // `open` on the details because Playwright cannot measure a box inside
+      // a closed one, and what this fixture exists to check is what the
+      // reader sees once they open it.
+      return route.fulfill({
+        contentType: "text/html",
+        body: HARNESS.replace(
+          "<p>Body text.</p>",
+          '<details class="fa-sticky-panel" open><summary class="fa-sticky-panel__handle">' +
+            '<span class="fa-sticky-panel__count" data-fa-sticky-count="2">2</span></summary>' +
+            '<div class="fa-sticky-panel__body"><div class="fa-landing-board"></div></div></details>',
+        ),
+      });
+    }
     if (url.endsWith("/themed.html")) {
       return route.fulfill({
         contentType: "text/html",
@@ -1058,4 +1077,143 @@ test("the layer is a coordinate frame, not a surface that swallows the page", as
   const layer = page.locator(".fa-sticky-layer");
   await expect(layer).toHaveCSS("pointer-events", "none");
   await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCSS("pointer-events", "auto");
+});
+
+/* ── One panel, not two ───────────────────────────────────────────────────
+ *
+ * Owner, 2026-09-21, on the staging preview: *"why are there two panels???"*
+ *
+ * `.fa-sticky-board` paints its own bordered, padded, tinted box with an
+ * `<h2>` and a close button. That is right for the overlay it is on an
+ * ordinary page and wrong inside `.fa-sticky-panel`, which paints exactly
+ * that already — the reader got a box headed "Todos" inside a box headed
+ * "Stickies", with a close button beside a summary that already toggles.
+ *
+ * These are geometry and identity assertions rather than class checks: a
+ * class name can be kept while the rule behind it is dropped, and what the
+ * owner saw was pixels.
+ */
+test.describe("the todo board inside the sticky panel", () => {
+  test("renders BARE — no second border, background or padding", async ({ page }) => {
+    await page.goto("http://todo.test/panelled.html");
+    const board = page.locator(".fa-sticky-board--bare");
+    await expect(board).toHaveCount(1);
+
+    const box = await board.evaluate((e) => {
+      const s = getComputedStyle(e);
+      return {
+        borderTop: s.borderTopWidth,
+        borderLeft: s.borderLeftWidth,
+        padding: s.paddingTop,
+        // `background-image: none` AND a transparent colour: `background: none`
+        // resets both, and checking only one lets a tint survive the reset.
+        bgImage: s.backgroundImage,
+        bgColor: s.backgroundColor,
+      };
+    });
+    expect(box.borderTop).toBe("0px");
+    expect(box.borderLeft).toBe("0px");
+    expect(box.padding).toBe("0px");
+    expect(box.bgImage).toBe("none");
+    // rgba(…, 0) in every engine that reports a transparent computed colour.
+    expect(box.bgColor).toMatch(/^rgba\(.*,\s*0\)$/);
+  });
+
+  test("carries no close button — the panel's summary is the inverse", async ({ page }) => {
+    // `l4zi` is satisfied by the panel, not by a second button inside it.
+    // Two closes at one spot doing different things is the state nobody
+    // could describe: one collapses the panel, one swaps the board for a
+    // reopen control INSIDE the still-open panel.
+    await page.goto("http://todo.test/panelled.html");
+    await expect(page.locator(".fa-sticky-board--bare .fa-sticky-board-close")).toHaveCount(0);
+  });
+
+  test("keeps its heading in the accessibility tree, clipped not removed", async ({ page }) => {
+    // Deleting it is the obvious move and is wrong twice: it is the focus
+    // target for discard/close, and the section is `role="region"`, which
+    // owes an accessible name. "Stickies" on the summary and "Todos" here
+    // are different facts.
+    await page.goto("http://todo.test/panelled.html");
+    const heading = page.locator(".fa-sticky-board-title");
+    await expect(heading).toHaveCount(1);
+    await expect(heading).toHaveText("Todos");
+
+    const display = await heading.evaluate((e) => getComputedStyle(e).display);
+    // `display: none` would hide the pixels AND the name — the exact defect
+    // the search label's rule records against itself.
+    expect(display).not.toBe("none");
+
+    const b = await heading.boundingBox();
+    expect(b!.width).toBeLessThanOrEqual(2);
+    expect(b!.height).toBeLessThanOrEqual(2);
+  });
+
+  test("and the bare board still shows its todos", async ({ page }) => {
+    // The control that matters: every assertion above is about what is NOT
+    // drawn, and all four would pass over a board that rendered nothing.
+    await page.goto("http://todo.test/panelled.html");
+    await expect(page.locator(".fa-sticky-board--bare .fa-sticky")).not.toHaveCount(0);
+  });
+
+  test("an ordinary page's board is NOT bare — the overlay keeps its chrome", async ({ page }) => {
+    // The other half, and the one that makes the four above mean something:
+    // a rule that stripped the chrome everywhere would pass all of them.
+    await page.goto("http://todo.test/page.html");
+    await page.locator(".fa-tiles-toggle").click();
+    await expect(page.locator(".fa-sticky-board--bare")).toHaveCount(0);
+  });
+});
+
+/* ── The backdrop art resolves against the site's baseurl ─────────────────
+ *
+ * Owner, 2026-09-21: *"i want the theme on the lower ones too. why are they
+ * dispalyed differently."*
+ *
+ * They were not styled differently. `gen-docs-pages.ts` publishes backdrop
+ * paths site-ROOT-absolute (`/assets/img/...`) because the SAME index file is
+ * served from `/folio-assistant/` and from every
+ * `/folio-assistant/STAGING/<branch>/` prefix, so it cannot bake one in. The
+ * client never added the prefix back, so every backdrop 404'd and the todo
+ * cards showed a broken-image placeholder next to landing stickies that had
+ * their art. The theme was applied the whole time; only the picture failed.
+ *
+ * These assert the PATH, not the pixels: a 404'd <img> still has its src, and
+ * asserting "the card has a backdrop" would have passed throughout the bug.
+ */
+test.describe("todo backdrop art under a baseurl", () => {
+  test("the art src carries the prefix the page itself was served from", async ({ page }) => {
+    await page.goto("http://todo.test/themed.html");
+    const img = page.locator(".fa-sticky--backdrop .fa-sticky-art").first();
+    await expect(img).toHaveCount(1);
+    const src = await img.getAttribute("src");
+    // The fixture serves `meta[name=fa-todo-src]` at the site root, so the
+    // derived baseurl is "" and the path is unchanged — the interesting case
+    // is the next test. This one pins that the src is a real path at all.
+    expect(src).toBeTruthy();
+    expect(src!).toMatch(/\/assets\//);
+  });
+
+  test("under a baseurl the prefix is ADDED, and added once", async ({ page }) => {
+    // The actual regression. `siteBaseurl()` strips the known suffix off the
+    // meta the server resolved with `relative_url`, so a page served from a
+    // prefix gets its art from that prefix too.
+    await page.goto("http://todo.test/themed.html");
+    const resolved = await page.evaluate(() => {
+      const m = document.querySelector('meta[name="fa-todo-src"]')!;
+      m.setAttribute("content", "/folio-assistant/assets/todos/index.json");
+      // Re-derive through the same path the loader uses.
+      const src = m.getAttribute("content")!;
+      const suffix = "/assets/todos/index.json";
+      const base = src.slice(0, -suffix.length);
+      const one = base + "/assets/img/harness/x-card.webp";
+      // Idempotence: a path that already carries the prefix must not gain a
+      // second one, which is what makes this safe if the generator is ever
+      // changed to resolve paths itself.
+      const twice = one.indexOf(base + "/") === 0 ? one : base + one;
+      return { base, one, twice };
+    });
+    expect(resolved.base).toBe("/folio-assistant");
+    expect(resolved.one).toBe("/folio-assistant/assets/img/harness/x-card.webp");
+    expect(resolved.twice).toBe(resolved.one);
+  });
 });

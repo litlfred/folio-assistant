@@ -2610,6 +2610,73 @@
     return widthPx < t.belowPx;
   }
 
+  /**
+   * THE SITE'S BASEURL, derived from a path the server already resolved.
+   *
+   * Every backdrop in the todo index was arriving as `/assets/img/...` —
+   * site-ROOT-absolute with no baseurl — and this site is served from
+   * `/folio-assistant/` on the canonical deploy and
+   * `/folio-assistant/STAGING/<branch>/` on a preview. So every one of them
+   * 404'd, and the owner saw todo cards with a broken-image placeholder
+   * beside landing stickies that had their art: *"i want the theme on the
+   * lower ones too. why are they dispalyed differently."*
+   *
+   * They were not displayed differently by design. The theme WAS applied —
+   * `data-fa-sticky-theme` and `fa-sticky--backdrop` both set — and only the
+   * picture failed to load. A styling answer would have been the wrong fix
+   * for a broken path.
+   *
+   * ## Why derive it rather than read it
+   *
+   * `gen-docs-pages.ts` cannot write the baseurl in: the SAME index file is
+   * served from the canonical prefix and from every staging prefix, so a
+   * baked-in prefix is wrong on all but one. Liquid could pass it, and
+   * `#fa-translation-index` does carry `site.baseurl` — but that island is
+   * about translations and may legitimately be absent, which would make the
+   * art depend on an unrelated feature being switched on.
+   *
+   * `meta[name="fa-todo-src"]` is the honest source: it is emitted through
+   * `relative_url`, so the SERVER has already resolved the prefix, and the
+   * board does not mount at all without it. Stripping the known suffix gives
+   * the prefix the same page used to fetch the index itself.
+   */
+  function siteBaseurl() {
+    var m = document.querySelector('meta[name="fa-todo-src"]');
+    var src = m && m.getAttribute("content");
+    var suffix = "/assets/todos/index.json";
+    if (src && src.length >= suffix.length && src.slice(-suffix.length) === suffix) {
+      return src.slice(0, -suffix.length);
+    }
+    return "";
+  }
+
+  /**
+   * Prefix every art path in a `themeArt` map with the site's baseurl.
+   *
+   * Left alone: anything already absolute (`http:`, `//`) and anything that
+   * already starts with the prefix. The second guard is what stops a
+   * double-prefix if the generator is ever changed to resolve paths itself —
+   * at which point this becomes a no-op rather than a bug.
+   */
+  function baseurlResolved(themeArt) {
+    var base = siteBaseurl();
+    if (!base) return themeArt;
+    var out = {};
+    Object.keys(themeArt).forEach(function (theme) {
+      var layouts = themeArt[theme] || {};
+      out[theme] = {};
+      Object.keys(layouts).forEach(function (layout) {
+        var src = layouts[layout];
+        if (typeof src !== "string" || /^([a-z]+:)?\/\//i.test(src) || src.indexOf(base + "/") === 0) {
+          out[theme][layout] = src;
+        } else {
+          out[theme][layout] = base + src;
+        }
+      });
+    });
+    return out;
+  }
+
   /** Fetch the folio's declaration. Absent is a real answer and stays null. */
   function fetchZoom(done) {
     var src = document.querySelector('meta[name="fa-zoom-src"]');
@@ -2648,7 +2715,7 @@
         // theme would otherwise carry fifty copies of the same three paths.
         // Absent is a real state: a theme with no backdrop renders a flat
         // themed card, which is correct rather than degraded.
-        todoState.themeArt = doc.themeArt || {};
+        todoState.themeArt = baseurlResolved(doc.themeArt || {});
         done(doc.items);
       })
       .catch(function (e) {
@@ -3082,8 +3149,26 @@
     // whole content is a board of stickies, a hidden board of stickies is the
     // one thing a reader cannot find; anywhere else it is an overlay and must
     // not cover the page it was opened from.
+    /* ONE PANEL, NOT TWO. Owner, 2026-09-21, on the staging preview:
+     * *"why are there two panels???"*
+     *
+     * `.fa-sticky-board` carries a border, a background, padding, an `<h2>`
+     * and a close button — correct when it is an overlay opened by a
+     * launcher, and wrong the moment it is mounted INSIDE the landing
+     * board, because the landing board is now itself inside
+     * `.fa-sticky-panel`. The reader got panel-inside-panel: a bordered box
+     * headed "Todos" sitting in a bordered panel headed "Stickies", with a
+     * close button next to a summary that already toggles.
+     *
+     * So a board nested in the sticky panel renders BARE. The chrome is not
+     * restyled smaller — it is the OUTER panel's job and is already there
+     * once.
+     */
+    var bare = !!(landing && landing.closest && landing.closest(".fa-sticky-panel"));
+
     var boardAttrs = {
-      class: "fa-sticky-board" + (landing ? " fa-sticky-board--inline" : ""),
+      class: "fa-sticky-board" + (landing ? " fa-sticky-board--inline" : "") +
+             (bare ? " fa-sticky-board--bare" : ""),
       tabindex: "-1",
       role: "region",
       "aria-label": "Todos",
@@ -3091,14 +3176,40 @@
     if (!landing) boardAttrs.hidden = "hidden";
     var board = el("section", boardAttrs);
     var head = el("div", { class: "fa-sticky-board-head" });
-    var heading = el("h2", { class: "fa-sticky-board-title", tabindex: "-1" }, "Todos");
+
+    /* THE HEADING SURVIVES BARE, VISUALLY HIDDEN.
+     *
+     * Deleting it was the obvious move and is wrong twice. It is the focus
+     * target for `discard()` and `setOpen()` — without it focus lands on
+     * `<body>` and a keyboard reader loses their place, which is the defect
+     * `l4zi` already records against this very board. And the section is
+     * `role="region"`, so it owes an accessible name: "Stickies" on the
+     * summary and "Todos" here are different facts, and a screen-reader user
+     * moving by region needs the inner one.
+     *
+     * `fa-sr-only` is the clip-not-hide class the search label uses, for the
+     * same reason spelled out there: `display: none` would take it out of the
+     * accessibility tree along with the pixels. */
+    var heading = el("h2", {
+      class: "fa-sticky-board-title" + (bare ? " fa-sr-only" : ""),
+      tabindex: "-1",
+    }, "Todos");
     head.appendChild(heading);
+
+    /* THE CLOSE BUTTON DOES NOT SURVIVE BARE, and that is not a lost control.
+     *
+     * Its inverse is the `<summary>` one line up, which closes the whole
+     * panel — so `l4zi` is satisfied by the panel rather than by a second
+     * button inside it. Keeping it would have given the reader two closes
+     * doing different things at the same spot: one collapsing the panel, one
+     * swapping the board for a "Todos (n)" reopen button INSIDE the still-open
+     * panel. That second state is the one nobody would be able to describe. */
     var boardClose = el("button", {
       type: "button",
       class: "fa-sticky-board-close",
       "aria-label": "Close the todo board",
-    }, "×");
-    head.appendChild(boardClose);
+    }, "\u00d7");
+    if (!bare) head.appendChild(boardClose);
     board.appendChild(head);
 
     /* THE READER'S FILTER, in the board's head and nowhere in any document.
@@ -3624,9 +3735,25 @@
       return isOpen;
     }
     boardClose.addEventListener("click", function () { setOpen(false); });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
-    });
+
+    /* ESCAPE CLOSES AN OVERLAY. IT MUST NOT CLOSE A BARE BOARD.
+     *
+     * Everywhere else this board is an overlay over the page, so Escape
+     * dismissing it is the standard gesture. Inside `.fa-sticky-panel` it is
+     * page content with no close button (see above), and letting Escape run
+     * would produce exactly the state that button was removed to prevent: the
+     * board swapped for a "Todos (n)" reopen control INSIDE a panel that is
+     * still open, reached by a key the reader pressed for some other reason.
+     *
+     * The panel's own `<summary>` is the way to close it, and it is one Tab
+     * away. So: no handler at all when bare, rather than a handler that
+     * checks and returns — an event listener that never acts is a thing the
+     * next reader has to prove is dead. */
+    if (!bare) {
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
+      });
+    }
 
     /* THE COLLAPSED PANEL'S COUNT has to include what THIS function just
      * mounted, or it understates the thing it exists to declare.

@@ -4264,3 +4264,62 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-search-home .search { position: relative; }
+
+/* ── A board nested in the sticky panel has no chrome of its own ──────────
+ *
+ * Owner, 2026-09-21, looking at the staging preview: *"why are there two
+ * panels???"*
+ *
+ * They were two because `.fa-sticky-board` paints a bordered, padded,
+ * tinted box with its own heading — which is right for the overlay it is
+ * everywhere else, and wrong inside `.fa-sticky-panel`, which already paints
+ * exactly that. Nesting one in the other gave a box headed "Todos" inside a
+ * box headed "Stickies".
+ *
+ * NOT a smaller border or a lighter tint. The chrome belongs to the OUTER
+ * panel and is already there once; a second, quieter frame would still be a
+ * second frame, and the question would come back as "why are there two
+ * boxes".
+ *
+ * Every declaration here UNSETS something the base rule sets, which is why
+ * they are spelled out rather than shorthanded away: a reader changing
+ * `.fa-sticky-board` needs to see precisely what this cancels.
+ */
+.fa-sticky-board--bare {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+/* The head is empty when bare — the `<h2>` inside it is clipped to a pixel by
+   `fa-sr-only` and the close button is not appended at all — so it would
+   otherwise contribute its 0.8em bottom margin as a gap above nothing. */
+.fa-sticky-board--bare > .fa-sticky-board-head { margin: 0; }
+
+/* ── The filter row, compacted ────────────────────────────────────────────
+ *
+ * Owner: *"the todos controls are too clunky / take up too much real
+ * estate."* (bean `qefk`, partial.)
+ *
+ * The row is two labelled selects, and at the panel's font size the labels
+ * were reading as loud as the todo titles beneath them. Quieted rather than
+ * removed: the labels are what make the selects say WHICH axis they filter,
+ * and a bare pair of dropdowns is a guessing game.
+ *
+ * What is NOT done here: shrinking the select targets. They stay at their
+ * full height because this instance's declared interaction profile is
+ * low-dexterity, and "takes up less room" must not be bought with a target a
+ * reader cannot hit. The saving comes from the label type and the gaps.
+ */
+.fa-sticky-board--bare > .fa-board-filter {
+  gap: 0.35rem 0.6rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+}
+
+.fa-sticky-board--bare > .fa-board-filter .fa-board-filter-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+}
