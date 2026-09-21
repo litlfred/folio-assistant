@@ -342,3 +342,113 @@ moves. Measured constraints already known:
 Whether the merged file is process-WRITTEN at initialization (§2). If it is, a
 `.config.json` is `state` wearing a config's name, and the convention spreads
 that naming to every instance at once. The ruling does not decide it.
+
+---
+
+## OWNER RULING, 2026-09-21 — §1 reconfirmed and WIDENED
+
+Asked in session_01AYHimvYMmf8h8e9fFN6dW5 as the `goal-review` sweep's single
+question, with the migration cost measured first. The owner's words, verbatim:
+
+> 1 bit should also bootstrap and folio-assistant configs/instantatioon
+
+Option 1 was **REPLACE** — `<name>.config.json` becomes the single declaration
+at an instantiation root and `harness.json` goes. So §1 stands as ruled on
+2026-09-20, and the addition is the new part: **`cat-bootstrap/` and the
+`folio-assistant-*` instances are in scope too.** One rule, no exemption.
+
+### What that settles, and what it does not
+
+**Settles:** `603s` shipped `harness-tiles.ts` discovering instances by
+scanning for `harness.json` and recorded *"this bean's question 1, answered:
+`harness.json` is what names an instance"*. That answer is now superseded by a
+ruling. The scanner is repointed, not defended.
+
+**Settles:** bootstrap is not exempt from this rule. `hfkl` is the bean that
+carries what bootstrap IS exempt from (a visualiser); it is not exempt from
+carrying its own config. That is a narrower exception than "bootstrap is the
+exception" reads.
+
+**Does NOT settle** — and this is derived from the ruling rather than stated in
+it: the filename comes from the declared `name`, so `folio-assistant-core/`
+and `folio-assistant-sci/` cannot be renamed until `hso8` is answered
+(`folio-assist-core` on main vs `folio-assistant-core` on disk and on the
+branch). The ruling does not name them; it says they are in scope.
+
+**Does NOT settle** §2 — whether the merged file is process-WRITTEN at
+initialization, which is what decides whether a `.config.json` is `state`
+wearing a config's name. Still the owner's.
+
+### Migration cost, measured 2026-09-21 before the question was asked
+
+| | |
+|---|---|
+| declaration files on disk | **12** (a 13th, `cat-harness/docs/_data/harness.json`, is generated data, not a declaration) |
+| `.config.json` files today | **1** — `cat-harness.config.json`, at the repo root, named by exactly **1** TypeScript file |
+| TypeScript files naming the old string | **121** (357 occurrences) |
+| **non-test string literals bypassing `DECLARATION_FILENAME`** | **21** |
+| workflow files | 3 |
+
+`DECLARATION_FILENAME` already exists at `cat-harness/schemas/cat-harness.ts:84`
+and **21 non-test call sites do not use it**. Those bypasses are a latent
+defect whichever way this was ruled; routing them through the constant is what
+makes the rename a day's work rather than a sweep of 121 files.
+
+## Done when — added by this ruling
+
+- [ ] The 21 non-test literals are routed through `DECLARATION_FILENAME`
+      FIRST, as a separable change that is correct under either filename
+- [ ] `cat-bootstrap/` carries its own config, and `hfkl` records that the
+      bootstrap exception is about a visualiser and not about this
+- [ ] The `folio-assistant-*` instances are migrated once `hso8` is answered
+- [ ] `AGENTS.md`, `zkgs`'s Done-when and `603s`'s recorded answer are
+      corrected, or each says why it still reads the other way
+
+*Recorded, not implemented. This bean belongs to another session; a ruling is
+evidence, and evidence is not a claim on the work.*
+
+## OWNER RULING, 2026-09-21 — §2 settled: **authored config a scaffolder seeds**
+
+Asked with the evidence rather than as an open question, because the code
+answers the literal half of it. §2 read:
+
+> Whether the merged file is process-WRITTEN at initialization. If it is, a
+> `.config.json` is `state` wearing a config's name.
+
+### What is measured
+
+**Two processes write the declaration**, so the literal answer is *yes*:
+
+| site | what it does |
+|---|---|
+| `scripts/init-folio.ts` | **creates** it when scaffolding a new folio |
+| `scripts/ensure-landing-sticky.ts:550` | `if (!already) writeFileSync(join(root, DECLARATION_FILENAME), insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY))` — **repairs** it, adding a `folio` directory entry to an instance that does not declare one |
+
+### The ruling
+
+The owner chose **authored config that a scaffolder seeds**. The name stays as
+ruled in §1: `<name>.config.json`, not a `state`-flavoured name.
+
+The reason the literal *yes* does not carry the classification: **neither
+writer maintains the file.** `init-folio` creates it once and
+`ensure-landing-sticky` only fires on `!already` — both are create-or-repair,
+not a process keeping a value current. And the file is committed and heavily
+hand-authored: `folio-assistant-core/harness.json` carries a ~1,900-character
+`_comment` recording an owner ruling and a correction, which is not something a
+process writes.
+
+> **A process may CREATE or REPAIR the declaration. It never maintains it.**
+
+That is the rule this ruling establishes, and it is what keeps the `holds:
+content | context | state` axis honest: `state` is for a graph a running
+process keeps current, and a file whose content is prose an author wrote is not
+that, however it first arrived on disk.
+
+## Done when — added by this ruling
+
+- [ ] The create-or-repair rule is written into the skill that owns the
+      `holds` axis (`content-context-and-state-graphs`), not only here — a
+      rule that lives in one bean is a rule with no home
+- [ ] `ensure-landing-sticky`'s write is documented AS a repair at its call
+      site, so a later reader does not take it for maintenance and reclassify
+      the file

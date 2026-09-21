@@ -30,3 +30,34 @@ agent's call: 27 declared paths resolve against it today, and changing the
 base would move all of them at once. This bean now records the behaviour
 accurately and waits for the owner's ruling rather than pre-empting it.
 
+## `path` HAS a declared disambiguator; `coverage.*` has none — 2026-09-21
+
+Found while verifying `1ity`, and it sharpens the ruling this bean is waiting
+for rather than merely adding to it.
+
+`cat-harness/harness.json` uses **both bases in one file**, and says which is
+which:
+
+| id | `scope` | `path` | resolves from |
+|---|---|---|---|
+| `library` | *(none)* | `library/` | the INSTANCE |
+| `who-iris-library` | `repository` | `who-iris/library/` | the REPO |
+| `agent-skills-library` | `repository` | `agent-skills/library/` | the REPO |
+| `folio-assistant-sci-library` | `repository` | `folio-assistant-sci/library/` | the REPO |
+
+So a declared `path` is instance-relative **by default** and repo-relative
+when `scope: "repository"` declares it so. A consumer never has to guess,
+and a first pass that ignored `scope` wrongly called three of these missing —
+which is the failure mode the mechanism exists to prevent.
+
+**`coverage.visualiser` and `coverage.docs` have no such field.** They are
+repo-relative always, by convention only, with nothing in the declaration
+saying so. That is the asymmetry, stated more precisely than this bean had
+it: not "two fields use two bases", but **one field declares its base and the
+other does not**.
+
+It also suggests the cheapest resolution, without deciding it: `coverage.*`
+could honour the SAME `scope` the sibling field already uses, rather than a
+new mechanism or a migration of 27 paths. Recorded as an option for the
+owner, not taken.
+

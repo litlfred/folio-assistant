@@ -81,6 +81,69 @@ the populated one were one key, and the stub won."*
 labels for one thing — it is two instances as far as every declaration-driven
 consumer is concerned, which is how the stub won last time.
 
+---
+
+*2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5 — **this blocker now gates more
+than it did, and `cjtm` may already answer it.***
+
+The owner ruled REPLACE on `b5f0` (one `<name>.config.json` per instantiation
+root) and widened it to the `folio-assistant-*` instances. **The filename
+derives from the declared `name`**, so those two cannot be migrated until this
+bean is answered — `folio-assist-core` on main against `folio-assistant-core`
+on disk and on the branch. One spelling, two files, two instances to every
+declaration-driven reader.
+
+Worth checking before asking again: `cjtm` records a ruling — *"cat- prefix
+does not extend to folio-assistant-\*"* — and states it settled this live merge
+conflict, naming `folio-assistant-core`. If that is the answer, this bean is
+blocked on nothing and says so; if it is not, the two beans disagree and that
+is the thing to put to the owner.
+
+**Not edited here** — a sibling's bean.
+
+### Re-derived the same day: **the blocker is VOID**
+
+The note above said `cjtm` *may* already answer this. It does better than that
+— the declarations themselves agree, on both refs:
+
+```
+$ grep -o '"name": "[^"]*"' folio-assistant-core/harness.json | head -1
+"name": "folio-assistant-core"
+$ git show origin/main:folio-assistant-core/harness.json | grep -o '"name": "[^"]*"' | head -1
+"name": "folio-assistant-core"
+```
+
+This bean's title asserts *"main and this branch name the core instance
+differently — folio-assist-core vs folio-assistant-core"*. **Neither side says
+`folio-assist-core` any more.** `folio-assistant-core/harness.json`'s own
+`_comment` records the owner's ruling — *"use folio-assistant-core/"*,
+2026-09-20 — and states that the directory and the declared name are both
+spelled out in full, after exactly this contradiction was found and corrected.
+
+So nothing downstream waits on this. The `folio-assistant-*` half of the
+REPLACE ruling (`b5f0`, 2026-09-21) can proceed: the filename derives from the
+declared `name`, and the declared name is settled at `folio-assistant-core`.
+
+**Not closed, and not tagged `ready-to-close`.** That tag is for a bean a
+session judged finished but *could not re-derive*; this one re-derives in two
+commands, which is the evidence `bean-coordination` asks for rather than a
+reason to park it. Closing a sibling's bean remains the collision `bbbl`
+names and the owner has not ruled on it — so the evidence is recorded here and
+the close stays theirs.
+
+What is left on this bean, if anything, is the residue its owner can see and I
+cannot: whether any *reader* still keys on the short spelling. `8xtj` tracks
+that residue and says a sweep must not touch it blindly.
+
+---
+
+*2026-09-21, session_017MEZnJxx7WeekiNCabx4hx — **reached the same verdict
+independently, from the other end.** The section above works forward from the
+declarations and `cjtm`'s ruling; the one below works backward from #477
+having merged. Two sessions, two routes, one answer — kept side by side
+rather than deduplicated, because agreement reached twice by different
+evidence is worth more than either half.*
+
 
 ## RESOLVED — and it was resolved on 2026-09-20, not today
 

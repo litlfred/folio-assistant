@@ -31,6 +31,7 @@ import { registerBaseContentTypes } from "./content-types-base";
 import { registerDakContentTypes } from "./dak-content-type";
 import { describeRepositoryClosure } from "./harness-config";
 import { writeInstanceConfig } from "../test/support/instance-fixture.js";
+import { DECLARATION_FILENAME } from "./cat-harness.js";
 
 const roots: string[] = [];
 afterEach(() => {
@@ -76,12 +77,12 @@ describe("a repository is a SET of types, not a boolean", () => {
   });
 
   test("one marker → one membership, with a dereferenceable type", () => {
-    const d = describeRepository(repo({ "harness.json": '{"name":"x"}' }), base());
+    const d = describeRepository(repo({ [DECLARATION_FILENAME]: '{"name":"x"}' }), base());
     expect(d.types.map((t) => t.id)).toEqual(["harness"]);
     // The IRI is the whole point: the filename asserts membership, the type
     // says what membership MEANS. A marker with no resolvable type is `blv9`.
     expect(d.types[0]!.type).toMatch(/^https?:\/\//);
-    expect(d.types[0]!.marker).toBe("harness.json");
+    expect(d.types[0]!.marker).toBe(DECLARATION_FILENAME);
   });
 
   test("TWO markers → two memberships — the case the boolean got wrong", () => {
@@ -100,7 +101,7 @@ describe("a repository is a SET of types, not a boolean", () => {
 
   test("three at once, including ours", () => {
     const root = repo({
-      "harness.json": '{"name":"x"}',
+      [DECLARATION_FILENAME]: '{"name":"x"}',
       "dak.json": '{"name":"x"}',
       "sushi-config.yaml": "canonical: http://example.org/x\n",
     });
@@ -113,7 +114,7 @@ describe("a marker that is present and unreadable is its OWN state", () => {
     // Not absent, and not a clean membership either. Dropping it would under-
     // report what the repository asserts; reporting it as parsed would hand a
     // consumer facts nothing backs. The third state says which.
-    const d = describeRepository(repo({ "harness.json": "{ not json" }), base());
+    const d = describeRepository(repo({ [DECLARATION_FILENAME]: "{ not json" }), base());
     expect(d.types).toHaveLength(1);
     expect({ parsed: d.types[0]!.parsed, facts: d.types[0]!.facts }).toEqual({
       parsed: false,
@@ -133,7 +134,7 @@ describe("a marker that is present and unreadable is its OWN state", () => {
   });
 
   test("a marker with no facts contributes none — absent is not 'agrees'", () => {
-    const d = describeRepository(repo({ "harness.json": "{}" }), base());
+    const d = describeRepository(repo({ [DECLARATION_FILENAME]: "{}" }), base());
     expect(d.types[0]!.facts).toEqual({});
     expect(d.disagreements).toEqual([]);
   });
@@ -146,7 +147,7 @@ describe("two markers stating one fact differently are REPORTED, not resolved", 
     // resolved". Ranking the markers would make a repository's truth depend on
     // which layer happened to load first.
     const root = repo({
-      "harness.json": '{"name":"x","canonicalUrl":"http://one.example/"}',
+      [DECLARATION_FILENAME]: '{"name":"x","canonicalUrl":"http://one.example/"}',
       "dak.json": '{"name":"x","canonicalUrl":"http://two.example/"}',
     });
     const d = describeRepository(root, base());
@@ -163,7 +164,7 @@ describe("two markers stating one fact differently are REPORTED, not resolved", 
     // also quietly picks one" look identical from a caller that only reads
     // `types`. Both claims survive in full.
     const root = repo({
-      "harness.json": '{"name":"x","canonicalUrl":"http://one.example/"}',
+      [DECLARATION_FILENAME]: '{"name":"x","canonicalUrl":"http://one.example/"}',
       "dak.json": '{"name":"x","canonicalUrl":"http://two.example/"}',
     });
     const d = describeRepository(root, base());
@@ -173,7 +174,7 @@ describe("two markers stating one fact differently are REPORTED, not resolved", 
 
   test("agreement is silence, not a finding", () => {
     const root = repo({
-      "harness.json": '{"name":"x","canonicalUrl":"http://same.example/"}',
+      [DECLARATION_FILENAME]: '{"name":"x","canonicalUrl":"http://same.example/"}',
       "dak.json": '{"name":"x","canonicalUrl":"http://same.example/"}',
     });
     expect(describeRepository(root, base()).disagreements).toEqual([]);
@@ -184,7 +185,7 @@ describe("two markers stating one fact differently are REPORTED, not resolved", 
     // Reading only our spelling would make every such disagreement invisible,
     // which is the failure mode this whole section exists to prevent.
     const root = repo({
-      "harness.json": '{"name":"x","canonicalUrl":"http://ours.example/"}',
+      [DECLARATION_FILENAME]: '{"name":"x","canonicalUrl":"http://ours.example/"}',
       "dak.json": '{"name":"x","canonical":"http://theirs.example/"}',
     });
     expect(describeRepository(root, base()).disagreements.map((x) => x.fact)).toEqual([
@@ -251,7 +252,7 @@ describe("the set is closed under the dependency tree", () => {
 
   test("a dependency's types are in the closure, ATTRIBUTED to it", () => {
     const dep = instance("dep", { "dak.json": '{"name":"who"}' });
-    const root = instance("root", { "harness.json": '{"name":"mine"}' });
+    const root = instance("root", { [DECLARATION_FILENAME]: '{"name":"mine"}' });
     dependsOn(root, "who-adapter", dep);
 
     const c = describeRepositoryClosure(root, base());
@@ -268,7 +269,7 @@ describe("the set is closed under the dependency tree", () => {
     // The distinction a flattened set destroys, and the case the bean cites:
     // a folio depending on a WHO adapter is not itself a DAK.
     const dep = instance("dep2", { "dak.json": '{"name":"who"}' });
-    const root = instance("root2", { "harness.json": '{"name":"mine"}' });
+    const root = instance("root2", { [DECLARATION_FILENAME]: '{"name":"mine"}' });
     dependsOn(root, "who-adapter", dep);
 
     const c = describeRepositoryClosure(root, base());
@@ -291,7 +292,7 @@ describe("the set is closed under the dependency tree", () => {
   });
 
   test("no dependencies → the closure is just the root", () => {
-    const root = instance("solo", { "harness.json": '{"name":"mine"}' });
+    const root = instance("solo", { [DECLARATION_FILENAME]: '{"name":"mine"}' });
     const c = describeRepositoryClosure(root, base());
     expect(c.types.map((t) => ({ id: t.id, by: t.by }))).toEqual([
       { id: "harness", by: "(root)" },
@@ -303,7 +304,7 @@ describe("the set is closed under the dependency tree", () => {
     // non-trivial dependency tree look broken, which is the false positive
     // that gets a check switched off within a week.
     const dep = instance("dep4", { "dak.json": '{"canonicalUrl":"http://theirs/"}' });
-    const root = instance("root4", { "harness.json": '{"canonicalUrl":"http://ours/"}' });
+    const root = instance("root4", { [DECLARATION_FILENAME]: '{"canonicalUrl":"http://ours/"}' });
     dependsOn(root, "who-adapter", dep);
 
     expect(describeRepositoryClosure(root, base()).disagreements).toEqual([]);
@@ -319,10 +320,10 @@ describe("the set is closed under the dependency tree", () => {
       // (AGENTS.md: "Absent declaration is fine … a present-but-unreadable one
       // throws"). The subject here is two markers disagreeing about
       // `canonicalUrl`, and a valid declaration carries both facts fine.
-      "harness.json": '{"name":"who-adapter","canonicalUrl":"http://a/"}',
+      [DECLARATION_FILENAME]: '{"name":"who-adapter","canonicalUrl":"http://a/"}',
       "dak.json": '{"canonicalUrl":"http://b/"}',
     });
-    const root = instance("root5", { "harness.json": '{"name":"mine"}' });
+    const root = instance("root5", { [DECLARATION_FILENAME]: '{"name":"mine"}' });
     dependsOn(root, "who-adapter", dep);
 
     const c = describeRepositoryClosure(root, base());

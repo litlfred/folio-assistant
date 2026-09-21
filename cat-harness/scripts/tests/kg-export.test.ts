@@ -28,7 +28,7 @@ import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
-import { readDeclaration, artefactStub } from "../../schemas/cat-harness.js";
+import { artefactStub, DECLARATION_FILENAME, readDeclaration } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
 
 /**
@@ -292,7 +292,7 @@ describe("kg export", () => {
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/${stub}.schema.json`);
 
     // The declaration is read from a fixed filename, whatever the stub is.
-    expect(existsSync(join(import.meta.dir, "../..", "harness.json"))).toBe(true);
+    expect(existsSync(join(import.meta.dir, "../..", DECLARATION_FILENAME))).toBe(true);
     expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
   });
 

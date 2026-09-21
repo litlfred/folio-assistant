@@ -17,7 +17,7 @@ import { join, resolve } from "node:path";
 import { readFshGutsNode } from "../../schemas/fsh-guts.ts";
 import { buildFshGutsExport, fshGutsDirs } from "../fsh-guts-export.ts";
 import { buildExport } from "../kg-export.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -37,7 +37,7 @@ function instance(declare = true): string {
   mkdirSync(root, { recursive: true });
   mkdirSync(join(repo, "fsh-guts"), { recursive: true });
   writeFileSync(
-    join(root, "harness.json"),
+    join(root, DECLARATION_FILENAME),
     JSON.stringify({
       name: "t",
       stub: "t",

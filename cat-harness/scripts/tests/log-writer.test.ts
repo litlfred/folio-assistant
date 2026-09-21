@@ -22,6 +22,7 @@ import {
 import { workflowFiles } from "../known-skills.js";
 import { loadProcessModel } from "../../src/workflow/process-model.ts";
 import { describeCapture, writeLogEntry } from "../../src/logging/log-writer.ts";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 /** An instance whose declaration names a trashcan, so there is somewhere to log. */
 function instance(declareFshGuts = true): string {
@@ -31,7 +32,7 @@ function instance(declareFshGuts = true): string {
     : [{ id: "schemas", path: "schemas/", dependents: "reproduce", description: "schemas", graphs: ["schemas"] }];
   for (const d of directories) mkdirSync(join(root, d.path), { recursive: true });
   writeFileSync(
-    join(root, "harness.json"),
+    join(root, DECLARATION_FILENAME),
     JSON.stringify({ name: "t", stub: "t", directories }, null, 2),
   );
   return root;
