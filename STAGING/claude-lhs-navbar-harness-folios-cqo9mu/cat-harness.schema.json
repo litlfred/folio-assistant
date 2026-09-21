@@ -275,7 +275,7 @@
                   "repository"
                 ]
               },
-              "graphs": {
+              "graphKinds": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -384,6 +384,9 @@
               "instanceRoot": {
                 "type": "boolean"
               },
+              "composed": {
+                "type": "boolean"
+              },
               "theme": {
                 "type": "string",
                 "minLength": 1
@@ -392,7 +395,7 @@
             "required": [
               "id",
               "path",
-              "graphs",
+              "graphKinds",
               "dependents"
             ],
             "additionalProperties": false
@@ -412,7 +415,7 @@
                 "type": "string",
                 "format": "uri"
               },
-              "graphs": {
+              "graphKinds": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -432,7 +435,7 @@
             "required": [
               "id",
               "url",
-              "graphs"
+              "graphKinds"
             ],
             "additionalProperties": false
           },
@@ -624,8 +627,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld",
   "staging": {
     "branch": "claude/lhs-navbar-harness-folios-cqo9mu",
-    "sha": "979a90fe463642e3eb674b5a35c3dee0dccbe7cc",
+    "sha": "28928b77f976ecb8852b8218ced811b64cf31786",
     "pr": "791/merge",
-    "run": "35653731697"
+    "run": "35655697761"
   }
 }
