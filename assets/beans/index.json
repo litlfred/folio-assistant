@@ -1029,6 +1029,22 @@
       "file": "beans/defs/folio-assistant-6n23--excise-harnessjson-the-declaration-folds-into-name.md"
     },
     {
+      "id": "folio-assistant-6o1z",
+      "title": "crdm-detect corpus: #187 and #199 are the same artefact, labelled opposite",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [
+        "folio-assistant-vjbl"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:40:00Z",
+      "updatedAt": "2026-09-21T16:40:00Z",
+      "preview": "**A specific, checkable contradiction in the eval corpus — not a judgement call\nabout intent.** `vjbl` already names #187 as a hard case *\"turning on intent\nrather than wording\"*. Measured while working `9gtc`, it is sharper than that:\n\n| issue | label | what it is |\n|---|---|---|\n| [#187](https://github.com/litlfred/folio-assistant/issues/187) | `isFeature: false` — *\"a documentation deliverable ",
+      "file": "beans/defs/folio-assistant-6o1z--crdm-detect-corpus-187-and-199-are-the-same-artefa.md"
+    },
+    {
       "id": "folio-assistant-6pfo",
       "title": "Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph",
       "status": "in-progress",
@@ -4036,7 +4052,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T01:28:38Z",
-      "updatedAt": "2026-09-19T05:43:14Z",
+      "updatedAt": "2026-09-21T16:33:15Z",
       "preview": "_2026-09-19T01:28:54Z_ — Measured 2026-09-19 by axe-core over the action-tile harness in tests/a11y.e2e.ts, while building 1le7. NOT caused by that change -- found because the new gate looked at a page the old one never did.\n\n`mountPageLanguageBar()` in docs/assets/js/docs-ui.js renders an always-visible row of six locale tabs into `.main-content`. Its colours are INLINE STYLES on each tab, writte",
       "file": "beans/defs/folio-assistant-rptk--the-per-page-language-bar-fails-contrast-in-both-s.md"
     },
@@ -4570,7 +4586,9 @@
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
-      "blockedBy": [],
+      "blockedBy": [
+        "folio-assistant-6o1z"
+      ],
       "createdAt": "2026-09-18T15:07:07Z",
       "updatedAt": "2026-09-18T15:07:53Z",
       "preview": "The `crdm-detect` eval's ground truth is **one annotator's, unblinded** — the\nsame agent wrote the labels and the scorer. That is the first thing to fix\nbefore quoting 71% / 63% as a property of the skill rather than of this corpus.\n\nEach label in `scripts/eval/crdm-detect-corpus.json` carries a one-line reason,\nso a second annotator can disagree with a specific claim rather than the whole\nset. Th",
@@ -5364,6 +5382,12 @@
     }
   ],
   "findings": [
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-6o1z",
+      "blocks": "folio-assistant-vjbl",
+      "detail": "blocks `folio-assistant-vjbl` and states no expiry, so the block cannot be told from abandoned work"
+    },
     {
       "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",

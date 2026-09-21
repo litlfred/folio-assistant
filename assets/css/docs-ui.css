@@ -853,9 +853,63 @@
   margin: 0;
 }
 
+/* ── The sidebar language bar (bean `rptk`, second half) ──────────────
+ *
+ * `buildLanguageBar()`'s six locale tabs, shown inside the Language action
+ * tile. This is the SIBLING of the per-page bar below, and it carried the same
+ * two failing pairs for two days longer, because `rptk` was read as being
+ * about `mountPageLanguageBar()` alone and the gate that would have said
+ * otherwise never opened this view.
+ *
+ * Measured 2026-09-21, from the inline literals in `docs-ui.js`, against the
+ * `.fa-tiles` panel this bar actually renders on (#27262b):
+ *
+ *   - a not-yet-translated tab: `color:#475569` with `opacity:0.5`, which
+ *     composites to #373e4a = **1.39:1** — three tabs in the gate's
+ *     fixture, five on a page with nothing translated. The SAME opacity trap
+ *     the per-page bar paid for — and the reason `opacity` on text is not a
+ *     dimming control, it is a contrast control nobody measured.
+ *   - the current tab: #ffffff on #3b82f6 = **3.67:1**, bold at 12.8px, which
+ *     is under SC 1.4.3's 18.66px large-text threshold, so 4.5:1 applies.
+ *
+ * The other two pairs passed (#93c5fd on the panel at 8.33:1, and the JS
+ * hover background at 5.74:1) and are restated as tokens anyway: a pair that
+ * passes by accident is one edit from a pair that does not.
+ *
+ * ONE LITERAL, TWO NUMBERS, and that is the argument for an opaque token in a
+ * sentence. `#475569` at `opacity:0.5` is 1.34:1 on the per-page bar's old
+ * backdrop and 1.39:1 here, because the composite is a function of whatever
+ * is painted underneath. Neither number is a property of anything written in
+ * the source, which is why the bean's own note named the wrong colour.
+ *
+ * ONE PALETTE, NOT TWO, and that is a measured claim rather than an omission.
+ * `.fa-tiles` paints `var(--sidebar-color, #27262b)`, just-the-docs defines no
+ * such custom property (see this file's header), and there is no light-scheme
+ * override for it — so this bar's backdrop is the same dark panel in both
+ * schemes. A `:root[data-fa-scheme="light"]` block here would be six tokens
+ * that never apply, which reads as coverage and is not.
+ *
+ * `--fa-sidelang-bg` is OPAQUE and is painted by the bar itself in every one
+ * of its three contexts, so each ratio below is a fact about these tokens
+ * rather than about whatever happens to sit behind them. It is set to the
+ * tiles panel's own colour, so inside the tile the result is pixel-identical
+ * to the `background: transparent` it replaces.
+ */
+.fa-lang-bar {
+  --fa-sidelang-bg: #27262b;
+  --fa-sidelang-fg: #e6e9ee;           /* 12.34:1 — any bar text              */
+  --fa-sidelang-link: #9ec5fe;         /*  8.49:1 — a locale you can switch to */
+  --fa-sidelang-muted: #9aa4b2;        /*  5.95:1 — not yet translated         */
+  --fa-sidelang-current-bg: #60a5fa;   /*  5.91:1 as a surface on the bar       */
+  --fa-sidelang-on-current: #0f172a;   /*  7.02:1 on --fa-sidelang-current-bg   */
+  --fa-sidelang-hover-bg: #35343b;     /*  6.96:1 for --fa-sidelang-link on it  */
+
+  background: var(--fa-sidelang-bg);
+  color: var(--fa-sidelang-fg);
+}
+
 /* The language bar keeps its own card look; only its POSITIONING changed. */
 .fa-lang-bar.fa-panel-in-sidebar {
-  background: var(--sidebar-color, #1e293b);
   border: 1px solid var(--border-color, #475569);
   border-radius: 6px;
   padding: 4px 6px;
@@ -876,13 +930,52 @@
   left: 0;
   top: 100%;
   margin-top: 4px;
-  background: #1e293b;
   border: 1px solid #475569;
   border-radius: 6px;
   padding: 4px 6px;
   z-index: 10000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
+}
+
+.fa-lang-tab {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  margin: 0 1px;
+  transition: background 0.15s;
+  color: var(--fa-sidelang-link);
+  cursor: pointer;
+}
+
+/* Not yet translated. Dimmer by its own measured token, NEVER by `opacity`:
+   opacity blends the text toward the bar and takes the ratio with it, which is
+   exactly how this tab reached 1.37:1. */
+.fa-lang-tab.is-unavailable {
+  color: var(--fa-sidelang-muted);
+  cursor: default;
+}
+
+.fa-lang-tab.is-current {
+  background: var(--fa-sidelang-current-bg);
+  color: var(--fa-sidelang-on-current);
+  font-weight: bold;
+}
+
+/* The locale this reader saved. A ring rather than a colour swap, so it cannot
+   move any of the text pairs above off their measured numbers. */
+.fa-lang-tab.is-remembered {
+  box-shadow: inset 0 0 0 1px var(--fa-sidelang-link);
+}
+
+/* Hover was a pair of JS listeners writing `style.background` — an inline
+   colour literal with extra steps, and one nothing could measure, since it
+   existed only while a pointer was over the tab. Only a real link hovers, so
+   the muted spans keep their background and their ratio. */
+a.fa-lang-tab:hover:not(.is-current) {
+  background: var(--fa-sidelang-hover-bg);
 }
 
 /* ── Per-page language bar (bean `rptk`) ─────────────────────────────────
@@ -1680,6 +1773,10 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   cursor: default;
 }
 
+/* Flush inside the tile: no padding, no border, no card of its own. The
+   background is NOT reset to `transparent` here any more — `--fa-sidelang-bg`
+   is this panel's own colour, so the bar paints the same pixels while giving
+   every ratio above a backdrop that is stated rather than inherited. */
 .fa-tiles-view .fa-lang-bar {
   display: flex;
   flex-wrap: wrap;
@@ -1687,7 +1784,6 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   position: static;
   padding: 0;
   border: 0;
-  background: transparent;
 }
 
 .fa-tiles-view .fa-a11y-panel {
