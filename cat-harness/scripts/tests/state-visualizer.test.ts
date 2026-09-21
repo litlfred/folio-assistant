@@ -11,12 +11,17 @@
  * bean is a test that gets deleted.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { declaredVisualiserFor, describe as describeText } from "../state-visualizer.ts";
+import {
+  dashboardOwner,
+  declaredVisualiserFor,
+  describe as describeText,
+  pruneOrphanDashboards,
+} from "../state-visualizer.ts";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
 import "../../schemas/folio-graph-kind.ts";
 
@@ -310,3 +315,89 @@ describe("a declared description is escaped BEFORE its code spans are made", () 
   });
 });
 
+describe("orphan dashboards — bean `y90d`", () => {
+  /**
+   * A site root with one live dashboard, one orphan, one orphan with a
+   * sibling file, and one page nobody generated.
+   */
+  function plant(): string {
+    const site = mkdtempSync(join(tmpdir(), "sv-orphan-"));
+    const dash = (id: string) =>
+      `<!doctype html>\n<title>${id} — state</title>\n<meta name="fa-state-graph" content="${id}">\n`;
+
+    mkdirSync(join(site, "beans"));
+    writeFileSync(join(site, "beans", "index.html"), dash("beans"));
+
+    mkdirSync(join(site, "gone"));
+    writeFileSync(join(site, "gone", "index.html"), dash("gone"));
+
+    mkdirSync(join(site, "gone-plus"));
+    writeFileSync(join(site, "gone-plus", "index.html"), dash("gone-plus"));
+    writeFileSync(join(site, "gone-plus", "notes.md"), "somebody else's\n");
+
+    // The site root's ordinary population: a hand-authored page with no
+    // marker at all. Nothing here may touch it.
+    mkdirSync(join(site, "guides"));
+    writeFileSync(join(site, "guides", "index.html"), "<!doctype html>\n<title>Guides</title>\n");
+
+    // And a page carrying a marker that names SOMETHING ELSE — a copy, a
+    // move, a hand edit. Ownership must not be inferred from the directory.
+    mkdirSync(join(site, "copied"));
+    writeFileSync(join(site, "copied", "index.html"), dash("beans"));
+
+    return site;
+  }
+
+  test("a dashboard names the graph it serves, in its own bytes", () => {
+    expect(dashboardOwner('<meta name="fa-state-graph" content="beans">')).toBe("beans");
+    // The third state, and it is never read as "not mine": a page whose owner
+    // cannot be read is left alone rather than pruned.
+    expect(dashboardOwner("<!doctype html><title>Guides</title>")).toBeUndefined();
+  });
+
+  test("every committed dashboard carries the marker", () => {
+    // The end-to-end half. A page the generator wrote without one would be
+    // unprunable forever, and nothing else would say so.
+    for (const id of ["beans", "todos", "qa", "health", "issue-marks", "uploads"]) {
+      expect(dashboardOwner(read(id))).toBe(id);
+    }
+  });
+
+  test("--check reports an orphan as a finding and deletes nothing", () => {
+    const site = plant();
+    expect(pruneOrphanDashboards(site, ["beans"], true)).toBe(2);
+    expect(existsSync(join(site, "gone", "index.html"))).toBe(true);
+    expect(existsSync(join(site, "gone-plus", "index.html"))).toBe(true);
+    rmSync(site, { recursive: true });
+  });
+
+  test("a planted orphan is pruned; a hand-authored sibling survives", () => {
+    const site = plant();
+    expect(pruneOrphanDashboards(site, ["beans"], false)).toBe(2);
+
+    expect(existsSync(join(site, "gone"))).toBe(false);
+    expect(existsSync(join(site, "beans", "index.html"))).toBe(true);
+    // No marker: not a candidate, whatever it is called.
+    expect(existsSync(join(site, "guides", "index.html"))).toBe(true);
+    // A marker naming something else is FOREIGN, not owned — the rule is
+    // "the page names ITSELF", and guessing is what it exists to stop.
+    expect(existsSync(join(site, "copied", "index.html"))).toBe(true);
+
+    rmSync(site, { recursive: true });
+  });
+
+  test("the generator's own FILE goes, not a directory somebody else uses", () => {
+    const site = plant();
+    pruneOrphanDashboards(site, ["beans"], false);
+    expect(existsSync(join(site, "gone-plus", "index.html"))).toBe(false);
+    expect(readdirSync(join(site, "gone-plus"))).toEqual(["notes.md"]);
+    rmSync(site, { recursive: true });
+  });
+
+  test("a wanted graph is never a candidate, marker or not", () => {
+    const site = plant();
+    expect(pruneOrphanDashboards(site, ["beans", "gone", "gone-plus"], false)).toBe(0);
+    expect(existsSync(join(site, "gone", "index.html"))).toBe(true);
+    rmSync(site, { recursive: true });
+  });
+});
