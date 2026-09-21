@@ -302,7 +302,7 @@ function go(){
 }
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
-})();</script>
+})();</script><style>body{padding-left:48px}.fa-rail{position:fixed;top:0;left:0;bottom:0;width:48px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-rail:hover,.fa-rail:focus-within{width:232px}.fa-rail input.fa-rail-pin{position:absolute;opacity:0;pointer-events:none}.fa-rail input.fa-rail-pin:checked~.fa-rail-in{width:232px}.fa-rail-in{width:232px;display:flex;flex-direction:column;height:100%}.fa-rail-top{display:flex;align-items:center;gap:8px;padding:10px 0 10px 14px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-rail-glyph{flex:0 0 20px;text-align:center;font-size:16px}.fa-rail-name{white-space:nowrap;font-weight:600}.fa-rail a{display:flex;align-items:center;gap:8px;padding:8px 0 8px 14px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-rail a:hover{background:#30363d}.fa-rail a[aria-current="page"]{background:#30363d;font-weight:600}.fa-rail-foot{margin-top:auto;border-top:1px solid #30363d;font-size:12px;opacity:.75}@media print{.fa-rail{display:none}body{padding-left:0}}</style><nav class="fa-rail" aria-label="folio-assistant"><input type="checkbox" class="fa-rail-pin" id="fa-rail-pin" aria-label="Keep the harness navigation open"><div class="fa-rail-in"><label class="fa-rail-top" for="fa-rail-pin"><span class="fa-rail-glyph" aria-hidden="true">☰</span><span class="fa-rail-name">who-iris</span></label><a href="../../who-iris/"><span class="fa-rail-glyph" aria-hidden="true">◆</span><span>who-iris</span></a><a href="../../docs/who-iris/" aria-current="page"><span class="fa-rail-glyph" aria-hidden="true">D</span><span>docs</span></a><a href="../../library/who-iris/"><span class="fa-rail-glyph" aria-hidden="true">L</span><span>library</span></a><a class="fa-rail-foot" href="../../"><span class="fa-rail-glyph" aria-hidden="true">⌂</span><span>folio-assistant</span></a></div></nav>
 
 <div class="ingested"><div class="wrap">
   <strong>INGESTED COPY — not WHO, and not live.</strong>
@@ -527,7 +527,7 @@ say: which stages are actually built here, with this instance&rsquo;s own number
 <tr><th class="rid">2</th><td><strong>Serialize</strong><br><span class="why"><code>kg-export</code> emits the harness graph as JSON-LD; this instance&rsquo;s catalogue is 13 nodes with 3 item(s).</span></td><td><span class="state materialized">built</span></td></tr>
 <tr><th class="rid">3</th><td><strong>Package</strong><br><span class="why">There is no manifest. The pages and assets are published individually, so nothing here can detect a file that was <em>removed</em>.</span></td><td><span class="state referenced">not built</span></td></tr>
 <tr><th class="rid">4</th><td><strong>Sign</strong><br><span class="why">Nothing is signed. The catalogue records a <code>sha256</code> per bitstream, which is a digest and not an attestation &mdash; anyone who can change the bytes can change the digest beside them. The trust anchor is to be <strong>GDHCN</strong>, via WHO SMART Trust; see below.</span></td><td><span class="state referenced">not built</span></td></tr>
-<tr><th class="rid">5</th><td><strong>Distribute</strong><br><span class="why">10 generated page(s) and 3 cover(s) on GitHub Pages, with a jsDelivr route to the same bytes.</span></td><td><span class="state materialized">built</span></td></tr>
+<tr><th class="rid">5</th><td><strong>Distribute</strong><br><span class="why">10 generated page(s) and 0 cover(s) on GitHub Pages, with a jsDelivr route to the same bytes.</span></td><td><span class="state materialized">built</span></td></tr>
 <tr><th class="rid">6</th><td><strong>Verify</strong><br><span class="why">No consumer verifies anything, because there is nothing signed to verify. This is the stage that gets dropped, and it is dropped here.</span></td><td><span class="state referenced">not built</span></td></tr>
   </tbody>
 </table>
@@ -542,7 +542,7 @@ generation time &mdash; not quoted, not remembered.</p>
     <tr><th class="rid">items</th><td>3 here, of <strong>273,559</strong> upstream</td><td class="why">the completeness denominator</td></tr>
     <tr><th class="rid">files</th><td>1,057,223 upstream</td><td class="why">a different denominator; 3.86 files per item, so a fraction built from the wrong one is wrong by that factor</td></tr>
     <tr><th class="rid">bytes</th><td><strong>7.86 MB</strong> held, of 361.55 GiB upstream</td><td class="why">the size-gate denominator, and the reason this catalogue is by reference</td></tr>
-    <tr><th class="rid">served</th><td>10 page(s), 3 cover(s)</td><td class="why">what a publication period would actually move</td></tr>
+    <tr><th class="rid">served</th><td>10 page(s), 0 cover(s)</td><td class="why">what a publication period would actually move</td></tr>
     <tr><th class="rid">readers</th><td><span class="none">not measured</span></td><td class="why">traffic is bytes &times; requests, and nothing here counts requests. Unknown rather than assumed &mdash; an invented reader count would make every cost figure below it fiction</td></tr>
   </tbody>
 </table>
