@@ -5035,6 +5035,62 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#AssetDelivery",
+      "name": "AssetDelivery",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "doc": "How a declared asset REACHES the agent that needs it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "file",
+        "injected"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
+      "name": "AssetRoleDef",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "What a declared asset ROLE means — asked once, for every instance.",
+      "fields": [
+        {
+          "name": "purpose",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "What this artefact is FOR — one line."
+        },
+        {
+          "name": "layer",
+          "type": "GraphLayer",
+          "optional": false,
+          "array": false,
+          "doc": "Which {@link GraphLayer} the role's file belongs to."
+        },
+        {
+          "name": "delivery",
+          "type": "AssetDelivery",
+          "optional": false,
+          "array": false,
+          "doc": "{@link AssetDelivery} — and required, so a new role decides it at the keyboard."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#AssetDelivery",
+        "cat-harness/schemas/cat-harness.ts#GraphLayer"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "name": "CatHarnessDeclaration",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -29671,6 +29727,22 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
+      "to": "cat-harness/schemas/cat-harness.ts#AssetDelivery",
+      "via": "delivery",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
+      "to": "cat-harness/schemas/cat-harness.ts#GraphLayer",
+      "via": "layer",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",

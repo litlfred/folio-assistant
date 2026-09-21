@@ -256,13 +256,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T07:01:58.831Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/66e4f0aa7f51a1667fedf5b6ef1263abdb65d908",
-  "sourceCommitSha": "66e4f0aa7f51a1667fedf5b6ef1263abdb65d908",
-  "sourceCommitAt": "2026-09-21T09:00:19+02:00",
+  "generatedAt": "2026-09-21T07:45:35.080Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/519e8c01d2b8a3037ed26f96b3fd84dea19da189",
+  "sourceCommitSha": "519e8c01d2b8a3037ed26f96b3fd84dea19da189",
+  "sourceCommitAt": "2026-09-21T09:44:01+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 220,
+    "Skill": 221,
     "Actor": 27,
     "Capability": 28,
     "Role": 130,
@@ -2468,7 +2468,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/agent-memory.md",
-      "instructionLines": 166,
+      "instructionLines": 192,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2690,7 +2690,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/content-context-and-state-graphs.md",
-      "instructionLines": 216,
+      "instructionLines": 257,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3571,6 +3571,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/root-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "root-readme",
+      "title": "The root README, and the one fact it must carry",
+      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. The last thing initialize-harness does before it ends installed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap"
+      ],
+      "instructionsPath": "../cat-bootstrap/skills/root-readme.md",
+      "instructionLines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/discussion",
@@ -32043,8 +32059,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "66e4f0aa7f51a1667fedf5b6ef1263abdb65d908",
+    "sha": "519e8c01d2b8a3037ed26f96b3fd84dea19da189",
     "pr": "main",
-    "run": "35570905206"
+    "run": "35574356096"
   }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ASSET_ROLE_PURPOSE | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ASSET_ROLES | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
 <div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
 <ul role="listbox" id="tsd-search-results"></ul>
@@ -9,11 +9,11 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb" aria-label="Breadcrumb">
 <li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
-<li><a href="" aria-current="page">ASSET_ROLE_PURPOSE</a></li></ul>
-<h1>Variable ASSET_ROLE_PURPOSE<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">ASSET_ROLE_PURPOSE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
-<div class="tsd-comment tsd-typography"><p>What each asset role is FOR — one line, declared once.</p>
-<h2 id="why-the-purpose-lives-on-the-role-and-not-on-the-asset" class="tsd-anchor-link">Why the purpose lives on the ROLE and not on the asset<a href="#why-the-purpose-lives-on-the-role-and-not-on-the-asset" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<li><a href="" aria-current="page">ASSET_ROLES</a></li></ul>
+<h1>Variable ASSET_ROLES<code class="tsd-tag">Const</code></h1></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">ASSET_ROLES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <a href="../interfaces/schemas_cat-harness.AssetRoleDef.html" class="tsd-signature-type tsd-kind-interface">AssetRoleDef</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>What each asset role is, declared once — purpose, layer and delivery.</p>
+<h2 id="why-this-lives-on-the-role-and-not-on-the-asset" class="tsd-anchor-link">Why this lives on the ROLE and not on the asset<a href="#why-this-lives-on-the-role-and-not-on-the-asset" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>The owner, 2026-09-20, on <code>AGENTS.md</code>:</p>
 <blockquote>
 <p>it is an asset and has a defined purpose (that is part of skills of
@@ -27,7 +27,23 @@ where the role says so, once, for every instance that declares it.</p>
 <p>It was tried the other way first. A <code>purpose</code> key was written into
 <code>cat-harness/harness.json</code> and <a href="schemas_kg-node.KgAssetSchema.html" class="tsd-kind-variable">KgAssetSchema</a> silently stripped it,
 which is worse than absent: the declaration read as if it carried a purpose
-and no consumer ever saw one.</p>
+and no consumer ever saw one. <a href="../functions/schemas_cat-harness.strayAssetRoleKeys.html" class="tsd-kind-function">strayAssetRoleKeys</a> is what now catches
+that, because the stripping is silent by design and will stay that way.</p>
+<h2 id="why-one-table-and-not-three-maps" class="tsd-anchor-link">Why one table and not three maps<a href="#why-one-table-and-not-three-maps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>purpose</code>, <code>layer</code> and <code>delivery</code> were nearly added as three
+<code>Record&lt;string, …&gt;</code> constants side by side. Three maps keyed on the same
+thing is a shape where one gains a key the others lack and nothing says so —
+a role with a purpose and no layer would read as governed, and
+<code>assetRoleLayer</code> would return <code>undefined</code> for a role this layer plainly
+owns. One record of objects makes that state unrepresentable.</p>
+<h2 id="both-are-and-the-owner-said-so-in-those-words" class="tsd-anchor-link">Both are <code>context</code>, and the owner said so in those words<a href="#both-are-and-the-owner-said-so-in-those-words" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<blockquote>
+<p>its static content at process runtime and treated as an asset like
+memories</p>
+</blockquote>
+<p>That is <a href="../types/schemas_cat-harness.GraphLayer.html" class="tsd-kind-type-alias"><code>context</code></a> word for word — READ at session
+start, never written by a running process — and it is the same layer agent
+memory holds, which is what <em>&quot;like memories&quot;</em> asks for. Bean <code>7syd</code>.</p>
 <h2 id="the-two-that-matter-and-the-line-between-them" class="tsd-anchor-link">The two that matter, and the line between them<a href="#the-two-that-matter-and-the-line-between-them" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p><code>instance-readme</code> says what the instance IS; <code>agent-instructions</code> says what
 to DO. The second <strong>augments and never restates</strong> the first — the owner
@@ -44,7 +60,7 @@ entitled to a file that answers only theirs.</p>
 for it here would be the platform speaking for a layer it does not own.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/66e4f0aa7f51a1667fedf5b6ef1263abdb65d908/cat-harness/schemas/cat-harness.ts#L3384">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:3384</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/519e8c01d2b8a3037ed26f96b3fd84dea19da189/cat-harness/schemas/cat-harness.ts#L3452">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:3452</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -59,7 +75,7 @@ for it here would be the platform speaking for a layer it does not own.</p>
 <div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
 <details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h3>On This Page</h3></summary>
-<div class="tsd-accordion-details"><a href="#why-the-purpose-lives-on-the-role-and-not-on-the-asset"><span>Why the purpose lives on the <wbr/>ROLE and not on the asset</span></a><a href="#the-two-that-matter-and-the-line-between-them"><span>The two that matter, and the line between them</span></a></div></details></div>
+<div class="tsd-accordion-details"><a href="#why-this-lives-on-the-role-and-not-on-the-asset"><span>Why this lives on the <wbr/>ROLE and not on the asset</span></a><a href="#why-one-table-and-not-three-maps"><span>Why one table and not three maps</span></a><a href="#both-are-and-the-owner-said-so-in-those-words"><span>Both are , and the owner said so in those words</span></a><a href="#the-two-that-matter-and-the-line-between-them"><span>The two that matter, and the line between them</span></a></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
