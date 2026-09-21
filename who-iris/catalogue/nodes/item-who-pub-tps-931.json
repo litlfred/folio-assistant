@@ -55,26 +55,26 @@
     {
       "name": "who-pub-tps-931-cover.png",
       "bundle": "THUMBNAIL",
-      "bytes": 9927,
+      "bytes": 8425,
       "mediaType": "image/png",
       "pixelWidth": 300,
       "pixelHeight": 424,
       "materialization": {
         "state": "materialized",
         "of": "local:who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf#page=1",
-        "localPath": "docs/assets/covers/who-pub-tps-931-cover.png",
+        "localPath": "library/who-pub-tps-931-cover.png",
         "purpose": "working",
-        "bytes": 9927,
-        "materializedAt": "2026-09-20",
+        "bytes": 8425,
+        "materializedAt": "2026-09-21",
         "fixity": {
           "algorithm": "sha256",
-          "digest": "ab6e420383f34ee368044b26d0e3fa11c056861ba4ed29866605d4b0eb05a0ea",
-          "verifiedAt": "2026-09-20"
+          "digest": "56520df12846e105fa7548470aa5abac5d3a1e176d8ac8361ca11cc76efcd90b",
+          "verifiedAt": "2026-09-21"
         },
         "gates": {
           "size": {
             "verdict": "permitted",
-            "basis": "9,927 bytes -- a listing thumbnail, three orders of magnitude under the PDF it is rendered from"
+            "basis": "8,425 bytes -- a listing thumbnail, three orders of magnitude under the PDF it is rendered from"
           },
           "restrictions": {
             "verdict": "unknown",
@@ -93,8 +93,17 @@
             "basis": "no dc.rights field in the captured record; a cover render is a reproduction of the publication's own cover art"
           }
         },
-        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of WHO_PUB_TPS_93.1.pdf by cat-harness/scripts/pdf-cover.py (pymupdf 1.28.2) on 2026-09-20, scaled to 300px wide from a 708.98x1000.98pt page; the height follows the page's own aspect and is never forced. iris.who.int is egress-blocked from this environment (CONNECT 403, bean r1lz), so no upstream thumbnail was fetched or compared. `of` therefore names the local PDF this was made from rather than a WHO URI: the Handle identifies the ITEM, and asserting it here would say IRIS supplied this image. Page 1 is taken as the cover because page 1 is a determined answer and \"the cover\" is not -- the same choice pdf-pages.py makes about sections. Verified by `bun run who-iris/scripts/gen-covers.ts --check`, which re-renders and compares these bytes, this digest and these dimensions."
-      }
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of WHO_PUB_TPS_93.1.pdf by cat-harness/scripts/pdf-cover.py (pymupdf 1.28.2) on 2026-09-21 (re-rendered with the emblem masked), scaled to 300px wide from a 708.98x1000.98pt page; the height follows the page's own aspect and is never forced. iris.who.int is egress-blocked from this environment (CONNECT 403, bean r1lz), so no upstream thumbnail was fetched or compared. `of` therefore names the local PDF this was made from rather than a WHO URI: the Handle identifies the ITEM, and asserting it here would say IRIS supplied this image. Page 1 is taken as the cover because page 1 is a determined answer and \"the cover\" is not -- the same choice pdf-pages.py makes about sections. Verified by `bun run who-iris/scripts/gen-covers.ts --check`, which re-renders and compares these bytes, this digest and these dimensions. MASKED: the emblem lockup is blanked to a flat grey before these bytes are written -- see `maskedRegions` on this bitstream for the rectangle and the reason. The fill is deliberately NOT the surrounding page colour: an invisible mask would make this rendering look like a publication that never carried an emblem."
+      },
+      "maskedRegions": [
+        {
+          "x0": 118,
+          "y0": 226,
+          "x1": 164,
+          "y1": 264,
+          "reason": "the WHO emblem and the \"World Health Organization\" wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and then chose masking over withholding the covers entirely. The publication's TITLE is left intact where it contains \"WHO\" -- that is the work's name and a bibliographic fact, not branding applied by this replica."
+        }
+      ]
     }
   ],
   "materialization": {

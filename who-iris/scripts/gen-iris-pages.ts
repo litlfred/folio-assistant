@@ -45,7 +45,7 @@
  *   bun run who-iris/scripts/gen-iris-pages.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
-import { basename, dirname, join, resolve } from "path";
+import { basename, dirname, join, relative, resolve, sep } from "path";
 
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
@@ -331,35 +331,60 @@ function assetHref(n: Node): { href: string; cdn: string; name: string; bytes?: 
 /**
  * Are the rendered covers SHOWN on the replica?
  *
- * **No, by the owner's ruling of 2026-09-21.** The question put to them was
- * whether the emblem printed on a WHO publication reads as *content* — the
- * document's own cover — or as *branding* this page is wearing. The answer
- * named it with the logo: *"logo and other branding"*. So it falls under the
- * standing instruction, *"leave off WHO logo (as with all who-pages for now,
- * not until published under WHO, just use colors)"*, and a page whose thumbnail
- * strip carries the emblem three times is wearing it however the pixels got
- * there.
+ * **Yes, with the emblem masked — the owner's ruling of 2026-09-21.**
  *
- * **What this does NOT do is un-ingest anything.** The covers are still
- * rendered, still committed, still recorded as THUMBNAIL bitstreams with their
- * derivation on each one; `gen-covers.ts` and `iris:covers:check` are
- * untouched. Only the display is withheld, and the row says so — because
- * *"withheld"* and *"there is no cover"* are different facts and a reader who
- * cannot tell them apart learns nothing from either.
+ * The question first put to them was whether the emblem printed on a WHO
+ * publication reads as *content* — the document's own cover — or as *branding*
+ * this page is wearing. They named it with the logo: *"logo and other
+ * branding"*, and the covers were withheld. Asked again whether to show them
+ * masked, they chose masking over withholding.
  *
- * One line to reverse, the way the earlier note promised.
+ * So the standing instruction is still honoured — *"leave off WHO logo (as
+ * with all who-pages for now, not until published under WHO, just use
+ * colors)"* — and the covers are back. The emblem never reaches this page:
+ * `pdf-cover.py` blanks it **before the PNG is written**, so the committed
+ * bytes do not contain it and no display flag can leak it. The regions and
+ * their reason are declared on each THUMBNAIL bitstream as `maskedRegions`.
+ *
+ * **The TITLE is not masked where it contains "WHO"** — *WHO Editorial Style
+ * Manual*, *WHO Handbook for Guideline Development*. That is the work's name,
+ * a bibliographic fact about the publication, not branding this replica is
+ * wearing. Masking it would leave a cover that names no book.
+ *
+ * `false` still works and still says *"cover withheld"* rather than *"no
+ * cover"*, because those remain different facts. It is no longer the position
+ * the covers are in, only the switch that would put them back.
  */
-const COVERS_SHOWN = false;
+const COVERS_SHOWN = true;
 
-function coverSrc(n: Node): { src: string; w: number; h: number } | undefined {
+function coverSrc(n: Node): { src: string; w: number; h: number; masked: boolean } | undefined {
   const b = n.bitstreams?.find((x) => x.bundle === "THUMBNAIL");
   const lp = b?.materialization?.localPath;
   if (!b || !lp || b.pixelWidth === undefined || b.pixelHeight === undefined) return undefined;
   // Declared path honoured directly here, unlike `assetHref`: these bytes are
   // ones this repository wrote, at the path the node names, so a fallback
   // would be covering for a bug of our own making rather than for `yl5w`.
-  if (!existsSync(join(INSTANCE, lp))) return undefined;
-  return { src: encPath(lp.replace(/^docs\//, "")), w: b.pixelWidth, h: b.pixelHeight };
+  const abs = join(INSTANCE, lp);
+  if (!existsSync(abs)) return undefined;
+  // RELATIVE TO THE DIRECTORY THE PAGE IS WRITTEN INTO, computed, not stripped.
+  //
+  // This was `lp.replace(/^docs\//, "")`, correct for exactly as long as these
+  // pages lived in `docs/`. They moved to `library/` in `zgba` and the covers
+  // did not, so every `src` resolved to `library/assets/covers/...` -- a 404,
+  // invisible because `COVERS_SHOWN` was false and the `<img>` was never
+  // emitted. Two faults stacked, the outer one hiding the inner.
+  //
+  // A literal prefix is a second answer to "where is this page", and it goes
+  // stale the moment the first answer moves. `relative()` asks the one answer.
+  return {
+    src: encPath(relative(LIB, abs).split(sep).join("/")),
+    w: b.pixelWidth,
+    h: b.pixelHeight,
+    // Read off the bitstream rather than assumed for every cover: a future
+    // item whose cover carries no emblem needs no mask, and alt text claiming
+    // one was removed would be describing a different image.
+    masked: (b.maskedRegions ?? []).length > 0,
+  };
 }
 
 const THEME = whoThemeById("iris-web")!;
@@ -1163,14 +1188,18 @@ ${
  * gradient in the `iris-web` theme's own measured colours instead — owner:
  * *"just use colors."*
  *
- * **No item covers either, and that reading was wrong the first time.** The
- * covers ARE the publications' own, and the emblem on them is printed on the
- * documents — so this file argued they were content rather than chrome, and
- * said it was reversible in one place if the owner read it otherwise. They
- * did, 2026-09-21, naming the emblem with the logo: *"logo and other
- * branding"*. `COVERS_SHOWN` is that one place. The covers are still rendered,
- * committed and recorded; only the display is withheld, and each row says
- * **withheld** rather than **no cover**, because those are different facts.
+ * **Item covers ARE shown, with the emblem masked out of the bytes.** This
+ * took two rulings. The covers are the publications' own and the emblem on
+ * them is printed on the documents, so the file first argued they were content
+ * rather than chrome; the owner read it otherwise on 2026-09-21, naming the
+ * emblem with the logo — *"logo and other branding"* — and they were withheld.
+ * Asked then whether to show them masked, they chose masking.
+ *
+ * The emblem is blanked by `pdf-cover.py` **before the PNG is written**, from
+ * regions declared per item as `maskedRegions`, so the committed bytes do not
+ * contain it. Not a display rule: nothing downstream can leak what is not in
+ * the file. The publication's TITLE is untouched where it contains "WHO" —
+ * that names the work and is not branding this page wears.
  *
  * ## The numbers are real and the search box is not
  *
@@ -1289,7 +1318,9 @@ function submission(n: Node): string {
     ? `<span class="nocover" title="no cover rendered">no cover</span>`
     : COVERS_SHOWN
       ? `<a href="item-${esc(slug(n.id))}.html"><img src="${esc(cov.src)}" width="${cov.w}" height="${cov.h}"
-        alt="Cover of ${esc(n.title)}, rendered here from page 1 of the held PDF" loading="lazy"></a>`
+        alt="Cover of ${esc(n.title)}, rendered here from page 1 of the held PDF${
+          cov.masked ? ", with the WHO emblem masked out" : ""
+        }" loading="lazy"></a>`
       : `<span class="nocover" title="A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.">cover<br>withheld</span>`;
 
   return `<article class="sub">
