@@ -38,3 +38,59 @@ Every file DOES declare its own `$schema`, so classification needs no guessing. 
 
 ## Not in scope
 `health` (1 file) and `issue-marks` (2) are too thin to earn a dashboard. Saying so is the answer for them, not building one.
+
+## RULED 2026-09-21 — separate family panels, never one total
+
+The owner, choosing from four options:
+
+> Separate family panels, never one total.
+
+So Done-when item 1 is settled, and it settles it in the direction this bean
+was leaning: the dashboard shows one panel per family, in that family's own
+vocabulary, and publishes no number that spans them.
+
+### Re-measured before the ruling — this bean undercounts
+
+It says six families. **There are nine.** Measured by reading `$schema` out of
+every JSON under `cat-harness/` rather than from the earlier survey:
+
+| schema | files | `criteria` | roll-up buckets |
+|---|---|---|---|
+| `kg-qa/v1` | **321** | dict | `totals`: pass · fail · **`n/a`** · unknown |
+| `qa-witness/v1` | 134 | **list** | `counts`: pass · fail · **`na`** · unknown · **`warn`** |
+| `block-qa/v1` | 122 | dict | **none** |
+| `qa-script/v1` | **84** | — | — |
+| `folio-qa-index/v1` | 11 | — | — |
+| `qa-results/v1` | 8 | — | — |
+| `kg-qa-manifest/v1` | 1 | — | — |
+| `folio-test-run/v1` | 1 | — | — |
+| `translation-qa/v1` | 1 | dict | — |
+
+`qa-script/v1` (84 files), `kg-qa-manifest/v1` and `translation-qa/v1` were
+missing from the table above.
+
+### The three disagreements, which are sharper than "incompatible shapes"
+
+The two largest families that both roll up disagree **three separate ways**:
+
+1. the container is `totals` in one and `counts` in the other;
+2. not-applicable is spelled **`n/a`** in one and **`na`** in the other;
+3. `qa-witness` has a fifth bucket, **`warn`**, that `kg-qa` has no concept of.
+
+And the third-largest, `block-qa` at 122 files, carries **no roll-up field at
+all**. So a shared headline would have to drop `warn` or invent it for the
+others, pick a spelling of not-applicable, and compute totals for 122 files
+that never declared any — three decisions, none of them the reader's to
+discover from a number on a dashboard.
+
+### What was NOT chosen, and why it is worth recording
+
+**Normalising the schemas first.** It is the option that makes a headline free
+afterwards, and it was declined for now: it rewrites 577 committed files, and
+the disagreement is only a defect if somebody wants the total. Nobody does.
+
+## Done when
+- [x] A ruling on whether the six families may be summarised together —
+      **no. One panel per family, no cross-family total** (owner, 2026-09-21)
+- [ ] A reader that classifies on `$schema` and never infers from a path
+- [ ] A projection at `assets/qa/index.json`
