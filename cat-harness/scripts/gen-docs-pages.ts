@@ -1457,6 +1457,11 @@ function processHierarchy(): Record<string, string[]> {
  * directory and one of the two would overwrite the other — the same collision
  * the PO resolution in `translation-block-qa.ts` just had to be taught to
  * refuse, one layer down.
+ *
+ * That pair went away on 2026-09-21 (bean `8h42`, and the generated page that
+ * took the route is `published-graphs.md`, not a second `index.md`). The rule
+ * stays: it is about stems, not about those two files, and the next pair to
+ * share one will not announce itself.
  */
 function publishAuthoredPageTranslationQa(): void {
   const siteDir = OUT_DIR;

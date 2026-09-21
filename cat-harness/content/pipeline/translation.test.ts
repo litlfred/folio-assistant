@@ -178,6 +178,54 @@ describe("extractMarkdown", () => {
     expect(msgids).not.toContain(".no_toc");
   });
 
+  // ── `{:toc}` consumes its list — bean `lrbx` ──────────────────────
+  //
+  // Every case below is asserted in BOTH directions, because the failure mode
+  // of a fix like this is deleting prose a reader does see. `{: .no_toc }` is
+  // the near miss: it is about the table of contents, it sits beside a heading
+  // that renders, and a rule matching on "toc" rather than on the exact
+  // directive would silently drop that heading from every catalogue.
+
+  test("the list a `{:toc}` replaces is not offered to translators", () => {
+    // The measured cost: the ar and ru translators rendered `1. TOC` as a
+    // heading (ar `جدول المحتويات`), which is the correct reading of a string
+    // that should never have been shown to them.
+    const entries = extractMarkdown("Intro line.\n\n1. TOC\n{:toc}\n", "test.md");
+    expect(entries.map((e) => e.msgid)).toEqual(["Intro line."]);
+  });
+
+  test("`{: .no_toc }` keeps the heading it attaches to", () => {
+    const entries = extractMarkdown("## Subgraph viewers\n{: .no_toc }\n\nBody.\n", "test.md");
+    expect(entries.map((e) => e.msgid)).toEqual(["Subgraph viewers", "Body."]);
+  });
+
+  test("an ordinary list is untouched", () => {
+    const entries = extractMarkdown("- first item\n- second item\n\nA paragraph.\n", "test.md");
+    expect(entries.map((e) => e.msgid)).toEqual(["first item", "second item", "A paragraph."]);
+  });
+
+  test("a `{:toc}` further down the page does not reach back to an earlier list", () => {
+    // The run must END at the first line that is neither an item nor a blank,
+    // or one directive would delete a list nobody asked it to touch.
+    const entries = extractMarkdown(
+      "- keep me\n- keep me too\n\nA paragraph.\n\n1. TOC\n{:toc}\n",
+      "test.md",
+    );
+    expect(entries.map((e) => e.msgid)).toEqual(["keep me", "keep me too", "A paragraph."]);
+  });
+
+  test("a multi-item placeholder goes entirely, because the directive takes the LIST", () => {
+    // Conventionally one item, but kramdown replaces the whole list — so a
+    // rule that dropped only the last item would leak the rest.
+    const entries = extractMarkdown("- TOC\n- Contents\n{:toc}\n", "test.md");
+    expect(entries).toEqual([]);
+  });
+
+  test("an attribute list that attaches to prose keeps the prose", () => {
+    const entries = extractMarkdown("Some real prose.\n{: .note }\n", "test.md");
+    expect(entries.map((e) => e.msgid)).toEqual(["Some real prose."]);
+  });
+
   test("skips horizontal rules", () => {
     const entries = extractMarkdown(
       "Before.\n\n---\n\nAfter.\n",

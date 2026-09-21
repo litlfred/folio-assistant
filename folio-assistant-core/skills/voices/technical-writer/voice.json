@@ -1,19 +1,19 @@
 {
   "$schema": "folio-voice/v1",
   "id": "technical-writer",
-  "title": "Technical Writer \u2014 SDO register with RFC 2119 requirement levels",
+  "title": "Technical Writer — SDO register with RFC 2119 requirement levels",
   "description": "The voice for technical documentation of standards, software and knowledge assets, written as an SDO writes (W3C, IHE). Requirement levels are RFC 2119's, read from the ingested RFC rather than from memory, and constrained by RFC 8174: only UPPERCASE usage carries the defined meaning. Applies to drafting AND to review QA. Nine rules; five cite the two ingested RFCs, three cite the `technical-documentation` skill, a node of this instance's own knowledge graph, because a rule that cites a document it was not read from is the false provenance this schema exists to prevent.",
   "provenance": "assertion",
   "sources": [
     {
-      "title": "RFC 2119 \u2014 Key words for use in RFCs to Indicate Requirement Levels (S. Bradner, Harvard University, BCP 14, March 1997)",
+      "title": "RFC 2119 — Key words for use in RFCs to Indicate Requirement Levels (S. Bradner, Harvard University, BCP 14, March 1997)",
       "libraryId": "rfc2119-key-words-requirement-levels",
       "instance": "agent-skills",
       "url": "https://www.rfc-editor.org/info/rfc2119/",
       "year": 1997
     },
     {
-      "title": "RFC 8174 \u2014 Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words (B. Leiba, BCP 14, May 2017)",
+      "title": "RFC 8174 — Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words (B. Leiba, BCP 14, May 2017)",
       "libraryId": "rfc8174-uppercase-vs-lowercase-2119-key-words",
       "instance": "agent-skills",
       "url": "https://www.rfc-editor.org/info/rfc8174/",
@@ -30,7 +30,7 @@
   "rules": [
     {
       "id": "tw-rfc2119-absolute-requirement",
-      "title": "MUST, REQUIRED and SHALL mean an absolute requirement \u2014 nothing weaker",
+      "title": "MUST, REQUIRED and SHALL mean an absolute requirement — nothing weaker",
       "description": "Use MUST, REQUIRED or SHALL only where the requirement is absolute. They are interchangeable by the RFC's own definition, so choose one per document and keep to it rather than varying for rhythm. A MUST that a reader may reasonably decline is not a MUST; it is a SHOULD, and mislabelling it teaches readers to discount every other MUST in the document.",
       "category": "terminology",
       "severity": "critical",
@@ -59,7 +59,7 @@
     {
       "id": "tw-rfc2119-should-carries-a-burden",
       "title": "SHOULD and RECOMMENDED admit exceptions, and the writer owes the reader the implications",
-      "description": "SHOULD and RECOMMENDED mean valid reasons may exist to ignore the item \u2014 but the RFC puts a burden on the reader to understand and weigh the implications, which the writer can only discharge by stating them. A bare SHOULD with no account of what departing from it costs is an instruction the reader cannot act on.",
+      "description": "SHOULD and RECOMMENDED mean valid reasons may exist to ignore the item — but the RFC puts a burden on the reader to understand and weigh the implications, which the writer can only discharge by stating them. A bare SHOULD with no account of what departing from it costs is an instruction the reader cannot act on.",
       "category": "terminology",
       "severity": "major",
       "source": {
@@ -119,6 +119,7 @@
       "category": "capitalization",
       "severity": "major",
       "source": {
+        "instance": "cat-harness",
         "kgRef": "skills/folio-core/technical-documentation.md",
         "quote": "Glossary Terms are Capitalized on every use, so a reader can tell a defined Term from the same word used loosely."
       }
@@ -126,10 +127,11 @@
     {
       "id": "tw-no-repetition-logical-order",
       "title": "After the first draft: repetition, order, defined terms",
-      "description": "Three questions the writer runs against their own draft before review. Have I repeated anything? If so, consolidate \u2014 the same fact in two places is free to drift, and the copy a reader finds first is the one with no test. Does the content flow in logical order? If not, apply the detangler rather than reordering by taste. Is each Term defined? This is a drafting rule, not a reviewer's courtesy: it is cheapest to fix while the draft is still the author's.",
+      "description": "Three questions the writer runs against their own draft before review. Have I repeated anything? If so, consolidate — the same fact in two places is free to drift, and the copy a reader finds first is the one with no test. Does the content flow in logical order? If not, apply the detangler rather than reordering by taste. Is each Term defined? This is a drafting rule, not a reviewer's courtesy: it is cheapest to fix while the draft is still the author's.",
       "category": "structure",
       "severity": "major",
       "source": {
+        "instance": "cat-harness",
         "kgRef": "skills/folio-core/technical-documentation.md",
         "quote": "Have I repeated anything? If so, consolidate. The same fact in two places is free to drift, and the copy a reader finds first is usually the one with no test behind it."
       },
@@ -142,6 +144,7 @@
       "category": "citation",
       "severity": "major",
       "source": {
+        "instance": "cat-harness",
         "kgRef": "skills/folio-core/technical-documentation.md",
         "quote": "When the prose names a schema, link to the schema source and to its UML documentation where one exists. A schema named but not linked forces the reader to guess which file, and the guess is wrong exactly when the schema has moved."
       }

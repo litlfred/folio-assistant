@@ -36,6 +36,7 @@ import type {
   QaCriterionEntry,
   QaScriptSidecar,
   CompanionRole,
+  QaCriterionDefinition,
 } from "../../schemas/block-qa";
 import { COMPANION_ROLES } from "../../schemas/block-qa";
 import { ALL_BLOCK_BUILDER_ALT, kindForBuilder } from "../../schemas/block-kinds";
@@ -1666,10 +1667,26 @@ export function summariseFreshness(
   report: BlockQaReport,
   current: QaFieldHash,
   scriptHashesByCriterion?: Record<string, CriterionScriptHashes>,
+  /**
+   * The criterion index to resolve definitions against.
+   *
+   * Defaults to the static registry, which is right for every criterion
+   * written out in it — but NOT for the voice-overlay criteria, which since
+   * bean `btuv` are derived from the voices an instance ships. A caller that
+   * has an instance root passes `qaCriteriaByIdFor(root)`.
+   *
+   * The fallback below happens to give a voice criterion the right answer
+   * today, because its `depends_on` is `["md"]` and so is the fallback. That
+   * is a COINCIDENCE, not a design: the fallback exists for a criterion that
+   * is unknown or fenced out, and reading it as coverage for a criterion that
+   * is merely registered somewhere else would make the first `depends_on`
+   * change on a voice silently produce stale-looking-fresh entries.
+   */
+  criteriaById: Record<string, QaCriterionDefinition> = QA_CRITERIA_BY_ID,
 ): CriterionFreshness[] {
   const out: CriterionFreshness[] = [];
   for (const [criterion, entries] of Object.entries(report.criteria)) {
-    const def = QA_CRITERIA_BY_ID[criterion];
+    const def = criteriaById[criterion];
     const dependsOn = def ? freshnessKeys(def) : (["md"] as CompanionRole[]);
     const sh = scriptHashesByCriterion?.[criterion];
     const fresh: QaCriterionEntry[] = [];
