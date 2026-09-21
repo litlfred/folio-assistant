@@ -1,11 +1,11 @@
 ---
 # folio-assistant-t7ao
 title: One bean with unparseable front matter takes down the whole store, and 92 gates passed over it
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-21T18:54:30Z
-updated_at: 2026-09-21T18:54:49Z
+updated_at: 2026-09-21T20:17:47Z
 parent: folio-assistant-1xhc
 ---
 
@@ -60,9 +60,75 @@ third fails rather than passing.
 
 ## Done when
 
-- [ ] a gate parses every bean's front matter as YAML and names the file and
+- [x] a gate parses every bean's front matter as YAML and names the file and
       line when one does not
-- [ ] it is wired into `code-quality-gates.yml`, so `gates.ts` picks it up —
+- [x] it is wired into `code-quality-gates.yml`, so `gates.ts` picks it up —
       a check that is not in the workflow is `sb6z`'s complaint, one level in
-- [ ] a test that FEEDS IT A BROKEN BEAN and asserts it fails. A gate for
+- [x] a test that FEEDS IT A BROKEN BEAN and asserts it fails. A gate for
       this defect that has never seen the defect is the defect
+
+
+---
+
+## Summary of Changes — 2026-09-21
+
+`scripts/check-bean-front-matter.ts`, wired into `code-quality-gates.yml`
+**before** `check:bean-bodies`, because it is that gate's precondition: the
+checks below it read front matter by regex, and a regex over a broken document
+does not notice the document is broken.
+
+The premise was re-verified by breaking it again before anything was written.
+One planted bean with a literal `\1`:
+
+```
+beans list          -> Error: loading beans: ... yaml: line 7 ...  (no beans at all)
+check:bean-bodies   -> exit 0, "no NEW defect"
+```
+
+### Two defects, and only one is fatal
+
+Splitting them was the substance of this change, and the first draft got it
+wrong. `yaml`'s `uniqueKeys` defaults to **true**, so a plain `parseDocument`
+reported two loadable beans as unparseable — a gate **stricter than the thing
+it guards**, which would have gone red on day one over beans belonging to
+other people.
+
+- **Does not parse** → the gate FAILS. This is what takes the store down.
+- **Duplicate keys** → counted and named, never failed. Measured: `beans list`
+  loads the live store while two of its beans carry duplicates.
+
+The duplicates are a real defect even so, and worth stating: `scalar()` in
+`bean-store-read.ts` regexes out the FIRST occurrence while YAML takes the
+LAST. On `1hvo` the two `title:` lines **differ in their text**, so
+`check-bean-bodies` and `beans` show different titles for one bean. Left to
+their owners, as `check-bean-bodies` says of its own outstanding findings:
+
+- `folio-assistant-1hvo` — duplicate `title:` (line 4), and the two differ
+- `folio-assistant-7u3g` — duplicate `updated_at:` (line 10)
+
+### A second gap, found on the way
+
+`readBeanFiles` skips a file whose `---` fences do not match, as "not a bean".
+Right for a README, wrong for a bean whose fence was mangled: it vanishes from
+every consumer rather than being reported. That is now a finding, with
+`README.md` the one documented exception.
+
+### The gate had its own defect twice before it worked
+
+Recorded because it is the same shape as the bug being fixed, and both were
+caught only by running it rather than by reading it:
+
+1. `repoRootFor(process.cwd())` answered `/home/user`, so the directory
+   resolved outside the repo and the gate reported **"nothing checked", exit
+   0** over a store holding a planted broken bean. `check-bean-bodies`
+   resolves from the SCRIPT's location; copying that fixed it.
+2. `dir === null` and `!existsSync(dir)` were one branch, collapsing
+   **not declared** into **declared but absent** — the `dh4f` defect. They are
+   two answers now, and the second exits 2.
+
+### Verified
+
+`7 pass, 0 fail` in `scripts/tests/bean-front-matter.test.ts`, every case a
+fixture because the live store is loadable and therefore proves none of them.
+Falsified in both directions on the real corpus: clean store exits 0 over 629
+beans; one planted break exits 1 and names the file and line.

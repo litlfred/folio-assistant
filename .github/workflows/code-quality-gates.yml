@@ -640,6 +640,16 @@ jobs:
           # blocker naming a bean that is `completed` or `scrapped`. Baselined
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
+          # Bean `t7ao`: FIRST, because it is the precondition for every line
+          # below. One bean whose front matter does not parse takes the WHOLE
+          # store down -- `beans list`, `roadmap` and `prime` load it as a unit
+          # -- and `beans prime` is the first command in this repo's cold start.
+          # Measured by breaking it: a planted bean with a literal `\1` where
+          # `updated_at:` belonged left `beans list` reporting no beans at all,
+          # while the full gate set passed 92/92 over the same tree. The gates
+          # below read front matter BY REGEX, and a regex over a broken
+          # document does not notice the document is broken.
+          bun run check:bean-front-matter
           bun run check:bean-bodies
           # Bean `k59d`: check:bean-bodies reads a SENTENCE (`blocked on `id``).
           # A milestone states its blockers as a ROUTE, so both GOAL milestones

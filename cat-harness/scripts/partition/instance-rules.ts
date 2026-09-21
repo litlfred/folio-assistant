@@ -628,11 +628,18 @@ export const RULES: Rule[] = [
       // The work plan's own readers. Harness by subject and by dependency:
       // `beans/` is the AGENT's work plan, declared by the harness, and a
       // folio's content has no bean store. `bean-store-read.ts` is the shared
-      // file reader the three import; `check-waivers.ts` reads the `waiver`
+      // file reader they import; `check-waivers.ts` reads the `waiver`
       // graph, which is the harness's confirmation model and nothing a folio
       // authors.
+      //
+      // `check-bean-front-matter.ts` is here for the same two reasons and a
+      // third: it is `check-bean-bodies.ts`'s PRECONDITION. Bean `t7ao` --
+      // one bean whose front matter does not parse takes the whole store
+      // down, and the readers above examine front matter by regex, which
+      // cannot notice that the document is broken.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
       "scripts/check-ready-to-close.ts",
