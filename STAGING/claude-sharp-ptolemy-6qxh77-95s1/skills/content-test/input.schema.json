@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-95s1/skills/content-test/input.schema.json",
+  "title": "Content Test Input",
+  "description": "Input schema for end-to-end content testing.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string"
+    },
+    "testPlan": {
+      "type": "string",
+      "description": "Path to test plan file."
+    },
+    "testData": {
+      "type": "string",
+      "description": "Path to test data directory."
+    },
+    "regressionBaseline": {
+      "type": "string",
+      "description": "Git ref for regression baseline."
+    }
+  },
+  "staging": {
+    "branch": "claude/sharp-ptolemy-6qxh77-95s1",
+    "sha": "54a96a214b08f0c23f1b541e26b3d5d7c31d3ced",
+    "pr": "707/merge",
+    "run": "35601228430"
+  }
+}
