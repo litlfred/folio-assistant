@@ -57,7 +57,7 @@ import { findContentRepoRoot } from "./repo-root";
 import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 import {
   AGENT_INSTRUCTIONS_ROLE,
-  ASSET_ROLE_PURPOSE,
+  assetRolePurpose,
   INSTANCE_README_ROLE,
   declaredAssetPath,
   instanceRootsIn,
@@ -562,8 +562,8 @@ const instancesSection: ReadmeSection = {
         "\n" +
         (gaps.length === 0 ? "" : "\n" + gaps.map((g) => `> ${g}`).join("\n>\n") + "\n") +
         "\n" +
-        `*\`AGENTS.md\` — ${ASSET_ROLE_PURPOSE[AGENT_INSTRUCTIONS_ROLE]}*  \n` +
-        `*\`README\` — ${ASSET_ROLE_PURPOSE[INSTANCE_README_ROLE]}*\n`,
+        `*\`AGENTS.md\` — ${assetRolePurpose(AGENT_INSTRUCTIONS_ROLE)}*  \n` +
+        `*\`README\` — ${assetRolePurpose(INSTANCE_README_ROLE)}*\n`,
       notes,
     };
   },

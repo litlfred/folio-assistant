@@ -808,6 +808,7 @@ export const RULES: Rule[] = [
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
+      "scripts/check-asset-roles.ts",     // one place says what an asset ROLE is (bean `7syd`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
