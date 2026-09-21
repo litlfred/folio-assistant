@@ -13,9 +13,10 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { DECLARATION_FILENAME, isKgOnlyDirectory, ownDirectories, resolveDirectories } from "./cat-harness.js";
+import { isKgOnlyDirectory, ownDirectories, resolveDirectories } from "./cat-harness.js";
 import { resolveSkillDirs } from "./harness-config.js";
 import { writeInstanceConfig } from "../test/support/instance-fixture.js";
+import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 const roots: string[] = [];
 afterAll(() => roots.forEach((r) => rmSync(r, { recursive: true, force: true })));
@@ -25,13 +26,10 @@ function instance(name: string, kgPath: string): string {
   const root = mkdtempSync(join(tmpdir(), `overlay-${name}-`));
   roots.push(root);
   mkdirSync(join(root, kgPath), { recursive: true });
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({
+  writeDeclaration(root, JSON.stringify({
       name,
       directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"] }],
-    }),
-  );
+    }));
   return root;
 }
 
@@ -97,13 +95,10 @@ describe("the overlay is read from declarations, not from a literal", () => {
     // a consumer scans nothing and reports a clean run over it.
     const root = mkdtempSync(join(tmpdir(), "overlay-absent-"));
     roots.push(root);
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "absent",
         directories: [{ id: "cat-harness", path: "nope", dependents: "reproduce", graphs: ["cat-harness"] }],
-      }),
-    );
+      }));
     expect(resolveSkillDirs(root)).toEqual([]);
   });
 
@@ -137,13 +132,10 @@ describe("the overlay is read from declarations, not from a literal", () => {
     const root = mkdtempSync(join(tmpdir(), "overlay-mixed-"));
     roots.push(root);
     mkdirSync(join(root, "schemas"), { recursive: true });
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "mixed",
         directories: [{ id: "schemas", path: "schemas", dependents: "reproduce", graphs: ["schemas", "cat-harness"] }],
-      }),
-    );
+      }));
     expect(resolveSkillDirs(root)).toEqual([]);
   });
 });
@@ -162,13 +154,10 @@ describe("a REPOSITORY-scoped directory resolves against the repository", () => 
     const inst = join(repo, "inst");
     mkdirSync(join(repo, kgPath), { recursive: true });
     mkdirSync(inst, { recursive: true });
-    writeFileSync(
-      join(inst, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(inst, JSON.stringify({
         name: "inst",
         directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"], ...(scope ? { scope } : {}) }],
-      }),
-    );
+      }));
     return { repo, inst };
   }
 

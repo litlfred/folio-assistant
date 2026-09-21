@@ -60,8 +60,9 @@
  * membership can never be asserted: something that looks like coverage and
  * detects nothing.
  */
+import { readdirSync } from "node:fs";
 import { defaultContentTypes, type ContentTypeRegistry } from "./content-type";
-import { DECLARATION_FILENAME } from "./cat-harness";
+import { DECLARATION_SUFFIX, findDeclarationFile } from "./cat-harness";
 import { instanceConfigFilename, instanceConfigFor } from "./harness-config";
 import { termIri } from "./namespaces";
 
@@ -97,9 +98,40 @@ function folioMarkerFilename(repoRoot: string): string | undefined {
   return inst === undefined ? undefined : instanceConfigFilename(inst.name);
 }
 
+/**
+ * The harness marker — any `<name>.config.json` at this root.
+ *
+ * A FUNCTION rather than a constant because `harness.json` was excised
+ * (2026-09-21) and the filename now carries the instance's name, so there is
+ * no fixed string to look for.
+ *
+ * It falls back to any `*.config.json` when none is a valid declaration, and
+ * that is deliberate: a marker PRESENT AND UNREADABLE is its own state — the
+ * membership is asserted whether or not this module can parse the assertion.
+ * Dropping it would under-report what the repository says about itself, which
+ * is the third-state rule this file already applies to `sushi-config.yaml`.
+ */
+function harnessMarkerFilename(repoRoot: string): string | undefined {
+  let found: string | undefined;
+  try {
+    found = findDeclarationFile(repoRoot);
+  } catch {
+    // Several declarations, or only broken ones — either way the directory
+    // plainly carries the marker, and the fallback below names it.
+  }
+  if (found !== undefined) return found;
+  try {
+    return readdirSync(repoRoot)
+      .filter((e) => e.endsWith(DECLARATION_SUFFIX) && e.length > DECLARATION_SUFFIX.length)
+      .sort()[0];
+  } catch {
+    return undefined;
+  }
+}
+
 export function registerBaseContentTypes(registry: ContentTypeRegistry = defaultContentTypes): void {
   registry.register("harness", {
-    filename: DECLARATION_FILENAME,
+    filename: harnessMarkerFilename,
     type: HARNESS_TYPE,
     summary:
       "An instance of the harness — it declares a name, a stub and the directories it holds.",

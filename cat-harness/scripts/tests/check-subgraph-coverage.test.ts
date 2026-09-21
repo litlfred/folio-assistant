@@ -21,12 +21,8 @@ import {
   readmeFinding,
   ownDocsFinding,
 } from "../check-subgraph-coverage";
-import {
-  DECLARATION_FILENAME,
-  owesVisualiser,
-  GraphKindRegistry,
-  siteDirFor,
-} from "../../schemas/cat-harness";
+import { owesVisualiser, GraphKindRegistry, siteDirFor } from "../../schemas/cat-harness";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A throwaway instance whose one directory carries `coverage`. */
 function instance(
@@ -41,9 +37,7 @@ function instance(
     mkdirSync(abs.slice(0, abs.lastIndexOf("/")), { recursive: true });
     writeFileSync(abs, "x");
   }
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({
+  writeDeclaration(root, JSON.stringify({
       name: opts.name ?? "inst",
       directories: [
         {
@@ -54,8 +48,7 @@ function instance(
           ...(coverage === undefined ? {} : { coverage }),
         },
       ],
-    }),
-  );
+    }));
   return { root, cleanup: () => rmSync(base, { recursive: true, force: true }) };
 }
 
@@ -344,7 +337,7 @@ describe("could not determine is never a clean run", () => {
     const base = mkdtempSync(join(tmpdir(), "coverage-bad-"));
     const root = join(base, "broken");
     mkdirSync(root, { recursive: true });
-    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json");
+    writeDeclaration(root, "{ not json", "broken");
     const r = auditInstance(root);
     expect(r.verdict).toBe("undetermined");
     expect(r.reason).toBeDefined();
@@ -459,10 +452,7 @@ describe("the own-docs axis — an instance owes documentation of its own", () =
    */
   function inst(opts: { docs?: boolean } = {}): string {
     const root = mkdtempSync(join(tmpdir(), "op30-"));
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({ name: "probe", directories: [] }),
-    );
+    writeDeclaration(root, JSON.stringify({ name: "probe", directories: [] }));
     // `siteDirFor`, not the literal — the same rule the code under test
     // follows, and the guard that fires on the string does not exempt tests.
     if (opts.docs) mkdirSync(join(root, siteDirFor(root)), { recursive: true });

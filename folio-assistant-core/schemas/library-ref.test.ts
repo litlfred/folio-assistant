@@ -11,7 +11,8 @@ import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { explainFailure, instanceRoots, libraryDirOf, resolveLibraryRef } from "./library-ref.js";
-import { DECLARATION_FILENAME } from "../../cat-harness/schemas/cat-harness.js";
+import {  } from "../../cat-harness/schemas/cat-harness.js";
+import { writeDeclaration } from "../../cat-harness/test/support/instance-fixture.js";
 
 const REPO = resolve(import.meta.dir, "../..");
 const PLATFORM = resolve(REPO, "cat-harness");
@@ -220,7 +221,7 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
     const root = mkdtempSync(join(tmpdir(), "libdir-"));
     mkdirSync(join(root, "library"), { recursive: true });
     mkdirSync(join(root, "elsewhere", "library"), { recursive: true });
-    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "x", directories: dirs }));
+    writeDeclaration(root, JSON.stringify({ name: "x", directories: dirs }));
     return root;
   }
 

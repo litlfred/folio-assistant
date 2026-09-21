@@ -11,22 +11,18 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import {
-  defaultGraphKinds,
-  isActiveKg,
-  undecidedWorkKinds,
-  workPlanGraphsIn,
-} from "../../schemas/cat-harness";
+import { defaultGraphKinds, isActiveKg, undecidedWorkKinds, workPlanGraphsIn } from "../../schemas/cat-harness";
 import "../../schemas/folio-graph-kind";
 import { formatReport } from "../check-graph-kind-work";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 function repoWith(instances: Record<string, unknown>): string {
   const root = mkdtempSync(join(tmpdir(), "activekg-"));
-  writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "root" }));
+  writeDeclaration(root, JSON.stringify({ name: "root" }));
   for (const [name, decl] of Object.entries(instances)) {
     mkdirSync(join(root, name), { recursive: true });
-    writeFileSync(join(root, name, DECLARATION_FILENAME), JSON.stringify(decl));
+    writeDeclaration(join(root, name), JSON.stringify(decl));
   }
   return root;
 }
@@ -115,9 +111,9 @@ describe("could not determine is a THIRD state, never STATIC", () => {
     // STATIC — telling an arriving agent there is no work here when nobody
     // had been able to look.
     const root = mkdtempSync(join(tmpdir(), "activekg-bad-"));
-    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "root" }));
+    writeDeclaration(root, JSON.stringify({ name: "root" }));
     mkdirSync(join(root, "broken"), { recursive: true });
-    writeFileSync(join(root, "broken", DECLARATION_FILENAME), "{ not json");
+    writeDeclaration(join(root, "broken"), "{ not json", "broken");
     expect(isActiveKg(root)).toBeUndefined();
     expect(workPlanGraphsIn(root).unreadable).toHaveLength(1);
     rmSync(root, { recursive: true, force: true });
@@ -126,14 +122,11 @@ describe("could not determine is a THIRD state, never STATIC", () => {
   it("a real work plan outranks an unreadable sibling", () => {
     // Work that IS found is found, whatever else failed to parse.
     const root = mkdtempSync(join(tmpdir(), "activekg-mix-"));
-    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "root" }));
+    writeDeclaration(root, JSON.stringify({ name: "root" }));
     mkdirSync(join(root, "ok"), { recursive: true });
-    writeFileSync(
-      join(root, "ok", DECLARATION_FILENAME),
-      JSON.stringify({ name: "ok", directories: [{ id: "b", path: "beans/", dependents: "skip", graphs: ["beans"] }] }),
-    );
+    writeDeclaration(join(root, "ok"), JSON.stringify({ name: "ok", directories: [{ id: "b", path: "beans/", dependents: "skip", graphs: ["beans"] }] }));
     mkdirSync(join(root, "broken"), { recursive: true });
-    writeFileSync(join(root, "broken", DECLARATION_FILENAME), "{ not json");
+    writeDeclaration(join(root, "broken"), "{ not json", "broken");
     expect(isActiveKg(root)).toBe(true);
     rmSync(root, { recursive: true, force: true });
   });

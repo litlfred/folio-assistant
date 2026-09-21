@@ -69,7 +69,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { DECLARATION_FILENAME, repoRootFor } from "../schemas/cat-harness.js";
+import { findDeclarationFile, repoRootFor } from "../schemas/cat-harness.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 export const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -137,7 +137,7 @@ export function instanceDirs(repo: string): string[] {
   for (const name of readdirSync(repo)) {
     if (name.startsWith(".") || name === "node_modules") continue;
     try {
-      if (statSync(join(repo, name)).isDirectory() && existsSync(join(repo, name, DECLARATION_FILENAME))) out.push(name);
+      if (statSync(join(repo, name)).isDirectory() && findDeclarationFile(join(repo, name)) !== undefined) out.push(name);
     } catch {
       /* unreadable entry: not an instance as far as this can tell */
     }
@@ -179,7 +179,7 @@ export function checkAnchorNames(repo: string = repoRootFor(INSTANCE_ROOT)): Anc
         report.ascents++;
         const lands = resolve(join(file, ".."), ...parts);
         const isRepo = lands === repo;
-        const isInstance = existsSync(join(lands, DECLARATION_FILENAME));
+        const isInstance = findDeclarationFile(lands) !== undefined;
         const where = relative(repo, file);
         const to = relative(repo, lands) || ".";
         if (AMBIGUOUS_NAMES.test(name)) {

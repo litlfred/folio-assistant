@@ -20,7 +20,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { COLLECTOR_SCOPE, collectInstanceNodes } from "../kg-export.js";
-import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const BASE = "https://example.org";
@@ -103,13 +104,10 @@ describe("what was not looked for is not reported as clean", () => {
     const root = mkdtempSync(join(tmpdir(), "kgx-noflows-"));
     mkdirSync(join(root, "skills"), { recursive: true });
     writeFileSync(join(root, "skills", "a-skill.md"), "# A skill\n\nBody.\n");
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "noflows",
         directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
-      }),
-    );
+      }));
     const problems: string[] = [];
     const { notes } = await collectInstanceNodes(root, DOC, BASE, problems);
     rmSync(root, { recursive: true, force: true });
@@ -156,13 +154,10 @@ describe("what was not looked for is not reported as clean", () => {
     // So: NO `mkdirSync`. The declaration names `skills/` and the tree does
     // not carry it, which is the `dh4f` defect this test claims to be about.
     const root = mkdtempSync(join(tmpdir(), "kgx-absent-"));
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "absent",
         directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
-      }),
-    );
+      }));
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, BASE, problems);
     rmSync(root, { recursive: true, force: true });

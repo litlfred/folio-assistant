@@ -12,8 +12,9 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { DECLARATION_FILENAME, siteDirFor } from "../../schemas/cat-harness.js";
+import { siteDirFor } from "../../schemas/cat-harness.js";
 import { harnessTiles, ownStatePage, subjectPage } from "../harness-tiles.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repo with a site-owning harness and any number of siblings. */
 function fixture(
@@ -30,7 +31,7 @@ function fixture(
     // the fields it is about.
     const d = decl as { directories?: Array<Record<string, unknown>> };
     for (const entry of d.directories ?? []) entry["dependents"] ??= "skip";
-    writeFileSync(join(dir, DECLARATION_FILENAME), JSON.stringify(decl, null, 2));
+    writeDeclaration(dir, JSON.stringify(decl, null, 2));
   }
   // The site root is READ from the host's declaration, never written here.
   // `site-dir-single-answer.test.ts` guards that rule across the whole tree,

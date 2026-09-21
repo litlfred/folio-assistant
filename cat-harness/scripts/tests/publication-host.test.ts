@@ -14,13 +14,10 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "no
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import {
-  PUBLICATION_HOSTS,
-  publicationHost,
-  publicationLinkStyleConflict,
-  } from "../../schemas/cat-harness.ts";
+import { PUBLICATION_HOSTS, publicationHost, publicationLinkStyleConflict } from "../../schemas/cat-harness.ts";
 import { resolveHarnessConfigPath } from "../../schemas/harness-config.ts";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const temps: string[] = [];
@@ -29,7 +26,7 @@ const temps: string[] = [];
 function instance(body: string): string {
   const dir = mkdtempSync(join(tmpdir(), "publication-host-"));
   temps.push(dir);
-  writeFileSync(join(dir, DECLARATION_FILENAME), body);
+  writeDeclaration(dir, body);
   return dir;
 }
 

@@ -34,7 +34,7 @@ import {
   readStoreConfig,
   updateBean,
 } from "../beans-fallback.js";
-import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor, declarationPathIn } from "../../schemas/cat-harness.js";
 import { configNameFor, writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 // The REPOSITORY root, and it has to be said out loud now: `"..", ".."` from
@@ -259,7 +259,7 @@ describe("the config name — `<instance>.config.json`, and only that", () => {
     // declaration and the config together for exactly this reason.
     const root = scratchStore();
     try {
-      rmSync(join(root, DECLARATION_FILENAME), { force: true });
+      rmSync(declarationPathIn(root)!, { force: true });
       writeFileSync(join(root, "anything.config.json"), JSON.stringify({ contentType: "paper" }));
       expect(resolveHarnessConfigPath(root)).toBeUndefined();
       expect(readHarnessConfig(root)).toBeNull();

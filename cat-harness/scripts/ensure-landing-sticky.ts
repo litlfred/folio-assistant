@@ -63,15 +63,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import {
-  type ContentDirectory,
-  DECLARATION_FILENAME,
-  findInstanceRoot,
-  instanceRootFor,
-  readDeclaration,
-  repoRootFor,
-  rootForScope,
-} from "../schemas/cat-harness.js";
+import { type ContentDirectory, findDeclarationFile, findInstanceRoot, instanceRootFor, readDeclaration, repoRootFor, rootForScope, declarationPathIn } from "../schemas/cat-harness.js";
 // REQUIRED, and not merely tidy: `folio` is registered by CORE as a load-time
 // side effect (`schemas/folio-graph-kind.ts`, "a layer that cannot render must
 // not own the renderable kind"), so the harness alone does not know the kind
@@ -91,6 +83,7 @@ import {
   composeContributions,
   type DeclaredContribution,
 } from "../schemas/sticky-contribution.js";
+import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 /** The graph kind, and the conventional directory an instance keeps it in. */
 export const FOLIO_GRAPH_KIND = "folio";
@@ -380,7 +373,7 @@ export function contributingRoots(root: string): string[] {
       if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
       const abs = resolve(repoRoot, entry.name);
       if (abs === own) continue;
-      if (existsSync(join(abs, DECLARATION_FILENAME))) nested.push(abs);
+      if (findDeclarationFile(abs) !== undefined) nested.push(abs);
     }
   }
 
@@ -414,7 +407,7 @@ export function declaredContributions(root: string): DeclaredContribution[] {
         // link to the source had only a name, which is not resolvable — and
         // resolving one by searching is how two instances sharing a `name`
         // silently attribute a card to the wrong file.
-        declaredIn: relative(repoRootFor(root), join(layer, DECLARATION_FILENAME)) || DECLARATION_FILENAME,
+        declaredIn: relative(repoRootFor(root), declarationPathIn(layer)!) || (findDeclarationFile(layer) ?? ""),
         ...(decl.description === undefined ? {} : { description: decl.description }),
       });
     }
@@ -507,7 +500,7 @@ export function nextInitiation(
  * A sticky whose file is absent or unparseable is skipped rather than faked.
  */
 export function readLandingStickies(root: string): LandingSticky[] {
-  const decl = JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf8")) as {
+  const decl = JSON.parse(readFileSync(declarationPathIn(root)!, "utf8")) as {
     directories?: ContentDirectory[];
   };
   const dir = join(root, folioDirPath(decl));
@@ -521,7 +514,7 @@ export function ensureLandingSticky(
   now: string,
   opts: { check?: boolean; initiation?: InitiationUpdate } = {},
 ): EnsureReport {
-  const raw = readFileSync(join(root, DECLARATION_FILENAME), "utf8");
+  const raw = readFileSync(declarationPathIn(root)!, "utf8");
   const decl = JSON.parse(raw) as { directories?: ContentDirectory[] };
   const already = declaresFolio(decl);
   const folioDir = folioDirPath(decl);
@@ -547,7 +540,7 @@ export function ensureLandingSticky(
   };
   if (opts.check) return report;
 
-  if (!already) writeFileSync(join(root, DECLARATION_FILENAME), insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY));
+  if (!already) writeDeclaration(root, insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY));
   mkdirSync(absDir, { recursive: true });
   for (const p of planned) if (p.currentText !== p.wantedText) writeFileSync(p.abs, p.wantedText);
   for (const f of prunable) unlinkSync(join(absDir, f));

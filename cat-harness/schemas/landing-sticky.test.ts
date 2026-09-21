@@ -31,7 +31,7 @@ import {
   composeContributions,
   type DeclaredContribution,
 } from "./sticky-contribution.js";
-import { CatHarnessDeclarationSchema, DECLARATION_FILENAME, siteDirFor } from "./cat-harness.js";
+import { CatHarnessDeclarationSchema, siteDirFor, declarationPathIn, findDeclarationFile } from "./cat-harness.js";
 import { THEMES } from "./themes.js";
 import { resolveThemeBackdrop } from "./theme.js";
 
@@ -43,7 +43,7 @@ const NOW = "2026-09-20T00:00:00.000Z";
 /** A declaration, read the way a consumer reads it. */
 function decl(rel: string) {
   return CatHarnessDeclarationSchema.parse(
-    JSON.parse(readFileSync(join(REPO, rel, DECLARATION_FILENAME), "utf8")),
+    JSON.parse(readFileSync(declarationPathIn(join(REPO, rel))!, "utf8")),
   );
 }
 
@@ -752,7 +752,7 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
   });
 
   test("a branch other than main is honoured", () => {
-    expect(sourceLinks(REPO, DECLARATION_FILENAME, "claude/x")!.editHref).toBe(
+    expect(sourceLinks(REPO, findDeclarationFile(REPO)!, "claude/x")!.editHref).toBe(
       `${REPO}/edit/claude/x/harness.json`,
     );
   });
