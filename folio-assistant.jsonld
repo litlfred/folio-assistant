@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T05:50:54.573Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/05dfdbefbe18a736235d181f2fa676e482bbae5c",
-  "sourceCommitSha": "05dfdbefbe18a736235d181f2fa676e482bbae5c",
-  "sourceCommitAt": "2026-09-21T07:49:17+02:00",
+  "generatedAt": "2026-09-21T06:34:14.312Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/01a54a06641e996289b0b51d8561ea03ff889b0f",
+  "sourceCommitSha": "01a54a06641e996289b0b51d8561ea03ff889b0f",
+  "sourceCommitAt": "2026-09-21T08:32:07+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 219,
@@ -274,7 +274,7 @@
     "Tool": 69,
     "Schema": 83,
     "GraphKind": 22,
-    "Directory": 33,
+    "Directory": 34,
     "Asset": 3
   },
   "@graph": [
@@ -31911,6 +31911,17 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/docs"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/root-docs",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
+      "name": "root-docs",
+      "path": "docs/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/docs"
+      ],
+      "description": "THE REPOSITORY ROOT'S DOCUMENTATION OVERLAY, managed by this instance. Owner's ruling, 2026-09-21, answering whether the root declares its own docs: \"harness can have docs/ which then get listed under cat-harness/docs/<harness>, there is also docs/ dir in repo root managed by cat-harness. other harness augment or overlay ontop of that (content and behviors)\". SEPARATE FROM THE `docs` ENTRY ABOVE, AND IT HAS TO BE. That one is instance-scoped and `reproduce`, which is what makes a DEPENDENT materialise its own docs/ (bean n0nf slice 1). This one is `scope: \"repository\"`, and a repository-scoped entry is filtered out for dependencies -- cat-harness.ts:3261 and :3507 both skip it unless `link.own`. Re-scoping the existing entry instead of adding this one would therefore have UNDONE slice 1 silently: a dependent would simply stop getting a docs/ and nothing would fail. Two directories answering two questions, so two entries, with distinct ids -- the convention `who-iris-docs` already follows. `dependents` is `skip` for the same reason every other cross-instance repository-scoped entry here is: a dependent never reaches this one at all, and claiming it reproduces would be a promise the resolver does not keep. WHAT MAKES IT NOT `dh4f`: a declared directory that nothing reads is this repository's most-paid-for defect, and an empty overlay is exactly that shape. It is consumed by the site build, which composes it OVER cat-harness/docs/ -- so what it contributes today is nothing VERIFIABLY, pinned by a test asserting an empty overlay produces a byte-identical site, rather than nothing unnoticed.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/docs"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/folio-assist-core-schemas",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
       "name": "folio-assist-core-schemas",
@@ -32015,8 +32026,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "05dfdbefbe18a736235d181f2fa676e482bbae5c",
+    "sha": "01a54a06641e996289b0b51d8561ea03ff889b0f",
     "pr": "main",
-    "run": "35565987753"
+    "run": "35568911399"
   }
 }
