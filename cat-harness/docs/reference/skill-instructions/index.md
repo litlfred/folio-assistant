@@ -280,6 +280,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Initiator.** You may narrow; only the Requestor may decide. |
 | [discussion](discussion.html) | `discussion` | — | An agent that has just read `cat-bootstrap/README.md` knows the shape of a |
 | [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
+| [The root README, and the one fact it must carry](root-readme.html) | `root-readme` | — | **You are the Initiator, and the install has just succeeded.** The repository |
 
 ## CatBootstrap rendering (cat-bootstrap/render)
 

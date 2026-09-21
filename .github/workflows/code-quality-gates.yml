@@ -653,6 +653,12 @@ jobs:
           bun run check:subgraph-coverage
           bun run check:published-refs
           bun run check:graph-kind-work
+          # One place says what an asset ROLE is — purpose, layer and
+          # delivery. A per-asset restatement of any of the three is a
+          # second answer free to disagree, and `KgAssetSchema` strips it
+          # WITHOUT A WORD, so the declaration reads as if it carried one
+          # while no consumer ever saw it (bean `7syd`).
+          bun run check:asset-roles
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no
