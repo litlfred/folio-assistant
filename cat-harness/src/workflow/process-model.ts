@@ -30,7 +30,7 @@
  */
 
 import { BpmnModdle } from "bpmn-moddle";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decision-table.js";
 import { ACTOR_KINDS, type ActorKind } from "../../schemas/role-graph.js";
@@ -235,6 +235,52 @@ export interface LaneDef {
   nodes: string[];
 }
 
+/**
+ * How a declared precondition can be answered — bean `lv3j`.
+ *
+ * The split is the whole point, and the bean's own wording contains the trap:
+ * it offers *"this file was read"* as the checkable example. **It is not.**
+ * The engine can check that a file EXISTS; whether an actor READ it is not
+ * observable from here, and a check that claims otherwise is a green tick over
+ * something nobody verified — which is the failure this element exists to
+ * stop, not one it may commit on the way.
+ *
+ * So the line is drawn between a claim about the WORLD and a claim about the
+ * ACTOR, because that is the line observability actually falls on.
+ */
+export type PreconditionKind =
+  /** A claim about the world, which {@link evaluatePrecondition} can answer. */
+  | "checkable"
+  /** A claim about the actor. Nothing here can observe it; it is RECORDED. */
+  | "stated";
+
+/** The checks the engine implements. Adding one is adding a case below. */
+export type PreconditionCheck =
+  /** `ref` names a path, relative to the repository root, that must exist. */
+  | "file-exists";
+
+/** One `<folio:precondition>` on a process. */
+export interface Precondition {
+  /** Stable id, so a report names WHICH one could not be determined. */
+  id: string;
+  /** The statement, in the author's words. */
+  text: string;
+  kind: PreconditionKind;
+  /** Present exactly when `kind` is `checkable` — the parser enforces both ways. */
+  check?: { kind: PreconditionCheck; ref: string };
+}
+
+/**
+ * The three states, and the third is the reason this exists.
+ *
+ * `could-not-determine` is NOT a soft `unsatisfied`. It says the question was
+ * asked and has no observable answer, which a reader must be able to tell from
+ * a claim that was checked and failed — the same distinction `logCapture`
+ * draws for `unknown` twenty lines up, and `ci-health` draws for "could not
+ * check".
+ */
+export type PreconditionVerdict = "satisfied" | "unsatisfied" | "could-not-determine";
+
 export interface ProcessModel {
   /** `bpmn:process/@id`, e.g. `Process_Editing`. */
   id: string;
@@ -254,6 +300,17 @@ export interface ProcessModel {
    * judgement about its domain applies.
    */
   enforcement: "strict" | "advisory";
+  /**
+   * `<folio:precondition>` elements on the process — what must hold BEFORE the
+   * start event, bean `lv3j`.
+   *
+   * Empty for every diagram that declares none, which is most of them: a
+   * process running inside a harness has already had its actor established.
+   * `initialize-harness` is the case that motivated this — it runs BEFORE a
+   * harness exists, so nothing established who the Initiator is or what it
+   * knows, and the claim lived in documentation prose an engine cannot read.
+   */
+  preconditions: Precondition[];
   /**
    * `<folio:log capture="on|off"/>` on the process — whether running THIS
    * workflow writes activity-log entries to the data store.
@@ -454,6 +511,13 @@ interface ModdleElement {
       capture?: string;
       involvement?: string;
       relaxable?: string;
+      /** `<folio:precondition>` — bean `lv3j`. */
+      id?: string;
+      kind?: string;
+      text?: string;
+      check?: string;
+      /** bpmn-moddle puts an element's text content here when it has no `text`. */
+      $body?: string;
       reason?: string;
       kinds?: string;
     }[];
@@ -507,6 +571,47 @@ function processIndex(dir: string): Map<string, string> {
     for (const m of xml.matchAll(/<bpmn:process\s+id="([^"]+)"/g)) out.set(m[1], join(dir, file));
   }
   return out;
+}
+
+/**
+ * Answer one precondition, or say that it cannot be answered.
+ *
+ * A `stated` precondition returns `could-not-determine` on the FIRST line,
+ * before anything else is consulted. That ordering is deliberate: there is no
+ * path through this function on which a claim about the actor comes back
+ * `satisfied`, so the guarantee is structural rather than a rule somebody has
+ * to keep remembering.
+ *
+ * @param root Repository root that a `file-exists` ref resolves against.
+ */
+export function evaluatePrecondition(p: Precondition, root: string): PreconditionVerdict {
+  if (p.kind === "stated") return "could-not-determine";
+  // `check` is present exactly when kind is `checkable` — the parser refuses
+  // both halves of the other case — but a model built by hand in a test could
+  // still violate it, and guessing would be the defect this module is about.
+  if (!p.check) return "could-not-determine";
+  switch (p.check.kind) {
+    case "file-exists":
+      return existsSync(join(root, p.check.ref)) ? "satisfied" : "unsatisfied";
+  }
+}
+
+/**
+ * Every precondition of a process, answered.
+ *
+ * Returned as a list rather than a single verdict on purpose. "The process is
+ * ready" is not a thing this can say when two of its three conditions are
+ * unobservable, and collapsing them to one boolean is how the third state
+ * gets lost — the reader needs to see WHICH held and which nobody could tell.
+ */
+export function evaluatePreconditions(
+  model: Pick<ProcessModel, "preconditions">,
+  root: string,
+): Array<{ precondition: Precondition; verdict: PreconditionVerdict }> {
+  return model.preconditions.map((precondition) => ({
+    precondition,
+    verdict: evaluatePrecondition(precondition, root),
+  }));
 }
 
 export async function loadProcessModel(
@@ -659,6 +764,84 @@ export async function loadProcessModel(
   }
   const logCapture = captureDeclared as "on" | "off" | undefined;
 
+  // `<folio:precondition>` — what must hold BEFORE the start event (`lv3j`).
+  //
+  // Every refusal below exists because the alternative is a precondition that
+  // READS as verified and is not. That is worse than the documentation prose
+  // this replaces: prose is honestly unchecked, a wrong declaration is
+  // dishonestly checked.
+  const preconditions: Precondition[] = [];
+  for (const v of procExt.filter((e) => e.$type === "folio:precondition")) {
+    const id = (v.id as string | undefined)?.trim();
+    const text = ((v.text as string | undefined) ?? (v.$body as string | undefined) ?? "")
+      .replace(/\s+/g, " ")
+      .trim();
+    const kind = v.kind as string | undefined;
+    const check = v.check as string | undefined;
+    const ref = (v.ref as string | undefined)?.trim();
+
+    if (!id) {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: a folio:precondition has no id. A report that cannot NAME ` +
+          `which precondition it could not determine is not a report.`,
+      );
+    }
+    if (!text) {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: folio:precondition ${id} has no text. The statement is the ` +
+          `part a person reads; an id alone says a condition exists and not what it is.`,
+      );
+    }
+    // NO DEFAULT. Defaulting to `stated` would let an author who meant to
+    // check something forget and get silence; defaulting to `checkable` is
+    // worse. The author decides, every time.
+    if (kind !== "checkable" && kind !== "stated") {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: folio:precondition ${id} has kind="${kind ?? ""}". ` +
+          `Use "checkable" (a claim about the world this engine can evaluate) or "stated" ` +
+          `(a claim about the actor, which nothing here can observe). There is no default.`,
+      );
+    }
+    if (kind === "stated" && (check || ref)) {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: folio:precondition ${id} is kind="stated" but carries a ` +
+          `check. A stated precondition is one nothing can verify — attaching a check to it ` +
+          `is either a mislabelled checkable one or a check that does not answer the claim.`,
+      );
+    }
+    if (kind === "checkable") {
+      if (check !== "file-exists") {
+        throw new UnsupportedBpmn(
+          `${basename(bpmnPath)}: folio:precondition ${id} has check="${check ?? ""}", which ` +
+            `is not implemented. Use "file-exists", or declare it kind="stated" and say so ` +
+            `honestly. A checkable precondition with no check is the thing this refuses.`,
+        );
+      }
+      if (!ref) {
+        throw new UnsupportedBpmn(
+          `${basename(bpmnPath)}: folio:precondition ${id} has check="file-exists" and no ` +
+            `ref. The check needs to know WHAT must exist.`,
+        );
+      }
+    }
+    preconditions.push({
+      id,
+      text,
+      kind,
+      ...(kind === "checkable" ? { check: { kind: "file-exists" as const, ref: ref! } } : {}),
+    });
+  }
+  const seenIds = new Set<string>();
+  for (const p of preconditions) {
+    if (seenIds.has(p.id)) {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: two folio:precondition elements share id "${p.id}". ` +
+          `A verdict that names an id must name exactly one condition.`,
+      );
+    }
+    seenIds.add(p.id);
+  }
+
   const startNodes = [...nodes.values()].filter((n) => n.kind === "start").map((n) => n.id);
   if (startNodes.length === 0) {
     throw new UnsupportedBpmn(`${basename(bpmnPath)}: no start event, so nothing can begin`);
@@ -694,6 +877,7 @@ export async function loadProcessModel(
     dir: dirname(bpmnPath),
     enforcement,
     logCapture,
+    preconditions,
     nodes,
     flows,
     lanes,
