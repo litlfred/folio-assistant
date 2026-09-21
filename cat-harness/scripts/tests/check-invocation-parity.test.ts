@@ -47,7 +47,11 @@ describe("invocations", () => {
     // The witness. A matcher proven only against fixtures is proven against
     // its author's idea of the file.
     const got = invocations(wf("docs-site.yml"));
-    expect(got.some((i) => i.script === "kg-export" && i.instance === "./cat-bootstrap")).toBe(true);
+    // `./bootstrap` since 494bbbb6f9 ("Rename `cat-bootstrap` to `bootstrap`,
+    // everywhere"), which updated `docs-site.yml` and left this expectation
+    // behind — so the witness was asserting a path the deploy no longer uses.
+    // Read from the workflow to confirm, not substituted by pattern.
+    expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
 });
 
