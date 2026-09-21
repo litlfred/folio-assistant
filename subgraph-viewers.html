@@ -361,25 +361,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790028922">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790029215">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790028922">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790029215">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790028922">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790029215">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790028922">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790029215">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -393,10 +393,10 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790028922" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790029215" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -679,7 +679,8 @@
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/library/folio-assistant-sci/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/schemas/large-datasets/"
-         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">who-style-guide</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/schemas/folio-assistant-core/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
 </details>
   
@@ -723,7 +724,10 @@
     
 
 <p>A harness instance declares the directories it holds and the <strong>kind of graph</strong>
-in each. Two of those graphs now have a page you can open.</p>
+in each. Some of those graphs have a page you can open; the sections below are
+the list, and <strong>counting them here would be a number that goes stale by
+lying</strong> — a section is added when a viewer is, and a reader wanting the total
+counts the sections.</p>
 
 <ol id="markdown-toc">
   <li><a href="#why-these-pages-exist" id="markdown-toc-why-these-pages-exist">Why these pages exist</a></li>
@@ -735,6 +739,12 @@ in each. Two of those graphs now have a page you can open.</p>
       <li><a href="#ingestion-state-is-three-states-and-none-of-them-is-an-error" id="markdown-toc-ingestion-state-is-three-states-and-none-of-them-is-an-error">Ingestion state is three states, and none of them is an error</a></li>
       <li><a href="#the-uningested-badge-and-what-it-is-computed-from" id="markdown-toc-the-uningested-badge-and-what-it-is-computed-from">The uningested badge, and what it is computed from</a></li>
       <li><a href="#it-is-read-only" id="markdown-toc-it-is-read-only">It is read-only</a></li>
+    </ol>
+  </li>
+  <li><a href="#the-voices--what-each-rule-cites" id="markdown-toc-the-voices--what-each-rule-cites">The voices — what each rule cites</a>    <ol>
+      <li><a href="#a-rule-citing-nothing-is-drawn-as-a-finding-not-as-a-blank" id="markdown-toc-a-rule-citing-nothing-is-drawn-as-a-finding-not-as-a-blank">A rule citing nothing is drawn as a finding, not as a blank</a></li>
+      <li><a href="#a-declared-directory-that-is-not-there-gets-a-row" id="markdown-toc-a-declared-directory-that-is-not-there-gets-a-row">A declared directory that is not there gets a row</a></li>
+      <li><a href="#the-visualiser-rule-did-not-ask-for-this-page" id="markdown-toc-the-visualiser-rule-did-not-ask-for-this-page">The visualiser rule did not ask for this page</a></li>
     </ol>
   </li>
   <li><a href="#where-they-are-published--two-rules-not-three" id="markdown-toc-where-they-are-published--two-rules-not-three">Where they are published — two rules, not three</a>    <ol>
@@ -955,6 +965,71 @@ one is.</p>
 ingest from the corpus view, and materialising an entry into a folio of choice
 — are open work, because the write path is a decision the repository owner has
 not yet made.</p>
+<h2 id="the-voices--what-each-rule-cites">
+  
+  
+    <a href="#the-voices--what-each-rule-cites" class="anchor-heading" aria-labelledby="the-voices--what-each-rule-cites"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The voices — what each rule cites
+  
+  
+</h2>
+    
+
+<p><strong><a href="/folio-assistant/cat-harness/voices/"><code class="language-plaintext highlighter-rouge">/cat-harness/voices/</code></a></strong> — every voice
+its instance declares, every rule, and <strong>the passage the rule was read from</strong>.</p>
+
+<p>A voice is an editorial register asserted by an instance, and this subsystem’s
+whole claim is that it is <strong>auditable rather than asserted</strong>. <code class="language-plaintext highlighter-rouge">check-voices.ts</code>
+exists because PR #210 shipped three WHO profiles carrying ten plausible rules
+each with <code class="language-plaintext highlighter-rouge">source: null</code> — and one of those plausible rules asserted the
+opposite of what the WHO Editorial Style Manual says on p14. Every rule now
+carries the page and the quote.</p>
+
+<p><strong>Until this page, none of it was readable without opening JSON.</strong> A citation
+that is only machine-checked is one the reader takes on trust, which is the
+state the citations were added to end. So the rule row leads with the quote,
+and the citation is the one column that cannot be filtered away. Bean <code class="language-plaintext highlighter-rouge">bu2q</code>.</p>
+<h3 id="a-rule-citing-nothing-is-drawn-as-a-finding-not-as-a-blank">
+  
+  
+    <a href="#a-rule-citing-nothing-is-drawn-as-a-finding-not-as-a-blank" class="anchor-heading" aria-labelledby="a-rule-citing-nothing-is-drawn-as-a-finding-not-as-a-blank"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A rule citing nothing is drawn as a finding, not as a blank
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">VoiceRuleSourceSchema</code> requires <strong>exactly one</strong> of an ingested source
+(<code class="language-plaintext highlighter-rouge">libraryId</code> + <code class="language-plaintext highlighter-rouge">sectionId</code>) or a node of the instance’s own knowledge graph
+(<code class="language-plaintext highlighter-rouge">kgRef</code>), so a rule with neither cannot load. The viewer renders that state
+anyway, in red, saying that something is loading voices without validating
+them — because a reader who cannot tell “no citation” from “citation not
+rendered” learns nothing from an empty cell.</p>
+<h3 id="a-declared-directory-that-is-not-there-gets-a-row">
+  
+  
+    <a href="#a-declared-directory-that-is-not-there-gets-a-row" class="anchor-heading" aria-labelledby="a-declared-directory-that-is-not-there-gets-a-row"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A declared directory that is not there gets a row
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">agent-skills</code> declares a <code class="language-plaintext highlighter-rouge">voices</code> graph and ships none. It appears in the
+directories table as <strong>declared, not present</strong>, rather than being omitted:
+those are different facts, and a consumer that scans nothing and reports a
+clean run is the <code class="language-plaintext highlighter-rouge">dh4f</code> defect.</p>
+<h3 id="the-visualiser-rule-did-not-ask-for-this-page">
+  
+  
+    <a href="#the-visualiser-rule-did-not-ask-for-this-page" class="anchor-heading" aria-labelledby="the-visualiser-rule-did-not-ask-for-this-page"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The visualiser rule did not ask for this page
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">owesVisualiser</code> returns false for a <code class="language-plaintext highlighter-rouge">content</code> kind and <code class="language-plaintext highlighter-rouge">voices</code> is <code class="language-plaintext highlighter-rouge">content</code>,
+so <code class="language-plaintext highlighter-rouge">check:subgraph-coverage</code> never raised a finding for it — exactly as it
+never raised one for the library. What this page answers is <code class="language-plaintext highlighter-rouge">2krx</code>’s own
+sentence, <em>“a directory nobody can see is one nobody checks”</em>, which is a
+reason to build a viewer and not a row in a report.</p>
 <h2 id="where-they-are-published--two-rules-not-three">
   
   
@@ -1264,7 +1339,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35661490494"><code>645dd7d</code></a> &middot; 2026-09-21T22:15:16Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35662037647"><code>8f679f8</code></a> &middot; 2026-09-21T22:20:08Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
@@ -1297,7 +1372,8 @@ just not tied to the two moments named above.</p>
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/library/folio-assistant-sci/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/schemas/large-datasets/"
-         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">who-style-guide</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/cat-harness/schemas/folio-assistant-core/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
 </details>
     

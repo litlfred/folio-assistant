@@ -399,6 +399,20 @@
       "file": "beans/defs/folio-assistant-2634--qa-outputs-live-under-testresults-verdicts-and-wit.md"
     },
     {
+      "id": "folio-assistant-26tu",
+      "title": "DECLARED-BUT-ABSENT: agent-skills declares a voices graph at voices/ and ships none, now also on the old path",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:55:33Z",
+      "updatedAt": "2026-09-21T20:46:41Z",
+      "preview": "Pre-existing, surfaced while migrating voices to <stub>/skills/voices (bean btuv).\n\nagent-skills/agent-skills.config.json declares id=voices path=voices/ and agent-skills/voices/ does not exist. That is the dh4f defect: a consumer scans nothing and reports a clean run over it.\n\nLeft ALONE deliberately rather than removed. The entry's description states real intent — 'a shared base plus one overrid",
+      "file": "beans/defs/folio-assistant-26tu--declared-but-absent-agent-skills-declares-a-voices.md"
+    },
+    {
       "id": "folio-assistant-28jx",
       "title": "cat-harness declares title folio-assistant, so the navbar labels it folio-assistant (cat-harness)",
       "status": "scrapped",
@@ -859,6 +873,20 @@
       "updatedAt": "2026-09-21T12:10:01Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R2 + R9 + R15. Unit 4 of 10.\n\n**Two mechanisms that must not be conflated**, which is the whole finding here:\n\n| | trigger | who |\n|---|---|---|\n| **semantic zoom** | the card's RENDERED width crosses a declared threshold | automatic |\n| **open / close** | `[x]`, or opening a card | a person |\n\n`schemas/semantic-zoom.ts` declares the ",
       "file": "beans/defs/folio-assistant-51wf--semantic-zoom-windows-start-in-avatar-open-project.md"
+    },
+    {
+      "id": "folio-assistant-520m",
+      "title": "MERGE FRICTION: committed generated QA sidecars conflict on every base merge — 3 of 3 in one session",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:08:34Z",
+      "updatedAt": "2026-09-21T20:08:34Z",
+      "preview": "Measured on PR #773, 2026-09-21, across one working session.\n\n`main` moved three times while the branch was alive — 109, 38 and 20 commits —\nand **every one of the three merges conflicted, and every conflict was in a\ncommitted generated QA sidecar.** Not once in authored code.\n\n| merge | main moved | conflicts | all generated? |\n|---|---|---|---|\n| 1 | 109 commits | `qa-sweep.ts`, `folio-assistant",
+      "file": "beans/defs/folio-assistant-520m--merge-friction-committed-generated-qa-sidecars-con.md"
     },
     {
       "id": "folio-assistant-52dz",
@@ -1563,6 +1591,20 @@
       "file": "beans/defs/folio-assistant-88mg--consolidation-one-voice-over-bootstrap-and-cat-har.md"
     },
     {
+      "id": "folio-assistant-8h42",
+      "title": "LAYOUT: cat-harness/docs/cat-harness/index.md is the cat-harness instance's home page nested inside folio-assistant's site",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T14:07:39Z",
+      "updatedAt": "2026-09-21T19:59:26Z",
+      "preview": "Owner's observation, 2026-09-21: 'docs/cat-harness/index.md should probably be in cat-harness/docs/index.md'.\n\n## What is there now\n\ncat-harness/docs/ is the published Jekyll site for this instance. It holds TWO index pages:\n\n- cat-harness/docs/index.md — permalink /, title Home, the folio-assistant landing page;\n- cat-harness/docs/cat-harness/index.md — permalink /cat-harness/, title cat-harness,",
+      "file": "beans/defs/folio-assistant-8h42--layout-cat-harnessdocscat-harnessindexmd-is-the-ca.md"
+    },
+    {
       "id": "folio-assistant-8hg7",
       "title": "BOARD WIRING: declare where a folio keeps its board, its positions and its zoom document (OMG DI split)",
       "status": "completed",
@@ -2107,6 +2149,34 @@
       "updatedAt": "2026-09-20T10:38:54Z",
       "preview": "MADR was adopted whole on 2026-09-20 and its refusal — *\"never fewer than two\nconsidered options; one option is not a choice, and a straw option is worse than\na short list\"* — was prose nothing checked. Carried over from `u4hs` as the last\nopen item of the methodology work.\n\n## Where it went, and where it did NOT\n\n**Not `kg:audit`.** That audits the `kg` graph — skills, roles, workflow\nactivities ",
       "file": "beans/defs/folio-assistant-brv6--madr-a-decision-recorded-with-fewer-than-two-real.md"
+    },
+    {
+      "id": "folio-assistant-btuv",
+      "title": "PLATFORM BOUNDARY: qa-criteria-registry.ts hand-writes one criterion per VOICE, three of them WHO, restating another instance's rules uncited",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:26:49Z",
+      "updatedAt": "2026-09-21T19:11:59Z",
+      "preview": "Owner, 2026-09-21: 'cat-harness generic voice shouldnt have WHO references.'\n\nThe skill half is fixed (voice-authoring-guidance.md no longer restates any WHO rule). The registry half is not, and it is the larger leak.\n\ncat-harness/content/pipeline/qa-criteria-registry.ts carries four voice-overlay criteria, one per voice:\n\n  voice-overlay-who-editorial              voices: ['who-editorial']\n  voic",
+      "file": "beans/defs/folio-assistant-btuv--platform-boundary-qa-criteria-registryts-hand-writ.md"
+    },
+    {
+      "id": "folio-assistant-bu2q",
+      "title": "VISUALISER: voices/ — every voice defined, with the citation each rule carries",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:26:22Z",
+      "updatedAt": "2026-09-21T18:47:51Z",
+      "preview": "Owner, 2026-09-21: 'since cat-harness delcares voices/ dir it needs to add\nvisualier (followin SOPs on director visualizers in the docs.) shoulld show\nlist of voices defined.'\n\nOne correction to the premise, because it changes who owns the work rather\nthan whether it is owed: `cat-harness` no longer declares `voices/`. All four\nvoices moved to `<instance>/skills/voices/` earlier the same day (btuv",
+      "file": "beans/defs/folio-assistant-bu2q--visualiser-voices-every-voice-defined-with-the-cit.md"
     },
     {
       "id": "folio-assistant-bweb",
@@ -3069,6 +3139,20 @@
       "file": "beans/defs/folio-assistant-ivfw--sticky-pin-unpinning-loses-the-theme-and-the-stick.md"
     },
     {
+      "id": "folio-assistant-iy1n",
+      "title": "The milnor voice declares provenance 'house', and all 12 rules now cite an ingested document",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:49:56Z",
+      "updatedAt": "2026-09-21T20:49:56Z",
+      "preview": "Surfaced by closing `w0hi` on 2026-09-21, and it is the schema's own worked\nexample that has gone wrong.\n\n`schemas/voices.ts` defines the vocabulary:\n\n  • `assertion` — a publisher describing its own product or house style.\n  • `evidence`  — a measurement somebody else can repeat.\n  • `house`     — a standard this project set for itself, CITING THE NODE THAT\n                  STATES IT RATHER THAN",
+      "file": "beans/defs/folio-assistant-iy1n--the-milnor-voice-declares-provenance-house-and-all.md"
+    },
+    {
       "id": "folio-assistant-iym1",
       "title": "VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty",
       "status": "todo",
@@ -3523,14 +3607,14 @@
     {
       "id": "folio-assistant-lrbx",
       "title": "EXTRACTION: the kramdown {:toc} placeholder is extracted as translatable prose, and translators dutifully translate it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T13:22:39Z",
-      "updatedAt": "2026-09-21T13:22:39Z",
+      "updatedAt": "2026-09-21T20:46:20Z",
       "preview": "Found while doing he0e (PR #691). `1. TOC` at docs/guides/agent-onboarding.md:20 is the list item kramdown REPLACES with the generated table of contents, immediately followed by `{:toc}`. Its text never reaches a reader in any language.\n\npot-extract.ts picks it up as a translatable string anyway, and the Arabic and Russian translators rendered it — ar has جدول المحتويات. That is a sensible human r",
       "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
     },
@@ -3715,6 +3799,20 @@
       "updatedAt": "2026-09-21T13:16:37Z",
       "preview": "Seen directly while verifying PR #691 against the real generated page: the badge row under a title renders a dark-brown 2/6 languages chip and a dark-green Swept 8/289 chip next to a correctly themed light TR chip, on a light page.\n\nfa-lang-coverage-badge and fa-sweep-badge are built in mountTranslationBadges with inline colour literals (#78350f, #14532d, #1e293b, #e2e8f0). Contrast WITHIN each ch",
       "file": "beans/defs/folio-assistant-n7vv--badge-palette-the-coverage-and-sweep-badges-are-in.md"
+    },
+    {
+      "id": "folio-assistant-n8br",
+      "title": "check:voice-skills — schemas/voice-skill.ts promises a gate that does not exist",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:26:34Z",
+      "updatedAt": "2026-09-21T19:01:57Z",
+      "preview": "`schemas/voice-skill.ts` says, in the module doc comment:\n\n> **No field serves two of those by restatement.** The instruction body must\n> not enumerate rules: a rule stated in prose beside the same rule stated as\n> data is one fact in two places, and the prose copy is the one carrying no\n> citation and no pattern. `check:voice-skills` enforces it.\n\n**There is no `check:voice-skills`.** Written 202",
+      "file": "beans/defs/folio-assistant-n8br--checkvoice-skills-schemasvoice-skillts-promises-a.md"
     },
     {
       "id": "folio-assistant-nba0",
@@ -4416,7 +4514,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T14:45:12Z",
-      "updatedAt": "2026-09-20T15:10:23Z",
+      "updatedAt": "2026-09-21T21:46:40Z",
       "preview": "Owner, 2026-09-20, with an upload and a link:\n\n> `Agent_Skill_best_practices___Gemini_CLI.pdf` one-voice source for skills\n> <https://github.com/litlfred/folio-assistant/commit/467717508cf8ee3f8bb4cf1eaace91e769d92e16>\n>\n> for model specific sources, make those model specific voices. make sure .ts\n> skill data model accomodates all. (preference leave unstructured schema,\n> agentic review b/c of \"b",
       "file": "beans/defs/folio-assistant-rkqp--ingest-gemini-cli-agent-skill-best-practices-pdf-c.md"
     },
@@ -4857,6 +4955,20 @@
       "file": "beans/defs/folio-assistant-u1iu--docs-site-red-7-runs-the-foreign-instance-export-t.md"
     },
     {
+      "id": "folio-assistant-u2gv",
+      "title": "check-invocation-parity: the comment says the fixtures keep saying cat-bootstrap, and they do not",
+      "status": "todo",
+      "type": "bug",
+      "priority": "low",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:51:02Z",
+      "updatedAt": "2026-09-21T21:51:02Z",
+      "preview": "Found while merging `main` into `claude/bean-8h42-layout`, 2026-09-21. Tiny,\nand recorded rather than fixed because it is another branch's file and fixing\nit would widen an unrelated PR.\n\n`cat-harness/scripts/tests/check-invocation-parity.test.ts` carries, on the\nassertion that reads the real `docs-site.yml`:\n\n> The fixtures above keep saying `cat-bootstrap` on purpose: they are\n> synthetic YAML t",
+      "file": "beans/defs/folio-assistant-u2gv--check-invocation-parity-the-comment-says-the-fixtu.md"
+    },
+    {
       "id": "folio-assistant-u4hs",
       "title": "METHODOLOGY: the BPMN half — an executable options-analysis subprocess",
       "status": "completed",
@@ -5251,6 +5363,20 @@
       "updatedAt": "2026-09-20T08:02:32Z",
       "preview": "Owner, 2026-09-20: 'the 3 one-voices, should reference the 3 artefacts in the who-iris library, but the 3 one voices are derived from the cataloge and in their own repo/dir.' Dir name per the 2026-09-19 decision recorded in `r1lz`.\n\nThe three, with what each already cites (measured from `voices/*.json` this session):\n- `who-editorial` -> `who-pub-tps-931` (WHO Editorial Style Manual, 1993)\n- `who-",
       "file": "beans/defs/folio-assistant-w095--who-style-guide-the-three-one-voices-out-of-cat-ha.md"
+    },
+    {
+      "id": "folio-assistant-w0hi",
+      "title": "VOICE RULE CITES PLATFORM CODE: milnor-brevity-no-repeats is derived from qa-criteria-registry.ts, not from the paper",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:55:33Z",
+      "updatedAt": "2026-09-21T20:50:11Z",
+      "preview": "Surfaced by moving milnor to folio-assistant-sci (bean btuv).\n\nEvery other rule in the milnor voice cites the Milnor paper — libraryId milnorlink, with a page. milnor-brevity-no-repeats instead cites kgRef content/pipeline/qa-criteria-registry.ts and quotes the criterion text out of the platform's registry.\n\nSo the rule is not derived from the publication the voice declares as its source. It is de",
+      "file": "beans/defs/folio-assistant-w0hi--voice-rule-cites-platform-code-milnor-brevity-no-r.md"
     },
     {
       "id": "folio-assistant-w5bn",
