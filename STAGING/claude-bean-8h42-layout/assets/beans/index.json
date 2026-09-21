@@ -4647,14 +4647,14 @@
     {
       "id": "folio-assistant-sfhr",
       "title": "STORE DEFECTS the check does not see: an empty in-progress body, a title that ate its Done-when, a blocker on a scrapped bean",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-21T19:22:36Z",
+      "updatedAt": "2026-09-21T21:34:26Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`beans check` passes (\"No link issues found\"), and three beans are unreadable by the tooling or by a person: `70c7` is `in-progress` with an E",
       "file": "beans/defs/folio-assistant-sfhr--store-defects-the-check-does-not-see-an-empty-in-p.md"
     },
@@ -5093,6 +5093,20 @@
       "updatedAt": "2026-09-21T17:31:42Z",
       "preview": "Owner, 2026-09-21: \"folios have tiles do not go to the window. they are stacked around (bottom?, again read exsiting docs/siblings/beans) of folio, slid away, open to tiles to things like fsh-gts, todos, docs, etc.\"\n\nCORPUS CHECK. harness-tiles already states the rule this refines: 'Tiles render in the navbar AND on the board: one declaration, per-surface visibility, never two registries.' So the ",
       "file": "beans/defs/folio-assistant-v0jv--folio-tiles-belong-to-the-folio-edge-slid-away-not.md"
+    },
+    {
+      "id": "folio-assistant-v18c",
+      "title": "Navbar tiles: uploads and library are two tiles for ONE page, and cat-harness's library is empty",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:09:01Z",
+      "updatedAt": "2026-09-21T21:09:01Z",
+      "preview": "Found 2026-09-21 while fixing the library viewers' parse error (the owner:\n*\"way too many tiles (non functional) on LHS explode menu\"*). **The parse error\nis fixed and shipped separately**; this is what is left after it.\n\n## Measured in a browser, after the fix — 12 navbar tiles\n\n| tile | renders |\n|---|---|\n| `schemas` (cat-harness) | 773 declarations |\n| `detangle-schemas` / `large-datasets-sche",
+      "file": "beans/defs/folio-assistant-v18c--navbar-tiles-uploads-and-library-are-two-tiles-for.md"
     },
     {
       "id": "folio-assistant-v1hw",
