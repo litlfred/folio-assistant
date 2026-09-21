@@ -11,6 +11,42 @@ updated_at: 2026-09-20T21:55:00Z
 parent: folio-assistant-ahvw
 ---
 
+## The register — the shapes have NAMES, not numbers
+
+*2026-09-20T23:1xZ, on the owner's instruction ("2 resolve").*
+
+The ordinals collided: this bean numbered **shapes** in discovery order, while
+`7iog` called itself "a fourth class beyond `b963`'s three" — numbering
+something else entirely, the **readers** `check:command-paths` had at the
+time. Two incompatible schemes, one word. And by the time anyone noticed,
+this bean's own list had reached six, so `7iog`'s "the three known classes"
+was stale as well.
+
+Both were **counts in prose**, which this repository already refuses as
+evidence everywhere else. An ordinal is a count that rots the moment a
+seventh arrives, and renumbering breaks every commit and sibling bean that
+cites it. So the shapes are named, and the names do not move:
+
+| name | where the literal hides | reader |
+|---|---|---|
+| `fenced-command` | a fenced block in prose — `AGENTS.md`, docs | `check:command-paths` (`checkFile`) |
+| `hook-command` | a JSON `command` field — `.claude/settings.json` | `check:command-paths` (`checkHooks`) |
+| `printed-command` | a string a script prints for a human to run | `check:command-paths` (`checkPrintedCommands`) |
+| `re-rooted-ascent` | a relative ascent whose anchor moved under it | **none** — not decidable; `check:anchor-names` ships the decidable neighbour |
+| `interpolated-command` | verb and path split by an interpolation (`bun run ${SELF}`) | **none** |
+| `declared-manifest-path` | `main` / `exports` / `files` in a JSON manifest | **none** |
+| `execution-context` (`7iog`) | resolves in the repo; consumed where the repo is not | `check:workflow-paths` |
+
+`execution-context` is a **peer**, not a seventh instalment of this bean: the
+others are all *the literal is stale*, and that one is *the literal is fine
+and the frame is wrong*. It has its own bean and its own reader, and naming
+it stops the two being merged by a later reader who sees only the number.
+
+Ordinals below are left as they were WRITTEN, with the name beside them.
+Rewriting dated entries would be editing the record rather than correcting
+it; the register is what a reader should navigate by.
+
+
 Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.
 
 ## Measured
@@ -65,7 +101,7 @@ tests, each one a false positive the first draft produced over this corpus.
 - [x] A check reads every fenced command in the entry documents (AGENTS.md, README.md, the onboarding guide) and fails when a path in it does not resolve
 - [ ] The nine occurrences are confirmed repointed on main — #579 is not merged yet
 
-_2026-09-20T20:40Z_ — **A third class, found by CI going red.** The count is
+_2026-09-20T20:40Z_ — **A third class — `printed-command` — found by CI going red.** The count is
 now nine plus **thirteen**.
 
 `docs:harness:check` failed on this branch and its own failure message read
@@ -97,7 +133,7 @@ called that green. `bun run gates` runs sixty-eight, and it was **not in
 AGENTS.md's Commands block** — so the subset was chosen from memory. Added
 there, with the measurement: a subset of the gate set is not the gate set.
 
-_2026-09-20T20:20Z_ — **The third class has a reader, and it found 237.**
+_2026-09-20T20:20Z_ — **`printed-command` has a reader, and it found 237.**
 `checkPrintedCommands` in `check-command-paths.ts`, run over every `.ts` and
 `.sh` under the instance.
 
@@ -193,7 +229,7 @@ a nine-site sweep that misses two.
       a test that asserts the disclosure itself, so a later session that derives
       the set from a declaration has to update the note too.
 
-_2026-09-20T20:50Z_ — **A fourth class, and the test fixture was hiding it.**
+_2026-09-20T20:50Z_ — **A fourth class — `re-rooted-ascent` — and the test fixture was hiding it.**
 
 Fixing `init-folio` turned two of its tests red, and the tests were wrong
 rather than the fix. `PLATFORM` read `resolve(import.meta.dir, "../..")`, which
@@ -218,7 +254,7 @@ the path was therefore fine. An exemption suppresses the check, not the defect.
 
 **Running total: nine, plus thirteen, plus 127, plus nine, plus two.**
 
-- [x] The fourth class was ATTEMPTED and the direct check is **not decidable**
+- [x] `re-rooted-ascent` was ATTEMPTED and the direct check is **not decidable**
       by the means available. Three designs measured and falsified — see below.
       `check:anchor-names` ships the decidable neighbour instead.
 - [ ] A reader that catches a re-rooted ascent itself, by comparing it against
@@ -240,7 +276,7 @@ Noticed because the `stage` job went red on a stale base: the merge that fixed
 it is what brought the instance in. Worth recording that the finding came from
 handling an unrelated failure rather than from looking for it.
 
-_2026-09-20T21:55Z_ — **The fourth class: three designs measured, all
+_2026-09-20T21:55Z_ — **`re-rooted-ascent`: three designs measured, all
 falsified, and the decidable neighbour shipped.**
 
 | signal | findings | why it failed |
@@ -271,7 +307,7 @@ repository root while **five siblings used it for `cat-harness/`**. One name,
 two anchors, one directory — which is the confusion the original defect lived
 inside.
 
-**It does not catch the fourth class and says so** — in the module header, in
+**It does not catch `re-rooted-ascent` and says so** — in the module header, in
 the report footer, and in a test that asserts a truthfully-named re-rooted
 ascent passes clean, so a later session cannot read a green run as coverage it
 does not have.
