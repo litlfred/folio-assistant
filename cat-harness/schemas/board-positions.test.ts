@@ -23,6 +23,7 @@ import {
   BOARD_POSITIONS_SCHEMA_TAG,
   BoardPositionsSchema,
   emptyPositions,
+  moveBy,
   orphanPositions,
   place,
   positionOf,
@@ -253,5 +254,57 @@ describe("the document declares what it is", () => {
     const out = renderPositions(doc());
     expect(out.split("\n").filter((l) => /^\s{6}"\w+": \{$/.test(l)).length).toBe(2);
     expect(out.endsWith("\n")).toBe(true);
+  });
+});
+
+describe("moveBy — a move edits the LAYER and reaches no note", () => {
+  const placed = () =>
+    place(
+      place(BoardPositionsSchema.parse({ $schema: BOARD_POSITIONS_SCHEMA_TAG, boards: {} }), "b", "n1", {
+        x: 10,
+        y: 20,
+      }),
+      "b",
+      "n2",
+      { x: 0, y: 0 },
+    );
+
+  test("a delta is applied to the note's current position", () => {
+    const doc = moveBy(placed(), "b", "n1", 5, -3)!;
+    expect(positionOf(doc, "b", "n1")).toEqual({ x: 15, y: 17 });
+  });
+
+  test("a note that is NOT placed is not moved, and does not appear", () => {
+    // "Move it from where it is" has no answer for a note that is nowhere, and
+    // answering anyway would put it somewhere nobody chose.
+    expect(moveBy(placed(), "b", "never-placed", 5, 5)).toBeUndefined();
+    expect(moveBy(placed(), "no-such-board", "n1", 5, 5)).toBeUndefined();
+  });
+
+  test("it returns a NEW document and leaves the old one alone", () => {
+    const before = placed();
+    const snapshot = renderPositions(before);
+    moveBy(before, "b", "n1", 100, 100);
+    expect(renderPositions(before)).toBe(snapshot);
+  });
+
+  test("moving one note leaves every other position untouched", () => {
+    const doc = moveBy(placed(), "b", "n1", 7, 7)!;
+    expect(positionOf(doc, "b", "n2")).toEqual({ x: 0, y: 0 });
+  });
+
+  test("a note still appears at most ONCE on a board after a move", () => {
+    // The map's invariant, carried through a second writer. Two entries for
+    // one note is what makes a position ambiguous.
+    const doc = moveBy(moveBy(placed(), "b", "n1", 1, 1)!, "b", "n1", 1, 1)!;
+    expect(Object.keys(doc.boards.b!).filter((k) => k === "n1").length).toBe(1);
+    expect(positionOf(doc, "b", "n1")).toEqual({ x: 12, y: 22 });
+  });
+
+  test("a zero delta is a no-op in value, not a refusal", () => {
+    // A drag that ends where it started is still a completed gesture, and a
+    // caller should not have to special-case it.
+    const doc = moveBy(placed(), "b", "n1", 0, 0)!;
+    expect(positionOf(doc, "b", "n1")).toEqual({ x: 10, y: 20 });
   });
 });
