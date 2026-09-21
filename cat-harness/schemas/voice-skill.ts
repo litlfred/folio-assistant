@@ -56,10 +56,23 @@ import {
  * segment under it because the `kg` graph holds several kinds and a reader
  * scanning for voices should not have to open every skill to find them.
  *
- * **The owning instance is the one that DERIVED the voice**, which is the same
- * rule the library already follows: WHO editorial style is read out of a WHO
- * publication, so it belongs to `who-style-guide`, and the platform that runs
- * the checks holds none of it.
+ * **The owning instance is the one the voice BELONGS TO semantically, and it
+ * is a judgement.** Owner, 2026-09-21: *"voices should be associated to
+ * appropriate home semantically/by judgement."*
+ *
+ * This entry said "the one that DERIVED the voice" until then, which reads as
+ * a mechanical rule — follow the sources — and the corpus falsifies it twice:
+ *
+ * - `who-editorial` is read out of a WHO publication held by `who-iris`, and
+ *   lives in `who-style-guide`. Where the source sits did not decide it.
+ * - `technical-writer` is read out of RFC 2119 and RFC 8174, both ingested in
+ *   `agent-skills`, and lives in `folio-assistant-core` — because what it is
+ *   ABOUT is how to write technical documentation of a standard, software or
+ *   a knowledge asset, which is what that layer is for.
+ *
+ * The one part that is not a judgement: **the platform holds none of it.**
+ * `cat-harness` runs the checks and declares no voices, which is the boundary
+ * bean `btuv` exists to keep.
  */
 // declared-path-literal: the convention for a layout that has no graph kind
 // yet. `voices` is declared today as its own graph pointing at `voices/`; this
