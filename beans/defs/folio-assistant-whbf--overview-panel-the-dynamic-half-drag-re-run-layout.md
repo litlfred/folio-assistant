@@ -110,3 +110,29 @@ The three constraints under *"What the static half established"* all survived
 undrawn edges, and reproducibility. `qttr` added a fourth of the same kind —
 an edge label that has nowhere clear to sit is counted and said in the caption
 rather than silently overstruck.
+
+
+## RULED 2026-09-21 — dragging is SCRAPPED, on the owner's "Go"
+
+Removed from this bean's scope, with the reason, rather than left as an item
+nobody will pick up.
+
+**It contradicts this bean's own closing requirement** — *"a reader can return
+to the static arrangement"*. A dragged position is by definition not
+reproducible, so every dragged picture needs a reset the reader must know
+about, and a reader who drags and reloads loses the arrangement they had
+learned. It is also the most expensive of the four items, since the no-CDN
+rule makes hit-testing, pointer capture and a position store all hand-rolled.
+
+### What this bean is now
+
+| item | state |
+|---|---|
+| dragging | **scrapped**, above |
+| zoom and pan | open, but weakened by `qttr` — 0 of 69 modules below a 5px glyph at 1280 / 768 / 390px, so zoom would serve a reader wanting LESS detail, which the module filter already gives |
+| alternate layouts | open — grouped-by-module versus the layered arrangement that ships |
+| live filtering from the facets | open, unchanged |
+
+The remaining three are all optional improvements to a panel that now works.
+This bean is no longer blocking anything, and a future session should weigh
+each on its own rather than treating "the dynamic half" as one deliverable.

@@ -141,21 +141,33 @@ export function render(t: (typeof TARGETS)[number]): string {
   // published document does not change dialect when the library does.
   delete body.$schema;
 
-  // STRIP `additionalProperties`, and this is the one place the port changes
-  // behaviour if it is left in.
+  // STRICTNESS IS KEPT, DELIBERATELY — bean `z634`, decided 2026-09-21.
   //
   // `z.object()` is strict, so zodToJsonSchema emits `additionalProperties:
-  // false` on every object — but the hand-written documents this replaces
-  // carried none, at any depth. Publishing it would TIGHTEN a contract that
-  // consumers already follow: a document with one extra key validates today
-  // and would stop validating, for no reason anybody asked for.
+  // false` on every object. The port that introduced this file STRIPPED it,
+  // and that was right THEN: the hand-written documents it replaced carried
+  // none at any depth, and porting a shape is not the moment to change what
+  // validates.
   //
-  // Porting a shape is not the moment to change what validates. Strictness may
-  // well be the right answer — an agent-authored document with a typo'd key is
-  // exactly what it would catch — but that is a decision about the CONTRACT,
-  // separately made and separately announced, not a side effect of choosing
-  // Zod. Bean `z634`.
-  stripAdditionalProperties(body);
+  // The bean pre-registered the test that settles it — *"does anything
+  // actually produce these documents today? If nothing does, the
+  // compatibility risk is zero and this is free."* Measured 2026-09-21, and
+  // all three answers agree:
+  //
+  //   producers of a discussion document, anywhere in the repo   NONE
+  //   `skills/discussion.md` on whether extra keys are permitted SILENT
+  //   age of the published `$id`                                 1 day
+  //
+  // So nothing can break, and what strictness buys is exactly the failure
+  // these documents are most exposed to: they are written by AGENTS, and an
+  // agent that types `assumtion` for `assumption` gets SILENCE today. Under
+  // `additionalProperties: false` the key is rejected, and the `assumed`
+  // conditional then fires and names the missing field.
+  //
+  // `stripAdditionalProperties` is kept, exported and tested rather than
+  // deleted: it is the one-line reversal if a consumer ever appears, and a
+  // deleted function is a decision that cannot be undone by reading this
+  // comment.
 
   const doc: Record<string, unknown> = {
     $schema: "http://json-schema.org/draft-07/schema#",

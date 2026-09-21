@@ -1,7 +1,7 @@
 ---
 # folio-assistant-yzsj
 title: 'gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T20:02:00Z
@@ -471,8 +471,8 @@ compared, plus a new one pinning the re-read invariant — falsified by swapping
 
 ## Done when
 
-- [ ] A ruling on ONE shared publishing step vs four copies (see the
-      correction above — `06kg` is the precedent against copying)
+- [x] A ruling on ONE shared publishing step vs four copies. **NO SHARED
+      STEP**, owner's "Go", 2026-09-21 — see below
 - [x] `*.jsonl merge=union` via `$GIT_DIR/info/attributes` in the `pages/`
       checkout — NOT a committed `.gitattributes`, which a full replace
       deletes. **Done 2026-09-20** (`git-union-attr.sh`, three call sites),
@@ -610,3 +610,30 @@ correct implementation — and both of these already call
 **Recommendation: no shared step.** Left open rather than ticked, because the
 box asks for a ruling and reversing a proposal on an agent's own judgement is
 what this bean elsewhere declines to do.
+
+
+## RULED 2026-09-21 — no shared publishing step, and the bean closes
+
+The premise was *four copies*; **two of them have never run**. The live pair
+is `docs-site` (332 runs) and `feature-staging` (1210+), and they differ in
+exactly the property the retry strategy depends on — `docs-site.yml` states it
+itself:
+
+> A REBASE WOULD HAVE BEEN THE WRONG RETRY ... `feature-staging` rebases
+> correctly because its commit touches one `STAGING/<slug>/`. This commit
+> replaces the WHOLE TREE, so replaying it onto a newer `gh-pages` would
+> re-apply that replacement over whatever landed in between — `plj1` again,
+> re-created by the safety mechanism.
+
+A shared step would have to carry both strategies plus a flag to choose
+between them: two implementations with a conditional, not one. And `06kg`, the
+precedent cited for consolidating, is about copying a **backoff** — one
+behaviour with one correct implementation — which both already share via
+`scripts/backoff-sleep.ts`. **The thing that is duplicated is not
+duplicated.**
+
+Everything else in this bean is done: the `merge=union` half shipped, the
+`docs-site` retry shipped, and the three remaining boxes were verified already
+satisfied on 2026-09-21 (two of them by findings this bean had recorded
+wrongly — `discoverability-docs` DOES state its reason, and `deploy-folio`
+does not push to `gh-pages` at all).
