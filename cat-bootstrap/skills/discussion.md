@@ -57,7 +57,7 @@ conflated.
 
 **Ask the fewest questions that settle it.** The Initiator's persona is
 "asks exactly one question when it must". Narrow the candidate list from
-context first — a repository that already carries `cat-harness/harness.json`
+context first — a repository that already carries `cat-harness/cat-harness.json`
 is not a blank slate — and put the residue as one question with the
 candidates named. A question a reader must go and research is not ready.
 

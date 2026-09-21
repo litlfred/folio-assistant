@@ -28,9 +28,9 @@ Three things, all read rather than asked:
 
 | | from |
 |---|---|
-| that this repository is **not yet** an instance | no root `harness.json` |
+| that this repository is **not yet** an instance | no repository's declaration |
 | the instance to become one **of** | the single reference a person supplied |
-| what that instance **is** | its own `harness.json` |
+| what that instance **is** | its own declaration |
 
 If any of those is missing, you are earlier in the process than this page.
 Go back to [`cat-bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/README.md).
@@ -39,7 +39,7 @@ Go back to [`cat-bootstrap/README.md`](https://github.com/litlfred/folio-assista
 
 The order is the load-bearing part, not the individual steps.
 
-1. **Write this repository's `harness.json`** from what the upstream
+1. **Write this repository's declaration** from what the upstream
    declaration said — its `name`, and the directories and graph kinds it
    implies. Not before reading theirs: a declaration written first leaves a
    window in which this repository claims to be something it is not, and every
