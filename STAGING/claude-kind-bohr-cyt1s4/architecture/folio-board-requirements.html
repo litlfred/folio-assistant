@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(29)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(8)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(29) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(8) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(29) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(8) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(29) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list > li.nav-list-item:nth-child(8) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>A folio’s README | folio-assistant</title>
+<title>The folio board — requirements as agreed | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="A folio’s README" />
+<meta property="og:title" content="The folio board — requirements as agreed" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="A folio’s README" />
+<meta property="twitter:title" content="The folio board — requirements as agreed" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -732,8 +732,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>A folio's README</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/architecture.html">Architecture</a></li>
+    <li class="breadcrumb-nav-list-item"><span>The folio board — requirements as agreed</span></li>
   </ol>
 </nav>
 
@@ -741,260 +741,458 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/readme-sections.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/readme-sections.md</code></a> — do not edit here.</p>
-
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/readme-sections.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
-</blockquote>
-<h1 id="a-folios-readme--the-folio-owns-the-file-the-platform-owns-the-markers">
+            <h1 class="no_toc" id="the-folio-board--requirements-as-agreed">
   
   
-    <a href="#a-folios-readme--the-folio-owns-the-file-the-platform-owns-the-markers" class="anchor-heading" aria-labelledby="a-folios-readme--the-folio-owns-the-file-the-platform-owns-the-markers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A folio’s README — the folio owns the file, the platform owns the markers
+    <a href="#the-folio-board--requirements-as-agreed" class="anchor-heading" aria-labelledby="the-folio-board--requirements-as-agreed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The folio board — requirements as agreed
   
   
 </h1>
     
 
-<p>Two tools divide the file between them, and <strong>between them no link in a folio
-README is unaccounted for</strong>: <strong>sync</strong> owns the marked regions, <strong>audit</strong> checks
-everything else. Neither ever rewrites the author’s prose.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>what it does</th>
-      <th>writes?</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">readme_sync</code> · <code class="language-plaintext highlighter-rouge">readme:sync</code></td>
-      <td>refresh each generated section</td>
-      <td>only between markers</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">readme_audit</code> · <code class="language-plaintext highlighter-rouge">readme:audit</code></td>
-      <td>verify every Markdown link resolves</td>
-      <td>never</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><code class="language-plaintext highlighter-rouge">readme:sync:check</code> is the CI form; <code class="language-plaintext highlighter-rouge">readme:sections</code> lists what a README can
-opt into. Registered among the <strong>generic</strong> tools — a document folio has
-chapters, simulators and workflows for the same reason a paper folio does, and
-simply never carries the Lean markers.</p>
-<h2 id="opt-in-is-per-section-and-absence-means-not-opted-in">
+<ol id="markdown-toc">
+  <li><a href="#what-this-is-and-what-it-is-not" id="markdown-toc-what-this-is-and-what-it-is-not">What this is, and what it is not</a></li>
+  <li><a href="#the-need-in-the-requesters-words" id="markdown-toc-the-need-in-the-requesters-words">The need, in the requester’s words</a></li>
+  <li><a href="#round-one--r1-to-r7" id="markdown-toc-round-one--r1-to-r7">Round one — R1 to R7</a>    <ol>
+      <li><a href="#r1--the-board-renders-content-not-only-notes" id="markdown-toc-r1--the-board-renders-content-not-only-notes">R1 — the board renders content, not only notes</a></li>
+      <li><a href="#r2--semantic-zoom-with-a-declared-threshold" id="markdown-toc-r2--semantic-zoom-with-a-declared-threshold">R2 — semantic zoom, with a declared threshold</a></li>
+      <li><a href="#r3--targetlabel-shall-publish-its-parts" id="markdown-toc-r3--targetlabel-shall-publish-its-parts">R3 — <code class="language-plaintext highlighter-rouge">targetLabel</code> SHALL publish its parts</a></li>
+      <li><a href="#r4--the-linear-floor" id="markdown-toc-r4--the-linear-floor">R4 — the linear floor</a></li>
+      <li><a href="#r5-to-r7--the-badge" id="markdown-toc-r5-to-r7--the-badge">R5 to R7 — the badge</a></li>
+    </ol>
+  </li>
+  <li><a href="#round-two--r8-to-r14" id="markdown-toc-round-two--r8-to-r14">Round two — R8 to R14</a></li>
+  <li><a href="#r15-and-r16-are-referenced-but-never-defined" id="markdown-toc-r15-and-r16-are-referenced-but-never-defined">R15 and R16 are REFERENCED BUT NEVER DEFINED</a></li>
+  <li><a href="#r17--render-safety" id="markdown-toc-r17--render-safety">R17 — render safety</a></li>
+  <li><a href="#what-the-set-produced" id="markdown-toc-what-the-set-produced">What the set produced</a>    <ol>
+      <li><a href="#one-framing-worth-keeping" id="markdown-toc-one-framing-worth-keeping">One framing worth keeping</a></li>
+    </ol>
+  </li>
+  <li><a href="#where-this-diverged-from-what-was-agreed" id="markdown-toc-where-this-diverged-from-what-was-agreed">Where this diverged from what was agreed</a></li>
+</ol><hr />
+<h2 id="what-this-is-and-what-it-is-not">
   
   
-    <a href="#opt-in-is-per-section-and-absence-means-not-opted-in" class="anchor-heading" aria-labelledby="opt-in-is-per-section-and-absence-means-not-opted-in"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opt-in is per section, and absence means “not opted in”
+    <a href="#what-this-is-and-what-it-is-not" class="anchor-heading" aria-labelledby="what-this-is-and-what-it-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this is, and what it is not
   
   
 </h2>
     
 
-<p>A section is written <strong>only where the README already carries its
-<code class="language-plaintext highlighter-rouge">&lt;!-- marker:begin --&gt;</code> / <code class="language-plaintext highlighter-rouge">&lt;!-- marker:end --&gt;</code> pair</strong>. Nothing outside a marked
-region is ever touched, and a README with no markers is a README this tool
-leaves entirely alone. Adding a section is one registry entry: a marker, a
-one-line summary, and a renderer returning Markdown plus operator notes — the
-CLI, the MCP tool and the staleness check all read the registry.</p>
-<h2 id="could-not-determine-is-a-third-state-everywhere">
+<p><strong>A design record.</strong> It states what was agreed for the folio board, in the CRDM
+run on <a href="https://github.com/litlfred/folio-assistant/issues/602">issue #602</a>
+between 2026-09-20 and 2026-09-21, and it exists so that a person asking <em>why
+is the board shaped like this</em> has one place to look.</p>
+
+<p>It is <strong>history, not instruction</strong>, and that is the line the owner drew: a
+skill carries what a competent practitioner needs <em>in order to do</em> the task,
+and everything past that — the reasoning, the options not taken, the
+measurements behind a threshold — is documentation. Every sentence below describes what was
+agreed on a date, against a repository in a state. Where the implementation has
+since diverged, the divergence is stated rather than smoothed. Nothing here
+tells an agent what to do — the rules an agent follows live in the
+<code class="language-plaintext highlighter-rouge">cat-harness</code> skills this set produced, and the processes live in the three
+executable BPMN diagrams beside them.</p>
+
+<p><strong>Filed here on the owner’s ruling, 2026-09-21:</strong></p>
+
+<blockquote>
+  <p>this is a memory asset as part of design, so it goes into docs/ […] this was
+an asset as part of building a feature […] but it is not the content we want
+displayed itself.</p>
+</blockquote>
+
+<p><strong>And why it is in <code class="language-plaintext highlighter-rouge">cat-harness/docs/</code> specifically</strong>, sharpened the same day:
+<em>“if it is realated to some harness/feature/tool that detailed infromation/
+design/planning/etc go into that harness’ docs/”</em>. The board’s schema and
+behaviour live in <code class="language-plaintext highlighter-rouge">cat-harness</code> by the requester’s own layering, so the record
+of why they are shaped that way lives in that instance’s <code class="language-plaintext highlighter-rouge">docs/</code> — not in the
+repository root’s, and not in a folio’s.</p>
+
+<p>The class, and why <code class="language-plaintext highlighter-rouge">fsh-guts</code> was the tempting wrong answer for it, is in
+<a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/kg-contribution-offer.html"><code class="language-plaintext highlighter-rouge">kg-contribution-offer</code></a>;
+where inside <code class="language-plaintext highlighter-rouge">docs/</code> such a record files is in
+<a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>.</p><hr />
+<h2 id="the-need-in-the-requesters-words">
   
   
-    <a href="#could-not-determine-is-a-third-state-everywhere" class="anchor-heading" aria-labelledby="could-not-determine-is-a-third-state-everywhere"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> “Could not determine” is a third state, everywhere
+    <a href="#the-need-in-the-requesters-words" class="anchor-heading" aria-labelledby="the-need-in-the-requesters-words"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The need, in the requester’s words
   
   
 </h2>
     
 
-<p>A section that cannot establish its answer returns <strong>skip</strong>, and the region is
-left exactly as it was. This is not decoration:</p>
+<p>The whole set derives from this, kept verbatim because the layering sentence is
+precise and a paraphrase loses it:</p>
+
+<blockquote>
+  <p>landing folio should really be resizable, switchiing over to content avatars
+if content no longer lgeible. liek miro board. content vieweing panes are
+resizzble. but ALWAYS collapsable to linearly rendablee/just the docs. the
+todos/miro board is a static content overlays, so new content type that sits
+under todos/ but scema and behavhoir of folio=miro board is in cat-harness.
+carefull separte tools and schema.</p>
+</blockquote>
+
+<blockquote>
+  <p>notes can mvoe aroundin board. be attached to nothing or show attachment to
+content nodes based on relationships</p>
+</blockquote>
+
+<blockquote>
+  <p>stickies are icon on content (or its avatars) with badge of # if &gt; 1. can
+click to open sticky/sticky panel</p>
+</blockquote>
+
+<p>Two things in it are <strong>constraints rather than preferences</strong>, and both shaped
+everything after:</p>
 
 <ul>
-  <li>A folio configuring its simulators under a platform submodule has no such
-directory until that submodule is checked out. The first version rendered
-<em>directory absent</em> as <em>this folio has no simulators</em> — <strong>replacing a correct
-nine-row table with a sentence.</strong></li>
-  <li>A shallow clone cannot read the publish ref. “Could not read it” must not
-silently blank a table that was right yesterday.</li>
-</ul>
-
-<p><strong>An empty directory is still a determined empty.</strong> Absent and empty are
-different answers, and only one of them is safe to render.</p>
-<h2 id="resolve-links-never-compose-them">
+  <li><strong>the <code class="language-plaintext highlighter-rouge">todos/</code> ↔ <code class="language-plaintext highlighter-rouge">cat-harness</code> split</strong> — content under <code class="language-plaintext highlighter-rouge">todos/</code>, schema and
+behaviour in <code class="language-plaintext highlighter-rouge">cat-harness</code>, tools kept distinct from schema;</li>
+  <li><strong>“ALWAYS collapsable to linearly rendablee”</strong> — an accessibility floor. A
+board that cannot be read linearly cannot be read by a screen reader, printed
+or translated.</li>
+</ul><hr />
+<h2 id="round-one--r1-to-r7">
   
   
-    <a href="#resolve-links-never-compose-them" class="anchor-heading" aria-labelledby="resolve-links-never-compose-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Resolve links; never compose them
+    <a href="#round-one--r1-to-r7" class="anchor-heading" aria-labelledby="round-one--r1-to-r7"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Round one — R1 to R7
   
   
 </h2>
     
 
-<p>The contents table’s predecessor built every PDF cell by convention —
-<code class="language-plaintext highlighter-rouge">&lt;pages&gt;/papers/&lt;paper&gt;/chapters/&lt;dir&gt;.pdf</code> — and checked it against nothing.
-The folio’s publish branch had no <code class="language-plaintext highlighter-rouge">chapters/</code> directory, so <strong>all twenty-three
-chapter links were 404 and always had been</strong>; three of six appendix links
-happened to resolve. Every cell is now looked up in a real listing of the
-publish ref, and a chapter with no published PDF renders <code class="language-plaintext highlighter-rouge">—</code>.</p>
-
-<p>The audit half exists for the same reason and reports three states, never two:
-an external host, an in-page anchor, and a ref this checkout cannot read are all
-<strong>NOT CHECKED</strong>, so a shallow clone does not produce a wall of false findings.</p>
-<h2 id="on-link-style--raw-is-not-the-private-repo-answer">
-  
-  
-    <a href="#on-link-style--raw-is-not-the-private-repo-answer" class="anchor-heading" aria-labelledby="on-link-style--raw-is-not-the-private-repo-answer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> On link style — <code class="language-plaintext highlighter-rouge">raw</code> is not the private-repo answer
-  
-  
-</h2>
-    
-
-<p>A private folio whose README links to a Pages URL is unreachable for exactly the
-people who have repository access, and a raw-content host does not fix it: it
-404s on a private repo without a token, and a browser session cookie does not
-authenticate it.</p>
-
-<p><strong>The default is <code class="language-plaintext highlighter-rouge">blob</code></strong> — the forge’s own file view — which follows the
-viewer’s session, works whether the repo is public or private, and renders PDFs
-inline. The other styles remain configurable, and each prints a note under the
-table saying who can follow its links.</p>
-<h2 id="why-generating-the-rest-was-the-wrong-instinct">
-  
-  
-    <a href="#why-generating-the-rest-was-the-wrong-instinct" class="anchor-heading" aria-labelledby="why-generating-the-rest-was-the-wrong-instinct"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why generating the rest was the wrong instinct
-  
-  
-</h2>
-    
-
-<p>Two defects, both easy to write again.</p>
-
-<p><strong>The predecessor described one folio from inside the platform.</strong> It ended in a
-whole-file copy, carrying one folio’s title, badges, a registry of that folio’s
-own indices, a project-structure table naming its directories, and a licence
-block. Run it in any other folio and the author loses their README. Only five of
-its sections were derived from the tree at all; <strong>prose about a folio belongs to
-that folio.</strong> Three literals went with it, each worth recognising in new code: a
-namespace prefix applied regardless of the folio’s actual build library (now
-read from the build file, and left <strong>unprefixed</strong> when none names one — a wrong
-namespace is worse than none, because it is what a reader pastes into an
-import); descriptions from a hardcoded map of one folio’s filenames consulted
-<em>before</em> the artefact’s own declared name; and a hardcoded simulator directory.</p>
-
-<p><strong>And the authored half is worth keeping.</strong> One folio’s Published Artefacts
-table listed two directories that had never existed on its publish branch —
-both rows dead in both columns. But its labels were prose a generator would have
-had to invent. <strong>The defect was never a stale layout; it was targets that do not
-resolve.</strong> So that half is audited, not generated.</p>
-<h2 id="cat-harnessinstances--the-root-readme-indexes-every-instance">
-  
-  
-    <a href="#cat-harnessinstances--the-root-readme-indexes-every-instance" class="anchor-heading" aria-labelledby="cat-harnessinstances--the-root-readme-indexes-every-instance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">cat-harness:instances</code> — the root README indexes every instance
-  
-  
-</h2>
-    
-
-<p>Added 2026-09-20 (issue #592). The owner:</p>
-
-<blockquote>
-  <p>find beans related to readme, associated to harness instances, they must add
-to main one. should provide both Agent links (agents.md , memories) AND human
-docuemntaion (docs/) link for each harness.</p>
-</blockquote>
-
-<p>One row per instance declaring a declaration, with <strong>two entries because two
-readers arrive</strong>: an agent entry (<code class="language-plaintext highlighter-rouge">AGENTS.md</code>, memories) and a human one
-(README, docs). Both halves are resolved from that instance’s own declaration —
-declared assets for the file links, declared <code class="language-plaintext highlighter-rouge">graphs</code> for the directory links.</p>
-
-<p><strong>Never composed from a convention.</strong> <code class="language-plaintext highlighter-rouge">join(root, "AGENTS.md")</code> would link a
-file that may not be declared, and the criterion in <code class="language-plaintext highlighter-rouge">check:subgraph-coverage</code>
-rests on an undeclared file being one no checker has a reason to look at.
-Scope is honoured too: a directory declared <code class="language-plaintext highlighter-rouge">scope: "repository"</code> is linked at
-the repository root, which is how <code class="language-plaintext highlighter-rouge">memory/</code> was first rendered dead as
-<code class="language-plaintext highlighter-rouge">./cat-harness/memory/</code>. <strong>A dead link in a generated table is worse than a
-missing row — the row asserts the entry exists.</strong></p>
-
-<p><strong>A gap is rendered AS a gap</strong>: an em dash plus a counted note under the table,
-naming the check that lists them. Never a blank cell, never a guessed path.
-Eight of eleven instances had no agent entry when this was written, and a table
-that quietly omitted them would have read as though the work were done.</p>
-<h3 id="which-readme-and-the---dir-flag">
-  
-  
-    <a href="#which-readme-and-the---dir-flag" class="anchor-heading" aria-labelledby="which-readme-and-the---dir-flag"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which README, and the <code class="language-plaintext highlighter-rouge">--dir</code> flag
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">readme:sync</code> with no <code class="language-plaintext highlighter-rouge">--dir</code> resolves to whichever instance carries a <code class="language-plaintext highlighter-rouge">folio/</code>
-— <strong>which is <code class="language-plaintext highlighter-rouge">cat-harness</code>, not the repository root.</strong> Before #592 the two were
-one file (<code class="language-plaintext highlighter-rouge">cat-harness</code> declared the root’s README with <code class="language-plaintext highlighter-rouge">scope: "repository"</code>),
-so the difference could not show. Use the pair:</p>
+<p>Agreed in Phase 3. Of the seven, <strong>exactly one introduced a genuinely new
+mechanism</strong>; that finding is why the implementation was ten small units rather
+than one large one.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
       <th> </th>
-      <th> </th>
+      <th>requirement</th>
+      <th>new mechanism?</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">readme:sync</code> · <code class="language-plaintext highlighter-rouge">readme:audit</code></td>
-      <td>the cat-harness instance’s README</td>
+      <td><strong>R1</strong></td>
+      <td>the board renders content, not only notes</td>
+      <td>no — a second rendering of an existing relation</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">readme:sync:root</code> · <code class="language-plaintext highlighter-rouge">readme:audit:root</code></td>
-      <td>the REPOSITORY’s README</td>
+      <td><strong>R2</strong></td>
+      <td>semantic zoom, with the threshold <strong>declared</strong> rather than a literal</td>
+      <td><strong>yes — the only one</strong></td>
+    </tr>
+    <tr>
+      <td><strong>R3</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">targetLabel</code> publishes its parts</td>
+      <td>no — a bug fix</td>
+    </tr>
+    <tr>
+      <td><strong>R4</strong></td>
+      <td>linear collapse, reachable without JavaScript</td>
+      <td>no, but it constrains R1</td>
+    </tr>
+    <tr>
+      <td><strong>R5</strong></td>
+      <td>the badge counts only when <code class="language-plaintext highlighter-rouge">&gt; 1</code></td>
+      <td>no — two lines</td>
+    </tr>
+    <tr>
+      <td><strong>R6</strong></td>
+      <td>badge and panel stay <strong>one</strong> query</td>
+      <td>no — a regression test for something already true</td>
+    </tr>
+    <tr>
+      <td><strong>R7</strong></td>
+      <td>badges on avatars</td>
+      <td>no — R2 plus R6</td>
     </tr>
   </tbody>
 </table></div>
-
-<p>Both are gated in <code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code>, and that is not belt and braces:
-when the split landed, the bare <code class="language-plaintext highlighter-rouge">readme:audit</code> silently narrowed to
-cat-harness’s and took the root README’s 41 links out of the gate <strong>without
-failing anything</strong>. A gate that stops covering something still reports green.</p>
-<h3 id="where-the-readme-render-sits-in-the-pipeline">
+<h3 id="r1--the-board-renders-content-not-only-notes">
   
   
-    <a href="#where-the-readme-render-sits-in-the-pipeline" class="anchor-heading" aria-labelledby="where-the-readme-render-sits-in-the-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the README render sits in the pipeline
+    <a href="#r1--the-board-renders-content-not-only-notes" class="anchor-heading" aria-labelledby="r1--the-board-renders-content-not-only-notes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R1 — the board renders content, not only notes
   
   
 </h3>
     
 
-<p>Stage 1, <strong>after</strong> the current-state json/jsonld and <strong>before</strong> every other
-harness render, and <strong>fatal</strong> on failure — it is the file a reader opens first.
-The order and the reasoning are in
-<a href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/reference/skill-instructions/render-order.html"><code class="language-plaintext highlighter-rouge">render-order</code></a>; do not restate them here.</p>
-<h2 id="maintaining-these-files-is-memory-work-not-documentation-work">
+<p>The board SHALL render content nodes alongside notes, and a note attached to a
+content node SHALL render <strong>at that node</strong> rather than at an independent
+position.</p>
+
+<p><em>Accepted when</em> a board with one note attached to a block and one attached to
+nothing renders <strong>both</strong> — the first at its block, the second at its declared
+position. Removing the attachment moves the note to its position rather than
+hiding it: “attached to nothing” is an existing declared state, not a new one.</p>
+<h3 id="r2--semantic-zoom-with-a-declared-threshold">
   
   
-    <a href="#maintaining-these-files-is-memory-work-not-documentation-work" class="anchor-heading" aria-labelledby="maintaining-these-files-is-memory-work-not-documentation-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Maintaining these files is memory work, not documentation work
+    <a href="#r2--semantic-zoom-with-a-declared-threshold" class="anchor-heading" aria-labelledby="r2--semantic-zoom-with-a-declared-threshold"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R2 — semantic zoom, with a declared threshold
+  
+  
+</h3>
+    
+
+<p>As the board shrinks, a card SHALL stop rendering its words and render its
+<strong>avatar</strong> instead. The threshold SHALL be <strong>declared data</strong>, not a literal in
+the renderer.</p>
+
+<p><em>Accepted when</em> the card renders text at a declared size and its avatar below
+it, a kind with no avatar takes <code class="language-plaintext highlighter-rouge">GENERIC</code> rather than rendering blank, and the
+behaviour is <strong>falsified in both directions</strong> — a test that only checks the
+shrunk case passes for a board that is always avatars.</p>
+
+<p><em>Consumer burden:</em> the threshold is <strong>emitted</strong>, never documented. <em>“We don’t
+need to emit it — the renderer knows”</em> is the smell this phase names.</p>
+<h3 id="r3--targetlabel-shall-publish-its-parts">
+  
+  
+    <a href="#r3--targetlabel-shall-publish-its-parts" class="anchor-heading" aria-labelledby="r3--targetlabel-shall-publish-its-parts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R3 — <code class="language-plaintext highlighter-rouge">targetLabel</code> SHALL publish its parts
+  
+  
+</h3>
+    
+
+<p>The published todo index SHALL emit a note’s <strong>page and node as separate
+fields</strong>, not only the composite <code class="language-plaintext highlighter-rouge">targetLabel</code>.</p>
+
+<p>This one was a <strong>defect in something already published</strong>. The value is
+<code class="language-plaintext highlighter-rouge">sec:&lt;page&gt;-&lt;node&gt;</code>, page-qualified for a good reason — the bare node id
+<code class="language-plaintext highlighter-rouge">what-is-not-built-yet</code> existed on two pages. But any consumer asking <em>which
+page is this note on</em> had to string-manipulate: know the <code class="language-plaintext highlighter-rouge">sec:</code> prefix, know
+the separator is <code class="language-plaintext highlighter-rouge">-</code>, and know node ids themselves contain <code class="language-plaintext highlighter-rouge">-</code>, so the split is
+not unambiguous without already holding the page list.</p>
+
+<p><strong>Our own client escaped it by accident</strong>, matching on the whole string and
+never parsing, which is exactly why it went unnoticed.</p>
+<h3 id="r4--the-linear-floor">
+  
+  
+    <a href="#r4--the-linear-floor" class="anchor-heading" aria-labelledby="r4--the-linear-floor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R4 — the linear floor
+  
+  
+</h3>
+    
+
+<p>The board SHALL always be collapsible to a linear rendering that works without
+JavaScript. Movement SHALL be <strong>keyboard-operable</strong>; drag MAY be an accelerator
+and SHALL NOT be the only way in — this instance’s declared interaction profile
+is low-dexterity.</p>
+<h3 id="r5-to-r7--the-badge">
+  
+  
+    <a href="#r5-to-r7--the-badge" class="anchor-heading" aria-labelledby="r5-to-r7--the-badge"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R5 to R7 — the badge
+  
+  
+</h3>
+    
+
+<p>The badge SHALL show a count only when more than one note is attached (R5); the
+badge and its panel SHALL be <strong>two readings of one query</strong> rather than a number
+somebody maintains (R6); and an avatar carries the same badge from the same
+query as the card it replaced (R7).</p>
+
+<p><strong>A badge that can disagree with its own panel is the defect designed out</strong>,
+and it is designed out by derivation rather than by discipline.</p><hr />
+<h2 id="round-two--r8-to-r14">
+  
+  
+    <a href="#round-two--r8-to-r14" class="anchor-heading" aria-labelledby="round-two--r8-to-r14"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Round two — R8 to R14
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">README.md</code> and <code class="language-plaintext highlighter-rouge">AGENTS.md</code> are <strong>declared assets with a declared purpose</strong>
-(<code class="language-plaintext highlighter-rouge">ASSET_ROLES</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> — one place, per ROLE, not
-per asset). Keeping them true is part of
-<a href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/reference/skill-instructions/agent-memory.html"><code class="language-plaintext highlighter-rouge">agent-memory</code></a>, and the owner put them there:</p>
+<p>These arrived <strong>after</strong> the requirements gateway had closed, and were checked
+against the declared model rather than assumed compatible. They are additive:
+nothing already agreed was invalidated.</p>
 
-<blockquote>
-  <p>it is an asset and has a defined purpose (that is part of skills of mantiaing
-agent memroies)</p>
-</blockquote>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>requirement</th>
+      <th>relation to round one</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>R8</strong></td>
+      <td>the dynamic board is an <strong>overlay</strong>; the standard rendering is a simple tile listing</td>
+      <td><strong>sharpens R4</strong> — the floor is a tile listing, and movement is additive over it</td>
+    </tr>
+    <tr>
+      <td><strong>R9</strong></td>
+      <td><strong>everything starts as an avatar</strong>; opening is an explicit act, <code class="language-plaintext highlighter-rouge">[x]</code> closes back</td>
+      <td><strong>splits R2</strong> into two mechanisms — an explicit open/close a person performs, and automatic zoom by size. Conflating them is the defect to design out</td>
+    </tr>
+    <tr>
+      <td><strong>R10</strong></td>
+      <td>an open card is a panel with <strong>fixed controls</strong>, plus others depending on content; each content type controls its own rendering</td>
+      <td>the kind owned the zoom threshold; it now owns its whole rendering, under a chrome contract it cannot reach</td>
+    </tr>
+    <tr>
+      <td><strong>R11</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">fsh-guts</code> is a tile, and <code class="language-plaintext highlighter-rouge">[fishbones]</code> puts content into it as a <strong>confirmed</strong> action</td>
+      <td>new; reuses the declared non-rendered trashcan, whose founding rule is <em>do not delete unless explicit confirm</em></td>
+    </tr>
+    <tr>
+      <td><strong>R12</strong></td>
+      <td>create a new sticky note — itself a tile</td>
+      <td>new</td>
+    </tr>
+    <tr>
+      <td><strong>R13</strong></td>
+      <td>filter the board by kind properties, <strong>interactively</strong></td>
+      <td>a <em>reader’s</em> filter at view time, distinct from the board document’s <em>declared</em> filter. Two things that must not become one field</td>
+    </tr>
+    <tr>
+      <td><strong>R14</strong></td>
+      <td>resize open content, move it, drag and drop</td>
+      <td>rides R4’s floor: drag is an accelerator, keyboard operation is not optional</td>
+    </tr>
+  </tbody>
+</table></div>
 
-<p>The one distinction that governs how each is written: <strong>a file is read, memory
-is injected.</strong> Nothing truncates a file, so <code class="language-plaintext highlighter-rouge">AGENTS.md</code> carries what an agent
-must be able to look up; <code class="language-plaintext highlighter-rouge">MEMORY.md</code> carries what must arrive unasked and pays
-a 200-line budget for it.</p>
+<p>Recorded alongside them as scope rather than as a requirement: <strong>“do all the
+skills and bpmn workflows”</strong> — each of these gets its skill and its diagram,
+not only its schema.</p><hr />
+<h2 id="r15-and-r16-are-referenced-but-never-defined">
+  
+  
+    <a href="#r15-and-r16-are-referenced-but-never-defined" class="anchor-heading" aria-labelledby="r15-and-r16-are-referenced-but-never-defined"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R15 and R16 are REFERENCED BUT NEVER DEFINED
+  
+  
+</h2>
+    
+
+<p>Stated plainly because a design record that fills its own gaps with plausible
+sentences is worse than one that names them — invented text reads exactly like
+agreed text.</p>
+
+<p>Bean <code class="language-plaintext highlighter-rouge">51wf</code> is assigned <em>“R2, R9, R15”</em> and bean <code class="language-plaintext highlighter-rouge">zsah</code> <em>“R12, R16”</em>. <strong>No
+comment on #602 states either requirement.</strong> What they appear to mean is
+recoverable only by inference, and is recorded here as inference:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>what it appears to mean</th>
+      <th>evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>R15</strong></td>
+      <td>z-order — selecting any part of an open window raises it</td>
+      <td><code class="language-plaintext highlighter-rouge">51wf</code>’s unit description, <em>“z-order with raise-on-select”</em></td>
+    </tr>
+    <tr>
+      <td><strong>R16</strong></td>
+      <td>a tile opens the <strong>existing</strong> visualisation; nothing builds a second viewer</td>
+      <td>a later aside on the issue, <em>“R12/R16 said a tile opens the existing visualisation”</em></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Both were implemented to that reading. If either is wrong, the code is what
+needs re-checking, not this page.</p><hr />
+<h2 id="r17--render-safety">
+  
+  
+    <a href="#r17--render-safety" class="anchor-heading" aria-labelledby="r17--render-safety"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R17 — render safety
+  
+  
+</h2>
+    
+
+<p>The last instruction became its own requirement: <em>“skill tool hints for XSS…
+lazy load… assume assets in KG accessible, dynamic render where can”</em>.</p>
+
+<p><strong>Only part of it has a subject.</strong> The <code class="language-plaintext highlighter-rouge">Url</code> half shipped as
+<code class="language-plaintext highlighter-rouge">schemas/safe-url.ts</code>, default-deny, with a source-level check that a renderer
+ignoring it fails a test rather than shipping. The Tool-output render
+vocabulary did <strong>not</strong>, and the reason is recorded rather than deferred
+silently: nothing renders a <em>tool’s</em> output even now, so choosing the terms
+would be choosing them with no consumer to constrain them — a declared safety
+property whose check does not answer its claim is worse than prose, because
+prose is honestly unchecked.</p><hr />
+<h2 id="what-the-set-produced">
+  
+  
+    <a href="#what-the-set-produced" class="anchor-heading" aria-labelledby="what-the-set-produced"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the set produced
+  
+  
+</h2>
+    
+
+<p>Each requirement’s artefacts, so the record points at the code rather than
+describing it:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>graph</th>
+      <th>what landed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code> (BPMN)</td>
+      <td><code class="language-plaintext highlighter-rouge">board-open-close</code>, <code class="language-plaintext highlighter-rouge">board-relocate</code>, <code class="language-plaintext highlighter-rouge">board-place-note</code> — executable diagrams with hand-authored Diagram Interchange</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code> (skills)</td>
+      <td><code class="language-plaintext highlighter-rouge">board-windows</code>, <code class="language-plaintext highlighter-rouge">board-diagram-interchange</code>, <code class="language-plaintext highlighter-rouge">harness-tiles</code>, plus the <code class="language-plaintext highlighter-rouge">board-renderer</code> role and actor</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">schemas</code></td>
+      <td><code class="language-plaintext highlighter-rouge">board-positions</code>, <code class="language-plaintext highlighter-rouge">window-stack</code>, <code class="language-plaintext highlighter-rouge">panel-chrome</code>, <code class="language-plaintext highlighter-rouge">reader-filter</code>, <code class="language-plaintext highlighter-rouge">semantic-zoom</code>, <code class="language-plaintext highlighter-rouge">safe-url</code></td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="one-framing-worth-keeping">
+  
+  
+    <a href="#one-framing-worth-keeping" class="anchor-heading" aria-labelledby="one-framing-worth-keeping"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One framing worth keeping
+  
+  
+</h3>
+    
+
+<p>A <strong>board is a diagram OF a folio</strong>, in the OMG sense that a <code class="language-plaintext highlighter-rouge">BPMNDiagram</code> is a
+diagram of a <code class="language-plaintext highlighter-rouge">bpmn:process</code>. The folio carries what is true; the layout layer
+carries where it was drawn; the arrow runs <code class="language-plaintext highlighter-rouge">folio → board → position → note</code>
+and never back.</p>
+
+<p>Two consequences follow, and both are load-bearing: <code class="language-plaintext highlighter-rouge">board-positions</code> may not
+put <code class="language-plaintext highlighter-rouge">x</code>/<code class="language-plaintext highlighter-rouge">y</code> on a note, for the same reason BPMN does not put coordinates on a
+task — and <strong>a folio is complete with no board.</strong> Deleting every board loses
+layout and no content.</p><hr />
+<h2 id="where-this-diverged-from-what-was-agreed">
+  
+  
+    <a href="#where-this-diverged-from-what-was-agreed" class="anchor-heading" aria-labelledby="where-this-diverged-from-what-was-agreed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this diverged from what was agreed
+  
+  
+</h2>
+    
+
+<p>One place, and it is recorded on the bean as well.</p>
+
+<p><code class="language-plaintext highlighter-rouge">51wf</code>’s checklist said <em>“every card starts as its avatar, at any size”</em>, which
+cannot be literal alongside R2 — if cards are avatars at every width, R2 has
+nothing to do. It was read as <strong>“starts closed”</strong>: a closed card shows its words
+above the declared threshold and its avatar below it, with the avatar present at
+every width as the control that opens the window. Flagged rather than silently
+chosen, and <strong>confirmed by the owner on 2026-09-21</strong>.</p>
 
           
 
