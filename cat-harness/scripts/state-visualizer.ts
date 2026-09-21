@@ -141,6 +141,7 @@ import {
   siteDirFor,
   type CatHarnessDeclaration,
 } from "../schemas/cat-harness.js";
+import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 // REQUIRED: `folio` is registered by core on import and this instance declares
 // a folio graph, so `readDeclaration` throws on a valid declaration without it.
 // The same line `print-stub.ts` carries, for the same reason.
@@ -164,6 +165,18 @@ const check = process.argv.slice(2).includes("--check");
 /** The renderer and its styles, read from the files the docs site also serves. */
 const WORK_PLAN_JS = readFileSync(join(SITE, "assets", "js", "work-plan.js"), "utf-8");
 const WORK_PLAN_CSS = readFileSync(join(SITE, "assets", "css", "work-plan.css"), "utf-8");
+
+/**
+ * The projection tags this generator knows how to render.
+ *
+ * Named constants rather than literals at the branch, because the branch is a
+ * DISPATCH and a dispatch on an inline literal is one typo from silently
+ * falling through to a default — which is precisely the defect these replaced:
+ * every projection that was not beans got the todo renderer, by default rather
+ * than by decision.
+ */
+const BEAN_INDEX_SCHEMA = "folio-bean-index/v1";
+const TODO_INDEX_SCHEMA = "folio-todo-index/v1";
 
 /** Every graph kind whose `holds` is `state`, asked of the registry. */
 const STATE_KINDS = new Set(graphKindsOfLayer("state"));
@@ -620,15 +633,60 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
     });
   }
 
-  // ONE graph per page, so one meta: the renderer tells an absent meta from a
-  // failed fetch, and a second meta here would quietly make this the combined
-  // view under a single graph's name.
-  //
   // `../../assets/<id>/index.json` — the projection `gen-docs-pages.ts`
   // already publishes, read relative to this page rather than composed.
   const src = `../assets/${esc(g.id)}/index.json`;
+
+  // WHICH renderer, asked of the projection's own `$schema` rather than of the
+  // graph's id.
+  //
+  // This was `g.id === "beans" ? beans-meta : todo-meta`, which is a default
+  // rather than a choice: EVERY projection that was not beans got the todo
+  // renderer. It survived because only two existed. The third — `qa`, bean
+  // `py74` — would have mounted the work-plan renderer over a document with no
+  // `items` array at all, and the page would have claimed `live` above a
+  // container that rendered nothing. A dashboard that says live and shows
+  // nothing is worse than one that honestly says `declared`, which is the
+  // defect `flh4` already paid for one state over.
+  //
+  // So the file says what it is, the same contract `directory-conventions`
+  // states for every other node here: extension is a coincidence, a
+  // declaration inside the file is the contract.
+  const tag = projectionSchema(g.id);
+
+  if (tag === QA_GRAPH_INDEX_SCHEMA) {
+    // Rendered SERVER-SIDE, not fetched. The data is known at generate time,
+    // a family table has no interaction to speak of, and a static table needs
+    // no JavaScript — which is the accessibility floor every page here is held
+    // to rather than a nicety.
+    return page({
+      title: `${g.id} — state`,
+      metas: [],
+      body: head + qaPanels(g.id, src) + registry(graphs, g.id),
+    });
+  }
+
+  if (tag !== BEAN_INDEX_SCHEMA && tag !== TODO_INDEX_SCHEMA) {
+    // A projection this generator cannot render. NOT rendered as `declared` —
+    // the file is there, which is a different fact from nobody having
+    // published one — and not guessed at either.
+    return page({
+      title: `${g.id} — state`,
+      metas: [],
+      body:
+        head +
+        `<p>A projection is published at <a href="${src}">${esc(src)}</a>, and this ` +
+        `generator has no renderer for <code>${esc(tag ?? "a document with no $schema")}</code>. ` +
+        `That is a gap in this page, not a gap in the graph.</p>` +
+        registry(graphs, g.id),
+    });
+  }
+
+  // ONE graph per page, so one meta: the renderer tells an absent meta from a
+  // failed fetch, and a second meta here would quietly make this the combined
+  // view under a single graph's name.
   const metas = [
-    g.id === "beans"
+    tag === BEAN_INDEX_SCHEMA
       ? `<meta name="fa-beans-src" content="${src}">`
       : `<meta name="fa-todo-src" content="${src}">`,
   ];
@@ -640,6 +698,85 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
   <a href="${src}">a plain JSON file</a>.</p>
 </div>` + registry(graphs, g.id),
   });
+}
+
+/** The `$schema` a graph's published projection declares, or null. */
+export function projectionSchema(id: string): string | null {
+  const p = projectionFor(id);
+  if (p === null) return null;
+  try {
+    const doc: unknown = JSON.parse(readFileSync(p, "utf8"));
+    if (doc === null || typeof doc !== "object") return null;
+    const tag = (doc as Record<string, unknown>)["$schema"];
+    return typeof tag === "string" && tag.length > 0 ? tag : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The `qa` graph's panels — **one per family, and no total across them.**
+ *
+ * The owner's ruling of 2026-09-21 on bean `py74`. The absence of a headline
+ * is the point rather than an omission, so the page SAYS it is absent and why;
+ * a reader who finds no total and is told nothing will reasonably assume the
+ * page is unfinished and go looking for one.
+ *
+ * Each family's buckets are printed in that family's OWN spelling — `n/a` in
+ * one and `na` in another stay two columns, because merging them is exactly
+ * the decision that was declined.
+ */
+export function qaPanels(id: string, src: string): string {
+  const p = projectionFor(id);
+  if (p === null) return "";
+  let ix: {
+    files?: number;
+    families?: Array<{ schema: string; files: number; rollUpField: string | null; buckets?: Record<string, number> }>;
+    unclassified?: number;
+    unreadable?: number;
+  };
+  try {
+    ix = JSON.parse(readFileSync(p, "utf8")) as typeof ix;
+  } catch {
+    return `<p>The projection at <a href="${src}">${esc(src)}</a> could not be read.</p>`;
+  }
+  const families = ix.families ?? [];
+  const panels = families
+    .map((f) => {
+      const buckets = f.buckets ?? {};
+      const keys = Object.keys(buckets).sort();
+      const body =
+        f.rollUpField === null
+          ? `<p>Declares no roll-up field, so this family has no counts to show. ` +
+            `That is a property of the schema, not a count of zero.</p>`
+          : `<p>Rolled up from <code>${esc(f.rollUpField)}</code>.</p>` +
+            `<ul class="sv-list">` +
+            keys.map((k) => `<li class="sv-item"><h2>${esc(k)}<span class="sv-tag">${buckets[k]}</span></h2></li>`).join("") +
+            `</ul>`;
+      return `<section class="sv-item">
+    <h2><code>${esc(f.schema)}</code><span class="sv-tag">${f.files} file${f.files === 1 ? "" : "s"}</span></h2>
+    ${body}
+  </section>`;
+    })
+    .join("\n");
+
+  // BOTH third states printed every run, including at zero. A count that
+  // appears only when non-zero cannot be told from one nobody measured.
+  const thirdStates =
+    `<p class="sv-sub">${ix.unclassified ?? 0} document(s) carry no <code>$schema</code> ` +
+    `(could not determine); ${ix.unreadable ?? 0} would not parse.</p>`;
+
+  return (
+    `<h2 class="sv-h2">Families — ${families.length}, over ${ix.files ?? 0} document(s)</h2>` +
+    `<p class="sv-sub">There is deliberately <strong>no total across these families</strong>. ` +
+    `The two largest that roll up disagree on the container (<code>totals</code> against ` +
+    `<code>counts</code>), on the spelling of not-applicable (<code>n/a</code> against ` +
+    `<code>na</code>) and on whether <code>warn</code> exists at all; the third declares no ` +
+    `roll-up. A single number over them would be three silent decisions.</p>` +
+    panels +
+    thirdStates +
+    `<p class="sv-sub">The data is <a href="${src}">a plain JSON file</a>.</p>`
+  );
 }
 
 if (import.meta.main) main();

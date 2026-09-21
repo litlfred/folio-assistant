@@ -93,7 +93,11 @@ describe("each page reads the projection that already exists", () => {
 
 describe("what a page may claim", () => {
   test("a graph with no projection says so instead of rendering zeros", () => {
-    const html = read("qa");
+    // `qa` was the example here until 2026-09-21, when bean `py74` gave it a
+    // projection. `health` (1 file) and `issue-marks` (2) are the ones this
+    // repository has DECIDED are too thin to earn a dashboard, so they are the
+    // stable examples rather than merely the currently-empty ones.
+    const html = read("health");
     expect(html).toContain("declared");
     expect(html).toContain("2krx");
     // No container in the BODY, so the renderer never mounts. Matched as the
@@ -183,9 +187,10 @@ describe("no projection here is not the same as nothing renders this", () => {
 
   test("a graph with NO declared visualiser still says nothing renders it", () => {
     // The other direction, and the reason this change is scoped rather than a
-    // blanket rewrite: `qa`, `health` and `issue-marks` declare no visualiser,
-    // so their pages were right and must not move.
-    for (const id of ["qa", "health", "issue-marks"]) {
+    // blanket rewrite: these declare no visualiser, so their pages were right
+    // and must not move. `qa` was in this list until 2026-09-21 and left it by
+    // GAINING a projection (bean `py74`), not by the rule changing.
+    for (const id of ["health", "issue-marks"]) {
       expect(read(id)).toContain("nothing publishes a projection for it yet");
       expect(read(id)).not.toContain("rendered elsewhere");
     }
@@ -383,3 +388,53 @@ describe("orphan dashboards — a page that answers to no declaration", () => {
   });
 });
 
+
+describe("the renderer is chosen by the projection's `$schema`, not by the graph's id", () => {
+  // This was `g.id === "beans" ? beans-meta : todo-meta` — a DEFAULT rather
+  // than a choice, so every projection that was not beans got the todo
+  // renderer. It survived because only two existed. The third (`qa`, bean
+  // `py74`) would have mounted the work-plan renderer over a document with no
+  // `items` array, and the page would have claimed `live` above a container
+  // that rendered nothing — worse than honestly saying `declared`, which is
+  // the defect `flh4` already paid for one state over.
+
+  test("the qa page mounts NO work-plan container and declares no src meta", () => {
+    const html = read("qa");
+    expect(/<div class="fa-workplan" data-fa-workplan>/.test(html)).toBe(false);
+    // The bare strings appear in the INLINED renderer's own source, which
+    // queries for both. Asserted as the element, the way the sibling test
+    // above already learned to.
+    expect(/<meta name="fa-(beans|todo)-src"/.test(html)).toBe(false);
+  });
+
+  test("beans and todos still get theirs, so the dispatch did not simply stop working", () => {
+    expect(/<meta name="fa-beans-src"/.test(read("beans"))).toBe(true);
+    expect(/<meta name="fa-todo-src"/.test(read("todos"))).toBe(true);
+  });
+
+  test("the qa page renders one panel per family, server-side", () => {
+    const html = read("qa");
+    for (const fam of ["kg-qa/v1", "qa-witness/v1", "block-qa/v1"]) {
+      expect(html).toContain(`<code>${fam}</code>`);
+    }
+  });
+
+  test("and SAYS there is no total, rather than leaving its absence to be noticed", () => {
+    // The ruling is that no cross-family number exists. A reader who finds
+    // none and is told nothing will assume the page is unfinished.
+    const html = read("qa");
+    expect(html).toContain("no total across these families");
+    // The three disagreements are named, so the claim is checkable on the page.
+    expect(html).toContain("<code>totals</code>");
+    expect(html).toContain("<code>counts</code>");
+    expect(html).toContain("<code>warn</code>");
+  });
+
+  test("both third states are printed even at zero", () => {
+    // A count that appears only when non-zero cannot be told from one nobody
+    // measured — which is the whole reason this graph had no projection.
+    const html = read("qa");
+    expect(html).toContain("could not determine");
+    expect(html).toMatch(/\d+ would not parse/);
+  });
+});
