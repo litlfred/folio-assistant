@@ -63,7 +63,7 @@
  * wired into CI as a quality gate.
  */
 
-import { folioDir } from "../schemas/cat-harness.js";
+import { folioDirDeferred } from "../schemas/cat-harness.js";
 import { readFileSync, existsSync, writeFileSync } from "fs";
 import { join } from "path";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
@@ -74,7 +74,7 @@ import { requirePaper } from "../content/pipeline/repo-root";
 // for those globs. `findContentRepoRoot()` walks up from the real cwd;
 // `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT = folioDir(REPO_ROOT);
+const folioDirOf = folioDirDeferred(REPO_ROOT, import.meta.url);
 
 const GENERIC_NAME_RE = /^sec:.*-(part-\d+|extras|misc-\d+)$/;
 const BLOCK_TITLE_LIST_TELL =
@@ -136,7 +136,7 @@ function parseBlockTs(tsPath: string): { kind: string; label?: string; title?: s
 }
 
 function parseChapterManifest(paper: string, dir: string): ChapterInfo | null {
-  const ts = join(CONTENT, paper, dir, `${dir}.ts`);
+  const ts = join(folioDirOf(), paper, dir, `${dir}.ts`);
   if (!existsSync(ts)) return null;
   const src = readFileSync(ts, "utf-8");
 
@@ -242,7 +242,7 @@ function requiredLeadParas(blockCount: number): number {
 
 function auditPaper(paper: string): Finding[] {
   const findings: Finding[] = [];
-  const paperManifest = join(CONTENT, paper, `${paper}.ts`);
+  const paperManifest = join(folioDirOf(), paper, `${paper}.ts`);
   if (!existsSync(paperManifest)) {
     throw new Error(`Paper manifest not found: ${paperManifest}`);
   }
@@ -267,7 +267,7 @@ function auditPaper(paper: string): Finding[] {
     for (const sec of ch.sections) {
       for (const rn of sec.blocks) {
         if (blockKinds.has(rn)) continue;
-        const ts = join(CONTENT, paper, dir, `${rn}.ts`);
+        const ts = join(folioDirOf(), paper, dir, `${rn}.ts`);
         const info = parseBlockTs(ts);
         if (info) blockKinds.set(rn, { rootName: rn, ...info });
       }
@@ -379,7 +379,7 @@ function auditPaper(paper: string): Finding[] {
       // the ≤5 band (which requires a 1-paragraph lead). Only meaningful
       // when the section has *some* non-prose content (sectionSize > 0).
       if (firstIsProse && sectionSize > 0) {
-        const mdPath = join(CONTENT, paper, dir, `${firstBlock}.md`);
+        const mdPath = join(folioDirOf(), paper, dir, `${firstBlock}.md`);
         const paras = leadParagraphCount(mdPath);
         const required = requiredLeadParas(sectionSize);
         if (paras < required) {
@@ -396,7 +396,7 @@ function auditPaper(paper: string): Finding[] {
 
       // section-lead-block-title-list
       if (firstIsProse) {
-        const mdPath = join(CONTENT, paper, dir, `${firstBlock}.md`);
+        const mdPath = join(folioDirOf(), paper, dir, `${firstBlock}.md`);
         if (existsSync(mdPath)) {
           const txt = readFileSync(mdPath, "utf-8");
           if (BLOCK_TITLE_LIST_TELL.test(txt)) {
@@ -433,7 +433,7 @@ function auditPaper(paper: string): Finding[] {
       // the reads makes the scan O(N) reads + O(N²) memory lookups.
       const blockData = new Map<string, { interprets?: string; label?: string }>();
       for (const rn of sec.blocks) {
-        const tsPath = join(CONTENT, paper, dir, `${rn}.ts`);
+        const tsPath = join(folioDirOf(), paper, dir, `${rn}.ts`);
         if (!existsSync(tsPath)) continue;
         const tsSrc = readFileSync(tsPath, "utf-8");
         blockData.set(rn, {
