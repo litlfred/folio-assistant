@@ -1039,6 +1039,12 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
       // that is correct — it declares no `harness.json`, so it is a directory
       // rather than an instance.
+      // Added 2026-09-21 with the second ingested IG (bean qrnz). PROVISIONAL:
+      // the owner has since ruled that a per-IG harness should not exist at all
+      // (bean nsbb), so this entry and `smart-trust` below are both expected to
+      // collapse into a `smart-base` instance. It is listed because it EXISTS
+      // today, which is the only thing this assertion is about.
+      "smart-immunizations",
       "smart-trust",
       "who-iris",
       "who-style-guide",
