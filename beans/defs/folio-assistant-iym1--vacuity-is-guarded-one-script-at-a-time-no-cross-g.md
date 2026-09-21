@@ -66,4 +66,27 @@ each gate to PRINT a corpus count and refuse zero; or a runtime harness that
 runs each gate against an empty tree and demands non-zero exit. The third is
 the only one that tests the property directly rather than a proxy for it.
 
+### A false-positive precedent from this week, and it is the right shape
+
+PR #671 (bean `yt7j`) is worth reading before any of the three are tried. Its
+first pass called three `cat-harness` library entries defective because their
+`path` does not resolve from the instance root — and they are not defective:
+each carries `scope: "repository"`, so the declaration already says which base
+to use. A reader that ignored one declared field wrongly condemned three of
+four entries.
+
+That is this bean's failure mode with a name and a date. Any reader over
+"does this gate pin its corpus non-empty" has to understand the ways a gate
+legitimately declares a determined-empty corpus — `check-bean-parents.ts`
+documents exactly that (*"A repository with no bean store is **not** a
+failure"*) and would be condemned by a naive version. The third candidate
+signal (run each gate against an empty tree, demand non-zero exit) fails that
+test too, which is worth knowing BEFORE building it: it would call
+`check:bean-parents` defective for a third state its author chose deliberately.
+
+So the reader needs a declared exemption with a reason — the shape
+`FORWARD_DECLARED` uses in `check-context-emission.ts`, `STEP_EXEMPTIONS` in
+`gates.ts`, and `command-path-ok:` — rather than an inferred one. That is a
+design constraint the three candidates above do not yet carry.
+
 Blocked on nothing. Needs the measurement before the implementation.
