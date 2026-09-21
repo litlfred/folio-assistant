@@ -234,7 +234,7 @@ ever saw it.
 | | requirement | in the requester's words |
 |---|---|---|
 | **R18** | the board's spacing SHALL be condensed | *"to much padding between panels, condense"* |
-| **R19** | the board's tiles SHALL be the **same square tiles** as the LHS navbar's expanding menu, *or* a theme/avatar where that is the better fit | *"i meant to use same SQUARE TILES taht are in the expanding menu of LHS navbar OR use theme/avatars as appraopriate"* |
+| **R19** | the board's tiles SHALL be the **same square tiles** as the LHS navbar's expanding menu, *or* a theme/avatar where that is the better fit — **which is which is R19b, settled below** | *"i meant to use same SQUARE TILES taht are in the expanding menu of LHS navbar OR use theme/avatars as appraopriate"* |
 | **R20** | **no sub-panels.** One open, Miro-like board; everything lives on `fa-sticky-board` / `fa-landing-board` | *"i dont want sub-panels of the folio, just one open (miro-like) board"* |
 | **R21** | stickies SHALL be **closed avatars, and small** | *"THE STICKIES MUST BE CLOSED AVATRS AND SMALL"* |
 | **R22** | the folio visualisation SHALL have **no rounded corners** | *"drop all the rounded corners… too much dead space"* |
@@ -342,19 +342,52 @@ the card until its condensed text is unreadable; R32 without *"small"* leaves
 the dead space R18 was about. Either alone satisfies half the round and looks
 like it satisfied all of it, which is why both are asserted.
 
+### R19's second clause — reported open, then settled the same day
+
+**It was recorded here as undefined**, and deliberately: *"OR use theme/avatars
+as appropriate"* named a choice that nothing in the corpus said how to make,
+and a rule invented to close the gap reads exactly like a rule that was agreed.
+
+**The owner settled it on 2026-09-21**, choosing declaration ownership from
+four options put to them:
+
+| | the rule |
+|---|---|
+| **R19b** | a thing renders as a **tile** iff the **harness** declares it (a visualiser); as an **avatar** iff the **folio** holds it (a note, a document, a materialised asset under `folio/`). A **theme** is how either one looks, never a third kind |
+
+**The provenance is kept rather than tidied away**, the same as R15/R16: this
+is a rule recovered by argument and then ratified, not one written down at the
+time, and a reader re-checking the board should know which it is.
+
+**Two candidate rules were falsified by R30 before the choice was put.** R30
+places *"avatars of materialized assets (including materialized KG like
+bootstrap, cat-harness)"* on the glass — so a **whole knowledge graph renders
+as an avatar**. That kills *"many behind it → tile"* outright, and it kills
+*"opens a viewer over a set → tile"* too, since opening that avatar does open
+a viewer over a set. Declaration ownership survives because a materialised
+asset is in the reader's `folio/` **however big it is**.
+
+**It is recognition rather than invention**, which is the reason to prefer it:
+`harness-tiles` already carried *"a tile is the harness's, not the node's"*,
+and the owner's own 2026-09-20 line — *"if harness declares visaluzers, those
+should have tile. defaults to theme, but new can be changed"* — already said
+both halves. The gap was that nobody had read them as an answer to this
+question.
+
+The rule lives in
+[`harness-tiles`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/harness-tiles.html),
+with a pointer from `board-windows`. There is no check, and that is stated in
+the skill rather than left as an omission: nothing classifies a folio item
+yet, so a gate would be a declared property whose check cannot answer its own
+claim — R17's lesson, one round later.
+
 ### Still open from this round
 
-**R19's second clause has no rule yet.** *"OR use theme/avatars as
-appropriate"* names a choice — when is a thing a tile, and when is it a
-theme or an avatar? — and nothing here says how to make it. It is recorded as
-open rather than resolved, because a rule invented to close the gap would read
-exactly like a rule that was agreed. Tracked on
-[issue #796](https://github.com/litlfred/folio-assistant/issues/796).
-
 **Whether the library view distinguishes materialised from not-materialised**
-is the other half R30 leaves unsaid: the three states are the *asset's*, and
-nothing yet states whether a reader browsing a library can see which of its
-items they already hold.
+is the half R30 leaves unsaid: the three states are the *asset's*, and nothing
+yet states whether a reader browsing a library can see which of its items they
+already hold. Tracked on
+[issue #796](https://github.com/litlfred/folio-assistant/issues/796).
 
 ---
 

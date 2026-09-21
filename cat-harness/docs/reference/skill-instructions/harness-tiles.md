@@ -91,6 +91,58 @@ Both are the third state, and they are DIFFERENT findings:
   tile may claim to show — but staying silent would hide a working viewer
   behind a rule, and the remedy is one line in a declaration.
 
+## A tile, or an avatar? WHO DECLARED IT (settled 2026-09-21)
+
+The question this skill left open, in the owner's words: *"use same SQUARE
+TILES that are in the expanding menu of LHS navbar **OR use theme/avatars as
+appropriate**"*. When is a thing on the folio a tile, and when its own avatar?
+
+**One test, and it reads a declaration that already exists:**
+
+> **A tile is what the HARNESS declares. An avatar is what the FOLIO holds.**
+
+| the thing | renders as | because |
+|---|---|---|
+| a declared visualiser (`SubgraphCoverageSchema.visualiser`) — `fsh-guts`, `todos`, `docs` | **tile** | the harness declares it; §"A tile is the harness's" above |
+| a note, a document, a materialised asset under `folio/` | **avatar** | the folio holds it; it is the reader's, not the harness's |
+
+**THEME IS NOT A THIRD KIND, and reading it as one is the mistake the
+question invites.** A theme is a palette and its art. A tile already takes
+*"the avatar's declared hue"*, and the owner's 2026-09-20 line says the same
+thing from the other side — *"defaults to theme, but new can be changed"*. So
+theme is **how either one looks**, never an alternative to being a tile.
+
+### The case that settles it, and the two rules it kills
+
+R30 puts *"sticky notes/avatars of materialized assets (including materialized
+KG like bootstrap, cat-harness)"* on the glass. **A whole knowledge graph
+renders as an avatar.** That one sentence falsifies the two rules a reader
+reaches for first:
+
+- **"Many behind it → tile, one → avatar"** — `cat-harness` materialised is a
+  whole graph and is an avatar. Adopting cardinality means overruling R30.
+- **"Opens a viewer over a set → tile"** — opening that avatar *does* open a
+  viewer over a set, so this rule makes it a tile. Same contradiction, and it
+  additionally needs a per-item declaration of what selection does, which
+  nothing carries today.
+
+Declaration ownership survives because **a materialised asset is in the
+reader's `folio/` however big it is**, and that is the fact being read.
+
+### The consequence that looks like an inconsistency and is not
+
+**The same subject can be both.** `todos` is a tile in the strip *and* an
+individual todo is an avatar on the glass. Those are not two answers: the
+todo **viewer** is harness-declared and the todo **item** is folio content,
+so the rule gives one answer per object and they happen to share a name.
+
+### Why there is no check for this
+
+Nothing classifies a folio item yet — the rule governs authoring and the
+renderer reads the graph an item came from, which is already unambiguous. A
+gate here would be a declared property whose check cannot answer its own
+claim, which R17 already recorded as worse than prose.
+
 ## Where a tile lives, and what it must not eat
 
 Tiles render in the navbar **and** on the board: one declaration, per-surface

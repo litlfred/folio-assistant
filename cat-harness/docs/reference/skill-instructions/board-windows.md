@@ -164,6 +164,15 @@ folio is not scoped to the library it is currently pulled down over, so a
 reference that leaves the library is ordinary rather than exceptional, and a
 renderer that assumes local resolution will break on the reader's own data.
 
+## A tile, or an avatar?
+
+**Who declared it** — a tile is what the HARNESS declares, an avatar is what
+the FOLIO holds, and a theme is how either one looks rather than a third kind.
+The test, the case that settles it and the two rules it kills are in
+[`harness-tiles`](harness-tiles.md) §"A tile, or an avatar?", because the tile
+side already owned *"a tile is the harness's, not the node's"* and one rule
+with two homes is one rule free to drift.
+
 ## An asset has THREE states, not two
 
 Pulling the folio down gives a **glass** — a surface over whatever is being
