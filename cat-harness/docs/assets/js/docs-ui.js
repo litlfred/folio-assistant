@@ -3386,6 +3386,33 @@
       if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
     });
 
+    /* THE COLLAPSED PANEL'S COUNT has to include what THIS function just
+     * mounted, or it understates the thing it exists to declare.
+     *
+     * `landing.html` renders the panel's summary server-side and can only
+     * count the stickies Liquid knows about; the todo cards arrive here,
+     * after a fetch. A collapsed panel saying "3" over six cards is the badge
+     * defect `rta` pinned a test against — a count that is not the
+     * cardinality of the thing it labels.
+     *
+     * Added to the SERVER'S number, read back from `data-fa-sticky-count`,
+     * rather than recomputed from the DOM. The attribute is the one value
+     * that does not change when this runs twice; counting `.fa-sticky` nodes
+     * would double on a re-mount, and re-reading the text content would
+     * compound whatever it wrote last time.
+     *
+     * No panel (an ordinary page, or a landing page with no stickies) is not
+     * a failure — there is simply nothing to relabel, and the board's own
+     * heading already carries the count there. */
+    var panelCount = document.querySelector(".fa-sticky-panel__count");
+    if (panelCount) {
+      var declared = parseInt(panelCount.getAttribute("data-fa-sticky-count"), 10);
+      // NaN when the attribute is missing or not a number. Falling back to 0
+      // would silently drop the stickies from the total and report only the
+      // todos, which is a wrong number rather than a missing one.
+      if (!isNaN(declared)) panelCount.textContent = String(declared + live.length);
+    }
+
     return {
       toggle: function () { return setOpen(board.hasAttribute("hidden")); },
       count: live.length,

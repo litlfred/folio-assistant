@@ -71,7 +71,69 @@
 {%- assign stickies = site.data.stickies.stickies -%}
 
 {%- if stickies and stickies.size > 0 -%}
-<div class="fa-sticky-board fa-landing-board">
+{%- comment -%}
+  THE STICKY PANEL — SLID AWAY, and that is the default rather than a setting.
+
+  Owner, 2026-09-21, twice and then once more in capitals:
+
+    i thought the sticky panel had some todos, but they seem gone. they should
+    be closed/tiled to start.
+
+    please!!! i dont want to see these giant cats at the top anymore. priority
+    #1 make the stikypanel slid away
+
+  The stickies used to be the FIRST thing on the page, full-bleed, one card per
+  harness. On a laptop that is a screen and a half of cat before the page says
+  what the repository is — and `index.md` carries the title, the description and
+  the Get started button BELOW this include, so everything that answers "what is
+  this" was under the fold.
+
+  ## Why this is a `<details>` and not a script
+
+  The same reason `nav_footer_custom.html` gives for the harness tabs, and it is
+  load-bearing rather than stylistic: keyboard-operable for free, announces its
+  own open/closed state to a screen reader, and works with NO JAVASCRIPT AT ALL.
+  That last one is the `jtj` floor — *the listing is the ARTEFACT and the board
+  is the overlay* — and a JS disclosure would have put the stickies behind a
+  script, which is the exact defect measured on 2026-09-21: every note on an
+  ordinary page was built from a `fetch`, so a reader with JS off got nothing
+  and no hint that anything existed.
+
+  ## Why the panel is at the TOP, and why that is not the thing being complained about
+
+  Issue #764 §5 S6, which is the owner's own words for a webpage as against a
+  folio: *"if not placed on a document somewhere, they in slide down panel at
+  top with [stikcy] icon to open or so."* A docs page is a webpage, not a folio,
+  so a slide-down at the top IS the specified home. What was wrong was never the
+  position — it was that the panel had no closed state, so "at the top" meant a
+  screen and a half rather than one bar.
+
+  ## The count is the panel's own cardinality
+
+  `stickies.size`, rendered here, so a collapsed panel still says how much is
+  behind it — the same rule `harness-tiles` states for the collapsed tab groups.
+  `docs-ui.js` ADDS the todo count to it once `mountTodoBoard` has mounted into
+  the board below; with no script the number is the stickies alone, which is
+  correct rather than degraded, because with no script there are no todo cards
+  in here to count. The no-JS todo listing is a separate generated include and
+  is not affected by this panel at all.
+{%- endcomment -%}
+<details class="fa-sticky-panel">
+  <summary class="fa-sticky-panel__handle">
+    {%- comment -%}
+      A sticky note with a turned-up corner. `aria-hidden` because the label
+      beside it says the same thing in words, and a screen reader announcing
+      both reads the control twice.
+    {%- endcomment -%}
+    <svg class="fa-sticky-panel__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5 3h14a2 2 0 0 1 2 2v9l-7 7H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+      <path d="M21 14h-5a2 2 0 0 0-2 2v5z" opacity="0.55"/>
+    </svg>
+    <span class="fa-sticky-panel__label">Stickies</span>
+    <span class="fa-sticky-panel__count" data-fa-sticky-count="{{ stickies.size }}">{{ stickies.size }}</span>
+  </summary>
+  <div class="fa-sticky-panel__body">
+  <div class="fa-sticky-board fa-landing-board">
   {%- for st in stickies -%}
   {%- assign has_art = false -%}
   {%- if st.art.laptop -%}{%- assign has_art = true -%}{%- endif -%}
@@ -267,7 +329,9 @@
     </div>
   </article>
   {%- endfor -%}
-</div>
+  </div>
+  </div>
+</details>
 {%- else -%}
 {%- comment -%}
   No stickies: initiation has not run here, or this instance keeps none. The

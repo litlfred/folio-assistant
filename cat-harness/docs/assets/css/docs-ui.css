@@ -3807,3 +3807,147 @@ a.fa-harness-tab__body:focus-visible {
 .fa-board-tiles:empty {
   display: none;
 }
+
+/* ── The sticky panel, slid away ──────────────────────────────────────────
+ *
+ * Owner, 2026-09-21: *"please!!! i dont want to see these giant cats at the
+ * top anymore. priority #1 make the stikypanel slid away"* — and earlier,
+ * *"they should be closed/tiled to start."*
+ *
+ * Markup: `_includes/landing.html`, a `<details>` with no `open`. Everything
+ * here styles the two states; NOTHING here decides them, because a disclosure
+ * a stylesheet can force open is one a reader cannot close.
+ *
+ * ## BOTH SCHEMES, with the ratios measured rather than remembered
+ *
+ * Stated up front because this rule was written in the same session that
+ * filed bean `23bc` against `.fa-qr-toggle` and `.fa-tiles` for having no
+ * light-scheme block at all — shipping a third element with the same hole
+ * would have been the defect and its own bug report in one commit.
+ *
+ * Every pair below clears its threshold, and the thresholds differ: text on
+ * its own fill is held at 4.5:1 (WCAG AA body text), a border at 3:1 because
+ * it is a shape rather than a glyph.
+ *
+ * THE FILL IS NOT WHAT SEPARATES THE PANEL FROM THE PAGE — it measures 1.04:1
+ * in dark and 1.21:1 in light, which is a surface-on-surface tint and nothing
+ * more. The BORDER is what makes the panel an object (5.07:1 and 6.00:1
+ * against the page), so it is not decoration and must not be dropped to
+ * "clean up" the look.
+ */
+.fa-sticky-panel {
+  /* DARK scheme. Ratios against --fa-stickypanel-bg unless stated. */
+  --fa-stickypanel-bg: #232a33;
+  --fa-stickypanel-fg: #e6e9ee;         /* 11.90:1                        */
+  --fa-stickypanel-border: #8b97a8;     /*  4.89:1 here, 5.07:1 on the page */
+  --fa-stickypanel-count-bg: #3b4654;
+  --fa-stickypanel-count-fg: #e6e9ee;   /*  7.88:1 on the count's own fill  */
+
+  margin: 0 0 1.5rem;
+  border: 1px solid var(--fa-stickypanel-border);
+  border-radius: 6px;
+  background: var(--fa-stickypanel-bg);
+  color: var(--fa-stickypanel-fg);
+}
+
+:root[data-fa-scheme="light"] .fa-sticky-panel {
+  /* LIGHT scheme. The same five tokens, RE-MEASURED against #ffffff — a
+     colour written for one scheme and never rechecked in the other is how
+     `.fa-page-lang-bar` failed, and its note is a few hundred lines above. */
+  --fa-stickypanel-bg: #e8eaed;
+  --fa-stickypanel-fg: #1f2933;         /* 12.24:1                          */
+  --fa-stickypanel-border: #5a6472;     /*  4.98:1 here, 6.00:1 on the page */
+  --fa-stickypanel-count-bg: #d3d8de;
+  --fa-stickypanel-count-fg: #1f2933;   /* 10.29:1 on the count's own fill  */
+}
+
+/* The handle is the whole row, not the triangle.
+ *
+ * This instance's declared interaction profile is LOW-DEXTERITY, so the target
+ * is the full width at 2.75rem tall — comfortably past the 24px SC 2.5.8 floor
+ * in the axis that is hardest to hit, and past it by enough to still be
+ * comfortable rather than merely legal. `1le7` sizes the action tiles from the
+ * QR code for the same reason. */
+.fa-sticky-panel__handle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  /* `list-style: none` plus the WebKit pseudo-element: Safari ignores the
+     former on a summary and keeps drawing its own disclosure triangle, which
+     would sit beside the sticky glyph and read as two controls. */
+  list-style: none;
+}
+
+.fa-sticky-panel__handle::-webkit-details-marker { display: none; }
+
+/* Never left to the user agent. The panel's fill differs per scheme and the
+   default focus ring is invisible on one of them; 2px is the floor the a11y
+   spec here holds. */
+.fa-sticky-panel__handle:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
+.fa-sticky-panel__icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+.fa-sticky-panel__label { flex: 1 1 auto; }
+
+/* The count travels with the COLLAPSED state, which is the whole point of
+   putting it on the summary: a panel that hides its contents must still say
+   how much it is hiding, or "closed" and "empty" render identically. Same
+   rule `harness-tiles` states for the collapsed tab groups. */
+.fa-sticky-panel__count {
+  flex: 0 0 auto;
+  min-width: 1.5rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--fa-stickypanel-count-bg);
+  color: var(--fa-stickypanel-count-fg);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* The turned-up corner of the glyph rotates to point down when open — the
+   disclosure affordance, carried by the icon that is already there rather
+   than by a second chevron beside it. */
+.fa-sticky-panel[open] .fa-sticky-panel__icon { transform: rotate(180deg); }
+
+.fa-sticky-panel__body {
+  padding: 0 0.75rem 0.75rem;
+  border-top: 1px solid var(--fa-stickypanel-border);
+}
+
+/* THE SLIDE, and it is opt-in rather than default.
+ *
+ * `<details>` cannot animate its own height — the content goes from
+ * `display: none` to laid out in one frame — so the open state animates the
+ * BODY instead, which is a normal block and can. Guarded by
+ * `prefers-reduced-motion` because a panel that slides is a panel that moves
+ * under a reader who asked things not to, and the disclosure works identically
+ * without it: this is decoration on a control that is already correct. */
+@media (prefers-reduced-motion: no-preference) {
+  .fa-sticky-panel[open] .fa-sticky-panel__body {
+    animation: fa-sticky-panel-slide 180ms ease-out;
+  }
+  .fa-sticky-panel__icon { transition: transform 180ms ease-out; }
+}
+
+@keyframes fa-sticky-panel-slide {
+  from { opacity: 0; transform: translateY(-0.4rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Inside the panel the board is content, not a page section, so it drops the
+   margin it carries when it stands alone. */
+.fa-sticky-panel__body > .fa-landing-board { margin-top: 0.75rem; }
