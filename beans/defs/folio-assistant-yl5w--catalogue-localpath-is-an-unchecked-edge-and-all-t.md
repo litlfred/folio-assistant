@@ -113,3 +113,54 @@ resolves · `bun run gates` **78/78** · `bun test` **4869 pass / 0 fail** ·
 `iris:covers:check` re-rendered all three covers **from the moved PDFs**, with
 no fallback in the resolver — which is the end-to-end proof the new paths are
 the ones being read.
+
+---
+
+## 2026-09-21 ~10:45Z — a DUPLICATE was built in parallel, and its conclusion was WRONG
+
+session_01AYHimvYMmf8h8e9fFN6dW5 claimed this bean at ~10:00Z when it read
+`todo`, built a second `localPath` resolver, and opened PR #682 and issue #681.
+**PR #664 landed the real one at 10:35Z.** The duplicate is withdrawn: main's
+implementation is kept wholesale and mine deleted, along with its baseline file
+and tests.
+
+### The claim did not prevent it, exactly as `bean-coordination` says
+
+*"A claim is branch-local — it ANNOUNCES rather than reserves until your PR
+exists."* This bean read `todo` because the session doing the work had not
+pushed a claim yet. Both checks were half-built before either branch was
+visible to the other. That is the documented failure mode, observed.
+
+### The withdrawn conclusion, stated because it was asserted publicly
+
+The duplicate measured the three `localPath` values against its checkout,
+found nothing there, and concluded **"the bytes were never captured; the state
+is what is false"**. It went further and called
+`sourceLoss: { verdict: "permitted", basis: "original bytes held locally with
+a recorded sha256" }` **a gate permitted on a false basis**.
+
+**Both are wrong.** The bytes existed — the owner had them, and #664 moved
+them in. They are on main now at **exactly** the declared sizes:
+
+| path | bytes |
+|---|---|
+| `who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf` | 2,136,157 |
+| `who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf` | 3,293,424 |
+| `who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf` | 2,810,648 |
+
+The `fixity.sha256` and byte counts were **correct the whole time**; the file
+had not landed yet. The evidence (declared sizes an order of magnitude above
+the `-info.pdf` captures; `intake.json` listing only the `-info.pdf`) was real
+and the inference from it was not: *"absent from this checkout"* and *"never
+existed"* are different claims, and one was reported as the other.
+
+That is the same error `8nzu` names — a measurement of a moving system stated
+as a settled fact — committed twice by one session in one morning, once about
+sessions and once about bytes.
+
+### What survives
+
+Nothing of the duplicate's code. Its one contribution is this record, and the
+observation that **a baseline was the wrong instinct here**: the right move was
+to ask the owner, which the session that asked got, and which turned a
+three-entry backlog into three files that simply arrived.
