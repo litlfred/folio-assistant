@@ -666,12 +666,20 @@ export const RULES: Rule[] = [
       "schemas/cat-harness.ts",
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
-      // `namespaces.ts`, `kg-qa.ts` imports only zod. Neither touches the
-      // content vocabulary, so classifying them here adds no wrong-direction
-      // edge — and leaving them unclassified would have made `src/workflow/`
-      // and `src/tools/workflow.ts` read as harness → core.
+      // `namespaces.ts`, `kg-qa.ts` imports zod and `portable-path.ts` below.
+      // Neither touches the content vocabulary, so classifying them here adds
+      // no wrong-direction edge — and leaving them unclassified would have made
+      // `src/workflow/` and `src/tools/workflow.ts` read as harness → core.
       "schemas/role-graph.ts",
       "schemas/kg-qa.ts",
+      // Whether a path can be CHECKED OUT. It imports nothing at all, so it
+      // sits at or below every consumer by construction — but it is harness by
+      // subject too: its subject is this repository's own tree, and a folio has
+      // no stake in whether a sidecar filename is legal on NTFS. Classifying it
+      // in core is what the keyword pass guessed, and that read as
+      // `schemas/kg-qa.ts [harness] -> [core]`, a wrong-direction edge for a
+      // leaf with no dependencies of its own.
+      "schemas/portable-path.ts",
       // The bean graph declares the harness's own work-plan store and imports
       // only zod. It was already harness-layer by concept; classifying the
       // scripts below is what made the edge to it visible, and the edge was
@@ -686,6 +694,11 @@ export const RULES: Rule[] = [
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
       "scripts/known-skills.ts",
+      // The checkout-portability gate, beside the module it runs. Harness by
+      // subject: it reads `git ls-files` over THIS repository and grades the
+      // tree's own filenames, which is a fact about the checkout and not about
+      // any folio's material.
+      "scripts/check-portable-paths.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge
