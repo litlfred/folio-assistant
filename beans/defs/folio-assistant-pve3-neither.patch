@@ -1,0 +1,198 @@
+diff --git a/cat-bootstrap/skills/roles/roles.json b/cat-bootstrap/skills/roles/roles.json
+index b076b08c..9a1d428e 100644
+--- a/cat-bootstrap/skills/roles/roles.json
++++ b/cat-bootstrap/skills/roles/roles.json
+@@ -5,6 +5,9 @@
+     {
+       "id": "initiator",
+       "title": "Initiator",
++      "lanes": [
++        "Initiator"
++      ],
+       "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge cat-bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those cat-bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+       "actorKinds": [
+         "agent"
+@@ -20,6 +23,9 @@
+     {
+       "id": "knowledge-graph-data-store",
+       "title": "Knowledge Graph Data Store",
++      "lanes": [
++        "Knowledge Graph Data Store"
++      ],
+       "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+       "actorKinds": [
+         "system"
+@@ -30,6 +36,9 @@
+     {
+       "id": "requestor",
+       "title": "Requestor",
++      "lanes": [
++        "Requestor"
++      ],
+       "description": "Wants to initialize — or cat-bootstrap, or install, or load, or harness — a harness: cat-bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+       "actorKinds": [
+         "person"
+@@ -40,6 +49,9 @@
+     {
+       "id": "logger",
+       "title": "Logger",
++      "lanes": [
++        "Logger"
++      ],
+       "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
+       "actorKinds": [
+         "system"
+@@ -48,5 +60,5 @@
+       "actedUpon": true
+     }
+   ],
+-  "_lanes_comment": "NO `lanes` on any role, and the reason is an asymmetry this file cannot fix from here. The ROOT instance declares `cat-bootstrap/skills/` as one of its own kg directories, so it reads these roles — but it does NOT declare `cat-bootstrap/workflows/`, so it does not carry the process those lanes live in. A `lanes` entry therefore produced `bindsLane -> role/Initiator` in folio-assistant's graph, pointing at a lane node only cat-bootstrap's own export mints: three dangling links, measured 2026-09-20. CatBootstrap's own graph binds correctly either way (0 dangling), because it carries both halves. Whether the root should declare both halves of cat-bootstrap or neither is bean `pve3` — omitting `lanes` keeps the graph honest meanwhile rather than widening the dangling-link allowance, which would record new debt as progress."
++  "_lanes_comment": "`lanes` RESTORED 2026-09-21 on the owner's ruling of NEITHER (bean `pve3`). It was omitted as a workaround, and the asymmetry that forced it is now gone. The old note read: \"The ROOT instance declares `cat-bootstrap/skills/` as one of its own kg directories, so it reads these roles — but it does NOT declare `cat-bootstrap/workflows/`\", which made a `lanes` entry mint `bindsLane -> role/<Lane>` in folio-assistant's graph pointing at a lane node only cat-bootstrap's own export mints. Measured rather than reasoned about: restoring `lanes` while that entry still existed produced FOUR dangling links (one per role — three were measured 2026-09-20, before `logger` existed) and `kg-export.test.ts` refused them. The declaration that caused it has been removed from `cat-harness/harness.json`, so cat-bootstrap's roles are now read only by cat-bootstrap's own graph, which carries the process those lanes live in and bound correctly all along. THE FIFTH LANE IS DELIBERATELY UNBOUND: `log-message.bpmn` has a lane named `Actor` and no role claims it, because the point of that diagram is that the actor VARIES — the `logger` role's own description says the skill belongs to whoever is DOING the thing being logged, and `log-message` takes `actor` as a required input precisely because the Logger cannot infer who acted. A role binding `Actor` would assert the opposite."
+ }
+diff --git a/cat-harness/harness.json b/cat-harness/harness.json
+index 19a8e81a..8b71e8f6 100644
+--- a/cat-harness/harness.json
++++ b/cat-harness/harness.json
+@@ -407,16 +407,6 @@
+         "skill": "schema-management"
+       }
+     },
+-    {
+-      "id": "cat-bootstrap",
+-      "path": "cat-bootstrap/skills/",
+-      "dependents": "skip",
+-      "scope": "repository",
+-      "description": "The cat-bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `cat-bootstrap/skills/`, NOT `cat-bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `cat-bootstrap/README.md` and `cat-bootstrap/AGENTS.md` declare neither, and they are the cat-bootstrap instance's two DECLARED ASSETS — so a graph rooted at `cat-bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `cat-bootstrap/harness.json`; this entry is the same fact at the root, and it is stated twice BY DECISION (2026-09-20) rather than by necessity. THE EARLIER NOTE HERE WAS WRONG and the correction is the useful part: it said \"this instance depends on cat-bootstrap\" is not expressible because `HarnessConfigDependenciesSchema` knows only `folioAssistant`. That key does not mean the folio-assistant PACKAGE — its own doc comment reads \"Other folio-assistant instances this folio depends on\", and cat-bootstrap is such an instance by every test the code applies. MEASURED, not argued: writing `cat-harness/harness.config.json` with `{name: \"cat-bootstrap\", path: \"../cat-bootstrap\", provides: [\"skills\"]}` serves cat-bootstrap through `LOCAL_PACKAGES` with `folio-assistant` unmoved. The zod schema needs no change at all. WHAT ACTUALLY BLOCKS IT is one directory entry, and it is not in the dependency schema: cat-bootstrap declares `workflows/` with no `scope`, so cat-harness INHERITS it, and `materialiseDirectories` resolves an inherited path against the INHERITING instance by design — it wants `cat-harness/workflows/`, which does not exist, and `harness:dirs:check` reports `21 declared, 1 missing` and exits 1. The gap it exposes is general and this entry is only where it surfaced: a `ContentDirectory` cannot say whether it is a LAYOUT dependents should reproduce (`uploads/`, `library/`, `voices/`) or merely WHERE ITS OWN CONTENT LIVES (`workflows/`, `schemas/`, `tools/`). Simulated on a fresh folio depending on this instance, `init-folio` would create five directories it has no use for, each with a committed keep-marker — the `dh4f` shape, shipped downstream. Adding that distinction was considered and DECLINED for now: it is a schema change whose per-directory classification is a judgement about every directory here, not a cat-bootstrap workaround. So THIS entry stays, and the thing to fix before deleting it is the convention/content distinction — not the dependency schema. The earlier note here said `resolveSkillDirs` had no caller: it has one — `discoverLocalPackages` — and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
+-      "graphs": [
+-        "cat-harness"
+-      ]
+-    },
+     {
+       "_comment": "CAT-BOOTSTRAP'S RENDER SUBGRAPH, declared here for the same reason its sibling above is: `resolveSkillDirs` walks THIS instance's declaration plus its dependencies, and cat-bootstrap is not a declared dependency of cat-harness — it is composed under it. So a directory declared only in `cat-bootstrap/harness.json` is invisible to `skill_fetch` from this root, which is how cat-bootstrap's own skills came to be declared twice BY DECISION (see the entry above). WITHOUT IT the two skills that constitute cat-bootstrap's rendering exemption are unfetchable from the root — and an exemption whose substitute cannot be reached is the hole `renderExemption.owes` exists to close. Bean `hfkl`. A SEPARATE id from `cat-bootstrap`, because overrides match on id and reusing it would replace the skills with these.",
+       "id": "cat-bootstrap-render",
+@@ -815,5 +805,6 @@
+   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",
+   "needs": [
+     "cat-bootstrap"
+-  ]
++  ],
++  "_cat_bootstrap_comment": "NO `cat-bootstrap` DIRECTORY IS DECLARED HERE, and that is the owner's ruling of 2026-09-21 (\"neither\") on bean `pve3`, not an omission. This file used to declare `cat-bootstrap/skills/` with `scope: \"repository\"`, which resolves against the REPOSITORY root rather than this instance — so cat-bootstrap's skills and roles landed in folio-assistant's graph while the entry lived here. It did NOT declare `cat-bootstrap/workflows/`, deliberately, because #432 measured bootstrap's process leaking into the root graph 88 times. The root therefore carried HALF of cat-bootstrap, and the two symptoms were one asymmetry: a `lanes` entry on a cat-bootstrap role minted `bindsLane -> role/<Lane>` pointing at a lane node only cat-bootstrap's own export mints (four dangling links, measured 2026-09-21 by restoring `lanes` and watching `kg-export.test.ts` refuse it), and cat-bootstrap's `kg-navigation` collided by name with `skills/folio-core/kg-navigation` in the published docs (bean `v3se`). `pve3` put the choice as BOTH halves or NEITHER; both would undo #432's isolation and put a process the root does not own into its published graph. Under NEITHER, cat-bootstrap's skills are published through `cat-bootstrap.jsonld` and its own instance page, which is where an instance's own graph belongs. The old entry's rationale is preserved in the bean rather than here, because a rationale for a declaration that no longer exists reads as a declaration to a skimming reader."
+ }
+diff --git a/cat-harness/scripts/check-tools.ts b/cat-harness/scripts/check-tools.ts
+index de05d265..a2205250 100644
+--- a/cat-harness/scripts/check-tools.ts
++++ b/cat-harness/scripts/check-tools.ts
+@@ -29,13 +29,13 @@
+  * @module scripts/check-tools
+  */
+ import { existsSync, readFileSync } from "node:fs";
+-import { dirname, join } from "node:path";
++import { dirname, join, resolve } from "node:path";
+ import { fileURLToPath } from "node:url";
+ 
+ import { tools } from "../tools/index.js";
+ import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
+ import { knownSkills as knownSkillsIn } from "./known-skills.js";
+-import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
++import { instanceDirectoryForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
+ 
+ /**
+  * THIS INSTANCE'S OWN `schemas` directory, or the convention.
+@@ -222,8 +222,49 @@ export interface ToolCheck {
+   skillsWithoutTools: number;
+ }
+ 
++/**
++ * Skill ids a `satisfies` may legitimately name, which is WIDER than the ones
++ * this instance overlays.
++ *
++ * `knownSkills()` answers *"which skills are in MY overlay"*. For "every skill
++ * has a Tool" that is the right question — an instance is not accountable for
++ * covering another instance's skills. For *"does this `satisfies` name a real
++ * skill"* it is the WRONG one, and the difference is the same conflation this
++ * repository keeps paying for: **not in my overlay is not does not exist.**
++ *
++ * Found 2026-09-21 by the owner's ruling on `pve3` (*"neither"*), which
++ * removed `cat-bootstrap/skills/` from the root's declared directories. Two
++ * Tools then reported as dangling — `discuss` → `discussion` and
++ * `log-message` → `log-message` — and both skills exist, declared, in
++ * `cat-bootstrap/harness.json`. The Tools live here because a Tool is
++ * cat-harness's vocabulary and cat-bootstrap may not import it (bean `gn4l`
++ * records that as a limitation, with the node moving unchanged when tool
++ * collection stops being import-bound), so the cross-instance edge is the
++ * architecture rather than a defect.
++ *
++ * This widens ONE direction on purpose. Coverage still counts only this
++ * instance's skills, so adding a sibling cannot silently create an obligation
++ * to write Tools for it.
++ */
++function satisfiableSkills(): Set<string> {
++  const out = new Set(knownSkills());
++  // `ROOT` is THIS INSTANCE (`cat-harness/`), not the checkout. Sibling
++  // instances are enumerated from the repository root, and reading the wrong
++  // one here returns an empty list that looks exactly like "no siblings
++  // declare it" — the vacuous-green shape, arrived at by using a variable
++  // whose name does not say which root it is.
++  for (const instance of instanceRootsIn(repoRootFor(ROOT))) {
++    if (resolve(instance) === resolve(ROOT)) continue;
++    for (const id of knownSkillsIn(instance)) out.add(id);
++  }
++  return out;
++}
++
+ export function checkTools(): ToolCheck {
++  // Coverage is asked of THIS instance's skills; resolution is asked of every
++  // declared one. Two questions, two sets — see `satisfiableSkills`.
+   const skills = knownSkills();
++  const resolvable = satisfiableSkills();
+   const typeNames = new Set(Object.keys(TOOL_TYPES));
+   const dangling: Array<{ tool: string; skill: string }> = [];
+   const unknownTypes: Array<{ tool: string; port: string; ref: string }> = [];
+@@ -238,7 +279,9 @@ export function checkTools(): ToolCheck {
+     const portNames = new Set(t.io.inputs.map((i) => i.name));
+     for (const s of t.satisfies) {
+       if (skills.has(s)) covered.add(s);
+-      else dangling.push({ tool: t.id, skill: s });
++      // Resolvable-but-not-ours is neither covered nor dangling: the edge is
++      // real and this instance is not accountable for the skill.
++      else if (!resolvable.has(s)) dangling.push({ tool: t.id, skill: s });
+ 
+       // ## What is compared, and what deliberately is not
+       //
+diff --git a/cat-harness/scripts/tests/tools.test.ts b/cat-harness/scripts/tests/tools.test.ts
+index 9a0fca78..40a5ed0b 100644
+--- a/cat-harness/scripts/tests/tools.test.ts
++++ b/cat-harness/scripts/tests/tools.test.ts
+@@ -7,7 +7,7 @@
+  */
+ import { describe, expect, test } from "bun:test";
+ import { readFileSync } from "node:fs";
+-import { resolve } from "node:path";
++import { join, resolve } from "node:path";
+ 
+ import { tools } from "../../tools/index.js";
+ import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
+@@ -177,8 +177,21 @@ describe("tools", () => {
+     // Missed 2 real ones: `cat-bootstrap/skills/` holds skills DIRECTLY rather
+     // than in packages, and a scan of a root's subdirectories never looks at
+     // the root. Both read as dangling, which is how this was found.
+-    expect(s.has("confirm-harness")).toBe(true);
+-    expect(s.has("log-message")).toBe(true);
++    //
++    // THOSE TWO NO LONGER BELONG TO THIS INSTANCE, and the assertion is
++    // inverted rather than deleted — bean `pve3`, the owner's ruling of
++    // 2026-09-21 ("neither"). `cat-harness/harness.json` no longer declares
++    // `cat-bootstrap/skills/`, so cat-bootstrap's skills are published through
++    // its OWN graph and this instance does not overlay them. Deleting the
++    // lines would lose the regression they were written for; flipping them
++    // keeps it, because the failure mode being guarded is a SCAN that
++    // disagrees with the declaration, in either direction.
++    expect(s.has("confirm-harness")).toBe(false);
++    expect(s.has("log-message")).toBe(false);
++    // And they are still REACHABLE, which is what makes the removal a
++    // relocation rather than a loss. `check-tools`' `satisfiableSkills` reads
++    // every declared instance for exactly this reason.
++    expect(canonicalKnownSkills(join(INSTANCE, "../cat-bootstrap")).has("log-message")).toBe(true);
+   });
+ 
+   test("io IRIs follow the publication base, not the declaration", async () => {
