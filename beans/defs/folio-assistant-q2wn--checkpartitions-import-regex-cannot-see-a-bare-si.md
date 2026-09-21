@@ -82,10 +82,16 @@ changing nothing but `IMPORT_RE` in a scratch copy:
 
 ```
                      current    with bare side-effect imports
-total edges             1875    1950   (+75)
+total edges             1886    1961   (+75)
 CROSS-BOUNDARY             0      25   (+25)
 unresolved                 0       0
 ```
+
+*Re-verified after merging 11 commits from `main`, including #822's relocation
+of `skills/workflows/` to `processes/`. The total moved 1875 → 1886 as main
+added modules; **the +75 and the +25 did not move at all**. A relocation of
+that size is exactly what could have invalidated the figure, so it was re-run
+rather than carried forward.*
 
 `check:partition` exits **0** today and reports **zero** cross-boundary edges.
 Make the bare form visible and there are **25** — every one `harness → core`,
