@@ -264,13 +264,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T23:02:39.505Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/18d613d3fec38d452a35f2ec7a25f02037a617d5",
-  "sourceCommitSha": "18d613d3fec38d452a35f2ec7a25f02037a617d5",
-  "sourceCommitAt": "2026-09-21T23:00:37Z",
+  "generatedAt": "2026-09-21T23:26:13.337Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4b96c2287492612222282f9ac4d17115722f0291",
+  "sourceCommitSha": "4b96c2287492612222282f9ac4d17115722f0291",
+  "sourceCommitAt": "2026-09-21T23:23:58Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 223,
+    "Skill": 224,
     "Actor": 28,
     "Capability": 28,
     "Role": 131,
@@ -2668,6 +2668,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/evidence-review",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "evidence-review",
+      "title": "Evidence review — the same rule, a second instance",
+      "description": "Evidence review as an instance of untainted verification — the separation of the appraising party from the drafting party, what recurring surveillance in a living guideline shares with a stale QA verdict, and which of guideline methodology's rules are fenced rather than shipped.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/evidence-review.md",
+      "instructionLines": 115,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-review"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/symbiotic-interaction",
@@ -5390,6 +5407,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/docs-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/docs-generation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/editor",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/evidence-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/flushable-containers",
@@ -33831,6 +33849,7 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/evidence-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/quality-control",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#skill/untainted-verification"
       ],
@@ -35080,8 +35099,8 @@
   ],
   "staging": {
     "branch": "claude/eager-thompson-3bb3kq",
-    "sha": "6e3412242506e910cf526b575e76119864a2d21c",
+    "sha": "f505abc08daa077de2178a3feab9f28241500a3e",
     "pr": "829/merge",
-    "run": "35665550586"
+    "run": "35667379350"
   }
 }

@@ -14,9 +14,10 @@
   <style id="jtd-nav-activation">
   
 
+    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(15)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(84)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
@@ -25,12 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(84) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(84) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(84) > ul.nav-list {
       display: block;
     }
   </style>
@@ -50,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Architecture | folio-assistant</title>
+<title>Evidence review | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Architecture" />
+<meta property="og:title" content="Evidence review" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Architecture" />
+<meta property="twitter:title" content="Evidence review" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -755,340 +758,243 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Evidence review</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="architecture">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/evidence-review.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/evidence-review.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/evidence-review.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="evidence-review--the-same-rule-a-second-instance">
   
   
-    <a href="#architecture" class="anchor-heading" aria-labelledby="architecture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Architecture
+    <a href="#evidence-review--the-same-rule-a-second-instance" class="anchor-heading" aria-labelledby="evidence-review--the-same-rule-a-second-instance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Evidence review — the same rule, a second instance
   
   
 </h1>
     
 
-<ol id="markdown-toc">
-  <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
-  <li><a href="#separation-of-concerns--current-and-future-state" id="markdown-toc-separation-of-concerns--current-and-future-state">Separation of concerns — current and future state</a></li>
-  <li><a href="#repository-layout" id="markdown-toc-repository-layout">Repository layout</a></li>
-  <li><a href="#the-mcp-server" id="markdown-toc-the-mcp-server">The MCP server</a></li>
-  <li><a href="#content-adapters" id="markdown-toc-content-adapters">Content adapters</a></li>
-  <li><a href="#skills-and-skill-packages" id="markdown-toc-skills-and-skill-packages">Skills and skill packages</a></li>
-  <li><a href="#the-content-object-model" id="markdown-toc-the-content-object-model">The content-object model</a></li>
-  <li><a href="#rbac" id="markdown-toc-rbac">RBAC</a></li>
-  <li><a href="#work-plan-priming-cross-harness" id="markdown-toc-work-plan-priming-cross-harness">Work-plan priming (cross-harness)</a></li>
-  <li><a href="#deployment" id="markdown-toc-deployment">Deployment</a></li>
-</ol><hr />
-<h2 id="overview">
+<blockquote>
+  <p>Skill id: <code class="language-plaintext highlighter-rouge">evidence-review</code> · Capability: <code class="language-plaintext highlighter-rouge">quality-assurance</code> · Package: <code class="language-plaintext highlighter-rouge">folio-core</code></p>
+</blockquote>
+
+<p>This skill exists to demonstrate a claim rather than to assert it.
+<a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/untainted-verification.html"><code class="language-plaintext highlighter-rouge">untainted-verification</code></a> states a discipline and
+says it is generic. <strong>One instance is an example; two unrelated ones are
+evidence.</strong> The first is the translation round trip. This is the second, and it
+is as far from translation as the platform reaches: the appraisal of evidence
+behind a recommendation.</p>
+<h2 id="the-rule-is-not-a-platform-invention">
   
   
-    <a href="#overview" class="anchor-heading" aria-labelledby="overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Overview
+    <a href="#the-rule-is-not-a-platform-invention" class="anchor-heading" aria-labelledby="the-rule-is-not-a-platform-invention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule is not a platform invention
   
   
 </h2>
     
 
 <blockquote>
-  <p><strong>The rules behind this page.</strong> Architecture describes the shape; the Skills
-govern the decisions. Adapters against profiles —
-<a href="reference/skill-instructions/content-profiles.html"><code class="language-plaintext highlighter-rouge">content-profiles</code></a>.
-Where a new node belongs before you create it —
-<a href="reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>. The repository
-layout and every graph kind —
-<a href="reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.
-Composing and verifying the MCP surface —
-<a href="reference/skill-instructions/mcp-assembly.html"><code class="language-plaintext highlighter-rouge">mcp-assembly</code></a> and
-<a href="reference/skill-instructions/mcp-contract.html"><code class="language-plaintext highlighter-rouge">mcp-contract</code></a>.
-Where this page and a Skill disagree, the Skill wins.</p>
+  <p>The party that drafted the recommendation does not write the evidence
+appraisal for it.</p>
 </blockquote>
 
-<p>folio-assistant is an <strong>MCP server</strong> with a pluggable <strong>content adapter</strong> layer,
-a <strong>skill</strong> system, a typed <strong>content-object model</strong>, <strong>RBAC</strong>, and a deploy
-story. The content it operates on lives in a <em>separate</em> repository — the
-platform is content-agnostic.</p>
+<p>That is <code class="language-plaintext highlighter-rouge">untainted-verification</code>’s sentence with the nouns changed, and it long
+predates this repository. Guideline methodology separates the <strong>systematic
+review team</strong> from the <strong>guideline development group</strong> for exactly the reason
+the spine gives: a party assessing its own output is comparing a thing with its
+own paraphrase of itself.</p>
 
-<pre><code class="language-mermaid">flowchart TD
-    subgraph Harness[LLM harness · Claude Code / Antigravity / Gemini]
-      LLM[Agent]
-    end
-    LLM &lt;--&gt;|MCP stdio/http| Server[FolioServer · src/server.ts]
-    Server --&gt; Tools[Core tools&lt;br/&gt;check-deps · skill-fetch · preview · preferences · work_plan_prime]
-    Server --&gt; Adapter{Content adapter}
-    Adapter --&gt; Paper[paper adapter&lt;br/&gt;lean · validate · render]
-    Adapter --&gt; Future[other adapters …]
-    Server --&gt; RBAC[RBAC · src/core/rbac.ts]
-    Server --&gt; Git[Git helper · src/core/git.ts]
-    Server --&gt; Feedback[Feedback store · src/core/feedback.ts]
-    Tools --&gt; Skills[Skill packages&lt;br/&gt;schemas/skills/*]
-    Paper --&gt; Model[Content-object model&lt;br/&gt;schemas/types.ts · constraints.ts · builders.ts]
-</code></pre>
-<h2 id="separation-of-concerns--current-and-future-state">
-  
-  
-    <a href="#separation-of-concerns--current-and-future-state" class="anchor-heading" aria-labelledby="separation-of-concerns--current-and-future-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Separation of concerns — current and future state
-  
-  
-</h2>
-    
-
-<p>This repo is today a <strong>Tool repo and a Content repo in one checkout</strong>. Issue
-<a href="https://github.com/litlfred/folio-assistant/issues/223">#223</a> plans the split
-into five composable folio-assistant instances. Child pages carry it:</p>
+<p>Which is the useful finding here. The platform did not need to invent a rule
+for evidence review — it needed to notice that the rule it already had was the
+same one.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>page</th>
-      <th>what it answers</th>
+      <th><code class="language-plaintext highlighter-rouge">untainted-verification</code></th>
+      <th>here</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><a href="architecture/repo-taxonomy.html">Repo taxonomy</a></td>
-      <td>What kinds of repository exist — Tool, Test, Content, Consumer — and what each may contain</td>
+      <td>producer</td>
+      <td>whoever drafts the recommendation</td>
     </tr>
     <tr>
-      <td><a href="architecture/current-state.html">Current state</a></td>
-      <td>What is actually in this repo today, measured, and where the mixture is</td>
+      <td><strong>checker</strong> — given the artefact, and nothing that would let it shortcut</td>
+      <td>the appraisal, given the question and the evidence, <strong>not</strong> the draft’s conclusion</td>
     </tr>
     <tr>
-      <td><a href="architecture/future-state.html">Future state</a></td>
-      <td>The five target repos and which directory lands in which</td>
-    </tr>
-    <tr>
-      <td><a href="architecture/migration-plan.html">Migration plan</a></td>
-      <td>Phase 0/I/II/III, the gates, and what is still undecided</td>
-    </tr>
-    <tr>
-      <td><a href="architecture/cat-harness-minimum.html">Minimum <code class="language-plaintext highlighter-rouge">cat-harness</code></a></td>
-      <td>What survives in the harness once “not self-documenting” is applied as a test</td>
-    </tr>
-    <tr>
-      <td><a href="architecture/harness-instances.html">Harness instances</a></td>
-      <td>What an instance IS — schematics, visualisations, tools; the four directories; the default rendering</td>
+      <td><strong>adjudicator</strong> — given the intent and the checker’s output, never the artefact</td>
+      <td>the evidence-to-decision judgement</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>The last two look like they disagree — the minimum says a harness produces
-nothing a human looks at, and the instance page says an instance renders by
-default. They do not: the requirement is a <strong>floor that rises</strong>, with
-<code class="language-plaintext highlighter-rouge">bootstrap</code> exempt from the visualiser and owing its own <code class="language-plaintext highlighter-rouge">.json</code>/<code class="language-plaintext highlighter-rouge">.jsonld</code>
-instead, and <code class="language-plaintext highlighter-rouge">cat-harness</code> the layer where the rest begins to apply. See
-<a href="architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception">Where the requirement starts</a>.</p>
-
-<p>The rest of this page describes the architecture <strong>as it is now</strong>.</p>
-<h2 id="repository-layout">
+<p>Rule 1 of the spine has real teeth in this direction. An appraiser shown the
+recommendation the guideline group has already drafted is being told the answer
+before being asked the question, and a <em>“the evidence supports it”</em> produced
+that way measures the instruction, not the literature.</p>
+<h2 id="recurring-surveillance-is-staleness-generalised">
   
   
-    <a href="#repository-layout" class="anchor-heading" aria-labelledby="repository-layout"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Repository layout
+    <a href="#recurring-surveillance-is-staleness-generalised" class="anchor-heading" aria-labelledby="recurring-surveillance-is-staleness-generalised"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recurring surveillance is staleness, generalised
   
   
 </h2>
     
+
+<p>A <strong>living guideline</strong> is continuously updated as evidence appears rather than
+revised on a multi-year cycle. So the appraisal is not a one-off chapter — it
+is a verdict with an expiry.</p>
+
+<p>The spine already has that idea: a verdict is hashed to what it was about, so
+editing the subject stales it. A living guideline stales the same verdict for a
+different reason — <strong>the subject did not change, the evidence base did.</strong></p>
+
+<p><strong>That gap is stated, not papered over.</strong> The spine’s <code class="language-plaintext highlighter-rouge">field_hash</code> covers
+inputs that live in the repository. An external corpus does not, and nothing
+here pretends otherwise. What the two share is the shape a consumer must
+respect either way: <em>“verified on DATE against THESE inputs”</em> is a different
+claim from <em>“verified”</em>, and a reader given the second cannot tell a current
+verdict from a lapsed one. Any folio implementing surveillance owes an explicit
+expiry, in the same way <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking</code></a> requires one on a
+block: a verdict with no expiry cannot be told from an abandoned one.</p>
+<h2 id="the-fencing-analysis--which-rules-are-the-platforms-and-which-are-not">
+  
+  
+    <a href="#the-fencing-analysis--which-rules-are-the-platforms-and-which-are-not" class="anchor-heading" aria-labelledby="the-fencing-analysis--which-rules-are-the-platforms-and-which-are-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The fencing analysis — which rules are the platform’s, and which are not
+  
+  
+</h2>
+    
+
+<p>Run through <a href="../graph-management/domain-fencing.md"><code class="language-plaintext highlighter-rouge">domain-fencing</code></a>’s three
+questions, in order, first-to-answer wins:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Path</th>
-      <th>What lives here</th>
+      <th>candidate rule</th>
+      <th>Q1 rationale survives translation?</th>
+      <th>Q2 domain in mechanism or vocabulary?</th>
+      <th>Q3 needs the domain installed?</th>
+      <th>verdict</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">src/</code></td>
-      <td>The MCP server (<code class="language-plaintext highlighter-rouge">server.ts</code>), entry point (<code class="language-plaintext highlighter-rouge">index.ts</code>), core (<code class="language-plaintext highlighter-rouge">git</code>, <code class="language-plaintext highlighter-rouge">rbac</code>, <code class="language-plaintext highlighter-rouge">cache</code>, <code class="language-plaintext highlighter-rouge">feedback</code>, <code class="language-plaintext highlighter-rouge">logging</code>), and core tools (<code class="language-plaintext highlighter-rouge">tools/</code>)</td>
+      <td>appraiser ≠ drafter</td>
+      <td><strong>yes</strong>, word for word</td>
+      <td>vocabulary</td>
+      <td>no</td>
+      <td><strong>platform</strong> — it IS the spine</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">adapters/</code></td>
-      <td>Content adapters — <code class="language-plaintext highlighter-rouge">paper/</code> (Lean + LaTeX) and the standalone <code class="language-plaintext highlighter-rouge">mcp-server/</code></td>
+      <td>a verdict carries what it was verified against, and when</td>
+      <td><strong>yes</strong> — it is the <code class="language-plaintext highlighter-rouge">field_hash</code> argument</td>
+      <td>vocabulary</td>
+      <td>no</td>
+      <td><strong>platform</strong></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/</code></td>
-      <td>The content-object model (<code class="language-plaintext highlighter-rouge">types.ts</code>, <code class="language-plaintext highlighter-rouge">constraints.ts</code>, <code class="language-plaintext highlighter-rouge">builders.ts</code>) and per-skill JSON Schemas (<code class="language-plaintext highlighter-rouge">schemas/skills/*</code>)</td>
+      <td>a finding is upheld by opening the cited source, never by trusting the rule’s wording</td>
+      <td><strong>yes</strong></td>
+      <td>vocabulary</td>
+      <td>no</td>
+      <td><strong>platform</strong> — and already the practice in <code class="language-plaintext highlighter-rouge">voice-who-guideline-development</code></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/</code></td>
-      <td>Skill <strong>packages</strong> (<code class="language-plaintext highlighter-rouge">content-lifecycle</code>, <code class="language-plaintext highlighter-rouge">authoring-math</code>, <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code>) with their Docker manifests</td>
+      <td>certainty rated across the GRADE domains</td>
+      <td>no</td>
+      <td><strong>mechanism</strong></td>
+      <td>yes</td>
+      <td><strong>fence</strong></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/</code></td>
-      <td>Content <strong>pipeline</strong> tooling (validators, QA, render helpers) — not content itself</td>
+      <td>PICO question formulation</td>
+      <td>no</td>
+      <td><strong>mechanism</strong></td>
+      <td>yes</td>
+      <td><strong>fence</strong></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">ui/</code>, <code class="language-plaintext highlighter-rouge">viewer/</code>, <code class="language-plaintext highlighter-rouge">home_page/</code></td>
-      <td>Web UI, interactive viewer, and the example Pages site</td>
+      <td>evidence-to-decision framework tables</td>
+      <td>no</td>
+      <td><strong>mechanism</strong></td>
+      <td>yes</td>
+      <td><strong>fence</strong></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">deploy/</code></td>
-      <td>Deployment (Caddy, docker-compose, provisioning, OAuth)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">docs/</code></td>
-      <td>This documentation site</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">.github/</code></td>
-      <td>CI workflows and scripts (build, publish, QA, docs)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">.claude/skills/</code></td>
-      <td>Local agent skills + capability hooks</td>
+      <td>a search strategy is re-runnable — databases, dates, query recorded</td>
+      <td>yes <em>in rationale</em></td>
+      <td><strong>mechanism</strong> is bibliographic</td>
+      <td>yes</td>
+      <td><strong>fence the mechanism</strong>, keep the rationale (it is the row above)</td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="the-mcp-server">
+
+<p><strong>Three rows earn a place on the platform and four do not</strong>, and the four are
+not a backlog. They are a folio’s methodology, correctly located. The honest
+move is to fence them and say so — which is what <code class="language-plaintext highlighter-rouge">q-usage-watcher</code> does in its
+first paragraph, and what this table does here.</p>
+
+<p><strong>Nothing is shipped for the fenced rows.</strong> Declaring empty criteria for them
+would be bean <code class="language-plaintext highlighter-rouge">dh4f</code> exactly: a consumer scanning nothing and reporting a clean
+run over it. A folio that wants them declares them, in its own repository,
+where its methodology lives.</p>
+<h2 id="what-this-skill-does-not-do">
   
   
-    <a href="#the-mcp-server" class="anchor-heading" aria-labelledby="the-mcp-server"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The MCP server
+    <a href="#what-this-skill-does-not-do" class="anchor-heading" aria-labelledby="what-this-skill-does-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this skill does NOT do
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">FolioServer</code> (<code class="language-plaintext highlighter-rouge">src/server.ts</code>) registers the core tools, then asks the active
-<strong>content adapter</strong> to register its tools. It supports two transports — <code class="language-plaintext highlighter-rouge">--stdio</code>
-(what harnesses launch) and <code class="language-plaintext highlighter-rouge">--http</code> (a shared long-running instance). Tool calls
-are logged with timing.</p>
-<h2 id="content-adapters">
+<p><strong>It asserts no clinical or empirical claim, and the platform must not.</strong> The
+mechanism carries <em>process</em> — who may rule on what, given what. The evidence
+is the folio’s, the judgement is the guideline group’s, and a platform that
+shipped a default answer to either would be asserting on their behalf.</p>
+
+<p>This is the same line <code class="language-plaintext highlighter-rouge">content-profiles</code> draws for block kinds and
+<code class="language-plaintext highlighter-rouge">domain-fencing</code> draws for QA axes, arrived at from a third direction.</p>
+<h2 id="related">
   
   
-    <a href="#content-adapters" class="anchor-heading" aria-labelledby="content-adapters"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content adapters
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
   
   
 </h2>
     
-
-<p>A content adapter encapsulates everything type-specific: which artifacts exist,
-how to validate them, how to build/render them, and which extra MCP tools to
-register. The <code class="language-plaintext highlighter-rouge">document</code> adapter (<code class="language-plaintext highlighter-rouge">adapters/document/</code>) is the base for prose
-folios; the <code class="language-plaintext highlighter-rouge">paper</code> adapter (<code class="language-plaintext highlighter-rouge">adapters/paper/</code>) extends it and provides Lean lifecycle tools
-(<code class="language-plaintext highlighter-rouge">lean_setup</code>/<code class="language-plaintext highlighter-rouge">build</code>/<code class="language-plaintext highlighter-rouge">check</code>/<code class="language-plaintext highlighter-rouge">status</code>), validation, and rendering
-(<code class="language-plaintext highlighter-rouge">paper_render_pdf</code>/<code class="language-plaintext highlighter-rouge">html</code>, <code class="language-plaintext highlighter-rouge">formula_render</code>). New content types add a new
-adapter — see <a href="guides/new-content-type.html">Adding a content type</a>.</p>
-<h2 id="skills-and-skill-packages">
-  
-  
-    <a href="#skills-and-skill-packages" class="anchor-heading" aria-labelledby="skills-and-skill-packages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skills and skill packages
-  
-  
-</h2>
-    
-
-<p>A <strong>skill</strong> is a documented, schema-bounded unit of work (e.g.
-<code class="language-plaintext highlighter-rouge">lean-formalization</code>). Skills are grouped into <strong>packages</strong> that declare their
-Docker/runtime dependencies via a <code class="language-plaintext highlighter-rouge">package-manifest.json</code>. The LLM discovers
-skills with <code class="language-plaintext highlighter-rouge">skill_list</code> and loads instructions with <code class="language-plaintext highlighter-rouge">skill_fetch</code>. The full
-list of skills and roles — and how they compose with the LLM (RBAC, capabilities,
-requirements) — is on the <a href="skills.html">Skills &amp; roles</a> page; each skill’s
-input/output contract is published in the
-<a href="reference/skills/">Skill schema reference</a>.</p>
-<h2 id="the-content-object-model">
-  
-  
-    <a href="#the-content-object-model" class="anchor-heading" aria-labelledby="the-content-object-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The content-object model
-  
-  
-</h2>
-    
-
-<p>For papers, content is a tree of typed <strong>blocks</strong> validated at runtime with Zod:</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">schemas/types.ts</code> — <code class="language-plaintext highlighter-rouge">Block</code>, <code class="language-plaintext highlighter-rouge">Section</code>, <code class="language-plaintext highlighter-rouge">Chapter</code>, <code class="language-plaintext highlighter-rouge">Paper</code>, and block kinds</li>
-  <li><code class="language-plaintext highlighter-rouge">schemas/constraints.ts</code> — Zod schemas and constraint rules</li>
-  <li><code class="language-plaintext highlighter-rouge">schemas/builders.ts</code> — validated constructors (<code class="language-plaintext highlighter-rouge">definition()</code>, <code class="language-plaintext highlighter-rouge">theorem()</code>, …)</li>
+  <li><a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/untainted-verification.html"><code class="language-plaintext highlighter-rouge">untainted-verification</code></a> — the discipline. Read
+it first; this skill adds only what evidence review instantiates.</li>
+  <li><a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a> §”The agentic round trip” —
+the other instance, deliberately unrelated to this one.</li>
+  <li><code class="language-plaintext highlighter-rouge">voice-who-guideline-development</code> in <code class="language-plaintext highlighter-rouge">who-style-guide</code> — how a recommendation
+is <strong>worded</strong>. It states its own boundary: it governs the language of
+normative statements, <em>not the process that produces them</em>. This skill is on
+the other side of that line, and the two do not overlap.</li>
+  <li><a href="../graph-management/domain-fencing.md"><code class="language-plaintext highlighter-rouge">domain-fencing</code></a> — the three
+questions, and why a fenced rule is correctly located rather than missing.</li>
 </ul>
-
-<p>These are documented in the generated <a href="api/">TypeScript API reference</a>.</p>
-<h2 id="rbac">
-  
-  
-    <a href="#rbac" class="anchor-heading" aria-labelledby="rbac"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RBAC
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">src/core/rbac.ts</code> provides role-based access control so multi-actor workflows
-(business analyst, FHIR modeller, terminologist, clinical SME, …) have scoped
-permissions over lifecycle stages.</p>
-<h2 id="work-plan-priming-cross-harness">
-  
-  
-    <a href="#work-plan-priming-cross-harness" class="anchor-heading" aria-labelledby="work-plan-priming-cross-harness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Work-plan priming (cross-harness)
-  
-  
-</h2>
-    
-
-<p>The work-plan is stored in <code class="language-plaintext highlighter-rouge">beans</code> and surfaced three ways so any harness is
-primed identically:</p>
-
-<ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">AGENTS.md</code></strong> — static discipline, read natively by every agent.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">SessionStart</code> hook</strong> — each harness runs the shared
-<code class="language-plaintext highlighter-rouge">scripts/session-start-coord-sweep.sh</code> primer.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">work_plan_prime</code> MCP tool</strong> — live priming for any MCP-connected agent.</li>
-</ol>
-
-<p>See <code class="language-plaintext highlighter-rouge">docs/folio-assistant-migration.md</code> for the full cross-agent design.</p>
-<h2 id="deployment">
-  
-  
-    <a href="#deployment" class="anchor-heading" aria-labelledby="deployment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Deployment
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">deploy/</code> contains a Caddy reverse-proxy template, <code class="language-plaintext highlighter-rouge">docker-compose.yml</code>, a
-provisioning script, Google OAuth setup, and a self-update script for running a
-shared HTTP instance. The skill-package Docker manifests aggregate apt/pip/npm
-dependencies into a single image per active package set.</p>
 
           
 
           
-            <hr>
-<h2 class="text-delta">Table of contents</h2>
-
-<ul>
-  
-  <li>
-    <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/architecture/repo-taxonomy.html">Repo taxonomy</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/architecture/current-state.html">Current state</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/architecture/future-state.html">Future state</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/architecture/migration-plan.html">Migration plan</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/architecture/cat-harness-minimum.html">Minimum cat-harness</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/architecture/harness-instances.html">Harness instances</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/architecture/theming.html">Theming</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/architecture/folio-board-requirements.html">The folio board — requirements as agreed</a>
-  </li>
-  
-</ul>
+            
           
         </main>
         
