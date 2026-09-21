@@ -175,52 +175,55 @@ Written down because `check:bean-issue-links` found it missing, and the defect i
 
 ---
 
-## 2026-09-21 — the trigger was read, and it cannot be read
+## 2026-09-21 — the trigger is readable, and it counts the wrong thing
 
-The open box says **"REVISIT GATING at twelve decision records. `bun run
-health` → `bean-decision-records`; it read 7 on 2026-09-20."** Both halves fail
-on inspection.
+**Correcting the first version of this entry, which said the trigger "cannot be
+read". That was wrong.** `bean-decision-records` exists as a health metric and
+reads **10** today, up from the **7** this bean recorded on 2026-09-20. It is
+readable, it has moved, and it is 10 of 12. The error was mine: I looked for the
+metric in the findings list, where only findings appear, instead of in the
+measurements the report writes.
 
-### The command it names no longer reports that number
+### What survives, and it is the sharper finding
 
-`bean-decision-records` is folded into the `bean-store` check, which reports
-*"decision records with fewer than two options"* — a thinness ratio, not a
-count. So the condition points at an output that cannot answer it.
+| metric | today | 2026-09-20 |
+|---|---|---|
+| `bean-decision-records` — **what the trigger counts** | **10** | 7 |
+| `bean-rendered-decision-records` — **what the deferral was waiting for** | **1** | — |
+| `bean-thin-decision-records` | 0 | 0 |
 
-### And FOUR numbers are in play for one trigger
+**The trigger counts one thing and the reasoning wanted another.** The box will
+fire when `bean-decision-records` reaches 12 — a count of beans carrying a
+considered-options section, which this store writes as a matter of ordinary
+practice and which has grown 7 → 10 in a day without anyone adopting anything.
 
-| reading | today |
-|---|---|
-| beans with an `## Options` heading (LOOSE) | **15** |
-| beans with a RENDERED decision via `renderDecision` | **1** |
-| what this bean claims it read on 2026-09-20 | 7 |
-| what `checks.ts` records for the same day | 2 |
+But the reason the deferral was granted, recorded on this bean, is about
+`renderDecision`:
 
-The trigger names none of them precisely, and the two live readings fall on
-**opposite sides of twelve**.
+> decision-request.ts was written in one sitting against four questions its own
+> author had got wrong — a sample of one author
 
-### The strict count is 1, and it is this bean
+The evidence that would answer that is **`bean-rendered-decision-records`**, and
+it stands at **1** — this bean's own record. `renderDecision` has been used by
+nobody but its author.
 
-`checks.test.ts` settles which reading the condition wanted, in as many words:
+So the trigger will fire on schedule and deliver none of the evidence it was
+set to buy. `checks.test.ts` already states the distinction the trigger misses:
 
 > an `## Options` heading is NOT a rendered decision — the gating condition it
 > was read against wanted decisions put THROUGH `DecisionRequestSchema`
 
-By that reading: **1 of 12**, and the one is `hajp`'s own record. In the day and
-a half since, `renderDecision` has been used by nobody but its author.
+### And the mechanism has no moment that asks for it
 
-### Why that is the finding rather than a detail
+`ask-well.sh` fires on every `AskUserQuestion` and teaches the six parts of
+§4.1. **It never mentions `renderDecision`.** So the one enforced moment in the
+whole loop — the moment the rule certainly applies — says nothing about leaving
+a record, which is why records do not accrue.
 
-The deferral was granted for a stated reason, recorded above: *"decision-request.ts
-was written in one sitting against four questions its own author had got wrong
-— a sample of one author"*. Twelve records were to buy evidence from OTHER
-authors that the mechanism works.
+Measured on this session: **five multi-option questions asked today, zero
+rendered decisions written.** House style that nothing asks for is not followed,
+which is this bean's own thesis applied to its own remedy — *a rule that
+depends on being remembered is not enforced.*
 
-**No such evidence has accumulated.** And the loose count, now at 15, would
-make it look as though it had — which is the failure mode this store already
-has a name for: a condition that cannot be evaluated is indistinguishable from
-a condition not yet met.
-
-*Measured, not decided. The gating question goes back to the owner with these
-numbers rather than being settled by whichever reading happens to be
-convenient.*
+**Owner's ruling, 2026-09-21: option C** — make `renderDecision` required at the
+moment of asking so records accrue, and keep the twelve-record revisit.
