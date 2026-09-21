@@ -1031,14 +1031,14 @@
     {
       "id": "folio-assistant-7iog",
       "title": "COMMAND PATHS ARE CHECKED AGAINST THE REPO, NOT THE RUN: three of four backoff calls in feature-staging resolved at check time and not at run time",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:55:16Z",
-      "updatedAt": "2026-09-20T21:55:16Z",
+      "updatedAt": "2026-09-20T22:45:13Z",
       "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while implementing #605's\n`merge=union` half, in the very loops that fix was going into.\n\n## The defect, measured\n\n`feature-staging.yml` has four retry loops. Each calls `backoff-sleep.ts` —\nthe ONE shared implementation bean `06kg` established. **Three of the four\nname a path that does not exist at run time:**\n\n| loop | job | `working-directory`",
       "file": "beans/defs/folio-assistant-7iog--command-paths-are-checked-against-the-repo-not-the.md"
     },
@@ -1557,7 +1557,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
       "updatedAt": "2026-09-20T21:55:00Z",
-      "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`AGENTS.md` line 3 (the cold-start line every agent runs first), lines 192 and 351, `README.md` lines 4 and 371, and `cat-harness/docs/guides/",
+      "preview": "## The register — the shapes have NAMES, not numbers\n\n*2026-09-20T23:1xZ, on the owner's instruction (\"2 resolve\").*\n\nThe ordinals collided: this bean numbered **shapes** in discovery order, while\n`7iog` called itself \"a fourth class beyond `b963`'s three\" — numbering\nsomething else entirely, the **readers** `check:command-paths` had at the\ntime. Two incompatible schemes, one word. And by the time",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
     {
@@ -2019,14 +2019,14 @@
     {
       "id": "folio-assistant-etg1",
       "title": "bootstrap-tools: bootstrap's shapes become Zod WITHOUT bootstrap knowing zod at all",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:57:52Z",
-      "updatedAt": "2026-09-20T20:57:52Z",
+      "updatedAt": "2026-09-20T22:53:44Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/610\nSibling of `hfkl`, which settles that bootstrap is exempt from the visualiser\nand owes its own .json/.jsonld instead. This is the follow-on that CHANGES THE\nREASON for that exemption, so `hfkl` does not close until this is reflected in\nit. Parented to `vke6` rather than `hfkl` only because a task cannot parent a\ntask.\n\n## Measured, from",
       "file": "beans/defs/folio-assistant-etg1--bootstrap-tools-bootstraps-shapes-become-zod-witho.md"
     },
@@ -4423,6 +4423,20 @@
       "updatedAt": "2026-09-19T05:22:33Z",
       "preview": "## The requirement, in the author's words (2026-09-18)\n\n> make sure schema skills and tools as separated well. the zod(.ts) should be\n> tool KG nodes that implement maintaining a json-ld/json schema for public\n> authoritative. it is the CODING convention of cat-harness that the zod/.ts\n> toolchain is used to maintain INTERNAL the json schema. it is a REQUIREMENT\n> that any instance of cat-harness ",
       "file": "beans/defs/folio-assistant-z4mq--zod-modules-are-tool-kg-nodes-that-maintain-the-pu.md"
+    },
+    {
+      "id": "folio-assistant-z634",
+      "title": "Should bootstrap's published schemas become STRICT (additionalProperties: false)?",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:53:31Z",
+      "updatedAt": "2026-09-20T22:53:31Z",
+      "preview": "Raised by the Zod port (#610, bean `etg1`), and deliberately NOT decided there.\n\n## What happened\n\n`z.object()` is strict, so `zodToJsonSchema` emits `additionalProperties:\nfalse` on every object. The hand-written documents it replaces carried none,\nat any depth. Publishing it would have TIGHTENED a contract consumers already\nfollow: a document with one extra key validates today and would have sto",
+      "file": "beans/defs/folio-assistant-z634--should-bootstraps-published-schemas-become-strict.md"
     },
     {
       "id": "folio-assistant-z7ev",

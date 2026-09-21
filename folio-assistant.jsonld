@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T23:07:39.335Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dcfbe1591a756f764f5df9760cf24444fa33d9b5",
-  "sourceCommitSha": "dcfbe1591a756f764f5df9760cf24444fa33d9b5",
-  "sourceCommitAt": "2026-09-21T01:06:00+02:00",
+  "generatedAt": "2026-09-21T05:16:46.680Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7548838feb68c108342bc88846a0753e7d8be716",
+  "sourceCommitSha": "7548838feb68c108342bc88846a0753e7d8be716",
+  "sourceCommitAt": "2026-09-21T07:15:18+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 217,
@@ -272,9 +272,9 @@
     "SequenceFlow": 697,
     "ProcessNode": 662,
     "Tool": 68,
-    "Schema": 79,
+    "Schema": 80,
     "GraphKind": 22,
-    "Directory": 32,
+    "Directory": 33,
     "Asset": 3
   },
   "@graph": [
@@ -29780,6 +29780,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/detangle-schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "discussion",
+      "title": "The two documents the `discussion` process carries, as Zod.",
+      "module": "../cat-bootstrap-tools/schemas/discussion.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap-tools-schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/tools",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
       "name": "tools",
@@ -31281,6 +31289,17 @@
       "description": "The detangle criterion's schema node -- size, cohesion, inbound/outbound and the enforced/recorded edge authority that decides whether a boundary's direction is a fact or a filing decision. Repository-scoped, staged ahead of the split. UNDECLARED until 2026-09-20 although committed days earlier, which is the dh4f defect in reverse: graph content no declaration mentioned, so every declaration-driven consumer scanned past it -- including `check:schema-nodes`, the gate whose whole job is to stop a schema being silently absent."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap-tools-schemas",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
+      "name": "cat-bootstrap-tools-schemas",
+      "path": "cat-bootstrap-tools/schemas/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+      ],
+      "description": "The Zod that cat-bootstrap's two published JSON Schemas are GENERATED from. Declared here AND in cat-bootstrap-tools/harness.json, for the reason the sibling detangle/kg-navigation/large-datasets entries give: a directory declared only in an instance that is not a DEPENDENCY of this one is invisible from this root, because resolution walks this declaration plus its dependencies and cat-bootstrap-tools is composed under the repository rather than depended on. Without this entry the schema graph reads 113 modules across four instances and cat-bootstrap-tools contributes nothing — which is exactly the state this instance was created to end, since cat-bootstrap itself contributed 0 of 113. The duplicate goes when the composition is wired, with the others."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -31311,8 +31330,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "dcfbe1591a756f764f5df9760cf24444fa33d9b5",
+    "sha": "7548838feb68c108342bc88846a0753e7d8be716",
     "pr": "main",
-    "run": "35543634340"
+    "run": "35563920835"
   }
 }
