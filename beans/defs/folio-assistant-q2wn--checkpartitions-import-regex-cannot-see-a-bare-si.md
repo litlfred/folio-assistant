@@ -1,11 +1,11 @@
 ---
 # folio-assistant-q2wn
-title: "check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written"
-status: todo
+title: check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T22:20:00Z
-updated_at: 2026-09-21T22:20:00Z
+updated_at: 2026-09-21T22:55:57Z
 parent: folio-assistant-vke6
 ---
 
