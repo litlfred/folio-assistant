@@ -13,10 +13,29 @@
 
   <style id="jtd-nav-activation">
   
-    .site-nav ul li a {
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(8)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(8) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(8) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list > li.nav-list-item:nth-child(8) > ul.nav-list {
+      display: block;
+    }
   </style>
 
   
@@ -34,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>تأهيل الوكيل (AR) | folio-assistant</title>
+<title>The folio board — requirements as agreed | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="تأهيل الوكيل (AR)" />
-<meta property="og:locale" content="ar" />
+<meta property="og:title" content="The folio board — requirements as agreed" />
+<meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="تأهيل الوكيل (AR)" />
+<meta property="twitter:title" content="The folio board — requirements as agreed" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -189,16 +208,12 @@
   this block publishes it to the client. No manual editing needed.
 -->
 <script type="application/json" id="fa-translation-meta">{
-  "lang": "ar",
-  "translationStatus": "unverified",
-  "translationSource": "guides/agent-onboarding.md",
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
   "supportedLocales": ["ar","zh","en","fr","ru","es"],
-  "availableLocales": ["ar","zh","en","fr","ru","es"],
-  "translationQa":{
-    "key": "page.translation",
-    "src": "/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/qa/guides-agent-onboarding/page.translation.json",
-    "index": "/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/assets/qa/guides-agent-onboarding/qa-index.json"
-  },
+  "availableLocales": null,
+  "translationQa":null,
   "sweep": {
     "run": true,
     "sweptAt": "2026-09-21T11:25:19.602Z",
@@ -716,8 +731,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/guides/">Authoring guides</a></li>
-    <li class="breadcrumb-nav-list-item"><span>تأهيل الوكيل (AR)</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/architecture.html">Architecture</a></li>
+    <li class="breadcrumb-nav-list-item"><span>The folio board — requirements as agreed</span></li>
   </ol>
 </nav>
 
@@ -725,347 +740,465 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="تأهيل-الوكيل">
+            <h1 class="no_toc" id="the-folio-board--requirements-as-agreed">
   
   
-    <a href="#تأهيل-الوكيل" class="anchor-heading" aria-labelledby="تأهيل-الوكيل"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> تأهيل الوكيل
+    <a href="#the-folio-board--requirements-as-agreed" class="anchor-heading" aria-labelledby="the-folio-board--requirements-as-agreed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The folio board — requirements as agreed
   
   
 </h1>
     
 
-<p>أنت وكيل نموذج لغوي كبير (LLM) تم إدخالك للتو إلى مستودع يستخدم
-folio-assistant. هذه الصفحة هي دليلك التوجيهي: ما الذي تنظر إليه،
-وما يجب فعله أولاً، وأين تبحث عن المعلومات.</p>
-
-<p>من أجل <em>بنية</em> المهارات والأدوار والقدرات، راجع
-<a href="../skills.html">المهارات والأدوار</a>. هذه الصفحة هي النسخة العملية.</p>
-
 <ol id="markdown-toc">
-  <li><a href="#1-حدد-المستودع-الذي-تعمل-فيه" id="markdown-toc-1-حدد-المستودع-الذي-تعمل-فيه">1. حدد المستودع الذي تعمل فيه</a></li>
-  <li><a href="#2-الدقائق-الخمس-الأولى-لك" id="markdown-toc-2-الدقائق-الخمس-الأولى-لك">2. الدقائق الخمس الأولى لك</a></li>
-  <li><a href="#3-ابحث-عن-المهارة-المناسبة--لا-ترتجل" id="markdown-toc-3-ابحث-عن-المهارة-المناسبة--لا-ترتجل">3. ابحث عن المهارة المناسبة — لا ترتجل</a></li>
-  <li><a href="#4-نموذج-كائن-المحتوى-باختصار" id="markdown-toc-4-نموذج-كائن-المحتوى-باختصار">4. نموذج كائن المحتوى باختصار</a></li>
-  <li><a href="#5-علاقتان-من-علاقات-التبعية--لا-تخلط-بينهما" id="markdown-toc-5-علاقتان-من-علاقات-التبعية--لا-تخلط-بينهما">5. علاقتان من علاقات التبعية — لا تخلط بينهما</a></li>
-  <li><a href="#6-تتبع-العمل-في-beans-وليس-في-رأسك" id="markdown-toc-6-تتبع-العمل-في-beans-وليس-في-رأسك">6. تتبع العمل في beans، وليس في رأسك</a></li>
-  <li><a href="#7-ملفات-qa-الجانبية-والمحاور" id="markdown-toc-7-ملفات-qa-الجانبية-والمحاور">7. ملفات QA الجانبية والمحاور</a></li>
-  <li><a href="#8-شحن-العمل" id="markdown-toc-8-شحن-العمل">8. شحن العمل</a></li>
-  <li><a href="#9-أين-تبحث-عن-المعلومات" id="markdown-toc-9-أين-تبحث-عن-المعلومات">9. أين تبحث عن المعلومات</a></li>
-  <li><a href="#10-عادات-تبعدك-عن-المشاكل" id="markdown-toc-10-عادات-تبعدك-عن-المشاكل">10. عادات تبعدك عن المشاكل</a></li>
+  <li><a href="#what-this-is-and-what-it-is-not" id="markdown-toc-what-this-is-and-what-it-is-not">What this is, and what it is not</a></li>
+  <li><a href="#the-need-in-the-requesters-words" id="markdown-toc-the-need-in-the-requesters-words">The need, in the requester’s words</a></li>
+  <li><a href="#round-one--r1-to-r7" id="markdown-toc-round-one--r1-to-r7">Round one — R1 to R7</a>    <ol>
+      <li><a href="#r1--the-board-renders-content-not-only-notes" id="markdown-toc-r1--the-board-renders-content-not-only-notes">R1 — the board renders content, not only notes</a></li>
+      <li><a href="#r2--semantic-zoom-with-a-declared-threshold" id="markdown-toc-r2--semantic-zoom-with-a-declared-threshold">R2 — semantic zoom, with a declared threshold</a></li>
+      <li><a href="#r3--targetlabel-shall-publish-its-parts" id="markdown-toc-r3--targetlabel-shall-publish-its-parts">R3 — <code class="language-plaintext highlighter-rouge">targetLabel</code> SHALL publish its parts</a></li>
+      <li><a href="#r4--the-linear-floor" id="markdown-toc-r4--the-linear-floor">R4 — the linear floor</a></li>
+      <li><a href="#r5-to-r7--the-badge" id="markdown-toc-r5-to-r7--the-badge">R5 to R7 — the badge</a></li>
+    </ol>
+  </li>
+  <li><a href="#round-two--r8-to-r14" id="markdown-toc-round-two--r8-to-r14">Round two — R8 to R14</a></li>
+  <li><a href="#r15-and-r16--reconstructed-then-confirmed" id="markdown-toc-r15-and-r16--reconstructed-then-confirmed">R15 and R16 — reconstructed, then confirmed</a></li>
+  <li><a href="#r17--render-safety" id="markdown-toc-r17--render-safety">R17 — render safety</a></li>
+  <li><a href="#what-the-set-produced" id="markdown-toc-what-the-set-produced">What the set produced</a>    <ol>
+      <li><a href="#one-framing-worth-keeping" id="markdown-toc-one-framing-worth-keeping">One framing worth keeping</a></li>
+    </ol>
+  </li>
+  <li><a href="#where-this-diverged-from-what-was-agreed" id="markdown-toc-where-this-diverged-from-what-was-agreed">Where this diverged from what was agreed</a></li>
 </ol><hr />
-<h2 id="1-حدد-المستودع-الذي-تعمل-فيه">
+<h2 id="what-this-is-and-what-it-is-not">
   
   
-    <a href="#1-حدد-المستودع-الذي-تعمل-فيه" class="anchor-heading" aria-labelledby="1-حدد-المستودع-الذي-تعمل-فيه"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. حدد المستودع الذي تعمل فيه
+    <a href="#what-this-is-and-what-it-is-not" class="anchor-heading" aria-labelledby="what-this-is-and-what-it-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this is, and what it is not
   
   
 </h2>
     
 
-<p>هناك نوعان، والخلط بينهما هو الخطأ الأكثر شيوعًا في البداية.</p>
+<p><strong>A design record.</strong> It states what was agreed for the folio board, in the CRDM
+run on <a href="https://github.com/litlfred/folio-assistant/issues/602">issue #602</a>
+between 2026-09-20 and 2026-09-21, and it exists so that a person asking <em>why
+is the board shaped like this</em> has one place to look.</p>
+
+<p>It is <strong>history, not instruction</strong>, and that is the line the owner drew: a
+skill carries what a competent practitioner needs <em>in order to do</em> the task,
+and everything past that — the reasoning, the options not taken, the
+measurements behind a threshold — is documentation. Every sentence below describes what was
+agreed on a date, against a repository in a state. Where the implementation has
+since diverged, the divergence is stated rather than smoothed. Nothing here
+tells an agent what to do — the rules an agent follows live in the
+<code class="language-plaintext highlighter-rouge">cat-harness</code> skills this set produced, and the processes live in the three
+executable BPMN diagrams beside them.</p>
+
+<p><strong>Filed here on the owner’s ruling, 2026-09-21:</strong></p>
+
+<blockquote>
+  <p>this is a memory asset as part of design, so it goes into docs/ […] this was
+an asset as part of building a feature […] but it is not the content we want
+displayed itself.</p>
+</blockquote>
+
+<p><strong>And why it is in <code class="language-plaintext highlighter-rouge">cat-harness/docs/</code> specifically</strong>, sharpened the same day:
+<em>“if it is realated to some harness/feature/tool that detailed infromation/
+design/planning/etc go into that harness’ docs/”</em>. The board’s schema and
+behaviour live in <code class="language-plaintext highlighter-rouge">cat-harness</code> by the requester’s own layering, so the record
+of why they are shaped that way lives in that instance’s <code class="language-plaintext highlighter-rouge">docs/</code> — not in the
+repository root’s, and not in a folio’s.</p>
+
+<p>The class, and why <code class="language-plaintext highlighter-rouge">fsh-guts</code> was the tempting wrong answer for it, is in
+<a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/kg-contribution-offer.html"><code class="language-plaintext highlighter-rouge">kg-contribution-offer</code></a>;
+where inside <code class="language-plaintext highlighter-rouge">docs/</code> such a record files is in
+<a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>.</p><hr />
+<h2 id="the-need-in-the-requesters-words">
+  
+  
+    <a href="#the-need-in-the-requesters-words" class="anchor-heading" aria-labelledby="the-need-in-the-requesters-words"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The need, in the requester’s words
+  
+  
+</h2>
+    
+
+<p>The whole set derives from this, kept verbatim because the layering sentence is
+precise and a paraphrase loses it:</p>
+
+<blockquote>
+  <p>landing folio should really be resizable, switchiing over to content avatars
+if content no longer lgeible. liek miro board. content vieweing panes are
+resizzble. but ALWAYS collapsable to linearly rendablee/just the docs. the
+todos/miro board is a static content overlays, so new content type that sits
+under todos/ but scema and behavhoir of folio=miro board is in cat-harness.
+carefull separte tools and schema.</p>
+</blockquote>
+
+<blockquote>
+  <p>notes can mvoe aroundin board. be attached to nothing or show attachment to
+content nodes based on relationships</p>
+</blockquote>
+
+<blockquote>
+  <p>stickies are icon on content (or its avatars) with badge of # if &gt; 1. can
+click to open sticky/sticky panel</p>
+</blockquote>
+
+<p>Two things in it are <strong>constraints rather than preferences</strong>, and both shaped
+everything after:</p>
+
+<ul>
+  <li><strong>the <code class="language-plaintext highlighter-rouge">todos/</code> ↔ <code class="language-plaintext highlighter-rouge">cat-harness</code> split</strong> — content under <code class="language-plaintext highlighter-rouge">todos/</code>, schema and
+behaviour in <code class="language-plaintext highlighter-rouge">cat-harness</code>, tools kept distinct from schema;</li>
+  <li><strong>“ALWAYS collapsable to linearly rendablee”</strong> — an accessibility floor. A
+board that cannot be read linearly cannot be read by a screen reader, printed
+or translated.</li>
+</ul><hr />
+<h2 id="round-one--r1-to-r7">
+  
+  
+    <a href="#round-one--r1-to-r7" class="anchor-heading" aria-labelledby="round-one--r1-to-r7"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Round one — R1 to R7
+  
+  
+</h2>
+    
+
+<p>Agreed in Phase 3. Of the seven, <strong>exactly one introduced a genuinely new
+mechanism</strong>; that finding is why the implementation was ten small units rather
+than one large one.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
       <th> </th>
-      <th><strong>folio-assistant</strong> (المنصة)</th>
-      <th><strong>ملف المحتوى (A folio)</strong> (مستودع المحتوى)</th>
+      <th>requirement</th>
+      <th>new mechanism?</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>يحتوي على</td>
-      <td>المهارات، المخططات، خط المعالجة (pipeline)، خادم MCP</td>
-      <td>الورقة البحثية / الدليل الإرشادي / دليل التطبيق (IG) الفعلي</td>
+      <td><strong>R1</strong></td>
+      <td>the board renders content, not only notes</td>
+      <td>no — a second rendering of an existing relation</td>
     </tr>
     <tr>
-      <td>يحتوي على <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/</code></td>
-      <td>لا — فقط <code class="language-plaintext highlighter-rouge">content/pipeline/</code></td>
-      <td>نعم</td>
+      <td><strong>R2</strong></td>
+      <td>semantic zoom, with the threshold <strong>declared</strong> rather than a literal</td>
+      <td><strong>yes — the only one</strong></td>
     </tr>
     <tr>
-      <td>تعدل هنا من أجل</td>
-      <td>تغيير كيفية عمل التأليف</td>
-      <td>تغيير ما يتم تأليفه</td>
+      <td><strong>R3</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">targetLabel</code> publishes its parts</td>
+      <td>no — a bug fix</td>
+    </tr>
+    <tr>
+      <td><strong>R4</strong></td>
+      <td>linear collapse, reachable without JavaScript</td>
+      <td>no, but it constrains R1</td>
+    </tr>
+    <tr>
+      <td><strong>R5</strong></td>
+      <td>the badge counts only when <code class="language-plaintext highlighter-rouge">&gt; 1</code></td>
+      <td>no — two lines</td>
+    </tr>
+    <tr>
+      <td><strong>R6</strong></td>
+      <td>badge and panel stay <strong>one</strong> query</td>
+      <td>no — a regression test for something already true</td>
+    </tr>
+    <tr>
+      <td><strong>R7</strong></td>
+      <td>badges on avatars</td>
+      <td>no — R2 plus R6</td>
     </tr>
   </tbody>
 </table></div>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls </span>content/          <span class="c"># pipeline/ only  ⇒ platform;  paper dirs ⇒ folio</span>
-</code></pre></div></div>
-
-<p><strong>لا يحتوي folio-assistant على أي محتوى.</strong> إذا وجدت نفسك على وشك
-كتابة موضوع في صلب المادة داخله — فصلاً، أو ثابتاً، أو قائمة كلمات رئيسية
-لفصل — فأنت في المستودع الخطأ، أو أن ما تكتبه يجب أن يكون بيانات يقدمها
-الـ folio. راجع §7.</p>
-<h2 id="2-الدقائق-الخمس-الأولى-لك">
+<h3 id="r1--the-board-renders-content-not-only-notes">
   
   
-    <a href="#2-الدقائق-الخمس-الأولى-لك" class="anchor-heading" aria-labelledby="2-الدقائق-الخمس-الأولى-لك"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. الدقائق الخمس الأولى لك
+    <a href="#r1--the-board-renders-content-not-only-notes" class="anchor-heading" aria-labelledby="r1--the-board-renders-content-not-only-notes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R1 — the board renders content, not only notes
+  
+  
+</h3>
+    
+
+<p>The board SHALL render content nodes alongside notes, and a note attached to a
+content node SHALL render <strong>at that node</strong> rather than at an independent
+position.</p>
+
+<p><em>Accepted when</em> a board with one note attached to a block and one attached to
+nothing renders <strong>both</strong> — the first at its block, the second at its declared
+position. Removing the attachment moves the note to its position rather than
+hiding it: “attached to nothing” is an existing declared state, not a new one.</p>
+<h3 id="r2--semantic-zoom-with-a-declared-threshold">
+  
+  
+    <a href="#r2--semantic-zoom-with-a-declared-threshold" class="anchor-heading" aria-labelledby="r2--semantic-zoom-with-a-declared-threshold"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R2 — semantic zoom, with a declared threshold
+  
+  
+</h3>
+    
+
+<p>As the board shrinks, a card SHALL stop rendering its words and render its
+<strong>avatar</strong> instead. The threshold SHALL be <strong>declared data</strong>, not a literal in
+the renderer.</p>
+
+<p><em>Accepted when</em> the card renders text at a declared size and its avatar below
+it, a kind with no avatar takes <code class="language-plaintext highlighter-rouge">GENERIC</code> rather than rendering blank, and the
+behaviour is <strong>falsified in both directions</strong> — a test that only checks the
+shrunk case passes for a board that is always avatars.</p>
+
+<p><em>Consumer burden:</em> the threshold is <strong>emitted</strong>, never documented. <em>“We don’t
+need to emit it — the renderer knows”</em> is the smell this phase names.</p>
+<h3 id="r3--targetlabel-shall-publish-its-parts">
+  
+  
+    <a href="#r3--targetlabel-shall-publish-its-parts" class="anchor-heading" aria-labelledby="r3--targetlabel-shall-publish-its-parts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R3 — <code class="language-plaintext highlighter-rouge">targetLabel</code> SHALL publish its parts
+  
+  
+</h3>
+    
+
+<p>The published todo index SHALL emit a note’s <strong>page and node as separate
+fields</strong>, not only the composite <code class="language-plaintext highlighter-rouge">targetLabel</code>.</p>
+
+<p>This one was a <strong>defect in something already published</strong>. The value is
+<code class="language-plaintext highlighter-rouge">sec:&lt;page&gt;-&lt;node&gt;</code>, page-qualified for a good reason — the bare node id
+<code class="language-plaintext highlighter-rouge">what-is-not-built-yet</code> existed on two pages. But any consumer asking <em>which
+page is this note on</em> had to string-manipulate: know the <code class="language-plaintext highlighter-rouge">sec:</code> prefix, know
+the separator is <code class="language-plaintext highlighter-rouge">-</code>, and know node ids themselves contain <code class="language-plaintext highlighter-rouge">-</code>, so the split is
+not unambiguous without already holding the page list.</p>
+
+<p><strong>Our own client escaped it by accident</strong>, matching on the whole string and
+never parsing, which is exactly why it went unnoticed.</p>
+<h3 id="r4--the-linear-floor">
+  
+  
+    <a href="#r4--the-linear-floor" class="anchor-heading" aria-labelledby="r4--the-linear-floor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R4 — the linear floor
+  
+  
+</h3>
+    
+
+<p>The board SHALL always be collapsible to a linear rendering that works without
+JavaScript. Movement SHALL be <strong>keyboard-operable</strong>; drag MAY be an accelerator
+and SHALL NOT be the only way in — this instance’s declared interaction profile
+is low-dexterity.</p>
+<h3 id="r5-to-r7--the-badge">
+  
+  
+    <a href="#r5-to-r7--the-badge" class="anchor-heading" aria-labelledby="r5-to-r7--the-badge"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R5 to R7 — the badge
+  
+  
+</h3>
+    
+
+<p>The badge SHALL show a count only when more than one note is attached (R5); the
+badge and its panel SHALL be <strong>two readings of one query</strong> rather than a number
+somebody maintains (R6); and an avatar carries the same badge from the same
+query as the card it replaced (R7).</p>
+
+<p><strong>A badge that can disagree with its own panel is the defect designed out</strong>,
+and it is designed out by derivation rather than by discipline.</p><hr />
+<h2 id="round-two--r8-to-r14">
+  
+  
+    <a href="#round-two--r8-to-r14" class="anchor-heading" aria-labelledby="round-two--r8-to-r14"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Round two — R8 to R14
   
   
 </h2>
     
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans prime <span class="o">&amp;&amp;</span> beans list      <span class="c"># the work-plan — see §6</span>
-scripts/session-start-coord-sweep.sh   <span class="c"># CLI-independent equivalent</span>
-bun run src/index.ts <span class="nt">--check-deps</span>      <span class="c"># what this environment can do</span>
-</code></pre></div></div>
-
-<p>الخيار <code class="language-plaintext highlighter-rouge">--check-deps</code> أكثر أهمية مما يبدو عليه. إذ تتحول العديد من الفحوصات
-إلى <code class="language-plaintext highlighter-rouge">n/a</code> بدلاً من الفشل عند غياب أداة معينة (عدم وجود سلسلة أدوات Lean، أو
-عدم وجود Atlas، أو غياب LaTeX). <strong>إن نتيجة <code class="language-plaintext highlighter-rouge">n/a</code> لا تعني النجاح.</strong> إذا أبلغت بأن
-“كل شيء نظيف” دون معرفة ما تم تخطيه، فأنت تبلغ عن غياب البيانات كنتيجة.</p>
-<h2 id="3-ابحث-عن-المهارة-المناسبة--لا-ترتجل">
-  
-  
-    <a href="#3-ابحث-عن-المهارة-المناسبة--لا-ترتجل" class="anchor-heading" aria-labelledby="3-ابحث-عن-المهارة-المناسبة--لا-ترتجل"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. ابحث عن المهارة المناسبة — لا ترتجل
-  
-  
-</h2>
-    
-
-<p>المهارات هي وحدة العمل هنا. قبل أن تبني إجراءً يدويًا، تحقق مما إذا
-كان هناك إجراء موجود بالفعل.</p>
+<p>These arrived <strong>after</strong> the requirements gateway had closed, and were checked
+against the declared model rather than assumed compatible. They are additive:
+nothing already agreed was invalidated.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>الموقع</th>
-      <th>ما يقدمه لك</th>
+      <th> </th>
+      <th>requirement</th>
+      <th>relation to round one</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></td>
-      <td>مهارات غير مرتبطة بمحتوى معين: التنسيق، المراقبون (watchers)، ضمان الجودة (QA)، التصيير، المراجع</td>
+      <td><strong>R8</strong></td>
+      <td>the dynamic board is an <strong>overlay</strong>; the standard rendering is a simple tile listing</td>
+      <td><strong>sharpens R4</strong> — the floor is a tile listing, and movement is additive over it</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/</code></td>
-      <td>الأوراق البحثية: Lean، وLaTeX، والبراهين، والمحاكيات</td>
+      <td><strong>R9</strong></td>
+      <td><strong>everything starts as an avatar</strong>; opening is an explicit act, <code class="language-plaintext highlighter-rouge">[x]</code> closes back</td>
+      <td><strong>splits R2</strong> into two mechanisms — an explicit open/close a person performs, and automatic zoom by size. Conflating them is the defect to design out</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/authoring-who-smart-guidelines/</code></td>
-      <td>حزم DAK / أدلة IG لإرشادات منظمة الصحة العالمية SMART</td>
+      <td><strong>R10</strong></td>
+      <td>an open card is a panel with <strong>fixed controls</strong>, plus others depending on content; each content type controls its own rendering</td>
+      <td>the kind owned the zoom threshold; it now owns its whole rendering, under a chrome contract it cannot reach</td>
     </tr>
     <tr>
-      <td><a href="../reference/skills/">مرجع مخطط المهارات</a></td>
-      <td>عقد الإدخال/الإخراج المصنف للأنواع والمولّد آليًا لكل مهارة</td>
+      <td><strong>R11</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">fsh-guts</code> is a tile, and <code class="language-plaintext highlighter-rouge">[fishbones]</code> puts content into it as a <strong>confirmed</strong> action</td>
+      <td>new; reuses the declared non-rendered trashcan, whose founding rule is <em>do not delete unless explicit confirm</em></td>
     </tr>
     <tr>
-      <td><a href="../reference/skill-instructions/">تعليمات المهارات</a></td>
-      <td>نصوص التعليمات الكاملة المولّدة آليًا</td>
+      <td><strong>R12</strong></td>
+      <td>create a new sticky note — itself a tile</td>
+      <td>new</td>
     </tr>
     <tr>
-      <td><a href="../skills.html">المهارات والأدوار</a></td>
-      <td>كيفية تكوين المهارات والأدوار والقدرات معًا</td>
+      <td><strong>R13</strong></td>
+      <td>filter the board by kind properties, <strong>interactively</strong></td>
+      <td>a <em>reader’s</em> filter at view time, distinct from the board document’s <em>declared</em> filter. Two things that must not become one field</td>
+    </tr>
+    <tr>
+      <td><strong>R14</strong></td>
+      <td>resize open content, move it, drag and drop</td>
+      <td>rides R4’s floor: drag is an accelerator, keyboard operation is not optional</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>كلا الدليلين في <code class="language-plaintext highlighter-rouge">reference/</code> <strong>مولّدان آليًا</strong> — إياك وتعديلهما يدويًا.
-أعد التوليد باستخدام <code class="language-plaintext highlighter-rouge">bun run scripts/gen-schema-docs.ts</code> و
-<code class="language-plaintext highlighter-rouge">bun run scripts/gen-skill-docs.ts</code>.</p>
-<h2 id="4-نموذج-كائن-المحتوى-باختصار">
+<p>Recorded alongside them as scope rather than as a requirement: <strong>“do all the
+skills and bpmn workflows”</strong> — each of these gets its skill and its diagram,
+not only its schema.</p><hr />
+<h2 id="r15-and-r16--reconstructed-then-confirmed">
   
   
-    <a href="#4-نموذج-كائن-المحتوى-باختصار" class="anchor-heading" aria-labelledby="4-نموذج-كائن-المحتوى-باختصار"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. نموذج كائن المحتوى باختصار
-  
-  
-</h2>
-    
-
-<p>كتلة المحتوى (content block) هي <strong>ثلاثية</strong> تشترك في اسم جذر واحد:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;block&gt;.ts     manifest — label, kind, uses[], lean.ref, cites[]
-&lt;block&gt;.md     the narrative a reader actually reads
-&lt;block&gt;.lean   the formalisation (when the kind requires one)
-&lt;block&gt;.qa.json  QA sidecar — audit results, per criterion
-</code></pre></div></div>
-
-<p>بيان <code class="language-plaintext highlighter-rouge">.ts</code> هو مصدر الحقيقة للبنية. أما <em>حالة</em> الصياغة الرسمية فتُشتق
-أثناء وقت البناء، ولا تُخزَّن أبدًا في البيان.</p>
-<h2 id="5-علاقتان-من-علاقات-التبعية--لا-تخلط-بينهما">
-  
-  
-    <a href="#5-علاقتان-من-علاقات-التبعية--لا-تخلط-بينهما" class="anchor-heading" aria-labelledby="5-علاقتان-من-علاقات-التبعية--لا-تخلط-بينهما"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. علاقتان من علاقات التبعية — لا تخلط بينهما
+    <a href="#r15-and-r16--reconstructed-then-confirmed" class="anchor-heading" aria-labelledby="r15-and-r16--reconstructed-then-confirmed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R15 and R16 — reconstructed, then confirmed
   
   
 </h2>
     
 
-<p>هذا الأمر يُربك الوكلاء باستمرار.</p>
+<p><strong>They were referenced but never written down.</strong> Bean <code class="language-plaintext highlighter-rouge">51wf</code> is assigned
+<em>“R2, R9, R15”</em> and bean <code class="language-plaintext highlighter-rouge">zsah</code> <em>“R12, R16”</em>, and no comment on #602 states
+either requirement. When this record was first written they were therefore
+reported as <strong>undefined</strong>, with the recoverable meaning marked as inference —
+because a design record that fills its own gaps with plausible sentences is
+worse than one that names them, since invented text reads exactly like agreed
+text.</p>
 
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">uses[]</code> هي علاقة تحريرية.</strong> “ما الذي يجب أن يكون القارئ قد قرأه
-ليتابع هذه الكتلة؟” مؤلفة — يتولى صيانتها الوكيل/الإنسان.</li>
-  <li><strong>المخطط الشكلي (formal graph) مُشتق آليًا</strong> من <code class="language-plaintext highlighter-rouge">lean.ref</code>، ولا
-يُكتب يدويًا أبدًا.</li>
-</ul>
-
-<p>وهما يتباينان بصورة مبررة في كلا الاتجاهين: فقد يستدعي برهان ما توطئات
-<code class="language-plaintext highlighter-rouge">simp</code> لا يحتاج أي شخص للقراءة عنها؛ وقد يكون الدافع وراء مبرهنة ما
-مثالاً لا تستشهد به المبرهنة شكليًا على الإطلاق.</p>
-
-<p><strong>لا تملأ <code class="language-plaintext highlighter-rouge">uses[]</code> أبدًا من Lean.</strong> فهذا يدمر الإشارة التي يُحسب
-منها كل مقياس للترتيب. وللإجابة عن أسئلة الأثر (“ما الذي سينكسر إذا
-تغير هذا؟”)، خذ الاتحاد (union):</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/content-graph.ts content/&lt;paper&gt;
-</code></pre></div></div>
-
-<p>تدقيق ما إذا كانت <code class="language-plaintext highlighter-rouge">uses[]</code> مستخدمة بشكل جيد هو مهارة قائمة بذاتها:
-<code class="language-plaintext highlighter-rouge">uses-editorial-review</code>، بالإضافة إلى محور QA الميكانيكي <code class="language-plaintext highlighter-rouge">uses</code>.</p>
-<h2 id="6-تتبع-العمل-في-beans-وليس-في-رأسك">
-  
-  
-    <a href="#6-تتبع-العمل-في-beans-وليس-في-رأسك" class="anchor-heading" aria-labelledby="6-تتبع-العمل-في-beans-وليس-في-رأسك"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. تتبع العمل في beans، وليس في رأسك
-  
-  
-</h2>
-    
-
-<p>إن <code class="language-plaintext highlighter-rouge">beans</code> هي آلية المهام (todo) <strong>الوحيدة</strong> — محلية للجلسة <em>وعبر</em>
-الوكلاء. دليل <code class="language-plaintext highlighter-rouge">beans/</code> يتم تثبيته في المستودع (committed)، لذا فإن
-الخطة تبقى وتستمر عند الاستئناف في حاوية جديدة.</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans list
-beans create <span class="s2">"&lt;title&gt;"</span>
-beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>    <span class="c"># CLAIM before you work</span>
-</code></pre></div></div>
-
-<p>احجز المهمة (claim) قبل البدء بالعمل حتى لا تلتقط جلستان العنصر نفسه،
-ولا تقم أبدًا بحل أو حذف مهمة تخص وكيلاً زميلاً. لا تنشئ مخزن مهام
-موازيًا. ولا تستخدم <code class="language-plaintext highlighter-rouge">beans create</code> لإنشاء طوابير ضخمة مولدة آليًا
-(<code class="language-plaintext highlighter-rouge">*.qa.json</code>، ملفات الشواهد) — فهذه تبقى بصيغة JSON مجمعة.</p>
-
-<p>القواعد الكاملة: <code class="language-plaintext highlighter-rouge">skills/folio-core/todo-manager.md</code>، و
-<code class="language-plaintext highlighter-rouge">skills/folio-core/bean-coordination.md</code>.</p>
-<h2 id="7-ملفات-qa-الجانبية-والمحاور">
-  
-  
-    <a href="#7-ملفات-qa-الجانبية-والمحاور" class="anchor-heading" aria-labelledby="7-ملفات-qa-الجانبية-والمحاور"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. ملفات QA الجانبية والمحاور
-  
-  
-</h2>
-    
-
-<p>يمكن لكل كتلة أن تحمل <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> يسجل، لكل معيار، ما توصل إليه
-كل مراجع — <code class="language-plaintext highlighter-rouge">script</code>، أو <code class="language-plaintext highlighter-rouge">agent</code>، أو <code class="language-plaintext highlighter-rouge">human</code>. وتحمل السجلات تجزئات ملف
-المصدر في وقت التدقيق، لذا يصبح السجل <strong>قديماً (stale)</strong> عند تعديل
-الكتلة ويجب إعادة البت فيه.</p>
-
-<p>تُجمّع المعايير في <strong>محاور (axes)</strong> مثل (<code class="language-plaintext highlighter-rouge">proof</code>، و<code class="language-plaintext highlighter-rouge">voice</code>، و<code class="language-plaintext highlighter-rouge">detangler</code>،
-و<code class="language-plaintext highlighter-rouge">uses</code>، و<code class="language-plaintext highlighter-rouge">canonical</code>، و<code class="language-plaintext highlighter-rouge">compute</code>، و<code class="language-plaintext highlighter-rouge">bibliography</code>، …). قم بتشغيل أحدها:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/qa-sweep.ts <span class="nt">--axis</span> uses content/&lt;paper&gt;
-bun run content/pipeline/qa-staleness.ts content/&lt;paper&gt;
-</code></pre></div></div>
-
-<p>بعض المعايير تكون <code class="language-plaintext highlighter-rouge">automated: true</code> (يحسمها نص برمجي) وبعضها الآخر
-<code class="language-plaintext highlighter-rouge">automated: false</code> (يجب على وكيل أو إنسان البت فيها). والنوع الثاني يكلف
-أدوار عمل حقيقية — انظر <code class="language-plaintext highlighter-rouge">semantic-cone.ts</code> لحصر نطاقها وفق ما يمكنها
-التأثير عليه فعليًا.</p>
-
-<p><strong>محاور folio الاختيارية.</strong> لا يتم تسجيل محور يرمز لموضوع folio معين
-إلا عندما يختار الـ folio الاشتراك فيه صراحة:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">&lt;name&gt;.config.json</span><span class="w">
-</span><span class="p">{</span><span class="w"> </span><span class="nl">"qaAxes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"q-usage"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p>وبالمثل، فإن <em>البيانات</em> الخاصة بـ folio تنتمي إلى الـ folio، وليس إلى
-المنصة — على سبيل المثال: <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/topic-keywords.json</code> يوجّه
-<code class="language-plaintext highlighter-rouge">detangler-topic-coherence</code>، وفي حال غيابه يُبلغ الفاحص عن <code class="language-plaintext highlighter-rouge">n/a</code>.</p>
-<h2 id="8-شحن-العمل">
-  
-  
-    <a href="#8-شحن-العمل" class="anchor-heading" aria-labelledby="8-شحن-العمل"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. شحن العمل
-  
-  
-</h2>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/prepare-merge <span class="o">[</span>base]
-</code></pre></div></div>
-
-<p>يقوم هذا الأمر بتشغيل الوصفة العامة بالإضافة إلى بوابات الفحص الخاصة
-بنوع المحتوى (للأوراق البحثية → content_validate / qa_sweep / proof_status / latex_preflight /
-lean_build)، ثم يدفع التغييرات. <strong>إنه لا يقوم بالدمج.</strong></p>
-
-<p>لمراقبة طلب سحب (PR) زميل: <code class="language-plaintext highlighter-rouge">/watch &lt;pr|branch&gt;</code>.</p>
-<h2 id="9-أين-تبحث-عن-المعلومات">
-  
-  
-    <a href="#9-أين-تبحث-عن-المعلومات" class="anchor-heading" aria-labelledby="9-أين-تبحث-عن-المعلومات"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. أين تبحث عن المعلومات
-  
-  
-</h2>
-    
+<p><strong>The owner confirmed both readings on 2026-09-21</strong> (<em>“agreed on r15/16”</em>), so
+they are now agreed requirements rather than reconstructions:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>السؤال</th>
-      <th>الإجابة</th>
+      <th> </th>
+      <th>requirement</th>
+      <th>how it was recovered</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>أوامر المشروع واتفاقياته</td>
-      <td><code class="language-plaintext highlighter-rouge">AGENTS.md</code> (مصدر الحقيقة العام للوكيل)</td>
+      <td><strong>R15</strong></td>
+      <td>selecting any part of an open window <strong>raises</strong> it — z-order is a reader’s act</td>
+      <td><code class="language-plaintext highlighter-rouge">51wf</code>’s unit description, <em>“z-order with raise-on-select”</em></td>
     </tr>
     <tr>
-      <td>ما تفعله مهارة معينة</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/**/</code>، أو <a href="../reference/skill-instructions/">نصوص التعليمات</a> المولّدة آليًا</td>
-    </tr>
-    <tr>
-      <td>العقد المصنف للأنواع للمهارة</td>
-      <td><a href="../reference/skills/">مرجع مخطط المهارات</a></td>
-    </tr>
-    <tr>
-      <td>ما يعنيه معيار ضمان الجودة (QA)</td>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code> — الأوصاف هي المواصفة القياسية</td>
-    </tr>
-    <tr>
-      <td>مخطط الكتلة (block schema)</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/types.ts</code></td>
-    </tr>
-    <tr>
-      <td>مخطط ملف QA الجانبي</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/block-qa.ts</code></td>
-    </tr>
-    <tr>
-      <td>ما يمكن لهذه البيئة فعله</td>
-      <td><code class="language-plaintext highlighter-rouge">.claude/skills/capabilities/*.json</code>، و<code class="language-plaintext highlighter-rouge">--check-deps</code></td>
-    </tr>
-    <tr>
-      <td>خطة طريق أدوات Lean</td>
-      <td><a href="../proposals/llm-authoring-tool-integration.html">مقترح أدوات Lean</a></td>
+      <td><strong>R16</strong></td>
+      <td>a tile opens the <strong>existing</strong> visualisation; nothing builds a second viewer</td>
+      <td>an aside on the issue, <em>“R12/R16 said a tile opens the existing visualisation”</em></td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="10-عادات-تبعدك-عن-المشاكل">
+
+<p>Both were implemented to that reading before it was confirmed, which is why the
+gap mattered: the code was already committed to an interpretation nothing had
+stated. <strong>The provenance is kept rather than tidied away</strong> — a requirement
+recovered from a bean’s unit description and later ratified is not the same
+artefact as one written down at the time, and a reader re-checking this
+subsystem should know which it is.</p><hr />
+<h2 id="r17--render-safety">
   
   
-    <a href="#10-عادات-تبعدك-عن-المشاكل" class="anchor-heading" aria-labelledby="10-عادات-تبعدك-عن-المشاكل"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. عادات تبعدك عن المشاكل
+    <a href="#r17--render-safety" class="anchor-heading" aria-labelledby="r17--render-safety"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R17 — render safety
   
   
 </h2>
     
 
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">n/a</code> لا تعني النجاح.</strong> اذكر ما تم تخطيه ولماذا.</li>
-  <li><strong>احجز الـ bean قبل البدء بعمل دائم.</strong> قد تكون هناك مهام أخرى قيد التشغيل.</li>
-  <li><strong>لا تضع اسم الورقة البحثية بشكل ثابت (hardcode).</strong> قد يحتوي الـ folio على عدة أوراق؛ قم بحل الاسم
-باستخدام <code class="language-plaintext highlighter-rouge">findPapers()</code> / <code class="language-plaintext highlighter-rouge">soleFolioPaper()</code> من
-<code class="language-plaintext highlighter-rouge">content/pipeline/repo-root.ts</code>.</li>
-  <li><strong>لا تكتب محتوى داخل المنصة.</strong> إذا كان يحدد فصلاً، أو
-ثابتًا، أو مفردات، فهو من بيانات الـ folio.</li>
-  <li><strong>أعد التوليد ولا تعدل يدويًا أبدًا</strong> أي شيء تحت <code class="language-plaintext highlighter-rouge">docs/reference/</code>.</li>
-  <li><strong>اقرأ وصف المعيار قبل التصرف بناءً على نتيجة الفحص.</strong> فالأوصاف
-توضح مستوى الخطورة، والقصد، وما هو مستبعد صراحةً.</li>
-</ul>
+<p>The last instruction became its own requirement: <em>“skill tool hints for XSS…
+lazy load… assume assets in KG accessible, dynamic render where can”</em>.</p>
+
+<p><strong>Only part of it has a subject.</strong> The <code class="language-plaintext highlighter-rouge">Url</code> half shipped as
+<code class="language-plaintext highlighter-rouge">schemas/safe-url.ts</code>, default-deny, with a source-level check that a renderer
+ignoring it fails a test rather than shipping. The Tool-output render
+vocabulary did <strong>not</strong>, and the reason is recorded rather than deferred
+silently: nothing renders a <em>tool’s</em> output even now, so choosing the terms
+would be choosing them with no consumer to constrain them — a declared safety
+property whose check does not answer its claim is worse than prose, because
+prose is honestly unchecked.</p><hr />
+<h2 id="what-the-set-produced">
+  
+  
+    <a href="#what-the-set-produced" class="anchor-heading" aria-labelledby="what-the-set-produced"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the set produced
+  
+  
+</h2>
+    
+
+<p>Each requirement’s artefacts, so the record points at the code rather than
+describing it:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>graph</th>
+      <th>what landed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code> (BPMN)</td>
+      <td><code class="language-plaintext highlighter-rouge">board-open-close</code>, <code class="language-plaintext highlighter-rouge">board-relocate</code>, <code class="language-plaintext highlighter-rouge">board-place-note</code> — executable diagrams with hand-authored Diagram Interchange</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code> (skills)</td>
+      <td><code class="language-plaintext highlighter-rouge">board-windows</code>, <code class="language-plaintext highlighter-rouge">board-diagram-interchange</code>, <code class="language-plaintext highlighter-rouge">harness-tiles</code>, plus the <code class="language-plaintext highlighter-rouge">board-renderer</code> role and actor</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">schemas</code></td>
+      <td><code class="language-plaintext highlighter-rouge">board-positions</code>, <code class="language-plaintext highlighter-rouge">window-stack</code>, <code class="language-plaintext highlighter-rouge">panel-chrome</code>, <code class="language-plaintext highlighter-rouge">reader-filter</code>, <code class="language-plaintext highlighter-rouge">semantic-zoom</code>, <code class="language-plaintext highlighter-rouge">safe-url</code></td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="one-framing-worth-keeping">
+  
+  
+    <a href="#one-framing-worth-keeping" class="anchor-heading" aria-labelledby="one-framing-worth-keeping"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One framing worth keeping
+  
+  
+</h3>
+    
+
+<p>A <strong>board is a diagram OF a folio</strong>, in the OMG sense that a <code class="language-plaintext highlighter-rouge">BPMNDiagram</code> is a
+diagram of a <code class="language-plaintext highlighter-rouge">bpmn:process</code>. The folio carries what is true; the layout layer
+carries where it was drawn; the arrow runs <code class="language-plaintext highlighter-rouge">folio → board → position → note</code>
+and never back.</p>
+
+<p>Two consequences follow, and both are load-bearing: <code class="language-plaintext highlighter-rouge">board-positions</code> may not
+put <code class="language-plaintext highlighter-rouge">x</code>/<code class="language-plaintext highlighter-rouge">y</code> on a note, for the same reason BPMN does not put coordinates on a
+task — and <strong>a folio is complete with no board.</strong> Deleting every board loses
+layout and no content.</p><hr />
+<h2 id="where-this-diverged-from-what-was-agreed">
+  
+  
+    <a href="#where-this-diverged-from-what-was-agreed" class="anchor-heading" aria-labelledby="where-this-diverged-from-what-was-agreed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this diverged from what was agreed
+  
+  
+</h2>
+    
+
+<p>One place, and it is recorded on the bean as well.</p>
+
+<p><code class="language-plaintext highlighter-rouge">51wf</code>’s checklist said <em>“every card starts as its avatar, at any size”</em>, which
+cannot be literal alongside R2 — if cards are avatars at every width, R2 has
+nothing to do. It was read as <strong>“starts closed”</strong>: a closed card shows its words
+above the declared threshold and its avatar below it, with the avatar present at
+every width as the control that opens the window. Flagged rather than silently
+chosen, and <strong>confirmed by the owner on 2026-09-21</strong>.</p>
 
           
 
