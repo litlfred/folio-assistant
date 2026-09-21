@@ -688,6 +688,11 @@ jobs:
           # WITHOUT A WORD, so the declaration reads as if it carried one
           # while no consumer ever saw it (bean `7syd`).
           bun run check:asset-roles
+          # No module scope resolves the folio directory. `folioDir` throws
+          # on a malformed declaration, and a throw during evaluation strands
+          # every export below it — which is how bean `95s1` got an error
+          # 3,186 lines from its cause that looked like a circular import.
+          bun run check:module-scope-resolution
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no

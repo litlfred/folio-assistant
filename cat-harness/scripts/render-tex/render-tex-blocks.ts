@@ -18,7 +18,7 @@
  * @module scripts/render-tex/render-tex-blocks
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDirDeferred } from "../../schemas/cat-harness.js";
 import {
   readFileSync,
   writeFileSync,
@@ -32,7 +32,7 @@ import { Glob } from "bun";
 // ── Config ───────────────────────────────────────────────────────
 
 const INSTANCE_ROOT = join(import.meta.dir, "../..");
-const FOLIO_ROOT = folioDir(INSTANCE_ROOT);
+const folioDirOf = folioDirDeferred(INSTANCE_ROOT, import.meta.url);
 const PREAMBLE_PATH = join(import.meta.dir, "preamble.tex");
 
 const args = process.argv.slice(2);
@@ -259,7 +259,7 @@ function updateManifest(
 // ── Main ─────────────────────────────────────────────────────────
 
 async function main() {
-  const paperDir = join(FOLIO_ROOT, PAPER);
+  const paperDir = join(folioDirOf(), PAPER);
   if (!existsSync(paperDir)) {
     console.error(`Paper directory not found: ${paperDir}`);
     process.exit(1);

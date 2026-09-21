@@ -12,7 +12,7 @@
  * @module content/pipeline/migrate-cites
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDirDeferred } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { join} from "path";
 import { extractCitations } from "./citations";
@@ -27,7 +27,7 @@ const BUILDER_RE = new RegExp(`(${BLOCK_KIND_ALT})\\(`);
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-const FOLIO_ROOT = folioDir(REPO_ROOT);
+const folioDirOf = folioDirDeferred(REPO_ROOT, import.meta.url);
 const args = process.argv.slice(2);
 const dryRun = !args.includes("--write");
 
@@ -92,12 +92,12 @@ function processBlock(tsPath: string) {
       newContent = newContent.slice(0, insertIdx) + "\n" + citesStr + newContent.slice(insertIdx);
     } else {
       // Skip — can't find insertion point
-      console.log(`  SKIP (no label/title): ${tsPath.replace(FOLIO_ROOT + "/", "")}`);
+      console.log(`  SKIP (no label/title): ${tsPath.replace(folioDirOf() + "/", "")}`);
       return;
     }
   }
 
-  const relPath = tsPath.replace(FOLIO_ROOT + "/", "");
+  const relPath = tsPath.replace(folioDirOf() + "/", "");
   console.log(`  ${dryRun ? "WOULD" : "WRITE"}: ${relPath}  cites: [${cites.join(", ")}]`);
 
   if (!dryRun) {
@@ -106,7 +106,7 @@ function processBlock(tsPath: string) {
   modified++;
 }
 
-walkDir(FOLIO_ROOT);
+walkDir(folioDirOf());
 
 console.log(`\n${modified} files ${dryRun ? "would be" : ""} modified`);
 console.log(`${skipped} already had cites`);

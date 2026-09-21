@@ -30,7 +30,7 @@
  * @module content/pipeline/audit-tex-source
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDirDeferred } from "../../schemas/cat-harness.js";
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from "fs";
 import { resolve, join, relative } from "path";
 import { findMathTextSeams } from "./render-latex";
@@ -239,12 +239,12 @@ function auditMathTextSeams(file: string) {
 // ── Run ──────────────────────────────────────────────────────────────────────
 console.log("Auditing TeX-source hazards...");
 auditReferencesTs();
-const folioRoot = folioDir(REPO_ROOT);
-const mdFiles = walk(folioRoot, ".md");
+const folioRootOf = folioDirDeferred(REPO_ROOT, import.meta.url);
+const mdFiles = walk(folioRootOf(), ".md");
 // Same rule: a report over zero files is not a clean result.
 if (mdFiles.length === 0) {
   console.error(
-    `No .md files found under ${folioRoot} — refusing to report success.\n` +
+    `No .md files found under ${folioRootOf()} — refusing to report success.\n` +
     "This audits a FOLIO's content; folio-assistant is the platform.\n" +
     "Run it from the content repo.",
   );
