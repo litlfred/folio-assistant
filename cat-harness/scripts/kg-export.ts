@@ -1824,7 +1824,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       };
     });
   } catch (e) {
-    problems.push(`unparseable harness.json: ${e instanceof Error ? e.message : String(e)}`);
+    problems.push(`unparseable declaration: ${e instanceof Error ? e.message : String(e)}`);
     return [];
   }
 }
@@ -2136,6 +2136,18 @@ export function exportIdentity(opts: ExportOptions = {}): {
    * doing it is two chances to disagree about what the base is.
    */
   base: string;
+  /**
+   * The document's path under the publication base — and under `_site/`,
+   * which is the same thing because `_site/` is served at the base.
+   *
+   * Returned rather than recomposed from `stub`, for the reason `base` is:
+   * `<stub>.jsonld` is right for the host instance and WRONG for a foreign
+   * one, which sits at `<stub>/<stub>.jsonld` (bean `dyd3`). A caller that
+   * rebuilds it from the stub gets the host's answer for every instance, and
+   * the QA sidecar did exactly that — naming its findings' subject as a
+   * document at a path nothing writes.
+   */
+  docPath: string;
   /** The canonical document's IRI, when one is declared. */
   canonicalIri?: string;
   /** True when this export is published somewhere other than canonical. */
@@ -2238,6 +2250,7 @@ export function exportIdentity(opts: ExportOptions = {}): {
     stub,
     docIri,
     base,
+    docPath,
     canonicalIri,
     isPreview: canonicalIri !== undefined && docIri !== canonicalIri,
     instanceDir: instance,
@@ -2416,7 +2429,7 @@ if (import.meta.main) {
   // document the root's own graph LINKS TO, and a link that names a document
   // nothing publishes is a 404 with a `@id` in front of it.
   const instanceRoot = arg("--instance");
-  const { stub } = exportIdentity({ baseUrl, instanceRoot });
+  const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
   // is what tells a fetcher to treat it as one.
@@ -2501,7 +2514,11 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
-    subject: { kind: "graph", id: `${stub}.jsonld` },
+    // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
+    // `<stub>/<stub>.jsonld` (bean `dyd3`), so composing it here named a
+    // document nothing writes — in the file whose whole purpose is saying
+    // what was found about WHICH graph.
+    subject: { kind: "graph", id: docPath },
     families: {
       undeclaredTerms: {
         summary:

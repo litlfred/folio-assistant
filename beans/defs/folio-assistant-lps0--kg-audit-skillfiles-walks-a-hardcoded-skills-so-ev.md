@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lps0
 title: 'KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-20T18:59:22Z
-updated_at: 2026-09-21T12:37:26Z
+updated_at: 2026-09-21T20:17:11Z
 parent: folio-assistant-zzmr
 ---
 
@@ -78,8 +78,8 @@ package by its DECLARED ID (`cat-harness-src`, `bootstrap-render`) while
 - [x] Falsified in both directions: a skill in a topical directory IS audited,
       and removing that directory's declaration makes it stop being
 - [x] The findings the widened walk surfaces are triaged, not blanket-suppressed
-- [ ] A relocated skill's sidecar MOVES with it, rather than dying in place
-- [ ] One answer to "what is this package called", or a stated reason for two
+- [x] A relocated skill's sidecar MOVES with it, rather than dying in place
+- [x] One answer to "what is this package called", or a stated reason for two
 
 ---
 
@@ -293,3 +293,60 @@ and the last assignment won.
 Not repaired here: this bean's owner decides whether `skill-fetch` adopts
 declaration ids, `kgDirectories` adopts the three rules, or the two stay
 separate with the collision renamed. The measurement is what was missing.
+
+
+---
+
+## Summary of Changes — closed 2026-09-21 via #760 / PR #762
+
+Both remaining boxes are answered. Each by merged evidence, not by assertion.
+
+### "A relocated skill's sidecar MOVES with it, rather than dying in place"
+
+`relocateSidecars` in `scripts/kg-audit.ts`, merged in `7dc7e9148`. It runs
+BEFORE the write loop -- once a fresh sidecar exists at the new path there is
+nothing left to move -- and matches on `kind` + `id`, now carried on
+`OrphanSidecar`, because the PATH is what changes in a move.
+
+It is not the deletion the orphan sweep refuses. That rule exists because an
+orphan can mean a subject is temporarily UNDISCOVERED rather than gone (bean
+`pve3`), and "deleting on that evidence would destroy a verdict to hide a
+declaration gap". Nothing here deletes; an orphan matching no moved subject is
+left exactly where it is, to be reported.
+
+Three conditions stop it, and FIVE of its eight tests are those refusals:
+confirmed-gone only (never the `undefined` third state), identity rather than
+basename (two packages can hold a same-named skill), and no ambiguity. A
+verdict misfiled against a subject it never audited reads as healthy, while an
+orphan announces itself.
+
+Verified end to end by reproducing the failure on the real corpus and watching
+the move happen.
+
+### "One answer to 'what is this package called', or a stated reason for two"
+
+**The reason for two is stated, and the one thing no reason covered is gone.**
+
+The measurement recorded above stands: over the 8 declared kg directories,
+6 diverge, 1 agrees, 1 is unmatched -- and that is legitimate, because the two
+systems answer different questions at different granularities.
+`kgDirectories` asks which directories are declared and what each one's stable
+id is; `discoverLocalPackages` asks which packages can be SERVED and what a
+caller asks for, which is why `skills/` is one entry in the first and sixteen
+sub-packages in the second. Collapsing that would lose information.
+
+What no granularity argument defended was the COLLISION: `cat-harness`
+denoting two different real directories. #762 dissolved it by folding
+`src/skills/` into `skills/folio-core/`, and a test now pins it shut --
+`discoverLocalPackages(ROOT)["cat-harness"]` must be `undefined`.
+
+So: two names for one thing, with the reason written down; never again one
+name for two things, with a test to keep it that way.
+
+### Left for somebody else, deliberately
+
+A finding that fell out of the fold and is recorded on #760 rather than acted
+on: removing `src/skills/` removed the LAST manifest-less package in this
+corpus, so `kg-export`'s basename-fallback rule now has no subject. Its test
+reports that it is unexercised rather than passing silently over an empty set.
+The rule is still correct; nothing here exercises it.
