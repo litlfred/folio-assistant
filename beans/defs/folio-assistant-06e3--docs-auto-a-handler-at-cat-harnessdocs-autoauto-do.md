@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-20T22:58:07Z
+updated_at: 2026-09-21T09:54:35Z
 parent: folio-assistant-0lmb
 ---
 
@@ -291,3 +291,65 @@ has none.
 - **Types declared and not built**: `glossary` (gated by `lqo9`'s roast),
   `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles`. Absent
   rather than stubbed, on purpose.
+
+
+---
+
+## §4(a) done — 2026-09-21 (session_014HGPQoUnzXGqSspA8x6YyD)
+
+`cat-harness/docs/cat-harness/index.md`, published at `<base>/cat-harness/`.
+**That route had no index at all**: the directory held `docs-auto/`,
+`library/` and `schemas/` and nothing above them, so a path that reads like a
+section answered nothing.
+
+**Written under §2 and §3, with both rules stated in the file** so the next
+editor meets them:
+
+- **Reference, never restate.** If a sentence could be produced by reading a
+  generated page, it does not belong here. The page carries the model (actor /
+  role / task / process / skill, and why each is not the one beside it), what a
+  BPMN process *is* in this repository, what a lane means, and what is
+  authored versus generated — then links the indexes for the enumeration.
+- **No counts in prose.** The indexes are regenerated and carry live counts; a
+  number typed on an authored page is wrong the next time somebody adds a
+  diagram and nothing checks it. Measured in prep and deliberately NOT written
+  down: 55 BPMN files, 54 processes, 22 named as a call target.
+
+**One concept is derived rather than listed**, and it is the answer to "which
+are the MAIN business processes": a process **no other diagram calls** is an
+entry point; one named by a `callActivity` is a step inside a larger one, so
+entering it directly means starting in the middle. Nothing marks this in the
+file — it falls out of who calls whom, so it stays true as diagrams are added.
+That is the same discipline as `recordsWork` and as the referrer kind in
+`library-refs.ts`.
+
+`nav_exclude: true` is deliberate: the left-hand navbar's structure is bean
+`603s`, in flight in another session, and a nav entry here would collide with
+the section model it is building.
+
+### FINDING, found by checking the links rather than assuming
+
+**`/cat-harness/docs-auto/` and `/cat-harness/docs-auto/index/` have no index
+page either** — the same defect as `/cat-harness/`, one level down.
+`gen-docs-auto.ts` writes an `index.html` per TYPE (`index/processes`,
+`index/skills`) and nothing at the levels above them. The new page therefore
+links the two leaves that exist and names `docs-auto` without a link, with a
+comment saying why and that the link returns when the generator writes a
+parent index at each level.
+
+**Open, and the next piece of `06e3`:** `gen-docs-auto.ts` should write a
+parent index at each level it publishes under. It is the same shape it already
+has — an index listing what is below it — and until it exists, every link to a
+docs-auto level above a leaf lands on a bare directory.
+
+### Still open in this bean
+
+- §4(b) the "meaningfully populated" QA check — now has a page to pass over,
+  which it did not before.
+- §4(c) the navbar over harnesses with a populated `docs/` — **blocked**: bean
+  `603s` is in flight in another session on branch
+  `claude/lhs-navbar-harness-folios-cqo9mu`, editing `harness-tiles.ts` and
+  `nav_footer_custom.html`, which is exactly what §4(c) needs.
+- §5 the KG viewer.
+- The declared-but-unbuilt types: `glossary`, `index`, `index/bpmn`,
+  `index/dmn`, `index/tasks`, `index/roles`.
