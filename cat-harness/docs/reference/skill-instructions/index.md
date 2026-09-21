@@ -93,6 +93,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [docs-auto](docs-auto.html) | `docs-auto` | — | `<base>/<handler>/docs-auto/<auto-doc-type>/<sub-graph>/` is an index of what |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [Editor](editor.html) | `editor` | — |  |
+| [Evidence review](evidence-review.html) | `evidence-review` | — | > Skill id: `evidence-review` · Capability: `quality-assurance` · Package: `folio-core` |
 | [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |
 | [Feature-branch staging](feature-staging.html) | `feature-staging` | — |  |
 | [Flushable containers](flushable-containers.html) | `flushable-containers` | — | **A flushable container is a named store whose whole point is that it keeps |

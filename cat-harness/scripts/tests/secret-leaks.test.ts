@@ -29,7 +29,11 @@ describe("it finds a credential that announces itself", () => {
   });
 
   test("a private key block", () => {
-    const r = scanTree(tree({ "k.txt": "-----BEGIN RSA PRIVATE KEY-----\n" }), ["src"]);
+    // Assembled from parts on purpose. Written as a literal, this fixture is a
+    // finding in the scanner's own test file — which is how a scanner ends up
+    // excluding its tests wholesale and going blind to a real leak in one.
+    const marker = ["-".repeat(5), "BEGIN RSA PRIVATE KEY", "-".repeat(5)].join("");
+    const r = scanTree(tree({ "k.txt": `${marker}\n` }), ["src"]);
     expect(r.leaks.map((l) => l.pattern)).toEqual(["private-key-block"]);
   });
 
