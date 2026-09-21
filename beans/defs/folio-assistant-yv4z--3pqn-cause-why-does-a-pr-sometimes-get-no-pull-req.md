@@ -263,14 +263,37 @@ a `pull_request` run checks out `refs/pull/N/merge` and a conflicted PR has
 none, while a `push` run checks out `refs/heads/<branch>` and is unaffected —
 the same asymmetry that makes `workflow_dispatch` "fix" it.
 
-### What it does NOT do, stated so it is not read as settlement
+### A CONTROL arrived minutes later, and it DOES discriminate
 
-**It does not discriminate conflict from app-token suppression.** The push was
-authored by `litlfred` and fired; the `opened` came from the GitHub App token
-and did not. Both hypotheses predict precisely this pattern, and the resolving
-push was ALSO a `synchronize` from `litlfred`, so its firing is equally
-consistent with either. Conflict is the live reading only because #390 already
-falsified the app-token one — this observation adds nothing on that axis.
+Written first as *"this does not discriminate conflict from app-token
+suppression"* — both predict the pattern above, since the push was `litlfred`'s
+and the `opened` was the App's. **PR #806 then supplied the control**, on the
+same branch, in the same session, through the same tooling:
+
+| | #797 | #806 |
+|---|---|---|
+| branch | `claude/peaceful-heisenberg-dzgsf1` | the same |
+| PR created via | the GitHub App token (MCP `create_pull_request`) | the same |
+| a push AFTER the PR opened | none | none |
+| **mergeable at creation** | **NO** — `mergeable_state: dirty` | **YES** — 0 behind `main`, `merge-tree` clean |
+| `pull_request`-event runs | **zero**, for 19 minutes | **three, within ~1 minute** |
+
+Run `35657925325`, `event: "pull_request"`, `head_sha d970fd550`, created
+21:34:13Z. No push followed the PR's creation, so there is no `synchronize` to
+attribute it to: it is the `opened` event.
+
+**One variable differs between those two rows, and it is mergeability.** So:
+
+- **app-token suppression is falsified again**, independently of #390 — a PR
+  opened by the App token got its `pull_request` runs promptly;
+- the conflict hypothesis survived a test that could have killed it, on a
+  MATCHED PAIR rather than across occurrences a day apart.
+
+It does NOT establish the merge-ref *mechanism*. Step 2 below is still
+unmeasured, and *"an unmergeable PR gets no `pull_request` run"* is compatible
+with GitHub declining to compute the event for some other reason. What the
+control does is promote #797 from a consistent-with observation to a
+**discriminating** one.
 
 Worth recording that **this session independently re-derived the app-token
 hypothesis and believed it for some minutes**, before reading this bean. The
@@ -313,4 +336,3 @@ time rather than inferred.
 repository, which is a change to the forge rather than to the tree, and this
 bean is `low` with its owner's *"no work scheduled"* standing. Left as the one
 step that settles it.
-
