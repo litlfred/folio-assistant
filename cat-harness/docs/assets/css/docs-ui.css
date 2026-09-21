@@ -2258,9 +2258,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-sticky-body p:last-child { margin-bottom: 0; }
 .fa-sticky-empty { opacity: 0.7; font-style: italic; }
 
-/* A pinned sticky. `position: fixed` so it stays put while the page scrolls —
- * which is the whole point of pinning one. */
-.fa-sticky-layer { position: fixed; inset: auto 1rem 1rem auto; z-index: 90; width: min(22rem, calc(100vw - 2rem)); }
+/* THE LAYER IS THE FRAME, NOT THE ARRANGEMENT — bean `ivfw`.
+ *
+ * It was `inset: auto 1rem 1rem auto` with a width: a small bottom-right box
+ * whose children stacked in flow. That is precisely the owner's report, *"you
+ * cant move around dispaly"* — the LAYER decided where a sticky sat and the
+ * sticky had no say, so there was nowhere for it to go.
+ *
+ * Now it is the whole viewport and each card carries its own geometry, placed
+ * by `placeFloating` so the default reproduces the old bottom-right pile and
+ * nothing moves until a reader moves it. `position: fixed` is unchanged and is
+ * still the point of pinning: it stays put while the page scrolls.
+ *
+ * `pointer-events: none` on the frame and `auto` on the cards, because a
+ * full-viewport layer that swallowed clicks would make the whole page
+ * unusable the moment one sticky was pinned. The frame is a coordinate space,
+ * not a surface. */
+.fa-sticky-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+}
 .fa-sticky-layer:empty { display: none; }
 
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
@@ -2277,9 +2296,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * override, and BOTH background and colour set together in each, because
  * setting only one is exactly how the mismatch happened. */
 .fa-sticky-floating {
-  margin-top: 0.6em;
+  position: absolute;
+  pointer-events: auto;
+  /* `border-box`, so a geometry read back after a write is the geometry that
+     was written. `content-box` makes the round-trip grow the card by its own
+     padding on every nudge — measured on the board window, 450 → 452. */
+  box-sizing: border-box;
+  overflow: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
+
+/* In the move mode the card says so, for a reader who can see it. The live
+   region says it for one who cannot — both, never either. */
+.fa-sticky-floating[data-fa-moving="true"] {
+  outline: 2px dashed var(--fa-sidelang-link, #9ec5fe);
+  outline-offset: 2px;
+}
+
+/* The head is the drag handle, so it says so — but only on a card that can
+   actually be dragged. A board sticky showing a move cursor it cannot honour
+   is a promise the surface does not keep. */
+.fa-sticky-floating .fa-sticky-head { cursor: move; }
+.fa-sticky-floating .fa-sticky-head button { cursor: pointer; }
 
 /* THE OPAQUE OVERRIDE IS FOR AN UNTHEMED STICKY, AND ONLY FOR ONE.
  *

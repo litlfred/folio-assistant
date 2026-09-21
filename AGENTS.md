@@ -313,7 +313,7 @@ the platform carries no folio.
 the **repository**: how much of `gh-pages` the review previews occupy, how big
 a clone costs, whether the work plan has duplicates or unhonoured claims.
 Results are committed under `test/health/results/`, declared in
-`folio-assistant.config.json` as the `health` graph, and carry every threshold's **basis** —
+`cat-harness/cat-harness.json` as the `health` graph, and carry every threshold's **basis** —
 structurally, so a check cannot ship a bare number.
 
 Same three rules as above, and for the same reasons: **could-not-determine is
