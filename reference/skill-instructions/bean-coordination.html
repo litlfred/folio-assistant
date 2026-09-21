@@ -1163,6 +1163,75 @@ from an oversight, which is precisely how six of these accumulated.</p>
 <p>Stopping because you are <em>blocked</em> is a different state with its own
 requirements — what it waits on, since when, an expiry and a handoff:
 <a href="/folio-assistant/reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking.md</code></a>.</p>
+<h3 id="re-derive-from-the-remote-never-from-your-checkout-strict">
+  
+  
+    <a href="#re-derive-from-the-remote-never-from-your-checkout-strict" class="anchor-heading" aria-labelledby="re-derive-from-the-remote-never-from-your-checkout-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Re-derive from the REMOTE, never from your checkout (STRICT)
+  
+  
+</h3>
+    
+
+<p>Obligation 1 says re-derive the evidence. <strong>Where you read it from is part of
+the evidence</strong>, and getting that wrong produces a finding that is confident,
+specific and false — which is worse than no finding, because it sends the next
+reader off to verify an accusation.</p>
+
+<p><strong>Two occurrences in one session, 2026-09-21, bean <code class="language-plaintext highlighter-rouge">pomp</code>.</strong> Both were
+published before being caught: one to a commit message, a PR body AND an issue
+comment.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>the claim</th>
+      <th>what was true</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><em>“<code class="language-plaintext highlighter-rouge">gen-iris-pages.ts</code> has no <code class="language-plaintext highlighter-rouge">OWNED</code>, no prune, no orphan code — checked rather than assumed”</em></td>
+      <td><code class="language-plaintext highlighter-rouge">OWNED</code> is at line 104; the prune runs at 1575–1601</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><em>“<code class="language-plaintext highlighter-rouge">compose-docs.ts</code> is absent from main — a workflow step landed without its script, breaking every PR”</em></td>
+      <td>the commit added the step, a 249-line script and a 209-line test together</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two causes, and they need different guards:</p>
+
+<p><strong>A branch older than the claim.</strong> Grepping the working tree answers <em>“is this
+in MY base”</em>, which is a different question from <em>“does this exist”</em>. Occurrence
+1 grepped a checkout branched before the commit it was denying.</p>
+
+<blockquote>
+  <p>Ask the remote: <code class="language-plaintext highlighter-rouge">git show origin/main:&lt;path&gt;</code>, <code class="language-plaintext highlighter-rouge">git log origin/main -- &lt;path&gt;</code>.
+Never <code class="language-plaintext highlighter-rouge">grep</code> over the checkout to prove an absence.</p>
+</blockquote>
+
+<p><strong>A fetch in the same compound command is not a barrier.</strong> Occurrence 2 ran
+<code class="language-plaintext highlighter-rouge">git fetch -q origin main &amp;&amp; git cat-file -e origin/main:&lt;path&gt;</code> — which looks
+airtight and is not, because sibling sessions merge every few minutes here. The
+ref was current when fetched and stale when read.</p>
+
+<blockquote>
+  <p>Fetch, then read in a <strong>separate</strong> command, and re-read before publishing.</p>
+</blockquote>
+
+<p>Neither guard catches the third case — a file that exists only on an open PR’s
+head. When the claim is <em>“nobody has built this”</em>, check the open branches too;
+this session started building <code class="language-plaintext highlighter-rouge">ankg</code>, <code class="language-plaintext highlighter-rouge">s8nu</code> and a <code class="language-plaintext highlighter-rouge">viewer-prune</code> module that
+siblings had already landed or had in flight, <strong>five times</strong>, and the check that
+would have prevented each is one <code class="language-plaintext highlighter-rouge">git diff --name-only origin/main...&lt;branch&gt;</code>.</p>
+
+<p><strong>The cost is asymmetric, which is why this is STRICT.</strong> A missed finding is a
+bean that stays open one more day. A false one about a sibling’s work is a
+correction, a retraction, and a reader who now trusts the next finding less.</p>
 <h3 id="when-you-cannot-re-derive-it-yourself--ready-to-close">
   
   
@@ -1488,7 +1557,7 @@ beans (see todo-manager.md disambiguation block).</li>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35589549070"><code>034e86e</code></a> &middot; 2026-09-21T10:36:18Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35590808526"><code>9068779</code></a> &middot; 2026-09-21T10:50:33Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
