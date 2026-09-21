@@ -3,8 +3,9 @@
 title: 'C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-21T13:21:31Z
-updated_at: 2026-09-21T16:55:00Z
+updated_at: 2026-09-21T15:35:10Z
 parent: folio-assistant-vke6
 ---
 

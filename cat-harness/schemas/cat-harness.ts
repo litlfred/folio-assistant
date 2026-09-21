@@ -4762,19 +4762,72 @@ export function folioDir(root: string): string {
  * of surfacing as an unrelated binding's dead zone three thousand lines away.
  */
 export function folioDirDeferred(root: string, moduleUrl: string): () => string {
-  let value: string | undefined;
+  return deferResolution(() => folioDir(root), {
+    moduleUrl,
+    what: "its folio directory",
+    under: resolve(root),
+  });
+}
+
+/**
+ * The same deferral, for any module-scope value whose computation can throw on
+ * a declaration.
+ *
+ * ## Why this exists beside {@link folioDirDeferred} rather than instead of it
+ *
+ * `folioDir` was the whole hazard until 2026-09-21, and the gate was written
+ * to match a call in FIRST position — `const X = folioDir(...)`. Widening it
+ * found twelve more sites the anchored pattern could not see, and they are not
+ * a different defect:
+ *
+ * ```ts
+ * const LEDGER_PATH = join(folioDir(REPO_ROOT), "bib-qa-verifications.json");
+ * const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
+ * ```
+ *
+ * The throwing call is nested, so no wrapper around `folioDir` alone reaches
+ * it. What has to be deferred is the WHOLE expression. And two more resolvers
+ * throw for the same reason — `directoryForGraph` and `directoriesForGraph`,
+ * measured against a directory holding `{ not json` — so a second
+ * function-specific wrapper would already be a third.
+ *
+ * `folioDirDeferred` keeps its name and its message: it is called from twenty
+ * modules, and its wording is the thing a reader meets when the failure
+ * arrives. It is now a thin call to this.
+ *
+ * ## Same contract, one generalisation
+ *
+ * Resolution stays at LOAD, for the reason on `folioDirDeferred`: several
+ * resolvers read `process.cwd()` transitively, and moving the computation to
+ * first use would let a `process.chdir` change the answer — while memoising on
+ * first use would be worse, making the value depend on whichever caller ran
+ * first. Only the throw moves.
+ *
+ * Generic in the value because not every one is a string:
+ * `q-usage-audit.ts` resolves `string[]`.
+ */
+export function deferResolution<T>(
+  compute: () => T,
+  context: { moduleUrl: string; what: string; under: string },
+): () => T {
+  let value: T | undefined;
+  let ok = false;
   let failure: unknown;
   try {
-    value = folioDir(root);
+    value = compute();
+    ok = true;
   } catch (e) {
     failure = e;
   }
   return () => {
-    if (value !== undefined) return value;
+    // `ok` rather than `value !== undefined`: a resolver may legitimately
+    // return `undefined`, and treating that as a failure would raise this
+    // error over a value that resolved perfectly well.
+    if (ok) return value as T;
     throw new Error(
-      `${moduleUrl} could not resolve its folio directory when it loaded, and this is the ` +
-        `first use of that value. The declaration under ${resolve(root)} is what failed: ` +
-        `${failure instanceof Error ? failure.message : String(failure)}`,
+      `${context.moduleUrl} could not resolve ${context.what} when it loaded, and this is ` +
+        `the first use of that value. The declaration under ${context.under} is what ` +
+        `failed: ${failure instanceof Error ? failure.message : String(failure)}`,
       { cause: failure },
     );
   };
