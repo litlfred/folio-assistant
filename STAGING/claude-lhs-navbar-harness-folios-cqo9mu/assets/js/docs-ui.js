@@ -1808,10 +1808,11 @@
     edit: { id: "edit", label: "Edit", needs: "source-write" },
     pin: { id: "pin", label: "Pin to the page", needs: "none" },
     discard: { id: "discard", label: "Discard", needs: "none" },
+    move: { id: "move", label: "Move or resize", needs: "none" },
     relocate: { id: "relocate", label: "Send to the trashcan", needs: "none" },
   };
   var KIND_CONTROLS = {
-    todo: ["view", "edit", "pin", "discard", "relocate"],
+    todo: ["view", "edit", "move", "pin", "discard", "relocate"],
     bean: ["view"],
   };
 
@@ -1861,6 +1862,138 @@
       chip.appendChild(el("span", { class: "fa-node-badge-count" }, String(badge.count)));
     }
     return chip;
+  }
+
+  /* ═══ The READER's filter, which commits nothing ══════════════════════
+   *
+   * Owner: *"be able to filter out by kind properties things on miror board"*.
+   *
+   * TWO FILTERS, AND THEY MUST NOT BECOME ONE FIELD. A board carries a
+   * DECLARED filter (`schemas/board.ts`) that says what the board IS, and it
+   * lives in `boards/<id>.json` where everyone opening that board gets it.
+   * This is the other one: a reader narrowing their own view, at view time.
+   * Conflating them would make one reader's temporary view edit the board
+   * everyone else opens — which is what happens the moment a filter control
+   * writes to the file the other filter lives in.
+   *
+   * So this writes NOTHING: no file, no `localStorage`, no event anybody
+   * persists. It is session state, like the window stack, and the absence is
+   * the design rather than an omission.
+   *
+   * Mirrors `schemas/reader-filter.ts`, which this file cannot import — same
+   * cost and same mitigation as its siblings: the e2e checks the browser's
+   * answer against the model's.
+   */
+  var readerFilter = { properties: {} };
+
+  /** OR within a property's values, AND across properties — the board's logic. */
+  function readerShows(filter, todo) {
+    var props = filter.properties || {};
+    for (var name in props) {
+      if (!Object.prototype.hasOwnProperty.call(props, name)) continue;
+      var values = props[name];
+      if (!values || values.length === 0) continue;
+      // A node that cannot answer has not answered YES.
+      if (values.indexOf(todo[name]) === -1) return false;
+    }
+    return true;
+  }
+
+  /** Every value present in the corpus for one property, sorted. */
+  function propertyValues(items, name) {
+    var seen = {};
+    for (var i = 0; i < items.length; i++) {
+      var v = items[i][name];
+      if (v !== undefined && v !== null && v !== "") seen[v] = true;
+    }
+    return Object.keys(seen).sort();
+  }
+
+  /* ═══ Move and resize — keyboard FIRST, drag as the accelerator ═══════
+   *
+   * Owner: *"can resize open content, move around. drag and drop moving.."*
+   * and, on the floor every board control sits on, *"ALWAYS collapsable to
+   * linearly rendablee"*.
+   *
+   * **Drag is the accelerator, never the only way in.** This instance's
+   * declared interaction profile is low-dexterity — it is why the Pin control
+   * is a button rather than a drag — and a board whose only affordance is drag
+   * excludes its own owner. So the keyboard path is built first and the
+   * pointer path is added over it, rather than the other way round where the
+   * keyboard half is the thing that never gets finished.
+   *
+   * ## A MODE, because arrows already mean something
+   *
+   * Arrow keys scroll. A window that moved whenever a reader pressed one while
+   * reading it would have stolen the page's own navigation, so moving is a
+   * mode: the `move` control turns it on, the window says so, arrows move,
+   * `Shift`+arrows resize, and `Escape` or `Enter` leaves. The mode is
+   * announced rather than merely styled — a reader who cannot see the outline
+   * has to be told what their arrow keys now do.
+   *
+   * ## SESSION-ONLY, like the stack above it
+   *
+   * `schemas/board-positions.ts` is where a move becomes durable, and
+   * `moveBy` is the function that does it — for a tool or an agent, against
+   * the repository. A published page cannot write that file, and the lesson
+   * `db7g` settled applies unchanged: it is better to be a control over this
+   * reader's view and say so than to look like it changed the folio.
+   */
+  var MOVE_STEP = 16;
+  var RESIZE_STEP = 24;
+  var MIN_WINDOW = 160;
+
+  /** Turn the move mode on or off for one window, and say which it is. */
+  function setMoveMode(panel, on, live) {
+    panel.setAttribute("data-fa-moving", on ? "true" : "false");
+    if (live) {
+      live.textContent = on
+        ? "Move mode on. Arrow keys move this window; hold Shift to resize; Escape to finish."
+        : "Move mode off.";
+    }
+    if (on) panel.focus();
+  }
+
+  /** Current inline geometry, falling back to what the cascade laid out. */
+  function geometryOf(panel) {
+    var rect = panel.getBoundingClientRect();
+    var parent = panel.offsetParent ? panel.offsetParent.getBoundingClientRect() : { left: 0, top: 0 };
+    return {
+      left: parseFloat(panel.style.left) || rect.left - parent.left,
+      top: parseFloat(panel.style.top) || rect.top - parent.top,
+      width: parseFloat(panel.style.width) || rect.width,
+      height: parseFloat(panel.style.height) || rect.height,
+    };
+  }
+
+  function applyGeometry(panel, g) {
+    panel.style.left = g.left + "px";
+    panel.style.top = g.top + "px";
+    panel.style.width = g.width + "px";
+    panel.style.height = g.height + "px";
+  }
+
+  /**
+   * One arrow press in move mode.
+   *
+   * Returns true when it acted, so the caller knows whether to swallow the
+   * key. Swallowing unconditionally would eat a reader's scrolling the moment
+   * a window had focus and the mode did not.
+   */
+  function nudge(panel, key, shift) {
+    var g = geometryOf(panel);
+    var step = shift ? RESIZE_STEP : MOVE_STEP;
+    if (key === "ArrowLeft") { if (shift) g.width = Math.max(MIN_WINDOW, g.width - step); else g.left -= step; }
+    else if (key === "ArrowRight") { if (shift) g.width += step; else g.left += step; }
+    else if (key === "ArrowUp") { if (shift) g.height = Math.max(MIN_WINDOW, g.height - step); else g.top -= step; }
+    else if (key === "ArrowDown") { if (shift) g.height += step; else g.top += step; }
+    else return false;
+    // NEVER off the top-left. A window moved past the origin is a window a
+    // reader cannot reach the controls of, which is `l4zi` by another route.
+    g.left = Math.max(0, g.left);
+    g.top = Math.max(0, g.top);
+    applyGeometry(panel, g);
+    return true;
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -1969,7 +2102,7 @@
    * guess, and `aria-label` is what a screen reader announces. `\u2A37` is the
    * owner's `[fishbones]`.
    */
-  var CONTROL_GLYPHS = { close: "\u00D7", relocate: "\u2A37" };
+  var CONTROL_GLYPHS = { close: "\u00D7", relocate: "\u2A37", move: "\u271C" };
 
   function controlButton(control, todo, handlers) {
     if (control.id === "view" || control.id === "edit") {
@@ -2539,6 +2672,19 @@
     head.appendChild(boardClose);
     board.appendChild(head);
 
+    /* THE READER'S FILTER, in the board's head and nowhere in any document.
+     *
+     * Two selects rather than a search box: the values come from the CORPUS
+     * (`propertyValues`), so a reader picks from what is actually there rather
+     * than guessing a spelling — and an option list built from the data cannot
+     * offer a filter that matches nothing. */
+    var filterRow = el("div", {
+      class: "fa-board-filter",
+      role: "group",
+      "aria-label": "Filter this view",
+    });
+    board.appendChild(filterRow);
+
     var grid = el("div", { class: "fa-sticky-grid" });
     board.appendChild(grid);
     // APPEND on the landing board, insert-first everywhere else. The harness
@@ -2635,6 +2781,61 @@
       grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
     }
 
+    /* ── Applying the reader's filter ─────────────────────────────────────
+     *
+     * It hides SLOTS and touches nothing else: no note, no position, no
+     * stored preference. A filtered-out card keeps its place on the board and
+     * comes back the moment the filter is cleared, because nothing about it
+     * changed.
+     *
+     * `hidden` rather than a class, so the card leaves the accessibility tree
+     * too. A reader using a screen reader who filtered to "open" should not
+     * still be walked through the done ones.
+     */
+    function applyReaderFilter() {
+      var shown = 0;
+      for (var fi = 0; fi < rows.length; fi++) {
+        var t = rows[fi].todo;
+        var slot = slots[t.id];
+        if (!slot) continue;
+        var keep = readerShows(readerFilter, t);
+        if (keep) { slot.removeAttribute("hidden"); shown++; }
+        else slot.setAttribute("hidden", "hidden");
+      }
+      board.setAttribute("data-fa-filtered", String(shown));
+      var none = grid.querySelector(".fa-sticky-filtered-out");
+      if (shown === 0 && rows.length > 0 && !none) {
+        // A DETERMINED empty, and it says which: "nothing matches this filter"
+        // and "nothing outstanding" are opposite facts about the same blank
+        // grid, and a reader who cannot tell them apart will clear the wrong
+        // thing.
+        grid.appendChild(el("p", { class: "fa-sticky-filtered-out" },
+          "No card matches this filter. Clearing it brings them all back."));
+      } else if (shown > 0 && none) {
+        grid.removeChild(none);
+      }
+    }
+
+    // One select per property a todo carries. Built from the corpus, so a
+    // folio whose todos never set a priority simply gets no priority control.
+    ["status", "priority"].forEach(function (name) {
+      var values = propertyValues(live, name);
+      if (values.length < 2) return;   // nothing to choose between
+      var id = "fa-filter-" + name;
+      var label = el("label", { class: "fa-board-filter-label", for: id }, name);
+      var select = el("select", { class: "fa-board-filter-select", id: id });
+      select.appendChild(el("option", { value: "" }, "any " + name));
+      values.forEach(function (v) { select.appendChild(el("option", { value: v }, v)); });
+      select.addEventListener("change", function () {
+        if (select.value === "") delete readerFilter.properties[name];
+        else readerFilter.properties[name] = [select.value];
+        applyReaderFilter();
+      });
+      filterRow.appendChild(label);
+      filterRow.appendChild(select);
+    });
+    applyReaderFilter();
+
     /* ── Windows, projected ON TO the board ───────────────────────────────
      *
      * A separate layer, and that is the design rather than an implementation
@@ -2703,8 +2904,17 @@
        * would 404 for exactly the reader who cannot use it (`pb04`). */
       var caps = { "source-read": !!todo.viewHref, "source-write": !!todo.editHref };
       var split = servableControls(controlsFor("todo"), caps);
+      // The live region the move mode announces through. One per window, so a
+      // reader is told about the window they are in rather than the last one
+      // anybody touched.
+      var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+      panel.appendChild(live);
+
       var handlers = {
         close: function (t) { closeCard(t); },
+        move: function () {
+          setMoveMode(panel, panel.getAttribute("data-fa-moving") !== "true", live);
+        },
         pin: function (t) { float(t); },
         discard: function (t) { closeCard(t); discard(t); },
         // THE FISHBONE. The only control that asks first, because it is the
@@ -2753,6 +2963,46 @@
         raiseWindow(todo.id);
         renderStack();
       });
+
+      // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
+      // go on scrolling the page, which is what a reader expects of them.
+      panel.addEventListener("keydown", function (e) {
+        if (panel.getAttribute("data-fa-moving") !== "true") return;
+        if (e.key === "Escape" || e.key === "Enter") {
+          e.preventDefault();
+          e.stopPropagation();
+          setMoveMode(panel, false, live);
+          return;
+        }
+        if (nudge(panel, e.key, e.shiftKey)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+
+      /* THE ACCELERATOR, over the top of the path above rather than instead of
+       * it. Dragging the title bar moves the window; everything it can do, the
+       * keyboard can already do. */
+      (function () {
+        var from = null;
+        bar.addEventListener("mousedown", function (e) {
+          // Not on a control: a drag that started on `[x]` would fight the
+          // click that closes the window.
+          if (e.target.closest("[data-fa-control]")) return;
+          from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
+          e.preventDefault();
+        });
+        document.addEventListener("mousemove", function (e) {
+          if (!from) return;
+          applyGeometry(panel, {
+            left: Math.max(0, from.g.left + (e.clientX - from.x)),
+            top: Math.max(0, from.g.top + (e.clientY - from.y)),
+            width: from.g.width,
+            height: from.g.height,
+          });
+        });
+        document.addEventListener("mouseup", function () { from = null; });
+      })();
       windows.appendChild(panel);
       windowEls[todo.id] = panel;
       renderStack();

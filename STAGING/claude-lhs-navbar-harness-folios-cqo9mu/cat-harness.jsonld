@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T14:20:05.454Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b31025f27e7f1d429ba0e8a664d8363d4595ae59",
-  "sourceCommitSha": "b31025f27e7f1d429ba0e8a664d8363d4595ae59",
-  "sourceCommitAt": "2026-09-21T14:10:20Z",
+  "generatedAt": "2026-09-21T14:41:03.794Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8ae71c0f0059cf00df7a1fbbc0e966c4aeaddddf",
+  "sourceCommitSha": "8ae71c0f0059cf00df7a1fbbc0e966c4aeaddddf",
+  "sourceCommitAt": "2026-09-21T14:39:21Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -276,7 +276,7 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 87,
+    "Schema": 88,
     "GraphKind": 24,
     "Directory": 33,
     "Asset": 3
@@ -32987,6 +32987,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-review"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld#schema/reader-filter",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "reader-filter",
+      "title": "The filter a READER applies to a board, which commits nothing.",
+      "module": "schemas/reader-filter.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/reader-filter"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld#schema/refactor-strategy",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "refactor-strategy",
@@ -34984,8 +34993,8 @@
   ],
   "staging": {
     "branch": "claude/lhs-navbar-harness-folios-cqo9mu",
-    "sha": "722d02fffe849760f915bc7615bddfc056c8aea0",
+    "sha": "6570dff5b9e967ed4f017ce26d9e531303b63f0b",
     "pr": "702/merge",
-    "run": "35611270342"
+    "run": "35613627316"
   }
 }
