@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * A path to an instance's declaration is built from `DECLARATION_FILENAME`,
+ * A path to an instance's declaration is built from `RETIRED_DECLARATION`,
  * not from a string literal.
  *
  * Bean `jijc`, under the owner's REPLACE ruling on `b5f0` (2026-09-21):
@@ -10,7 +10,7 @@
  *
  * ## The defect this exists for
  *
- * `DECLARATION_FILENAME` has been exported from `schemas/cat-harness.ts` the
+ * `RETIRED_DECLARATION` has been exported from `schemas/cat-harness.ts` the
  * whole time, and call sites built the path from a literal instead. That is
  * not a style complaint. A constant nothing uses is a constant that does not
  * do its job: the rename it exists to make cheap costs a hand-edit at every
@@ -67,12 +67,23 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { DECLARATION_FILENAME } from "../schemas/cat-harness.js";
+/**
+ * The RETIRED declaration filename.
+ *
+ * Kept as a constant so this gate can FIND it, never so a reader can fall back
+ * to it — the same shape as `LEGACY_HARNESS_CONFIG` in
+ * `schemas/harness-config.ts`, and for the reason recorded there: the previous
+ * rename was a silent hard break, and `9ici` is what that cost.
+ */
+const RETIRED_DECLARATION = "harness.json";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 
 /** Where the constant itself is defined — the one legitimate literal. */
 const DEFINITION_SITE = "cat-harness/schemas/cat-harness.ts";
+
+/** This gate itself — the one file that must still name the retired string. */
+const THIS_GATE = "cat-harness/scripts/check-declaration-filename.ts";
 
 /**
  * The instance that owns the constant, DERIVED from where it is defined.
@@ -181,7 +192,7 @@ function countNonTypescript(): number {
     for (const e of readdirSync(yml, { withFileTypes: true })) {
       if (!e.isFile()) continue;
       if (!e.name.endsWith(".yml") && !e.name.endsWith(".yaml")) continue;
-      if (readFileSync(join(yml, e.name), "utf8").includes(DECLARATION_FILENAME)) out.push(e.name);
+      if (readFileSync(join(yml, e.name), "utf8").includes(RETIRED_DECLARATION)) out.push(e.name);
     }
   } catch {
     return -1; // could not determine — reported as unknown, never as zero
@@ -204,22 +215,28 @@ export function checkDeclarationFilename(root = REPO_ROOT): DeclarationFilenameR
     const lines = readFileSync(abs, "utf8").split("\n");
 
     for (const [i, line] of lines.entries()) {
-      if (!line.includes(DECLARATION_FILENAME)) continue;
+      if (!line.includes(RETIRED_DECLARATION)) continue;
 
       if (isComment(line)) {
         prose++;
         continue;
       }
 
-      const literal = wholeStringLiteral(line, DECLARATION_FILENAME);
-      const template = pathTemplate(line, DECLARATION_FILENAME);
+      const literal = wholeStringLiteral(line, RETIRED_DECLARATION);
+      const template = pathTemplate(line, RETIRED_DECLARATION);
       if (!literal && !template) {
         prose++;
         continue;
       }
 
-      // The constant's own definition is the one literal that must stay.
-      if (rel === DEFINITION_SITE && line.includes("DECLARATION_FILENAME =")) continue;
+      // This gate's own definition of the retired name is the one literal
+      // that must stay — it is how the gate finds the others.
+      if (rel === THIS_GATE) continue;
+
+      // `docs/_data/harness.json` is JEKYLL's data file and has nothing to do
+      // with an instance declaration. It merely shares a basename, which is
+      // exactly the kind of collision a bare string match gets wrong.
+      if (line.includes("_data")) continue;
 
       if (isTest) {
         tests++;
@@ -248,18 +265,20 @@ function formatReport(r: DeclarationFilenameReport): string {
   if (r.filesRead === 0) {
     return "Declaration filename\n  ? EXAMINED NOTHING — no TypeScript found. Not a pass.";
   }
-  const out = [`Declaration filename (${r.filesRead} file(s), constant \`${DECLARATION_FILENAME}\`)`];
+  const out = [`Declaration filename (${r.filesRead} file(s), retired name \`${RETIRED_DECLARATION}\`)`];
 
   if (r.bypasses.length === 0) {
-    out.push("  ✓ every non-test call site builds the path from DECLARATION_FILENAME");
+    out.push("  ✓ no call site names the retired `harness.json`");
   } else {
     for (const b of r.bypasses) {
       out.push(`  ✗ ${b.file}:${b.line} [${b.kind}]`);
       out.push(`      ${b.text}`);
     }
     out.push("");
-    out.push("  Import DECLARATION_FILENAME from schemas/cat-harness and join with it.");
-    out.push("  The constant exists so the REPLACE ruling on `b5f0` costs one edit, not twenty.");
+    out.push("  `harness.json` was EXCISED on 2026-09-21: a declaration is `<name>.config.json`,");
+    out.push("  discovered with `findDeclarationFile(dir)` or `declarationPathIn(dir)`. It cannot be");
+    out.push("  composed any more — the filename carries the instance's name, so the only way to");
+    out.push("  know it is to look.");
   }
 
   if (r.crossInstance.length > 0) {

@@ -17,7 +17,6 @@ import { tmpdir } from "os";
 
 import { initFolio, isValidSlug, slugify, type InitFolioOptions } from "../init-folio";
 import { instanceConfigFilename } from "../../schemas/harness-config.js";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 /**
  * The scaffold names its config after the folio's SLUG, not after the temp
@@ -116,7 +115,6 @@ describe("what gets written", () => {
     const d = tmp();
     const r = initFolio(opts(d));
     for (const f of [
-      DECLARATION_FILENAME,
       SCAFFOLD_CONFIG,
       ".mcp.json",
       ".beans.yml",

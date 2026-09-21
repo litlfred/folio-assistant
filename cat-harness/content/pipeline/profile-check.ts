@@ -26,7 +26,7 @@
  * @module content/pipeline/profile-check
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDir, unparseableConfigsIn } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
 import { basename } from "path";
 
@@ -84,8 +84,21 @@ export function readDeclaredFolioProfile(repoRoot: string): {
   // nothing here declares an instance, so there is no name to compose a
   // config filename from and no file to be absent. Reported as its own
   // sentence rather than folded into "no config", because the remedy differs
-  // — one wants a config written, the other wants a `harness.json`.
+  // — one wants a config written, the other wants a declaration.
   if (configPath === undefined) {
+    // UNREADABLE IS NOT UNDECLARED, and telling them apart moved here when
+    // `harness.json` was excised (2026-09-21). The declaration and the config
+    // are one file now, so a malformed one makes `instanceConfigFor` return
+    // the third state — which arrives at this branch looking exactly like
+    // "nothing declares this directory". It is the opposite: somebody
+    // declared, and it will not parse. The remedies are different sentences,
+    // which is this branch's whole reason for existing.
+    const broken = unparseableConfigsIn(repoRoot);
+    if (broken.length > 0) {
+      return {
+        declaredBy: `undetermined (unreadable: ${broken.join(", ")} will not parse)`,
+      };
+    }
     return { declaredBy: "undetermined (no instance declares this directory)" };
   }
   // The file's name is the instance's, so the messages below say which file

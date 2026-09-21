@@ -11,7 +11,7 @@
  * cannot parse must not silently lose every voice check while reporting clean.
  */
 import { describe, test, expect } from "bun:test";
-import { existsSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdtempSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
@@ -153,8 +153,20 @@ describe("readActiveVoices", () => {
     //
     // It also still says why `repoRootFor` is the wrong move here: with a
     // config per instance, the repo root is a DIFFERENT instance's question.
-    const unconfigured = join(repoRootFor(join(import.meta.dir, "../..")), "who-iris");
-    expect(existsSync(join(unconfigured, "who-iris.config.json"))).toBe(false);
+    //
+    // THE SUBJECT CHANGED ON 2026-09-21, AND THE PROPERTY DID NOT. This used
+    // to point at `who-iris`, an instance that DECLARED and had no config —
+    // a real state while a declaration (`harness.json`) and a config were two
+    // files. `harness.json` was excised and they are one, so every declared
+    // instance has a config file and `who-iris` now answers `[]` like any
+    // other. `[]` is a DETERMINED answer ("no voices are active") and the
+    // whole point here is the UNDETERMINED one.
+    //
+    // So the third state is demonstrated where it still lives: a directory
+    // that declares nothing at all. Moving the subject rather than weakening
+    // the assertion — `undefined` is what makes the criteria RUN, and a test
+    // that accepted `[]` here would have stopped guarding that.
+    const unconfigured = mkdtempSync(join(tmpdir(), "voice-undeclared-"));
     expect(readActiveVoices(unconfigured)).toBeUndefined();
   });
 

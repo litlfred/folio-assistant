@@ -47,15 +47,7 @@ import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
-import {
-  BASE_GRAPH_KINDS,
-  DECLARATION_FILENAME,
-  declaredAssets,
-  declaredGraphs,
-  declaredKinds,
-  repoRootFor,
-  resolveDirectories,
-} from "../schemas/cat-harness.js";
+import { BASE_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
@@ -1748,7 +1740,7 @@ function collectDeclaredAssets(doc: string, problems: string[], root: string = R
 }
 
 function collectDeclaration(doc: string, problems: string[], root: string = ROOT): Node[] {
-  const f = join(root, DECLARATION_FILENAME);
+  const f = declarationPathIn(root)!;
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
