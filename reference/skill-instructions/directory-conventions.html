@@ -1011,6 +1011,18 @@ decides it.</p>
       <td>no</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">boards</code></td>
+      <td><strong>harness</strong></td>
+      <td>boards — one file each, <code class="language-plaintext highlighter-rouge">"$schema": "folio-board/v1"</code>. A board is a <strong>diagram OF</strong> a folio, not a container of one: it declares what it shows, and a folio with no board is complete. The semantic half of the OMG split the owner named — <em>“treat it like OMG specs and BPMN layout. relationship first, visualiztion alter.”</em></td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">board-positions</code></td>
+      <td><strong>harness</strong></td>
+      <td>where each note sits on each board — <code class="language-plaintext highlighter-rouge">board-positions.json</code>, keyed by board then by note id, in board units. The <strong>Diagram Interchange</strong> half: it points at notes and is never pointed back at, which is why a note carries no <code class="language-plaintext highlighter-rouge">x</code>, <code class="language-plaintext highlighter-rouge">y</code>, <code class="language-plaintext highlighter-rouge">board</code> or <code class="language-plaintext highlighter-rouge">position</code>. <code class="language-plaintext highlighter-rouge">state</code> rather than <code class="language-plaintext highlighter-rouge">content</code>, because a running process writes it every time somebody moves a note.</td>
+      <td>no</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">todo-items</code></td>
       <td><strong>harness</strong></td>
       <td>todo nodes — one file each, <code class="language-plaintext highlighter-rouge">"$schema": "folio-todo/v1"</code>. Authored by people, and by agents on their behalf.</td>
@@ -1955,7 +1967,7 @@ up: <a href="../../../fsh-guts/proposals/instance-versioning.md"><code class="la
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35575647422"><code>82e1c17</code></a> &middot; 2026-09-21T08:01:19Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35587229507"><code>d32cf71</code></a> &middot; 2026-09-21T10:11:04Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

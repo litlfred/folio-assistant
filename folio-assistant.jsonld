@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T08:02:02.601Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/82e1c1704ceb13e3b872facd3940cf432987097d",
-  "sourceCommitSha": "82e1c1704ceb13e3b872facd3940cf432987097d",
-  "sourceCommitAt": "2026-09-21T10:00:14+02:00",
+  "generatedAt": "2026-09-21T10:11:45.855Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d32cf71b25308999091489b49b3aef695b30f489",
+  "sourceCommitSha": "d32cf71b25308999091489b49b3aef695b30f489",
+  "sourceCommitAt": "2026-09-21T12:09:30+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 222,
@@ -273,7 +273,7 @@
     "ProcessNode": 680,
     "Tool": 69,
     "Schema": 84,
-    "GraphKind": 22,
+    "GraphKind": 24,
     "Directory": 34,
     "Asset": 3
   },
@@ -1679,7 +1679,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 730,
+      "instructionLines": 732,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -30619,6 +30619,22 @@
       "summary": "Human actors' outstanding work — content, owned by the folio, tagged by role, process, task and identity. Its inner directories are declared by `todos/todos.json`."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/boards",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
+      "name": "boards",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#BoardGraph",
+      "renderable": false,
+      "summary": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/board-positions",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
+      "name": "board-positions",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#BoardPositionsGraph",
+      "renderable": false,
+      "summary": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/todo-items",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
       "name": "todo-items",
@@ -32084,8 +32100,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "82e1c1704ceb13e3b872facd3940cf432987097d",
+    "sha": "d32cf71b25308999091489b49b3aef695b30f489",
     "pr": "main",
-    "run": "35575647422"
+    "run": "35587229507"
   }
 }
