@@ -16,6 +16,35 @@
 import { test, expect } from "@playwright/test";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { artefactStubFor } from "../schemas/cat-harness.js";
+
+/**
+ * The published artefact name, RESOLVED from the declaration.
+ *
+ * Every path below was a `folio-assistant` literal until 2026-09-21, when the
+ * stub was renamed to `cat-harness` (issue #649) and this suite went red with
+ * `ENOENT: _kg/folio-assistant.jsonld` while the exporter was correctly
+ * writing `_kg/cat-harness.jsonld`.
+ *
+ * The comment on {@link PAGE} below had already diagnosed this exact shape one
+ * layer in — *"a constant would have moved all of them together"* — after the
+ * layout moved and two tests kept the old path. That repair named the PAGE and
+ * stopped there, leaving the stub itself inlined four times. This finishes it:
+ * the name is resolved once, so the next rename moves every path here with it.
+ */
+// Two things this got wrong before it got right, both invisible to the fast
+// gate set and both fatal at COLLECTION time, where Playwright reports them as
+// "no tests found" rather than as a failure:
+//
+//  1. `import.meta.dir` is a BUN extension and is `undefined` under Playwright.
+//     `a11y.e2e.ts` beside this already used the portable form.
+//  2. `readDeclaration` validates the whole declaration and throws when any
+//     directory names an unregistered graph kind — the hazard `siteDirFor`
+//     documents. `artefactStubFor` is the raw read, added for this.
+const STUB = artefactStubFor(join(dirname(fileURLToPath(import.meta.url)), ".."));
 
 // `_kg/` is gitignored — it is build output, not a fixture to commit. Generate
 // it if absent so the suite runs from a clean checkout with one command, and
@@ -29,8 +58,8 @@ import { execFileSync } from "node:child_process";
 // the point: a viewer that resolved its document correctly in a flat fixture
 // and wrongly in the deployed tree is exactly the failure a stand-in hides.
 for (const [file, script] of [
-  ["_kg/folio-assistant.jsonld", "cat-harness/scripts/kg-export.ts"],
-  ["_kg/folio-assistant/index.html", "cat-harness/scripts/kg-viewer.ts"],
+  [`_kg/${STUB}.jsonld`, "cat-harness/scripts/kg-export.ts"],
+  [`_kg/${STUB}/index.html`, "cat-harness/scripts/kg-viewer.ts"],
 ] as const) {
   if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
 }
@@ -43,12 +72,12 @@ for (const [file, script] of [
  * the old path and went green locally against a leftover `_kg/` — a constant
  * would have moved all of them together.
  */
-const PAGE = "/_kg/folio-assistant/index.html";
+const PAGE = `/_kg/${STUB}/index.html`;
 
 /** Facet ids carry `(`, `)` and `-`; they are matched literally, not as patterns. */
 const escapeRe = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-const KG = JSON.parse(readFileSync("_kg/folio-assistant.jsonld", "utf-8")) as {
+const KG = JSON.parse(readFileSync(`_kg/${STUB}.jsonld`, "utf-8")) as {
   "@graph": Array<Record<string, unknown>>;
   counts: Record<string, number>;
   /** Absent since bean `2634` — kept optional so the fixture below can set it. */
@@ -221,11 +250,11 @@ test.describe("kg viewer", () => {
     // deployed layout depends on. A page that resolved its document any other
     // way would read the real graph from here and fail.
     const dir = "_kg/fixtures";
-    mkdirSync(`${dir}/folio-assistant`, { recursive: true });
-    copyFileSync("_kg/folio-assistant/index.html", `${dir}/folio-assistant/index.html`);
+    mkdirSync(`${dir}/${STUB}`, { recursive: true });
+    copyFileSync(`_kg/${STUB}/index.html`, `${dir}/${STUB}/index.html`);
     const NS = "https://litlfred.github.io/folio-assistant/ns#";
     writeFileSync(
-      `${dir}/folio-assistant.jsonld`,
+      `${dir}/${STUB}.jsonld`,
       JSON.stringify({
         "@context": { "@version": 1.1, id: "@id", type: "@type", name: "http://www.w3.org/2000/01/rdf-schema#label" },
         "@id": "https://example.invalid/fixture.jsonld",
@@ -237,7 +266,7 @@ test.describe("kg viewer", () => {
       }),
     );
 
-    await page.goto(`/${dir}/folio-assistant/index.html`);
+    await page.goto(`/${dir}/${STUB}/index.html`);
     await expect(page.locator("#meta")).toContainText("1 nodes");
     await page.locator("#list li button").first().click();
     await expect(page.locator(".detail .note")).toContainText("not in the");
@@ -266,7 +295,7 @@ test.describe("kg viewer", () => {
     // declaration would be a second answer to a question already answered,
     // and the one that breaks on a preview.
     //
-    // The path is `../folio-assistant.jsonld`, not a bare sibling name: the
+    // The path is `../<stub>.jsonld`, not a bare sibling name: the
     // viewer lives one level down at `_kg/<stub>/index.html` and the graph sits
     // in the parent. That layout changed under this branch, and these two tests
     // kept passing locally against a STALE `_kg/` while failing in CI — which
@@ -275,7 +304,7 @@ test.describe("kg viewer", () => {
     // run against a leftover copy of it is not evidence about what ships.
     await page.goto(PAGE);
     const src = page.locator("#meta a").first();
-    await expect(src).toHaveAttribute("href", "../folio-assistant.jsonld");
+    await expect(src).toHaveAttribute("href", `../${STUB}.jsonld`);
     // A name that says what it gets you: "JSON-LD" alone names a syntax.
     await expect(src).toHaveAttribute("aria-label", /Download this graph as JSON-LD/);
     // And it actually resolves — from the PAGE's own directory, the way a
@@ -454,7 +483,7 @@ test.describe("kg viewer — with a catalogue", () => {
   });
 
   test("an unreadable document says so in the reader's language, and is still not drawn as empty", async ({ page }) => {
-    await page.route("**/folio-assistant.jsonld", (r) => r.fulfill({ status: 404, body: "" }));
+    await page.route(`**/${STUB}.jsonld`, (r) => r.fulfill({ status: 404, body: "" }));
     await page.goto(`${FIXTURE}?lang=qaa`);
     await expect(page.locator("#meta")).toContainText("could not load");
     await expect(page.locator(".detail")).toContainText("not an empty graph");
@@ -469,7 +498,7 @@ test.describe("kg viewer — the failed fetch", () => {
   test("a document that cannot be fetched says so, and is never drawn as empty", async ({ page }) => {
     // Three states, not two. An empty index and a failed fetch look identical
     // on screen and mean opposite things.
-    await page.route("**/folio-assistant.jsonld", (r) => r.fulfill({ status: 404, body: "" }));
+    await page.route(`**/${STUB}.jsonld`, (r) => r.fulfill({ status: 404, body: "" }));
     await page.goto(PAGE);
     await expect(page.locator("#meta")).toContainText("could not load");
     await expect(page.locator(".detail")).toContainText("not an empty graph");

@@ -14,7 +14,7 @@
  */
 import { describe, expect, it } from "bun:test";
 
-import { resolve_ } from "../mount-instance-docs.js";
+import { resolve_, withRoutes } from "../mount-instance-docs.js";
 
 const r = (route: string) => ({ route });
 
@@ -112,5 +112,71 @@ describe("both handlers register: the kind's, and the instance's own", () => {
     const { mounts, refused } = resolve_([r("who-iris"), r("who-iris-extra")]);
     expect(mounts).toHaveLength(2);
     expect(refused).toEqual([]);
+  });
+});
+
+describe("which kind answers at the instance's own route", () => {
+  const m = (name: string, kind: string, instanceRoot = false) => ({
+    name,
+    kind,
+    dir: `/repo/${name}/${kind}`,
+    instanceRoot,
+  });
+
+  it("ONE renderable kind needs no choosing", () => {
+    const { candidates, undetermined } = withRoutes([m("who-iris", "docs")]);
+    expect(candidates.map((c) => c.route).sort()).toEqual(["docs/who-iris", "who-iris"]);
+    expect(undetermined).toEqual([]);
+  });
+
+  it("the DECLARED kind takes the root, not the one that sorts first", () => {
+    // The defect this field exists for. `docs` sorts before `library`, so the
+    // themed root served the documentation — contradicting the ruling that
+    // puts the themed replica there. Order is deliberately docs-first here so
+    // the test fails if the declaration stops being consulted.
+    const { candidates, undetermined } = withRoutes([
+      m("who-iris", "docs"),
+      m("who-iris", "library", true),
+    ]);
+    const root = candidates.find((c) => c.route === "who-iris");
+    expect(root?.kind).toBe("library");
+    expect(undetermined).toEqual([]);
+  });
+
+  it("every kind still gets its own route, declared root or not", () => {
+    const { candidates } = withRoutes([m("who-iris", "docs"), m("who-iris", "library", true)]);
+    expect(candidates.map((c) => c.route).sort()).toEqual([
+      "docs/who-iris",
+      "library/who-iris",
+      "who-iris",
+    ]);
+  });
+
+  it("the root is emitted ONCE, however many kinds are declared", () => {
+    const { candidates } = withRoutes([
+      m("who-iris", "docs"),
+      m("who-iris", "library", true),
+      m("who-iris", "catalogue"),
+    ]);
+    expect(candidates.filter((c) => c.route === "who-iris")).toHaveLength(1);
+  });
+
+  it("several kinds and NONE declared is UNDETERMINED, and still serves something", () => {
+    // Could-not-determine is not a choice, and not a crash either: a site has
+    // to answer at that URL. The caller reports it rather than letting a
+    // silent pick read as a decision.
+    const { candidates, undetermined } = withRoutes([m("x", "docs"), m("x", "library")]);
+    expect(undetermined).toEqual([{ name: "x", kinds: ["docs", "library"], serving: "docs" }]);
+    expect(candidates.filter((c) => c.route === "x")).toHaveLength(1);
+  });
+
+  it("one instance being undetermined does not implicate another", () => {
+    const { undetermined } = withRoutes([
+      m("x", "docs"),
+      m("x", "library"),
+      m("y", "docs"),
+      m("y", "library", true),
+    ]);
+    expect(undetermined.map((u) => u.name)).toEqual(["x"]);
   });
 });

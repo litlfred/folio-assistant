@@ -50,12 +50,48 @@ import { join } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
 
-/** Generators whose page is one template literal. Each carries the warning. */
+/**
+ * Generators whose page is one template literal. Each carries the warning.
+ *
+ * ## Why this is still a LIST, which is not the usual answer here
+ *
+ * Deriving it — every `.ts` whose source contains `return <backtick><!doctype
+ * html>` — finds twelve files where this names five, and the extra ones are
+ * not an oversight: {@link strayBacktick} REPORTS TWO OF THEM FALSELY.
+ * Measured 2026-09-21 by running the detector over every candidate:
+ *
+ *     FINDING line 402   cat-harness/scripts/gen-docs-auto.ts
+ *     FINDING line 365   cat-harness/scripts/dak-pdf.ts
+ *
+ * Both compile. Both findings are a nested template literal inside an
+ * interpolation — `${scope ? <backtick> — ${esc(scope)}<backtick> : ""}` — and
+ * the detector's rule is that the first unescaped backtick after the opening
+ * closes the page. It does not follow `${…}`.
+ *
+ * So the four files it named were not a list of "the ones somebody
+ * remembered": they are the ones that obey their own NO BACKTICKS warning
+ * absolutely, which is exactly the condition that makes the naive scan sound.
+ * The list encodes a precondition, and deriving it without teaching the
+ * detector about nesting would trade a missed file for two false alarms —
+ * worse, because an author who is told twice that correct code is wrong stops
+ * reading the gate.
+ *
+ * **`gen-iris-pages.ts` is added because it meets that precondition**, checked
+ * rather than assumed: the detector reports it clean today. It belongs here
+ * because the trap caught it on 2026-09-21 — a backtick in a comment inside
+ * the page template, for the third time in one session — and nothing was
+ * watching the one generator outside `cat-harness/`.
+ *
+ * Making this derivable is bean-sized and is the real fix: teach
+ * {@link strayBacktick} to skip a balanced `${…}`, then scan for the opener
+ * and delete this array.
+ */
 export const VIEWER_SOURCES = [
   "cat-harness/scripts/gen-schema-viz.ts",
   "cat-harness/scripts/gen-library-viz.ts",
   "cat-harness/scripts/kg-viewer.ts",
   "cat-harness/scripts/state-visualizer.ts",
+  "who-iris/scripts/gen-iris-pages.ts",
 ];
 
 export interface StrayBacktick {

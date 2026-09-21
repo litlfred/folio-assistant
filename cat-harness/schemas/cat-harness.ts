@@ -1726,6 +1726,29 @@ export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
   /**
+   * This directory is what answers at the instance's own route, `/<instance>/`.
+   *
+   * `mount-instance-docs.ts` publishes an instance's content twice: at
+   * `/<kind>/<instance>/` for every renderable kind it declares, and once at
+   * `/<instance>/` — the instance's themed root, per the owner's 2026-09-20
+   * ruling that *"`/docs/who-iris/` should be the cat-harness handler default
+   * for docs. who-iris themed at `/who-iris/`."*
+   *
+   * **Until this field existed, the second route went to whichever kind sorted
+   * first alphabetically** — and the comment doing the sorting said, in as many
+   * words, that the choice "is the instance's own business". It was not: it was
+   * the alphabet's. who-iris declaring both `docs` and `library` made that
+   * concrete, because `docs` sorts first and the themed root would have served
+   * the documentation, contradicting the ruling it was implementing.
+   *
+   * Optional, because an instance declaring ONE renderable kind has nothing to
+   * choose. With several and none marked, the mount reports the root as
+   * UNDETERMINED and keeps the deterministic order rather than silently
+   * picking — a site must serve something there, and a quiet pick is how the
+   * wrong page became the front door in the first place.
+   */
+  instanceRoot: z.boolean().optional(),
+  /**
    * Which theme this subgraph renders on.
    *
    * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies
@@ -2739,6 +2762,42 @@ export function siteDirFor(root: string): string {
     throw new Error(`cannot determine the site root: ${p} declares neither \`stub\` nor \`name\``);
   }
   return siteDir({ name: stub, stub });
+}
+
+/**
+ * {@link artefactStub} for the instance rooted at `root`, read from its
+ * declaration — the RAW read, for the same reason {@link siteDirFor} takes one.
+ *
+ * `readDeclaration` validates the whole declaration, which means it throws
+ * when ANY directory in it names a graph kind the harness layer has not
+ * registered. `siteDirFor` documents that hazard above and avoids it; this is
+ * the missing half, and its absence was a real cost rather than a tidiness
+ * point: the 2026-09-21 stub rename (issue #649) needed the published artefact
+ * name in two Playwright suites, and `readDeclaration` threw there on exactly
+ * the unregistered-kind path `siteDirFor` warns about — in a browser job,
+ * where the failure reads as "no tests found" rather than as a bad read.
+ *
+ * Throws rather than defaulting, like its sibling. A guessed artefact name
+ * sends a consumer to a document nothing publishes, and "could not determine"
+ * is never rendered as an answer.
+ */
+export function artefactStubFor(root: string): string {
+  const p = join(root, DECLARATION_FILENAME);
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    throw new Error(
+      `cannot determine the artefact stub: ${p} is unreadable or not valid JSON ` +
+        `(${e instanceof Error ? e.message : String(e)})`,
+    );
+  }
+  const d = raw as { name?: unknown; stub?: unknown };
+  const stub = typeof d.stub === "string" && d.stub ? d.stub : d.name;
+  if (typeof stub !== "string" || !stub) {
+    throw new Error(`cannot determine the artefact stub: ${p} declares neither \`stub\` nor \`name\``);
+  }
+  return stub;
 }
 
 /**
