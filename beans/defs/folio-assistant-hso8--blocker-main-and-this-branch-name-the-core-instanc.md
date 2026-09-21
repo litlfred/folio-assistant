@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hso8
 title: 'BLOCKER: main and this branch name the core instance differently — folio-assist-core vs folio-assistant-core'
-status: todo
+status: in-progress
 type: task
-priority: high
+priority: normal
 created_at: 2026-09-20T16:36:01Z
-updated_at: 2026-09-20T16:36:22Z
+updated_at: 2026-09-21T07:52:20Z
 parent: folio-assistant-vke6
 ---
 
@@ -74,6 +74,80 @@ the populated one were one key, and the stub won."*
 - [ ] `instanceRootsIn` and the two committed instance lists
       (`cat-harness.test.ts`, `instance-render.test.ts`) are updated, and the
       rename is verified by `check:instance-render` rendering every instance.
+
+## RE-MEASURED 2026-09-21 ON MAIN (`519e8c01`) — THE BLOCKER IS GONE
+
+Everything above was measured 2026-09-20 and its premise no longer holds.
+**Main adopted the owner's name.** Measured, not read from this bean:
+
+| | 2026-09-20 (this bean) | 2026-09-21 (main) |
+|---|---|---|
+| directory | `folio-assistant-core/` here, `folio-assist-core/` on main | **`folio-assistant-core/`** |
+| declared `name` | disagreed | **`folio-assistant-core`** |
+| sibling | — | `folio-assistant-sci/`, long form too |
+
+`folio-assistant-core/harness.json` records the fix against itself, dated
+2026-09-20: *"the DIRECTORY and the declared NAME are BOTH spelled out in
+full … Corrected"*. So the fourteen-conflict merge this bean blocks cannot
+recur: there is one spelling, and it is the one the owner named.
+
+**115 files still say `folio-assist-core`, and almost none of it matters.**
+Checked rather than swept: 42 are `beans/defs` — historical record, which is
+never rewritten — and every one of the five `harness.json` hits is prose in a
+`_comment` or `description`. **No `dependencies` field names the short form**,
+so nothing resolves through it. The rest is docs, translations and generated
+pages.
+
+## What the settlement left behind, and it cost the instance its face
+
+**`AVATARS["folio-assist-core"]` was a live keyed lookup on a name nothing
+carries.** `harness-tiles.ts:223` calls `avatarFor(decl.name)` — the DECLARED
+INSTANCE NAME — so measured on 2026-09-21:
+
+    avatarFor("folio-assistant-core")  ->  GENERIC   (the question mark)
+    avatarFor("folio-assist-core")     ->  the leaf of paper, unreachable
+
+The instance rendered "no avatar is declared for this" while its own
+hand-drawn art sat in the table under the dead spelling. **A key nobody can
+reach is worse than a missing one**: `check-avatar-coverage` counted it as
+declared, so coverage read clean over it.
+
+The comment explaining the entry had gone stale in the same direction — *"the
+split (#223) has not happened, so `cat-bootstrap` and `folio-assist-core`
+exist as layers in the namespace and as nothing in `harness.json`"*. Both
+halves false: both files exist and both declare a `name`. The test asserting
+it repeated the claim verbatim.
+
+Fixed: the key, the comment, the test, and an asset `title` reading
+`AGENTS.md — folio-assist-core`. A new test states the property rather than
+the spelling — **every instance-keyed avatar must match a real declared
+name** — so the next drift fails instead of rendering a question mark.
+
+**The table serves two key spaces and only one is checked.** `kind-fan` and
+`gen-avatars-css` key by GRAPH KIND; `harness-tiles` keys by INSTANCE NAME.
+`check-avatar-coverage` asks only about kinds, which is why it reports these
+two as orphans — correct about its own axis, silent about the other. Instance
+coverage is bean `4kj4`'s and is deliberately **not** taken here.
+
+## Done when — restated against what is actually left
+
+- [x] The conflict is settled: main declares `folio-assistant-core`, directory
+      and name, and `folio-assistant-sci` alongside it.
+- [x] The namespace constant moved with the directory — one spelling in the
+      tree, no half-published IRI.
+- [x] `bootstrap` vs `cat-bootstrap` settled in the same direction:
+      `cat-bootstrap/` declares `name: "cat-bootstrap"`.
+- [x] The rename's live leftovers are gone, verified by `check:instance-render`
+      and `bun run gates` 80 of 80.
+- [ ] **STILL THE OWNER'S, and the only thing left:** does the `cat-` prefix
+      extend to the core instance? The trunk's state is not a ruling — it
+      carries `cat-harness` and `cat-bootstrap` with the prefix,
+      `folio-assistant-core` and `folio-assistant-sci` without. Nobody said
+      that was the intended line; it is where things landed. Nothing is
+      blocked on the answer, so this is a question and no longer a BLOCKER.
+
+**The bean is not closed**, because one box is a decision only the owner can
+make. It is no longer `high`/blocking: what it blocked has already happened.
 
 ## Not a naming quibble
 
