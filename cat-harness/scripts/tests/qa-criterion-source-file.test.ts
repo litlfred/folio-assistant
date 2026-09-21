@@ -51,27 +51,69 @@ import { describe, test, expect } from "bun:test";
 import { readFileSync, readdirSync, existsSync } from "fs";
 import { resolve } from "path";
 
-import {
-  QA_CRITERIA_REGISTRY,
-  getCriterionSourceFile,
-} from "../../content/pipeline/qa-criteria-registry.ts";
+import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry.ts";
 import { checkerFunctionName } from "../../content/pipeline/qa-checker-discovery.ts";
+import {
+  isCriterionSourceMiss,
+  resolveCriterionSource,
+} from "../../content/pipeline/criterion-source.ts";
+import { instanceRootsIn } from "../../schemas/cat-harness.ts";
+import { loadContributions } from "../../schemas/harness-config.ts";
+import {
+  ContributionRegistry,
+  type FolioContribution,
+} from "../../schemas/contributions.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
+const REPO = resolve(ROOT, "..");
 const CHECKER_DIR = "content/pipeline";
 
-/** Every `qa-checkers-*.ts`, discovered rather than listed. */
-function checkerFiles(): string[] {
-  const dir = resolve(ROOT, CHECKER_DIR);
-  if (!existsSync(dir)) return [];
-  return readdirSync(dir)
-    .filter((f) => /^qa-checkers-.*\.ts$/.test(f))
-    .map((f) => `${CHECKER_DIR}/${f}`)
-    .sort();
+/**
+ * The dependency tree, so a CONTRIBUTED checker is found where it lives.
+ *
+ * Two criteria (`proof-compile-cost`, `proof-no-cost-regression`) declare
+ * `checker_contributed`; their checkers are `folio-assistant-sci`'s. Without
+ * this the test would report them as having no checker anywhere — which is
+ * what it says a defect looks like, so it would fail loudly rather than pass
+ * vacuously, but for the wrong reason.
+ */
+const registry = await loadContributions<FolioContribution, ContributionRegistry>(
+  REPO,
+  new ContributionRegistry(),
+);
+
+/**
+ * Every `qa-checkers-*.ts` in EVERY instance, discovered rather than listed.
+ *
+ * Globbing one directory was the previous version, and it stopped being
+ * enough the moment a checker moved into another instance. Widening it to a
+ * second hardcoded directory would reproduce the exact defect this test's own
+ * header describes — an allow-list that falls through silently — so the
+ * instance list comes from the declarations, and a checker file added in a
+ * future contributor is covered without anyone remembering.
+ *
+ * Keys are the same labels `resolveCriterionSource` produces: bare and
+ * repo-relative for core's own, `<contributor>/<path>` for a contributed one.
+ */
+function checkerFiles(): Array<{ label: string; abs: string }> {
+  const out: Array<{ label: string; abs: string }> = [];
+  for (const instance of instanceRootsIn(REPO)) {
+    const dir = resolve(instance, CHECKER_DIR);
+    if (!existsSync(dir)) continue;
+    const name = instance.split("/").pop() ?? "";
+    for (const f of readdirSync(dir).filter((x) => /^qa-checkers-.*\.ts$/.test(x))) {
+      const rel = `${CHECKER_DIR}/${f}`;
+      out.push({
+        label: instance === ROOT ? rel : `${name}/${rel}`,
+        abs: resolve(dir, f),
+      });
+    }
+  }
+  return out.sort((a, b) => a.label.localeCompare(b.label));
 }
 
 const sources = new Map<string, string>(
-  checkerFiles().map((f) => [f, readFileSync(resolve(ROOT, f), "utf-8")]),
+  checkerFiles().map((f) => [f.label, readFileSync(f.abs, "utf-8")]),
 );
 
 // The name convention is `qa-checker-discovery`'s, not this test's: discovery
@@ -110,7 +152,14 @@ describe("getCriterionSourceFile — declared source must host the checker", () 
   test("every locatable automated criterion is hashed against its own file", () => {
     const mismatched: string[] = [];
     for (const def of automated) {
-      const declared = getCriterionSourceFile(def.id);
+      // Asked through the ONE resolver the sweep uses, so this test cannot
+      // agree with a path production does not take.
+      const located = resolveCriterionSource(def.id, ROOT, registry);
+      if (isCriterionSourceMiss(located)) {
+        mismatched.push(`${def.id}: ${located.reason}`);
+        continue;
+      }
+      const declared = located.label;
       const hosts = hostFiles(def.id);
       if (hosts.length === 0) continue; // reported separately below
       if (!hosts.includes(declared)) {
@@ -131,5 +180,35 @@ describe("getCriterionSourceFile — declared source must host the checker", () 
     // declared `automated: false`, which is what the runtime already did.
     const orphans = automated.filter((d) => hostFiles(d.id).length === 0);
     expect(orphans.map((d) => d.id)).toEqual([]);
+  });
+});
+
+describe("a contributed checker cannot fall through to the default", () => {
+  test("the cascade REFUSES a checker_contributed criterion", async () => {
+    // The whole hazard of this move, made unreachable rather than avoided.
+    // Dropping a criterion from the cascade would land it on
+    // `qa-checkers-extended.ts`, and `script_hash` over the wrong file is a
+    // verdict that can never go stale — the state this file's header was
+    // written about.
+    const { getCriterionSourceFile } = await import(
+      "../../content/pipeline/qa-criteria-registry.ts"
+    );
+    const contributed = QA_CRITERIA_REGISTRY.filter((d) => d.checker_contributed);
+    expect(contributed.length).toBeGreaterThan(0);
+    for (const def of contributed) {
+      expect(() => getCriterionSourceFile(def.id)).toThrow(/checker_contributed/);
+    }
+  });
+
+  test("and the resolver answers for exactly those, from the contributor", () => {
+    for (const def of QA_CRITERIA_REGISTRY.filter((d) => d.checker_contributed)) {
+      const located = resolveCriterionSource(def.id, ROOT, registry);
+      expect(isCriterionSourceMiss(located)).toBe(false);
+      const src = located as { root: string; label: string };
+      // Not this instance: that is what "contributed" has to mean, or the flag
+      // is decoration and the move never happened.
+      expect(src.root).not.toBe(ROOT);
+      expect(src.label.startsWith("folio-assistant-sci/")).toBe(true);
+    }
   });
 });

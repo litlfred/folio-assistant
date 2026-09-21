@@ -64,10 +64,9 @@ import type {
   QaCriterionDefinition,
   QaCriterionSubject,
 } from "../../schemas/block-qa";
-import {
-  QA_CRITERIA_REGISTRY,
-  getCriterionSourceFile,
-} from "./qa-criteria-registry";
+import { QA_CRITERIA_REGISTRY } from "./qa-criteria-registry";
+import { isCriterionSourceMiss, resolveCriterionSource } from "./criterion-source";
+import type { ContributionRegistry } from "../../schemas/contributions";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -95,7 +94,15 @@ export function checkerFunctionName(criterionId: string): string {
 /** An automated criterion whose declared module yielded no checker. */
 export interface UnimplementedCriterion {
   criterion: string;
-  sourceFile: string;
+  /**
+   * The file that was supposed to hold the checker.
+   *
+   * ABSENT when no file could be named at all — a criterion declared
+   * `checker_contributed` with no contributor loaded has no source file, and
+   * an empty string here would read as one in a report. The third state gets
+   * its own shape rather than a sentinel value.
+   */
+  sourceFile?: string;
   reason: string;
 }
 
@@ -133,13 +140,17 @@ export function criterionSubject(def: QaCriterionDefinition): QaCriterionSubject
  * Load every automated block criterion's checker from the module the registry
  * names. One pass; call it before the sweep loop, not inside it.
  */
-export function discoverBlockCheckers(): Promise<CheckerDiscovery<BlockChecker>> {
-  return discoverFor<BlockChecker>("block");
+export function discoverBlockCheckers(
+  registry?: ContributionRegistry,
+): Promise<CheckerDiscovery<BlockChecker>> {
+  return discoverFor<BlockChecker>("block", registry);
 }
 
 /** The same, for the script axis. */
-export function discoverScriptCheckers(): Promise<CheckerDiscovery<ScriptChecker>> {
-  return discoverFor<ScriptChecker>("script");
+export function discoverScriptCheckers(
+  registry?: ContributionRegistry,
+): Promise<CheckerDiscovery<ScriptChecker>> {
+  return discoverFor<ScriptChecker>("script", registry);
 }
 
 /**
@@ -197,7 +208,10 @@ export async function loadCheckerModule(
   return mod;
 }
 
-async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDiscovery<T>> {
+async function discoverFor<T>(
+  subject: QaCriterionSubject,
+  registry?: ContributionRegistry,
+): Promise<CheckerDiscovery<T>> {
   const checkers = new Map<string, T>();
   const unimplemented: UnimplementedCriterion[] = [];
   const orphaned: CheckerDiscovery<T>["orphaned"] = [];
@@ -210,8 +224,34 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
 
   for (const def of QA_CRITERIA_REGISTRY) {
     if (criterionSubject(def) !== subject) continue;
-    const sourceFile = getCriterionSourceFile(def.id);
-    const abs = join(ROOT, sourceFile);
+
+    // ONE answer to "where is this checker" — core's registry and a
+    // dependency's contribution partition the criteria between them, and a
+    // criterion claimed by both throws rather than picking a winner.
+    const located = resolveCriterionSource(def.id, ROOT, registry);
+    if (isCriterionSourceMiss(located)) {
+      if (def.automated) unimplemented.push({ criterion: def.id, reason: located.reason });
+      continue;
+    }
+
+    // A CONTRIBUTED checker arrives as a function: the contributor imported
+    // its own module, so there is nothing here to load and no path here to
+    // name. That is the whole point — this module names no checker file in any
+    // layer, and after the split it names no other package either.
+    if (located.contributed) {
+      if (def.automated) checkers.set(def.id, located.contributed as T);
+      // The same disagreement `orphaned` exists for, arriving from a
+      // dependency instead of a file: a checker for a criterion core declares
+      // `automated: false` never runs, so it is code with no caller ageing
+      // against a criterion nobody audits. Reported, not resolved — either the
+      // criterion should be automated or the contribution should go, and
+      // discovery cannot tell which.
+      else orphaned.push({ criterion: def.id, sourceFile: located.label });
+      continue;
+    }
+
+    const sourceFile = located.sourceFile;
+    const abs = join(located.root, sourceFile);
 
     if (!def.automated) {
       // Only reported off an ALREADY-loaded module. Importing a module for a

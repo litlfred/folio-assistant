@@ -4,7 +4,7 @@ title: 'C: built-ins self-register at the outermost layer — wire the Contribut
 status: in-progress
 type: task
 created_at: 2026-09-21T13:21:31Z
-updated_at: 2026-09-21T15:05:00Z
+updated_at: 2026-09-21T16:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -135,3 +135,108 @@ that would let discovery ask the registry for a criterion core does not know,
 and throw if both claim one — is easy to write and would have no caller. An
 unwired seam with a plausible shape is exactly what this bean exists to repair;
 adding a second one while fixing the first is not progress.
+
+## The vertical slice landed — the registry has a real contributor
+
+Owner, 2026-09-21: *"Vertical slice now — move qa-checkers-cost.ts"*.
+
+`qa-checkers-cost.ts` now lives in `folio-assistant-sci`, which contributes its
+two checkers through a `contributes` module reached by the repository's **first
+dependency edge**. Loaded for real, not in a fixture:
+
+```
+contributed checkers:
+  proof-compile-cost        folio-assistant-sci  folio-assistant-sci/content/pipeline/qa-checkers-cost.ts
+  proof-no-cost-regression  folio-assistant-sci  folio-assistant-sci/content/pipeline/qa-checkers-cost.ts
+```
+
+### The criterion stayed; the checker moved
+
+A criterion is a rule about content and a checker is the tooling that answers
+it — the owner's cut, *"f-a-core has high level processes only, no tooling"*.
+So `proof-compile-cost` and `proof-no-cost-regression` are still declared in
+core's `QA_CRITERIA_REGISTRY`; what moved is the file that implements them.
+
+### One answer, not a `??`
+
+`resolveCriterionSource(id, coreRoot, registry?)` is the single answer to
+"where is this checker", used by discovery, by the sweep's hashing loop and by
+the test that pins declared == actual. It is not the shape
+`qa-checker-discovery`'s header condemns, because the two sources
+**partition**: core declares criteria whose checkers core owns; a dependency
+contributes checkers for criteria it owns. A criterion claimed by both is a
+**collision and throws**, naming both claimants — the same discipline
+`ContributionRegistry.register` already applies to two dependencies claiming
+one criterion.
+
+### The trap, and why it is now unreachable rather than avoided
+
+`getCriterionSourceFile` ends in a **default**: an unrecognised id resolves to
+`qa-checkers-extended.ts`. `script_hash` is computed over that path, so a
+criterion pointed at a file not containing its checker **never invalidates** —
+eleven criteria were measured in that state on 2026-09-18. Simply deleting the
+cascade's cost branch would have dropped both criteria straight into it.
+
+Three things stop that, and the third is the one that matters:
+
+1. `QaCriterionDefinition.checker_contributed` — core declares that it does not
+   own the checker. A flag rather than an absent `source_file`, because absence
+   is indistinguishable from "never declared one".
+2. `resolveCriterionSource` refuses the cascade for such a criterion and
+   reports an unsupplied checker as **unresolved** — a third state, not a path.
+   Verified: with no registry loaded, `proof-compile-cost` returns a miss whose
+   reason says so, rather than `qa-checkers-extended.ts`.
+3. **`getCriterionSourceFile` itself throws** for a `checker_contributed`
+   criterion. Without it, `script-sweep.ts` calling the cascade directly was
+   safe only *by accident* — its `SCRIPT_CHECKERS` table happens to contain no
+   block criterion. Safe-by-accident is one refactor from unsafe, so the state
+   is made unreachable.
+
+### Freshness, end to end
+
+The sweep's bundle for each criterion, computed through the resolver:
+
+```
+proof-compile-cost        source_file: folio-assistant-sci/content/pipeline/qa-checkers-cost.ts
+                          script_hash: 3eb5d65c22b2
+proof-no-cost-regression  source_file: folio-assistant-sci/content/pipeline/qa-checkers-cost.ts
+                          script_hash: 96b9bdc29ac9
+```
+
+Two **different** hashes from one file — the per-criterion closure hash, so
+each verdict tracks its own checker. `computeCriterionScriptHashes` gained an
+optional `recordAs`, because the bytes are read from the contributor's root
+while the recorded label must be contributor-qualified: two instances holding
+the same relative path would otherwise write the same `source_file` and a
+reader could not tell whose checker a verdict came from.
+
+### Measured effect on `zlmp`'s table
+
+The `core → sci` runtime edge is **gone** — `qa-checker-discovery` no longer
+resolves any sci path, because a contributed checker arrives as a function and
+the contributor imported its own module. Four of the five remain
+(`qa-checkers-dak.ts` at 5 criteria, `render-latex.ts`, and the server's route
+and tool groups). `bun run check:partition` still 0 wrong-direction, 0
+unassigned; `bun run gates` 87 of 87.
+
+### Falsified, in both directions
+
+- Removing the dependency edge fails three tests, each naming the real problem:
+  the two cost criteria stop resolving, are reported unimplemented, and the
+  source-file test reports them unresolved. None passes vacuously.
+- The source-file test's glob now walks **every instance** via
+  `instanceRootsIn` rather than one hardcoded directory. Adding
+  `folio-assistant-sci` as a second literal would have reproduced the exact
+  defect that test's own header describes — an allow-list that falls through
+  silently, which once hid three real mismatches.
+
+### Still to do
+
+- `qa-checkers-dak.ts` (base, 5 criteria) and `render-latex.ts` (sci) — the
+  same move, now that the path is proven.
+- The server cluster: `src/server.ts` (harness) names three core routes and one
+  core tool group, with an explicit `layer:` field per entry.
+- `script-sweep.ts`'s `SCRIPT_CHECKERS` is still a hardcoded dispatch table.
+  Not reachable by a contributed criterion today, and the throw above makes a
+  future one loud rather than silent — but it is the same shape discovery
+  replaced.

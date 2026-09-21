@@ -13,15 +13,31 @@
  * compared across different source is not a weak signal, it is a
  * confident wrong one.
  *
- * @module content/pipeline/qa-checkers-cost
+ * ## Why this is in `folio-assistant-sci` and not the platform
+ *
+ * Elaboration cost is a LEAN measurement, so the checker is the science
+ * layer's tooling, and `cat-harness` reaching it was a core → sci dependency.
+ * `check:partition` never counted it, because `getCriterionSourceFile` named
+ * this file as a STRING and a variable specifier is deliberately no edge — but
+ * after the repository split the file still has to exist, in another package.
+ * Bean `zlmp` measured five such runtime edges; this is the first one drained.
+ *
+ * The CRITERION stays in core (`qa-criteria-registry.ts` declares
+ * `proof-compile-cost` and `proof-no-cost-regression`): a criterion is a rule
+ * about content, and a checker is the tooling that answers it. That is the
+ * owner's cut — *"f-a-core has high level processes only, no tooling"* — and
+ * it is what `QaCheckerContribution` models, criterion id plus function plus
+ * the file that defines it.
+ *
+ * @module folio-assistant-sci/content/pipeline/qa-checkers-cost
  */
 
 import { existsSync, readFileSync } from "fs";
-import type { CheckerResult } from "../../schemas/block-qa";
+import type { CheckerResult } from "../../../cat-harness/schemas/block-qa";
 
-import { parseLeanRef, refToDecl } from "./content-graph";
-import { loadProfileCache, entryFresh, type ProfileCache } from "./lean-profile-ingest";
-import { findContentRepoRoot } from "./repo-root";
+import { parseLeanRef, refToDecl } from "../../../cat-harness/content/pipeline/content-graph";
+import { loadProfileCache, entryFresh, type ProfileCache } from "../../../cat-harness/content/pipeline/lean-profile-ingest";
+import { findContentRepoRoot } from "../../../cat-harness/content/pipeline/repo-root";
 
 let _cache: ProfileCache | null = null;
 let _root: string | null = null;
