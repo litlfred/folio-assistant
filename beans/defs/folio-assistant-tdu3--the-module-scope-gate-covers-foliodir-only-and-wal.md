@@ -4,7 +4,7 @@ title: The module-scope gate covers folioDir only, and walks only cat-harness
 status: in-progress
 type: task
 created_at: 2026-09-21T15:35:46Z
-updated_at: 2026-09-21T15:35:46Z
+updated_at: 2026-09-21T16:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -92,5 +92,41 @@ precondition proves nothing, and its failure looks exactly like the finding.
 - [x] It sees a nested call, not only one in first position
 - [x] It reads every instance rather than one directory
 - [x] It does not flag its own remedy, pinned by a test that would fail if it did
-- [ ] The four exported sites migrate to accessors (`todos.ts`,
+- [x] The four exported sites migrate to accessors (`todos.ts`,
       `agent-memory.ts`, `mcp-server/paths.ts` ×2)
+
+## The four exported sites are done — and every use site was already call-time
+
+Checked before converting, which is what made it small. All four constants are
+consumed either as a **default parameter value** or inside a **function body**,
+and both are evaluated when somebody calls, not when the module loads. So
+turning each into an accessor defers the throw without relocating it — the
+falsifier this bean set (*"if an importer needs the value at its own module
+scope, deferring only moves the throw"*) does not fire anywhere.
+
+| constant | file | consumers |
+|---|---|---|
+| `TODO_ROOT` | `scripts/todos.ts` | 4 default params in-file, 1 in `gen-default-boards.ts`, 3 in its test |
+| `MEMORY_DIRS` / `MEMORY_DIR` | `scripts/agent-memory.ts` | 1 default param; **no external importer** |
+| `UPLOADS_DIR` | `adapters/mcp-server/paths.ts` | 5 sites in `server.ts`, all inside handler bodies |
+| `TODOS_DIR` | `adapters/mcp-server/paths.ts` | **none** |
+
+`AGENT_MEMORY_DIR` is left alone: it composes through `repoRootFor`, which
+does not throw.
+
+### `TODOS_DIR` has no consumers at all
+
+Found while converting it. The only other mention in the tree was this gate's
+own `ALLOWED` entry naming it — so the allow-list was the sole thing keeping a
+record of an export nobody imports. Deferred rather than deleted: an unused
+export is a judgement about intent, not a defect this bean is entitled to
+settle, and the module-scope throw is worth removing either way. Recorded here
+so the judgement is somebody's rather than nobody's.
+
+### `ALLOWED` is now empty, and that is a determined empty
+
+All three entries went with their conversions. The mechanism stays — the next
+such case will want it, and it reports a stale entry as a finding in its own
+right. The gate runs clean over **997 files**.
+
+`bun run gates`: 89 of 89.

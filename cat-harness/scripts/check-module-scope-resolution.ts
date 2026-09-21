@@ -119,21 +119,24 @@ function walk(dir: string, out: string[]): void {
 }
 
 /**
- * Sites kept, with the reason, because their constants are EXPORTED — making
- * one deferred is a change at every import site rather than in one file.
+ * Sites kept, with the reason — and **it is empty**, which is a determined
+ * empty rather than an unused mechanism.
  *
- * Short on purpose, and it POLICES ITSELF: an entry whose file no longer
- * matches is reported as stale and to be deleted. An allow-list that keeps an
- * entry after the reason for it is gone stops being a list of known exceptions
- * and becomes a blind spot — which is the defect this repository has already
- * paid for in `qa-criterion-source-file.test.ts`, where a hardcoded checker
- * list hid three real mismatches.
+ * It held three entries when this gate was widened: `scripts/todos.ts`,
+ * `scripts/agent-memory.ts` and `adapters/mcp-server/paths.ts`, whose
+ * constants are EXPORTED, so deferring one is a change at every import site
+ * rather than in one file. All three are converted now, and the entries went
+ * with them.
+ *
+ * The mechanism stays because the next such case will want it, and because it
+ * POLICES ITSELF: an entry whose file no longer matches is reported as stale
+ * and to be deleted. An allow-list that keeps an entry after the reason for it
+ * is gone stops being a list of known exceptions and becomes a blind spot —
+ * the defect this repository has already paid for in
+ * `qa-criterion-source-file.test.ts`, where a hardcoded checker list hid three
+ * real mismatches.
  */
-const ALLOWED: Record<string, string> = {
-  "cat-harness/scripts/todos.ts": "exported TODO_ROOT",
-  "cat-harness/scripts/agent-memory.ts": "exported MEMORY_DIRS",
-  "cat-harness/adapters/mcp-server/paths.ts": "exported UPLOADS_DIR and TODOS_DIR, 5+ importers",
-};
+const ALLOWED: Record<string, string> = {};
 
 /**
  * Is the throwing call already behind an arrow, and therefore deferred?
