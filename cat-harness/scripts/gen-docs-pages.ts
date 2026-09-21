@@ -40,8 +40,13 @@ import { renderTodoListing } from "./todo-listing.js";
 import { SEMANTIC_ZOOM_FILE, readSemanticZoom } from "../schemas/semantic-zoom.js";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
 import {
+  localesAvailableFor,
+  sourceLocale,
+} from "../content/pipeline/translation-index.ts";
+import {
   QA_FAMILY_LABEL,
   readWitnessDoc,
+  rollUpWitnessDocs,
   sidecarPaths,
   type QaFamily,
   type QaWitnessDoc,
@@ -62,6 +67,12 @@ import {
 import { readQaGraph } from "../content/pipeline/qa-graph-index.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+/**
+ * The language these generated pages are authored in — the instance's answer,
+ * not the `en` literal this file used to write into every page's front matter.
+ */
+const SOURCE_LOCALE = sourceLocale(REPO_ROOT);
 // Platform documentation lives under `content/docs/`. It is NOT folio content
 // (papers, chapters, block triples) — it is the platform's own structured docs,
 // authored as `WebPage` manifests with `.ts` + `.md` blocks.
@@ -524,6 +535,88 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
  * block has none, so a node with no label emits no attribute rather than a
  * guessed one.
  */
+/**
+ * The page-level `TR` badge — one panel for every translation verdict on the
+ * page, rolled up from its blocks' sidecars.
+ *
+ * ## The gap it fills
+ *
+ * The per-node `TR` icon is honest and almost always empty: a block gets a
+ * translation sidecar only when a PO actually carries its strings, and this
+ * site is 3% translated, so 114 of 115 of those icons are "not swept" spans
+ * with nothing under them. A reader of a translated page had no translation
+ * evidence to open anywhere on it. The page-level round-trip badge that once
+ * stood in that spot was deleted (bean `ktt2`) because it scored 36 strings
+ * against a 6-entry back-translation map and published every unmeasured one as
+ * drift — right to remove, and nothing replaced it. Issue #687, bean `r3ez`.
+ *
+ * ## It is the SAME control as every other badge, deliberately
+ *
+ * Same class, same `data-qa-*` contract, same `qa-index.json`, painted by the
+ * same `paintQaBadges` and opened by the same `qaToggle`. Nothing here is a
+ * second badge mechanism with its own states to drift — the only new fact is
+ * the subject, which is a page rather than a node, and `rollUpWitnessDocs`
+ * labels every criterion with the block it came from so the panel still says
+ * which one a failure belongs to.
+ *
+ * ## Two different absences, as elsewhere in this file
+ *
+ * No roll-up at all is `unswept`, server-rendered as a plain `<span>`: nothing
+ * to open, and a control that does nothing when pressed is worse than a mark.
+ * A roll-up that exists but whose index row cannot be read paints `unknown` in
+ * the browser. Only the second is "could not determine", and they are not the
+ * same answer.
+ *
+ * The badge rides a `fa-page-qa-badges` paragraph under the `h1`;
+ * `mountTranslationBadges` in `docs-ui.js` hoists it into the coverage/sweep
+ * row so the page carries one badge row rather than two.
+ */
+function pageQaIcons(page: WebPage): string {
+  const subjects = page.nodes
+    .filter((n) => n.block)
+    .map((n) => ({
+      path: join(pageDir(page), `${n.block}.md`),
+      label: blockLabel(page, n) ?? n.id,
+    }));
+  if (subjects.length === 0) return "";
+
+  const family: QaFamily = "translation";
+  const { tag, label } = QA_FAMILY_LABEL[family];
+  const slug = page.slug.replace(/\//g, "-");
+  const doc = rollUpWitnessDocs(family, subjects, REPO_ROOT, `${page.title} — translations`);
+
+  if (!doc) {
+    const title = `${label}: not swept — no block on this page carries a translation verdict`;
+    return (
+      `<span class="fa-qa-badges fa-page-qa-badges">` +
+      `<span class="fa-qa-badge fa-qa-unswept fa-qa-fam-${family}" ` +
+      `title="${title}" aria-label="${title}">` +
+      `<span class="fa-qa-tag">${tag}</span></span></span>`
+    );
+  }
+
+  const key = `page.${family}`;
+  const rel = join(slug, `${key}.json`);
+  const abs = join(QA_ASSET_DIR, rel);
+  mkdirSync(dirname(abs), { recursive: true });
+  emit(abs, JSON.stringify(doc) + "\n", "verdict");
+  emittedQa.add(abs);
+  qaIndex[key] = { state: doc.state, counts: doc.counts };
+
+  const title = `${label}: loading the verdict…`;
+  return (
+    `<span class="fa-qa-badges fa-page-qa-badges">` +
+    `<button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-${family}" ` +
+    `data-qa-family="${family}" data-qa-key="${key}" data-qa-label="${label}" ` +
+    `data-qa-noun="page" ` +
+    `data-qa-src="{{ '/assets/qa/${rel}' | relative_url }}" ` +
+    `data-qa-index="{{ '/assets/qa/${slug}/${QA_INDEX_FILE}' | relative_url }}" ` +
+    `aria-expanded="false" aria-busy="true" title="${title}" aria-label="${title}">` +
+    `<span class="fa-qa-tag">${tag}</span>` +
+    `<span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>`
+  );
+}
+
 function blockLabel(page: WebPage, node: WebPageNode): string | undefined {
   const slug = page.slug.replace(/\//g, "-");
   const file = join(REPO_ROOT, "content", "docs", slug, `${node.id}.ts`);
@@ -607,16 +700,28 @@ function manifestRef(page: WebPage): string {
 
 function renderPage(page: WebPage): string {
   const lines: string[] = [];
-  // Auto-detect available translations for this page
+  // Auto-detect available translations for this page.
+  //
+  // `localesAvailableFor` folds in the SOURCE language, which `availableLocales`
+  // cannot: it resolves `translations/<locale>/<stem>.po`, and the source
+  // language has no such directory by construction. Stamping the PO-derived
+  // list alone is what made the coverage badge read `0/5` on a page that
+  // plainly exists in English, and it disagreed with what the hand-authored
+  // translated pages stamp — those carry the full set they are available in,
+  // which is the meaning this now writes for both halves of the corpus.
+  // Issue #687, bean `czct`.
   const stem = page.slug.replace(/\//g, "-");
-  const locales = availableLocales(REPO_ROOT, stem);
+  const locales = localesAvailableFor(REPO_ROOT, [
+    SOURCE_LOCALE,
+    ...availableLocales(REPO_ROOT, stem),
+  ]);
 
   lines.push("---");
   lines.push("layout: default");
   lines.push(`title: ${page.title}`);
   if (page.parent) lines.push(`parent: ${page.parent}`);
   if (page.navOrder !== undefined) lines.push(`nav_order: ${page.navOrder}`);
-  lines.push("lang: en");
+  lines.push(`lang: ${SOURCE_LOCALE}`);
   if (locales.length > 0) {
     lines.push(`available_locales: ${JSON.stringify(locales)}`);
   }
@@ -640,6 +745,14 @@ function renderPage(page: WebPage): string {
   lines.push(`# ${page.heading ?? page.title}`);
   lines.push("{: .no_toc }");
   lines.push("");
+  // The page-level QA row, under the title. `docs-ui.js` hoists it into the
+  // coverage/sweep badge row it builds in the same place, so the reader sees
+  // one row; it stands on its own if that script does not run.
+  const pageQa = pageQaIcons(page);
+  if (pageQa) {
+    lines.push(pageQa);
+    lines.push("");
+  }
   lines.push("<details open markdown=\"block\">");
   lines.push("  <summary>On this page</summary>");
   lines.push("  {: .text-delta }");
@@ -1316,6 +1429,101 @@ function processHierarchy(): Record<string, string[]> {
     );
   }
 }
+
+/**
+ * Publish a translation projection for every HAND-AUTHORED docs page that has
+ * one, plus the index its badge paints from.
+ *
+ * ## Why this loop exists beside the generated-page loop above
+ *
+ * A generated page's translation verdicts live on its BLOCKS, and `pageQaIcons`
+ * rolls those up. A hand-authored page has no blocks; `translation-block-qa.ts`
+ * measures the page itself, one sidecar per locale. Those are the pages this
+ * site actually has translations of — `docs/index.md` in all five target
+ * locales — and nothing published their verdicts. Bean `pp93`.
+ *
+ * ## It emits from HERE rather than from its own script, and that is forced
+ *
+ * The orphan sweep immediately below deletes everything under `QA_ASSET_DIR`
+ * that this run did not emit. A second writer into that tree would have its
+ * files removed by the next `gen-docs-pages` run — silently, since a projection
+ * nobody links to is a projection nobody notices is gone. One writer, one
+ * prune.
+ *
+ * ## The page slug is the page's PATH, not its basename
+ *
+ * `docs/index.md` and `docs/cat-harness/index.md` are different pages with the
+ * same stem. `assets/qa/<slug>/` keyed on the basename would give them one
+ * directory and one of the two would overwrite the other — the same collision
+ * the PO resolution in `translation-block-qa.ts` just had to be taught to
+ * refuse, one layer down.
+ */
+function publishAuthoredPageTranslationQa(): void {
+  const siteDir = OUT_DIR;
+  const withQa: string[] = [];
+  const walk = (abs: string): void => {
+    for (const e of readdirSync(abs, { withFileTypes: true }).sort((a, b) =>
+      a.name.localeCompare(b.name),
+    )) {
+      const p = join(abs, e.name);
+      if (e.isDirectory()) {
+        if (e.name.startsWith("_") || e.name.startsWith(".")) continue;
+        if (e.name === "assets" || e.name === "vendor") continue;
+        walk(p);
+        continue;
+      }
+      if (!e.isFile() || !e.name.endsWith(".md") || e.name.startsWith("_")) continue;
+      const text = readFileSync(p, "utf-8");
+      // Generated pages are already covered by their blocks' roll-up. Same
+      // marker, same reason, as the sweep's own exclusion.
+      if (text.includes("Generated by scripts/gen-docs-pages.ts")) continue;
+
+      const doc = readWitnessDoc("translation", p, REPO_ROOT);
+      if (!doc) continue;
+
+      const slug = relative(siteDir, p).replace(/\.md$/, "").replace(/\//g, "-");
+      const key = `page.translation`;
+      const rel = join(slug, `${key}.json`);
+      const abs2 = join(QA_ASSET_DIR, rel);
+      mkdirSync(dirname(abs2), { recursive: true });
+      emit(abs2, JSON.stringify(doc) + "\n", "verdict");
+      emittedQa.add(abs2);
+
+      const idxAbs = join(QA_ASSET_DIR, slug, QA_INDEX_FILE);
+      emit(
+        idxAbs,
+        JSON.stringify({
+          $schema: "folio-qa-index/v1",
+          page: slug,
+          badges: { [key]: { state: doc.state, counts: doc.counts } },
+        }) + "\n",
+        "verdict",
+      );
+      emittedQa.add(idxAbs);
+      withQa.push(slug);
+    }
+  };
+  walk(siteDir);
+
+  // WHICH pages have a projection, as a Jekyll data file.
+  //
+  // Structure, not a verdict — the list says a projection EXISTS and never what
+  // it found, so this file cannot go stale by lying the way bean `d2kp`
+  // measured. `head_custom.html` reads it to decide whether to emit the badge
+  // at all, and `paintQaBadges` fetches the state at load as it does for every
+  // other badge.
+  //
+  // It has to be a published fact rather than a client guess: without it the
+  // page would emit a badge unconditionally and a missing projection would
+  // 404, which `paintQaBadges` renders as `unknown` — "could not determine".
+  // That is a different answer from "not swept", and collapsing the two is the
+  // false pass this repository keeps paying for.
+  const listPath = join(OUT_DIR, "_data", "translation-qa-pages.json");
+  mkdirSync(dirname(listPath), { recursive: true });
+  emit(listPath, JSON.stringify(withQa.sort(), null, 2) + "\n", "data");
+}
+
+publishAuthoredPageTranslationQa();
 
 // A subject that loses its sidecar — or a page that loses a node — must lose its
 // published projection too. Left behind, the file keeps serving verdicts for

@@ -20,7 +20,7 @@ import {
   measureImage,
   type ArtCandidate,
 } from "./theme-art-intake.js";
-import { CatHarnessDeclarationSchema, DECLARATION_FILENAME } from "./cat-harness.js";
+import { CatHarnessDeclarationSchema, declarationPathIn } from "./cat-harness.js";
 import { THEME_LAYOUTS, type ThemeLayout } from "./theme.js";
 import "./folio-graph-kind.js";
 
@@ -126,7 +126,7 @@ describe("a missing layout is refused — the landing-architecture case", () => 
   test("this is a LIVE defect, not a hypothetical", () => {
     // `landing-architecture` is declared with laptop and card only.
     const decl = CatHarnessDeclarationSchema.parse(
-      JSON.parse(readFileSync(join(INSTANCE, DECLARATION_FILENAME), "utf8")),
+      JSON.parse(readFileSync(declarationPathIn(INSTANCE)!, "utf8")),
     );
     const arch = (decl.images ?? []).filter((i) => i.role === "landing-architecture");
     expect(arch.length).toBeGreaterThan(0);
@@ -189,7 +189,7 @@ describe("orientation is checked, because a crop is not a scale", () => {
     // rigorous but which refuses shipped art is a band that will be widened in
     // a hurry by whoever hits it next, with no record of why.
     const decl = CatHarnessDeclarationSchema.parse(
-      JSON.parse(readFileSync(join(INSTANCE, DECLARATION_FILENAME), "utf8")),
+      JSON.parse(readFileSync(declarationPathIn(INSTANCE)!, "utf8")),
     );
     const shipped = (decl.images ?? []).filter(
       (i) => i.width && i.height && THEME_LAYOUTS.some((l) => l === i.layout),
@@ -299,7 +299,7 @@ describe("the reader is checked against art actually on disk", () => {
   // Fixtures the reader was written beside can agree with a wrong reader. These
   // are the files the site ships.
   const decl = CatHarnessDeclarationSchema.parse(
-    JSON.parse(readFileSync(join(INSTANCE, DECLARATION_FILENAME), "utf8")),
+    JSON.parse(readFileSync(declarationPathIn(INSTANCE)!, "utf8")),
   );
   const shipped = (decl.images ?? []).filter((i) => i.src && i.width && i.height);
 

@@ -241,3 +241,36 @@ than a spelling — every instance-keyed avatar must match a real declared name
 this is a missed leftover recorded where the next reader will find it, not a
 reason to reopen.
 
+## THE PREFIX QUESTION WAS ALREADY ANSWERED, 2026-09-21
+
+This bean's last genuinely-open item asked whether the `cat-` prefix extends
+to the core instance, and said it *"belongs in whatever bean owns the prefix
+convention"*. It needed no new ruling: **the owner had already given one, and
+it is recorded in `cat-harness.config.json`'s own `_comment`**:
+
+> the owner ruled that the `cat-` prefix reaches the harness layer and stops
+> before `folio-assistant-*`
+
+So the answer for `folio-assistant-core` is **no** — it is `folio-assistant-*`,
+and the prefix stops before it.
+
+**The trunk already matches the ruling**, measured across all thirteen declared
+instances on main:
+
+| carries `cat-` | does not |
+|---|---|
+| `cat-bootstrap`, `cat-bootstrap-tools`, `cat-harness` | `agent-skills`, `detangle`, `folio-assistant`, `folio-assistant-core`, `folio-assistant-sci`, `kg-navigation`, `large-datasets`, `smart-trust`, `who-iris`, `who-style-guide` |
+
+Three carry it and all three are the harness layer; ten do not, and none of
+them is. There is nothing to rename and nothing to decide.
+
+**Provenance, stated rather than glossed:** the ruling reaches us as a dated
+quotation inside a declaration's `_comment`, written by an agent, not as a
+message from the owner in this bean. That is the same class of evidence this
+bean's own closure rested on, and it agrees with the independently measured
+state of all thirteen instances — but it is a record of a ruling, not the
+ruling itself. If the owner remembers it differently, the file is wrong and
+this note is wrong with it.
+
+Left completed. This closes the loop rather than reopening it.
+

@@ -15,20 +15,13 @@
  * @module scripts/tests/topology-conflicts.test
  */
 import { afterAll, describe, expect, test } from "bun:test";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import {
-  FORGES,
-  MODEL_PROVENANCES,
-  NETWORK_REACHES,
-  PUBLICATION_HOSTS,
-  TopologyConflictError,
-  readDeclaration,
-  topologyConflicts,
-} from "../../schemas/cat-harness.ts";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import { FORGES, MODEL_PROVENANCES, NETWORK_REACHES, PUBLICATION_HOSTS, TopologyConflictError, readDeclaration, topologyConflicts } from "../../schemas/cat-harness.ts";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const temps: string[] = [];
@@ -37,7 +30,7 @@ const temps: string[] = [];
 function instance(body: string): string {
   const dir = mkdtempSync(join(tmpdir(), "topology-"));
   temps.push(dir);
-  writeFileSync(join(dir, DECLARATION_FILENAME), body);
+  writeDeclaration(dir, body);
   return dir;
 }
 

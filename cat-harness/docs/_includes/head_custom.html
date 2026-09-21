@@ -167,6 +167,38 @@
   "translationSource": "{{ page.translation_source | default: '' }}",
   "supportedLocales": {{ site.translation_locales | default: '["ar","zh","en","fr","ru","es"]' }},
   "availableLocales": {{ page.available_locales | jsonify | default: '[]' }},
+  "translationQa": {%- comment -%}
+    The page-level Translation QA badge for a HAND-AUTHORED page, as PATHS only.
+
+    A generated page gets its badge written into its own markup by
+    `gen-docs-pages.ts`, because whether its blocks carry a verdict is structure
+    it already knows. An authored page has no generator, so the same structural
+    fact is published as `_data/translation-qa-pages.json` -- the list of slugs
+    that HAVE a projection -- and the badge is emitted only for those. A badge
+    emitted unconditionally would 404 where no projection exists, and
+    `paintQaBadges` renders a failed fetch as `unknown`, "could not determine":
+    a different answer from "not swept", and collapsing the two is a false pass.
+
+    Never the verdict itself. The state and counts are fetched at load from
+    `qa-index.json`, the way every other badge on the site gets them -- bean
+    `d2kp`, where a page carrying its own measurement went stale by lying.
+
+    A TRANSLATED page points at its SOURCE's projection: it is the same subject,
+    "the translations of this page", and `translation_source` is how a
+    translated page names what it translates. Deriving it from the path instead
+    would read a locale out of a directory name, which
+    `content/pipeline/translation-index.ts` documents at length as wrong in both
+    directions.
+  {%- endcomment -%}
+  {%- assign _tr_src = page.translation_source | default: page.path -%}
+  {%- assign _tr_slug = _tr_src | remove: '.md' | replace: '/', '-' -%}
+  {%- if site.data.translation-qa-pages contains _tr_slug -%}
+  {
+    "key": "page.translation",
+    "src": "{{ '/assets/qa/' | append: _tr_slug | append: '/page.translation.json' | relative_url }}",
+    "index": "{{ '/assets/qa/' | append: _tr_slug | append: '/qa-index.json' | relative_url }}"
+  }
+  {%- else -%}null{%- endif -%},
   "sweep": {
     "run": {% if site.data.translation-qa %}true{% else %}false{% endif %},
     "sweptAt": "{{ site.data.translation-qa.sweptAt | default: '' }}",

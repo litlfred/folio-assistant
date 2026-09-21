@@ -46,7 +46,8 @@ import {
   queue,
   reviewer,
 } from "../narratives.ts";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const AGENT = { kind: "agent" as const, id: "claude-code", model: "claude-opus-5" };
@@ -125,10 +126,7 @@ describe("the state machine refuses records that mean nothing", () => {
 function repo(entries: Record<string, unknown>): string {
   const root = mkdtempSync(join(tmpdir(), "narr-"));
   made.push(root);
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }),
-  );
+  writeDeclaration(root, JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }));
   for (const [slug, narrative] of Object.entries(entries)) {
     mkdirSync(join(root, "library", slug), { recursive: true });
     writeFileSync(
@@ -267,7 +265,7 @@ describe("the queue shows exactly what is waiting on a person", () => {
   test("no library at all is an empty queue, not a crash", () => {
     const root = mkdtempSync(join(tmpdir(), "narr-none-"));
     made.push(root);
-    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "x", directories: [] }));
+    writeDeclaration(root, JSON.stringify({ name: "x", directories: [] }));
     expect(queue(root)).toEqual([]);
   });
 
@@ -350,10 +348,7 @@ describe("deciding writes the file, and validates before it does", () => {
 function imagesRepo(): string {
   const root = mkdtempSync(join(tmpdir(), "narr-img-"));
   made.push(root);
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }),
-  );
+  writeDeclaration(root, JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }));
   mkdirSync(join(root, "library", "x"), { recursive: true });
   writeFileSync(
     join(root, "library", "x", "images.json"),

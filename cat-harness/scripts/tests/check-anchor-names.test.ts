@@ -14,13 +14,13 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { AMBIGUOUS_NAMES, checkAnchorNames, instanceDirs } from "../check-anchor-names.ts";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repo with one instance at `cat-harness/`, holding `scripts/tests/a.ts`. */
 function fixture(src: string): string {
   const root = mkdtempSync(join(tmpdir(), "anchors-"));
   mkdirSync(join(root, "cat-harness", "scripts", "tests"), { recursive: true });
-  writeFileSync(join(root, "cat-harness", DECLARATION_FILENAME), "{}");
+  writeDeclaration(join(root, "cat-harness"), { name: "cat-harness" });
   writeFileSync(join(root, "cat-harness", "scripts", "tests", "a.ts"), src);
   return root;
 }
@@ -88,7 +88,7 @@ describe("what this check does NOT claim", () => {
   test("instances are discovered by harness.json, never listed", () => {
     const root = fixture("\n");
     mkdirSync(join(root, "who-iris"), { recursive: true });
-    writeFileSync(join(root, "who-iris", DECLARATION_FILENAME), "{}");
+    writeDeclaration(join(root, "who-iris"), { name: "who-iris" });
     expect(instanceDirs(root).sort()).toEqual(["cat-harness", "who-iris"]);
   });
 });

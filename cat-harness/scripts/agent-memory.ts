@@ -67,6 +67,7 @@ import {
   type MemoryNode,
 } from "../schemas/memory.js";
 import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { portableSegment } from "../schemas/portable-path";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
 // renderable kind"), and `directoriesForGraph` reads the WHOLE declaration,
@@ -417,7 +418,24 @@ export function entriesPastBudget(file: string, budget = 200): string[] {
  * written into either would be destroyed or would destroy something.
  */
 export function detailRelPath(id: string): string {
-  return join("detail", `${id}.md`);
+  return join("detail", detailFileName(id));
+}
+
+/**
+ * The detail file's basename — ONE composer, because two would prune live files.
+ *
+ * `writeDetail` builds a keep-set of names and deletes everything in `detail/`
+ * that is not in it. So a second spelling of this name is not a cosmetic
+ * duplicate: the writer would emit one name, the keep-set would hold another,
+ * and the pruner would delete the file the writer had just written.
+ *
+ * {@link portableSegment} because a memory-entry id is an identifier and
+ * nothing requires it to be a legal filename — the `req:agent-workflow` shape
+ * that made this repository unclonable on Windows. Every id in use today is a
+ * slug and encodes to itself, so no existing detail file moves.
+ */
+export function detailFileName(id: string): string {
+  return `${portableSegment(id)}.md`;
 }
 
 export function renderEntries(entries: readonly MemoryNode[]): string {
@@ -499,7 +517,7 @@ export interface SyncResult {
  */
 function writeDetail(dir: string, entries: readonly MemoryNode[]): void {
   const detailDir = join(dir, "detail");
-  const wanted = new Map(entries.filter((m) => m.detail).map((m) => [`${m.id}.md`, m.detail!]));
+  const wanted = new Map(entries.filter((m) => m.detail).map((m) => [detailFileName(m.id), m.detail!]));
   if (wanted.size === 0 && !existsSync(detailDir)) return;
   mkdirSync(detailDir, { recursive: true });
   for (const [name, body] of wanted) {

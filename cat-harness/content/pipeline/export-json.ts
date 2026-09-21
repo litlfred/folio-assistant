@@ -16,7 +16,7 @@
  * @module content/pipeline/export-json
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDirDeferred } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from "fs";
 import { join } from "path";
 import { createHash } from "crypto";
@@ -43,7 +43,7 @@ import { leanPackageByName, parseLeanRef } from "../../schemas/lean-packages";
 // lands in folio-assistant, which holds no papers — and the symlinked
 // embedding resolves there even when run from the content repo.
 const REPO_ROOT = findContentRepoRoot();
-const FOLIO_ROOT = folioDir(REPO_ROOT);
+const folioDirOf = folioDirDeferred(REPO_ROOT, import.meta.url);
 
 const args = process.argv.slice(2);
 function argVal(name: string, fallback: string): string {
@@ -60,13 +60,13 @@ if (!PAPER_NAME) {
   const found = findPapers(REPO_ROOT);
   console.error(
     found.length === 0
-      ? `export-json: no paper found under ${FOLIO_ROOT} — run from a folio checkout, or pass --paper.`
+      ? `export-json: no paper found under ${folioDirOf()} — run from a folio checkout, or pass --paper.`
       : `export-json: this folio has ${found.length} papers (${found.join(", ")}) — pass --paper to choose one.`,
   );
   process.exit(2);
 }
 const OUT_DIR = argVal("out", join(REPO_ROOT, "build", "viewer"));
-const PAPER_DIR = join(FOLIO_ROOT, PAPER_NAME);
+const PAPER_DIR = join(folioDirOf(), PAPER_NAME);
 
 // ── Types for export ─────────────────────────────────────────────
 

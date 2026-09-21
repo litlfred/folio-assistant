@@ -20,15 +20,14 @@ import {
   undeclaredAtRoot,
 } from "../check-undeclared-files.js";
 import "../../schemas/folio-graph-kind.js";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import { DECLARATION_SUFFIX, findDeclarationFile } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repository with one instance, which declares a repository-scoped directory. */
 function repo(): string {
   const root = mkdtempSync(join(tmpdir(), "undeclared-"));
   mkdirSync(join(root, "an-instance"), { recursive: true });
-  writeFileSync(
-    join(root, "an-instance", DECLARATION_FILENAME),
-    JSON.stringify(
+  writeDeclaration(join(root, "an-instance"), JSON.stringify(
       {
         name: "an-instance",
         directories: [
@@ -38,8 +37,7 @@ function repo(): string {
       },
       null,
       2,
-    ),
-  );
+    ));
   mkdirSync(join(root, "work"), { recursive: true });
   writeFileSync(join(root, "package.json"), "{}");
   return root;
@@ -80,14 +78,11 @@ describe("the ROOT may itself be an instance", () => {
   /** `repo()` plus a root `harness.json` declaring one directory of its own. */
   function repoWithRootInstance(): string {
     const root = repo();
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify(
+    writeDeclaration(root, JSON.stringify(
         { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] }] },
         null,
         2,
-      ),
-    );
+      ));
     mkdirSync(join(root, "uploads"), { recursive: true });
     writeFileSync(join(root, "uploads", "dropped.pdf"), "x");
     return root;
@@ -104,7 +99,7 @@ describe("the ROOT may itself be an instance", () => {
   });
 
   test("the root's own harness.json is accounted for", () => {
-    expect(accountedRootPaths(repoWithRootInstance()).get(DECLARATION_FILENAME)).toContain("own declaration");
+    expect(accountedRootPaths(repoWithRootInstance()).get(findDeclarationFile(repoWithRootInstance())!)).toContain("own declaration");
   });
 
   test("a root instance does NOT account for what it does not declare", () => {
@@ -129,14 +124,11 @@ describe("the ROOT may itself be an instance", () => {
     // Same ordering argument as the two-pass fix: an instance is accounted for
     // BY ITSELF, and another declaration claiming its name does not unmake it.
     const root = repo();
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify(
+    writeDeclaration(root, JSON.stringify(
         { name: "the-repo", directories: [{ id: "x", path: "an-instance/", dependents: "reproduce", graphs: ["uploads"] }] },
         null,
         2,
-      ),
-    );
+      ));
     expect(accountedRootPaths(root).get("an-instance")).toContain("declares itself");
   });
 });
@@ -247,8 +239,9 @@ describe("this repository, as it stands", () => {
     // already fixed; this pins the property for whatever is declared next.
     const names = new Map<string, string[]>();
     for (const entry of readdirSync(REPO, { withFileTypes: true })) {
-      const rel = entry.isDirectory() ? join(entry.name, DECLARATION_FILENAME) : null;
-      for (const p of [rel, entry.name === DECLARATION_FILENAME ? DECLARATION_FILENAME : null]) {
+      const sub = entry.isDirectory() ? findDeclarationFile(join(REPO, entry.name)) : undefined;
+      const rel = sub === undefined ? null : join(entry.name, sub);
+      for (const p of [rel, entry.name.endsWith(DECLARATION_SUFFIX) ? entry.name : null]) {
         if (!p || !existsSync(join(REPO, p))) continue;
         const name = (JSON.parse(readFileSync(join(REPO, p), "utf-8")) as { name?: string }).name;
         if (name) names.set(name, [...(names.get(name) ?? []), p]);
@@ -332,7 +325,7 @@ describe("an instance's own declaration outranks another instance naming it", ()
     const byName: Record<string, unknown> = { [firstName]: outer, [secondName]: inner };
     for (const [dir, decl] of Object.entries(byName)) {
       mkdirSync(join(root, dir), { recursive: true });
-      writeFileSync(join(root, dir, DECLARATION_FILENAME), JSON.stringify(decl, null, 2));
+      writeDeclaration(join(root, dir), JSON.stringify(decl, null, 2));
     }
     mkdirSync(join(root, secondName, "skills"), { recursive: true });
     writeFileSync(join(root, "package.json"), "{}");

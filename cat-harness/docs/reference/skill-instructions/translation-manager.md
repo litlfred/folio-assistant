@@ -300,14 +300,65 @@ The translation pipeline stamps this front matter on generated pages:
 ```yaml
 # Source pages (English):
 lang: en
-available_locales: ["fr"]          # locales with translations
+available_locales: ["en", "fr"]    # every locale the page can be read in
 
 # Translated pages:
 lang: fr
 translation_status: unverified     # or "official"
 translation_source: index.md       # source file
-available_locales: ["fr"]
+available_locales: ["en", "fr"]
 ```
+
+### The terminology glossary — `translations/<locale>/glossary.po`
+
+`translation-terms-preserved` can see that a source term is absent from a
+translation. It cannot see whether that is a correct localisation or a silent
+loss: `WHO` missing from a French sentence is either `OMS` or a dropped term,
+and guessing either way is worse than saying so. The glossary is how a folio
+tells it which.
+
+| entry | meaning | when the term is absent |
+|---|---|---|
+| `msgstr "OMS"` | the expected form, pinned | **fail** — the glossary said what it should be |
+| `msgstr "FHIR"` (identity) | must survive verbatim | **fail** |
+| `#, localised` | rendered in the target language, form NOT pinned | **pass** |
+| no entry | unknown | **warn** |
+
+**`#, localised` exists so a glossary needs no translated content.** Pinning a
+form means authoring target-language material; the flag says the one thing the
+checker needs — *this term gets localised, I am not pinning how* — and it is
+reviewable by someone who reads only English. Pin a form when you want the
+stricter check.
+
+**It is a reading rule and cannot become a mute button**, which is the property
+to preserve if you touch it. `localised` only converts a would-be finding about
+that term into a pass: it never reaches `strict` tokens (a URL or a number
+consults no glossary — nothing localises a `3`), it cannot act on a term it does
+not name, an entry with neither a form nor the flag is *unfinished* rather than
+permission, and each locale's file is read alone, so marking a term in French
+says nothing about Arabic. Every one of those is a test in
+`translation-block-qa.test.ts`.
+
+The file is hand-authored and has no POT — `schemas/translation.ts` declares
+that slot, and `TranslationNode.potFile` is optional for exactly this. Bean
+`he0e`.
+
+**`available_locales` includes the SOURCE language, and that is not a
+formality.** It is the list a reader's language bar and coverage badge are
+computed from — "which languages can I read this page in" — and the page is
+certainly readable in the one it was written in. It is *not* the list of
+translations that exist, which is what `availableLocales()` in
+`content/pipeline/po-resolve.ts` returns by resolving
+`translations/<locale>/<stem>.po`; that lookup can never name the source
+language, because there is no `translations/en/` and there never will be. Use
+`localesAvailableFor()` in `content/pipeline/translation-index.ts` to go from
+one to the other.
+
+Both halves of the corpus must stamp the same meaning. They did not until issue
+#687: the generator stamped the PO-derived list while the hand-authored
+translated pages stamped the full set, so `docs/fr/index.md` rendered a badge
+reading `6/5 languages` — a numerator larger than its denominator, which is the
+shape a disagreement about what a field means takes when it finally surfaces.
 
 The `qa_translation_*` keys are **gone**, along with the badge that read them.
 They were stamped from a node-level round trip whose back-translation map held

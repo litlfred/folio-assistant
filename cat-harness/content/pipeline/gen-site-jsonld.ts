@@ -49,6 +49,7 @@ import {
   siteIri,
 } from "../../schemas/jsonld.ts";
 import type { WebPage, WebPageNode } from "../../schemas/webpage.ts";
+import { portableSegment } from "../../schemas/portable-path";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SRC_DIR = join(REPO_ROOT, "content", "docs");
@@ -163,7 +164,11 @@ for (const flat of flats) {
   pages++;
 
   for (const node of page.nodes) {
-    emit(join(SRC_DIR, flat, "nodes", `${node.id}.jsonld`), nodeDoc(page, node, flat));
+    // `portableSegment`: a node id is an identifier, not a filename. Every id
+    // in the corpus today is a slug and encodes to itself, so no emitted path
+    // moves — but the knowledge graph this reads also holds `req:*` ids, and
+    // one reaching here would write a name NTFS cannot create.
+    emit(join(SRC_DIR, flat, "nodes", `${portableSegment(node.id)}.jsonld`), nodeDoc(page, node, flat));
     nodes++;
   }
 }

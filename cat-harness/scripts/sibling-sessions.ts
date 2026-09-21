@@ -10,6 +10,22 @@
  * insights"* and *"claim before you work"* both assume an agent can see who
  * else is here.
  *
+ * ## That observation is DATED, and this tool is not the first resort
+ *
+ * **Re-measured 2026-09-21: the listing returned seven siblings**, with their
+ * statuses and — for those waiting — the question each was holding, in plain
+ * text. So *"the session API cannot see a sibling"*, which this file printed in
+ * its own report until then, is a present-tense claim that had stopped being
+ * true, and it is exactly what bean `8nzu` is about: a dated observation
+ * welded to a capability claim outlives its evidence, and every reader after
+ * that takes the claim.
+ *
+ * What is durable is narrower and still worth having: **a commit trailer
+ * survives the container**, and a session's own id is not resolvable from
+ * outside itself. So this remains the right tool for *what did each session
+ * DO in this window* — it reads commits — and the wrong first question for
+ * *who is here now*. An agent that can call the session API asks that first.
+ *
  * ## The trailer is the identity, and that is not a workaround
  *
  * A session is an ephemeral container. Its id is not resolvable from outside
@@ -160,8 +176,9 @@ function formatReport(s: SessionSweep): string {
     `Sibling sessions (since ${s.since}; ${s.commitsScanned} commit(s) across all branches, ` +
       `${s.untrailered} with no trailer)`,
     "",
-    "  State is INFERRED from branches and commit times. The session API cannot see a",
-    "  sibling, so 'still running' is not knowable here and is not reported.",
+    "  State is INFERRED from branches and commit times, so 'still running' is not",
+    "  knowable HERE and is not reported. This tool reads COMMITS; an agent that can",
+    "  call the session API should ask it first -- it answers what a trailer cannot.",
   ];
   if (s.sessions.length === 0) {
     out.push("");

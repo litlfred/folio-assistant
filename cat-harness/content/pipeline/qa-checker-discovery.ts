@@ -160,7 +160,8 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
       // criterion nobody automates would make every sweep pay for a report,
       // and the automated criteria sharing that file load it anyway.
       const seen = load(abs);
-      if (seen && findChecker<T>(seen, def.id)) orphaned.push({ criterion: def.id, sourceFile });
+      const seenRead = seen && readModule(seen);
+      if (seenRead && findChecker<T>(seenRead, def.id)) orphaned.push({ criterion: def.id, sourceFile });
       continue;
     }
 
@@ -190,7 +191,26 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
       modules.set(abs, mod);
     }
 
-    const found = findChecker<T>(mod, def.id);
+    // READ BEFORE ASKING. A namespace that cannot be enumerated belongs to a
+    // module that threw while evaluating, and saying it "exports neither" a
+    // checker would be a determined answer about a file nobody could read.
+    // `await import()` above does not always re-throw for such a module — it
+    // can hand back the half-built namespace — so this is the only place the
+    // distinction can still be made.
+    const read = readModule(mod);
+    if (read === undefined) {
+      unimplemented.push({
+        criterion: def.id,
+        sourceFile,
+        reason:
+          "module did not finish evaluating — its exports were never bound, so nothing here " +
+          "can say whether it implements this criterion. The real error is at that module's " +
+          "own top level; this is the symptom.",
+      });
+      continue;
+    }
+
+    const found = findChecker<T>(read, def.id);
     if (found) checkers.set(def.id, found);
     else {
       unimplemented.push({
@@ -204,14 +224,87 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
   return { checkers, unimplemented, orphaned };
 }
 
+/**
+ * A module namespace read safely, or `undefined` when it CANNOT BE READ AT
+ * ALL — which means the module threw while evaluating.
+ *
+ * ## What actually happens, corrected 2026-09-21
+ *
+ * This was introduced (PR #695) with the diagnosis *"the module is part of an
+ * import cycle and is being read while it is mid-evaluation"*. **That was
+ * wrong, and measuring said so**: the import graph has 950 modules and exactly
+ * two strongly-connected components, and neither contains
+ * `qa-checkers-extended.ts`. There is no cycle.
+ *
+ * The real mechanism is a **module-scope side effect that throws**.
+ * `qa-checkers-extended.ts` opens with `const REPO_ROOT =
+ * findContentRepoRoot()`, and that resolved through a declaration which would
+ * not parse. Evaluation aborted at line 49, so `EXTENDED_AUTOMATED_CHECKERS`
+ * three thousand lines below was never bound — and a later `await import()`
+ * handed back the half-built namespace rather than re-throwing. Reading any
+ * binding on it, or even enumerating its keys, then raises "Cannot access X
+ * before initialization", naming a symptom three thousand lines from the
+ * cause.
+ *
+ * `findContentRepoRoot` no longer throws there (same PR), but the shape
+ * remains reachable: a dozen pipeline modules do filesystem work at module
+ * scope, and any of them can fail the same way.
+ *
+ * ## Why the namespace is read through here at all
+ *
+ * `Object.keys` ITSELF throws on such a namespace — the ownKeys trap
+ * evaluates — so the guard has to wrap the enumeration rather than each read.
+ *
+ * **And the failure has to keep its own name.** The first version returned an
+ * empty list, which made `discoverFor` report *"exports neither a dispatch-
+ * table entry nor check<Id>()"* — a DETERMINED, FALSE statement about a module
+ * nobody could read. Returning `undefined` is what lets the caller say "did
+ * not load" instead, which is the difference between a third state and a
+ * wrong answer.
+ */
+export interface ModuleRead {
+  /** Readable exports, in enumeration order. */
+  values: unknown[];
+  /** One export by name, `undefined` if it is unreadable or absent. */
+  byName(name: string): unknown;
+}
+
+export function readModule(mod: Record<string, unknown>): ModuleRead | undefined {
+  let keys: string[];
+  try {
+    keys = Object.keys(mod);
+  } catch {
+    return undefined; // the module never finished evaluating
+  }
+  const values: unknown[] = [];
+  for (const key of keys) {
+    try {
+      values.push(mod[key]);
+    } catch {
+      // One binding unreadable while the rest are fine: skip it. A value that
+      // cannot be read is not a dispatch table.
+    }
+  }
+  return {
+    values,
+    byName(name) {
+      try {
+        return mod[name];
+      } catch {
+        return undefined;
+      }
+    },
+  };
+}
+
 /** A dispatch-table entry keyed by the id, else `check<PascalCaseId>`. */
-function findChecker<T>(mod: Record<string, unknown>, criterionId: string): T | undefined {
-  for (const value of Object.values(mod)) {
+function findChecker<T>(read: ModuleRead, criterionId: string): T | undefined {
+  for (const value of read.values) {
     if (value && typeof value === "object" && criterionId in (value as Record<string, unknown>)) {
       const entry = (value as Record<string, unknown>)[criterionId];
       if (typeof entry === "function") return entry as T;
     }
   }
-  const named = mod[checkerFunctionName(criterionId)];
+  const named = read.byName(checkerFunctionName(criterionId));
   return typeof named === "function" ? (named as T) : undefined;
 }

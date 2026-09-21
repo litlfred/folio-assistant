@@ -1,0 +1,92 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ar/agent-onboarding",
+  "block": "Agent onboarding",
+  "locale": "ar",
+  "paths": {
+    "md": "docs/guides/agent-onboarding.md"
+  },
+  "po": "translations/ar/agent-onboarding.po",
+  "source_hashes": {
+    "md": "68377b6e4537",
+    "po": "220dc4d37f7c"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "68377b6e4537",
+          "po": "220dc4d37f7c"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "7eb346adbac4",
+          "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
+        },
+        "reviewed_at": "2026-09-21T13:29:41.882Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
+        "severity": "minor",
+        "metrics": {
+          "translated": 80,
+          "total": 86,
+          "pct": 93
+        },
+        "notes": "6 of 86 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "68377b6e4537",
+          "po": "220dc4d37f7c"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "7eb346adbac4",
+          "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
+        },
+        "reviewed_at": "2026-09-21T13:29:41.889Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
+        "metrics": {
+          "checked": 80,
+          "missing": 0,
+          "missing_strict": 0,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 1
+        },
+        "notes": "1 further acronym(s) are absent verbatim and the glossary accounts for each: TOC — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "68377b6e4537",
+          "po": "220dc4d37f7c"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "7eb346adbac4",
+          "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
+        },
+        "reviewed_at": "2026-09-21T13:29:41.894Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
+        "metrics": {
+          "echoed": 0,
+          "translated": 80
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-21T13:29:41.896Z"
+}

@@ -674,12 +674,20 @@ export const RULES: Rule[] = [
       "schemas/cat-harness.ts",
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
-      // `namespaces.ts`, `kg-qa.ts` imports only zod. Neither touches the
-      // content vocabulary, so classifying them here adds no wrong-direction
-      // edge — and leaving them unclassified would have made `src/workflow/`
-      // and `src/tools/workflow.ts` read as harness → core.
+      // `namespaces.ts`, `kg-qa.ts` imports zod and `portable-path.ts` below.
+      // Neither touches the content vocabulary, so classifying them here adds
+      // no wrong-direction edge — and leaving them unclassified would have made
+      // `src/workflow/` and `src/tools/workflow.ts` read as harness → core.
       "schemas/role-graph.ts",
       "schemas/kg-qa.ts",
+      // Whether a path can be CHECKED OUT. It imports nothing at all, so it
+      // sits at or below every consumer by construction — but it is harness by
+      // subject too: its subject is this repository's own tree, and a folio has
+      // no stake in whether a sidecar filename is legal on NTFS. Classifying it
+      // in core is what the keyword pass guessed, and that read as
+      // `schemas/kg-qa.ts [harness] -> [core]`, a wrong-direction edge for a
+      // leaf with no dependencies of its own.
+      "schemas/portable-path.ts",
       // The bean graph declares the harness's own work-plan store and imports
       // only zod. It was already harness-layer by concept; classifying the
       // scripts below is what made the edge to it visible, and the edge was
@@ -694,6 +702,11 @@ export const RULES: Rule[] = [
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
       "scripts/known-skills.ts",
+      // The checkout-portability gate, beside the module it runs. Harness by
+      // subject: it reads `git ls-files` over THIS repository and grades the
+      // tree's own filenames, which is a fact about the checkout and not about
+      // any folio's material.
+      "scripts/check-portable-paths.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge
@@ -825,6 +838,7 @@ export const RULES: Rule[] = [
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
       "scripts/check-asset-roles.ts",     // one place says what an asset ROLE is (bean `7syd`)
+      "scripts/check-module-scope-resolution.ts", // no module scope resolves the folio dir (bean `1hkj`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
@@ -1041,6 +1055,16 @@ export const RULES: Rule[] = [
       // `jsonld.ts` was refused. The difference is the subject, not the
       // filename — a script is not automatically tooling-side.
       "scripts/check-context-emission.ts",
+      // Validates every committed `fhir-artifact-index` graph against
+      // `schemas/fhir-artifact-index.ts` — core by the `schemas/` prefix. CORE
+      // rather than harness for the reason the two entries above it give: a
+      // script is not automatically tooling-side, and this one's SUBJECT is
+      // content — an IG's artefacts, which is a `content`-layer graph. Calling
+      // it harness would buy a wrong-direction edge into `schemas/` for
+      // nothing. Its sibling `scripts/ingest-ig-artifacts.ts` writes the same
+      // graph from the same schema and is core on the same reasoning.
+      "scripts/check-artifact-index.ts",
+      "scripts/ingest-ig-artifacts.ts",
       // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
       // exclusively on core data, and calling it harness bought two

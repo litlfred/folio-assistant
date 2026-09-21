@@ -22,13 +22,13 @@ import {
   ownDocsFinding,
 } from "../check-subgraph-coverage";
 import {
-  DECLARATION_FILENAME,
   INSTANCE_README_ROLE,
   owesVisualiser,
   GraphKindRegistry,
   resolveCoveragePath,
   siteDirFor,
 } from "../../schemas/cat-harness";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /**
  * A throwaway instance whose one directory carries `coverage`.
@@ -53,9 +53,7 @@ function instance(
     mkdirSync(abs.slice(0, abs.lastIndexOf("/")), { recursive: true });
     writeFileSync(abs, "x");
   }
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({
+  writeDeclaration(root, JSON.stringify({
       name: opts.name ?? "inst",
       directories: [
         {
@@ -66,8 +64,7 @@ function instance(
           ...(coverage === undefined ? {} : { coverage }),
         },
       ],
-    }),
-  );
+    }));
   return { root, cleanup: () => rmSync(base, { recursive: true, force: true }) };
 }
 
@@ -356,7 +353,7 @@ describe("could not determine is never a clean run", () => {
     const base = mkdtempSync(join(tmpdir(), "coverage-bad-"));
     const root = join(base, "broken");
     mkdirSync(root, { recursive: true });
-    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json");
+    writeDeclaration(root, "{ not json", "broken");
     const r = auditInstance(root);
     expect(r.verdict).toBe("undetermined");
     expect(r.reason).toBeDefined();
@@ -471,10 +468,7 @@ describe("the own-docs axis — an instance owes documentation of its own", () =
    */
   function inst(opts: { docs?: boolean } = {}): string {
     const root = mkdtempSync(join(tmpdir(), "op30-"));
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({ name: "probe", directories: [] }),
-    );
+    writeDeclaration(root, JSON.stringify({ name: "probe", directories: [] }));
     // `siteDirFor`, not the literal — the same rule the code under test
     // follows, and the guard that fires on the string does not exempt tests.
     if (opts.docs) mkdirSync(join(root, siteDirFor(root)), { recursive: true });
@@ -576,9 +570,7 @@ describe("coverage.* resolves against the REPOSITORY root and nothing else — b
     const root = join(base, "inst");
     mkdirSync(join(root, "thing"), { recursive: true });
     writeFileSync(join(root, "viz.html"), "x"); // under the INSTANCE, not the repo
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "inst",
         directories: [
           {
@@ -589,8 +581,7 @@ describe("coverage.* resolves against the REPOSITORY root and nothing else — b
             coverage: { visualiser: "viz.html" },
           },
         ],
-      }),
-    );
+      }));
     const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
     expect(viz).toHaveLength(1);
     expect(viz[0]?.severity).toBe("major");
@@ -631,16 +622,13 @@ describe("the repository root is recognised as itself — bean `yt7j`", () => {
     const root = join(base, "inst");
     mkdirSync(root, { recursive: true });
     writeFileSync(join(root, "README.md"), "x");
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "inst",
         directories: [],
         assets: [
           { id: "inst-readme", role: INSTANCE_README_ROLE, src: "README.md", ...(scope ? { scope } : {}) },
         ],
-      }),
-    );
+      }));
     return { root, cleanup: () => rmSync(base, { recursive: true, force: true }) };
   }
 

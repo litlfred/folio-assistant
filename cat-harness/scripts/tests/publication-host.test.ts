@@ -10,26 +10,27 @@
  * @module scripts/tests/publication-host.test
  */
 import { afterAll, describe, expect, test } from "bun:test";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import {
-  PUBLICATION_HOSTS,
-  publicationHost,
-  publicationLinkStyleConflict,
-  } from "../../schemas/cat-harness.ts";
+import { PUBLICATION_HOSTS, publicationHost, publicationLinkStyleConflict } from "../../schemas/cat-harness.ts";
 import { resolveHarnessConfigPath } from "../../schemas/harness-config.ts";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const temps: string[] = [];
 
-/** An instance root whose `harness.json` is exactly `body`. */
+/** An instance root whose declaration is exactly `body`. */
 function instance(body: string): string {
   const dir = mkdtempSync(join(tmpdir(), "publication-host-"));
   temps.push(dir);
-  writeFileSync(join(dir, DECLARATION_FILENAME), body);
+  // The stem is supplied because several callers pass a body that is
+  // deliberately malformed or nameless: there is no name to read out of it,
+  // and the filename has to come from somewhere. `publicationHost` reads the
+  // file discovery finds, so any stem does — what is under test is the body.
+  writeDeclaration(dir, body, "probe");
   return dir;
 }
 

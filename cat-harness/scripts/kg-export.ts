@@ -41,21 +41,13 @@
  * @module scripts/kg-export
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
-import { join, dirname, relative } from "node:path";
+import { join, dirname, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
-import {
-  BASE_GRAPH_KINDS,
-  DECLARATION_FILENAME,
-  declaredAssets,
-  declaredGraphs,
-  declaredKinds,
-  repoRootFor,
-  resolveDirectories,
-} from "../schemas/cat-harness.js";
+import { BASE_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
@@ -65,6 +57,7 @@ import {
   isPublishedGraphKind,
   isPublishedSchemaModule,
   isPublishedSkill,
+  instanceRootsIn,
   readDeclaration,
   renderingPath,
 } from "../schemas/cat-harness.js";
@@ -73,6 +66,7 @@ import {
   isSkillMd,
   kgDirectories,
   kgRoots,
+  knownSkills,
   skillMdDirs as knownSkillDirs,
   workflowDirs,
   unpublishedSkills,
@@ -1450,6 +1444,50 @@ async function collectProcesses(
  * the item before you work" to the two mechanisms that do it, without knowing
  * that a bare string was meant to be a skill name.
  */
+/**
+ * The document IRI a skill's node lives in — this one, or a sibling's.
+ *
+ * ## Why a Tool may name a skill this document does not contain
+ *
+ * `gn4l`: the Tool nodes for `discussion` and `log-message` live in
+ * cat-harness because a Tool is cat-harness's vocabulary and cat-bootstrap may
+ * not import it — recorded there as *a limitation rather than a decision*,
+ * with the nodes moving unchanged once tool collection stops being
+ * import-bound. The SKILLS live in cat-bootstrap so an Initiator can read them
+ * with nothing installed. So the edge crosses instances by construction.
+ *
+ * While cat-harness declared `cat-bootstrap/skills/` the crossing was hidden:
+ * both ends landed in one document. The owner's `pve3` ruling of 2026-09-21
+ * ("neither") removed that declaration, and a link minted into THIS document
+ * then pointed at a node no document contains.
+ *
+ * ## An unknown skill still gets THIS document's IRI
+ *
+ * Deliberately. A skill nothing declares is a genuine dangling link and must
+ * keep reading as one — inventing a plausible foreign IRI for it would turn a
+ * reported defect into a link that merely 404s later, which is the harder
+ * failure to find. Only a skill some instance DOES declare is re-homed.
+ */
+function skillHome(base: string, ownDoc: string, skillId: string): string {
+  // THIS DOCUMENT WINS WHENEVER IT HAS THE SKILL, and that check has to come
+  // first rather than fall out of iteration order.
+  //
+  // Without it, a skill declared by BOTH this instance and a sibling is
+  // exiled to the sibling's document — the node is right here and the link
+  // points elsewhere. Measured when this was written the other way round:
+  // `agent-skills.jsonld` and `kg-navigation.jsonld` appeared as link targets
+  // because those instances declare ids cat-harness also declares, and the
+  // published-paths walk in `kg-export.test.ts` caught it as two documents
+  // the deploy does not write.
+  if (knownSkills(ROOT).has(skillId)) return ownDoc;
+  for (const instance of instanceRootsIn(repoRootFor(ROOT))) {
+    if (resolve(instance) === resolve(ROOT)) continue;
+    if (!knownSkills(instance).has(skillId)) continue;
+    return exportIdentity({ baseUrl: base, instanceRoot: instance }).docIri;
+  }
+  return ownDoc;
+}
+
 function collectTools(doc: string, base: string, problems: string[]): Node[] {
   let defs;
   try {
@@ -1473,10 +1511,12 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
     // an environment descriptor (`{ runtime: ["go"], network: true }`) whose
     // values are not capability ids. Two relations, two terms.
     requirements: t.requires,
-    satisfies: t.satisfies.map((k) => makeIri(doc, "skill", k)),
+    satisfies: t.satisfies.map((k) => makeIri(skillHome(base, doc, k), "skill", k)),
     // `satisfiesSkillNames` was here. REMOVED as denormalised: every
     // `satisfies` link lands on a Skill node carrying that same name, and none
-    // of them dangles.
+    // of them dangles — see {@link skillHome} for the ones that land in
+    // ANOTHER instance's document, which is still a resolvable node rather
+    // than a dangling link.
     // The artefacts this Tool is authoritative for, as the URLs they are
     // actually served at — `renderingPath`, not a composed string, so the
     // edge dereferences from the published document rather than looking as
@@ -1700,7 +1740,7 @@ function collectDeclaredAssets(doc: string, problems: string[], root: string = R
 }
 
 function collectDeclaration(doc: string, problems: string[], root: string = ROOT): Node[] {
-  const f = join(root, DECLARATION_FILENAME);
+  const f = declarationPathIn(root)!;
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
@@ -1821,6 +1861,28 @@ export async function collectInstanceNodes(
     ...collectDeclaration(doc, problems, root),
     ...collectDeclaredAssets(doc, problems, root),
   ];
+  // A LINK TO AN OMITTED COLLECTOR'S NODES MUST NOT BE EMITTED.
+  //
+  // `collectSkills` puts `inPackage` on every skill, and the package nodes are
+  // minted by `collectPackages` — which is instance-bound and therefore NOT
+  // run here. Left in place that is 7 dangling links in cat-bootstrap's
+  // export, measured: every skill pointing at `#package/skills` or
+  // `#package/render`, neither of which this document can contain.
+  //
+  // Stripped rather than faked: emitting a package node the generic path did
+  // not collect would assert membership of something nobody enumerated. The
+  // omission is already reported through `omitted`, so a reader can tell
+  // "this instance has no packages" from "packages were never looked for" —
+  // which is the distinction that would be lost by silently keeping a link
+  // that happens to resolve in a different document.
+  //
+  // Found because the FIRST reading of this was vacuous: `danglingLinks` is
+  // computed but not written into the published document, so reading the file
+  // and defaulting an absent key to `[]` reported zero. The in-memory export
+  // says seven. A default that stands in for an absent field is not an
+  // answer.
+  for (const n of nodes) if ("inPackage" in n) delete (n as Record<string, unknown>).inPackage;
+
   return { nodes, omitted: COLLECTOR_SCOPE.instanceBound, notes };
 }
 
@@ -1907,6 +1969,21 @@ export function compact(n: Node): Node {
  */
 export interface ExportOptions {
   baseUrl?: string;
+  /**
+   * The instance whose identity this is — defaults to the one this module
+   * lives in.
+   *
+   * `collectInstanceNodes` has taken a root since `gn4l` separated the generic
+   * collectors from the instance-bound ones, but IDENTITY did not follow it:
+   * `exportIdentity` read `ROOT` unconditionally, so every instance's nodes
+   * were minted into THIS instance's document IRI. That was invisible while
+   * only one document was ever built.
+   *
+   * It stops being invisible the moment one graph must REFERENCE another —
+   * bean `pve3`, where a Tool in cat-harness satisfies a skill published in
+   * cat-bootstrap's graph and the link has to name cat-bootstrap's document.
+   */
+  instanceRoot?: string;
 }
 
 /** Filename stem and document IRI for this instance's published graph. */
@@ -2015,11 +2092,42 @@ export function exportIdentity(opts: ExportOptions = {}): {
   canonicalIri?: string;
   /** True when this export is published somewhere other than canonical. */
   isPreview: boolean;
+  /**
+   * The instance directory this export is OF — `opts.instanceRoot` resolved,
+   * or this one.
+   *
+   * Returned for the same reason `base` is: a caller that needs to say which
+   * declaration was consulted would otherwise repeat the `?? ROOT` default,
+   * and a second copy of a default is a second chance to disagree with it.
+   */
+  instanceDir: string;
 } {
-  const decl = readDeclaration(ROOT);
+  const instance = opts.instanceRoot ?? ROOT;
+  const decl = readDeclaration(instance);
+  // `package.json` is the REPOSITORY's and is the fallback stub for an
+  // instance that declares nothing, so it is read from the repo root rather
+  // than from `instance` — a nested instance has none, and reading one from
+  // there would throw on exactly the instances this parameter exists for.
   const pkg = JSON.parse(readFileSync(join(repoRootFor(ROOT), "package.json"), "utf-8")) as { name?: string };
   const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
-  const canonicalBase = (decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  // The publication base belongs to the SITE DOING THE PUBLISHING, not to the
+  // instance whose graph is being exported — so a foreign instance that
+  // declares no `canonicalUrl` of its own falls back to this one's.
+  //
+  // This is the same argument the `stub` line above already makes about
+  // `package.json`, and not applying it here is what took `docs-site.yml` red
+  // on `main` for every push between 11:31 and 14:0x on 2026-09-21 (bean
+  // `40fl`). `cat-bootstrap` declares no `canonicalUrl` DELIBERATELY — it has
+  // no site of its own, as its own declaration says at length — but its graph
+  // is published into THIS site, at `<base>/cat-bootstrap.jsonld`, by the very
+  // step that was failing. So "the exported instance declares no base" was
+  // never the same question as "this document has no base".
+  //
+  // Fallback, never override: an instance that declares its own canonical URL
+  // keeps it, because then the document really does belong somewhere else.
+  const ownCanonical = decl?.canonicalUrl ?? "";
+  const publisherCanonical = ownCanonical ? "" : (readDeclaration(ROOT)?.canonicalUrl ?? "");
+  const canonicalBase = (ownCanonical || publisherCanonical).replace(/\/+$/, "");
   const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
   // No base declared → a document-relative IRI. Deliberately NOT a fabricated
   // absolute one: see makeIri's note on links that look dereferenceable.
@@ -2029,12 +2137,19 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // `makeIri`'s note on links that look dereferenceable.
   const docIri = renderingPath(base, `${stub}.jsonld`);
   const canonicalIri = canonicalBase ? renderingPath(canonicalBase, `${stub}.jsonld`) : undefined;
-  return { stub, docIri, base, canonicalIri, isPreview: canonicalIri !== undefined && docIri !== canonicalIri };
+  return {
+    stub,
+    docIri,
+    base,
+    canonicalIri,
+    isPreview: canonicalIri !== undefined && docIri !== canonicalIri,
+    instanceDir: instance,
+  };
 }
 
 export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   const problems: string[] = [];
-  const { stub, docIri, base, canonicalIri, isPreview } = exportIdentity(opts);
+  const { stub, docIri, base, canonicalIri, isPreview, instanceDir: exportedInstance } = exportIdentity(opts);
 
   // Provenance of the SOURCE. Absent fields are absent, never placeholders:
   // a consumer must be able to tell "this export did not know" from "this
@@ -2056,25 +2171,57 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   if (!docIri.startsWith("http")) {
     // Reported, not silently tolerated: a graph whose nodes have no absolute
     // identity cannot be merged with anyone else's, which is most of the point.
+    //
+    // NAMES THE FILE IT ACTUALLY LOOKED IN, resolved rather than spelled. This
+    // message said `harness.json` until bean `40fl` — a filename excised by
+    // #695 — so the one reader it exists for was sent to a file that is not
+    // there, while the real declaration sat one rename away. A diagnostic that
+    // names a retired path is worse than a bare one: it reads as specific.
+    const looked = declarationPathIn(exportedInstance);
     problems.push(
-      "no canonicalUrl in harness.json and no --base-url given: " +
+      `no canonicalUrl in ${looked ? relative(repoRootFor(ROOT), looked) : `${relative(repoRootFor(ROOT), exportedInstance)} (no declaration found)`}` +
+        ", and none declared by the publishing instance, and no --base-url given: " +
         "@id values are document-relative and will not dereference",
     );
   }
 
-  const schemaAudit = auditSchemaNodes(ROOT);
-  const graph = [
-    ...collectSkills(docIri, base, problems),
-    ...collectRegistryNodes(docIri, problems),
-    ...collectPackages(docIri, problems),
-    ...(await collectProcesses(docIri, problems)),
-    ...collectTools(docIri, base, problems),
-    ...collectSchemas(docIri, base),
-    ...collectGraphKinds(),
-    ...collectDeclaredRoles(docIri),
-    ...collectDeclaration(docIri, problems),
-    ...collectDeclaredAssets(docIri, problems),
-  ].map(compact);
+  // ANOTHER instance's document is built from the GENERIC collectors only.
+  //
+  // `opts.instanceRoot` already gave this export cat-bootstrap's identity —
+  // its stub, its docIri. Running the list below unchanged would then fill
+  // that document with THIS instance's content: cat-harness's 222 skills and
+  // 55 processes published as `cat-bootstrap.jsonld`. A graph that is wrong
+  // about whose it is, under a name a consumer trusts.
+  //
+  // `COLLECTOR_SCOPE` already states which collectors are instance-bound and
+  // why (`gn4l`, 2026-09-19), and `collectInstanceNodes` is the generic side
+  // of that seam. So the branch is not a special case bolted on here — it is
+  // the seam being used for the first time by something other than a test.
+  const foreign = opts.instanceRoot !== undefined && resolve(opts.instanceRoot) !== resolve(ROOT);
+  // Audited over the instance being exported, not over this one. For a
+  // foreign instance that is honestly empty (cat-bootstrap declares no
+  // `schemas/`), where a hand-built empty object would be asserting the same
+  // thing without having looked.
+  const schemaAudit = auditSchemaNodes(foreign ? opts.instanceRoot! : ROOT);
+  const instanceOnly = foreign
+    ? await collectInstanceNodes(opts.instanceRoot!, docIri, base, problems)
+    : undefined;
+  const graph = (
+    instanceOnly
+      ? instanceOnly.nodes
+      : [
+          ...collectSkills(docIri, base, problems),
+          ...collectRegistryNodes(docIri, problems),
+          ...collectPackages(docIri, problems),
+          ...(await collectProcesses(docIri, problems)),
+          ...collectTools(docIri, base, problems),
+          ...collectSchemas(docIri, base),
+          ...collectGraphKinds(),
+          ...collectDeclaredRoles(docIri),
+          ...collectDeclaration(docIri, problems),
+          ...collectDeclaredAssets(docIri, problems),
+        ]
+  ).map(compact);
 
   stampSubgraph(graph, docIri);
 
@@ -2141,7 +2288,13 @@ if (import.meta.main) {
     return i !== -1 ? process.argv[i + 1] : undefined;
   };
   const baseUrl = arg("--base-url") ?? process.env.KG_BASE_URL;
-  const { stub } = exportIdentity({ baseUrl });
+  // `--instance <root>` exports ANOTHER declared instance's graph — its
+  // identity and its generic collectors, never this one's content under its
+  // name. Added because `pve3`'s "neither" ruling makes a sibling's graph a
+  // document the root's own graph LINKS TO, and a link that names a document
+  // nothing publishes is a 404 with a `@id` in front of it.
+  const instanceRoot = arg("--instance");
+  const { stub } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
   // is what tells a fetcher to treat it as one.
@@ -2153,7 +2306,7 @@ if (import.meta.main) {
   // one level up — and the stale pre-move copy at the old path made it look
   // fine locally.
 const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
-  const data = await buildExport({ baseUrl });
+  const data = await buildExport({ baseUrl, instanceRoot });
 
   mkdirSync(dirname(out), { recursive: true });
   // The staging stamp, from the same function `harness-schema-export` uses, so

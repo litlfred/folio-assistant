@@ -55,6 +55,44 @@
     "fr": "Fran\u00E7ais", "ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439", "es": "Espa\u00F1ol"
   };
 
+  /* The six UN languages, matching `UN_LOCALES` in `schemas/translation.ts`.
+
+     A FALLBACK, never the answer: `fa-translation-meta` carries the instance's
+     own `supportedLocales`, and an instance may support more or fewer. This is
+     what a page with no meta block falls back to, in one place, because the
+     same array was written out three times below and the three were free to
+     disagree with each other and with the schema. */
+  var UN_LOCALES = ["ar", "zh", "en", "fr", "ru", "es"];
+
+  /**
+   * Every locale a reader can read THIS page in \u2014 the source language included.
+   *
+   * The source language is a language. An English page on a six-UN-language
+   * site is available in one of them, not none, and the coverage badge read
+   * `0/5` because both halves of that fraction excluded it: the denominator was
+   * hardcoded to `supported.length - 1`, and the numerator came from
+   * `available_locales`, which the generator derives by resolving
+   * `translations/<locale>/<stem>.po` \u2014 a lookup the source language can never
+   * satisfy, since there is no `translations/en/` and there never will be.
+   *
+   * So the page's own `lang` is folded in here rather than being expected in
+   * the data, which also repairs the two front-matter conventions that had
+   * drifted apart: generated source pages stamped the PO-derived list while the
+   * hand-authored translated pages stamped the full supported set, and
+   * `docs/fr/index.md` therefore rendered `6/5 languages`.
+   *
+   * Filtered by `supported` so a locale outside the declared set cannot inflate
+   * a count taken against it, and ordered by `supported` so every page's bar
+   * and badge read in the same order. Issue #687.
+   */
+  function localesAvailable(meta, supported) {
+    var have = {};
+    if (meta && meta.lang) have[meta.lang] = true;
+    var declared = (meta && meta.availableLocales) || [];
+    for (var i = 0; i < declared.length; i++) have[declared[i]] = true;
+    return supported.filter(function (loc) { return have[loc] === true; });
+  }
+
   function getGlobalLocale() {
     try { return localStorage.getItem("fa-locale") || "en"; } catch (_e) { return "en"; }
   }
@@ -76,7 +114,10 @@
   function rememberedLocale(currentLang, available) {
     var loc = getGlobalLocale();
     if (!loc || loc === currentLang) return null;
-    if (loc !== "en" && available.indexOf(loc) === -1) return null;
+    // No `loc !== "en"` exemption: `available` carries the source language now,
+    // so membership answers this on its own, and the exemption would have
+    // offered English on a folio that has no English.
+    if (available.indexOf(loc) === -1) return null;
     return loc;
   }
 
@@ -144,8 +185,8 @@
   function buildLanguageBar() {
     var meta = getTranslationMeta();
     var currentLang = (meta && meta.lang) || "en";
-    var available = (meta && meta.availableLocales) || [];
-    var supported = ["ar", "zh", "en", "fr", "ru", "es"];
+    var supported = (meta && meta.supportedLocales) || UN_LOCALES;
+    var available = localesAvailable(meta, supported);
     var path = window.location.pathname;
     var basePath = deriveBasePath(path, currentLang);
 
@@ -158,7 +199,10 @@
 
     for (var i = 0; i < supported.length; i++) {
       var loc = supported[i];
-      var isAvailable = loc === "en" || available.indexOf(loc) !== -1;
+      // `available` now carries the source language, so membership is the whole
+      // test. `loc === "en"` stood here, which made English clickable on a
+      // folio authored in French and left French greyed out on its own page.
+      var isAvailable = available.indexOf(loc) !== -1;
       var isCurrent = loc === currentLang;
       var isRemembered = loc === remembered;
 
@@ -202,8 +246,8 @@
   function mountPageLanguageBar() {
     var meta = getTranslationMeta();
     var currentLang = (meta && meta.lang) || "en";
-    var available = (meta && meta.availableLocales) || [];
-    var supported = ["ar", "zh", "en", "fr", "ru", "es"];
+    var supported = (meta && meta.supportedLocales) || UN_LOCALES;
+    var available = localesAvailable(meta, supported);
     var path = window.location.pathname;
     var basePath = deriveBasePath(path, currentLang);
 
@@ -231,7 +275,10 @@
 
     for (var i = 0; i < supported.length; i++) {
       var loc = supported[i];
-      var isAvailable = loc === "en" || available.indexOf(loc) !== -1;
+      // `available` now carries the source language, so membership is the whole
+      // test. `loc === "en"` stood here, which made English clickable on a
+      // folio authored in French and left French greyed out on its own page.
+      var isAvailable = available.indexOf(loc) !== -1;
       var isCurrent = loc === currentLang;
       var isRemembered = loc === remembered;
 
@@ -3534,8 +3581,8 @@
     var meta = getTranslationMeta();
     if (!meta) return;
 
-    var supported = meta.supportedLocales || ["ar", "zh", "en", "fr", "ru", "es"];
-    var available = meta.availableLocales || [];
+    var supported = meta.supportedLocales || UN_LOCALES;
+    var available = localesAvailable(meta, supported);
     var totalLangs = supported.length;
     var availLangs = available.length;
 
@@ -3545,18 +3592,25 @@
     // read a `_includes/language-selector.html`, deleted once this file did the
     // same job better (it greys out untranslated locales, which that include
     // only promised in a comment).
-    if (availLangs === 0) {
+    //
+    // The trigger is `<= 1`, not `=== 0`: a page whose only available locale is
+    // its own source language has nothing stamped either, and under the old
+    // `=== 0` test that case stopped reaching this fallback the moment the
+    // source language joined the count. It also no longer drops `meta.lang`
+    // from what it finds — the page's own language is one of the answers, which
+    // is the whole correction here.
+    if (availLangs <= 1) {
       var langLinks = document.querySelectorAll(".fa-lang-tab, [data-locale]");
-      var found = [];
+      var found = {};
+      if (meta.lang) found[meta.lang] = true;
       langLinks.forEach(function (link) {
         var loc = link.getAttribute("data-locale") || link.textContent.trim().toLowerCase();
-        if (loc && loc !== meta.lang && found.indexOf(loc) === -1) found.push(loc);
+        if (loc) found[loc] = true;
       });
-      // The page itself counts as one available locale if it's not English-source
-      // or if it has translations
-      if (found.length > 0) {
-        availLangs = found.length;
-        available = found;
+      var detected = supported.filter(function (loc) { return found[loc] === true; });
+      if (detected.length > availLangs) {
+        availLangs = detected.length;
+        available = detected;
       }
     }
 
@@ -3565,29 +3619,39 @@
     if (!title) return;
 
     // Create badge container — block-level row below the title
-    var container = el("span", { class: "fa-translation-badges", style:
-      "display: flex; align-items: center; gap: 6px; margin: 0.3em 0 0.6em; flex-wrap: wrap;"
-    });
+    // No `style` here, and none on either badge below. Every colour this row
+    // used to carry inline is a per-scheme token in `docs-ui.css` now, with its
+    // measured ratio written beside it -- bean `n7vv`. The container is also
+    // where those tokens are DECLARED, so a badge outside this row would resolve
+    // none of them, which is the intended failure rather than a silent default.
+    var container = el("span", { class: "fa-translation-badges" });
 
-    // Language coverage badge — always shown
-    var langBg, langBorder;
-    if (availLangs >= totalLangs - 1) {
-      langBg = "#14532d"; langBorder = "#22c55e";
-    } else if (availLangs > 0) {
-      langBg = "#78350f"; langBorder = "#d97706";
-    } else {
-      langBg = "#1e293b"; langBorder = "#475569";
-    }
+    // Language coverage badge — always shown.
+    //
+    // Green means EVERY supported language, not "all but one": the old test was
+    // `availLangs >= totalLangs - 1`, the same off-by-one the fraction carried,
+    // and it painted a page missing a whole language as complete. Amber is now
+    // the source language plus at least one translation; grey is the source
+    // language alone, which is the honest resting state of an untranslated page
+    // and is no longer indistinguishable from "no languages at all".
+    var langState = availLangs >= totalLangs
+      ? "is-ok"
+      : availLangs > 1 ? "is-partial" : "is-idle";
 
     var langBadge = el("span", {
-      class: "fa-lang-coverage-badge",
-      style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
-             "background:" + langBg + ";border:1px solid " + langBorder + ";" +
-             "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
-      title: availLangs > 0
-        ? "Available translations: " + available.join(", ")
-        : "No translations available for this page"
-    }, "\uD83C\uDF10 " + availLangs + "/" + (totalLangs - 1) + " languages");
+      class: "fa-translation-badge fa-lang-coverage-badge " + langState,
+      // Three wordings, because the fraction alone does not say which case it
+      // is. The "of <every supported locale>" tail is what makes a partial
+      // count actionable -- it names the languages still missing -- and is
+      // dropped when the two lists are equal, where it read "available in:
+      // ar, zh, en, fr, ru, es -- of ar, zh, en, fr, ru, es".
+      title: availLangs >= totalLangs
+        ? "Available in every supported language: " + available.join(", ")
+        : availLangs > 1
+          ? "Available in: " + available.join(", ") + " \u2014 of " + supported.join(", ")
+          : "Available in " + (available[0] || meta.lang || "its source language") +
+            " only; not yet translated"
+    }, "\uD83C\uDF10 " + availLangs + "/" + totalLangs + " languages");
     container.appendChild(langBadge);
 
     // The round-trip QA badge that stood here is gone, and the data behind it
@@ -3600,42 +3664,34 @@
 
     // QA sweep completeness badge — indicates whether sidecars have been run
     var sweep = meta.sweep || {};
-    var sweepBg, sweepBorder, sweepIcon, sweepLabel, sweepTitle;
+    var sweepState, sweepIcon, sweepLabel, sweepTitle;
     if (!sweep.run) {
-      sweepBg = "#1e293b"; sweepBorder = "#475569"; sweepIcon = "\u2B58";
+      sweepState = "is-idle"; sweepIcon = "\u2B58";
       sweepLabel = "QA: not run";
       sweepTitle = "Translation QA sweep has not been run. " +
                    "Run: bun run content/pipeline/translation-qa-sweep.ts";
     } else if (sweep.complete && sweep.pagesWithTranslations > 0) {
       var ratio = sweep.pagesWithTranslations + "/" + sweep.totalPages;
-      sweepBg = "#14532d"; sweepBorder = "#22c55e"; sweepIcon = "\u2705";
+      sweepState = "is-ok"; sweepIcon = "\u2705";
       sweepLabel = "Swept " + ratio;
       sweepTitle = "QA sweep complete. " + sweep.pagesWithTranslations + " of " +
                    sweep.totalPages + " pages have translations. Last run: " + sweep.sweptAt;
     } else {
-      sweepBg = "#78350f"; sweepBorder = "#d97706"; sweepIcon = "\u26A0\uFE0F";
+      sweepState = "is-partial"; sweepIcon = "\u26A0\uFE0F";
       sweepLabel = "Swept 0/" + sweep.totalPages;
       sweepTitle = "QA sweep complete but no pages have translations yet. " +
                    "Last run: " + sweep.sweptAt;
     }
 
     var sweepBadge = el("span", {
-      class: "fa-sweep-badge",
-      style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
-             "background:" + sweepBg + ";border:1px solid " + sweepBorder + ";" +
-             "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
+      class: "fa-translation-badge fa-sweep-badge " + sweepState,
       title: sweepTitle
     }, sweepIcon + " " + sweepLabel);
     container.appendChild(sweepBadge);
 
     // Unverified translation warning — auto-injected on translated pages
     if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
-      var warning = el("div", {
-        class: "fa-translation-warning",
-        style: "background:#78350f;border:1px solid #d97706;border-radius:6px;" +
-               "padding:12px 16px;margin:1em 0;color:#fef3c7;font-size:0.9rem;",
-        role: "alert"
-      });
+      var warning = el("div", { class: "fa-translation-warning", role: "alert" });
       warning.innerHTML =
         "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
         "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert." +
@@ -3647,6 +3703,59 @@
       var mainContent = document.querySelector(".main-content, #main-content");
       if (mainContent && mainContent.firstChild) {
         mainContent.insertBefore(warning, mainContent.firstChild);
+      }
+    }
+
+    // A HAND-AUTHORED page has no generator to write its badge into the
+    // markup, so it is built here from the paths `head_custom.html` published.
+    // Those paths are STRUCTURE — `_data/translation-qa-pages.json` says a
+    // projection exists, never what it found — so this badge is emitted only
+    // where there is something to open, and `paintQaBadges` (which runs right
+    // after `mountTranslationBadges`) fetches its state from the same
+    // `qa-index.json` every other badge uses.
+    //
+    // Deliberately identical markup to the generated one, down to the
+    // `fa-qa-pending` class and the `…` glyph: one badge, one painter, one
+    // panel. A second shape here would be a second set of states to keep in
+    // step with the first.
+    var tq = meta.translationQa;
+    if (tq && tq.src && tq.index && !document.querySelector(".fa-page-qa-badges")) {
+      var tqBadge = el("button", {
+        type: "button",
+        class: "fa-qa-badge fa-qa-pending fa-qa-fam-translation",
+        "data-qa-family": "translation",
+        "data-qa-key": tq.key || "page.translation",
+        "data-qa-label": "Translation QA",
+        "data-qa-noun": "page",
+        "data-qa-src": tq.src,
+        "data-qa-index": tq.index,
+        "aria-expanded": "false",
+        "aria-busy": "true",
+        title: "Translation QA: loading the verdict…",
+        "aria-label": "Translation QA: loading the verdict…"
+      });
+      tqBadge.appendChild(el("span", { class: "fa-qa-tag" }, "TR"));
+      tqBadge.appendChild(el("span", { class: "fa-qa-glyph", "aria-hidden": "true" }, "…"));
+      container.appendChild(tqBadge);
+    }
+
+    // The page-level QA badges the generator emitted under the h1 join this
+    // row rather than standing as a second one. They are SERVER-rendered,
+    // because whether a page's blocks carry any translation verdict is
+    // structure — the same argument `gen-docs-pages.ts` makes for the per-node
+    // icons — and they are moved rather than rebuilt here so there is exactly
+    // one place that knows their markup.
+    var pageQa = document.querySelector(".fa-page-qa-badges");
+    if (pageQa) {
+      while (pageQa.firstChild) container.appendChild(pageQa.firstChild);
+      // The now-empty span, and the paragraph kramdown wrapped it in when that
+      // span was the whole line. Left behind, the paragraph keeps its margins
+      // and opens a gap under the title that looks like a rendering fault.
+      var host = pageQa.parentNode;
+      pageQa.parentNode.removeChild(pageQa);
+      if (host && host.tagName === "P" && host.textContent.trim() === "" &&
+          host.children.length === 0 && host.parentNode) {
+        host.parentNode.removeChild(host);
       }
     }
 
@@ -3828,6 +3937,13 @@
       QA_RESULT_LABEL[c.result] || c.result || "no verdict"));
     if (c.severity) {
       btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-sev-" + c.severity }, c.severity));
+    }
+    // On a page-level roll-up one panel carries verdicts about many blocks, so
+    // the row has to say WHICH — a `fail` with no subject is a page-wide alarm
+    // a reader cannot act on. Absent on a per-block panel, where the doc's own
+    // subject already says it.
+    if (c.block) {
+      btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-block" }, c.block));
     }
     if (c.locale) {
       btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-locale" }, c.locale));
