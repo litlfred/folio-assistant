@@ -3933,12 +3933,12 @@
       "title": "C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T13:21:31Z",
-      "updatedAt": "2026-09-21T16:55:00Z",
+      "updatedAt": "2026-09-21T15:35:10Z",
       "preview": "**Owner's decision, 2026-09-21: C now, B as the destination.** Answering the\nthree-way question `zlmp` parked — who registers a BUILT-IN adapter's\ncontributions. C is built-ins self-registering at the outermost layer; B is no\nbuilt-ins at all, every adapter a real dependency with a `contributes` module.\n\n## Why this is wiring, not extending\n\n`schemas/contributions.ts` is 370 lines and complete — c",
       "file": "beans/defs/folio-assistant-rfev--c-built-ins-self-register-at-the-outermost-layer-w.md"
     },
@@ -4277,6 +4277,20 @@
       "updatedAt": "2026-09-20T16:14:28Z",
       "preview": "Found 2026-09-20 while draining bean `rl3h`. **Needs the owner: this is a\ndeletion, and an agent does not remove a durable artefact on its own\ninitiative.**\n\n## The file\n\n`cat-harness/translations/fr/agent-onboarding.md` — 8,656 bytes, added\n2026-09-20 (commit `169b7510b5`, *\"Merge main, and fix the sweep main's\nmemory move made blind\"*).\n\n## Why it looks wrong\n\nIt is the **only `.md` anywhere und",
       "file": "beans/defs/folio-assistant-tc95--blocked-on-owner-translationsfragent-onboardingmd.md"
+    },
+    {
+      "id": "folio-assistant-tdu3",
+      "title": "The module-scope gate covers folioDir only, and walks only cat-harness",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T15:35:46Z",
+      "updatedAt": "2026-09-21T15:35:46Z",
+      "preview": "Carved out of `1hkj` (#719) after it merged, from three gaps found by running\nits gate rather than by reading it.\n\n## Three gaps, each measured\n\n**1. Only `folioDir` was on the list.** Measured on main against a directory\nholding `{ not json`:\n\n| `folioDir` | THREW |\n| `directoryForGraph` | THREW |\n| `directoriesForGraph` | THREW |\n| `findContentRepoRoot` | returned its declared fallback |\n\n`findC",
+      "file": "beans/defs/folio-assistant-tdu3--the-module-scope-gate-covers-foliodir-only-and-wal.md"
     },
     {
       "id": "folio-assistant-tfo1",
