@@ -329,13 +329,16 @@ catalogue, <strong>3</strong> of which this repository actually holds the bytes 
   </tbody>
 </table>
 
-<h2>Still open</h2>
-<p>Bean <code>yl5w</code>: every <code>localPath</code> in the catalogue points at
-<code>who-iris/uploads/</code> and all three are missing — the bytes are under
-<code>cat-harness/uploads/</code>, and <code>check:catalogue</code> does not check
-<code>localPath</code> at all. These pages link to where the bytes <em>are</em> rather
-than to where the claim says they are, and say so rather than emitting a dead link
-that matches the claim. That is a workaround, not a fix.</p>
+<h2>Settled 2026-09-21 — bean <code>yl5w</code></h2>
+<p>Every ORIGINAL <code>localPath</code> in this catalogue named
+<code>who-iris/uploads/</code> while the bytes sat in <code>cat-harness/uploads/</code>,
+and <code>check:catalogue</code> did not look at <code>localPath</code> at all — so
+three <code>materialized</code> claims resolved to nothing while the gate printed
+<em>clean</em>. The three sources now sit beside their own intake records at
+<code>who-iris/uploads/&lt;slug&gt;/</code>, the page generator's fallback is deleted,
+and <code>check:catalogue</code> verifies every <code>localPath</code> — with
+<em>could not determine</em> as its own answer, because an unreadable file is not a
+missing one.</p>
 
 <p><code>iris.who.int</code> is egress-blocked from the environment that generates this
 page, so nothing here was fetched from IRIS. Every record was transcribed from a capture

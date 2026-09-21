@@ -35,13 +35,24 @@
  * relation is CONTENT-VERIFIED rather than name-matched, which is stronger
  * than any of the three shapes `v1hw` proposed inventing. The badge follows,
  * counting documents and not plumbing (see {@link filesIn} on dotfiles):
- * `uploads/` **22 uningested of 22**, `cat-harness/uploads/` **0 of 4**.
+ * `uploads/` **26 uningested of 28**, `cat-harness/uploads/` **0 of 1**,
+ * `who-iris/uploads/` **1 of 4** — re-measured 2026-09-21, after bean `yl5w`
+ * moved the three WHO sources out of the harness queue and into the folio
+ * beside their own intake records.
  *
- * So the harness layer's own queue is fully drained and the repository root's
- * is untouched — which is a fact about this corpus that nobody could state
- * before, and the sharper reading of `v1hw`'s "those numbers cannot be
- * subtracted": they could not be subtracted, and they never needed to be.
- * The relation was on the manifest all along.
+ * **The relation survived the move, and that is the evidence it is real.** All
+ * six entries still report `upload=match` from a recomputed hash, across three
+ * queues now instead of two: a name-matched relation would have broken the
+ * moment the files changed directory, and this one did not notice. The one
+ * uningested file under `who-iris/uploads/` is the IRIS home capture, which is
+ * a page grab rather than a document — uningested is the correct answer for it
+ * rather than a backlog.
+ *
+ * So the harness layer's own queue is down to a single document and the
+ * repository root's is untouched — which is a fact about this corpus that
+ * nobody could state before, and the sharper reading of `v1hw`'s "those
+ * numbers cannot be subtracted": they could not be subtracted, and they never
+ * needed to be. The relation was on the manifest all along.
  *
  * What `v1hw` got right, and this keeps: the relation is only as good as the
  * manifest, so an entry with no `source_file` is **`unknown`** and never
@@ -64,6 +75,8 @@
  * ship first, and this module is that half.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+
+import type { LibraryRef } from "./library-refs.ts";
 import { basename, dirname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -125,6 +138,16 @@ export interface LibraryEntry {
   upload: UploadLink;
   /** The uploads queue holding it, when one does. */
   uploadInstance: string;
+  /**
+   * What references this slug, and from where — bean `jbx2`'s third ask.
+   *
+   * EMPTY IS A FINDING, not a blank: `library/` is L1 because every reference
+   * to a source resolves through it, so a slug nothing names is a slug that
+   * claim is not true of. Attached by the caller, because resolving which
+   * directories to scan needs the declaration; absent when nobody scanned,
+   * which is again not the same as empty.
+   */
+  referencedBy?: LibraryRef[];
 }
 
 /**
@@ -187,6 +210,14 @@ export interface LibraryGraph {
   entries: LibraryEntry[];
   uploads: UploadItem[];
   queues: UploadQueue[];
+  /**
+   * How the reference scan went, when one ran.
+   *
+   * Carried so a reader can tell "nothing references this" from "nothing
+   * looked". Absent means no scan; `unreadable` non-empty means the scan is
+   * incomplete and every zero below it is provisional.
+   */
+  refScan?: { filesRead: number; unreadable: string[] };
 }
 
 /** Parse JSON, or `undefined`. Unreadable and absent are the caller's to tell apart. */

@@ -109,3 +109,44 @@ before building on it.**
 - [ ] Beans and todos carry a process reference, or one is derivable
 - [ ] The `workflow-statemgmt` rendering is published at a stable base-url path
       and satisfies the kind's rendering requirement
+
+---
+
+## STALE 2026-09-21 — the blocker has partly lifted, and one claim was wrong in shape
+
+Re-measured, because a blocker recorded as current is a blocker the next agent
+believes.
+
+**`beans/workflows/` is no longer empty.** Two committed instances:
+
+| instance | process | status | `bean` |
+|---|---|---|---|
+| `crdm--folio-assistant-6lb8` | `Process_CRDM` | running | `folio-assistant-6lb8` |
+| `crdm--issue-607-kg-to-cdn-portal` | `Process_CRDM` | running | `folio-assistant-xies` |
+
+Both carry `$schema: "folio-workflow-instance/v1"`, plus `tokens`, `history`,
+`arrivals`, `children`, `subject` and `source`. So the table above — *"workflow
+instances: 0"* — is a day out of date.
+
+### And the sharper claim needs correcting too
+
+This bean says **"Nothing maps a bean to a BPMN… the mapping does not exist as
+data."** That is now false in one direction and was stated more broadly than
+the evidence supported even then. An instance carries `bean:` as a first-class
+field, so **instance → bean exists and is committed**.
+
+What does *not* exist is the inverse: a bean's front matter carries `id`,
+`title`, `status`, `type`, `parent` and no process reference. But that is a
+join to compute, not data to invent — invert the instance set and every bean
+named by one has its process, its token position and its history.
+
+**So ask 2 is no longer blocked on data.** It is blocked on nothing but the
+work, over a set of 2. The honest caveat is COVERAGE, not existence: 2 of 232
+beans are named by an instance, so a view must render "no instance recorded"
+as a **third state** rather than drawing an empty diagram — which is this
+repository's usual rule and the one `vlhk` was opened about.
+
+**Ask 1 is still blocked**, and for a narrower reason than this bean gives:
+both instances are `Process_CRDM`. Neither is `initialize-harness.bpmn`, so
+*"where a harness got to in its initialisation"* still has no answer. See the
+same correction on `supn`.

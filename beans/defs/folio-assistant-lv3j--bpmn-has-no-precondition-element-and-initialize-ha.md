@@ -1,7 +1,7 @@
 ---
 # folio-assistant-lv3j
 title: BPMN has no precondition element, and initialize-harness needs one
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:02:49Z
@@ -45,8 +45,79 @@ it reads the lanes, does not know what a lane is, and improvises.
 
 ## Done when
 
-- [ ] a precondition has a declared home in the process schema, not only in
+- [x] a precondition has a declared home in the process schema, not only in
       documentation prose
-- [ ] the schema distinguishes a checkable precondition from a stated one, and
+- [x] the schema distinguishes a checkable precondition from a stated one, and
       an unverifiable one is reported rather than assumed
 - [ ] `initialize-harness` carries its precondition in that form
+
+
+## Summary of Changes — 2026-09-21
+
+`<folio:precondition>` on the `<bpmn:process>`, parsed in `process-model.ts`
+alongside `folio:policy` and `folio:log`.
+
+### Where — on the process, and the bean's own reasoning settled it
+
+*"A start event is the closest BPMN idiom but conflates 'may start' with 'is
+ready'."* That is right, so it sits on the process.
+
+### The bean's checkable example was wrong, and getting it right IS the design
+
+The bean offers *"this file was read"* as the checkable case. **It is not.**
+The engine can check a file EXISTS; whether an actor READ it is not observable
+from here, and a check claiming otherwise is precisely the green tick over an
+unverified claim this element exists to prevent — not one it may commit on the
+way in.
+
+So the line is drawn where observability actually falls:
+
+| kind | claim about | verdict |
+|---|---|---|
+| `checkable` | the WORLD | `satisfied` / `unsatisfied` |
+| `stated` | the ACTOR | **always** `could-not-determine` |
+
+`evaluatePrecondition` returns on `stated` on its FIRST line, before anything
+else is consulted, so there is no path on which a claim about the actor comes
+back satisfied. That is structural rather than a rule somebody must keep
+remembering — it holds for a model nobody parsed, which a test asserts by
+hand-building a `stated` precondition carrying a check.
+
+### Nine refusals, because a wrong declaration is worse than prose
+
+Prose is honestly unchecked; a wrong declaration is dishonestly checked. So
+the parser throws on: no `kind` (**no default** — defaulting either way lets
+an author who meant to check something forget), a `kind` that is neither,
+`checkable` with no check, an unimplemented check, `checkable` with no `ref`,
+`stated` carrying a check, no `id`, no `text`, and two sharing an `id`.
+
+### initialize-harness
+
+The one prose sentence became four declarations — three `stated`, one
+`checkable` — and the count is now visible rather than buried:
+
+```
+could-not-determine   stated     knows-the-vocabulary
+could-not-determine   stated     told-it-is-an-initiator
+could-not-determine   stated     at-the-start
+satisfied             checkable  readme-present
+```
+
+Loaded BY PATH in the test, because no corpus sweep covers
+`cat-bootstrap/workflows/` — the platform scans `cat-harness/skills/workflows/`
+only, which is the `pve3` asymmetry. Without that the element could have
+shipped and the one diagram needing it been left behind.
+
+### A vacuous green, caught by falsifying
+
+The first version of the unknown-check refusal test passed **with that branch
+disabled**: it omitted `ref`, so the no-ref guard rejected it first and the
+branch under test was never reached. A refusal test has to leave exactly one
+reason to refuse. Fixed, and both falsifications now turn tests red.
+
+## Not in scope
+
+Wiring preconditions into gate ENFORCEMENT. This declares and reports; making
+one BLOCK a step is a decision about behaviour, and `could-not-determine` is
+the majority verdict here — a gate that blocks on it would stop the only
+process an Initiator can start.

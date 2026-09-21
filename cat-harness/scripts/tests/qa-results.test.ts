@@ -114,7 +114,21 @@ describe("the witnesses are committed in one place and published in another", ()
     // what a checker found. It sat in `docs/` only because that is where Jekyll
     // could reach it, which is a fact about the build, not about the artefact.
     expect(existsSync(WITNESS_DIR)).toBe(true);
-    expect(existsSync(join(ROOT, siteDirFor(ROOT), "assets", "qa"))).toBe(false);
+
+    // NARROWED 2026-09-21. This asserted that `docs/assets/qa/` does not exist
+    // AT ALL, as a proxy for "no witnesses under docs/". The proxy stopped
+    // being equivalent when bean `py74` published the qa graph's projection
+    // there — one generated file, the same shape and the same home as
+    // `assets/beans/index.json` and `assets/todos/index.json`, and not a
+    // witness.
+    //
+    // So the guard now asserts what it always meant. A committed witness is
+    // any of the three shapes the results tree holds, and finding one here
+    // would mean the move had been undone.
+    const qaAssets = join(ROOT, siteDirFor(ROOT), "assets", "qa");
+    const here = existsSync(qaAssets) ? readdirSync(qaAssets) : [];
+    expect(here.filter((f) => f !== "index.json")).toEqual([]);
+    expect(here.some((f) => /\.(block|qa|qa-results)\.json$/.test(f))).toBe(false);
   });
 
   it("BOTH publishing workflows copy them into the site", () => {

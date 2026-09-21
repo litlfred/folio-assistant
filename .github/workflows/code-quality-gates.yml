@@ -631,6 +631,11 @@ jobs:
           bun run check:l1-complete
           bun run check:l1-complete -- --check
           bun run check:catalogue
+          # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
+          # least one MEANINGFULLY POPULATED page. Exit 2 — could not
+          # determine — is a failure here and not a pass, which is the whole
+          # reason the check exists rather than a file-exists test.
+          bun run check:docs-populated
           bun run check:declared-paths
           bun run check:fallback-roles
           bun run check:kind-validators

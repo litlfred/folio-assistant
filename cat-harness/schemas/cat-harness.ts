@@ -2477,6 +2477,57 @@ export function repoRootFor(instanceRoot: string): string {
 }
 
 /**
+ * Resolve a `coverage.visualiser` / `coverage.docs` value to an absolute path.
+ *
+ * **The base is the REPOSITORY root, and the owner ruled it so on 2026-09-21**
+ * (bean `yt7j`, issue #619). This function is that ruling, and it is the only
+ * place the base is written down as code rather than as prose.
+ *
+ * ## Why this exists rather than a `resolve()` at each call site
+ *
+ * A declared `path` states its own base — instance-relative by default,
+ * repository-relative when the entry carries `scope: "repository"`. **A
+ * coverage value states nothing.** So the asymmetry `yt7j` records is not
+ * "two fields use two bases"; it is *one field declares its base and the other
+ * does not*, and a consumer holding a bare string has no way to ask.
+ *
+ * The cost of leaving that to each caller was measured, not imagined:
+ * `state-visualizer.ts` has `ROOT = cat-harness/`, so the obvious
+ * `join(ROOT, cov)` reported EVERY declared visualiser as absent. That very
+ * nearly shipped as a page of false "the declared visualiser is not there"
+ * findings, and it was caught only because the corpus happened to be measured
+ * first. The next consumer has no such luck — which is the whole argument for
+ * one named answer, the same one {@link siteDirFor} makes about the site root.
+ *
+ * ## Resolving against "whichever root happens to work" is not a kindness
+ *
+ * `check-subgraph-coverage.ts` tried the instance root and then the repository
+ * root, accepting either. That is worse than picking wrong: a path that is
+ * incorrect in its declared base passes anyway via the other, so the check
+ * cannot enforce the convention it documents, and the corpus is free to drift
+ * into a mix nobody can read. Measured 2026-09-21 before tightening it: of
+ * **45** coverage paths in this repository, **45 resolve from the repository
+ * root** and the fallback was load-bearing for none.
+ *
+ * ## Take the repository root; do not derive it here
+ *
+ * The parameter is the REPOSITORY root, not an instance root, because
+ * {@link repoRootFor} overshoots for the one instance where it matters: the
+ * root declaration's instance root IS the repository, so going up one lands
+ * outside the checkout entirely. A caller that holds an instance root and
+ * knows it is nested composes `repoRootFor` itself, at a call site where that
+ * assumption is visible.
+ *
+ * It does not check that the result exists. A caller asking "does this
+ * resolve" wants {@link existsSync} on the answer and a three-state verdict
+ * around it; folding the question in here would give every consumer a boolean
+ * where some of them need to say *where* they looked.
+ */
+export function resolveCoveragePath(repoRoot: string, coveragePath: string): string {
+  return resolve(repoRoot, coveragePath);
+}
+
+/**
  * The root a declared `path` or `src` is relative to.
  *
  * The ONE place a declared scope turns into a directory. Every consumer of a
@@ -2688,6 +2739,42 @@ export function siteDirFor(root: string): string {
     throw new Error(`cannot determine the site root: ${p} declares neither \`stub\` nor \`name\``);
   }
   return siteDir({ name: stub, stub });
+}
+
+/**
+ * {@link artefactStub} for the instance rooted at `root`, read from its
+ * declaration — the RAW read, for the same reason {@link siteDirFor} takes one.
+ *
+ * `readDeclaration` validates the whole declaration, which means it throws
+ * when ANY directory in it names a graph kind the harness layer has not
+ * registered. `siteDirFor` documents that hazard above and avoids it; this is
+ * the missing half, and its absence was a real cost rather than a tidiness
+ * point: the 2026-09-21 stub rename (issue #649) needed the published artefact
+ * name in two Playwright suites, and `readDeclaration` threw there on exactly
+ * the unregistered-kind path `siteDirFor` warns about — in a browser job,
+ * where the failure reads as "no tests found" rather than as a bad read.
+ *
+ * Throws rather than defaulting, like its sibling. A guessed artefact name
+ * sends a consumer to a document nothing publishes, and "could not determine"
+ * is never rendered as an answer.
+ */
+export function artefactStubFor(root: string): string {
+  const p = join(root, DECLARATION_FILENAME);
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    throw new Error(
+      `cannot determine the artefact stub: ${p} is unreadable or not valid JSON ` +
+        `(${e instanceof Error ? e.message : String(e)})`,
+    );
+  }
+  const d = raw as { name?: unknown; stub?: unknown };
+  const stub = typeof d.stub === "string" && d.stub ? d.stub : d.name;
+  if (typeof stub !== "string" || !stub) {
+    throw new Error(`cannot determine the artefact stub: ${p} declares neither \`stub\` nor \`name\``);
+  }
+  return stub;
 }
 
 /**

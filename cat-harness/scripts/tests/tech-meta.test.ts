@@ -9,9 +9,9 @@
  * @module scripts/tests/tech-meta
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 import { libraryEntry } from "./library-dirs.ts";
 
 import { refreshMeta } from "../ingest-document.ts";
@@ -109,9 +109,21 @@ describe("the mechanical facts", () => {
     const entry = libraryEntry("who-pub-tps-931");
     expect(entry, "who-pub-tps-931 is not in any declared library").toBeDefined();
     const s = JSON.parse(readFileSync(join(entry!, "structure.json"), "utf-8")) as {
-      source: { sha256: string };
+      source: { sha256: string; file: string };
     };
-    expect(techMeta(join(ROOT, "uploads/WHO_PUB_TPS_93.1.pdf")).sha256).toBe(s.source.sha256);
+    // The SOURCE path is derived too, and it has to be: bean `yl5w` moved
+    // this PDF out of `cat-harness/uploads/` and into the folio beside its own
+    // intake, and the line here was `join(ROOT, "uploads/WHO_PUB_TPS_93.1.pdf")`
+    // — a literal, in the one test whose own comment says asserting a spelling
+    // of a location is what re-pins the next relocation. `structure.json`
+    // records the source FILENAME, and the library entry says which instance and slug,
+    // so the upload sits at `<instance>/uploads/<slug>/<basename>` with nothing
+    // spelled out here.
+    const slug = basename(entry!);
+    const instance = resolve(entry!, "..", "..");
+    const pdf = join(instance, "uploads", slug, s.source.file);
+    expect(existsSync(pdf), `the ingested source for ${slug} is not at ${pdf}`).toBe(true);
+    expect(techMeta(pdf).sha256).toBe(s.source.sha256);
   });
 });
 
