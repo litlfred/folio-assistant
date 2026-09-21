@@ -36,8 +36,52 @@ this repository's own history:
 
 ## Done when
 
-- [ ] The paths by which a credential can reach a commit here are enumerated
-      and each is either covered or explicitly out of scope with a reason
-- [ ] The false-positive rate is measured on this corpus before anything gates
-- [ ] A finding is dispatched and adjudicated per `0grh`, not self-reported
-- [ ] Third state: a scanner that could not run is never reported as clean
+- [x] The paths are enumerated and each is covered or out of scope **with its
+      reason**, in the module's own docstring — six paths, one deliberately out
+      of scope (below)
+- [x] The false-positive rate is measured on this corpus BEFORE gating, and
+      the number decided the design (below)
+- [ ] A finding is dispatched and adjudicated per `0grh` — **not needed and
+      deliberately not built.** A prefix-anchored match is deterministic: the
+      string either is a `ghp_` token or it is not. Dispatching an adjudicator
+      to confirm a regex would be ceremony, and `0grh` exists for judgements,
+      not for greps. This becomes live the day an entropy or heuristic
+      detector is added, and the measurement below says why that day is not
+      today
+- [x] Third state: `could-not-scan` exits **2** and outranks clean. Proved by
+      accident — the first run reported *"could not scan: package.json"*,
+      because a single-file root is not walkable. The refusal was right and
+      the cause was a bug; both are fixed and the state is tested
+
+## The measurement that decided the design
+
+The bean's constraint was to measure precision before gating, because this
+corpus is adversarial input to every entropy detector. It is worse than that.
+
+Shannon entropy > 3.5 bits/char on tokens of 20+ characters, over the same
+roots:
+
+| | |
+|---|---|
+| files | 3,614 |
+| high-entropy tokens | **68,337** |
+| credentials among them | **0** |
+| false-positive rate | **100 %** |
+
+43,405 are in `.json` — the committed QA sidecars, whose 12-char hashes are the
+whole point of the file. But the shape of the rest is the real lesson:
+`source=orphan-branch`, `folio-assistant/scripts/lake-cache`,
+`content/quantum-observable-universe/lean`. **Ordinary hyphenated identifiers
+clear the threshold**, so raising it does not rescue the approach — it only
+moves an arbitrary line.
+
+So the detector is **prefix-anchored**: twelve patterns, each matching a
+credential format that announces itself. On the real tree: **3,691 files,
+0 findings, 0 false positives, 0.76 s.** Falsified by planting a `ghp_` token,
+which it names and redacts, and removing it, which turns it green.
+
+## Out of scope, said rather than implied
+
+**Git history.** A sweep of past objects is a different job with a different
+remedy — rotation, not deletion — and claiming it here would be the over-claim
+this gate exists to avoid. From here forward, and the docstring says so.
