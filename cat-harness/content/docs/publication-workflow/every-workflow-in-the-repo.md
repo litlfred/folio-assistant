@@ -21,7 +21,7 @@ itself; everything below says what the index structurally cannot.
 
 **Bootstrap's diagrams are deliberately outside that index**, and their absence
 is a fact rather than a gap. `cat-bootstrap/workflows/` is declared by
-`cat-bootstrap/harness.json` and *not* by the root, because declaring it there
+`cat-bootstrap/cat-bootstrap.json` and *not* by the root, because declaring it there
 re-carries bootstrap's process into the root's published graph — which `#432`
 removed on purpose and a test still guards. Bean `pve3` holds that choice:
 **both halves of bootstrap, or neither.** So the derived index covers what the
@@ -44,7 +44,7 @@ catch and could not, because it could not see the directory either (bean `7u3g`)
 
 The rows are correct now. **The diagrams are still invisible to the tooling**,
 and deliberately so pending a decision: `bootstrap/workflows/` is declared by
-`bootstrap/harness.json` but not by the root, and declaring it there re-carries
+`cat-bootstrap/cat-bootstrap.json` but not by the root, and declaring it there re-carries
 bootstrap's process into the root's published graph — which `#432` removed on
 purpose and a test still guards. Bean `pve3` holds that choice: **both halves of
 bootstrap, or neither.**

@@ -38,7 +38,7 @@ Base branch: `$ARGUMENTS` if given, else the repo default (auto-detect:
 ## Content-type-specific verification (the generalization point)
 
 After the generic gates, run the checks for **this folio's content type** (read
-`contentType` from `harness.config.json`; default to the platform's own checks).
+`contentType` from `<name>.config.json`; default to the platform's own checks).
 Prefer the MCP tools (structured findings) when connected; otherwise the scripts.
 
 **Always (platform):**

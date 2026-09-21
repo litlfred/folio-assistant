@@ -1059,3 +1059,82 @@ test("the layer is a coordinate frame, not a surface that swallows the page", as
   await expect(layer).toHaveCSS("pointer-events", "none");
   await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCSS("pointer-events", "auto");
 });
+
+/* ── `qefk` — three on the face, one that holds the rest ──────────────────
+ *
+ * Owner: *"the todos controls are too clunky / take up too much real
+ * estate."* Four buttons on a card whose content is one line of summary, five
+ * once it floated. Asked how far to go, the owner answered **"3+1"**.
+ *
+ * The split is by WHAT THE GESTURE DOES: board gestures (Pin, Discard, and
+ * Move once floating) stay on the face; the two that leave for the forge
+ * (View, Edit) go behind one `<details>`. `pb04` required both to be
+ * PRESENT — that is satisfied; competing with the summary was never what it
+ * asked for.
+ */
+test("a board sticky's face carries the board gestures, not the forge links", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const card = page.locator(".fa-sticky-slot .fa-sticky").first();
+  const tools = card.locator(".fa-sticky-tools");
+
+  // On the face.
+  await expect(tools.locator("> .fa-sticky-pin")).toHaveCount(1);
+  await expect(tools.locator("> .fa-sticky-discard")).toHaveCount(1);
+  await expect(tools.locator("> .fa-sticky-more")).toHaveCount(1);
+
+  // NOT on the face — still present, one level in. `>` is the whole point of
+  // this assertion: a descendant selector would pass for both arrangements
+  // and prove nothing.
+  await expect(tools.locator("> a.fa-sticky-view")).toHaveCount(0);
+  await expect(tools.locator("> a.fa-sticky-edit")).toHaveCount(0);
+  await expect(card.locator("a.fa-sticky-view")).toHaveCount(1);
+  await expect(card.locator("a.fa-sticky-edit")).toHaveCount(1);
+
+  // The drawer is LAST, so the row ends with it rather than starting with it.
+  const ids = await tools.evaluate((el) =>
+    Array.from(el.children).map((c) => c.className));
+  expect(ids[ids.length - 1]).toContain("fa-sticky-more");
+});
+
+test("the drawer opens from the keyboard and names what it holds", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const more = page.locator(".fa-sticky-slot .fa-sticky").first().locator(".fa-sticky-more");
+  const summary = more.locator("summary");
+
+  // It names its CONTENTS, not its shape: "More" tells a screen-reader user
+  // nothing about whether opening it is worth the keystroke.
+  await expect(summary).toHaveAttribute("aria-label", /Source links for .+ — 2 links/);
+
+  await expect(more).not.toHaveAttribute("open", "");
+  await summary.press("Enter");
+  await expect(more).toHaveAttribute("open", "");
+  await expect(more.locator("a.fa-sticky-view")).toBeVisible();
+  await expect(more.locator("a.fa-sticky-edit")).toBeVisible();
+
+  // An inverse that is reachable — `l4zi`.
+  await summary.press("Enter");
+  await expect(more).not.toHaveAttribute("open", "");
+});
+
+test("Move joins the face when the card floats, ahead of the drawer", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+
+  const tools = page.locator(".fa-sticky-layer .fa-sticky .fa-sticky-tools");
+  const order = await tools.evaluate((el) =>
+    Array.from(el.children).map((c) => c.className));
+  const moveAt = order.findIndex((c) => c.includes("fa-sticky-move"));
+  const drawerAt = order.findIndex((c) => c.includes("fa-sticky-more"));
+  expect(moveAt).toBeGreaterThan(-1);
+  // Move is a BOARD gesture, so it belongs on the face. It used to go in at
+  // `firstChild`, which reordered the row every time a card floated.
+  expect(moveAt).toBeLessThan(drawerAt);
+});

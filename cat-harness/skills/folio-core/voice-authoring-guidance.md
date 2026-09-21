@@ -20,7 +20,7 @@ rewriting prose somebody has already reviewed.
 bun run check:voices          # what this instance ships, and how many rules each carries
 ```
 
-The active set is in `harness.config.json`:
+The active set is in `<name>.config.json`:
 
 ```json
 { "voices": { "active": ["who-editorial", "who-guideline-development"] } }

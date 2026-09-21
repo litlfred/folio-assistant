@@ -177,7 +177,7 @@ change being pushed, and its "60 of 60" was quoted as though it did.
 
 **`bun run gates` reads the WORKING TREE, not the commit**, which is the
 mechanism behind that sentence and worth knowing on its own. A third instance,
-2026-09-20: a splice script corrupted `harness.json` while a run was in
+2026-09-20: a splice script corrupted `<name>.json` while a run was in
 flight, and **40 of 61 gates failed reading a file that was invalid for about
 a minute**. Every one of the five failures the summary named passed when
 re-run by hand. So a mid-run edit does not merely leave the change unverified

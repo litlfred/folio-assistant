@@ -29,7 +29,7 @@ the others is incomplete rather than minimal:
 
 | clause | what it obliges | where it is declared |
 |---|---|---|
-| *adds schematics to the KG* | declare the directories it scans and each one's graph kind | `harness.json` — [directory conventions](../../skills/folio-core/directory-conventions.md) |
+| *adds schematics to the KG* | declare the directories it scans and each one's graph kind | `<name>.json` — [directory conventions](../../skills/folio-core/directory-conventions.md) |
 | *builds visualisations for it* | a declared subgraph a reader cannot see is a subgraph nobody checks | the renderer, per subgraph |
 | *describes the tools* | a Tool is a KG node, not a shell string somebody remembers | `tools/` |
 
@@ -111,7 +111,7 @@ cannot fail quietly.
 
 ### The exemption is declared data, not a special case in a checker
 
-`cat-bootstrap/harness.json` carries a `renderExemption` — `of`, `reason` and
+`cat-bootstrap/cat-bootstrap.json` carries a `renderExemption` — `of`, `reason` and
 `owes` — and `2krx`'s axis reads it through `isExemptFrom` rather than testing
 an instance name. A name literal would state a rule true only for the instance
 somebody remembered, and a vendored or renamed bootstrap would silently

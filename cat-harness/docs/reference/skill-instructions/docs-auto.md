@@ -101,7 +101,7 @@ Two answers to "what is a skill" is one answer too many.
 
 The owner wrote `<path>`; the URL carries the declared entry's **`id`**.
 Deliberate, and the reasons are `state-visualizer`'s own: `id` is what
-`harness.json` declares and what an override matches on, so an id-derived URL
+`<name>.json` declares and what an override matches on, so an id-derived URL
 **survives the directory moving**. It also stays one segment, which is what
 lets `orphanSubjectPages()` prune with an exact ownership test rather than a
 fourth pruner (bean `ankg` asks for no more of those). Each page **states its

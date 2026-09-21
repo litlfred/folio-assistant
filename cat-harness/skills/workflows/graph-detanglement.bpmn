@@ -66,7 +66,7 @@
     </bpmn:task>
 
     <bpmn:task id="Task_Declare" name="1 &amp;#183; Declare in place&amp;#10;(nothing moves)">
-      <bpmn:documentation>A `harness.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</bpmn:documentation>
+      <bpmn:documentation>A `&lt;name&gt;.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="graph-detanglement"/>
       </bpmn:extensionElements>

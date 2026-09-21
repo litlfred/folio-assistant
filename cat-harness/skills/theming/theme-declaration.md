@@ -37,7 +37,7 @@ A premise a schema cannot hold is a premise that needs a test.
 
 `laptop`, `mobile`, `card`. The owner: *"themes need all three layouts to be
 defined to be considered valid."* Not a new vocabulary — exactly the set
-`harness.json`'s `images[].layout` already uses.
+`<name>.json`'s `images[].layout` already uses.
 
 **Missing a layout is invalid, never degraded.** There is deliberately no
 fallback to another layout's geometry: a theme that renders wrong on a phone

@@ -125,6 +125,13 @@ export interface Claim {
   /** Basenames of the files that really declare this graph. */
   actual: string[];
   agrees: boolean;
+  /**
+   * The claim names a pattern (`<name>.json`), not a file.
+   *
+   * Correct by construction and never a contradiction, but counted, because
+   * the alternative is a corpus that shrinks every time prose is generalised.
+   */
+  placeholder: boolean;
 }
 
 /** How far from `` `<id>` graph `` a filename still counts as paired with it. */
@@ -135,7 +142,29 @@ const NEAR = 120;
 // basename — and a pattern rejecting the path form would make the clearer
 // sentence INVISIBLE to this check rather than verified. A silent pass is the
 // worse failure, and it was one edit away.
-const JSON_FILE = /`([A-Za-z0-9._/-]+\.json)`/g;
+//
+// `<` and `>` are here for the same reason, and the near-miss became a real
+// one. A GENERIC skill correctly writes `<name>.json`: it describes any
+// instance, so substituting this repository's concrete file would be wrong.
+// Without the brackets in this class, every such sentence dropped out of the
+// corpus — clearing bean `vzur`'s backlog took it 5 claims → 3, and each
+// disappearance READ AS A FIX. That is the `dh4f` shape once more: examining
+// less and reporting the same tick.
+const JSON_FILE = /`([A-Za-z0-9._/<>-]+\.json)`/g;
+
+/**
+ * Does this spelling name a PATTERN rather than a file?
+ *
+ * `<name>.json`, `<instance>.json`, `<slug>.json` and their `.config.json`
+ * siblings are how a generic skill has to write it. Such a claim cannot
+ * contradict a declaration — there is no file to disagree with — but it is
+ * emphatically NOT absent, so it is carried as a third state rather than
+ * folded into `agrees`. Counting it as agreement would let a wrong concrete
+ * filename be "fixed" by making it vague.
+ */
+function isPlaceholder(spelling: string): boolean {
+  return /^<[A-Za-z0-9._-]+>/.test(spelling);
+}
 
 /**
  * Claims in one markdown document.
@@ -155,7 +184,16 @@ export function claimsIn(markdown: string, file: string, graphs: GraphSources): 
         const window = flat.slice(Math.max(0, m.index - NEAR), m.index + m[0].length + NEAR);
         for (const f of window.matchAll(JSON_FILE)) {
           const claimed = basename(f[1]!);
-          out.push({ file, graph, claimed, context: window.trim(), actual, agrees: actual.includes(claimed) });
+          const placeholder = isPlaceholder(claimed);
+          out.push({
+            file,
+            graph,
+            claimed,
+            context: window.trim(),
+            actual,
+            agrees: placeholder || actual.includes(claimed),
+            placeholder,
+          });
         }
       }
     }

@@ -1,9 +1,4 @@
 {
-  "_comment": "Bean hrv2, 2026-09-21. The markdown backlog this check found on the day it shipped, and did NOT fix. Each is prose in a SKILL naming `harness.json` as the declaration filename -- the retired-name backlog (162 occurrences across 83 files), which is separate work from hrv2's own defect and was scoped out by the owner. Fixing them is editorial: `directory-conventions.md` line 454 does not merely name the old file, it asserts the declaration is NOT stub-named, which is now false in substance. The two entries under docs/reference/skill-instructions/ are GENERATED from the two skills above them and will follow when those are fixed -- do not edit them by hand. Same rule as bean-bodies-baseline.json: a NEW contradiction fails, the backlog is listed every run, and an entry that stops matching is reported stale so this file shrinks rather than fossilises.",
-  "known": [
-    "cat-harness/skills/folio-core/directory-conventions.md:folio",
-    "cat-harness/skills/folio-core/skills-and-tools.md:beans",
-    "cat-harness/docs/reference/skill-instructions/directory-conventions.md:folio",
-    "cat-harness/docs/reference/skill-instructions/skills-and-tools.md:beans"
-  ]
+  "_comment": "EMPTY, and kept rather than deleted. Bean hrv2 opened this file on 2026-09-21 with four entries -- prose in skills naming `harness.json` as the declaration filename -- and bean vzur emptied it the same day by fixing them. The mechanism is the record: a NEW contradiction fails, a listed one is reported every run, and an entry that stops matching is reported STALE and fails too, so the file shrinks rather than fossilises. All four were reported stale and removed here, which is what that rule looks like when it works. The file stays so the next backlog entry has somewhere to go and so the shrink is visible in history; removing a durable artefact is not an agent's call to make on its own initiative (`deletion-requires-confirmation`).",
+  "known": []
 }
