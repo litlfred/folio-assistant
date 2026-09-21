@@ -7,8 +7,16 @@
  */
 import { describe, expect, it } from "bun:test";
 
-import { RAIL_COLLAPSED_PX, RAIL_OPEN_PX, injectRail, railCss, railHtml } from "../lib/harness-rail.js";
-import { toRootFor } from "../mount-instance-docs.js";
+import {
+  RAIL_COLLAPSED_PX,
+  RAIL_GLYPH_PX,
+  RAIL_OPEN_PX,
+  RAIL_PAD_PX,
+  injectRail,
+  railCss,
+  railHtml,
+} from "../lib/harness-rail.js";
+import { toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
 const opts = {
   instance: "who-iris",
@@ -39,6 +47,33 @@ describe("the harness rail", () => {
     expect(css).toContain(`body{padding-left:${RAIL_COLLAPSED_PX}px}`);
     expect(css).toContain(`width:${RAIL_COLLAPSED_PX}px`);
     expect(RAIL_OPEN_PX).toBeGreaterThan(RAIL_COLLAPSED_PX);
+  });
+
+  it("collapses to the glyph column and its two gutters — nothing else fits", () => {
+    // The owner photographed the rail collapsed and called it "too wide": at a
+    // bare 48 the clip was wider than the glyph column inside it, so the first
+    // few pixels of every label sat in view and each row showed a sliver of a
+    // word. Deriving the width from the column is what stops that recurring.
+    expect(RAIL_COLLAPSED_PX).toBe(RAIL_PAD_PX * 2 + RAIL_GLYPH_PX);
+    expect(railCss()).toContain(`flex:0 0 ${RAIL_GLYPH_PX}px`);
+  });
+
+  it("holds EVERY label invisible while collapsed, not just clipped", () => {
+    // The arithmetic above is a geometry argument, and a host stylesheet is
+    // one inherited `letter-spacing` away from moving where a label starts
+    // while the constants stay put. So the labels are held at `opacity:0`
+    // too — and this binds to the MARKUP, so a label span added later without
+    // the class fails here rather than bleeding into the collapsed strip.
+    const html = railHtml(opts);
+    const visible = [...html.matchAll(/<span(?![^>]*aria-hidden)[^>]*>/g)].map((m) => m[0]);
+    expect(visible.length).toBeGreaterThan(0);
+    for (const span of visible) expect(span).toContain("fa-rail-label");
+    expect(railCss()).toContain(".fa-rail-label{white-space:nowrap;opacity:0");
+    // ...and revealed by all three mechanisms, not only by hover.
+    const css = railCss();
+    expect(css).toContain(".fa-rail:hover .fa-rail-label");
+    expect(css).toContain(".fa-rail:focus-within .fa-rail-label");
+    expect(css).toContain(".fa-rail-pin:checked~.fa-rail-in .fa-rail-label");
   });
 
   it("carries no script", () => {
@@ -108,5 +143,44 @@ describe("toRoot depth — the arithmetic that broke first", () => {
 
   it("and nested inside THAT, three", () => {
     expect(toRootFor("library/who-iris", "a/b.html")).toBe("../../..");
+  });
+});
+
+describe("where a kind's rail link actually goes", () => {
+  // The owner, on the deployed rail: "clicking on doc/ or library/ under
+  // who-iris navbar did nothing … under library/ the 3 assets listed. are
+  // those interfaces not done?" They were done. `/library/who-iris/` mounts
+  // `who-iris/library/` verbatim, whose `index.html` is the IRIS replica home
+  // — the page `/who-iris/` already serves. The link navigated correctly to a
+  // byte-identical document, which a reader cannot tell from a dead link.
+
+  it("an index under the published tree addresses as its directory", () => {
+    expect(visualiserHref("cat-harness/docs/cat-harness/library/who-iris/index.html", "cat-harness/docs")).toBe(
+      "cat-harness/library/who-iris/",
+    );
+  });
+
+  it("a page that is NOT an index addresses as itself", () => {
+    // Appending a slash to `a/b.html` would invent a directory that is not
+    // there, and the 404 would read as a missing visualiser rather than as a
+    // composed URL.
+    expect(visualiserHref("cat-harness/docs/qa/axes.html", "cat-harness/docs")).toBe("qa/axes.html");
+  });
+
+  it("the prefix's own index is the site root", () => {
+    expect(visualiserHref("cat-harness/docs/index.html", "cat-harness/docs")).toBe("");
+  });
+
+  it("REFUSES a visualiser outside the published tree rather than composing a URL", () => {
+    // A visualiser can be declared and real without being published — it is
+    // then a finding, and the caller names it and falls back to the mount
+    // route. Quietly linking somewhere plausible is how the dead-looking link
+    // above survived a review in the first place.
+    expect(visualiserHref("who-iris/library/index.html", "cat-harness/docs")).toBeUndefined();
+    expect(visualiserHref("cat-harness/docs-extra/x/index.html", "cat-harness/docs")).toBeUndefined();
+  });
+
+  it("tolerates a declared prefix written with a trailing slash", () => {
+    expect(visualiserHref("cat-harness/docs/a/index.html", "cat-harness/docs/")).toBe("a/");
   });
 });
