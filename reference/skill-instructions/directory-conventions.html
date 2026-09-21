@@ -1412,10 +1412,10 @@ copy of the same rot.</p>
 declares nothing it does not have. A <code class="language-plaintext highlighter-rouge">library</code> entry appears in <code class="language-plaintext highlighter-rouge">who-iris</code>’s
 declaration only when the corpus moves there, because a declared-but-absent
 directory makes every consumer scan nothing and report a clean run over it.</p>
-<h2 id="naming--one-fixed-config-stub-named-artefacts-strict">
+<h2 id="naming--a-self-identifying-declaration-stub-named-artefacts-strict">
   
   
-    <a href="#naming--one-fixed-config-stub-named-artefacts-strict" class="anchor-heading" aria-labelledby="naming--one-fixed-config-stub-named-artefacts-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming — one fixed config, stub-named artefacts (STRICT)
+    <a href="#naming--a-self-identifying-declaration-stub-named-artefacts-strict" class="anchor-heading" aria-labelledby="naming--a-self-identifying-declaration-stub-named-artefacts-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming — a self-identifying declaration, stub-named artefacts (STRICT)
   
   
 </h2>
@@ -1517,14 +1517,26 @@ would be false on arrival. <strong>So the type declares its filename, and the
 convention is that rule rather than a spelling.</strong> What a new type copies is
 <em>say what your marker is called</em>, not a pattern to imitate.</p>
 
-<p>The two alternatives were considered and rejected on measurement:
-<code class="language-plaintext highlighter-rouge">&lt;slug&gt;.config.json</code> everywhere would rename what WHO owns; bare <code class="language-plaintext highlighter-rouge">&lt;slug&gt;.json</code>
-collides with <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.json</code>, which is already the published KG-as-JSON alias,
-and would make the declaration un-findable — <code class="language-plaintext highlighter-rouge">findInstanceRoot</code> walks up
-testing one fixed filename per level, and no declaration in this tree carries a
-<code class="language-plaintext highlighter-rouge">$schema</code> to glob for, while <code class="language-plaintext highlighter-rouge">{name, directories}</code> is the shared shape of the
-root declaration, <code class="language-plaintext highlighter-rouge">beans.json</code> and <code class="language-plaintext highlighter-rouge">todos.json</code> alike, so duck-typing returns
-<code class="language-plaintext highlighter-rouge">beans/</code> as an instance root <strong>silently</strong>.</p>
+<p>The two alternatives were considered and rejected on measurement, <strong>and the
+second rejection was later reversed</strong> — recorded rather than rewritten, because
+the objection was real and what answered it is the interesting part.</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;slug&gt;.config.json</code> everywhere would rename what WHO owns. That still holds.</p>
+
+<p>Bare <code class="language-plaintext highlighter-rouge">&lt;slug&gt;.json</code> was rejected as <strong>un-findable</strong>: <code class="language-plaintext highlighter-rouge">findInstanceRoot</code> walked up
+testing one fixed filename per level, no declaration carried a <code class="language-plaintext highlighter-rouge">$schema</code> to glob
+for, and <code class="language-plaintext highlighter-rouge">{name, directories}</code> is the shared shape of the root declaration,
+<code class="language-plaintext highlighter-rouge">beans.json</code> and <code class="language-plaintext highlighter-rouge">todos.json</code> alike — so duck-typing would return <code class="language-plaintext highlighter-rouge">beans/</code> as an
+instance root <strong>silently</strong>.</p>
+
+<p><strong>Both halves were answered by making the file identify itself.</strong>
+<code class="language-plaintext highlighter-rouge">findDeclarationFile</code> admits a <code class="language-plaintext highlighter-rouge">*.json</code> only when its <code class="language-plaintext highlighter-rouge">name</code> field EQUALS its
+own filename stem, and <code class="language-plaintext highlighter-rouge">findInstanceRoot</code> now calls it rather than testing a
+word agreed in advance. Discovery survives, because a consumer matches on the
+file agreeing with itself. And the duck-typing worry closes on the same rule:
+<code class="language-plaintext highlighter-rouge">beans/beans.json</code> declares <code class="language-plaintext highlighter-rouge">"name": "folio-assistant"</code> against the stem
+<code class="language-plaintext highlighter-rouge">beans</code>, so it does not match and <code class="language-plaintext highlighter-rouge">beans/</code> is not an instance root — refused by
+what the file says it is, not by a path exception.</p>
 
 <p><strong>At the graph-kind level this is <code class="language-plaintext highlighter-rouge">GraphKindDef.declarationFile</code></strong>, and it is
 already load-bearing rather than decorative. <code class="language-plaintext highlighter-rouge">declaredKinds</code> computed a nested
@@ -2057,7 +2069,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35659009558"><code>f99b5e5</code></a> &middot; 2026-09-21T21:48:01Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35659479949"><code>36aa14d</code></a> &middot; 2026-09-21T21:51:27Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
