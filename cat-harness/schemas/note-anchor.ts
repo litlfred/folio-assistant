@@ -181,3 +181,96 @@ export function isPageGlobal(note: Anchored, page: string): boolean {
   const a = anchorOf(note);
   return a.kind === "page" && a.page === page;
 }
+
+/**
+ * Content nodes a note is ALSO about, without being attached to them.
+ *
+ * ## The ruling, 2026-09-20 (CRDM Q1)
+ *
+ * The ask carried two features in one sentence — *"be attached to nothing or
+ * show attachment to content node**s** based on relationships"*, plural — and
+ * the owner settled which one it is:
+ *
+ * > **One primary + declared secondaries.**
+ *
+ * So {@link anchorOf} is unchanged and still answers *where is this note
+ * attached*, one place or none. Everything a consumer of `targetLabel` does
+ * keeps working untouched, which was the point of choosing this over making
+ * the block anchor a list.
+ *
+ * ## The badge counts PRIMARIES, and that is what keeps R6 true
+ *
+ * R6: *the badge's count SHALL be the cardinality of the query the panel
+ * renders.* {@link notesAt} returns both sets from one pass so the count and
+ * the panel cannot be computed from different things — and the badge is
+ * `attached.length`, because the panel is *"the notes attached here"*. A badge
+ * that silently included secondaries would be a number disagreeing with the
+ * list under it, which is the exact defect the owner asked to design out.
+ *
+ * ## A secondary is a LINE, not an attachment
+ *
+ * What it buys on the board is the edge the ask asked for: a note placed at
+ * its own position, with a line drawn to each node it is also about. It does
+ * not move the note, it does not appear in that node's panel, and it does not
+ * make the note belong anywhere.
+ */
+export const AlsoAboutSchema = z.array(BlockAnchorSchema);
+export type AlsoAbout = z.infer<typeof AlsoAboutSchema>;
+
+/** Anything that may carry secondary references, alongside its anchor. */
+export type Related = Anchored & { alsoAbout?: AlsoAbout };
+
+/**
+ * The labels a note is also about — `[]` when it is about nothing else.
+ *
+ * A reader rather than a field access, for the same reason {@link anchorOf}
+ * is one: every note written before this existed carries nothing, and an
+ * absent list and an empty list mean the same thing to every caller. Returning
+ * `undefined` would make each of them decide that again.
+ */
+export function alsoAboutLabels(note: Related): string[] {
+  return (note.alsoAbout ?? []).map((a) => a.label);
+}
+
+/**
+ * The notes at one content node, split into the two relations, from ONE pass.
+ *
+ * `attached` is the panel and its count is the badge (R6). `alsoAbout` is the
+ * lines. They are returned together rather than by two functions so a caller
+ * cannot compute the badge from one query and render the panel from another —
+ * the only way for the two to disagree is for somebody to build them apart.
+ *
+ * A note that is both attached here and also-about here is counted **once, as
+ * attached**: the stronger relation wins, so a self-referential declaration
+ * cannot inflate a badge past the length of the list it labels.
+ */
+export function notesAt<T extends Related>(
+  notes: readonly T[],
+  label: string,
+): { attached: T[]; alsoAbout: T[] } {
+  const attached: T[] = [];
+  const alsoAbout: T[] = [];
+  for (const n of notes) {
+    const a = anchorOf(n);
+    if (a.kind === "block" && a.label === label) attached.push(n);
+    else if (alsoAboutLabels(n).includes(label)) alsoAbout.push(n);
+  }
+  return { attached, alsoAbout };
+}
+
+/**
+ * What the badge shows at a node: the count, and whether to show one at all.
+ *
+ * R5: *a badge SHALL show a count only when more than one note is attached* —
+ * the owner's *"badge of # if > 1"*. The exact number is kept alongside
+ * regardless, because the threshold is a DENSITY decision about the visual and
+ * a screen-reader user should not be told less; `aria-label` takes `count`
+ * while the rendered chip takes `showCount`.
+ */
+export function badgeAt<T extends Related>(
+  notes: readonly T[],
+  label: string,
+): { count: number; showCount: boolean } {
+  const count = notesAt(notes, label).attached.length;
+  return { count, showCount: count > 1 };
+}
