@@ -23,8 +23,10 @@
 import { describe, expect, test } from "bun:test";
 
 import {
+  BLOCKER,
   SHADOW_MIN_WORDS,
   checklistItems,
+  insideQuotation,
   overlap,
   shadowedItems,
   splitChecklist,
@@ -170,5 +172,65 @@ describe("shadowedItems — what it must NOT report", () => {
 
   test("a bean with no canonical section reports nothing", () => {
     expect(shadowedItems("prose\n\n- [x] a ticked item with no Done when heading here")).toEqual([]);
+  });
+});
+
+/* ── The quotation guard's SCOPE, which `k59d` asked to be settled ────────
+ *
+ * `k59d`: *"The quotation guard covers a markdown table cell, or the guard's
+ * stated scope says it does not and why — a workaround in one bean is not a
+ * fix."* It does not, and these are the cases that say so.
+ *
+ * The decision is the corpus's, not taste's. Measured 2026-09-21 over every
+ * bean body for `blocked on \`id\`` on a line beginning `|`: two hits, and
+ * they point opposite ways — `k59d` quotes yg29 and marks it; `xgd8` asserts
+ * its OWN live blocker in a cell. Treating a cell as a quotation would
+ * silently exempt the second, which is the only kind that matters.
+ */
+describe("insideQuotation — what marks a quotation, and what does not", () => {
+  const at = (line: string): number => {
+    BLOCKER.lastIndex = 0;
+    const m = BLOCKER.exec(line);
+    if (!m) throw new Error(`the blocker pattern does not match: ${line}`);
+    return m.index;
+  };
+
+  test("a plain assertion is not a quotation", () => {
+    const line = "Blocked on `hqku` until that lands.";
+    expect(insideQuotation(line, at(line))).toBe(false);
+  });
+
+  test("double quotes on the line mark one — this is the whole signal", () => {
+    const line = 'yg29 says "blocked on `hqku`", which is completed.';
+    expect(insideQuotation(line, at(line))).toBe(true);
+  });
+
+  test("an UNQUOTED table cell is an assertion, and must stay one", () => {
+    // `xgd8`'s shape: a bean stating its own blocker in a cell. `slw1` was
+    // `todo` when this was written, so that block is live and correctly
+    // unflagged — but were it to close, this is the row that has to fail.
+    const line = "| schemas into `library/`, both directions | — | blocked on `slw1`, see above |";
+    expect(insideQuotation(line, at(line))).toBe(false);
+  });
+
+  test("a QUOTED table cell is read as a quotation, so the marking works", () => {
+    // `k59d`'s shape, and the reason its double-quoting was never a
+    // workaround: quoting what you quote is correct English AND the signal.
+    const line = '| `yg29` | "blocked on `hqku`, and on the disposition" | completed |';
+    expect(insideQuotation(line, at(line))).toBe(true);
+  });
+
+  test("a blockquote is NOT read — priced, not missed", () => {
+    // Defensible to add: `>` is unambiguously a quotation in markdown. The
+    // store contains ZERO of them, so implementing it would be building for a
+    // case that does not exist. This test is the record of that choice, and
+    // it is the one to flip if the form ever appears.
+    const line = "> blocked on `hqku`";
+    expect(insideQuotation(line, at(line))).toBe(false);
+  });
+
+  test("emphasis is not attribution", () => {
+    const line = "*blocked on `hqku`* — its own words";
+    expect(insideQuotation(line, at(line))).toBe(false);
   });
 });

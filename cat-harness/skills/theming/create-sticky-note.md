@@ -147,7 +147,7 @@ Asked for a sticky about reading the documentation, explicitly **not** in
 ## What this skill does not do
 
 - **It does not write a landing-page sticky.** Those are a layer's contribution,
-  declared in its `harness.json` — see `sticky-contribution.ts`.
+  declared in its declaration — see `sticky-contribution.ts`.
 - **It does not create beans.** Agent work is `todo-manager`'s.
 - **It does not delete or overwrite a sticky it did not make.** Editing somebody
   else's note is the `deletion-requires-confirmation` case.

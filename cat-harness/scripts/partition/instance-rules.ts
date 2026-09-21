@@ -174,6 +174,12 @@ export const RULES: Rule[] = [
       // (`<base-url>/<path-to-kind-or-node>`) is a statement about harnesses,
       // not about what a folio holds.
       "scripts/mount-instance-docs.ts",      // instance-rendered content -> /<kind>/<instance>/
+      // The harness navigation it injects into those pages. Same layer by the
+      // same argument: the rail is the HARNESS's chrome, and it exists because
+      // a mounted page gets no Jekyll layout. Putting it in a folio's
+      // generator would give every instance its own copy of the platform's
+      // navbar, which is the boundary AGENTS.md opens with.
+      "scripts/lib/harness-rail.ts",
       // Its sibling: same question, same answer. `compose-docs.ts` reads the
       // `docs` declarations, works out which is the base and which the
       // overlay from `scope`, and lays them down in order. Every decision it
@@ -594,6 +600,12 @@ export const RULES: Rule[] = [
       // dependency: it imports `schemas/cat-harness.js` for the constant and
       // nothing else, and a folio declares no instances. Bean `jijc`.
       "scripts/check-declaration-filename.ts",
+      // Its sibling, bean `hrv2`: prose claiming which file declares a graph,
+      // checked against the declarations. Harness by subject as well as by
+      // dependency -- which file declares which graph is a fact about
+      // instances, and a folio declares none.
+      "scripts/check-declaration-claims.ts",
+      "src/docs/declaration-claims.ts",
       // Who else is working THIS repository — a fact about the forge and this
       // checkout, not about any folio's material.
       "scripts/sibling-sessions.ts",
