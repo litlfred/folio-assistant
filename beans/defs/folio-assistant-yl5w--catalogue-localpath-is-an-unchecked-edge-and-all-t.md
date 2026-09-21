@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yl5w
 title: 'CATALOGUE: localPath is an unchecked edge, and all three point at nothing'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-20T18:49:27Z
-updated_at: 2026-09-20T18:49:27Z
+updated_at: 2026-09-21T06:46:44Z
 parent: folio-assistant-kupb
 ---
 
