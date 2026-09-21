@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8nzu
 title: 'GOAL-REVIEW PROVENANCE GOES STALE: two axis claims measurably false one day later, and following them would have missed the sweep''s headline'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:25:55Z
-updated_at: 2026-09-21T06:26:13Z
+updated_at: 2026-09-21T12:30:46Z
 parent: folio-assistant-ahvw
 ---
 
@@ -52,11 +52,48 @@ the second cannot.
 
 ## Done when
 
-- [ ] `goal-review` separates its dated measurements from its instructions,
+- [x] `goal-review` separates its dated measurements from its instructions,
       so a stale number cannot be read as present guidance — the same
       discipline `ci-health` applies with *possibly stale* and *superseded*
-- [ ] Axis 1 says to ask the session API **first** and fall back to trailers,
+- [x] Axis 1 says to ask the session API **first** and fall back to trailers,
       with "could not determine" if neither answers — rather than naming the
       fallback as the method
-- [ ] `ab3n` (completed) carries a correction: its title asserts *"the session
+- [x] `ab3n` (completed) carries a correction: its title asserts *"the session
       API cannot see them"*, which is no longer true
+
+*Ticked IN PLACE 2026-09-21 — appending a second copy is the `shadow-checklist`
+defect `sfhr` shipped a detector for, and that detector caught this session
+doing it twice already today.*
+
+## What shipped, and the thing it found beyond the bean
+
+The header disclaimer already said the numbers were provenance. **That was not
+enough, and the reason is the whole finding:** a sentence like *"the API may
+not be able to see them: on DATE eight lookups returned not found"* welds a
+**present-tense capability claim** to its dated evidence, and a disclaimer
+about NUMBERS does not reach the CLAIM. A reader takes the first clause as
+guidance and never re-tests it. So every dated observation in the file is now
+labelled as one, every instruction is present-tense and actionable, and where
+the two have since disagreed **both are kept** — the observation with its date,
+and what re-measurement found.
+
+**Axis 1** now says: ask the session API FIRST; fall back to commit trailers
+when it does not answer; report `could not determine` when neither does. Never
+present the fallback as the method.
+
+**Axis 5**'s *"expect this axis to be thin"* is replaced by *measure it, do not
+expect a size* — with both readings on the record (2 issues on 2026-09-20, 30
+touched and 23 opened on 2026-09-21) and the reason for the inversion, which
+was not chance: the repository adopted an issue per piece of work, so the
+skill's own subject changed underneath its number.
+
+**The claim had escaped into code, which the bean did not know.**
+`sibling-sessions.ts` *printed* "The session API cannot see a sibling" in its
+own report to whoever ran it. Corrected, and its header now states what is
+actually durable: a commit trailer survives the container, so that tool is
+right for *what did each session DO in this window* and wrong as the first
+question for *who is here now*.
+
+`ab3n` carries the correction and is **left `completed`** — its work is done
+and correct; only a sentence about the world aged, and closing or reopening a
+sibling's bean is not this session's to do.

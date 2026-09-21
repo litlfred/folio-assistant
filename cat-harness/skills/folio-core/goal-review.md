@@ -22,6 +22,17 @@ against three goals, then asked that the interaction become this skill. The
 numbers in this file are that session's measurements, kept as provenance for
 the rules; they are not a description of the repository today.
 
+**And a number is not the only thing that goes stale.** A sentence like *"the
+API may not be able to see them: on DATE eight lookups returned not found"*
+welds a **present-tense capability claim** to its dated evidence, and a
+disclaimer about numbers does not reach the claim — a reader takes the first
+clause as guidance and never re-tests it. So in this file every dated
+observation is **labelled as one**, and every instruction is written in the
+present tense as something to DO. Where the two have since disagreed, both are
+kept: the observation with its date, and what re-measurement found. Bean
+`8nzu`, opened after this skill's own axis 1 sent its first reader the wrong
+way.
+
 **This is a review, not a plan.** It reads everything and writes only work
 items for the gaps it finds. Picking up the queue it produces is
 [`pickup`](pickup.md); declaring intent is [`session-intent`](session-intent.md);
@@ -58,9 +69,22 @@ measurement below is a diff between those two.
 
 ## The six axes, and what each one can and cannot tell you
 
-**1. Sibling sessions.** The session API may not be able to see them at all:
-on 2026-09-20 every one of eight lookups by id returned *not found*, and the
-listing showed only the asking session. The durable identity of a session is
+**1. Sibling sessions. ASK THE SESSION API FIRST.** List the sessions; where
+it answers, it gives what no inference can — each session's `session_status`,
+and a `task_summary` that carries a held question in plain text. **Fall back to
+commit trailers when it does not answer, and report "could not determine" when
+neither does.** Never present the fallback as the method.
+
+*Dated observation, 2026-09-20, kept as provenance and NOT as a capability
+claim:* eight lookups by id returned *not found* and the listing showed only
+the asking session. **Contradicted 2026-09-21**, when the same listing returned
+seven siblings with their statuses — and with four sessions' pending questions,
+which the trailer route cannot reach at all. The earlier sentence here asserted
+that the API "may not be able to see them", welding a present-tense claim to
+its dated evidence, and a reader who followed it skipped the query and missed
+the sweep's headline. Bean `8nzu`.
+
+The trailer route, for when it is needed: the durable identity of a session is
 the trailer it leaves on its commits. Sweep the window's commits across all
 branches for those trailers, group by session, and record for each: commit
 count, first and last commit, and the branches whose **tip** it wrote. A
@@ -95,8 +119,13 @@ measurements the store's own status field cannot give you:
   branches' stores too, or the review is blind to the largest workstream.
 
 **5. Issues.** Updated in the window, and the full open set for
-classification. Expect this axis to be thin where work is bean-driven: 54
-proposals merged that day and 2 issues changed.
+classification. **Measure it; do not expect a size.** *Dated observation,
+2026-09-20:* 54 proposals merged and 2 issues changed — which this file
+previously turned into "expect this axis to be thin where work is bean-driven",
+an instruction to under-read it. **Measured 2026-09-21: 30 issues touched, 23
+newly opened.** The inversion was not an accident — the repository adopted a
+round summary per bean and an issue per piece of work, so the skill's own
+subject changed underneath the number. Bean `8nzu`.
 
 **6. CI on the default branch.** Runs in the window by workflow and outcome.
 A red default branch reclassifies every "stalled" proposal, so read this
