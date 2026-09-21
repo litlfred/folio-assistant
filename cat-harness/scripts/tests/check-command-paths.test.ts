@@ -94,6 +94,37 @@ describe("the skill corpus judges only what claims to be about this tree", () =>
   });
 });
 
+describe("a FOLIO-OWNED head is declined even when that directory exists HERE", () => {
+  // The test above — "a folio's path is not" — passes for the wrong reason:
+  // `content/` is absent from its fixture, so ANY implementation that checks
+  // only for existence agrees with it. This one puts the directory there.
+  //
+  // It is not hypothetical. The repository root gained a `docs/` on 2026-09-21
+  // (bean `n0nf`, the owner's compose ruling), and `docs/audits/…` in a
+  // paper-adapter skill immediately became "about this tree" and was reported
+  // missing — 7 findings with the directory present, 0 without. The skill was
+  // never wrong: that path is a FOLIO's audit output.
+  const root = fixture({ "keep.md": "" }, ["cat-harness", "docs", "content", "uploads"]);
+
+  test("`docs/`, `content/` and `uploads/` are declined although present", () => {
+    for (const tok of ["docs/audits/x.json", "content/pipeline/qa-sweep.ts", "uploads/a.pdf"]) {
+      expect({ tok, judged: aboutThisTree(root, tok) }).toEqual({ tok, judged: false });
+    }
+  });
+
+  test("...and a head that is NOT folio-owned is still judged, which is the contrast", () => {
+    // Without this, declining everything would satisfy the test above.
+    expect(aboutThisTree(root, "cat-harness/scripts/x.ts")).toBe(true);
+  });
+
+  test("the PLATFORM's own docs keep their instance prefix, and stay judged", () => {
+    // `cat-harness/docs/…` is the platform's documentation and is spelled with
+    // the instance that owns it, so nothing about this loosens the check for
+    // the pages that actually live in this repository.
+    expect(aboutThisTree(root, "cat-harness/docs/guides/agent-onboarding.md")).toBe(true);
+  });
+});
+
 describe("the exemption carries a reason and is counted", () => {
   test("a marked block is exempt; an unmarked one is not", () => {
     const md = [

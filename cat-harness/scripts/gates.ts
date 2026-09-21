@@ -173,6 +173,28 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "mount-instance-docs.test.ts in `bun test`",
   },
   {
+    // Its sibling, and exempt for the same reason. `compose-docs.ts` lays the
+    // declared `docs` layers into one tree for Jekyll to build — base
+    // (`cat-harness/docs/`) then the repository root's overlay. It COPIES
+    // rather than checks, and its output is meaningless outside the job that
+    // then runs Jekyll over it.
+    //
+    // Its guarantees are NOT exempt, and that distinction is the whole reason
+    // an exemption here is safe: `compose-docs.test.ts` is in `bun test`, and
+    // it asserts on the REAL tree that an empty overlay composes
+    // byte-identically, that an override is both applied and REPORTED with
+    // both layer ids, and that a declared layer with no directory is a finding
+    // rather than a silent empty. Those are what make changing the live
+    // publish path's `source:` sound; this exemption only says the copy itself
+    // is not something a contributor runs for a verdict.
+    match: "compose-docs.ts",
+    kind: "ci-only",
+    reason:
+      "a BUILD step, not a check: it composes the declared docs layers into ./_docs for Jekyll, " +
+      "which only means anything inside the site-build job. Its byte-identity, override-reporting " +
+      "and missing-layer guarantees are covered by compose-docs.test.ts in `bun test`",
+  },
+  {
     match: "bun install",
     kind: "ci-only",
     reason: "installing dependencies is not a check; every workflow opens with it",

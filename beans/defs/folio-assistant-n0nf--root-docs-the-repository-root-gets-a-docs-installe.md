@@ -236,6 +236,61 @@ progress while changing nothing that happens.
 
 So slice 2 waits on the same one-line ruling. Nothing else does.
 
+## RULED IN FULL, 2026-09-21 — three parts, and it is more than the question asked
+
+Owner, answering "should the repository root declare its own `docs/`?":
+
+> *"harness can have docs/ which then get listed under
+> `cat-harness/docs/<harness>`, there is also docs/ dir in repo root managed by
+> cat-harness. other harness augment or overlay ontop of that (content and
+> behviors)"*
+
+Three statements, and only the second answers the question that was asked:
+
+| # | the ruling | state |
+|---|---|---|
+| 1 | a harness has its own `docs/`, **listed under `cat-harness/docs/<harness>`** | **already works** — `mount-instance-docs.ts`, and the layout exists (`cat-harness/docs/cat-harness/…`) |
+| 2 | **there IS a `docs/` at the repo root, MANAGED BY cat-harness** | to build |
+| 3 | other harnesses **augment or overlay on top of that** — *"content and behaviors"* | to build |
+
+### "managed by cat-harness" is a mechanism this repository already has
+
+It is not a loose phrase. `scope: "repository"` means a declared path resolves
+against the REPOSITORY root rather than the declaring instance's
+(`cat-harness.ts:2347`), and `cat-bootstrap` already declares
+`cat-bootstrap/skills/` that way. So *"a `docs/` dir in repo root managed by
+cat-harness"* reads directly as: **cat-harness declares it, repository-scoped.**
+
+### But it CANNOT be the existing `docs` entry, and that is measured
+
+A repository-scoped entry is filtered out for dependencies —
+`cat-harness.ts:3261` and `:3507` both skip `dir.scope === "repository"` unless
+`link.own`. So re-scoping the existing `docs` entry would **undo slice 1**: a
+dependent would stop materialising its own. The two are different directories
+answering different questions, so they want **two entries with different ids**,
+which is already the convention here — `who-iris` declares its docs graph as
+`who-iris-docs`, not `docs`.
+
+### The sequencing hazard, named before it is walked into
+
+Part 2 alone creates a **declared, empty directory that nothing reads** — the
+`dh4f` shape, and the same trap `resolveSkillDirs` fell into. Part 3 is what
+gives it a consumer. So they ship together or not at all, and part 3 touches
+`docs-site.yml`, which is the live publish path.
+
+**The safety property that makes that acceptable**: composing an EMPTY overlay
+must produce byte-identical output to today's site. If that holds, the rewiring
+is provably a no-op until somebody authors an override, and the risk is
+bounded. That is the gate to build against, not a nicety.
+
+### Still unstated, and NOT invented here
+
+*"content and behaviors"* — a page overlay is clear. A **behaviour** overlay is
+not: Jekyll layouts and includes, `_data`, client-side JS, and the just-the-docs
+config are all candidates and they compose differently from pages. Recorded as
+an open question rather than guessed, because picking one and shipping it would
+make the answer look settled.
+
 ## Done when
 
 - [x] Copy, link or compose is chosen — **COMPOSE (overlay)**, owner, 2026-09-21
@@ -250,7 +305,13 @@ So slice 2 waits on the same one-line ruling. Nothing else does.
 - [x] A test asserts a dependent gets one, falsified by flipping the
       declaration back — **done**: flipping the word back turns 2 red, and
       the contrast (`schemas`/`tools` stay out) is asserted too
-- [ ] **THE ROOT** — blocked on the two owner statements above, not on work
+- [x] **THE ROOT** — ruled 2026-09-21: it exists, managed by cat-harness
+- [ ] A repository-scoped `docs` entry, with its own id so slice 1's
+      instance-scoped one is untouched
+- [ ] The site composes the root's `docs/` over the built instance's, with
+      an EMPTY overlay proven byte-identical to today's site
+- [ ] What a **behaviour** overlay is — layouts, includes, `_data`, JS,
+      config — is stated rather than guessed
 
 Related: `o7eq` (the URL space this completes), `wwi6` (the same mechanism for
 uploads/ and library/), `x4a6` (declaring `docs/` as the renderable graph),
