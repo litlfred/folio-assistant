@@ -16,6 +16,7 @@ import {
   criterionSubject,
   discoverBlockCheckers,
   discoverScriptCheckers,
+  readModule,
 } from "../../content/pipeline/qa-checker-discovery.ts";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry.ts";
 
@@ -118,5 +119,72 @@ describe("the two disagreements are reported, not swallowed", () => {
       const def = QA_CRITERIA_REGISTRY.find((c) => c.id === o.criterion);
       expect(def?.automated).toBe(false);
     }
+  });
+});
+
+describe("a module that never finished evaluating keeps its own name", () => {
+  /**
+   * Bean `95s1`. These reproduce the two shapes a half-built module namespace
+   * takes, without needing a real one: a namespace whose `ownKeys` trap throws
+   * (nothing can be enumerated), and one whose single binding throws on read
+   * while the rest are fine.
+   *
+   * ## What this is really guarding
+   *
+   * Not a crash — `readModule` already survives both. It guards the
+   * DISTINCTION. The first version of this guard returned an empty list, so
+   * `discoverFor` went on to report "exports neither a dispatch-table entry
+   * nor check<Id>()", which is a determined and FALSE statement about a module
+   * nobody could read. `undefined` is what lets the caller say "did not finish
+   * evaluating" instead.
+   *
+   * The measured original was `qa-checkers-extended.ts`: `const REPO_ROOT =
+   * findContentRepoRoot()` at line 49 threw on a declaration that would not
+   * parse, so `EXTENDED_AUTOMATED_CHECKERS` three thousand lines below was
+   * never bound — and the error named a symptom, not the cause.
+   */
+  const tdzNamespace = (): Record<string, unknown> =>
+    new Proxy({} as Record<string, unknown>, {
+      ownKeys() {
+        throw new ReferenceError("Cannot access 'X' before initialization.");
+      },
+    });
+
+  const oneBadBinding = (): Record<string, unknown> =>
+    new Proxy({ good: () => "ok", bad: undefined } as Record<string, unknown>, {
+      get(target, prop, receiver) {
+        if (prop === "bad") throw new ReferenceError("Cannot access 'bad' before initialization.");
+        return Reflect.get(target, prop, receiver);
+      },
+    });
+
+  test("an unenumerable namespace is `undefined`, not an empty read", () => {
+    // The difference between a THIRD STATE and a wrong answer. An empty read
+    // is indistinguishable from a module that legitimately exports nothing.
+    expect(readModule(tdzNamespace())).toBeUndefined();
+  });
+
+  test("a module exporting nothing reads as EMPTY — the case `undefined` must not collide with", () => {
+    const read = readModule({});
+    expect(read).toBeDefined();
+    expect(read!.values).toEqual([]);
+  });
+
+  test("one unreadable binding does not cost the others", () => {
+    // Narrower than the case above, and it must stay narrower: a single
+    // binding in its dead zone is not a reason to declare the whole module
+    // unreadable, or one bad export would hide every checker beside it.
+    const read = readModule(oneBadBinding());
+    expect(read).toBeDefined();
+    expect(read!.values).toHaveLength(1);
+    expect(typeof read!.values[0]).toBe("function");
+  });
+
+  test("`byName` yields undefined for an unreadable binding rather than throwing", () => {
+    // The named-export fallback reads a binding directly, so it needs the same
+    // guard the enumeration has — it threw here before bean `95s1`.
+    const read = readModule(oneBadBinding())!;
+    expect(read.byName("bad")).toBeUndefined();
+    expect(typeof read.byName("good")).toBe("function");
   });
 });

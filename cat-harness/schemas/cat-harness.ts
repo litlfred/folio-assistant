@@ -951,6 +951,60 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), " +
       "with no default. Distinct from `library`, which is content that IS here.",
   },
+  // The artefact index of a published FHIR Implementation Guide — one graph
+  // per IG, keyed by the IG's own canonical URLs.
+  //
+  // A SIBLING of `catalogue`, not a `flavour` of it, and the reason is the
+  // test AGENTS.md sets for a content type applied one level down: different
+  // CODE, or only different RULES? A catalogue node is a container or an item;
+  // a FHIR artefact is a `resourceType` at a canonical URL, published in
+  // several representations at once, in a versioned package, against a FHIR
+  // version. None of those five facts has a home on `CatalogueNode`, and a
+  // `flavour: "fhir"` smuggling them into free text would be a catalogue that
+  // cannot answer the only questions anybody asks of an IG.
+  //
+  // What the two DO share is `MaterializationSchema`, imported rather than
+  // restated — the same move `bean-graph.ts` makes with `ContentDirectorySchema`.
+  //
+  // NOT `derived`, and the distinction is the one `library`'s own comment
+  // draws. `library` is derived because ingestion PRODUCES BYTES HERE and a
+  // finding against a section is a finding against the ingestion that made it.
+  // This graph models a corpus that stays where it is: 655 of smart-trust's
+  // 674 artefacts are `referenced` and always will be. That is the `catalogue`
+  // shape exactly — including its mixed case, where a handful of nodes are
+  // materialised and the rest are not — so it takes `catalogue`'s answer.
+  "fhir-artifact-index": {
+    type: termIri("FhirArtifactIndexGraph"),
+    renderable: false,
+    // `content`, on `catalogue`'s reasoning: detach an artefact node and it
+    // still says something standing on its own — this ValueSet exists, at this
+    // canonical URL, in this IG, with this JSON Schema. Being assembled by an
+    // import process is not what the axis asks about.
+    holds: "content",
+    summary:
+      "The artefact index of a published FHIR Implementation Guide, reconstructed from its " +
+      "published output — every artefact by canonical URL and published representation, with " +
+      "the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. " +
+      "No IG publishes such an index itself, so every field records which file it came out of.",
+    skill: "ig-artifact-ingestion",
+    // NO `schema`/`validator`, and that is the same omission `catalogue` makes
+    // two entries up rather than an oversight. Both fields resolve under the
+    // DECLARING instance's root — here `cat-harness/` — and this kind's schema
+    // lives in `folio-assistant-core/schemas/fhir-artifact-index.ts`, one layer
+    // up. `check:kind-validators` catches a path that does not resolve, which
+    // is how this was found.
+    //
+    // The harness must not reach up into core: nothing under `cat-harness/`
+    // imports from `folio-assistant-core/`, and a declared path pointing there
+    // would be that dependency in all but name. When this repository splits,
+    // the kind moves to core with its schema and both fields come back — the
+    // `folio` kind is the worked example, registered by core through a
+    // load-time side effect rather than declared here.
+    //
+    // Until then `kg_validate` reports "could not determine" for this graph,
+    // and saying so here is the point: an undeclared validator that nobody
+    // wrote down reads exactly like a graph with nothing to check.
+  },
   // Named editorial voice profiles, overlaid on the base house voice. A
   // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
   // simply available: the activation list in `harness.config.json` is what makes

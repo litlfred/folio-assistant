@@ -646,8 +646,16 @@ jobs:
           bun run check:declared-paths
           bun run check:fallback-roles
           bun run check:kind-validators
+          bun run check:artifact-index
           bun run check:actor-reach
           bun run check:harness-dirs
+          # Can this repository be CHECKED OUT? Every other gate here asks
+          # whether the content is right; this one asks whether the tree can be
+          # created at all. Seven sidecars named `req:<slug>` made the clone
+          # abort on Windows — the fetch succeeds, then `error: invalid path`
+          # takes the WHOLE working tree, so the author sees nothing and CI,
+          # being Linux, saw nothing either (2026-09-21, bean `en68`).
+          bun run check:portable-paths
           # A backtick inside a viewer's page template closes the string
           # and turns the rest of the page into TypeScript. The compiler
           # already refuses it, so this is about the MESSAGE: it names a

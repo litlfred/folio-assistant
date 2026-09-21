@@ -30,6 +30,7 @@ import {
 } from "../../folio-assistant-core/schemas/external-schema.js";
 
 import { FOLIO_BPMN_NS, OWN_XML_NAMESPACES } from "../schemas/namespaces.js";
+import { portableSegment } from "../schemas/portable-path";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REGISTRY = join(ROOT, "external-schemas");
@@ -159,7 +160,10 @@ function run(argv: string[]): number {
         term,
         operative: prior.get(term) ?? "derived from the corpus; what this repository does with it is not yet described",
       }));
-      writeFileSync(join(REGISTRY, `${s.id}.json`), JSON.stringify(s, null, 2) + "\n");
+      // A specification id is an identifier, not a filename. Safe on the read
+      // side — `loadSpecs` walks the directory rather than composing a name —
+      // so encoding only the writer cannot split the two apart.
+      writeFileSync(join(REGISTRY, `${portableSegment(s.id)}.json`), JSON.stringify(s, null, 2) + "\n");
     }
   }
 

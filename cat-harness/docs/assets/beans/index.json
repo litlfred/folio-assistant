@@ -229,6 +229,20 @@
       "file": "beans/defs/folio-assistant-1feu--staging-policy-a-merged-prs-preview-goes-away-with.md"
     },
     {
+      "id": "folio-assistant-1hkj",
+      "title": "MODULE-SCOPE FILESYSTEM WORK: importing any of 39 modules can throw, and the error names a symptom far from the cause",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:12:36Z",
+      "updatedAt": "2026-09-21T13:12:36Z",
+      "preview": "Carved out of 95s1 (issue #706, PR #707), where it was found and deliberately not taken.\n\n## The shape, measured on main 2026-09-21\n\nThirty-nine modules resolve the repository root at MODULE SCOPE:\n\n    const REPO_ROOT = findContentRepoRoot();\n    const FOLIO_DIR = folioDir(REPO_ROOT);\n\n**39 files, 53 call sites** — 25 in `content/pipeline/`, 11 in `scripts/`, 3 in `adapters/`.\n\n## Why it matters,",
+      "file": "beans/defs/folio-assistant-1hkj--module-scope-filesystem-work-importing-any-of-39-m.md"
+    },
+    {
       "id": "folio-assistant-1hvo",
       "title": "THEMING: a cat-harness/theming/ subgraph, broken up thematically",
       "status": "completed",
@@ -1423,14 +1437,14 @@
     {
       "id": "folio-assistant-8nzu",
       "title": "GOAL-REVIEW PROVENANCE GOES STALE: two axis claims measurably false one day later, and following them would have missed the sweep's headline",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:25:55Z",
-      "updatedAt": "2026-09-21T06:26:13Z",
+      "updatedAt": "2026-09-21T12:30:46Z",
       "preview": "Found 2026-09-21 by running `goal-review` itself (session_01AYHimvYMmf8h8e9fFN6dW5),\none day after the skill was authored from bean `mgta` / issue #578.\n\n## Measured\n\nThe skill keeps its authoring session's numbers \"as provenance for the rules\"\nand says so. Two of them have since become **guidance a reader follows**, and\nboth are now false:\n\n| the skill says | measured 2026-09-21 |\n|---|---|\n| §Ax",
       "file": "beans/defs/folio-assistant-8nzu--goal-review-provenance-goes-stale-two-axis-claims.md"
     },
@@ -1493,14 +1507,14 @@
     {
       "id": "folio-assistant-95s1",
       "title": "IMPORT CYCLE: EXTENDED_AUTOMATED_CHECKERS is reachable in its temporal dead zone, and discovery only survives it",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T11:14:16Z",
-      "updatedAt": "2026-09-21T11:14:16Z",
+      "updatedAt": "2026-09-21T12:37:17Z",
       "preview": "Found while excising `harness.json` (bean 6n23, PR #695), and NOT fixed there.\n\n`qa-checker-discovery.findChecker` enumerated a module namespace with\n`Object.values`. That throws outright — `Object.keys` too — when any export is\na `const` still in its temporal dead zone, which happens when the module is\npart of an import cycle and is read while mid-evaluation. Measured 2026-09-21:\n`qa-checkers-ext",
       "file": "beans/defs/folio-assistant-95s1--import-cycle-extended-automated-checkers-is-reacha.md"
     },
@@ -2255,6 +2269,20 @@
       "file": "beans/defs/folio-assistant-eief--csvw-skill-ingestion-tools-tabular-metadata-as-far.md"
     },
     {
+      "id": "folio-assistant-en68",
+      "title": "Colons in kg-qa sidecar filenames make the repo unclonable on Windows",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:08:48Z",
+      "updatedAt": "2026-09-21T10:08:48Z",
+      "preview": "## What\n\n`git clone` of this repository **fails on Windows** — not at fetch, at\ncheckout. Seven KG QA sidecars are named `req:<slug>.kg-qa.json`, and NTFS\nreserves `:` inside a path component for alternate data streams, so Git\nrefuses to create the file.\n\nGit aborts the **entire** checkout on the first invalid path, so this is not\nseven missing files. It is no working tree at all, for everybody on",
+      "file": "beans/defs/folio-assistant-en68--colons-in-kg-qa-sidecar-filenames-make-the-repo-un.md"
+    },
+    {
       "id": "folio-assistant-eof6",
       "title": "SEARCH INDEX AS A RELEASE ARTIFACT: build it on release, never on staging refresh",
       "status": "todo",
@@ -2579,14 +2607,14 @@
     {
       "id": "folio-assistant-he0e",
       "title": "TERMS-PRESERVED NEEDS A GLOSSARY: an acronym warns because the check cannot tell WHO to OMS from WHO dropped",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T12:02:00Z",
-      "updatedAt": "2026-09-21T13:18:41Z",
+      "updatedAt": "2026-09-21T13:34:02Z",
       "preview": "Split out of pp93 (PR #691). translation-terms-preserved now reports a missing acronym as warn/minor rather than fail/major, because it genuinely cannot distinguish a correct localisation from a silently dropped term. That is the honest confidence, not the useful one.\n\nA per-locale glossary would settle it: translations/<locale>/glossary.po already exists as a hand-authored PO with no POT, and sch",
       "file": "beans/defs/folio-assistant-he0e--terms-preserved-needs-a-glossary-an-acronym-warns.md"
     },
@@ -3101,14 +3129,14 @@
     {
       "id": "folio-assistant-lps0",
       "title": "KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:59:22Z",
-      "updatedAt": "2026-09-20T18:59:22Z",
+      "updatedAt": "2026-09-21T12:37:26Z",
       "preview": "`kg-audit.ts` walks a hardcoded `KG_ROOT = join(root, \"skills\")` when it\ncollects skill subjects (`skillFiles()`, line ~578). **Every skill outside\n`skills/` is therefore unaudited** — not reported as unknown, not reported at\nall. It is the `dh4f` shape in the tool whose job is finding that shape.\n\n## Measured, 2026-09-20\n\nThe instance declares several `cat-harness` directories that hold skills\nDI",
       "file": "beans/defs/folio-assistant-lps0--kg-audit-skillfiles-walks-a-hardcoded-skills-so-ev.md"
     },
@@ -3771,6 +3799,20 @@
       "updatedAt": "2026-09-20T13:18:18Z",
       "preview": "Queued on the owner's ruling of 2026-09-20: root `harness.json` now, this\nschema work next. Their words for it: *\"directive for cat-harness to create if\n(as named in schema)\"*.\n\n## It was already found, and already declined — that is the point\n\n`cat-harness/harness.json`, on the `bootstrap` skills entry, states it exactly:\n\n> a `ContentDirectory` cannot say whether it is a LAYOUT dependents should",
       "file": "beans/defs/folio-assistant-qmjh--schema-a-contentdirectory-cannot-say-whether-it-is.md"
+    },
+    {
+      "id": "folio-assistant-qsf5",
+      "title": "FHIR IG ARTEFACT INDEX: a reusable index schema type, an ingest pipeline over published IG output, and smart-trust as the first subject",
+      "status": "completed",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:42:25Z",
+      "updatedAt": "2026-09-21T12:39:12Z",
+      "preview": "Ingest the artefact index of a published FHIR IG that exposes a DAK API, and represent it as a KG using the IG's own JSON / JSON-LD / JSON Schema surface.\n\nGeneralisable across many IGs — smart-trust is the first subject, not the deliverable.\n\nEvidence gathered 2026-09-21 from WorldHealthOrganization/smart-trust gh-pages (342,656 files, IG v1.8.0, FHIR 5.0.0):\n\n- THERE IS NO PUBLISHED INDEX *INSTA",
+      "file": "beans/defs/folio-assistant-qsf5--fhir-ig-artefact-index-a-reusable-index-schema-typ.md"
     },
     {
       "id": "folio-assistant-qttr",
