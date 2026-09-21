@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tyyc
-title: 'docs-site''s paths filter misses 11 of the 22 scripts it runs, so a fix to the publisher never rebuilds the site'
-status: in-progress
+title: docs-site's paths filter misses 11 of the 22 scripts it runs, so a fix to the publisher never rebuilds the site
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T14:12:00Z
-updated_at: 2026-09-21T14:30:00Z
+updated_at: 2026-09-21T22:14:52Z
 parent: folio-assistant-vke6
 ---
 
@@ -82,3 +82,28 @@ reviewer actually looks at.
 - [x] Falsified — restoring the narrow list turns `docs-site.yml` red
 - [x] `docs-site` green on `main` — **observed**, run dispatched against `2d20850562`;
       `check:ci-health` went from *"8 consecutive failure(s)"* to `✓ green`
+
+## Closed 2026-09-21 — re-derived, not taken on trust
+
+Every Done-when box was already ticked and the bean was still `in-progress`.
+Verified from a clean checkout of `main` at `645dd7dd91` rather than from the
+boxes:
+
+- `docs-site.yml` carries `cat-harness/scripts/**` (14 globs), not the eight
+  named scripts this bean opened against. Same for `feature-staging.yml` (8)
+  and `jsonld-gen-check.yml` (15).
+- Coverage re-derived independently, resolving `bun run <name>` through
+  `package.json` so a script reached via an npm-script indirection is counted:
+  **0 uncovered across all three** (20, 29 and 11 invoked files).
+- `bun run check:workflow-script-paths` passes over 39 workflows, and is
+  registered in BOTH `package.json:91` and `code-quality-gates.yml:707` — the
+  second is what makes it a gate rather than a script somebody may run.
+- Its third states are intact in the output: 35 workflows declaring no filter
+  are reported as *nothing to under-cover* rather than folded into the pass,
+  and one filtered workflow invoking no script is named separately.
+
+**What prompted the check.** This session predicted that merging a change to
+`kg-export.ts` would NOT rebuild the site, on this bean's premise. A
+`docs-site` run fired on the merge (`645dd7dd91`, run 407). The prediction was
+wrong because the premise was stale — which is the bean's own lesson about
+hand-maintained lists, arriving from the other direction.

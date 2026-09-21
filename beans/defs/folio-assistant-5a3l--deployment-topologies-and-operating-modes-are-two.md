@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5a3l
 title: 'DEPLOYMENT: topologies and operating modes are two axes, not one list of modes'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-09-19T08:52:35Z
-updated_at: 2026-09-19T09:56:04Z
+updated_at: 2026-09-21T22:18:00Z
 ---
 
 Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),
@@ -120,3 +120,20 @@ overlap on the other nine. Issues #369, #370, #371.
 All four Done-when boxes are now ticked. This epic stays in-progress as the
 container for its children rather than completing — an epic is a thematic
 container and is not worked on directly.
+
+## Closed 2026-09-21 — re-derived on `645dd7dd91`, with one stale path
+
+The proposal exists, at `fsh-guts/proposals/deployment-topologies.md` rather
+than the `docs/proposals/` this bean names: `e65dfe547f` moved proposals off
+the docs site into the declared trashcan. **Searched before concluding**, for
+the `pomp` reason — *"not in my checkout" is not "does not exist"*, and the
+first look at the path the bean gives found nothing.
+
+- 15 child beans declare `parent: folio-assistant-5a3l`; the bean says 13, so
+  the set grew rather than shrank.
+- The BA sign-off on the axes is recorded in the body, dated 2026-09-19.
+
+The children are unblocked against this vocabulary, which is what this bean
+existed to produce.
+
+Found by the `fkjo` sweep: this was `in-progress` with every box ticked.
