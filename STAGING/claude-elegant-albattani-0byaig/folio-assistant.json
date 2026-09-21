@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T07:28:00.663Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/764ae5233e9b486e0aa2e99b2a964a3a83be755b",
-  "sourceCommitSha": "764ae5233e9b486e0aa2e99b2a964a3a83be755b",
-  "sourceCommitAt": "2026-09-21T07:26:22Z",
+  "generatedAt": "2026-09-21T07:48:49.388Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/67f38f8fd5c1e8b1800117193dc00579f11d6561",
+  "sourceCommitSha": "67f38f8fd5c1e8b1800117193dc00579f11d6561",
+  "sourceCommitAt": "2026-09-21T07:44:10Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 220,
+    "Skill": 221,
     "Actor": 27,
     "Capability": 28,
     "Role": 130,
@@ -2608,7 +2608,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/agent-memory.md",
-      "instructionLines": 166,
+      "instructionLines": 192,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2844,7 +2844,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/content-context-and-state-graphs.md",
-      "instructionLines": 216,
+      "instructionLines": 257,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3781,6 +3781,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-simplifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/root-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "root-readme",
+      "title": "The root README, and the one fact it must carry",
+      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. The last thing initialize-harness does before it ends installed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/cat-bootstrap"
+      ],
+      "instructionsPath": "../cat-bootstrap/skills/root-readme.md",
+      "instructionLines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-bootstrap",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/root-readme"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/discussion",
@@ -34110,8 +34127,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-albattani-0byaig",
-    "sha": "045e7e87a11645ad35dac2e08de52e65e7dadfcc",
+    "sha": "0af70549eb13629b768a59871578e822c3333cfb",
     "pr": "647/merge",
-    "run": "35572971344"
+    "run": "35574602839"
   }
 }

@@ -260,10 +260,10 @@
     "Asset": 2,
     "Directory": 3,
     "Process": 3,
-    "SequenceFlow": 29,
-    "ProcessNode": 29,
+    "SequenceFlow": 30,
+    "ProcessNode": 30,
     "Role": 9,
-    "Skill": 6,
+    "Skill": 7,
     "GraphKind": 1
   },
   "problems": [],
@@ -575,8 +575,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
       ],
-      "nodeCount": 14,
-      "flowCount": 15
+      "nodeCount": 15,
+      "flowCount": 16
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1",
@@ -597,7 +597,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed"
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12",
@@ -628,6 +628,13 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2",
@@ -852,6 +859,25 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Write the root README, if it is not there",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#skill/root-readme"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
       "name": "Failed",
@@ -879,7 +905,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
       ],
       "outgoing": []
     },
@@ -1287,6 +1313,21 @@
       ],
       "instructionsPath": "skills/log-message.md",
       "instructionLines": 93,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#skill/root-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "root-readme",
+      "title": "The root README, and the one fact it must carry",
+      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. The last thing initialize-harness does before it ends installed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-bootstrap.jsonld#package/skills"
+      ],
+      "instructionsPath": "skills/root-readme.md",
+      "instructionLines": 82,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
