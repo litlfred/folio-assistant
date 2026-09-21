@@ -36,6 +36,14 @@
  * filter is exactly this: it keeps only candidates that parse as the thing it
  * writes. Reused rather than reinvented, per the bean.
  *
+ * It is a MODULE rather than a private helper on purpose. Bean `y90d`
+ * anticipated this one as `orphanSubjectPages` inside `gen-schema-viz.ts` and
+ * told the next generator not to write a fourth shape — then wrote a third
+ * (`prunableDashboards`, #642) because there was nothing importable. A helper
+ * that lives inside the generator it serves cannot be the thing anybody
+ * reuses. Consolidating all three onto this module is bean `s8nu`; it is not
+ * done here because #642 is live on that file.
+ *
  * ## Two signatures, because the orphans predate the marker
  *
  * New pages carry {@link viewerMarker}. Pages written before it do not, and an
