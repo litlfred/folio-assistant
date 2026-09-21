@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8h42
 title: 'LAYOUT: cat-harness/docs/cat-harness/index.md is the cat-harness instance''s home page nested inside folio-assistant''s site'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T14:07:39Z
-updated_at: 2026-09-21T14:07:39Z
+updated_at: 2026-09-21T19:16:03Z
 parent: folio-assistant-vuip
 ---
 
@@ -33,3 +33,44 @@ Whether the move is right, and what it implies for permalinks, nav_order, the th
 - the owner has settled whether /cat-harness/ becomes the cat-harness instance's own docs root;
 - if so: permalinks, the three generators, and inbound relative_url links move with it, and readme:audit / site:links confirm nothing 404s;
 - the two-pages-one-stem collision is gone rather than contained.
+
+
+## 2026-09-21 — measured, and the finding is sharper than the framing
+
+### `/cat-harness/` is the HANDLER namespace, and that is the collision
+
+`cat-harness.json` declares `name: "cat-harness"`, and every viewer generator
+composes `<base>/<handler>/<kind>/` from that declared name. So `docs-auto/`,
+`library/`, `schemas/` and `voices/` are not "subsections of the cat-harness
+page" — they are **cat-harness rendering four graphs**, and the path segment
+means "handler".
+
+`gen-library-viz.ts` states the two rules explicitly, on the owner's ruling of
+2026-09-20:
+
+  1. `<base>/<handler>/<kind>/` — the machinery rendering something
+  2. `<base>/<instance>/` — the instance presenting ITSELF (who-iris mocking
+     the IRIS website)
+
+**cat-harness is both the handler and an instance, so the two rules collide at
+exactly this path.** The authored `index.md` is rule 2; its four siblings are
+rule 1. That is why the page feels misplaced, and it is not a naming accident
+that a move would fix by itself.
+
+### Nothing links to it
+
+Measured: **zero** pages in this site link to `/cat-harness/`, and
+`nav_exclude: true` keeps it out of the navbar. The page's own comment claimed
+"reachable by its route and from the links that point at it" — the second half
+was false. Corrected in place, with the measurement, rather than left standing.
+
+The generator list in the same comment was also wrong by one: it named three
+after `gen-voices-viz.ts` landed. Replaced with a pointer to the sibling
+directories, which is the rule the comment itself states two paragraphs down.
+
+### What did NOT change
+
+The move. Its first `Done when` is the owner's, and the measurement above
+changes what is being asked: not "should this page move one directory up", but
+"which of the two path rules owns `/cat-harness/` when the handler and the
+instance are the same one". Put to the owner with the options.

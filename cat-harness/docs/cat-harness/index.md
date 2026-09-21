@@ -8,12 +8,16 @@ permalink: /cat-harness/
 ---
 
 <!--
-  AUTHORED. Everything under `/cat-harness/` except this file is generated —
-  `docs-auto/` by `gen-docs-auto.ts`, `library/` by `gen-library-viz.ts`,
-  `schemas/` by `gen-schema-viz.ts`. This page is the one a person writes, and
-  bean `06e3` §2 is why it exists at all: an index says what there is, and
-  nothing else. What a process is FOR, when you would be in it, and what it is
-  not, has to be written by somebody.
+  AUTHORED, and the only authored thing under `/cat-harness/` — every sibling
+  is a generator's output at `<handler>/<kind>/`, written by `gen-docs-auto.ts`,
+  `gen-library-viz.ts`, `gen-schema-viz.ts` and `gen-voices-viz.ts`. The list
+  is not repeated as a count on purpose, and it was WRONG by one for a day:
+  it named three generators after the fourth landed. Read the sibling
+  directories, or the `viewerPlacement` callers, rather than this sentence.
+
+  This page is the one a person writes, and bean `06e3` §2 is why it exists at
+  all: an index says what there is, and nothing else. What a process is FOR,
+  when you would be in it, and what it is not, has to be written by somebody.
 
   TWO RULES THIS PAGE IS UNDER, both from `06e3`:
 
@@ -26,8 +30,14 @@ permalink: /cat-harness/
 
   `nav_exclude` is deliberate: the left-hand navbar's structure is bean `603s`,
   in flight in another session, and a nav entry added here would collide with
-  the section model it is building. The page is reachable by its route and
-  from the links that point at it.
+  the section model it is building.
+
+  THIS PARAGRAPH USED TO END "the page is reachable by its route and from the
+  links that point at it". Measured 2026-09-21: **no page in this site links
+  here** — not one, and `nav_exclude` keeps it out of the navbar too. So the
+  page is reachable by typing its URL, which is a different claim, and bean
+  `8h42` is about where it should live instead. Leaving the old sentence
+  standing would be the defect that bean exists to name, one file down.
 -->
 
 # cat-harness
