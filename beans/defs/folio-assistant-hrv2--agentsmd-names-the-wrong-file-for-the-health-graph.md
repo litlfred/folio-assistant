@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hrv2
 title: AGENTS.md names the wrong file for the health graph — and the wrong file FAMILY
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T16:51:13Z
-updated_at: 2026-09-21T16:51:13Z
+updated_at: 2026-09-21T17:26:30Z
 parent: folio-assistant-vke6
 ---
 
