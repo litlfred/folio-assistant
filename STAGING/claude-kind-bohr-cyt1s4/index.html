@@ -87,7 +87,8 @@
   `relative_url`, same as `title.html` and `landing.html` — a bare
   `/assets/...` 404s on the same baseurl this file's landing-panel fix exists
   for.
---><link rel="icon" type="image/svg+xml" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/img/icons/cat-mark.svg"><link rel="icon" type="image/svg+xml" sizes="16x16" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/img/icons/cat-mark-small.svg"><!--
+--><link rel="icon" type="image/svg+xml" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/img/icons/cat-mark.svg" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/img/icons/cat-mark-dark.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/svg+xml" sizes="16x16" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/img/icons/cat-mark-small.svg"><!--
   Site-wide styling for the BPMN workflow figures.
 
   just-the-docs pulls this file into <head> on every page. The diagrams are wide
@@ -653,7 +654,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <header class="side-bar">
   <div class="site-header">
     <a href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/" class="site-title lh-tight"><img src="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/img/icons/cat-mark.svg" alt="" aria-hidden="true"
-       class="fa-site-mark" width="32" height="32" /><span class="fa-site-title">C@T Harness</span>
+       class="fa-site-mark fa-site-mark--light" width="32" height="32" />
+  <img src="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/img/icons/cat-mark-dark.svg" alt="" aria-hidden="true"
+       class="fa-site-mark fa-site-mark--dark" width="32" height="32" /><span class="fa-site-title">C@T Harness</span>
 </a>
     <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
       <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
