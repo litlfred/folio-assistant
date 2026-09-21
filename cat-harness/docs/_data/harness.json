@@ -93,9 +93,9 @@
   ],
   "harnesses": [
     {
-      "name": "folio-assistant",
-      "title": "folio-assistant",
-      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "name": "smart-trust",
+      "title": "smart-trust",
+      "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
       "footer": false,
       "needs": [
         "folio-assistant-core"
@@ -104,9 +104,7 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
-      "instantiated": true,
-      "href": "/",
-      "hrefKind": "folio",
+      "instantiated": false,
       "stats": [
         {
           "id": "directories",
@@ -126,13 +124,12 @@
       ],
       "visualisations": [
         {
-          "kind": "uploads"
+          "kind": "fhir-artifact-index"
         }
       ],
       "findings": [
-        "folio-assistant: declares 1 graph(s) with no published viewer — uploads. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
-        "folio-assistant: no avatar declared for this instance — showing the generic mark."
+        "smart-trust: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: no avatar declared for this instance — showing the generic mark."
       ]
     },
     {
@@ -482,6 +479,49 @@
         "who-style-guide: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
         "who-style-guide: no avatar declared for this instance — showing the generic mark.",
         "who-style-guide: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+      ]
+    },
+    {
+      "name": "folio-assistant",
+      "title": "folio-assistant",
+      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "footer": false,
+      "needs": [
+        "folio-assistant-core"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": true,
+      "href": "/",
+      "hrefKind": "folio",
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "uploads"
+        }
+      ],
+      "findings": [
+        "folio-assistant: declares 1 graph(s) with no published viewer — uploads. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
+        "folio-assistant: no avatar declared for this instance — showing the generic mark."
       ]
     },
     {

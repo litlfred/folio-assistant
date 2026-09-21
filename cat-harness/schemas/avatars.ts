@@ -193,6 +193,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 258,
     reads: "a card index — what is known to exist, mostly not held",
   },
+  "fhir-artifact-index": {
+    // A card index with a braced tail: the `catalogue` drawer, plus the
+    // JSON-Schema brace that is the whole reason this kind exists. It quotes
+    // `catalogue`'s glyph deliberately — the two are siblings sharing a
+    // materialisation model, and an unrelated mark would hide that.
+    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M19 7c-1 0-1 2-2 2 1 0 1 2 2 2",
+    tone: 168,
+    reads: "a card index with a schema brace — an IG's artefacts, known by canonical URL",
+  },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
     tone: 36,

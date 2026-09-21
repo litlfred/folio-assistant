@@ -837,9 +837,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. " +
       "No IG publishes such an index itself, so every field records which file it came out of.",
     skill: "ig-artifact-ingestion",
-    schema: "folio-assistant-core/schemas/fhir-artifact-index.ts",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+    // NO `schema`/`validator`, and that is the same omission `catalogue` makes
+    // two entries up rather than an oversight. Both fields resolve under the
+    // DECLARING instance's root — here `cat-harness/` — and this kind's schema
+    // lives in `folio-assistant-core/schemas/fhir-artifact-index.ts`, one layer
+    // up. `check:kind-validators` catches a path that does not resolve, which
+    // is how this was found.
+    //
+    // The harness must not reach up into core: nothing under `cat-harness/`
+    // imports from `folio-assistant-core/`, and a declared path pointing there
+    // would be that dependency in all but name. When this repository splits,
+    // the kind moves to core with its schema and both fields come back — the
+    // `folio` kind is the worked example, registered by core through a
+    // load-time side effect rather than declared here.
+    //
+    // Until then `kg_validate` reports "could not determine" for this graph,
+    // and saying so here is the point: an undeclared validator that nobody
+    // wrote down reads exactly like a graph with nothing to check.
   },
   // Named editorial voice profiles, overlaid on the base house voice. A
   // separate kind from `kg` because a voice is OPT-IN per folio while a skill is

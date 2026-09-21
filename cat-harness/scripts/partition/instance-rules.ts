@@ -1033,6 +1033,16 @@ export const RULES: Rule[] = [
       // `jsonld.ts` was refused. The difference is the subject, not the
       // filename — a script is not automatically tooling-side.
       "scripts/check-context-emission.ts",
+      // Validates every committed `fhir-artifact-index` graph against
+      // `schemas/fhir-artifact-index.ts` — core by the `schemas/` prefix. CORE
+      // rather than harness for the reason the two entries above it give: a
+      // script is not automatically tooling-side, and this one's SUBJECT is
+      // content — an IG's artefacts, which is a `content`-layer graph. Calling
+      // it harness would buy a wrong-direction edge into `schemas/` for
+      // nothing. Its sibling `scripts/ingest-ig-artifacts.ts` writes the same
+      // graph from the same schema and is core on the same reasoning.
+      "scripts/check-artifact-index.ts",
+      "scripts/ingest-ig-artifacts.ts",
       // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
       // exclusively on core data, and calling it harness bought two

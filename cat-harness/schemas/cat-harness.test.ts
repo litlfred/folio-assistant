@@ -1105,6 +1105,13 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "folio-assistant-sci",
       "kg-navigation",
       "large-datasets",
+      // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
+      // It fired as designed, which is what this list is for: `smart-trust/`
+      // declares a `harness.json` and is therefore an instance, sorting
+      // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
+      // that is correct — it declares no `harness.json`, so it is a directory
+      // rather than an instance.
+      "smart-trust",
       "who-iris",
       "who-style-guide",
     ]);
