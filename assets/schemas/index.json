@@ -1056,6 +1056,14 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/masked-region.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "masked-region.test",
+      "graphNode": "undeclared",
+      "summary": "`maskedRegions` — the rules, each against the mistake it exists for.",
+      "isTest": true
+    },
+    {
       "module": "folio-assistant-core/schemas/materialization.ts",
       "instance": "folio-assistant-core",
       "name": "materialization",
@@ -28671,6 +28679,13 @@
           "array": false
         },
         {
+          "name": "maskedRegions",
+          "type": "z.array(MaskedRegionSchema).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Regions blanked out of these bytes before they were written."
+        },
+        {
           "name": "materialization",
           "type": "MaterializationSchema",
           "optional": false,
@@ -28681,6 +28696,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema",
         "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
       ],
       "unresolved": [],
@@ -28898,6 +28914,69 @@
       "unresolved": [],
       "external": [
         "CATALOGUE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/catalogue.ts#MaskedRegion",
+      "name": "MaskedRegion",
+      "module": "folio-assistant-core/schemas/catalogue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema",
+      "name": "MaskedRegionSchema",
+      "module": "folio-assistant-core/schemas/catalogue.ts",
+      "kind": "zod-object",
+      "doc": "A rectangle blanked out of a raster before its bytes were written.",
+      "fields": [
+        {
+          "name": "x0",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "y0",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "x1",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "Exclusive."
+        },
+        {
+          "name": "y1",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "Exclusive."
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why this region is masked, in a person's words. Never generated."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -34897,6 +34976,14 @@
       "via": "worklist",
       "kind": "field",
       "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/catalogue.ts#BitstreamSchema",
+      "to": "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema",
+      "via": "maskedRegions",
+      "kind": "field",
+      "optional": true,
       "array": true
     },
     {
