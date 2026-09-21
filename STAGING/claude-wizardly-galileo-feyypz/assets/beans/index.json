@@ -777,6 +777,20 @@
       "file": "beans/defs/folio-assistant-55ao--add-a-first-class-recommendation-block-kind-for-do.md"
     },
     {
+      "id": "folio-assistant-57n3",
+      "title": "VIEWER BACKTICKS: strayBacktick cannot see past an interpolation, so its file list cannot be derived",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T11:09:08Z",
+      "updatedAt": "2026-09-21T11:09:08Z",
+      "preview": "`check-viewer-backticks.ts` names its files in an array. The obvious fix is to\nderive them — every `.ts` whose source contains `return <backtick><!doctype\nhtml>` — and that finds twelve where the array names five.\n\n## Why it was NOT derived, measured 2026-09-21\n\nRunning `strayBacktick` over every candidate reports two findings on files\nthat COMPILE:\n\n    FINDING line 402   cat-harness/scripts/gen-",
+      "file": "beans/defs/folio-assistant-57n3--viewer-backticks-straybacktick-cannot-see-past-an.md"
+    },
+    {
       "id": "folio-assistant-5a3l",
       "title": "DEPLOYMENT: topologies and operating modes are two axes, not one list of modes",
       "status": "in-progress",
@@ -817,6 +831,20 @@
       "updatedAt": "2026-09-20T10:59:55Z",
       "preview": "Owner, 2026-09-20, on the CRDM process: *\"and to data modeling guidance in\nskills for CRDM when data modelling comes in (does subprocess exist yet?)\"*.\n\n## The factual half, answered\n\n**Yes, the subprocess mechanism exists, and CRDM is already built on it.**\n`crdm-requirements.bpmn` is a shell of four `callActivity` elements:\n\n| call | into |\n|---|---|\n| `Call_Issue` | `Process_CRDM_Issue` |\n| `Ca",
       "file": "beans/defs/folio-assistant-5tul--crdm-data-modelling-phase-guidance-skill-plus-the.md"
+    },
+    {
+      "id": "folio-assistant-5wrg",
+      "title": "A11Y GATE: the six state dashboards are audited by nothing — measured clean today, untested tomorrow",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:51:28Z",
+      "updatedAt": "2026-09-21T10:54:04Z",
+      "preview": "Found 2026-09-21 by asking a question rather than assuming the answer: *does the\naccessibility gate cover the state dashboards?*\n\n## Measured, both halves\n\n**The gate audits ONE page.** `cat-harness/test/a11y.e2e.ts` runs axe over\n`PAGE = \"/_kg/folio-assistant/index.html\"` — the KG viewer — plus an i18n\nfixture and two sticky fixtures it builds itself. Grepping for a `goto` at any\nof `qa/`, `beans",
+      "file": "beans/defs/folio-assistant-5wrg--a11y-gate-the-six-state-dashboards-are-audited-b.md"
     },
     {
       "id": "folio-assistant-5xfr",
@@ -1367,7 +1395,7 @@
     {
       "id": "folio-assistant-8ka1",
       "title": "COORDINATION: two files moved under sibling PRs' feet — gen-bootstrap-graph.ts and repo-partition.ts",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -1941,7 +1969,7 @@
     {
       "id": "folio-assistant-cjtm",
       "title": "SKILL: creating a new instance KIND — naming, prefixes, and repointing cat-bootstrap/README.md",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -1952,7 +1980,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:45:37Z",
-      "updatedAt": "2026-09-21T07:36:35Z",
+      "updatedAt": "2026-09-21T07:54:06Z",
       "preview": "Owner, 2026-09-20, across several messages while PR #477 was merging. Every\nline below is theirs; the grouping is mine.\n\n## The prefix families\n\n> cat- prefix does not extend to folio-assistant-*\n\n> also who- prefixs, and litlfred- prefix\n\nSo a prefix names the LAYER or the OWNER an instance belongs to, and the\nfamilies in this repository today are:\n\n| prefix | what it marks | instances here |\n|--",
       "file": "beans/defs/folio-assistant-cjtm--skill-creating-a-new-instance-kind-naming-prefixes.md"
     },
@@ -2131,7 +2159,7 @@
     {
       "id": "folio-assistant-dhvf",
       "title": "DEPENDENCY VERSIONS: instance deps float on a git branch, and nothing declares a version — SUSHI/FHIR vs semver options",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -2579,9 +2607,9 @@
     {
       "id": "folio-assistant-hso8",
       "title": "BLOCKER: main and this branch name the core instance differently — folio-assist-core vs folio-assistant-core",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "high",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
@@ -2849,14 +2877,14 @@
     {
       "id": "folio-assistant-k59d",
       "title": "MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:00Z",
-      "updatedAt": "2026-09-21T06:30:00Z",
+      "updatedAt": "2026-09-21T11:03:00Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5), independently by **two**\ndelegated agents reading two different milestones. An instruction gap.\n\n## Measured\n\n| milestone | what its own body advertises | what the store says |\n|---|---|---|\n| `p5wm` (GOAL 2) | critical path `b5f0 → 603s → hfkl → 2krx → (6lb8 ‖ ivfw + 5y4b) → pb",
       "file": "beans/defs/folio-assistant-k59d--milestone-critical-paths-go-stale-p5wm-and-yg29-bo.md"
     },
@@ -3059,7 +3087,7 @@
     {
       "id": "folio-assistant-lv3j",
       "title": "BPMN has no precondition element, and initialize-harness needs one",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -3495,7 +3523,7 @@
     {
       "id": "folio-assistant-pomp",
       "title": "A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-vke6",
@@ -3505,6 +3533,20 @@
       "updatedAt": "2026-09-21T06:43:56Z",
       "preview": "Two occurrences in one session, same shape, both published before being\ncaught. Recorded because the failure mode is invisible from inside: the\ncommand succeeds, the output is definite, and the conclusion is about somebody\nelse's work being broken.\n\n## Occurrence 1 — `ankg`'s precedent\n\nAsserted, in a commit message, a PR body and an issue comment: *\"#607 says it\nbuilt pruning in `gen-iris-pages.t",
       "file": "beans/defs/folio-assistant-pomp--a-stale-originmain-produced-two-confident-wrong-fi.md"
+    },
+    {
+      "id": "folio-assistant-pp93",
+      "title": "TRANSLATED PAGES HAVE NO TR PANEL: the roll-up is over blocks, and the locale index pages have none",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T11:23:21Z",
+      "updatedAt": "2026-09-21T11:23:21Z",
+      "preview": "The page-level translation roll-up (PR #691, issue #687) reaches the 12 generated pages, whose blocks can carry translation sidecars.\n\nThe 5 hand-authored translated pages — docs/{ar,es,fr,ru,zh}/index.md — get the corrected counts and the language bar, but no TR panel: their source docs/index.md carries no block triples, so there is nothing to roll up.\n\n## Done when\n\n- (docs page, locale) pairs a",
+      "file": "beans/defs/folio-assistant-pp93--translated-pages-have-no-tr-panel-the-roll-up-is-o.md"
     },
     {
       "id": "folio-assistant-ppkm",
@@ -3537,14 +3579,14 @@
     {
       "id": "folio-assistant-py74",
       "title": "QA PROJECTION: six schemas, three incompatible verdict shapes — no honest roll-up exists yet",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T23:09:04Z",
-      "updatedAt": "2026-09-20T23:09:04Z",
+      "updatedAt": "2026-09-21T10:30:54Z",
       "preview": "`<base>/qa/` says \"declared and nothing publishes a projection for it yet\" over **592 committed JSON files**. A reader was attempted 2026-09-20 and STOPPED at the measurement, deliberately.\n\n## What the graph actually holds\n\n| schema | files | where a verdict lives |\n|---|---|---|\n| `kg-qa/v1` | 316 | `criteria` as a DICT keyed by criterion id, plus `totals` |\n| `qa-witness/v1` | 134 | `state` (to",
       "file": "beans/defs/folio-assistant-py74--qa-projection-six-schemas-three-incompatible-verdi.md"
     },
@@ -3679,14 +3721,14 @@
     {
       "id": "folio-assistant-r3ez",
       "title": "TRANSLATION QA REPORTS: 114 of 115 TR badges have no sidecar to open, and the page-level translation QA badge was removed with nothing put back",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T10:44:41Z",
-      "updatedAt": "2026-09-21T11:04:51Z",
+      "updatedAt": "2026-09-21T11:23:28Z",
       "preview": "The per-block TR icon fires on exactly one block. The page-level round-trip badge was deliberately removed (ktt2) because its data was bogus; the three criteria that ARE measurable were never promoted to the page level to replace it.",
       "file": "beans/defs/folio-assistant-r3ez--translation-qa-reports-114-of-115-tr-badges-have-n.md"
     },
@@ -3777,14 +3819,14 @@
     {
       "id": "folio-assistant-rq8s",
       "title": "A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:04Z",
-      "updatedAt": "2026-09-21T06:30:04Z",
+      "updatedAt": "2026-09-21T10:29:09Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
@@ -4481,14 +4523,14 @@
     {
       "id": "folio-assistant-x0hj",
       "title": "PUBLICATION LAYOUT: <baseurl>/ is the root docs pipeline, <baseurl>/<instantiated harness>/<path> is everything else",
-      "status": "todo",
+      "status": "scrapped",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:26:35Z",
-      "updatedAt": "2026-09-20T18:26:35Z",
+      "updatedAt": "2026-09-21T10:40:17Z",
       "preview": "Owner, 2026-09-20, verbatim — the layout is specific enough that a paraphrase\nwould lose which segment comes from where:\n\n| rendered assets should be available at toplevel like <baseULR>/ for main jsut\n| the docs pipleline, or <baseurl>/<page> where is registered rendered page from\n| a harness that was instantiated and enbaled (by default enabled) realtivg to\n| their url, so <baseurl>cat-harness/d",
       "file": "beans/defs/folio-assistant-x0hj--publication-layout-baseurl-is-the-root-docs-pipeli.md"
     },
@@ -4817,6 +4859,20 @@
       "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-dire.md"
     },
     {
+      "id": "folio-assistant-yt7j",
+      "title": "",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:13:34Z",
+      "updatedAt": "2026-09-21T10:13:34Z",
+      "preview": "## RULED 2026-09-21 — repository-root relative, and one exported resolver\n\nThe owner, choosing from four options with their costs:\n\n> One exported resolver, no schema change.\n\nSo `coverage.visualiser` and `coverage.docs` resolve against the **repository\nroot**, full stop, and `resolveCoveragePath(repoRoot, coveragePath)` in\n`schemas/cat-harness.ts` is that ruling as code rather than as prose. No n",
+      "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-direc.md"
+    },
+    {
       "id": "folio-assistant-yv4z",
       "title": "3pqn cause: why does a PR sometimes get NO pull_request-event run at all?",
       "status": "todo",
@@ -4899,6 +4955,20 @@
       "updatedAt": "2026-09-20T21:15:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`session-intent.md` (user-invocable, bound to `session-coordinator`) step 1 is \"Open `STATUS.md`\" and step 2 \"Open `docs/coordination/<goal>.m",
       "file": "beans/defs/folio-assistant-z9eb--session-intent-names-statusmd-and-docscoordination.md"
+    },
+    {
+      "id": "folio-assistant-zgba",
+      "title": "WHO-IRIS ROUTING: the KG renders library-side, the documentation docs-side, and the replica navbar stops carrying docs",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:51:32Z",
+      "updatedAt": "2026-09-21T11:02:32Z",
+      "preview": "Owner, 2026-09-21, two messages:\n\n> i want the proposal pages for who-iris moved to their docs/. the docs/ should\n> not be for the who-iris top navbar, instead, f-a navbar should still be on\n> the left, with who-iris and then link to docs on side in navbar. see other\n> beans/sibling work on LHS\n\nand, ruling out the question of where the replica lives:\n\n> the iris KG should be in who-iris/library (",
+      "file": "beans/defs/folio-assistant-zgba--who-iris-routing-the-kg-renders-library-side-the-d.md"
     },
     {
       "id": "folio-assistant-zkgs",
@@ -5016,24 +5086,6 @@
   "findings": [
     {
       "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-cjtm",
-      "blocks": "folio-assistant-jbx2",
-      "detail": "blocks `folio-assistant-jbx2` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-cjtm",
-      "blocks": "folio-assistant-v1hw",
-      "detail": "blocks `folio-assistant-v1hw` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-cjtm",
-      "blocks": "folio-assistant-x4a6",
-      "detail": "blocks `folio-assistant-x4a6` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",
       "blocks": "folio-assistant-p67i",
       "detail": "blocks `folio-assistant-p67i` and states no expiry, so the block cannot be told from abandoned work"
@@ -5055,6 +5107,18 @@
       "bean": "folio-assistant-04vl",
       "blocks": "folio-assistant-d5f1",
       "detail": "is completed but still blocks `folio-assistant-d5f1`, which is in-progress"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-cjtm",
+      "blocks": "folio-assistant-v1hw",
+      "detail": "is completed but still blocks `folio-assistant-v1hw`, which is todo"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-cjtm",
+      "blocks": "folio-assistant-x4a6",
+      "detail": "is completed but still blocks `folio-assistant-x4a6`, which is todo"
     }
   ]
 }

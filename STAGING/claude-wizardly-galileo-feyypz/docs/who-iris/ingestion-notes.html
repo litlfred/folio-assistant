@@ -325,14 +325,31 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div>
 </div></header>
 
+<!--
+  THE DOCUMENTATION IS NOT IN THIS NAVBAR, and that is the owner's ruling of
+  2026-09-21: *"the docs/ should not be for the who-iris top navbar, instead,
+  f-a navbar should still be on the left, with who-iris and then link to docs
+  on side in navbar."*
+
+  This strip is the REPLICA's chrome -- it exists to look like the IRIS site,
+  and the IRIS site has no page about how this repository ingested it. The
+  ingestion notes and the portal proposal are reached from the folio-assistant
+  navbar on the left, through who-iris's own tile in harness-tiles.ts, which
+  is where a reader looking for documentation about this harness is standing.
+  Putting them here also meant linking across two mount points once the split
+  landed, which is a relative path that breaks the first time either route
+  moves.
+
+  (No backticks in this comment: it sits inside the page template literal, and
+  one here closes the string and turns the rest of the file into TypeScript,
+  failing at a line far from the mistake.)
+-->
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
-  <a href="ingestion-notes.html">Ingestion notes</a>
-  <a href="kg-to-portal.html">KG &rarr; portal</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="index.html">Home</a><span class="sep">•</span><span class="here">Ingestion notes</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="index.html">Documentation</a><span class="sep">•</span><span class="here">Ingestion notes</span></div></div>
 
 <main class="wrap">
 
