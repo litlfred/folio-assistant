@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sqtq
 title: 'SWIMLANES HAVE NO DEFINITION: 157 task-containing lanes carry a name and no documentation'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T18:32:14Z
-\1
+updated_at: 2026-09-21T18:53:07Z
 parent: folio-assistant-1xhc
 ---
 
@@ -72,3 +72,80 @@ and `crdm-requirements` 9 and 8.
 The glossary extractor itself (#596, and it reads this once the text exists),
 and the one lane-less activity — that is a diagram-structure question, not a
 prose one.
+
+## Worked 2026-09-21 — the fix is right, the GLOSSARY half of this bean was wrong
+
+Before dispatching agents to write 157 definitions, I measured what a lane
+already resolves to. It changes the design.
+
+### 150 of 157 lanes already have a definition
+
+`roles.json` carries a `description` for each of its 43 roles, and each role
+carries a `lanes[]` array of the lane names that bind to it. Resolving every
+undocumented lane through both routes:
+
+| how the lane resolves to a role | lanes |
+|---|---|
+| explicit `<folio:role ref>` in the lane's `extensionElements` | 27 |
+| `roles.json` `lanes[]` alias, matched on the lane's `name` | 123 |
+| **resolves to no role at all** | **7** |
+
+Every one of the 150 that resolves has a non-empty `description`. Zero refs
+point at a role that is not declared.
+
+### So writing a persona definition into each lane would DUPLICATE roles.json
+
+Which is the defect this corpus names in its own diagrams — `code-change-review.bpmn`
+puts it as *"a second description of a process is a second thing free to
+disagree with the first."* 157 hand-written persona blurbs, 12 of them for
+the lane named `Agent`, is that failure at scale and with a QA gate holding
+it in place.
+
+**My dispatch brief said the opposite and was corrected before the agents
+ran.** It told them the same persona must get the same text across diagrams,
+because the terms merge in the glossary. That reasoning was sound about the
+glossary and wrong about where the definition lives.
+
+### The three-way split the measurement implies
+
+| SKOS | comes from | answers |
+|---|---|---|
+| `prefLabel` | the lane's `name` | what is this called |
+| `definition` | the **role's** `description` | who is this persona, in every diagram |
+| `scopeNote` | the lane's `<bpmn:documentation>` | what is this lane accountable for **in THIS process** |
+
+The lane text is therefore SUPPOSED to differ per diagram — that is its
+content, not a consistency failure. The owner's *"name, documentation -->
+glossary"* holds: both feed the glossary, at different SKOS predicates.
+
+This also keeps the extractor honest about provenance. A definition sourced
+from `roles.json` has one author and one place to fix; a scope note sourced
+from a diagram is attributable to that diagram.
+
+### The 7 lanes that resolve to nothing are a separate, smaller defect
+
+`Initiator` (×2), `Requestor` (×2), `Knowledge Graph Data Store`, `Actor`,
+`Logger`. Each names a persona no role declares, so each would enter the
+glossary as a **label with no definition** — which is the state this whole
+bean exists to end. They need a role binding, an alias on an existing role,
+or a new role; that is a judgement about the role model, not something an
+agent writing documentation should decide. Note that `Initiator` and
+`Requestor` are both in `cat-bootstrap/`, a nested instance, so the answer
+may be that bootstrap declares its own.
+
+### What the agents were actually told
+
+Write what the role cannot say. Each agent's manifest carries, per lane, the
+resolved role's `description` and `persona` **so that it does not repeat
+them**, plus the lane's activities and the process documentation, so the text
+it writes is about accountability in that process.
+
+## Done when — revised
+
+- [ ] 157 lanes carry a `<bpmn:documentation>` that is not a restatement of
+      their role's description
+- [ ] the new strings are extracted into every locale's `.pot`
+- [ ] the check is wired into `code-quality-gates.yml`
+- [ ] the 7 role-less lanes are ruled on — binding, alias, or new role
+- [ ] the glossary extractor reads `definition` from the role and
+      `scopeNote` from the lane, rather than expecting one text to be both
