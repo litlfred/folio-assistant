@@ -35,6 +35,7 @@ import { workflowFiles } from "./known-skills.js";
 import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
+import { resolveTarget } from "../schemas/todo-index.js";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
 import {
   QA_FAMILY_LABEL,
@@ -661,6 +662,22 @@ const slugs = readdirSync(SRC_DIR, { withFileTypes: true })
   .map((d) => d.name)
   .sort();
 
+/**
+ * Every block's declared label, resolved to the page and node it is on.
+ *
+ * THE REVERSE INDEX R3 NEEDS, and it is a JOIN rather than two fields lying
+ * around. `readTodoFiles` hands the todo emitter `targetLabel` and nothing
+ * else; the page and node live HERE, where `blockLabel` reads a block's own
+ * declaration while this loop holds both. Building it costs nothing extra
+ * because the walk happens anyway — but it is why `target` could not simply be
+ * spread from the todo, which an earlier impact analysis assumed and which the
+ * data-model phase corrected.
+ *
+ * Filled by the loop below and read by the todo index further down, so the
+ * loop must run first — which it does: the index is emitted after every page.
+ */
+const blockByLabel = new Map<string, { page: string; node: string }>();
+
 for (const slug of slugs) {
   const manifest = join(SRC_DIR, slug, `${slug}.ts`);
   if (!existsSync(manifest)) {
@@ -675,6 +692,27 @@ for (const slug of slugs) {
   // nesting rule to remember.
   if (page.slug.replace(/\//g, "-") !== slug) {
     throw new Error(`${manifest} declares slug "${page.slug}" but lives in ${slug}/`);
+  }
+  // Collected BEFORE rendering, so a page that fails to render still cannot
+  // leave a half-filled index behind it.
+  //
+  // A DUPLICATE LABEL THROWS, naming both sites. The label is page-qualified
+  // precisely so it is unique — `what-is-not-built-yet` is a node on two pages
+  // — so two blocks claiming one label means the qualification has failed, and
+  // a map that silently kept the last writer would attach every note with that
+  // label to whichever page happened to be walked second.
+  for (const node of page.nodes) {
+    const label = blockLabel(page, node);
+    if (label === undefined) continue;
+    const prev = blockByLabel.get(label);
+    if (prev !== undefined) {
+      throw new Error(
+        `two blocks declare the label "${label}": ${prev.page}/${prev.node} and ` +
+          `${page.slug}/${node.id}. A label is page-qualified so that it is unique; ` +
+          `a note pointing at this one could not say which block it meant.`,
+      );
+    }
+    blockByLabel.set(label, { page: page.slug, node: node.id });
   }
   const outPath = join(OUT_DIR, `${page.slug}.md`);
   mkdirSync(dirname(outPath), { recursive: true });
@@ -882,6 +920,11 @@ function processHierarchy(): Record<string, string[]> {
   //  - the todo's OWN value is preserved unresolved upstream of this, so
   //    "the author chose grumpy-cat" and "nobody chose" stay distinguishable
   //    to a reviewer reading the file.
+  /** `{ target }` when the label resolves, `{}` when it does not — see the spread below. */
+  const targetOf = (label: string | undefined) => {
+    const target = resolveTarget(blockByLabel, label);
+    return target === undefined ? {} : { target };
+  };
   const fallbackTheme = todoDefaultTheme();
   const items = readTodoFiles().map(({ todo, path }) => ({
     id: todo.id,
@@ -892,6 +935,19 @@ function processHierarchy(): Record<string, string[]> {
     origin: todo.origin,
     createdAt: todo.createdAt,
     targetLabel: todo.targetLabel,
+    // THE SAME ATTACHMENT, IN PARTS — R3 of issue #602, bean `f76l`.
+    //
+    // `targetLabel` is page-qualified (`sec:<page>-<node>`), which is correct
+    // and is also a burden: a consumer asking "which page is this on" has to
+    // know the prefix, know the separator, and know that node ids themselves
+    // contain `-` — so the split is not even unambiguous without the page
+    // list. `targetLabel` STAYS, so nothing that matches on it breaks.
+    //
+    // Spread, so a label that resolves to NO block emits an absent key rather
+    // than `null` or a guess. That is the third state and it is already how
+    // this repository treats a dangling label: `mountPageStickies` reports it
+    // instead of dropping the note.
+    ...targetOf(todo.targetLabel),
     theme: todo.theme ?? fallbackTheme,
     tags: todo.tags,
     // The edges, already resolved. A sticky that showed only status and

@@ -93,6 +93,49 @@
   ],
   "harnesses": [
     {
+      "name": "folio-assistant",
+      "title": "folio-assistant",
+      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "footer": false,
+      "needs": [
+        "folio-assistant-core"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": true,
+      "href": "/",
+      "hrefKind": "folio",
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "uploads"
+        }
+      ],
+      "findings": [
+        "folio-assistant: declares 1 graph(s) with no published viewer — uploads. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
+        "folio-assistant: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
       "name": "agent-skills",
       "title": "agent-skills",
       "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
@@ -101,6 +144,9 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/library/agent-skills/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -130,6 +176,7 @@
       "findings": [
         "agent-skills: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
+        "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root.",
         "agent-skills: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
     },
@@ -142,6 +189,9 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/schemas/cat-bootstrap-tools/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -167,6 +217,7 @@
       ],
       "findings": [
         "cat-bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
+        "cat-bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-bootstrap-tools/) rather than the instance's own themed root.",
         "cat-bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
     },
@@ -179,6 +230,9 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/schemas/detangle/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -208,6 +262,7 @@
       "findings": [
         "detangle: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
         "detangle: no avatar declared for this instance — showing the generic mark.",
+        "detangle: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/detangle/) rather than the instance's own themed root.",
         "detangle: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
     },
@@ -220,6 +275,9 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/library/folio-assistant-sci/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -245,6 +303,7 @@
       ],
       "findings": [
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
+        "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root.",
         "folio-assistant-sci: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
     },
@@ -257,6 +316,7 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
       "stats": [
         {
           "id": "directories",
@@ -294,6 +354,9 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/schemas/large-datasets/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -323,6 +386,7 @@
       "findings": [
         "large-datasets: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
         "large-datasets: no avatar declared for this instance — showing the generic mark.",
+        "large-datasets: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/large-datasets/) rather than the instance's own themed root.",
         "large-datasets: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
     },
@@ -335,6 +399,9 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
+      "href": "/who-iris/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
@@ -388,6 +455,7 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
       "stats": [
         {
           "id": "directories",
@@ -417,46 +485,6 @@
       ]
     },
     {
-      "name": "folio-assistant",
-      "title": "folio-assistant",
-      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
-      "footer": false,
-      "needs": [
-        "folio-assistant-core"
-      ],
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "uploads"
-        }
-      ],
-      "findings": [
-        "folio-assistant: declares 1 graph(s) with no published viewer — uploads. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
-        "folio-assistant: no avatar declared for this instance — showing the generic mark."
-      ]
-    },
-    {
       "name": "folio-assistant-core",
       "title": "folio-assistant-core",
       "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
@@ -468,6 +496,9 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/schemas/folio-assistant-core/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -499,7 +530,8 @@
       ],
       "findings": [
         "folio-assistant-core: declares 2 graph(s) with no published viewer — cat-harness, folio. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-core: no avatar declared for this instance — showing the generic mark."
+        "folio-assistant-core: no avatar declared for this instance — showing the generic mark.",
+        "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ]
     },
     {
@@ -517,6 +549,9 @@
       "tone": 268,
       "reads": "a framed face with ears — the harness the instance is held in",
       "genericAvatar": false,
+      "instantiated": true,
+      "href": "/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
@@ -615,6 +650,7 @@
       "tone": 96,
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,
+      "instantiated": true,
       "stats": [
         {
           "id": "directories",

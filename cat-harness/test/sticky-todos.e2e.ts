@@ -58,6 +58,8 @@ const ITEMS = [
 ];
 
 const PAGE_URL = "http://todo.test/page.html";
+/** The LANDING page: the board is page content there, not an overlay. */
+const LANDING_URL = "http://todo.test/landing.html";
 
 /**
  * A SECOND fixture, for the themed sticky, on its own page and its own index.
@@ -112,6 +114,14 @@ test.beforeEach(async ({ page }) => {
     const url = route.request().url();
     if (url.endsWith("/page.html")) {
       return route.fulfill({ contentType: "text/html", body: HARNESS });
+    }
+    if (url.endsWith("/landing.html")) {
+      // `.fa-landing-board` is what makes `mountTodoBoard` render INLINE
+      // rather than as a hidden overlay — the branch bean `l4zi` is about.
+      return route.fulfill({
+        contentType: "text/html",
+        body: HARNESS.replace('<p>Body text.</p>', '<div class="fa-landing-board"></div>'),
+      });
     }
     if (url.endsWith("/themed.html")) {
       return route.fulfill({
@@ -859,5 +869,58 @@ test.describe("board stacking", () => {
     await page.locator(".fa-qr-toggle").click();
     await page.locator(".fa-tile", { hasText: "Todos" }).click();
     await expect(page.locator(".fa-sticky-board .fa-sticky")).toHaveCount(1);
+  });
+});
+
+/**
+ * Bean `l4zi` — the owner, 2026-09-21: *"clicking on postit display panel,
+ * hides it, no place to get it back."*
+ *
+ * On the landing board the todos are page CONTENT, so closing them removes a
+ * section of the page. The launcher's Todos tile re-opens it, but a control
+ * two clicks deep inside a collapsed launcher is not a place to get it back;
+ * it is a place a reader has to already know about.
+ */
+test.describe("the inline board's close has a reachable inverse", () => {
+  test("closing leaves a control WHERE THE BOARD WAS, and focuses it", async ({ page }) => {
+    await page.goto(LANDING_URL);
+    const board = page.locator(".fa-sticky-board");
+    await expect(board).toBeVisible();
+    await page.locator(".fa-sticky-board-close").click();
+    await expect(board).toBeHidden();
+
+    const back = page.locator(".fa-sticky-board-reopen");
+    await expect(back).toBeVisible();
+    // In the board's own position, not appended somewhere else on the page.
+    await expect(page.locator(".fa-landing-board > *").first()).toHaveClass(/fa-sticky-board-reopen/);
+    // Focus follows it. Left alone it lands on <body>, which tells a reader
+    // nothing and loses the keyboard position entirely.
+    await expect(back).toBeFocused();
+    // The count rides the accessible name, so it is not a bare "Todos".
+    await expect(back).toHaveAttribute("aria-label", /\d+ outstanding/);
+  });
+
+  test("clicking it brings the board back and takes the control away", async ({ page }) => {
+    await page.goto(LANDING_URL);
+    await page.locator(".fa-sticky-board-close").click();
+    await page.locator(".fa-sticky-board-reopen").click();
+    await expect(page.locator(".fa-sticky-board")).toBeVisible();
+    await expect(page.locator(".fa-sticky-board-reopen")).toHaveCount(0);
+    // Round trip, because a one-way fix is the defect in the other direction.
+    await page.locator(".fa-sticky-board-close").click();
+    await expect(page.locator(".fa-sticky-board-reopen")).toBeVisible();
+  });
+
+  test("an OVERLAY page gets no such control — the tile is its way back", async ({ page }) => {
+    // The distinction is the whole point: an overlay was covering what you
+    // were reading, so closing it returns you to the page. Adding a button to
+    // that page would be litter.
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+    await expect(page.locator(".fa-sticky-board")).toBeVisible();
+    await page.locator(".fa-sticky-board-close").click();
+    await expect(page.locator(".fa-sticky-board")).toBeHidden();
+    await expect(page.locator(".fa-sticky-board-reopen")).toHaveCount(0);
   });
 });

@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: low
 created_at: 2026-09-20T16:33:37Z
-updated_at: 2026-09-20T17:19:50Z
+updated_at: 2026-09-21T05:40:33Z
 parent: folio-assistant-1xhc
 ---
 
@@ -79,3 +79,51 @@ Left open deliberately rather than closed. Its Done-when allows *"not
 determinable from here"* as a **determined** answer, so whoever next hits this
 can close it honestly without having solved it — which is the outcome this
 bean expects.
+
+
+---
+
+## Observation seven, 2026-09-21 — and it narrows the claim rather than confirming it
+
+PR #601 merged on `claude/lhs-navbar-harness-folios-cqo9mu`; the branch was
+restarted from `origin/main`, a commit pushed (`5f80b5cd`), and PR #644 opened.
+`check:head-has-run` reported **no run of any kind**. A second push after
+merging main in (`e6890728`) reported the same, ~20 s after pushing.
+
+**It matches the surviving hypothesis exactly**: the branch's previous PR had
+just merged. That is now seven for seven.
+
+**But the runs APPEARED, with no `workflow_dispatch`.** Polled until they
+showed: roughly one to two minutes after the push, both `Code-quality gates`
+and `Feature Staging` were present on `e6890728` (`in_progress` and `queued`).
+Nothing was dispatched and nothing was re-pushed in between.
+
+So **this occurrence was LAG, not a dropped event**, and that distinction is
+load-bearing for the tool as much as for the cause:
+
+- the observation set may be contaminated. Some of the six may have been the
+  same lag, observed at a moment when the operator concluded "dropped" and
+  dispatched — a dispatch that then LOOKS like the fix and is
+  indistinguishable from waiting. **The correct test now needs a wait** before
+  it counts an occurrence: poll to a stated timeout, and only then call it
+  dropped;
+- **`check:head-has-run` states the wrong thing with confidence.** Its body
+  already says *"a pull request carrying zero checks looks exactly like one
+  whose checks have not started"* — and its headline then asserts
+  *"It IS pushed, so this is bean `3pqn`: the event was dropped."* Those are
+  the same third-state failure this repository names everywhere else: it
+  cannot tell `dropped` from `not yet`, so it must say so rather than pick.
+  A `--wait` (poll to a timeout, then report `dropped` or `could not
+  determine`) would make its answer honest without changing what an operator
+  does about it.
+
+Recorded here rather than as a new bean: this is evidence on the open question
+this bean exists to hold, and a duplicate would split the six observations
+from the seventh.
+
+
+**And the refutation is cleaner still**: at 05:40Z a `check_suite.completed`
+event arrived for **`5f80b5cd`** — the very head `check:head-has-run` had
+reported as having *"NO workflow run of any kind"* and attributed to a dropped
+event. That head did not merely acquire runs late; it **finished** them. Both
+heads in this occurrence lagged, and the tool was wrong about both.
