@@ -2125,6 +2125,20 @@
       "file": "beans/defs/folio-assistant-cz17--migrate-dakjson-in-the-dak-type-is-ours-and-its-lo.md"
     },
     {
+      "id": "folio-assistant-czct",
+      "title": "TRANSLATION COUNTS: the source language is absent from every numerator and denominator, and the two available_locales conventions disagree",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:44:38Z",
+      "updatedAt": "2026-09-21T11:04:51Z",
+      "preview": "The language-coverage badge reads '0/5' on an untranslated English page and '6/5' on docs/fr/index.md. Three writers drop the source locale and two disagree about what available_locales means. See the session brief.",
+      "file": "beans/defs/folio-assistant-czct--translation-counts-the-source-language-is-absent-f.md"
+    },
+    {
       "id": "folio-assistant-d1r6",
       "title": "STICKY: the close control discards to fsh-guts, with a crumpled-sticky icon",
       "status": "completed",
@@ -2271,14 +2285,14 @@
     {
       "id": "folio-assistant-en68",
       "title": "Colons in kg-qa sidecar filenames make the repo unclonable on Windows",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T10:08:48Z",
-      "updatedAt": "2026-09-21T10:08:48Z",
+      "updatedAt": "2026-09-21T13:45:00Z",
       "preview": "## What\n\n`git clone` of this repository **fails on Windows** — not at fetch, at\ncheckout. Seven KG QA sidecars are named `req:<slug>.kg-qa.json`, and NTFS\nreserves `:` inside a path component for alternate data streams, so Git\nrefuses to create the file.\n\nGit aborts the **entire** checkout on the first invalid path, so this is not\nseven missing files. It is no working tree at all, for everybody on",
       "file": "beans/defs/folio-assistant-en68--colons-in-kg-qa-sidecar-filenames-make-the-repo-un.md"
     },
@@ -2603,6 +2617,20 @@
       "updatedAt": "2026-09-21T05:29:17Z",
       "preview": "The owner, 2026-09-20, after four questions that broke the rule:\n\n> *\"ask specific questiosn w/ context/ recommendations/pros/cons (see skills,\n> why not invoked?)\"*\n>\n> *\"fix skills so interaction modality would be triggered\"*\n>\n> *\"can we struture schema better to help enforce?\"*\n\n## The measurement\n\n`interaction-modality` §4.1 was STRICT and complete, and was broken the same day\nby the agent im",
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
+    },
+    {
+      "id": "folio-assistant-he0e",
+      "title": "TERMS-PRESERVED NEEDS A GLOSSARY: an acronym warns because the check cannot tell WHO to OMS from WHO dropped",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T12:02:00Z",
+      "updatedAt": "2026-09-21T13:34:02Z",
+      "preview": "Split out of pp93 (PR #691). translation-terms-preserved now reports a missing acronym as warn/minor rather than fail/major, because it genuinely cannot distinguish a correct localisation from a silently dropped term. That is the honest confidence, not the useful one.\n\nA per-locale glossary would settle it: translations/<locale>/glossary.po already exists as a hand-authored PO with no POT, and sch",
+      "file": "beans/defs/folio-assistant-he0e--terms-preserved-needs-a-glossary-an-acronym-warns.md"
     },
     {
       "id": "folio-assistant-hfkl",
@@ -3155,6 +3183,20 @@
       "file": "beans/defs/folio-assistant-lr7h--ci-health-the-window-is-61-hours-so-the-weekly-wat.md"
     },
     {
+      "id": "folio-assistant-lrbx",
+      "title": "EXTRACTION: the kramdown {:toc} placeholder is extracted as translatable prose, and translators dutifully translate it",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:22:39Z",
+      "updatedAt": "2026-09-21T13:22:39Z",
+      "preview": "Found while doing he0e (PR #691). `1. TOC` at docs/guides/agent-onboarding.md:20 is the list item kramdown REPLACES with the generated table of contents, immediately followed by `{:toc}`. Its text never reaches a reader in any language.\n\npot-extract.ts picks it up as a translatable string anyway, and the Arabic and Russian translators rendered it — ar has جدول المحتويات. That is a sensible human r",
+      "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
+    },
+    {
       "id": "folio-assistant-lv3j",
       "title": "BPMN has no precondition element, and initialize-harness needs one",
       "status": "completed",
@@ -3307,6 +3349,20 @@
       "updatedAt": "2026-09-20T16:24:37Z",
       "preview": "## Why this is not another `vke6` child like the others\n\n`vke6` has thirteen children and every one of them is an INSTANCE of splitting\n— drain the edges, invert the stub, declare topical directories, settle the\ntype set, rename a package. None of them is the PRACTICE. Checked before\ncreating this (`beans list`, 2026-09-20): no bean covers \"how do you split a\ngraph\", only \"split this particular th",
       "file": "beans/defs/folio-assistant-n2s1--practice-graph-detanglement-and-extraction-as-a-na.md"
+    },
+    {
+      "id": "folio-assistant-n7vv",
+      "title": "BADGE PALETTE: the coverage and sweep badges are inline dark-palette literals, beside a themed TR badge on the same row",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T11:38:02Z",
+      "updatedAt": "2026-09-21T13:16:37Z",
+      "preview": "Seen directly while verifying PR #691 against the real generated page: the badge row under a title renders a dark-brown 2/6 languages chip and a dark-green Swept 8/289 chip next to a correctly themed light TR chip, on a light page.\n\nfa-lang-coverage-badge and fa-sweep-badge are built in mountTranslationBadges with inline colour literals (#78350f, #14532d, #1e293b, #e2e8f0). Contrast WITHIN each ch",
+      "file": "beans/defs/folio-assistant-n7vv--badge-palette-the-coverage-and-sweep-badges-are-in.md"
     },
     {
       "id": "folio-assistant-nba0",
@@ -3619,6 +3675,20 @@
       "file": "beans/defs/folio-assistant-pomp--a-stale-originmain-produced-two-confident-wrong-fi.md"
     },
     {
+      "id": "folio-assistant-pp93",
+      "title": "TRANSLATED PAGES HAVE NO TR PANEL: the roll-up is over blocks, and the locale index pages have none",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T11:23:21Z",
+      "updatedAt": "2026-09-21T12:02:00Z",
+      "preview": "The page-level translation roll-up (PR #691, issue #687) reaches the 12 generated pages, whose blocks can carry translation sidecars.\n\nThe 5 hand-authored translated pages — docs/{ar,es,fr,ru,zh}/index.md — get the corrected counts and the language bar, but no TR panel: their source docs/index.md carries no block triples, so there is nothing to roll up.\n\n## Done when\n\n- (docs page, locale) pairs a",
+      "file": "beans/defs/folio-assistant-pp93--translated-pages-have-no-tr-panel-the-roll-up-is-o.md"
+    },
+    {
       "id": "folio-assistant-ppkm",
       "title": "ROUTE B: bind the derived gates as Tool nodes, so a downstream instance inherits them",
       "status": "completed",
@@ -3817,16 +3887,30 @@
       "file": "beans/defs/folio-assistant-r279--decide-which-transcription-backend-and-what-ci-pay.md"
     },
     {
+      "id": "folio-assistant-r3ez",
+      "title": "TRANSLATION QA REPORTS: 114 of 115 TR badges have no sidecar to open, and the page-level translation QA badge was removed with nothing put back",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:44:41Z",
+      "updatedAt": "2026-09-21T11:23:28Z",
+      "preview": "The per-block TR icon fires on exactly one block. The page-level round-trip badge was deliberately removed (ktt2) because its data was bogus; the three criteria that ARE measurable were never promoted to the page level to replace it.",
+      "file": "beans/defs/folio-assistant-r3ez--translation-qa-reports-114-of-115-tr-badges-have-n.md"
+    },
+    {
       "id": "folio-assistant-r8br",
       "title": "BLOCKER: pdf-images classifies browser-print nav icons as figures, so 7 documents cannot be promoted",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:36:29Z",
-      "updatedAt": "2026-09-20T16:36:52Z",
+      "updatedAt": "2026-09-21T14:02:42Z",
       "preview": "Seven of the nine agent-skill documents are staged and cannot be promoted.\nThey fail exactly one requirement — `image-descriptions` — and the images in\nquestion are not figures.\n\n## Measured 2026-09-20\n\n`Agent Skills — Google Antigravity Docs`, a **four-page** browser print:\n\n- **104 images, all classified `figure`**\n- page 1 alone carries 26\n- coverage of the first three: **0.000183, 0.000183, 0.",
       "file": "beans/defs/folio-assistant-r8br--blocker-pdf-images-classifies-browser-print-nav-ic.md"
     },
@@ -4563,6 +4647,20 @@
       "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
     },
     {
+      "id": "folio-assistant-wjfu",
+      "title": "SMART-TRUST PAGES: 674 ingested artefacts had no reader-facing surface — a docs graph, generated from index.json",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:18:01Z",
+      "updatedAt": "2026-09-21T13:23:30Z",
+      "preview": "The owner asked where `https://litlfred.github.io/folio-assistant/smart-trust` was. It did not exist, and that is a gap left by qsf5 rather than a bug: `fhir-artifact-index` is registered `renderable: false`, and `smart-trust/` declares exactly one directory of exactly that kind, so nothing was generated for it.\n\nOnly 2 of 29 graph kinds are renderable — `docs` and `folio`. `who-iris/` publishes b",
+      "file": "beans/defs/folio-assistant-wjfu--smart-trust-pages-674-ingested-artefacts-had-no-re.md"
+    },
+    {
       "id": "folio-assistant-wlqd",
       "title": "skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package",
       "status": "in-progress",
@@ -4973,14 +5071,14 @@
     {
       "id": "folio-assistant-yv4z",
       "title": "3pqn cause: why does a PR sometimes get NO pull_request-event run at all?",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "low",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:33:37Z",
-      "updatedAt": "2026-09-21T05:40:33Z",
+      "updatedAt": "2026-09-21T14:06:54Z",
       "preview": "Split out of `3pqn` on the owner's instruction, 2026-09-20. `3pqn` closed on\nits Done-when 2 and 3 — the **damage** is stopped, because\n[`prepare-merge`](../../cat-harness/skills/folio-core/prepare-merge.md)\n§Guardrails now says *\"NO CHECKS IS NOT GREEN\"* and gives the procedure. This\nbean carries the remaining **why**, at low priority, with the evidence\nattached so nobody re-derives it.\n\n## The o",
       "file": "beans/defs/folio-assistant-yv4z--3pqn-cause-why-does-a-pr-sometimes-get-no-pull-req.md"
     },

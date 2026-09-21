@@ -213,11 +213,12 @@
   "translationSource": "",
   "supportedLocales": ["ar","zh","en","fr","ru","es"],
   "availableLocales": null,
+  "translationQa":null,
   "sweep": {
     "run": true,
-    "sweptAt": "2026-09-18T13:35:56.610Z",
-    "totalPages": 154,
-    "pagesWithTranslations": 5,
+    "sweptAt": "2026-09-21T11:25:19.602Z",
+    "totalPages": 289,
+    "pagesWithTranslations": 8,
     "complete": true
   }
 }</script>
@@ -652,7 +653,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <summary class="fa-harness-tabs__heading">
     Dependencies <span class="fa-harness-tabs__count">10</span>
   </summary>
-  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-trust</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/library/agent-skills/"
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/smart-trust/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">smart-trust</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/library/agent-skills/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">agent-skills</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/schemas/cat-bootstrap-tools/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">cat-bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/library/folio-assistant-sci/"
@@ -1193,14 +1195,96 @@ unverified</code></li>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Source pages (English):</span>
 <span class="na">lang</span><span class="pi">:</span> <span class="s">en</span>
-<span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>          <span class="c1"># locales with translations</span>
+<span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">en"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>    <span class="c1"># every locale the page can be read in</span>
 
 <span class="c1"># Translated pages:</span>
 <span class="na">lang</span><span class="pi">:</span> <span class="s">fr</span>
 <span class="na">translation_status</span><span class="pi">:</span> <span class="s">unverified</span>     <span class="c1"># or "official"</span>
 <span class="na">translation_source</span><span class="pi">:</span> <span class="s">index.md</span>       <span class="c1"># source file</span>
-<span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>
+<span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">en"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>
 </code></pre></div></div>
+<h3 id="the-terminology-glossary--translationslocaleglossarypo">
+  
+  
+    <a href="#the-terminology-glossary--translationslocaleglossarypo" class="anchor-heading" aria-labelledby="the-terminology-glossary--translationslocaleglossarypo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The terminology glossary — <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/glossary.po</code>
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">translation-terms-preserved</code> can see that a source term is absent from a
+translation. It cannot see whether that is a correct localisation or a silent
+loss: <code class="language-plaintext highlighter-rouge">WHO</code> missing from a French sentence is either <code class="language-plaintext highlighter-rouge">OMS</code> or a dropped term,
+and guessing either way is worse than saying so. The glossary is how a folio
+tells it which.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>entry</th>
+      <th>meaning</th>
+      <th>when the term is absent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">msgstr "OMS"</code></td>
+      <td>the expected form, pinned</td>
+      <td><strong>fail</strong> — the glossary said what it should be</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">msgstr "FHIR"</code> (identity)</td>
+      <td>must survive verbatim</td>
+      <td><strong>fail</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">#, localised</code></td>
+      <td>rendered in the target language, form NOT pinned</td>
+      <td><strong>pass</strong></td>
+    </tr>
+    <tr>
+      <td>no entry</td>
+      <td>unknown</td>
+      <td><strong>warn</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">#, localised</code> exists so a glossary needs no translated content.</strong> Pinning a
+form means authoring target-language material; the flag says the one thing the
+checker needs — <em>this term gets localised, I am not pinning how</em> — and it is
+reviewable by someone who reads only English. Pin a form when you want the
+stricter check.</p>
+
+<p><strong>It is a reading rule and cannot become a mute button</strong>, which is the property
+to preserve if you touch it. <code class="language-plaintext highlighter-rouge">localised</code> only converts a would-be finding about
+that term into a pass: it never reaches <code class="language-plaintext highlighter-rouge">strict</code> tokens (a URL or a number
+consults no glossary — nothing localises a <code class="language-plaintext highlighter-rouge">3</code>), it cannot act on a term it does
+not name, an entry with neither a form nor the flag is <em>unfinished</em> rather than
+permission, and each locale’s file is read alone, so marking a term in French
+says nothing about Arabic. Every one of those is a test in
+<code class="language-plaintext highlighter-rouge">translation-block-qa.test.ts</code>.</p>
+
+<p>The file is hand-authored and has no POT — <code class="language-plaintext highlighter-rouge">schemas/translation.ts</code> declares
+that slot, and <code class="language-plaintext highlighter-rouge">TranslationNode.potFile</code> is optional for exactly this. Bean
+<code class="language-plaintext highlighter-rouge">he0e</code>.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">available_locales</code> includes the SOURCE language, and that is not a
+formality.</strong> It is the list a reader’s language bar and coverage badge are
+computed from — “which languages can I read this page in” — and the page is
+certainly readable in the one it was written in. It is <em>not</em> the list of
+translations that exist, which is what <code class="language-plaintext highlighter-rouge">availableLocales()</code> in
+<code class="language-plaintext highlighter-rouge">content/pipeline/po-resolve.ts</code> returns by resolving
+<code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;stem&gt;.po</code>; that lookup can never name the source
+language, because there is no <code class="language-plaintext highlighter-rouge">translations/en/</code> and there never will be. Use
+<code class="language-plaintext highlighter-rouge">localesAvailableFor()</code> in <code class="language-plaintext highlighter-rouge">content/pipeline/translation-index.ts</code> to go from
+one to the other.</p>
+
+<p>Both halves of the corpus must stamp the same meaning. They did not until issue
+#687: the generator stamped the PO-derived list while the hand-authored
+translated pages stamped the full set, so <code class="language-plaintext highlighter-rouge">docs/fr/index.md</code> rendered a badge
+reading <code class="language-plaintext highlighter-rouge">6/5 languages</code> — a numerator larger than its denominator, which is the
+shape a disagreement about what a field means takes when it finally surfaces.</p>
 
 <p>The <code class="language-plaintext highlighter-rouge">qa_translation_*</code> keys are <strong>gone</strong>, along with the badge that read them.
 They were stamped from a node-level round trip whose back-translation map held
@@ -1894,7 +1978,8 @@ just not tied to the two moments named above.</p>
   <summary class="fa-harness-tabs__heading">
     Dependencies <span class="fa-harness-tabs__count">10</span>
   </summary>
-  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-trust</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/library/agent-skills/"
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/smart-trust/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">smart-trust</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/library/agent-skills/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">agent-skills</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/schemas/cat-bootstrap-tools/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">cat-bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/library/folio-assistant-sci/"
