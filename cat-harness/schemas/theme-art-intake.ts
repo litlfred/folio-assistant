@@ -299,7 +299,7 @@ export function ingestThemeArt(input: ThemeArtIntakeInput): ThemeArtIntakeResult
       kind: "undeclared-destination",
       detail: `${input.destinationDir} is not inside any declared directory (${input.declaredDirectories.join(", ") || "none declared"})`,
       remedy:
-        "write the art under a declared directory, or add the directory to `harness.json` in the same change — a file nothing declares is a file no gate can see",
+        "write the art under a declared directory, or add the directory to the instance's `<name>.json` in the same change — a file nothing declares is a file no gate can see",
     });
   }
 

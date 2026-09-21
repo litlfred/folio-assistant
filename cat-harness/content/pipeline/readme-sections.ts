@@ -459,7 +459,7 @@ const instancesSection: ReadmeSection = {
     // reader is holding a README that sits in a repository which, by
     // construction, contains at least the instance that declared it.
     if (roots.length === 0) {
-      return { markdown: "", notes: ["no instance declares a harness.json — nothing was read"], skip: true };
+      return { markdown: "", notes: ["no instance declares a <name>.json — nothing was read"], skip: true };
     }
 
     const notes: string[] = [];
@@ -608,7 +608,7 @@ const coldStartSection: ReadmeSection = {
     const repo = ctx.root;
     const roots = instanceRootsIn(repo);
     if (roots.length === 0) {
-      return { markdown: "", notes: ["no instance declares a harness.json — nothing was read"], skip: true };
+      return { markdown: "", notes: ["no instance declares a <name>.json — nothing was read"], skip: true };
     }
 
     const { plan, unreadable } = workPlanGraphsIn(repo);
