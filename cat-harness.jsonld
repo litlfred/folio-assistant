@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T20:07:53.497Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/485deb6f5f089ab11c654f86ae719e82e3c00077",
-  "sourceCommitSha": "485deb6f5f089ab11c654f86ae719e82e3c00077",
-  "sourceCommitAt": "2026-09-21T22:06:20+02:00",
+  "generatedAt": "2026-09-21T20:18:03.531Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7dc7e914856dc18dedaa80c734259c848618e33a",
+  "sourceCommitSha": "7dc7e914856dc18dedaa80c734259c848618e33a",
+  "sourceCommitAt": "2026-09-21T22:16:18+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -267,14 +267,14 @@
     "Capability": 28,
     "Role": 131,
     "Convention": 2,
-    "SkillPackage": 17,
+    "SkillPackage": 16,
     "Process": 58,
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
     "Schema": 90,
     "GraphKind": 24,
-    "Directory": 33,
+    "Directory": 32,
     "Asset": 3
   },
   "@graph": [
@@ -1106,6 +1106,22 @@
       ],
       "instructionsPath": "skills/folio-core/chapter-complexity-review.md",
       "instructionLines": 220,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "corpus-grep",
+      "title": "Corpus-Grep Skill",
+      "description": "Pre-declaration corpus check. Before declaring any item \"open\", \"gap\", \"TODO\", \"open problem\", \"pending derivation\" — or asserting in chat that something is unresolved in the corpus — run the four-path grep checklist. A source file's `## Status` note lags the corpus by weeks; the corpus is the source of truth. An item is open only after all four paths come back empty (modulo the originating file itself).",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/corpus-grep.md",
+      "instructionLines": 152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3746,23 +3762,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/methodology-crdm"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "corpus-grep",
-      "title": "Corpus-Grep Skill",
-      "description": "Pre-declaration corpus check. Before declaring any item \"open\", \"gap\", \"TODO\", \"open problem\", \"pending derivation\" — or asserting in chat that something is unresolved in the corpus — run the four-path grep checklist. A source file's `## Status` note lags the corpus by weeks; the corpus is the source of truth. An item is open only after all four paths come back empty (modulo the originating file itself).",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills"
-      ],
-      "instructionsPath": "src/skills/corpus-grep.md",
-      "instructionLines": 152,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-navigation",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "kg-navigation",
@@ -4792,14 +4791,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/methodology-crdm"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "skills",
-      "path": "src/skills",
-      "hasManifest": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-navigation",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "kg-navigation",
@@ -5047,6 +5038,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/coordinate",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/covered-is-not-reachable",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-audit",
@@ -32723,17 +32715,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/translation-sources"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
-      "name": "cat-harness-src",
-      "path": "src/skills/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
-      ],
-      "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse — committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
       "name": "folio",
@@ -32881,8 +32862,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "485deb6f5f089ab11c654f86ae719e82e3c00077",
+    "sha": "7dc7e914856dc18dedaa80c734259c848618e33a",
     "pr": "main",
-    "run": "35648979928"
+    "run": "35650029845"
   }
 }

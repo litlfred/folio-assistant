@@ -14297,6 +14297,19 @@
           "doc": "`subject.path` as the sidecar records it, or `undefined` if it records none."
         },
         {
+          "name": "kind",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`subject.kind` and `subject.id`, when the sidecar records them."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "subjectExists",
           "type": "boolean",
           "optional": true,
