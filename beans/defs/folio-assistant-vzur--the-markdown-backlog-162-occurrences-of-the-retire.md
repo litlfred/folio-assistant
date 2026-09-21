@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vzur
 title: 'The markdown backlog: 162 occurrences of the retired declaration filename in skills an agent reads'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T17:43:09Z
-updated_at: 2026-09-21T18:22:21Z
+updated_at: 2026-09-21T21:05:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -60,14 +60,15 @@ cleared is a gate that is red on arrival.
 
 ## Done when
 
-- [ ] The 83 files say the right thing, `directory-conventions.md:454`'s
+- [x] The 83 files say the right thing, `directory-conventions.md:454`'s
       substantive claim included.
 - [x] The two generated files are REGENERATED, never hand-edited.
 - [x] All four baseline entries removed, and `check:declaration-claims` green
       with an empty backlog. **The gate reported all four STALE and failed until
       they were gone** — the shrink rule working, not merely declared.
-- [ ] A decision recorded on whether `check:declaration-filename` now extends
-      to markdown, with the backlog cleared so it can.
+- [x] A decision recorded on whether `check:declaration-filename` now extends
+      to markdown, with the backlog cleared so it can. **The owner ruled: yes.
+      It is on**, and the backlog was cleared first, in this bean's own order.
 
 *Not started. Recorded by session_01AYHimvYMmf8h8e9fFN6dW5 while closing `hrv2`.*
 
@@ -212,3 +213,65 @@ session 15; `stub` is set on exactly one, equal to its `name`.
   and it no longer reproduces. Bean `zq3f`: the resolver was fixed by a side
   effect of #727, but 235 sidecars still carry verdicts from the old
   behaviour, and **a fixed resolver is not a fixed verdict**.
+
+---
+
+## Closed 2026-09-21 — the owner ruled on all four open questions
+
+PR [#769](https://github.com/litlfred/folio-assistant/pull/769). `bun run
+gates` 93 of 93.
+
+### 1. Restore the filenames — corpus 1 → 3
+
+Pass B's phrase replacement (`harness.json` → *"the declaration"*) removed the
+pairing `check:declaration-claims` verifies. The prose stopped being wrong and
+stopped telling a reader which file to open; the gate built one day earlier
+fell to **1 claim across 747 files**.
+
+26 lines restored by rebuilding from the ORIGINALS with the retired name
+swapped for `<name>.json`, rather than patching the phrased form back. That
+also repaired four grammar defects Pass B's own repair sweep missed — *"a the
+declaration at the instance root"*, *"the declaration declares"* twice, and
+*"The stub (the declaration → `stub`)"*.
+
+### 2. The held 7 — landed
+
+The owner authored the reversal by ruling. Three were the same argument in
+three places; each now records that the **discovery half was answered rather
+than traded away**. Two were the layer-naming argument, which the declaration
+file no longer exemplifies.
+
+`docs/getting-started.md:250` was **checkable rather than a judgement call**,
+and the caution was the right instinct aimed at the wrong file: every key in
+that JSONC block — `title`, `description`, `icon`, `images` — is a top-level
+field of the DECLARATION, verified against `cat-harness.json`.
+
+### 3. The gate is on, and found a bug in its own matcher
+
+`check:declaration-filename` reads markdown, classifying: `record` (derived
+from the declarations), `generated` (prefixes composed from each instance's
+`siteDirFor()`), `historical`, `jekyll-data`, `use`. Only `use` fails.
+
+**History is tested by the PARAGRAPH, not the line.** A line-local test read
+`kg-export`'s retirement note as a stale path, which would make
+correctly-written history the one thing the gate cannot recognise — pushing an
+author to delete the record rather than mark it.
+
+**`boundedIndexOf` checked only the LEFT boundary**, so `harness.jsonld`
+matched. The bean that added that check named `harness.jsonld` in the same
+sentence as `cat-harness.json`, then guarded only the side it had a failing
+example for. Half a filename rule fails as a FINDING rather than a miss, so it
+looks like the check working.
+
+Falsified both ways; 16 tests.
+
+### 4. `TODOS_DIR` removed
+
+Verified unused across the whole tree, not only `.ts`. The only other
+occurrences are an unrelated Python local in `fsh-guts/`.
+
+### What this bean leaves behind
+
+`zq3f` — the profile resolver was fixed by a side effect of #727, but 235
+sidecars still carry verdicts from the old behaviour. **A fixed resolver is
+not a fixed verdict**, and that was not measured here.
