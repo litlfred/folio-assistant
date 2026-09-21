@@ -103,7 +103,7 @@
 import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
-import { injectRail, type RailLink } from "./lib/harness-rail.js";
+import { injectRail, type NavItem } from "./lib/harness-rail.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -306,6 +306,60 @@ export function visualiserHref(visualiser: string, docsPrefix: string): string |
 }
 
 /**
+ * The INSTANTIATED harnesses, for the navbar's fixed bottom.
+ *
+ * Owner, 2026-09-21: *"keep the navba rmenu/tab of the active/instantiated
+ * harnsesss from folio-asst at bottom of navbar in en aexpanable menu. use
+ * avatar/themes of the hanreses"*.
+ *
+ * Read from `<built>/docs/_data/harness.json`, which `sync-docs-harness.ts`
+ * generates from the declarations and `docs:harness:check` gates. A hardcoded
+ * list here would be the `check:declared-assets` defect, and it would go stale
+ * the first time an instance is instantiated — which happened twice this week.
+ *
+ * `undefined`, not `[]`, when the file is missing or will not parse. The
+ * caller then OMITS the region rather than rendering an empty disclosure
+ * labelled "Harnesses", which would read as a site with no harnesses instead
+ * of as a navbar that could not find out. Third state, said by absence.
+ *
+ * **Avatars come from the data, and today almost none are there** — `icon` is
+ * declared for `cat-harness` alone. That is `603s`'s subject, in flight on PR
+ * #791; when it lands the avatars arrive through this same field and nothing
+ * here changes, which is the test of whether the boundary was drawn in the
+ * right place. Until then an item falls back to its initial.
+ *
+ * @param toRoot the calling page's path back to the site root, since every
+ *   href in `harness.json` is site-absolute and a mounted page is not at the
+ *   root.
+ */
+function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
+  const data = join(REPO, built, "docs", "_data", "harness.json");
+  if (!existsSync(data)) return undefined;
+  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string } | null }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  if (!Array.isArray(d.harnesses)) return undefined;
+  return d.harnesses
+    .filter((h) => h.instantiated === true)
+    .map((h) => {
+      const label = h.label ?? h.title ?? h.name ?? "?";
+      // A site-absolute href has to be re-based for a page that is not at the
+      // root. `/who-iris/` from `/docs/who-iris/index.html` is `../../who-iris/`.
+      const href = h.href ? `${toRoot}${h.href}` : undefined;
+      const avatar = h.icon?.src ? { src: `${toRoot}${h.icon.src}`, ...(h.icon.title ? { title: h.icon.title } : {}) } : undefined;
+      return {
+        label,
+        ...(href ? { href } : {}),
+        ...(avatar ? { avatar } : {}),
+        ...(h.tone ? { tone: h.tone } : {}),
+      };
+    });
+}
+
+/**
  * Inject the harness rail into every mounted HTML page.
  *
  * The rail's LINKS ARE DERIVED FROM THE MOUNT TABLE, never listed: an instance
@@ -328,6 +382,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
   siteAbs: string,
   mounts: readonly T[],
   docsPrefix: string | undefined,
+  built: string,
 ): { injected: number; skipped: string[]; unpublished: { route: string; visualiser: string }[] } {
   const byInstance = new Map<string, T[]>();
   for (const m of mounts) byInstance.set(m.name, [...(byInstance.get(m.name) ?? []), m]);
@@ -380,7 +435,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
       // Every route this instance answers at, so the rail can move between
       // them -- the owner's "with who-iris and then link to docs on side in
       // navbar". Rebuilt per file because `toRoot` is per file.
-      const links: RailLink[] = (byInstance.get(m.name) ?? []).map((o) => {
+      const links: NavItem[] = (byInstance.get(m.name) ?? []).map((o) => {
         const visual = target.get(o.route);
         return {
           href: `${toRoot}/${visual ?? `${o.route}/`}`,
@@ -392,8 +447,14 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         };
       });
 
+      const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");
-      const after = injectRail(before, { instance: m.name, toRoot, links });
+      const after = injectRail(before, {
+        instance: m.name,
+        toRoot,
+        links,
+        ...(harnesses ? { harnesses } : {}),
+      });
       if (after === undefined) {
         skipped.push(file.slice(siteAbs.length + 1));
         continue;
@@ -569,7 +630,7 @@ function main(): number {
         `Rail links fall back to mount routes.`,
     );
   }
-  const railed = injectRails(siteAbs, mounts, docsPrefix);
+  const railed = injectRails(siteAbs, mounts, docsPrefix, built);
   for (const u of railed.unpublished) {
     console.error(
       `  ? /${u.route}/ declares the visualiser ${u.visualiser}, which is not under ` +
