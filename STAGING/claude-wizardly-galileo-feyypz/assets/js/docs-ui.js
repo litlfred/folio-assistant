@@ -3016,9 +3016,12 @@
     if (!title) return;
 
     // Create badge container — block-level row below the title
-    var container = el("span", { class: "fa-translation-badges", style:
-      "display: flex; align-items: center; gap: 6px; margin: 0.3em 0 0.6em; flex-wrap: wrap;"
-    });
+    // No `style` here, and none on either badge below. Every colour this row
+    // used to carry inline is a per-scheme token in `docs-ui.css` now, with its
+    // measured ratio written beside it -- bean `n7vv`. The container is also
+    // where those tokens are DECLARED, so a badge outside this row would resolve
+    // none of them, which is the intended failure rather than a silent default.
+    var container = el("span", { class: "fa-translation-badges" });
 
     // Language coverage badge — always shown.
     //
@@ -3028,20 +3031,12 @@
     // the source language plus at least one translation; grey is the source
     // language alone, which is the honest resting state of an untranslated page
     // and is no longer indistinguishable from "no languages at all".
-    var langBg, langBorder;
-    if (availLangs >= totalLangs) {
-      langBg = "#14532d"; langBorder = "#22c55e";
-    } else if (availLangs > 1) {
-      langBg = "#78350f"; langBorder = "#d97706";
-    } else {
-      langBg = "#1e293b"; langBorder = "#475569";
-    }
+    var langState = availLangs >= totalLangs
+      ? "is-ok"
+      : availLangs > 1 ? "is-partial" : "is-idle";
 
     var langBadge = el("span", {
-      class: "fa-lang-coverage-badge",
-      style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
-             "background:" + langBg + ";border:1px solid " + langBorder + ";" +
-             "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
+      class: "fa-translation-badge fa-lang-coverage-badge " + langState,
       // Three wordings, because the fraction alone does not say which case it
       // is. The "of <every supported locale>" tail is what makes a partial
       // count actionable -- it names the languages still missing -- and is
@@ -3066,42 +3061,34 @@
 
     // QA sweep completeness badge — indicates whether sidecars have been run
     var sweep = meta.sweep || {};
-    var sweepBg, sweepBorder, sweepIcon, sweepLabel, sweepTitle;
+    var sweepState, sweepIcon, sweepLabel, sweepTitle;
     if (!sweep.run) {
-      sweepBg = "#1e293b"; sweepBorder = "#475569"; sweepIcon = "\u2B58";
+      sweepState = "is-idle"; sweepIcon = "\u2B58";
       sweepLabel = "QA: not run";
       sweepTitle = "Translation QA sweep has not been run. " +
                    "Run: bun run content/pipeline/translation-qa-sweep.ts";
     } else if (sweep.complete && sweep.pagesWithTranslations > 0) {
       var ratio = sweep.pagesWithTranslations + "/" + sweep.totalPages;
-      sweepBg = "#14532d"; sweepBorder = "#22c55e"; sweepIcon = "\u2705";
+      sweepState = "is-ok"; sweepIcon = "\u2705";
       sweepLabel = "Swept " + ratio;
       sweepTitle = "QA sweep complete. " + sweep.pagesWithTranslations + " of " +
                    sweep.totalPages + " pages have translations. Last run: " + sweep.sweptAt;
     } else {
-      sweepBg = "#78350f"; sweepBorder = "#d97706"; sweepIcon = "\u26A0\uFE0F";
+      sweepState = "is-partial"; sweepIcon = "\u26A0\uFE0F";
       sweepLabel = "Swept 0/" + sweep.totalPages;
       sweepTitle = "QA sweep complete but no pages have translations yet. " +
                    "Last run: " + sweep.sweptAt;
     }
 
     var sweepBadge = el("span", {
-      class: "fa-sweep-badge",
-      style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
-             "background:" + sweepBg + ";border:1px solid " + sweepBorder + ";" +
-             "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
+      class: "fa-translation-badge fa-sweep-badge " + sweepState,
       title: sweepTitle
     }, sweepIcon + " " + sweepLabel);
     container.appendChild(sweepBadge);
 
     // Unverified translation warning — auto-injected on translated pages
     if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
-      var warning = el("div", {
-        class: "fa-translation-warning",
-        style: "background:#78350f;border:1px solid #d97706;border-radius:6px;" +
-               "padding:12px 16px;margin:1em 0;color:#fef3c7;font-size:0.9rem;",
-        role: "alert"
-      });
+      var warning = el("div", { class: "fa-translation-warning", role: "alert" });
       warning.innerHTML =
         "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
         "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert." +
