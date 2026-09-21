@@ -427,6 +427,7 @@ export const RULES: Rule[] = [
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
+      "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
@@ -811,6 +812,7 @@ export const RULES: Rule[] = [
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
+      "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-cat-bootstrap-graph.ts", // writes cat-bootstrap/cat-bootstrap.jsonld

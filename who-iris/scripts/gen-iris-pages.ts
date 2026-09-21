@@ -273,6 +273,29 @@ function assetHref(n: Node): { href: string; cdn: string; name: string; bytes?: 
  * of them, and a wrong box is a reflow rather than a missing image, which is
  * the harder failure to notice.
  */
+/**
+ * Are the rendered covers SHOWN on the replica?
+ *
+ * **No, by the owner's ruling of 2026-09-21.** The question put to them was
+ * whether the emblem printed on a WHO publication reads as *content* — the
+ * document's own cover — or as *branding* this page is wearing. The answer
+ * named it with the logo: *"logo and other branding"*. So it falls under the
+ * standing instruction, *"leave off WHO logo (as with all who-pages for now,
+ * not until published under WHO, just use colors)"*, and a page whose thumbnail
+ * strip carries the emblem three times is wearing it however the pixels got
+ * there.
+ *
+ * **What this does NOT do is un-ingest anything.** The covers are still
+ * rendered, still committed, still recorded as THUMBNAIL bitstreams with their
+ * derivation on each one; `gen-covers.ts` and `iris:covers:check` are
+ * untouched. Only the display is withheld, and the row says so — because
+ * *"withheld"* and *"there is no cover"* are different facts and a reader who
+ * cannot tell them apart learns nothing from either.
+ *
+ * One line to reverse, the way the earlier note promised.
+ */
+const COVERS_SHOWN = false;
+
 function coverSrc(n: Node): { src: string; w: number; h: number } | undefined {
   const b = n.bitstreams?.find((x) => x.bundle === "THUMBNAIL");
   const lp = b?.materialization?.localPath;
@@ -503,9 +526,13 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
      reflows. */
   .sub-cover { flex: 0 0 104px; }
   .sub-cover img { width: 104px; height: auto; display: block; border: 1px solid var(--iris-edge); }
+  /* Centred by FLEX, not by a line-height equal to the height: the withheld
+     placeholder is two lines, and a 140px line-height would put the first of
+     them below the box. */
   .sub-cover .nocover {
-    display: block; width: 104px; height: 140px; border: 1px dashed var(--iris-edge);
-    color: var(--iris-muted); font-size: 0.78rem; text-align: center; line-height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    width: 104px; height: 140px; border: 1px dashed var(--iris-edge);
+    color: var(--iris-muted); font-size: 0.78rem; text-align: center; line-height: 1.3;
   }
   .sub-body { flex: 1; min-width: 0; }
   .sub-title { font-size: 1.02rem; line-height: 1.35; text-decoration: underline; }
@@ -589,7 +616,9 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   <strong>INGESTED COPY — not WHO, and not live.</strong>
   This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
   from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
-  <em>by reference</em>: ${banner()}. The WHO logo is deliberately omitted.
+  <em>by reference</em>: ${banner()}. The WHO logo is deliberately omitted, and the
+  rendered covers are withheld from display for the same reason — they carry the
+  emblem printed on the publications.
 </div></div>
 
 <header class="mast"><div class="wrap">
@@ -601,7 +630,7 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
       <span class="sub">Institutional Repository<br>for Information Sharing</span>
     </span>
   </div>
-  <div class="nologo">Logo omitted — replica, not published under WHO</div>
+  <div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div>
 </div></header>
 
 <nav class="main"><div class="wrap">
@@ -1062,13 +1091,14 @@ ${
  * gradient in the `iris-web` theme's own measured colours instead — owner:
  * *"just use colors."*
  *
- * **The item covers ARE the publications' real covers**, and those carry the
- * WHO emblem, because it is printed on the documents. That is content rather
- * than chrome: the instruction was about not branding OUR page as WHO's, and
- * the same message that gave it also asked for the covers to be extracted.
- * Reversible in one place if that reading is wrong — delete the `<img>` in
- * `submission()` and the covers stop being shown, without touching the
- * catalogue that records them.
+ * **No item covers either, and that reading was wrong the first time.** The
+ * covers ARE the publications' own, and the emblem on them is printed on the
+ * documents — so this file argued they were content rather than chrome, and
+ * said it was reversible in one place if the owner read it otherwise. They
+ * did, 2026-09-21, naming the emblem with the logo: *"logo and other
+ * branding"*. `COVERS_SHOWN` is that one place. The covers are still rendered,
+ * committed and recorded; only the display is withheld, and each row says
+ * **withheld** rather than **no cover**, because those are different facts.
  *
  * ## The numbers are real and the search box is not
  *
@@ -1181,13 +1211,17 @@ function submission(n: Node): string {
       .join(", ")})`,
   ].join(" ");
 
-  return `<article class="sub">
-  <div class="sub-cover">${
-    cov
+  // Three states, not two. A withheld cover and an absent one look the same
+  // in a layout and mean opposite things about the catalogue.
+  const coverCell = !cov
+    ? `<span class="nocover" title="no cover rendered">no cover</span>`
+    : COVERS_SHOWN
       ? `<a href="item-${esc(slug(n.id))}.html"><img src="${esc(cov.src)}" width="${cov.w}" height="${cov.h}"
         alt="Cover of ${esc(n.title)}, rendered here from page 1 of the held PDF" loading="lazy"></a>`
-      : `<span class="nocover" title="no cover rendered">no cover</span>`
-  }</div>
+      : `<span class="nocover" title="A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.">cover<br>withheld</span>`;
+
+  return `<article class="sub">
+  <div class="sub-cover">${coverCell}</div>
   <div class="sub-body">
     <a class="sub-title" href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a>
     <p class="sub-by">${byline}</p>
