@@ -62,6 +62,8 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [bib-photo-ingestion-watcher](bib-photo-ingestion-watcher.html) | `bib-photo-ingestion-watcher` | — | The automation half of the [`bib-human-review`](bib-human-review.md) workflow. |
 | [Bibliography QA](bib-qa.html) | `bib-qa` | — | cd content && bun run pipeline/bib-qa.ts --check-urls |
 | [Block Density](block-density.html) | `block-density` | — |  |
+| [Relationship first, visualisation later](board-diagram-interchange.html) | `board-diagram-interchange` | — | **One sentence, and it is the owner's:** |
+| [Start in the avatar, open into a window](board-windows.html) | `board-windows` | — | The owner, 2026-09-20 and 2026-09-21: |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
@@ -98,6 +100,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
 | [Harness requirements](harness-requirements.html) | `harness-requirements` | — | **Declaring a directory is a promise.** It says this instance holds a graph of |
+| [A tile is the harness's, not the node's](harness-tiles.html) | `harness-tiles` | — | The owner, 2026-09-20, correcting the question rather than answering it: |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
 | [Incremental render](incremental-render.html) | `incremental-render` | — | Owner, 2026-09-20, bean `9c34`: |
@@ -272,16 +275,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
-
-## CatBootstrap (read before anything else is known)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Reading a knowledge graph before you have anything](cat-bootstrap-kg-navigation.html) | `cat-bootstrap-kg-navigation` | — | **This skill assumes a text editor and nothing else.** No MCP server, no |
-| [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Initiator.** You may narrow; only the Requestor may decide. |
-| [discussion](discussion.html) | `discussion` | — | An agent that has just read `cat-bootstrap/README.md` knows the shape of a |
-| [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
-| [The root README, and the one fact it must carry](root-readme.html) | `root-readme` | — | **You are the Initiator, and the install has just succeeded.** The repository |
 
 ## CatBootstrap rendering (cat-bootstrap/render)
 

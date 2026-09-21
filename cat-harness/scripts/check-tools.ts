@@ -29,13 +29,13 @@
  * @module scripts/check-tools
  */
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
 import { knownSkills as knownSkillsIn } from "./known-skills.js";
-import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
+import { instanceDirectoryForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
 
 /**
  * THIS INSTANCE'S OWN `schemas` directory, or the convention.
@@ -222,8 +222,49 @@ export interface ToolCheck {
   skillsWithoutTools: number;
 }
 
+/**
+ * Skill ids a `satisfies` may legitimately name, which is WIDER than the ones
+ * this instance overlays.
+ *
+ * `knownSkills()` answers *"which skills are in MY overlay"*. For "every skill
+ * has a Tool" that is the right question — an instance is not accountable for
+ * covering another instance's skills. For *"does this `satisfies` name a real
+ * skill"* it is the WRONG one, and the difference is the same conflation this
+ * repository keeps paying for: **not in my overlay is not does not exist.**
+ *
+ * Found 2026-09-21 by the owner's ruling on `pve3` (*"neither"*), which
+ * removed `cat-bootstrap/skills/` from the root's declared directories. Two
+ * Tools then reported as dangling — `discuss` → `discussion` and
+ * `log-message` → `log-message` — and both skills exist, declared, in
+ * `cat-bootstrap/harness.json`. The Tools live here because a Tool is
+ * cat-harness's vocabulary and cat-bootstrap may not import it (bean `gn4l`
+ * records that as a limitation, with the node moving unchanged when tool
+ * collection stops being import-bound), so the cross-instance edge is the
+ * architecture rather than a defect.
+ *
+ * This widens ONE direction on purpose. Coverage still counts only this
+ * instance's skills, so adding a sibling cannot silently create an obligation
+ * to write Tools for it.
+ */
+function satisfiableSkills(): Set<string> {
+  const out = new Set(knownSkills());
+  // `ROOT` is THIS INSTANCE (`cat-harness/`), not the checkout. Sibling
+  // instances are enumerated from the repository root, and reading the wrong
+  // one here returns an empty list that looks exactly like "no siblings
+  // declare it" — the vacuous-green shape, arrived at by using a variable
+  // whose name does not say which root it is.
+  for (const instance of instanceRootsIn(repoRootFor(ROOT))) {
+    if (resolve(instance) === resolve(ROOT)) continue;
+    for (const id of knownSkillsIn(instance)) out.add(id);
+  }
+  return out;
+}
+
 export function checkTools(): ToolCheck {
+  // Coverage is asked of THIS instance's skills; resolution is asked of every
+  // declared one. Two questions, two sets — see `satisfiableSkills`.
   const skills = knownSkills();
+  const resolvable = satisfiableSkills();
   const typeNames = new Set(Object.keys(TOOL_TYPES));
   const dangling: Array<{ tool: string; skill: string }> = [];
   const unknownTypes: Array<{ tool: string; port: string; ref: string }> = [];
@@ -238,7 +279,9 @@ export function checkTools(): ToolCheck {
     const portNames = new Set(t.io.inputs.map((i) => i.name));
     for (const s of t.satisfies) {
       if (skills.has(s)) covered.add(s);
-      else dangling.push({ tool: t.id, skill: s });
+      // Resolvable-but-not-ours is neither covered nor dangling: the edge is
+      // real and this instance is not accountable for the skill.
+      else if (!resolvable.has(s)) dangling.push({ tool: t.id, skill: s });
 
       // ## What is compared, and what deliberately is not
       //

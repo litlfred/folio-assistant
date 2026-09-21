@@ -86,6 +86,20 @@ export type HarnessVisualisation = {
 export type HarnessTile = {
   name: string;
   title: string;
+  /**
+   * What the tile SAYS, which is `title` unless another tile says the same.
+   *
+   * Owner, 2026-09-21, on the sidebar: two tiles both read `folio-assistant` —
+   * the repository root acting as an instance, and `cat-harness`, whose
+   * declared title is the product's name. Both link `/`, so a reader could not
+   * tell which one they were about to open, or that they were two.
+   *
+   * A title is a person's choice and is not required to be unique; a LABEL in
+   * a list of links has to be, or it is not a label. So the disambiguation
+   * happens where the whole set is visible — {@link disambiguate} — rather
+   * than by forbidding a title somebody chose.
+   */
+  label: string;
   description: string;
   /**
    * Exempt from owing a visualiser — the declared reason cat-bootstrap sorts
@@ -130,10 +144,48 @@ export type HarnessTile = {
   findings: string[];
 };
 
-/** `docs/assets/x.svg` → `/assets/x.svg`, matching `sync-docs-harness`. */
-function siteRelative(src: string, siteDir: string): string {
-  const prefix = `${siteDir}/`;
-  return src.startsWith(prefix) ? `/${src.slice(prefix.length)}` : src;
+/**
+ * A declared icon's path, as the PUBLISHED site serves it.
+ *
+ * ## The defect this replaced, measured on the served bytes
+ *
+ * Owner, 2026-09-21: *"broken image on LHS navbar"*. Read out of
+ * `origin/gh-pages`, because egress to the published site is blocked from the
+ * build container and the branch is the only place the served bytes can be
+ * had:
+ *
+ * ```
+ * <img class="fa-harness-tile__mark"
+ *      src="/folio-assistant/STAGING/<branch>/docs/assets/img/icons/cat-mark.svg">
+ * ```
+ *
+ * `docs/` is the instance's site directory, and the site build copies that
+ * directory's CONTENTS to the mount — so the declared prefix is exactly what a
+ * published URL does not carry. Every reader got a 404 and a placeholder.
+ *
+ * The old helper was handed the wrong KIND of value and could never have
+ * stripped anything: `siteDir` is ABSOLUTE
+ * (`/…/cat-harness/docs`) while `icon.src` is relative to the instance
+ * (`docs/assets/…`), so the prefix test was false for every input. A helper
+ * that silently passes everything through is indistinguishable from one that
+ * is working, which is why this now takes the instance's own directory and
+ * derives the prefix from its OWN declaration.
+ *
+ * ## Two parts, because an instance is not always at the site root
+ *
+ * The published path is the instance's mount plus the asset's path with its
+ * site directory removed. `folioRoot` already answers the first — `/` for the
+ * instance that owns the site, `/<name>/` for one mounted beneath it — so this
+ * takes it rather than re-deriving it, and an instance whose mount is unknown
+ * gets **no icon at all**. That is the `pb04` rule one layer down: an `<img>`
+ * whose `src` 404s is worse than no `<img>`, because a placeholder reads as a
+ * broken site rather than as an instance with no art.
+ */
+function publishedIcon(instanceDir: string, src: string, mount: string | undefined): string | undefined {
+  if (mount === undefined) return undefined;
+  const prefix = `${siteDirFor(instanceDir)}/`;
+  if (!src.startsWith(prefix)) return undefined;
+  return `${mount.replace(/\/$/, "")}/${src.slice(prefix.length)}`;
 }
 
 /**
@@ -219,6 +271,8 @@ function tileFor(
   repoRoot: string,
   /** This instance IS the repository root — the checkout acting as an instance. */
   isRepoRoot: boolean,
+  /** This instance's OWN directory, which is where its declared paths are relative to. */
+  instanceDir: string,
 ): HarnessTile {
   const dirs = decl.directories ?? [];
   const kinds = [...new Set(dirs.flatMap((d) => d.graphs ?? []))].sort();
@@ -295,6 +349,21 @@ function tileFor(
   // the checkout that pipeline publishes. Saying so beats giving one of them a
   // link that 404s — `docs/cat-harness/` has viewers beneath it and no index.
   const folio = folioRoot(repoRoot, decl.name, ownsSite || isRepoRoot);
+
+  // THE ICON, published rather than declared — see `publishedIcon`. Resolved
+  // here rather than beside `icon` because it needs the mount, and the mount
+  // is `folio`.
+  const iconSrc = icon ? publishedIcon(instanceDir, icon.src, folio) : undefined;
+  if (icon && iconSrc === undefined) {
+    // Reported, never rendered as a placeholder. The instance ASKED for a
+    // mark and did not get one, and that is a fact about its declaration
+    // rather than about this tile.
+    findings.push(
+      `${decl.name}: declares icon "${decl.icon}" at ${icon.src}, which this build cannot ` +
+        `turn into a published path — the instance has no mount, or the path is not under ` +
+        `its declared site directory. Showing no mark rather than a broken image.`,
+    );
+  }
   const firstViewer = visualisations.find((v) => v.path)?.path;
   const href = folio ?? firstViewer;
   if (folio === undefined && firstViewer !== undefined) {
@@ -307,10 +376,13 @@ function tileFor(
   return {
     name: decl.name,
     title: decl.title ?? decl.name,
+    // Provisional. `disambiguate` is what settles it, because only the whole
+    // set can say whether this title identifies anything.
+    label: decl.title ?? decl.name,
     description: decl.description ?? "",
     footer: isExemptFrom(decl, "visualiser"),
     ...(decl.needs ? { needs: decl.needs } : {}),
-    icon: icon ? { src: siteRelative(icon.src, siteDir), title: icon.title ?? "" } : null,
+    icon: iconSrc === undefined ? null : { src: iconSrc, title: icon?.title ?? "" },
     tone: avatar.tone,
     reads: avatar.reads,
     genericAvatar: !own,
@@ -353,10 +425,47 @@ export function harnessTiles(
   for (const dir of instanceDirs(repoRoot, names)) {
     const decl = readDeclaration(dir);
     if (!decl) continue;
-    tiles.push(tileFor(decl, handler, siteDir, dir === harnessRoot, repoRoot, dir === repoRoot));
+    tiles.push(
+      tileFor(decl, handler, siteDir, dir === harnessRoot, repoRoot, dir === repoRoot, dir),
+    );
   }
 
-  return orderTiles(tiles);
+  return orderTiles(disambiguate(tiles));
+}
+
+/**
+ * Make every tile's label identify its subject, and say when it did not.
+ *
+ * A duplicate is qualified with the instance's own directory name, which IS
+ * unique — it is the directory the declaration was read from. `folio-assistant`
+ * and `folio-assistant (cat-harness)` are then two labels a reader can act on.
+ *
+ * **The finding is not optional.** Two tiles that read the same and link the
+ * same place are indistinguishable from one tile rendered twice, and this
+ * repository has already paid for a defect of exactly that shape — a count
+ * that was not the thing it counted. Qualifying the label fixes what a reader
+ * sees; the finding is what tells somebody a declaration is ambiguous.
+ */
+export function disambiguate(tiles: readonly HarnessTile[]): HarnessTile[] {
+  const byTitle = new Map<string, number>();
+  for (const t of tiles) byTitle.set(t.title, (byTitle.get(t.title) ?? 0) + 1);
+  return tiles.map((t) => {
+    if ((byTitle.get(t.title) ?? 0) < 2) return t;
+    // `folio-assistant (folio-assistant)` says nothing twice. When the title
+    // IS the directory name there is no further fact to add, so the label is
+    // left alone and the other tiles carry the qualifier — which is what makes
+    // the pair distinguishable.
+    return {
+      ...t,
+      label: t.name === t.title ? t.title : `${t.title} (${t.name})`,
+      findings: [
+        ...t.findings,
+        `${t.name}: its title "${t.title}" is also another instance's. The tile is ` +
+          `labelled with its directory name as well, because a label that does not ` +
+          `identify its subject is not a label.`,
+      ],
+    };
+  });
 }
 
 const byName = (a: HarnessTile, b: HarnessTile) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
