@@ -172,7 +172,7 @@ export function instanceDeclarationFilename(name: string): string {
 /**
  * The declaration file in this directory, or `undefined` if there is none.
  *
- * Scans for `*.config.json` and returns the one that both carries a `name` and
+ * Scans for `*.json` and returns the one that both carries a `name` and
  * whose filename stem EQUALS that name. A file failing either half is not a
  * declaration: no `name` means it is a plain config, and a mismatched stem is
  * the rename-half-done case `check:instance-config` already reports.
@@ -3142,7 +3142,7 @@ export function siteDirFor(root: string): string {
  */
 export function artefactStubFor(root: string): string {
   // Named as a DIRECTORY when there is no declaration, the same way
-  // `siteDirFor` is: under `<name>.config.json` there is no single filename to
+  // `siteDirFor` is: under `<name>.json` there is no single filename to
   // report as missing, and "no declaration in <dir>" is the fact anyway.
   const file = findDeclarationFile(root);
   const p = file === undefined ? resolve(root) : join(root, file);
