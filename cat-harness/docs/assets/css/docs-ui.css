@@ -2155,6 +2155,33 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * that is barely legal is a target that is hard to hit (bean `gjli`).
  */
 
+/* ── The folio visualisation's corner radius — ONE home ───────────────
+ *
+ * Owner, 2026-09-21: *"drop all the rounded corners… too much dead space."*
+ *
+ * A TOKEN rather than a sweep, and the difference is what the next change
+ * costs. Written as `border-radius: 0` at each of the thirteen surfaces, the
+ * decision would have thirteen homes and no name: a reader who wanted the
+ * rounding back would have to find every one, and a reader editing
+ * `.fa-sticky`'s radius would not learn that the value is a policy rather
+ * than a taste. Here it is one line, and each surface below SAYS it is
+ * governed by asking for it.
+ *
+ * SCOPED TO THE FOLIO, not to the stylesheet. The surfaces that opt in are
+ * the board, the cards on it, the window, the avatar and the chrome inside a
+ * card — the thing the owner was looking at. The QA panel, the search field
+ * and the translation badges keep their own literals: none was asked about,
+ * and a blanket sweep would have changed them silently.
+ *
+ * THE PILLS ARE NOT SURFACES AND DO NOT OPT IN. `.fa-sticky-chip`,
+ * `.fa-sticky-badge` and `.fa-tile-count` are `999px` — a pill is a SHAPE
+ * that carries meaning, and squaring a count badge does not recover any dead
+ * space because a pill has none. The stated reason does not reach them, so
+ * they are left and NAMED here rather than left and unmentioned. */
+:root {
+  --fa-folio-radius: 0;
+}
+
 /* Themed: every colour here is a ROLE supplied by themes.css, which is
  * generated from the theme nodes in `schemas/themes.ts`. The fallbacks after
  * each `var()` are the pre-theme neutrals, so a board still renders if
@@ -2162,9 +2189,12 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * theme yet" is a state rather than an error. */
 .fa-sticky-board {
   margin: 0 0 1.5em;
-  padding: 1em 1.1em 1.2em;
+  /* CONDENSED — *"to much padding between panels"*. Was `1em 1.1em 1.2em`.
+     The board is the glass the cards sit on, so its inset is frame rather
+     than content: it needs to read as an edge, not as a margin. */
+  padding: 0.4rem;
   border: 1px solid var(--fa-sticky-edge, rgba(128, 128, 128, 0.4));
-  border-radius: 8px;
+  border-radius: var(--fa-folio-radius, 8px);
   background: rgba(128, 128, 128, 0.06);
 }
 
@@ -2187,7 +2217,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   min-height: 2.75rem;
   padding: 0;
   border: 1px solid rgba(128, 128, 128, 0.4);
-  border-radius: 6px;
+  border-radius: var(--fa-folio-radius, 6px);
   background: transparent;
   color: inherit;
   font-size: 1.2rem;
@@ -2197,11 +2227,46 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 
 /* `auto-fill` with a floor, so the board is one readable column on a phone and
  * lines the stickies up on a wide screen — without a media query naming a
- * breakpoint that the next layout change would invalidate. */
+ * breakpoint that the next layout change would invalidate.
+ *
+ * ── The column is CAPPED now, and the cap is a measurement ──────────
+ *
+ * Owner, 2026-09-21: *"sticky should stilll be ~2.5" in large macbook
+ * screen"*, said in the same breath as *"THE STICKIES MUST BE CLOSED AVATRS
+ * AND SMALL"* — so the cap is what keeps "small" from becoming "unreadable",
+ * not a licence to shrink further.
+ *
+ * `1fr` WAS THE BUG. The floor was 17rem and the track was `1fr`, so on a
+ * wide board every column absorbed the leftover space and the sticky's width
+ * was whatever the viewport happened to leave — a size nobody chose and
+ * nothing could hold. `--fa-sticky-max-width` makes the intended width
+ * statable, and therefore testable.
+ *
+ * 20rem IS 2.5 INCHES, AND NOT BECAUSE CSS SAYS SO. A CSS `in` is defined as
+ * exactly 96 CSS px and is NOT a physical inch — writing `2.5in` here would
+ * have rendered about 1.9" of glass and looked like the owner was ignored.
+ * The 16" MacBook Pro this was asked about is 3456x2234 over a 16.2" diagonal
+ * — 13.6" of width — and presents 1728 CSS px across it, so one physical inch
+ * is about 127 CSS px. 2.5 x 127 = 318px; 20rem is 320px. The device is named
+ * because the conversion is device-dependent: on a 27" 1440p display the same
+ * 20rem is about 3.7 physical inches, and that is correct rather than a
+ * defect — the owner sized it for the screen they use.
+ *
+ * MOBILE IS UNTOUCHED. themes.css sets `--fa-sticky-min-width: 100%` under
+ * 40rem. `minmax(100%, 20rem)` has min > max, which CSS resolves by IGNORING
+ * the max — so the phone keeps its single full-width column without this rule
+ * having to know a breakpoint. */
 .fa-sticky-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--fa-sticky-min-width, 17rem), 1fr));
-  gap: 0.9em;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(var(--fa-sticky-min-width, 17rem), var(--fa-sticky-max-width, 20rem))
+  );
+  /* CONDENSED — *"to much padding between panels, condense"*. Was `0.9em`,
+     which is ~14px of dead board between two cards that are themselves only
+     320px wide. `rem` rather than `em` because the gap is board geometry and
+     must not track a sticky's font scale. */
+  gap: 0.4rem;
   align-items: start;
 }
 
@@ -2214,7 +2279,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    * WIDTH as well as an opacity — colour alone would carry the whole signal,
    * which SC 1.4.1 forbids and a monochrome reader cannot see at all. */
   border-left-width: 5px;
-  border-radius: 6px;
+  border-radius: var(--fa-folio-radius, 6px);
   /* A gradated theme supplies both stops or neither — the schema refuses one,
    * because a gradient with a single stop is a flat fill claiming otherwise.
    * So the linear-gradient falls back to the flat surface as a whole. */
@@ -2374,7 +2439,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   min-height: 2.75rem;
   padding: 0.2em 0.7em;
   border: 1px solid rgba(128, 128, 128, 0.4);
-  border-radius: 6px;
+  border-radius: var(--fa-folio-radius, 6px);
   background: transparent;
   color: inherit;
   font: inherit;
@@ -2419,7 +2484,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   margin: 0;
   padding: 0.2em 0.7em;
   border: 1px solid rgba(128, 128, 128, 0.4);
-  border-radius: 6px;
+  border-radius: var(--fa-folio-radius, 6px);
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
@@ -2458,7 +2523,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   min-width: 24px;
   min-height: 24px;
   padding: 0 0.35em;
-  border-radius: 4px;
+  border-radius: var(--fa-folio-radius, 4px);
   cursor: pointer;
   line-height: 1;
   list-style: none;
@@ -2481,7 +2546,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   min-width: max-content;
   padding: 0.3em;
   border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
-  border-radius: 5px;
+  border-radius: var(--fa-folio-radius, 5px);
   /* OPAQUE, and for the reason the pinned sticky is: it sits over content.
      Inherits the card's own surface so a themed sticky's drawer is themed
      too — the `ivfw` round-trip lesson, applied before it could bite. */
@@ -2631,7 +2696,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   gap: 0.3em;
   padding: 0.1em 0.5em;
   border: 1px solid rgba(128, 128, 128, 0.35);
-  border-radius: 4px;
+  border-radius: var(--fa-folio-radius, 4px);
   font-size: 0.72rem;
 }
 
@@ -3076,7 +3141,12 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    * `min(26rem, 100%)` rather than a flat 26rem: 26rem is 416px, and a 430px
    * phone would otherwise be handed a column it cannot quite fit. */
   grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
-  gap: 1rem;
+  /* CONDENSED with the board grid, and for the same reason. Not to `0.4rem`:
+     these cards carry full-bleed art to their own edges, so at 4px two crops
+     read as one image. `0.6rem` is the smallest gap at which the boundary
+     survives — the constraint is the art, not a second opinion about
+     spacing. */
+  gap: 0.6rem;
   align-items: start;
   margin-bottom: 1.5rem;
 }
@@ -3610,7 +3680,7 @@ a.fa-harness-tab__body:focus-visible {
   align-items: center;
   padding: 0 1rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.4));
-  border-radius: 0.375rem;
+  border-radius: var(--fa-folio-radius, 0.375rem);
   margin: 0.5rem 0;
   background: transparent;
   color: inherit;
@@ -3763,7 +3833,7 @@ a.fa-harness-tab__body:focus-visible {
   min-height: 2.75rem;
   margin: 0 0 0.375rem;
   border: 1px solid transparent;
-  border-radius: 0.375rem;
+  border-radius: var(--fa-folio-radius, 0.375rem);
   background-color: transparent;
   cursor: pointer;
 }
@@ -3819,7 +3889,7 @@ a.fa-harness-tab__body:focus-visible {
   overflow: auto;
   pointer-events: auto;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.5));
-  border-radius: 0.5rem;
+  border-radius: var(--fa-folio-radius, 0.5rem);
   background: var(--fa-surface, Canvas);
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
 }
@@ -3870,7 +3940,7 @@ a.fa-harness-tab__body:focus-visible {
   min-width: 2.25rem;
   min-height: 2.25rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.4));
-  border-radius: 0.25rem;
+  border-radius: var(--fa-folio-radius, 0.25rem);
   background: transparent;
   color: inherit;
   cursor: pointer;
@@ -4017,7 +4087,7 @@ a.fa-harness-tab__body:focus-visible {
   min-height: 2.25rem;
   padding: 0 0.375rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.45));
-  border-radius: 0.25rem;
+  border-radius: var(--fa-folio-radius, 0.25rem);
   background: transparent;
   color: inherit;
 }
@@ -4027,16 +4097,106 @@ a.fa-harness-tab__body:focus-visible {
   opacity: 0.8;
 }
 
-/* The declared visualisations, on the board. The navbar's copies live in the
- * action launcher's own grid and take its rules; this is the second surface of
- * the same declaration, so it reuses `.fa-tile` rather than styling a new
- * thing — the template is `1le7`'s and is not duplicated. */
+/* ── The folio's tile strip (beans `v0jv`, refined by #796) ────────────
+ *
+ * Owner, 2026-09-21: *"lets have the square tiles lined up on the top of the
+ * folio-sicky-board-landingpanel whole slides up if user doesnt want"*, and
+ * in the same breath *"i dont want sub-panels of the folio, just one open
+ * (miro-like) board … drop all the rounded corners… too much dead space."*
+ *
+ * TWO CORRECTIONS TO WHAT THIS WAS, both before it shipped. `v0jv` put the
+ * tiles in a `<details>` at the BOTTOM, CLOSED. Wrong edge, and wrong
+ * default: tiles a reader must open before they can see what a folio offers
+ * read as absent, which is the very complaint that opened `v0jv` about the
+ * in-flow row. Open is the initial state; sliding it up is the reader's act.
+ *
+ * CHROME ALONG THE BOARD, NOT A PANEL WITHIN IT. It carries no card, no
+ * content and no second surface — that is what *"no sub-panels"* means, and
+ * it is why this is a strip rather than a dock.
+ *
+ * SQUARE, and the same `.fa-tile` the launcher uses: *"i meant to use same
+ * SQUARE TILES taht are in the expanding menu of LHS navbar."* The template
+ * was already shared; what was not square was the tile itself, a flex item of
+ * flexible width in a wrap row. `aspect-ratio` makes it square without
+ * hardcoding a size, so it still tracks the theme's own steps.
+ *
+ * NO ROUNDED CORNERS on this surface. Stated as a rule here rather than swept
+ * across all 57 `border-radius` declarations in this file: the folio
+ * visualisation is the surface the owner is specifying, and a blanket sweep
+ * would change the QA panel, the translation badges and the search field —
+ * none of which was asked for and each of which is somebody else's bean. */
+.fa-board-strip {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  border-bottom: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  /* Opaque: board content scrolls UNDER it. */
+  background: var(--sidebar-color, #27262b);
+}
+:root[data-fa-scheme="light"] .fa-board-strip {
+  background: #e8eaed;
+  border-bottom-color: #767d88;        /* 3.44:1 as a boundary, SC 1.4.11 */
+  color: #1f2933;                      /* 12.24:1 */
+}
+
+.fa-board-strip-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  /* SC 2.5.8's 24px floor. This instance's declared interaction profile is
+     low-dexterity, so the floor is the point rather than a minimum to argue
+     down from. */
+  min-height: 24px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  list-style: none;
+}
+.fa-board-strip-summary::-webkit-details-marker { display: none; }
+.fa-board-strip-summary::marker { content: ""; }
+.fa-board-strip-summary:hover { background: rgba(128, 128, 128, 0.16); }
+
+/* The declared visualisations, lined up along the top. The navbar's copies
+ * live in the launcher's own grid and take its rules; this is the second
+ * surface of the same declaration, so it reuses `.fa-tile` rather than
+ * styling a new thing — the template is `1le7`'s and is not duplicated. */
 .fa-board-tiles {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  /* CONDENSED — *"to much padding between panels, condense"*. Was 0.5rem on
+     both; the gap carries the separation and the padding was dead space. */
+  gap: 0.25rem;
+  padding: 0.25rem;
+  /* NOT the default `stretch`. A flex line stretches its items to the tallest
+     one, which silently un-squares every tile on the row the moment one
+     caption wraps — measured at 64 x 68.8px, and invisible in a screenshot. */
+  align-items: flex-start;
 }
+
+/* SQUARE, and cornerless, on this surface only.
+ *
+ * AN EXPLICIT HEIGHT rather than `aspect-ratio: 1 / 1`, and the difference is
+ * that one of them is a promise and the other is a constraint. `aspect-ratio`
+ * supplies a height only while the content fits inside it; a two-line caption
+ * grows the box past the ratio and the tile is quietly oblong again. The
+ * padding drops with it so the caption has the room not to wrap in the first
+ * place — that is the actual fix, and the clip below is only the backstop for
+ * a caption longer than any declared today. */
+.fa-board-tiles .fa-tile {
+  flex: 0 0 auto;
+  width: 4rem;
+  height: 4rem;
+  min-height: 0;
+  padding: 0.25rem;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+/* An EMPTY strip is no strip. A row that opens on nothing is the `pb04`
+   failure again — an affordance that promises and delivers nothing — and
+   `:has()` lets the container answer for its contents rather than the mount
+   having to tell it. */
+.fa-board-strip:not(:has(.fa-tile)) { display: none; }
 
 .fa-board-tiles:empty {
   display: none;

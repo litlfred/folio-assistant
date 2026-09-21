@@ -2617,6 +2617,43 @@
     return pic;
   }
 
+  /**
+   * One line of text, from prose that was never one line.
+   *
+   * Owner, 2026-09-21, on what a CLOSED sticky shows: *"just the condensend
+   * text"*, and then *"(strip whitesaplnce, newlines, bullets....)"*.
+   *
+   * ## Why this rather than an `aria-label`
+   *
+   * The first proposal was a visually-hidden name. The owner rejected it —
+   * *"that's new data to maintain"* — and the rejection is the better
+   * design: a hidden label is a SECOND string beside the visible one, and two
+   * strings for one fact is the defect `1rta` and `6lb8` §6 already name about
+   * a badge that can disagree with its own panel. The card's own text IS its
+   * name; a screen reader and a sighted reader get the same string because
+   * there is only one.
+   *
+   * ## What it strips, and what it deliberately does not
+   *
+   * Markdown list markers, blockquote carets, heading hashes and every run of
+   * whitespace — the structure that makes prose readable DOWN a card and
+   * unreadable ACROSS one. It does not truncate: cutting at a character count
+   * puts the elision in the model, where a stylesheet cannot undo it for a
+   * wider card. `text-overflow` is the renderer's job and stays there.
+   */
+  function condense(text) {
+    if (!text) return "";
+    return String(text)
+      // List markers and blockquote carets, at the start of any line only —
+      // a hyphen mid-sentence is a hyphen.
+      .replace(/^[ \t]*(?:[-*+\u2022]|\d+[.)]|>)+[ \t]*/gm, "")
+      // Heading hashes, same rule.
+      .replace(/^[ \t]*#{1,6}[ \t]*/gm, "")
+      // Every run of whitespace, newlines included, becomes one space.
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
     var attrs = {
@@ -2662,7 +2699,7 @@
       class: "fa-sticky-toggle",
       "aria-expanded": "false",
     });
-    toggle.appendChild(el("span", { class: "fa-sticky-summary" }, todo.summary));
+    toggle.appendChild(el("span", { class: "fa-sticky-summary" }, condense(todo.summary)));
     head.appendChild(toggle);
 
     var chips = el("div", { class: "fa-sticky-chips" });
@@ -2940,15 +2977,63 @@
     /* THE OTHER SURFACE for the same declarations. Q11: declared once,
      * per-surface visibility. This filters the same array the navbar reads, so
      * a tile cannot be one thing in the sidebar and another here. */
+    /* AN EDGE DOCK, NOT A ROW IN FLOW — bean `v0jv`, the owner: *"folios have
+     * tiles do not go to the window. they are stacked around (bottom?) of
+     * folio, slid away, open to tiles to things like fsh-gts, todos, docs."*
+     *
+     * It was `display: flex; flex-wrap: wrap` appended after the sticky grid,
+     * so on the landing board it landed below every full-bleed card and read
+     * as absent. The DECLARATION side was already right and is untouched:
+     * `harness-tiles` — *"declared once, per-surface visibility, never two
+     * registries free to disagree about what a tile is"* — and the call below
+     * still filters the same array the navbar reads. Only the placement was
+     * wrong.
+     *
+     * FOLIO CHROME, NOT BOARD CONTENT, which is the distinction the bean
+     * records: *"the tiles must NOT be projected onto the glass — they are
+     * folio chrome, where a window is content."* So the dock is a SIBLING of
+     * the board's content, at its edge, and never a layer over it. Same arrow
+     * as `board-diagram-interchange`: chrome frames content, never the
+     * reverse.
+     *
+     * A `<details>` for the same reason the sticky drawer is one — the
+     * disclosure, the keyboard path, Escape and the expanded state are the
+     * browser's, and it degrades to everything-visible with no JavaScript,
+     * which is R4's floor rather than a convenience. */
+    var boardStrip = el("details", { class: "fa-board-strip", open: "" });
+    boardStrip.appendChild(el("summary", {
+      class: "fa-board-strip-summary",
+      // NAMES WHAT IS INSIDE. "Tiles" is the shape; a reader deciding whether
+      // to spend a keystroke needs the subject.
+      "aria-label": "Visualisations for this folio",
+      title: "Visualisations for this folio",
+    }, "\u25A6 Visualisations"));
     var boardTiles = el("div", {
       class: "fa-board-tiles",
       role: "group",
       "aria-label": "Visualisations",
     });
+    boardStrip.appendChild(boardTiles);
 
     var grid = el("div", { class: "fa-sticky-grid" });
+    /* THE STRIP IS ALONG THE TOP, and OPEN by default — owner, 2026-09-21:
+     * *"lets have the square tiles lined up on the top of the
+     * folio-sicky-board-landingpanel whole slides up if user doesnt want."*
+     *
+     * It was a `<details>` dock at the BOTTOM, closed, which got two things
+     * wrong at once: the edge, and the default. Tiles a reader has to open
+     * before they can see what a folio offers are tiles that read as absent —
+     * which is the same complaint that opened `v0jv` about the in-flow row.
+     * So `open` is the initial state and sliding it UP is the reader's act,
+     * not the other way round.
+     *
+     * NOT A SUB-PANEL, which the owner ruled in the same breath: *"i dont
+     * want sub-panels of the folio, just one open (miro-like) board.
+     * everything lives on fa-sticky-board, fa-landing-board."* The strip is
+     * chrome ALONG the board rather than a panel within it — it carries no
+     * card, no content and no second surface. */
+    board.appendChild(boardStrip);
     board.appendChild(grid);
-    board.appendChild(boardTiles);
     // APPEND on the landing board, insert-first everywhere else. The harness
     // cards are the page's first statement -- what this repository is, and
     // which layers initiated -- and putting the todos above them would answer

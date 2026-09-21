@@ -222,12 +222,183 @@ one mitigation a single session can apply.
 
 ---
 
-## Step 2 of the decisive test — IN PROGRESS
+## Observation EIGHT, 2026-09-21 — the failure is EVENT-TYPED, measured on one sha
 
-This block exists to CREATE a conflict against `main`, which already carries a
-different block at exactly this position. It is the instrument, not a finding:
-`yv4z`'s step 2 asks whether a PR that is unmergeable AT CREATION carries
-`refs/pull/N/merge`, and that can only be measured on a PR which is open and
-conflicted at the same moment. Every open PR checked so far was mergeable.
+session_01857F3XZrMAYDxyx3UqRsZG, PR #797. Observed end to end, and it adds a
+narrowing none of the previous seven could make.
 
-Replaced by the measurement once taken.
+| | |
+|---|---|
+| head `ed821b385` pushed | 20:33:17Z, by `litlfred`, plain fast-forward |
+| PR #797 opened | 20:33:31Z — **14 s later** |
+| `mergeable_state` when checked | **`dirty`**, measured at the time |
+| the conflict | real: three files, `merge-tree` exit 1 (two add/add, one content) |
+| `pull_request`-event runs on that head | **ZERO**, across ALL THREE workflows |
+| `push`-event run on that SAME head | **`JSON-LD generated-file drift`, success, 20:33:17Z** |
+| elapsed before it was called dropped | **~19 minutes**, not one or two |
+| after merging main and resolving (`bef5ddc3e`) | CI fired at **20:52:25Z**, 1 s after the push |
+
+### What is new here: a push run and no pull_request run, on ONE sha
+
+Every earlier observation records *"no run of any kind"* — observation seven
+says so explicitly, via `check:head-has-run`. This one has a head where a
+workflow **ran to completion by `push`** while three workflows produced nothing
+by `pull_request`.
+
+`jsonld-gen-check.yml` carries BOTH triggers, `pull_request:` and `push:`, both
+with the same `paths` list. Its run on `ed821b385` is absent from the
+`event=pull_request` listing for this branch, so it fired on the push.
+
+That kills a whole class of explanation for THIS occurrence, without needing
+any hypothesis about mechanism:
+
+- not the sha (a workflow checked it out and passed on it);
+- not runner capacity, repo throttling or an Actions outage (same minute);
+- not a `paths` filter (the same file's `push` half matched the same diff);
+- not lag (19 minutes, against the 1–2 the seventh observation measured).
+
+The failure is **specific to the `pull_request` event on a head that is
+unmergeable**, which is exactly the shape the merge-ref mechanism predicts:
+a `pull_request` run checks out `refs/pull/N/merge` and a conflicted PR has
+none, while a `push` run checks out `refs/heads/<branch>` and is unaffected —
+the same asymmetry that makes `workflow_dispatch` "fix" it.
+
+### A CONTROL arrived minutes later, and it DOES discriminate
+
+Written first as *"this does not discriminate conflict from app-token
+suppression"* — both predict the pattern above, since the push was `litlfred`'s
+and the `opened` was the App's. **PR #806 then supplied the control**, on the
+same branch, in the same session, through the same tooling:
+
+| | #797 | #806 |
+|---|---|---|
+| branch | `claude/peaceful-heisenberg-dzgsf1` | the same |
+| PR created via | the GitHub App token (MCP `create_pull_request`) | the same |
+| a push AFTER the PR opened | none | none |
+| **mergeable at creation** | **NO** — `mergeable_state: dirty` | **YES** — 0 behind `main`, `merge-tree` clean |
+| `pull_request`-event runs | **zero**, for 19 minutes | **three, within ~1 minute** |
+
+Run `35657925325`, `event: "pull_request"`, `head_sha d970fd550`, created
+21:34:13Z. No push followed the PR's creation, so there is no `synchronize` to
+attribute it to: it is the `opened` event.
+
+**One variable differs between those two rows, and it is mergeability.** So:
+
+- **app-token suppression is falsified again**, independently of #390 — a PR
+  opened by the App token got its `pull_request` runs promptly;
+- the conflict hypothesis survived a test that could have killed it, on a
+  MATCHED PAIR rather than across occurrences a day apart.
+
+It does NOT establish the merge-ref *mechanism*. Step 2 below is still
+unmeasured, and *"an unmergeable PR gets no `pull_request` run"* is compatible
+with GitHub declining to compute the event for some other reason. What the
+control does is promote #797 from a consistent-with observation to a
+**discriminating** one.
+
+Worth recording that **this session independently re-derived the app-token
+hypothesis and believed it for some minutes**, before reading this bean. The
+"do not re-test these" table is doing its job only if it is found first, and a
+session that reaches the symptom through a PR rather than through the work plan
+does not pass this file on the way.
+
+### The merge-ref census — why the retroactive check is impossible
+
+Measured on the forge, 2026-09-21:
+
+```
+git ls-remote origin 'refs/pull/*/head'   ->  681 refs
+git ls-remote origin 'refs/pull/*/merge'  ->   12 refs
+```
+
+The twelve are **exactly** the twelve then-open PRs. `refs/pull/N/merge` is
+reaped when a PR closes — #797's was already gone minutes after merging.
+
+So this is a structural reason, not bad luck, for what the seventh observation
+reports as *"no live conflicted PR was available"*: the discriminating fact
+exists only while the PR is open AND conflicted, and every open PR at the time
+of checking was mergeable and carried its ref. It cannot be recovered after the
+fact for any of the eight occurrences.
+
+### The decisive test, unchanged and now cheaper to state
+
+Exactly as the seventh observation frames it, and this occurrence supplies
+every half but one:
+
+1. push a commit that **conflicts with `main`**, open a PR;
+2. record `refs/pull/N/merge` — present or absent — **while it is conflicted**;
+3. resolve, and record both again.
+
+Step 2 is the only unmeasured link in the chain. Steps 1 and 3 are now observed
+twice (#715, #797), both times with `mergeable_state: dirty` confirmed at the
+time rather than inferred.
+
+**Not run here.** It needs a deliberately conflicted PR opened on a live
+repository, which is a change to the forge rather than to the tree, and this
+bean is `low` with its owner's *"no work scheduled"* standing. Left as the one
+step that settles it.
+
+
+---
+
+## STEP 2, MEASURED — 2026-09-21, PR #813
+
+The one unmeasured link in this bean's own decisive test. Run deliberately,
+because it can only be taken on a PR that is **open and conflicted at the same
+moment**, and the merge ref is reaped on close — so none of the eight past
+occurrences could supply it.
+
+### The instrument
+
+Branched from `36aa14dd2` (main before #806) and appended a different block to
+the same end-of-file region #806 had appended to, in **this file**. `merge-tree`
+exit 1, one real content conflict. A bean markdown file, so nothing built or
+broke while the conflict stood. PR #813 opened 22:10:04Z, `mergeable_state:
+dirty` confirmed by the API.
+
+### The readings
+
+| | |
+|---|---|
+| `refs/pull/813/head` | **present** immediately |
+| `refs/pull/813/merge` | **NEVER APPEARED** — polled every 20 s for **433 s** |
+| `pull_request`-event runs on `b5fcc04b0` | **zero**, throughout |
+| push-event run on the same sha | `JSON-LD generated-file drift`, started 22:09:54Z, **success** |
+
+### Why the absence is a measurement and not a wait
+
+Three controls, all simultaneous, and the third is the one that matters:
+
+1. **A measured normal latency.** PR #812 — another session, branched from the
+   same `36aa14dd2`, `mergeable_state: clean` — was created 21:57:32Z and its
+   `pull_request` runs started 22:00:15Z. **2 m 43 s.** #813 was given more
+   than three times that.
+2. **Twelve open mergeable PRs held merge refs** at the instant #813 did not.
+3. **PRs created DURING the polling window got theirs.** #815 and #817 did not
+   exist at the 22:10 census and were present at 22:17. So the forge was
+   minting merge refs throughout the seven minutes it declined to mint one for
+   #813 — which is what separates *"not computed for this PR"* from *"not
+   computed yet"*, and no earlier observation here could make that cut.
+
+### What this settles, and what it does not
+
+**Settled:** a PR that is unmergeable at creation carries **no**
+`refs/pull/N/merge`, and receives **no** `pull_request`-event run, while a
+`push`-event run on the identical sha completes normally. The mechanism
+proposed in observation seven — `actions/checkout@v4` with no `ref:` resolves
+`refs/pull/N/merge` for a `pull_request` event, and a conflicted PR has no such
+commit — now has its missing link measured rather than inferred.
+
+**Not settled:** *which* of the two is cause and which is consequence. GitHub
+may decline to compute the merge commit and therefore skip the event, or skip
+the event for its own reasons and never compute the commit. Both are consistent
+with every reading here. The bean does not need that resolved: its Done-when
+asks for the cause to be established **or** recorded as not determinable, and
+what an operator needs — `mergeable_state` first, never a dispatch on a
+conflicted PR — is already in `prepare-merge` §Guardrails and does not depend
+on the direction.
+
+**The `workflow_dispatch` workaround is now explained rather than merely
+observed.** It resolves `refs/heads/<branch>`, which exists regardless, so it
+worked six times for the reason this measurement gives — and that is exactly
+why it was unsafe on a conflicted PR: it tests a tree that will never exist.
+

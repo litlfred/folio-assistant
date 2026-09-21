@@ -25,7 +25,7 @@ import { describe, test, expect } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "fs";
 import { join, resolve } from "path";
 import { tmpdir } from "os";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import {
   run,
   injectInto,
@@ -177,15 +177,105 @@ describe("injection mechanics carried over from the bash version", () => {
     // own `>` behind: every staged page carried a stray `>`, and a `<body>`
     // with attributes came out as `<body>BANNER class="…"">` — attributes
     // orphaned as visible text and the real tag stripped of them.
-    const out = injectInto(`<html><body class="a" id="b">x</body></html>`);
+    const { html: out, outcome } = injectInto(`<html><body class="a" id="b">x</body></html>`);
+    expect(outcome).toBe("injected");
     expect(out).toContain(`<body class="a" id="b">`);
     expect(out).not.toContain(`">x`);
     expect(out.indexOf(FRAGMENT)).toBe(out.indexOf(`<body class="a" id="b">`) + `<body class="a" id="b">`.length);
   });
 
   test("a second pass is a no-op rather than a doubled banner", () => {
-    const once = injectInto(`<html><body>x</body></html>`);
-    expect(injectInto(once)).toBe(once);
+    const once = injectInto(`<html><body>x</body></html>`).html;
+    const twice = injectInto(once);
+    expect(twice.html).toBe(once);
+    expect(twice.outcome).toBe("already");
+  });
+});
+
+/* ── A COMMENT ABOUT THE BANNER BROKE THE BANNER ──────────────────────────
+ *
+ * Owner, 2026-09-21, with two screenshots: *"staging banner gone from f-a"* —
+ * present on a `who-iris` page, absent on the folio-assistant landing page of
+ * the same preview.
+ *
+ * `docs/_includes/head_custom.html` sits in the `<head>` of every
+ * just-the-docs page and contains, as PROSE, the sentence
+ *
+ *     A browser hoists a stray `<div>` into `<body>` and the code still works
+ *
+ * so the first `<body>` in the document was inside an HTML comment. The
+ * non-global `replace` spent its one substitution there and the real tag,
+ * hundreds of lines later, got nothing. `who-iris` pages are generated
+ * without that include, which is why half the preview worked and the failure
+ * read as a `who-iris` feature.
+ *
+ * MEASURED ON THE DEPLOYED TREE rather than inferred: of 670 staged pages,
+ * 347 carried the banner correctly and **323 carried it inside a comment** —
+ * 48 % of the preview, invisible, while the injector reported all 670 as
+ * injected.
+ */
+describe("the banner goes in the BODY, not in a comment that mentions one", () => {
+  test("a commented `<body>` before the real one does not absorb the banner", () => {
+    const page = "<html><head><!-- hoists a stray div into <body> --></head><body>x</body></html>";
+    const { html: out, outcome } = injectInto(page);
+    expect(outcome).toBe("injected");
+    // Inside the comment is where it used to land.
+    expect(out.indexOf(FRAGMENT)).toBeGreaterThan(out.indexOf("-->"));
+    expect(out).toContain(`<body>${FRAGMENT}`);
+  });
+
+  test("THE WITNESS — the real head_custom.html, which is what actually broke", () => {
+    // A matcher proven only against fixtures is proven against its author's
+    // idea of the file. This reads the include that shipped the defect and
+    // builds a page the way Jekyll does, so the test fails if that sentence
+    // comes back or another one like it is added.
+    // `siteDirFor`, never a literal: the site root is one answer and this
+    // file is not allowed to be a second one — which `check:site-root` holds.
+    //
+    // The INSTANCE root, not the repository root: this include belongs to
+    // `cat-harness`, whose site dir is its own. `repoRootFor` would hand back
+    // the checkout and resolve to a `docs/` that is not there.
+    const instance = resolve(import.meta.dir, "..", "..");
+    const include = readFileSync(
+      join(instance, siteDirFor(instance), "_includes", "head_custom.html"),
+      "utf-8",
+    );
+    // The premise of the test, asserted: if the include stops containing a
+    // commented `<body>` this case is vacuous and should say so.
+    expect(include).toMatch(/<body/i);
+
+    const page = `<html><head>${include}</head><body class="x">content</body></html>`;
+    const { html: out, outcome } = injectInto(page);
+    expect(outcome).toBe("injected");
+    expect(out).toContain(`<body class="x">${FRAGMENT}`);
+  });
+
+  test("a document with NO body is a reported state, not a silent success", () => {
+    // The third state. It used to be indistinguishable from a successful
+    // injection, because the only question asked was whether the bytes
+    // changed.
+    const { html: out, outcome } = injectInto("<html><head></head></html>");
+    expect(outcome).toBe("no-body");
+    expect(out).not.toContain("data-fa-staging-banner");
+  });
+
+  test("a `<body>` that appears ONLY inside a comment is no body at all", () => {
+    const { outcome } = injectInto("<html><!-- <body> --></html>");
+    expect(outcome).toBe("no-body");
+  });
+
+  test("run() reports the pages it could not place a banner in", () => {
+    const dir = mkdtempSync(join(tmpdir(), "fa-staging-nb-"));
+    writeFileSync(join(dir, "good.html"), "<html><body>x</body></html>");
+    writeFileSync(join(dir, "bad.html"), "<html><head><!-- <body> --></head></html>");
+    const out = run(dir, {
+      branch: "b", sha: "s", built: "t", pr: "1",
+      prUrl: "u", branchUrl: "u", issue: null, issueUrl: null,
+      runUrl: "u", mainSite: "m", mainPagesKnown: false, newPages: [],
+    });
+    expect(out.injected).toBe(1);
+    expect(out.noBody).toEqual(["bad.html"]);
+    rmSync(dir, { recursive: true, force: true });
   });
 });
 
