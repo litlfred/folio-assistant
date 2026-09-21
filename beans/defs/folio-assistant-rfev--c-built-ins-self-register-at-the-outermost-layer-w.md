@@ -4,7 +4,7 @@ title: 'C: built-ins self-register at the outermost layer — wire the Contribut
 status: in-progress
 type: task
 created_at: 2026-09-21T13:21:31Z
-updated_at: 2026-09-21T13:21:31Z
+updated_at: 2026-09-21T15:05:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -95,3 +95,43 @@ Falsified: removing the root pin fails exactly the one test that asserts it.
       by a test that fails if it is not
 - [ ] `bun run check:partition` still 0, and the five runtime edges `zlmp`
       measured are gone rather than relocated
+
+## Where the next step actually stands — checked, not assumed
+
+The instances C would contribute FROM already exist: `instanceRootsIn` lists
+`folio-assistant-sci` and `folio-assistant-core` beside `cat-harness`,
+`cat-bootstrap`, `agent-skills` and the rest. So this is not blocked on the
+instances being created.
+
+It is blocked on the **files**. `folio-assistant-sci` declares exactly one
+directory, `library/`, and its own config says why in so many words: *"DECLARE
+ONLY WHAT EXISTS, per the dh4f rule: `library/` is the only entry, because it
+is the only directory here."* The sci checkers it would contribute —
+`qa-checkers-cost.ts`, and `render-latex.ts` for the renderer half — are still
+inside `cat-harness/content/pipeline/`. The root also declares no
+`dependencies.folioAssistant` entry for it, so `loadContributions` walks a tree
+that does not include it.
+
+So the first real registration is not a wiring change; it is a **move**:
+relocate the module, declare a directory for it, add the `contributes` entry
+and the dependency edge. That is `zmdo` / `wggr` territory and a visible
+structural change, so it is the owner's call rather than something to do on the
+way past.
+
+**Two ways in, and they differ in kind rather than in size:**
+
+- **A vertical slice** — move `qa-checkers-cost.ts` (2 criteria) to
+  `folio-assistant-sci` and wire it end to end. Smallest thing that proves the
+  mechanism *with a real contributor*, which is the one property the registry
+  has never had. Also the smallest thing that can show the freshness path works
+  across repositories, which is what this bean just made possible.
+- **Wait for the split** — `zmdo` / `wggr` move the layers wholesale and the
+  contributions follow. No interim state, at the cost of the registry staying
+  unproven until then.
+
+**Not doing either on my own initiative, and deliberately not building the
+composition API in the meantime.** `composedCriterionSource` — the function
+that would let discovery ask the registry for a criterion core does not know,
+and throw if both claim one — is easy to write and would have no caller. An
+unwired seam with a plausible shape is exactly what this bean exists to repair;
+adding a second one while fixing the first is not progress.
