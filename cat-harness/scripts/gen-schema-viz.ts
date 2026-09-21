@@ -64,6 +64,7 @@ import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
 import { readDeclaration, siteDirFor } from "../schemas/cat-harness.ts";
+import { findOrphans, pruneOrphans, viewerMarker } from "./viewer-prune.ts";
 // The `folio` graph kind is registered by CORE on import; this module resolves
 // this instance's directories and the instance declares a folio graph.
 import "../schemas/folio-graph-kind.js";
@@ -211,6 +212,7 @@ export function viewerHtml(dataHref: string, scope = ""): string {
   // declaration. `viz-generators.test.ts` imports this module, so a stray one
   // reddens the suite rather than only the generator.
   return `<!doctype html>
+${viewerMarker("gen-schema-viz")}
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -983,6 +985,24 @@ if (import.meta.main) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
   }
+
+  // ORPHANS. A subject that stopped being declared leaves its page behind,
+  // and `emit` cannot see it: a file this generator no longer writes is
+  // outside what `--check` inspects. Bean `ankg`, found when #604's rename
+  // left `folio-assist-sci/` serving a subject nothing declares.
+  const orphans = findOrphans(pageDir, subjects, "gen-schema-viz");
+  for (const o of orphans) {
+    if (o.kind === "owned") {
+      console.log(`  ${check ? "✗ orphan" : "− pruned"} ${relative(ROOT, o.path)}`);
+    } else {
+      // Reported and LEFT. This generator did not write it, so it is not this
+      // generator's to remove — `deletion-requires-confirmation`.
+      console.log(`  ? ${relative(ROOT, o.path)} — under this root but NOT written by this generator; left alone`);
+    }
+  }
+  const owned = orphans.filter((o) => o.kind === "owned");
+  if (check) stale += owned.length;
+  else pruneOrphans(pageDir, orphans);
 
   if (!check) {
     console.log(

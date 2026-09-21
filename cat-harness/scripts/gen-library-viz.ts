@@ -48,10 +48,11 @@
  *   bun run library:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
 import { viewerPlacement } from "./gen-schema-viz.ts";
+import { findOrphans, pruneOrphans, viewerMarker } from "./viewer-prune.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
 import { directoriesForGraph, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
@@ -74,6 +75,7 @@ export function viewerHtml(dataHref: string, scope = ""): string {
   // declaration. `viz-generators.test.ts` imports this module, so a stray one
   // reddens the suite rather than only the generator.
   return `<!doctype html>
+${viewerMarker("gen-library-viz")}
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -410,6 +412,21 @@ if (import.meta.main) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
   }
+
+  // ORPHANS — see `viewer-prune.ts`. Bean `ankg`: this generator's own rename
+  // left a page serving a subject no declaration describes, and `emit` cannot
+  // see it because a file no longer written is outside what `--check` reads.
+  const orphans = findOrphans(pageDir, subjects, "gen-library-viz");
+  for (const o of orphans) {
+    if (o.kind === "owned") {
+      console.log(`  ${check ? "✗ orphan" : "− pruned"} ${relative(ROOT, o.path)}`);
+    } else {
+      console.log(`  ? ${relative(ROOT, o.path)} — under this root but NOT written by this generator; left alone`);
+    }
+  }
+  const ownedOrphans = orphans.filter((o) => o.kind === "owned");
+  if (check) stale += ownedOrphans.length;
+  else pruneOrphans(pageDir, orphans);
 
   if (!check) {
     console.log(

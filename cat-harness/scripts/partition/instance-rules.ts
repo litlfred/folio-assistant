@@ -408,6 +408,9 @@ export const RULES: Rule[] = [
       // harness", and a page under `docs/` is exactly that.
       "scripts/schema-graph.ts",             // schemas/*.ts → declarations + edges
       "scripts/gen-schema-viz.ts",           // that graph → projection + viewer
+      // Shared by both viewer generators: which published subject pages no
+      // longer answer to a subject, and whether this generator wrote them.
+      "scripts/viewer-prune.ts",
       // Zod in `cat-bootstrap-tools` → JSON Schema in `cat-bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
