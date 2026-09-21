@@ -2926,6 +2926,76 @@
     return pic;
   }
 
+  /* The pencil and the eye, as inline SVG rather than `✎` and `⎘`.
+   *
+   * Which glyph a font actually has for those two characters varies, and `⎘`
+   * falls back to a box on several common stacks — a control that looks
+   * broken without anybody changing it. An inline path draws the same shape
+   * everywhere and takes `currentColor`. */
+  var EYE_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 5c-5 0-8.6 4.2-9.6 6a1 1 0 0 0 0 1c1 1.8 4.6 6 9.6 6s8.6-4.2 9.6-6a1 1 0 0 0 0-1c-1-1.8-4.6-6-9.6-6zm0 11a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0-2.2a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6z"/>' +
+    "</svg>";
+  var PENCIL_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M4 16.5V20h3.5L17.8 9.7l-3.5-3.5L4 16.5zM20.7 7.3a1 1 0 0 0 0-1.4l-2.6-2.6a1 1 0 0 0-1.4 0l-1.7 1.7 3.5 3.5 1.7-1.7z"/>' +
+    "</svg>";
+
+  /**
+   * View and Edit for a todo's source file, as a caption row.
+   *
+   * ## The SLOT owns these, not the card
+   *
+   * The owner asked for them below the sticky rather than inside it, and the
+   * slot is what "below" means here — but there is a second reason the slot
+   * is the right owner rather than merely a convenient one. A card can be
+   * PINNED onto the glass, where it is positioned freely and has no "below"
+   * to put a caption in. Hanging the links on the card would mean either
+   * dragging a caption around the glass behind it or losing the links
+   * whenever a sticky is pinned.
+   *
+   * On the slot they simply stay put: the card floats away, the greyed recall
+   * button takes its place, and View and Edit are still exactly where the
+   * reader left them. That is the same reasoning the board already uses for
+   * keeping a floating sticky's slot in the grid rather than reflowing it.
+   *
+   * ## Absent, never disabled
+   *
+   * `sourceLinks` returns `undefined` for anything that is not a github.com
+   * origin, so the keys are simply missing when the pipeline has no forge.
+   * `pb04`: a dead link invites a click and then 404s for exactly the reader
+   * who cannot edit, which reads as "this page is broken" rather than "you
+   * cannot do this". Returns null so the caller appends nothing at all.
+   */
+  function buildSourceLinks(todo) {
+    if (!todo.viewHref && !todo.editHref) return null;
+    var row = el("p", { class: "fa-sticky-links" });
+    if (todo.viewHref) {
+      var v = el("a", {
+        class: "fa-node-edit fa-sticky-view",
+        href: safeHref(todo.viewHref),
+        title: "View this todo's source on GitHub",
+        // No visible text, so the label and the title are BOTH needed and are
+        // not interchangeable: the label names the action for a screen
+        // reader, the title gives a pointer user the same words on hover.
+        "aria-label": "View the source of " + todo.summary,
+      });
+      v.innerHTML = EYE_GLYPH;
+      row.appendChild(v);
+    }
+    if (todo.editHref) {
+      var e = el("a", {
+        class: "fa-node-edit fa-sticky-edit",
+        href: safeHref(todo.editHref),
+        title: "Edit this todo's markdown on GitHub",
+        "aria-label": "Edit " + todo.summary,
+      });
+      e.innerHTML = PENCIL_GLYPH;
+      row.appendChild(e);
+    }
+    return row;
+  }
+
   function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
     var attrs = {
@@ -3036,22 +3106,11 @@
     // A dead link is worse than no link: it invites a click, and on a private
     // repository it 404s for exactly the reader who cannot edit, which reads
     // as "this page is broken" rather than "you cannot do this".
-    if (todo.viewHref) {
-      tools.appendChild(el("a", {
-        class: "fa-node-edit fa-sticky-view",
-        href: safeHref(todo.viewHref),
-        title: "View this todo's source on GitHub",
-        "aria-label": "View the source of " + todo.summary,
-      }, "⎘ View"));
-    }
-    if (todo.editHref) {
-      tools.appendChild(el("a", {
-        class: "fa-node-edit fa-sticky-edit",
-        href: safeHref(todo.editHref),
-        title: "Edit this todo's markdown on GitHub",
-        "aria-label": "Edit " + todo.summary,
-      }, "✎ Edit"));
-    }
+    // THE SOURCE LINKS ARE NOT IN THE CARD ANY MORE. Owner, 2026-09-21:
+    // *"i want the [pencil] edit icon, (edit, view links can be below, not
+    // inside stick)"*. `buildSourceLinks` renders them, and the SLOT places
+    // them under the card — see the note on that function for why the slot
+    // and not the card is the right owner.
     // An INLINE sticky is already beside the content it is about, so Pin and
     // Close have nothing to do: pinning it would move it AWAY from the thing
     // it annotates, and closing it would hide a block-level annotation with no
@@ -3396,6 +3455,9 @@
         slot.appendChild(el("span", { class: "fa-sticky-process" }, row.process));
       }
       slot.appendChild(buildSticky(row.todo, float, dock, discard));
+      // BELOW the card, and it stays here when the card is pinned away.
+      var links = buildSourceLinks(row.todo);
+      if (links) slot.appendChild(links);
       slots[row.todo.id] = slot;
       grid.appendChild(slot);
     }
@@ -3855,7 +3917,16 @@
       var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
       (function (list, mine) {
         for (var k = 0; k < mine.length; k++) {
-          list.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
+          /* A CELL, for the same reason the board uses a slot: the source
+           * links live BELOW the sticky now, not inside it, so something has
+           * to hold the pair. An inline sticky keeps them when it loses Pin,
+           * Close and Discard — that is the point of the inline case, which
+           * drops the BOARD's controls and keeps the content object's. */
+          var cell = el("div", { class: "fa-sticky-cell" });
+          cell.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
+          var inlineLinks = buildSourceLinks(mine[k]);
+          if (inlineLinks) cell.appendChild(inlineLinks);
+          list.appendChild(cell);
         }
       })(list, mine);
       var shown = list.children.length;

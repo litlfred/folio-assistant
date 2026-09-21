@@ -4323,3 +4323,75 @@ a.fa-harness-tab__body:focus-visible {
   letter-spacing: 0.02em;
   opacity: 0.72;
 }
+
+/* ── The source links, as a caption row under the sticky ──────────────────
+ *
+ * Owner, 2026-09-21: *"i want the [pencil] edit icon, (edit, view links can
+ * be below, not inside stick)"*.
+ *
+ * They used to sit inside the card — in the sticky's own text box on the
+ * landing page, and in the card head on a todo. A sticky is a note; these
+ * links are about the FILE the note was declared in, which is a different
+ * subject. On a card with backdrop art they also competed with the words for
+ * the quiet part of the cloud.
+ *
+ * The grid item is the CELL now (`.fa-sticky-cell` in `landing.html`,
+ * `.fa-sticky-slot` on the board), holding the sticky and this row beneath
+ * it. The sticky keeps its declared aspect ratio; the caption adds its own
+ * height below rather than eating into the art.
+ */
+.fa-sticky-cell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fa-sticky-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  /* Trailing, so the icons sit under the card's right edge and read as
+     belonging to it rather than starting a new column of content. */
+  justify-content: flex-end;
+  margin: 0.3rem 0 0;
+  padding: 0;
+}
+
+/* TARGET SIZE IS NOT NEGOTIABLE HERE. Icon-only controls are exactly where
+   this gets quietly lost: the glyph is 1rem, and without a minimum the hit
+   area would be the glyph. 1.75rem matches the header mini-icons, and this
+   instance's declared interaction profile is low-dexterity — 24px is the SC
+   2.5.8 floor and 28 is the comfort this file holds everywhere else. */
+.fa-sticky-links .fa-node-edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border-radius: 4px;
+  /* The row is quiet until reached for — it is a caption, not an action bar.
+     0.62 is about as far down as these go while still clearing 4.5:1 against
+     the page in both schemes. */
+  opacity: 0.62;
+  text-decoration: none;
+}
+
+.fa-sticky-links .fa-node-edit svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.fa-sticky-links .fa-node-edit:hover,
+.fa-sticky-links .fa-node-edit:focus-visible {
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.18);
+}
+
+/* Never left to the user agent: these sit on the page background, which
+   differs per scheme, and the default ring is invisible on one of them. */
+.fa-sticky-links .fa-node-edit:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}

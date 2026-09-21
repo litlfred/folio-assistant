@@ -268,7 +268,12 @@ test("a sticky carries VIEW and EDIT, two controls for two acts", async ({ page 
   await page.locator(".fa-tiles-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
 
-  const tools = page.locator(".fa-sticky").first().locator(".fa-sticky-tools");
+  // THE ROW MOVED OUT OF THE CARD on 2026-09-21 — owner: *"edit, view links
+  // can be below, not inside stick"*. It is a caption on the SLOT now, which
+  // is also what lets it survive the card being pinned to the glass. The
+  // assertion below is unchanged in substance: two controls, two different
+  // URLs, `/blob/` for reading and `/edit/` for the editor.
+  const tools = page.locator(".fa-sticky-slot").first().locator(".fa-sticky-links");
   await expect(tools.locator(".fa-sticky-view")).toHaveAttribute(
     "href",
     "https://github.com/litlfred/folio-assistant/blob/main/todos/items/first-todo.md",
@@ -339,10 +344,13 @@ test("the pencil is `.fa-node-edit` pointing at the todo's own file", async ({ p
   await page.locator(".fa-tiles-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
   // `.fa-sticky-edit`, not the bare `a.fa-node-edit` this used: bean `pb04`
-  // put a `⎘ View` beside the pencil, so the class-level selector now matches
+  // put a View control beside the pencil, so the class-level selector matches
   // two links and the assertion would be order-dependent. Naming the control
   // is what the two classes exist for.
-  const edit = page.locator(".fa-sticky").first().locator("a.fa-sticky-edit");
+  //
+  // Scoped to the SLOT rather than the card since 2026-09-21: the row is a
+  // caption below the sticky now, not a tool inside it.
+  const edit = page.locator(".fa-sticky-slot").first().locator("a.fa-sticky-edit");
   await expect(edit).toHaveAttribute(
     "href",
     "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
@@ -763,12 +771,19 @@ test.describe("todos attached to a block", () => {
     await expect(first.locator(".fa-sticky-close")).toHaveCount(0);
     await expect(first.locator(".fa-sticky-discard")).toHaveCount(0);
     // But it keeps BOTH source affordances, which is the point: an inline
-    // sticky loses the board's controls and keeps the content object's. Two
-    // now rather than one — bean `pb04` added `⎘ View` beside `✎ Edit` — and
-    // asserted by name, because a count over the shared `.fa-node-edit` class
+    // sticky loses the board's controls and keeps the content object's.
+    // Asserted by name, because a count over the shared `.fa-node-edit` class
     // would silently accept two pencils.
-    await expect(first.locator("a.fa-sticky-view")).toHaveCount(1);
-    await expect(first.locator("a.fa-sticky-edit")).toHaveCount(1);
+    //
+    // ON THE CELL, not on the card, since 2026-09-21 — the row is a caption
+    // BELOW the sticky now. This test caught the move as a real regression
+    // rather than a rename: the first cut added the links back only in the
+    // board's slot loop, so inline stickies lost them entirely.
+    const cell = page.locator(".fa-sticky-inline-list .fa-sticky-cell").first();
+    await expect(cell.locator("a.fa-sticky-view")).toHaveCount(1);
+    await expect(cell.locator("a.fa-sticky-edit")).toHaveCount(1);
+    // ...and NOT inside the card, which is the thing that changed.
+    await expect(first.locator("a.fa-sticky-edit")).toHaveCount(0);
   });
 
   test("an inline sticky carries no Move either — it is already beside its subject", async ({ page }) => {
