@@ -926,6 +926,34 @@ rendered surface</strong> is not a failure, it is the useful answer.</p>
 <p>The middle row is the most useful thing this skill can report, and composing
 its URL anyway would hide exactly that — §”Before you report a staging URL as
 broken”.</p>
+<h3 id="the-commit-in-the-bots-comment-is-not-your-branch-head">
+  
+  
+    <a href="#the-commit-in-the-bots-comment-is-not-your-branch-head" class="anchor-heading" aria-labelledby="the-commit-in-the-bots-comment-is-not-your-branch-head"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The commit in the bot’s comment is NOT your branch head
+  
+  
+</h3>
+    
+
+<p>Measured 2026-09-21, by getting it wrong in this skill’s own first use. The
+comment named <code class="language-plaintext highlighter-rouge">3894c41</code>; the branch head was <code class="language-plaintext highlighter-rouge">037812c7</code>; I reported the preview
+as <em>“one commit behind”</em>. <strong>It was current.</strong> On a <code class="language-plaintext highlighter-rouge">pull_request</code> trigger the
+stage job builds <code class="language-plaintext highlighter-rouge">refs/pull/&lt;n&gt;/merge</code> — your head merged into the base — so
+the commit it names is an object that <strong>never</strong> equals your head and is not
+even in your clone. Comparing the two reports a stale preview on every PR,
+forever.</p>
+
+<p>Resolve it instead. The merge commit’s <strong>second parent</strong> is the head it was
+built from:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin <span class="s2">"refs/pull/&lt;n&gt;/merge:refs/remotes/origin/pr-&lt;n&gt;-merge"</span> <span class="nt">-q</span>
+git log <span class="nt">--format</span><span class="o">=</span><span class="s2">"%h %p"</span> <span class="nt">-1</span> origin/pr-&lt;n&gt;-merge   <span class="c"># &lt;merge&gt; &lt;base&gt; &lt;YOUR HEAD&gt;</span>
+</code></pre></div></div>
+
+<p>Stale means that second parent is not your head — nothing else does. This is
+the same fact <code class="language-plaintext highlighter-rouge">bun run gates</code> exists around: <strong>CI tests the merge</strong>, and so
+does the preview, so a branch behind its base is previewing a tree nobody will
+have.</p>
 <h2 id="when-to-provide-beforeafter-urls">
   
   
