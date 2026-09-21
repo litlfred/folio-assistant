@@ -72,10 +72,19 @@ checkable:
 - [x] `HookEventSchema` can express `PreToolUse`
 - [x] `check:command-paths` covers hook commands in `.claude/settings.json`
 - [x] A check asserts the `.claude/skills/` stub's links resolve (`check:command-paths` covers `.claude/skills/`)
-- [ ] **REVISIT GATING at twelve decision records.** `bun run health` →
-      `bean-decision-records`; it read **7** on 2026-09-20. This box is the
-      trigger, and it is the whole of what makes "gate later" a deferral rather
-      than a decision nobody made.
+- [ ] **REVISIT GATING at twelve RENDERED decision records.** `bun run health`
+      → **`bean-rendered-decision-records`**; it read **1** on 2026-09-21, and
+      the one was this bean. This box is the trigger, and it is the whole of
+      what makes "gate later" a deferral rather than a decision nobody made.
+
+      *Corrected 2026-09-21, owner's option C. It named `bean-decision-records`
+      — a different metric, which counts any bean carrying a considered-options
+      section and had grown 7 → 10 in a day without anyone adopting anything.
+      It would have reached twelve on ordinary practice and delivered none of
+      the evidence this deferral was set to buy, which by its own recorded
+      reasoning is whether `renderDecision` works for authors other than the
+      one who wrote it. `checks.test.ts` states the distinction: "an `## Options`
+      heading is NOT a rendered decision".*
 
 ## Options
 

@@ -11,6 +11,30 @@
 # rule certainly applies. It REMINDS and never blocks: it sees the tool call,
 # not the prose written before it, so it cannot tell a well-formed ask from a
 # bare one, and a gate that cannot tell must not refuse.
+#
+# ## Why it now names `renderDecision` — bean `hajp`, owner's option C
+#
+# `hajp` deferred gating "until twelve decision records", on the stated ground
+# that `decision-request.ts` was written against four questions by a single
+# author and needed evidence from others. Measured 2026-09-21:
+#
+#   bean-decision-records             10   <- what the trigger counts
+#   bean-rendered-decision-records     1   <- what the deferral waits for
+#
+# The one rendered decision is `hajp` itself. The trigger will reach twelve on
+# ordinary considered-options sections and deliver none of the evidence it was
+# set to buy.
+#
+# The cause was measurable and is here: this hook is the ONE enforced moment in
+# the loop, and it taught the six parts while never mentioning where the record
+# goes. One session asked five multi-option questions the same day and wrote
+# zero records. A house style nothing asks for is not followed — which is this
+# bean's own thesis turned on its remedy.
+#
+# It still does not BLOCK. `hajp` weighed that as option 2 and the owner
+# rejected it for a reason worth keeping: a blocking hook that misfires removes
+# the escape hatch, leaving the agent unable even to report that the gate is
+# broken.
 set -euo pipefail
 cat <<'EOF'
 ── Before this question (interaction-modality §4.1, STRICT) ──────────────────
@@ -29,7 +53,22 @@ cat <<'EOF'
   Several decisions open? Ask ONE in full and give a COUNT for the rest —
   never a list of option names without their costs.
 
+── More than two options? RECORD it (bean `hajp`, REQUIRED) ──────────────────
+
+  Build a `DecisionRequest` and render it — do not hand-write the table:
+
+      import { renderDecision } from "cat-harness/schemas/decision-request.ts";
+
+  The schema has NO optionals, so a decision with two options and no comparison
+  does not parse, and the prose table and the selection come from ONE object
+  that cannot disagree with itself.
+
+  The record goes on the BEAN, under `## Options`, with the choice and who made
+  it. That is what `bean-rendered-decision-records` counts — 1 in the whole
+  store on 2026-09-21, which is why this paragraph exists.
+
   Full rule: cat-harness/skills/folio-core/interaction-modality.md §4
   The columns: cat-harness/skills/folio-core/decision-comparison.md
+  The schema:  cat-harness/schemas/decision-request.ts
 ──────────────────────────────────────────────────────────────────────────────
 EOF
