@@ -1,11 +1,11 @@
 ---
 # folio-assistant-btuv
 title: 'PLATFORM BOUNDARY: qa-criteria-registry.ts hand-writes one criterion per VOICE, three of them WHO, restating another instance''s rules uncited'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T16:26:49Z
-updated_at: 2026-09-21T17:57:07Z
+updated_at: 2026-09-21T19:11:59Z
 parent: folio-assistant-vuip
 ---
 
@@ -110,3 +110,67 @@ One correction to the consumer list above, after merging main: `criterion-source
 is new from main and also reads the static index, and also needs no change —
 both its production callers reach it only for a criterion that is `automated`
 or carries a checker, and every voice-overlay criterion is neither.
+
+
+## 2026-09-21 — the last box: `framework` fenced, the header fixed
+
+### `framework` was registered unconditionally, and it is one paper's notation
+
+Read the checker rather than any comment: `qa-checkers-voice.ts`'s
+`DEPRECATED_PATTERNS` are `(M, Θ, G, P, E)`, `\omega` as a fibre functor,
+`\mathcal{C}` for a category, and a bare `$H_q$`. Nothing about those is
+platform.
+
+`\mathcal{C}(?!_)` is the sharp end: **any paper folio writing `\mathcal{C}`
+for anything at all got a `major` finding** telling it the canonical form is
+`\mathbf{C}`. That is the platform asserting one paper's convention over every
+other paper's, in the subsystem whose verdicts a folio is judged by — the same
+defect as the voice criteria, one domain over, and it survived the first pass
+because it does not have WHO in its name.
+
+Fenced behind the SAME axis as the wall, `archimedean-wall`. Registry 113 → 112
+in this instance.
+
+**One axis rather than two, and that is the migration argument.** There is no
+folio for which "the wall but not the notation" is a coherent request — they
+are the same paper's mathematics. So a folio already opted into
+`archimedean-wall` for the wall criteria gets `framework` with it and needs no
+change at all. Worth confirming against `qou`'s `harness.config.json`, which
+is not reachable from this session.
+
+**It has no direct-call safety net and the wall does.** `q-usage-audit.ts`
+calls `checkWallSide` and `checkBaseRingMinimal` itself, so closing the axis
+leaves a folio's own audit computing them. `checkFrameworkCanonical` has no
+caller outside the registry's dispatch table. Recorded in the fence comment,
+because the alternative — leaving it on for everyone so one folio need not add
+a line — is how the content got into the platform to begin with.
+
+### The header described a registry that does not exist
+
+It named four domains for a registry carrying many more, so a reader trusting
+it got a list wrong by omission the day it was written. Replaced with a
+pointer to the `── Domain: … ──` headings, plus the two things the entries
+cannot say about themselves: that the voice overlays are DERIVED, and that
+`framework` and `wall` are one folio's mathematics behind an opt-in.
+
+And it cited `.claude/skills/local/one-voice-audit.md` as what the `voice`
+domain extends. **That file does not exist in this repository** — a folio's
+local skill, named from the platform, in the most-read comment in the QA
+subsystem.
+
+### Green here proves nothing about `qou`
+
+97/97 gates, and this instance carries NO FOLIO — so the fence changes nothing
+locally and the green is not evidence it is safe downstream. The evidence is
+the `folio-optional-axes` test, which probes a temp folio with and without the
+axis: absent config gives 0 framework and 0 wall criteria, `q-usage` alone
+does not open them, and `archimedean-wall` opens both.
+
+## All four `Done when` boxes
+
+- [x] no criterion in the platform registry restates rules owned by another
+      instance
+- [x] a voice shipping in any instance gets its overlay criterion without a
+      platform edit
+- [x] the folio-specific domains in the registry header are settled
+- [x] (the header's broken skill citation, found while doing it)

@@ -9,21 +9,32 @@ import { voiceCriteriaFor } from "./voice-criteria.ts";
  * whether to run the automated checker or queue an agent / human
  * adjudication request.
  *
- * Domain buckets (current):
+ * ## Domains — and this list is not the list
  *
- * - `voice` — scholarly voice + status-leak greps (extends
- *   `.claude/skills/local/one-voice-audit.md` with four new
- *   axes: scholarly-default, ai-slop, fit-section-chapter,
- *   framework-canonical, wall-side-correct).
- * - `fit` — does the block belong in its declared sub-section /
- *   section / chapter.
- * - `framework` — uses current canonical math (not deprecated
- *   notation, e.g. old 5-tuple, $\omega$ for fibre functor).
- * - `wall` — archimedean vs algebraic placement, per CLAUDE.md
- *   §7c base-ring convention.
+ * A domain is a bucket of criteria, and **the registry below is what exists**.
+ * Naming the domains here as well is a second index, free to disagree with the
+ * first, and it did: this header described four domains for a registry that
+ * carries many more, so a reader who trusted it got a list that was wrong by
+ * omission the day it was written. Count `QA_CRITERIA_REGISTRY`, or read the
+ * `── Domain: … ──` headings, rather than this paragraph.
  *
- * Future watchers (proof, canonical, compute, detangler) extend
- * the registry with their own criteria.
+ * What is worth saying here is the thing the entries cannot say about
+ * themselves:
+ *
+ * - `voice` — the editorial register. Its per-VOICE overlay criteria are
+ *   DERIVED from the voices an instance ships, not written here: see
+ *   `voice-criteria.ts`, and `qaCriteriaFor(root)` rather than
+ *   `QA_CRITERIA_REGISTRY` if you want them.
+ * - `framework` and `wall` — **one folio's mathematics**, not platform
+ *   concerns. Both are fenced behind the `archimedean-wall` opt-in axis —
+ *   see the note above each — so a folio that has not asked for that
+ *   mathematics is not measured against it.
+ *
+ * This header cited `.claude/skills/local/one-voice-audit.md` as what the
+ * `voice` domain extends. **That file does not exist in this repository** —
+ * it is a folio's local skill, named from the platform, in the most-read
+ * comment in the QA subsystem. Bean `btuv`: the registry's folio-specific
+ * content is not only the criteria, it is the prose around them.
  *
  * ── Chapter-scoped criteria (NOT per-block) ──────────────────────
  *
@@ -338,6 +349,34 @@ const FIT: QaCriterionDefinition[] = [
 ];
 
 // ── Domain: framework ───────────────────────────────────────────
+//
+// ── Folio-optional: ONE FOLIO'S NOTATION ────────────────────────
+//
+// `framework-canonical` asserts a canonical notation, and the notation is a
+// specific paper's. Read the checker rather than this comment — the patterns
+// in `qa-checkers-voice.ts` are `(M, Θ, G, P, E)`, `\omega` as a fibre
+// functor, `\mathcal{C}` for a category, and a bare `$H_q$`. Nothing about
+// those is platform.
+//
+// **It was registered unconditionally, so it ran on every folio**, and
+// `\mathcal{C}(?!_)` is the sharp end: any paper writing `\mathcal{C}` for
+// anything at all got a `major` finding telling it the canonical form is
+// `\mathbf{C}`. That is the platform asserting one paper's convention over
+// every other paper's, in the subsystem whose verdicts a folio is judged by.
+// Bean `btuv`, its last `Done when`.
+//
+// Fenced behind the SAME axis as the wall, because it is the same folio:
+//
+//   // harness.config.json
+//   { "qaAxes": ["archimedean-wall"] }
+//
+// **This one has no direct-call safety net, and the wall does.**
+// `q-usage-audit.ts` calls `checkWallSide` and `checkBaseRingMinimal`
+// itself, so closing the axis leaves a folio's own audit computing them.
+// `checkFrameworkCanonical` has no caller outside the registry's dispatch
+// table, so a folio that wants it MUST name the axis. Saying so here because
+// the alternative — leaving it on for everyone so one folio need not add a
+// line — is how the content got into the platform in the first place.
 
 const FRAMEWORK: QaCriterionDefinition[] = [
   {
@@ -2410,7 +2449,10 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...VOICE,
   ...VOICE_OVERLAYS,
   ...FIT,
-  ...FRAMEWORK,
+  // Folio-optional — see `FRAMEWORK` above. One folio's notation, on the same
+  // `archimedean-wall` axis as the wall criteria, because it is the same
+  // folio's mathematics.
+  ...(folioOptionalAxes().includes("archimedean-wall") ? FRAMEWORK : []),
   ...RENDER,
   // Folio-optional — see `WALL` above. One folio's wall and one folio's
   // chapter names; the same `archimedean-wall` axis as the detangler
