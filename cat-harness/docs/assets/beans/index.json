@@ -3269,6 +3269,20 @@
       "file": "beans/defs/folio-assistant-k59d--milestone-critical-paths-go-stale-p5wm-and-yg29-bo.md"
     },
     {
+      "id": "folio-assistant-k8rc",
+      "title": "The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:25:00Z",
+      "updatedAt": "2026-09-21T20:25:00Z",
+      "preview": "The markdown half of this is done (`vzur`, #769). This is the `.ts` half, and\nit is **not** simply the same sweep one file type over — the exemption that\ncovers it is sound for most of the corpus and wrong for a subset.\n\n**Measured 2026-09-21 on `main` @ `83cc04b`:** 344 mentions of `harness.json`\nor `harness.config.json` in `.ts` files under `cat-harness/`, excluding\n`RETIRED_DECLARATION`'s own d",
+      "file": "beans/defs/folio-assistant-k8rc--the-typescript-prose-backlog-344-and-two-of-them.md"
+    },
+    {
       "id": "folio-assistant-ke0o",
       "title": "VOICE + SKILL: a Technical Documentation voice written as an SDO writes, with RFC 2119 requirement levels",
       "status": "completed",
@@ -4675,14 +4689,14 @@
     {
       "id": "folio-assistant-t7ao",
       "title": "One bean with unparseable front matter takes down the whole store, and 92 gates passed over it",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T18:54:30Z",
-      "updatedAt": "2026-09-21T18:54:49Z",
+      "updatedAt": "2026-09-21T20:20:13Z",
       "preview": "Found 2026-09-21, by breaking it. Not a hypothetical: the bad bean was mine,\nit was committed, and the full gate set passed over it.\n\n## What happened\n\n`224e0beac8` committed `beans/defs/folio-assistant-sqtq--*.md` whose line 8\nwas a literal `\\1` — an unsubstituted sed backreference where `updated_at:`\nbelonged. `bun run gates --all` was run on that tree: **92 gates, all green.**\nIt was pushed as ",
       "file": "beans/defs/folio-assistant-t7ao--one-bean-with-unparseable-front-matter-takes-down.md"
     },
@@ -5831,14 +5845,14 @@
     {
       "id": "folio-assistant-zq3f",
       "title": "The profile resolver was fixed by a side effect — and 235 sidecars still carry the old verdicts",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:20:00Z",
-      "updatedAt": "2026-09-21T19:20:00Z",
+      "updatedAt": "2026-09-21T20:15:00Z",
       "preview": "Found 2026-09-21 while clearing `vzur`'s retired-filename backlog, and **not\nfixed there**: it is a question about QA verdicts, not about prose.\n\n[`domain-fencing`](../../cat-harness/skills/graph-management/domain-fencing.md)\nrecords a defect under §\"Two things the fencing turned up\". Re-measuring it to\nfix the filename in the quoted output showed the measurement itself had moved.\n\n## What changed",
       "file": "beans/defs/folio-assistant-zq3f--the-profile-resolver-was-fixed-by-a-side-effect-235.md"
     },
