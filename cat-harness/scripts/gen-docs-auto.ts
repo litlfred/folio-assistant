@@ -31,7 +31,9 @@
  * ## The sub-graph segment is the declared directory's `id`, not its path
  *
  * The owner wrote `<path>`. This publishes under the declared entry's **id**
- * instead, and the choice is deliberate and worth arguing with:
+ * instead — put to them as an open question on #607 with both costs stated,
+ * and **ruled for the `id` on 2026-09-21**. The reasons it was argued on, all
+ * of which survive as the reasons it stays:
  *
  * - **Precedent.** `state-visualizer.ts` settled the same question the same
  *   way, and gave the reason: `id` is what `harness.json` declares and what an
@@ -43,6 +45,10 @@
  *   which bean `ankg` explicitly asks nobody to write.
  * - **Nothing is lost.** Each page STATES its declared path, so the mapping
  *   from id to path is on the artefact rather than only in the URL.
+ *
+ * The cost, said out loud because a settled question still has one: the URL
+ * does not mirror the tree, so `skills/` publishing under `cat-harness` is
+ * legible only from the declaration. That is the trade taken.
  *
  * ## What this emits is an INDEX, and an index is not the documentation
  *

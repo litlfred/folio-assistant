@@ -1,11 +1,11 @@
 ---
 # folio-assistant-op30
 title: 'DOCS OBLIGATION: an instance owes its own docs/, with a QA axis — 1 of 11 has one, and it is the instance with no README'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T20:23:57Z
-updated_at: 2026-09-20T20:23:57Z
+updated_at: 2026-09-21T05:53:29Z
 parent: folio-assistant-yj32
 ---
 
@@ -92,13 +92,67 @@ change to a `dependents` value is a change every concurrent branch pays for.
 
 ## Done when
 
-- [ ] A QA sidecar reports, per instance, whether it has its OWN `docs/` —
+- [x] A QA sidecar reports, per instance, whether it has its OWN `docs/` —
       three states, with the opt-out carrying a reason.
-- [ ] The README obligation and this one are reported as SEPARATE axes, since
-      the sets that satisfy them are currently disjoint.
+- [x] The README obligation and this one are reported as SEPARATE axes, since
+      the sets that satisfy them are currently disjoint. (Separate, yes — but
+      NOT for this reason any more; see the re-measurement below.)
 - [ ] `dependents: "skip"` on cat-harness's `docs` entry is resolved with
       `n0nf`, one way, stated.
 - [ ] Falsified both directions: an instance with `docs/` is not reported, and
       removing it makes it appear.
 - [ ] `cat-harness` gets a README of its own, or an exemption with a reason —
       it is the one instance that has documentation and no front door.
+
+## Re-measured 2026-09-21, and this bean's central argument no longer holds
+
+The table above was taken at 20:23 on 2026-09-20. Re-derived rather than
+quoted, nine hours later:
+
+| | then | now |
+|---|---|---|
+| instances | 11 | **12** (`cat-bootstrap-tools` added) |
+| with `docs/` of their own | 1 (`cat-harness`) | **2** (`cat-harness`, `who-iris`) |
+| the checker calls README-less | 1 (`cat-harness`) | **0** |
+
+**The "disjoint sets" argument is dead.** It rested on `cat-harness` having
+documentation and no README while ten others had a README and no
+documentation. Every instance now declares an `instance-readme` with no
+borrowed scope, so `docs/` is a strict SUBSET of README rather than disjoint
+from it.
+
+The axes stay separate anyway, for the reason that survives the measurement
+and is written into the code: *"can a reader enter this instance"* and *"is
+there anything to read once inside"* are different questions, and they do not
+collapse into one number because one set happens to contain the other.
+
+## Summary of Changes
+
+`own-docs` joins `RENDER_OBLIGATIONS`, so the opt-out is the EXISTING
+`renderExemption` mechanism — which already requires a `reason` AND a
+substitute (`owes`), refusing the hole that a bare waiver would leave.
+`ownDocsFinding` is `minor` and deliberately NOT in the `--strict` gate: it
+fires on 10 of 12 today, and a check that fires on most of its subjects on
+the day it lands is one people learn to skim.
+
+**Three guards objected to the first draft, and all three were right.**
+
+1. `check:declared-paths` — "a DIRECTORY the declaration already answers".
+2. The site-root test — the literal `"docs"` is forbidden because getting that
+   string wrong once unignored 3,080 files.
+3. My own tests — the throw path returned `undefined`, which reads as "has
+   documentation".
+
+The answer to the first two is the same and is better than an exemption from
+either: an instance's own documentation **is** its site root, so
+`siteDirFor(root)` is the correct accessor and there is no literal. It also
+supplies the third state for free, since it throws when it cannot resolve —
+and "cannot answer" is reported as UNKNOWN, never as satisfied.
+
+## Still open — item 3, and it is a ruling
+
+`dependents: "skip"` on cat-harness's `docs` entry is UNTOUCHED. The bean
+records that a `dependents` change costs every concurrent branch (166 failures
+and 35 errors, last time), and that whoever changes it should read `n0nf`
+first. Not an agent's call.
+

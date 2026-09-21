@@ -62,6 +62,7 @@ import {
   declaredAssetPath,
   instanceRootsIn,
   readDeclaration,
+  workPlanGraphsIn,
 } from "../../schemas/cat-harness";
 
 // ── Section contract ────────────────────────────────────────────────────────
@@ -568,8 +569,105 @@ const instancesSection: ReadmeSection = {
   },
 };
 
+// ── Cold start ──────────────────────────────────────────────────────────────
+
+/**
+ * What an arriving agent does first — four pointers, and the skill list is a
+ * QUERY rather than an answer.
+ *
+ * The owner, 2026-09-20, on what the root README owes a cold agent:
+ *
+ * > • point to the bootstreap md overview of skill/tasks
+ * > • point to kg-navation, instruct them where to find the list of skills in
+ * >   materialed corpus (be careful to do this to minimize drift, maybe tool
+ * >   to use json/jsonld queries for aaplicable KGs)
+ * > • tell them to determine if active KG (beans/tods) or static (point to
+ * >   process on determining context)
+ * > • if active: see agent shoud can determine their role, process, task,
+ * >   context/memoty (point to BPMN processes), then check for active beans
+ * >   and (new/updated process) priotize and ask use which beans to work on
+ *
+ * ## The drift constraint is the design, not a caveat
+ *
+ * *"be careful to do this to minimize drift"* — so **this section never
+ * lists skills.** It names the two calls that ask the graph, and the fallback
+ * for an agent with no MCP server. A README that lists skills is wrong the
+ * day a skill is added and nothing says so, because a README is the one file
+ * no check reads. This repository has paid for that shape repeatedly: a
+ * hardcoded instance list in two gates (`6tkl`), a hardcoded skills
+ * catalogue, a comment asserting a committed artefact that was gitignored.
+ *
+ * The one thing it DOES compute is the active-vs-static verdict, because
+ * that is a fact about this checkout rather than a list that can rot — see
+ * {@link workPlanGraphsIn}, which derives it from each kind's `recordsWork`.
+ */
+const coldStartSection: ReadmeSection = {
+  marker: "cat-harness:cold-start",
+  summary: "What an arriving agent does first — four pointers, skills reached by query",
+  render(ctx) {
+    const repo = ctx.root;
+    const roots = instanceRootsIn(repo);
+    if (roots.length === 0) {
+      return { markdown: "", notes: ["no instance declares a harness.json — nothing was read"], skip: true };
+    }
+
+    const { plan, unreadable } = workPlanGraphsIn(repo);
+    const notes: string[] = [];
+    // THREE states. An unreadable declaration means the absence of a work
+    // plan is unproven, and rendering STATIC over it would tell an arriving
+    // agent there is nothing here — the one thing this section must not get
+    // wrong. Same rule as every other section in this file: not-looked-at is
+    // never reported as nothing-found.
+    if (plan.length === 0 && unreadable.length > 0) {
+      for (const u of unreadable) notes.push(`declaration unreadable: ${relative(repo, u) || "."}`);
+      return {
+        markdown: "",
+        notes: [...notes, "active-vs-static could not be determined — region left untouched"],
+        skip: true,
+      };
+    }
+    const active = plan.length > 0;
+    for (const u of unreadable) notes.push(`declaration unreadable, not counted: ${relative(repo, u) || "."}`);
+
+    // The verdict, computed, with the evidence beside it — a bare ACTIVE is a
+    // claim, and the whole point of deriving it is that a reader can check.
+    const verdict = active
+      ? `**This repository is an ACTIVE knowledge graph.** ` +
+        plan
+          .map((p) => `\`${cell(p.instance)}\` declares ${p.kinds.map((k) => `\`${k}\``).join(" and ")}`)
+          .join("; ") +
+        ` — work somebody is partway through, which you can pick up.`
+      : `**This repository is a STATIC knowledge graph.** No instance declares a graph that records work ` +
+        `(beans, todos, a BPMN instance mid-flight), so there is nothing here to pick up — it is here to be read.`;
+
+    const lines = [
+      "**Read this before you do anything else.**",
+      "",
+      verdict,
+      "",
+      "| | |",
+      "|---|---|",
+      "| **1. What the harness is, from nothing** | [`cat-bootstrap/README.md`](cat-bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |",
+      "| **2. How to find the graph, and the skills in it** | [`kg-navigation`](kg-navigation/skills/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `harness.json` and read the directory it names. |",
+      "| **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |",
+      active
+        ? "| **4. It is active, so** | Work out your role, process and task from the BPMN under [`skills/workflows/`](cat-harness/skills/workflows/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |"
+        : "| **4. It is static, so** | There is no work plan to prioritise and no process to resume. Determine your context from [`process-state`](cat-harness/skills/workflow/process-state.md) and work from what you were asked to do. |",
+      "",
+      "*Why no list of skills: a README is the one file no check reads, so a list in it is wrong the day a skill is added and nothing says so. The two calls above ask the graph instead.*",
+      "",
+    ];
+
+    if (!active) {
+      notes.push("no work-plan graph declared — rendered the STATIC branch");
+    }
+    return { markdown: lines.join("\n"), notes };
+  },
+};
+
 export const SECTIONS: readonly ReadmeSection[] = [
   tocSection,
+  coldStartSection,
   instancesSection,
   leanCoverageSection,
   leanModulesSection,

@@ -159,7 +159,16 @@ describe("isExemptFrom is what the QA axis calls", () => {
 });
 
 describe("the obligations are a closed set", () => {
-  test("both are named, and adding one is a deliberate edit", () => {
-    expect([...RENDER_OBLIGATIONS].sort()).toEqual(["visualiser", "workflow-visualiser"]);
+  test("all three are named, and adding one is a deliberate edit", () => {
+    // `own-docs` added 2026-09-21 for bean `op30`, DELIBERATELY — which is
+    // what this test exists to force. It reuses this mechanism rather than
+    // minting a second opt-out because the requirement is identical: an
+    // exemption needs a reason, and a reason with no substitute is a hole,
+    // which `owes` already refuses.
+    expect([...RENDER_OBLIGATIONS].sort()).toEqual([
+      "own-docs",
+      "visualiser",
+      "workflow-visualiser",
+    ]);
   });
 });

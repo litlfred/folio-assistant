@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T22:49:13Z
-updated_at: 2026-09-20T22:49:31Z
+updated_at: 2026-09-21T05:59:34Z
 parent: folio-assistant-vke6
 ---
 
@@ -129,3 +129,32 @@ date" and exited 0.
 Seven tests, falsified both ways — selecting on the directory instead of the
 marker fails 2, dropping the keep-set fails 2.
 
+## A second session duplicated this, and the duplicate was discarded — 2026-09-21
+
+Session `session_014HGPQoUnzXGqSspA8x6YyD` implemented this bean again, on
+branch `claude/determined-euler-gqhkk0`, **after** the fix above had merged to
+`main` in #642. The duplicate is commit `b2129189b3`; nothing of it is kept,
+and the merge resolved `state-visualizer.ts`, its test and `gen-schema-viz.ts`
+to `main`.
+
+Recorded rather than quietly dropped, because the miss is reusable. The bean
+said *"Not started"* and that was true when it was written; the session read
+that line, opened the work with a brief saying in as many words *"I have not
+yet re-read the script on the current main, so treat that as last-session's
+reading"* — and then did not re-read it. **A bean's own status is evidence
+about the moment it was written, never about `main` now.** `bean-coordination`
+§"claim before you work" exists for this, and the cheap check it asks for is
+one `git grep` against `origin/main` before the first edit.
+
+Two things the duplicate arrived at independently, both of which the merged fix
+already had, which is the useful part of the comparison: ownership must be READ
+off the file rather than inferred from the directory, and the prune must take
+the generator's own FILE rather than the directory it sits in. Two sessions
+reaching the same two rules from the same skill is the skill working.
+
+One difference, and `main`'s choice is at least as good: the merged fix matches
+on `GENERATED_BY` (*this generator wrote this*), the duplicate on a per-graph
+`<meta>` naming the graph (*this page is for graph X, and X is this
+directory*). The second is marginally stricter about a copied page; the first
+needs no new marker and was already in the #581 original. Not worth a change
+now, and `s8nu` owns any unification of the four selectors.
