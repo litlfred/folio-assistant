@@ -22,11 +22,11 @@ describe("invocations", () => {
     // instance. Collapsing the two is what let that pass unnoticed.
     const yml = [
       "          bun run cat-harness/scripts/kg-export.ts --out a.jsonld",
-      "          bun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out b.jsonld",
+      "          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out b.jsonld",
     ].join("\n");
     const got = invocations(yml);
     expect(got).toHaveLength(2);
-    expect(got.map((i) => i.instance)).toEqual([undefined, "./cat-bootstrap"]);
+    expect(got.map((i) => i.instance)).toEqual([undefined, "./bootstrap"]);
   });
 
   test("a repeated invocation is counted once", () => {
@@ -118,10 +118,10 @@ describe("formatReport", () => {
   test("a missing invocation names the instance argument, not just the script", () => {
     const out = formatReport({
       deploy: "docs-site.yml",
-      peers: [{ workflow: "feature-staging.yml", missing: [{ script: "kg-export", instance: "./cat-bootstrap" }] }],
+      peers: [{ workflow: "feature-staging.yml", missing: [{ script: "kg-export", instance: "./bootstrap" }] }],
       staleExemptions: [],
     });
-    expect(out).toContain("kg-export --instance ./cat-bootstrap");
+    expect(out).toContain("kg-export --instance ./bootstrap");
   });
 
   test("a clean run prints the exemptions with their reasons", () => {

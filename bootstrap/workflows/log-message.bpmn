@@ -20,7 +20,16 @@ It lives in CAT_BOOTSTRAP rather than in the harness on purpose. CatBootstrap ma
 NO folio:bean, and isExecutable is false, for the same reasons as initialize-harness.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_LogMessage">
       <bpmn:lane id="Lane_Actor" name="Actor">
+        <!-- NO ROLE, DECLARED rather than merely absent (bean `ug4r`). The
+             actor here is whoever called this sub-process, which is why
+             `log-message` takes `actor` as a required input and why the
+             `logger` role says the skill belongs to whoever is DOING the
+             thing being logged. A role binding `Actor` would assert the
+             opposite. Until this attribute existed the decision lived only in
+             a prose comment in cat-bootstrap's roles.json, so no tool could
+             tell it from a lane nobody got round to binding. -->
         <bpmn:documentation>Whichever process called this sub-process, composing the five required fields and nothing more. GW_Complete then refuses an incomplete message rather than logging it anyway, because a partial entry that reads as a whole one is worse than no entry at all.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role variable="true"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_LogMessage</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Compose</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Complete</bpmn:flowNodeRef>

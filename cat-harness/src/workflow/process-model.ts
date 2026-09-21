@@ -231,6 +231,27 @@ export interface LaneDef {
   name?: string;
   /** `<folio:role ref="…"/>` on the lane, when declared. */
   roleRef?: string;
+  /**
+   * `<folio:role variable="true"/>` — this lane's PERFORMER VARIES, declared.
+   *
+   * Bean `ug4r`. A lane binding no role is normally a defect, and
+   * `lane-binds-role` says so at severity `major`. But `log-message.bpmn`'s
+   * `Actor` lane binds none ON PURPOSE: the point of that sub-process is that
+   * whoever is doing the thing being logged is the actor, which is why
+   * `log-message` takes `actor` as a required input and why the `logger` role
+   * says the skill belongs to whoever is DOING it. A role binding `Actor`
+   * would assert the opposite.
+   *
+   * Before this flag, that decision lived in a prose `_comment` inside
+   * `bootstrap/skills/roles/roles.json` — which no tool reads, so
+   * "deliberately unbound" and "nobody got round to it" were the same thing
+   * to every consumer. A declared answer and an absent one are different
+   * facts, exactly as an empty `roles` list differs from a missing one.
+   *
+   * Mutually exclusive with `roleRef`: a lane that names a role has not got a
+   * varying performer, and `check-workflow-policy` refuses both together.
+   */
+  performerVaries?: boolean;
   /** Ids of the flow nodes in this lane. */
   nodes: string[];
 }
@@ -655,12 +676,18 @@ export async function loadProcessModel(
   for (const lane of proc.laneSets?.[0]?.lanes ?? []) {
     const laneId = lane.id ?? lane.name ?? `lane_${lanes.length}`;
     const laneExt = lane.extensionElements?.values ?? [];
-    const roleRef = laneExt.find((v) => v.$type === "folio:role" && v.ref)?.ref;
+    const roleEl = laneExt.find((v) => v.$type === "folio:role");
+    const roleRef = roleEl?.ref;
+    // Moddle carries an unregistered attribute through as a string, which is
+    // how `ref` already arrives — so `variable` needs no schema registration.
+    // Only the exact string "true" counts: anything else is a typo, and
+    // reading a typo as a declaration is how a defect becomes an exemption.
+    const performerVaries = (roleEl as { variable?: string } | undefined)?.variable === "true";
     const laneConventions = laneExt
       .filter((v) => v.$type === CONVENTION_EXT && v.ref)
       .map((v) => v.ref!);
     const nodeIds = (lane.flowNodeRef ?? []).map((r) => r.id);
-    lanes.push({ id: laneId, name: lane.name, roleRef, nodes: nodeIds });
+    lanes.push({ id: laneId, name: lane.name, roleRef, performerVaries, nodes: nodeIds });
     for (const id of nodeIds) {
       if (lane.name) laneOf.set(id, lane.name);
       laneIdOf.set(id, laneId);
