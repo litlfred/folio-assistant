@@ -1,0 +1,51 @@
+{
+  "$schema": "folio-qa-graph/v1",
+  "files": 609,
+  "families": [
+    {
+      "schema": "kg-qa/v1",
+      "files": 333,
+      "rollUpField": "totals",
+      "buckets": {
+        "pass": 1541,
+        "fail": 90,
+        "n/a": 435,
+        "unknown": 0
+      }
+    },
+    {
+      "schema": "qa-witness/v1",
+      "files": 134,
+      "rollUpField": "counts",
+      "buckets": {
+        "fail": 0,
+        "warn": 0,
+        "pass": 2656,
+        "na": 3052,
+        "unknown": 0
+      }
+    },
+    {
+      "schema": "block-qa/v1",
+      "files": 122,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-index/v1",
+      "files": 11,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-results/v1",
+      "files": 8,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-test-run/v1",
+      "files": 1,
+      "rollUpField": null
+    }
+  ],
+  "unclassified": 0,
+  "unreadable": 0
+}
