@@ -28,7 +28,7 @@ import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
-import { artefactStub, findDeclarationFile, readDeclaration } from "../../schemas/cat-harness.js";
+import { artefactStub, findDeclarationFile, instanceRootsIn, readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
 
 /**
@@ -307,6 +307,52 @@ describe("kg export", () => {
     // The declaration is read from a fixed filename, whatever the stub is.
     expect(findDeclarationFile(join(import.meta.dir, "../..")) !== undefined).toBe(true);
     expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
+  });
+
+  test("EVERY declared instance exports at an absolute IRI — the base is the SITE's, not the instance's", () => {
+    // Bean `40fl`. `exportIdentity` read `canonicalUrl` off the instance being
+    // EXPORTED. `cat-bootstrap` declares none deliberately — it has no site of
+    // its own — so the moment `docs-site.yml` started publishing its graph
+    // (2026-09-21, 11:31) the export minted a document-relative `@id`, pushed
+    // that onto `problems`, and exited 1. Every push to `main` for the next
+    // two hours failed to publish the site.
+    //
+    // DERIVED over the declared instances rather than listing cat-bootstrap:
+    // the defect is not about that instance, it is about any instance whose
+    // graph this site publishes, and the next one to be added would have
+    // reproduced it against a literal list that still read green.
+    //
+    // The invariant is the one the export's own error text states: a graph
+    // whose nodes have no absolute identity cannot be merged with anyone
+    // else's. It holds per-instance, so it is asserted per-instance.
+    const repoRoot = repoRootFor(join(import.meta.dir, "../.."));
+    const instances = instanceRootsIn(repoRoot);
+    // An empty list is a broken probe, not a clean run — the `dh4f` shape.
+    // Without this, a resolver that stopped finding instances would make every
+    // assertion below vacuous and this test would pass by checking nothing.
+    expect(instances.length).toBeGreaterThan(1);
+
+    const relative_ = (d: string): string => d.slice(repoRoot.length + 1) || ".";
+    const notAbsolute = instances
+      .map((instanceRoot) => ({ at: relative_(instanceRoot), iri: exportIdentity({ instanceRoot }).docIri }))
+      .filter((r) => !r.iri.startsWith("http"));
+    expect(notAbsolute).toEqual([]);
+  });
+
+  test("a foreign instance's export reports no unread source — the publish step exits 0", async () => {
+    // The companion to the above, one level up: `publishedPaths()` already
+    // asserted that `cat-bootstrap.jsonld` is a path the deploy WRITES, and
+    // that assertion stayed green throughout the outage — because a path the
+    // workflow names is not a step that succeeds. `problems` is what the exit
+    // code is computed from, so this is the assertion that was missing.
+    const boot = join(repoRootFor(join(import.meta.dir, "../..")), "cat-bootstrap");
+    const ex = await buildExport({ instanceRoot: boot });
+    expect(ex.problems).toEqual([]);
+    // `BASE` is THIS instance's declared canonicalUrl, which is the whole
+    // point: the foreign document is published at the publishing site's base,
+    // under its own stub. Spelling the URL as a literal here would pass even
+    // if the fallback started reading some other instance's declaration.
+    expect(ex["@id"]).toBe(`${BASE}/cat-bootstrap.jsonld`);
   });
 
   test("no canonicalUrl and no base → no absolute IRI, and it says so", () => {

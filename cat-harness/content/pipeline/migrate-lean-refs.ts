@@ -20,7 +20,7 @@
  * @module content/pipeline/migrate-lean-refs
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDirDeferred } from "../../schemas/cat-harness.js";
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join, relative } from "path";
 import { LEAN_PACKAGES } from "../../schemas/lean-packages";
@@ -31,7 +31,7 @@ import { findContentRepoRoot } from "./repo-root";
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-const FOLIO_ROOT = folioDir(REPO_ROOT);
+const folioDirOf = folioDirDeferred(REPO_ROOT, import.meta.url);
 const WRITE = process.argv.includes("--write");
 
 /** Paper directory → Lake package short-name. */
@@ -76,7 +76,7 @@ function walk(dir: string): string[] {
  * paper (caller then logs + skips).
  */
 function packageForFile(absPath: string): string | undefined {
-  const rel = relative(FOLIO_ROOT, absPath);
+  const rel = relative(folioDirOf(), absPath);
   // Cross-platform: `relative()` returns `\` on Windows, `/` on POSIX.
   // Split on either separator so the paper-directory lookup works on
   // both platforms.
@@ -172,7 +172,7 @@ function transform(src: string, pkg: string): { src: string; matches: number } {
 }
 
 function main() {
-  const files = walk(FOLIO_ROOT);
+  const files = walk(folioDirOf());
   const stats: FileStats[] = [];
   let totalMatches = 0;
   let totalFiles = 0;
