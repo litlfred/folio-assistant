@@ -84,3 +84,34 @@ just bean up"). `aazi` then asked for beans and todos **mapped to their BPMNs,
 rendered for project management**, published at a `workflow-statemgmt` path.
 That is the same data this bean wants to show "where process is breaking
 down". One renderer with two readings, not two renderers.
+
+---
+
+## UNBLOCKED 2026-09-21 — the join this bean describes is now computable
+
+This bean argued it was *"buildable rather than speculative"* because every
+piece was committed state. One piece was not, when it was written:
+`beans/workflows/` held only `.gitkeep`, which is what `vlhk` was opened about
+and what `aazi` and `supn` both record as their blocker.
+
+**It holds two instances now**, both `$schema: "folio-workflow-instance/v1"`
+and both `running`:
+
+| instance | process | `bean` |
+|---|---|---|
+| `crdm--folio-assistant-6lb8` | `Process_CRDM` | `folio-assistant-6lb8` |
+| `crdm--issue-607-kg-to-cdn-portal` | `Process_CRDM` | `folio-assistant-xies` |
+
+Each carries `tokens` (where the token sits), `history` (the steps taken),
+`arrivals`, `children`, `subject` and `source`. So *"instance state × diagram ×
+the beans those steps name"* is a join over real data rather than a plan.
+
+**The caveat to build against is coverage, not existence.** 2 instances against
+232 beans, so the overwhelmingly common case is a bean NO instance names — and
+the view must render that as a **third state**, not as an empty diagram or a
+zero. A process view that draws nothing for 230 beans and says why is honest;
+one that draws an empty lane is the failure this repository keeps paying for.
+
+*"Where a process is breaking down"* is also now askable: both instances are
+`running` and one has not moved since 06:14, which is exactly the
+looks-like-nothing state this bean names.
