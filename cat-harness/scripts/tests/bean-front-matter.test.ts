@@ -18,7 +18,9 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { checkBeanFrontMatter } from "../check-bean-front-matter.ts";
+import { checkBeanFrontMatter, reconcile } from "../check-bean-front-matter.ts";
+import { readBeanFiles } from "../bean-store-read.ts";
+import { readdirSync } from "node:fs";
 
 /** `sqtq` as committed in `224e0beac8`, line for line. */
 const BROKEN_FRONT_MATTER = [
@@ -165,5 +167,239 @@ describe("check-bean-front-matter", () => {
     expect(r.beans).not.toBeNull();
     expect(r.beans).toBeGreaterThan(0);
     expect(r.defects.filter((d) => d.kind === "unparseable")).toEqual([]);
+  });
+});
+
+/**
+ * Bean `t6s7` — the two states the gate inherited from `readBeanFiles`.
+ *
+ * `t7ao` above is the LOUD defect: the store goes down and every reader says
+ * so. These two are the quiet ones, and they survived that fix because the
+ * gate is built on a reader that drops both on the floor. Each case below is
+ * the planted defect, because the live store is clean and therefore proves
+ * neither — the same reason every fixture above exists.
+ */
+const UNFENCED = [
+  "---",
+  "# folio-assistant-cccc",
+  "title: the closing fence is `--`, one dash short",
+  "status: todo",
+  "type: task",
+  "--",
+  "parent: folio-assistant-1xhc",
+  "",
+].join("\n");
+
+/** `storeWith`, plus the `beans/beans.json` that makes the path DECLARED. */
+function declaredStore(path: string, files: Record<string, string> = {}): string {
+  const root = mkdtempSync(join(tmpdir(), "bean-fm-decl-"));
+  mkdirSync(join(root, "beans"), { recursive: true });
+  writeFileSync(
+    join(root, "beans", "beans.json"),
+    JSON.stringify({
+      name: "fixture",
+      directories: [{ id: "defs", path, graphs: ["bean-defs"], description: "declared" }],
+    }),
+  );
+  if (Object.keys(files).length > 0) {
+    mkdirSync(join(root, "beans", path), { recursive: true });
+    for (const [n, t] of Object.entries(files)) writeFileSync(join(root, "beans", path, n), t);
+  }
+  return root;
+}
+
+describe("t6s7 — a mangled FENCE is reported, not skipped", () => {
+  test("the planted file is a defect, and the good bean beside it still counts", () => {
+    const root = storeWith({
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+      "folio-assistant-cccc--unfenced.md": UNFENCED,
+    });
+    try {
+      const r = checkBeanFrontMatter(root);
+      const unfenced = r.defects.filter((d) => d.kind === "unfenced");
+      expect(unfenced).toHaveLength(1);
+      expect(unfenced[0]!.file).toBe("folio-assistant-cccc--unfenced.md");
+      // The id is the FILENAME STEM on purpose: that is what `beans` falls
+      // back to when the front matter yields nothing, so the gate names the
+      // same ghost row a person sees in `beans list`.
+      expect(unfenced[0]!.id).toBe("folio-assistant-cccc--unfenced");
+      // One bad file does not make the gate give up on the rest.
+      expect(r.beans).toBe(1);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("THE REGRESSION: the bean count alone cannot see it — reconciliation can", () => {
+    // This is the measurement that opened `t6s7`. Before the fix the gate's
+    // count was IDENTICAL with and without the planted file (629 either way)
+    // because the file was skipped before it was ever examined. So the count
+    // is exactly the wrong thing to assert on, and `filesSeen` is the right
+    // one: `beans + skipped` has to account for every `.md` in the directory.
+    const clean = storeWith({ "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER });
+    const planted = storeWith({
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+      "folio-assistant-cccc--unfenced.md": UNFENCED,
+    });
+    try {
+      const a = checkBeanFrontMatter(clean);
+      const b = checkBeanFrontMatter(planted);
+      expect(b.beans).toBe(a.beans); // the count does NOT move — the old blind spot
+      expect(b.filesSeen).toBe(a.filesSeen + 1); // but the directory does
+      expect(b.beans! + b.skipped.length).toBe(b.filesSeen);
+    } finally {
+      rmSync(clean, { recursive: true, force: true });
+      rmSync(planted, { recursive: true, force: true });
+    }
+  });
+
+  test("README.md is the one documented exception — skipped, and NOT a defect", () => {
+    const root = storeWith({
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+      "README.md": "# The bean store\n\nOne markdown file per work item.\n",
+    });
+    try {
+      const r = checkBeanFrontMatter(root);
+      expect(r.defects.filter((d) => d.kind === "unfenced")).toEqual([]);
+      // Still ACCOUNTED FOR, not invisible — it has to appear in the
+      // arithmetic or the reconciliation above would be excusing it.
+      expect(r.skipped).toHaveLength(1);
+      expect(r.skipped[0]!.expected).toBe(true);
+      expect(r.beans! + r.skipped.length).toBe(r.filesSeen);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the archive is walked for this too", () => {
+    const root = storeWith({ "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER });
+    try {
+      const archive = join(root, "beans", "defs", "archive");
+      mkdirSync(archive, { recursive: true });
+      writeFileSync(join(archive, "folio-assistant-dddd--unfenced.md"), UNFENCED);
+      const r = checkBeanFrontMatter(root);
+      const unfenced = r.defects.filter((d) => d.kind === "unfenced");
+      expect(unfenced).toHaveLength(1);
+      // Reported WITH its subdirectory, because the basename alone would send
+      // a reader to `defs/` where the file is not.
+      expect(unfenced[0]!.file).toBe(join("archive", "folio-assistant-dddd--unfenced.md"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("t6s7 — the two absences are two answers", () => {
+  test("DECLARED and not there is `declared-but-absent`, never a pass", () => {
+    const root = declaredStore("defs-that-does-not-exist");
+    try {
+      const r = checkBeanFrontMatter(root);
+      expect(r.beans).toBeNull();
+      expect(r.storeState).toBe("declared-but-absent");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("no `beans/` at all is `absent` — legitimate, and still a pass", () => {
+    // The distinction the fallback destroys: `beanDefsDir` hands back a
+    // perfectly plausible `beans/defs` for a repository that never mentioned
+    // one, so without the `declared` flag this fixture and the one above are
+    // indistinguishable — and BOTH reported "nothing to check", exit 0.
+    const root = mkdtempSync(join(tmpdir(), "bean-fm-none-"));
+    try {
+      const r = checkBeanFrontMatter(root);
+      expect(r.beans).toBeNull();
+      expect(r.storeState).toBe("absent");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a DECLARED directory that exists is read normally", () => {
+    const root = declaredStore("somewhere-else", {
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+    });
+    try {
+      const r = checkBeanFrontMatter(root);
+      expect(r.storeState).toBe("read");
+      expect(r.beans).toBe(1);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("t6s7 — the four consumers are untouched", () => {
+  test("readBeanFiles still returns the beans, and still `null` for no store", () => {
+    // Three of the four callers want exactly this shape and reach no verdict
+    // about the store itself. The fix must not change what they see, or it
+    // stops being a fix to one gate and becomes a change to four.
+    const root = storeWith({
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+      "folio-assistant-cccc--unfenced.md": UNFENCED,
+    });
+    try {
+      const files = readBeanFiles(root);
+      expect(files).not.toBeNull();
+      // The unfenced file is still not a bean — it is REPORTED elsewhere, not
+      // promoted into the list, because a consumer given a fenceless "bean"
+      // would read empty strings for every field.
+      expect(files!.map((f) => f.id)).toEqual(["folio-assistant-aaaa"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+    expect(readBeanFiles(mkdtempSync(join(tmpdir(), "bean-fm-none-")))).toBeNull();
+  });
+
+  test("the repository's own store has no unfenced file", () => {
+    const repo = join(import.meta.dir, "..", "..", "..");
+    const r = checkBeanFrontMatter(repo);
+    expect(r.storeState).toBe("read");
+    expect(r.defects.filter((d) => d.kind === "unfenced")).toEqual([]);
+    // And the arithmetic closes on the real corpus, not just on fixtures.
+    expect(r.beans! + r.skipped.length).toBe(r.filesSeen);
+  });
+});
+
+describe("t6s7 — the reconciliation is not a tautology", () => {
+  test("`filesSeen` is an INDEPENDENT count of the directory", () => {
+    // Derived as `beans + skipped` it restates the two lists, so the guard
+    // below holds by construction and cannot fail — which is `xom7`, and is
+    // exactly what this whole bean is about. Found by mutating it: computing
+    // `filesSeen` from the lists left every other test here green.
+    //
+    // Asserted against a count this test makes for itself, from the directory,
+    // so the assertion does not depend on the implementation's arithmetic.
+    const root = storeWith({
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+      "folio-assistant-cccc--unfenced.md": UNFENCED,
+      "README.md": "# not a bean\n",
+      "notes.txt": "not markdown, and must not be counted\n",
+    });
+    try {
+      const onDisk = readdirSync(join(root, "beans", "defs")).filter((n) =>
+        n.endsWith(".md"),
+      ).length;
+      expect(onDisk).toBe(3); // the .txt is excluded
+      expect(checkBeanFrontMatter(root).filesSeen).toBe(onDisk);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the guard's FAILING branch is executed, not merely written", () => {
+    // The read path cannot currently produce a mismatch — every `.md` lands in
+    // `beans` or `skipped` — so this is the only way to run the branch that
+    // reports one. A guard whose failure has never executed is indistinguish-
+    // able from one that cannot fail.
+    expect(reconcile(2, 1, 3)).toBeNull();
+    const complaint = reconcile(1, 1, 3);
+    expect(complaint).not.toBeNull();
+    // It has to name all three numbers: a reader's next move is to work out
+    // WHICH file went missing, and a bare "counts disagree" does not help.
+    expect(complaint).toContain("3 .md file(s)");
+    expect(complaint).toContain("1 bean(s)");
+    expect(complaint).toContain("1 skipped");
   });
 });

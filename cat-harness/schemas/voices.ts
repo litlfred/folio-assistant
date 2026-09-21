@@ -590,7 +590,7 @@ export function activeVoices(
   if (missing.length > 0) {
     throw new VoiceLoadError(
       missing.join(", "),
-      `activated in harness.config.json but no such voice is shipped. ` +
+      `activated in <name>.config.json but no such voice is shipped. ` +
         `Available: ${[...byId.keys()].join(", ") || "(none)"}`,
     );
   }
