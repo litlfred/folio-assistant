@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WHO GDHCN Trust Network Participant - DEV — WHO SMART Trust artefact</title>
-<meta name="description" content="ValueSet/Participants-DEV in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars.">
+---
+title: "WHO GDHCN Payload Types — WHO SMART Trust artefact"
+description: "ValueSet/PayloadTypes in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
+nav_exclude: true
+---
 <style>
 :root {
   --ink: #17242e; --muted: #5c6b77; --edge: #d5dde3; --surface: #ffffff;
@@ -75,24 +73,11 @@ footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86r
 .back { display: inline-block; margin-bottom: 8px; }
 @media (max-width: 640px) { header.top h1 { font-size: 1.1rem; } .wrap { padding: 0 16px; } }
 </style>
-</head>
-<body>
-<header class="top"><div class="wrap">
-  <h1><a href="../index.html">WHO SMART Trust — artefact index</a></h1>
-  <span class="sub">smart.who.int.trust · reconstructed, not authored</span>
-</div></header>
-<div class="banner"><div class="wrap">
-  Generated from <code>smart-trust/fhir-artifact-index/index.json</code> by
-  <code>smart-trust:pages</code>. Not a WHO site, and not the published IG &mdash;
-  the IG itself is at
-  <a href="https://worldhealthorganization.github.io/smart-trust/">worldhealthorganization.github.io/smart-trust</a>.
-</div></div>
-<main><div class="wrap">
 
 <a class="back" href="../index.html">&larr; all 674 artefacts</a>
-<h2 style="margin-top:6px">WHO GDHCN Trust Network Participant - DEV</h2>
-<p class="mono" style="color:var(--muted)">ValueSet/Participants-DEV</p>
-<p class="lede">ValueSet of GDHCN Trust Network Participants for Development environment</p>
+<h2 style="margin-top:6px">WHO GDHCN Payload Types</h2>
+<p class="mono" style="color:var(--muted)">ValueSet/PayloadTypes</p>
+<p class="lede">ValueSet of GDHCN Trust Network Payload Types</p>
 <div class="grid">
   <div class="stat"><b>ValueSet</b><span>resource type</span></div>
   <div class="stat"><b>1.8.0</b><span>version</span></div>
@@ -102,8 +87,8 @@ footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86r
 
 <h3>Identity and bytes are different questions</h3>
 <table><tbody>
-<tr><td style="width:12rem">Canonical URL</td><td class="mono">http://smart.who.int/trust/ValueSet/Participants-DEV</td></tr>
-<tr><td>Published</td><td class="reps"><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.json">json</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.xml">xml</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.ttl">ttl</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.html">html</a></td></tr>
+<tr><td style="width:12rem">Canonical URL</td><td class="mono">http://smart.who.int/trust/ValueSet/PayloadTypes</td></tr>
+<tr><td>Published</td><td class="reps"><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.json">json</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.xml">xml</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.ttl">ttl</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.html">html</a></td></tr>
 <tr><td>Materialization</td><td><span class="tag held">materialized</span> &mdash; working copy, regenerable by re-running the ingest</td></tr>
 </tbody></table>
 
@@ -115,30 +100,23 @@ rather than a gap in this index.</p>
 <tbody>
 <tr>
   <td>JSON Schema</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-DEV.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-DEV.schema.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/ValueSet-Participants-DEV.schema.json</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-PayloadTypes.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-PayloadTypes.schema.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-PayloadTypes.schema.json</td>
 </tr>
 <tr>
   <td>Displays</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-DEV.displays.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-DEV.displays.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/ValueSet-Participants-DEV.displays.json</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-PayloadTypes.displays.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-PayloadTypes.displays.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-PayloadTypes.displays.json</td>
 </tr>
 <tr>
   <td>OpenAPI</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-DEV.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-DEV.openapi.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/ValueSet-Participants-DEV.openapi.json</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-PayloadTypes.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-PayloadTypes.openapi.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-PayloadTypes.openapi.json</td>
 </tr>
 <tr>
   <td>JSON-LD</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.jsonld">https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.jsonld</a></td>
-  <td class="mono">fhir-artifact-index/dak/ValueSet-Participants-DEV.jsonld</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.jsonld">https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.jsonld</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-PayloadTypes.jsonld</td>
 </tr>
 </tbody></table>
 
-</div></main>
-<footer><div class="wrap">
-  Every figure and link on this page is read out of the artefact index; nothing here is hand-written.
-  Regenerate with <code>bun run smart-trust:pages</code>.
-</div></footer>
-</body>
-</html>

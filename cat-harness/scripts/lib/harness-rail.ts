@@ -66,12 +66,32 @@ export interface RailOptions {
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+/** Gutter either side of the glyph column, and the rail's only horizontal padding. */
+export const RAIL_PAD_PX = 10;
+/** The glyph column itself. */
+export const RAIL_GLYPH_PX = 20;
 /**
- * Width while collapsed. One icon plus its padding, and the same number the
- * stylesheet pads `body` by — stated once so the two cannot disagree and leave
- * the rail either overlapping the page or floating off it.
+ * Width while collapsed. DERIVED from the glyph column and its two gutters, so
+ * the collapsed rail is exactly the icon and nothing else — and it is the same
+ * number the stylesheet pads `body` by, stated once so the two cannot disagree
+ * and leave the rail either overlapping the page or floating off it.
+ *
+ * It was a bare 48 until the owner photographed it: at 48 the rail is wider
+ * than the glyph column it contains, so the first few pixels of every LABEL
+ * sat inside the clip and each row showed a sliver of a word. That reads as a
+ * rail that failed to collapse rather than as one collapsed by design, which
+ * is what "hidden width too wide" named.
+ *
+ * Deriving the width is only half the fix. Clipping is a geometry argument,
+ * and a geometry argument is one host stylesheet away from being wrong — a
+ * larger font, a wider glyph, an inherited `letter-spacing` all move where the
+ * label starts while this constant stays put. So the labels are ALSO held at
+ * `opacity:0` while collapsed, which cannot be knocked out by arithmetic.
+ * Opacity rather than `display:none` or `visibility:hidden` on purpose: the
+ * labels stay in the accessibility tree, and this rail is the only harness
+ * navigation a mounted page has.
  */
-export const RAIL_COLLAPSED_PX = 48;
+export const RAIL_COLLAPSED_PX = RAIL_PAD_PX * 2 + RAIL_GLYPH_PX;
 /** Width while open. Overlays rather than reflowing. */
 export const RAIL_OPEN_PX = 232;
 
@@ -86,18 +106,25 @@ export function railCss(): string {
     `.fa-rail input.fa-rail-pin{position:absolute;opacity:0;pointer-events:none}`,
     `.fa-rail input.fa-rail-pin:checked~.fa-rail-in{width:${RAIL_OPEN_PX}px}`,
     `.fa-rail-in{width:${RAIL_OPEN_PX}px;display:flex;flex-direction:column;height:100%}`,
-    `.fa-rail-top{display:flex;align-items:center;gap:8px;padding:10px 0 10px 14px;`,
+    `.fa-rail-top{display:flex;align-items:center;gap:8px;padding:10px ${RAIL_PAD_PX}px;`,
     `border-bottom:1px solid #30363d;cursor:pointer;user-select:none}`,
-    `.fa-rail-glyph{flex:0 0 20px;text-align:center;font-size:16px}`,
-    `.fa-rail-name{white-space:nowrap;font-weight:600}`,
-    `.fa-rail a{display:flex;align-items:center;gap:8px;padding:8px 0 8px 14px;`,
+    `.fa-rail-glyph{flex:0 0 ${RAIL_GLYPH_PX}px;text-align:center;font-size:16px}`,
+    `.fa-rail-name{font-weight:600}`,
+    `.fa-rail a{display:flex;align-items:center;gap:8px;padding:8px ${RAIL_PAD_PX}px;`,
     `color:#e6edf3;text-decoration:none;white-space:nowrap}`,
+    // Every label is held invisible while collapsed and revealed by the same
+    // three mechanisms that widen the rail. See RAIL_COLLAPSED_PX: clipping
+    // alone is a geometry argument, and a host stylesheet can move where a
+    // label starts without touching these numbers. `opacity` rather than
+    // `display:none` or `visibility:hidden` -- a screen reader should still
+    // reach them, and this rail is the only harness navigation these pages
+    // have.
+    `.fa-rail-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}`,
+    `.fa-rail:hover .fa-rail-label,.fa-rail:focus-within .fa-rail-label,`,
+    `.fa-rail .fa-rail-pin:checked~.fa-rail-in .fa-rail-label{opacity:1}`,
     `.fa-rail a:hover{background:#30363d}`,
     `.fa-rail a[aria-current="page"]{background:#30363d;font-weight:600}`,
     `.fa-rail-foot{margin-top:auto;border-top:1px solid #30363d;font-size:12px;opacity:.75}`,
-    // Collapsed, only the glyph column is inside the clip. The labels are not
-    // hidden with `display:none` -- a screen reader should still reach them,
-    // and the rail is the only harness navigation these pages have.
     `@media print{.fa-rail{display:none}body{padding-left:0}}`,
   ].join("");
 }
@@ -115,7 +142,7 @@ export function railHtml(o: RailOptions): string {
       (l) =>
         `<a href="${esc(l.href)}"${l.current ? ' aria-current="page"' : ""}>` +
         `<span class="fa-rail-glyph" aria-hidden="true">${esc(l.icon)}</span>` +
-        `<span>${esc(l.label)}</span></a>`,
+        `<span class="fa-rail-label">${esc(l.label)}</span></a>`,
     )
     .join("");
   return (
@@ -124,10 +151,10 @@ export function railHtml(o: RailOptions): string {
     `<div class="fa-rail-in">` +
     `<label class="fa-rail-top" for="fa-rail-pin">` +
     `<span class="fa-rail-glyph" aria-hidden="true">☰</span>` +
-    `<span class="fa-rail-name">${esc(o.instance)}</span></label>` +
+    `<span class="fa-rail-name fa-rail-label">${esc(o.instance)}</span></label>` +
     items +
     `<a class="fa-rail-foot" href="${esc(o.toRoot)}/">` +
-    `<span class="fa-rail-glyph" aria-hidden="true">⌂</span><span>folio-assistant</span></a>` +
+    `<span class="fa-rail-glyph" aria-hidden="true">⌂</span><span class="fa-rail-label">folio-assistant</span></a>` +
     `</div></nav>`
   );
 }

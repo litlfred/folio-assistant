@@ -13,10 +13,12 @@
     <bpmn:documentation>Reviewing what the MVP actually RENDERS — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: choosing a theme is an authoring judgement made per note, and there is no role-to-theme mapping to check at build time. What can be reviewed is the result, and only after there is one.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_ThemeUIReview">
       <bpmn:lane id="Lane_Reviewer" name="Reviewer">
+        <bpmn:documentation>The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the rendered whole, not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean build, a passing accessibility check and a correct branding pass can each be true and still miss what only rendering and looking catches.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>R_Judge</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:documentation>Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_TUR</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Inventory</bpmn:flowNodeRef>

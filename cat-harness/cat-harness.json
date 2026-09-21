@@ -647,15 +647,6 @@
       ]
     },
     {
-      "id": "cat-harness-src",
-      "path": "src/skills/",
-      "dependents": "skip",
-      "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse — committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
-      "graphs": [
-        "cat-harness"
-      ]
-    },
-    {
       "id": "folio",
       "coverage": {
         "docs": "cat-harness/docs/content-types.md",

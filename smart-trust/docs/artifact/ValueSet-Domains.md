@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Health Certificate — WHO SMART Trust artefact</title>
-<meta name="description" content="StructureDefinition/HCert in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars.">
+---
+title: "WHO GDHCN Trust Domains — WHO SMART Trust artefact"
+description: "ValueSet/Domains in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
+nav_exclude: true
+---
 <style>
 :root {
   --ink: #17242e; --muted: #5c6b77; --edge: #d5dde3; --surface: #ffffff;
@@ -75,35 +73,22 @@ footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86r
 .back { display: inline-block; margin-bottom: 8px; }
 @media (max-width: 640px) { header.top h1 { font-size: 1.1rem; } .wrap { padding: 0 16px; } }
 </style>
-</head>
-<body>
-<header class="top"><div class="wrap">
-  <h1><a href="../index.html">WHO SMART Trust — artefact index</a></h1>
-  <span class="sub">smart.who.int.trust · reconstructed, not authored</span>
-</div></header>
-<div class="banner"><div class="wrap">
-  Generated from <code>smart-trust/fhir-artifact-index/index.json</code> by
-  <code>smart-trust:pages</code>. Not a WHO site, and not the published IG &mdash;
-  the IG itself is at
-  <a href="https://worldhealthorganization.github.io/smart-trust/">worldhealthorganization.github.io/smart-trust</a>.
-</div></div>
-<main><div class="wrap">
 
 <a class="back" href="../index.html">&larr; all 674 artefacts</a>
-<h2 style="margin-top:6px">Health Certificate</h2>
-<p class="mono" style="color:var(--muted)">StructureDefinition/HCert</p>
-<p class="lede">Logical Model for the HCERT</p>
+<h2 style="margin-top:6px">WHO GDHCN Trust Domains</h2>
+<p class="mono" style="color:var(--muted)">ValueSet/Domains</p>
+<p class="lede">ValueSet of WHO GDHCN Trust Domains for Production environment</p>
 <div class="grid">
-  <div class="stat"><b>StructureDefinition</b><span>resource type</span></div>
+  <div class="stat"><b>ValueSet</b><span>resource type</span></div>
   <div class="stat"><b>1.8.0</b><span>version</span></div>
-  <div class="stat"><b>Structures: Logical Models</b><span>category</span></div>
+  <div class="stat"><b>Terminology: Value Sets</b><span>category</span></div>
   
 </div>
 
 <h3>Identity and bytes are different questions</h3>
 <table><tbody>
-<tr><td style="width:12rem">Canonical URL</td><td class="mono">http://smart.who.int/trust/StructureDefinition/HCert</td></tr>
-<tr><td>Published</td><td class="reps"><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.json">json</a><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.xml">xml</a><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.ttl">ttl</a><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.html">html</a></td></tr>
+<tr><td style="width:12rem">Canonical URL</td><td class="mono">http://smart.who.int/trust/ValueSet/Domains</td></tr>
+<tr><td>Published</td><td class="reps"><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.json">json</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.xml">xml</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.ttl">ttl</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.html">html</a></td></tr>
 <tr><td>Materialization</td><td><span class="tag held">materialized</span> &mdash; working copy, regenerable by re-running the ingest</td></tr>
 </tbody></table>
 
@@ -115,22 +100,23 @@ rather than a gap in this index.</p>
 <tbody>
 <tr>
   <td>JSON Schema</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-HCert.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-HCert.schema.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/StructureDefinition-HCert.schema.json</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains.schema.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-Domains.schema.json</td>
 </tr>
-<tr><td>Displays</td><td colspan="2" style="color:var(--muted)">not published for this artefact</td></tr>
+<tr>
+  <td>Displays</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains.displays.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains.displays.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-Domains.displays.json</td>
+</tr>
 <tr>
   <td>OpenAPI</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-HCert.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-HCert.openapi.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/StructureDefinition-HCert.openapi.json</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains.openapi.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-Domains.openapi.json</td>
 </tr>
-<tr><td>JSON-LD</td><td colspan="2" style="color:var(--muted)">not published for this artefact</td></tr>
+<tr>
+  <td>JSON-LD</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.jsonld">https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.jsonld</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-Domains.jsonld</td>
+</tr>
 </tbody></table>
 
-</div></main>
-<footer><div class="wrap">
-  Every figure and link on this page is read out of the artefact index; nothing here is hand-written.
-  Regenerate with <code>bun run smart-trust:pages</code>.
-</div></footer>
-</body>
-</html>

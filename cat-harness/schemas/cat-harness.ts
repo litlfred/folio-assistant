@@ -2104,6 +2104,38 @@ export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
    */
   instanceRoot: z.boolean().optional(),
   /**
+   * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
+   * Jekyll source instead of mounting its built output.
+   *
+   * Two ways an instance's content can reach the site, and they are not
+   * interchangeable:
+   *
+   * | | when | what it gets |
+   * |---|---|---|
+   * | **mounted** (default) | after Jekyll, copied into `_site` | nothing — no layout, no sidebar, no front matter |
+   * | **composed** (`true`) | before Jekyll, into `_docs/<instance>/` | the real just-the-docs page: sidebar, nav, language bar, QA badges |
+   *
+   * The owner's ruling on `n0nf` has both readings in one sentence — *"harness
+   * can have docs/ which then get listed under `cat-harness/docs/<harness>`,
+   * there is also docs/ dir in repo root … other harness augment or overlay
+   * ontop of that"*. `compose-docs.ts` read the second clause and
+   * `mount-instance-docs.ts` the first, and neither implemented *listed under*
+   * as composition. This field is that clause.
+   *
+   * **Opt-in, and it must stay opt-in.** `who-iris/` is a REPLICA of IRIS:
+   * just-the-docs' layout would replace IRIS's chrome with folio-assistant's,
+   * which is the opposite of what a replica is for, and
+   * `mount-instance-docs.ts` says exactly that where it declines to run Jekyll
+   * over these directories. A composed default would silently restyle it.
+   *
+   * A composed directory holds **markdown with front matter**, not finished
+   * HTML — Jekyll renders it. Declaring `composed` over a directory of
+   * `<!doctype html>` files publishes them as page BODIES inside a layout,
+   * which is a nested document rather than an error, so nothing downstream can
+   * catch it for you.
+   */
+  composed: z.boolean().optional(),
+  /**
    * Which theme this subgraph renders on.
    *
    * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies
