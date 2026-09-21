@@ -1,7 +1,7 @@
 ---
 # folio-assistant-op30
 title: 'DOCS OBLIGATION: an instance owes its own docs/, with a QA axis — 1 of 11 has one, and it is the instance with no README'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T20:23:57Z
@@ -97,8 +97,8 @@ change to a `dependents` value is a change every concurrent branch pays for.
 - [x] The README obligation and this one are reported as SEPARATE axes, since
       the sets that satisfy them are currently disjoint. (Separate, yes — but
       NOT for this reason any more; see the re-measurement below.)
-- [ ] `dependents: "skip"` on cat-harness's `docs` entry is resolved with
-      `n0nf`, one way, stated.
+- [x] `dependents: "skip"` on cat-harness's `docs` entry is resolved with
+      `n0nf`, one way, stated. — RESOLVED BY A SIBLING, see below.
 - [ ] Falsified both directions: an instance with `docs/` is not reported, and
       removing it makes it appear.
 - [ ] `cat-harness` gets a README of its own, or an exemption with a reason —
@@ -155,4 +155,24 @@ and "cannot answer" is reported as UNKNOWN, never as satisfied.
 records that a `dependents` change costs every concurrent branch (166 failures
 and 35 errors, last time), and that whoever changes it should read `n0nf`
 first. Not an agent's call.
+
+## Item 3 is resolved, and not by me — 2026-09-21
+
+This bean left `dependents: "skip"` untouched and named it a ruling rather
+than a task, because a `dependents` change costs every concurrent branch.
+Checked again after the next merge of main: **it is now `reproduce`.**
+
+Changed under `n0nf` — `7d519ae6` ("n0nf slice 1: a dependent instance
+materialises its own docs/", PR #643) and `129b2461` ("the root's docs/ exists
+and the site composes it — **the owner's full ruling**"). So the two ends of
+the one mechanism this bean named have met, which is what it asked for.
+
+**The count moved as designed rather than being edited to suit.** 10 at the
+moment the axis landed, 9 once the root acquired a `docs/`. `reproduce` means
+the remaining instances materialise theirs at initiation rather than
+retroactively, so the rest of the fall is still ahead. That is the whole
+reason the finding is advisory.
+
+All three items satisfied, so this closes — on the EVIDENCE that the
+declaration now reads `reproduce`, not on anyone's authorship of it.
 
