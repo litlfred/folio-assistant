@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r3ez
 title: 'TRANSLATION QA REPORTS: 114 of 115 TR badges have no sidecar to open, and the page-level translation QA badge was removed with nothing put back'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T10:44:41Z
-updated_at: 2026-09-21T11:04:51Z
+updated_at: 2026-09-21T11:23:28Z
 parent: folio-assistant-bzyu
 ---
 
