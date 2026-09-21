@@ -103,3 +103,27 @@ Left with #746's author as a comment-and-rename rather than raised as a
 blocker, and deliberately NOT opened as a fresh bean here — it belongs to
 `vz24`'s decision, and a bean minted against somebody else's open PR is how
 this afternoon's duplications started.
+
+## A slip of my own, recorded rather than amended away
+
+The first commit on this branch swept in **two stray QA sidecars** —
+`kg-export.outside.qa-results.json` and `kg-export.who-iris.qa-results.json`.
+Both are debris from the repro runs above: `git add -A` after
+`--instance /tmp/outside` and `--instance ./who-iris`. The PR body said "one
+bean file" while the diff carried three, and CI was green on all of it,
+because nothing in the gate set asks whether a results file has a subject
+anybody exports.
+
+Removed in a follow-up commit rather than amended out, so the mistake stays
+legible.
+
+**It is also a finding about `u1iu`'s own sidecar fix.** Before that change an
+ad-hoc foreign export CLOBBERED the host's committed result — strictly worse.
+After it, an ad-hoc export leaves a NEW committed-looking file named after
+whatever was passed to `--instance`. The results tree can now accumulate a
+sidecar per experiment, and the accumulation is silent.
+
+Not opened as a bean here, deliberately: the fix belongs with whoever settles
+`vz24`'s location-vs-publication question, since "which instances may own a
+results sidecar" is the same question one directory over. Recorded here so it
+is findable from the id that observed it.
