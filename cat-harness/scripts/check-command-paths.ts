@@ -184,6 +184,23 @@ export function aboutThisTree(repo: string, tok: string): boolean {
   // because the skill is speaking from inside one, and judging those here
   // reports a folio's layout as a defect.
   if (first === path) return path.endsWith(".md");
+  // A head a FOLIO has means the skill is speaking from inside one, and this
+  // tree is not entitled to judge it — even when a directory of that name
+  // happens to sit here too.
+  //
+  // Added 2026-09-21 with `docs`, and the pairing is the whole point. The two
+  // notions were already both present and answered separately: line ~407
+  // HOLDS a folio-addressed command in the entry corpus, while the skill
+  // corpus asked only "does a directory of that name exist here". They agreed
+  // by accident until the repository root gained a `docs/` (bean `n0nf`), at
+  // which point `docs/audits/…` in a paper-adapter skill became "about this
+  // tree" and was reported missing. Measured: 7 findings with the directory
+  // present, 0 without.
+  //
+  // The skill was never wrong. `docs/audits/…` is a FOLIO's audit output, and
+  // the platform's own documentation is spelled `cat-harness/docs/…` with its
+  // instance prefix, so it still carries a head this tree does judge.
+  if (SKILL_FOLIO_HEADS.has(first)) return false;
   try {
     return statSync(join(repo, first)).isDirectory();
   } catch {
@@ -449,6 +466,38 @@ export function checkPrintedCommands(repo: string, report: CommandPathReport): v
  * command means *this command is addressed to a folio*.
  */
 export const FOLIO_OWNED = new Set(["folio", "content", "uploads", "library", "lean", ".lake"]);
+
+/**
+ * Path heads that mean "a folio's", **for the SKILL corpus only**.
+ *
+ * It is `FOLIO_OWNED` plus `docs`, and the difference is not an oversight —
+ * the two sets answer different questions and `docs` is the one place they
+ * disagree.
+ *
+ * | corpus | `docs/x` means | verdict |
+ * |---|---|---|
+ * | entry (README, AGENTS) | THIS repository's, spelled short | **fail**, with the fix `docs/x -> cat-harness/docs/x` |
+ * | skill | an instruction to a folio author, run in THEIR folio | not this tree's to judge |
+ *
+ * An entry document describes this repository, so a bare `docs/` there is a
+ * reference that lost its instance prefix and the finding carries its repair.
+ * A skill is executed by an agent working inside a folio, where `docs/` is
+ * that folio's — `docs/audits/…` is its audit output and `docs/_site` its
+ * rendered pages. Both readings are right for their corpus, which is what
+ * `Corpus` exists to distinguish.
+ *
+ * **Adding `docs` to `FOLIO_OWNED` instead was tried and is WRONG**: it turns
+ * the entry corpus's real correction into a silent hold, and
+ * `check-command-paths.test.ts` says so directly — *"`docs/` is this
+ * repository's, so it fails"*. That test caught the mistake.
+ *
+ * The case is not hypothetical. The repository root gained a `docs/` on
+ * 2026-09-21 (bean `n0nf`), and `docs/audits/…` in a paper-adapter skill
+ * immediately became "about this tree" and was reported missing. Measured:
+ * **7 findings with the directory present, 0 without**, and adding the head
+ * here moves exactly those 7 — 297 checked before, 290 after.
+ */
+const SKILL_FOLIO_HEADS = new Set([...FOLIO_OWNED, "docs"]);
 
 export function instanceRoots(repo: string): string[] {
   const out: string[] = [];

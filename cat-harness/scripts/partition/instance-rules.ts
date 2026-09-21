@@ -168,6 +168,12 @@ export const RULES: Rule[] = [
       // (`<base-url>/<path-to-kind-or-node>`) is a statement about harnesses,
       // not about what a folio holds.
       "scripts/mount-instance-docs.ts",      // instance-rendered content -> /<kind>/<instance>/
+      // Its sibling: same question, same answer. `compose-docs.ts` reads the
+      // `docs` declarations, works out which is the base and which the
+      // overlay from `scope`, and lays them down in order. Every decision it
+      // makes is about INSTANCES and where their directories resolve; it
+      // opens the files only to copy bytes, and never asks what a page says.
+      "scripts/compose-docs.ts",             // docs layers -> one composed tree
       "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI

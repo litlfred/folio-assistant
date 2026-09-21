@@ -51,7 +51,7 @@ rename a directory and the links follow.
 | `agent-skills` | agent-skills | [AGENTS.md](./agent-skills/AGENTS.md) | [README](./agent-skills/README.md) |
 | `cat-bootstrap` | cat-bootstrap | [AGENTS.md](./cat-bootstrap/AGENTS.md) | [README](./cat-bootstrap/README.md) |
 | `cat-bootstrap-tools` | cat-bootstrap-tools | [AGENTS.md](./cat-bootstrap-tools/AGENTS.md) | [README](./cat-bootstrap-tools/README.md) |
-| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
+| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) · [docs](docs/) |
 | `detangle` | detangle | [AGENTS.md](./detangle/AGENTS.md) | [README](./detangle/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
