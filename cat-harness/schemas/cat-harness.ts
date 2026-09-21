@@ -102,26 +102,70 @@ import { StickyContributionSchema, type StickyContribution } from "./sticky-cont
  * disagree — and {@link findDeclarationFile} checks exactly that rather than
  * trusting either half.
  *
- * ## What tells a declaration from a plain config
+ * ## What tells a declaration from a plain config — the NAME, then the SUFFIX
  *
- * **A `name` field.** Both live at the repository root, and both end
- * `.config.json`, so the discriminator has to be inside. A file carrying
- * `name` declares an instance; one without it configures the checkout it sits
- * in. `cat-harness.config.json` at the root is the second kind, which is why
- * it is left where it is: it is an INSTANTIATION marker, which is the half of
- * the owner's sentence that stays.
+ * **A `name` field**, and since 2026-09-21 the suffix as well.
+ *
+ * Until then both ended `.config.json`, so the only discriminator was inside
+ * the file: carrying `name` made it a declaration, lacking one made it a
+ * config. That worked and was still the thing `b5f0` §1 warned about — two
+ * different schemas, with two different readers, sharing one filename shape
+ * and told apart only by which directory they sat in.
+ *
+ * The owner reversed §1's REPLACE ruling on 2026-09-21 and took its other
+ * option, the one `b5f0` recorded as *"`<name>.json` + `<name>.config.json`
+ * would at least pair them"*:
+ *
+ * | file | schema | reader |
+ * |---|---|---|
+ * | `<name>.json` in the instance | {@link CatHarnessDeclarationSchema} | `readDeclaration` |
+ * | `<name>.config.json` at the instantiation root | `HarnessConfigSchema` | `readHarnessConfig` |
+ *
+ * The `name` check STAYS rather than being replaced by the suffix.
+ * {@link findDeclarationFile} still requires the filename stem to equal the
+ * declared `name`, which is what makes a declaration self-identifying: a
+ * consumer opening a repository it has never seen scans, parses, and takes the
+ * file that agrees with itself. That is the property migration-plan I.8 asked
+ * for, and it is the reason the suffix could move at all — nothing here
+ * derives a filename from a DIRECTORY name, so a clone renamed on disk still
+ * resolves.
  */
-export const DECLARATION_SUFFIX = ".config.json";
+export const DECLARATION_SUFFIX = ".json";
 
 /**
- * The declaration filename for an instance of this name.
+ * The suffix of an instantiation root's CONFIG, as against its declaration.
+ *
+ * These were ONE suffix until 2026-09-21, because the declaration had been
+ * folded into the config. The owner's reversal separates them again, so there
+ * are now two things to spell and they must not be spelled by one constant:
+ * composing a config path from {@link DECLARATION_SUFFIX} produced
+ * `cat-harness.json` for a file that is `cat-harness.config.json`, and
+ * `check:instance-config` reported all three real configs as orphans.
+ */
+export const CONFIG_SUFFIX = ".config.json";
+
+/**
+ * The CONFIG filename for an instance of this name — `<name>.config.json`.
  *
  * Defined HERE and re-exported by `schemas/harness-config.ts`, which is where
  * it used to live — that module imports this one, so the dependency only runs
- * one way and the alternative was two functions spelling one filename. One
- * speller, or the config and the declaration drift apart at the first rename.
+ * one way. The rationale was "one speller, or the config and the declaration
+ * drift apart at the first rename"; that still holds, but the thing being
+ * spelled once is now each filename rather than both, and the pair below is
+ * what keeps them from drifting.
  */
 export function instanceConfigFilename(name: string): string {
+  return `${name}${CONFIG_SUFFIX}`;
+}
+
+/**
+ * The DECLARATION filename for an instance of this name — `<name>.json`.
+ *
+ * Its sibling above spells the config. Both exist so that neither is composed
+ * at a call site: a literal `${name}.json` is the thing that survives a
+ * suffix change and then resolves to nothing.
+ */
+export function instanceDeclarationFilename(name: string): string {
   return `${name}${DECLARATION_SUFFIX}`;
 }
 
@@ -164,7 +208,24 @@ export function findDeclarationFile(dir: string): string | undefined {
       // reports a clean run. It cannot be matched on `name` (there is no
       // parse), so it is collected separately and `readDeclaration` throws on
       // it rather than returning `undefined`.
-      broken.push(entry);
+      //
+      // BUT ONLY WHEN IT COULD PLAUSIBLY BE THIS INSTANCE'S. The suffix was
+      // `.config.json` until 2026-09-21, which made "unparseable file with
+      // this suffix" a near-certain broken declaration. A bare `.json` makes
+      // it near-certainly NOT one: a malformed `folio/landing.json` — a
+      // landing sticky, nothing to do with declarations — was reported as a
+      // broken declaration and took `readDeclaration` down with it.
+      //
+      // The two admissible signals, neither of which is used for RESOLUTION:
+      // a sibling `<stem>.config.json`, which is the pairing the split
+      // created, or a stem equal to the directory's own name. Matching the
+      // directory here does NOT reintroduce what migration-plan I.8 warned
+      // about — that is about deriving a declaration's location from a
+      // directory name, and resolution still goes only through a file
+      // agreeing with its own `name`. This is error REPORTING: the cost of
+      // being wrong is a worse message, not a missed instance.
+      const plausible = stem === basename(dir) || entries.includes(`${stem}${CONFIG_SUFFIX}`);
+      if (plausible) broken.push(entry);
       continue;
     }
     if ((raw as { name?: unknown })?.name === stem) found.push(entry);

@@ -50,5 +50,5 @@ like it belonged here and did not.
 
 ---
 
-*A declared asset of this instance ([`who-iris.config.json`](who-iris.config.json), role
+*A declared asset of this instance ([`who-iris.json`](who-iris.json), role
 `agent-instructions`). Issue #592.*
