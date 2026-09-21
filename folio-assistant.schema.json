@@ -555,6 +555,13 @@
             "owes"
           ],
           "additionalProperties": false
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       },
       "required": [
@@ -570,8 +577,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "0b312164b7f9d69dedd7f5ee97e737cb4754becf",
+    "sha": "a5ac57c98d65065d2c4c7713da58b031efdcfba9",
     "pr": "main",
-    "run": "35564300226"
+    "run": "35564536312"
   }
 }

@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T05:23:06.070Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0b312164b7f9d69dedd7f5ee97e737cb4754becf",
-  "sourceCommitSha": "0b312164b7f9d69dedd7f5ee97e737cb4754becf",
-  "sourceCommitAt": "2026-09-21T07:21:37+02:00",
+  "generatedAt": "2026-09-21T05:27:40.143Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a5ac57c98d65065d2c4c7713da58b031efdcfba9",
+  "sourceCommitSha": "a5ac57c98d65065d2c4c7713da58b031efdcfba9",
+  "sourceCommitAt": "2026-09-21T07:26:07+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 219,
@@ -272,7 +272,7 @@
     "SequenceFlow": 714,
     "ProcessNode": 680,
     "Tool": 69,
-    "Schema": 80,
+    "Schema": 83,
     "GraphKind": 22,
     "Directory": 33,
     "Asset": 3
@@ -29879,6 +29879,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/board-positions",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "board-positions",
+      "title": "Where a note sits on a board — a layer ON TOP of the notes, never inside them.",
+      "module": "schemas/board-positions.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/board",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "board",
+      "title": "A board — the surface a folio's notes and its content are read on together.",
+      "module": "schemas/board.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/carried-note",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "carried-note",
@@ -30162,6 +30178,14 @@
       "name": "script-qa",
       "title": "Per-script QA report schema.",
       "module": "schemas/script-qa.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/semantic-zoom",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "semantic-zoom",
+      "title": "When a card stops rendering its words and becomes its avatar.",
+      "module": "schemas/semantic-zoom.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/schemas"
     },
     {
@@ -31991,8 +32015,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "0b312164b7f9d69dedd7f5ee97e737cb4754becf",
+    "sha": "a5ac57c98d65065d2c4c7713da58b031efdcfba9",
     "pr": "main",
-    "run": "35564300226"
+    "run": "35564536312"
   }
 }
