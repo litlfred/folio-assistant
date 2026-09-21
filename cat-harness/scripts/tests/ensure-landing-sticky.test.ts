@@ -24,6 +24,7 @@ import {
 import { LandingStickySchema } from "../../schemas/landing-sticky.js";
 import { contributingRoots, declaredContributions, initiationFromArgv } from "../ensure-landing-sticky.js";
 import { InitiationSchema } from "../../schemas/sticky-contribution.js";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 /**
  * The ids this fixture's declaration contributes.
@@ -78,7 +79,7 @@ const DECL = `{
 
 function instance(decl = DECL): string {
   const root = mkdtempSync(join(tmpdir(), "landing-sticky-"));
-  writeFileSync(join(root, "harness.json"), decl);
+  writeFileSync(join(root, DECLARATION_FILENAME), decl);
   return root;
 }
 
@@ -190,7 +191,7 @@ describe("running it twice changes nothing", () => {
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     ensureLandingSticky(root, "2027-01-01T00:00:00Z");
     const written = JSON.parse(
-      readFileSync(join(root, folioDirPath(JSON.parse(readFileSync(join(root, "harness.json"), "utf8"))), stickyFile(LANDING_STICKY_ID)), "utf8"),
+      readFileSync(join(root, folioDirPath(JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf8"))), stickyFile(LANDING_STICKY_ID)), "utf8"),
     ) as { createdAt: string };
     expect(written.createdAt).toBe("2026-09-20T00:00:00Z");
   });
@@ -198,15 +199,15 @@ describe("running it twice changes nothing", () => {
   test("the declaration is written once and not grown", () => {
     const root = instance();
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
-    const after = readFileSync(join(root, "harness.json"), "utf8");
+    const after = readFileSync(join(root, DECLARATION_FILENAME), "utf8");
     ensureLandingSticky(root, "2027-01-01T00:00:00Z");
-    expect(readFileSync(join(root, "harness.json"), "utf8")).toBe(after);
+    expect(readFileSync(join(root, DECLARATION_FILENAME), "utf8")).toBe(after);
   });
 
   test("the sticky it writes is a valid LandingSticky", () => {
     const root = instance();
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
-    const decl = JSON.parse(readFileSync(join(root, "harness.json"), "utf8")) as object;
+    const decl = JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf8")) as object;
     const raw = readFileSync(join(root, folioDirPath(decl), stickyFile(LANDING_STICKY_ID)), "utf8");
     expect(() => LandingStickySchema.parse(JSON.parse(raw))).not.toThrow();
   });
@@ -214,7 +215,7 @@ describe("running it twice changes nothing", () => {
   test("the instance's own description is what the sticky carries", () => {
     const root = instance();
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
-    const decl = JSON.parse(readFileSync(join(root, "harness.json"), "utf8")) as object;
+    const decl = JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf8")) as object;
     const s = LandingStickySchema.parse(
       JSON.parse(readFileSync(join(root, folioDirPath(decl), stickyFile(LANDING_STICKY_ID)), "utf8")),
     );
@@ -225,10 +226,10 @@ describe("running it twice changes nothing", () => {
 
   test("`--check` reports without writing", () => {
     const root = instance();
-    const before = readFileSync(join(root, "harness.json"), "utf8");
+    const before = readFileSync(join(root, DECLARATION_FILENAME), "utf8");
     const report = ensureLandingSticky(root, "2026-09-20T00:00:00Z", { check: true });
     expect(report.declaredFolio).toBe("added");
-    expect(readFileSync(join(root, "harness.json"), "utf8")).toBe(before);
+    expect(readFileSync(join(root, DECLARATION_FILENAME), "utf8")).toBe(before);
   });
 });
 
@@ -238,7 +239,7 @@ describe("a malformed sticky is repaired, not fatal", () => {
     // would be the one failure mode with no recovery.
     const root = instance();
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
-    const decl = JSON.parse(readFileSync(join(root, "harness.json"), "utf8")) as object;
+    const decl = JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf8")) as object;
     const path = join(root, folioDirPath(decl), stickyFile(LANDING_STICKY_ID));
     writeFileSync(path, "{ not json");
     const report = ensureLandingSticky(root, "2027-01-01T00:00:00Z");
@@ -255,7 +256,7 @@ describe("a malformed sticky is repaired, not fatal", () => {
     // A landing page with no words is worse than one naming the instance, and
     // `summary` is `min(1)` so an empty description would refuse the node.
     const root = instance(DECL.replace(/  "description": "[^"]*",\n/, ""));
-    const path = join(root, "harness.json");
+    const path = join(root, DECLARATION_FILENAME);
     const s = stickiesFor(root, join(root, "nowhere"), "2026-09-20T00:00:00Z")[0]!;
     expect(s.comment).toBe("a-folio");
     expect(readFileSync(path, "utf8")).toContain('"name": "a-folio"');
@@ -281,7 +282,7 @@ describe("a nested instance contributes its own stickies", () => {
   function nested(): string {
     const root = mkdtempSync(join(tmpdir(), "landing-nested-"));
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify(
         {
           name: "outer",
@@ -302,7 +303,7 @@ describe("a nested instance contributes its own stickies", () => {
     );
     mkdirSync(join(root, "inner", "skills"), { recursive: true });
     writeFileSync(
-      join(root, "inner", "harness.json"),
+      join(root, "inner", DECLARATION_FILENAME),
       JSON.stringify(
         {
           name: "inner",
@@ -334,7 +335,7 @@ describe("a nested instance contributes its own stickies", () => {
     // stickies would collide with themselves.
     const root = mkdtempSync(join(tmpdir(), "landing-plain-"));
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify(
         { name: "only", directories: [{ id: "s", path: "sub/", dependents: "reproduce", graphs: ["cat-harness"] }] },
         null,
@@ -366,7 +367,7 @@ describe("a nested instance contributes its own stickies", () => {
     const root = nested();
     const report = ensureLandingSticky(root, "2026-09-20T00:00:00.000Z");
     expect(report.stickies.map((s) => s.id)).toEqual(["landing", "inner-card"]);
-    const dir = folioDirPath(JSON.parse(readFileSync(join(root, "harness.json"), "utf8")));
+    const dir = folioDirPath(JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf8")));
     for (const st of report.stickies) {
       const node = LandingStickySchema.parse(
         JSON.parse(readFileSync(join(root, dir, stickyFile(st.id)), "utf8")),
@@ -386,7 +387,7 @@ describe("a nested instance contributes its own stickies", () => {
     // default here would hand a cat back to a bare cat-bootstrap.
     const root = mkdtempSync(join(tmpdir(), "landing-none-"));
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({ name: "quiet", description: "no cards", directories: [] }, null, 2),
     );
     expect(declaredContributions(root)).toEqual([]);
@@ -408,7 +409,7 @@ describe("a sticky is an initiation RECEIPT", () => {
   function instanceWithSticky(): string {
     const root = mkdtempSync(join(tmpdir(), "receipt-"));
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify(
         {
           name: "a-folio",
@@ -430,7 +431,7 @@ describe("a sticky is an initiation RECEIPT", () => {
     LandingStickySchema.parse(
       JSON.parse(
         readFileSync(
-          join(root, folioDirPath(JSON.parse(readFileSync(join(root, "harness.json"), "utf8"))), stickyFile(id)),
+          join(root, folioDirPath(JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf8"))), stickyFile(id)),
           "utf8",
         ),
       ),

@@ -38,6 +38,7 @@ import {
 } from "../../schemas/cat-harness.js";
 
 import { walkBlocks } from "../../content/pipeline/qa-utils.js";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 /** A block manifest `walkBlocks` will admit without importing it. */
 const MANIFEST = 'import { prose } from "./builders";\nexport default prose({ label: "probe", body: "x" });\n';
@@ -53,7 +54,7 @@ function fixture(): { root: string } {
   const root = mkdtempSync(join(tmpdir(), "sweep-scope-"));
   mkdirSync(join(root, ".git"), { recursive: true });
   writeFileSync(
-    join(root, "harness.json"),
+    join(root, DECLARATION_FILENAME),
     JSON.stringify({
       name: "probe",
       description: "one content directory and one retired one",
@@ -100,7 +101,7 @@ describe("a sweep walks content and skips what is declared retired", () => {
     const root = mkdtempSync(join(tmpdir(), "sweep-scope-bare-"));
     mkdirSync(join(root, ".git"), { recursive: true });
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "probe",
         description: "an entry with no graphs",
@@ -118,7 +119,7 @@ describe("a sweep walks content and skips what is declared retired", () => {
     // nothing, which is the failure this repository names most often.
     const root = mkdtempSync(join(tmpdir(), "sweep-scope-bad-"));
     mkdirSync(join(root, ".git"), { recursive: true });
-    writeFileSync(join(root, "harness.json"), "{ not json at all");
+    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json at all");
     mkdirSync(join(root, "folio"), { recursive: true });
     writeFileSync(join(root, "folio", "probe.ts"), MANIFEST);
     expect(walked(root)).toEqual(["folio/probe.ts"]);
@@ -136,7 +137,7 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     const { readDeclaration } = await import("../../schemas/cat-harness.js");
     const root = mkdtempSync(join(tmpdir(), "sweep-scope-unknown-"));
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "probe",
         description: "names a kind nothing registers",
@@ -152,7 +153,7 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     const root = mkdtempSync(join(tmpdir(), "sweep-scope-unknown2-"));
     mkdirSync(join(root, ".git"), { recursive: true });
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "probe",
         description: "names a kind nothing registers",

@@ -50,6 +50,13 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "fs";
 import { join, resolve } from "path";
 
+// The declaration filename comes from the harness, not a second copy of it
+// here. This instance already declares `"needs": ["cat-harness"]`, and the
+// partition rules call core reading harness DOWNWARD -- so this is the
+// declared dependency being used, not a new one being created. Owner ruling,
+// 2026-09-21, bean `jijc`.
+import { DECLARATION_FILENAME } from "../../cat-harness/schemas/cat-harness.js";
+
 /** A citation into L1 content. `instance` absent means *this* instance. */
 export interface LibraryRef {
   /** The DECLARED NAME of the instance holding the corpus — not a path. */
@@ -80,7 +87,7 @@ export type LibraryRefResult =
 export function instanceRoots(repoRoot: string): Map<string, string> {
   const out = new Map<string, string>();
   const consider = (dir: string) => {
-    const decl = join(dir, "harness.json");
+    const decl = join(dir, DECLARATION_FILENAME);
     if (!existsSync(decl)) return;
     try {
       const name = JSON.parse(readFileSync(decl, "utf8"))?.name;
@@ -108,7 +115,7 @@ export function instanceRoots(repoRoot: string): Map<string, string> {
  * graph at all, which is a different answer from "the directory is empty".
  */
 export function libraryDirOf(instanceRoot: string): string | undefined {
-  const decl = join(instanceRoot, "harness.json");
+  const decl = join(instanceRoot, DECLARATION_FILENAME);
   if (!existsSync(decl)) return undefined;
   let dirs: Array<{ path?: string; graphs?: string[]; scope?: string }> = [];
   try {

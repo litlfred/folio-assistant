@@ -25,6 +25,7 @@ import { defineTool, type ToolDefinition } from "../schemas/tool.js";
 import { toolTypeIri } from "../schemas/tool-types.js";
 import { mcpTools } from "./mcp.js";
 import { sessionTools } from "./sessions.js";
+import { DECLARATION_FILENAME } from "../schemas/cat-harness.js";
 
 // The INSTANCE root — `<repo>/cat-harness`, where `harness.json` lives.
 //
@@ -54,7 +55,7 @@ function stub(): string {
 }
 
 function decl(): { canonicalUrl?: string; stub?: string; name?: string } {
-  const p = join(ROOT, "harness.json");
+  const p = join(ROOT, DECLARATION_FILENAME);
   if (!existsSync(p)) return {};
   try {
     return JSON.parse(readFileSync(p, "utf-8")) as ReturnType<typeof decl>;

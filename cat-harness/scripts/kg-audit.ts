@@ -91,7 +91,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { DECLARATION_FILENAME, repoRootFor } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 
 const ENGINE_VERSION = "1";
@@ -1026,7 +1026,7 @@ function unreadNestedInstances(): KgFinding[] {
         walk(p, depth + 1);
         continue;
       }
-      if (e.name !== "harness.json") continue;
+      if (e.name !== DECLARATION_FILENAME) continue;
       // Not this audit's own instance, whichever directory that is.
       if (resolve(dir) === resolve(root)) continue;
       let decl: { directories?: unknown[]; name?: string };

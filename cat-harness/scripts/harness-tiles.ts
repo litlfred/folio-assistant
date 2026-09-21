@@ -58,6 +58,7 @@ import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { flattenDependencies } from "./dependency-order.js";
 import {
   type CatHarnessDeclaration,
+  DECLARATION_FILENAME,
   isExemptFrom,
   readDeclaration,
   siteDirFor,
@@ -201,17 +202,17 @@ function folioRoot(repoRoot: string, name: string, atSiteRoot: boolean): string 
   // literal, and it was right to: an instance may publish from anywhere, and
   // this function would have quietly answered "no folio view" for one that
   // did.
-  if (!existsSync(join(dir, "harness.json"))) return undefined;
+  if (!existsSync(join(dir, DECLARATION_FILENAME))) return undefined;
   return existsSync(join(dir, siteDirFor(dir))) ? `/${name}/` : undefined;
 }
 
 /** Every `harness.json` in the tree: the repository root and one level down. */
 function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
   const out: string[] = [];
-  if (existsSync(join(repoRoot, "harness.json"))) out.push(repoRoot);
+  if (existsSync(join(repoRoot, DECLARATION_FILENAME))) out.push(repoRoot);
   for (const name of names) {
     const dir = join(repoRoot, name);
-    if (dir !== repoRoot && existsSync(join(dir, "harness.json"))) out.push(dir);
+    if (dir !== repoRoot && existsSync(join(dir, DECLARATION_FILENAME))) out.push(dir);
   }
   return out;
 }

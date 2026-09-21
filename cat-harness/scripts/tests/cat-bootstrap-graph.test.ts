@@ -10,7 +10,7 @@ import { join, resolve } from "node:path";
 
 import { buildCatBootstrapDocument } from "../gen-cat-bootstrap-graph.js";
 import { isSkillMd } from "../known-skills.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 // `cat-bootstrap/` is at the REPOSITORY root, not inside this instance — it is
@@ -152,7 +152,7 @@ describe("what it contains, and what it admits it did not look at", () => {
       .filter((n) => String(n["@type"]).endsWith("#GraphKind"))
       .map((n) => String(n["name"]));
     const declared = new Set(
-      (JSON.parse(readFileSync(join(CAT_BOOTSTRAP, "harness.json"), "utf-8")) as {
+      (JSON.parse(readFileSync(join(CAT_BOOTSTRAP, DECLARATION_FILENAME), "utf-8")) as {
         directories?: Array<{ graphs?: string[] }>;
       }).directories?.flatMap((d) => d.graphs ?? []) ?? [],
     );

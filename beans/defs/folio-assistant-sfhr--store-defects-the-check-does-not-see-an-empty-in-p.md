@@ -114,3 +114,7 @@ either way, one per rejected candidate above.
       remaining half
 - [ ] The five baselined `shadow-checklist` beans are repaired by their owners
       (this bean does not edit them)
+
+*Issue link, recorded 2026-09-21.* **[#639](https://github.com/litlfred/folio-assistant/issues/639)** — the shadow-checklist detector.
+
+Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.
