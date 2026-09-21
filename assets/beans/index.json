@@ -4693,6 +4693,20 @@
       "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md"
     },
     {
+      "id": "folio-assistant-vz24",
+      "title": "kg-export's publication-base fallback has no boundary: an instance outside the repo gets this site's base",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:46:00Z",
+      "updatedAt": "2026-09-21T16:50:00Z",
+      "preview": "## What\n\n`exportIdentity`'s fallback — mine, from `40fl`/#718 — inherits the host\ninstance's `canonicalUrl` for **any** instance declaring none, with no\ncondition on where that instance lives. Measured on `main` at `0fc29b98cc`:\n\n```\n$ kg-export.ts --instance /tmp/.../outside --out …\n  @id  https://litlfred.github.io/folio-assistant/outside.jsonld\n  exit 0, no problem reported\n```\n\nA directory in ",
+      "file": "beans/defs/folio-assistant-vz24--kg-exports-publication-base-fallback-has-no-bounda.md"
+    },
+    {
       "id": "folio-assistant-w095",
       "title": "who-style-guide/ — the three one-voices out of cat-harness, citing who-iris across the boundary",
       "status": "completed",
