@@ -2913,7 +2913,11 @@ export function siteDirFor(root: string): string {
  * is never rendered as an answer.
  */
 export function artefactStubFor(root: string): string {
-  const p = join(root, DECLARATION_FILENAME);
+  // Named as a DIRECTORY when there is no declaration, the same way
+  // `siteDirFor` is: under `<name>.config.json` there is no single filename to
+  // report as missing, and "no declaration in <dir>" is the fact anyway.
+  const file = findDeclarationFile(root);
+  const p = file === undefined ? resolve(root) : join(root, file);
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(p, "utf-8"));
