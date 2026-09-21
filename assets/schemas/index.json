@@ -5396,6 +5396,13 @@
           "array": false
         },
         {
+          "name": "instanceRoot",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is what answers at the instance's own route, `/<instance>/`."
+        },
+        {
           "name": "theme",
           "type": "z.string().min(1).optional()",
           "optional": true,
