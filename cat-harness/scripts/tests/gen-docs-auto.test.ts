@@ -19,7 +19,7 @@ import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { TYPES, autoDocPage, declaredDirectories, owningDirectory } from "../gen-docs-auto.ts";
+import { TYPES, autoDocPage, declaredDirectories, levelPage, owningDirectory } from "../gen-docs-auto.ts";
 import { knownSkills } from "../known-skills.ts";
 import { readDeclaration, siteDirFor } from "../../schemas/cat-harness.ts";
 
@@ -182,5 +182,64 @@ describe("what is published", () => {
     // skills page and must NOT get a processes page.
     const p = join(SITE, HANDLER!, "docs-auto", "index", "processes", "who-iris-skills");
     expect(existsSync(p)).toBe(false);
+  });
+});
+
+describe("the LEVEL pages — a route that reads like a section must answer", () => {
+  it("every level above a built type has an index", () => {
+    // Bean `06e3`: a type id may carry a slash, so `viewerPlacement` nests its
+    // page directory and the levels above came into existence holding nothing.
+    // `/cat-harness/docs-auto/` and `/cat-harness/docs-auto/index/` were both
+    // bare directories — the same defect §4(a) fixed one level up, and the
+    // reason the authored landing page had to name `docs-auto` without a link.
+    const levels = new Set<string>();
+    for (const t of TYPES) {
+      const segs = t.id.split("/");
+      for (let i = 0; i < segs.length; i++) levels.add(segs.slice(0, i).join("/"));
+    }
+    expect(levels.size).toBeGreaterThan(0);
+    for (const prefix of levels) {
+      const p = join(SITE, HANDLER!, "docs-auto", ...(prefix ? prefix.split("/") : []), "index.html");
+      expect(existsSync(p), `no index at docs-auto/${prefix}`).toBe(true);
+    }
+  });
+
+  it("a level page names ITSELF, so the one pruner can read its ownership", () => {
+    // `orphanSubjectPages` establishes ownership from `var SCOPE`, and a page
+    // whose SCOPE does not match its own directory is FOREIGN — reported and
+    // left. A level page that got this wrong would be unprunable forever, and
+    // nothing else would say so.
+    const root = readFileSync(join(SITE, HANDLER!, "docs-auto", "index.html"), "utf-8");
+    expect(root).toContain('var SCOPE = "docs-auto";');
+    const mid = readFileSync(join(SITE, HANDLER!, "docs-auto", "index", "index.html"), "utf-8");
+    expect(mid).toContain('var SCOPE = "index";');
+  });
+
+  it("its links are relative to itself, so the tree can move", () => {
+    const mid = readFileSync(join(SITE, HANDLER!, "docs-auto", "index", "index.html"), "utf-8");
+    for (const t of TYPES) {
+      const seg = t.id.split("/").pop()!;
+      if (!t.id.startsWith("index/")) continue;
+      expect(mid).toContain(`href="${seg}/"`);
+    }
+    // And no absolute path composed from a base URL — the same rule every
+    // viewer here follows, because the base is not this generator's to know.
+    expect(/href="\//.test(mid)).toBe(false);
+  });
+
+  it("renders a level with nothing under it as a stated absence", () => {
+    // Not an empty list: an empty list and a complete list look identical,
+    // which is why `TYPES` keeps unbuilt types absent rather than stubbed.
+    expect(levelPage("index", [])).toContain("Nothing is built under this level");
+  });
+
+  it("counts a type's items and says what a nested level holds", () => {
+    const h = levelPage("", [
+      { seg: "index", title: "index", detail: "2 type(s) below" },
+      { seg: "glossary", title: "Glossary", detail: "every defined term", count: 7 },
+    ]);
+    expect(h).toContain("2 type(s) below");
+    expect(h).toContain(">7<");
+    expect(h).toContain('href="glossary/"');
   });
 });

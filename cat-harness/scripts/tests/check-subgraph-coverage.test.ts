@@ -21,10 +21,26 @@ import {
   readmeFinding,
   ownDocsFinding,
 } from "../check-subgraph-coverage";
-import { owesVisualiser, GraphKindRegistry, siteDirFor } from "../../schemas/cat-harness";
+import {
+  INSTANCE_README_ROLE,
+  owesVisualiser,
+  GraphKindRegistry,
+  resolveCoveragePath,
+  siteDirFor,
+} from "../../schemas/cat-harness";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
-/** A throwaway instance whose one directory carries `coverage`. */
+/**
+ * A throwaway instance whose one directory carries `coverage`.
+ *
+ * **`realTargets` are written at the REPOSITORY root (`base`), not under the
+ * instance**, because that is where a `coverage.*` value resolves — the
+ * owner's ruling of 2026-09-21 on bean `yt7j`, and what all 45 coverage paths
+ * in this repository already do. The fixture wrote them under the instance
+ * while `targetExists` accepted either root, so it was passing against the
+ * fallback rather than against the convention; eight tests turned red the
+ * moment the fallback came out, which is the evidence that they were.
+ */
 function instance(
   coverage: unknown,
   opts: { name?: string; realTargets?: string[]; graphs?: string[] } = {},
@@ -33,7 +49,7 @@ function instance(
   const root = join(base, opts.name ?? "inst");
   mkdirSync(join(root, "thing"), { recursive: true });
   for (const t of opts.realTargets ?? []) {
-    const abs = resolve(root, t);
+    const abs = resolve(base, t);
     mkdirSync(abs.slice(0, abs.lastIndexOf("/")), { recursive: true });
     writeFileSync(abs, "x");
   }
@@ -531,3 +547,110 @@ describe("the own-docs axis — an instance owes documentation of its own", () =
   });
 });
 
+
+describe("coverage.* resolves against the REPOSITORY root and nothing else — bean `yt7j`", () => {
+  // The owner's ruling of 2026-09-21. Before it, `targetExists` tried the
+  // instance root and fell back to the repository root, accepting either —
+  // which reads as tolerance and is the opposite: a path incorrect in its
+  // declared base passed anyway through the other, so the axis could not
+  // enforce the convention its own schema documents.
+
+  it("a target at the repository root resolves", () => {
+    const { root, cleanup } = instance({ visualiser: "viz.html" }, { realTargets: ["viz.html"] });
+    expect(auditInstance(root).findings.filter((f) => f.criterion === "visualiser")).toEqual([]);
+    cleanup();
+  });
+
+  it("THE FALSIFICATION: a target that exists ONLY under the instance is a finding", () => {
+    // The fallback's removal has to be provable, not asserted. This fixture
+    // plants the file where the old code would have found it and nowhere else;
+    // if the instance root is still being tried, this test goes green and says
+    // nothing.
+    const base = mkdtempSync(join(tmpdir(), "coverage-inst-only-"));
+    const root = join(base, "inst");
+    mkdirSync(join(root, "thing"), { recursive: true });
+    writeFileSync(join(root, "viz.html"), "x"); // under the INSTANCE, not the repo
+    writeDeclaration(root, JSON.stringify({
+        name: "inst",
+        directories: [
+          {
+            id: "thing",
+            path: "thing/",
+            dependents: "reproduce",
+            graphs: ["cat-harness"],
+            coverage: { visualiser: "viz.html" },
+          },
+        ],
+      }));
+    const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
+    expect(viz).toHaveLength(1);
+    expect(viz[0]?.severity).toBe("major");
+    expect(viz[0]?.detail).toContain("does not resolve");
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("resolveCoveragePath composes from the root it is handed, and checks nothing", () => {
+    // It does not verify existence on purpose: a caller asking "does this
+    // resolve" needs to say WHERE it looked, and folding the question in here
+    // would hand every consumer a bare boolean instead.
+    expect(resolveCoveragePath("/repo", "cat-harness/docs/x.html")).toBe(
+      "/repo/cat-harness/docs/x.html",
+    );
+    expect(resolveCoveragePath("/repo/", "a/b.md")).toBe("/repo/a/b.md");
+  });
+
+  it("a node id — no slash, no dot — is not treated as a path in either base", () => {
+    // `coverage.skill` names a skill rather than a file, so "missing" here
+    // would be the axis lying about what it looked at.
+    const { root, cleanup } = instance({ skill: "some-skill" });
+    expect(auditInstance(root).findings.filter((f) => f.criterion === "skill")).toEqual([]);
+    cleanup();
+  });
+});
+
+describe("the repository root is recognised as itself — bean `yt7j`", () => {
+  // `isRoot` was `resolve(root) === resolve(repoRootFor(root))`: a directory
+  // compared with its own PARENT, equal only at the filesystem root. So the
+  // guard "the repository root legitimately owns the repository's files" could
+  // never fire for the one instance it exists for. Latent rather than visible
+  // — this repository's root declaration carries no `scope: "repository"`
+  // asset today — which is exactly why it needs a test rather than a sighting.
+
+  /** An instance declaring one asset, optionally repository-scoped. */
+  function withAsset(scope: string | undefined): { root: string; cleanup: () => void } {
+    const base = mkdtempSync(join(tmpdir(), "coverage-root-"));
+    const root = join(base, "inst");
+    mkdirSync(root, { recursive: true });
+    writeFileSync(join(root, "README.md"), "x");
+    writeDeclaration(root, JSON.stringify({
+        name: "inst",
+        directories: [],
+        assets: [
+          { id: "inst-readme", role: INSTANCE_README_ROLE, src: "README.md", ...(scope ? { scope } : {}) },
+        ],
+      }));
+    return { root, cleanup: () => rmSync(base, { recursive: true, force: true }) };
+  }
+
+  it("an instance BELOW the root borrowing a repository-scoped asset is a finding", () => {
+    const { root, cleanup } = withAsset("repository");
+    const r = auditInstance(root, join(root, ".."));
+    expect(r.readme?.severity).toBe("major");
+    expect(r.readme?.detail).toContain("one file doing two jobs");
+    cleanup();
+  });
+
+  it("the repository root declaring the same asset is NOT a finding", () => {
+    // The whole point of the guard, and what the broken formula suppressed.
+    const { root, cleanup } = withAsset("repository");
+    expect(auditInstance(root, root).readme).toBeUndefined();
+    cleanup();
+  });
+
+  it("an unscoped asset is fine either way, which is why this stayed latent", () => {
+    const { root, cleanup } = withAsset(undefined);
+    expect(auditInstance(root, root).readme).toBeUndefined();
+    expect(auditInstance(root, join(root, "..")).readme).toBeUndefined();
+    cleanup();
+  });
+});

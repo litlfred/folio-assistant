@@ -13,9 +13,19 @@
   <bpmn:process id="Process_InitializeHarness" name="Initialize a harness" isExecutable="false">
     <bpmn:documentation>THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. An Initiator that has read cat-bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces.
 
-PRECONDITION: the Initiator understands tasks, roles, processes, actors and skills, has been told it is an Initiator, and is at the start of this process. BPMN has no precondition element and this schema adds none yet, so it is stated here in the documentation and tracked as bean `lv3j`.
+PRECONDITIONS are DECLARED below as folio:precondition elements rather than asserted here (bean `lv3j`). Three of the four are kind="stated": nothing in this repository can observe whether an actor understands what a role is, and a check claiming to would be a green tick over an unverified claim — so they evaluate to could-not-determine, never to satisfied. The fourth is checkable, and note what it actually checks: that README.md EXISTS, not that the Initiator read it. Reading is not observable from here.
 
 NO folio:bean on any activity: a bean is work-plan machinery and an Initiator runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data an Initiator reads, not a process cat-bootstrap can drive.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:precondition id="knows-the-vocabulary" kind="stated"
+        text="The Initiator understands what a task, a role, a process, an actor and a skill are."/>
+      <folio:precondition id="told-it-is-an-initiator" kind="stated"
+        text="The Initiator has been told that it is an Initiator."/>
+      <folio:precondition id="at-the-start" kind="stated"
+        text="The Initiator is at the start of this process and has not begun it elsewhere."/>
+      <folio:precondition id="readme-present" kind="checkable" check="file-exists" ref="cat-bootstrap/README.md"
+        text="The README this process tells the Initiator to read exists in this checkout."/>
+    </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_InitializeHarness">
       <bpmn:lane id="Lane_Initiator" name="Initiator">
         <bpmn:flowNodeRef>Start_InitializeHarness</bpmn:flowNodeRef>

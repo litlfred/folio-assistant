@@ -1,11 +1,11 @@
 ---
 # folio-assistant-a6kl
 title: 'L1 GATE WAS A NO-OP IN CI: check:l1-complete ran from the repo root and found no declaration'
-status: in-progress
+status: completed
 type: bug
 priority: critical
 created_at: 2026-09-20T10:20:54Z
-updated_at: 2026-09-21T07:28:59Z
+updated_at: 2026-09-21T10:10:00Z
 parent: folio-assistant-kupb
 ---
 
@@ -99,3 +99,23 @@ script end is guarded by the script's own refusal, not by an external reader.
   returning `string` and throwing. Not imported, so not a shadowing bug — but
   one name with two meanings, which is `check:anchor-names`' own shape one level
   up, and that check sees anchor names rather than function names. New bean.
+
+## Summary of Changes
+
+Both halves of this bean are now landed and merged (#674, `ce71f60`).
+
+The FIX shipped earlier: `checkAll` throws `NoDeclaredLibrary` rather than
+returning `[]`, and the CLI resolves the instance root instead of the CWD.
+
+The SWEEP shipped here, and closed the "Still open" question with a measurement
+rather than an assurance: 75 gates wired, 6 resolve a root from the CWD, all 6
+find a non-empty corpus from CI's actual cwd, and 0 of the 31
+`working-directory:` steps across 33 workflows run any of them.
+
+The falsification is the part worth keeping. Reintroducing the defect leaves
+`check:l1-complete` at rc=2 and SIX other gates at rc=0 — so the gate
+self-guards and nothing external reads this class. That corrected a claim
+`check-workflow-paths.ts` was making about `check:anchor-names`, in place.
+
+Follow-ups, both under `1xhc`: `iym1` (no cross-gate vacuity reader) and `12ws`
+(`instanceRootFor` means two different things in two files).

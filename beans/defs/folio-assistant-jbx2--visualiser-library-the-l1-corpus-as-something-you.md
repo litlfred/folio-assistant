@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jbx2
 title: 'VISUALISER: library/ — the L1 corpus as something you can look at'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:01:05Z
-updated_at: 2026-09-20T18:50:45Z
+updated_at: 2026-09-21T07:54:15Z
 parent: folio-assistant-yj32
 ---
 
@@ -273,3 +273,90 @@ short because they are discoverable rather than secret:
   reports a clean run over three `materialized` claims that resolve to nothing.
   A library viewer resolving bytes that way renders three broken links and no
   error.
+
+
+---
+
+## Summary of Changes — 2026-09-21 (session_014HGPQoUnzXGqSspA8x6YyD)
+
+**Measured the three "done when" items against the tree before building
+anything**, and two were already met by #583: `ocrState` renders OCR as three
+states (`not scanned` / `N OCR pages` / `ocr/ present, empty`, none styled as
+an error), and the queues/uploads half shows what has not become a slug.
+
+The third — *"resolves at least one real reference through a slug, so the
+'everything resolves through here' property is demonstrated rather than
+asserted"* — had **no field in the projection and no token in the page**. That
+is what this change builds.
+
+### `scripts/library-refs.ts` — who references a slug
+
+- **The referrer's KIND is read, never listed.** A reference is a `libraryId`
+  field; what kind of thing carries it is the **declared graph kind of the
+  directory the file sits in**. Nothing enumerates `catalogue` and `voices` —
+  a new kind that starts naming slugs appears the day it is declared. A
+  hardcoded pair would already have been wrong: `voices` was not a referrer
+  when this corpus began.
+- **Site output is skipped.** `docs/assets/…` holds published copies of the
+  catalogue and of this very projection, so scanning it would count the page
+  that *displays* a reference as a reference — the `docs-auto` 1,522 error.
+- **Zero and unknown are different answers.** A slug nothing references is a
+  finding; an unparseable file is not evidence of anything, so `unreadable[]`
+  is separate and the viewer says the zeros are provisional when it is
+  non-empty. A file that could not be parsed is not counted as read either.
+- **One file is one referrer** however many times it names the slug. A voice
+  names its source once in `sources[]` and again on every rule; that depth is
+  `count`, not a second referrer.
+
+### Measured on this corpus, 2026-09-21
+
+736 JSON files scanned, 0 unreadable:
+
+| slug | referrers |
+|---|---|
+| `9789241548960-eng` | catalogue node + voice |
+| `who-pub-tps-931` | catalogue node + voice |
+| `wpr-rdo-2020-003-eng` | catalogue node + voice |
+| `milnorlink` | voice |
+| `arxiv-2607.25032v1` | **nothing** |
+| `arxiv-2608.08453v1` | **nothing** |
+
+So the L1 claim is demonstrated for four of six entries through **two
+independent referrer kinds**, and the two it is NOT true of now say so on the
+page instead of reading as fine. That second half is the part a viewer could
+not have been trusted without.
+
+### The viewer
+
+A sortable `referenced by` column (kinds and counts, the referring files in
+its `title`), the same pill on the desktop card, and a badge carrying the scan
+itself — files read, entries referenced by nothing, and unreadable count when
+there is one. `refCount` is `-1` for "not scanned" so it sorts apart from a
+real zero rather than beside it.
+
+### Also here
+
+The committed library projection was **stale from my own `yl5w` change** — it
+still said these sources lived in `cat-harness/uploads/`. Regenerated. That
+projection is deliberately NOT staleness-gated (owner's call on #583, reasons
+written into `code-quality-gates.yml`), so the committed copy is exactly the
+thing that drifts; `docs-site.yml` runs the writers at deploy, so nothing
+published was wrong.
+
+**I hit the backtick trap** the file warns about twice in its own comments —
+a backtick inside a comment inside the one big template literal, which fails
+at a line far from the mistake. Fixed, and the comment now says so in place.
+
+### Verified
+
+12 tests in `scripts/tests/library-refs.test.ts` — the scanner against a
+planted tree (kind labelling, one-file-one-referrer, dot-prefix, a file named
+by two declarations read once, unreadable collected separately, a missing
+directory) and the real corpus separately, so the two halves can disagree.
+`bun run gates` **78/78** · `bun test` **4881 pass / 0 fail**.
+
+### Not done, deliberately
+
+`fsh-guts/` has its own visualisation beaned and in progress. Sharing a
+renderer between them stays a decision for whoever builds the second one, as
+this bean said.
