@@ -1,0 +1,51 @@
+---
+doc_id: who-pub-tps-931
+doc_title: "WHO Editorial Style Manual"
+section_id: page-119
+section_title: "Page 119"
+pages: 119-119
+pdf_page: 119
+source_pdf: WHO_PUB_TPS_93.1.pdf
+source_sha256: ecc88eee99756755
+text_source: ocr
+granularity: page
+---
+WHO Editorial Style Manual
+
+Local/other name English/approved name Local/other name English/opproved name
+Rangoon Yangon Tashi Chho Thimphu
+Reikjavik Reykjavik Dzong
+Riad Riyadh Tchad. Chad*
+Roma Rome Tehran Teheran
+Roumania, Romania* Thessaloniki Salonica
+Rumania Thimbu Thimphu
+Ruanda Rwanda* Tiflis Tbilisi
+Tirané Tirana
+Saint Christopher Saint Kitts and Torino Turin
+and Nevis Nevis* Tunisie Tunisia*
+Samarqand Samarkand Tiirkiye Turkey*
+Sanaa Sana’a
+Sao Thomé, Sao Tome* Ulan Bator Ulaanbaatar
+Sao Tomé
+Sardegna Sardinia Valetta Valletta
+Serajevo Sarajevo Venezia Venice
+Sevilla Seville Vietnam, Viet Nam*
+Skopje Skopje Viet-Nain .
+Sofiya, Sophia Sofia Vilna, Vilno Vilnius
+Soudan Sudan* :
+Shqipni, Shqipri, Albania* Warszawa Warsaw
+Shqipéri Wien Vienna
+. . Wilna, Wilno Vilnius
+Stettin Szczecin
+Suomi B inland* Yafa, Yafo Jaffa
+Surinam Suriname* Yaunde Yaoundé
+Sverige Sweden*
+
+_ cae Zagrab Zagreb
+Tadzhikistan Tajikistan* Zaragoza Saragossa
+Talin Tallinn Zirich Zurich
+‘Tananarivo Antananarivo .
+
+* WHO Member States. For full, official names, see Annex 2. -
+
+114
