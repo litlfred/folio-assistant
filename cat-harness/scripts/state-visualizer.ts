@@ -517,6 +517,37 @@ a:hover { text-decoration-thickness: 2px; }
    there. The dataviz palette's serious, not its critical — nothing is broken
    for a reader, a claim is unbacked. */
 .sv-tag.is-unresolved { color: #ec835a; }
+/* A family's bucket counts — a KPI ROW of stat tiles, which is what a handful
+   of headline numbers is. They were a stack of full-width cards nested inside
+   the family panel, so a label and an integer carried the same visual weight
+   as the panel containing them and nine of them filled half the page. Seen by
+   screenshotting the page rather than by reading the markup, which is the only
+   way this class of defect shows up.
+
+   DELIBERATELY NO COLOUR on a bucket. fail/pass/warn are status words and the
+   status palette is right for them in general — but painting fail red here
+   would invite exactly the cross-family comparison this page exists to refuse:
+   one family has warn and the other has no concept of it, and a shared colour
+   language asserts a shared scale. The numbers wear text ink; the family panel
+   around them carries the identity.
+
+   Proportional figures, not tabular: these wrap in a row rather than aligning
+   in a column, and tabular-nums gives every digit the width of a zero, which
+   reads loose at tile size. */
+.sv-counts {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin: 0.6rem 0 0; padding: 0; list-style: none;
+}
+.sv-count {
+  border: 1px solid rgba(255,255,255,0.10); border-radius: 6px;
+  padding: 0.4rem 0.7rem; min-width: 4.5rem;
+}
+:root[data-fa-scheme="light"] .sv-count { border-color: rgba(11,11,11,0.10); }
+.sv-count-v { display: block; font-size: 1.1rem; font-weight: 600; line-height: 1.25; }
+.sv-count-k {
+  display: block; font-size: 0.7rem; color: var(--sv-ink-2);
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
 ${WORK_PLAN_CSS}
 </style>
 </head>
@@ -750,8 +781,16 @@ export function qaPanels(id: string, src: string): string {
           ? `<p>Declares no roll-up field, so this family has no counts to show. ` +
             `That is a property of the schema, not a count of zero.</p>`
           : `<p>Rolled up from <code>${esc(f.rollUpField)}</code>.</p>` +
-            `<ul class="sv-list">` +
-            keys.map((k) => `<li class="sv-item"><h2>${esc(k)}<span class="sv-tag">${buckets[k]}</span></h2></li>`).join("") +
+            `<ul class="sv-counts">` +
+            keys
+              .map(
+                (k) =>
+                  `<li class="sv-count">` +
+                  `<span class="sv-count-v">${buckets[k]}</span>` +
+                  `<span class="sv-count-k">${esc(k)}</span>` +
+                  `</li>`,
+              )
+              .join("") +
             `</ul>`;
       return `<section class="sv-item">
     <h2><code>${esc(f.schema)}</code><span class="sv-tag">${f.files} file${f.files === 1 ? "" : "s"}</span></h2>

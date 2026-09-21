@@ -438,3 +438,33 @@ describe("the renderer is chosen by the projection's `$schema`, not by the graph
     expect(html).toMatch(/\d+ would not parse/);
   });
 });
+
+describe("the bucket counts are a KPI row, not nested panels", () => {
+  // Found by SCREENSHOTTING the page, not by reading the markup: the counts
+  // were `.sv-item` cards nested inside the family's own `.sv-item`, so a
+  // label and an integer carried the same visual weight as the panel
+  // containing them, and nine of them filled half the page.
+
+  test("each count is a stat tile with a value and a label", () => {
+    const html = read("qa");
+    expect(html).toContain('<ul class="sv-counts">');
+    expect(html).toMatch(/<li class="sv-count"><span class="sv-count-v">\d+<\/span><span class="sv-count-k">/);
+  });
+
+  test("a count is never a `.sv-item`, which is the registry's card", () => {
+    // The regression this guards: reusing `.sv-item` here is what made a
+    // bucket look like a peer of the family that contains it.
+    const panels = read("qa").split('<h2 class="sv-h2">State graphs')[0] ?? "";
+    expect(panels).toContain("sv-count");
+    expect(panels).not.toContain('<li class="sv-item">');
+  });
+
+  test("no bucket carries a status colour", () => {
+    // fail/pass/warn are status words and the status palette is right for them
+    // in general. Here it would assert a shared scale across families that
+    // deliberately have none — one has `warn`, the other has no concept of it.
+    const panels = read("qa").split('<h2 class="sv-h2">State graphs')[0] ?? "";
+    expect(panels).not.toMatch(/sv-count[^"]*"[^>]*class="[^"]*is-(declared|live|elsewhere|unresolved)/);
+    expect(panels).not.toMatch(/<li class="sv-count"[^>]*style=/);
+  });
+});
