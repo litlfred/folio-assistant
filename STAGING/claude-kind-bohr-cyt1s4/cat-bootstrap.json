@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld",
   "repository": "cat-bootstrap",
-  "generatedAt": "2026-09-21T19:51:32.064Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8c6ef2c820357dcbd7f930589c338e1b951f2413",
-  "sourceCommitSha": "8c6ef2c820357dcbd7f930589c338e1b951f2413",
-  "sourceCommitAt": "2026-09-21T19:49:34Z",
+  "generatedAt": "2026-09-21T20:30:06.871Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c74eff38ee12a78fa2db82414d2f75fba8716929",
+  "sourceCommitSha": "c74eff38ee12a78fa2db82414d2f75fba8716929",
+  "sourceCommitAt": "2026-09-21T20:28:13Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -770,6 +770,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#role/Initiator",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#skill/root-readme"
       ],
@@ -1308,7 +1309,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#skill/cat-bootstrap-kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#skill/confirm-harness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#skill/discussion",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#skill/log-message",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#skill/root-readme"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-bootstrap.jsonld#role/Initiator"
@@ -1422,8 +1424,8 @@
   ],
   "staging": {
     "branch": "claude/kind-bohr-cyt1s4",
-    "sha": "6fa90c0843d71d08258d3f351a6a4d733b630105",
+    "sha": "ce5c9bb9b19335de8b65e595785a18d68d6a1566",
     "pr": "781/merge",
-    "run": "35647246545"
+    "run": "35651268463"
   }
 }

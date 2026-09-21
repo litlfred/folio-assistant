@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T19:51:31.387Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8c6ef2c820357dcbd7f930589c338e1b951f2413",
-  "sourceCommitSha": "8c6ef2c820357dcbd7f930589c338e1b951f2413",
-  "sourceCommitAt": "2026-09-21T19:49:34Z",
+  "generatedAt": "2026-09-21T20:30:06.237Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c74eff38ee12a78fa2db82414d2f75fba8716929",
+  "sourceCommitSha": "c74eff38ee12a78fa2db82414d2f75fba8716929",
+  "sourceCommitAt": "2026-09-21T20:28:13Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -271,14 +271,14 @@
     "Capability": 28,
     "Role": 131,
     "Convention": 2,
-    "SkillPackage": 17,
+    "SkillPackage": 16,
     "Process": 58,
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
     "Schema": 90,
     "GraphKind": 24,
-    "Directory": 33,
+    "Directory": 32,
     "Asset": 3
   },
   "@graph": [
@@ -888,7 +888,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/domain-fencing.md",
-      "instructionLines": 187,
+      "instructionLines": 203,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1165,6 +1165,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/chapter-complexity-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/corpus-grep",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "corpus-grep",
+      "title": "Corpus-Grep Skill",
+      "description": "Pre-declaration corpus check. Before declaring any item \"open\", \"gap\", \"TODO\", \"open problem\", \"pending derivation\" — or asserting in chat that something is unresolved in the corpus — run the four-path grep checklist. A source file's `## Status` note lags the corpus by weeks; the corpus is the source of truth. An item is open only after all four paths come back empty (modulo the originating file itself).",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/corpus-grep.md",
+      "instructionLines": 152,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/swarm-management",
@@ -1785,7 +1802,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 733,
+      "instructionLines": 745,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2323,7 +2340,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-export.md",
-      "instructionLines": 336,
+      "instructionLines": 351,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3967,24 +3984,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-data-model"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/corpus-grep",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "corpus-grep",
-      "title": "Corpus-Grep Skill",
-      "description": "Pre-declaration corpus check. Before declaring any item \"open\", \"gap\", \"TODO\", \"open problem\", \"pending derivation\" — or asserting in chat that something is unresolved in the corpus — run the four-path grep checklist. A source file's `## Status` note lags the corpus by weeks; the corpus is the source of truth. An item is open only after all four paths come back empty (modulo the originating file itself).",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/skills",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/skills"
-      ],
-      "instructionsPath": "src/skills/corpus-grep.md",
-      "instructionLines": 152,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/cat-harness-src",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/kg-navigation",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "kg-navigation",
@@ -5079,15 +5078,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/skills",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "skills",
-      "path": "src/skills",
-      "hasManifest": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/cat-harness-src",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/kg-navigation",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "kg-navigation",
@@ -5346,6 +5336,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/coordinate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/corpus-grep",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/covered-is-not-reachable",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/decision-audit",
@@ -34838,18 +34829,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/translation-sources"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/cat-harness-src",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
-      "name": "cat-harness-src",
-      "path": "src/skills/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
-      ],
-      "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse — committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/cat-harness-src",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/folio",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
       "name": "folio",
@@ -35011,8 +34990,8 @@
   ],
   "staging": {
     "branch": "claude/kind-bohr-cyt1s4",
-    "sha": "6fa90c0843d71d08258d3f351a6a4d733b630105",
+    "sha": "ce5c9bb9b19335de8b65e595785a18d68d6a1566",
     "pr": "781/merge",
-    "run": "35647246545"
+    "run": "35651268463"
   }
 }

@@ -2610,6 +2610,73 @@
     return widthPx < t.belowPx;
   }
 
+  /**
+   * THE SITE'S BASEURL, derived from a path the server already resolved.
+   *
+   * Every backdrop in the todo index was arriving as `/assets/img/...` —
+   * site-ROOT-absolute with no baseurl — and this site is served from
+   * `/folio-assistant/` on the canonical deploy and
+   * `/folio-assistant/STAGING/<branch>/` on a preview. So every one of them
+   * 404'd, and the owner saw todo cards with a broken-image placeholder
+   * beside landing stickies that had their art: *"i want the theme on the
+   * lower ones too. why are they dispalyed differently."*
+   *
+   * They were not displayed differently by design. The theme WAS applied —
+   * `data-fa-sticky-theme` and `fa-sticky--backdrop` both set — and only the
+   * picture failed to load. A styling answer would have been the wrong fix
+   * for a broken path.
+   *
+   * ## Why derive it rather than read it
+   *
+   * `gen-docs-pages.ts` cannot write the baseurl in: the SAME index file is
+   * served from the canonical prefix and from every staging prefix, so a
+   * baked-in prefix is wrong on all but one. Liquid could pass it, and
+   * `#fa-translation-index` does carry `site.baseurl` — but that island is
+   * about translations and may legitimately be absent, which would make the
+   * art depend on an unrelated feature being switched on.
+   *
+   * `meta[name="fa-todo-src"]` is the honest source: it is emitted through
+   * `relative_url`, so the SERVER has already resolved the prefix, and the
+   * board does not mount at all without it. Stripping the known suffix gives
+   * the prefix the same page used to fetch the index itself.
+   */
+  function siteBaseurl() {
+    var m = document.querySelector('meta[name="fa-todo-src"]');
+    var src = m && m.getAttribute("content");
+    var suffix = "/assets/todos/index.json";
+    if (src && src.length >= suffix.length && src.slice(-suffix.length) === suffix) {
+      return src.slice(0, -suffix.length);
+    }
+    return "";
+  }
+
+  /**
+   * Prefix every art path in a `themeArt` map with the site's baseurl.
+   *
+   * Left alone: anything already absolute (`http:`, `//`) and anything that
+   * already starts with the prefix. The second guard is what stops a
+   * double-prefix if the generator is ever changed to resolve paths itself —
+   * at which point this becomes a no-op rather than a bug.
+   */
+  function baseurlResolved(themeArt) {
+    var base = siteBaseurl();
+    if (!base) return themeArt;
+    var out = {};
+    Object.keys(themeArt).forEach(function (theme) {
+      var layouts = themeArt[theme] || {};
+      out[theme] = {};
+      Object.keys(layouts).forEach(function (layout) {
+        var src = layouts[layout];
+        if (typeof src !== "string" || /^([a-z]+:)?\/\//i.test(src) || src.indexOf(base + "/") === 0) {
+          out[theme][layout] = src;
+        } else {
+          out[theme][layout] = base + src;
+        }
+      });
+    });
+    return out;
+  }
+
   /** Fetch the folio's declaration. Absent is a real answer and stays null. */
   function fetchZoom(done) {
     var src = document.querySelector('meta[name="fa-zoom-src"]');
@@ -2648,7 +2715,7 @@
         // theme would otherwise carry fifty copies of the same three paths.
         // Absent is a real state: a theme with no backdrop renders a flat
         // themed card, which is correct rather than degraded.
-        todoState.themeArt = doc.themeArt || {};
+        todoState.themeArt = baseurlResolved(doc.themeArt || {});
         done(doc.items);
       })
       .catch(function (e) {
@@ -2859,6 +2926,76 @@
     return pic;
   }
 
+  /* The pencil and the eye, as inline SVG rather than `✎` and `⎘`.
+   *
+   * Which glyph a font actually has for those two characters varies, and `⎘`
+   * falls back to a box on several common stacks — a control that looks
+   * broken without anybody changing it. An inline path draws the same shape
+   * everywhere and takes `currentColor`. */
+  var EYE_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 5c-5 0-8.6 4.2-9.6 6a1 1 0 0 0 0 1c1 1.8 4.6 6 9.6 6s8.6-4.2 9.6-6a1 1 0 0 0 0-1c-1-1.8-4.6-6-9.6-6zm0 11a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0-2.2a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6z"/>' +
+    "</svg>";
+  var PENCIL_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M4 16.5V20h3.5L17.8 9.7l-3.5-3.5L4 16.5zM20.7 7.3a1 1 0 0 0 0-1.4l-2.6-2.6a1 1 0 0 0-1.4 0l-1.7 1.7 3.5 3.5 1.7-1.7z"/>' +
+    "</svg>";
+
+  /**
+   * View and Edit for a todo's source file, as a caption row.
+   *
+   * ## The SLOT owns these, not the card
+   *
+   * The owner asked for them below the sticky rather than inside it, and the
+   * slot is what "below" means here — but there is a second reason the slot
+   * is the right owner rather than merely a convenient one. A card can be
+   * PINNED onto the glass, where it is positioned freely and has no "below"
+   * to put a caption in. Hanging the links on the card would mean either
+   * dragging a caption around the glass behind it or losing the links
+   * whenever a sticky is pinned.
+   *
+   * On the slot they simply stay put: the card floats away, the greyed recall
+   * button takes its place, and View and Edit are still exactly where the
+   * reader left them. That is the same reasoning the board already uses for
+   * keeping a floating sticky's slot in the grid rather than reflowing it.
+   *
+   * ## Absent, never disabled
+   *
+   * `sourceLinks` returns `undefined` for anything that is not a github.com
+   * origin, so the keys are simply missing when the pipeline has no forge.
+   * `pb04`: a dead link invites a click and then 404s for exactly the reader
+   * who cannot edit, which reads as "this page is broken" rather than "you
+   * cannot do this". Returns null so the caller appends nothing at all.
+   */
+  function buildSourceLinks(todo) {
+    if (!todo.viewHref && !todo.editHref) return null;
+    var row = el("p", { class: "fa-sticky-links" });
+    if (todo.viewHref) {
+      var v = el("a", {
+        class: "fa-node-edit fa-sticky-view",
+        href: safeHref(todo.viewHref),
+        title: "View this todo's source on GitHub",
+        // No visible text, so the label and the title are BOTH needed and are
+        // not interchangeable: the label names the action for a screen
+        // reader, the title gives a pointer user the same words on hover.
+        "aria-label": "View the source of " + todo.summary,
+      });
+      v.innerHTML = EYE_GLYPH;
+      row.appendChild(v);
+    }
+    if (todo.editHref) {
+      var e = el("a", {
+        class: "fa-node-edit fa-sticky-edit",
+        href: safeHref(todo.editHref),
+        title: "Edit this todo's markdown on GitHub",
+        "aria-label": "Edit " + todo.summary,
+      });
+      e.innerHTML = PENCIL_GLYPH;
+      row.appendChild(e);
+    }
+    return row;
+  }
+
   function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
     var attrs = {
@@ -2956,6 +3093,31 @@
     }
 
     var tools = el("div", { class: "fa-sticky-tools" });
+
+    /* THREE ON THE FACE, ONE THAT HOLDS THE REST — bean `qefk`, the owner:
+     * *"the todos controls are too clunky / take up too much real estate."*
+     * Asked how far to go and answered **"3+1"**.
+     *
+     * The split is by WHAT THE GESTURE DOES, not by how often it is used:
+     *
+     *   face      Pin, Discard, and Move once the card is floating
+     *             — the things you do to a card ON THE BOARD
+     *   behind    View, Edit — the things that LEAVE for the forge
+     *
+     * That keeps `pb04` intact. Its rule was that View and Edit are two acts
+     * and both must be present — *"a reader checking what a card says should
+     * not land in a text box, and one who wants to fix it should not have to
+     * find the button"*. Present is what it asked for; competing with a
+     * one-line summary is not. Both are still here, still keyboard-reachable,
+     * one keystroke further away.
+     *
+     * AND IT IS A `<details>`, not a scripted menu. The disclosure, the
+     * keyboard path, the Escape behaviour and the accessible name are the
+     * browser's; a hand-rolled popup would be four affordances to reimplement
+     * and four ways to get them wrong. It also degrades to "everything
+     * visible" with no JavaScript, which is `R4`'s floor rather than a
+     * convenience.
+     */
     // VIEW *AND* EDIT — two controls, because they are two acts. Bean `pb04`,
     // the owner: *"rendeding shows edit src icon (and also need view icon)"*.
     // `/blob/` is reading and `/edit/` opens GitHub's editor: a reader
@@ -2969,22 +3131,11 @@
     // A dead link is worse than no link: it invites a click, and on a private
     // repository it 404s for exactly the reader who cannot edit, which reads
     // as "this page is broken" rather than "you cannot do this".
-    if (todo.viewHref) {
-      tools.appendChild(el("a", {
-        class: "fa-node-edit fa-sticky-view",
-        href: safeHref(todo.viewHref),
-        title: "View this todo's source on GitHub",
-        "aria-label": "View the source of " + todo.summary,
-      }, "⎘ View"));
-    }
-    if (todo.editHref) {
-      tools.appendChild(el("a", {
-        class: "fa-node-edit fa-sticky-edit",
-        href: safeHref(todo.editHref),
-        title: "Edit this todo's markdown on GitHub",
-        "aria-label": "Edit " + todo.summary,
-      }, "✎ Edit"));
-    }
+    // THE SOURCE LINKS ARE NOT IN THE CARD ANY MORE. Owner, 2026-09-21:
+    // *"i want the [pencil] edit icon, (edit, view links can be below, not
+    // inside stick)"*. `buildSourceLinks` renders them, and the SLOT places
+    // them under the card — see the note on that function for why the slot
+    // and not the card is the right owner.
     // An INLINE sticky is already beside the content it is about, so Pin and
     // Close have nothing to do: pinning it would move it AWAY from the thing
     // it annotates, and closing it would hide a block-level annotation with no
@@ -3012,6 +3163,26 @@
       discard.addEventListener("click", function () { onDiscard(todo); });
       tools.appendChild(discard);
     }
+
+    /* THE `⋯` DRAWER IS GONE, and this note is why rather than a silence.
+     *
+     * `main` answered `qefk` by collapsing View and Edit into a `<details>`
+     * on the card's face — the owner's *"3+1"*: three board gestures on the
+     * face, the two forge links one level in. That was the right shape for
+     * the instruction it had.
+     *
+     * The owner then went further, 2026-09-21: *"i want the [pencil] edit
+     * icon, (edit, view links can be below, not inside stick)"*. The links
+     * leave the card entirely, which is the same direction `qefk` was
+     * pointing and one step past the drawer. A drawer with nothing to hold
+     * is `pb04`'s failure in a new costume — an affordance that promises and
+     * delivers nothing — so it goes rather than staying as an empty control.
+     *
+     * WHAT SURVIVES IS THE SPLIT ITSELF, and it is main's: board gestures
+     * (Pin, Discard, Move) belong on the face because they act on the card;
+     * the forge links act on the FILE and now sit below it, in the cell.
+     * `buildSourceLinks` renders them and the slot places them.
+     */
 
     head.appendChild(tools);
 
@@ -3082,8 +3253,26 @@
     // whole content is a board of stickies, a hidden board of stickies is the
     // one thing a reader cannot find; anywhere else it is an overlay and must
     // not cover the page it was opened from.
+    /* ONE PANEL, NOT TWO. Owner, 2026-09-21, on the staging preview:
+     * *"why are there two panels???"*
+     *
+     * `.fa-sticky-board` carries a border, a background, padding, an `<h2>`
+     * and a close button — correct when it is an overlay opened by a
+     * launcher, and wrong the moment it is mounted INSIDE the landing
+     * board, because the landing board is now itself inside
+     * `.fa-sticky-panel`. The reader got panel-inside-panel: a bordered box
+     * headed "Todos" sitting in a bordered panel headed "Stickies", with a
+     * close button next to a summary that already toggles.
+     *
+     * So a board nested in the sticky panel renders BARE. The chrome is not
+     * restyled smaller — it is the OUTER panel's job and is already there
+     * once.
+     */
+    var bare = !!(landing && landing.closest && landing.closest(".fa-sticky-panel"));
+
     var boardAttrs = {
-      class: "fa-sticky-board" + (landing ? " fa-sticky-board--inline" : ""),
+      class: "fa-sticky-board" + (landing ? " fa-sticky-board--inline" : "") +
+             (bare ? " fa-sticky-board--bare" : ""),
       tabindex: "-1",
       role: "region",
       "aria-label": "Todos",
@@ -3091,14 +3280,40 @@
     if (!landing) boardAttrs.hidden = "hidden";
     var board = el("section", boardAttrs);
     var head = el("div", { class: "fa-sticky-board-head" });
-    var heading = el("h2", { class: "fa-sticky-board-title", tabindex: "-1" }, "Todos");
+
+    /* THE HEADING SURVIVES BARE, VISUALLY HIDDEN.
+     *
+     * Deleting it was the obvious move and is wrong twice. It is the focus
+     * target for `discard()` and `setOpen()` — without it focus lands on
+     * `<body>` and a keyboard reader loses their place, which is the defect
+     * `l4zi` already records against this very board. And the section is
+     * `role="region"`, so it owes an accessible name: "Stickies" on the
+     * summary and "Todos" here are different facts, and a screen-reader user
+     * moving by region needs the inner one.
+     *
+     * `fa-sr-only` is the clip-not-hide class the search label uses, for the
+     * same reason spelled out there: `display: none` would take it out of the
+     * accessibility tree along with the pixels. */
+    var heading = el("h2", {
+      class: "fa-sticky-board-title" + (bare ? " fa-sr-only" : ""),
+      tabindex: "-1",
+    }, "Todos");
     head.appendChild(heading);
+
+    /* THE CLOSE BUTTON DOES NOT SURVIVE BARE, and that is not a lost control.
+     *
+     * Its inverse is the `<summary>` one line up, which closes the whole
+     * panel — so `l4zi` is satisfied by the panel rather than by a second
+     * button inside it. Keeping it would have given the reader two closes
+     * doing different things at the same spot: one collapsing the panel, one
+     * swapping the board for a "Todos (n)" reopen button INSIDE the still-open
+     * panel. That second state is the one nobody would be able to describe. */
     var boardClose = el("button", {
       type: "button",
       class: "fa-sticky-board-close",
       "aria-label": "Close the todo board",
-    }, "×");
-    head.appendChild(boardClose);
+    }, "\u00d7");
+    if (!bare) head.appendChild(boardClose);
     board.appendChild(head);
 
     /* THE READER'S FILTER, in the board's head and nowhere in any document.
@@ -3236,7 +3451,13 @@
           setMoveMode(card, on, live);
           moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
         });
-        tools.insertBefore(moveBtn, tools.firstChild);
+        // APPENDED, after the other board gestures. This used to insert
+        // before the `⋯` drawer, which no longer exists — the forge links
+        // moved out of the card altogether — so the face is Pin, Discard,
+        // Move and nothing else. `firstChild` was the version before that
+        // and put Move ahead of Pin, which reordered the row every time a
+        // card floated; appending keeps the order stable.
+        tools.appendChild(moveBtn);
       }
 
       wireMove(card, card.querySelector(".fa-sticky-head") || card, live);
@@ -3285,6 +3506,9 @@
         slot.appendChild(el("span", { class: "fa-sticky-process" }, row.process));
       }
       slot.appendChild(buildSticky(row.todo, float, dock, discard));
+      // BELOW the card, and it stays here when the card is pinned away.
+      var links = buildSourceLinks(row.todo);
+      if (links) slot.appendChild(links);
       slots[row.todo.id] = slot;
       grid.appendChild(slot);
     }
@@ -3624,9 +3848,25 @@
       return isOpen;
     }
     boardClose.addEventListener("click", function () { setOpen(false); });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
-    });
+
+    /* ESCAPE CLOSES AN OVERLAY. IT MUST NOT CLOSE A BARE BOARD.
+     *
+     * Everywhere else this board is an overlay over the page, so Escape
+     * dismissing it is the standard gesture. Inside `.fa-sticky-panel` it is
+     * page content with no close button (see above), and letting Escape run
+     * would produce exactly the state that button was removed to prevent: the
+     * board swapped for a "Todos (n)" reopen control INSIDE a panel that is
+     * still open, reached by a key the reader pressed for some other reason.
+     *
+     * The panel's own `<summary>` is the way to close it, and it is one Tab
+     * away. So: no handler at all when bare, rather than a handler that
+     * checks and returns — an event listener that never acts is a thing the
+     * next reader has to prove is dead. */
+    if (!bare) {
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
+      });
+    }
 
     /* THE COLLAPSED PANEL'S COUNT has to include what THIS function just
      * mounted, or it understates the thing it exists to declare.
@@ -3728,7 +3968,16 @@
       var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
       (function (list, mine) {
         for (var k = 0; k < mine.length; k++) {
-          list.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
+          /* A CELL, for the same reason the board uses a slot: the source
+           * links live BELOW the sticky now, not inside it, so something has
+           * to hold the pair. An inline sticky keeps them when it loses Pin,
+           * Close and Discard — that is the point of the inline case, which
+           * drops the BOARD's controls and keeps the content object's. */
+          var cell = el("div", { class: "fa-sticky-cell" });
+          cell.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
+          var inlineLinks = buildSourceLinks(mine[k]);
+          if (inlineLinks) cell.appendChild(inlineLinks);
+          list.appendChild(cell);
         }
       })(list, mine);
       var shown = list.children.length;
