@@ -228,8 +228,21 @@ without a word.
 
 **Creation at INITIALISATION is not a process write.** A `context` asset that
 does not exist yet has to come from somewhere, and bootstrap writing one when
-it is absent is not the write this rule forbids: initialisation is not process
-runtime. Bean `7sfm` is where that lands alongside the code that does it.
+it is absent is not the write this rule forbids: **initialisation is not
+process runtime.** The rule governs a process operating on an instance that
+exists; initialisation is the act that brings one into being, so *"never
+written by a process"* cannot mean *"never created"* without leaving every
+instance without one.
+
+That is not hypothetical. `initialize-harness.bpmn` ends with
+`A_WriteRootReadme`, whose skill (`cat-bootstrap/skills/root-readme.md`) writes
+the root `README.md` when there is none — an `instance-readme`, which is
+`context`. It **never replaces** one that exists: an existing README is
+authored content, and the link and install status go in a marker pair the
+harness's `readme_sync` owns from then on. Bean `7sfm`.
+
+Where this page and that skill disagree, **this page wins** and the skill is
+the copy that drifted — it says so itself.
 
 ## See also
 
