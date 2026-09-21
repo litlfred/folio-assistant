@@ -143,13 +143,70 @@ function countFiles(dir: string): number {
  * front door. Until then the kind is absent from the site, which is honest,
  * rather than present and serving a directory listing of source files.
  */
-function mountable(): { name: string; kind: string; dir: string }[] {
-  const out: { name: string; kind: string; dir: string }[] = [];
+/** One mountable directory, as `mountable()` reports it. */
+export interface Mountable {
+  name: string;
+  kind: string;
+  dir: string;
+  instanceRoot: boolean;
+}
+
+/**
+ * Both routes per mountable, and which instance roots nobody chose.
+ *
+ * An instance's content publishes at `/<kind>/<instance>/` for every
+ * renderable kind it declares, and ONCE at `/<instance>/` — its themed root,
+ * per the owner's 2026-09-20 ruling that *"`/docs/who-iris/` should be the
+ * cat-harness handler default for docs. who-iris themed at `/who-iris/`."*
+ *
+ * **Which kind answers at the root is now DECLARED.** This used to take the
+ * first by sort order while the comment doing it claimed the choice was "the
+ * instance's own business" — it was the alphabet's. who-iris made that
+ * concrete the day it declared both `docs` and `library`: `docs` sorts first,
+ * so the themed root would have served the documentation, contradicting the
+ * very ruling it implemented. `instanceRoot: true` on the directory decides it.
+ *
+ * With several renderable kinds and none marked, the root is returned as
+ * UNDETERMINED. The deterministic order still picks one, because a site has to
+ * serve something at that URL — but the caller reports that nobody chose it,
+ * rather than letting a silent pick read as a decision. That is the same
+ * third-state rule the rest of this repository keeps: could-not-determine is
+ * never rendered as a choice.
+ */
+export function withRoutes<T extends Mountable>(
+  found: readonly T[],
+): { candidates: (T & { route: string })[]; undetermined: { name: string; kinds: string[]; serving: string }[] } {
+  const byInstance = new Map<string, T[]>();
+  for (const m of found) byInstance.set(m.name, [...(byInstance.get(m.name) ?? []), m]);
+
+  const undetermined: { name: string; kinds: string[]; serving: string }[] = [];
+  for (const [name, ms] of byInstance) {
+    if (ms.length > 1 && !ms.some((m) => m.instanceRoot)) {
+      undetermined.push({ name, kinds: ms.map((m) => m.kind), serving: ms[0]!.kind });
+    }
+  }
+
+  const declaredRoot = new Set(found.filter((m) => m.instanceRoot).map((m) => m.name));
+  const rooted = new Set<string>();
+  const candidates = found.flatMap((m) => {
+    const byKind = { ...m, route: `${m.kind}/${m.name}` };
+    if (rooted.has(m.name)) return [byKind];
+    // A declared root waits for its own entry rather than letting whichever
+    // kind comes first claim the route.
+    if (declaredRoot.has(m.name) && !m.instanceRoot) return [byKind];
+    rooted.add(m.name);
+    return [byKind, { ...m, route: m.name }];
+  });
+  return { candidates, undetermined };
+}
+
+function mountable(): Mountable[] {
+  const out: Mountable[] = [];
   for (const e of readdirSync(REPO, { withFileTypes: true })) {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
     const decl = join(REPO, e.name, DECLARATION_FILENAME);
     if (!existsSync(decl)) continue;
-    let d: { name?: string; directories?: { path?: string; graphs?: string[] }[] };
+    let d: { name?: string; directories?: { path?: string; graphs?: string[]; instanceRoot?: boolean }[] };
     try {
       d = JSON.parse(readFileSync(decl, "utf-8"));
     } catch {
@@ -163,7 +220,7 @@ function mountable(): { name: string; kind: string; dir: string }[] {
       if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
       if (!existsSync(join(abs, "index.html"))) continue;
       for (const kind of entry.graphs ?? []) {
-        out.push({ name: d.name ?? e.name, kind, dir: abs });
+        out.push({ name: d.name ?? e.name, kind, dir: abs, instanceRoot: entry.instanceRoot === true });
       }
     }
   }
@@ -233,18 +290,14 @@ function main(): number {
     return true;
   });
 
-  // Both routes, per the owner's ruling above. The instance root is emitted
-  // ONCE per instance even when it declares several renderable kinds —
-  // `<base-url>/who-iris` is one place, and which of its kinds answers there
-  // is the instance's own business, not a thing to mint two claims for. First
-  // by the sort order in `mountable()`, which is deterministic.
-  const rootedInstances = new Set<string>();
-  const candidates = found.flatMap((m) => {
-    const byKind = { ...m, route: `${m.kind}/${m.name}` };
-    if (rootedInstances.has(m.name)) return [byKind];
-    rootedInstances.add(m.name);
-    return [byKind, { ...m, route: m.name }];
-  });
+  const { candidates, undetermined } = withRoutes(found);
+  for (const u of undetermined) {
+    console.error(
+      `  ? /${u.name}/ is UNDETERMINED — ${u.kinds.length} renderable kinds (${u.kinds.join(", ")}) ` +
+        `and none declares \`instanceRoot\`. Serving ${u.serving} because the order is deterministic, ` +
+        `not because anything chose it.`,
+    );
+  }
 
   const { mounts, refused } = resolve_(candidates);
 
