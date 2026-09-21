@@ -727,9 +727,9 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // shows edit src icon (and also need view icon)". `/blob/` reads and
     // `/edit/` opens the editor; a reader checking what a card says should not
     // land in a text box.
-    expect(sourceLinks(REPO, "cat-bootstrap/cat-bootstrap.config.json", "main")).toEqual({
-      viewHref: `${REPO}/blob/main/cat-bootstrap/cat-bootstrap.config.json`,
-      editHref: `${REPO}/edit/main/cat-bootstrap/cat-bootstrap.config.json`,
+    expect(sourceLinks(REPO, "cat-bootstrap/cat-bootstrap.json", "main")).toEqual({
+      viewHref: `${REPO}/blob/main/cat-bootstrap/cat-bootstrap.json`,
+      editHref: `${REPO}/edit/main/cat-bootstrap/cat-bootstrap.json`,
     });
   });
 
@@ -738,25 +738,25 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // worse than no link: it invites a click, and on a private repository it
     // 404s for exactly the reader who cannot edit — which reads as "this page
     // is broken" rather than "you cannot do this".
-    expect(sourceLinks(undefined, "cat-bootstrap/cat-bootstrap.config.json", "main")).toBeUndefined();
+    expect(sourceLinks(undefined, "cat-bootstrap/cat-bootstrap.json", "main")).toBeUndefined();
   });
 
   test("the path is the CONTRIBUTING instance's, not a default", () => {
     // The falsifier that matters. Three instances contribute today, so a
     // resolver that always answered `cat-harness/harness.json` would be
     // silently right one time in three.
-    const a = sourceLinks(REPO, "cat-harness/cat-harness.config.json", "main")!;
-    const b = sourceLinks(REPO, "folio-assistant-core/folio-assistant-core.config.json", "main")!;
+    const a = sourceLinks(REPO, "cat-harness/cat-harness.json", "main")!;
+    const b = sourceLinks(REPO, "folio-assistant-core/folio-assistant-core.json", "main")!;
     expect(a.editHref).not.toEqual(b.editHref);
-    expect(b.editHref).toContain("folio-assistant-core/folio-assistant-core.config.json");
+    expect(b.editHref).toContain("folio-assistant-core/folio-assistant-core.json");
   });
 
   test("a branch other than main is honoured", () => {
     // `declaredIn` is a repo-relative PATH STRING, not a directory to look in
     // — `REPO` here is the remote URL. A codemod briefly passed this through
     // `findDeclarationFile`, which asked the filesystem about a URL.
-    expect(sourceLinks(REPO, "cat-harness/cat-harness.config.json", "claude/x")!.editHref).toBe(
-      `${REPO}/edit/claude/x/cat-harness/cat-harness.config.json`,
+    expect(sourceLinks(REPO, "cat-harness/cat-harness.json", "claude/x")!.editHref).toBe(
+      `${REPO}/edit/claude/x/cat-harness/cat-harness.json`,
     );
   });
 
@@ -764,8 +764,8 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // Declarations do not have spaces today, but the queue this repository
     // ingests from is full of them, and a URL that breaks at the first space
     // is a link that silently points somewhere else.
-    expect(sourceLinks(REPO, "some dir/some dir.config.json", "main")!.viewHref).toBe(
-      `${REPO}/blob/main/some%20dir/some%20dir.config.json`,
+    expect(sourceLinks(REPO, "some dir/some dir.json", "main")!.viewHref).toBe(
+      `${REPO}/blob/main/some%20dir/some%20dir.json`,
     );
   });
 });

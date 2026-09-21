@@ -20,7 +20,12 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 
-import { DEFAULT_DIRECTORIES, findDeclarationFile, instanceConfigFilename } from "../../schemas/cat-harness.js";
+import {
+  DEFAULT_DIRECTORIES,
+  findDeclarationFile,
+  instanceConfigFilename,
+  instanceDeclarationFilename,
+} from "../../schemas/cat-harness.js";
 
 /**
  * The fallback name, used only where a fixture has no directory of its own.
@@ -28,17 +33,35 @@ import { DEFAULT_DIRECTORIES, findDeclarationFile, instanceConfigFilename } from
  * Every helper below defaults to `basename(dir)` instead, and that is not a
  * convenience — it is the fix for the defect that made this file necessary
  * twice. A shared constant gives every instance in a dependency-tree fixture
- * the SAME name, so `<name>.config.json` collides and the outward walk finds
+ * the SAME name, so `<name>.json` collides and the outward walk finds
  * a sibling's config rather than its own. Naming each after its directory
  * makes them distinct for free, and makes the fixture read the way the real
  * thing does: `dep-a/` declares `dep-a`.
  */
 export const FIXTURE_INSTANCE = "fixture";
 
-/** `fixture.config.json` — the fallback name's config. */
+/**
+ * `fixture.json` — the fallback name's DECLARATION.
+ *
+ * Named `FIXTURE_CONFIG` and built from `instanceConfigFilename` until
+ * 2026-09-21, which was accurate only while the declaration and the config
+ * shared one filename. Once the owner split them, these helpers went on
+ * writing `<name>.config.json` while `findDeclarationFile` looked for
+ * `<name>.json` — 250 tests failed at once, all of them fixtures declaring an
+ * instance that discovery could then not see. The name says which of the two
+ * it is, so the next split cannot make it quietly wrong again.
+ */
+export const FIXTURE_DECLARATION = instanceDeclarationFilename(FIXTURE_INSTANCE);
+
+/** `<basename>.json` for a directory — the declaration these helpers write. */
+export function declarationNameFor(dir: string): string {
+  return instanceDeclarationFilename(basename(dir));
+}
+
+/** `fixture.config.json` — the fallback name's CONFIG, as against its declaration. */
 export const FIXTURE_CONFIG = instanceConfigFilename(FIXTURE_INSTANCE);
 
-/** `<basename>.config.json` for a directory — what these helpers actually write. */
+/** `<basename>.config.json` for a directory — its CONFIG. */
 export function configNameFor(dir: string): string {
   return instanceConfigFilename(basename(dir));
 }
@@ -59,7 +82,7 @@ export function declareInstance(dir: string, name?: string): string {
   }
   const chosen = name ?? basename(dir);
   writeFileSync(
-    join(dir, instanceConfigFilename(chosen)),
+    join(dir, instanceDeclarationFilename(chosen)),
     JSON.stringify({ name: chosen, directories: conventionalDirectories(dir) }),
     "utf-8",
   );
@@ -95,7 +118,17 @@ function conventionalDirectories(dir: string): unknown[] {
   return DEFAULT_DIRECTORIES.filter((d) => existsSync(join(dir, d.path))).map((d) => ({ ...d }));
 }
 
-/** Where `dir`'s config goes, once `dir` is a declared instance. */
+/** Where `dir`'s DECLARATION goes — `<name>.json`. */
+export function instanceDeclarationPathIn(dir: string, name: string = basename(dir)): string {
+  return join(dir, instanceDeclarationFilename(name));
+}
+
+/**
+ * Where `dir`'s CONFIG goes — `<name>.config.json`, beside the declaration.
+ *
+ * A separate path again since 2026-09-21. While the two were one file this
+ * returned the declaration's path and the distinction did not exist.
+ */
 export function instanceConfigPathIn(dir: string, name: string = basename(dir)): string {
   return join(dir, instanceConfigFilename(name));
 }
@@ -104,47 +137,28 @@ export function instanceConfigPathIn(dir: string, name: string = basename(dir)):
  * Declare `dir` and write its config in one call — the shape the fixtures
  * actually wanted.
  *
- * ## It MERGES, because the declaration and the config are one file now
+ * ## It writes TWO files again, because they ARE two files again
  *
- * It used to `declareInstance` and then write `body` to a second path. Since
- * `harness.json` was excised (2026-09-21) both are `<name>.config.json`, so
- * the second write CLOBBERED the declaration it had just made — the fixture
- * ended up with a config and no `directories`, and dozens of tests failed
- * somewhere far from the cause. The same collision hit `init-folio.ts` for the
- * same reason and was fixed the same way.
+ * Between the excision of `harness.json` and 2026-09-21 the declaration and
+ * the config were one file, so this had to MERGE: writing `body` to the same
+ * path clobbered the declaration it had just made, and dozens of tests failed
+ * far from the cause.
  *
- * Merging is not a workaround for the collision; it is what one file per
- * instance MEANS. `body` wins on any key it sets, so a test pinning a
- * `contentType` still pins it.
+ * The owner's split gives each its own name, so the merge has nothing left to
+ * solve and is gone. `declareInstance` writes `<name>.json`; `body` goes to
+ * `<name>.config.json`. Neither can clobber the other, and a test pinning a
+ * `contentType` pins it without the declaration having to survive a merge.
  *
- * An UNPARSEABLE `body` is written verbatim and the declaration is discarded,
- * because several tests pass `"{ not json"` on purpose to exercise the
- * unreadable path. There is nothing to merge into a string that is not JSON,
- * and quietly keeping the declaration would make that fixture readable — which
- * is the opposite of what it was written to test.
+ * An UNPARSEABLE `body` is still written verbatim — several tests pass
+ * `"{ not json"` on purpose to exercise the unreadable path, and the config
+ * file is where that belongs.
  */
 export function writeInstanceConfig(dir: string, body: string, name?: string): string {
   const declared = declareInstance(dir, name);
   const p = instanceConfigPathIn(dir, declared);
-  let merged: string;
-  try {
-    const decl = JSON.parse(readFileSync(p, "utf-8")) as Record<string, unknown>;
-    const cfg = JSON.parse(body) as Record<string, unknown>;
-    // ONLY the two keys `declareInstance` contributes are carried over —
-    // never the whole previous file. Merging everything made a REWRITE
-    // impossible: `harness-config.test.ts` restores a fixture by writing its
-    // original body back, and a full merge kept the `dependencies` the test
-    // had just added, so a later assertion saw three dependencies where the
-    // fixture declares two. Keeping the declaration is what the merge is for;
-    // keeping the previous CONFIG is a different thing that nobody asked for.
-    merged = JSON.stringify({ name: decl.name, directories: decl.directories, ...cfg });
-  } catch {
-    merged = body;
-  }
-  writeFileSync(p, merged, "utf-8");
+  writeFileSync(p, body, "utf-8");
   return p;
 }
-
 
 /**
  * Write a declaration into `dir`, naming the file after the declared name.
@@ -185,7 +199,7 @@ export function writeDeclaration(dir: string, body: unknown, name?: string): str
         "no filename for it. Pass `name` explicitly when writing a deliberately broken declaration.",
     );
   }
-  const path = join(dir, instanceConfigFilename(stem));
+  const path = join(dir, instanceDeclarationFilename(stem));
   writeFileSync(path, text, "utf-8");
   return path;
 }

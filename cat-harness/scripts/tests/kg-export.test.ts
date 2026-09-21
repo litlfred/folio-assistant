@@ -22,7 +22,6 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
-import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
@@ -304,9 +303,31 @@ describe("kg export", () => {
     expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/${stub}.jsonld`);
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/${stub}.schema.json`);
 
-    // The declaration is read from a fixed filename, whatever the stub is.
-    expect(findDeclarationFile(join(import.meta.dir, "../..")) !== undefined).toBe(true);
-    expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
+    // THE OTHER HALF OF THIS TEST WAS REVERSED BY THE OWNER, 2026-09-21, and
+    // the reasoning is worth keeping rather than just the new assertion.
+    //
+    // It read: the declaration is at a FIXED filename, whatever the stub is —
+    // and asserted `<stub>.json` must NOT exist. Migration-plan I.8's argument
+    // was that a fixed name is what lets a consumer open a repo it has never
+    // seen, because "a resolver deriving it from the DIRECTORY finds nothing
+    // when the repo is cloned elsewhere".
+    //
+    // That argument is about deriving a filename from the DIRECTORY, and no
+    // resolver here does. `findDeclarationFile` scans, parses, and takes the
+    // file whose stem equals its own declared `name` — so a declaration is
+    // SELF-IDENTIFYING and a clone renamed on disk still resolves. The
+    // property I.8 wanted is preserved by the check rather than by the
+    // constant, which is what made the suffix free to move.
+    //
+    // So `<name>.json` exists now, deliberately, and what is asserted is the
+    // self-agreement that replaced the fixed name.
+    const declFile = findDeclarationFile(join(import.meta.dir, "../.."));
+    expect(declFile).toBe(`${readDeclaration(join(import.meta.dir, "../.."))!.name}.json`);
+    // ...and the stub does NOT name it. The stub names published ARTEFACTS;
+    // the declaration is named for the instance. They are equal here only
+    // because cat-harness's stub is its own name, so asserting on the stub
+    // would pass for the wrong reason in any instance that sets one.
+    expect(declFile).not.toBe(`${stub}.config.json`);
   });
 
   test("EVERY declared instance exports at an absolute IRI — the base is the SITE's, not the instance's", () => {
