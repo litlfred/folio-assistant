@@ -49,6 +49,10 @@ labels by kind. That disqualification is for ANNOTATING, not for this.
 
 ## Done 2026-09-21 — 71/63/67 → **80/63/71**, and ONE of the two exclusions
 
+Issue [#728](https://github.com/litlfred/folio-assistant/issues/728) · draft PR
+[#729](https://github.com/litlfred/folio-assistant/pull/729) · session
+`session_01AYHimvYMmf8h8e9fFN6dW5`.
+
 `bun run eval:crdm-detect`, whole population, same 27 issues:
 
 | | precision | recall | F1 | false alarms |
