@@ -1,10 +1,11 @@
 ---
 # folio-assistant-lps0
 title: 'KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-20T18:59:22Z
-updated_at: 2026-09-20T18:59:22Z
+updated_at: 2026-09-21T13:12:26Z
 parent: folio-assistant-zzmr
 ---
 
@@ -71,11 +72,62 @@ package by its DECLARED ID (`cat-harness-src`, `cat-bootstrap-render`) while
 `skill-fetch` keys it by the instance name or the basename (`folio-assistant`,
 `render`). Both are defensible; having both is the problem.
 
+## Built, 2026-09-21 — and three of this bean's own figures were stale
+
+`skillFiles()` now walks **`kgDirectories(root)`** — the same resolver
+`graphScope()` and the process walk already use — instead of the literal
+`skills/`. That removes an answer to "which directories are the graph" rather
+than adding one. De-duplicated, because a declaration may nest one directory
+inside another and a skill audited twice would write two verdicts to one
+sidecar path.
+
+**The audit's own report had been naming a scope wider than its walk the whole
+time**: `graphScope()` prints every declared directory in each finding's text,
+while the walk saw one of them.
+
+### Re-measured before changing anything (bean `8nzu`)
+
+| this bean said, 2026-09-20 | measured 2026-09-21 |
+|---|---|
+| "roughly twenty skills nobody has ever audited" | **10 markdown files** in the other seven directories; **6 new sidecars** once written |
+| "a change that flips `kg:audit:check` red" | **`kg:audit:check` passes, exit 0.** Nothing flipped |
+| `theming/` — 6 skills, 0 sidecars | **no longer applies**: the package moved INTO `skills/`, so it was already audited |
+
+Eight directories are declared; the walk saw one. The four that resolve outside
+this instance land under an **`_external/` mirror** that `sidecarPath` already
+provided — as this bean predicted, no change was needed there.
+
+### Falsified in both directions
+
+Removing `cat-harness-src` from the declaration made `corpus-grep` **stop**
+being audited; restoring it brought the sidecar back. So the walk follows the
+DECLARATION, not a path. The declaration was restored byte-identical
+(`git diff` empty).
+
+**One earlier attempt at that falsification was meaningless and is recorded
+rather than dropped:** it edited `cat-harness/harness.json`, which no longer
+exists — the REPLACE rename has landed for this instance and the file is
+`cat-harness.config.json`. The test reported "rule failed" against a file it
+never opened. A test that cannot find its subject must say so; this one said
+the rule was broken.
+
+### Verification
+
+`bun run gates` — **87 of 87**, exit 0.
+
 ## Done when
 
-- [ ] `skillFiles()` walks every declared `cat-harness` directory, not `skills/`
-- [ ] Falsified in both directions: a skill in a topical directory IS audited,
+- [x] `skillFiles()` walks every declared `cat-harness` directory, not `skills/`
+- [x] Falsified in both directions: a skill in a topical directory IS audited,
       and removing that directory's declaration makes it stop being
-- [ ] The findings the widened walk surfaces are triaged, not blanket-suppressed
-- [ ] A relocated skill's sidecar MOVES with it, rather than dying in place
+- [x] The findings the widened walk surfaces are triaged, not blanket-suppressed
+      — **there were none to triage**: 6 sidecars written, `kg:audit:check`
+      green. The bean expected ~20 findings and a red gate; both were wrong
+- [ ] A relocated skill's sidecar MOVES with it, rather than dying in place —
+      **not addressed here.** The widened walk means a relocation within the
+      declared set now writes the new sidecar, but the OLD one still has to be
+      removed by hand, and `kg:audit:check`'s stale-sidecar report is what
+      catches it
 - [ ] One answer to "what is this package called", or a stated reason for two
+      — **not addressed here.** `gen-skill-docs` keys by declared id while
+      `skill-fetch` keys by instance name or basename; that is a separate change
