@@ -1,11 +1,11 @@
 ---
 # folio-assistant-q2wm
 title: 'RENDER SAFETY: declared XSS hints on tools and skills, lazy loading, and dynamic render from the graph'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T21:47:28Z
-updated_at: 2026-09-20T21:47:28Z
+updated_at: 2026-09-21T15:15:58Z
 parent: folio-assistant-6lb8
 ---
 
@@ -33,10 +33,17 @@ and in `folio-todo-index/v1`. A restriction nothing can read is not a restrictio
 
 ## Done when
 
-- [ ] a declared XSS/render restriction on Tool and skill nodes, with a default that is the SAFE one
-- [ ] a renderer that ignores the hint fails a test rather than shipping
-- [ ] window content is fetched lazily, on open
-- [ ] KG assets are referenced where they live
+- [~] a declared XSS/render restriction on Tool and skill nodes — STILL NOT BUILT, for the
+      reason recorded below, which has not changed. The `Url` case IS built:
+      `schemas/safe-url.ts`, default-deny.
+- [x] a renderer that ignores the check fails a test rather than shipping —
+      `scripts/tests/href-safety.test.ts` reads the source and requires every `href` site
+      to go through `safeHref`
+- [ ] window content is fetched lazily, on open — STILL NO SUBJECT. The window renders from
+      the already-fetched index; there is no per-card fetch to make lazy.
+- [x] KG assets are referenced where they live — `zsah`'s tiles carry the declared ref
+      resolved to its published route, and `data:` is refused precisely so an asset is
+      referenced rather than copied into the page
 
 
 ## Measured before starting, 2026-09-21 — two of the four done-whens have no subject yet
@@ -99,3 +106,52 @@ Proposed then, recorded now so the thinking is not lost: `render` on
 projection and a markup fragment), `escaped-text` as the default, anything
 else carrying a stated reason, and `Url` treated as its own case because the
 dangerous part is the scheme rather than the markup.
+
+## Re-measured 2026-09-21, AFTER the board renderer landed — and the answer changed in one place
+
+The measurement above concluded *"not started, deliberately"*, and named its own
+unblocking condition: *"A renderer that puts tool or skill output into a page —
+the board window is the one this issue anticipates."*
+
+**That renderer now exists.** `51wf` and `t4my` built the board window, `0jtj`
+built the server-rendered floor, and `zsah` put declared refs into `href`
+attributes. So the condition was re-checked rather than the conclusion inherited,
+and it split:
+
+**The Tool-output vocabulary is still unblocked-only-in-theory.** Nothing renders
+a *tool's* output even now — the window renders notes. The argument against
+choosing terms with no consumer to constrain them holds unchanged, and it stays
+unbuilt.
+
+**The `Url` case is no longer theoretical, and that is what shipped.**
+
+### What the hazard actually was, stated precisely
+
+A first pass claimed a live hole: `relations[].href` is authored and reaches an
+`<a href>`. **That was wrong**, and checking the path rather than the type is what
+showed it — `gen-docs-pages.ts` interpolates authored values into
+`https://github.com/…`, `sourceLinks` builds from the git origin, and
+`publishedHref` returns a `/`-prefixed path. **No `javascript:` was reachable.**
+
+The real finding is weaker and still worth the unit: the property was **emergent,
+not enforced.** `TodoRelationSchema.href` is `z.string()` — the schema permits
+`javascript:alert(1)` — `escapeHtml` closes tags and does nothing about a scheme,
+and the composition that made it safe was spread across three files and stated in
+none of them. An edit passing an authored URL straight through would have opened
+the hole and looked like a simplification.
+
+### Three things the tests found while building it
+
+- **The classic bypass, shipped for one commit.** The first `safeHref` trimmed
+  only leading and trailing whitespace, so `java<TAB>script:alert(1)` read as a
+  relative path — and the URL parser removes exactly TAB/LF/CR before parsing, so
+  a browser would have resolved it as `javascript:`. Its own spec caught it.
+- **`el()` wrote `href="undefined"`.** `setAttribute(k, undefined)` stringifies,
+  so an absent value became a relative link to a page called `undefined` — a link
+  to somewhere wrong rather than no link. Two callers already relied on the
+  intent, including the language switcher.
+- **The dangling-relation message became wrong.** It said *"nothing on this site
+  resolves X"* for a refused scheme, which hides a hostile value as a missing one.
+  Two reasons, two messages.
+
+`bun run gates --all` — 92/92, 329 e2e.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xfoh
 title: 'crdm-detect: add missing exclusions and re-measure against the 71/63 baseline'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-21T14:18:21Z
+updated_at: 2026-09-21T15:29:13Z
 parent: folio-assistant-ahvw
 blocked_by:
     - folio-assistant-vjbl
@@ -115,3 +115,15 @@ rather than in PRECISION would be the overclaim.
 
 *Numbers above are this corpus's, one unblinded annotator's (`vjbl`), not the
 skill's.*
+
+**Merged 2026-09-21** as [#729](https://github.com/litlfred/folio-assistant/pull/729)
+(`5bca749dd0`), CI green on `700f6dd`, `bun run gates` 89 of 89 on the merged
+tree. Issue [#728](https://github.com/litlfred/folio-assistant/issues/728) stays
+OPEN — an agent does not close one on its own say-so, and its recall half is
+untouched.
+
+**What is left, and it is not this bean's.** Recall stands at 63%: seven feature
+requests the phrase list does not carry, among them #203, the issue that asked
+for the capability, and #1, the framework design. Widening the CATEGORIES is a
+different risk from narrowing the exclusions — every pattern added there can
+only cost precision — so it wants its own baseline and its own bean.

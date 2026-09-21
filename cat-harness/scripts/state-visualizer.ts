@@ -140,6 +140,7 @@ import {
   repoRootFor,
   siteDirFor,
   type CatHarnessDeclaration,
+  visualisationsOf,
 } from "../schemas/cat-harness.js";
 import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 // REQUIRED: `folio` is registered by core on import and this instance declares
@@ -357,7 +358,13 @@ function stateGraphsOf(decl: CatHarnessDeclaration): StateGraph[] {
       path: d.path,
       kinds,
       ...(projectionFor(d.id) === null
-        ? declaredVisualiserFor(d.id, d.coverage?.visualiser)
+        ? // THE FIRST declared visualisation, and the choice is deliberate: this
+          // page reports ONE state per directory, so it answers about the
+          // primary one. A directory declaring several is not misreported by
+          // that — `harness-tiles.ts` checks every ref and is where a broken
+          // second viewer surfaces. Passing the whole list here would need a
+          // state per visualisation, which is a different page.
+          declaredVisualiserFor(d.id, visualisationsOf(d.coverage, d.id)[0]?.ref)
         : { state: "live" as const }),
       // The declaration's own words, clipped to its first sentence. Restating
       // what a directory is for, here, would be a second description free to

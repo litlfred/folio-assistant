@@ -56,6 +56,12 @@ export const CATEGORIES: Category[] = [
       /\bmake the pipeline\b/i, /\bnew block kind\b/i, /\bneed a content type\b/i,
       /\bit would be great if\b/i, /\bbuild me\b/i, /\bcreate a tool\b/i, /\bdevelop a feature\b/i,
       /\bwe need to have\b/i, /\bwe (?:also )?need to\b/i,
+      // Bean `9gtc`. The most natural way there is to ask for agent capability,
+      // and the list carried only the diffident form ("it would be great if the
+      // agent COULD"). Caught #232 and #203 — and #203 is the issue that asked
+      // for CRDM itself.
+      /\b(?:the )?agents? (?:should|needs? to|will need to|must)\b/i,
+      /\bwe will need to\b/i,
     ],
   },
   {
@@ -72,6 +78,9 @@ export const CATEGORIES: Category[] = [
       /\bchange the schema\b/i, /\bmodify the pipeline\b/i, /\badd a new adapter\b/i,
       /\bthe constraint should\b/i, /\bupdate the CI\b/i, /\bworkflow should fire\b/i,
       /\bMCP tool\b/i, /\bregister a new tool\b/i, /\bmigrate\b/i, /\bdeprecat/i,
+      // A change asked of a tool this platform DEPENDS ON is still a platform
+      // change — it lands in neither the folio nor a chapter. Bean `9gtc`.
+      /\bupstream (?:asks?|change)/i,
       /\b(?:schemas|content\/pipeline|adapters|scripts|\.github\/workflows)\//,
     ],
   },
@@ -79,6 +88,10 @@ export const CATEGORIES: Category[] = [
     name: "cross-cutting",
     patterns: [
       /\bfor all papers\b/i, /\bevery folio\b/i, /\bacross all content types\b/i,
+      // A bullet the skill has carried all along with nothing implementing it,
+      // found by {@link categoryDrift} rather than by reading. It changes no
+      // verdict on this corpus; it is here because the skill says it.
+      /\bwhen any user\b/i,
       /\bthe platform should\b/i, /\bboth document and paper\b/i, /\bwrit large\b/i,
     ],
   },
@@ -88,6 +101,20 @@ export const CATEGORIES: Category[] = [
       /\bwould be easier if\b/i, /\btriage these comments\b/i, /\bfeedback workflow\b/i,
       /\bstakeholders need\b/i, /\breview process more\b/i, /\bfor comment review\b/i,
     ],
+  },
+  {
+    // The MIRROR of the `"Migration record: …"` exclusion, and added for the
+    // same reason: some documents declare what they are in their own first
+    // line, and the declaration outranks the sentences underneath it. A
+    // proposal or a design document argues for something that does not exist.
+    //
+    // Anchored to the opening line, and the anchor is the whole pattern. A
+    // document that MENTIONS a proposal is not one — #187 asks for a write-up
+    // of a merged proposal's changes and is labelled not-a-feature, while #199
+    // IS that write-up and is labelled one. Unanchored, `proposal` costs #187;
+    // anchored, it costs nothing. Measured both ways, not supposed.
+    name: "self-declared-genre",
+    patterns: [/^proposal:/im, /\bdesign document\b/i],
   },
 ];
 
@@ -115,6 +142,106 @@ export const EXCLUSIONS: RegExp[] = [
   // refuse — an exclusion with no prose behind it and no measurement either.
   /\bmigration record\b/i,
 ];
+
+/** A bullet and its pattern that disagree — in either direction. */
+export interface Drift {
+  direction: "unmatched-bullet" | "orphan-pattern";
+  subject: string;
+}
+
+/**
+ * Both directions of the transcription, measured against the skill.
+ *
+ * `unmatched-bullet` is the drift that shipped: a quoted exclusion no pattern
+ * catches, so the runner silently excludes less than the skill says.
+ * `orphan-pattern` is the reverse — a pattern excluding something the skill
+ * never asked to exclude, which is the more dangerous direction, because it
+ * suppresses real detections with no prose to justify it.
+ */
+/**
+ * The heading each detection section carries, against the category it declares.
+ *
+ * A literal map rather than a slug derived from the heading: a section renamed
+ * in the prose should FAIL the drift check loudly, not quietly stop being
+ * checked. That is the `dh4f` shape one level up — a checker that examines
+ * nothing and reports a clean run.
+ */
+export const CATEGORY_HEADINGS: Record<string, string> = {
+  "Direct capability requests": "direct-capability",
+  "Workflow gap descriptions": "workflow-gap",
+  "Platform-level change requests": "platform-change",
+  "Cross-cutting concerns": "cross-cutting",
+  "Review-surfaced needs": "review-surfaced",
+  "Self-declared genre": "self-declared-genre",
+};
+
+/**
+ * The quoted example utterances under each `### ` detection heading.
+ *
+ * Throws when a heading in {@link CATEGORY_HEADINGS} is absent from the prose,
+ * for the reason on that constant.
+ */
+export function parseSkillCategories(markdown: string): Record<string, string[]> {
+  const out: Record<string, string[]> = {};
+  let current = "";
+  for (const line of markdown.split("\n")) {
+    if (line.startsWith("### ")) {
+      current = CATEGORY_HEADINGS[line.slice(4).trim()] ?? "";
+      if (current) out[current] ??= [];
+      continue;
+    }
+    if (line.startsWith("## ")) current = "";
+    if (!current || !line.startsWith("- ")) continue;
+    for (const m of line.matchAll(/"([^"]+)"/g)) out[current]!.push(m[1]!);
+  }
+  const missing = Object.values(CATEGORY_HEADINGS).filter((c) => !(c in out));
+  if (missing.length) {
+    throw new Error(
+      `crdm-detect.md is missing detection heading(s) for: ${missing.join(", ")}. ` +
+        `A renamed section must fail here rather than quietly stop being checked.`,
+    );
+  }
+  return out;
+}
+
+/**
+ * Quoted category examples no pattern in their own category catches.
+ *
+ * **One direction only, and the asymmetry is deliberate.** The exclusion list
+ * is CLOSED — *"Do not trigger CRDM for:"* — so a pattern with no bullet there
+ * suppresses detections the skill never asked to suppress, and
+ * {@link exclusionDrift} reports it. The detection sections are explicitly
+ * OPEN: *"Scan every user request for these categories of phrasing"*, with
+ * bullets as examples. A pattern there is allowed to generalise past every
+ * bullet, so `orphan-pattern` would fire on correct work.
+ *
+ * What the check cannot enforce is still an obligation: a pattern added here
+ * with no bullet added there leaves the skill — the thing an AGENT actually
+ * reads — saying less than the scorer measures. Write the bullet.
+ *
+ * Found one on the day it was written: `"when any user …"` had been in the
+ * prose with nothing implementing it, the same drift `exclusionDrift` had just
+ * closed on the other half of the same file.
+ */
+export function categoryDrift(
+  skill: Record<string, string[]>,
+  categories: Category[] = CATEGORIES,
+): Drift[] {
+  const drift: Drift[] = [];
+  for (const [name, examples] of Object.entries(skill)) {
+    const category = categories.find((c) => c.name === name);
+    if (!category) {
+      drift.push({ direction: "unmatched-bullet", subject: `(no category implements "${name}")` });
+      continue;
+    }
+    for (const e of examples) {
+      if (!category.patterns.some((p) => p.test(e))) {
+        drift.push({ direction: "unmatched-bullet", subject: `${name}: ${e}` });
+      }
+    }
+  }
+  return drift;
+}
 
 /** What the skill's "What is NOT a feature request" list actually carries. */
 export interface SkillExclusions {
@@ -154,21 +281,6 @@ export function parseSkillExclusions(markdown: string): SkillExclusions {
   return { quoted, judgementOnly };
 }
 
-/** A bullet and its pattern that disagree — in either direction. */
-export interface Drift {
-  direction: "unmatched-bullet" | "orphan-pattern";
-  subject: string;
-}
-
-/**
- * Both directions of the transcription, measured against the skill.
- *
- * `unmatched-bullet` is the drift that shipped: a quoted exclusion no pattern
- * catches, so the runner silently excludes less than the skill says.
- * `orphan-pattern` is the reverse — a pattern excluding something the skill
- * never asked to exclude, which is the more dangerous direction, because it
- * suppresses real detections with no prose to justify it.
- */
 export function exclusionDrift(skill: SkillExclusions, patterns: RegExp[] = EXCLUSIONS): Drift[] {
   const drift: Drift[] = [];
   for (const q of skill.quoted) {

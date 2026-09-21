@@ -143,6 +143,12 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
+      // HARNESS for the same reason as `check-ci-health` above: its subject
+      // is this repository's own deploy workflow — which commands it runs
+      // and whether they succeed — and it reads no folio content at all.
+      // It builds an instance's KG the way `kg-export` (already harness,
+      // below) does, one instance at a time (issue #720).
+      "scripts/check-published-instance-exports.ts",
       // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
       // entry was added to `RULES` while `RULES` was moving to this file,
       // so it arrives here rather than where it was written.
@@ -215,6 +221,19 @@ export const RULES: Rule[] = [
       // about any folio's subject matter — a folio could not make it answer
       // differently, only add a row.
       "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
+      // Beside its sibling, and HARNESS rather than core — the opposite
+      // classification to `gen-default-boards.ts`, for the reason that entry
+      // records: what settles it is what a module is ABOUT. That one produces
+      // folio content (a board); this one reads instance DECLARATIONS and
+      // answers a question about the machinery — which directories an instance
+      // says it renders. Its only import is `schemas/cat-harness.ts`, which is
+      // harness, so the direction is flat rather than upward.
+      //
+      // Classified core first, on the reasoning that a tile is something a
+      // reader sees. `check:partition` answered with a wrong-direction edge
+      // from `sync-docs-harness.ts`, which is harness and calls it — the
+      // import was right and the classification was wrong.
+      "scripts/graph-tiles.ts",              // every declared visualisation → its tile
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
       // Same question, same answer: it projects the PLATFORM's own term
       // vocabulary — every class and property hanging off `FOLIO_NS` — and
