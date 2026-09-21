@@ -52,6 +52,10 @@
           "detail": "no role carries \"hypothesis-generation\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `cat-bootstrap-render` at `cat-bootstrap/render/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`, `kg-navigation` at `kg-navigation/skills/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
+          "where": "ig-artifact-ingestion",
+          "detail": "no role carries \"ig-artifact-ingestion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `cat-bootstrap-render` at `cat-bootstrap/render/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`, `kg-navigation` at `kg-navigation/skills/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
           "where": "incremental-render",
           "detail": "no role carries \"incremental-render\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `cat-bootstrap-render` at `cat-bootstrap/render/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`, `kg-navigation` at `kg-navigation/skills/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -155,6 +159,10 @@
         {
           "where": "large-datasets/large-datasets.config.json",
           "detail": "nested instance \"large-datasets\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-trust/smart-trust.config.json",
+          "detail": "nested instance \"smart-trust\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "who-iris/who-iris.config.json",
