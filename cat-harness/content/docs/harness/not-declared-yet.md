@@ -1,4 +1,4 @@
-Three parts of the model above are intended and **not implemented**. They are
+Two parts of the model above are intended and **not implemented**. They are
 listed together, with what a reader will actually hit, because a page that
 described them as working would send somebody to look for code that is not
 there.
@@ -33,15 +33,23 @@ And the config carries **no field pointing at a definition**, so even were the
 filename freed there is nothing for it to point with. Freeing the stub means
 adding that pointer first; the filename rule is the symptom.
 
-### 3. Rendering a harnessed directory's JSON-LD is unchecked
+### A third claim was here, and it was wrong
 
-Stated as a **MUST** in the section above, carried by nothing. `coverage` can
-name a visualiser, a docs entry and a skill; it cannot name the rendered
-description, so `check:subgraph-coverage` cannot ask for it.
+This section listed the JSON-LD serialisation as a **MUST** carried by nothing.
+It is carried by `coverage.serialisations` and checked by
+`check:subgraph-coverage` — and it is the **strictest** obligation in the set,
+the only one `coverage.exempt` refuses to waive. The claim was made by reading
+`coverage` as three fields when it has four, which is the failure this page
+warns about one section earlier: treating an overlapping set as the same set.
+
+It is corrected rather than quietly deleted because a reader who saw the first
+version would go looking for a gap that is not there, and because *"stated as a
+MUST, carried by nothing"* is the specific kind of error a page written in RFC
+2119 key words is most able to cause.
 
 ---
 
-None of the three blocks the other. Instantiation works, the dependency walk
-works, and the visualisation obligation is both carried and checked. What is
+Neither remaining item blocks the other. Instantiation works, the dependency
+walk works, and all four coverage obligations are carried and checked. What is
 missing is the part that would let a Harness be **validated as** a Harness
 rather than recognised as one.

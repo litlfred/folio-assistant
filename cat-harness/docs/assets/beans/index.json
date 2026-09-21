@@ -1017,14 +1017,14 @@
     {
       "id": "folio-assistant-623b",
       "title": "PAGE: Harness — how it bootstraps, and how the dependency tree is walked from the lowest instance up",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:21:34Z",
-      "updatedAt": "2026-09-21T16:21:34Z",
+      "updatedAt": "2026-09-21T19:08:34Z",
       "preview": "Owner, 2026-09-21: a page covering how the Harness bootstraps, and how agents are steered by Processes (BPMN), Actors, Roles, Skills and Tasks.\n\n**The mechanism to document:** the dependency tree of the harness is walked starting from the LOWEST (bootstrap) in an ORDERED dependency hierarchy. The harness is declared in the KG. The page MUST explain how bootstrap plus zero or more harnesses can be ",
       "file": "beans/defs/folio-assistant-623b--page-harness-how-it-bootstraps-and-how-the-depende.md"
     },
@@ -2223,6 +2223,20 @@
       "updatedAt": "2026-09-20T14:37:12Z",
       "preview": "## The ruling that settles it\n\n> *does sending a reader to a REMARK ABOUT B mean they have read B's\n> prerequisites? no — it means that the reader can take for granted assertions\n> made, but if they need more info they can look at referenced content.*\n> — owner, 2026-08-24\n\nSo an `interprets` edge transmits **nothing forward** for this purpose. A\n`uses[]` entry reachable only through one is **not*",
       "file": "beans/defs/folio-assistant-ckpe--uses-editorial-hygiene-walked-interprets-hops-594.md"
+    },
+    {
+      "id": "folio-assistant-cmsl",
+      "title": "DEDUPE: 11 directories declared twice — and both obvious fixes are measurably wrong",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:18:36Z",
+      "updatedAt": "2026-09-21T19:21:24Z",
+      "preview": "Owner asked 2026-09-21: *\"we need to dediplicate. options? auto stub prefix?\"*\nBoth options were put to them, both were chosen, and **both turned out to be\nmeasurably wrong**. Recorded here so the next agent does not re-derive it.\n\n## The measurement\n\n**63 declared entries across 52 distinct directories; 11 declared twice.**\nEvery duplicate has one shape: `cat-harness` declares another instance's\n",
+      "file": "beans/defs/folio-assistant-cmsl--dedupe-11-directories-declared-twice-and-both-obvi.md"
     },
     {
       "id": "folio-assistant-cp3l",

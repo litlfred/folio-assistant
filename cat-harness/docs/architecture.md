@@ -15,6 +15,18 @@ has_children: true
 
 ## Overview
 
+> **The rules behind this page.** Architecture describes the shape; the Skills
+> govern the decisions. Adapters against profiles —
+> [`content-profiles`](reference/skill-instructions/content-profiles.html).
+> Where a new node belongs before you create it —
+> [`placement`](reference/skill-instructions/placement.html). The repository
+> layout and every graph kind —
+> [`directory-conventions`](reference/skill-instructions/directory-conventions.html).
+> Composing and verifying the MCP surface —
+> [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html) and
+> [`mcp-contract`](reference/skill-instructions/mcp-contract.html).
+> Where this page and a Skill disagree, the Skill wins.
+
 folio-assistant is an **MCP server** with a pluggable **content adapter** layer,
 a **skill** system, a typed **content-object model**, **RBAC**, and a deploy
 story. The content it operates on lives in a *separate* repository — the
