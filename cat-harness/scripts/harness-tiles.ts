@@ -54,6 +54,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
+import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { flattenDependencies } from "./dependency-order.js";
 import {
   type CatHarnessDeclaration,
@@ -103,6 +104,18 @@ export type HarnessTile = {
   reads: string;
   /** Whether the avatar is the instance's own or the generic fallback. */
   genericAvatar: boolean;
+  /**
+   * INSTANTIATED here, rather than merely present as a dependency.
+   *
+   * The owner, 2026-09-21: *"only the instiatiated harnesses (not all
+   * dependent ones) in teh folio... so repo root has
+   * `<harness>.config.json`"*. So the signal is the config at the
+   * instantiation root, not the declaration: `harness.json` says what an
+   * instance DECLARES, and the config says that the instance is instantiated
+   * HERE. Two different facts, and the navbar could not be derived from the
+   * declarations alone.
+   */
+  instantiated: boolean;
   /**
    * Where the tile GOES when clicked — the instance's own themed root when it
    * has one, else its first viewer, else absent and the tile is not a link.
@@ -306,6 +319,7 @@ function tileFor(
     tone: avatar.tone,
     reads: avatar.reads,
     genericAvatar: !own,
+    instantiated: existsSync(join(repoRoot, instanceConfigFilename(decl.name))),
     ...(href === undefined ? {} : { href, hrefKind: folio === undefined ? ("viewer" as const) : ("folio" as const) }),
     stats: [
       { id: "directories", label: "declared directories", value: dirs.length },

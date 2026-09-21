@@ -3041,3 +3041,20 @@ a.fa-harness-tile__body:focus-visible {
   padding-top: 0.625rem;
   border-top: 1px dashed var(--fa-rule, rgba(128, 128, 128, 0.3));
 }
+
+/* The DEPENDENCY group — present, and visibly secondary.
+ *
+ * Owner, 2026-09-21: "only the instiatiated harnesses (not all dependent ones)
+ * in teh folio". The instantiated harnesses are the list; the ones that are
+ * merely here as dependencies keep a group of their own rather than
+ * disappearing, because making the distinction a disappearance would answer
+ * "where did who-iris go" with silence. Closed by default, and dimmer, so the
+ * column reads as one list with a footnote rather than two competing ones. */
+.fa-harness-tiles--deps {
+  margin-top: 0.25rem;
+  opacity: 0.75;
+}
+
+.fa-harness-tiles--deps .fa-harness-tile__body {
+  min-height: 2.25rem;
+}

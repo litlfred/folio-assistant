@@ -23,6 +23,8 @@
   broken".
 {%- endcomment -%}
 {%- assign tiles = site.data.harness.harnesses -%}
+{%- assign instantiated = tiles | where: "instantiated", true -%}
+{%- assign dependencies = tiles | where: "instantiated", false -%}
 {%- if tiles and tiles.size > 0 -%}
 {%- comment -%}
   COLLAPSED BY DEFAULT. Owner, 2026-09-21: "harnesses should be collasabile,
@@ -38,12 +40,23 @@
   The COUNT rides the summary, so a collapsed list still says how much is
   behind it rather than hiding the fact that there is anything.
 {%- endcomment -%}
-<details class="fa-harness-tiles">
+{%- comment -%}
+  TWO GROUPS, and the split is the owner's: "only the instiatiated harnesses
+  (not all dependent ones) in teh folio". An instance is instantiated HERE when
+  the instantiation root carries its `<name>.config.json` — a different fact
+  from what its `harness.json` declares, which is why the navbar cannot be
+  derived from the declarations alone.
+
+  The dependencies are kept rather than dropped, in a group of their own that
+  says what they are. Making the distinction a DISAPPEARANCE would answer
+  "where did who-iris go" with silence.
+{%- endcomment -%}
+<details class="fa-harness-tiles" open>
   <summary class="fa-harness-tiles__heading">
-    Harnesses <span class="fa-harness-tiles__count">{{ tiles.size }}</span>
+    Harnesses <span class="fa-harness-tiles__count">{{ instantiated.size }}</span>
   </summary>
   <ul class="fa-harness-tiles__list">
-  {%- for t in tiles -%}
+  {%- for t in instantiated -%}
     {%- assign open = t.visualisations | where_exp: "v", "v.path" -%}
     {%- comment -%}
       `t.href` is the instance's OWN themed root when it has one, and a kind
@@ -116,4 +129,56 @@
   {%- endfor -%}
   </ul>
 </details>
+{%- if dependencies.size > 0 -%}
+<details class="fa-harness-tiles fa-harness-tiles--deps">
+  <summary class="fa-harness-tiles__heading">
+    Dependencies <span class="fa-harness-tiles__count">{{ dependencies.size }}</span>
+  </summary>
+  <ul class="fa-harness-tiles__list">
+  {%- for t in dependencies -%}
+    {%- assign open = t.visualisations | where_exp: "v", "v.path" -%}
+    <li class="fa-harness-tile" style="--fa-tile-tone: {{ t.tone }}">
+      {%- if t.href -%}
+      <a class="fa-harness-tile__body" href="{{ t.href | relative_url }}"
+         data-fa-href-kind="{{ t.hrefKind }}">
+      {%- else -%}
+      <div class="fa-harness-tile__body fa-harness-tile__body--unlinked">
+      {%- endif -%}
+        {%- if t.icon -%}
+          <img class="fa-harness-tile__mark" src="{{ t.icon.src | relative_url }}"
+               alt="" aria-hidden="true" width="28" height="28" />
+        {%- else -%}
+          <span class="fa-avatar fa-harness-tile__mark"
+                data-fa-kind="{{ t.name }}" role="img"
+                aria-label="{{ t.reads }}"></span>
+        {%- endif -%}
+        <span class="fa-harness-tile__text">
+          <span class="fa-harness-tile__title">{{ t.title }}</span>
+          <span class="fa-harness-tile__stats">
+          {%- for s in t.stats -%}
+            <span class="fa-harness-tile__stat" data-fa-stat="{{ s.id }}">
+              <span class="fa-harness-tile__badge">{{ s.value }}</span>
+              <span class="fa-sr-only">{{ s.label }}</span>
+            </span>
+          {%- endfor -%}
+          </span>
+        </span>
+      {%- if t.href -%}
+      </a>
+      {%- else -%}
+      </div>
+      <p class="fa-harness-tile__gap">Nothing published to open yet.</p>
+      {%- endif -%}
+      {%- if open.size > 0 -%}
+      <ul class="fa-harness-tile__more">
+        {%- for v in open -%}
+        <li><a href="{{ v.path | relative_url }}">{{ v.kind }}</a></li>
+        {%- endfor -%}
+      </ul>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+  </ul>
+</details>
+{%- endif -%}
 {%- endif -%}
