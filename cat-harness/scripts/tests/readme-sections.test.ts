@@ -28,6 +28,7 @@ import {
   instanceRootsIn,
 } from "../../schemas/cat-harness.js";
 import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance } from "../../test/support/instance-fixture.js";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 const dirs: string[] = [];
 
@@ -287,10 +288,10 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
   // A property worth keeping must not depend on the corpus still being wrong.
   function repoWith(instances: Record<string, unknown>): string {
     const root = mkdtempSync(join(tmpdir(), "instances-"));
-    writeFileSync(join(root, "harness.json"), JSON.stringify({ name: "root" }));
+    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "root" }));
     for (const [name, decl] of Object.entries(instances)) {
       mkdirSync(join(root, name), { recursive: true });
-      writeFileSync(join(root, name, "harness.json"), JSON.stringify(decl));
+      writeFileSync(join(root, name, DECLARATION_FILENAME), JSON.stringify(decl));
     }
     return root;
   }

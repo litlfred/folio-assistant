@@ -104,3 +104,7 @@ The remedy it asked for — land beans ahead of code — was **not exercised on
 the case that prompted it**. #477's beans landed *with* the code. The rule
 stands for the next long-lived branch, untested by this one, and that is worth
 knowing before anybody cites this bean as evidence the rule works.
+
+*Issue link, recorded 2026-09-21.* **[#651](https://github.com/litlfred/folio-assistant/issues/651)** — closed on evidence, and the 61-bean blind spot.
+
+Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.

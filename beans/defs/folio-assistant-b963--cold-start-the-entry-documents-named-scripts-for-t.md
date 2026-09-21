@@ -381,3 +381,7 @@ that our coverage does not reach it.
       `exports`, `files` in `package.json`, and the same question for any
       other declaration whose unresolvable entry is dropped rather than
       refused. Depends on #623 merging first, so the fix is not re-derived.
+
+*Issue link, recorded 2026-09-21.* **[#620](https://github.com/litlfred/folio-assistant/issues/620)** — `check:anchor-names`.
+
+Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.

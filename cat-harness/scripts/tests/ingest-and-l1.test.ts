@@ -36,6 +36,7 @@ import {
   planFor,
   usableOutlineEntries,
 } from "../ingest-document.ts";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 const made: string[] = [];
 afterEach(() => {
@@ -324,7 +325,7 @@ describe("L1 completeness", () => {
     made.push(root);
     mkdirSync(join(root, "library"), { recursive: true });
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "t",
         directories: [{ id: "library", path: "library/", dependents: "reproduce", graphs: ["library"] }],

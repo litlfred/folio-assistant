@@ -2618,7 +2618,7 @@ export function initializationDoc(d: Pick<CatHarnessDeclaration, "name" | "stub"
 }
 
 export function siteDirFor(root: string): string {
-  const p = join(root, "harness.json");
+  const p = join(root, DECLARATION_FILENAME);
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(p, "utf-8"));
