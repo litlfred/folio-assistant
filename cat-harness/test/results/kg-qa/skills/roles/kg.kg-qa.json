@@ -112,6 +112,10 @@
           "detail": "nested instance \"agent-skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
+          "where": "cat-bootstrap-tools/harness.json",
+          "detail": "nested instance \"cat-bootstrap-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
           "where": "cat-bootstrap/harness.json",
           "detail": "nested instance \"cat-bootstrap\" declares its own graph, and this audit does not read it — 3 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
