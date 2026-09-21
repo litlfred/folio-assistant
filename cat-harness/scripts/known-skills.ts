@@ -13,7 +13,7 @@
  * @module scripts/known-skills
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, join, join as joinPath, relative } from "node:path";
+import { basename, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
 
 import { resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
@@ -151,6 +151,56 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
  */
 export function kgRoots(root: string): string[] {
   return kgDirectories(root).map((d) => d.absPath);
+}
+
+/**
+ * Knowledge-graph roots this audit may write sidecars for.
+ *
+ * **Every root the instance DECLARES, minus the ones belonging to another
+ * instance** — bean `lps0`. This walked the literal
+ * `KG_ROOT = join(root, "skills")`, so a skill in a topical directory was not
+ * audited AND not reported as unaudited: the `dh4f` shape inside the tool
+ * whose job is finding that shape. Measured when it was fixed — 219 skills
+ * under the literal, 229 under the declaration, and the 10 in the gap had
+ * never been audited at all.
+ *
+ * ## Another instance's roots are excluded, and that is not this function's
+ * ## judgement to make
+ *
+ * `kgRoots` resolves a DEPENDENCY's directories too, so it returns paths like
+ * `../cat-bootstrap/render`. Walking them is forbidden by
+ * `instance-graph-isolation.test.ts`, which guards a live 2026-09-19 leak of
+ * 88 references: one instance's graph must not carry another's nodes.
+ * `unreadNestedInstances` states the same rule in its own finding text — *"do
+ * NOT declare its directories here"*.
+ *
+ * It would break this audit's own output as well. {@link sidecarPath}
+ * composes `dirname(join(root, subject.path))` and mirrors it under
+ * `test/results/kg-qa/`, so a `../` subject normalises to
+ * `test/results/cat-bootstrap/render` — **outside the results tree
+ * altogether**, which is the escaping-path defect bean `chq5` fixed one store
+ * over.
+ *
+ * **The exclusion is not silent, and it needs nothing added here.** The
+ * `nested-instance-audited` criterion already names every unread nested
+ * instance and counts what it holds — added by bean `sa8y` for exactly this
+ * invisibility. A second report from this function would be a second answer to
+ * one question, free to disagree with the first.
+ */
+export function ownKgRoots(root: string): string[] {
+  const here = resolve(root);
+  const kept = kgRoots(root).filter((r) => {
+    const rel = relative(here, resolve(r));
+    // `rel === ""` is the instance root itself, which would walk everything
+    // including its own results tree.
+    return rel !== "" && !rel.startsWith("..") && !isAbsolute(rel);
+  });
+  // DEDUPLICATED. `resolveDirectories` supplies the conventional defaults
+  // alongside the declaration, so an instance that ALSO declares `skills/`
+  // gets it twice — measured on a fixture declaring it explicitly. Harmless to
+  // a caller that dedupes its own output and wasteful to one that does not,
+  // and a caller cannot tell the two apart from the list alone.
+  return [...new Set(kept.map((r) => resolve(r)))].sort();
 }
 
 /**

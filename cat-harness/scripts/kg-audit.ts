@@ -42,7 +42,7 @@
  */
 
 import { createHash } from "node:crypto";
-import { kgDirectories, workflowDirs, workflowFiles } from "./known-skills.js";
+import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -563,32 +563,19 @@ function isPartOfASkill(path: string): boolean {
   return basename(dir) === parent && existsSync(join(dirname(dir), `${parent}.md`));
 }
 
-/**
- * Every skill this instance declares — across ALL its knowledge-graph
- * directories, not just `skills/`.
- *
- * Bean `lps0`. This walked `KG_ROOT` alone, so a skill living in a topical
- * directory was **not reported as unknown — not reported at all**: the `dh4f`
- * shape inside the tool whose job is finding that shape. The audit's own
- * `graphScope()` has been printing all the declared directories in its
- * findings the whole time, so the report named a scope wider than the walk.
- *
- * *Measured 2026-09-21:* 8 declared directories, of which this walked **one**;
- * **10 markdown files in the other seven** were never examined. Bean `lps0`
- * estimated "roughly twenty skills" on 2026-09-20 — the real figure is at most
- * ten, and `theming/` has since moved INTO `skills/`, so one row of that bean's
- * table no longer applies. **Run the audit for today's number; do not quote
- * either of these** (bean `8nzu`).
- *
- * `kgDirectories` is the same resolver `graphScope()` and the process walk
- * already use, so this does not introduce a second answer to "which
- * directories are the graph" — it removes one. A declared directory that does
- * not exist is skipped by that resolver, not by a check here.
- */
 function skillFiles(): string[] {
   const out: string[] = [];
   const walk = (dir: string): void => {
-    for (const e of readdirSync(dir, { withFileTypes: true })) {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      // A declared-but-absent directory is `dh4f`: scanning nothing and
+      // reporting a clean run over it. Skipped here and surfaced by
+      // `check:harness-dirs`, which is the check that owns that question.
+      return;
+    }
+    for (const e of entries) {
       const p = join(dir, e.name);
       if (e.isDirectory()) {
         if (e.name !== KG_QA_DIRNAME) walk(p);
@@ -597,14 +584,11 @@ function skillFiles(): string[] {
       }
     }
   };
-  // De-duplicated: a declaration may nest one directory inside another, and a
-  // skill audited twice would get two verdicts at one sidecar path.
-  const seen = new Set<string>();
-  for (const d of kgDirectories(root)) {
-    if (seen.has(d.absPath)) continue;
-    seen.add(d.absPath);
-    walk(d.absPath);
-  }
+  for (const r of ownKgRoots(root)) walk(r);
+  // Deduplicated: two declared roots may nest, and a skill found twice would
+  // be audited twice into one sidecar path — the second verdict silently
+  // overwriting the first, which is the collision `sidecarPath` exists to
+  // avoid one level down.
   return [...new Set(out)].sort();
 }
 
