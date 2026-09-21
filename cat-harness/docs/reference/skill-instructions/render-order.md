@@ -72,7 +72,7 @@ names the step that **broke**, not the nearest blocked neighbour.
 `ran`, `failed`, `skipped` — plus a step that is **declared but not yet
 performable**, which the report marks `◻` and never a tick. It exists because
 the first draft did not have it: the bootstrap step was written as
-`kg-export --root cat-bootstrap`, and `kg-export` has no `--root` flag. The
+`kg-export --root bootstrap`, and `kg-export` has no `--root` flag. The
 argument would have been ignored and the whole graph exported under
 bootstrap's name — **a step reporting success while doing something else.**
 Naming the gap costs a line; finding it from a wrong artefact costs a release.
@@ -99,7 +99,7 @@ rendering and nothing else.
 
 **Bootstrap is the exception, and it is declared as one.** It depends on
 nothing and nothing depends on it — that is what "as an exception" means here:
-cat-bootstrap is read when no harness is installed, so it cannot wait on the
+bootstrap is read when no harness is installed, so it cannot wait on the
 graph and the graph must not wait on it. Same shape as its exemption from the
 `visualiser` criterion in `check:subgraph-coverage`, and a **second criterion
 rather than a hole**: it owes its own `.json`/`.jsonld` instead (bean `hfkl`).

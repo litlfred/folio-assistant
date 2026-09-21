@@ -46,7 +46,7 @@ rule rather than a new one, and the two should be written down once.
 
 ## Measured, 2026-09-20, before claiming anything
 
-- **`cat-bootstrap/skills/` holds `bootstrap-kg-navigation.md`**, and it is about
+- **`bootstrap/skills/` holds `bootstrap-kg-navigation.md`**, and it is about
   **reading** a knowledge graph cold ("assumes a text editor and nothing
   else"). That is the neighbour of what the owner asked for, not the thing:
   the ask is the skills for **rendering** `.jsonld`/`.json`. So "maybe in wrong
@@ -56,7 +56,7 @@ rule rather than a new one, and the two should be written down once.
   the `cat-harness` graph kind. There is no `render/`.
 - **The artefact is built, not committed.** `kg-export` writes
   `_kg/<stub>.jsonld` (`kg-export.ts:1777`), and `kg-export.ts:1005` already
-  names `cat-bootstrap/cat-bootstrap.jsonld` as "a COMMITTED artefact" in a comment.
+  names `bootstrap/bootstrap.jsonld` as "a COMMITTED artefact" in a comment.
   Those two disagree, and which one is true decides whether bootstrap's
   existence is checkable from a checkout or only after a build. **Check this
   before building anything** — it may be the whole bean.
@@ -70,15 +70,15 @@ rule rather than a new one, and the two should be written down once.
       holding the skills for rendering `.jsonld`/`.json`
 - [x] The exemption is written where the QA axis will read it, so `2krx` does
       not raise a finding against bootstrap for having no visualiser
-- [x] The `_kg/` vs `cat-bootstrap/cat-bootstrap.jsonld` contradiction above is
+- [x] The `_kg/` vs `bootstrap/bootstrap.jsonld` contradiction above is
       resolved, one way stated — **done 2026-09-20, and it was a stale
       comment rather than a design question.** Both generators exist and
       neither commits anything: `kg-export.ts` writes `_kg/<stub>.jsonld`
       (gitignored, `.gitignore:98`) or wherever `--out` says, and
-      `gen-bootstrap-graph.ts` writes `cat-bootstrap/cat-bootstrap.jsonld`, which
+      `gen-bootstrap-graph.ts` writes `bootstrap/bootstrap.jsonld`, which
       `.gitignore:108` ignores **deliberately** — it was committed once on a
-      rationale citing a README step no prose file under `cat-bootstrap/`
-      contains, at 52 % of `cat-bootstrap/` by line count. `docs-site.yml:274`
+      rationale citing a README step no prose file under `bootstrap/`
+      contains, at 52 % of `bootstrap/` by line count. `docs-site.yml:274`
       builds it into the published site instead.
 
       So `kg-export.ts`'s comment calling it "a COMMITTED artefact ... so its
@@ -103,17 +103,17 @@ rule rather than a new one, and the two should be written down once.
 
 ## Done, 2026-09-20 — and two of the four boxes were already true
 
-**`cat-bootstrap/render/` exists and is DECLARED**, id `cat-bootstrap-render`,
-holding `cat-bootstrap-graph-emission.md` (what the document contains and the
-four properties it holds) and `cat-bootstrap-graph-publication.md` (where it
+**`bootstrap/render/` exists and is DECLARED**, id `bootstrap-render`,
+holding `bootstrap-graph-emission.md` (what the document contains and the
+four properties it holds) and `bootstrap-graph-publication.md` (where it
 lands, why its `@id` must equal that path, why it is no longer committed) plus
 its own `package-manifest.json`. A separate id from `cat-harness`, which
 `skills/` already holds — overrides match on id, so reusing it would have
-replaced cat-bootstrap's skills with these. `check:instance-render` reports
-cat-bootstrap at **81 own nodes**, up from the 76 this bean measured.
+replaced bootstrap's skills with these. `check:instance-render` reports
+bootstrap at **81 own nodes**, up from the 76 this bean measured.
 
 **The exemption is DECLARED DATA, and that was the design decision.** The
-obvious shortcut is `if (name === "cat-bootstrap")` in the `2krx` checker,
+obvious shortcut is `if (name === "bootstrap")` in the `2krx` checker,
 which states a rule true only for the instance somebody remembered — a
 vendored or renamed bootstrap silently reacquires the obligation it was
 excused from. So `renderExemption` is a field on the instance declaration
@@ -123,7 +123,7 @@ calls.
 
 **`owes` is REQUIRED by the schema**, and it is the part worth defending. An
 exemption with no substitute is a hole, and a list of holes is the silence list
-`2krx` says an opt-out must not become. cat-bootstrap is not dropping out of
+`2krx` says an opt-out must not become. bootstrap is not dropping out of
 the requirement — it trades a criterion it could fail quietly for one it
 cannot. A test asserts the skill files `owes` names actually exist, so the
 field cannot rot into decoration.
@@ -132,7 +132,7 @@ field cannot rot into decoration.
 takes every instance in the repository rather than one declaration, because
 *"only the bottom layer may claim this"* is a fact about the stack that a
 per-instance check structurally cannot see. At most one claimant, **not
-exactly one** — a repository vendoring no cat-bootstrap has nothing to exempt,
+exactly one** — a repository vendoring no bootstrap has nothing to exempt,
 and failing it for that is asking it to declare something to stay green. Wired
 into `check:instance-render`, which is the gate it is an exemption FROM.
 16 tests, falsified in both directions.
@@ -140,10 +140,10 @@ into `check:instance-render`, which is the gate it is an exemption FROM.
 ### The `_kg/` contradiction resolved itself before this bean was written
 
 The bean asked which of the two was true and said it *"may be the whole bean"*.
-Measured: **neither, any more.** `cat-bootstrap/cat-bootstrap.jsonld` was
+Measured: **neither, any more.** `bootstrap/bootstrap.jsonld` was
 committed with a byte-staleness gate; on 2026-09-20 (bean `blv9`) it became a
 build artefact published by `docs-site.yml` at
-`_site/cat-bootstrap/cat-bootstrap.jsonld`, the gate was removed, and a test
+`_site/bootstrap/bootstrap.jsonld`, the gate was removed, and a test
 now asserts the inverse — that **no tracked copy exists**. What was left was a
 stale comment at `kg-export.ts:1061` still calling it *"a COMMITTED artefact"*,
 four days after it stopped being one. Fixed, and the fix records that the
@@ -163,7 +163,7 @@ failure. All four instances report `rendered`, 0 failed, 0 undetermined.
 
 *"The docs page's 'conflict' section is rewritten as the resolved rule"* —
 `cat-harness/docs/architecture/harness-instances.md` already carried
-§"Where the requirement starts — cat-bootstrap is the exception" with the
+§"Where the requirement starts — bootstrap is the exception" with the
 floor-that-rises table. Extended rather than rewritten: a subsection now
 records that the exemption is declared data, why `owes` is required, and why
 the spread guard is global.
@@ -174,7 +174,7 @@ narrower than its name.***
 
 Asked as the `goal-review` sweep's single question, the owner ruled REPLACE on
 `b5f0` and added, verbatim: *"1 bit should also bootstrap and folio-assistant
-configs/instantatioon"*. So `cat-bootstrap/` carries its own config file like
+configs/instantatioon"*. So `bootstrap/` carries its own config file like
 every other instantiation root.
 
 This bean's exception is about a **visualiser** — bootstrap has none, and its

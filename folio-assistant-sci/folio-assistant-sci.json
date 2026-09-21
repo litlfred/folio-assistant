@@ -24,7 +24,7 @@
       "path": "library/",
       "dependents": "reproduce",
       "description": "Ingested L1 source material for the sciences. `milnorlink` is the whole of it: the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
-      "graphs": [
+      "graphKinds": [
         "library"
       ],
       "coverage": {

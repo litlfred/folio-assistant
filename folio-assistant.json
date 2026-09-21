@@ -8,7 +8,7 @@
       "path": "uploads/",
       "dependents": "reproduce",
       "description": "The incoming queue of the document-ingestion pipeline for THIS checkout \u2014 raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.",
-      "graphs": [
+      "graphKinds": [
         "uploads"
       ],
       "coverage": {
@@ -25,10 +25,10 @@
       "src": "AGENTS.md",
       "role": "agent-instructions",
       "title": "AGENTS.md \u2014 folio-assistant",
-      "description": "The file every cold agent reads first, and the rules that bind in EVERY layer of this checkout. A layer's own AGENTS.md augments it and never restates it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED \u2014 'it was copied at init' is not an answer. This provenance sits here rather than on cat-harness's because THIS is the file cat-bootstrap copies at initialisation; cat-harness's own is authored in place and carries no source.",
+      "description": "The file every cold agent reads first, and the rules that bind in EVERY layer of this checkout. A layer's own AGENTS.md augments it and never restates it. `source` names the bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED \u2014 'it was copied at init' is not an answer. This provenance sits here rather than on cat-harness's because THIS is the file bootstrap copies at initialisation; cat-harness's own is authored in place and carries no source.",
       "source": {
         "instance": "litlfred/folio-assistant",
-        "path": "cat-bootstrap/AGENTS.md"
+        "path": "bootstrap/AGENTS.md"
       }
     },
     {

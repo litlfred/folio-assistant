@@ -16,7 +16,7 @@ describes.
 ## What happened
 
 157 task-containing lanes, and exactly one resolves to no role: `Actor`, in
-`cat-bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s
+`bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s
 §"Adding a role", worked out the `actorKinds` and the `skills`, and was about
 to add it when the end of the file said:
 
@@ -83,5 +83,48 @@ Binding `Actor` to a role. That is the wrong fix and the file says why.
 - [ ] the glossary extractor can tell "no definition, by design" from "no
       definition, nobody wrote one"
 - [ ] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
-      `cat-bootstrap/skills/roles/roles.json` points at it rather than being
+      `bootstrap/skills/roles/roles.json` points at it rather than being
       the only record
+
+## Investigated 2026-09-21 — the fix is aimed at the right layer, and the shape is settled
+
+The open question in this bean was WHERE the declaration belongs. Read rather
+than reasoned about:
+
+| fact | where |
+|---|---|
+| `<folio:role ref>` is parsed off the lane's `extensionElements` | `src/workflow/process-model.ts:658` |
+| the lane→role resolution, explicit ref winning over the name table | `roleForLane`, `schemas/role-graph.ts:~711` |
+| the criterion that fires on an unbound lane | `scripts/kg-audit.ts:448`, `"lane-binds-role": entry(unboundLane, …)` |
+| the precedent flags, and they are on the ROLE not the lane | `RoleDef.actedUpon` / `RoleDef.judgementOnly`, `role-graph.ts:323,348` |
+
+So option (1) in this bean — declare it on the lane — is aimed at a real
+extension point that is already parsed, and `roleForLane` is the one function
+every consumer goes through. Nothing has to be invented.
+
+**One correction to this bean's own reasoning.** It argued from `actedUpon`
+and `judgementOnly` that "a property of the thing goes on the thing". Those
+two are properties of a ROLE, and what is being declared here is a property of
+a LANE — there is no role to hang it on, which is the whole point. The
+principle still favours the lane, but the cited precedent is an analogy rather
+than a parallel, and saying otherwise would overstate it.
+
+## Shape
+
+- `<folio:role variable="true"/>` on the lane, no `ref`. A lane may carry one
+  or the other, never both: a lane that names a role has not got a varying
+  performer.
+- `roleForLane` returns a third answer. Today it is `RoleDef | undefined`, and
+  `undefined` means "nothing matched" — the same value a typo produces. The
+  declared case must be distinguishable from that, or the gate cannot tell
+  them apart, which is this bean's entire complaint one level in.
+- `lane-binds-role` reads the declared case as **answered**, and still fails
+  on an undeclared one.
+- The glossary emits such a lane as a term with a `scopeNote` and no
+  `definition`, which is honest, rather than as a label with a hole.
+
+## Deliberately NOT done in PR #794
+
+That PR is the bean front-matter gate. This is a BPMN extension plus an audit
+criterion — a different subject, and mixing them makes both harder to review.
+Implementation waits for #794 to merge.

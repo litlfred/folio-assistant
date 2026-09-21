@@ -277,14 +277,14 @@ jobs:
       - name: no undeclared files at the repository root
         run: bun run check:undeclared-files:check
 
-      # `cat-bootstrap/cat-bootstrap.jsonld` HAD a staleness gate here, because it was
+      # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
       # committed. It no longer is — it is built at render time into the
       # published site by `docs-site.yml` — so there is no committed copy to
       # go stale and nothing for a byte gate to compare against.
       #
       # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
       # assuming: the gate compared bytes, while every property it was
-      # protecting is asserted directly in `scripts/tests/cat-bootstrap-graph.test.ts`
+      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
       # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
       # build paths, skills derived from disk, graph kinds a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
@@ -488,8 +488,8 @@ jobs:
       - name: namespace vocabulary is complete
         run: bun run ns:check
 
-      # `cat-bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `cat-bootstrap-tools`, because bootstrap promises an Initiator it needs
+      # `bootstrap`'s two JSON Schemas are GENERATED from Zod in
+      # `bootstrap-tools`, because bootstrap promises an Initiator it needs
       # no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked
@@ -641,6 +641,16 @@ jobs:
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
           bun run check:bean-bodies
+          # Bean `t7ao`: check:bean-bodies reads front matter by REGEX, and a
+          # regex over a broken document does not notice the document is
+          # broken. A bean committed with a literal `\1` where `updated_at:`
+          # belonged passed 92 gates, then took `beans list`, `roadmap` and
+          # `prime` down for every reader -- the store loads as a unit, and
+          # `prime` is the first command in the AGENTS.md cold start. Fails
+          # hard on a bean NO loader will read; a duplicate key (which `beans`
+          # itself tolerates) is baselined at the two the store carries, so a
+          # NEW one fails and the existing two are listed rather than demanded.
+          bun run check:bean-front-matter
           # Bean `k59d`: check:bean-bodies reads a SENTENCE (`blocked on `id``).
           # A milestone states its blockers as a ROUTE, so both GOAL milestones
           # advertised finished work as next and neither detector could see it.
@@ -738,6 +748,12 @@ jobs:
           # so adding one there is covered here with no edit; finding none
           # is exit 1, not a pass (issue #720, bean `u1iu`).
           bun run check:published-instance-exports
+          # A preview must run the generators the deploy runs, with the same
+          # instance arguments. `3jhq` was exactly this: staging ran the
+          # exporter but not for the foreign instance, so two links 404ed on
+          # every preview. Deploy and preview are DERIVED (the deploy passes no
+          # `--base-url`), so neither is named in the check (bean `qgpo`).
+          bun run check:invocation-parity
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no

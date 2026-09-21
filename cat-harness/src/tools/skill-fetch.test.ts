@@ -4,7 +4,7 @@
  * @module src/tools/skill-fetch.test
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -20,7 +20,7 @@ function instance(pkgs: Record<string, string>, kgPath = "skills"): string {
   const root = mkdtempSync(join(tmpdir(), "pkgs-"));
   writeDeclaration(root, JSON.stringify({
       name: "t",
-      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphKinds: ["cat-harness"] }],
     }));
   for (const [name, body] of Object.entries(pkgs)) {
     mkdirSync(join(root, kgPath, name), { recursive: true });
@@ -44,31 +44,51 @@ describe("the live table", () => {
     }
   });
 
-  test("the co-located package is DISCOVERED, not hand-written", () => {
-    // This test asserted the opposite until 2026-09-19, and the assertion was
-    // correct then: `src/skills/` was an undeclared kg directory, so discovery
-    // could not see the one skill it holds and `LOCAL_PACKAGES` carried a
-    // hand-written exception for it.
+  test("the co-located skill is DISCOVERED, not hand-written", () => {
+    // Three states of one question, kept as one test because the middle one
+    // is the reason the last one is safe.
     //
-    // Bean `osbo` declared it. The exception is gone, and the package now
-    // falls out of the declaration like every other — so the old assertion is
-    // kept here inverted rather than deleted, because "discovery cannot see
-    // it" was a real limitation and this is the record of it ending.
-    expect(LOCAL_PACKAGES["cat-harness"]).toBeDefined();
-    expect(discoverLocalPackages(ROOT)["cat-harness"]).toBeDefined();
+    // Until 2026-09-19 this asserted the OPPOSITE, correctly: `src/skills/`
+    // was an undeclared kg directory, so discovery could not see the one
+    // skill it holds and `LOCAL_PACKAGES` carried a hand-written exception.
+    // Bean `osbo` declared it, the exception went, and the package fell out
+    // of the declaration like every other.
+    //
+    // 2026-09-21, issue #760: `src/skills/` is GONE. Its stated reason — a
+    // skill beside the `.ts` that implements it — was already served by
+    // `skills/folio-core/`, eight times over, and the separate directory's
+    // only distinguishing property was that `discoverLocalPackages` named it
+    // `cat-harness` while the declaration gave that id to `skills/`. One name,
+    // two real directories.
+    //
+    // So the SUBJECT moved and the CLAIM did not: a co-located skill is still
+    // discovered rather than hand-listed. Asserted on the skill rather than on
+    // the directory, because the directory was the accident.
+    const dir = discoverLocalPackages(ROOT)["folio-core"];
+    expect(dir).toBeDefined();
+    expect(readdirSync(dir!)).toContain("corpus-grep.md");
+  });
+
+  test("the name `cat-harness` denotes exactly one directory", () => {
+    // The defect #760 closes, pinned so it cannot come back. `skill_fetch`
+    // took `cat-harness` to mean `src/skills` (one skill) while the
+    // declaration took it to mean `skills/` (sixteen sub-packages), and
+    // nothing joined the two — so an agent reading the declaration and
+    // calling `skill_fetch("cat-harness")` got the wrong directory silently,
+    // with no error, because the name WAS valid in that namespace.
+    expect(discoverLocalPackages(ROOT)["cat-harness"]).toBeUndefined();
   });
 
   test("a directly-held kg directory is named after its INSTANCE", () => {
-    // There is no subdirectory name to take: `src/skills/` holds
-    // `corpus-grep.md` at its root. The declaration's `name` is what the
-    // package is, because that is whose skills they are.
+    // Rule 1: a directory basenamed `skills` IS the instance's own package —
+    // there is no subdirectory name to take — so it takes the instance's name.
     //
-    // `cat-harness`, not `folio-assistant`, since 2026-09-20: the owner ruled
-    // the three instances distinct, and the harness layer stopped sharing the
-    // repository's name. THE TEST'S CLAIM IS UNCHANGED — the package is named
-    // after whoever declares the directory — which is why this moved with the
-    // declaration rather than being pinned to a string.
-    expect(discoverLocalPackages(ROOT)["cat-harness"]).toContain("src/skills");
+    // The subject was `src/skills/` until #760 folded it into
+    // `skills/folio-core/`. THE TEST'S CLAIM IS UNCHANGED, which is the point:
+    // the rule was never about that directory, so it is asserted here on a
+    // live subject instead. `kg-navigation/skills/` is basenamed `skills` and
+    // takes its instance's name, exactly as `src/skills/` did.
+    expect(discoverLocalPackages(ROOT)["kg-navigation"]).toContain("kg-navigation/skills");
   });
 });
 
@@ -141,27 +161,27 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // the earlier package is found and then silently dropped. No collision is
     // reported, nothing throws, and `skill_fetch` answers "package not found"
     // for a package discovery had in hand. `dh4f` one layer up from the scope
-    // defect that hid `cat-bootstrap/skills/` in the first place.
+    // defect that hid `bootstrap/skills/` in the first place.
     const repo = mkdtempSync(join(tmpdir(), "held-"));
 
     // The sibling, with its OWN declaration — this is what makes it nameable.
     mkdirSync(join(repo, "sibling", "skills"), { recursive: true });
     writeDeclaration(join(repo, "sibling"), JSON.stringify({
         name: "sibling",
-        directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     writeFileSync(join(repo, "sibling", "skills", "s.md"), SKILL);
 
     // The instance, declaring its own kg directory AND the sibling's, the
-    // second at repository scope — the `cat-bootstrap/skills/` shape.
+    // second at repository scope — the `bootstrap/skills/` shape.
     const inst = join(repo, "inst");
     mkdirSync(join(inst, "kg"), { recursive: true });
     writeFileSync(join(inst, "kg", "i.md"), SKILL);
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
         directories: [
-          { id: "sib", path: "sibling/skills", dependents: "reproduce", graphs: ["cat-harness"], scope: "repository" },
-          { id: "cat-harness", path: "kg", dependents: "reproduce", graphs: ["cat-harness"] },
+          { id: "sib", path: "sibling/skills", dependents: "reproduce", graphKinds: ["cat-harness"], scope: "repository" },
+          { id: "cat-harness", path: "kg", dependents: "reproduce", graphKinds: ["cat-harness"] },
         ],
       }));
 
@@ -196,7 +216,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
           id: `d${i}`,
           path,
           dependents: "reproduce",
-          graphs: ["cat-harness"],
+          graphKinds: ["cat-harness"],
         })),
       }));
 
@@ -226,7 +246,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
           id: `d${i}`,
           path,
           dependents: "reproduce",
-          graphs: ["cat-harness"],
+          graphKinds: ["cat-harness"],
         })),
       }));
     const found = discoverLocalPackages(inst);
@@ -244,24 +264,24 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     writeFileSync(join(inst, "kg", "s.md"), SKILL);
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
-        directories: [{ id: "cat-harness", path: "kg", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "kg", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     expect(Object.keys(discoverLocalPackages(inst))).toEqual(["inst"]);
     rmSync(repo, { recursive: true, force: true });
   });
 
-  test("the live table still names src/skills after its declaring instance", () => {
+  test("the live table names a directly-held set after its declaring instance", () => {
     // The falsifier for the change above, stated as its own test because the
-    // whole claim is that this is a refactor: the name is now derived from
-    // where the skills LIVE rather than from who asked, and for `src/skills/`
-    // the nearest enclosing declaration is this instance's, so the answer must
-    // be the same one the hand-written table gave. If this goes red the change
-    // is a behaviour break, not a refactor.
+    // whole claim is that this is a refactor: the name is derived from where
+    // the skills LIVE rather than from who asked, so the nearest enclosing
+    // declaration decides. If this goes red the change is a behaviour break.
     //
-    // The title said `folio-assistant` until the owner's 2026-09-20 ruling
-    // made the three instances distinct. A title naming the expected STRING
-    // goes stale on a rename that is not a behaviour change; one naming the
-    // RULE does not.
-    expect(discoverLocalPackages(ROOT)["cat-harness"]).toContain("src/skills");
+    // The subject was `src/skills/` until #760 removed it. A title naming the
+    // expected STRING goes stale on a move that is not a behaviour change; one
+    // naming the RULE does not — which is why only the subject moved here.
+    // `bootstrap/render/` is directly-held and not basenamed `skills`, so
+    // it reaches the same answer by rule 2 rather than rule 1: the sole
+    // directly-held directory takes its instance's name.
+    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/render");
   });
 });

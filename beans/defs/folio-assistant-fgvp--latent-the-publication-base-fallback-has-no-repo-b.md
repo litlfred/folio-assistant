@@ -55,7 +55,7 @@ nothing walks.
 
 ## Do not
 
-Do not "fix" this by making cat-bootstrap declare a canonicalUrl. It has no
+Do not "fix" this by making bootstrap declare a canonicalUrl. It has no
 site; `40fl` settled that and its reasoning is right.
 
 ## Reasons for Scrapping

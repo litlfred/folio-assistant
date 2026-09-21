@@ -128,7 +128,7 @@ interface DeclEntry {
   id?: string;
   path?: string;
   scope?: string;
-  graphs?: string[];
+  graphKinds?: string[];
 }
 
 /**
@@ -149,7 +149,7 @@ export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLay
   };
   const found: DocsLayer[] = [];
   for (const e of decl.directories ?? []) {
-    if (!e.path || !e.id || !(e.graphs ?? []).includes("docs")) continue;
+    if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
     const repositoryScoped = e.scope === "repository";
     const root = repositoryScoped ? repo : join(repo, "cat-harness");
     found.push({ id: e.id, dir: join(root, e.path), repositoryScoped });
