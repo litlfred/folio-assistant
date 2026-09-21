@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld",
   "repository": "cat-bootstrap",
-  "generatedAt": "2026-09-21T19:37:49.856Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4dc517eaef2089f4ff0b5a11c1d66cd68dd5cef2",
-  "sourceCommitSha": "4dc517eaef2089f4ff0b5a11c1d66cd68dd5cef2",
-  "sourceCommitAt": "2026-09-21T19:36:11Z",
+  "generatedAt": "2026-09-21T19:49:56.267Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e2bf713f1bf566829f203233427f2397d5cc8ceb",
+  "sourceCommitSha": "e2bf713f1bf566829f203233427f2397d5cc8ceb",
+  "sourceCommitAt": "2026-09-21T19:48:03Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -271,8 +271,8 @@
     "SequenceFlow": 30,
     "Role": 9,
     "ProcessNode": 30,
-    "GraphKind": 2,
-    "Directory": 3,
+    "GraphKind": 3,
+    "Directory": 4,
     "Asset": 2
   },
   "@graph": [
@@ -356,6 +356,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-render",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#skill/cat-bootstrap-graph-emission"
     },
     {
@@ -369,6 +370,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-render",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#skill/cat-bootstrap-graph-publication"
     },
     {
@@ -382,6 +384,7 @@
       ],
       "nodeCount": 15,
       "flowCount": 16,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness"
     },
     {
@@ -390,6 +393,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
     },
     {
@@ -398,6 +402,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
     },
     {
@@ -406,6 +411,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
     },
     {
@@ -414,6 +420,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
     },
     {
@@ -423,6 +430,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5"
     },
     {
@@ -432,6 +440,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
     },
     {
@@ -440,6 +449,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
     },
     {
@@ -449,6 +459,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14"
     },
     {
@@ -458,6 +469,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
     },
     {
@@ -466,6 +478,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
     },
     {
@@ -475,6 +488,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
     },
     {
@@ -484,6 +498,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
     },
     {
@@ -492,6 +507,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
     },
     {
@@ -500,6 +516,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
     },
     {
@@ -508,6 +525,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
     },
     {
@@ -516,6 +534,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
     },
     {
@@ -554,6 +573,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
     },
     {
@@ -575,6 +595,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses"
     },
     {
@@ -596,6 +617,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations"
     },
     {
@@ -617,6 +639,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness"
     },
     {
@@ -637,6 +660,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen"
     },
     {
@@ -658,6 +682,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation"
     },
     {
@@ -678,6 +703,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized"
     },
     {
@@ -699,6 +725,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration"
     },
     {
@@ -720,6 +747,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart"
     },
     {
@@ -740,6 +768,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound"
     },
     {
@@ -761,6 +790,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install"
     },
     {
@@ -781,6 +811,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme"
     },
     {
@@ -804,6 +835,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure"
     },
     {
@@ -821,6 +853,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
       ],
       "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed"
     },
     {
@@ -838,6 +871,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
       ],
       "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed"
     },
     {
@@ -851,6 +885,7 @@
       ],
       "nodeCount": 9,
       "flowCount": 9,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion"
     },
     {
@@ -859,6 +894,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
     },
     {
@@ -867,6 +903,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
     },
     {
@@ -875,6 +912,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
     },
     {
@@ -883,6 +921,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
     },
     {
@@ -892,6 +931,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
     },
     {
@@ -901,6 +941,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
     },
     {
@@ -910,6 +951,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
     },
     {
@@ -918,6 +960,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
     },
     {
@@ -926,6 +969,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
     },
     {
@@ -943,6 +987,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
     },
     {
@@ -964,6 +1009,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates"
     },
     {
@@ -986,6 +1032,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion"
     },
     {
@@ -1005,6 +1052,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/A_Answer"
     },
     {
@@ -1026,6 +1074,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/G_Settled"
     },
     {
@@ -1047,6 +1096,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination"
     },
     {
@@ -1068,6 +1118,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled"
     },
     {
@@ -1085,6 +1136,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
       ],
       "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/End_Settled"
     },
     {
@@ -1102,6 +1154,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
       ],
       "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled"
     },
     {
@@ -1115,6 +1168,7 @@
       ],
       "nodeCount": 6,
       "flowCount": 5,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage"
     },
     {
@@ -1123,6 +1177,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
     },
     {
@@ -1131,6 +1186,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
     },
     {
@@ -1140,6 +1196,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
     },
     {
@@ -1149,6 +1206,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
     },
     {
@@ -1157,6 +1215,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
     },
     {
@@ -1188,6 +1247,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
     },
     {
@@ -1209,6 +1269,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/node/A_Compose"
     },
     {
@@ -1229,6 +1290,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete"
     },
     {
@@ -1250,6 +1312,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/node/A_Record"
     },
     {
@@ -1267,6 +1330,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
       ],
       "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/node/End_Logged"
     },
     {
@@ -1284,6 +1348,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
       ],
       "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged"
     },
     {
@@ -1301,6 +1366,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#WorkflowGraph",
       "renderable": false,
       "summary": "Executable BPMN processes and the DMN tables their gateways compute from."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
+      "name": "scenarios",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ScenarioGraph",
+      "renderable": false,
+      "summary": "Actors, the Roles they take on, and the User Stories those Roles serve."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#role/initiator",
@@ -1386,15 +1459,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#directory/cat-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-harness-workflows",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-roles",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
-      "name": "cat-harness-workflows",
+      "name": "cat-bootstrap-roles",
+      "path": "skills/roles/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios"
+      ],
+      "description": "CatBootstrap's three Roles — Initiator, Knowledge Graph Data Store, and the person asking. Declared as `scenarios` on 2026-09-21, matching `cat-harness/skills/roles/`: before the split this inherited `skills` from the directory above it, so a consumer asking for the Scenarios got skill bodies and a consumer asking for Skills got a role registry. A lane name is a string the audit cannot bind to anything, which is why these Roles were declared at all rather than left implicit in the diagrams' lanes.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-roles",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#directory/cat-bootstrap-roles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
+      "name": "cat-bootstrap-workflows",
       "path": "workflows/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/workflows"
       ],
       "description": "The cat-bootstrap PROCESSES — `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace cat-bootstrap's skills with its workflows.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#directory/cat-harness-workflows"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#directory/cat-bootstrap-workflows"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-render",
@@ -1405,6 +1491,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ],
       "description": "The skills for RENDERING this instance's own graph as `.jsonld`/`.json` — `cat-bootstrap-graph-emission` (what the document contains and the four properties it holds) and `cat-bootstrap-graph-publication` (where it lands, why its `@id` must equal that path, and why it is no longer committed). A SEPARATE id from `cat-harness`, which `skills/` already holds: overrides match on id, so reusing it would replace cat-bootstrap's skills with these. SEPARATE from `skills/` as a package too, because the two answer different questions — `skills/` is about READING a graph cold and about the initialization flow, this is about cat-bootstrap EMITTING its own. Until this directory existed the emission discipline lived in a code comment in `kg-export.ts` and a YAML comment in `docs-site.yml`, which is why it was rediscovered rather than read. Bean `hfkl`.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-bootstrap.jsonld#directory/cat-bootstrap-render",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#directory/cat-bootstrap-render"
     },
     {
@@ -1430,8 +1517,8 @@
   ],
   "staging": {
     "branch": "claude/amazing-ptolemy-2ceyvg",
-    "sha": "adda15fc0cbf54cc00dcbb4fdc20894ea92a3ff0",
+    "sha": "151be76ba89af4b39a93f2ec6dc500f0b0160664",
     "pr": "771/merge",
-    "run": "35645855377"
+    "run": "35647098017"
   }
 }
