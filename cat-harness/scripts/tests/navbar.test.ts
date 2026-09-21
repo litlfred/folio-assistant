@@ -24,14 +24,21 @@ import {
   type NavbarModel,
 } from "../lib/navbar.js";
 import { injectRail, railModel } from "../lib/harness-rail.js";
-import { toRootFor, visualiserHref } from "../mount-instance-docs.js";
+import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
 const model: NavbarModel = {
   instance: "who-iris",
-  graphs: [
-    { href: "../who-iris/", label: "who-iris", icon: "◆", current: true },
-    { href: "../docs/who-iris/", label: "docs", icon: "D" },
-  ],
+  root: { href: "../who-iris/", label: "who-iris", icon: "◆", current: true },
+  graphs: {
+    label: "Graphs",
+    items: [
+      { href: "../docs/who-iris/", label: "docs", icon: "D" },
+      // Declared with no published viewer — a GAP, drawn as a non-link.
+      { label: "catalogue", icon: "C" },
+    ],
+    collapsible: true,
+    open: true,
+  },
   harnesses: {
     label: "Harnesses",
     items: [
@@ -99,6 +106,35 @@ describe("three regions, and only the middle one scrolls", () => {
     expect(bottom).toContain("Harnesses");
     expect(bottom).toContain("folio-assistant");
     expect(region(html, "fa-nav-graphs")).not.toContain("Harnesses");
+  });
+
+  it("the instance's ROOT is in the fixed top, not inside the graphs group", () => {
+    // A group labelled "Graphs" containing the instance itself is a label that
+    // does not tell the truth — and the root is the one destination that must
+    // stay reachable when the graphs are folded away, since the `☰` beside it
+    // is a toggle rather than a link.
+    const html = navbarHtml(model);
+    expect(region(html, "fa-nav-top")).toContain('aria-current="page"');
+    expect(region(html, "fa-nav-graphs")).not.toContain("../who-iris/");
+  });
+
+  it("the graphs FOLD IN ONE CLICK, and arrive open", () => {
+    // Owner: "librarues should be in hambuger menu so can collase all". Open
+    // by default, because a navbar whose content arrives folded looks empty.
+    const html = navbarHtml(model);
+    expect(region(html, "fa-nav-graphs")).toContain('<details class="fa-nav-group" open>');
+  });
+
+  it("a declared graph with NO viewer is listed, as a non-link", () => {
+    // "there shuold be all the harness controlled dirs/graphs". Omitting the
+    // unpublished ones answers "what is in this KG" with a shorter and wronger
+    // list than the declaration gives. `harness-tiles` words it exactly right:
+    // declared and not rendered is a GAP, not a dead link — and `pb04` is why
+    // it must not be drawn as a link.
+    const graphs = region(navbarHtml(model), "fa-nav-graphs");
+    expect(graphs).toContain("catalogue");
+    expect(graphs).toContain('<span class="fa-nav-dead">');
+    expect(graphs).not.toContain('href="undefined"');
   });
 
   it("home is LAST in the bottom — the owner asked for it there by name", () => {
@@ -206,12 +242,13 @@ describe("the document index sits in the FIXED top", () => {
 });
 
 describe("the rail is an adapter, not a second navbar", () => {
-  const opts = { instance: "who-iris", toRoot: "..", links: model.graphs };
+  const opts = { instance: "who-iris", toRoot: "..", links: model.graphs.items };
 
   it("builds a model rather than markup", () => {
     const m = railModel(opts);
     expect(m.instance).toBe("who-iris");
-    expect(m.graphs).toEqual(model.graphs);
+    expect(m.graphs.items).toEqual(model.graphs.items);
+    expect(m.graphs.collapsible).toBe(true);
     expect(m.home?.href).toBe("../");
   });
 
@@ -284,5 +321,48 @@ describe("where a kind's navbar link actually goes", () => {
 
   it("REFUSES a visualiser outside the published tree rather than composing a URL", () => {
     expect(visualiserHref("who-iris/library/index.html", "cat-harness/docs")).toBeUndefined();
+  });
+});
+
+describe("every declared graph reaches the navbar, linked or not", () => {
+  // The owner's report: "there shuold be all the harness controlled
+  // dirs/graphs". The navbar listed two of who-iris's six.
+  //
+  // THIS IS BOUND TO `declaredGraphs`, not to a hand-built model. The
+  // renderer's handling of a non-link is tested above against a fixture, and
+  // that fixture went on passing while the PRODUCER emitted only the mounted
+  // kinds — the regression was visible only by building a site. A test that
+  // cannot see the producer cannot see this defect.
+  const kinds = (linked: Record<string, string> = {}) =>
+    declaredGraphs("who-iris", new Map(Object.entries(linked))).map((i) => i.label);
+
+  it("lists every kind the instance declares, not only the published ones", () => {
+    // Six declared: library, catalogue, uploads, skills, themes, docs.
+    expect(kinds()).toEqual(["catalogue", "docs", "library", "skills", "themes", "uploads"]);
+  });
+
+  it("links exactly the kinds it was told are published", () => {
+    const got = declaredGraphs("who-iris", new Map([["docs", "../docs/who-iris/"]]));
+    expect(got.find((i) => i.label === "docs")?.href).toBe("../docs/who-iris/");
+    // ...and everything else carries no href, which the renderer draws as a
+    // non-link. `harness-tiles`: declared and not rendered is a GAP.
+    expect(got.filter((i) => i.href === undefined).map((i) => i.label)).toEqual([
+      "catalogue",
+      "library",
+      "skills",
+      "themes",
+      "uploads",
+    ]);
+  });
+
+  it("is sorted, so the order is a function of the declaration", () => {
+    expect(kinds()).toEqual([...kinds()].sort());
+  });
+
+  it("returns EMPTY for an instance that declares nothing readable", () => {
+    // Not a throw and not a guess. An unparseable declaration is
+    // `kg:schema:check`'s finding, not this script's; here it is an empty
+    // middle, and the caller still renders the root and the harnesses.
+    expect(declaredGraphs("does-not-exist", new Map())).toEqual([]);
   });
 });

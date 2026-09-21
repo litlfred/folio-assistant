@@ -306,6 +306,55 @@ export function visualiserHref(visualiser: string, docsPrefix: string): string |
 }
 
 /**
+ * EVERY graph this instance declares — the navbar's scrollable middle.
+ *
+ * Owner, 2026-09-21: *"there shuold be all the harness controlled dirs/graphs"*.
+ *
+ * The navbar used to list only the MOUNTED kinds — the ones whose directory
+ * carries an `index.html`. For who-iris that is two of six: `library` and
+ * `docs` are published, while `catalogue`, `uploads`, `skills` and `themes`
+ * are declared and have no viewer. Listing two answered *"what is in this
+ * KG"* with a shorter and wronger list than the declaration gives.
+ *
+ * So all six appear, and the four without a viewer appear WITHOUT AN HREF.
+ * `harness-tiles` already words the distinction exactly right — *"declared and
+ * not rendered is a GAP, not a dead link"* — and `pb04` is why the gap must
+ * not be drawn as a link: a dead link invites a click and then reads as "this
+ * site is broken", which is a worse answer than "nothing renders this yet".
+ *
+ * Deduped on the KIND rather than the directory. Two entries may declare the
+ * same kind (an override and its default), and a navbar that listed `library`
+ * twice would be reporting the declaration's shape rather than the graph's.
+ *
+ * @param linked  href per kind for the kinds that ARE published, already
+ *   relative to the page being rendered.
+ */
+export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<string, string>): NavItem[] {
+  const decl = declarationPathIn(join(REPO, instanceDirName));
+  if (decl === undefined || !existsSync(decl)) return [];
+  let d: { directories?: { graphKinds?: string[] }[] };
+  try {
+    d = JSON.parse(readFileSync(decl, "utf-8"));
+  } catch {
+    // Not this script's finding — `kg:schema:check` owns an unparseable
+    // declaration. Here it is an empty middle, and the caller still renders
+    // the instance root and the harnesses.
+    return [];
+  }
+  const seen = new Set<string>();
+  const out: NavItem[] = [];
+  for (const entry of d.directories ?? []) {
+    for (const kind of entry.graphKinds ?? []) {
+      if (seen.has(kind)) continue;
+      seen.add(kind);
+      const href = linked.get(kind);
+      out.push({ label: kind, icon: kind.slice(0, 1).toUpperCase(), ...(href ? { href } : {}) });
+    }
+  }
+  return out.sort((a, b) => a.label.localeCompare(b.label));
+}
+
+/**
  * The INSTANTIATED harnesses, for the navbar's fixed bottom.
  *
  * Owner, 2026-09-21: *"keep the navba rmenu/tab of the active/instantiated
@@ -443,23 +492,34 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
       // Every route this instance answers at, so the rail can move between
       // them -- the owner's "with who-iris and then link to docs on side in
       // navbar". Rebuilt per file because `toRoot` is per file.
-      const links: NavItem[] = (byInstance.get(m.name) ?? []).map((o) => {
+      // The instance's own themed root, first — it is the instance rather
+      // than one of its graphs, so it is not inside the graphs group.
+      const own = (byInstance.get(m.name) ?? []).filter((o) => o.route === o.name);
+      const root: NavItem[] = own.map((o) => ({
+        href: `${toRoot}/${o.route}/`,
+        label: o.name,
+        icon: "◆",
+        current: o.route === m.route,
+      }));
+
+      // Which KINDS are actually published, and where. Built from the mount
+      // table, so a kind gains a link the moment it gains a viewer and loses
+      // one the moment it does not — never from a list here.
+      const linked = new Map<string, string>();
+      for (const o of byInstance.get(m.name) ?? []) {
+        if (o.route === o.name) continue;
         const visual = target.get(o.route);
-        return {
-          href: `${toRoot}/${visual ?? `${o.route}/`}`,
-          label: o.route === o.name ? o.name : o.kind,
-          icon: o.route === o.name ? "◆" : o.kind.slice(0, 1).toUpperCase(),
-          // A link that goes somewhere OTHER than this mount is never the
-          // current page, whatever route the page was copied to.
-          current: visual === undefined && o.route === m.route,
-        };
-      });
+        linked.set(o.kind, `${toRoot}/${visual ?? `${o.route}/`}`);
+      }
+
+      const links: NavItem[] = declaredGraphs(m.name, linked);
 
       const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");
       const after = injectRail(before, {
         instance: m.name,
         toRoot,
+        ...(root[0] ? { root: root[0] } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
       });

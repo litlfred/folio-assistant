@@ -90,6 +90,16 @@ export interface NavbarModel {
   /** The instance this navbar belongs to, shown in the fixed top. */
   instance: string;
   /**
+   * The instance's own themed root — its front door, in the fixed top.
+   *
+   * NOT inside the graphs group: a group labelled "Graphs" that contains the
+   * instance itself is a label that does not tell the truth, and the root is
+   * the one destination that should stay reachable when the graphs are folded
+   * away. The `☰` header beside it is a TOGGLE, not a link, so this is the
+   * only way to the instance's front page from a page beneath it.
+   */
+  root?: NavItem;
+  /**
    * The open document's index, when a document is open.
    *
    * *"when a document or other indexed object is opened, the document
@@ -100,8 +110,21 @@ export interface NavbarModel {
    * than empty — an empty disclosure invites a click that does nothing.
    */
   documentIndex?: NavGroup;
-  /** The KG's own graphs. The scrollable middle. */
-  graphs: readonly NavItem[];
+  /**
+   * The KG's own graphs — the scrollable middle, as ONE collapsible group.
+   *
+   * Owner, 2026-09-21: *"librarues should be in hambuger menu so can collase
+   * all"*. A group rather than a bare list, so the whole stack folds in one
+   * click; `open: true` so the default is to show it, because a navbar whose
+   * content arrives folded is a navbar that looks empty.
+   *
+   * *"there shuold be all the harness controlled dirs/graphs"* — EVERY
+   * declared graph, not only the ones with a viewer. A graph with no published
+   * viewer appears with no href, which `harness-tiles` already words exactly
+   * right: **declared and not rendered is a gap, not a dead link.** Omitting it
+   * would answer "what is in this KG" with a shorter and wronger list.
+   */
+  graphs: NavGroup;
   /** The instantiated harnesses. The expandable group in the fixed bottom. */
   harnesses?: NavGroup;
   /** Home, last in the fixed bottom. `"keep home at bottom for who iris."` */
@@ -249,9 +272,10 @@ export function navbarHtml(m: NavbarModel): string {
     `<label class="fa-nav-head" for="fa-nav-open" title="Open navigation">` +
     `<span class="fa-nav-glyph" aria-hidden="true">&#9776;</span>` +
     `<span class="fa-nav-name fa-nav-label">${esc(m.instance)}</span></label>` +
+    (m.root ? itemHtml(m.root) : "") +
     (m.documentIndex ? groupHtml(m.documentIndex) : "") +
     `</div>` +
-    `<div class="fa-nav-graphs">${m.graphs.map(itemHtml).join("")}</div>` +
+    `<div class="fa-nav-graphs">${groupHtml(m.graphs)}</div>` +
     `<div class="fa-nav-bottom">` +
     (m.harnesses ? groupHtml(m.harnesses) : "") +
     (m.home ? itemHtml(m.home) : "") +

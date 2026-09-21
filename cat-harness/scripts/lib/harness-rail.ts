@@ -52,6 +52,8 @@ export interface RailOptions {
   instance: string;
   /** Path back to the site root from this page — `..`, `../..`, … */
   toRoot: string;
+  /** The instance's own themed root, for the fixed top — never inside the graphs group. */
+  root?: NavItem;
   /** This instance's own graphs — the scrollable middle. */
   links: readonly NavItem[];
   /**
@@ -80,7 +82,11 @@ export function railModel(o: RailOptions): NavbarModel {
       : { label: "Harnesses", icon: "\u25A6", items: o.harnesses, collapsible: true };
   return {
     instance: o.instance,
-    graphs: o.links,
+    ...(o.root ? { root: o.root } : {}),
+    // Collapsible so the whole stack folds in one click -- the owner's
+    // "librarues should be in hambuger menu so can collase all" -- and OPEN
+    // by default, because a navbar whose content arrives folded looks empty.
+    graphs: { label: "Graphs", icon: "\u25A4", items: o.links, collapsible: true, open: true },
     ...(harnesses ? { harnesses } : {}),
     home: { href: `${o.toRoot}/`, label: "folio-assistant", icon: "\u2302" },
   };
