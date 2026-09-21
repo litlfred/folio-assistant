@@ -18,9 +18,11 @@
 import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
-import { execFileSync } from "child_process";
+import { execFileSync, spawnSync } from "child_process";
+import { createHash } from "crypto";
 
 import { OWNED, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
+import { pngSize } from "../gen-covers.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
@@ -200,27 +202,59 @@ describe("the IRIS home replica", () => {
     }
   });
 
+  /**
+   * Is the PDF backend here? Asked once, the way `gen-covers` asks it.
+   *
+   * The CI gate job installs `ruff` and nothing else. `gen-covers.ts` carries
+   * a paragraph about exactly this — `iris:covers:check` went into that job
+   * and "turned the branch red three times" — and the first version of the
+   * test below was written anyway, in the same session that read it. It went
+   * red on the first CI run for precisely the documented reason.
+   */
+  const pdfBackend = spawnSync("python3", ["-c", "import pymupdf"]).status === 0;
+
   it("the emblem is absent from the BYTES, not merely undisplayed", () => {
     // The display flag is not the guarantee. `pdf-cover.py` blanks the region
     // before it computes the digests, so the committed PNG cannot carry the
-    // emblem whatever any page decides to do with it -- and this asserts the
-    // rectangle really is flat fill in the file rather than trusting that the
-    // renderer was asked nicely.
+    // emblem whatever a page decides to do with it.
     //
-    // MASK_FILL, spelled here rather than imported: this test's job is to be
+    // WITHOUT THE BACKEND this degrades to *slightly less* and says so, rather
+    // than to could-not-determine — `verifyWithoutRender`'s rule, and the
+    // reason it exists: a check reporting `unknown` on every CI run is a check
+    // nobody reads. Two of the three claims need no decoder at all.
+    //
+    // MASK_FILL is spelled here rather than imported: this test's job is to be
     // an independent witness, and a constant shared with the thing it checks
     // agrees with it by construction.
-    const nodes = readdirSync(join(INSTANCE, "catalogue", "nodes")).filter((f) => f.endsWith(".json"));
-    let checked = 0;
-    for (const f of nodes) {
-      const n = JSON.parse(readFileSync(join(INSTANCE, "catalogue", "nodes", f), "utf-8"));
+    const nodeDir = join(INSTANCE, "catalogue", "nodes");
+    let pixelChecked = 0;
+    let declaredChecked = 0;
+
+    for (const f of readdirSync(nodeDir).filter((x) => x.endsWith(".json"))) {
+      const n = JSON.parse(readFileSync(join(nodeDir, f), "utf-8"));
       for (const b of n.bitstreams ?? []) {
         for (const r of b.maskedRegions ?? []) {
-          // Coordinates are ARGV, never interpolated into the program text.
-          // Building source in a template literal is how `57n3` happened --
-          // and a generated program is also one that cannot be run by hand to
-          // check what it did.
-          const png = execFileSync("python3", [
+          const abs = join(INSTANCE, b.materialization.localPath);
+
+          // (1) The bytes on disk are the ones the claim describes. No decoder.
+          const sha = createHash("sha256").update(readFileSync(abs)).digest("hex");
+          expect(sha, `${b.name}: committed bytes are not the declared ones`).toBe(
+            b.materialization.fixity.digest,
+          );
+
+          // (2) The rectangle fits the ACTUAL file, read from its IHDR — not
+          // from the declaration, which is the thing that could be stale. This
+          // is the "measured against a different rendering" defect, and it is
+          // checkable with no backend.
+          const size = pngSize(readFileSync(abs))!;
+          expect(size, `${b.name}: not a readable PNG`).toBeDefined();
+          expect(r.x1, `${b.name}: mask runs past the real width`).toBeLessThanOrEqual(size.w);
+          expect(r.y1, `${b.name}: mask runs past the real height`).toBeLessThanOrEqual(size.h);
+          declaredChecked++;
+
+          // (3) The pixels really are flat fill. Needs a decoder.
+          if (!pdfBackend) continue;
+          const out = execFileSync("python3", [
             "-c",
             [
               "import pymupdf,sys",
@@ -231,17 +265,25 @@ describe("the IRIS home replica", () => {
               "cols = {tuple(b[(y*W+x)*n:(y*W+x)*n+3]) for y in range(y0,y1) for x in range(x0,x1)}",
               "print(len(cols), sorted(cols)[0] if cols else ())",
             ].join("\n"),
-            join(INSTANCE, b.materialization.localPath),
-            String(r.x0), String(r.y0), String(r.x1), String(r.y1),
+            abs, String(r.x0), String(r.y0), String(r.x1), String(r.y1),
           ]).toString().trim();
-          expect(png, `${b.name} mask is not a single flat colour`).toMatch(/^1 /);
-          expect(png).toContain("128, 128, 128");
-          checked++;
+          expect(out, `${b.name}: mask is not a single flat colour`).toMatch(/^1 /);
+          expect(out).toContain("128, 128, 128");
+          pixelChecked++;
         }
       }
     }
-    // A sweep that found nothing must not report clean -- the `dh4f` shape.
-    expect(checked).toBeGreaterThan(0);
+
+    // A sweep that found nothing must not report clean — the `dh4f` shape.
+    expect(declaredChecked, "no masked region found to check").toBeGreaterThan(0);
+    if (!pdfBackend) {
+      console.log(
+        `    (no pymupdf: checked ${declaredChecked} declared region(s) against each file's own ` +
+          `IHDR and digest; the flat-fill pixel check was skipped)`,
+      );
+    } else {
+      expect(pixelChecked).toBe(declaredChecked);
+    }
   });
 
   it("states the upstream item count it was given, not a remembered one", () => {
