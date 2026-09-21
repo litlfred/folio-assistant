@@ -77,3 +77,24 @@ missed, and the test is the one to flip if the form appears.
   which the checker itself reported as no longer matching once `ivfw`'s
   checklist was ticked. Removed — that report exists so the file cannot
   quietly stop shrinking.
+
+
+## A neighbouring ruling, recorded here because it has no bean of its own
+
+Asked in the same round, 2026-09-21: the `staging-review` skill is **388 lines**
+against a skill-corpus p75 of **279**, and `skill-is-brief` was already failing
+at 289 before that change. Three options: leave it, trim ~110 lines of
+justification prose, or split the skill in two.
+
+**The owner chose: leave it at 388.**
+
+So the `major` finding in
+`test/results/kg-qa/skills/folio-core/staging-review.kg-qa.json` is **known and
+accepted**, not unnoticed. `kg:audit:check` does not gate on it; `kg:audit:strict`
+would, and that is the cost of the decision, stated rather than buried.
+
+The reasoning behind the recommendation, kept because the next agent will meet
+the same finding: the threshold is a percentile rather than a limit, and this
+repository's own experience is that a rule stripped of the measurement behind it
+drifts back. If brevity is wanted later, the cut is the justification prose —
+never the contract tables.
