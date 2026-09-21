@@ -261,7 +261,7 @@ export function harnessesWithDocs(repoRoot: string): { instance: string; dirs: s
     const decl = readDeclaration(inst);
     if (!decl) continue;
     const dirs = (decl.directories ?? [])
-      .filter((d) => (d.graphs ?? []).includes("docs"))
+      .filter((d) => (d.graphKinds ?? []).includes("docs"))
       .map((d) => relative(repoRoot, join(inst, d.path)).split("\\").join("/"));
     if (dirs.length > 0) out.push({ instance: decl.name ?? inst, dirs: [...new Set(dirs)].sort() });
   }

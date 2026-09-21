@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hw9g
 title: 'MOUNTED PAGES HAVE NO LHS RAIL: a collapsed icon-width harness nav for every mounted instance, opening on hover or click'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T18:40:00Z
-updated_at: 2026-09-21T21:10:00Z
+updated_at: 2026-09-21T20:02:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -193,4 +193,26 @@ so the replica chrome's one internal link is library-side only.
 Checked the way the rail's depth bug was checked — by resolving every local
 href against the BUILT tree, not by reading the code: **157 local hrefs across
 all three mounts, all resolve.**
+
+## Closed — merged, and verified ON MAIN rather than on the branch
+
+PR #785, merge commit `b34efee271`, 2026-09-21. `bun run gates` green (93 of
+93) on the merged tree; CI green on head `4ba42590d9`; docs-site run #393
+fired on the merge, which is the `tyyc` check — a merge that triggers no site
+build looks exactly like one that did.
+
+Checked by reading main, not the branch:
+
+| | on `origin/main` |
+|---|---|
+| `RAIL_COLLAPSED_PX = RAIL_PAD_PX * 2 + RAIL_GLYPH_PX` | present, `harness-rail.ts:94` |
+| `visualiserHref` | present in `mount-instance-docs.ts` |
+| `href="community-list.html"` in `who-iris/docs/index.html` | **0** occurrences |
+
+The rail itself is done. What this bean left open moved to **`2b5s`**, and it
+grew on the way: the owner asked *"where are duplicates?"*, and answering it
+showed that `/library/who-iris/` duplicating `/who-iris/` is the smaller half
+— 1,367 of those 1,378 files are L1 corpus sidecars being published as a
+website, once at `/who-iris/` before any duplication. The prior question is
+whether a mount copies a directory wholesale at all.
 

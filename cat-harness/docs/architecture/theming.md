@@ -113,6 +113,6 @@ would hide the photograph anyway.
 ## Related
 
 - [Harness instances](harness-instances.html) — the rendering obligation this
-  subgraph discharges, and cat-bootstrap's exemption from it
+  subgraph discharges, and bootstrap's exemption from it
 - Beans: `1hvo` (this split), `2krx` (the QA axis), `603s` (`avatarRegion`),
   `ivfw` (the theme surviving a pin), `5y4b` (themed todo stickies)

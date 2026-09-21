@@ -87,7 +87,7 @@ export interface SubgraphReport {
    *
    * Keyed on the declared graph kind rather than a new field, because
    * `isPublishedGraphKind` already answers exactly this question and the
-   * directory already declares `graphs: ["fsh-guts"]`. Same shape as the
+   * directory already declares `graphKinds: ["fsh-guts"]`. Same shape as the
    * `published: false` a skill now carries: the thing says what it is.
    */
   exempt: string[];
@@ -203,7 +203,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
     const abs = dir.absPath ?? join(root, dir.path);
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
     // Retired content is not held to link resolution — see `exempt`.
-    if (dir.graphs.length > 0 && dir.graphs.every((g) => !isPublishedGraphKind(g))) {
+    if (dir.graphKinds.length > 0 && dir.graphKinds.every((g) => !isPublishedGraphKind(g))) {
       exempt.push(`${dir.id} (${dir.path})`);
       continue;
     }
@@ -250,7 +250,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         }
         if (!existsSync(resolved)) {
           // A renderable graph addresses the PUBLISHED tree, not this one.
-          const renderable = owner.graphs.some((g) => isRenderable(g));
+          const renderable = owner.graphKinds.some((g) => isRenderable(g));
           (renderable ? siteResolved : dangling).push({
             from: relative(root, file),
             fromDir: owner.id,

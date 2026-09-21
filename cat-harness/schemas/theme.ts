@@ -47,7 +47,7 @@
  *
  * The owner, 2026-09-20: *"each harness hould have its own unique theme (by
  * convention)"*, and then the assignment itself: *"cat-harness=gumpy hoddie.
- * test=engineer. cat-bootstrap coming."*
+ * test=engineer. bootstrap coming."*
  *
  * That does not reopen what the section below closes, and the difference is
  * exact:
@@ -72,8 +72,8 @@
  * declared but whose crops are missing, which `resolveThemeBackdrop` refuses
  * wholesale.
  *
- * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `cat-bootstrap` (the
- * cowboy in the desert) is cat-bootstrap's, `library` is folio-assist-core's, and
+ * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `bootstrap` (the
+ * cowboy in the desert) is bootstrap's, `library` is folio-assist-core's, and
  * `engineer` is reserved for testing surfaces.
  *
  * ## Choosing a theme is an AUTHORING judgement — there is no mapping

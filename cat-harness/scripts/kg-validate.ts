@@ -48,7 +48,7 @@ export type Verdict =
 export function kindForPath(
   filePath: string,
   root: string,
-  dirs: { path: string; graphs: string[] }[],
+  dirs: { path: string; graphKinds: string[] }[],
 ): string | undefined {
   const rel = relative(root, resolve(filePath));
   if (rel.startsWith("..")) return undefined;
@@ -59,8 +59,8 @@ export function kindForPath(
       // A directory may declare several graphs; one is unambiguous, more is
       // not, and guessing which would be the lie of precision the
       // `cat-harness` kind's own doc comment warns about.
-      if (d.graphs.length === 1 && (!best || dir.length > best.len)) {
-        best = { len: dir.length, kind: d.graphs[0] };
+      if (d.graphKinds.length === 1 && (!best || dir.length > best.len)) {
+        best = { len: dir.length, kind: d.graphKinds[0] };
       }
     }
   }

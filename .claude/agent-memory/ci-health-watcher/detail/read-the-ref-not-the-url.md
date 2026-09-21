@@ -5,7 +5,7 @@
 
 - **Composed URL.** `docs/<stub>/proposals/x.md` publishes to
   `/proposals/x.html`. The stub segment is a source-tree convention Jekyll
-  does not carry into the site. Measured 2026-09-19 on `cat-bootstrap.md`.
+  does not carry into the site. Measured 2026-09-19 on `bootstrap.md`.
 - **Slug shape.** The branch name with `/` replaced by `-`.
 - **Proxy.** Outbound HTTPS is proxied; `curl` returns `000` with
   `CONNECT tunnel failed, response 403` whether or not the page exists.

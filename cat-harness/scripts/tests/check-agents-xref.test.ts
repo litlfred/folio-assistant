@@ -132,7 +132,7 @@ describe("unresolved", () => {
     // The file is mentioned in 54 places and cited with a section in 20. Only
     // the latter can break when a section moves.
     const found = auditXrefs(
-      repo("## Real\n", { "s.md": "AGENTS.md is the cat-bootstrap pointer. Read it.\n" }),
+      repo("## Real\n", { "s.md": "AGENTS.md is the bootstrap pointer. Read it.\n" }),
       SKILL_ROOTS,
     );
     expect(found).toEqual([]);

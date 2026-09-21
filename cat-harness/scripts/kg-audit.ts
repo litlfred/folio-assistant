@@ -922,7 +922,7 @@ function auditRequirements(
  *    layout moves, which it did on 2026-09-20.
  * 2. **A manifest AT a declared directory was invisible**, because the walk only
  *    looked inside subdirectories. `gen-skill-docs` already documents that two
- *    declared directories — `cat-bootstrap` and `cat-harness-src` — "hold their
+ *    declared directories — `bootstrap` and `cat-harness-src` — "hold their
  *    skills DIRECTLY rather than in package subdirectories". So a manifest for
  *    those could not be found however correctly it was written, which is why
  *    `confirm-harness` reported as listed by no package manifest while being
@@ -945,7 +945,7 @@ function manifestPackages(): { pkg: string; skill: string }[] {
     }
   };
   for (const d of kgDirectories(root)) {
-    // A manifest at the declared directory itself: the shape `cat-bootstrap` and
+    // A manifest at the declared directory itself: the shape `bootstrap` and
     // `cat-harness-src` use.
     read(join(d.absPath, "package-manifest.json"), d.id);
     if (!existsSync(d.absPath)) continue;
@@ -1008,8 +1008,8 @@ function manifestEntries(): { pkg: string; skill: string }[] {
  *
  * Reading them would be the defect. `instance-graph-isolation.test.ts` guards a
  * leak that was LIVE on 2026-09-19: a filesystem walk discovered
- * `cat-bootstrap/workflows/` from the repository root and put 88 references to a
- * cat-bootstrap process into folio-assistant's published graph. One instance's graph
+ * `bootstrap/workflows/` from the repository root and put 88 references to a
+ * bootstrap process into folio-assistant's published graph. One instance's graph
  * must not carry another's nodes, and this audit is right not to.
  *
  * What was wrong is that nothing said so. The silence was read as a blind spot on
@@ -1073,12 +1073,12 @@ function unreadNestedInstances(): KgFinding[] {
  * A finding that says a skill is "named by no activity" is true OF THE GRAPH IT
  * RANGED OVER and says nothing about any other. Worded absolutely it reads as a
  * fact about the repository, and on 2026-09-20 a session read it that way:
- * `confirm-harness` is named three times by `cat-bootstrap/workflows/`, which this
+ * `confirm-harness` is named three times by `bootstrap/workflows/`, which this
  * audit does not read, so the absolute wording looked like a blind spot. The
  * session "fixed" it by declaring that directory at the root and re-introduced a
  * defect `instance-graph-isolation.test.ts` had been written the day before to
  * prevent — one instance's graph carrying another's nodes, which had put 88
- * references to a cat-bootstrap process into folio-assistant's published graph.
+ * references to a bootstrap process into folio-assistant's published graph.
  *
  * The isolation is correct and the scoping is correct. **Only the sentence was
  * wrong**, and it cost a change a test had to stop. Bean `sa8y`.
@@ -1088,7 +1088,7 @@ function graphScope(): string {
   // knowledge-graph directories, which is exactly the set this audit walks.
   //
   // The DECLARED path string, not a computed relative one. Computing it against
-  // this script's root printed `../cat-bootstrap/skills` once the tree moved into
+  // this script's root printed `../bootstrap/skills` once the tree moved into
   // `cat-harness/`, which is accurate and reads like a bug — and it is the
   // declaration that a reader would go and edit. "Resolve, do not compose",
   // applied to a diagnostic rather than to a link.
@@ -1337,7 +1337,7 @@ function sidecarPath(r: KgQaReport): string {
   // live under several packages, so one directory per kind would collide two
   // packages' same-named skills into one sidecar. Processes have exactly that
   // shape the moment an instance declares more than one knowledge-graph
-  // directory — `cat-bootstrap/workflows/` and `crdm/workflows/` can each hold a
+  // directory — `bootstrap/workflows/` and `crdm/workflows/` can each hold a
   // `review.bpmn`, and a kind-keyed table sends both to one file, so one
   // silently overwrites the other's findings.
   //
@@ -1526,8 +1526,8 @@ for (const r of reports) {
 // structurally invisible: nothing regenerates it, nothing prunes it, and
 // `--check` compares it against nothing.
 //
-// Measured, bean `3jj9`: `cat-bootstrap/workflows/cat-bootstrap.kg-qa.json` sat in
-// the tree auditing `cat-bootstrap/workflows/cat-bootstrap.bpmn`, a path that does
+// Measured, bean `3jj9`: `bootstrap/workflows/bootstrap.kg-qa.json` sat in
+// the tree auditing `bootstrap/workflows/bootstrap.bpmn`, a path that does
 // not exist — the process had been renamed to `initialize-harness.bpmn`.
 // It reported `lane-binds-role: pass` over a file nobody had, while the live
 // diagram had no sidecar at all, and `kg:audit:check` exited 0 across both.
@@ -1536,7 +1536,7 @@ for (const r of reports) {
 //
 // REPORTED, NEVER DELETED. An orphan can also mean the subject is
 // temporarily unreachable — here the real cause is bean `pve3`, the root
-// declaring `cat-bootstrap/skills/` but not `cat-bootstrap/workflows/`, so the
+// declaring `bootstrap/skills/` but not `bootstrap/workflows/`, so the
 // process is simply not discovered from this root. Deleting on that
 // evidence would destroy a verdict to hide a declaration gap.
 // `deletion-requires-confirmation` — the agent reports, a person decides.

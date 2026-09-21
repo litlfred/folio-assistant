@@ -45,7 +45,7 @@ sticky above the instance's own.
 
 ## Measured, so the bootstrap half is not started blind
 
-- `cat-bootstrap/harness.json` declares `name: "bootstrap"`, `description: "The
+- `bootstrap/harness.json` declares `name: "bootstrap"`, `description: "The
   graph an agent reads before it knows what this repository is."` and two
   assets (`AGENTS.md`, `README.md`). It declares **no `images[]`** and no
   `canonicalUrl`, so a bootstrap sticky has a description to carry but **no art
@@ -76,7 +76,7 @@ _2026-09-20_ — **DONE.** The board is composed from declared contributions.
 ## Against the `## Done when` above
 
 - [x] **a sticky is a CONTRIBUTION from a layer** — `stickies` on
-      `CatHarnessDeclarationSchema`; `cat-bootstrap/harness.json` contributes its
+      `CatHarnessDeclarationSchema`; `bootstrap/harness.json` contributes its
       own card and `cat-harness/harness.json` the other three.
 - [x] **order is declared** — `order` on a shared scale, tie-broken on
       `(order, declaredBy, id)` so the board never depends on read order.
@@ -112,7 +112,7 @@ sub-graphs paragraph were living in `schemas/`.
 Worth recording because none of them threw:
 
 1. **Discovery ignored `scope` and looked for `harness.json` INSIDE the declared
-   directory.** `bootstrap` is declared `cat-bootstrap/skills/` with **repository**
+   directory.** `bootstrap` is declared `bootstrap/skills/` with **repository**
    scope, so both halves were wrong — the board composed **three** cards instead
    of four, silently. `rootForScope` and `findInstanceRoot` already knew; the
    composer now uses them rather than reimplementing either.

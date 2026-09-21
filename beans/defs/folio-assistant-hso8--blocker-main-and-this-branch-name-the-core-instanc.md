@@ -26,8 +26,8 @@ is a decision about somebody else's work.
 | the other name appears | — | **nowhere** |
 
 The bootstrap layer diverged the same way and in the same direction:
-`bootstrap/` here, `cat-bootstrap/` on main, with `CAT_BOOTSTRAP_NS` and a
-`cat-bootstrap` theme id to match. Main is consolidating on a `cat-` prefix
+`bootstrap/` here, `bootstrap/` on main, with `CAT_BOOTSTRAP_NS` and a
+`bootstrap` theme id to match. Main is consolidating on a `cat-` prefix
 for harness-layer instances.
 
 ## Why an agent should not pick
@@ -68,7 +68,7 @@ the populated one were one key, and the stub won."*
 - [ ] Whichever loses is renamed in one commit that moves the directory AND
       the namespace constant together — `CORE_NS` is published, so a rename
       that lands in two commits publishes a broken IRI in between.
-- [ ] `bootstrap` vs `cat-bootstrap` is settled in the same breath; it is the
+- [ ] `bootstrap` vs `bootstrap` is settled in the same breath; it is the
       same question about the same layer and splitting it guarantees a third
       round.
 - [ ] `instanceRootsIn` and the two committed instance lists
@@ -191,7 +191,7 @@ this that would still be a defect.
 ### What is genuinely still open, and it is not a blocker
 
 The second done-when asks whether the `cat-` prefix extends to the core
-instance. Today `cat-harness` and `cat-bootstrap` carry it and
+instance. Today `cat-harness` and `bootstrap` carry it and
 `folio-assistant-core` does not. That is a naming question with nothing
 waiting on it, so it belongs in whatever bean owns the prefix convention
 rather than in a blocker. **Not swept, not assumed either way** — the last
@@ -221,7 +221,7 @@ carries. **A key nobody can reach is worse than a missing one**:
 it — which is also why the closing sweep did not see it.
 
 The comment beside the entry had gone stale the same way (*"the split has not
-happened, so `cat-bootstrap` and `folio-assist-core` exist … as nothing in
+happened, so `bootstrap` and `folio-assist-core` exist … as nothing in
 `harness.json`"* — both files exist and both declare a `name`), and the test
 asserting it repeated the claim verbatim. One stale premise, load-bearing in
 three places.
@@ -259,7 +259,7 @@ instances on main:
 
 | carries `cat-` | does not |
 |---|---|
-| `cat-bootstrap`, `cat-bootstrap-tools`, `cat-harness` | `agent-skills`, `detangle`, `folio-assistant`, `folio-assistant-core`, `folio-assistant-sci`, `kg-navigation`, `large-datasets`, `smart-trust`, `who-iris`, `who-style-guide` |
+| `bootstrap`, `bootstrap-tools`, `cat-harness` | `agent-skills`, `detangle`, `folio-assistant`, `folio-assistant-core`, `folio-assistant-sci`, `kg-navigation`, `large-datasets`, `smart-trust`, `who-iris`, `who-style-guide` |
 
 Three carry it and all three are the harness layer; ten do not, and none of
 them is. There is nothing to rename and nothing to decide.

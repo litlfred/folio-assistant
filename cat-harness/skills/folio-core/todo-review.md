@@ -177,7 +177,7 @@ badge on any feedback item).
 ## Seeding Feedback
 
 When `feedback/` is empty or doesn't exist for a paper, the skill can
-cat-bootstrap an initial set by scanning for issues:
+bootstrap an initial set by scanning for issues:
 
 | Source | How to scan | Priority |
 |--------|-------------|----------|

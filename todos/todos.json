@@ -7,7 +7,7 @@
     {
       "id": "items",
       "path": "items",
-      "graphs": [
+      "graphKinds": [
         "todo-items"
       ],
       "description": "One Markdown file per todo, carrying `$schema: folio-todo/v1` in its front matter. Tagged against the knowledge graph — roles, processes, tasks, identities, references and artefacts — so \"what is outstanding here\" is answerable from any node."
@@ -15,7 +15,7 @@
     {
       "id": "feedback",
       "path": "feedback",
-      "graphs": [
+      "graphKinds": [
         "todo-feedback"
       ],
       "description": "Todos raised against a specific block, carrying the submitter's identity. The content-review feedback workflow the `todo-review` skill reads."
@@ -23,7 +23,7 @@
     {
       "id": "boards",
       "path": "boards",
-      "graphs": [
+      "graphKinds": [
         "boards"
       ],
       "description": "One file per board, carrying `$schema: folio-board/v1`. A board is a DIAGRAM OF this folio, not a container of one — it declares what it shows (absent filter means the whole folio) and nothing else. Owner, 2026-09-20: \"treat it like OMG specs and BPMN layout. relationship first, visualiztion alter.\" So this is the semantic half; `positions` beside it is the Diagram Interchange. A folio with no boards is complete, and deleting every board loses layout and no content."
@@ -31,7 +31,7 @@
     {
       "id": "positions",
       "path": "boards",
-      "graphs": [
+      "graphKinds": [
         "board-positions"
       ],
       "description": "`board-positions.json`, the layout layer: keyed by board id then by note id, in board units. It lives BESIDE the boards it lays out and points one way — folio -> board -> position -> note — so a note carries no x, y, board or position, which `schemas/board-positions.test.ts` asserts against the source of four note schemas. `state` rather than `content` because a running process writes it every time somebody moves a note; the boards it refers to are `content`."

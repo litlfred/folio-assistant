@@ -64,7 +64,7 @@ function scratchStore(): string {
 }
 
 /** Write a bean graph under `root/beans/`. */
-function writeGraph(root: string, directories: Array<{ id: string; path: string; graphs: string[] }>): void {
+function writeGraph(root: string, directories: Array<{ id: string; path: string; graphKinds: string[] }>): void {
   mkdirSync(join(root, "beans"), { recursive: true });
   writeFileSync(
     join(root, "beans", "beans.json"),
@@ -97,7 +97,7 @@ describe("the two stores are visible and agreed upon", () => {
     const root = scratchStore();
     try {
       // The folio declares one path; the CLI is pointed at another.
-      writeGraph(root, [{ id: "defs", path: "defs", graphs: ["bean-defs"] }]);
+      writeGraph(root, [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }]);
       writeFileSync(join(root, ".beans.yml"), "beans:\n    path: somewhere-else\n");
       const r = checkHarnessDirs(root);
       expect(r.problems.some((p) => p.includes("Work-plan path disagrees"))).toBe(true);
@@ -111,7 +111,7 @@ describe("the two stores are visible and agreed upon", () => {
     try {
       // `beans/.defs` — visible root, hidden node. A path cannot escape the
       // graph root, so this is the shape the guard has to catch.
-      writeGraph(root, [{ id: "defs", path: ".defs", graphs: ["bean-defs"] }]);
+      writeGraph(root, [{ id: "defs", path: ".defs", graphKinds: ["bean-defs"] }]);
       writeFileSync(join(root, ".beans.yml"), "beans:\n    path: beans/.defs\n");
       mkdirSync(join(root, "beans", ".defs"), { recursive: true });
       const r = checkHarnessDirs(root);
@@ -301,8 +301,8 @@ describe("the config name — `<instance>.config.json`, and only that", () => {
     const root = scratchStore();
     try {
       writeGraph(root, [
-        { id: "defs", path: "defs", graphs: ["bean-defs"] },
-        { id: "workflows", path: "workflows", graphs: ["workflow-state"] },
+        { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
+        { id: "workflows", path: "workflows", graphKinds: ["workflow-state"] },
       ]);
       writeInstanceConfig(root, JSON.stringify({ harness: { workPlan: "ignored", workflowState: "also-ignored" } }),
       );

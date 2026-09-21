@@ -3,16 +3,16 @@
  *
  * @module scripts/tests/kg-export-instance.test
  *
- * Bean `gn4l`. These assertions run against **cat-bootstrap**, a real instance in
+ * Bean `gn4l`. These assertions run against **bootstrap**, a real instance in
  * this repository that has a declaration, two skills, no `tools/`, no
  * `package.json` and no `.claude/` — which is exactly the shape the exporter
  * was never written for.
  *
- * It had no BPMN too, until this branch gave it `workflows/cat-bootstrap.bpmn`.
+ * It had no BPMN too, until this branch gave it `workflows/bootstrap.bpmn`.
  * Anything asserting on an absence here is asserting on a property of a
  * REAL instance that is still being built, so it belongs in a fixture — see
- * the workflow-directory test below, which was written against cat-bootstrap and
- * broke the day cat-bootstrap grew the feature.
+ * the workflow-directory test below, which was written against bootstrap and
+ * broke the day bootstrap grew the feature.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -37,26 +37,26 @@ const typesOf = (nodes: Array<Record<string, unknown>>): Map<string, number> => 
 };
 
 describe("a minimal instance exports through the same code path", () => {
-  test("cat-bootstrap contributes its declared skills", async () => {
+  test("bootstrap contributes its declared skills", async () => {
     // The whole point: `kg-export` could not see these at all before, because
     // it walked THIS repository regardless of what it was asked about.
     const problems: string[] = [];
-    const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "cat-bootstrap"), DOC, BASE, problems);
+    const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "bootstrap"), DOC, BASE, problems);
     expect(typesOf(nodes).get("Skill")).toBeGreaterThan(0);
   });
 
   test("and its declaration, without borrowing this repository's", async () => {
     const problems: string[] = [];
-    const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "cat-bootstrap"), DOC, BASE, problems);
+    const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "bootstrap"), DOC, BASE, problems);
     const dirs = typesOf(nodes).get("Directory") ?? 0;
     const rootDirs = typesOf(
       (await collectInstanceNodes(ROOT, DOC, BASE, [])).nodes,
     ).get("Directory")!;
     // Strictly fewer than the root's, and NOT a pinned number.
     //
-    // This asserted `toBe(1)` until 2026-09-19 and broke the moment cat-bootstrap
+    // This asserted `toBe(1)` until 2026-09-19 and broke the moment bootstrap
     // declared a second directory for its `workflows/`. One was an incidental
-    // fact about cat-bootstrap that day; the PROPERTY is that cat-bootstrap's
+    // fact about bootstrap that day; the PROPERTY is that bootstrap's
     // declaration is its own and smaller. A pinned count makes "the isolation
     // holds" and "somebody changed a declaration" indistinguishable — the
     // mistake this repository has paid for with coverage counts more than once.
@@ -81,7 +81,7 @@ describe("what was not looked for is not reported as clean", () => {
   test("instance-bound collectors are named as omitted, not silently skipped", async () => {
     // "This instance has no tools" and "tools were never looked for" are
     // different facts. Collapsing them is the `dh4f` defect.
-    const { omitted } = await collectInstanceNodes(join(repoRootFor(ROOT), "cat-bootstrap"), DOC, BASE, []);
+    const { omitted } = await collectInstanceNodes(join(repoRootFor(ROOT), "bootstrap"), DOC, BASE, []);
     expect([...omitted].sort()).toEqual(["packages", "registry", "schemas", "tools"]);
   });
 
@@ -89,10 +89,10 @@ describe("what was not looked for is not reported as clean", () => {
     // It threw ENOENT while this was being written: a directory found under
     // one root and joined against another.
     //
-    // Built as a FIXTURE rather than asserted against `cat-bootstrap/`, which is
+    // Built as a FIXTURE rather than asserted against `bootstrap/`, which is
     // what it named until 2026-09-19. CatBootstrap had no `workflows/` then, so
     // the test passed on a property nobody had chosen — and the moment this
-    // branch gave cat-bootstrap its process diagram, a test about ENOENT handling
+    // branch gave bootstrap its process diagram, a test about ENOENT handling
     // started failing because its SUBJECT had grown a feature. The behaviour
     // under test never changed.
     //
@@ -106,7 +106,7 @@ describe("what was not looked for is not reported as clean", () => {
     writeFileSync(join(root, "skills", "a-skill.md"), "# A skill\n\nBody.\n");
     writeDeclaration(root, JSON.stringify({
         name: "noflows",
-        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     const { notes } = await collectInstanceNodes(root, DOC, BASE, problems);
@@ -156,7 +156,7 @@ describe("what was not looked for is not reported as clean", () => {
     const root = mkdtempSync(join(tmpdir(), "kgx-absent-"));
     writeDeclaration(root, JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, BASE, problems);
