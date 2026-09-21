@@ -240,24 +240,24 @@ export function incompatibleCompanions(def: {
  * See `skills/folio-core/untainted-verification.md` for the three rules and
  * the failure each one is there to stop.
  */
-export interface UntaintedDispatch {
+export interface UntaintedDispatch<A extends string = CompanionRole> {
   /**
-   * Companion roles the CHECKER is given.
+   * Artefacts the CHECKER is given.
    *
    * Disjoint from {@link adjudicator_sees}: if both parties can read the same
    * file, one of them is grading its own input.
    */
-  checker_sees: CompanionRole[];
+  checker_sees: A[];
   /**
-   * Companion roles deliberately WITHHELD from the checker.
+   * Artefacts deliberately WITHHELD from the checker.
    *
    * Listed rather than inferred, so that the omission is a decision somebody
    * made. Together with `checker_sees` this must cover every companion the
    * criterion depends on — see {@link untaintedPartitionDefects}.
    */
-  checker_withheld: CompanionRole[];
-  /** Companion roles the ADJUDICATOR is given, alongside the checker's output. */
-  adjudicator_sees: CompanionRole[];
+  checker_withheld: A[];
+  /** Artefacts the ADJUDICATOR is given, alongside the checker's output. */
+  adjudicator_sees: A[];
   /**
    * What counts as a finding for this criterion, and what does not.
    *
@@ -281,30 +281,45 @@ export interface UntaintedDispatch {
  * - **overlap** — a role in both `checker_sees` and `adjudicator_sees`. This is
  *   the one that matters: the two parties can read the same file, so the check
  *   compares a thing with its own paraphrase of itself and passes.
- * - **unpartitioned** — a companion the criterion depends on that appears in
- *   neither `checker_sees` nor `checker_withheld`. Usually a role added to
- *   `depends_on` later; without this it would default to invisible, which is
- *   safe, or to visible, which is not — either way nobody decided.
- * - **phantom** — a role named in the declaration that the criterion does not
- *   depend on. The declaration is describing a criterion other than this one.
+ * - **unpartitioned** — an artefact in the criterion's universe that appears in
+ *   neither `checker_sees` nor `checker_withheld`. Usually one added later;
+ *   without this it would default to invisible, which is safe, or to visible,
+ *   which is not — either way nobody decided.
+ * - **phantom** — an artefact named in the declaration that is not in the
+ *   criterion's universe. The declaration describes some other criterion.
+ *
+ * ## Why `universe` is a parameter rather than read off `depends_on`
+ *
+ * It was `def.depends_on` until the first instantiation, and the first
+ * instantiation is what showed that to be wrong. `translation-semantic-
+ * roundtrip`'s central visible artefact is the **`.po`**, and `po` is
+ * deliberately NOT a {@link CompanionRole} — `translation-block-qa.ts` states
+ * the reason at length: a PO is a companion of a *(block, locale)* pair, not
+ * of a block, so adding it to `COMPANION_ROLES` would widen applicability for
+ * every criterion in every folio.
+ *
+ * So the discipline's own founding case could not be expressed in the type
+ * generalised from it. **The abstraction was too narrow, not the case** — the
+ * artefact vocabulary belongs to the criterion, and the caller is the only
+ * party that knows it. For a block criterion the universe IS `depends_on`; for
+ * a translation criterion it is `depends_on` plus `po`.
  *
  * Deliberately NOT checked here: whether `drift` says anything useful. A
  * non-empty string is checkable; "states what is not drift as well as what is"
  * is a reading, and a gate that pretends to measure it would be the very thing
  * this file exists to stop.
  */
-export function untaintedPartitionDefects(def: {
-  id: string;
-  depends_on: CompanionRole[];
-  untainted?: UntaintedDispatch;
-}): string[] {
+export function untaintedPartitionDefects<A extends string = CompanionRole>(
+  def: { id: string; untainted?: UntaintedDispatch<A> },
+  universe: readonly A[],
+): string[] {
   const u = def.untainted;
   if (!u) return [`${def.id}: undeclared — no \`untainted\` block, so nobody has said what the checker may see`];
 
   const out: string[] = [];
-  const depends = new Set<CompanionRole>(def.depends_on);
-  const sees = new Set<CompanionRole>(u.checker_sees);
-  const withheld = new Set<CompanionRole>(u.checker_withheld);
+  const depends = new Set<A>(universe);
+  const sees = new Set<A>(u.checker_sees);
+  const withheld = new Set<A>(u.checker_withheld);
 
   for (const r of u.adjudicator_sees) {
     if (sees.has(r)) {
@@ -317,7 +332,7 @@ export function untaintedPartitionDefects(def: {
   for (const r of u.checker_sees) {
     if (withheld.has(r)) out.push(`${def.id}: overlap — \`${r}\` is both seen and withheld from the checker`);
   }
-  for (const r of def.depends_on) {
+  for (const r of universe) {
     if (!sees.has(r) && !withheld.has(r)) {
       out.push(
         `${def.id}: unpartitioned — \`${r}\` is a companion this criterion depends on and is in ` +
@@ -327,7 +342,10 @@ export function untaintedPartitionDefects(def: {
   }
   for (const r of [...u.checker_sees, ...u.checker_withheld, ...u.adjudicator_sees]) {
     if (!depends.has(r)) {
-      out.push(`${def.id}: phantom — \`${r}\` is named in the untainted declaration but is not in \`depends_on\``);
+      out.push(
+        `${def.id}: phantom — \`${r}\` is named in the untainted declaration but is not among this ` +
+          `criterion's artefacts`,
+      );
     }
   }
   if (u.drift.trim() === "") {
