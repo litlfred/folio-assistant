@@ -55,6 +55,44 @@
     "fr": "Fran\u00E7ais", "ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439", "es": "Espa\u00F1ol"
   };
 
+  /* The six UN languages, matching `UN_LOCALES` in `schemas/translation.ts`.
+
+     A FALLBACK, never the answer: `fa-translation-meta` carries the instance's
+     own `supportedLocales`, and an instance may support more or fewer. This is
+     what a page with no meta block falls back to, in one place, because the
+     same array was written out three times below and the three were free to
+     disagree with each other and with the schema. */
+  var UN_LOCALES = ["ar", "zh", "en", "fr", "ru", "es"];
+
+  /**
+   * Every locale a reader can read THIS page in \u2014 the source language included.
+   *
+   * The source language is a language. An English page on a six-UN-language
+   * site is available in one of them, not none, and the coverage badge read
+   * `0/5` because both halves of that fraction excluded it: the denominator was
+   * hardcoded to `supported.length - 1`, and the numerator came from
+   * `available_locales`, which the generator derives by resolving
+   * `translations/<locale>/<stem>.po` \u2014 a lookup the source language can never
+   * satisfy, since there is no `translations/en/` and there never will be.
+   *
+   * So the page's own `lang` is folded in here rather than being expected in
+   * the data, which also repairs the two front-matter conventions that had
+   * drifted apart: generated source pages stamped the PO-derived list while the
+   * hand-authored translated pages stamped the full supported set, and
+   * `docs/fr/index.md` therefore rendered `6/5 languages`.
+   *
+   * Filtered by `supported` so a locale outside the declared set cannot inflate
+   * a count taken against it, and ordered by `supported` so every page's bar
+   * and badge read in the same order. Issue #687.
+   */
+  function localesAvailable(meta, supported) {
+    var have = {};
+    if (meta && meta.lang) have[meta.lang] = true;
+    var declared = (meta && meta.availableLocales) || [];
+    for (var i = 0; i < declared.length; i++) have[declared[i]] = true;
+    return supported.filter(function (loc) { return have[loc] === true; });
+  }
+
   function getGlobalLocale() {
     try { return localStorage.getItem("fa-locale") || "en"; } catch (_e) { return "en"; }
   }
@@ -76,7 +114,10 @@
   function rememberedLocale(currentLang, available) {
     var loc = getGlobalLocale();
     if (!loc || loc === currentLang) return null;
-    if (loc !== "en" && available.indexOf(loc) === -1) return null;
+    // No `loc !== "en"` exemption: `available` carries the source language now,
+    // so membership answers this on its own, and the exemption would have
+    // offered English on a folio that has no English.
+    if (available.indexOf(loc) === -1) return null;
     return loc;
   }
 
@@ -144,8 +185,8 @@
   function buildLanguageBar() {
     var meta = getTranslationMeta();
     var currentLang = (meta && meta.lang) || "en";
-    var available = (meta && meta.availableLocales) || [];
-    var supported = ["ar", "zh", "en", "fr", "ru", "es"];
+    var supported = (meta && meta.supportedLocales) || UN_LOCALES;
+    var available = localesAvailable(meta, supported);
     var path = window.location.pathname;
     var basePath = deriveBasePath(path, currentLang);
 
@@ -158,7 +199,10 @@
 
     for (var i = 0; i < supported.length; i++) {
       var loc = supported[i];
-      var isAvailable = loc === "en" || available.indexOf(loc) !== -1;
+      // `available` now carries the source language, so membership is the whole
+      // test. `loc === "en"` stood here, which made English clickable on a
+      // folio authored in French and left French greyed out on its own page.
+      var isAvailable = available.indexOf(loc) !== -1;
       var isCurrent = loc === currentLang;
       var isRemembered = loc === remembered;
 
@@ -202,8 +246,8 @@
   function mountPageLanguageBar() {
     var meta = getTranslationMeta();
     var currentLang = (meta && meta.lang) || "en";
-    var available = (meta && meta.availableLocales) || [];
-    var supported = ["ar", "zh", "en", "fr", "ru", "es"];
+    var supported = (meta && meta.supportedLocales) || UN_LOCALES;
+    var available = localesAvailable(meta, supported);
     var path = window.location.pathname;
     var basePath = deriveBasePath(path, currentLang);
 
@@ -231,7 +275,10 @@
 
     for (var i = 0; i < supported.length; i++) {
       var loc = supported[i];
-      var isAvailable = loc === "en" || available.indexOf(loc) !== -1;
+      // `available` now carries the source language, so membership is the whole
+      // test. `loc === "en"` stood here, which made English clickable on a
+      // folio authored in French and left French greyed out on its own page.
+      var isAvailable = available.indexOf(loc) !== -1;
       var isCurrent = loc === currentLang;
       var isRemembered = loc === remembered;
 
@@ -2872,8 +2919,8 @@
     var meta = getTranslationMeta();
     if (!meta) return;
 
-    var supported = meta.supportedLocales || ["ar", "zh", "en", "fr", "ru", "es"];
-    var available = meta.availableLocales || [];
+    var supported = meta.supportedLocales || UN_LOCALES;
+    var available = localesAvailable(meta, supported);
     var totalLangs = supported.length;
     var availLangs = available.length;
 
@@ -2883,18 +2930,25 @@
     // read a `_includes/language-selector.html`, deleted once this file did the
     // same job better (it greys out untranslated locales, which that include
     // only promised in a comment).
-    if (availLangs === 0) {
+    //
+    // The trigger is `<= 1`, not `=== 0`: a page whose only available locale is
+    // its own source language has nothing stamped either, and under the old
+    // `=== 0` test that case stopped reaching this fallback the moment the
+    // source language joined the count. It also no longer drops `meta.lang`
+    // from what it finds — the page's own language is one of the answers, which
+    // is the whole correction here.
+    if (availLangs <= 1) {
       var langLinks = document.querySelectorAll(".fa-lang-tab, [data-locale]");
-      var found = [];
+      var found = {};
+      if (meta.lang) found[meta.lang] = true;
       langLinks.forEach(function (link) {
         var loc = link.getAttribute("data-locale") || link.textContent.trim().toLowerCase();
-        if (loc && loc !== meta.lang && found.indexOf(loc) === -1) found.push(loc);
+        if (loc) found[loc] = true;
       });
-      // The page itself counts as one available locale if it's not English-source
-      // or if it has translations
-      if (found.length > 0) {
-        availLangs = found.length;
-        available = found;
+      var detected = supported.filter(function (loc) { return found[loc] === true; });
+      if (detected.length > availLangs) {
+        availLangs = detected.length;
+        available = detected;
       }
     }
 
@@ -2907,11 +2961,18 @@
       "display: flex; align-items: center; gap: 6px; margin: 0.3em 0 0.6em; flex-wrap: wrap;"
     });
 
-    // Language coverage badge — always shown
+    // Language coverage badge — always shown.
+    //
+    // Green means EVERY supported language, not "all but one": the old test was
+    // `availLangs >= totalLangs - 1`, the same off-by-one the fraction carried,
+    // and it painted a page missing a whole language as complete. Amber is now
+    // the source language plus at least one translation; grey is the source
+    // language alone, which is the honest resting state of an untranslated page
+    // and is no longer indistinguishable from "no languages at all".
     var langBg, langBorder;
-    if (availLangs >= totalLangs - 1) {
+    if (availLangs >= totalLangs) {
       langBg = "#14532d"; langBorder = "#22c55e";
-    } else if (availLangs > 0) {
+    } else if (availLangs > 1) {
       langBg = "#78350f"; langBorder = "#d97706";
     } else {
       langBg = "#1e293b"; langBorder = "#475569";
@@ -2922,10 +2983,12 @@
       style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
              "background:" + langBg + ";border:1px solid " + langBorder + ";" +
              "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
-      title: availLangs > 0
-        ? "Available translations: " + available.join(", ")
-        : "No translations available for this page"
-    }, "\uD83C\uDF10 " + availLangs + "/" + (totalLangs - 1) + " languages");
+      title: availLangs > 1
+        ? "Available in: " + available.join(", ") + " \u2014 of " +
+          supported.join(", ")
+        : "Available in " + ((available[0] || meta.lang || "its source language")) +
+          " only; not yet translated"
+    }, "\uD83C\uDF10 " + availLangs + "/" + totalLangs + " languages");
     container.appendChild(langBadge);
 
     // The round-trip QA badge that stood here is gone, and the data behind it

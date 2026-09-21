@@ -38,6 +38,10 @@ import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { resolveTarget } from "../schemas/todo-index.js";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
 import {
+  localesAvailableFor,
+  sourceLocale,
+} from "../content/pipeline/translation-index.ts";
+import {
   QA_FAMILY_LABEL,
   readWitnessDoc,
   sidecarPaths,
@@ -58,6 +62,12 @@ import {
 } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+/**
+ * The language these generated pages are authored in — the instance's answer,
+ * not the `en` literal this file used to write into every page's front matter.
+ */
+const SOURCE_LOCALE = sourceLocale(REPO_ROOT);
 // Platform documentation lives under `content/docs/`. It is NOT folio content
 // (papers, chapters, block triples) — it is the platform's own structured docs,
 // authored as `WebPage` manifests with `.ts` + `.md` blocks.
@@ -555,16 +565,28 @@ function manifestRef(page: WebPage): string {
 
 function renderPage(page: WebPage): string {
   const lines: string[] = [];
-  // Auto-detect available translations for this page
+  // Auto-detect available translations for this page.
+  //
+  // `localesAvailableFor` folds in the SOURCE language, which `availableLocales`
+  // cannot: it resolves `translations/<locale>/<stem>.po`, and the source
+  // language has no such directory by construction. Stamping the PO-derived
+  // list alone is what made the coverage badge read `0/5` on a page that
+  // plainly exists in English, and it disagreed with what the hand-authored
+  // translated pages stamp — those carry the full set they are available in,
+  // which is the meaning this now writes for both halves of the corpus.
+  // Issue #687, bean `czct`.
   const stem = page.slug.replace(/\//g, "-");
-  const locales = availableLocales(REPO_ROOT, stem);
+  const locales = localesAvailableFor(REPO_ROOT, [
+    SOURCE_LOCALE,
+    ...availableLocales(REPO_ROOT, stem),
+  ]);
 
   lines.push("---");
   lines.push("layout: default");
   lines.push(`title: ${page.title}`);
   if (page.parent) lines.push(`parent: ${page.parent}`);
   if (page.navOrder !== undefined) lines.push(`nav_order: ${page.navOrder}`);
-  lines.push("lang: en");
+  lines.push(`lang: ${SOURCE_LOCALE}`);
   if (locales.length > 0) {
     lines.push(`available_locales: ${JSON.stringify(locales)}`);
   }

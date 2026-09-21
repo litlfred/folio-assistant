@@ -5,7 +5,7 @@ nav_order: 1
 lang: en
 description: "folio-assistant — a content-agnostic agent skills framework."
 permalink: /
-available_locales: ["ar", "zh", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 {% include landing.html %}

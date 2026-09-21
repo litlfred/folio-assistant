@@ -21,6 +21,12 @@
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
 import { join, relative, basename } from "node:path";
 import { availableLocales } from "./po-resolve";
+import {
+  localesAvailableFor,
+  sourceLocale,
+  supportedLocales,
+  targetLocales,
+} from "./translation-index.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const INSTANCE_ROOT = join(import.meta.dir, "..", "..");
@@ -28,19 +34,48 @@ const DOCS_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
 const DATA_DIR = join(DOCS_DIR, "_data");
 const OUTPUT_FILE = join(DATA_DIR, "translation-qa.json");
 
-// Default supported locales (minus source)
-const DEFAULT_LOCALES = ["ar", "zh", "fr", "ru", "es"];
+/**
+ * The instance's own answer, not a literal — `translation-index.ts` reads the
+ * config once and every consumer asks it.
+ *
+ * TWO lists, because they answer two questions and collapsing them is the
+ * defect this sweep shipped with (issue #687, bean `czct`):
+ *
+ * - {@link TARGET_LOCALES} — the locales a translation is produced INTO, which
+ *   is what `translations/<locale>/` can hold and what a locale subdirectory
+ *   under `docs/` is named after. Iterated to look for PO files, and used to
+ *   recognise a locale subtree so it is not walked as source.
+ * - {@link SUPPORTED_LOCALES} — every language the site claims, source
+ *   INCLUDED. This is the denominator of any "how many languages can a reader
+ *   read this in" count, because the source language is one of the answers.
+ *
+ * One list served both roles, so `coveragePct` was taken out of five on a
+ * six-language site and `localeCoverage` carried no row for the language 97% of
+ * the corpus is actually written in.
+ */
+const SOURCE_LOCALE = sourceLocale(INSTANCE_ROOT);
+const SUPPORTED_LOCALES = supportedLocales(INSTANCE_ROOT);
+const TARGET_LOCALES = targetLocales(INSTANCE_ROOT);
 
 interface PageTranslationStatus {
   /** Page path relative to docs/ */
   page: string;
   /** Source language */
   sourceLang: string;
-  /** Available translated locales */
+  /**
+   * Every locale a reader can read this page in — the source language FIRST
+   * among them, then each target locale holding a `.po` for it.
+   *
+   * This field used to hold the PO-derived list alone, so a page authored in
+   * English and translated nowhere reported `[]` — read by the badge as "this
+   * page exists in no language at all".
+   */
   availableLocales: string[];
-  /** Target locales (minus source) */
+  /** The locales a translation is produced into — supported, minus the source. */
   targetLocales: string[];
-  /** Coverage: available / target count */
+  /** Every language this site claims, source included. The denominator. */
+  supportedLocales: string[];
+  /** Coverage: {@link availableLocales} over {@link supportedLocales}. */
   coveragePct: number;
   /** Whether this page has any front matter lang field */
   hasLangField: boolean;
@@ -93,7 +128,7 @@ function findSourcePages(): string[] {
       const fullPath = join(dir, entry.name);
       if (entry.isDirectory()) {
         // Skip locale subdirectories and special dirs
-        if (DEFAULT_LOCALES.includes(entry.name)) continue;
+        if (TARGET_LOCALES.includes(entry.name)) continue;
         if (entry.name.startsWith("_") || entry.name.startsWith(".")) continue;
         if (entry.name === "assets" || entry.name === "vendor") continue;
         walk(fullPath, depth + 1);
@@ -108,6 +143,16 @@ function findSourcePages(): string[] {
 }
 
 /**
+ * The locales a page is available in OTHER than the one it is written in.
+ *
+ * The distinction {@link PageTranslationStatus.availableLocales} no longer
+ * carries on its own, now that the source language is a member of it.
+ */
+function translatedInto(page: PageTranslationStatus): string[] {
+  return page.availableLocales.filter((l) => l !== page.sourceLang);
+}
+
+/**
  * Run the translation QA sweep.
  */
 export function runTranslationQaSweep(): TranslationQaSweepResult {
@@ -115,7 +160,9 @@ export function runTranslationQaSweep(): TranslationQaSweepResult {
   const results: PageTranslationStatus[] = [];
   const localeCounts: Record<string, { available: number; total: number }> = {};
 
-  for (const locale of DEFAULT_LOCALES) {
+  // A row per SUPPORTED locale, so the source language is reported beside the
+  // targets instead of being the one language the table cannot mention.
+  for (const locale of SUPPORTED_LOCALES) {
     localeCounts[locale] = { available: 0, total: 0 };
   }
 
@@ -126,23 +173,28 @@ export function runTranslationQaSweep(): TranslationQaSweepResult {
 
     // Derive stem for translation lookup
     const stem = basename(relPath, ".md");
-    const locales = availableLocales(INSTANCE_ROOT, stem);
+    const poLocales = availableLocales(INSTANCE_ROOT, stem);
     const hasLangField = "lang" in fm;
+    // The page's OWN declared language, not the instance default: a page under
+    // a locale subtree is authored in that locale and is available in it.
+    const pageSource = fm.lang || SOURCE_LOCALE;
+    const locales = localesAvailableFor(INSTANCE_ROOT, [pageSource, ...poLocales]);
 
     const status: PageTranslationStatus = {
       page: relPath,
-      sourceLang: fm.lang || "en",
+      sourceLang: pageSource,
       availableLocales: locales,
-      targetLocales: DEFAULT_LOCALES,
-      coveragePct: DEFAULT_LOCALES.length > 0
-        ? Math.round((locales.length / DEFAULT_LOCALES.length) * 100)
+      targetLocales: TARGET_LOCALES,
+      supportedLocales: SUPPORTED_LOCALES,
+      coveragePct: SUPPORTED_LOCALES.length > 0
+        ? Math.round((locales.length / SUPPORTED_LOCALES.length) * 100)
         : 100,
       hasLangField,
     };
 
     results.push(status);
 
-    for (const locale of DEFAULT_LOCALES) {
+    for (const locale of SUPPORTED_LOCALES) {
       localeCounts[locale].total++;
       if (locales.includes(locale)) {
         localeCounts[locale].available++;
@@ -161,8 +213,14 @@ export function runTranslationQaSweep(): TranslationQaSweepResult {
   return {
     sweptAt: new Date().toISOString(),
     totalPages: pages.length,
-    pagesWithTranslations: results.filter((r) => r.availableLocales.length > 0).length,
-    pagesWithoutTranslations: results.filter((r) => r.availableLocales.length === 0).length,
+    // A page is TRANSLATED when it exists in a language other than its own.
+    // `availableLocales.length > 0` was the test until the source locale joined
+    // that list, at which point it became true of every page in the corpus —
+    // the sweep would have reported 154 of 154 pages translated on a site that
+    // is 3% translated. A count whose predicate is vacuously true is worse than
+    // no count, because it reads as good news.
+    pagesWithTranslations: results.filter((r) => translatedInto(r).length > 0).length,
+    pagesWithoutTranslations: results.filter((r) => translatedInto(r).length === 0).length,
     localeCoverage,
     pages: results,
     complete: true,
@@ -194,7 +252,7 @@ if (import.meta.main) {
     console.log();
 
     // Pages without translations
-    const noTrans = result.pages.filter((p) => p.availableLocales.length === 0);
+    const noTrans = result.pages.filter((p) => translatedInto(p).length === 0);
     if (noTrans.length > 0) {
       console.log(`Pages without any translations (${noTrans.length}):`);
       for (const p of noTrans) {
@@ -205,7 +263,7 @@ if (import.meta.main) {
     console.log();
 
     // Pages with translations
-    const hasTrans = result.pages.filter((p) => p.availableLocales.length > 0);
+    const hasTrans = result.pages.filter((p) => translatedInto(p).length > 0);
     if (hasTrans.length > 0) {
       console.log(`Pages with translations (${hasTrans.length}):`);
       for (const p of hasTrans) {

@@ -300,14 +300,31 @@ The translation pipeline stamps this front matter on generated pages:
 ```yaml
 # Source pages (English):
 lang: en
-available_locales: ["fr"]          # locales with translations
+available_locales: ["en", "fr"]    # every locale the page can be read in
 
 # Translated pages:
 lang: fr
 translation_status: unverified     # or "official"
 translation_source: index.md       # source file
-available_locales: ["fr"]
+available_locales: ["en", "fr"]
 ```
+
+**`available_locales` includes the SOURCE language, and that is not a
+formality.** It is the list a reader's language bar and coverage badge are
+computed from — "which languages can I read this page in" — and the page is
+certainly readable in the one it was written in. It is *not* the list of
+translations that exist, which is what `availableLocales()` in
+`content/pipeline/po-resolve.ts` returns by resolving
+`translations/<locale>/<stem>.po`; that lookup can never name the source
+language, because there is no `translations/en/` and there never will be. Use
+`localesAvailableFor()` in `content/pipeline/translation-index.ts` to go from
+one to the other.
+
+Both halves of the corpus must stamp the same meaning. They did not until issue
+#687: the generator stamped the PO-derived list while the hand-authored
+translated pages stamped the full set, so `docs/fr/index.md` rendered a badge
+reading `6/5 languages` — a numerator larger than its denominator, which is the
+shape a disagreement about what a field means takes when it finally surfaces.
 
 The `qa_translation_*` keys are **gone**, along with the badge that read them.
 They were stamped from a node-level round trip whose back-translation map held
