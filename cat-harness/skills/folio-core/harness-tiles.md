@@ -104,7 +104,7 @@ appropriate**"*. When is a thing on the folio a tile, and when its own avatar?
 |---|---|---|
 | a declared visualiser (`SubgraphCoverageSchema.visualiser`) — a directory or sub-graph | **tile**, *functional* | the harness declares it; §"A tile is the harness's" above |
 | a set of schema instances — `todos` | **tile**, *content* | the harness declares the set; the instances are the folio's |
-| a note, a document, a materialised asset under `folio/` | **avatar** | the folio holds it; it is the reader's, not the harness's |
+| a note, a document, a materialised asset in the folio's `reproduce` directories (`library/`, `uploads/`) | **avatar** | the folio holds it; it is the reader's, not the harness's |
 
 ### A TILE IS ONE OF TWO KINDS, and they bind to different things
 
