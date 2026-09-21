@@ -1,4 +1,30 @@
 {%- comment -%}
+  THE NAV LAUNCHER, and it is here rather than in the sidebar for one reason:
+  the sidebar is HIDDEN by default (owner, 2026-09-21: "have it start hidden
+  ... need easy way to close it. [x]"), and anything inside a hidden element is
+  hidden with it. A launcher the reader cannot see is not a launcher.
+
+  `footer_custom.html` renders inside `.main`, but the control is
+  `position: fixed`, so it paints at the viewport corner wherever it sits in
+  the document -- "attached to screen/window/glass", in the owner's words.
+
+  ONE CHECKBOX, TWO LABELS, IN DIFFERENT SUBTREES. `<label for>` reaches a
+  control anywhere in the document, so this `☰` and the `[x]` inside the
+  sidebar drive the same input; `docs-ui.css` reads its state with `:has()` on
+  `body`, the only ancestor the two share. No JavaScript, and the checkbox is
+  a real focusable control that announces its own state.
+
+  It carries an accessible NAME but no `aria-expanded`: a checkbox already
+  exposes checked/unchecked, and a second, hand-maintained state attribute is
+  one more thing that can disagree with the first.
+{%- endcomment -%}
+<input type="checkbox" class="fa-nav-open" id="fa-nav-open">
+<label class="fa-nav-launcher" for="fa-nav-open" title="Show navigation">
+  <span aria-hidden="true">&#9776;</span>
+  <span class="fa-sr-only">Show navigation</span>
+</label>
+
+{%- comment -%}
   Overrides just-the-docs' own footer_custom.html.
 
   The build stamp lives HERE rather than in `footer_content` for a reason that

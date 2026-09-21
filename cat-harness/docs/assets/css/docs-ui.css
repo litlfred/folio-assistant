@@ -534,49 +534,55 @@
   .side-bar + .main { margin-left: 16.5rem; }
 }
 
-/* ── The sidebar starts CLOSED, on every page of this site ─────────────── */
+/* ── The sidebar starts HIDDEN, on every page of this site ─────────────── */
 
-/* Owner, 2026-09-21: "i want navbar to be collasable and start closed
- * everywhere, not just who-iris."
+/* Owner, 2026-09-21, refining the round before this one:
  *
- * The mounted instance pages got this first (`harness-rail.ts`, bean `hw9g`),
- * because they get no Jekyll layout and had no harness navigation at all. That
- * left ONE SITE WITH TWO NAVBARS BEHAVING DIFFERENTLY -- the rail collapsed to
- * an icon, the theme's sidebar always open -- which is the inconsistency this
- * removes. Same three mechanisms, same no-JavaScript rule, same reason for
- * each.
+ *   "have it start hidden. it is attached to screen/window/glass. it does not
+ *    scroll. need easy way to close it. [x]"
  *
- * IT OVERLAYS WHEN OPEN, it does not reflow the page. A sidebar that pushed
- * the text column right on hover would make every line jump under the pointer
- * on the way to a link, which is worse than briefly covering the left margin.
- * `.main`'s margin therefore stays at the COLLAPSED width.
+ * THAT CHANGES THE MECHANISM, not just a number. The previous version
+ * collapsed to an icon strip and opened on `:hover` — and a sidebar that is
+ * HIDDEN cannot be hovered, because there is nothing on screen to put a
+ * pointer on. So hover stops being the opener and this becomes an explicit
+ * open and an explicit close: a launcher fixed to the glass, and an `[x]`
+ * inside.
  *
- * The children keep their open width and are CLIPPED. Letting them inherit
- * 3.5rem instead would wrap every nav label to roughly one character per line,
- * and the reflow back on hover is visible as a full re-layout of the nav.
+ * That is also the `l4zi` rule from `board-windows`: an action whose inverse
+ * is not reachable is not a toggle. Opening from a launcher and closing from
+ * nothing would have been exactly that.
  *
- * `align-items: flex-start` is not cosmetic and is easy to miss: the theme
- * sets `align-items: flex-end` on this flex column, so with a narrow parent
- * and wide children the clip would show the RIGHT-HAND END of every label
- * rather than its start.
+ * THE LAUNCHER CANNOT LIVE IN THE SIDEBAR. Anything inside a hidden element is
+ * hidden with it, so the `☰` sits in `footer_custom.html` — rendered inside
+ * `.main`, but `position: fixed`, so it paints at the viewport corner wherever
+ * it appears in the document. The `[x]` sits in `nav_footer_custom.html`,
+ * inside the sidebar. Both are `<label for>` pointing at ONE checkbox, because
+ * `for` reaches a control anywhere in the document, and the state is read with
+ * `:has()` on `body` — the only ancestor the two subtrees share.
  *
- * Scoped to 50rem and up on purpose -- below it the theme is not `fixed` and
- * has its own hamburger, and applying this there breaks the phone layout.
+ * ATTACHED TO THE GLASS, AND IT DOES NOT SCROLL. `.side-bar` is already
+ * `position: fixed`, so it is fixed to the viewport rather than to the
+ * document and the page scrolls underneath it. What it did NOT have is an
+ * inner scroll: a nav taller than the window had items no one could reach,
+ * because the bar does not scroll and neither did its contents. `overflow-y:
+ * auto` fixes that without making the bar itself move.
  *
- * MEASURED LIMIT: this was written against the selectors recorded above, which
- * an earlier session read off the BUILT stylesheet. The rendered result was
- * not checked, because litlfred.github.io is refused at this environment's
- * proxy. If the collapsed strip clips the site mark, `--fa-nav-collapsed` is
- * the one value to move. */
+ * IT OVERLAYS, it does not reflow. `.main` keeps the full width and the open
+ * sidebar paints over its left edge. More noticeable now that the closed state
+ * gives the content the whole page — and still right: a nav that pushed the
+ * text column sideways on every open would move every line the reader was
+ * looking at.
+ *
+ * HIDDEN MEANS HIDDEN TO THE KEYBOARD TOO. `transform` alone would move the
+ * sidebar off-screen while leaving every link focusable, so tabbing would walk
+ * an invisible nav. `visibility: hidden` takes it out of the tab order and the
+ * accessibility tree, and is reversed on open.
+ *
+ * MEASURED LIMIT: written against the selectors recorded above, which an
+ * earlier session read off the BUILT stylesheet. The rendered result was not
+ * checked — litlfred.github.io is refused at this environment's proxy. */
 :root {
-  /* DERIVED, not picked: the theme's own 1rem gutter on `.site-title`, plus
-     `.fa-site-mark` at 2rem, plus a matching right gutter. So the collapsed
-     strip is exactly the mark and its padding, and nothing of a label can sit
-     inside it. The rail's own constant is 40px against a 20px glyph -- a
-     different number for the same rule, because the two carry different marks
-     and a reader never sees both at once. */
-  --fa-nav-collapsed: 3.5rem;
-  /* The theme's width at mq(md); redefined below where the theme widens it. */
+  /* The open width: the theme's own at mq(md), redefined where it widens. */
   --fa-nav-open: 15.5rem;
 }
 
@@ -586,77 +592,101 @@
 
 @media (min-width: 50rem) {
   .side-bar {
-    width: var(--fa-nav-collapsed);
-    overflow: hidden;
-    align-items: flex-start;
+    width: var(--fa-nav-open);
+    /* Out of sight, out of the tab order, and out of the way of `.main`. */
+    transform: translateX(-100%);
+    visibility: hidden;
+    /* The bar is fixed to the glass; its CONTENTS scroll when they outgrow the
+       window. Without this a long nav has unreachable items and no scrollbar
+       to say so. */
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-  .side-bar > * { width: var(--fa-nav-open); }
+  /* `.main` takes the whole page while the nav is away. The open sidebar
+     overlays this margin rather than restoring it. */
+  .side-bar + .main { margin-left: 0; }
 
-  .side-bar:hover,
-  .side-bar:focus-within,
-  .side-bar:has(.fa-nav-pin:checked) {
-    width: var(--fa-nav-open);
-    /* Above `.main`, which is positioned and later in tree order. Without this
-       the sidebar opens BEHIND the page content and reads as a rendering bug
-       rather than as a nav. */
+  body:has(.fa-nav-open:checked) .side-bar {
+    transform: none;
+    visibility: visible;
+    /* `.main` is positioned and later in tree order, so without this the
+       sidebar opens BEHIND the page content. */
     z-index: 100;
   }
 
-  .side-bar + .main { margin-left: var(--fa-nav-collapsed); }
-
-  /* Every label is held invisible while collapsed rather than merely clipped.
-     The width arithmetic above is a geometry argument, and a longer title or
-     an inherited `letter-spacing` moves where a label starts without touching
-     any of these values. `opacity`, not `display:none` -- the labels stay in
-     the accessibility tree. */
-  .side-bar .fa-site-title,
-  .side-bar .site-nav,
-  .side-bar .fa-harness-tabs {
-    opacity: 0;
-    transition: opacity .12s ease;
-  }
-  .side-bar:hover .fa-site-title,
-  .side-bar:hover .site-nav,
-  .side-bar:hover .fa-harness-tabs,
-  .side-bar:focus-within .fa-site-title,
-  .side-bar:focus-within .site-nav,
-  .side-bar:focus-within .fa-harness-tabs,
-  .side-bar:has(.fa-nav-pin:checked) .fa-site-title,
-  .side-bar:has(.fa-nav-pin:checked) .site-nav,
-  .side-bar:has(.fa-nav-pin:checked) .fa-harness-tabs {
-    opacity: 1;
-  }
-
-  /* The pin. A POINTER IS NOT THE ONLY INPUT: `:hover` does nothing on a
-     tablet, which is above this breakpoint, and `:focus-within` there only
-     fires once a tap has already landed on a link the reader could not see.
-     The pin is the affordance that makes the nav reachable by touch. */
-  .fa-nav-pin { position: absolute; opacity: 0; pointer-events: none; }
-  .fa-nav-pin-toggle {
+  /* THE LAUNCHER — the only thing on screen while the nav is hidden, so it is
+     the whole affordance. Fixed to the glass, top left, clear of the theme's
+     own header row. */
+  .fa-nav-launcher {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 101;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0 0.4rem 1rem;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
     cursor: pointer;
     user-select: none;
-    font-size: 0.75rem;
-    opacity: 0.8;
+    border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+    border-radius: 6px;
+    background: var(--sidebar-color, #27262b);
+    font-size: 1rem;
+    line-height: 1;
   }
-  .fa-nav-pin-toggle .fa-nav-pin-glyph { flex: none; width: 2rem; text-align: center; }
-  .fa-nav-pin-toggle .fa-nav-pin-text { white-space: nowrap; opacity: 0; transition: opacity .12s ease; }
-  .side-bar:hover .fa-nav-pin-text,
-  .side-bar:focus-within .fa-nav-pin-text,
-  .side-bar:has(.fa-nav-pin:checked) .fa-nav-pin-text { opacity: 1; }
+  /* It is not needed while the nav is open, and it would sit on top of it. */
+  body:has(.fa-nav-open:checked) .fa-nav-launcher { display: none; }
+
+  /* THE CLOSE CONTROL. Inside the sidebar, so it is where the reader's
+     attention already is, and `position: sticky` so it stays reachable after
+     the inner scroll above has moved the nav. */
+  .fa-nav-close {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: 0.5rem 0.5rem 0 0;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 4px;
+    background: var(--sidebar-color, #27262b);
+    font-size: 0.875rem;
+    line-height: 1;
+    opacity: 0.75;
+  }
+  .fa-nav-close:hover { opacity: 1; }
+  /* Hidden with the sidebar; shown with it. Never on screen alone, where it
+     would read as a close button for the page. */
+  body:not(:has(.fa-nav-open:checked)) .fa-nav-close { display: none; }
+}
+
+/* The control itself is never seen — the two labels are the interface. It is a
+   real checkbox rather than a styled div so it is focusable and announces its
+   own state, and `left: -9999px` rather than `display: none` because a hidden
+   control is not focusable and the keyboard would lose the nav entirely. */
+.fa-nav-open {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
 }
 
 @media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
-  .side-bar { transition: width .14s ease; }
+  .side-bar { transition: transform .16s ease, visibility .16s; }
 }
 
-/* Printing a collapsed nav prints a grey stripe down the page. */
+/* Printing a nav that is not on screen prints nothing useful. */
 @media print {
-  .side-bar { display: none; }
+  .side-bar,
+  .fa-nav-launcher,
+  .fa-nav-close { display: none; }
   .side-bar + .main { margin-left: 0; }
 }
 
