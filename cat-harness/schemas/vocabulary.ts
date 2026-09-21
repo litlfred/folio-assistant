@@ -59,7 +59,34 @@
  * The direction rule holds here as everywhere: core may name a harness term,
  * harness may name a bootstrap term, and never the reverse.
  */
-export type TermLayer = "bootstrap" | "harness" | "core";
+export const TERM_LAYERS = ["bootstrap", "harness", "core"] as const;
+
+/**
+ * The layers, as a value — and THE ORDER IS PART OF THE CONTRACT.
+ *
+ * It is the direction rule above, written so code can read it: index 0 may be
+ * named by nothing below it, and each layer may name the ones before it. Two
+ * consumers already depend on that reading — the `--layer` slice in
+ * `ns-export.ts` compares indices, and its SKOS scheme ordering sorts by them —
+ * so this is not an incidental array order that a tidy-up may sort.
+ *
+ * IT EXISTS BECAUSE THE TYPE ALONE COULD NOT BE READ AT RUNTIME (#807). A
+ * union has no value, so every site that needed to CHECK a layer wrote the
+ * three names out again, and the copies drifted: `ns-export.ts` validated
+ * against `cat-bootstrap` while the error message beside it already said
+ * `bootstrap`, so a rejected `--layer bootstrap` printed
+ *
+ *     --layer must be bootstrap, harness or core (got bootstrap)
+ *
+ * — a message that names the value it just refused. The failure was real and
+ * ordinary; what made it cost an afternoon is that it was UNREADABLE, so it
+ * looked like an impossible state rather than two lists out of step.
+ *
+ * So the type is derived from this tuple rather than declared beside it: a
+ * layer added here is a layer the type gains, and a message composed from it
+ * cannot disagree with the predicate that used it.
+ */
+export type TermLayer = (typeof TERM_LAYERS)[number];
 
 /** A term's gloss, and where a reader goes for more. */
 export interface TermGloss {

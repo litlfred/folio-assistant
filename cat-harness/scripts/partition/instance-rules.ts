@@ -184,6 +184,13 @@ export const RULES: Rule[] = [
       // generator would give every instance its own copy of the platform's
       // navbar, which is the boundary AGENTS.md opens with.
       "scripts/lib/harness-rail.ts",
+      // The renderer that rail became an adapter over (bean `sjic`). HARNESS
+      // by the same argument and more strongly: it is now the ONE navbar, for
+      // a mounted page and for a Jekyll page alike, so a folio owning it would
+      // mean a folio owning the platform's chrome for every other instance
+      // too. It renders a model and reads no content object -- the model's
+      // regions are composed by the caller from declarations.
+      "scripts/lib/navbar.ts",
       // Its sibling: same question, same answer. `compose-docs.ts` reads the
       // `docs` declarations, works out which is the base and which the
       // overlay from `scope`, and lays them down in order. Every decision it

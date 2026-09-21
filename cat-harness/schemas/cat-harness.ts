@@ -2095,6 +2095,33 @@ export const VisualisationSchema = z.object({
   hidden: z.boolean().optional(),
   /** The tile's theme. Absent means the directory's, then the instance's. */
   theme: z.string().min(1).optional(),
+  /**
+   * WHICH GLYPH the tile wears, by NAME. Absent falls back to the generic
+   * node-graph glyph every tile shared before this field existed.
+   *
+   * ## A name, and emphatically not markup
+   *
+   * `tileLink` assigns its glyph with `innerHTML`. A field carrying SVG would
+   * therefore make a DECLARATION an HTML injection site — and a declaration is
+   * inherited: a dependency's `<instance>.json` reaches this instance through
+   * `resolveSkillDirs`, so the markup would not even have to be written by
+   * somebody with commit access here.
+   *
+   * So this names a glyph in the client's own registry and default-denies
+   * anything it does not know, which is R17's rule (*"skill tool hints for
+   * XSSrsiction"*) applied one surface along: an allow-list is wrong only
+   * about things it refuses, and a refusal is visible.
+   *
+   * ## Why an unknown name is a FALLBACK and not a failure
+   *
+   * The registry lives in `docs-ui.js` and the declaration lives here, so the
+   * two are deployed together but AUTHORED apart — a folio may declare a glyph
+   * against a newer platform than the one rendering it. A tile that vanished
+   * or threw on an unrecognised name would turn a cosmetic mismatch into a
+   * missing navigation entry. It renders the generic glyph instead, which is
+   * exactly what it rendered before anybody declared one.
+   */
+  icon: z.string().min(1).optional(),
 });
 export type Visualisation = z.infer<typeof VisualisationSchema>;
 

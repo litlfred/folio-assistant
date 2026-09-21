@@ -519,7 +519,8 @@
     {
       "id": "beans",
       "coverage": {
-        "visualiser": "cat-harness/docs/beans/index.html",
+        "_visualiser_comment": "THE LIST FORM, for one visualisation, so it can carry `icon`. A bare string still parses and 26 other entries here are one; this is not the start of a migration. Owner, 2026-09-21, having gone looking for the board and landed on the origin: they asked for a tile for it and sent the bean art. `icon` names a glyph in `docs-ui.js`'s registry rather than carrying markup, because `tileLink` assigns its glyph with innerHTML and a declaration is INHERITED by dependent instances — see VisualisationSchema.icon. An unknown name falls back to the generic glyph.",
+        "visualiser": [{ "ref": "cat-harness/docs/beans/index.html", "icon": "beans" }],
         "docs": "cat-harness/docs/beans-and-todos.md",
         "skill": "todo-manager"
       },

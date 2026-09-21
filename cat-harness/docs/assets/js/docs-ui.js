@@ -1100,6 +1100,61 @@
     'fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>' +
     "</svg>";
 
+  /* ── The glyph a tile wears, by declared NAME ────────────────────────
+   *
+   * Every graph tile wore NET_GLYPH — the graph-as-a-thing-to-browse net —
+   * because a tile had no way to say otherwise. `VisualisationSchema.icon`
+   * gives it one, and this is the registry that name resolves against.
+   *
+   * A NAME rather than markup, and the reason is not style. `tileLink` assigns
+   * its glyph with `innerHTML`, so a declaration carrying SVG would make
+   * `<instance>.json` an HTML injection site — and a declaration is INHERITED,
+   * reaching this instance from a dependency through `resolveSkillDirs`. The
+   * markup would not even have to be authored by somebody with commit access
+   * here. R17's rule, one surface along: allow-list, default-deny.
+   *
+   * `hasOwnProperty` and not `TILE_GLYPHS[name]`, because the name comes from
+   * a declaration: `"constructor"` and `"toString"` are inherited properties
+   * of every object literal, and a bare lookup would hand one of them to
+   * `innerHTML`.
+   *
+   * An unknown name falls back rather than failing. The registry ships with
+   * the site and the declaration is authored apart from it, so a folio may
+   * name a glyph a slightly older platform has not got; a tile that vanished
+   * over that would turn a cosmetic mismatch into a missing navigation entry.
+   * The fallback is exactly what every tile rendered before this existed.
+   */
+  /*
+   * TWO beans, not the four the owner's reference art has, and the count was
+   * MEASURED rather than chosen. `.fa-tile svg` is `1.25rem` — 20px — so 20px
+   * is the whole of this glyph's job. Five candidates were rendered at it:
+   * three outlined beans crowd until the hilums merge into one grey mass;
+   * three filled with an oval cut-out read as olives; a filled crescent
+   * collapses to a speck. At two beans the shapes and their hilums stay
+   * separate at 20px and the drawing still looks like the reference at 64.
+   *
+   * Which is the usual trade and worth naming: an icon is not a picture
+   * shrunk, and fidelity to the source art at a size nobody views it at is
+   * not fidelity to anything.
+   */
+  var BEANS_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">' +
+    '<g transform="translate(8.4,8.6) rotate(-32)">' +
+    '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
+    '<g transform="translate(15.6,15.4) rotate(26)">' +
+    '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
+    "</g></svg>";
+
+  var TILE_GLYPHS = { beans: BEANS_GLYPH };
+
+  function glyphFor(name) {
+    if (typeof name !== "string") return NET_GLYPH;
+    return Object.prototype.hasOwnProperty.call(TILE_GLYPHS, name)
+      ? TILE_GLYPHS[name]
+      : NET_GLYPH;
+  }
+
   // A magnifier: search. The owner asked for the search to leave the main
   // panel and become "a icon in navbar that expands" -- this is the icon, and
   // the launcher it lives in is the expansion.
@@ -1933,6 +1988,52 @@
     return a;
   }
 
+  /* ── Where a declared, site-root path is composed ────────────────────
+   *
+   * `graph-tiles.ts` stores a tile's href relative to the SITE ROOT — `/beans/`
+   * — which is right, and is what `harness.links[].path` stores as well. Every
+   * other consumer of such a path hands it to Liquid's `relative_url`, which
+   * prepends `site.baseurl`. A tile cannot: it is composed here, after Liquid
+   * has finished, from JSON on a `<meta>`.
+   *
+   * SO IT HAS TO BE DONE HERE, AND IT WAS NOT — issue #801. This site serves
+   * from `/folio-assistant`, so an unprefixed `/beans/` resolves against the
+   * ORIGIN and every one of the twelve tiles 404ed. The rule was already
+   * written down 800 lines above, on the action tiles: *"an absolute `/kg/`
+   * is a 404 rather than a wrong-looking link"*. Two tile families, one rule,
+   * and only one of them was following it.
+   *
+   * NOT applied inside `tileLink`, which both families share. The action tiles
+   * are handed `#fa-site-links` values that Liquid ALREADY composed, so
+   * prefixing there would double the base and break the family that works.
+   * The base belongs where the raw declared value enters, which is here.
+   *
+   * An ABSENT meta yields `""` and the href is returned unchanged. That is the
+   * previous behaviour, deliberately: a site with no baseurl is the common case
+   * (the e2e fixtures, a local `jekyll serve`), and it is indistinguishable
+   * from a declared empty one — `site.baseurl` renders as the empty string for
+   * both. There is nothing here to report as a finding.
+   */
+  function siteBaseurl() {
+    var meta = document.querySelector('meta[name="fa-baseurl"]');
+    var v = (meta && meta.getAttribute("content")) || "";
+    return v.replace(/\/+$/, "");
+  }
+
+  /**
+   * A site-root path, composed against this deploy's base.
+   *
+   * Only a path that starts with `/` is composed. Anything else is already
+   * relative to the page, or is not ours, and prefixing it would invent a URL.
+   * No guard against a base that is already present: a tile whose declared
+   * path genuinely begins with the base's spelling is a directory somebody
+   * named that way, and skipping it would be this bug with the sign flipped.
+   */
+  function withBase(href) {
+    if (typeof href !== "string" || href.charAt(0) !== "/") return href;
+    return siteBaseurl() + href;
+  }
+
     /* ── The DECLARED visualisations, one tile each ──────────────────────
    *
    * Owner: *"if harness declares visaluzers, those should have tile"*, and
@@ -1964,7 +2065,7 @@
       // another surface.
       if (t.hidden && hiddenIds.indexOf(t.id) === -1) continue;
       if (!t.hidden && hiddenIds.indexOf(t.id) !== -1) continue;
-      var tile = tileLink(NET_GLYPH, t.title, t.href,
+      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href),
                           "the declared visualisation of " + t.directory);
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
