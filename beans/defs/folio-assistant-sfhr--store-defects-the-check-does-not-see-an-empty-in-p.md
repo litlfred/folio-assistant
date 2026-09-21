@@ -118,3 +118,63 @@ either way, one per rejected candidate above.
 *Issue link, recorded 2026-09-21.* **[#639](https://github.com/litlfred/folio-assistant/issues/639)** — the shadow-checklist detector.
 
 Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.
+
+---
+
+## 2026-09-21 — the closed-bean question, answered with a number
+
+It sat as *"raised, not decided"* because nobody had measured it. Measured now,
+and **the dates decide it, not the count**:
+
+| | |
+|---|---|
+| CLOSED beans carrying the shape | **30** (75 items), against 3 open |
+| **ARCHIVED** beans carrying it | **0 of 219** — and archived beans are the OLD ones |
+| last updated 2026-09-20 | **21** |
+| last updated 2026-09-21 | 9 |
+| this check shipped (#589) | **2026-09-21** |
+
+So it is neither sediment nor a trend. It is a **one-day burst on 2026-09-20** —
+the 54-merge window `vlhk` describes — and this check shipped the day after, in
+response to it. The zero across 219 archived beans is what rules out "it has
+always been like this".
+
+### Decided: closed beans are COUNTED, never failed
+
+**Every bean is open before it is closed**, so the open-bean rule already
+prevents recurrence. Extending it backwards would add **75 baseline entries,
+all belonging to other owners, for work already finished** — and a completed
+bean's unticked checklist misleads nobody about what to do next, because its
+`status` says `completed` and dominates.
+
+That is the same argument I made on `vzur` four hours ago and would be
+contradicting here: **a gate that is red on arrival is not a gate.**
+
+### But not silent, either
+
+`closedWithShadow` is reported every run. *"Not scanned"* and *"none there"*
+must not look alike — the three-state rule this repository applies everywhere
+else. A **rising** number means the open-bean gate is being evaded; a flat one
+means the burst is history. A measurement that lives only in a bean is a
+printed verdict: gone, and unaskable later.
+
+### The other open item is NOT mine
+
+*"The five baselined `shadow-checklist` beans are repaired by their owners."*
+Two already are — `ivfw` and `jbx2` are gone from the baseline, which is the
+shrink rule working. Three remain: `0hi8`, `81t5`, `xgd8`. **I own none of
+them**, and this check's own output says so in as many words:
+
+> Outstanding defects are repaired by the bean's OWNER, not by this check and
+> not by whoever ran it.
+
+Left open, and it is the only thing standing between `sfhr` and done.
+
+### Noticed while measuring, not touched
+
+Six `dead-blocker` findings the issue does not mention — four beans blocked on
+`68dt` (`completed`), two on `fsch` (`scrapped`), one on `qif9` (`completed`) —
+plus a `folded-title` (`52dz`) and an `empty-body` (`70c7`). All baselined, all
+other owners'.
+
+`bun run gates` — 93 of 93.
