@@ -555,6 +555,13 @@
             "owes"
           ],
           "additionalProperties": false
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       },
       "required": [
@@ -570,8 +577,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "198470e0c49ee4e88d270b827434fbb2e6724b88",
-    "pr": "main",
-    "run": "35564182170"
+    "sha": "20e13f1ccc4cbed8aaac9589940c0999878b78f3",
+    "pr": "642/merge",
+    "run": "35564875426"
   }
 }

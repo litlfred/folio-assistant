@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WHO handbook for guideline development, 2nd ed. — ingested IRIS replica</title>
+<title>WHO handbook for guideline development — ingested IRIS replica</title>
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
 <style>
   :root {
@@ -114,6 +114,103 @@
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
+  /* ── IRIS home replica ────────────────────────────────────────────────
+     Bands in the capture's order: hero, search, Recent Submissions. Measured
+     against who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf page 1.
+
+     The hero bleeds to the wrap's edges rather than to the viewport: 100vw
+     inside a centred column is the classic horizontal-scrollbar bug, and a
+     replica that scrolls sideways on a phone is a worse infidelity than a
+     hero 32px narrower than the original. */
+  .hero {
+    margin: 0 calc(-1 * var(--iris-pad)) 1.6rem;
+    padding: 3.2rem var(--iris-pad) 2.4rem;
+    /* Colour only. The real hero is a photograph of the Geneva headquarters
+       with the WHO emblem on the facade; see landingPage() for why neither is
+       here. Both stops are theme roles, not literals. */
+    background: linear-gradient(135deg, var(--iris-dark) 0%, var(--iris-accent) 55%, var(--iris-deep) 100%);
+    color: #fff;
+  }
+  .hero-in { max-width: 34rem; }
+  .hero h1 { font-size: 3.6rem; line-height: 1; margin: 0 0 1.2rem; color: #fff; font-weight: 400; }
+  .hero p { font-size: 1.06rem; line-height: 1.5; margin: 0; color: rgba(255,255,255,0.95); }
+  /* Two classes, not one: the rule .hero p is class+element and beat the bare
+     .hero-note, so the margin below was declared and never applied -- the
+     replica note sat flush against the last line of the hero paragraph and
+     read as part of it. */
+  .hero .hero-note {
+    margin: 1.6rem 0 0; font-size: 0.8rem; color: rgba(255,255,255,0.8);
+    border-top: 1px solid rgba(255,255,255,0.25); padding-top: 0.9rem;
+  }
+  .hero-note code { color: #fff; }
+
+  .searchbar { display: flex; gap: 0; margin: 1.8rem 0 0.5rem; }
+  .searchbar input {
+    flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
+    border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
+    background: #fff; color: var(--iris-muted);
+  }
+  .searchbar button {
+    padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
+    border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
+    background: var(--iris-accent); color: #fff;
+  }
+  /* The disabled attribute already communicates this to a pointer; the cursor
+     says it to a reader who hovers before clicking. */
+  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
+  .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
+
+  .subs { display: flex; flex-direction: column; gap: 1.8rem; }
+  .sub { display: flex; gap: 1.2rem; align-items: flex-start; }
+  /* A fixed column so a landscape cover and a portrait one start on the same
+     line. The IMAGE keeps its own aspect -- pixelWidth and pixelHeight are on
+     the tag, so the box is reserved before the bytes arrive and nothing
+     reflows. */
+  .sub-cover { flex: 0 0 104px; }
+  .sub-cover img { width: 104px; height: auto; display: block; border: 1px solid var(--iris-edge); }
+  .sub-cover .nocover {
+    display: block; width: 104px; height: 140px; border: 1px dashed var(--iris-edge);
+    color: var(--iris-muted); font-size: 0.78rem; text-align: center; line-height: 140px;
+  }
+  .sub-body { flex: 1; min-width: 0; }
+  .sub-title { font-size: 1.02rem; line-height: 1.35; text-decoration: underline; }
+  .sub-by { margin: 0.35rem 0 0.4rem; font-size: 0.9rem; color: var(--iris-ink); }
+  .sub-abs {
+    margin: 0 0 0.5rem; font-size: 0.93rem; line-height: 1.5;
+    /* The capture truncates each abstract under a "Show more" control. This
+       clamps instead of shipping a disclosure widget -- the owner asked for a
+       replica of the look, not working functionality. */
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .sub-abs.none { display: block; font-style: italic; color: var(--iris-muted); }
+  .sub-links { margin: 0; font-size: 0.88rem; }
+
+  p.lede { font-size: 1.05rem; line-height: 1.6; max-width: 46rem; }
+
+  table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
+  table.reqs th, table.reqs td {
+    text-align: left; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
+    vertical-align: top;
+  }
+  table.reqs thead th { background: var(--iris-wash); font-weight: 700; }
+  table.reqs th.rid {
+    width: 3.2rem; white-space: nowrap; font-weight: 700; color: var(--iris-accent);
+  }
+  table.reqs td.why { color: var(--iris-muted); }
+  table.reqs code { font-size: 0.87em; }
+  table.reqs td .why { font-size: 0.88em; color: var(--iris-muted); }
+
+  /* The architecture drawing, inlined. Authored at 1000x432 and scaled down on
+     a narrow screen: an auto height keeps its aspect, which a figure of
+     labelled boxes cannot survive losing.
+     NOTE FOR ANYONE EDITING THESE COMMENTS: this whole stylesheet is inside a
+     JS template literal, so a backtick here ends the string and the generator
+     stops parsing. It has happened four times. Write CSS identifiers plainly. */
+  figure.arch { margin: 1.6rem 0; }
+  figure.arch svg { width: 100%; height: auto; max-width: 1000px; display: block; border: 1px solid var(--iris-edge); border-radius: 6px; }
+  figure.arch figcaption { font-size: 0.88rem; color: var(--iris-muted); margin-top: 0.6rem; }
+
   .caveat {
     border-left: 4px solid var(--iris-current); background: var(--iris-wash);
     padding: 0.9rem 1.1rem; margin: 1.6rem 0; font-size: 0.95rem;
@@ -129,15 +226,26 @@
 
   @media (max-width: 640px) {
     h1 { font-size: 1.9rem; }
-    .none { color: var(--iris-muted); font-style: italic; }
-  /* The CDN link is secondary to the one that is known to work. */
-  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
-  .nologo { display: none; }
+    /* .none and .cdn are defined above and were duplicated in here; the
+       copies said nothing the base rules did not. A .nologo display:none was
+       in here too, which HID the "replica, not published under WHO" notice on
+       exactly the screens where a reader is least able to tell a replica from
+       the real site. It shrinks now; it does not disappear. */
+    .nologo { font-size: 0.72rem; max-width: none; }
     .wordmark .iris { font-size: 1.7rem; }
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+    table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
+    table.reqs thead { display: none; }
+    table.reqs td, table.reqs th.rid { border-bottom: none; padding: 0.2rem 0; }
+    table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+    .hero h1 { font-size: 2.6rem; }
+    .searchbar { flex-direction: column; }
+    .searchbar input { border-right: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
+    .searchbar button { border-radius: 0 0 4px 4px; }
+    .sub { flex-direction: column; }
   }
 </style>
 </head>
@@ -196,8 +304,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <strong>INGESTED COPY — not WHO, and not live.</strong>
   This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
   from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
-  <em>by reference</em>: 12 nodes of a 361.55&nbsp;GiB repository, of which
-  <strong>3 items</strong> are held here. The WHO logo is deliberately omitted.
+  <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted.
 </div></div>
 
 <header class="mast"><div class="wrap">
@@ -214,18 +321,20 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
+  <a href="ingestion-notes.html">Ingestion notes</a>
+  <a href="kg-to-portal.html">KG &rarr; portal</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">WHO handbook for guideline development, 2nd ed.</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">WHO handbook for guideline development</span></div></div>
 
 <main class="wrap">
-<h1>WHO handbook for guideline development, 2nd ed.</h1>
+<h1>WHO handbook for guideline development</h1>
 <p>Permanent URI for this item
-  <span class="none">none recorded — ingested from a local copy, not resolved from IRIS</span>
+  <a href="https://iris.who.int/handle/10665/145714">https://iris.who.int/handle/10665/145714</a>
   <span class="state materialized">materialized</span></p>
 
-
+<p class="note" style="margin-left:0">In: 1. Headquarters &rsaquo; Publications</p>
 
 <h2>Files</h2>
 <table class="items">
@@ -237,6 +346,12 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>2.04 MB</td>
   <td><span class="state materialized">materialized</span></td>
 </tr>
+<tr>
+  <td><code>9789241548960-eng-cover.png</code></td>
+  <td>THUMBNAIL</td>
+  <td>0.02 MB</td>
+  <td><span class="state materialized">materialized</span></td>
+</tr>
 </tbody>
 </table>
 
@@ -244,15 +359,15 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <table class="items">
 <thead><tr><th>Where</th><th>Link</th></tr></thead>
 <tbody>
-<tr><td>Upstream, at WHO</td><td>none recorded</td></tr>
+<tr><td>Upstream, at WHO</td><td><a href="https://iris.who.int/handle/10665/145714">https://iris.who.int/handle/10665/145714</a></td></tr>
 <tr><td>Held here, in folio-assistant</td>
     <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/9789241548960_eng.pdf">9789241548960_eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/cat-harness/uploads/9789241548960_eng.pdf">via CDN</a></td></tr>
-<tr><td>In collection</td><td><span class="none">no collection recorded</span></td></tr>
+<tr><td>In collection</td><td><a href="collection-collection-hq-publications.html">Publications</a><br><code>in 1. Headquarters</code></td></tr>
 <tr><td>Ingested text (L1)</td>
     <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections">who-iris/library/9789241548960-eng/sections/</a></td></tr>
 <tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Download 9789241548960-eng.dc.json</a>
       <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/9789241548960-eng.dc.json">via CDN</a>
-      <br><code>qualified Dublin Core · 1.9 KB</code></td></tr>
+      <br><code>qualified Dublin Core · 6.7 KB</code></td></tr>
 </tbody>
 </table>
 
