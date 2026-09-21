@@ -140,7 +140,7 @@ describe("reading a declaration", () => {
     // be stable across a relocation — so a projection must hand it back
     // unchanged. A graph KIND is projected as its type IRI, and the IRI is
     // the identity: `kg` and `cat-harness` are two spellings of
-    // `fa:KnowledgeGraph`, of which only one is current. Reading the
+    // `cat:KGraph`, of which only one is current. Reading the
     // projection back resolves the IRI to the current name.
     //
     // That makes project-and-read-back a MIGRATION PATH for a downstream

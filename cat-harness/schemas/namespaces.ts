@@ -147,7 +147,7 @@ export function prefixForLayer(layer: "cat-bootstrap" | "harness" | "core"): "bs
  * This replaced 93 hand-written per-term template literals
  * across four modules. Each of those was a place to pick the wrong namespace
  * once the namespaces stopped being one, and `cat-harness.ts` alone mints
- * terms in all three layers — `KnowledgeGraph` and `SchemaGraph` are
+ * terms in all three layers — `KGraph` and `SchemaGraph` are
  * cat-bootstrap's, `BeanGraph` is the harness's, `VoiceGraph` is core's — so
  * "which namespace does this file use" has no file-level answer.
  */

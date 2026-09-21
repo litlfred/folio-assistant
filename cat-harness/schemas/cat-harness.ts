@@ -558,7 +558,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   //
   // `kg` remains readable as a deprecated alias — see GRAPH_KIND_ALIASES.
   "cat-harness": {
-    type: termIri("KnowledgeGraph"),
+    // `KGraph` since 2026-09-21, on the owner's naming: Knowledge Graph is
+    // KGraph throughout. This is the EMITTED IRI, so the rename moves the
+    // identity a downstream declaration resolves through — `kg` and
+    // `cat-harness` are two spellings of this one term, and the IRI is what
+    // tells them apart from a third. The namespace is unchanged
+    // (`…/cat-harness/ns#`); only the local name moves.
+    type: termIri("KGraph"),
     renderable: false,
     // Skills, workflows, roles, requirements — the authored instruction bodies
     // and the diagrams they are named from. See the note on `holds`:

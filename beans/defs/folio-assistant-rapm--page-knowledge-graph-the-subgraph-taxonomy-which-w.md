@@ -89,9 +89,15 @@ Measured surface, so the sweep is scoped rather than blind:
 
 Three separate decisions, deliberately not one commit:
 
-- **The IRI** (`termIri("KnowledgeGraph")`, `cat-harness/schemas/cat-harness.ts:561`)
-  is published in the JSON-LD this repository emits. Renaming it changes what
-  consumers see, so it is a versioning decision, not a rename.
+- **The IRI — DONE 2026-09-21, and it was NOT breaking.** `termIri("KnowledgeGraph")`
+  -> `termIri("KGraph")` on the owner's go-ahead. Checked before acting rather
+  than assumed: the namespace is unchanged (both resolve under
+  `…/cat-harness/ns#`, so only the local name moved), and **no committed file
+  carries a graph-kind IRI** — `ns:export` writes to `_kg/ns.jsonld`, a build
+  output. That is exactly what `namespaces.ts` predicted would make it cheap:
+  *"Nothing served `<base>/ns` until this branch, so no consumer holds any of
+  these IRIs."* Once the vocabulary IS published, the same rename would need an
+  alias carried forever, as `kg` -> `cat-harness` needed `GRAPH_KIND_ALIASES`.
 - **The prose** is the 152-file body. It SHOULD be swept as part of the
   consolidation pass (`88mg`) rather than by find-and-replace, because most
   occurrences are incidental lower-case mentions and some are quotations of
