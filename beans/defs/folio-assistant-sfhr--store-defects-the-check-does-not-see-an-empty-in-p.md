@@ -20,7 +20,14 @@ Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS
 todo-manager says a bean carries its Done-when and its blockers; nothing checks that a bean HAS a body, that its title is one line, or that a prose blocker names a live bean. The link check covers front-matter links only.
 
 ## Done when
-- [ ] A check reports: empty body on an open bean, multi-line title, and a "blocked on `<id>`" in prose whose target is scrapped or completed
+- [x] A check reports: empty body on an open bean, multi-line title, and a "blocked on `<id>`" in prose whose target is scrapped or completed
+
+*Ticked IN PLACE 2026-09-21.* `check:bean-bodies` shipped in PR #589 and
+reports all three. A ticked copy had been appended at the foot of this file
+instead — this bean's own subject, in the bean that added the detector for it,
+and invisible to that detector until it learned that a `---` rule ends the
+canonical section too.
+
 - [ ] The three beans above are repaired by their owners (this bean does not edit them)
 
 ---
