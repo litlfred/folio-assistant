@@ -4861,14 +4861,14 @@
     {
       "id": "folio-assistant-xfoh",
       "title": "crdm-detect: add missing exclusions and re-measure against the 71/63 baseline",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T15:07:07Z",
-      "updatedAt": "2026-09-18T15:08:32Z",
+      "updatedAt": "2026-09-21T14:18:21Z",
       "preview": "**BASELINE — measured 2026-09-18 on `main`, command `bun run eval:crdm-detect`.**\nDo not quote as a current answer; re-run it.\n\nAll 27 issues in the repo (whole population, not a sample):\nprecision **71%**, recall **63%**, F1 **67%**.\n\nThe failure pattern is worth more than the score:\n- 7 misses, including **#203 itself** — the issue that asked for the capability\n  — and #1, the framework design.\n",
       "file": "beans/defs/folio-assistant-xfoh--crdm-detect-add-missing-exclusions-and-re-measure.md"
     },

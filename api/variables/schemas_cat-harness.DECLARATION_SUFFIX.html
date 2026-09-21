@@ -11,7 +11,7 @@
 <li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
 <li><a href="" aria-current="page">DECLARATION_SUFFIX</a></li></ul>
 <h1>Variable DECLARATION_SUFFIX<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">DECLARATION_SUFFIX</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;.config.json&quot;</span></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">DECLARATION_SUFFIX</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;.json&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>The suffix every instance declaration carries — <code>&lt;name&gt;.config.json</code>.</p>
 <h2 id="is-gone-and-this-replaced-it" class="tsd-anchor-link"><code>harness.json</code> is gone, and this replaced it<a href="#is-gone-and-this-replaced-it" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>The owner, 2026-09-21: <em>&quot;Excise harness.json.. only
@@ -26,16 +26,48 @@ know which question each answered. They are one file now.</p>
 Under <code>&lt;name&gt;.config.json</code> the FILENAME CARRIES THE NAME, so the two cannot
 disagree — and <a href="../functions/schemas_cat-harness.findDeclarationFile.html" class="tsd-kind-function">findDeclarationFile</a> checks exactly that rather than
 trusting either half.</p>
-<h2 id="what-tells-a-declaration-from-a-plain-config" class="tsd-anchor-link">What tells a declaration from a plain config<a href="#what-tells-a-declaration-from-a-plain-config" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p><strong>A <code>name</code> field.</strong> Both live at the repository root, and both end
-<code>.config.json</code>, so the discriminator has to be inside. A file carrying
-<code>name</code> declares an instance; one without it configures the checkout it sits
-in. <code>cat-harness.config.json</code> at the root is the second kind, which is why
-it is left where it is: it is an INSTANTIATION marker, which is the half of
-the owner's sentence that stays.</p>
+<h2 id="what-tells-a-declaration-from-a-plain-config-the-name-then-the-suffix" class="tsd-anchor-link">What tells a declaration from a plain config — the NAME, then the SUFFIX<a href="#what-tells-a-declaration-from-a-plain-config-the-name-then-the-suffix" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><strong>A <code>name</code> field</strong>, and since 2026-09-21 the suffix as well.</p>
+<p>Until then both ended <code>.config.json</code>, so the only discriminator was inside
+the file: carrying <code>name</code> made it a declaration, lacking one made it a
+config. That worked and was still the thing <code>b5f0</code> §1 warned about — two
+different schemas, with two different readers, sharing one filename shape
+and told apart only by which directory they sat in.</p>
+<p>The owner reversed §1's REPLACE ruling on 2026-09-21 and took its other
+option, the one <code>b5f0</code> recorded as <em>&quot;<code>&lt;name&gt;.json</code> + <code>&lt;name&gt;.config.json</code>
+would at least pair them&quot;</em>:</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>schema</th>
+<th>reader</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;name&gt;.json</code> in the instance</td>
+<td><a href="schemas_cat-harness.CatHarnessDeclarationSchema.html" class="tsd-kind-variable">CatHarnessDeclarationSchema</a></td>
+<td><code>readDeclaration</code></td>
+</tr>
+<tr>
+<td><code>&lt;name&gt;.config.json</code> at the instantiation root</td>
+<td><code>HarnessConfigSchema</code></td>
+<td><code>readHarnessConfig</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>name</code> check STAYS rather than being replaced by the suffix.
+<a href="../functions/schemas_cat-harness.findDeclarationFile.html" class="tsd-kind-function">findDeclarationFile</a> still requires the filename stem to equal the
+declared <code>name</code>, which is what makes a declaration self-identifying: a
+consumer opening a repository it has never seen scans, parses, and takes the
+file that agrees with itself. That is the property migration-plan I.8 asked
+for, and it is the reason the suffix could move at all — nothing here
+derives a filename from a DIRECTORY name, so a clone renamed on disk still
+resolves.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/32495bf769fe9966ca5e127b528237a279d3f1f0/cat-harness/schemas/cat-harness.ts#L114">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:114</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5bca749dd0f1dbfcfb0b05adafa7821220b83c75/cat-harness/schemas/cat-harness.ts#L133">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:133</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -50,7 +82,7 @@ the owner's sentence that stays.</p>
 <div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
 <details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h3>On This Page</h3></summary>
-<div class="tsd-accordion-details"><a href="#is-gone-and-this-replaced-it"><span> is gone, and this replaced it</span></a><a href="#a-fixed-filename-cannot-be-discovered-and-that-was-the-point"><span>A fixed filename cannot be discovered, and that was the point</span></a><a href="#what-tells-a-declaration-from-a-plain-config"><span>What tells a declaration from a plain config</span></a></div></details></div>
+<div class="tsd-accordion-details"><a href="#is-gone-and-this-replaced-it"><span> is gone, and this replaced it</span></a><a href="#a-fixed-filename-cannot-be-discovered-and-that-was-the-point"><span>A fixed filename cannot be discovered, and that was the point</span></a><a href="#what-tells-a-declaration-from-a-plain-config-the-name-then-the-suffix"><span>What tells a declaration from a plain config — the <wbr/>NAME, then the <wbr/>SUFFIX</span></a></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">

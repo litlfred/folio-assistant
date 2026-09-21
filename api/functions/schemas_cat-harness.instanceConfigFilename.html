@@ -16,11 +16,13 @@
 <li class="">
 <div class="tsd-signature tsd-anchor-link" id="instanceconfigfilename"><span class="tsd-kind-call-signature">instanceConfigFilename</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#instanceconfigfilename" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>The declaration filename for an instance of this name.</p>
+<div class="tsd-comment tsd-typography"><p>The CONFIG filename for an instance of this name — <code>&lt;name&gt;.config.json</code>.</p>
 <p>Defined HERE and re-exported by <code>schemas/harness-config.ts</code>, which is where
 it used to live — that module imports this one, so the dependency only runs
-one way and the alternative was two functions spelling one filename. One
-speller, or the config and the declaration drift apart at the first rename.</p>
+one way. The rationale was &quot;one speller, or the config and the declaration
+drift apart at the first rename&quot;; that still holds, but the thing being
+spelled once is now each filename rather than both, and the pair below is
+what keeps them from drifting.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -28,7 +30,7 @@ speller, or the config and the declaration drift apart at the first rename.</p>
 <li><span><span class="tsd-kind-parameter">name</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/32495bf769fe9966ca5e127b528237a279d3f1f0/cat-harness/schemas/cat-harness.ts#L124">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:124</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5bca749dd0f1dbfcfb0b05adafa7821220b83c75/cat-harness/schemas/cat-harness.ts#L157">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:157</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
