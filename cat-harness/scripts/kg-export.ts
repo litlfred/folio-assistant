@@ -2092,6 +2092,15 @@ export function exportIdentity(opts: ExportOptions = {}): {
   canonicalIri?: string;
   /** True when this export is published somewhere other than canonical. */
   isPreview: boolean;
+  /**
+   * The instance directory this export is OF — `opts.instanceRoot` resolved,
+   * or this one.
+   *
+   * Returned for the same reason `base` is: a caller that needs to say which
+   * declaration was consulted would otherwise repeat the `?? ROOT` default,
+   * and a second copy of a default is a second chance to disagree with it.
+   */
+  instanceDir: string;
 } {
   const instance = opts.instanceRoot ?? ROOT;
   const decl = readDeclaration(instance);
@@ -2101,7 +2110,24 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // there would throw on exactly the instances this parameter exists for.
   const pkg = JSON.parse(readFileSync(join(repoRootFor(ROOT), "package.json"), "utf-8")) as { name?: string };
   const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
-  const canonicalBase = (decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  // The publication base belongs to the SITE DOING THE PUBLISHING, not to the
+  // instance whose graph is being exported — so a foreign instance that
+  // declares no `canonicalUrl` of its own falls back to this one's.
+  //
+  // This is the same argument the `stub` line above already makes about
+  // `package.json`, and not applying it here is what took `docs-site.yml` red
+  // on `main` for every push between 11:31 and 14:0x on 2026-09-21 (bean
+  // `40fl`). `cat-bootstrap` declares no `canonicalUrl` DELIBERATELY — it has
+  // no site of its own, as its own declaration says at length — but its graph
+  // is published into THIS site, at `<base>/cat-bootstrap.jsonld`, by the very
+  // step that was failing. So "the exported instance declares no base" was
+  // never the same question as "this document has no base".
+  //
+  // Fallback, never override: an instance that declares its own canonical URL
+  // keeps it, because then the document really does belong somewhere else.
+  const ownCanonical = decl?.canonicalUrl ?? "";
+  const publisherCanonical = ownCanonical ? "" : (readDeclaration(ROOT)?.canonicalUrl ?? "");
+  const canonicalBase = (ownCanonical || publisherCanonical).replace(/\/+$/, "");
   const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
   // No base declared → a document-relative IRI. Deliberately NOT a fabricated
   // absolute one: see makeIri's note on links that look dereferenceable.
@@ -2111,12 +2137,19 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // `makeIri`'s note on links that look dereferenceable.
   const docIri = renderingPath(base, `${stub}.jsonld`);
   const canonicalIri = canonicalBase ? renderingPath(canonicalBase, `${stub}.jsonld`) : undefined;
-  return { stub, docIri, base, canonicalIri, isPreview: canonicalIri !== undefined && docIri !== canonicalIri };
+  return {
+    stub,
+    docIri,
+    base,
+    canonicalIri,
+    isPreview: canonicalIri !== undefined && docIri !== canonicalIri,
+    instanceDir: instance,
+  };
 }
 
 export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   const problems: string[] = [];
-  const { stub, docIri, base, canonicalIri, isPreview } = exportIdentity(opts);
+  const { stub, docIri, base, canonicalIri, isPreview, instanceDir: exportedInstance } = exportIdentity(opts);
 
   // Provenance of the SOURCE. Absent fields are absent, never placeholders:
   // a consumer must be able to tell "this export did not know" from "this
@@ -2138,8 +2171,16 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   if (!docIri.startsWith("http")) {
     // Reported, not silently tolerated: a graph whose nodes have no absolute
     // identity cannot be merged with anyone else's, which is most of the point.
+    //
+    // NAMES THE FILE IT ACTUALLY LOOKED IN, resolved rather than spelled. This
+    // message said `harness.json` until bean `40fl` — a filename excised by
+    // #695 — so the one reader it exists for was sent to a file that is not
+    // there, while the real declaration sat one rename away. A diagnostic that
+    // names a retired path is worse than a bare one: it reads as specific.
+    const looked = declarationPathIn(exportedInstance);
     problems.push(
-      "no canonicalUrl in harness.json and no --base-url given: " +
+      `no canonicalUrl in ${looked ? relative(repoRootFor(ROOT), looked) : `${relative(repoRootFor(ROOT), exportedInstance)} (no declaration found)`}` +
+        ", and none declared by the publishing instance, and no --base-url given: " +
         "@id values are document-relative and will not dereference",
     );
   }
