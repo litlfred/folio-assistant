@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T22:26:25.813Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6d49fcafd6a7804751c6a72b42c859c4a2f46ec4",
-  "sourceCommitSha": "6d49fcafd6a7804751c6a72b42c859c4a2f46ec4",
-  "sourceCommitAt": "2026-09-21T22:24:35Z",
+  "generatedAt": "2026-09-21T22:36:05.008Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7621d527c082f458747b5351b0991fb3e03fa389",
+  "sourceCommitSha": "7621d527c082f458747b5351b0991fb3e03fa389",
+  "sourceCommitAt": "2026-09-21T22:34:06Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 222,
@@ -280,9 +280,9 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 90,
-    "GraphKind": 27,
-    "Directory": 35,
+    "Schema": 91,
+    "GraphKind": 26,
+    "Directory": 34,
     "Asset": 3
   },
   "@graph": [
@@ -1756,7 +1756,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/voice-authoring-guidance.md",
-      "instructionLines": 81,
+      "instructionLines": 92,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2043,7 +2043,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 511,
+      "instructionLines": 537,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3085,7 +3085,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/coordinate.md",
-      "instructionLines": 271,
+      "instructionLines": 340,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -33282,6 +33282,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocabulary"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#schema/voice-skill",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "voice-skill",
+      "title": "A VOICE SKILL — a voice as a first-class member of the knowledge graph.",
+      "module": "schemas/voice-skill.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/voice-skill"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#schema/voices",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "voices",
@@ -33576,14 +33585,6 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LibraryGraph",
       "renderable": false,
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/voices",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "voices",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#VoiceGraph",
-      "renderable": false,
-      "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/todo-feedback",
@@ -34887,18 +34888,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-library"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/voices",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "voices",
-      "path": "voices/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/voices"
-      ],
-      "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/voices",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/voices"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "translation-sources",
@@ -35072,8 +35061,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-turing-v49ph5",
-    "sha": "16a705ba4c030994838269a480c7b52f36e6798c",
+    "sha": "ff63f141dfddd1b23662a952203bc41df8a6c228",
     "pr": "803/merge",
-    "run": "35662527281"
+    "run": "35663351275"
   }
 }
