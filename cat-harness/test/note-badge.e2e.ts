@@ -242,3 +242,100 @@ test.describe("secondaries do not inflate the badge", () => {
     ).toHaveCount(0);
   });
 });
+
+test.describe("R17 — a scheme a link may not carry never reaches an `href`", () => {
+  /** The same notes, with one relation carrying a scheme the renderer refuses. */
+  const HOSTILE = [
+    {
+      ...base,
+      id: "n7",
+      summary: "Attached to four",
+      targetLabel: "sec:four",
+      relations: [
+        { axis: "bean", label: "safe", href: "https://example.invalid/ok" },
+        { axis: "bean", label: "hostile", href: "javascript:alert(1)" },
+        // The classic bypass: the URL parser removes the tab before parsing.
+        { axis: "bean", label: "sneaky", href: "java\tscript:alert(1)" },
+      ],
+    },
+  ];
+
+  test.beforeEach(async ({ page }) => {
+    await page.route("http://badge.test/assets/todos/index.json", (route) =>
+      route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({ $schema: "folio-todo-index/v1", items: HOSTILE }),
+      }),
+    );
+  });
+
+  test("the allowed relation is a link and the refused ones are not", async ({ page }) => {
+    // `TodoRelationSchema.href` is `z.string()`, so the schema permits both.
+    // The renderer is where the difference is made.
+    await page.goto(URL_PAGE);
+    await page.waitForSelector(".fa-sticky-badge");
+    await page.locator(".fa-sticky-badge").first().click();
+    // A SET, because the board and the inline panel each render the note, so
+    // the same allowed link appears twice. What matters is which values reach
+    // an href at all, not how many surfaces show them.
+    const hrefs = await page
+      .locator(".fa-sticky-rel-link")
+      .evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+    expect([...new Set(hrefs)]).toEqual(["https://example.invalid/ok"]);
+  });
+
+  test("a refused relation is still SHOWN, as text", async ({ page }) => {
+    // `pb04` both ways: the edge exists and the reader should see it; what it
+    // must not be is a link that executes.
+    await page.goto(URL_PAGE);
+    await page.waitForSelector(".fa-sticky-badge");
+    await page.locator(".fa-sticky-badge").first().click();
+    // Asserted STRUCTURALLY rather than by visibility: the same note is
+    // rendered on two surfaces and one of them is collapsed, so "is it
+    // visible" answers about a surface rather than about the relation.
+    const dangling = await page
+      .locator(".fa-sticky-rel-dangling")
+      .evaluateAll((els) => els.map((e) => e.textContent));
+    expect(new Set(dangling)).toEqual(new Set(["hostile", "sneaky"]));
+  });
+
+  test("and the reason SAYS which — refused is not the same as unresolved", async ({ page }) => {
+    // Two different facts: the edge resolved to nothing, or it carries a
+    // scheme a link may not carry. Saying the first about the second would be
+    // wrong in the direction that hides a hostile value as a missing one.
+    await page.goto(URL_PAGE);
+    await page.waitForSelector(".fa-sticky-badge");
+    await page.locator(".fa-sticky-badge").first().click();
+    const titles = await page
+      .locator(".fa-sticky-rel-dangling")
+      .evaluateAll((els) => els.map((e) => e.getAttribute("title")));
+    for (const t of titles) expect(t).toContain("a scheme a link may not carry");
+  });
+
+  test("no element anywhere on the page carries a javascript: href", async ({ page }) => {
+    // The broad sweep, because the assertions above only cover the elements
+    // they name and the next `href` is the one nobody thought to check.
+    await page.goto(URL_PAGE);
+    await page.waitForSelector(".fa-sticky-badge");
+    await page.locator(".fa-sticky-badge").first().click();
+    const bad = await page.evaluate(() =>
+      [...document.querySelectorAll("[href]")]
+        .map((e) => e.getAttribute("href") ?? "")
+        .filter((h) => /^\s*[\u0000- ]*j[\u0009\u000A\u000D]*a/i.test(h.replace(/[\u0009\u000A\u000D]/g, ""))
+          && /^javascript:/i.test(h.replace(/[\u0009\u000A\u000D]/g, "").trim())),
+    );
+    expect(bad).toEqual([]);
+  });
+
+  test("and none carries the string `undefined` either", async ({ page }) => {
+    // `setAttribute(k, undefined)` writes "undefined", which is a relative
+    // link to a page called `undefined` — a link to somewhere wrong rather
+    // than no link. `el()` now drops an absent value instead.
+    await page.goto(URL_PAGE);
+    await page.waitForSelector(".fa-sticky-badge");
+    const hrefs = await page.evaluate(() =>
+      [...document.querySelectorAll("[href]")].map((e) => e.getAttribute("href")),
+    );
+    expect(hrefs).not.toContain("undefined");
+  });
+});
