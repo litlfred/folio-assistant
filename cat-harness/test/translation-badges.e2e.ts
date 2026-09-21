@@ -46,6 +46,7 @@ const QA_SRC_URL = "/assets/qa/harness/page.translation.json";
 
 interface Meta {
   lang: string;
+  translationStatus?: string;
   translationQa?: { key: string; src: string; index: string } | null;
   availableLocales?: string[];
   supportedLocales?: string[];
@@ -70,10 +71,12 @@ const PAGE_BADGE =
   `<span class="fa-qa-tag">TR</span>` +
   `<span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p>`;
 
-function harness(meta: Meta, body = ""): string {
+function harness(meta: Meta, body = "", scheme?: "light" | "dark"): string {
   return (
-    `<!doctype html><html lang="${meta.lang}"><head><meta charset="utf-8">` +
-    `<style>${CSS}</style>` +
+    `<!doctype html><html lang="${meta.lang}"` +
+    (scheme ? ` data-fa-scheme="${scheme}"` : "") +
+    `><head><meta charset="utf-8">` +
+    `<style>body{background:${scheme === "light" ? "#fff" : "#27262b"}}${CSS}</style>` +
     `<script type="application/json" id="fa-translation-meta">${JSON.stringify(meta)}<\/script>` +
     `</head><body>` +
     `<div class="main-content" id="main-content"><h1>Harness</h1>${body}</div>` +
@@ -85,12 +88,20 @@ function harness(meta: Meta, body = ""): string {
 async function serve(
   page: Page,
   meta: Meta,
-  opts: { body?: string; index?: unknown; projection?: unknown } = {},
+  opts: {
+    body?: string;
+    index?: unknown;
+    projection?: unknown;
+    scheme?: "light" | "dark";
+  } = {},
 ): Promise<void> {
   await page.route("http://tr.test/**", (route) => {
     const url = route.request().url();
     if (url.endsWith("/page.html")) {
-      return route.fulfill({ contentType: "text/html", body: harness(meta, opts.body) });
+      return route.fulfill({
+        contentType: "text/html",
+        body: harness(meta, opts.body, opts.scheme),
+      });
     }
     if (url.endsWith(QA_INDEX_URL) && opts.index !== undefined) {
       return route.fulfill({ contentType: "application/json", body: JSON.stringify(opts.index) });
@@ -380,5 +391,105 @@ test.describe("a hand-authored page builds its own TR badge", () => {
     );
     await page.locator('.fa-qa-badge[data-qa-key="page.translation"]').click();
     await expect(page.locator(".fa-qa-chip.fa-qa-locale")).toHaveCount(2);
+  });
+});
+
+/**
+ * The badge row takes its colours from the stylesheet, in both schemes.
+ *
+ * Bean `n7vv`. `mountTranslationBadges` built these two badges and the
+ * unverified-translation notice from inline literals — `#14532d`, `#78350f`,
+ * `#1e293b`, `#e2e8f0` — so a dark-green `Swept` chip and a dark-brown
+ * `languages` chip sat on the page's LIGHT main content beside a `TR` chip that
+ * had been themed properly. Never a contrast failure (light text on a dark fill
+ * is fine inside each chip); two of three controls in one row simply ignored
+ * the scheme.
+ *
+ * The ratios below are asserted rather than trusted to a comment. Every number
+ * written beside a token in `docs-ui.css` is computed here from what the
+ * browser actually resolves, so a token edited without re-measuring fails.
+ */
+test.describe("the translation badges are themed, not painted inline", () => {
+  const STATES: Array<[string, string, string[]]> = [
+    ["is-ok", "every supported language", ["ar", "zh", "en", "fr", "ru", "es"]],
+    ["is-partial", "some of them", ["en", "fr"]],
+    ["is-idle", "the source language alone", []],
+  ];
+
+  /** WCAG relative-luminance contrast, from two resolved `rgb(...)` strings. */
+  const CONTRAST = `(a, b) => {
+    const lin = (c) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+    const lum = (s) => {
+      const [r, g, b] = (s.match(/\\d+(\\.\\d+)?/g) || [0, 0, 0]).slice(0, 3).map(Number);
+      const [R, G, B] = [r, g, b].map((v) => lin(v / 255));
+      return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+    };
+    const [hi, lo] = lum(a) > lum(b) ? [lum(a), lum(b)] : [lum(b), lum(a)];
+    return (hi + 0.05) / (lo + 0.05);
+  }`;
+
+  test("no badge carries an inline style attribute", async ({ page }) => {
+    // The literal test. Every colour these used to hold is a token now, and a
+    // regression would most likely arrive as a convenient inline `style`.
+    await serve(page, { lang: "en", availableLocales: ["en", "fr"], translationStatus: "unverified" });
+    for (const sel of [".fa-lang-coverage-badge", ".fa-sweep-badge", ".fa-translation-warning"]) {
+      const el = page.locator(sel);
+      await expect(el).toHaveCount(1);
+      expect(await el.getAttribute("style")).toBeNull();
+    }
+  });
+
+  for (const [cls, why, locales] of STATES) {
+    test(`the coverage badge carries ${cls} when a page is in ${why}`, async ({ page }) => {
+      await serve(page, { lang: "en", availableLocales: locales });
+      await expect(page.locator(".fa-lang-coverage-badge")).toHaveClass(
+        new RegExp(`fa-translation-badge(?=.*\\b${cls}\\b)`),
+      );
+    });
+  }
+
+  for (const scheme of ["light", "dark"] as const) {
+    test(`every state's text clears 4.5:1 on its own fill in ${scheme}`, async ({ page }) => {
+      for (const [, , locales] of STATES) {
+        await serve(page, { lang: "en", availableLocales: locales }, { scheme });
+        const r = await page.evaluate((fn) => {
+          const e = document.querySelector(".fa-lang-coverage-badge") as HTMLElement;
+          const c = getComputedStyle(e);
+          // eslint-disable-next-line no-eval
+          return (eval(fn) as (a: string, b: string) => number)(c.color, c.backgroundColor);
+        }, CONTRAST);
+        expect(r).toBeGreaterThanOrEqual(4.5);
+      }
+    });
+
+    test(`every state's border clears 3:1 on its own fill in ${scheme}`, async ({ page }) => {
+      // 3:1 is the non-text threshold: the border is what separates the chip
+      // from the page, and it is a shape rather than a glyph. Asserted at the
+      // real number — the dark `idle` border sat at 2.92:1 under a comment
+      // claiming 3:1, and was raised rather than the assertion lowered.
+      for (const [, , locales] of STATES) {
+        await serve(page, { lang: "en", availableLocales: locales }, { scheme });
+        const r = await page.evaluate((fn) => {
+          const e = document.querySelector(".fa-lang-coverage-badge") as HTMLElement;
+          const c = getComputedStyle(e);
+          // eslint-disable-next-line no-eval
+          return (eval(fn) as (a: string, b: string) => number)(c.borderTopColor, c.backgroundColor);
+        }, CONTRAST);
+        expect(r).toBeGreaterThanOrEqual(3);
+      }
+    });
+  }
+
+  test("the two schemes resolve to DIFFERENT colours", async ({ page }) => {
+    // Without this the suite would pass on a stylesheet that declared the dark
+    // values once and never overrode them — which is the defect, not the fix.
+    const read = async (scheme: "light" | "dark") => {
+      await serve(page, { lang: "en", availableLocales: ["en", "fr"] }, { scheme });
+      return page.evaluate(() => {
+        const c = getComputedStyle(document.querySelector(".fa-lang-coverage-badge")!);
+        return c.backgroundColor + "|" + c.color;
+      });
+    };
+    expect(await read("light")).not.toBe(await read("dark"));
   });
 });

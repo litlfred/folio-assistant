@@ -1,11 +1,11 @@
 ---
 # folio-assistant-n7vv
 title: 'BADGE PALETTE: the coverage and sweep badges are inline dark-palette literals, beside a themed TR badge on the same row'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T11:38:02Z
-updated_at: 2026-09-21T11:38:02Z
+updated_at: 2026-09-21T13:16:37Z
 parent: folio-assistant-bzyu
 ---
 
