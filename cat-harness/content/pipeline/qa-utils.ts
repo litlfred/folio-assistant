@@ -15,6 +15,7 @@ import {
 import { join, resolve } from "path";
 import { execFileSync } from "child_process";
 import { findDeclarationFile, graphLayer, readDeclaration } from "../../schemas/cat-harness.js";
+import { portableSegment } from "../../schemas/portable-path";
 // The `folio` kind is registered by CORE as a load-time side effect. Without
 // it `graphLayer("folio")` is undefined and the folio directory would read as
 // "layer unknown" — which this walker treats as walkable, so the corpus is
@@ -1688,12 +1689,17 @@ export const SCRIPT_SIDECAR_DIR = "content/pipeline/script-sidecars";
  * Resolve a criterion's script-sidecar path. `repoRoot` should be
  * the absolute path to the repo root; the sidecar lives under
  * `<repoRoot>/content/pipeline/script-sidecars/<id>.script.json`.
+ *
+ * The id is {@link portableSegment}-encoded, because a criterion id is an
+ * identifier rather than a filename and nothing constrains it to be one. Every
+ * caller resolves through here — write and read alike — so the encoding cannot
+ * put the writer and the reader in different places.
  */
 export function scriptSidecarPath(
   criterionId: string,
   repoRoot: string = process.cwd(),
 ): string {
-  return join(repoRoot, SCRIPT_SIDECAR_DIR, `${criterionId}.script.json`);
+  return join(repoRoot, SCRIPT_SIDECAR_DIR, `${portableSegment(criterionId)}.script.json`);
 }
 
 /** Load a script sidecar by criterion id; returns undefined if absent. */
