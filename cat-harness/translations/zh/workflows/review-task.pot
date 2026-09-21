@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: review-task\n"
-"POT-Creation-Date: 2026-09-19T11:52:32.861Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.514Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,77 +14,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/review-task.bpmn:91
+#: skills/workflows/review-task.bpmn:93
 #. Diagram label
 msgid "Accept, or send back"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:54
+#: skills/workflows/review-task.bpmn:56
 #. Diagram label
 msgid "Change to review"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:56
+#: skills/workflows/review-task.bpmn:58
 #. Diagram label
 msgid "Classify what changed"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:74
+#: skills/workflows/review-task.bpmn:76
 #. Diagram label
 msgid "Code node review"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:104
+#: skills/workflows/review-task.bpmn:106
 #. Diagram label
 msgid "code nodes"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:83
+#: skills/workflows/review-task.bpmn:85
 #. Diagram label
 msgid "Consolidate findings"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:99
+#: skills/workflows/review-task.bpmn:101
 #. Diagram label
 msgid "Decision recorded"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:75
+#: skills/workflows/review-task.bpmn:77
 #. Diagram element documentation
 msgid "Descend into Process_CodeReview. The actor takes on the `code-reviewer` lane for this call path only."
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:68
+#: skills/workflows/review-task.bpmn:70
 #. Diagram element documentation
 msgid "Descend into Process_NarrativeReview. The actor takes on the `narrative-reviewer` lane for this call path only."
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:49
+#: skills/workflows/review-task.bpmn:50
 #. Diagram label
 msgid "Editors + authoring agents"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:67
+#: skills/workflows/review-task.bpmn:51
+#. Diagram element documentation
+msgid "Kept a separate lane on purpose, holding the one activity this diagram gives it: the reviewer who classified and judged the change is never the party that accepts it, so consolidated findings cross a lane boundary before anything is decided on them."
+msgstr ""
+
+#: skills/workflows/review-task.bpmn:40
+#. Diagram element documentation
+msgid "Makes exactly one decision on its own — what changed, at Task_ClassifyChange — and for everything after that descends into a subprocess, taking on the narrative- or code-reviewer role for that call path only rather than carrying both statically. A change that is both visits both subprocesses in turn, and neither role widens the other."
+msgstr ""
+
+#: skills/workflows/review-task.bpmn:69
 #. Diagram label
 msgid "Narrative review"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:84
+#: skills/workflows/review-task.bpmn:86
 #. Diagram element documentation
 msgid "One report from however many subprocesses ran. Findings are advice: a reviewer cannot accept the change."
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:103
+#: skills/workflows/review-task.bpmn:105
 #. Diagram label
 msgid "prose"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:57
+#: skills/workflows/review-task.bpmn:59
 #. Diagram element documentation
 msgid "Prose, code nodes, or both. This is the only decision the generic lane makes on its own: everything after it is made inside a subprocess by the role that lane binds."
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:65
+#: skills/workflows/review-task.bpmn:67
 #. Diagram label
 msgid "Prose, code, or both?"
 msgstr ""
@@ -99,7 +109,7 @@ msgstr ""
 msgid "Reviewer / SME"
 msgstr ""
 
-#: skills/workflows/review-task.bpmn:92
+#: skills/workflows/review-task.bpmn:94
 #. Diagram element documentation
 msgid "The editor's lane, kept separate on purpose: the reviewer who judged the change is not the position that accepts it."
 msgstr ""

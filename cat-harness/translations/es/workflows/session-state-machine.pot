@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: session-state-machine\n"
-"POT-Creation-Date: 2026-09-20T07:16:23.293Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.515Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/session-state-machine.bpmn:115
+#: skills/workflows/session-state-machine.bpmn:117
 #. Diagram element documentation
 msgid "A turn is anything that arrives — a person's message, a tool result, a notification. The machine advances on turns rather than on a clock, because a session that has been told nothing has not changed."
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:91
+#: skills/workflows/session-state-machine.bpmn:93
 #. Diagram label
 msgid "Actor established?"
 msgstr ""
@@ -29,72 +29,82 @@ msgstr ""
 msgid "Agent (playing the machine)"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:79
+#: skills/workflows/session-state-machine.bpmn:81
 #. Diagram label
 msgid "An actor picks up"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:144
+#: skills/workflows/session-state-machine.bpmn:146
 #. Diagram element documentation
 msgid "An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `folio:bean` on this step. It records that a claim happened; it does not claim."
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:100
+#: skills/workflows/session-state-machine.bpmn:102
 #. Diagram label
 msgid "Ask who is acting"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:152
+#: skills/workflows/session-state-machine.bpmn:60
+#. Diagram element documentation
+msgid "Classifies every turn into exactly one of three effects at Gateway_TurnEffect — nothing changed, state changed, ending — a fresh judgement each time because a table cannot key on intent and a wrong read is corrected by the next turn. It records that a bean was claimed or an instance closed, at A_UpdateSession, but performs none of those actions itself: the record and the thing it describes are kept deliberately separate."
+msgstr ""
+
+#: skills/workflows/session-state-machine.bpmn:154
 #. Diagram label
 msgid "Close the session"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:83
+#: skills/workflows/session-state-machine.bpmn:73
+#. Diagram element documentation
+msgid "Entered only when Gateway_ActorKnown cannot confirm an actor — the one fact in this whole record that the machine cannot recover by reading the repository — and answered once: the response is recorded so this lane is never re-entered for the same session, which is what keeps asking who is acting from becoming a repeated interruption."
+msgstr ""
+
+#: skills/workflows/session-state-machine.bpmn:85
 #. Diagram label
 msgid "Establish who is acting"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:71
+#: skills/workflows/session-state-machine.bpmn:72
 #. Diagram label
 msgid "Human actor"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:165
+#: skills/workflows/session-state-machine.bpmn:167
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:170
+#: skills/workflows/session-state-machine.bpmn:172
 #. Diagram label
 msgid "nothing changed"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:137
+#: skills/workflows/session-state-machine.bpmn:139
 #. Diagram element documentation
 msgid "Nothing changed, and saying so is the point. A record that stops being written looks exactly like an abandoned session; a refreshed timestamp with no other change says the session is alive and idle, which is a different fact and the commonest one."
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:107
+#: skills/workflows/session-state-machine.bpmn:109
 #. Diagram label
 msgid "Open the session record"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:153
+#: skills/workflows/session-state-machine.bpmn:155
 #. Diagram element documentation
 msgid "Records that the actor stopped. It does NOT resolve beans or complete instances: those outlive the session by design, and a machine that closed them on the way out would be asserting work finished because somebody went away."
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:136
+#: skills/workflows/session-state-machine.bpmn:138
 #. Diagram label
 msgid "Refresh `updatedAt` only"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:159
+#: skills/workflows/session-state-machine.bpmn:161
 #. Diagram label
 msgid "Session closed"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:76
+#: skills/workflows/session-state-machine.bpmn:78
 #. Diagram label
 msgid "Session record"
 msgstr ""
@@ -104,52 +114,52 @@ msgstr ""
 msgid "Session state machine"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:172
+#: skills/workflows/session-state-machine.bpmn:174
 #. Diagram label
 msgid "state changed"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:114
+#: skills/workflows/session-state-machine.bpmn:116
 #. Diagram label
 msgid "Take in the turn"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:84
+#: skills/workflows/session-state-machine.bpmn:86
 #. Diagram element documentation
 msgid "The first step and not a formality: `actor` is the one field of the record that nothing else can supply. Every other field is recoverable by reading the repository; who is acting is not."
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:126
+#: skills/workflows/session-state-machine.bpmn:128
 #. Diagram element documentation
 msgid "THE non-deterministic point, and the reason this process exists. Three branches, and the agent chooses."
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:101
+#: skills/workflows/session-state-machine.bpmn:103
 #. Diagram element documentation
 msgid "The one step that needs a person. Asked ONCE and recorded, never re-asked: `interaction/interaction.json` and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7."
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:174
+#: skills/workflows/session-state-machine.bpmn:176
 #. Diagram label
 msgid "the session is ending"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:125
+#: skills/workflows/session-state-machine.bpmn:127
 #. Diagram label
 msgid "What did the turn change?"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:143
+#: skills/workflows/session-state-machine.bpmn:145
 #. Diagram label
 msgid "Write what changed"
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:108
+#: skills/workflows/session-state-machine.bpmn:110
 #. Diagram element documentation
 msgid "Writes `id`, `actor` and `startedAt`, with `open` and `claimed` empty. An empty `open` is the NORMAL state, not an unfinished one: an agent reading, answering or deciding is in no process at all."
 msgstr ""
 
-#: skills/workflows/session-state-machine.bpmn:167
+#: skills/workflows/session-state-machine.bpmn:169
 #. Diagram label
 msgid "yes"
 msgstr ""

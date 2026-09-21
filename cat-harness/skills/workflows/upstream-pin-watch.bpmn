@@ -22,6 +22,7 @@ The adoption itself is a call activity, so the judgement half lives in its own r
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_UpstreamPinWatch">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
+        <bpmn:documentation>Owns exactly three outcomes and must keep them visibly different: current closes the tracking issue, behind opens or edits it, and UNKNOWN leaves the issue untouched while failing the job anyway — a watchdog that goes blind must never read as clean, so this lane is the one place that distinction cannot be collapsed into a single pass or fail. It hands off at the first sign of judgement: the moment a bump needs adopting, that is Lane_Agent's, never this one's.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Sweep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReadPins</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_QueryUpstream</bpmn:flowNodeRef>
@@ -33,6 +34,7 @@ The adoption itself is a call activity, so the judgement half lives in its own r
         <bpmn:flowNodeRef>Task_TrackIssue</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:documentation>Entered only once Lane_Ci has confirmed a pin is behind and filed the issue, never to make that determination itself: A_PickUp's claim is what stops two sessions adopting the same bump. The judgement of adoption is not drawn here either — Call_Adopt hands it to its own reusable process, so this lane is only the hand-off from mechanical detection to judgement, not the judgement itself.</bpmn:documentation>
         <bpmn:flowNodeRef>A_PickUp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Adopt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Handled</bpmn:flowNodeRef>
