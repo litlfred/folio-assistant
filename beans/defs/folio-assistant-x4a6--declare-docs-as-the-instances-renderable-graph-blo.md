@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T08:00:02Z
-updated_at: 2026-09-19T10:19:49Z
+updated_at: 2026-09-21T21:55:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -103,3 +103,46 @@ Added a docs/<stub> section to skills/folio-core/directory-conventions.md with t
 Deliberately NOT done: creating an empty docs/<other-stub>/ to 'exercise the convention'. A declared-but-absent directory is the dh4f defect — every consumer scans nothing and reports a clean run over it. The convention is exercised for a second stub by site-dir-single-answer.test.ts, which asserts siteDir({stub:'y'}) === 'docs/y'.
 
 Note on the skill's own QA: skill-is-brief and skill-not-a-document were ALREADY failing on main at 448 lines. My first draft took it to 493; trimmed to 462. Both are minor/coverage so they do not gate, but widening a criterion that says 'at this length it is a document' by 46 lines while adding to it is the wrong instinct. Splitting the skill is its own piece of work.
+
+---
+
+## Re-measured 2026-09-21 — the block is STILL REAL, and `docs/` is already declared
+
+Two things had changed and one had not.
+
+**`docs/` IS declared now**, which this bean's first Done-when asks for. It
+arrived 2026-09-20 as the `docs` kind rather than as `folio`, with a second
+`root-docs` entry for the repository-root overlay (owner's ruling,
+2026-09-21). So the bean's title — *"declare docs/ as the instance's
+renderable graph"* — describes finished work, reached by a different route
+than the one it assumed.
+
+**The blocker it names has not moved.** Measured today:
+
+```
+directoryForGraph(cat-harness, "docs") threw:
+  cat-harness/cat-harness.json: directory "folio" declares unknown graph kind
+directoryForGraph(cat-harness, "folio") threw:  (the same)
+```
+
+Reading this instance's declaration through `directoryForGraph` **throws**,
+because the `folio` DIRECTORY ENTRY declares graph kind `folio` and that kind
+is registered by CORE. Every consumer that works today does so by importing
+`schemas/folio-graph-kind.js` first — `folio-optional-axes.test.ts` is the
+worked example. A consumer that does not is one `unknown graph kind` away
+from a throw, and the throw names the `folio` entry rather than the caller.
+
+*Recorded because this session twice found a stated blocker had silently
+dissolved (`zq3f`'s resolver, `hrv2`'s filename). This one had not, and a
+block confirmed current is worth as much as a block found stale — the next
+agent should not have to re-derive either.*
+
+## What is actually left
+
+- [ ] The registration reaching every declaration reader, which is the real
+      subject and is architectural rather than a declaration edit.
+- [ ] `translation-index.ts` taking its root from the declaration:
+      `SITE_DIR = siteDirFor(REPO_ROOT)` resolves to `docs`, and so does
+      `siteDirFor(cat-harness)`. It is already declaration-DERIVED, through
+      `stub` rather than through the `docs` entry — so this item is narrower
+      than it reads, and wants restating rather than doing as written.

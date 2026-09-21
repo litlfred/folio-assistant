@@ -3467,14 +3467,14 @@
     {
       "id": "folio-assistant-lps0",
       "title": "KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:59:22Z",
-      "updatedAt": "2026-09-21T12:37:26Z",
+      "updatedAt": "2026-09-21T20:17:11Z",
       "preview": "`kg-audit.ts` walks a hardcoded `KG_ROOT = join(root, \"skills\")` when it\ncollects skill subjects (`skillFiles()`, line ~578). **Every skill outside\n`skills/` is therefore unaudited** — not reported as unknown, not reported at\nall. It is the `dh4f` shape in the tool whose job is finding that shape.\n\n## Measured, 2026-09-20\n\nThe instance declares several `cat-harness` directories that hold skills\nDI",
       "file": "beans/defs/folio-assistant-lps0--kg-audit-skillfiles-walks-a-hardcoded-skills-so-ev.md"
     },
@@ -4701,6 +4701,20 @@
       "file": "beans/defs/folio-assistant-t4my--panel-chrome-the-kind-declares-its-controls-the-pl.md"
     },
     {
+      "id": "folio-assistant-t6s7",
+      "title": "A bean whose FENCE is mangled is skipped by every check, and a declared-but-absent store reports clean",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:41:44Z",
+      "updatedAt": "2026-09-21T20:48:56Z",
+      "preview": "`t7ao` closed the LOUD case: a bean whose YAML does not parse takes the whole\nstore down, and 92 gates passed over it. This is the QUIET case, and it\nsurvived that fix because the new gate inherits the blind spot from the reader\nit is built on.\n\n`readBeanFiles` in `cat-harness/scripts/bean-store-read.ts` collapses two\ndifferent answers into \"nothing here\", and every one of its four consumers\ninher",
+      "file": "beans/defs/folio-assistant-t6s7--a-bean-whose-fence-is-mangled-is-skipped-by-every.md"
+    },
+    {
       "id": "folio-assistant-t7ao",
       "title": "One bean with unparseable front matter takes down the whole store, and 92 gates passed over it",
       "status": "completed",
@@ -4859,14 +4873,14 @@
     {
       "id": "folio-assistant-ug4r",
       "title": "A lane deliberately bound to NO role is indistinguishable from one nobody got round to",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:17:46Z",
-      "updatedAt": "2026-09-21T19:18:11Z",
+      "updatedAt": "2026-09-21T20:41:59Z",
       "preview": "Found 2026-09-21 working bean `sqtq`, by nearly making the mistake it\ndescribes.\n\n## What happened\n\n157 task-containing lanes, and exactly one resolves to no role: `Actor`, in\n`bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s\n§\"Adding a role\", worked out the `actorKinds` and the `skills`, and was about\nto add it when the end of the file said:\n\n> THE FIFTH LANE IS DELIBERATELY UN",
       "file": "beans/defs/folio-assistant-ug4r--a-lane-deliberately-bound-to-no-role-is-indistingu.md"
     },
@@ -5362,7 +5376,7 @@
         "folio-assistant-cjtm"
       ],
       "createdAt": "2026-09-19T08:00:02Z",
-      "updatedAt": "2026-09-19T10:19:49Z",
+      "updatedAt": "2026-09-21T21:55:00Z",
       "preview": "Found and measured while doing bean `lgwe` (PR #351).\n\n## The gap\n\n`docs/` is this instance's Jekyll site — 150+ pages, `_config.yml`, the whole\npublished documentation — and **nothing declares it**. `cat-harness.json`\ndeclares `docs/assets/qa/` (the witnesses) and nothing else under it. So a\nconsumer asking \"which directories does this instance scan\" is not told about\nthe one a reader actually se",
       "file": "beans/defs/folio-assistant-x4a6--declare-docs-as-the-instances-renderable-graph-blo.md"
     },
