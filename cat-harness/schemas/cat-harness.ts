@@ -2349,7 +2349,22 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   { id: "todos", path: "todos/", dependents: "reproduce", graphKinds: ["todos"] },
   { id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
   { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
-  { id: "voices", path: "voices/", dependents: "reproduce", graphKinds: ["voices"] },
+  // `skills/voices/`, not `voices/`, since 2026-09-21 — a voice IS a skill, and
+  // the four this repository ships moved under `skills/` with the rest of the
+  // `kg` graph (bean `btuv`). The convention stated here and the fallback
+  // `VOICES_DIR` in `schemas/voices.ts` are ONE fact, and they disagreed for a
+  // day: this said `voices/` while that said `skills/voices`.
+  //
+  // The disagreement was harmless only by accident — `resolveDirectories`
+  // drops an entry whose directory is absent, so an undeclared instance with
+  // voices under `skills/` got `undefined` here and fell through to
+  // `VOICES_DIR`. An accident is not a mechanism, and the next reader would
+  // have had to rediscover it to know which of the two was right.
+  //
+  // The LEGACY path is not dropped: `loadVoices` probes `voices/` when the new
+  // one is absent, for the same reason `voiceFilesIn` reads both file layouts
+  // — a downstream folio must not be broken by an upgrade it did not ask for.
+  { id: "voices", path: "skills/voices/", dependents: "reproduce", graphKinds: ["voices"] },
 ];
 
 /**

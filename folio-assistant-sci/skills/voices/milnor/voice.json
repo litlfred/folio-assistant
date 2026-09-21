@@ -1,9 +1,12 @@
 {
-  "$schema": "folio-voice/v1",
+  "$schema": "folio-voice-skill/v1",
   "id": "milnor",
   "title": "Milnor exposition standard",
   "description": "Eight hallmarks of mathematical exposition, scored 0-2 each with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (Annals of Mathematics 59(2), 1954, pp. 177-195). Not a house standard named after him any more: every rule now cites a page of the paper, and three of them exist because the paper CONTRADICTS what this platform's own house voice asserts. 8899 words, 496 sentences, measured 2026-09-19.",
-  "provenance": "house",
+  "instructions": {
+    "file": "SKILL.md",
+    "summary": "Write and review in the Milnor exposition standard voice — 12 rules, each citing the publication it was read from."
+  },
   "sources": [
     {
       "title": "Link Groups (John Milnor, Annals of Mathematics, Second Series, 59(2), March 1954, pp. 177-195)",
@@ -13,12 +16,8 @@
       "year": 1954
     }
   ],
-  "appliesTo": [
-    "prose",
-    "remark",
-    "example",
-    "algorithm"
-  ],
+  "provenance": "house",
+  "overlaySeverity": "minor",
   "rules": [
     {
       "id": "milnor-h1-economy",
@@ -181,14 +180,22 @@
     {
       "id": "milnor-brevity-no-repeats",
       "title": "No content repeated within the block — and the resolve discipline is stricter",
-      "description": "The companion to the eight hallmarks. A repeat may be deleted ONLY where the two occurrences are semantically identical. Where the content differs you may not delete, and you never delete maths — a diagram, an equation or a derivation. Where de-duplication would lose distinct content, keep it, or split the block if that aids explication.",
+      "description": "Milnor does not restate: where a result is needed again he names it and points at it. The cited sentence is the sharpest instance — the assertion about meridian and parallel pairs could have been proved by reproducing the proof of Theorem 1 with the new pairs substituted in, and instead the reader is sent back through the existing proof. The paper does this throughout, invoking numbered results by number (\"by Lemma 7\", \"It follows from Lemma 4\", \"hence by Theorem 5\") rather than re-deriving them.\n\nSo: no content is repeated within a block. THE RESOLVE DISCIPLINE BELOW IS THIS PROJECT'S, NOT MILNOR'S, and is stated here rather than in the citation because it is about editing rather than about the paper — a repeat may be deleted ONLY where the two occurrences are semantically identical. Where the content differs you may not delete, and you never delete maths: a diagram, an equation or a derivation. Where de-duplication would lose distinct content, keep it, or split the block if that aids explication.",
       "category": "structure",
       "severity": "major",
       "source": {
-        "kgRef": "content/pipeline/qa-criteria-registry.ts",
-        "quote": "Companion to expo-milnor-clarity: no content is repeated / duplicated within the block. Resolve discipline is STRICTER than clarity — a repeat may be deleted ONLY when the two occurrences are semantically identical (content unchanged); if the content DIFFERS you may NOT delete, and never delete math content (diagram / equation / derivation)."
+        "libraryId": "milnorlink",
+        "sectionId": "page-181",
+        "pages": "181",
+        "quote": "The proof is easily given: it is only necessary to check this assertion through each stage of the proof of Theorem 1."
       },
       "judgementOnly": true
     }
+  ],
+  "appliesTo": [
+    "prose",
+    "remark",
+    "example",
+    "algorithm"
   ]
 }

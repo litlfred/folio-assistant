@@ -157,6 +157,26 @@ jobs:
       - name: Regenerate the library projection and viewer
         run: bun run library:viz
 
+      # Every voice its instance declares, with the passage each rule was read
+      # from. Same contract as the two viewers above: the committed copy is
+      # browsable on GitHub and the published one must never be its stale half.
+      #
+      # This one carries a claim the others do not. `check-voices.ts` exists
+      # because PR #210 shipped ten plausible rules per voice with
+      # `source: null`, one asserting the opposite of its source — so every
+      # rule now cites a page and a quote, and until this page NONE of those
+      # citations was readable without opening JSON (bean `bu2q`).
+      - name: Regenerate the voices projection and viewer
+        run: bun run voices:viz
+
+      # The handler namespace's own index, at `/<handler>/`. It lists what the
+      # four generators above publish, so it runs AFTER them — not because it
+      # reads their output (it derives from the declarations) but because a
+      # reader arriving at the index should not find it describing a kind the
+      # build has not written yet.
+      - name: Regenerate the handler namespace index
+        run: bun run handler:index
+
       # Same reasoning as the three regenerations above: the committed copy is
       # browsable on GitHub and the PUBLISHED one must never be the stale half
       # of that pair. A stale index here is not cosmetic — it is the navbar
