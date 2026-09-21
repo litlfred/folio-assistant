@@ -95,6 +95,33 @@ Both are the third state, and they are DIFFERENT findings:
 Tiles render in the navbar **and** on the board: one declaration, per-surface
 visibility, never two registries free to disagree about what a tile is.
 
+**On the board they are a strip along the TOP, and it starts OPEN.** Both
+halves are rules rather than defaults to tune:
+
+- **The top, not the bottom, and not in flow.** In flow the strip lands below
+  the cards, and on a board of full-bleed art it reads as absent — which is the
+  failure this placement exists to fix, not a cosmetic one.
+- **Open, because closed reads as absent too.** Tiles a reader must open before
+  they can see what a folio offers have the same effect as tiles that are not
+  there. Sliding the strip up is the reader's act; it is never the starting
+  position.
+- **`sticky`, never `fixed`.** The strip belongs to the FOLIO: it travels with
+  the board and goes when the board goes. A viewport-fixed bar is chrome for
+  the *page*, a different object, and would follow a reader onto content with
+  no tiles at all.
+- **Chrome along the board, not a panel within it.** It carries no card, no
+  content and no second surface. An open window passes **over** it, because
+  chrome frames content and never the reverse.
+- **An empty strip does not render.** A row that opens on nothing is `pb04`'s
+  failure — an affordance that promises and delivers nothing.
+
+**A board tile is SQUARE, and it is the launcher's tile.** Same template, same
+declaration; what differs is the surface's geometry. Square is a measured
+property rather than a declared one — assert the box, not the stylesheet.
+`aspect-ratio` gives a height only while the content fits inside it, and a flex
+line's default `align-items: stretch` un-squares every tile on a row the moment
+one caption wraps. Both failures are invisible in a screenshot.
+
 They are **collapsible**, with the count on the summary so a collapsed list
 still says how much is behind it. That is not polish — a fixed-height sidebar
 with a dozen fat tiles pushes the page nav off the top, which is a navigation

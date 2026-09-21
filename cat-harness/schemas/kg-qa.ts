@@ -326,6 +326,16 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary: "A gateway names a DMN file or decision id that does not exist, so the branch cannot be computed.",
   },
   {
+    id: "variable-performer-declared-alone",
+    applies: ["process"],
+    severity: "major",
+    summary:
+      "A lane declares <folio:role variable=\"true\"/> AND a `ref`. It cannot be both: a lane that names " +
+      "a role has not got a varying performer, and reading either one first would make the other silently " +
+      "have no effect. `n/a` when no lane in the diagram declares a varying performer, which is also how a " +
+      "reader tells a lane that binds no role BY DESIGN from one nobody got round to.",
+  },
+  {
     id: "role-ref-resolves",
     applies: ["process"],
     severity: "critical",

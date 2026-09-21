@@ -405,7 +405,10 @@ describe("kg export", () => {
     const boot = join(repoRootFor(join(import.meta.dir, "../..")), "bootstrap");
     const id = exportIdentity({ instanceRoot: boot });
     expect(id.publishedHere).toBe(true);
-    expect(id.docIri).toBe(`${BASE}/bootstrap.jsonld`);
+    // `<stub>/<stub>.jsonld` since `dyd3`: the owner's URL-space rule puts a
+    // foreign instance under its own segment, and the site-root path this
+    // used to assert is the one that had two `@id`s for one graph.
+    expect(id.docIri).toBe(`${BASE}/bootstrap/bootstrap.jsonld`);
   });
 
   test("a foreign instance's export reports no unread source — the publish step exits 0", async () => {
@@ -421,7 +424,7 @@ describe("kg export", () => {
     // point: the foreign document is published at the publishing site's base,
     // under its own stub. Spelling the URL as a literal here would pass even
     // if the fallback started reading some other instance's declaration.
-    expect(ex["@id"]).toBe(`${BASE}/bootstrap.jsonld`);
+    expect(ex["@id"]).toBe(`${BASE}/bootstrap/bootstrap.jsonld`);
   });
 
   test("no canonicalUrl and no base → no absolute IRI, and it says so", () => {
@@ -571,8 +574,12 @@ describe("every self-URL the export publishes resolves to something published", 
       // satisfy a skill published there. Listed as a literal like everything
       // else in this set: if the deploy step goes, this line makes it a test
       // failure rather than a 404 nobody sees.
-      "bootstrap.jsonld",
-      "bootstrap.json",
+      // `dyd3`: bootstrap's graph moved from the site root to its own segment,
+      // and `gen-bootstrap-graph.ts`'s publish step was retired with it. One
+      // document, one `@id`, at the path the owner's URL-space rule names —
+      // it was published at BOTH until then, 88 subjects under two identities.
+      "bootstrap/bootstrap.jsonld",
+      "bootstrap/bootstrap.json",
       "tool.schema.json",
       "tool-types.schema.json",
       `${stub}/`,
@@ -867,7 +874,7 @@ describe("exporting ANOTHER instance's graph", () => {
   test("it takes the OTHER instance's identity", async () => {
     const { buildExport } = await import("../kg-export.js");
     const e = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
-    expect(e["@id"]).toBe(`${BASE}/bootstrap.jsonld`);
+    expect(e["@id"]).toBe(`${BASE}/bootstrap/bootstrap.jsonld`);
   });
 
   test("and the other instance's CONTENT — not this one's under that name", async () => {
@@ -889,7 +896,10 @@ describe("exporting ANOTHER instance's graph", () => {
     // And named, not merely smaller: a skill bootstrap has and this
     // instance does not.
     const ids = new Set((theirs["@graph"] as Array<{ "@id": string }>).map((x) => x["@id"]));
-    expect(ids.has(`${BASE}/bootstrap.jsonld#skill/discussion`)).toBe(true);
+    // `skillHome` follows `exportIdentity`, so repointing the document moved
+    // every link into it — which is the half of `dyd3`'s option B that needed
+    // no separate change.
+    expect(ids.has(`${BASE}/bootstrap/bootstrap.jsonld#skill/discussion`)).toBe(true);
   });
 
   test("it emits no link to a collector it did not run", async () => {
@@ -917,7 +927,7 @@ describe("exporting ANOTHER instance's graph", () => {
     const tool = (e["@graph"] as Array<Record<string, unknown>>).find(
       (n) => n["@id"] === `${e["@id"]}#tool/discuss`,
     )!;
-    expect(tool.satisfies).toEqual([`${BASE}/bootstrap.jsonld#skill/discussion`]);
+    expect(tool.satisfies).toEqual([`${BASE}/bootstrap/bootstrap.jsonld#skill/discussion`]);
   });
 
   test("a skill THIS instance also declares stays here", async () => {
@@ -931,7 +941,7 @@ describe("exporting ANOTHER instance's graph", () => {
       for (const s of (n.satisfies ?? []) as string[]) {
         if (s.startsWith(`${own}#`)) continue;
         // The only legitimate foreign home in this corpus.
-        expect(s.startsWith(`${BASE}/bootstrap.jsonld#`)).toBe(true);
+        expect(s.startsWith(`${BASE}/bootstrap/bootstrap.jsonld#`)).toBe(true);
       }
     }
   });

@@ -329,25 +329,47 @@
   "nothing discarded" and "could not read the document" are opposite facts.
 -->
 <meta name="fa-fsh-guts-src" content="{{ '/fsh-guts.json' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}">
+<!--
+  ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
+  failure, not a performance one.
+
+  These five are served from stable paths with no hash in the name, so a
+  browser that has the page cached keeps the old CSS and JS until its
+  `max-age` runs out. On the live site that is invisible. On a STAGING
+  preview it is the whole point of the deployment: the reviewer opens the URL
+  they opened an hour ago, gets yesterday's stylesheet, and reports "i dont
+  see changes" — which is indistinguishable from a deploy that never
+  happened, and sends the next hour after the wrong cause. Measured
+  2026-09-21 on this branch: every byte of the change was verified present in
+  the publish ref while the page rendered the previous build.
+
+  `site.time` is the BUILD's timestamp, so the query changes exactly when the
+  bytes might have, and never between two readers of the same build. A
+  content hash would be tighter and needs a pipeline step; this needs none
+  and closes the case that costs review time.
+
+  NOT a cache-busting strategy for third-party assets, and not applied to
+  them: those are versioned in their own URLs already.
+-->
+<link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="{{ '/assets/css/work-plan.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/work-plan.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="{{ '/assets/css/themes.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/themes.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="{{ '/assets/css/avatars.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/avatars.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -364,7 +386,7 @@
 <script type="application/json" id="fa-declared-kinds">{{ site.data.harness.declaredKinds | jsonify }}</script>
 <script src="{{ '/assets/js/vendor/qrcode.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/vendor/qrcode_UTF8.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/docs-ui.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/docs-ui.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying

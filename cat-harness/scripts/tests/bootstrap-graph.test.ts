@@ -1,5 +1,10 @@
 /**
- * The bootstrap graph is committed, current, and a pure function of its inputs.
+ * The bootstrap graph resolves at the URL it names itself by, has exactly one
+ * publisher, and is a pure function of its inputs.
+ *
+ * It said "committed, current" until bean `dyd3` — it has been a build
+ * artefact since 2026-09-20, and `it is NOT committed` below is the test that
+ * says so.
  *
  * @module scripts/tests/bootstrap-graph.test
  */
@@ -10,7 +15,12 @@ import { join, resolve } from "node:path";
 
 import { buildCatBootstrapDocument } from "../gen-bootstrap-graph.js";
 import { isSkillMd } from "../known-skills.js";
-import { repoRootFor, declarationPathIn } from "../../schemas/cat-harness.js";
+import {
+  repoRootFor,
+  declarationPathIn,
+  readDeclaration,
+  artefactStub,
+} from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 // `bootstrap/` is at the REPOSITORY root, not inside this instance — it is
@@ -42,7 +52,7 @@ describe("the document is published where it says it is", () => {
     expect(id.endsWith("/bootstrap/bootstrap.jsonld")).toBe(true);
   });
 
-  test("the site build actually writes it, at that path", () => {
+  test("the site build actually writes it, at that path", async () => {
     // The assertion is against the WORKFLOW, because the failure being
     // guarded is a publication gap rather than a generator bug: the generator
     // worked perfectly for months while nothing published what it produced.
@@ -51,11 +61,47 @@ describe("the document is published where it says it is", () => {
     // runs the generator and writes it somewhere else leaves the `@id` dead
     // just as surely as one that never runs it, and the script name alone
     // cannot tell the two apart.
+    //
+    // That sentence was written here on 2026-09-20 and the assertion did not
+    // honour it — the literal it matched named `gen-bootstrap-graph.ts`. Bean
+    // `dyd3` then found TWO publishers writing a bootstrap graph, disagreeing
+    // about its contents, and retired this one; the site now writes that URL
+    // from `kg-export --instance ./bootstrap`. A script-name match would have
+    // gone red on the change that FIXED the defect it was guarding. Matching
+    // the path, as the comment always said, it goes red only if nothing
+    // writes there.
     const wf = readFileSync(
       join(repoRootFor(ROOT), ".github", "workflows", "docs-site.yml"),
       "utf-8",
     );
-    expect(wf).toContain("gen-bootstrap-graph.ts --out \"./_site/bootstrap/bootstrap.jsonld\"");
+    const id = String((await buildCatBootstrapDocument())["@id"]);
+    // `<base>/bootstrap/bootstrap.jsonld` → `bootstrap/bootstrap.jsonld`, the
+    // path under `_site/`. Taken from the `@id` rather than written out, so
+    // the two sides cannot drift into agreeing about different URLs.
+    const served = new URL(id).pathname.split("/").slice(-2).join("/");
+    expect(siteOutputs(wf)).toContain(`./_site/${served}`);
+  });
+
+  test("exactly ONE step publishes it — the rival generator no longer does", () => {
+    // `dyd3`. Two generators minted the SAME document: this one at
+    // `<base>/bootstrap/bootstrap.jsonld`, and `kg-export --instance
+    // ./bootstrap` at `<base>/bootstrap.jsonld`. Measured 2026-09-21: 88 nodes
+    // each, 85 of them doc-relative, so 85 subjects existed under two
+    // identities no consumer will ever merge.
+    //
+    // Collapsing the PATHS is not what settles it, which is why this test is
+    // about the COUNT rather than about a path: at one URL the two documents
+    // still disagree on 74 of those 88 nodes, so the site would serve whichever
+    // step ran last. The invariant is one publisher, and the failure mode it
+    // guards is somebody re-adding the other because the generator is still
+    // here and still works.
+    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
+      const text = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", wf), "utf-8");
+      expect({ workflow: wf, publishers: bootstrapGraphPublishers(text).length }).toEqual({
+        workflow: wf,
+        publishers: 1,
+      });
+    }
   });
 
   test("it is NOT committed — it is a build artefact now", () => {
@@ -204,6 +250,53 @@ describe("what it contains, and what it admits it did not look at", () => {
     expect((doc["problems"] as string[]).filter((p) => p.includes("bpmn"))).toEqual([]);
   });
 });
+
+/**
+ * The steps in a workflow that publish a bootstrap GRAPH document.
+ *
+ * Two generators can write one: `gen-bootstrap-graph.ts`, and `kg-export.ts`
+ * pointed at that instance. Both are named here because both are real — the
+ * question this answers is how many of them a given build runs, and a check
+ * that knew about only the surviving one could not notice the other coming
+ * back. `ns-export.ts` also writes into `bootstrap/`, and is not one of these:
+ * it publishes the NAMESPACE document, a different subject at a different URL.
+ */
+function bootstrapGraphPublishers(workflowText: string): string[] {
+  const code = workflowText
+    .split("\n")
+    .filter((l) => !/^\s*#/.test(l))
+    .join("\n");
+  return [...code.matchAll(/cat-harness\/scripts\/([a-z0-9-]+)\.ts([^\n]*)/g)]
+    .filter((m) => {
+      const [script, rest] = [m[1]!, m[2] ?? ""];
+      if (!/--out\s/.test(rest)) return false;
+      if (script === "gen-bootstrap-graph") return true;
+      return script === "kg-export" && /--instance\s+\.?\/?bootstrap\b/.test(rest);
+    })
+    .map((m) => `${m[1]}${m[2]}`);
+}
+
+/**
+ * Every `--out` path a workflow writes, with its shell variables expanded.
+ *
+ * The workflow captures stubs — `BOOT_STUB=$(… print-stub.ts ./bootstrap)` —
+ * so a literal-text match cannot see the path at all. Expanding the capture
+ * rather than hardcoding `bootstrap` keeps the assertion pointed at the
+ * DECLARATION: rename the instance and both sides move together, which is the
+ * whole reason the workflow captures it instead of spelling it out.
+ */
+function siteOutputs(workflowText: string): string[] {
+  const stubs = new Map<string, string>();
+  for (const m of workflowText.matchAll(
+    /(\w+)=\$\(bun run cat-harness\/scripts\/print-stub\.ts\s+(\S+)\)/g,
+  )) {
+    const decl = readDeclaration(join(repoRootFor(ROOT), m[2]!));
+    if (decl) stubs.set(m[1]!, artefactStub(decl));
+  }
+  const expand = (v: string): string =>
+    v.replace(/\$\{(\w+)\}/g, (whole, name: string) => stubs.get(name) ?? whole);
+  return [...workflowText.matchAll(/--out\s+"([^"]+)"/g)].map((m) => expand(m[1]!));
+}
 
 function doc_omitted(doc: Record<string, unknown>): string[] {
   return [...(doc["omitted"] as readonly string[])];

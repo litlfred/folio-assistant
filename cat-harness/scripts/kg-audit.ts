@@ -69,6 +69,7 @@ import {
   type KgSubjectKind,
 } from "../schemas/kg-qa.js";
 import {
+  laneBinding,
   readRoleGraph,
   readActors,
   readPermissions,
@@ -287,21 +288,50 @@ async function auditProcess(
   // Lanes → roles.
   const danglingRoleRef: KgFinding[] = [];
   const unboundLane: KgFinding[] = [];
+  /** Lanes that declared a varying performer — counted, never a finding. */
+  const variablePerformer: KgFinding[] = [];
+  /** ...and those that declared one alongside a `ref`, which cannot be both. */
+  const contradictoryPerformer: KgFinding[] = [];
   const laneRole = new Map<string, string>(); // lane id → role id
   for (const lane of m.lanes) {
-    const role = graph ? roleForLane(graph, lane.name, lane.roleRef) : undefined;
-    if (lane.roleRef && graph && !role) {
-      danglingRoleRef.push({ where: lane.id, detail: `binds role "${lane.roleRef}", which is not declared in the role graph.` });
-      continue;
+    // One decision, in `laneBinding`, so the rule is testable without running
+    // this script — which matters because the case it exists for
+    // (`log-message.bpmn`'s `Actor`) is in a NESTED instance this audit does
+    // not read at all. A rule reachable only through a script that never sees
+    // its own subject is a rule nothing checks.
+    const b = laneBinding(graph, lane);
+    switch (b.kind) {
+      case "bound":
+        laneRole.set(lane.id, b.role.id);
+        break;
+      case "dangling":
+        danglingRoleRef.push({
+          where: lane.id,
+          detail: `binds role "${b.ref}", which is not declared in the role graph.`,
+        });
+        break;
+      case "contradictory":
+        contradictoryPerformer.push({
+          where: lane.id,
+          detail: `lane "${lane.name ?? lane.id}" declares BOTH <folio:role ref="${b.ref}"/> and variable="true". A lane that names a role has not got a varying performer; drop whichever is wrong.`,
+        });
+        break;
+      case "variable":
+        // A DECLARED answer, not an absence — bean `ug4r`. Counted so the
+        // `lane-binds-role` number means "nobody got round to it" and nothing
+        // else, and so a sidecar shows the declaration rather than silence.
+        variablePerformer.push({
+          where: lane.id,
+          detail: `lane "${lane.name ?? lane.id}" declares <folio:role variable="true"/> — its performer varies by design, so it binds no role and that is the answer rather than a gap.`,
+        });
+        break;
+      case "unbound":
+        unboundLane.push({
+          where: lane.id,
+          detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in scenarios/roles.json, bind it with <folio:role ref="…"/>, or — if its performer genuinely varies — declare that with <folio:role variable="true"/>.`,
+        });
+        break;
     }
-    if (!role) {
-      unboundLane.push({
-        where: lane.id,
-        detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in scenarios/roles.json, or bind it with <folio:role ref="…"/>.`,
-      });
-      continue;
-    }
-    laneRole.set(lane.id, role.id);
   }
 
   // Does the lane's role carry what its activities demand?
@@ -449,6 +479,13 @@ async function auditProcess(
     "role-ref-resolves": entry(danglingRoleRef, Boolean(graph)),
     "activity-in-lane": entry(noLane, m.lanes.length > 0),
     "lane-binds-role": entry(unboundLane, Boolean(graph) && m.lanes.length > 0),
+    // `n/a` when nothing declares a varying performer — which is also what
+    // makes the declaration VISIBLE in a sidecar: a diagram whose entry is
+    // `pass` rather than `n/a` has a lane that binds no role on purpose.
+    "variable-performer-declared-alone": entry(
+      contradictoryPerformer,
+      variablePerformer.length > 0 || contradictoryPerformer.length > 0,
+    ),
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
     "activity-fulfilment-kind": entry(wrongKind, Boolean(graph) && kindApplicable > 0),
@@ -1378,16 +1415,28 @@ const actors = readActors(ACTOR_DIR);
 
 let graph: RoleGraph | undefined;
 let graphError: string | undefined;
+/**
+ * WHERE the role graph was actually found, for the findings that cite it.
+ *
+ * Not a constant: `scenarios/` is the convention since 2026-09-21 and
+ * `skills/roles/` is what an unmigrated instance still has, so a message
+ * naming either unconditionally is wrong for half the corpus — and a
+ * "roles.json is missing" pointing at the path the reader does not use is
+ * worse than no path at all.
+ */
+let roleGraphPath = "";
 try {
-  // `scenarios/`, not `KG_ROOT` — the role graph moved out of the skills tree
-  // on 2026-09-21 and is a declared directory of its own now. `KG_ROOT` is
-  // still the skills root, which is what every other use of it here wants.
   // declared-path-literal: the convention fallback, at the call site. The
   // role graph moved out of the skills tree on 2026-09-21 and is a declared
   // directory of its own; `KG_ROOT` is the second branch for an instance
   // that has not migrated.
   const scenarios = instanceDirectoryForGraph(root, "scenarios") ?? join(root, "scenarios");
-  graph = readRoleGraph(scenarios) ?? readRoleGraph(KG_ROOT);
+  graph = readRoleGraph(scenarios);
+  roleGraphPath = join(scenarios, "roles.json");
+  if (!graph) {
+    graph = readRoleGraph(KG_ROOT);
+    if (graph) roleGraphPath = join(KG_ROOT, "roles", "roles.json");
+  }
 } catch (e) {
   graphError = e instanceof Error ? e.message : String(e);
 }
@@ -1403,7 +1452,7 @@ const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : []
 for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds));
 reports.push(...(await auditDecisions(processes)));
 if (graph) {
-  reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills));
+  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills));
 }
 reports.push(...auditRequirements(readRequirements(), skills, actors));
 reports.push(...auditSkills());

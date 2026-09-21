@@ -1,31 +1,56 @@
 #!/usr/bin/env bun
 /**
- * Write `bootstrap/bootstrap.jsonld` — the graph an agent loads before it has
- * a harness to build one with.
+ * Build bootstrap's graph locally — `bun run bootstrap:graph`. It is NOT what
+ * the site publishes, and has not been since bean `dyd3`.
  *
  * @module scripts/gen-bootstrap-graph
  *
- * ## Why this file is NOT committed — and why it was, until 2026-09-20
+ * ## It publishes NOTHING — `kg-export --instance ./bootstrap` does
+ *
+ * Two generators wrote this document. This one, at
+ * `<base>/bootstrap/bootstrap.jsonld`, and `kg-export` at
+ * `<base>/bootstrap.jsonld`. **Measured 2026-09-21: 88 nodes each, 85 of them
+ * doc-relative**, so 85 subjects existed under two identities no consumer
+ * merges — only the 3 absolute `cat-harness/ns#graphKind/*` IRIs were shared.
+ * Collapsing the paths would not have settled it: at one URL the two still
+ * disagree on **74 of the 88 nodes** and six top-level fields, so the site
+ * would have served whichever step ran last.
+ *
+ * `kg-export` is the publisher kept, because its output is the target of
+ * every `skillHome` link cat-harness mints. Both publish steps for this
+ * script are gone from `docs-site.yml` and `feature-staging.yml`, and
+ * `bootstrap-graph.test.ts` asserts that exactly one step per workflow
+ * publishes a bootstrap graph.
+ *
+ * **So mind what its tests now prove.** They assert properties of a document
+ * nobody serves, and the two documents differ on most of their nodes. Purity,
+ * ordering, no-absolute-paths and the derived skill set are real properties of
+ * THIS builder; they are not evidence about the published graph. A reader
+ * reaching for "is the bootstrap graph ordered?" wants `kg-export`.
+ *
+ * ## Why the document is NOT committed — and why it was, until 2026-09-20
  *
  * It was committed, and the rationale written here said its reader "has just
  * been pointed at a repository and has nothing installed", so a graph that
  * only appears after a build is one that reader never sees. It cited
  * `bootstrap/README.md` step 2: *"Load `bootstrap/bootstrap.jsonld`"*.
  *
- * **Both halves were false when checked.** The string `jsonld` appears in no
- * prose file under `bootstrap/` — the README sends a cold reader to
- * `workflows/initialize-harness.bpmn` and `skills/bootstrap-kg-navigation.md`,
- * and never to this document. And nothing published it: `docs-site.yml`
- * writes `_site/bootstrap/ns.jsonld`, the NAMESPACE document, and never
- * copied this one, so its own `@id` —
+ * **Both halves were false when checked.** No prose file under `bootstrap/`
+ * tells a reader to load this document — the README sends a cold reader to
+ * `workflows/initialize-harness.bpmn` and `skills/bootstrap-kg-navigation.md`.
+ * (This said *"the string `jsonld` appears in no prose file under
+ * `bootstrap/`"* until `dyd3`, by which point `bootstrap/render/` had landed
+ * with bean `hfkl` and named the document throughout. The narrow claim is the
+ * one the argument needs and the one that survived.) And nothing published
+ * it: `docs-site.yml` wrote `_site/bootstrap/ns.jsonld`, the NAMESPACE
+ * document, and never copied this one, so its own `@id` —
  * `<base>/bootstrap/bootstrap.jsonld` — dereferenced to nothing. That is
  * `blv9`, a link-shaped value that does not resolve, in the artefact whose
  * whole purpose is to be resolved.
  *
  * So it was 52 % of `bootstrap/` by line count, read by no documented
- * instruction, published nowhere, and byte-gated in CI. It is now BUILT AT
- * RENDER TIME into the published site, which is the first time the IRI it has
- * always claimed actually answers.
+ * instruction, published nowhere, and byte-gated in CI. That IRI now answers
+ * — written by the other generator.
  *
  * ## Still pure, and the reason has outlived the gate
  *

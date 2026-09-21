@@ -26,7 +26,7 @@ bun run check:voices          # what this instance ships, and how many rules eac
 The active set is in `<name>.config.json`:
 
 ```json
-{ "voices": { "active": ["who-editorial", "who-guideline-development"] } }
+{ "voices": { "active": ["milnor"] } }
 ```
 
 **An empty or absent list means no voice, and that is a real answer.** This
@@ -48,20 +48,31 @@ Each voice's rules carry three things you need while writing:
 
 ## The rules most often broken by drafting on instinct
 
-Three examples from the voices this instance ships, each chosen because the
-instinct is wrong:
+**Read your active voices before drafting, not at review.** The rules worth
+knowing in advance are the ones where the instinct is wrong — where a writer
+who has never opened the voice will produce something fluent and against house
+style, and the fix ripples through every sentence built on it. A terminology
+rule is the cheapest to honour and the most tedious to retrofit.
 
-- **`-ize`, not `-ise`.** It is widely believed that WHO house style is `-ise`.
-  The Editorial Style Manual says `-ize` is preferred, on the ground of the Greek
-  root. A draft written on the assumption needs every `organisation` changed.
-- **Never "not recommended".** The WHO handbook names both readings — "no
-  recommendation was made" and "do not implement" — and requires "we recommend
-  against intervention X…". A draft that reaches review with "not recommended"
-  in a normative statement has an ambiguity in the one sentence readers will act
-  on.
+One worked example, from the only voice THIS instance ships:
+
 - **"Clearly" is fine in a mathematical block.** The `milnor` voice measured
   fourteen uses of it in the exemplar paper, every one routing the reader away
   from a routine verification. Do not write around it to appease the checker.
+
+Two further examples stood here, both drawn from another instance's voices, and
+they are gone because this is the PLATFORM. A voice's rules belong to the
+instance that derived them, where each one carries the publication, page and
+verbatim quote it was read from. Restating a rule here reproduced it **without
+its citation**, in a subsystem whose whole argument is that a voice is auditable
+rather than asserted — and `check-voices.ts` exists because PR #210 shipped ten
+plausible rules with `source: null`, one of which asserted the opposite of what
+its own source says. The uncited copy is the one a reader meets first, and it is
+the one nothing can check.
+
+So: to learn which of your voices' rules are counterintuitive, open the voices.
+`bun run check:voices` lists what this instance ships and how many rules each
+carries.
 
 ## When two active voices disagree
 

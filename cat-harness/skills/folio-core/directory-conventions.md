@@ -436,7 +436,7 @@ declares nothing it does not have. A `library` entry appears in `who-iris`'s
 declaration only when the corpus moves there, because a declared-but-absent
 directory makes every consumer scan nothing and report a clean run over it.
 
-## Naming — one fixed config, stub-named artefacts (STRICT)
+## Naming — a self-identifying declaration, stub-named artefacts (STRICT)
 
 The declaration carries three publication fields beside `name`:
 
@@ -489,14 +489,26 @@ would be false on arrival. **So the type declares its filename, and the
 convention is that rule rather than a spelling.** What a new type copies is
 *say what your marker is called*, not a pattern to imitate.
 
-The two alternatives were considered and rejected on measurement:
-`<slug>.config.json` everywhere would rename what WHO owns; bare `<slug>.json`
-collides with `<stub>.json`, which is already the published KG-as-JSON alias,
-and would make the declaration un-findable — `findInstanceRoot` walks up
-testing one fixed filename per level, and no declaration in this tree carries a
-`$schema` to glob for, while `{name, directories}` is the shared shape of the
-root declaration, `beans.json` and `todos.json` alike, so duck-typing returns
-`beans/` as an instance root **silently**.
+The two alternatives were considered and rejected on measurement, **and the
+second rejection was later reversed** — recorded rather than rewritten, because
+the objection was real and what answered it is the interesting part.
+
+`<slug>.config.json` everywhere would rename what WHO owns. That still holds.
+
+Bare `<slug>.json` was rejected as **un-findable**: `findInstanceRoot` walked up
+testing one fixed filename per level, no declaration carried a `$schema` to glob
+for, and `{name, directories}` is the shared shape of the root declaration,
+`beans.json` and `todos.json` alike — so duck-typing would return `beans/` as an
+instance root **silently**.
+
+**Both halves were answered by making the file identify itself.**
+`findDeclarationFile` admits a `*.json` only when its `name` field EQUALS its
+own filename stem, and `findInstanceRoot` now calls it rather than testing a
+word agreed in advance. Discovery survives, because a consumer matches on the
+file agreeing with itself. And the duck-typing worry closes on the same rule:
+`beans/beans.json` declares `"name": "folio-assistant"` against the stem
+`beans`, so it does not match and `beans/` is not an instance root — refused by
+what the file says it is, not by a path exception.
 
 **At the graph-kind level this is `GraphKindDef.declarationFile`**, and it is
 already load-bearing rather than decorative. `declaredKinds` computed a nested

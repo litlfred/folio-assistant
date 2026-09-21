@@ -291,6 +291,15 @@ jobs:
       # the TypeScript job above already runs. Removing a check whose
       # coverage lives elsewhere is fine; removing one and saying so is what
       # stops the next reader reinstating it.
+      #
+      # ONE QUALIFICATION, added by bean `dyd3`: `buildCatBootstrapDocument()`
+      # is no longer what the site publishes at that URL —
+      # `kg-export --instance ./bootstrap` is, and the two documents differ on
+      # 74 of their 88 nodes. Those assertions are properties of a builder
+      # that publishes nothing. `kg-export.test.ts` is where the published
+      # document's are, and the two guards in `bootstrap-graph.test.ts` that
+      # DO reach the site are the ones about publication: the path the `@id`
+      # names, and exactly one publisher per workflow.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
@@ -378,6 +387,23 @@ jobs:
       # extraction, which would have broken 28 citations silently.
       - name: voice citations resolve
         run: bun run check:voices
+
+      # The other half of the same claim: the rules are cited, AND the
+      # instruction body beside them does not restate them uncited.
+      #
+      # `schemas/voice-skill.ts` said "`check:voice-skills` enforces it" from
+      # the day it was written, and four `SKILL.md` files repeat the claim in
+      # their own prose — a promise made in five places and kept in none until
+      # this gate (bean `n8br`). An absent gate nobody was told about leaves a
+      # reviewer reading carefully; an absent gate a doc comment promises
+      # leaves them reading PAST.
+      #
+      # Measured over the four voices here, 37 rules: zero findings. A check
+      # that fires on every subject is wrong and so is one that can never
+      # fire, so it is falsified rather than trusted — five mutations, each
+      # caught, in `tests/voice-skills.test.ts`.
+      - name: voice skills do not restate their own rules
+        run: bun run check:voice-skills
 
       # Workflow YAML GitHub will actually parse, and no attacker-controlled
       # expression interpolated into a run body.
@@ -862,6 +888,33 @@ jobs:
       # omission, every time.
       - name: generated docs pages are current
         run: bun run cat-harness/scripts/gen-docs-pages.ts --check
+
+      # GATED, unlike the two projections below, and the difference is the
+      # INPUT SET — which is the standard those two are excused against.
+      #
+      # `schema:viz` and `library:viz` derive from the WHOLE repository, so any
+      # branch alive for more than a few minutes finds them stale against the
+      # merge ref and a red means "somebody else merged". The voices projection
+      # derives from the declared `voices` directories and the declarations
+      # naming them: four voices in two instances, changed when somebody edits
+      # a voice. A red here means a voice was added or a rule was edited and
+      # the page was not regenerated — an omission by the author of the diff,
+      # every time, which is exactly the test stated twenty lines above.
+      - name: voices projection and viewer are current
+        run: bun run voices:viz:check
+
+      # The handler namespace's own index. Gated on the same ground as the
+      # voices projection: it derives from the DECLARATIONS (which kinds each
+      # instance declares, and whether a `coverage.visualiser` names a
+      # published path), not from the whole repository — so a red means
+      # somebody changed a declaration and did not regenerate.
+      #
+      # It is also the one page a navbar tile points at: `siteLinks` publishes
+      # `kg` as `/<stub>/`, and `verifySiteLinks` reports `unknown` rather
+      # than `dead` on an unbuilt tree, so nothing else here would notice it
+      # going missing until production (bean `8h42`).
+      - name: handler namespace index is current
+        run: bun run handler:index:check
 
       # NOT GATED: the schema and library projections.
       #
