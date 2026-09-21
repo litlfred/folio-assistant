@@ -23,8 +23,8 @@ Evidence gathered 2026-09-21 from WorldHealthOrganization/smart-trust gh-pages (
 Graph kind settled from `content-context-and-state-graphs`: an ingested index is produced FROM A SOURCE and would be REGENERATED rather than re-authored -> `holds: "derived"`. Precedent for catalogue-by-reference is `who-iris/` (1,057,223 known, three materialized).
 
 ## Done when
-- [ ] a reusable artefact-index schema type exists, not smart-trust-specific
-- [ ] an ingest pipeline points at an IG and reconstructs its index from published output
-- [ ] a skill governs the pipeline (which IGs qualify, what to read, what to refuse)
-- [ ] smart-trust/ exists as the first ingested subject and validates the schema
-- [ ] gates green
+- [x] a reusable artefact-index schema type exists, not smart-trust-specific
+- [x] an ingest pipeline points at an IG and reconstructs its index from published output
+- [x] a skill governs the pipeline (which IGs qualify, what to read, what to refuse)
+- [x] smart-trust/ exists as the first ingested subject and validates the schema
+- [x] gates green
