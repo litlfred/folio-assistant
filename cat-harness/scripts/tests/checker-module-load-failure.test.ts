@@ -33,18 +33,39 @@ const evaluations = (): number =>
 const evaluations2 = (): number =>
   (globalThis as { __throwsAtTopLevelEvaluations2?: number }).__throwsAtTopLevelEvaluations2 ?? 0;
 
-describe("the platform behaviour this exists for", () => {
-  test("the second import RESOLVES, with a half-initialised namespace", async () => {
+describe("what a failed import does, and what it does NOT do", () => {
+  test("the module is evaluated ONCE, whatever the second import reports", async () => {
     const before = evaluations();
     await expect(import(FIXTURE)).rejects.toThrow("this checker module cannot load");
     expect(evaluations()).toBe(before + 1);
 
-    // The claim under test. If this ever starts rejecting, the caching below
-    // becomes belt-and-braces rather than load-bearing — which is worth
-    // knowing, so the test says so rather than tolerating either answer.
-    const stale = (await import(FIXTURE)) as Record<string, unknown>;
-    expect(evaluations()).toBe(before + 1); // not re-evaluated
-    expect(() => Object.keys(stale)).toThrow(/before initialization/);
+    // THE SECOND IMPORT IS WHERE RUNTIMES DIFFER, and the first version of
+    // this test asserted one answer: on Bun 1.3.11 it RESOLVES, handing back
+    // the namespace of a module whose body aborted partway, over which
+    // `Object.keys` throws. CI runs `bun-version: latest` and it does not, so
+    // the test went red there while passing locally — a platform quirk pinned
+    // as if it were a contract.
+    //
+    // So the quirk is OBSERVED and the contract is asserted. Both are real
+    // facts; only one of them is ours.
+    let resolved: Record<string, unknown> | undefined;
+    try {
+      resolved = (await import(FIXTURE)) as Record<string, unknown>;
+    } catch {
+      // Re-rejected. The kinder behaviour, and the one the cache makes moot.
+    }
+
+    // TRUE EITHER WAY, and it is the whole reason `loadCheckerModule` caches:
+    // a module that threw is never re-run, so the second caller cannot get a
+    // better answer by asking again — only a worse one, or the same error.
+    expect(evaluations()).toBe(before + 1);
+
+    if (resolved !== undefined) {
+      // This runtime hands back the half-built namespace. `readModule` is what
+      // keeps that a third state rather than a false "exports neither".
+      expect(() => Object.keys(resolved)).toThrow(/before initialization/);
+      expect(readModule(resolved)).toBeUndefined();
+    }
   });
 });
 
@@ -74,15 +95,8 @@ describe("loadCheckerModule", () => {
   });
 });
 
-describe("the poisoned namespace the cache exists to avoid", () => {
-  test("readModule declines to read it, so nothing downstream guesses", async () => {
-    // Reachable exactly as the sweep reaches it: some earlier caller in this
-    // process has already imported the broken module twice, so `import()`
-    // resolves and the namespace cannot be enumerated. `readModule` is what
-    // keeps that a third state; the cache above is what keeps discovery from
-    // reaching it in the first place, and the two are not the same fix.
-    const stale = (await import(FIXTURE)) as Record<string, unknown>;
-    expect(() => Object.keys(stale)).toThrow(/before initialization/);
-    expect(readModule(stale)).toBeUndefined();
-  });
-});
+// The poisoned-namespace case lived here and has been removed rather than
+// made conditional: it needed the runtime to PRODUCE such a namespace, which
+// not every Bun does. `qa-checker-discovery.test.ts` covers `readModule`
+// against one built by hand — same property, no platform dependency — and the
+// branch above still exercises the real thing wherever the runtime offers it.
