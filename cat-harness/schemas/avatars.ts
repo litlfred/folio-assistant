@@ -64,16 +64,29 @@ export interface Avatar {
 export const AVATARS: Readonly<Record<string, Avatar>> = {
   // ── The layer identities the owner named ───────────────────────────
   //
-  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*. Two of
-  // these three are NOT graph kinds this repo declares — the split (#223) has
-  // not happened, so `cat-bootstrap` and `folio-assist-core` exist as layers in
-  // the namespace and as nothing in `harness.json`.
+  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*.
   //
-  // They are here anyway, and `check-avatar-coverage` reports them as
-  // `avatar-has-kind` findings rather than pruning them. Drawing art for a
-  // layer before its directory exists is the right way round: the alternative
-  // is a split that lands with three blank avatars, discovered by a reader.
-  // The finding is the honest record that they are ahead of the declaration.
+  // THIS TABLE SERVES TWO KEY SPACES, and the entries below are the second
+  // one. `kind-fan` and `gen-avatars-css` key by GRAPH KIND; `harness-tiles`
+  // calls `avatarFor(decl.name)` — an INSTANCE's declared name. Most entries
+  // are kinds; these three are instances, which is why `check-avatar-coverage`
+  // reports them as "an avatar for a kind this instance does not declare" and
+  // will go on doing so. That finding is correct about the kind axis and says
+  // nothing about the instance axis, which nothing currently checks. Bean
+  // `4kj4` is where instance coverage belongs; it is not this table's to
+  // assert.
+  //
+  // THE COMMENT HERE WAS STALE AND COST THE INSTANCE ITS FACE. It read: *"the
+  // split (#223) has not happened, so `cat-bootstrap` and `folio-assist-core`
+  // exist as layers in the namespace and as nothing in `harness.json`"*. Both
+  // halves were false by 2026-09-21 — `cat-bootstrap/harness.json` and
+  // `folio-assistant-core/harness.json` both exist and both declare a `name`
+  // — and the second is not even the name that was adopted. Measured on
+  // 2026-09-21: `avatarFor("folio-assistant-core")` returned GENERIC, the
+  // question mark that means "no avatar is declared for this", while the leaf
+  // of paper below sat in the table under a spelling nothing carries. A key
+  // nobody can reach is worse than a missing one: the coverage check counted
+  // it as declared. Bean `hso8`, whose rename this completes.
   "cat-bootstrap": {
     // A seed with a shoot: the graph an agent reads before it knows anything.
     glyph: "M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z",
@@ -86,7 +99,10 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
   },
-  "folio-assist-core": {
+  // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
+  // and name both spelled in full, per the owner's ruling of 2026-09-20 and
+  // as `folio-assistant-core/harness.json` records against itself.
+  "folio-assistant-core": {
     glyph: "M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h5",
     tone: 212,
     reads: "a leaf of paper with lines — the folio itself",
@@ -120,6 +136,22 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M5 7h5v5H5zM14 12h5v5h-5zM10 9h4v6",
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
+  },
+  // THE BOARD AND ITS LAYOUT. Two glyphs because they are two kinds, and the
+  // pair says the split: a frame with cards ON it, and the same frame with the
+  // cards' POSITIONS marked. A reader who sees them side by side should be
+  // able to guess which is the semantic model and which is the interchange.
+  boards: {
+    // a frame with two cards on it — a diagram OF a folio
+    glyph: "M3 5h18v14H3zM7 9h4v6H7zM14 9h3v3h-3z",
+    tone: 205,
+    reads: "a framed board carrying two cards — a diagram of a folio",
+  },
+  "board-positions": {
+    // the same frame, with crosshairs where the cards go — where, not what
+    glyph: "M3 5h18v14H3zM9 12h.01M15 10h.01M9 9v6M15 7v6M6 12h6M12 10h6",
+    tone: 205,
+    reads: "a board marked with positions — where each note was drawn",
   },
   todos: {
     glyph: "M5 4h11l3 3v13H5zM16 4v3h3M8 12l2 2 4-4",

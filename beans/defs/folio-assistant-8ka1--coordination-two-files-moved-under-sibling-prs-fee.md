@@ -1,7 +1,7 @@
 ---
 # folio-assistant-8ka1
 title: 'COORDINATION: two files moved under sibling PRs'' feet — gen-bootstrap-graph.ts and repo-partition.ts'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T16:26:22Z
@@ -93,3 +93,47 @@ condition down in advance, and it has come true.
 Whoever owns it: the condition is met and the scrap is one command.
 
 _Recorded by session_017PqeiS4JYySSWGAYLedmus, which merged both PRs._
+
+
+## DISCHARGED 2026-09-21 — both warned-about PRs have landed
+
+This bean is a NOTICE, not work. Its value is entirely in reaching a sibling
+before that sibling's merge, so it expires when the merges happen rather than
+when somebody does something.
+
+| | |
+|---|---|
+| **#542** (`claude/wonderful-gauss-7frcrw`) — edits `gen-bootstrap-graph.ts` at its old path | **merged 2026-09-20T18:55:19Z** |
+| **#544** — the `repo-partition.ts` split | merged, as this bean already recorded |
+
+Both moves verified on the tree rather than taken from the note above:
+
+```
+gen-bootstrap-graph.ts        absent
+gen-cat-bootstrap-graph.ts    present
+partition/engine.ts           present
+partition/instance-rules.ts   present
+repo-partition.ts             present   (the CLI, re-exporting)
+```
+
+And the distinction this bean was careful to draw held: **`pages-bootstrap.ts`
+is still `pages-bootstrap.ts`** — the GitHub *Pages* bootstrap, a different
+word, which a wholesale rename would have swept along with the other 87 files
+carrying only the verb.
+
+### Worth keeping rather than deleting
+
+The mechanism is the part with a future: **a file move is invisible from the
+branch it affects.** A sibling reading its own diff sees a file it edited, not
+that the file has a different name on `main`. This bean was written in a third
+bean neither affected PR was editing, so the warning could not arrive inside
+the diff it was warning about.
+
+That is the same blind spot this session hit five times from the other side —
+building something a sibling had already landed. The guard for the read
+direction is now
+[`bean-coordination`](../../cat-harness/skills/folio-core/bean-coordination.md)
+§"Re-derive from the REMOTE"; this bean is the WRITE direction, and there is
+no skill line for it yet. Worth one if a third instance appears: **when you
+move or rename a file a sibling branch edits, say so in a bean neither branch
+is touching.**

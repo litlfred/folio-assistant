@@ -7,7 +7,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
 
 import { tools } from "../../tools/index.js";
 import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
@@ -177,8 +177,21 @@ describe("tools", () => {
     // Missed 2 real ones: `cat-bootstrap/skills/` holds skills DIRECTLY rather
     // than in packages, and a scan of a root's subdirectories never looks at
     // the root. Both read as dangling, which is how this was found.
-    expect(s.has("confirm-harness")).toBe(true);
-    expect(s.has("log-message")).toBe(true);
+    //
+    // THOSE TWO NO LONGER BELONG TO THIS INSTANCE, and the assertion is
+    // inverted rather than deleted — bean `pve3`, the owner's ruling of
+    // 2026-09-21 ("neither"). `cat-harness/harness.json` no longer declares
+    // `cat-bootstrap/skills/`, so cat-bootstrap's skills are published through
+    // its OWN graph and this instance does not overlay them. Deleting the
+    // lines would lose the regression they were written for; flipping them
+    // keeps it, because the failure mode being guarded is a SCAN that
+    // disagrees with the declaration, in either direction.
+    expect(s.has("confirm-harness")).toBe(false);
+    expect(s.has("log-message")).toBe(false);
+    // And they are still REACHABLE, which is what makes the removal a
+    // relocation rather than a loss. `check-tools`' `satisfiableSkills` reads
+    // every declared instance for exactly this reason.
+    expect(canonicalKnownSkills(join(INSTANCE, "../cat-bootstrap")).has("log-message")).toBe(true);
   });
 
   test("io IRIs follow the publication base, not the declaration", async () => {

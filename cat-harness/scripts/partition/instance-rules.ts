@@ -427,6 +427,8 @@ export const RULES: Rule[] = [
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
       "scripts/gen-bootstrap-schemas.ts",
+      "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
+      "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
@@ -567,6 +569,11 @@ export const RULES: Rule[] = [
       // Who else is working THIS repository — a fact about the forge and this
       // checkout, not about any folio's material.
       "scripts/sibling-sessions.ts",
+      // Its sibling: which sessions are WAITING on a person. Harness by
+      // subject and by dependency -- a session is a fact about this checkout
+      // and the forge, and a folio has no sessions. Bean `rq8s`.
+      "scripts/check-session-staleness.ts",
+      "src/sessions/staleness.ts",
       "scripts/check-agents-xref.ts",
       // The bean reader — HARNESS by subject as well as by dependency. It
       // reads the agent work plan, which `AGENTS.md` places in the
@@ -583,6 +590,7 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
       "scripts/check-ready-to-close.ts",
       "scripts/check-waivers.ts",
@@ -1058,6 +1066,23 @@ export const RULES: Rule[] = [
       // reason nobody can re-check, which is why this says so rather than
       // quietly keeping the old sentence.
       "scripts/todos.ts",
+      // The default boards, and CORE rather than harness — which is the
+      // checker's finding, not a preference. It was classified harness first,
+      // on the reasoning that it asks which INSTANCES are instantiated and
+      // which are above the floor. `check:partition` answered with two
+      // wrong-direction edges: it imports `schemas/board.ts` and
+      // `scripts/todos.ts`, both core, and the harness layer may not depend on
+      // core. The imports were right and the classification was wrong — what
+      // it PRODUCES is folio content, a board, whose type core owns. The
+      // instance questions are how it decides WHICH folios, not what it makes.
+      "scripts/gen-default-boards.ts",
+      // The linear floor's renderer, and CORE for the reason
+      // `state-visualizer.ts` records two entries down: it is a RENDERER, and
+      // rendering is core's. Its only import is `schemas/todo-index.ts`, its
+      // subject is a folio's own notes, and what it produces is the artefact a
+      // reader gets when JavaScript never runs. `gen-docs-pages.ts` calling it
+      // is core calling core; nothing about it is instance machinery.
+      "scripts/todo-listing.ts",
       // The state visualiser, and it is core for the reason `gen-landing-data.ts`
       // records about itself: it is a RENDERER, and rendering is core's.
       //

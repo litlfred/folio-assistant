@@ -281,6 +281,22 @@ jobs:
           bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
+          # cat-bootstrap's OWN graph, as its own document.
+          #
+          # Not decoration: this instance's graph LINKS INTO it. Bean `pve3`,
+          # the owner's ruling of 2026-09-21 ("neither"), removed
+          # `cat-bootstrap/skills/` from cat-harness's declared directories, so
+          # a Tool here that satisfies a skill there now mints
+          # `cat-bootstrap.jsonld#skill/<id>`. Publishing the target is what
+          # keeps that an IRI rather than a 404 with an `@id` in front of it,
+          # and `kg-export.test.ts` fails if this step is removed.
+          #
+          # `--instance` builds the GENERIC collectors against that root, never
+          # this instance's content under that name — see `buildExport`.
+          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-bootstrap)
+          bun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out "./_site/${BOOT_STUB}.jsonld"
+          cp "./_site/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}.json"
+
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
           # The export above STRIPS `fsh-guts` from every graph it publishes,

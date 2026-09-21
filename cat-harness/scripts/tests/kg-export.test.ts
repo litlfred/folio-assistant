@@ -90,7 +90,13 @@ describe("kg export", () => {
   test("the document identifies itself — @id, @type, provenance", () => {
     // smart-base's pattern: the document IRI is the URL it is served from, so
     // fetching an `@id` returns the document that defines it.
-    expect(EXPORT["@id"]).toBe(`${BASE}/folio-assistant.jsonld`);
+    //
+    // DERIVED from the declaration rather than restating the stub. This read
+    // `${BASE}/folio-assistant.jsonld` and went red on the 2026-09-21 stub
+    // rename — correctly, but for the wrong reason: the property here is that
+    // the document names ITSELF, which holds whatever the stub is. The value
+    // is pinned once, in the naming test below, where it IS the subject.
+    expect(EXPORT["@id"]).toBe(`${BASE}/${artefactStub(readDeclaration(join(import.meta.dir, "../.."))!)}.jsonld`);
     expect(EXPORT["@type"]).toBe("http://www.w3.org/ns/prov#Entity");
     expect(EXPORT.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
   });
@@ -287,7 +293,14 @@ describe("kg export", () => {
     // it from the directory finds nothing when the repo is cloned elsewhere.
     const decl = readDeclaration(join(import.meta.dir, "../.."))!;
     const stub = artefactStub(decl);
-    expect(stub).toBe("folio-assistant");
+    // `cat-harness` since 2026-09-21, on the owner's ruling (issue #649).
+    // While this read `folio-assistant` it was the same string the REPOSITORY
+    // ROOT instance carries as its `name`, and `artefactStub` falls through to
+    // `name` when no stub is declared — so both instances resolved to
+    // `<base>/folio-assistant.jsonld`. Two vocabularies, one path. The literal
+    // is pinned HERE and derived everywhere else, because this test is the one
+    // whose subject is the name itself.
+    expect(stub).toBe("cat-harness");
     expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/${stub}.jsonld`);
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/${stub}.schema.json`);
 
@@ -438,6 +451,13 @@ describe("every self-URL the export publishes resolves to something published", 
       `${stub}.jsonld`,
       `${stub}.json`,
       `${stub}.schema.json`,
+      // cat-bootstrap's own graph, published by the same step because THIS
+      // graph links into it — `pve3`'s "neither" ruling made a Tool here
+      // satisfy a skill published there. Listed as a literal like everything
+      // else in this set: if the deploy step goes, this line makes it a test
+      // failure rather than a 404 nobody sees.
+      "cat-bootstrap.jsonld",
+      "cat-bootstrap.json",
       "tool.schema.json",
       "tool-types.schema.json",
       `${stub}/`,
@@ -627,30 +647,46 @@ describe("a package's id is declared, not derived from its path", () => {
     expect(ids.length).toBe(new Set(ids).size);
   });
 
-  test("`cat-bootstrap` is named by its manifest, not by its directory", () => {
-    // Its directory is `cat-bootstrap/skills/`, basename `skills`. The
-    // manifest says `cat-bootstrap`. Exactly the case the basename rule got
-    // wrong, and the only one in this corpus — so it is named here rather
-    // than searched for.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap"));
+  // WITNESS RETARGETED 2026-09-21, from `cat-bootstrap` to
+  // `cat-bootstrap-render`, and the reason is worth more than the change.
+  //
+  // These three guarded `packageIdFor`'s rule — an id comes from the
+  // manifest's `name`, never from the directory basename — by asserting it of
+  // the one package in the corpus that exercised it. The owner's `pve3`
+  // ruling ("neither") removed `cat-bootstrap/skills/` from this instance's
+  // declared directories, so that package is no longer in this graph and the
+  // witness went with it.
+  //
+  // Deleting them would have deleted a live contamination guard along with
+  // the witness. `cat-bootstrap/render/` is still declared here and has the
+  // same shape — basename `render`, manifest `cat-bootstrap-render` — so the
+  // RULE is still witnessed against the real corpus rather than a fixture.
+  //
+  // The lesson, since this is the second time a corpus witness has been lost
+  // to a declaration change: a test that asserts a RULE through one named
+  // example dies with that example. Where `packageIdFor` can be called
+  // directly against a root, prefer that.
+  test("`cat-bootstrap-render` is named by its manifest, not by its directory", () => {
+    // Its directory is `cat-bootstrap/render/`, basename `render`. The
+    // manifest says `cat-bootstrap-render`. Exactly the case the basename rule
+    // got wrong.
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap-render"));
     expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
-    expect(p!["name"]).toBe("cat-bootstrap");
-    expect(String(p!["path"])).toContain("cat-bootstrap/skills");
+    expect(p!["name"]).toBe("cat-bootstrap-render");
+    expect(String(p!["path"])).toContain("cat-bootstrap/render");
+    // And the basename is NOT what it is called — the assertion the rule is
+    // actually about, which naming the package alone does not make.
+    expect(p!["name"]).not.toBe("render");
   });
 
-  test("its members are cat-bootstrap's own skills and nothing else", () => {
+  test("its members are that package's own skills and nothing else", () => {
     // Listed rather than counted, because what the collision produced was a
     // member from ANOTHER package — a count would have gone on passing while
     // one name was swapped for another.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap"))!;
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap-render"))!;
     expect(membersOf(String(p["@id"])).sort()).toEqual([
-      "skill/cat-bootstrap-kg-navigation",
-      "skill/confirm-harness",
-      "skill/discussion",
-      "skill/log-message",
-      // The last step of `initialize-harness`: the root README, when there is
-      // none (bean `7sfm`).
-      "skill/root-readme",
+      "skill/cat-bootstrap-graph-emission",
+      "skill/cat-bootstrap-graph-publication",
     ]);
   });
 
@@ -658,7 +694,7 @@ describe("a package's id is declared, not derived from its path", () => {
     // The sharpest assertion here, because it is the one that was false and
     // that every other signal called healthy. `corpus-grep` lives in
     // `src/skills/`, which declares no package at all.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap"))!;
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap-render"))!;
     expect(membersOf(String(p["@id"]))).not.toContain("skill/corpus-grep");
   });
 
@@ -681,6 +717,88 @@ describe("a package's id is declared, not derived from its path", () => {
       if (p["hasManifest"] !== true) continue;
       const id = String(p["@id"]).split("#package/")[1];
       expect(id, `package at ${String(p["path"])}`).toBe(String(p["name"]));
+    }
+  });
+});
+
+describe("exporting ANOTHER instance's graph", () => {
+  // `gn4l` separated the generic collectors from the instance-bound ones in
+  // 2026-09-19 and proved `collectInstanceNodes` against cat-bootstrap. What
+  // it did not do is let a DOCUMENT be built for another instance, and the
+  // owner's `pve3` ruling ("neither") made that necessary: this graph now
+  // links into cat-bootstrap's, so cat-bootstrap's has to exist.
+  const BOOT = join(import.meta.dir, "../../../cat-bootstrap");
+  const BASE = "https://example.invalid/fa";
+
+  test("it takes the OTHER instance's identity", async () => {
+    const { buildExport } = await import("../kg-export.js");
+    const e = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
+    expect(e["@id"]).toBe(`${BASE}/cat-bootstrap.jsonld`);
+  });
+
+  test("and the other instance's CONTENT — not this one's under that name", async () => {
+    // THE SHARPEST ASSERTION HERE. `exportIdentity` and the collectors are
+    // separately parameterised, so honouring `instanceRoot` for the identity
+    // while leaving the collector list alone produces a document that is
+    // wrong about whose it is, under a name a consumer trusts.
+    //
+    // Measured by removing the branch: cat-bootstrap's document came back
+    // with 2079 nodes — this instance's 222 skills and 55 processes — instead
+    // of 85. A size comparison is the check, because every other signal
+    // (`@id`, stub, published path) was correct in that run.
+    const { buildExport } = await import("../kg-export.js");
+    const mine = await buildExport({ baseUrl: BASE });
+    const theirs = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
+    const n = (e: { "@graph": unknown[] }) => e["@graph"].length;
+    expect(n(theirs)).toBeGreaterThan(0);
+    expect(n(theirs)).toBeLessThan(n(mine) / 4);
+    // And named, not merely smaller: a skill cat-bootstrap has and this
+    // instance does not.
+    const ids = new Set((theirs["@graph"] as Array<{ "@id": string }>).map((x) => x["@id"]));
+    expect(ids.has(`${BASE}/cat-bootstrap.jsonld#skill/discussion`)).toBe(true);
+  });
+
+  test("it emits no link to a collector it did not run", async () => {
+    // `collectSkills` puts `inPackage` on every skill; `collectPackages` is
+    // instance-bound and omitted. Left alone that was SEVEN dangling links in
+    // cat-bootstrap's export, every skill pointing at a package node the
+    // document cannot contain.
+    const { buildExport } = await import("../kg-export.js");
+    const e = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
+    expect(e.danglingLinks).toEqual([]);
+    expect((e["@graph"] as Array<Record<string, unknown>>).some((n) => "inPackage" in n)).toBe(false);
+  });
+
+  test("a Tool satisfying a sibling's skill links into the SIBLING's document", async () => {
+    // The edge `pve3` created: the skills live in cat-bootstrap so an
+    // Initiator can read them with nothing installed, the Tool nodes live here
+    // because a Tool is cat-harness's vocabulary (`gn4l`).
+    const { buildExport } = await import("../kg-export.js");
+    const e = await buildExport({ baseUrl: BASE });
+    // The document's OWN `@id`, never a spelled-out stub. Main renamed this
+    // instance's stub from `folio-assistant` to `cat-harness` while this
+    // branch was open and the hardcoded literal took two tests down with it —
+    // the same failure this file's package-witness comment warns about, made
+    // in the act of fixing it.
+    const tool = (e["@graph"] as Array<Record<string, unknown>>).find(
+      (n) => n["@id"] === `${e["@id"]}#tool/discuss`,
+    )!;
+    expect(tool.satisfies).toEqual([`${BASE}/cat-bootstrap.jsonld#skill/discussion`]);
+  });
+
+  test("a skill THIS instance also declares stays here", async () => {
+    // Own-first, and it is not academic: `agent-skills` and `kg-navigation`
+    // declare ids this instance also declares, and without the own-first
+    // check their documents appeared as link targets the deploy never writes.
+    const { buildExport } = await import("../kg-export.js");
+    const e = await buildExport({ baseUrl: BASE });
+    const own = String(e["@id"]);
+    for (const n of e["@graph"] as Array<Record<string, unknown>>) {
+      for (const s of (n.satisfies ?? []) as string[]) {
+        if (s.startsWith(`${own}#`)) continue;
+        // The only legitimate foreign home in this corpus.
+        expect(s.startsWith(`${BASE}/cat-bootstrap.jsonld#`)).toBe(true);
+      }
     }
   });
 });

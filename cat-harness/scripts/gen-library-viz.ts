@@ -51,9 +51,10 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import { basename, dirname, join } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
+import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
-import { directoriesForGraph, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { directoriesForGraph, instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "..");
@@ -192,6 +193,21 @@ function ocrState(e){
   if (e.ocrPages > 0) return { label: e.ocrPages + " OCR pages", cls: "info" };
   return { label: "ocr/ present, empty", cls: "warn" };
 }
+/* Three states again, and the middle one is the point of the whole column.
+   The library is L1 because every reference to a source resolves through it,
+   so a slug nothing names is a slug that claim is NOT true of -- a finding
+   rather than a blank. A scan that did not run is a third answer: the
+   projection carries no refScan, so nobody looked.
+   (No backticks in here. See the warning at the top of viewerHtml.) */
+function refState(e){
+  if (!e.referencedBy) return { label: "not scanned", cls: "", n: -1 };
+  var n = e.referencedBy.length;
+  if (n === 0) return { label: "referenced by nothing", cls: "warn", n: 0 };
+  var kinds = {};
+  e.referencedBy.forEach(function(r){ kinds[r.kind] = (kinds[r.kind]||0) + 1; });
+  var parts = Object.keys(kinds).sort().map(function(k){ return kinds[k] + " " + k; });
+  return { label: parts.join(", "), cls: "ok", n: n };
+}
 function uploadState(e){
   return {
     match:   { label: "source verified", cls: "ok" },
@@ -213,6 +229,9 @@ var COLS = [
   { k:"pageEnd",  t:"pages",    n:true, f:function(e){ return e.pageStart==null?'<span class="pill">—</span>':esc(e.pageStart+"–"+e.pageEnd); } },
   { k:"words",    t:"words",    n:true, f:function(e){ return e.words.toLocaleString(); } },
   { k:"bytes",    t:"size",     n:true, f:function(e){ return kb(e.bytes); } },
+  { k:"refCount", t:"referenced by", n:true, f:function(e){ var s=refState(e);
+      var files = (e.referencedBy||[]).map(function(r){ return r.from + " (" + r.count + ")"; }).join("\n");
+      return '<span class="pill '+s.cls+'"'+(files?' title="'+esc(files)+'"':"")+">"+esc(s.label)+"</span>"; } },
   { k:"upload",   t:"source",   n:false, f:function(e){ var s=uploadState(e);
       return '<span class="pill '+s.cls+'">'+esc(s.label)+"</span>"+(e.sourceFile?'<br><span class="slug" style="font-size:.72rem;color:var(--muted)">'+esc(e.sourceFile)+"</span>":""); } }
 ];
@@ -264,7 +283,8 @@ function renderDesk(){
       "</div>" +
       '<div class="tags"><span class="pill '+(e.rung==="none"?"warn":"ok")+'">'+esc(e.rung)+"</span>" +
         '<span class="pill '+o.cls+'">'+esc(o.label)+"</span>" +
-        '<span class="pill '+u.cls+'">'+esc(u.label)+"</span></div>" +
+        '<span class="pill '+u.cls+'">'+esc(u.label)+"</span>" +
+        '<span class="pill '+refState(e).cls+'">'+esc(refState(e).label)+"</span></div>" +
       "</article>";
   }).join("") || '<p class="empty">Nothing matches.</p>';
 }
@@ -304,6 +324,9 @@ fetch(DATA_HREF).then(function(r){
   return r.json();
 }).then(function(data){
   G = data;
+  /* A sortable number for the referenced-by column. -1 for "not scanned" so
+     it sorts apart from a real zero rather than beside it. */
+  G.entries.forEach(function(e){ e.refCount = e.referencedBy ? e.referencedBy.length : -1; });
   var scoped = G.entries.filter(inScope);
   var words = scoped.reduce(function(n,e){ return n + e.words; }, 0);
   $("status").textContent = (SCOPE ? SCOPE + " · " : "") + scoped.length + " entries · " +
@@ -314,6 +337,16 @@ fetch(DATA_HREF).then(function(r){
     return '<span class="badge q"><b>'+q.uningested+"</b> uningested in <code>"+esc(q.dir)+
       "</code> <span style=\\"color:var(--muted)\\">of "+q.total+"</span></span>";
   }).join("");
+  if (G.refScan) {
+    var none = scoped.filter(function(e){ return e.refCount === 0; }).length;
+    $("badges").innerHTML += '<span class="badge"><b>'+G.refScan.filesRead+
+      "</b> json file(s) scanned for references" +
+      (none ? ', <b>'+none+"</b> entr(ies) referenced by nothing" : "") +
+      (G.refScan.unreadable.length
+        ? ' <span class="pill warn" title="'+esc(G.refScan.unreadable.join("\n"))+'">'+
+          G.refScan.unreadable.length+" unreadable — the zeros are provisional</span>"
+        : "") + "</span>";
+  }
   $("q").addEventListener("input", render);
   $("vList").addEventListener("click", function(){ setView("list"); });
   $("vDesk").addEventListener("click", function(){ setView("desk"); });
@@ -358,6 +391,43 @@ if (import.meta.main) {
     console.log("  · no library or uploads directory is declared — nothing to publish");
     process.exit(0);
   }
+  // ── Who references a slug — bean `jbx2`'s third ask ───────────────────
+  //
+  // The sources are DERIVED: every instance's own declaration, every
+  // directory it names, labelled by that directory's declared graph kind. So
+  // `catalogue` and `voices` appear because they are declared and carry the
+  // field, not because this file lists them — and a new kind that starts
+  // referencing slugs shows up the day it is declared.
+  //
+  // Each instance's SITE directory is skipped: it holds published copies of
+  // the catalogue and of this projection, so scanning it would count the page
+  // that displays a reference as a reference.
+  {
+    const repo = repoRootFor(ROOT);
+    const sources: RefSource[] = [];
+    for (const inst of instanceRootsIn(repo)) {
+      const decl = readDeclaration(inst);
+      if (!decl) continue;
+      const siteDir = join(inst, siteDirFor(inst));
+      for (const d of decl.directories ?? []) {
+        const dir = join(inst, d.path);
+        if (dir === siteDir || dir.startsWith(siteDir + "/")) continue;
+        for (const kind of d.graphs ?? []) sources.push({ kind, instance: decl.name ?? basename(inst), dir });
+      }
+    }
+    const scan = scanLibraryRefs(sources, repo);
+    for (const e of g.entries) e.referencedBy = scan.bySlug[e.id] ?? [];
+    g.refScan = { filesRead: scan.filesRead, unreadable: scan.unreadable };
+    const orphans = g.entries.filter((e) => (e.referencedBy?.length ?? 0) === 0).map((e) => e.id);
+    console.log(
+      `  · references: ${scan.filesRead} json file(s) read, ` +
+        `${Object.keys(scan.bySlug).length} slug(s) referenced, ` +
+        `${orphans.length} entr(ies) referenced by nothing` +
+        (orphans.length > 0 ? ` (${orphans.join(", ")})` : "") +
+        (scan.unreadable.length > 0 ? ` — ${scan.unreadable.length} file(s) UNREADABLE, so the zeros are provisional` : ""),
+    );
+  }
+
   const site = join(ROOT, siteDirFor(ROOT));
   // The published segment is the DECLARED directory's own name — the same
   // rule `gen-schema-viz.ts` follows, and for the same reason: writing

@@ -658,6 +658,60 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
     declarationFile: "todos.json",
   },
+  // THE BOARD AND ITS LAYOUT, declared as TWO kinds, and the split is the
+  // whole design rather than a filing convenience.
+  //
+  // The owner, 2026-09-20: *"treat it like OMG specs and BPMN layout.
+  // relationship first, visualiztion alter."* BPMN separates the semantic
+  // model (`bpmn:process`) from **Diagram Interchange** — `BPMNDiagram`,
+  // `BPMNShape`, `BPMNEdge` — and the layout document points AT the semantic
+  // one, never the other way. So:
+  //
+  //   boards            what a board IS, and what it shows        content
+  //   board-positions   where each note was drawn on it           state
+  //
+  // A board is a DIAGRAM OF a folio, not a container of one: a folio is
+  // complete with no board, and deleting every board loses layout and no
+  // content. That is also why `board-positions` is `state` while `boards` is
+  // `content` — one is authored and the other is written by a running process
+  // as people move things, and `content-context-and-state-graphs` refuses a
+  // content node that carries state. It is the same reason a note may not
+  // hold `x` and `y`, which `schemas/board-positions.ts` asserts against the
+  // source of four schemas.
+  boards: {
+    type: termIri("BoardGraph"),
+    renderable: false,
+    holds: "content",
+    // NOT work. A board is a way of LOOKING at work, and `check:graph-kind-work`
+    // asks the question because the two are easy to conflate: `beans`, `todos`
+    // and `workflow-state` each record something somebody is partway through,
+    // and a board records none of it. Deleting every board loses no position
+    // in any process.
+    recordsWork: false,
+    skill: "todo-manager",
+    summary:
+      "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. " +
+      "A board is a diagram OF a folio: it declares what it shows, and a folio with " +
+      "no board is complete. Schema: `schemas/board.ts`.",
+  },
+  "board-positions": {
+    type: termIri("BoardPositionsGraph"),
+    renderable: false,
+    // Written by a running process every time somebody moves a note. It is
+    // Diagram Interchange: where things were drawn, not what is true.
+    holds: "state",
+    // NOT work either, and this is the sharper of the two. It IS `state` —
+    // written by a running process — which is exactly what makes the question
+    // worth asking: state that records a POSITION IN A PROCESS is work, and
+    // state that records a position ON A CANVAS is not. Losing this file loses
+    // where things were drawn and nothing about what is outstanding.
+    recordsWork: false,
+    skill: "todo-manager",
+    summary:
+      "Where each note sits on each board — `board-positions.json`, keyed by board " +
+      "then by note id, in board units. The layout layer, which points at notes and " +
+      "is never pointed back at. Schema: `schemas/board-positions.ts`.",
+  },
   "todo-items": {
     type: termIri("TodoItemsGraph"),
     renderable: false,
@@ -1672,6 +1726,29 @@ export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
   /**
+   * This directory is what answers at the instance's own route, `/<instance>/`.
+   *
+   * `mount-instance-docs.ts` publishes an instance's content twice: at
+   * `/<kind>/<instance>/` for every renderable kind it declares, and once at
+   * `/<instance>/` — the instance's themed root, per the owner's 2026-09-20
+   * ruling that *"`/docs/who-iris/` should be the cat-harness handler default
+   * for docs. who-iris themed at `/who-iris/`."*
+   *
+   * **Until this field existed, the second route went to whichever kind sorted
+   * first alphabetically** — and the comment doing the sorting said, in as many
+   * words, that the choice "is the instance's own business". It was not: it was
+   * the alphabet's. who-iris declaring both `docs` and `library` made that
+   * concrete, because `docs` sorts first and the themed root would have served
+   * the documentation, contradicting the ruling it was implementing.
+   *
+   * Optional, because an instance declaring ONE renderable kind has nothing to
+   * choose. With several and none marked, the mount reports the root as
+   * UNDETERMINED and keeps the deterministic order rather than silently
+   * picking — a site must serve something there, and a quiet pick is how the
+   * wrong page became the front door in the first place.
+   */
+  instanceRoot: z.boolean().optional(),
+  /**
    * Which theme this subgraph renders on.
    *
    * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies
@@ -2423,6 +2500,57 @@ export function repoRootFor(instanceRoot: string): string {
 }
 
 /**
+ * Resolve a `coverage.visualiser` / `coverage.docs` value to an absolute path.
+ *
+ * **The base is the REPOSITORY root, and the owner ruled it so on 2026-09-21**
+ * (bean `yt7j`, issue #619). This function is that ruling, and it is the only
+ * place the base is written down as code rather than as prose.
+ *
+ * ## Why this exists rather than a `resolve()` at each call site
+ *
+ * A declared `path` states its own base — instance-relative by default,
+ * repository-relative when the entry carries `scope: "repository"`. **A
+ * coverage value states nothing.** So the asymmetry `yt7j` records is not
+ * "two fields use two bases"; it is *one field declares its base and the other
+ * does not*, and a consumer holding a bare string has no way to ask.
+ *
+ * The cost of leaving that to each caller was measured, not imagined:
+ * `state-visualizer.ts` has `ROOT = cat-harness/`, so the obvious
+ * `join(ROOT, cov)` reported EVERY declared visualiser as absent. That very
+ * nearly shipped as a page of false "the declared visualiser is not there"
+ * findings, and it was caught only because the corpus happened to be measured
+ * first. The next consumer has no such luck — which is the whole argument for
+ * one named answer, the same one {@link siteDirFor} makes about the site root.
+ *
+ * ## Resolving against "whichever root happens to work" is not a kindness
+ *
+ * `check-subgraph-coverage.ts` tried the instance root and then the repository
+ * root, accepting either. That is worse than picking wrong: a path that is
+ * incorrect in its declared base passes anyway via the other, so the check
+ * cannot enforce the convention it documents, and the corpus is free to drift
+ * into a mix nobody can read. Measured 2026-09-21 before tightening it: of
+ * **45** coverage paths in this repository, **45 resolve from the repository
+ * root** and the fallback was load-bearing for none.
+ *
+ * ## Take the repository root; do not derive it here
+ *
+ * The parameter is the REPOSITORY root, not an instance root, because
+ * {@link repoRootFor} overshoots for the one instance where it matters: the
+ * root declaration's instance root IS the repository, so going up one lands
+ * outside the checkout entirely. A caller that holds an instance root and
+ * knows it is nested composes `repoRootFor` itself, at a call site where that
+ * assumption is visible.
+ *
+ * It does not check that the result exists. A caller asking "does this
+ * resolve" wants {@link existsSync} on the answer and a three-state verdict
+ * around it; folding the question in here would give every consumer a boolean
+ * where some of them need to say *where* they looked.
+ */
+export function resolveCoveragePath(repoRoot: string, coveragePath: string): string {
+  return resolve(repoRoot, coveragePath);
+}
+
+/**
  * The root a declared `path` or `src` is relative to.
  *
  * The ONE place a declared scope turns into a directory. Every consumer of a
@@ -2634,6 +2762,42 @@ export function siteDirFor(root: string): string {
     throw new Error(`cannot determine the site root: ${p} declares neither \`stub\` nor \`name\``);
   }
   return siteDir({ name: stub, stub });
+}
+
+/**
+ * {@link artefactStub} for the instance rooted at `root`, read from its
+ * declaration — the RAW read, for the same reason {@link siteDirFor} takes one.
+ *
+ * `readDeclaration` validates the whole declaration, which means it throws
+ * when ANY directory in it names a graph kind the harness layer has not
+ * registered. `siteDirFor` documents that hazard above and avoids it; this is
+ * the missing half, and its absence was a real cost rather than a tidiness
+ * point: the 2026-09-21 stub rename (issue #649) needed the published artefact
+ * name in two Playwright suites, and `readDeclaration` threw there on exactly
+ * the unregistered-kind path `siteDirFor` warns about — in a browser job,
+ * where the failure reads as "no tests found" rather than as a bad read.
+ *
+ * Throws rather than defaulting, like its sibling. A guessed artefact name
+ * sends a consumer to a document nothing publishes, and "could not determine"
+ * is never rendered as an answer.
+ */
+export function artefactStubFor(root: string): string {
+  const p = join(root, DECLARATION_FILENAME);
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    throw new Error(
+      `cannot determine the artefact stub: ${p} is unreadable or not valid JSON ` +
+        `(${e instanceof Error ? e.message : String(e)})`,
+    );
+  }
+  const d = raw as { name?: unknown; stub?: unknown };
+  const stub = typeof d.stub === "string" && d.stub ? d.stub : d.name;
+  if (typeof stub !== "string" || !stub) {
+    throw new Error(`cannot determine the artefact stub: ${p} declares neither \`stub\` nor \`name\``);
+  }
+  return stub;
 }
 
 /**

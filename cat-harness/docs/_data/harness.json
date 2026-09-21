@@ -78,13 +78,13 @@
   "links": [
     {
       "id": "kg",
-      "path": "/folio-assistant/",
-      "target": "folio-assistant/index.html"
+      "path": "/cat-harness/",
+      "target": "cat-harness/index.html"
     },
     {
       "id": "jsonld",
-      "path": "/folio-assistant.jsonld",
-      "target": "folio-assistant.jsonld"
+      "path": "/cat-harness.jsonld",
+      "target": "cat-harness.jsonld"
     },
     {
       "id": "source",
@@ -95,6 +95,7 @@
     {
       "name": "folio-assistant",
       "title": "folio-assistant",
+      "label": "folio-assistant",
       "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
       "footer": false,
       "needs": [
@@ -132,12 +133,14 @@
       "findings": [
         "folio-assistant: declares 1 graph(s) with no published viewer — uploads. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
-        "folio-assistant: no avatar declared for this instance — showing the generic mark."
+        "folio-assistant: no avatar declared for this instance — showing the generic mark.",
+        "folio-assistant: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
       ]
     },
     {
       "name": "agent-skills",
       "title": "agent-skills",
+      "label": "agent-skills",
       "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
       "footer": false,
       "icon": null,
@@ -183,6 +186,7 @@
     {
       "name": "cat-bootstrap-tools",
       "title": "cat-bootstrap-tools",
+      "label": "cat-bootstrap-tools",
       "description": "Zod for the shapes cat-bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
       "footer": false,
       "icon": null,
@@ -224,6 +228,7 @@
     {
       "name": "detangle",
       "title": "detangle",
+      "label": "detangle",
       "description": "Is this candidate subgraph really a subgraph? Size, cohesion, and whether the arrows' direction is a fact or a filing decision.",
       "footer": false,
       "icon": null,
@@ -269,6 +274,7 @@
     {
       "name": "folio-assistant-sci",
       "title": "folio-assistant-sci",
+      "label": "folio-assistant-sci",
       "description": "Scientific source material used by folios that formalise mathematics — one document today.",
       "footer": false,
       "icon": null,
@@ -310,6 +316,7 @@
     {
       "name": "kg-navigation",
       "title": "kg-navigation",
+      "label": "kg-navigation",
       "description": "How an agent finds the knowledge graph, and the skill that governs its task, before it knows the layout.",
       "footer": false,
       "icon": null,
@@ -348,6 +355,7 @@
     {
       "name": "large-datasets",
       "title": "large-datasets",
+      "label": "large-datasets",
       "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
       "footer": false,
       "icon": null,
@@ -393,6 +401,7 @@
     {
       "name": "who-iris",
       "title": "who-iris",
+      "label": "who-iris",
       "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
       "footer": false,
       "icon": null,
@@ -449,6 +458,7 @@
     {
       "name": "who-style-guide",
       "title": "who-style-guide",
+      "label": "who-style-guide",
       "description": "The WHO house voices — editorial style, guideline development, publication design — each derived from one IRIS publication and citing it by page.",
       "footer": false,
       "icon": null,
@@ -487,15 +497,16 @@
     {
       "name": "folio-assistant-core",
       "title": "folio-assistant-core",
+      "label": "folio-assistant-core",
       "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
       "footer": false,
       "needs": [
         "cat-harness"
       ],
       "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "tone": 212,
+      "reads": "a leaf of paper with lines — the folio itself",
+      "genericAvatar": false,
       "instantiated": false,
       "href": "/cat-harness/schemas/folio-assistant-core/",
       "hrefKind": "viewer",
@@ -530,20 +541,20 @@
       ],
       "findings": [
         "folio-assistant-core: declares 2 graph(s) with no published viewer — cat-harness, folio. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-core: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ]
     },
     {
       "name": "cat-harness",
       "title": "folio-assistant",
+      "label": "folio-assistant (cat-harness)",
       "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
       "footer": false,
       "needs": [
         "cat-bootstrap"
       ],
       "icon": {
-        "src": "docs/assets/img/icons/cat-mark.svg",
+        "src": "/assets/img/icons/cat-mark.svg",
         "title": "c@t"
       },
       "tone": 268,
@@ -556,7 +567,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 35
+          "value": 34
         },
         {
           "id": "kinds",
@@ -637,12 +648,14 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 11 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, tools, translation-sources, voices, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 11 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, tools, translation-sources, voices, waiver. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
       ]
     },
     {
       "name": "cat-bootstrap",
       "title": "cat-bootstrap",
+      "label": "cat-bootstrap",
       "description": "The graph an agent reads before it knows what this repository is.",
       "footer": true,
       "needs": [],

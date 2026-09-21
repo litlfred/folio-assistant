@@ -12,7 +12,7 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { AVATARS, GENERIC, avatarFor, avatarKinds, hasAvatar } from "../../schemas/avatars.ts";
-import { BASE_GRAPH_KINDS, defaultGraphKinds } from "../../schemas/cat-harness.ts";
+import { BASE_GRAPH_KINDS, defaultGraphKinds, instanceRootsIn, readDeclaration } from "../../schemas/cat-harness.ts";
 import { avatarsCssPath, renderAvatarsCss } from "../gen-avatars-css.ts";
 import { coverage, requiredKinds, trashDerivationPresent } from "../check-avatar-coverage.ts";
 
@@ -159,14 +159,44 @@ describe("coverage is a QA axis, not a promise", () => {
     expect(coverage(ROOT).missing.map((m) => m.kind)).toEqual([]);
   });
 
-  test("an avatar ahead of its declaration is REPORTED, not pruned", () => {
-    // `cat-bootstrap` and `folio-assist-core` are layers the owner named by name
-    // and the split (#223) has not happened, so nothing declares them yet.
-    // Drawing art before the directory exists is the right way round; the
-    // finding is the honest record that they are ahead.
+  test("an INSTANCE-keyed avatar is REPORTED on the kind axis, not pruned", () => {
+    // These two are keyed on a declared INSTANCE name, not on a graph kind —
+    // `harness-tiles` calls `avatarFor(decl.name)`. So this check, which asks
+    // only about kinds, is right to report them and will go on doing so.
+    //
+    // The comment here used to say they were "ahead of their declaration",
+    // *"the split (#223) has not happened, so nothing declares them yet"*.
+    // Both halves were false by 2026-09-21: `cat-bootstrap/harness.json` and
+    // `folio-assistant-core/harness.json` both exist and both declare a
+    // `name`. The reason the finding is correct changed; the finding did not.
+    //
+    // It is `folio-assistant-core` and not `folio-assist-core`. The key was
+    // the short spelling until bean `hso8`, so `avatarFor("folio-assistant-
+    // core")` returned GENERIC — the question mark meaning "none declared" —
+    // while the art sat under a name nothing carries. This assertion is what
+    // now fails if the key drifts off the declared name again.
     const orphaned = coverage(ROOT).orphaned;
     expect(orphaned).toContain("cat-bootstrap");
-    expect(orphaned).toContain("folio-assist-core");
+    expect(orphaned).toContain("folio-assistant-core");
+  });
+
+  test("every instance-keyed avatar resolves for the name an instance declares", () => {
+    // The defect `hso8` left behind, stated as a property rather than as one
+    // spelling: an avatar keyed on an instance must match a real declared
+    // name, or it is unreachable AND counted as declared — worse than absent,
+    // because coverage reads clean over it.
+    // The REPOSITORY root, not `ROOT`. `ROOT` is this INSTANCE (`cat-harness/`)
+    // and is the right argument for `coverage`, which asks what this instance
+    // declares — but instance NAMES are a repository-level fact, and asking
+    // `instanceRootsIn(ROOT)` returns cat-harness's own subdirectories. The
+    // two roots were the same directory before the split, which is why this
+    // distinction is easy to get wrong and worth saying in place.
+    const declared = new Set(
+      instanceRootsIn(resolve(ROOT, "..")).map((r) => readDeclaration(r)?.name),
+    );
+    for (const key of coverage(ROOT).orphaned) {
+      expect([key, declared.has(key)]).toEqual([key, true]);
+    }
   });
 
   test("the trash derivation is asserted once, and it is in place", () => {
