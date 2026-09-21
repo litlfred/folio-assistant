@@ -387,25 +387,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790031277">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790032019">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790031277">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790032019">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790031277">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790032019">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790031277">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790032019">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -422,7 +422,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790031277" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790032019" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -780,6 +780,10 @@
       <li><a href="#an-asset-has-three-states-not-two--r30" id="markdown-toc-an-asset-has-three-states-not-two--r30">An asset has <strong>three</strong> states, not two — R30</a></li>
       <li><a href="#a-stickys-face--r31-and-r32" id="markdown-toc-a-stickys-face--r31-and-r32">A sticky’s face — R31 and R32</a></li>
       <li><a href="#r19s-second-clause--reported-open-then-settled-the-same-day" id="markdown-toc-r19s-second-clause--reported-open-then-settled-the-same-day">R19’s second clause — reported open, then settled the same day</a></li>
+      <li><a href="#r27-and-question-1--answered-by-the-corpus-then-settled" id="markdown-toc-r27-and-question-1--answered-by-the-corpus-then-settled">R27 and question 1 — answered by the corpus, then settled</a>        <ol>
+          <li><a href="#where-the-bytes-land--the-part-that-did-need-deciding" id="markdown-toc-where-the-bytes-land--the-part-that-did-need-deciding">Where the bytes land — the part that DID need deciding</a></li>
+        </ol>
+      </li>
       <li><a href="#still-open-from-this-round" id="markdown-toc-still-open-from-this-round">Still open from this round</a></li>
     </ol>
   </li>
@@ -1281,7 +1285,7 @@ landing page and smart-* has/will have its own harness</p>
     </tr>
     <tr>
       <td><strong>R27</strong></td>
-      <td><strong>materialised</strong> assets from the static KG SHALL live in <code class="language-plaintext highlighter-rouge">folio/</code></td>
+      <td><strong>materialised</strong> assets from the static KG SHALL live in the folio — <strong>settled 2026-09-21, see below</strong></td>
       <td><em>“clarifying if KG is static w/ materizlied…, materialized should live in folio”</em></td>
     </tr>
     <tr>
@@ -1427,7 +1431,7 @@ four options put to them:</p>
   <tbody>
     <tr>
       <td><strong>R19b</strong></td>
-      <td>a thing renders as a <strong>tile</strong> iff the <strong>harness</strong> declares it; as an <strong>avatar</strong> iff the <strong>folio</strong> holds it (a note, a document, a materialised asset under <code class="language-plaintext highlighter-rouge">folio/</code>). A <strong>theme</strong> is how either one looks, never a third kind</td>
+      <td>a thing renders as a <strong>tile</strong> iff the <strong>harness</strong> declares it; as an <strong>avatar</strong> iff the <strong>folio</strong> holds it (a note, a document, a materialised asset in <code class="language-plaintext highlighter-rouge">library/</code> or <code class="language-plaintext highlighter-rouge">uploads/</code>). A <strong>theme</strong> is how either one looks, never a third kind</td>
     </tr>
     <tr>
       <td><strong>R19c</strong></td>
@@ -1521,6 +1525,86 @@ with a pointer from <code class="language-plaintext highlighter-rouge">board-win
 the skill rather than left as an omission: nothing classifies a folio item
 yet, so a gate would be a declared property whose check cannot answer its own
 claim — R17’s lesson, one round later.</p>
+<h3 id="r27-and-question-1--answered-by-the-corpus-then-settled">
+  
+  
+    <a href="#r27-and-question-1--answered-by-the-corpus-then-settled" class="anchor-heading" aria-labelledby="r27-and-question-1--answered-by-the-corpus-then-settled"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R27 and question 1 — answered by the corpus, then settled
+  
+  
+</h3>
+    
+
+<p><strong>The requester’s own parenthetical marked this unsettled</strong>: <em>“clarifying if
+KG is static w// materizlied…”</em>. Measured 2026-09-21, the answer was already
+in the corpus in three places, none of which had been read as answering it:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/materialization.ts</code></td>
+      <td><strong>three states</strong> — <code class="language-plaintext highlighter-rouge">referenced</code> (we know where, we hold no bytes), <code class="language-plaintext highlighter-rouge">materialized</code> (the bytes are here), <code class="language-plaintext highlighter-rouge">unknown</code> (we have not established which) — with <strong>no default</strong>, plus five gates, and <code class="language-plaintext highlighter-rouge">localPath</code> present <strong>iff</strong> <code class="language-plaintext highlighter-rouge">materialized</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">skills/workflows/materialize-remote.bpmn</code></td>
+      <td>the act itself, as an executable <strong>STRICT</strong> process running five gates in a fixed order; <code class="language-plaintext highlighter-rouge">unknown</code> on any one keeps the node <code class="language-plaintext highlighter-rouge">referenced</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">skills/folio-core/directory-conventions.md</code></td>
+      <td>the <code class="language-plaintext highlighter-rouge">catalogue</code> graph kind — <em>“a remote catalogue modelled BY REFERENCE … Distinct from <code class="language-plaintext highlighter-rouge">library</code>: that is content which IS here, this is the shape of a collection of which almost none is”</em></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>So: yes.</strong> The knowledge graph is static and modelled by reference;
+materialisation is a separate, gated, checked act that produces bytes.
+Question 1 needed no decision — it needed reading.</p>
+<h4 id="where-the-bytes-land--the-part-that-did-need-deciding">
+  
+  
+    <a href="#where-the-bytes-land--the-part-that-did-need-deciding" class="anchor-heading" aria-labelledby="where-the-bytes-land--the-part-that-did-need-deciding"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the bytes land — the part that DID need deciding
+  
+  
+</h4>
+    
+
+<p>R27 says <em>“materialized should live in folio”</em>, and <code class="language-plaintext highlighter-rouge">who-iris</code> materialises
+into <code class="language-plaintext highlighter-rouge">library/</code> (items and covers) and <code class="language-plaintext highlighter-rouge">uploads/</code> (source PDFs). <strong>Neither is
+<code class="language-plaintext highlighter-rouge">folio/</code>.</strong> Three readings were put to the owner; they chose <strong>the folio is
+the reader’s REPOSITORY</strong>, of which <code class="language-plaintext highlighter-rouge">library/</code> and <code class="language-plaintext highlighter-rouge">uploads/</code> are already
+declared parts:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
+{ id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">dependents: "reproduce"</code> is the schema saying <strong>this is the reader’s own
+copy</strong> — the exact fact R27 reaches for, and it predates R27.</p>
+
+<p><strong>The literal reading would have broken a consumer, and that was found AFTER
+the options were tabled.</strong> It is recorded here for that reason rather than
+folded into the argument as though it had been known.
+<code class="language-plaintext highlighter-rouge">schemas/materialization.ts</code> states it outright — <strong><em><code class="language-plaintext highlighter-rouge">corpus-grep</code> searches
+<code class="language-plaintext highlighter-rouge">library/</code> only</em></strong>, so a node materialised into <code class="language-plaintext highlighter-rouge">folio/</code> would read as ABSENT
+to every consumer. That is the same defect the schema forbids one state up,
+where collapsing <code class="language-plaintext highlighter-rouge">referenced</code> into <code class="language-plaintext highlighter-rouge">materialized</code> hides a node nobody holds.
+Had the owner chosen the literal reading, it would have been a migration into
+a known breakage, and the recommendation put alongside the options did not say
+so because this had not been measured yet.</p>
+
+<p><code class="language-plaintext highlighter-rouge">folio/</code> is also the <strong>renderable</strong> graph kind, so the literal reading would
+additionally have put a 40 MB PDF into the site build.</p>
+
+<p><strong>R27 is therefore already satisfied, and already gated.</strong>
+<code class="language-plaintext highlighter-rouge">who-iris/scripts/check-catalogue.ts</code> checks that a <code class="language-plaintext highlighter-rouge">materialized</code> claim names
+bytes that exist, with <code class="language-plaintext highlighter-rouge">local-path.ts</code>’s three states (<code class="language-plaintext highlighter-rouge">ok</code> / <code class="language-plaintext highlighter-rouge">missing</code> /
+<code class="language-plaintext highlighter-rouge">unknown</code>) and bean <code class="language-plaintext highlighter-rouge">yl5w</code>’s scar behind it: <em>three claims resolved to nothing
+and the gate said clean</em>.</p>
 <h3 id="still-open-from-this-round">
   
   
@@ -1530,10 +1614,18 @@ claim — R17’s lesson, one round later.</p>
 </h3>
     
 
-<p><strong>Whether the library view distinguishes materialised from not-materialised</strong>
-is the half R30 leaves unsaid: the three states are the <em>asset’s</em>, and nothing
-yet states whether a reader browsing a library can see which of its items they
-already hold. Tracked on
+<p><strong>Whether the library view distinguishes materialised from not-materialised.</strong>
+The states now have a name and a schema — <code class="language-plaintext highlighter-rouge">referenced</code> / <code class="language-plaintext highlighter-rouge">materialized</code> /
+<code class="language-plaintext highlighter-rouge">unknown</code> — so the question is no longer <em>is there a distinction</em> but <em>does
+the reader’s view render it</em>. Nothing yet says.</p>
+
+<p><strong>F8/F9 is not built, and the gap is measured rather than asserted.</strong> On the
+deployed preview, <code class="language-plaintext highlighter-rouge">who-iris/index.html</code> loads <code class="language-plaintext highlighter-rouge">docs-ui.js</code> <strong>0</strong> times and
+carries <strong>0</strong> boards and <strong>0</strong> tiles, against 9 / 1 / 28 on the
+folio-assistant landing page. A reader browsing that library has <strong>no folio at
+all</strong> — not a degraded one.</p>
+
+<p>Both tracked on
 <a href="https://github.com/litlfred/folio-assistant/issues/796">issue #796</a>.</p><hr />
 <h2 id="what-the-set-produced">
   
@@ -1795,7 +1887,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35664906420"><code>aa462f7</code></a> &middot; 2026-09-21T22:54:33Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35665968785"><code>454c8b1</code></a> &middot; 2026-09-21T23:06:56Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
