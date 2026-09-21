@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1ity
 title: 'COVERAGE: four instances'' library/ directories are rendered by the library viewer but do not declare it'
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-09-20T19:51:00Z
-updated_at: 2026-09-20T19:51:00Z
+updated_at: 2026-09-21T07:28:24Z
 parent: folio-assistant-yj32
 ---
 
@@ -54,3 +54,35 @@ question.
 **Done when:** the four instances above declare
 `cat-harness/docs/library/index.html` as their `library` visualiser, and
 `check:subgraph-coverage` drops the corresponding findings.
+
+## Verified done — 2026-09-21, and one of the four never owed it
+
+Re-derived rather than taken. Every declared `library` directory in the
+repository now carries `coverage.visualiser`, and
+`check:subgraph-coverage` reports **zero** `library / visualiser` findings.
+
+| instance the bean named | declares a `library`? | `coverage.visualiser` |
+|---|---|---|
+| `who-iris` | yes | **declared** |
+| `agent-skills` | yes | **declared** |
+| `folio-assist-sci` → `folio-assistant-sci` | yes | **declared** |
+| `who-style-guide` | **no — it declares only `voices`** | n/a |
+
+So three of the four got the line and the fourth never owed one. Recording
+that rather than writing "4/4 done", because a bean that closes by rounding
+up is one whose count nobody can reproduce.
+
+Closed on the EVIDENCE that the findings are gone, not on authorship — the
+`bean-coordination` rule for work that has already landed. Whoever declared
+them did so between 2026-09-20 19:51 and now.
+
+## What the check taught, and it belongs to `yt7j`
+
+A first pass called three cat-harness entries defective because their `path`
+values (`who-iris/library/`, `agent-skills/library/`,
+`folio-assistant-sci/library/`) do not resolve from the instance root. They
+are not defective: each carries **`scope: "repository"`**, which is the
+declared disambiguator, and they resolve perfectly from the repo root.
+
+That is a fact `yt7j` needs and did not have — see its own note.
+
