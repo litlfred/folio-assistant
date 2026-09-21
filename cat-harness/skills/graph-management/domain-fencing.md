@@ -87,9 +87,11 @@ repository root.
 > **Re-measured 2026-09-21, and the resolution half no longer reproduces.**
 > `findContentRepoRoot()` now returns `cat-harness/`, not `cat-harness/folio/`,
 > and `readDeclaredFolioProfile()` returns `document` from **both** roots —
-> `cat-harness.config.json` at the resolved one, `folio-assistant.config.json`
-> at the repository root. The declaration/config split gave `cat-harness` a
-> config of its own, and the walk now finds one.
+> `cat-harness.config.json` for the resolved one, `folio-assistant.config.json`
+> for the repository root. The declaration/config split gave `cat-harness` a
+> config of its own and the walk now finds one — **both config files sit at the
+> repository root**, named for their instance rather than placed inside it,
+> which is why looking in `cat-harness/` for one turns up nothing.
 >
 > **What that does NOT establish is the consequence below.** The 235 committed
 > sidecars carrying `detangler-archimedean-wall` were written under the old
