@@ -763,6 +763,20 @@
       "file": "beans/defs/folio-assistant-4pm8--pagefind-evaluate-as-the-search-engine-for-the-lar.md"
     },
     {
+      "id": "folio-assistant-4v62",
+      "title": "QUOTATION GUARD SCOPE: a table cell is not a quotation, and the corpus is what says so",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T17:33:34Z",
+      "updatedAt": "2026-09-21T17:33:45Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/696 — this closes\n`k59d`'s one remaining agent-ownable Done-when:\n\n> The quotation guard covers a markdown table cell, or the guard's stated\n> scope says it does not and why — a workaround in one bean is not a fix\n\n## Measured before deciding, and the measurement went against my first instinct\n\n`insideQuotation` in `check-bean-bodies.ts` re",
+      "file": "beans/defs/folio-assistant-4v62--quotation-guard-scope-a-table-cell-is-not-a-quotat.md"
+    },
+    {
       "id": "folio-assistant-4wzf",
       "title": "RENAME: agent-harness -> cat-harness (computable agentic testing harness)",
       "status": "todo",
@@ -2109,6 +2123,20 @@
       "file": "beans/defs/folio-assistant-ce65--tool-nodes-exist-for-11-of-138-skills-audit-which.md"
     },
     {
+      "id": "folio-assistant-cekz",
+      "title": "DESIGN RECORD: file the folio board's R1-R17 into docs/architecture, per the owner's docs-filing ruling",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:38:14Z",
+      "updatedAt": "2026-09-21T18:46:28Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — CRDM\n`BA_ChooseKg`, the step after sign-off.\n\n## The owner's ruling, verbatim\n\n> this is a memory asset as part of design, so it goes into docs/. update\n> skills for documentation filing. fsh-guts can be thrown away/lost... this was\n> an asset as part of building a feature (or accessing data, or other skill\n> realtaed to manament/rend",
+      "file": "beans/defs/folio-assistant-cekz--design-record-file-the-folio-boards-r1-r17-into-do.md"
+    },
+    {
       "id": "folio-assistant-cflw",
       "title": "Generated artefacts collide: 218 sidecars rewritten by one auditor edit",
       "status": "in-progress",
@@ -2887,6 +2915,20 @@
       "file": "beans/defs/folio-assistant-huiu--dublin-core-a-ts-record-type-in-cat-harness-fully.md"
     },
     {
+      "id": "folio-assistant-hw9g",
+      "title": "MOUNTED PAGES HAVE NO LHS RAIL: a collapsed icon-width harness nav for every mounted instance, opening on hover or click",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:40:00Z",
+      "updatedAt": "2026-09-21T19:05:00Z",
+      "preview": "## What\n\nOwner, 2026-09-21, looking at the published `/who-iris/`:\n\n> *\"i see no LHS navbar. It still should be there in this harness, but it can\n> start collapsed (so only icon width wide), hovering/clicking on it will\n> open\"*\n\nand earlier, on the same subject:\n\n> *\"f-a navbar should still be on the left, with who-iris and then link to docs\n> on side in navbar\"*\n\n## Measured, not assumed\n\nOn the",
+      "file": "beans/defs/folio-assistant-hw9g--mounted-pages-have-no-lhs-rail-a-collapsed-icon-wi.md"
+    },
+    {
       "id": "folio-assistant-hylg",
       "title": "Workflow interpreter descends into call activities — subprocesses give increasing context",
       "status": "in-progress",
@@ -3127,6 +3169,20 @@
       "updatedAt": "2026-09-20T16:35:15Z",
       "preview": "Found while working `81t5` — and it is the defect `81t5` was standing on rather\nthan the one it describes.\n\n## The measurement\n\n**9 of the 44 checkable `invoke.shell` values named a path that does not exist.**\nEvery one was missing the `cat-harness/` prefix, stale since the instance moved\nunder that directory:\n\n| node | declared | actually at |\n|---|---|---|\n| `ingest-stdlib`, `ingest-extended` | ",
       "file": "beans/defs/folio-assistant-jqv4--tool-paths-9-of-44-invokeshell-values-named-a-comm.md"
+    },
+    {
+      "id": "folio-assistant-jut3",
+      "title": "SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:10:00Z",
+      "updatedAt": "2026-09-21T19:10:00Z",
+      "preview": "## The owner's words, verbatim\n\nParaphrase would lose the sequencing and the scope, both of which constrain the\ndesign:\n\n> i want the smart-* mockups not to mount the existing rendered .html but use\n> the IG Publisher+postporcessed json/jsonld +metadataindexing to reproduce the\n> generated html in the justthedoc pipeline.\n>\n> i want the input/page(s)/ content to be rendered viajustthedocs pipeline",
+      "file": "beans/defs/folio-assistant-jut3--smart-via-just-the-docs-stop-mounting-ig-publisher.md"
     },
     {
       "id": "folio-assistant-k59d",
@@ -3579,7 +3635,7 @@
     {
       "id": "folio-assistant-nrtx",
       "title": "COVERS: show the item covers with the WHO emblem masked, and make the mask survive re-rendering",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
