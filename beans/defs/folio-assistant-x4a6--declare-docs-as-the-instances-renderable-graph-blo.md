@@ -1,11 +1,11 @@
 ---
 # folio-assistant-x4a6
 title: Declare docs/ as the instance's renderable graph — blocked on core's folio registration reaching every declaration reader
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T08:00:02Z
-updated_at: 2026-09-21T21:55:00Z
+updated_at: 2026-09-21T22:22:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -146,3 +146,62 @@ agent should not have to re-derive either.*
       `siteDirFor(cat-harness)`. It is already declaration-DERIVED, through
       `stub` rather than through the `docs` entry — so this item is narrower
       than it reads, and wants restating rather than doing as written.
+
+---
+
+## Measured 2026-09-21 — it is LATENT, not live, and the falsifier landed
+
+The brief named the falsifier in advance: *if every real consumer already
+imports the registration transitively, this is a latent hazard rather than a
+live defect, and the fix is a guard plus a better error, not a
+re-architecture.* That is what the measurement says.
+
+**31 of 31 real call sites reach the registration. Zero are exposed.**
+
+### Getting that number took four attempts, and three were wrong
+
+Worth recording, because the wrong ones all *looked* like answers:
+
+| attempt | said | why it was wrong |
+|---|---|---|
+| `grep -l` for the functions | 57 readers | counted **comment mentions**; the real figure is 31 call sites |
+| static walk, `[^;\n]*?` | 7 unreached | `[^\n]` forbids newlines, so every MULTI-LINE import was invisible |
+| static walk, `[\s\S]*?` | 35 unreached | unbounded scan ran past statement ends and mis-attributed specifiers |
+| **`bun build`** | **0 unreached** | the bundler IS the resolver; nothing to disagree with |
+
+The third attempt used the same pattern as `scripts/partition/engine.ts`. It
+reported `translation.ts` as not reaching a module it imports **on line 28** —
+which is how bean `q2wn` was found.
+
+**The rule: do not hand-roll a module-graph walker when the toolchain will
+resolve the graph for you.** A regex over import syntax has now been wrong
+here in three different directions, and each failure produced a plausible
+number rather than an error.
+
+### What was done
+
+The throw already said *"A kind contributed by a dependency must be registered
+before the declaration is read"*, which is true and leaves the reader to grep.
+It now names the import — `import "schemas/folio-graph-kind.js";` — and says
+it is for its SIDE EFFECT so it takes no binding and must not be elided.
+
+**The message pointed at the wrong file.** It names the declaration ENTRY, so
+it accuses `cat-harness.json`, which is correct, while the mistake is a
+missing import in whichever module read it first.
+
+### What was NOT done, and why
+
+No re-architecture. `folio-graph-kind.ts` states the boundary it defends — *"a
+layer that cannot render must not own the renderable kind"* — so moving the
+kind into the harness would break the thing this bean would be serving.
+
+No new gate. `q2wn` has to be settled first: a gate proving "every reader
+reaches the registration" needs edges that `check:partition` currently cannot
+see, so it would be built on a blind resolver.
+
+## Still open
+
+- [ ] `q2wn` — the bare side-effect import the partition regex misses.
+- [ ] Whether a reachability gate is worth having once `q2wn` is settled.
+      **Not red on arrival**: 31 of 31 pass today, so this one could be turned
+      on the day the edges are visible.
