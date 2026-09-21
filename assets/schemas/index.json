@@ -4051,6 +4051,13 @@
           "doc": "Path (repo-relative) to the source file containing this"
         },
         {
+          "name": "checker_contributed",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "This criterion is declared here, but its checker belongs to a dependency."
+        },
+        {
           "name": "extra_inputs",
           "type": "string[]",
           "optional": true,
@@ -8327,6 +8334,51 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/contributions.ts#ContributedChecker",
+      "name": "ContributedChecker",
+      "module": "cat-harness/schemas/contributions.ts",
+      "kind": "interface",
+      "doc": "A registered checker, resolved: the function, and where its bytes live.",
+      "fields": [
+        {
+          "name": "check",
+          "type": "(paths: CheckerPaths) => CheckerResult",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sourceFile",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Relative to `root`."
+        },
+        {
+          "name": "root",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The contributor's own root, absolute."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`<contributor>/<sourceFile>` — portable, and says whose checker it is."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/block-qa.ts#CheckerPaths",
+        "cat-harness/schemas/block-qa.ts#CheckerResult"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/contributions.ts#FolioContribution",
       "name": "FolioContribution",
       "module": "cat-harness/schemas/contributions.ts",
@@ -8338,6 +8390,13 @@
           "optional": false,
           "array": false,
           "doc": "The contributing instance's name, as declared in the dependency entry."
+        },
+        {
+          "name": "root",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The contributing instance's root directory, absolute."
         },
         {
           "name": "blockKinds",
@@ -8429,6 +8488,13 @@
           "optional": false,
           "array": false,
           "doc": "The checker itself."
+        },
+        {
+          "name": "sourceFile",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The file that DEFINES `check`, relative to the contributor's own root."
         }
       ],
       "extendsNames": [],
@@ -31453,6 +31519,22 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/contributions.ts#ContributedChecker",
+      "to": "cat-harness/schemas/block-qa.ts#CheckerPaths",
+      "via": "check",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/contributions.ts#ContributedChecker",
+      "to": "cat-harness/schemas/block-qa.ts#CheckerResult",
+      "via": "check",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/contributions.ts#FolioContribution",

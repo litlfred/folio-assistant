@@ -22,9 +22,9 @@ wrong-direction dependency (core → smart-base) and it does not generalise:
 a third adapter means a third <code>??</code>, and a folio that brings its own criteria
 has nowhere to put them at all.</p>
 </div></section>
-<div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">QaCheckerContribution</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#check">check</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">paths</span><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_block-qa.CheckerPaths.html" class="tsd-signature-type tsd-kind-type-alias">CheckerPaths</a><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <a href="schemas_block-qa.CheckerResult.html" class="tsd-signature-type tsd-kind-interface">CheckerResult</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#criterion">criterion</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">QaCheckerContribution</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#check">check</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">paths</span><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_block-qa.CheckerPaths.html" class="tsd-signature-type tsd-kind-type-alias">CheckerPaths</a><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <a href="schemas_block-qa.CheckerResult.html" class="tsd-signature-type tsd-kind-interface">CheckerResult</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#criterion">criterion</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#sourcefile">sourceFile</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5bca749dd0f1dbfcfb0b05adafa7821220b83c75/cat-harness/schemas/contributions.ts#L107">work/folio-assistant/folio-assistant/cat-harness/schemas/contributions.ts:107</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/470ee6c7031f5749a716e65467fa269ebb439c82/cat-harness/schemas/contributions.ts#L107">work/folio-assistant/folio-assistant/cat-harness/schemas/contributions.ts:107</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -34,6 +34,7 @@ has nowhere to put them at all.</p>
 <h3 class="tsd-index-heading tsd-anchor-link" id="properties">Properties<a href="#properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-index-list"><a href="#check" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>check</span></a>
 <a href="#criterion" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>criterion</span></a>
+<a href="#sourcefile" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>source<wbr/>File</span></a>
 </div></section></div></details></section></section>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="properties-1">Properties<a href="#properties-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
@@ -44,14 +45,48 @@ has nowhere to put them at all.</p>
 <div class="tsd-comment tsd-typography"><p>The checker itself.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5bca749dd0f1dbfcfb0b05adafa7821220b83c75/cat-harness/schemas/contributions.ts#L111">work/folio-assistant/folio-assistant/cat-harness/schemas/contributions.ts:111</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/470ee6c7031f5749a716e65467fa269ebb439c82/cat-harness/schemas/contributions.ts#L111">work/folio-assistant/folio-assistant/cat-harness/schemas/contributions.ts:111</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="criterion"><span>criterion</span><a href="#criterion" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">criterion</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>The criterion id this answers. Must be a criterion the sweep knows.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5bca749dd0f1dbfcfb0b05adafa7821220b83c75/cat-harness/schemas/contributions.ts#L109">work/folio-assistant/folio-assistant/cat-harness/schemas/contributions.ts:109</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/470ee6c7031f5749a716e65467fa269ebb439c82/cat-harness/schemas/contributions.ts#L109">work/folio-assistant/folio-assistant/cat-harness/schemas/contributions.ts:109</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="sourcefile"><span>source<wbr/>File</span><a href="#sourcefile" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">sourceFile</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>The file that DEFINES <code>check</code>, relative to the contributor's own root.</p>
+<h2 id="why-a-function-is-not-enough-and-why-this-is-required" class="tsd-anchor-link">Why a function is not enough, and why this is required<a href="#why-a-function-is-not-enough-and-why-this-is-required" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>The sweep does not re-run a criterion whose verdict is still fresh, and
+freshness is <code>script_hash</code> — <code>computeCriterionScriptHashes</code> reads the
+bytes at the criterion's resolved source file and hashes the checker's
+closure within them. A checker handed over as a bare function has no
+bytes to hash, so its hash is <code>&quot;&quot;</code>, and
+<code>qa-criteria-registry.ts</code> records exactly what that costs:</p>
+<blockquote>
+<p>a criterion pointed at a file that does not contain its checker NEVER
+INVALIDATES. Its verdicts stay &quot;fresh&quot; forever, and editing the real
+checker changes nothing.</p>
+</blockquote>
+<p>Eleven criteria were measured in that state on 2026-09-18, found only
+because a fix to a checker did not change its verdict. A wrong <code>pass</code> is
+believed; a verdict that cannot go stale is worse, because nothing about
+it ever looks wrong.</p>
+<p>So it is <strong>required</strong>, not optional. Optional would make &quot;no source file&quot;
+a state a contributor can enter by omission — which is the same state,
+reached more quietly.</p>
+<h2 id="why-relative-to-the-contributors-root" class="tsd-anchor-link">Why relative to the CONTRIBUTOR's root<a href="#why-relative-to-the-contributors-root" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>A contributed checker lives in another repository, and
+<code>computeCriterionScriptHashes</code> resolves against a single <code>repoRoot</code>. The
+registry pairs this with the contributor's root, pinned by
+<code>loadContributions</code> from the dependency entry rather than taken from the
+module — the same reason <code>name</code> is pinned there. A relative path also
+keeps the recorded <code>source_file</code> label portable across checkouts, which
+is why that field is relative in the first place.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/470ee6c7031f5749a716e65467fa269ebb439c82/cat-harness/schemas/contributions.ts#L147">work/folio-assistant/folio-assistant/cat-harness/schemas/contributions.ts:147</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -68,7 +103,10 @@ has nowhere to put them at all.</p>
 <h3>On This Page</h3></summary>
 <div class="tsd-accordion-details">
 <details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Properties</summary>
-<div><a href="#check"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>check</span></a><a href="#criterion"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>criterion</span></a></div></details></div></details></div>
+<div><a href="#check"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>check</span></a><a href="#criterion"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>criterion</span></a><a href="#sourcefile"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>source<wbr/>File</span></a>
+<ul>
+<li><a href="#why-a-function-is-not-enough-and-why-this-is-required"><span>Why a function is not enough, and why this is required</span></a></li>
+<li><a href="#why-relative-to-the-contributors-root"><span>Why relative to the <wbr/>CONTRIBUTOR&#39;s root</span></a></li></ul></div></details></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
