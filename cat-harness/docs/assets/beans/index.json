@@ -231,14 +231,14 @@
     {
       "id": "folio-assistant-1hkj",
       "title": "MODULE-SCOPE FILESYSTEM WORK: importing any of 39 modules can throw, and the error names a symptom far from the cause",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T13:12:36Z",
-      "updatedAt": "2026-09-21T13:12:36Z",
+      "updatedAt": "2026-09-21T18:20:00Z",
       "preview": "Carved out of 95s1 (issue #706, PR #707), where it was found and deliberately not taken.\n\n## The shape, measured on main 2026-09-21\n\nThirty-nine modules resolve the repository root at MODULE SCOPE:\n\n    const REPO_ROOT = findContentRepoRoot();\n    const FOLIO_DIR = folioDir(REPO_ROOT);\n\n**39 files, 53 call sites** — 25 in `content/pipeline/`, 11 in `scripts/`, 3 in `adapters/`.\n\n## Why it matters,",
       "file": "beans/defs/folio-assistant-1hkj--module-scope-filesystem-work-importing-any-of-39-m.md"
     },
@@ -621,6 +621,20 @@
       "updatedAt": "2026-09-20T18:05:00Z",
       "preview": "Split out of `bm6d` on the owner's instruction, 2026-09-20. `bm6d` fixed the\n*cause* of the self-cancellations; this is the **blindness that let them run\nfor months unnoticed**, and it is bigger than that bean.\n\n## The gap, measured\n\n`bm6d` counted **6 of the last 10 `pages build and deployment` runs\n`cancelled`**, in an exact pattern, and nothing in this repository said so.\nThree properties combi",
       "file": "beans/defs/folio-assistant-3yi4--ci-visibility-nothing-here-can-see-gh-pages-build.md"
+    },
+    {
+      "id": "folio-assistant-40fl",
+      "title": "docs-site is red on main: a foreign instance's export has no publication base, so kg-export exits 1",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:11:53Z",
+      "updatedAt": "2026-09-21T13:40:00Z",
+      "preview": "## What\n\n`docs-site.yml` fails on `main`. The site has not published since **11:31 on\n2026-09-21**, the commit (`f4366814cc`, bean `pve3`, issue #686) that made\n`kg-export` multi-instance and added a second export step:\n\n```\nbun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out \"./_site/cat-bootstrap.jsonld\"\n```\n\nThat step exits 1:\n\n```\n1 source(s) could not be read:\n  ✗ no can",
+      "file": "beans/defs/folio-assistant-40fl--docs-site-is-red-on-main-a-foreign-instances-expor.md"
     },
     {
       "id": "folio-assistant-4dbr",
@@ -2271,14 +2285,14 @@
     {
       "id": "folio-assistant-en68",
       "title": "Colons in kg-qa sidecar filenames make the repo unclonable on Windows",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T10:08:48Z",
-      "updatedAt": "2026-09-21T10:08:48Z",
+      "updatedAt": "2026-09-21T13:45:00Z",
       "preview": "## What\n\n`git clone` of this repository **fails on Windows** — not at fetch, at\ncheckout. Seven KG QA sidecars are named `req:<slug>.kg-qa.json`, and NTFS\nreserves `:` inside a path component for alternate data streams, so Git\nrefuses to create the file.\n\nGit aborts the **entire** checkout on the first invalid path, so this is not\nseven missing files. It is no working tree at all, for everybody on",
       "file": "beans/defs/folio-assistant-en68--colons-in-kg-qa-sidecar-filenames-make-the-repo-un.md"
     },
@@ -4633,6 +4647,20 @@
       "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
     },
     {
+      "id": "folio-assistant-wjfu",
+      "title": "SMART-TRUST PAGES: 674 ingested artefacts had no reader-facing surface — a docs graph, generated from index.json",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:18:01Z",
+      "updatedAt": "2026-09-21T13:23:30Z",
+      "preview": "The owner asked where `https://litlfred.github.io/folio-assistant/smart-trust` was. It did not exist, and that is a gap left by qsf5 rather than a bug: `fhir-artifact-index` is registered `renderable: false`, and `smart-trust/` declares exactly one directory of exactly that kind, so nothing was generated for it.\n\nOnly 2 of 29 graph kinds are renderable — `docs` and `folio`. `who-iris/` publishes b",
+      "file": "beans/defs/folio-assistant-wjfu--smart-trust-pages-674-ingested-artefacts-had-no-re.md"
+    },
+    {
       "id": "folio-assistant-wlqd",
       "title": "skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package",
       "status": "in-progress",
@@ -5043,14 +5071,14 @@
     {
       "id": "folio-assistant-yv4z",
       "title": "3pqn cause: why does a PR sometimes get NO pull_request-event run at all?",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "low",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:33:37Z",
-      "updatedAt": "2026-09-21T05:40:33Z",
+      "updatedAt": "2026-09-21T14:06:54Z",
       "preview": "Split out of `3pqn` on the owner's instruction, 2026-09-20. `3pqn` closed on\nits Done-when 2 and 3 — the **damage** is stopped, because\n[`prepare-merge`](../../cat-harness/skills/folio-core/prepare-merge.md)\n§Guardrails now says *\"NO CHECKS IS NOT GREEN\"* and gives the procedure. This\nbean carries the remaining **why**, at low priority, with the evidence\nattached so nobody re-derives it.\n\n## The o",
       "file": "beans/defs/folio-assistant-yv4z--3pqn-cause-why-does-a-pr-sometimes-get-no-pull-req.md"
     },
