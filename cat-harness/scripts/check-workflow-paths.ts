@@ -70,11 +70,28 @@
  * found nothing, and reported `nothing to check` over 1,402 files.
  *
  * So the recommended fix MOVES the risk rather than removing it: out of the
- * workflow, into the script's own root resolution. That successor class has
- * its own reader — `check:anchor-names`, which is why `a6kl`'s fix resolves
- * `INSTANCE_ROOT` rather than the CWD. Neither check subsumes the other and
- * neither is the whole answer; between them the path is accounted for at
- * both ends.
+ * workflow, into the script's own root resolution. This module used to claim
+ * that class had its own reader — `check:anchor-names` — and that "between
+ * them the path is accounted for at both ends". **The second half was wrong,
+ * and the sweep closing `a6kl` measured it.** Reintroducing the defect (the
+ * four call sites in `check-l1-complete.ts` reverted to `resolve(".")`) leaves
+ * `check:anchor-names` at exit 0, along with `check:command-paths`,
+ * `check:partition`, `check:harness-dirs`, `check:declared-assets` and this
+ * check. `check:anchor-names` audits anchor NAMES — `REPO_ROOT`,
+ * `INSTANCE_ROOT`, `PLATFORM` — and those call sites pass an inline expression
+ * under no named anchor, so it is structurally blind to them.
+ *
+ * What DOES catch it is the gate's own refusal: `checkAll` throws rather than
+ * returning `[]`, so the reintroduced defect exits 2 saying *"This is NOT a
+ * pass. Treat it as unknown."* That is the half of `a6kl`'s fix doing the
+ * work — not the root resolution, which is why the distinction is recorded
+ * here rather than left as two interchangeable bullet points.
+ *
+ * So: this check owns the workflow end. The script end is guarded by each
+ * script refusing its own empty corpus, one script at a time, with no
+ * cross-gate reader over that convention. Naming the gap is not closing it,
+ * and a reader that pinned every corpus-walking gate non-empty is queued
+ * rather than built.
  *
  * ## "Could not determine" is never green
  *

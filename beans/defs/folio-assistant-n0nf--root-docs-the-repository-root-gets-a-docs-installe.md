@@ -1,11 +1,11 @@
 ---
 # folio-assistant-n0nf
 title: 'ROOT DOCS: the repository root gets a docs/ installed by cat-harness, the way a dependent gets uploads/ and library/'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-20T19:01:17Z
-updated_at: 2026-09-21T05:18:07Z
+updated_at: 2026-09-21T10:10:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -298,22 +298,104 @@ make the answer look settled.
       **2026-09-21**, `dependents: "reproduce"`, measured 6 → 7 on a fixture
 - [x] A newly initiated instance gets a `docs/` without being told to —
       same change; `init-folio` calls `materialiseDeclaredDirectories`
-- [ ] The site builds from the COMPOSED tree — root overlay over
+- [x] The site builds from the COMPOSED tree — root overlay over
       `cat-harness/docs/`, which stays where it is
-- [ ] The build can say WHICH LAYER supplied any given page, so an override
+      — **done: docs-site.yml runs compose-docs.ts and builds from `source: ./_docs`**
+- [x] The build can say WHICH LAYER supplied any given page, so an override
       is distinguishable from the only copy
+      — **done: `suppliedBy`, `overrides` (both layers named), `added` and `merged` (changed keys named)**
 - [x] A test asserts a dependent gets one, falsified by flipping the
       declaration back — **done**: flipping the word back turns 2 red, and
       the contrast (`schemas`/`tools` stay out) is asserted too
 - [x] **THE ROOT** — ruled 2026-09-21: it exists, managed by cat-harness
-- [ ] A repository-scoped `docs` entry, with its own id so slice 1's
+- [x] A repository-scoped `docs` entry, with its own id so slice 1's
       instance-scoped one is untouched
-- [ ] The site composes the root's `docs/` over the built instance's, with
+      — **done: `root-docs`, `scope: "repository"`, slice 1's `docs` untouched**
+- [x] The site composes the root's `docs/` over the built instance's, with
       an EMPTY overlay proven byte-identical to today's site
-- [ ] What a **behaviour** overlay is — layouts, includes, `_data`, JS,
+      — **done: pinned against the REAL tree by compose-docs.test.ts; re-verified on main at ce71f60 — 439 files, no overrides, `_config.yml` byte-identical**
+- [x] What a **behaviour** overlay is — layouts, includes, `_data`, JS,
       config — is stated rather than guessed
 
 Related: `o7eq` (the URL space this completes), `wwi6` (the same mechanism for
 uploads/ and library/), `x4a6` (declaring `docs/` as the renderable graph),
 `ohx6` (cat-harness's own folio/), `qmjh` (a ContentDirectory saying whether
 dependents reproduce it).
+
+## Behaviours settled 2026-09-21 — `_config.yml` merges, overlay keys win
+
+The compose ruling said instances overlay *"content and behaviors"*. Content
+shipped first; behaviours were left as a refusal, because two Jekyll configs
+want merging and the precedence had not been chosen. That refusal had a real
+cost: a downstream harness could overlay pages but could not change ONE Jekyll
+setting — no theme, no nav, no title.
+
+Owner's ruling, asked as three options and answered "2":
+
+> **Overlay keys win. Objects merge recursively. Lists REPLACE rather than
+> concatenate.**
+
+Lists replacing is the clause worth recording, because concatenation is the
+more common default and is wrong here for the same reason the file overlay is
+last-wins: an overlay that wanted three nav entries and inherited seven has no
+way to remove the four it did not ask for. One direction everywhere.
+
+**The allowlist that was NOT chosen** matters as much. Merging only declared
+keys (`title`, `nav`, colour tokens) is safer per-key and is exactly the `6tkl`
+shape — a hardcoded list that goes stale silently, which this repository has
+paid for three times.
+
+### The constraint that shaped the implementation
+
+**A YAML round trip is not byte-preserving** — it strips comments and may
+reorder keys. Merging unconditionally would therefore rewrite the published
+`_config.yml` on a tree whose overlay carries none, breaking the byte-identity
+property that licenses `docs-site.yml` pointing `source:` at the composed tree
+at all. So the merge fires ONLY when an overlay supplies a config AND a lower
+layer already did; every other case copies bytes untouched.
+
+Verified on the real tree, not only on fixtures:
+
+    composed 437 file(s) from 2 layer(s)
+    no overrides — the composed tree is the base layer
+    cat-harness/docs/_config.yml vs composed _config.yml   IDENTICAL
+
+...and with a temporary overlay config in place, end to end:
+
+    MERGED  _config.yml — docs <- root-docs (title, aux_links)
+    title overlaid; description, remote_theme, baseurl and 25 further
+    lines survived from the base
+
+The report names the CHANGED KEYS rather than counting files, the same `dh4f`
+discipline the override path already follows: "merged 1 file" leaves a reader
+unable to tell which settings moved, which is the whole question a merged
+configuration raises.
+
+
+      — **done 2026-09-21: owner ruled MERGE for `_config.yml` — overlay keys win, objects recurse, lists REPLACE**
+
+## Summary of Changes
+
+Merged in #674 (`ce71f60`). Every box is now ticked.
+
+The root `docs/` exists, is declared as a repository-scoped entry (`root-docs`)
+distinct from the instance-scoped `docs`, and the site builds from the COMPOSED
+tree — `docs-site.yml` runs `compose-docs.ts` and points `source:` at `./_docs`.
+The composer names both layers on every override and the changed keys on every
+merge, so an override is never indistinguishable from the only copy.
+
+**The behaviours question, which was the last one open, is settled.** The owner
+ruled MERGE for `_config.yml` — overlay keys win, objects merge recursively,
+lists REPLACE rather than concatenate. Lists replacing is the clause worth
+keeping in view: concatenation is the more common default and would leave an
+overlay no way to remove an inherited entry.
+
+**The safety property held throughout, and is what licensed touching the live
+publish path at all**: an empty overlay composes byte-identically to the base.
+Pinned against the REAL tree rather than a fixture, and re-verified on `main`
+after the merge — 439 files, no overrides, `_config.yml` byte-identical.
+
+The merge is deliberately CONDITIONAL on the overlay supplying a config,
+because a YAML round trip strips comments and may reorder keys; merging
+unconditionally would have rewritten the published config on a tree whose
+overlay carries none, breaking exactly that property.

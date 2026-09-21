@@ -1045,6 +1045,16 @@ export const RULES: Rule[] = [
       // reason nobody can re-check, which is why this says so rather than
       // quietly keeping the old sentence.
       "scripts/todos.ts",
+      // The default boards, and CORE rather than harness — which is the
+      // checker's finding, not a preference. It was classified harness first,
+      // on the reasoning that it asks which INSTANCES are instantiated and
+      // which are above the floor. `check:partition` answered with two
+      // wrong-direction edges: it imports `schemas/board.ts` and
+      // `scripts/todos.ts`, both core, and the harness layer may not depend on
+      // core. The imports were right and the classification was wrong — what
+      // it PRODUCES is folio content, a board, whose type core owns. The
+      // instance questions are how it decides WHICH folios, not what it makes.
+      "scripts/gen-default-boards.ts",
       // The state visualiser, and it is core for the reason `gen-landing-data.ts`
       // records about itself: it is a RENDERER, and rendering is core's.
       //
