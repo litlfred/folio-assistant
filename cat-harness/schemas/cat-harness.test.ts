@@ -1078,7 +1078,8 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     const decl = readDeclaration(join(repo, "cat-harness"));
     const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
     expect(themed.map((d) => d.id).sort()).toEqual([
-      "methodologies", "methodology-crdm", "methodology-raci", "smart-kg-methodologies",
+      "methodologies", "methodology-crdm", "methodology-raci", "methodology-spec-kit",
+      "smart-kg-methodologies",
     ]);
     for (const d of themed) expect(d.theme).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");

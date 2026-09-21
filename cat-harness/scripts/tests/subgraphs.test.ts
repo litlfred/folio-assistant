@@ -32,7 +32,7 @@ describe("subgraph containment is derived from declared paths", () => {
   test("methodologies contains its methodologies, and nothing else claims them", () => {
     const tree = subgraphTree(dirs);
     const m = tree.find((r) => r.parent === "methodologies");
-    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci"]);
+    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci", "methodology-spec-kit"]);
     // Exactly one parent per child: two would make a node's owner ambiguous,
     // which is the question this whole derivation exists to answer once.
     for (const child of m?.children ?? []) {
@@ -147,6 +147,6 @@ describe("repository-scoped directories are attributed", () => {
       expect(r.children).not.toContain("smart-kg-methodologies");
     }
     const m = report.tree.find((r) => r.parent === "methodologies");
-    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci"]);
+    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci", "methodology-spec-kit"]);
   });
 });

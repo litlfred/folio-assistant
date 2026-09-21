@@ -35,6 +35,37 @@ So: **pick one per decision, name it, and follow it.**
 
 ## Choosing which applies
 
+### First: is this a judgement, or a process?
+
+**Ask before the ladder**, because the ladder below is about how to *decide*
+something, and a request for a change is not yet a decision — it is work needing
+agreed requirements before anything is built. Sending it down the ladder lands it
+on the catch-all rung and produces an options analysis for a question nobody has
+framed yet.
+
+> **Is somebody asking for a change, such that requirements have to be agreed
+> before it is built?**
+
+If yes, the question is **who is asking, and does the answer depend on what a
+folio says?**
+
+- **A change to the platform's own capability — a tool, a schema, a pipeline, a
+  skill, a gate — raised by somebody building the tooling, whose answer does not
+  depend on any folio's subject matter** → the software-development process
+  methodology.
+- **Requirements that come from stakeholders who must sign them off, tied to a
+  folio's domain** → the stakeholder requirements methodology.
+
+Both answer *request → agreed requirements*, so **they are parallel and must not
+be blended** — the refusal below applies to this pair first and hardest. Which is
+which is stated in each one's `applies-when`, not here, for the reason in
+§"Why this skill does not name them".
+
+If no — the change is agreed and the question is how to decide something within
+it — continue to the ladder.
+
+### Then the ladder
+
 Ask in this order. The first yes decides.
 
 1. **Do the criteria recur, with the same inputs having to produce the same

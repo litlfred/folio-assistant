@@ -298,6 +298,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
 | [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
 
+## Spec-driven development (methodologies/spec-kit)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Spec Kit](spec-kit.html) | `spec-kit` | — | **Adopted whole, 2026-09-21**, on the owner's decision (issue #730, option A): |
+
 ## Agent skills
 
 | Skill | Id | Schema | Summary |

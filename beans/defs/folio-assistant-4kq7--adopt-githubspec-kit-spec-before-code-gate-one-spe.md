@@ -3,8 +3,10 @@
 title: 'Adopt github/spec-kit: spec-before-code gate, one spec template, specs as issue comments, change-size splitting'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-21T14:46:51Z
-updated_at: 2026-09-21T14:46:51Z
+updated_at: 2026-09-21T17:15:47Z
+parent: folio-assistant-ahvw
 ---
 
 Issue: https://github.com/litlfred/folio-assistant/issues/730

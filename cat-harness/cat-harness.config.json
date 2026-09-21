@@ -452,6 +452,19 @@
       ]
     },
     {
+      "id": "methodology-spec-kit",
+      "coverage": {
+        "skill": "spec-kit"
+      },
+      "theme": "analyst",
+      "path": "methodologies/spec-kit/",
+      "dependents": "skip",
+      "description": "Spec Kit as its own subgraph beside CRDM and RACI, adopted whole from github/spec-kit on the owner's decision of 2026-09-21 (issue #730, option A). PARALLEL to CRDM, never blended: `methodology-adoption` forbids a composite, and the two genuinely answer the same question — request to agreed requirements — so one must be selected rather than fused. The discriminator is the owner's, verbatim: spec-kit is for `folio assistant feature development requests by tool developers not content developers (content agnostic, more scrum methodology process)`, while CRDM keeps stakeholder-facing WHO/IG work. Declared SEPARATELY rather than via the `methodologies` parent, for the reason already recorded on `methodology-crdm`: `workflowDirs` resolves `<kgdir>/workflows`, so declaring only the parent would leave any diagram undiscovered. `graphs` is `cat-harness` rather than `methodology` because this is a skill-bearing package like `crdm` and `raci`, not a single-file judgement method like `madr` or `kepner-tregoe`. NOTE what is deliberately NOT adopted, and it is stated in the skill with its reason rather than omitted silently: spec-kit's own `specs/NNN-feature/spec.md` and `.specify/` layout, because `where-a-proposal-goes` sends a design argument to the issue and off the knowledge graph, and because the dot-prefix guard rejects `.specify/` outright.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
       "id": "methodologies",
       "theme": "analyst",
       "path": "methodologies/",

@@ -272,6 +272,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // placement silently dropped its skills out of skill QA.
   "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
   "methodology-raci": "RACI involvement model (methodologies/raci)",
+  "methodology-spec-kit": "Spec-driven development (methodologies/spec-kit)",
   "remote-stubs": "Declared but not implemented here (stubs)",
   // The two entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
