@@ -36,13 +36,32 @@
  * @module scripts/tests/inline-colour.test
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
-const CLIENT = join(ROOT, siteDirFor(ROOT), "assets/js/docs-ui.js");
+const CLIENT_DIR = join(ROOT, siteDirFor(ROOT), "assets/js");
+
+/**
+ * EVERY client script this site ships, not `docs-ui.js` by name.
+ *
+ * Naming one file is how this bean happened: the fix landed on one of two
+ * functions and the sibling kept the literals. A gate that names its subject
+ * repeats that at one level up the moment a second script is added — and
+ * `work-plan.js` already exists and is already clean, so the sweep costs
+ * nothing today and covers the file nobody has written yet.
+ *
+ * `vendor/` is excluded: it is third-party code this repo does not author, and
+ * a rule about where OUR colours may be written says nothing about it.
+ */
+function clientScripts(): string[] {
+  return readdirSync(CLIENT_DIR, { withFileTypes: true })
+    .filter((e) => e.isFile() && e.name.endsWith(".js"))
+    .map((e) => join(CLIENT_DIR, e.name))
+    .sort();
+}
 
 /** A hex, `rgb()`/`rgba()`, `hsl()`/`hsla()`, or a named colour declaration. */
 const COLOUR = /#[0-9a-fA-F]{3,8}\b|\brgba?\s*\(|\bhsla?\s*\(/;
@@ -83,8 +102,6 @@ function offenders(sites: Site[]): Site[] {
 }
 
 describe("no colour is written into an inline style in the client", () => {
-  const source = readFileSync(CLIENT, "utf-8");
-
   test("the detector finds the literals this bean removed", () => {
     // NON-VACUITY, and it has to be synthetic: the check passes at zero, so
     // the file itself can no longer demonstrate that the detector works. These
@@ -113,14 +130,24 @@ describe("no colour is written into an inline style in the client", () => {
     expect(offenders(inlineStyleSites(sample))).toEqual([]);
   });
 
-  test("the client has inline styles at all, so the sweep is over something", () => {
-    expect(inlineStyleSites(source).length).toBeGreaterThan(3);
+  test("there ARE client scripts, so the sweep is over something", () => {
+    // Without this, a move of `assets/js` empties the sweep and it passes over
+    // nothing — the `pzdv` shape again, one directory up.
+    expect(clientScripts().length).toBeGreaterThan(0);
   });
 
-  test("none of them carries a colour or an opacity", () => {
-    // Named with the line and the text, because "3 offenders" does not say
-    // which colour or where, and the fix is always a specific token.
-    expect(offenders(inlineStyleSites(source)).map((o) => `${o.line}: ${o.text.trim()}`))
-      .toEqual([]);
+  test("the client has inline styles at all, so the sweep has a subject", () => {
+    const total = clientScripts()
+      .reduce((n, f) => n + inlineStyleSites(readFileSync(f, "utf-8")).length, 0);
+    expect(total).toBeGreaterThan(3);
   });
+
+  for (const file of clientScripts()) {
+    test(`${file.split("/").pop()}: none of them carries a colour or an opacity`, () => {
+      // Named with the line and the text, because "3 offenders" does not say
+      // which colour or where, and the fix is always a specific token.
+      expect(offenders(inlineStyleSites(readFileSync(file, "utf-8")))
+        .map((o) => `${o.line}: ${o.text.trim()}`)).toEqual([]);
+    });
+  }
 });
