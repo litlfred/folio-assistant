@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uwka
 title: 'PAGE: Managing Agent Context — overlays, and the several ways contextual information is generated'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-21T16:21:34Z
-updated_at: 2026-09-21T16:21:34Z
+updated_at: 2026-09-21T16:50:33Z
 parent: folio-assistant-2upx
 ---
 

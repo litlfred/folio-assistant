@@ -68,3 +68,59 @@ wants already half-exists by a different route — cat-harness declares
 `cat-harness`-kind directories, which is dependents contributing skills without
 any subgraph concept. Whether that IS the mechanism, or the thing the subgraph
 mechanism should replace, is the decision to take before writing the page.
+
+
+## Added 2026-09-21 — two terminology decisions, with their measured scope
+
+### 1. Knowledge Graph is **KGraph**
+
+Owner, twice: *"lets make it KGraph for Knowledge Graph"*. It is a Glossary
+Term, so it is Capitalized on every use, per the `technical-writer` voice.
+
+Measured surface, so the sweep is scoped rather than blind:
+
+| occurrence | files |
+|---|---|
+| `termIri("KnowledgeGraph")` — an EMITTED IRI | 4 |
+| "Knowledge Graph" in prose | 13 |
+| "knowledge graph" lower-case in prose | 152 |
+| `kgRef` / `kgDirectories` identifiers | 9 / 17 |
+| `kg:audit` and its sidecars | 137 |
+
+Three separate decisions, deliberately not one commit:
+
+- **The IRI** (`termIri("KnowledgeGraph")`, `cat-harness/schemas/cat-harness.ts:561`)
+  is published in the JSON-LD this repository emits. Renaming it changes what
+  consumers see, so it is a versioning decision, not a rename.
+- **The prose** is the 152-file body. It SHOULD be swept as part of the
+  consolidation pass (`88mg`) rather than by find-and-replace, because most
+  occurrences are incidental lower-case mentions and some are quotations of
+  other people's text, which MUST NOT be silently rewritten.
+- **The identifiers** (`kgRef`, `kgDirectories`, `kg:audit`) are a third
+  question. `kg:audit` alone appears in 137 files, mostly committed QA
+  sidecars, so renaming the script renames data.
+
+### 2. A directory's `graphs:` field lists KINDS, not graphs
+
+This is the conflation that makes `GraphKind` read as ugly, and it is in the
+DATA rather than the type. From `cat-harness.config.json`:
+
+    { "id": "voices", "path": "voices/", "graphs": ["voices"] }
+
+`"voices"` is not a graph. It is the name of a KIND, registered in
+`BASE_GRAPH_KINDS` with a `type` IRI, `renderable`, `holds` and a `summary`.
+The graph is the thing at `voices/`. Three directories declare
+`graphs: ["voices"]` today and `cat-harness` is declared by **22** — so read
+literally, twenty-two directories each assert they ARE the cat-harness graph.
+
+**The minimal fix is the field, not the type**: `graphs:` -> `graphKinds:`.
+Then `GraphKind` names exactly what it is, and "the voices graph" can mean one
+directory's contents without ambiguity.
+
+The owner also asked whether the type could simply be `Graph`. The
+multiplicity above is the argument against: one kind already has up to 22
+instances, and the subgraph direction recorded above — dependents contributing
+voices into a shared subgraph — leans on the class/instance distinction
+harder, not less. If a rename is still wanted, `GraphType` is the safe option;
+`GraphDefinition` matches this repository's `ActorDefinition` idiom but
+collides with FHIR's own `GraphDefinition` resource.

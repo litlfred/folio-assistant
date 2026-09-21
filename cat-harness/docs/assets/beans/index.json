@@ -231,14 +231,14 @@
     {
       "id": "folio-assistant-1hkj",
       "title": "MODULE-SCOPE FILESYSTEM WORK: importing any of 39 modules can throw, and the error names a symptom far from the cause",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T13:12:36Z",
-      "updatedAt": "2026-09-21T13:12:36Z",
+      "updatedAt": "2026-09-21T13:38:53Z",
       "preview": "Carved out of 95s1 (issue #706, PR #707), where it was found and deliberately not taken.\n\n## The shape, measured on main 2026-09-21\n\nThirty-nine modules resolve the repository root at MODULE SCOPE:\n\n    const REPO_ROOT = findContentRepoRoot();\n    const FOLIO_DIR = folioDir(REPO_ROOT);\n\n**39 files, 53 call sites** — 25 in `content/pipeline/`, 11 in `scripts/`, 3 in `adapters/`.\n\n## Why it matters,",
       "file": "beans/defs/folio-assistant-1hkj--module-scope-filesystem-work-importing-any-of-39-m.md"
     },
@@ -425,6 +425,20 @@
       "updatedAt": "2026-09-20T06:55:03Z",
       "preview": "Found 2026-09-20 while doing a cleanup sweep at the owner's request.\n\n## What broke\n\n`test/health/run.ts` passed `ROOT` — the INSTANCE root, since the file sits\nat `<instance>/test/health/` — into a context field named `repoRoot`. Two\nprobes resolve their store from a declaration whose entry is\n`scope: \"repository\"`, so `beans/` and `todos/` live at the repository root:\n\n```\ncould not read the bea",
       "file": "beans/defs/folio-assistant-2tlx--health-the-sweep-was-handed-the-instance-root-so-t.md"
+    },
+    {
+      "id": "folio-assistant-2upx",
+      "title": "DOCUMENTATION: one SDO voice, RFC 2119 requirement levels, and the pages the knowledge graph is missing",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:21:34Z",
+      "updatedAt": "2026-09-21T16:21:34Z",
+      "preview": "Owner, 2026-09-21. A large body of direction on documentation, captured here as the frame; the children carry the work.\n\n**The writing standard.** We are writing as an SDO writes — W3C, IHE. Glossary Terms are Capitalized throughout. Requirement levels follow RFC 2119 (MUST / MUST NOT / REQUIRED / SHALL / SHALL NOT / SHOULD / SHOULD NOT / RECOMMENDED / MAY / OPTIONAL). The RFC is queued at `upload",
+      "file": "beans/defs/folio-assistant-2upx--documentation-one-sdo-voice-rfc-2119-requirement-l.md"
     },
     {
       "id": "folio-assistant-3025",
@@ -621,6 +635,20 @@
       "updatedAt": "2026-09-20T18:05:00Z",
       "preview": "Split out of `bm6d` on the owner's instruction, 2026-09-20. `bm6d` fixed the\n*cause* of the self-cancellations; this is the **blindness that let them run\nfor months unnoticed**, and it is bigger than that bean.\n\n## The gap, measured\n\n`bm6d` counted **6 of the last 10 `pages build and deployment` runs\n`cancelled`**, in an exact pattern, and nothing in this repository said so.\nThree properties combi",
       "file": "beans/defs/folio-assistant-3yi4--ci-visibility-nothing-here-can-see-gh-pages-build.md"
+    },
+    {
+      "id": "folio-assistant-40fl",
+      "title": "docs-site is red on main: a foreign instance's export has no publication base, so kg-export exits 1",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:11:53Z",
+      "updatedAt": "2026-09-21T13:40:00Z",
+      "preview": "## What\n\n`docs-site.yml` fails on `main`. The site has not published since **11:31 on\n2026-09-21**, the commit (`f4366814cc`, bean `pve3`, issue #686) that made\n`kg-export` multi-instance and added a second export step:\n\n```\nbun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out \"./_site/cat-bootstrap.jsonld\"\n```\n\nThat step exits 1:\n\n```\n1 source(s) could not be read:\n  ✗ no can",
+      "file": "beans/defs/folio-assistant-40fl--docs-site-is-red-on-main-a-foreign-instances-expor.md"
     },
     {
       "id": "folio-assistant-4dbr",
@@ -915,6 +943,20 @@
       "updatedAt": "2026-09-19T09:01:53Z",
       "preview": "**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):\n\"self-soveringn mode: like soveregion cloud but hosted on own infrastructure, in\nL4-L5 context may have data stores like hapi. not designed for external facing\nservices. more for managing wallets. have incoming DAK content. bean up to may\nstrwperson and create issue to review these.\"\n\n## Strawperson position, to ",
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
+    },
+    {
+      "id": "folio-assistant-623b",
+      "title": "PAGE: Harness — how it bootstraps, and how the dependency tree is walked from the lowest instance up",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:21:34Z",
+      "updatedAt": "2026-09-21T16:21:34Z",
+      "preview": "Owner, 2026-09-21: a page covering how the Harness bootstraps, and how agents are steered by Processes (BPMN), Actors, Roles, Skills and Tasks.\n\n**The mechanism to document:** the dependency tree of the harness is walked starting from the LOWEST (bootstrap) in an ORDERED dependency hierarchy. The harness is declared in the KG. The page MUST explain how bootstrap plus zero or more harnesses can be ",
+      "file": "beans/defs/folio-assistant-623b--page-harness-how-it-bootstraps-and-how-the-depende.md"
     },
     {
       "id": "folio-assistant-6366",
@@ -1391,6 +1433,20 @@
       "updatedAt": "2026-09-20T17:03:08Z",
       "preview": "_2026-09-19T13:25Z_ — Found while verifying PR #413's merge against the publish ref. Not claimed; recording the measurement so it is not lost.\n\n## What was measured\n\n`main` relocated all four proposals out of the rendered site to `fsh-guts/` on 2026-09-19 — kept and addressable, **deliberately unpublished** (beans `t0i3`, `uv09`, `yjjt`). The main-site deploy honoured that: `git ls-tree -r --name-",
       "file": "beans/defs/folio-assistant-85im--feature-staging-deploys-with-keep-files-true-so-a.md"
+    },
+    {
+      "id": "folio-assistant-88mg",
+      "title": "CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:21:35Z",
+      "updatedAt": "2026-09-21T16:21:35Z",
+      "preview": "Owner, 2026-09-21: a thorough analysis of the existing documentation AND skills, consolidated, in ONE voice. All of the documentation eventually; **bootstrap and cat-harness first**.\n\n**Two structural asks:**\n- **Reuse content between `skills/` and `docs/`** so both consolidate, with the docs pointing at the skill for rendering where the skill was written correctly.\n- **Some documentation will nee",
+      "file": "beans/defs/folio-assistant-88mg--consolidation-one-voice-over-bootstrap-and-cat-har.md"
     },
     {
       "id": "folio-assistant-8hg7",
@@ -2973,6 +3029,20 @@
       "file": "beans/defs/folio-assistant-k59d--milestone-critical-paths-go-stale-p5wm-and-yg29-bo.md"
     },
     {
+      "id": "folio-assistant-ke0o",
+      "title": "VOICE + SKILL: a Technical Documentation voice written as an SDO writes, with RFC 2119 requirement levels",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:21:34Z",
+      "updatedAt": "2026-09-21T16:21:34Z",
+      "preview": "Two paired artefacts, because a voice with no skill is unenforceable and a skill with no voice has no house style.\n\n**The voice.** Applies to standards, software and knowledge-asset documentation, for BOTH drafting and review QA. Written as W3C or IHE writes. Glossary Terms are Capitalized throughout. Requirement levels follow RFC 2119 and are used with their RFC meanings, not colloquially.\n\n**RFC",
+      "file": "beans/defs/folio-assistant-ke0o--voice-skill-a-technical-documentation-voice-writte.md"
+    },
+    {
       "id": "folio-assistant-km90",
       "title": "BEANS IN THE RENDERING PIPELINE: beans/ has no published projection and no visualiser, while todos/ has both",
       "status": "completed",
@@ -3393,6 +3463,20 @@
       "file": "beans/defs/folio-assistant-nlvl--package-id-collision-477s-three-new-skills-directo.md"
     },
     {
+      "id": "folio-assistant-nsbb",
+      "title": "IG PIPELINE LAYERING: a bare FHIR IG pipeline is the base; DAK and SMART are overlays on it, not the thing itself",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T15:37:14Z",
+      "updatedAt": "2026-09-21T15:37:14Z",
+      "preview": "Owner, 2026-09-21, verbatim:\n\n> 'that should be the basic bare FHIR IG (not DAK, not SMART) pipeline= running fhir IG, no pre-post processing and outpuing to gh-pages (how smart-guidelines generated before pre/post peocess) for those what are not WHO specfic.... those can be upgraded to do pre/post, but would need chnages/overlays .'\n\n## The layering\n\n**Base — generic, not WHO.** Run the FHIR IG P",
+      "file": "beans/defs/folio-assistant-nsbb--ig-pipeline-layering-a-bare-fhir-ig-pipeline-is-th.md"
+    },
+    {
       "id": "folio-assistant-nvbr",
       "title": "Phase I.4 — LHS navbar section per node in the folio instance (#223)",
       "status": "todo",
@@ -3801,6 +3885,20 @@
       "file": "beans/defs/folio-assistant-qmjh--schema-a-contentdirectory-cannot-say-whether-it-is.md"
     },
     {
+      "id": "folio-assistant-qrnz",
+      "title": "SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline actually generalises",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T14:13:32Z",
+      "updatedAt": "2026-09-21T14:13:32Z",
+      "preview": "The generalisation test qsf5 deferred. Until a second DAK-API IG goes through, \"generalisable across many IGs\" is a design claim.\n\nSubject: `smart.who.int.immunizations` v0.2.0, FHIR **4.0.1** (smart-trust is 5.0.0), gh-pages, 232,040 published files.\n\nMeasured 2026-09-21 before writing any code:\n\n| | smart-trust | smart-immunizations |\n|---|---|---|\n| artefacts (.index.json) | 674 | 712 |\n| canon",
+      "file": "beans/defs/folio-assistant-qrnz--second-ig-ingest-smart-immunizations-and-find-out.md"
+    },
+    {
       "id": "folio-assistant-qsf5",
       "title": "FHIR IG ARTEFACT INDEX: a reusable index schema type, an ingest pipeline over published IG output, and smart-trust as the first subject",
       "status": "completed",
@@ -3899,6 +3997,20 @@
       "updatedAt": "2026-09-20T16:36:52Z",
       "preview": "Seven of the nine agent-skill documents are staged and cannot be promoted.\nThey fail exactly one requirement — `image-descriptions` — and the images in\nquestion are not figures.\n\n## Measured 2026-09-20\n\n`Agent Skills — Google Antigravity Docs`, a **four-page** browser print:\n\n- **104 images, all classified `figure`**\n- page 1 alone carries 26\n- coverage of the first three: **0.000183, 0.000183, 0.",
       "file": "beans/defs/folio-assistant-r8br--blocker-pdf-images-classifies-browser-print-nav-ic.md"
+    },
+    {
+      "id": "folio-assistant-rapm",
+      "title": "PAGE: Knowledge Graph — the subgraph taxonomy, which way the arrows flow, and how each is used",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:21:34Z",
+      "updatedAt": "2026-09-21T16:21:34Z",
+      "preview": "Owner's structure, 2026-09-21, captured as given:\n\n- **Schema subgraph** — everything has JSON-LD / JSON Schema definitions describing all managed content. Comes EMPTY except for what is self-describing; harnesses add knowledge content assets.\n- **Content subgraph** — instances of knowledge assets, with Schemas and Skills.\n  - **Scenarios subgraph** (a kind of Content) — Actors (Machine, Human, Ag",
+      "file": "beans/defs/folio-assistant-rapm--page-knowledge-graph-the-subgraph-taxonomy-which-w.md"
     },
     {
       "id": "folio-assistant-rday",
@@ -4365,6 +4477,20 @@
       "file": "beans/defs/folio-assistant-ulqj--decide-the-data-model-for-csv-and-spreadsheets-ado.md"
     },
     {
+      "id": "folio-assistant-uwka",
+      "title": "PAGE: Managing Agent Context — overlays, and the several ways contextual information is generated",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:21:34Z",
+      "updatedAt": "2026-09-21T16:50:33Z",
+      "preview": "Owner, 2026-09-21: a new page in the cat-harness docs explaining the concept of OVERLAYS.\n\nIt applies to contextual information that is generated in several different ways — agent directives, `memory.md`, and others. Overlaying a context is what lets testing run repeatably across different contexts, which is the Context subgraph's reason for existing.\n\nRelates to `3q47` (deterministically set an a",
+      "file": "beans/defs/folio-assistant-uwka--page-managing-agent-context-overlays-and-the-sever.md"
+    },
+    {
       "id": "folio-assistant-v048",
       "title": "ROAST: adversarial pass over the catalogue-import design before any of it is believed",
       "status": "todo",
@@ -4617,6 +4743,20 @@
       "updatedAt": "2026-09-20T21:10:28Z",
       "preview": "Owner, 2026-09-20, splitting the work explicitly:\n\n| dynamic stuff is bean for later.  but static visualiztion overview is needed.\n| panel at top (colassibkle)\n\nThe static half shipped: a collapsible `<details>` panel at the top of the\nschema viewer holding a deterministic SVG of the whole graph. See\n`schema-management` §\"The overview panel\".\n\n## What is NOT there, and is this bean\n\n- Dragging a n",
       "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
+    },
+    {
+      "id": "folio-assistant-wjfu",
+      "title": "SMART-TRUST PAGES: 674 ingested artefacts had no reader-facing surface — a docs graph, generated from index.json",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:18:01Z",
+      "updatedAt": "2026-09-21T13:23:30Z",
+      "preview": "The owner asked where `https://litlfred.github.io/folio-assistant/smart-trust` was. It did not exist, and that is a gap left by qsf5 rather than a bug: `fhir-artifact-index` is registered `renderable: false`, and `smart-trust/` declares exactly one directory of exactly that kind, so nothing was generated for it.\n\nOnly 2 of 29 graph kinds are renderable — `docs` and `folio`. `who-iris/` publishes b",
+      "file": "beans/defs/folio-assistant-wjfu--smart-trust-pages-674-ingested-artefacts-had-no-re.md"
     },
     {
       "id": "folio-assistant-wlqd",
