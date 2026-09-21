@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cjtm
 title: 'SKILL: creating a new instance KIND — naming, prefixes, and repointing cat-bootstrap/README.md'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T16:45:37Z
-updated_at: 2026-09-21T07:36:35Z
+updated_at: 2026-09-21T07:54:06Z
 parent: folio-assistant-yj32
 blocking:
     - folio-assistant-jbx2
