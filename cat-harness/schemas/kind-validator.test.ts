@@ -146,8 +146,8 @@ describe("kindForPath", () => {
     mkdirSync(join(root, "beans", "defs"), { recursive: true });
     writeFileSync(join(root, "beans", "defs", "a.md"), "");
     const dirs = [
-      { path: "beans/", graphs: ["beans"] },
-      { path: "beans/defs/", graphs: ["bean-defs"] },
+      { path: "beans/", graphKinds: ["beans"] },
+      { path: "beans/defs/", graphKinds: ["bean-defs"] },
     ];
     expect(kindForPath(join(root, "beans", "defs", "a.md"), root, dirs)).toBe("bean-defs");
     rmSync(root, { recursive: true, force: true });
@@ -159,14 +159,14 @@ describe("kindForPath", () => {
     const { kindForPath } = await import("../scripts/kg-validate");
     const root = mkdtempSync(join(tmpdir(), "kfp2-"));
     mkdirSync(join(root, "schemas"), { recursive: true });
-    const dirs = [{ path: "schemas/", graphs: ["schemas", "cat-harness"] }];
+    const dirs = [{ path: "schemas/", graphKinds: ["schemas", "cat-harness"] }];
     expect(kindForPath(join(root, "schemas", "x.ts"), root, dirs)).toBeUndefined();
     rmSync(root, { recursive: true, force: true });
   });
 
   test("a path outside the root belongs to no kind", async () => {
     const { kindForPath } = await import("../scripts/kg-validate");
-    expect(kindForPath("/etc/passwd", "/tmp/x", [{ path: "a/", graphs: ["beans"] }]))
+    expect(kindForPath("/etc/passwd", "/tmp/x", [{ path: "a/", graphKinds: ["beans"] }]))
       .toBeUndefined();
   });
 });

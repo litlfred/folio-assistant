@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_Process_Discussion"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/bootstrap/workflows"
+                  exporter="bootstrap" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_Discussion">
+    <bpmn:participant id="Participant_Process_Discussion" name="Determine the harness and repositories" processRef="Process_Discussion"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Discussion" name="Determine the harness and repositories" isExecutable="false">
+    <bpmn:documentation>THE SECOND PROCESS IN CAT_BOOTSTRAP, and an exception to bootstrap holding as little as possible. Two facts have no answer in any file an Initiator can reach: WHICH harness this repository should become, and WHICH repositories are read from and written to. No instruction body produces them — they are judgements held by whoever asked for the harness. An agent that cannot obtain them cannot take the first step of `initialize-harness`, so this is presupposed by every task rather than indicated by one. (Logging sits differently and is NOT the contrast it first looks like: the owner's rule is "logging is optional, unless indicated on tasks", and `initialize-harness` indicates it — which is why `log-message` is here too.)
+
+SYMMETRIC IN ITS PARTICIPANTS. Human-to-agent and agent-to-agent are the same process: the Requestor lane is filled by a person or by a sibling agent that already holds the answer. The output records which, because the two are evidence of different weight, but neither is refused and they are not conflated.
+
+THE TOOL DOES NOT DECIDE. `discuss` carries a question out and an answer back. Judgement — the Initiator's — chooses what to ask and rules on when an answer settles the matter. The task is finished when a document conforming to `discussion.output.schema.json` exists, not when a pleasant exchange has occurred.
+
+PRECONDITION: the Initiator has read bootstrap/README.md and has narrowed the candidates as far as context allows. BPMN has no precondition element and this schema adds none yet, so it is stated here as `initialize-harness` states its own, and tracked as bean `lv3j`.
+
+NO folio:bean on any activity, and isExecutable is false, for the reasons `initialize-harness` gives: a bean is work-plan machinery and an engine is harness machinery, and an Initiator runs before either exists. This is data an Initiator reads.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_Process_Discussion">
+      <bpmn:lane id="Lane_Initiator" name="Initiator">
+        <bpmn:documentation>Holds the one judgement this process refuses to compute: whether an answer actually settles the question, which is why G_Settled carries no folio:decision unlike the DMN-backed gateways elsewhere in this corpus. It narrows candidates before spending the one question a reader is entitled to, and closes either with a determination or, on a decline, with what is still open — never a guess standing in for either.</bpmn:documentation>
+        <bpmn:flowNodeRef>Start_Discussion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_NarrowCandidates</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_PutQuestion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Settled</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_RecordDetermination</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_RecordUnsettled</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Settled</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Unsettled</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Requestor" name="Requestor">
+        <bpmn:documentation>Filled interchangeably by a person or a sibling agent that already holds the answer — the output records which, since the two are evidence of different weight, but this lane's standing to answer is the same either way. Declining is a legitimate exit here, not a failure: it is what turns the outcome into "unsettled" rather than forcing a guess.</bpmn:documentation>
+        <bpmn:flowNodeRef>A_Answer</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_Discussion" name="A fact is needed that no file holds">
+      <bpmn:outgoing>Flow_Start_Narrow</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:task id="A_NarrowCandidates" name="Narrow the candidates from context">
+      <bpmn:documentation>Before asking. A repository that already carries `cat-harness/cat-harness.json` is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="discussion"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Start_Narrow</bpmn:incoming>
+      <bpmn:outgoing>Flow_Narrow_Put</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_PutQuestion" name="Put the question, with its candidates named">
+      <bpmn:documentation>Uses the `discuss` tool. One question where one will do — the Initiator's persona is "asks exactly one question when it must". A question a reader must go and research is not ready to be asked.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="discussion"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Narrow_Put</bpmn:incoming>
+      <bpmn:incoming>Flow_Settled_No</bpmn:incoming>
+      <bpmn:outgoing>Flow_Put_Answer</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_Answer" name="Answer, or decline">
+      <bpmn:documentation>The Requestor lane, filled by a person or by a sibling agent. Declining is a permitted move and not an error: it produces `outcome: unsettled` with what is still open, never a guess.</bpmn:documentation>
+      <bpmn:incoming>Flow_Put_Answer</bpmn:incoming>
+      <bpmn:outgoing>Flow_Answer_Gate</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="G_Settled" name="Does the answer settle it?">
+      <bpmn:documentation>Judgement, exercised by the Initiator — which is why this gateway carries no `folio:decision`. Whether an answer settles the matter is not computable from the answer's text, and a DMN table here would be a claim that it is.</bpmn:documentation>
+      <bpmn:incoming>Flow_Answer_Gate</bpmn:incoming>
+      <bpmn:outgoing>Flow_Settled_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Settled_No</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Settled_Declined</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="A_RecordDetermination" name="Record the determination">
+      <bpmn:documentation>Writes a document conforming to `discussion.output.schema.json`: the harness, the repositories as read-from / written-to pairs, `determinedBy`, and who answered. This artefact is what finishes the task.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="discussion"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Settled_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_Record_End</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_RecordUnsettled" name="Record what is still open">
+      <bpmn:documentation>The declined route. `outcome: unsettled` with `stillOpen`, so the next actor resumes rather than restarts. An agent that reaches for a default here has produced a guess, not a determination.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="discussion"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Settled_Declined</bpmn:incoming>
+      <bpmn:outgoing>Flow_Unsettled_End</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_Settled" name="Harness and repositories determined">
+      <bpmn:incoming>Flow_Record_End</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:endEvent id="End_Unsettled" name="Still open, and said so">
+      <bpmn:incoming>Flow_Unsettled_End</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_Start_Narrow" sourceRef="Start_Discussion" targetRef="A_NarrowCandidates"/>
+    <bpmn:sequenceFlow id="Flow_Narrow_Put" sourceRef="A_NarrowCandidates" targetRef="A_PutQuestion"/>
+    <bpmn:sequenceFlow id="Flow_Put_Answer" sourceRef="A_PutQuestion" targetRef="A_Answer"/>
+    <bpmn:sequenceFlow id="Flow_Answer_Gate" sourceRef="A_Answer" targetRef="G_Settled"/>
+    <bpmn:sequenceFlow id="Flow_Settled_Yes" name="yes" sourceRef="G_Settled" targetRef="A_RecordDetermination"/>
+    <bpmn:sequenceFlow id="Flow_Settled_No" name="not yet — ask once more" sourceRef="G_Settled" targetRef="A_PutQuestion"/>
+    <bpmn:sequenceFlow id="Flow_Settled_Declined" name="declined" sourceRef="G_Settled" targetRef="A_RecordUnsettled"/>
+    <bpmn:sequenceFlow id="Flow_Record_End" sourceRef="A_RecordDetermination" targetRef="End_Settled"/>
+    <bpmn:sequenceFlow id="Flow_Unsettled_End" sourceRef="A_RecordUnsettled" targetRef="End_Unsettled"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_Discussion">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_Discussion" bpmnElement="Collaboration_Process_Discussion">
+      <bpmndi:BPMNShape id="Shape_Participant_Discussion" bpmnElement="Participant_Process_Discussion" isHorizontal="true">
+        <dc:Bounds x="130" y="80" width="900" height="330"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Initiator" bpmnElement="Lane_Initiator" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="870" height="230"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Requestor" bpmnElement="Lane_Requestor" isHorizontal="true">
+        <dc:Bounds x="160" y="310" width="870" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Discussion" bpmnElement="Start_Discussion">
+        <dc:Bounds x="200" y="152" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_NarrowCandidates" bpmnElement="A_NarrowCandidates">
+        <dc:Bounds x="280" y="130" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_PutQuestion" bpmnElement="A_PutQuestion">
+        <dc:Bounds x="450" y="130" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Answer" bpmnElement="A_Answer">
+        <dc:Bounds x="450" y="325" width="120" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_G_Settled" bpmnElement="G_Settled" isMarkerVisible="true">
+        <dc:Bounds x="625" y="145" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_RecordDetermination" bpmnElement="A_RecordDetermination">
+        <dc:Bounds x="730" y="110" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_RecordUnsettled" bpmnElement="A_RecordUnsettled">
+        <dc:Bounds x="730" y="210" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Settled" bpmnElement="End_Settled">
+        <dc:Bounds x="920" y="127" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Unsettled" bpmnElement="End_Unsettled">
+        <dc:Bounds x="920" y="227" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_Start_Narrow" bpmnElement="Flow_Start_Narrow">
+        <di:waypoint x="236" y="170"/>
+        <di:waypoint x="280" y="170"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Narrow_Put" bpmnElement="Flow_Narrow_Put">
+        <di:waypoint x="400" y="170"/>
+        <di:waypoint x="450" y="170"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Put_Answer" bpmnElement="Flow_Put_Answer">
+        <di:waypoint x="510" y="210"/>
+        <di:waypoint x="510" y="325"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Answer_Gate" bpmnElement="Flow_Answer_Gate">
+        <di:waypoint x="570" y="360"/>
+        <di:waypoint x="650" y="360"/>
+        <di:waypoint x="650" y="195"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Settled_Yes" bpmnElement="Flow_Settled_Yes">
+        <di:waypoint x="675" y="160"/>
+        <di:waypoint x="730" y="145"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Settled_No" bpmnElement="Flow_Settled_No">
+        <di:waypoint x="650" y="145"/>
+        <di:waypoint x="650" y="100"/>
+        <di:waypoint x="510" y="100"/>
+        <di:waypoint x="510" y="130"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Settled_Declined" bpmnElement="Flow_Settled_Declined">
+        <di:waypoint x="675" y="180"/>
+        <di:waypoint x="730" y="245"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Record_End" bpmnElement="Flow_Record_End">
+        <di:waypoint x="860" y="145"/>
+        <di:waypoint x="920" y="145"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Unsettled_End" bpmnElement="Flow_Unsettled_End">
+        <di:waypoint x="860" y="245"/>
+        <di:waypoint x="920" y="245"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -20,7 +20,7 @@
  *
  * Worse, it was not one file. Running each declaration-reading test file in
  * isolation found **five** with the same latent dependency — `kg-node`,
- * `cat-bootstrap-initialization-convention`, `qa-results`, `todos` and
+ * `bootstrap-initialization-convention`, `qa-results`, `todos` and
  * `topology-conflicts`. CI had only caught the one its ordering broke first, so
  * fixing that one would have left four to surface on the next shard.
  *

@@ -1,6 +1,6 @@
 ---
 # folio-assistant-r1vw
-title: Package ids come from the DIRECTORY basename, so cat-bootstrap/skills/ mints package/skills and collides
+title: Package ids come from the DIRECTORY basename, so bootstrap/skills/ mints package/skills and collides
 status: completed
 type: task
 parent: folio-assistant-zzmr
@@ -24,7 +24,7 @@ package/authoring-who-smart-guidelines  package/graph-management
 package/skills                          <-- the twelfth
 ```
 
-`cat-bootstrap/skills/package-manifest.json` declares `"name": "cat-bootstrap"`.
+`bootstrap/skills/package-manifest.json` declares `"name": "bootstrap"`.
 Its node is `package/skills`, **named `skills`**. The manifest's own name is
 dropped.
 
@@ -35,14 +35,14 @@ dropped.
 root's graph that one node has **5 members**:
 
 ```
-skill/cat-bootstrap-kg-navigation   <- cat-bootstrap/skills/
-skill/confirm-harness               <- cat-bootstrap/skills/
-skill/discussion                    <- cat-bootstrap/skills/
-skill/log-message                   <- cat-bootstrap/skills/
+skill/bootstrap-kg-navigation   <- bootstrap/skills/
+skill/confirm-harness               <- bootstrap/skills/
+skill/discussion                    <- bootstrap/skills/
+skill/log-message                   <- bootstrap/skills/
 skill/corpus-grep                   <- cat-harness/src/skills/
 ```
 
-A cat-harness skill is published as a member of cat-bootstrap's package. Nothing
+A cat-harness skill is published as a member of bootstrap's package. Nothing
 reports it: both sides resolve, no link dangles, and the audit's `skill-servable`
 criterion is *satisfied* by the collision — `corpus-grep` is served because a
 package it was never listed in happens to exist.
@@ -50,7 +50,7 @@ package it was never listed in happens to exist.
 ## Why it is `dh4f`-shaped rather than cosmetic
 
 An id derived from a path is an id two paths can agree on by accident. The
-failure is silent in both directions: cat-bootstrap's package loses its declared
+failure is silent in both directions: bootstrap's package loses its declared
 name, and cat-harness's unmanifested skill gains a package it never claimed.
 The one node that would have caught it — a uniqueness check keyed on the
 manifest `name` — cannot exist while the name is not what the id is made of.
@@ -59,7 +59,7 @@ manifest `name` — cannot exist while the name is not what the id is made of.
 
 This is a **third** symptom of the same asymmetry, alongside the three dangling
 `bindsLane` links and the `kg-navigation` docs collision (`v3se`): all three
-exist because the root declares `cat-bootstrap/skills/` as one of its own kg
+exist because the root declares `bootstrap/skills/` as one of its own kg
 directories. Dropping that declaration (`pve3`'s "neither" option) removes this
 one too — but the id-minting defect would survive, waiting for the next two
 directories to share a basename.
@@ -92,17 +92,17 @@ Measured, before → after:
 ```
 SkillPackage nodes      12 → 13
 package/skills          5 members → 1   (corpus-grep only)
-package/cat-bootstrap   absent  → 4     (the four bootstrap skills)
+package/bootstrap   absent  → 4     (the four bootstrap skills)
 dangling internal links 0 → 0
 ```
 
 Six tests in `kg-export.test.ts` under *"a package's id is declared, not
-derived from its path"*: ids are unique; `cat-bootstrap` is named by its
+derived from its path"*: ids are unique; `bootstrap` is named by its
 manifest; its members are exactly the four; **`corpus-grep` is not among
 them** — the assertion that was false while every signal said healthy; a
 manifest-less directory falls back and reports `hasManifest: false`; and,
 over the whole corpus, every manifested package's id equals its declared name.
-That last one is the mechanism rather than the outcome: `cat-bootstrap/skills`
+That last one is the mechanism rather than the outcome: `bootstrap/skills`
 and `src/skills` are the only colliding pair here, so an outcome-only test
 would pass over a corpus with nothing left to detect the day one is renamed.
 

@@ -93,7 +93,7 @@ Measured across every declaration before pinning it:
 
 | instance | sticky id | |
 |---|---|---|
-| `cat-bootstrap` | `cat-bootstrap` | same |
+| `bootstrap` | `bootstrap` | same |
 | `cat-harness` | `cat-harness` | same |
 | `folio-assistant-core` | `folio-assist-core` | **differs** |
 
@@ -127,7 +127,7 @@ bun test rc=1 — 2 fail
 - **"a check reports a declared instance directory whose name no consumer
   resolves"**: measured first, and it would be **vacuous today**. All twelve
   declared instances have external references, the smallest being
-  `cat-bootstrap-tools` at 20. Building it now would be a ratchet with no
+  `bootstrap-tools` at 20. Building it now would be a ratchet with no
   finding and no way to show it works on this corpus; the relational guard
   above is the same defect's real guard and does have a reproduction.
 

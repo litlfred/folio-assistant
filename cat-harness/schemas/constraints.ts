@@ -174,7 +174,7 @@ export const TodoItemSchema = z.object({
    *
    * ## Why a bare string rather than an enum of theme ids
    *
-   * Same reason `GraphNodeDirectorySchema.graphs` is an open string checked
+   * Same reason `GraphNodeDirectorySchema.graphKinds` is an open string checked
    * against the registry later: a closed enum has to be built at module load,
    * and this module is the CONTENT model — importing the theme table here
    * would drag rendering into the content schema and give every consumer of a

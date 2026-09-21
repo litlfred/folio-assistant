@@ -23,7 +23,7 @@ import { loadProcessModel } from "../../src/workflow/process-model.js";
 describe("the declaration and the directory agree", () => {
   test("`harness.json` declares a `todos` graph", () => {
     const d = readDeclaration(ROOT);
-    const entry = d?.directories?.find((x) => x.graphs?.includes("todos"));
+    const entry = d?.directories?.find((x) => x.graphKinds?.includes("todos"));
     expect(entry?.path).toBe("todos/");
   });
 
@@ -146,7 +146,7 @@ describe("the published process hierarchy", () => {
     // uses — not the literal `skills/workflows`.
     //
     // This hardcoded that path and broke the moment a second root existed:
-    // `cat-bootstrap/workflows/cat-bootstrap.bpmn` is in the published hierarchy and
+    // `bootstrap/workflows/bootstrap.bpmn` is in the published hierarchy and
     // was not in this expectation, so the test called the GENERATOR wrong for
     // correctly reading the declaration. A test that pins an order must derive
     // it from the same source as the thing it pins, or it pins the past.

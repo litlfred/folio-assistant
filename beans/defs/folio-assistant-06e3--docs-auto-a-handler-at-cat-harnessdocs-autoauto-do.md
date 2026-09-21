@@ -266,7 +266,7 @@ derived index and keeps the half that cannot be generated. That is
 lesson is kept rather than deleted.
 
 Bootstrap's three diagrams are correctly OUTSIDE the index —
-`cat-bootstrap/workflows/` is declared by `cat-bootstrap/harness.json` and not
+`bootstrap/workflows/` is declared by `bootstrap/harness.json` and not
 by the root, deliberately (bean `pve3`). Stated on the page so the absence
 reads as a fact rather than a gap.
 
