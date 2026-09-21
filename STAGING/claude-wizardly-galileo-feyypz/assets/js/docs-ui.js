@@ -2983,11 +2983,17 @@
       style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
              "background:" + langBg + ";border:1px solid " + langBorder + ";" +
              "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
-      title: availLangs > 1
-        ? "Available in: " + available.join(", ") + " \u2014 of " +
-          supported.join(", ")
-        : "Available in " + ((available[0] || meta.lang || "its source language")) +
-          " only; not yet translated"
+      // Three wordings, because the fraction alone does not say which case it
+      // is. The "of <every supported locale>" tail is what makes a partial
+      // count actionable -- it names the languages still missing -- and is
+      // dropped when the two lists are equal, where it read "available in:
+      // ar, zh, en, fr, ru, es -- of ar, zh, en, fr, ru, es".
+      title: availLangs >= totalLangs
+        ? "Available in every supported language: " + available.join(", ")
+        : availLangs > 1
+          ? "Available in: " + available.join(", ") + " \u2014 of " + supported.join(", ")
+          : "Available in " + (available[0] || meta.lang || "its source language") +
+            " only; not yet translated"
     }, "\uD83C\uDF10 " + availLangs + "/" + totalLangs + " languages");
     container.appendChild(langBadge);
 
