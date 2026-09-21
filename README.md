@@ -54,9 +54,9 @@ not, do not.
 ## Harness instances
 
 This repository holds several **instances**, each declaring its own
-`<instance>.json`. Every one has two entry points on purpose: a **README** saying
-what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments
-the first rather than restating it.
+`<instance>.json`. Every one has two entry points on purpose: a **README**
+saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second
+augments the first rather than restating it.
 
 The table is generated from the declarations themselves by `bun run
 readme:sync`; it is not a list anybody keeps. Add an instance and it appears;

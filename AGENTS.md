@@ -29,10 +29,10 @@ are thin stubs pointing here.
 > ### Getting skills
 >
 > **Skills are knowledge-graph content, not a directory you memorise.** They
-> live in the `kg` graph an instance declares in its own
-> `<instance>.json` — here that is `cat-harness/cat-harness.json`, whose `kg`
-> entry maps to `skills/`, but an
-> instance may put it anywhere, and a downstream instance **inherits** its
+> live in the `kg` graph an instance declares in its own `<instance>.json` —
+> here that is `cat-harness/cat-harness.json`, whose `kg` entry maps to
+> `skills/`, but an instance may put it anywhere, and a downstream instance
+> **inherits** its
 > dependencies' skills through the same declaration. Hardcoding a path is how
 > a skill goes missing the moment the layout moves.
 >
@@ -106,9 +106,9 @@ why there is no `recommendation` block kind.
 
 `bun run init-folio --help`, or the `folio_init` MCP tool. It writes `content/`,
 `uploads/`, `library/`, the document + chapter + first block manifests,
-`<slug>.json` and `<slug>.config.json`, the `content/schema/` builder shim, `AGENTS.md` with
-`CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the session-start hook and the beans
-store — and links the platform as a submodule or a sibling checkout.
+`<slug>.json` and `<slug>.config.json`, the `content/schema/` builder shim,
+`AGENTS.md` with `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the session-start
+hook and the beans store — and links the platform as a submodule or a sibling checkout.
 
 Two things about it worth knowing before you edit it. The builder shim exists so
 the path to folio-assistant is written down **once**: block manifests import
@@ -157,9 +157,10 @@ holds markdown. `beans/beans.json` declares it; the schema is
 | `defs` | `beans/defs/` | `bean-defs` — WHAT is being worked on | yes |
 | `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |
 
-**It is the same schema as an instance's `<instance>.json`, not a parallel one.** A bean-graph
-entry IS a `ContentDirectory` — an id, a path, and the graph kinds found there.
-`<instance>.json` says which directories exist and what kind of graph each holds;
+**It is the same schema as an instance's `<instance>.json`, not a parallel
+one.** A bean-graph entry IS a `ContentDirectory` — an id, a path, and the graph
+kinds found there. `<instance>.json` says which directories exist and what kind
+of graph each holds;
 `beans/beans.json` says what its own nodes are. One fact, one place, at each
 level.
 
@@ -608,9 +609,9 @@ to spend the words: **do not start the topic.**
   and rough cost —
   [`skills/folio-core/swarm-management.md`](cat-harness/skills/folio-core/swarm-management.md)
   and the [reader-facing page](cat-harness/docs/swarm-management.md).
-- **An instance declares the directories it scans — `<instance>.json` at
-  that instance's own root.** Each entry names a directory and the **kind of graph** it
-  holds: `folio` (authored content, rendered to a website by just-the-docs),
+- **An instance declares the directories it scans — `<instance>.json` at that
+  instance's own root.** Each entry names a directory and the **kind of graph**
+  it holds: `folio` (authored content, rendered to a website by just-the-docs),
   `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,
   roles) or `schemas`. A kind answers TWO questions: `renderable` — is it wired
   to the site build, which is what makes `folio` special — and `holds`, which
@@ -634,8 +635,7 @@ to spend the words: **do not start the topic.**
   exists** — a declared-but-absent directory is the bean `dh4f` defect, where a
   consumer scans nothing and reports a clean run over it. This repo is
   pre-split, and **`cat-harness/cat-harness.json` is the list — not this
-  sentence.** It said
-  "declares `schemas/` and `skills/` only" until 2026-09-20, by which point
+  sentence.** It said "declares `schemas/` and `skills/` only" until 2026-09-20, by which point
   neither half was true: there are many more entries, and `src/skills/` is a
   SECOND knowledge-graph directory holding a skill beside the `.ts` that
   implements it. No count is given here on purpose, because a count in prose is
