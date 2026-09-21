@@ -80,7 +80,7 @@ comments up is the same defect wearing a different hat.
 
 1. **Identify the requester** — who is asking?
 2. **Identify stakeholders** — who else is affected? Check:
-   - `harness.config.json` roles across active folios
+   - `<name>.config.json` roles across active folios
    - GitHub CODEOWNERS
    - Recent activity on related issues
 3. **Gather source material** — the request may come from:

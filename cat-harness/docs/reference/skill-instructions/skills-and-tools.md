@@ -136,7 +136,7 @@ instead of a repository-wide yes/no that no reader of a skill can see.
 **`agentic-harness` must work with no MCP server running.** Everything it needs
 is files in directories the instance declares: skills in the `kg` graph, Tool
 nodes beside them, the work plan in the `beans` graph. An agent with nothing but
-a filesystem and the declaration can read all of it.
+a filesystem and `<name>.json` can read all of it.
 
 MCP is **acknowledged as a future transport, not assumed as the present one.**
 Where a downstream instance runs a server, `skill_list` / `skill_fetch` /
@@ -160,7 +160,7 @@ sovereign-compute and air-gapped operation are reachable later without a second
 design — an instance with no server loses a transport, not a capability.
 
 So when this skill says "reach a Tool through the graph", the floor is: read
-the declaration, find the `kg` entry, open the directory. Anything richer
+`<name>.json`, find the `kg` entry, open the directory. Anything richer
 is an optimisation an instance may offer.
 
 ## GitHub is a Tool node, not a layer

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-tdu3
 title: The module-scope gate covers folioDir only, and walks only cat-harness
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-21T15:35:46Z
-updated_at: 2026-09-21T16:40:00Z
+updated_at: 2026-09-21T16:56:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -130,3 +131,38 @@ such case will want it, and it reports a stale entry as a finding in its own
 right. The gate runs clean over **997 files**.
 
 `bun run gates`: 89 of 89.
+
+## Summary of Changes
+
+Merged as #739 (`adadd76a`), on top of #734 (`709f0d8b`).
+
+**The gate**, in `cat-harness/scripts/check-module-scope-resolution.ts`:
+covers all three resolvers that throw, sees a call nested inside another
+expression rather than only one in first position, walks **every instance**
+via `instanceRootsIn`, and does not flag its own remedy — the discriminator is
+the arrow, not the helper's name. `ALLOWED` is empty, and says that is a
+determined empty.
+
+**The mechanism**: `deferResolution(compute, {moduleUrl, what, under})` in
+`schemas/cat-harness.ts`, with `folioDirDeferred` reduced to a thin call to it,
+keeping its name, its message and its five tests. Resolution stays at load;
+only the throw moves.
+
+**Converted**: 12 nested sites in #734, 4 exported ones in #739 — 16 in all.
+
+**Tests**: `module-scope-resolution-gate.test.ts`, 9 cases, both halves — the
+hazard is caught (first position, nested, both extra resolvers, `let`/`var`)
+and the remedy is not (`deferResolution`, a hand-written accessor, a call
+inside a function body). Plus `findContentRepoRoot` deliberately absent, and
+"examined nothing is not a pass".
+
+**Left for a decision, not settled here**: `TODOS_DIR` in
+`adapters/mcp-server/paths.ts` has no consumers anywhere. Deferred rather than
+deleted — an unused export is a judgement about intent.
+
+**One process finding worth keeping**: merging main before merging out is not
+ceremony. On #739 the PR was green and GitHub reported `mergeable_state: clean`,
+but that green was measured against a main 23 commits older, and
+`state:visualizer:check` failed on the merged tree with `docs/qa/index.html`
+stale. A red run on main, from a fully green PR, caught before the merge rather
+than after it.

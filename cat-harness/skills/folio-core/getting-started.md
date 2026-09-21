@@ -16,7 +16,7 @@ declared in the repository's declaration. Nothing about any
 particular instance is written into the template, so a downstream folio does not
 inherit the platform's grumpy cat.
 
-**Where the markdown node is:** `description` in the declaration. It is
+**Where the markdown node is:** `description` in `<name>.json`. It is
 markdown and it is rendered as-is. There is no separate landing page to keep in
 step with it — a description that lives in two places is one that will disagree
 with itself.

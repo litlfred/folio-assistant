@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WHO SMART Trust — artefact index</title>
-<meta name="description" content="All 674 artefacts of the WHO SMART Trust IG 1.8.0, reconstructed from its published output.">
+---
+title: "WHO SMART Trust — artefact index"
+description: "All 674 artefacts of the WHO SMART Trust IG 1.8.0, reconstructed from its published output."
+---
 <style>
 :root {
   --ink: #17242e; --muted: #5c6b77; --edge: #d5dde3; --surface: #ffffff;
@@ -75,19 +72,6 @@ footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86r
 .back { display: inline-block; margin-bottom: 8px; }
 @media (max-width: 640px) { header.top h1 { font-size: 1.1rem; } .wrap { padding: 0 16px; } }
 </style>
-</head>
-<body>
-<header class="top"><div class="wrap">
-  <h1><a href="./index.html">WHO SMART Trust — artefact index</a></h1>
-  <span class="sub">smart.who.int.trust · reconstructed, not authored</span>
-</div></header>
-<div class="banner"><div class="wrap">
-  Generated from <code>smart-trust/fhir-artifact-index/index.json</code> by
-  <code>smart-trust:pages</code>. Not a WHO site, and not the published IG &mdash;
-  the IG itself is at
-  <a href="https://worldhealthorganization.github.io/smart-trust/">worldhealthorganization.github.io/smart-trust</a>.
-</div></div>
-<main><div class="wrap">
 
 <p class="lede">The artefact index of the WHO SMART Trust Implementation Guide, rebuilt from what the IG
 publishes. Most of it is catalogued <strong>by reference</strong>: the index records where each artefact
@@ -645,10 +629,3 @@ sidecar links through to its own page; the rest link out to the published repres
   </div>
 </details>
 
-</div></main>
-<footer><div class="wrap">
-  Every figure and link on this page is read out of the artefact index; nothing here is hand-written.
-  Regenerate with <code>bun run smart-trust:pages</code>.
-</div></footer>
-</body>
-</html>

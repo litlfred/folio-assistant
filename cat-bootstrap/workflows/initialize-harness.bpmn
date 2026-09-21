@@ -73,7 +73,7 @@ and where">
 
     <bpmn:task id="A_ReadLocation" name="Read what each location
 already is">
-      <bpmn:documentation>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `harness.json` present and parsing is the whole test, and `kg-navigation` says what the three answers mean — absent (not an instance yet, which is this process's case), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either.
+      <bpmn:documentation>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `&lt;name&gt;.json` present and parsing is the whole test, and `kg-navigation` says what the three answers mean — absent (not an instance yet, which is this process's case), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either.
 
 Before reading the chosen harness rather than after, deliberately: if the location is spoken for there is nothing to learn from the harness, and fetching it first only makes the failure more expensive.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="cat-bootstrap-kg-navigation"/></bpmn:extensionElements>

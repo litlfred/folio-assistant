@@ -91,22 +91,6 @@ export const BUILD_DIR = resolve(REPO_ROOT, "build");
 /** Preference storage file. */
 export const PREFS_FILE = resolve(REPO_ROOT, ".folio-assistant-prefs.json");
 
-/** Gitignored todos directory (survives branch switches). */
-// declared-path-literal: as above, a write target.
-// The declared `todos` graph — a person's outstanding items, as against
-// `beans/`. Same write-target fallback as above.
-// `REPO_ROOT` is `findContentRepoRoot()` — a FOLIO's root, not this instance's.
-// The `repoRootFor` sweep sent the fallback to that folio's PARENT.
-// NOTHING IMPORTS THIS. Found while converting it (bean `tdu3`): the only
-// other mention in the tree was the gate's own allow-list entry naming it.
-// Deferred rather than deleted — an unused export is a judgement about
-// intent, not a defect this bean is entitled to settle, and a module-scope
-// throw is worth removing either way.
-export const TODOS_DIR = deferResolution(
-  () => directoryForGraph(REPO_ROOT, "todos") ?? resolve(REPO_ROOT, "todos"),
-  { moduleUrl: import.meta.url, what: "its todos directory", under: REPO_ROOT },
-);
-
 /** Feedback directory — committed to main via worktree.
  *  Structure: feedback/<paper-dir>/<rootName>.ts */
 export const FEEDBACK_DIR = resolve(REPO_ROOT, "folio-assistant/feedback");
