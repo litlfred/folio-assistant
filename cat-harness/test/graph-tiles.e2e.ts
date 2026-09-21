@@ -40,17 +40,26 @@ const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
 /** Declarations, and the tiles they must yield — one source for both. */
 const DIRS: TiledDirectory[] = [
-  { id: "beans", coverage: { visualiser: "cat-harness/docs/beans/index.html" } },
+  // Icons are declared on EXISTING entries rather than new ones: the id set is
+  // asserted exactly a few tests down, and a fixture that grows to cover a new
+  // field would quietly rewrite what "exactly the declarations that say
+  // navbar" means.
+  { id: "beans", coverage: { visualiser: [{ ref: "cat-harness/docs/beans/index.html", icon: "beans" }] } },
   {
     id: "library",
     coverage: {
       visualiser: [
-        { ref: "cat-harness/docs/library/shelf.html", title: "Shelf" },
+        // An icon the client's registry has not got: the fallback case, which
+        // is a folio declaring against a newer platform than the one rendering.
+        { ref: "cat-harness/docs/library/shelf.html", title: "Shelf", icon: "no-such-glyph" },
         { ref: "cat-harness/docs/library/map.html", title: "Map", surfaces: ["board"] },
       ],
     },
   },
-  { id: "navbar-only", coverage: { visualiser: [{ ref: "cat-harness/docs/n.html", surfaces: ["navbar"] }] } },
+  // An INHERITED property of every object literal. A registry read as
+  // `TILE_GLYPHS[name]` would return `Object`'s constructor here and hand a
+  // function to `innerHTML`; this pins the `hasOwnProperty` guard.
+  { id: "navbar-only", coverage: { visualiser: [{ ref: "cat-harness/docs/n.html", surfaces: ["navbar"], icon: "constructor" }] } },
   { id: "starts-hidden", coverage: { visualiser: [{ ref: "cat-harness/docs/h.html", hidden: true }] } },
   // Declares nothing: it must get no tile, however much a viewer exists.
   { id: "undeclared" },
@@ -127,6 +136,7 @@ async function tilesOnPage(page: import("@playwright/test").Page, surface: strin
       id: (e as HTMLElement).dataset.faTile,
       title: e.querySelector(".fa-tile-caption")?.textContent,
       href: e.getAttribute("href"),
+      glyph: e.querySelector("svg")?.outerHTML,
     })),
   );
 }
@@ -314,5 +324,57 @@ test.describe("the tile template is `1le7`'s, not a second one", () => {
       .evaluateAll((els) => els.map((e) => e.getAttribute("aria-label")));
     expect(labels.length).toBeGreaterThan(0);
     for (const l of labels) expect(l).toContain("the declared visualisation of");
+  });
+});
+
+test.describe("the glyph a tile wears is DECLARED, by name", () => {
+  test("a declared icon renders a different glyph from the generic one", async ({ page }) => {
+    // Asserted as a DIFFERENCE, not against the bean's path data. A test
+    // carrying the artwork would fail on every redraw while proving only that
+    // the string was copied twice; what has to hold is that the declaration
+    // reached the renderer and changed what it drew.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const byId = Object.fromEntries((await tilesOnPage(page, "navbar")).map((t) => [t.id, t.glyph]));
+    expect(byId["beans"]).toBeTruthy();
+    expect(byId["beans"]).not.toBe(byId["library/1"]);
+  });
+
+  test("an unknown icon name falls back to the glyph every tile had before", async ({ page }) => {
+    // `library/1` declares `no-such-glyph`; `library/2` declares nothing. The
+    // two must be identical, which is what "falls back" has to mean — a folio
+    // naming a glyph its platform has not got still gets a working tile.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const nav = Object.fromEntries((await tilesOnPage(page, "navbar")).map((t) => [t.id, t.glyph]));
+    const board = Object.fromEntries((await tilesOnPage(page, "board")).map((t) => [t.id, t.glyph]));
+    expect(nav["library/1"]).toBeTruthy();
+    expect(nav["library/1"]).toBe(board["library/2"]);
+  });
+
+  test("an INHERITED property name is not a glyph", async ({ page }) => {
+    // `navbar-only` declares `constructor`. A bare `TILE_GLYPHS[name]` lookup
+    // returns `Object`'s constructor for it, and `innerHTML = <function>`
+    // writes its SOURCE into the page. Asserted both ways: the tile renders
+    // the fallback, and the word `function` appears nowhere in it.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const nav = Object.fromEntries((await tilesOnPage(page, "navbar")).map((t) => [t.id, t.glyph]));
+    expect(nav["navbar-only"]).toBe(nav["library/1"]);
+    const html = await page.locator('[data-fa-tile="navbar-only"]').innerHTML();
+    expect(html).not.toContain("function");
+  });
+
+  test("a tile's glyph is the same on both surfaces", async ({ page }) => {
+    // One declaration, two surfaces — the same rule Q11 states for visibility.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const nav = await tilesOnPage(page, "navbar");
+    const board = await tilesOnPage(page, "board");
+    const onBoth = nav.filter((n) => board.some((b) => b.id === n.id));
+    expect(onBoth.length).toBeGreaterThan(0);
+    for (const n of onBoth) {
+      expect(board.find((b) => b.id === n.id)!.glyph).toBe(n.glyph);
+    }
   });
 });
