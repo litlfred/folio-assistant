@@ -47,7 +47,11 @@ describe("invocations", () => {
     // The witness. A matcher proven only against fixtures is proven against
     // its author's idea of the file.
     const got = invocations(wf("docs-site.yml"));
-    expect(got.some((i) => i.script === "kg-export" && i.instance === "./cat-bootstrap")).toBe(true);
+    // `./bootstrap` since `494bbbb6f` renamed the directory. The four other
+    // `./cat-bootstrap` strings in this file are FIXTURE text — arbitrary
+    // instance names the parser echoes back — and are correct as they stand.
+    // This one reads the real workflow, which is the whole point of it.
+    expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
 });
 
