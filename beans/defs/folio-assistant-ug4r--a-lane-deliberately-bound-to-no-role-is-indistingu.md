@@ -77,12 +77,14 @@ Binding `Actor` to a role. That is the wrong fix and the file says why.
 
 ## Done when
 
-- [ ] a lane can DECLARE that its performer varies, in a form a tool reads
-- [ ] `lane-binds-role` treats a declared-variable lane as answered, and
-      still fails on an undeclared one
+- [x] a lane can DECLARE that its performer varies, in a form a tool reads
+- [x] `lane-binds-role` treats a declared-variable lane as answered, and
+      still fails on an undeclared one — falsified, 4 failures on the mutation
+      that suppresses every unbound lane
 - [ ] the glossary extractor can tell "no definition, by design" from "no
-      definition, nobody wrote one"
-- [ ] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
+      definition, nobody wrote one" — #596 slice 2, which consumes
+      `laneBinding`; not this bean
+- [x] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
       `cat-bootstrap/skills/roles/roles.json` points at it rather than being
       the only record
 
@@ -193,12 +195,15 @@ and points at the declaration. It was the only record until today, and a fact
 that lives only in a comment is one `lane-binds-role` reports as `major` for
 ever.
 
-## Done when — status
+## Where the remaining box lives
 
-- [x] a lane can DECLARE that its performer varies, in a form a tool reads
-- [x] `lane-binds-role` treats a declared-variable lane as answered, and still
-      fails on an undeclared one — falsified, 4 failures
-- [ ] the glossary extractor can tell "no definition, by design" from "no
-      definition, nobody wrote one" — #596 slice 2 consumes `laneBinding`
-- [x] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose
-      points at it rather than being the only record
+The one unticked item above is **#596 slice 2's**, not this bean's: the
+extractor consumes `laneBinding` to tell a by-design definition-less term from
+a hole. It is left open here because the section above is what a reader and
+every tool consult, and ticking it would claim work that has not been done.
+
+This section replaced a second `## Done when — status` checklist that restated
+the canonical one with its own ticks. `check:bean-bodies` failed the push for
+it — correctly: a second checklist is free to disagree with the first, and the
+one a tool reads was still saying "not done". The lesson is the check's own:
+tick the canonical boxes, never shadow them.
