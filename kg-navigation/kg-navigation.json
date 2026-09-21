@@ -7,8 +7,8 @@
       "id": "agent-instructions",
       "src": "AGENTS.md",
       "role": "agent-instructions",
-      "title": "AGENTS.md — kg-navigation",
-      "description": "Cold start for the agent who does not yet know the layout. Carries the instruction the README states as a description: ask for the skill rather than opening a path, and do NOT delete either kg-navigation body as a duplicate — they answer one question under different preconditions, so merging them leaves one caller unable to run what it was given."
+      "title": "AGENTS.md \u2014 kg-navigation",
+      "description": "Cold start for the agent who does not yet know the layout. Carries the instruction the README states as a description: ask for the skill rather than opening a path, and do NOT delete either kg-navigation body as a duplicate \u2014 they answer one question under different preconditions, so merging them leaves one caller unable to run what it was given."
     },
     {
       "id": "readme",
@@ -24,8 +24,8 @@
       "path": "skills/",
       "dependents": "skip",
       "description": "The TOOLED route -- what an agent takes when `skill_list`, `skill_fetch` and `work_plan_prime` are reachable. The zero-install floor stays in `bootstrap/skills/`, and MUST: bootstrap is phase one with nothing installed, and a bootstrap that reached into another instance for its first skill would fail in exactly the cold-start case it exists for. The id is NOT `cat-harness`; overrides match on the entry's id, and `cat-harness/harness.json` already holds that one for `skills/`, so reusing it would REPLACE the harness's knowledge graph rather than add to it.",
-      "graphs": [
-        "cat-harness"
+      "graphKinds": [
+        "skills"
       ]
     }
   ]

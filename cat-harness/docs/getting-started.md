@@ -213,8 +213,8 @@ Full discipline: the
 Creating a folio should end with a link. Immediately after scaffolding:
 
 ```sh
-bun run pages:cat-bootstrap            # derive the address, report, no probe
-bun run pages:cat-bootstrap -- --wait  # probe until the site answers (bounded)
+bun run pages:bootstrap            # derive the address, report, no probe
+bun run pages:bootstrap -- --wait  # probe until the site answers (bounded)
 ```
 
 It derives the address from `harness.config.json` or the `origin` remote, finds

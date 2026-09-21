@@ -22,7 +22,7 @@
  *
  * Where each sticky comes from now, and why that file rather than this one, is in
  * `schemas/sticky-contribution.ts` — including why a declaration beats a code
- * registry (cat-bootstrap holds no TypeScript and may not import the layer composed
+ * registry (bootstrap holds no TypeScript and may not import the layer composed
  * on top of it) and why the text itself belongs in the declaration
  * (`AGENTS.md`: subject matter in this repository *"belongs in the folio as
  * data"*, and a sticky's words are subject matter).
@@ -161,8 +161,8 @@ export const LandingStickySchema = CarriedNoteSchema.extend({
    * Recorded on the node rather than left implicit, because the board is now
    * composed and *"which layer put this here"* is the first question anyone
    * debugging it asks. It is also what lets a test assert the owner's ruling
-   * structurally: a board composed over cat-bootstrap alone carries only stickies
-   * whose `contributedBy` is `cat-bootstrap`, and therefore no cat.
+   * structurally: a board composed over bootstrap alone carries only stickies
+   * whose `contributedBy` is `bootstrap`, and therefore no cat.
    */
   contributedBy: z.string().min(1),
   /**

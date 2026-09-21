@@ -181,7 +181,7 @@ Run independently it reproduces the recorded 9.25–9.36:1 range (computed
 the cheapest confirmation there is that the comments beside those values are
 still true.
 
-`docs/architecture/theming.md` is the documentation entry. cat-bootstrap's
+`docs/architecture/theming.md` is the documentation entry. bootstrap's
 `renderExemption` was the alternative and is the wrong shape: that exemption is
 a floor that rises, for a layer producing nothing a human browses. Theming
 produces nothing BUT things a human looks at.
@@ -201,7 +201,7 @@ Fixed by a RULE rather than by first-wins, in a second pass over the whole set
 because the answer depends on how many there are: a directory basenamed
 `skills` takes the instance name; otherwise a SOLE directly-held directory
 takes it; otherwise the basename. `src/skills/` stays `folio-assistant` and
-`cat-bootstrap/skills/` stays `cat-bootstrap`, both measured unchanged.
+`bootstrap/skills/` stays `bootstrap`, both measured unchanged.
 **Majors 102 → 75, passes 1393 → 1404**, and the `role-skills-resolve`
 critical cleared with them.
 
@@ -239,6 +239,6 @@ in a commit about that.
 ### One thing left open, recorded on `lps0`
 
 `gen-skill-docs` keys a directly-held package by its DECLARED ID
-(`cat-harness-src`, `cat-bootstrap-render`) while `skill-fetch` keys it by the
+(`cat-harness-src`, `bootstrap-render`) while `skill-fetch` keys it by the
 instance name or the basename (`folio-assistant`, `render`). Both are
 defensible; having both is the problem, and it predates this change.

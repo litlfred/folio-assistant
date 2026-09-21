@@ -1,6 +1,6 @@
 ---
 # folio-assistant-3jhq
-title: 'TWO PATHS FOR ONE BOOTSTRAP GRAPH: docs-site publishes cat-bootstrap.jsonld at the site root, feature-staging at cat-bootstrap/cat-bootstrap.jsonld'
+title: 'TWO PATHS FOR ONE BOOTSTRAP GRAPH: docs-site publishes bootstrap.jsonld at the site root, feature-staging at bootstrap/bootstrap.jsonld'
 status: completed
 type: task
 priority: normal
@@ -15,15 +15,15 @@ Noticed while measuring issue #720, and deliberately kept out of that fix.
 
 | workflow | command | published at |
 |---|---|---|
-| `docs-site.yml` | `kg-export.ts --instance ./cat-bootstrap` | `<base>/cat-bootstrap.jsonld` |
-| `feature-staging.yml` | `gen-cat-bootstrap-graph.ts --base-url "$BASE"` | `<base>/cat-bootstrap/cat-bootstrap.jsonld` |
+| `docs-site.yml` | `kg-export.ts --instance ./bootstrap` | `<base>/bootstrap.jsonld` |
+| `feature-staging.yml` | `gen-bootstrap-graph.ts --base-url "$BASE"` | `<base>/bootstrap/bootstrap.jsonld` |
 
 Two DIFFERENT scripts, two DIFFERENT paths, for a document that names itself
 by `@id`. The `docs-site` path is the one cat-harness's own graph links to —
 verified by building the export and reading the link targets out of it:
 
-    https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#skill/discussion
-    https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld#skill/log-message
+    https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/discussion
+    https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/log-message
 
 So on a STAGED preview those two links point at a document the staging build
 does not write at that path — the `blv9` shape ("the `@id` resolved to
@@ -34,13 +34,13 @@ nothing"), one workflow over from where it was fixed.
 NOT ASSUMED TO BE ONE. Three things have to be checked before deciding:
 
 - [x] does `feature-staging.yml` publish the `--instance` export at all, or
-      only `gen-cat-bootstrap-graph.ts`? They may be different documents with
+      only `gen-bootstrap-graph.ts`? They may be different documents with
       different jobs, in which case the paths are correct and the finding is
       that nothing says so
 - [x] what does a staged cat-harness graph mint as its link target — the
-      staged base plus `cat-bootstrap.jsonld`, or something else?
-- [x] is `gen-cat-bootstrap-graph.ts` the same graph as
-      `kg-export --instance ./cat-bootstrap`, or a different projection of it?
+      staged base plus `bootstrap.jsonld`, or something else?
+- [x] is `gen-bootstrap-graph.ts` the same graph as
+      `kg-export --instance ./bootstrap`, or a different projection of it?
 
 Answer those before proposing a path change. Two scripts and two paths may be
 two answers to one question — or it may be one answer each to two questions,
@@ -58,16 +58,16 @@ and collapsing them would lose a document.
 ## The three answers, 2026-09-21 — and the bean's own premise was half wrong
 
 **Q1 — staging publishes only one of the two.** `feature-staging.yml:585` ran
-`gen-cat-bootstrap-graph.ts` → `cat-bootstrap/cat-bootstrap.jsonld` and
+`gen-bootstrap-graph.ts` → `bootstrap/bootstrap.jsonld` and
 nothing else. `docs-site.yml` runs **both**: that one (line 411) AND
-`kg-export --instance` → `cat-bootstrap.jsonld` at the site root (line 330).
+`kg-export --instance` → `bootstrap.jsonld` at the site root (line 330).
 
 **Q2 — the staged graph links to the path staging did not write.** Built with
 `--base-url https://…/STAGING/demo-branch` and the targets read out of the
 document rather than inferred:
 
-    …/STAGING/demo-branch/cat-bootstrap.jsonld#skill/discussion
-    …/STAGING/demo-branch/cat-bootstrap.jsonld#skill/log-message
+    …/STAGING/demo-branch/bootstrap.jsonld#skill/discussion
+    …/STAGING/demo-branch/bootstrap.jsonld#skill/log-message
 
 So **every staged preview carried two dangling links** — `blv9` exactly, and
 one of the skill bodies caught in the same grep names `blv9` as the failure it
@@ -137,13 +137,13 @@ here.
       host: litlfred.github.io:443  (policy denial)
 
 A green `stage` job proves the file was WRITTEN INTO `_site/`. It does not
-prove it is SERVED. Those were the same claim for `gen-cat-bootstrap-graph.ts`
+prove it is SERVED. Those were the same claim for `gen-bootstrap-graph.ts`
 for months, and `blv9` is what the difference cost — so it was reported as a
 third state rather than rounded up into the green.
 
 The owner opened it, 2026-09-21:
 
-    https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-3jhq/cat-bootstrap.jsonld
+    https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-3jhq/bootstrap.jsonld
     → served, valid JSON-LD
 
 So the document staging did not publish before this change is now on the

@@ -30,7 +30,7 @@ describe("the results directory is DECLARED, not merely created", () => {
     expect(decl).toBeDefined();
     const entry = decl!.directories.find((d) => d.path.replace(/\/+$/, "") === QA_RESULTS_DIR);
     expect(entry).toBeDefined();
-    expect(entry!.graphs).toContain("qa");
+    expect(entry!.graphKinds).toContain("qa");
   });
 
   it("...and the directory it declares actually exists", () => {

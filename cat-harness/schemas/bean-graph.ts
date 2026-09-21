@@ -162,8 +162,8 @@ export const DEFAULT_BEAN_GRAPH_ROOT = "beans";
 export const DEFAULT_BEAN_GRAPH: BeanGraph = {
   name: "default",
   directories: [
-    { id: "defs", path: "defs", graphs: ["bean-defs"] },
-    { id: "workflows", path: "workflows", graphs: ["workflow-state"] },
+    { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
+    { id: "workflows", path: "workflows", graphKinds: ["workflow-state"] },
   ],
 };
 
@@ -206,7 +206,7 @@ export function parseBeanGraph(
     // shape but not this check, and a test caught the gap — an unknown kind
     // was being accepted and ignored, which is the failure mode this schema's
     // own docstring forbids.
-    for (const g of node.graphs) {
+    for (const g of node.graphKinds) {
       if (!registry.has(g)) {
         throw new Error(
           `bean graph: directory "${node.id}" declares unknown graph kind "${g}". ` +
@@ -234,7 +234,7 @@ export function parseBeanGraph(
   // Not a uniqueness rule in general — a graph may one day hold several
   // definition stores — but exactly one workflow-state node is what every
   // consumer today assumes, and an unnoticed second would split the state.
-  const stateNodes = graph.directories.filter((n) => n.graphs.includes("workflow-state"));
+  const stateNodes = graph.directories.filter((n) => n.graphKinds.includes("workflow-state"));
   if (stateNodes.length > 1) {
     throw new Error(
       `bean graph: ${stateNodes.length} workflow-state nodes ` +
@@ -255,5 +255,5 @@ export function parseBeanGraph(
  * problem rather than a layout choice.
  */
 export function nodeOfKind(graph: BeanGraph, kind: BeanNodeKind): BeanGraphNode | undefined {
-  return graph.directories.find((n) => n.graphs.includes(kind));
+  return graph.directories.find((n) => n.graphKinds.includes(kind));
 }

@@ -270,6 +270,34 @@ export type JsonLdContext = z.infer<typeof JsonLdContextSchema>;
  * "the ingest did not look" are different facts, and only the first is a
  * reason to stop ingesting.
  */
+/**
+ * A DAK sidecar the enumeration lists that could not be bound to an artefact.
+ *
+ * RECORDED RATHER THAN DROPPED, and that is the whole reason this type exists.
+ * smart-immunizations publishes 198 JSON Schemas and the first ingest bound
+ * 188 — the ten Logical Models are named after the model's TITLE
+ * (`StructureDefinition-IMMZ_C4_Create_client_record`) while the artefact's id
+ * is `IMMZC4`, so a filename composed as `<ResourceType>-<id>` missed every
+ * one of them. The count came out ten short and nothing said so.
+ *
+ * A printed warning would have been gone by the next run. An entry here
+ * survives in the committed index, so "this IG names its sidecars in a way we
+ * cannot bind" and "this IG has no sidecars" stay different facts.
+ */
+export const UnboundSidecarSchema = z
+  .object({
+    /** The sidecar file the enumeration named. */
+    filename: z.string().min(1),
+    /** Its title, as the enumeration gives it — usually the only human handle on what was missed. */
+    title: z.string().min(1).optional(),
+    /** Which enumeration listed it. */
+    enumeration: z.string().min(1),
+    /** Why no artefact matched: the strategies tried, in order. */
+    reason: z.string().min(1),
+  })
+  .strict();
+export type UnboundSidecar = z.infer<typeof UnboundSidecarSchema>;
+
 export const DAK_API_STATES = ["unknown", "absent", "present"] as const;
 export type DakApiState = (typeof DAK_API_STATES)[number];
 
@@ -291,6 +319,12 @@ export const FhirArtifactIndexSchema = z
     provenance: IndexProvenanceSchema,
     dakApi: z.enum(DAK_API_STATES),
     contexts: z.array(JsonLdContextSchema).optional(),
+    /**
+     * Sidecars an enumeration listed that bound to no artefact. Absent means
+     * none; an empty array is not written. See {@link UnboundSidecarSchema}
+     * for why these are recorded rather than warned about and forgotten.
+     */
+    dakUnbound: z.array(UnboundSidecarSchema).optional(),
     count: z.number().int().nonnegative(),
     artifacts: z.array(FhirArtifactSchema),
   })
