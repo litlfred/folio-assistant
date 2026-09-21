@@ -1366,8 +1366,21 @@ platform change with all the gates that implies.</p>
   </tbody>
 </table></div>
 
-<p><code class="language-plaintext highlighter-rouge">bun run gates</code> derives its list from the CI workflow, so it cannot drift from
-what CI actually runs. A hand-picked subset of the gate set is not the gate set.</p>
+<p><code class="language-plaintext highlighter-rouge">bun run gates</code> is the one to run, and it is stronger than “a list someone
+maintains” in two distinct ways worth knowing before you trust it (bean <code class="language-plaintext highlighter-rouge">j2w4</code>):</p>
+
+<ol>
+  <li><strong>Its gate list is derived</strong>, from <code class="language-plaintext highlighter-rouge">.github/workflows/code-quality-gates.yml</code>,
+so it cannot drift from that workflow.</li>
+  <li><strong>Every OTHER workflow is scanned too</strong>, and any <code class="language-plaintext highlighter-rouge">bun</code> step CI runs that the
+local set does not is reported on every run — unless it carries a declared
+exemption with a <strong>reason</strong> (<code class="language-plaintext highlighter-rouge">covered-by</code>, <code class="language-plaintext highlighter-rouge">ci-only</code>, <code class="language-plaintext highlighter-rouge">no-folio</code>). <em>“It is
+slow”</em> and <em>“it usually passes”</em> are not reasons.</li>
+</ol>
+
+<p>The second half is what makes the first safe to rely on, and it was added
+because a CI failure went red on a gate the local runner had just passed. A
+hand-picked subset of the gate set is not the gate set.</p>
 <h2 id="related">
   
   
