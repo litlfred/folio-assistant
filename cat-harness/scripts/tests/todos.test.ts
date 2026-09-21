@@ -32,11 +32,21 @@ describe("the declaration and the directory agree", () => {
     expect(existsSync(join(TODO_ROOT, TODO_GRAPH_FILE))).toBe(true);
   });
 
-  test("its own declaration parses, and names both nodes", () => {
+  test("its own declaration parses, and names every node", () => {
+    // FOUR now, not two. `boards` and `positions` joined on 2026-09-21 (bean
+    // `8hg7`), and they are the OMG split rather than two more todo folders:
+    // a board is the semantic model — what it shows — and the positions are
+    // its Diagram Interchange, where each note was drawn. They share a `path`
+    // deliberately, because the layout belongs beside the thing it lays out.
     const g = parseTodoGraph(
       JSON.parse(readFileSync(join(TODO_ROOT, TODO_GRAPH_FILE), "utf8")),
     );
-    expect(g.directories.map((d) => d.id).sort()).toEqual(["feedback", "items"]);
+    expect(g.directories.map((d) => d.id).sort()).toEqual([
+      "boards",
+      "feedback",
+      "items",
+      "positions",
+    ]);
   });
 
   test("every declared node directory is on disk", () => {

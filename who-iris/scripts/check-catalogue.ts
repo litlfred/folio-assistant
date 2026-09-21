@@ -21,44 +21,26 @@
  *   2. every `libraryId` names a directory that is actually ingested — the
  *      catalogue and `library/` agreeing about what exists;
  *   3. every `parents` path names nodes that are in the catalogue;
- *   4. every `materialization.localPath` on a `materialized` node or bitstream
- *      names something that is THERE — see below;
- *   5. the census, printed rather than asserted, because the ratio of
+ *   3a. every `materialization.localPath` names a file that is THERE. Bean
+ *      `yl5w`: this was the one edge nothing verified, and all three
+ *      `ORIGINAL` claims resolved to nothing while the run printed
+ *      "every metadataRef, libraryId and parent path resolves" — a clean
+ *      pass over exactly the state the three-state model exists to make
+ *      impossible. `materialized` is supposed to mean the bytes are here;
+ *      an unchecked `localPath` makes that adjective decorative;
+ *   4. the census, printed rather than asserted, because the ratio of
  *      referenced to materialized is the whole point of a catalogue by
  *      reference and a number nobody looks at is a number nobody checks.
- *
- * ## `localPath` was the unchecked edge, and the pass sentence hid it
- *
- * Bean `yl5w`. Until 2026-09-21 this script ended with
- *
- * > ✓ every node validates; every metadataRef, libraryId and parent path resolves
- *
- * which is true, exhaustive-sounding, and silent about the one field that says
- * **where the bytes are**. `MaterializationSchema` requires `localPath` when
- * `state` is `materialized` — *"bytes that are here are somewhere"* — and a
- * non-empty string is all a schema can require. Three of nine `localPath`
- * values named nothing while their nodes claimed `materialized`, and the check
- * reported a clean run over them. A library viewer resolving those renders
- * three broken links and no error. The `dh4f` shape, in the check written to
- * stop exactly this class one field over.
- *
- * **Instance-relative, by declaration rather than by choice.**
- * `MaterializationSchema.localPath` says *"Where the bytes landed,
- * instance-relative"*, and `metadataRef` above is already resolved against
- * `INSTANCE` the same way. So this settles nothing that `yt7j` is holding
- * open: that bean is about `coverage.*` being repo-root relative while a
- * directory's path is instance-relative, and it warns against changing
- * resolution behaviour without the owner. Nothing here changes; this field
- * already had an answer and nobody was reading it.
  */
 import { existsSync, readFileSync, readdirSync } from "fs";
-import { join, resolve } from "path";
+import { join, relative, resolve } from "path";
 import { CatalogueNodeSchema, CatalogueSchema, materializationCensus, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { DublinCoreRecordSchema } from "../../folio-assistant-core/schemas/dublin-core.js";
 import { instanceDirectoryForGraph } from "../../cat-harness/schemas/cat-harness.js";
-import { BASELINE_FILE, readBaseline } from "./catalogue-baseline.js";
+import { checkLocalPath } from "./lib/local-path.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
+const REPO = resolve(INSTANCE, "..");
 /**
  * Where ingested content lives — READ from this instance's declaration.
  *
@@ -114,44 +96,6 @@ for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
 }
 const ids = present;
 
-/**
- * Dead `localPath`s already known, repaired BY THEIR OWNER.
- *
- * The same shape as `bean-bodies-baseline.json` and for the same reason: the
- * three this check found on the day it was written are a CONTENT correction,
- * not a path typo. Each carries a `fixity.sha256` and a gate reading
- * `sourceLoss: permitted` on the basis that the bytes are held locally -- a
- * gate permitted on a false basis. Rewriting another instance's gate verdicts
- * is not a checker's to do on its own initiative, so a NEW dead path fails
- * while the backlog is listed, and an entry that stops matching is reported as
- * stale so the file shrinks.
- *
- * Missing or unparseable is an EMPTY baseline, never a pass: the effect is
- * that every finding fails, which is the safe direction.
- */
-const baseline = readBaseline(() => readFileSync(join(INSTANCE, BASELINE_FILE), "utf8"));
-
-const matchedBaseline = new Set<string>();
-const outstanding: string[] = [];
-
-/**
- * Every materialisation a node carries, node-level and per bitstream, each
- * with where it was found.
- *
- * A generic walk for `localPath` was the alternative and is worse: it would
- * also find the field on anything the schema later gains, reporting positions
- * that mean nothing to a reader and resolving paths whose base may not be the
- * instance. Enumerating the two places the schema actually defines keeps the
- * check honest about its own scope -- if a third appears, this goes red on a
- * type error rather than silently skipping it.
- */
-function materializations(n: CatalogueNode): { mat: CatalogueNode["materialization"]; where: string }[] {
-  return [
-    { mat: n.materialization, where: "" },
-    ...n.bitstreams.map((b, i) => ({ mat: b.materialization, where: ` bitstreams[${i}]` })),
-  ];
-}
-
 for (const n of nodes) {
   if (n.metadataRef) {
     const p = join(INSTANCE, n.metadataRef);
@@ -173,30 +117,31 @@ for (const n of nodes) {
         `The catalogue and library/ disagree about what exists.`,
     );
   }
+  for (const b of n.bitstreams ?? []) {
+    const m = b.materialization;
+    const lp = m?.localPath;
+    if (m === undefined || lp === undefined) continue;
+    // Three states, and the third is not an error: `lib/local-path.ts` carries
+    // why unreadable and absent must not be reported the same way.
+    const { state, detail: why } = checkLocalPath(INSTANCE, lp);
+    if (state === "ok") continue;
+    if (state === "unknown") {
+      problems.push(
+        `${n.id}: ${b.bundle} localPath "${lp}" COULD NOT BE CHECKED — ${why}. ` +
+          `That is not a pass: unreadable and absent are different facts and this run can tell neither.`,
+      );
+      continue;
+    }
+    problems.push(
+      `${n.id}: ${b.bundle} localPath "${lp}"${why ? ` ${why} and` : ""} does not exist — ` +
+        `an edge to nothing, and this one claims state "${m.state}". ` +
+        `\`materialized\` means the bytes are HERE; localPath is instance-relative, so it resolves under ` +
+        `${relative(REPO, INSTANCE) || "."}/ and nowhere else.`,
+    );
+  }
   for (const path of n.parents) {
     for (const step of path) {
       if (!ids.has(step)) problems.push(`${n.id}: parent path names "${step}", which is not a node in this catalogue`);
-    }
-  }
-
-  // A node carries ONE materialisation and each bitstream carries its own --
-  // `BitstreamSchema` says so: "An item may be referenced while one of its
-  // bitstreams is materialised". So both are checked, and the bitstream is
-  // named by index, because three nodes' worth of "localPath does not exist"
-  // with no position is a finding nobody can act on.
-  for (const m of materializations(n)) {
-    if (m.mat.state !== "materialized" || !m.mat.localPath) continue;
-    if (existsSync(join(INSTANCE, m.mat.localPath))) continue;
-    const key = `${n.id}${m.where}`;
-    const line =
-      `${key}: localPath "${m.mat.localPath}" does not exist, while state is "materialized". ` +
-      `Either the bytes are not here -- in which case the state is wrong -- or they moved and this did not. ` +
-      `A viewer resolving this renders a broken link and no error.`;
-    if (baseline.has(key)) {
-      matchedBaseline.add(key);
-      outstanding.push(line);
-    } else {
-      problems.push(line);
     }
   }
 }
@@ -217,25 +162,9 @@ console.log(
 );
 console.log(`  The gap between ${census.materialized} and that is the point of a catalogue by reference.\n`);
 
-for (const line of outstanding) console.error(`  \u00b7 outstanding ${line}`);
-const staleBaseline = [...baseline].filter((k) => !matchedBaseline.has(k)).sort();
-for (const k of staleBaseline) {
-  console.error(`  \u00b7 baseline entry "${k}" no longer matches -- repaired; remove it from ${BASELINE_FILE}`);
-}
-if (outstanding.length) {
-  console.error(
-    `\n  ${outstanding.length} outstanding localPath defect(s), listed not failed. Repaired by the catalogue's\n` +
-      `  owner: the bytes are not here, so the STATE is what is wrong -- and each also carries a\n` +
-      `  \`sourceLoss: permitted\` gate whose basis is that the bytes are held locally. See ${BASELINE_FILE}.`,
-  );
-}
-
 if (problems.length) {
   console.error(`✗ ${problems.length} problem(s):`);
   for (const p of problems) console.error(`    ${p}`);
   process.exit(1);
 }
-console.log(
-  `\u2713 every node validates; every metadataRef, libraryId, parent path and materialized localPath resolves` +
-    `${outstanding.length ? ` (${outstanding.length} baselined)` : ""}\n`,
-);
+console.log("✓ every node validates; every metadataRef, libraryId, localPath and parent path resolves\n");

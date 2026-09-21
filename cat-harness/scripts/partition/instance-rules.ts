@@ -427,6 +427,8 @@ export const RULES: Rule[] = [
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
       "scripts/gen-bootstrap-schemas.ts",
+      "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
+      "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
@@ -1050,6 +1052,16 @@ export const RULES: Rule[] = [
       // reason nobody can re-check, which is why this says so rather than
       // quietly keeping the old sentence.
       "scripts/todos.ts",
+      // The default boards, and CORE rather than harness — which is the
+      // checker's finding, not a preference. It was classified harness first,
+      // on the reasoning that it asks which INSTANCES are instantiated and
+      // which are above the floor. `check:partition` answered with two
+      // wrong-direction edges: it imports `schemas/board.ts` and
+      // `scripts/todos.ts`, both core, and the harness layer may not depend on
+      // core. The imports were right and the classification was wrong — what
+      // it PRODUCES is folio content, a board, whose type core owns. The
+      // instance questions are how it decides WHICH folios, not what it makes.
+      "scripts/gen-default-boards.ts",
       // The state visualiser, and it is core for the reason `gen-landing-data.ts`
       // records about itself: it is a RENDERER, and rendering is core's.
       //

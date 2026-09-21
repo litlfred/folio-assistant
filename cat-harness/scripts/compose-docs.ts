@@ -60,24 +60,57 @@
  * deliberately authors an override — and the risk is bounded to that moment
  * rather than to this commit. `compose-docs.test.ts` pins it.
  *
- * ## What it deliberately does not do
+ * ## Behaviours: `_config.yml` is MERGED, and the owner picked the rule
  *
- * **Behaviours.** The ruling says instances overlay "content and behaviors".
- * Content is a file at a path, which is this. A *behaviour* — a Jekyll layout,
- * an include, `_data`, client-side JS, the just-the-docs config — composes
- * differently and the owner has not said how. Layouts and includes happen to
- * compose correctly as files, so they work today by construction; `_config.yml`
- * does NOT, since two configs need merging rather than shadowing, and the
- * overlay carrying one would silently replace the base's whole configuration.
- * That is reported as a refusal rather than guessed at.
+ * The ruling says instances overlay "content and behaviors". Content is a file
+ * at a path, which is the paragraphs above. A *behaviour* — a Jekyll layout, an
+ * include, `_data`, client-side JS, the just-the-docs config — is not always a
+ * file swap. Layouts and includes happen to compose correctly as files, so they
+ * work by construction. `_config.yml` does not: it is the WHOLE of Jekyll's
+ * configuration, and an overlay copy shadowing it would replace every plugin,
+ * collection and theme setting at once while reading in the report as a single
+ * added page.
+ *
+ * This refused it until 2026-09-21, which meant a downstream harness could
+ * overlay pages but could not change one Jekyll setting — no theme, no nav, no
+ * title. The owner settled the rule that day, choosing merge over refusal and
+ * over a key allowlist:
+ *
+ * > **Overlay keys win. Objects merge recursively. Lists REPLACE rather than
+ * > concatenate.**
+ *
+ * Lists replacing is the part worth stating, because concatenation is the more
+ * common default and it is wrong here for the same reason the file overlay is
+ * last-wins: an overlay that wanted three nav entries and got seven has no way
+ * to remove the four it inherited. One direction, everywhere, so an agent that
+ * learns the rule once does not meet it backwards.
+ *
+ * The allowlist that was NOT chosen is worth recording too. Merging only
+ * declared keys (`title`, `nav`, colour tokens) is safer per-key and is exactly
+ * the `6tkl` shape — a hardcoded list that goes stale silently, which this
+ * repository has paid for three times.
+ *
+ * ## Why the merge is conditional, and what breaks if it is not
+ *
+ * **A YAML round trip is not byte-preserving.** Parsing and re-emitting strips
+ * comments and may reorder keys, so merging unconditionally would change the
+ * published `_config.yml` on a tree whose overlay carries none — breaking the
+ * byte-identity property that licenses `docs-site.yml` pointing `source:` at
+ * the composed tree at all.
+ *
+ * So the merge fires ONLY when an overlay actually supplies a config and a
+ * lower layer already did. In every other case the file is copied, bytes
+ * untouched, exactly as before. `compose-docs.test.ts` pins both halves.
  *
  * Usage:
  *   bun run cat-harness/scripts/compose-docs.ts --out <dir>
  *   bun run cat-harness/scripts/compose-docs.ts --out <dir> --check
  */
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { DECLARATION_FILENAME } from "../schemas/cat-harness.js";
+
+import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -154,24 +187,70 @@ export interface ComposeReport {
   readonly overrides: { path: string; baseLayer: string; by: string }[];
   /** Paths an overlay added that no earlier layer had. */
   readonly added: string[];
-  /** Overlay files this refuses to compose, with the reason. */
-  readonly refused: { path: string; reason: string }[];
+  /**
+   * Files an overlay MERGED into a lower layer rather than shadowing, with the
+   * dotted keys the overlay changed. Neither an override nor an addition —
+   * collapsing it into either would make "what did the root change" unanswerable.
+   */
+  readonly merged: { path: string; baseLayer: string; by: string; keys: string[] }[];
 }
 
 /**
- * Files an overlay must not simply shadow, because shadowing them is not what
- * "overlay" means for that file.
+ * Files an overlay MERGES into the lower layer instead of shadowing it.
  *
- * `_config.yml` is the whole of Jekyll's configuration. An overlay carrying
- * one would replace the base's entirely — every plugin, every collection,
- * every `just-the-docs` setting — while looking like it added one page. Two
- * configurations want MERGING, and the owner has not said with what
- * precedence, so this refuses and names it rather than picking one.
+ * `_config.yml` is the whole of Jekyll's configuration, so a shadow would
+ * replace every plugin, collection and theme setting while reading in the
+ * report as one added page. The owner's rule (2026-09-21) is to merge it.
+ *
+ * A map rather than a set because the reason travels with the entry, the same
+ * discipline as `FORWARD_DECLARED` and `STEP_EXEMPTIONS`: a later reader gets
+ * the decision rather than a bare filename.
  */
-const REFUSE_TO_SHADOW: Readonly<Record<string, string>> = {
+const MERGE_RATHER_THAN_SHADOW: Readonly<Record<string, string>> = {
   "_config.yml":
-    "a Jekyll config is merged, never shadowed — an overlay copy would replace the base's entire configuration while reading as one added page",
+    "the whole of Jekyll's configuration — shadowing it would replace every plugin, collection and theme setting while reading as one added page",
 };
+
+/** A plain object, as distinct from an array or a scalar. */
+const isRecord = (v: unknown): v is Record<string, unknown> =>
+  typeof v === "object" && v !== null && !Array.isArray(v);
+
+/**
+ * Deep-merge `over` onto `base` — the owner's rule, and every clause matters.
+ *
+ * - objects merge RECURSIVELY, so an overlay setting one colour token does not
+ *   drop the rest of the theme;
+ * - lists REPLACE, so an overlay can shorten an inherited list. Concatenating
+ *   would leave no way to remove an inherited entry;
+ * - scalars replace, and `null` is a value like any other — an overlay may
+ *   deliberately null a key out.
+ *
+ * Returns the merged value and the dotted paths the overlay actually changed,
+ * because the report names what moved rather than counting it.
+ */
+export function mergeConfig(
+  base: unknown,
+  over: unknown,
+  prefix = "",
+): { merged: unknown; changed: string[] } {
+  if (!isRecord(base) || !isRecord(over)) {
+    return { merged: over, changed: [prefix || "(document)"] };
+  }
+  const merged: Record<string, unknown> = { ...base };
+  const changed: string[] = [];
+  for (const [k, v] of Object.entries(over)) {
+    const path = prefix ? `${prefix}.${k}` : k;
+    if (isRecord(base[k]) && isRecord(v)) {
+      const r = mergeConfig(base[k], v, path);
+      merged[k] = r.merged;
+      changed.push(...r.changed);
+    } else {
+      merged[k] = v;
+      changed.push(path);
+    }
+  }
+  return { merged, changed };
+}
 
 /** Lay the layers down in order, recording who supplied what. */
 export function compose(out: string, repo = REPO): ComposeReport {
@@ -183,26 +262,39 @@ export function compose(out: string, repo = REPO): ComposeReport {
   const suppliedBy: Record<string, string> = {};
   const overrides: ComposeReport["overrides"] = [];
   const added: string[] = [];
-  const refused: ComposeReport["refused"] = [];
+  const merged: ComposeReport["merged"] = [];
 
   for (const [i, layer] of layers.entries()) {
     for (const rel of filesUnder(layer.dir)) {
       const isOverlay = i > 0;
-      const reason = REFUSE_TO_SHADOW[rel];
-      if (isOverlay && reason && suppliedBy[rel]) {
-        refused.push({ path: rel, reason });
+      const dest = join(out, rel);
+      const src = join(layer.dir, rel);
+
+      // MERGED, not shadowed — and only when a lower layer actually supplied
+      // one. A YAML round trip drops comments and may reorder keys, so doing
+      // this unconditionally would change the published bytes on a tree whose
+      // overlay carries no config, breaking the byte-identity property that
+      // licenses pointing the live `source:` at the composed tree.
+      if (isOverlay && MERGE_RATHER_THAN_SHADOW[rel] && suppliedBy[rel]) {
+        const r = mergeConfig(
+          parseYaml(readFileSync(dest, "utf-8")),
+          parseYaml(readFileSync(src, "utf-8")),
+        );
+        writeFileSync(dest, stringifyYaml(r.merged));
+        merged.push({ path: rel, baseLayer: suppliedBy[rel]!, by: layer.id, keys: r.changed });
+        suppliedBy[rel] = layer.id;
         continue;
       }
+
       if (suppliedBy[rel]) overrides.push({ path: rel, baseLayer: suppliedBy[rel]!, by: layer.id });
       else if (isOverlay) added.push(rel);
 
-      const dest = join(out, rel);
       mkdirSync(join(dest, ".."), { recursive: true });
-      cpSync(join(layer.dir, rel), dest);
+      cpSync(src, dest);
       suppliedBy[rel] = layer.id;
     }
   }
-  return { layers, missing, suppliedBy, overrides, added, refused };
+  return { layers, missing, suppliedBy, overrides, added, merged };
 }
 
 /** Every file beneath a directory with its bytes — for the identity check. */
@@ -241,7 +333,12 @@ if (import.meta.main) {
   if (r.overrides.length === 0) console.log("  no overrides — the composed tree is the base layer");
   for (const o of r.overrides) console.log(`  OVERRIDE ${o.path} — ${o.baseLayer} -> ${o.by}`);
   for (const a of r.added) console.log(`  ADDED    ${a}`);
-  for (const f of r.refused) console.error(`::warning::compose-docs: refused ${f.path} — ${f.reason}`);
+  // The changed KEYS, never a count. "merged 1 file" tells a reader nothing
+  // about what the overlay did to the site's configuration, which is the whole
+  // question a merged config raises.
+  for (const m of r.merged) {
+    console.log(`  MERGED   ${m.path} — ${m.baseLayer} <- ${m.by} (${m.keys.join(", ")})`);
+  }
 
   if (r.missing.length > 0) process.exit(1);
   if (argv.includes("--check")) {

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yl5w
 title: 'CATALOGUE: localPath is an unchecked edge, and all three point at nothing'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T18:49:27Z
-updated_at: 2026-09-21T10:09:05Z
+updated_at: 2026-09-21T07:38:38Z
 parent: folio-assistant-kupb
 ---
 
@@ -37,106 +37,130 @@ The fix is a move, and `uploads/` relocation is live work on someone else's plat
 - A `materialized` bitstream whose bytes are absent FAILS. It is never reported as a clean run.
 - The three paths resolve — by the bytes moving, not by the claim being softened.
 
+
 ---
 
-## 2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5 — the check exists, and this bean's own description was wrong in three ways
+## Summary of Changes — 2026-09-21 (session_014HGPQoUnzXGqSspA8x6YyD)
 
-Claimed and worked after the owner picked it. **The defect is real. The way
-this bean describes it is not**, and the corrections matter because they change
-what the fix is.
+**Re-measured before touching anything, and the bean was out of date.** It
+recorded three claims; there were **six**. The three THUMBNAIL covers added
+2026-09-20 resolve; the three ORIGINAL PDFs did not. A bean's measurement is
+evidence about the day it was written.
 
-### 1. Not "all three point at nothing" — three of NINE
+### The check, which is the point
 
-Each of the three items carries three materialisations, not one: a node-level
-one plus one per bitstream. **Six resolve. Three do not**, and all three are
-`bitstreams[0]`, the ORIGINAL-bundle PDF.
+`who-iris/scripts/lib/local-path.ts` + the call in `check-catalogue.ts`, beside
+the `metadataRef` and `libraryId` checks that already existed. **Three states,
+because unreadable is not absent** — reporting them alike sends a reader
+hunting for bytes that are sitting right there, and reporting either as a pass
+is worse. A path naming a DIRECTORY is `missing` too: `localPath` is where the
+bytes landed, and a directory is not bytes.
 
-### 2. `localPath` is instance-relative, and that was never ambiguous
+It resolves against the **instance and nowhere else**, which is the schema's
+own words — *"where the bytes landed, instance-relative"*. Deliberate: these
+three claims named bytes that DID exist one instance over, and a resolver that
+searched the repository would have called them present and made the contract
+unenforceable.
 
-Measured repo-root-relative first, which made all nine look dead.
-`MaterializationSchema.localPath` says it outright — *"Where the bytes landed,
-instance-relative"* — and `check-catalogue.ts` already resolves `metadataRef`
-against `INSTANCE` the same way.
+A module rather than four inline lines because `check-catalogue.ts` is
+imperative top to bottom — importing it to reach a helper runs the gate as a
+side effect of loading, and the test would then assert against whatever the
+corpus holds rather than a case it planted. Same split `lib/bytes.ts` uses.
 
-**So this settles nothing `yt7j` is holding open.** That bean is about
-`coverage.*` being repo-root relative while a directory's path is
-instance-relative, with 27 paths depending and an explicit *do not change
-resolution behaviour without the owner's ruling*. Nothing here changes: this
-field already had a declared answer and nobody was reading it.
+### The relocation, on the owner's ruling
 
-### 3. Not "a move that is on someone else's plate" — the bytes were never here
+Owner, 2026-09-21, given three options: **`git mv` the sources into the
+folio**. `cat-harness/uploads/{9789241548960_eng, WHO_PUB_TPS_93.1,
+WPR-RDO-2020-003-eng}.pdf` → `who-iris/uploads/<slug>/`, each beside its own
+`intake.json` and IRIS capture, and each now listed in that intake with `bytes`
+and `sha256` — because the intake describes what is IN that directory.
 
-This bean reads as though the files moved and the catalogue lagged. They did
-not. **Measured:**
+All three digests match the `source.sha256` their `library/<slug>/structure.json`
+already recorded, so the moved bytes are provably the ones the L1 corpus was
+derived from. This finishes what `frs5` left: it moved the derived corpus and
+not the sources.
 
-| bitstream declares | only PDF in `uploads/<slug>/iris-capture/` |
+### The workaround deleted, exactly as it predicted
+
+`lib/bytes.ts` carried a declared-path-first resolver with a
+`cat-harness/uploads/` fallback, and its own note said: *"When `yl5w` is
+settled … this module is the one edit, and the `DECLARED_FIRST` order is what
+makes that edit a deletion rather than a rewrite."* It was. The fallback is
+gone; the resolver now honours the declaration and nothing else.
+
+`ingestion-notes.html`'s **"Still open"** section is now **"Settled"** — it is a
+projection of this work, so it could not be left saying `check:catalogue` does
+not check `localPath`.
+
+### Consumers, found by running the gates rather than by grepping once
+
+- `tech-meta.test.ts` read `join(ROOT, "uploads/WHO_PUB_TPS_93.1.pdf")` — a
+  literal, in the one test whose own comment says asserting a spelling of a
+  location re-pins the next relocation. Now derived: `structure.json` gives the
+  filename, the library entry gives the instance and slug.
+- `declared-path-baseline.json` — the lost witness dropped with `--update`,
+  which is a reviewable diff by design.
+- `library-graph.ts`'s measured table re-measured: `cat-harness/uploads/`
+  **0 of 1**, `who-iris/uploads/` **1 of 4**. **All six entries still report
+  `upload=match`** from a recomputed hash across three queues — a name-matched
+  relation would have broken on the move and this one did not notice, which is
+  the evidence it is content-verified rather than nominal.
+
+### Verified
+
+`check:catalogue` ✓ every metadataRef, libraryId, localPath and parent path
+resolves · `bun run gates` **78/78** · `bun test` **4869 pass / 0 fail** ·
+`iris:covers:check` re-rendered all three covers **from the moved PDFs**, with
+no fallback in the resolver — which is the end-to-end proof the new paths are
+the ones being read.
+
+---
+
+## 2026-09-21 ~10:45Z — a DUPLICATE was built in parallel, and its conclusion was WRONG
+
+session_01AYHimvYMmf8h8e9fFN6dW5 claimed this bean at ~10:00Z when it read
+`todo`, built a second `localPath` resolver, and opened PR #682 and issue #681.
+**PR #664 landed the real one at 10:35Z.** The duplicate is withdrawn: main's
+implementation is kept wholesale and mine deleted, along with its baseline file
+and tests.
+
+### The claim did not prevent it, exactly as `bean-coordination` says
+
+*"A claim is branch-local — it ANNOUNCES rather than reserves until your PR
+exists."* This bean read `todo` because the session doing the work had not
+pushed a claim yet. Both checks were half-built before either branch was
+visible to the other. That is the documented failure mode, observed.
+
+### The withdrawn conclusion, stated because it was asserted publicly
+
+The duplicate measured the three `localPath` values against its checkout,
+found nothing there, and concluded **"the bytes were never captured; the state
+is what is false"**. It went further and called
+`sourceLoss: { verdict: "permitted", basis: "original bytes held locally with
+a recorded sha256" }` **a gate permitted on a false basis**.
+
+**Both are wrong.** The bytes existed — the owner had them, and #664 moved
+them in. They are on main now at **exactly** the declared sizes:
+
+| path | bytes |
 |---|---|
-| `9789241548960_eng.pdf`, 2,136,157 B | `WHO handbook for guideline development-info.pdf`, **569,673 B** |
-| `WHO_PUB_TPS_93.1.pdf`, 3,293,424 B | `WHO editorial style manual-info.pdf`, **229,365 B** |
-| `WPR-RDO-2020-003-eng.pdf`, 2,810,648 B | `Publication and information products style guide.pdf`, **201,099 B** |
+| `who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf` | 2,136,157 |
+| `who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf` | 3,293,424 |
+| `who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf` | 2,810,648 |
 
-An order of magnitude out in every case. The third looked like a name match and
-is not: 201 KB is a DSpace landing-page capture, not a 2.8 MB publication. And
-`who-pub-tps-931/intake.json` lists **only** the `-info.pdf`, so the
-publication was never captured at all.
+The `fixity.sha256` and byte counts were **correct the whole time**; the file
+had not landed yet. The evidence (declared sizes an order of magnitude above
+the `-info.pdf` captures; `intake.json` listing only the `-info.pdf`) was real
+and the inference from it was not: *"absent from this checkout"* and *"never
+existed"* are different claims, and one was reported as the other.
 
-**So re-pointing `localPath` would be wrong.** The bytes are genuinely absent;
-the `state` is what is false.
+That is the same error `8nzu` names — a measurement of a moving system stated
+as a settled fact — committed twice by one session in one morning, once about
+sessions and once about bytes.
 
-## What this actually exposes — a gate permitted on a false basis
+### What survives
 
-Each of the three carries a `fixity.sha256` and:
-
-> `"sourceLoss": { "verdict": "permitted", "basis": "original bytes held locally with a recorded sha256" }`
-
-The bytes are not held locally. That is worse than a broken link: the five
-gates exist to record *why* holding a copy is safe, and this one claims a
-resilience the repository does not have. A `permitted` verdict and "nobody
-looked" are exactly the pair `materialization.ts` was written to keep apart.
-
-## What shipped, and what deliberately did not
-
-**Shipped:** `check:catalogue` now resolves `materialization.localPath` on
-every `materialized` node and bitstream, naming the bitstream by index. Its
-closing line used to read *"every metadataRef, libraryId and parent path
-resolves"* — true, exhaustive-sounding, and silent about the one field that
-says where the bytes are. The `dh4f` shape, one field over, inside the check
-written to stop that class.
-
-**Not shipped: the data repair.** Rewriting another instance's gate verdicts
-and fixity digests is not a checker's to do on its own initiative. The three
-are **baselined** — `catalogue/localpath-baseline.json`, the same shape and the
-same reasons as `bean-bodies-baseline.json`: a NEW dead path fails, the backlog
-is listed every run, and an entry that stops matching is reported as **stale**
-so the file shrinks rather than fossilises.
-
-## Verification
-
-Falsified in all three directions against the real corpus: planting a fourth
-dead path **failed** (exit 1); a baseline entry matching nothing **reported
-stale**; restored, **exit 0**. The pure split is in
-`scripts/catalogue-baseline.ts` so it can be tested at all —
-`check-catalogue.ts` runs at module top level and ends in `process.exit`, so
-importing it runs the whole check. **9 tests, 4 of which go red when the rule
-is stubbed**; the rest are the direction that must never fail — an unreadable
-baseline reads as EMPTY, so a typo in that file cannot silently pass the whole
-backlog.
-
-## Done when
-
-- [x] `check:catalogue` resolves `materialization.localPath` on nodes and
-      bitstreams, so a `materialized` claim cannot name nothing
-- [x] The three are listed on every run rather than suppressed, with a NEW one
-      failing
-- [ ] **The catalogue's owner repairs the three.** The fix is the `state`, not
-      the path: `referenced` rather than `materialized`, which the schema then
-      requires to carry neither `localPath` nor `gates`
-- [ ] The `sourceLoss: permitted` basis is re-stated or withdrawn on each —
-      it asserts local bytes that are not there
-- [ ] Baseline entries removed as they are repaired; the check reports a stale
-      one, so this cannot be forgotten
-
-*Issue link, recorded on creation.* **[#681](https://github.com/litlfred/folio-assistant/issues/681)** — shipped in [PR #682](https://github.com/litlfred/folio-assistant/pull/682).
-
-Written in the same turn the issue was opened. `oh78` exists because a session
-opened four issues from beans and carried none of the links back.
+Nothing of the duplicate's code. Its one contribution is this record, and the
+observation that **a baseline was the wrong instinct here**: the right move was
+to ask the owner, which the session that asked got, and which turned a
+three-entry backlog into three files that simply arrived.

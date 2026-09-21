@@ -631,6 +631,11 @@ jobs:
           bun run check:l1-complete
           bun run check:l1-complete -- --check
           bun run check:catalogue
+          # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
+          # least one MEANINGFULLY POPULATED page. Exit 2 — could not
+          # determine — is a failure here and not a pass, which is the whole
+          # reason the check exists rather than a file-exists test.
+          bun run check:docs-populated
           bun run check:declared-paths
           bun run check:fallback-roles
           bun run check:kind-validators
@@ -701,6 +706,13 @@ jobs:
           # the `xom7` shape one level along.
           bun run external-schemas:check
           bun run docs:harness:check
+          # Every instantiated harness ABOVE THE FLOOR owes a board, and the
+          # board it owes shows the whole folio. Owner, 2026-09-21: "Any
+          # harness above bootsteap has a board filled with all contents."
+          # Gated because a harness added without one renders a navbar tile
+          # pointing at a folio with no board -- which looks exactly like a
+          # folio whose board is empty, and the two are different facts.
+          bun run boards:default:check
           # The derived sub-graph indexes (bean `06e3`). Gated for the same
           # reason every other generated artefact here is: an index that has
           # drifted from the graph it claims to index is worse than none,
