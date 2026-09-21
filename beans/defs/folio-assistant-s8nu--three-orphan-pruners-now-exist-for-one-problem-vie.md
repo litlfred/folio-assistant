@@ -1,7 +1,7 @@
 ---
 # folio-assistant-s8nu
 title: Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-21T05:33:00Z
 updated_at: 2026-09-21T06:05:00Z
@@ -90,3 +90,54 @@ Folding the other three together is a parameterisation. Folding `OWNED` in
 means generalising the unit from *directory holding an `index.html`* to
 *artefact this generator emits*, which changes the shape of the selector for
 every caller, not just for `who-iris`.
+
+
+## BEING DONE IN #648 — do not start it, and the scope question is answered
+
+Checked before starting, which is the discipline this session learned the hard
+way four times over: [#648](https://github.com/litlfred/folio-assistant/pull/648)
+(`claude/determined-euler-gqhkk0`) is already doing this.
+
+### Their design, read rather than assumed
+
+`orphanSubjectPages` gains a parameter:
+
+```ts
+export type OwnerReader = (html: string) => string | undefined;
+const scopeOwner: OwnerReader = (html) => SCOPE_LINE.exec(html)?.[1];
+```
+
+with `readOwner: OwnerReader = scopeOwner` defaulted, so every existing caller
+is unchanged and `state-visualizer` passes a `dashboardOwner` that reads its
+`GENERATED_BY` comment instead. That is the parameterisation this bean's first
+*done when* asks for, arrived at independently.
+
+### The three-vs-four question is settled, and by evidence rather than a ruling
+
+This bean asked the owner whether `OWNED`'s flat-file case was in scope, and
+recommended **three**. #648 folds **three** and leaves `OWNED` alone —
+`gen-iris-pages.ts` is edited there but is NOT a call site, and `OWNED` is
+still its own regex at line 104.
+
+Their code shows WHY, structurally, better than this bean's prose did. The
+loop is still:
+
+```ts
+if (!e.isDirectory() || keep.has(e.name)) continue;
+const page = join(parentPageDir, e.name, "index.html");
+```
+
+The unit is *a directory holding an `index.html`*, baked into both the
+`isDirectory()` filter and the hardcoded join. `who-iris` publishes
+`item-*.html` and `collection-*.html` **flat**, so it cannot be a call site
+without changing that unit — which is exactly the "real design step rather
+than a rename" this bean recorded. The `OwnerReader` abstracts how ownership
+is READ; it does not abstract what an artefact IS.
+
+### What is left for this bean
+
+Nothing to build. It stays open only until #648 merges, then closes against
+that PR — this bean's remaining *done when* boxes are its acceptance criteria,
+not a second implementation. **A fifth selector is still the thing to avoid**,
+and after #648 the answer for a new generator is: import
+`orphanSubjectPages` and pass an `OwnerReader`.
