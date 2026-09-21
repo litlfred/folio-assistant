@@ -56,7 +56,7 @@ import { join, resolve } from "node:path";
 
 import {
   AGENT_INSTRUCTIONS_ROLE,
-  ASSET_ROLE_PURPOSE,
+  assetRolePurpose,
   INSTANCE_README_ROLE,
   instanceRootsIn,
   isExemptFrom,
@@ -198,7 +198,7 @@ export function readmeFinding(
  * symmetry: *"agents.md should give good coldstart instructions (dont
  * duplicatae readme.md) but augment"*. An augment that does not exist is not a
  * thinner answer to the reader's question; it is no answer to a different
- * question. See {@link ASSET_ROLE_PURPOSE}, which is where each role says what
+ * question. See {@link ASSET_ROLES}, which is where each role says what
  * it is for, once.
  */
 export function agentInstructionsFinding(
@@ -223,7 +223,7 @@ export function assetRoleFinding(
   isRepositoryRoot: boolean,
   role: string,
 ): { severity: Severity; detail: string } | undefined {
-  const purpose = ASSET_ROLE_PURPOSE[role] ?? role;
+  const purpose = assetRolePurpose(role) ?? role;
   const asset = (decl?.assets ?? []).find((a) => a.role === role);
   if (asset === undefined) {
     return {

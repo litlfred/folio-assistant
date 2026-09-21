@@ -1219,7 +1219,24 @@ export function isDerivedGraph(kind: string, registry: GraphKindRegistry = defau
  * step performs in passing. Those are the writes this predicate is about.
  */
 export function processMayWrite(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
-  return graphLayer(kind, registry) === "state";
+  const layer = graphLayer(kind, registry);
+  return layer === undefined ? false : layerIsWritable(layer);
+}
+
+/**
+ * THE rule, in one place: only `state` is written by a running step.
+ *
+ * Extracted when declared ASSETS gained a layer (bean `7syd`), because the
+ * alternative was a second `=== "state"` in {@link processMayWriteAsset} —
+ * and the promise {@link processMayWrite} already made, that a fourth layer is
+ * one edit rather than a search, is only true while there is one site to edit.
+ *
+ * It takes a {@link GraphLayer} and not a kind on purpose: a declared asset
+ * has a layer and no graph kind, so a kind-shaped rule could not have been
+ * reused and would have been copied instead.
+ */
+export function layerIsWritable(layer: GraphLayer): boolean {
+  return layer === "state";
 }
 
 /** Every registered kind on one side of the line, sorted. */
@@ -3344,9 +3361,41 @@ export const AGENT_INSTRUCTIONS_ROLE = "agent-instructions";
 export const INSTANCE_README_ROLE = "instance-readme";
 
 /**
- * What each asset role is FOR — one line, declared once.
+ * How a declared asset REACHES the agent that needs it.
  *
- * ## Why the purpose lives on the ROLE and not on the asset
+ * Two values, and the line between them is mechanical rather than a matter of
+ * taste. **`injected`** is spliced into a prompt, so it pays the harness's
+ * budget — `MEMORY.md`'s first 200 lines, *with the overflow dropped
+ * silently*. **`file`** is opened by a reader, so nothing truncates it.
+ *
+ * That is why `AGENTS.md` may be long and a memory entry may not, and it is
+ * the reason the rule is worth declaring rather than describing: a rule in
+ * prose cannot be asked, and `agent-memory.md` carried this one as a table for
+ * a day with nothing able to check it.
+ */
+export type AssetDelivery = "file" | "injected";
+
+/** What a declared asset ROLE means — asked once, for every instance. */
+export interface AssetRoleDef {
+  /** What this artefact is FOR — one line. */
+  purpose: string;
+  /**
+   * Which {@link GraphLayer} the role's file belongs to.
+   *
+   * **REQUIRED, for {@link GraphKindDef.holds}'s reason.** An optional field
+   * would make "did not say" indistinguishable from `content`, and the whole
+   * point of declaring it is that a step writing to a `context` asset is a
+   * DEFECT rather than an update. `tsc` refuses a role that does not say.
+   */
+  layer: GraphLayer;
+  /** {@link AssetDelivery} — and required, so a new role decides it at the keyboard. */
+  delivery: AssetDelivery;
+}
+
+/**
+ * What each asset role is, declared once — purpose, layer and delivery.
+ *
+ * ## Why this lives on the ROLE and not on the asset
  *
  * The owner, 2026-09-20, on `AGENTS.md`:
  *
@@ -3362,7 +3411,26 @@ export const INSTANCE_README_ROLE = "instance-readme";
  * It was tried the other way first. A `purpose` key was written into
  * `cat-harness/harness.json` and {@link KgAssetSchema} silently stripped it,
  * which is worse than absent: the declaration read as if it carried a purpose
- * and no consumer ever saw one.
+ * and no consumer ever saw one. {@link strayAssetRoleKeys} is what now catches
+ * that, because the stripping is silent by design and will stay that way.
+ *
+ * ## Why one table and not three maps
+ *
+ * `purpose`, `layer` and `delivery` were nearly added as three
+ * `Record<string, …>` constants side by side. Three maps keyed on the same
+ * thing is a shape where one gains a key the others lack and nothing says so —
+ * a role with a purpose and no layer would read as governed, and
+ * `assetRoleLayer` would return `undefined` for a role this layer plainly
+ * owns. One record of objects makes that state unrepresentable.
+ *
+ * ## Both are `context`, and the owner said so in those words
+ *
+ * > its static content at process runtime and treated as an asset like
+ * > memories
+ *
+ * That is {@link GraphLayer | `context`} word for word — READ at session
+ * start, never written by a running process — and it is the same layer agent
+ * memory holds, which is what *"like memories"* asks for. Bean `7syd`.
  *
  * ## The two that matter, and the line between them
  *
@@ -3381,23 +3449,122 @@ export const INSTANCE_README_ROLE = "instance-readme";
  * `cat-bootstrap-initialization` is cat-bootstrap's, and a purpose invented
  * for it here would be the platform speaking for a layer it does not own.
  */
-export const ASSET_ROLE_PURPOSE: Readonly<Record<string, string>> = {
-  [INSTANCE_README_ROLE]:
-    "What this instance IS, for a reader — its entry point, and the human half of the pair.",
-  [AGENT_INSTRUCTIONS_ROLE]:
-    "What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.",
+export const ASSET_ROLES: Readonly<Record<string, AssetRoleDef>> = {
+  [INSTANCE_README_ROLE]: {
+    purpose:
+      "What this instance IS, for a reader — its entry point, and the human half of the pair.",
+    layer: "context",
+    delivery: "file",
+  },
+  [AGENT_INSTRUCTIONS_ROLE]: {
+    purpose:
+      "What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.",
+    layer: "context",
+    delivery: "file",
+  },
 };
 
 /**
- * The roles EVERY instance is expected to declare.
- *
- * Both, not one: an instance with a README and no `AGENTS.md` is readable by a
- * person and mute to an agent, and the reverse leaves a reader with
- * instructions to follow and nothing saying what they are in. Measured
- * 2026-09-20: ten of eleven instances declared `instance-readme` and **two**
- * declared `agent-instructions`, which is the gap `check:subgraph-coverage`
- * could not see because it only ever asked about the README.
+ * What a role's asset is for, or `undefined` for a role this layer does not
+ * govern. The accessor exists so a caller reads {@link ASSET_ROLES} through
+ * one door, as the graph-kind registry is read through `get`.
  */
+export function assetRolePurpose(role: string): string | undefined {
+  return ASSET_ROLES[role]?.purpose;
+}
+
+/**
+ * Which layer a role's asset belongs to, or `undefined` for an ungoverned role.
+ *
+ * `undefined` is the THIRD STATE and is never to be read as a permissive
+ * default: it means nobody here has classified this role, not that the file is
+ * free for a process to rewrite. {@link processMayWriteAsset} preserves it for
+ * exactly that reason.
+ */
+export function assetRoleLayer(role: string): GraphLayer | undefined {
+  return ASSET_ROLES[role]?.layer;
+}
+
+/** How a role's asset reaches its reader, or `undefined` for an ungoverned role. */
+export function assetRoleDelivery(role: string): AssetDelivery | undefined {
+  return ASSET_ROLES[role]?.delivery;
+}
+
+/**
+ * May a running process WRITE a declared asset of this role?
+ *
+ * `undefined` when the role is not one this layer governs — *could not
+ * determine*, which a caller must not render as either answer. A gate treats
+ * it as a finding; a consumer that needs a decision asks the layer that owns
+ * the role.
+ *
+ * The rule itself is {@link layerIsWritable}, shared with
+ * {@link processMayWrite} so that assets and graphs cannot come to disagree
+ * about what `context` permits. Two predicates spelling `=== "state"`
+ * separately is how one of them survives a fourth layer being added.
+ */
+export function processMayWriteAsset(role: string): boolean | undefined {
+  const layer = assetRoleLayer(role);
+  return layer === undefined ? undefined : layerIsWritable(layer);
+}
+
+/**
+ * Asset declarations carrying a key that the ROLE already answers.
+ *
+ * {@link KgAssetSchema} is a non-strict `z.object`, so an unknown key is
+ * dropped without a word — and that is not a defect to fix here, because the
+ * schema is also how a downstream instance carries a key this layer has not
+ * learned about yet. What it costs is recorded above: a `purpose` written into
+ * `cat-harness/harness.json` read as if it carried one, and no consumer ever
+ * saw it.
+ *
+ * So the finding is raised against the RAW declaration rather than the parsed
+ * one — after parsing, the evidence is gone. Returns one entry per offending
+ * key, with the instance root and the asset id, because "some instance has a
+ * stray key" is not something anybody can act on.
+ */
+export function strayAssetRoleKeys(
+  root: string,
+): Array<{ root: string; asset: string; key: string }> {
+  const p = join(root, DECLARATION_FILENAME);
+  if (!existsSync(p)) return [];
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf8"));
+  } catch {
+    // A declaration that will not parse is a finding somebody else already
+    // raises loudly; reporting it a second time here would send a reader to
+    // the wrong check. It is NOT silently clean either — `readDeclaration`
+    // throws on it, so no caller reaches a verdict through this path.
+    return [];
+  }
+  const assets = (raw as { assets?: unknown })?.assets;
+  if (!Array.isArray(assets)) return [];
+  const out: Array<{ root: string; asset: string; key: string }> = [];
+  for (const a of assets) {
+    if (typeof a !== "object" || a === null) continue;
+    const rec = a as Record<string, unknown>;
+    const id = typeof rec.id === "string" ? rec.id : typeof rec.src === "string" ? rec.src : "<unnamed>";
+    for (const key of ROLE_OWNED_ASSET_KEYS) {
+      if (key in rec) out.push({ root, asset: id, key });
+    }
+  }
+  return out;
+}
+
+/**
+ * The keys an asset may NOT restate, because {@link ASSET_ROLES} answers them.
+ *
+ * Derived from the interface rather than typed out, so adding a field to
+ * {@link AssetRoleDef} cannot leave this list behind — the failure this whole
+ * mechanism exists to catch, reproduced one level up.
+ */
+export const ROLE_OWNED_ASSET_KEYS = [
+  "purpose",
+  "layer",
+  "delivery",
+] as const satisfies readonly (keyof AssetRoleDef)[];
+
 export const REQUIRED_ASSET_ROLES = [INSTANCE_README_ROLE, AGENT_INSTRUCTIONS_ROLE] as const;
 
 /**
