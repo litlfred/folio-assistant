@@ -12,7 +12,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { buildReport } from "../check-actor-reach";
-import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 type Actor = Record<string, unknown>;
 
@@ -21,15 +22,12 @@ function instance(network: string | undefined, actors: Actor[]): string {
   const root = mkdtempSync(join(tmpdir(), "reach-"));
   const dir = join(root, ".claude", "skills", "actors");
   mkdirSync(dir, { recursive: true });
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({
+  writeDeclaration(root, JSON.stringify({
       name: "test-instance",
       description: "throwaway instance for reach tests",
       directories: [],
       ...(network ? { topology: { network } } : {}),
-    }),
-  );
+    }));
   for (const a of actors) writeFileSync(join(dir, `${String(a.id)}.json`), JSON.stringify(a));
   return root;
 }
@@ -98,7 +96,7 @@ describe("buildReport", () => {
     // The vacuity guard in `main()` is what turns this into a non-pass; the
     // reader must not throw, or the guard never runs.
     const root = mkdtempSync(join(tmpdir(), "reach-empty-"));
-    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "x", description: "empty", directories: [] }));
+    writeDeclaration(root, JSON.stringify({ name: "x", description: "empty", directories: [] }));
     expect(buildReport(join(root, "nope"), root).actors).toEqual([]);
     rmSync(root, { recursive: true, force: true });
   });

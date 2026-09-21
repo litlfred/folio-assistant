@@ -23,12 +23,13 @@
  * @module cat-harness/scripts/tests/declared-assets-discovery.test
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { declaredInstances } from "../check-declared-assets.js";
-import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = repoRootFor(resolve(import.meta.dir, "..", ".."));
 
@@ -68,10 +69,7 @@ describe("instances are discovered, not listed", () => {
   test("a nested harness.json IS discovered — declaring itself is the contract", () => {
     const root = mkdtempSync(join(tmpdir(), "assets-nested-"));
     mkdirSync(join(root, "sub"), { recursive: true });
-    writeFileSync(
-      join(root, "sub", DECLARATION_FILENAME),
-      JSON.stringify({ name: "sub", description: "d", directories: [] }),
-    );
+    writeDeclaration(join(root, "sub"), JSON.stringify({ name: "sub", description: "d", directories: [] }));
     expect(declaredInstances(root).map((p) => p.replace(root + "/", ""))).toContain("sub");
   });
 

@@ -18,7 +18,8 @@ import { describe, expect, test } from "bun:test";
 import { RETIRED, scan } from "../check-retired-front-matter.ts";
 import { parseFrontMatter } from "../../schemas/front-matter.ts";
 import { directoryForGraph, repoRootFor } from "../../schemas/cat-harness.ts";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const REPO = repoRootFor(INSTANCE);
@@ -37,16 +38,13 @@ const REPO = repoRootFor(INSTANCE);
 function fixture(files: Record<string, string>, declare = true): string {
   const root = mkdtempSync(resolve(tmpdir(), "retired-fm-"));
   if (declare) {
-    writeFileSync(
-      resolve(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "fixture",
         directories: [
           { id: "skills", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] },
           { id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", scope: "repository", graphs: ["fsh-guts"] },
         ],
-      }),
-    );
+      }));
     // Every retirement's record has to exist, or `missingRecords` fires and
     // swamps the assertion the test is actually making.
     for (const r of RETIRED) {

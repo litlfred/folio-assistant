@@ -32,5 +32,5 @@ file is not evidence about the graph's shape.
 
 ---
 
-*A declared asset of this instance ([`harness.json`](harness.json), role
+*A declared asset of this instance ([`detangle.config.json`](detangle.config.json), role
 `agent-instructions`). Issue #592.*

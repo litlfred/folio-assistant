@@ -12,8 +12,9 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { DECLARATION_FILENAME, siteDirFor } from "../../schemas/cat-harness.js";
+import { siteDir, siteDirFor } from "../../schemas/cat-harness.js";
 import { harnessTiles, ownStatePage, subjectPage } from "../harness-tiles.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repo with a site-owning harness and any number of siblings. */
 function fixture(
@@ -30,7 +31,7 @@ function fixture(
     // the fields it is about.
     const d = decl as { directories?: Array<Record<string, unknown>> };
     for (const entry of d.directories ?? []) entry["dependents"] ??= "skip";
-    writeFileSync(join(dir, DECLARATION_FILENAME), JSON.stringify(decl, null, 2));
+    writeDeclaration(dir, JSON.stringify(decl, null, 2));
   }
   // The site root is READ from the host's declaration, never written here.
   // `site-dir-single-answer.test.ts` guards that rule across the whole tree,
@@ -331,5 +332,104 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
     expect(who.href).toBe("/who/");
     // ...and the viewer is still reachable, listed rather than dropped.
     expect(who.visualisations.filter((v) => v.path).map((v) => v.path)).toEqual(["/host/schemas/who/"]);
+  });
+});
+
+describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS navbar\"", () => {
+  /** An instance declaring an icon at a path under its own site directory. */
+  const withIcon = (name: string, extra: Record<string, unknown> = {}) => ({
+    name,
+    directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }],
+    icon: "mark",
+    // The site directory is read from the DECLARATION, not from disk: this
+    // runs before the fixture has written anything, and hardcoding the default
+    // here would be the second answer `site-dir-single-answer.test.ts` exists
+    // to refuse.
+    images: [{ id: "mark", src: `${siteDir({ name, stub: name })}/assets/img/mark.svg`, title: "M" }],
+    ...extra,
+  });
+
+  test("the site directory's prefix is STRIPPED, because the mount does not carry it", () => {
+    // Measured on the served bytes, 2026-09-21:
+    //   src="/folio-assistant/STAGING/<branch>/docs/assets/img/icons/cat-mark.svg"
+    // `docs/` is the instance's site directory and the build copies its
+    // CONTENTS to the mount, so every reader got a 404 and a placeholder.
+    const f = fixture({ host: withIcon("host") });
+    const [tile] = tilesOf(f).filter((t) => t.name === "host");
+    expect(tile.icon?.src).toBe("/assets/img/mark.svg");
+    expect(tile.icon?.src).not.toContain(`${siteDirFor(join(f.repo, "host"))}/`);
+  });
+
+  test("an instance mounted beneath the site root carries its mount", () => {
+    // The site owner is at `/`; everything else is at `/<name>/`. A helper
+    // that answered `/assets/...` for both would 404 for every instance but
+    // one, which is the shape of the defect it replaced.
+    const f = fixture({ host: host(), sibling: withIcon("sibling") });
+    giveOwnSite(f.repo, "sibling");
+    const [tile] = tilesOf(f).filter((t) => t.name === "sibling");
+    expect(tile.icon?.src).toBe("/sibling/assets/img/mark.svg");
+  });
+
+  test("no mount means NO icon and a finding — `pb04` one layer down", () => {
+    // An `<img>` whose `src` 404s is worse than no `<img>`: a placeholder
+    // reads as a broken site rather than as an instance with no art. `sibling`
+    // has no site directory of its own, so there is nowhere to serve it from.
+    const f = fixture({ host: host(), sibling: withIcon("sibling") });
+    const [tile] = tilesOf(f).filter((t) => t.name === "sibling");
+    expect(tile.icon).toBeNull();
+    expect(tile.findings.join(" ")).toContain("Showing no mark rather than a broken image");
+  });
+
+  test("a path outside the site directory is refused rather than rewritten", () => {
+    // Guessing would turn a path the instance meant into one it did not, and
+    // the result would look exactly like art that failed to load.
+    const f = fixture({
+      host: {
+        name: "host",
+        directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }],
+        icon: "mark",
+        images: [{ id: "mark", src: "elsewhere/mark.svg", title: "M" }],
+      },
+    });
+    const [tile] = tilesOf(f).filter((t) => t.name === "host");
+    expect(tile.icon).toBeNull();
+    expect(tile.findings.join(" ")).toContain("elsewhere/mark.svg");
+  });
+});
+
+describe("a LABEL identifies its subject, or it is not a label", () => {
+  test("two instances with one title are told apart, and both say so", () => {
+    // Owner, 2026-09-21: the sidebar showed `folio-assistant` twice — the
+    // repository root acting as an instance, and `cat-harness`, whose declared
+    // title is the product's name. Both linked `/`.
+    const f = fixture({
+      host: { name: "host", title: "Shared", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] },
+      other: { name: "other", title: "Shared", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] },
+    });
+    const labels = tilesOf(f).map((t) => t.label);
+    expect(new Set(labels).size).toBe(labels.length);
+    expect(labels).toContain("Shared (host)");
+    expect(labels).toContain("Shared (other)");
+    for (const t of tilesOf(f)) {
+      expect(t.findings.join(" ")).toContain("is also another instance's");
+    }
+  });
+
+  test("a unique title is left exactly as its author wrote it", () => {
+    // A title is a person's choice and is not required to be unique. The
+    // qualifier appears only where it carries information.
+    const f = fixture({ host: { ...host(), title: "Only one" } });
+    expect(tilesOf(f)[0].label).toBe("Only one");
+  });
+
+  test("`name (name)` is never emitted — it says nothing twice", () => {
+    const f = fixture({
+      host: { name: "host", title: "host", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] },
+      other: { name: "other", title: "host", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] },
+    });
+    const labels = tilesOf(f).map((t) => t.label);
+    expect(labels).toContain("host");
+    expect(labels).toContain("host (other)");
+    expect(labels).not.toContain("host (host)");
   });
 });

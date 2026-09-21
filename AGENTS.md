@@ -30,7 +30,7 @@ are thin stubs pointing here.
 >
 > **Skills are knowledge-graph content, not a directory you memorise.** They
 > live in the `kg` graph an instance declares in its root
-> `harness.json` — in this repo that id maps to `skills/`, but an
+> `folio-assistant.config.json` — in this repo that id maps to `skills/`, but an
 > instance may put it anywhere, and a downstream instance **inherits** its
 > dependencies' skills through the same declaration. Hardcoding a path is how
 > a skill goes missing the moment the layout moves.
@@ -40,7 +40,7 @@ are thin stubs pointing here.
 > - **`skill_list`** — what skills exist here, with their one-line summaries.
 > - **`skill_fetch`** — load a named skill's instructions.
 > - **`work_plan_prime`** — the work plan, for any MCP-connected agent.
-> - No MCP? Resolve the `kg` graph from `harness.json`
+> - No MCP? Resolve the `kg` graph from `folio-assistant.config.json`
 >   (`schemas/cat-harness.ts`) and read from the directory it names.
 >
 > Conventions for the declaration and its graph kinds:
@@ -156,9 +156,9 @@ holds markdown. `beans/beans.json` declares it; the schema is
 | `defs` | `beans/defs/` | `bean-defs` — WHAT is being worked on | yes |
 | `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |
 
-**It is the same schema as `harness.json`, not a parallel one.** A bean-graph
+**It is the same schema as `folio-assistant.config.json`, not a parallel one.** A bean-graph
 entry IS a `ContentDirectory` — an id, a path, and the graph kinds found there.
-`harness.json` says which directories exist and what kind of graph each holds;
+`folio-assistant.config.json` says which directories exist and what kind of graph each holds;
 `beans/beans.json` says what its own nodes are. One fact, one place, at each
 level.
 
@@ -254,6 +254,32 @@ region untouched, and an empty directory is still a determined empty), why every
 link is resolved rather than composed, why `raw` is not the private-repo answer,
 and the two defects in the whole-file generator it replaced.
 
+## Boards, windows and harness tiles — pointers only
+
+A **board is a diagram OF a folio**, in the OMG sense that `BPMNDiagram` is a
+diagram of a `bpmn:process`: the folio carries what is true, the layout layer
+carries where it was drawn, and the arrow runs `folio → board → position →
+note` and never back. A folio is complete with no board.
+
+**The discipline is in the skills, not here** —
+[`board-diagram-interchange`](cat-harness/skills/folio-core/board-diagram-interchange.md)
+carries that split, why a note holds no coordinate, and how an orphan is swept
+from the LAYER;
+[`board-windows`](cat-harness/skills/folio-core/board-windows.md) carries the
+two mechanisms that must not be conflated — semantic zoom is automatic and
+driven by size, open and close are a person's — and the `l4zi` rule that an
+action whose inverse is not reachable is not a toggle;
+[`harness-tiles`](cat-harness/skills/folio-core/harness-tiles.md) carries why a
+tile belongs to the **harness** rather than to a node, why `instantiated` is a
+different question from `declared`, and the two gaps it reports rather than
+hides.
+
+The processes are executable diagrams, not prose: `board-open-close.bpmn`,
+`board-relocate.bpmn` and `board-place-note.bpmn` under `skills/workflows/`,
+indexed with the rest on the [publication-workflow
+page](cat-harness/docs/publication-workflow.md). **Count the directory rather
+than quoting a number from this paragraph** — `bpmn-processes` says why.
+
 ## CI health — a red workflow looks exactly like a green one from in here
 
 A workflow's outcome is invisible from a checkout, so one here fired on every
@@ -287,7 +313,7 @@ the platform carries no folio.
 the **repository**: how much of `gh-pages` the review previews occupy, how big
 a clone costs, whether the work plan has duplicates or unhonoured claims.
 Results are committed under `test/health/results/`, declared in
-`harness.json` as the `health` graph, and carry every threshold's **basis** —
+`folio-assistant.config.json` as the `health` graph, and carry every threshold's **basis** —
 structurally, so a check cannot ship a bare number.
 
 Same three rules as above, and for the same reasons: **could-not-determine is
@@ -581,7 +607,7 @@ to spend the words: **do not start the topic.**
   and rough cost —
   [`skills/folio-core/swarm-management.md`](cat-harness/skills/folio-core/swarm-management.md)
   and the [reader-facing page](cat-harness/docs/swarm-management.md).
-- **An instance declares the directories it scans — `harness.json` at
+- **An instance declares the directories it scans — `folio-assistant.config.json` at
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
   `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,
@@ -606,7 +632,7 @@ to spend the words: **do not start the topic.**
   conventions); a present-but-unreadable one throws. **Declare only what
   exists** — a declared-but-absent directory is the bean `dh4f` defect, where a
   consumer scans nothing and reports a clean run over it. This repo is
-  pre-split, and **`harness.json` is the list — not this sentence.** It said
+  pre-split, and **`folio-assistant.config.json` is the list — not this sentence.** It said
   "declares `schemas/` and `skills/` only" until 2026-09-20, by which point
   neither half was true: there are many more entries, and `src/skills/` is a
   SECOND knowledge-graph directory holding a skill beside the `.ts` that

@@ -242,6 +242,7 @@ import {
   type ContentTypeRegistry,
 } from "./content-type";
 import {
+  instanceConfigFilename,
   findInstanceRoot,
   isKgOnlyDirectory,
   materialiseDirectories,
@@ -312,9 +313,14 @@ export interface ResolvedDependency {
  * `critical` on prose that never reaches pdflatex" — and the sidecars proved
  * it was happening.
  */
-export function instanceConfigFilename(name: string): string {
-  return `${name}.config.json`;
-}
+// MOVED to `schemas/cat-harness.ts` on 2026-09-21 and re-exported here, so
+// every existing importer keeps working. It had to move: that module now uses
+// this filename for DISCOVERY — `<name>.config.json` is the declaration too
+// since `harness.json` was excised — and this module imports THAT one, so the
+// dependency only runs one way. The alternative was two functions spelling one
+// filename, which is how a config and its declaration drift apart at the first
+// rename.
+export { instanceConfigFilename };
 
 /**
  * The retired global name. Kept as a constant so `check:instance-config` can
@@ -339,7 +345,19 @@ export const LEGACY_HARNESS_CONFIG = "harness.config.json";
 export function instanceConfigFor(dir: string): { root: string; name: string } | undefined {
   const root = findInstanceRoot(dir);
   if (root === undefined) return undefined;
-  const name = readDeclaration(root)?.name;
+  let name: string | undefined;
+  try {
+    name = readDeclaration(root)?.name;
+  } catch {
+    // UNREADABLE is the same third state as UNDECLARED for this question, and
+    // it only became reachable here when `harness.json` was excised: the
+    // declaration and the config used to be two files, so a malformed config
+    // could not make `readDeclaration` throw. They are one file now, and a
+    // caller asking "which instance owns this directory" cannot answer from a
+    // file that will not parse. `readDeclaration` still throws for the callers
+    // that need the declaration itself — this one needs a name.
+    return undefined;
+  }
   return name === undefined ? undefined : { root, name };
 }
 
