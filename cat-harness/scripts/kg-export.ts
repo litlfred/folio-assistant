@@ -1146,10 +1146,26 @@ function collectPackages(doc: string, problems: string[]): Node[] {
  * from "belongs to the root graph", and the viewer shows it as its own facet
  * so the gap is visible instead of absorbed.
  */
-function stampSubgraph(graph: Node[], doc: string): void {
-  const dirs = declaredGraphs(ROOT)
+function stampSubgraph(graph: Node[], doc: string, instanceRoot: string = ROOT): void {
+  // THE INSTANCE BEING EXPORTED, not the module-level `ROOT`.
+  //
+  // It read `ROOT` on both lines until 2026-09-21, so exporting ANOTHER
+  // instance stamped its nodes with THIS instance's directory ids wherever the
+  // two share a relative path. `cat-bootstrap/skills/roles/` and
+  // `cat-harness/skills/roles/` are both `skills/roles`, so cat-bootstrap's
+  // own directory node came out carrying `inSubgraph ->
+  // cat-bootstrap.jsonld#directory/cat-harness-roles` — an id from the other
+  // instance, in a document that does not define it, which the dangling-link
+  // check caught as soon as the second `skills/roles/` was declared.
+  //
+  // One instance's graph must not carry another's nodes
+  // (`instance-graph-isolation.test.ts`, guarding a live leak of 88
+  // references). This is that rule in the facet that says WHICH SUBGRAPH a
+  // node came from — the one place where getting the root wrong produces a
+  // plausible id rather than a missing one.
+  const dirs = declaredGraphs(instanceRoot)
     .filter((d) => d.absPath !== undefined)
-    .map((d) => ({ id: d.id, rel: relative(ROOT, d.absPath!).replace(/\\/g, "/").replace(/\/$/, "") }))
+    .map((d) => ({ id: d.id, rel: relative(instanceRoot, d.absPath!).replace(/\\/g, "/").replace(/\/$/, "") }))
     // `..` is KEPT, and dropping it is what made this facet useless.
     //
     // Every repository-scoped entry — `who-iris/`, `folio-assistant-core/`,
@@ -2281,7 +2297,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
         ]
   ).map(compact);
 
-  stampSubgraph(graph, docIri);
+  stampSubgraph(graph, docIri, exportedInstance);
 
   // A preview's nodes say, explicitly and per node, which canonical node they
   // are an alternate presentation of.
