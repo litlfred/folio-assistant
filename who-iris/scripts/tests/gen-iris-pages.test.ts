@@ -16,8 +16,9 @@
  * @module who-iris/scripts/tests/gen-iris-pages.test
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync, readdirSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
+import { execFileSync } from "child_process";
 
 import { OWNED, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
 
@@ -179,26 +180,68 @@ describe("the IRIS home replica", () => {
     expect(home.toLowerCase()).not.toContain("emblem.svg");
   });
 
-  it("withholds every committed cover from display", () => {
-    // Owner, 2026-09-21, asked whether the emblem printed on a WHO
-    // publication is content or branding: *"logo and other branding"*. So the
-    // covers are rendered and recorded but not shown, and this asserts the
-    // display half only -- the catalogue half is the next test, and they must
-    // be able to disagree or neither is evidence of anything.
-    const covers = readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png"));
+  it("shows every committed cover, and each src RESOLVES from the page", () => {
+    // INVERTED, not deleted. Its previous form asserted the covers were
+    // withheld -- the owner's first ruling of 2026-09-21, that the emblem is
+    // *"logo and other branding"*. Asked whether to show them masked, they
+    // chose masking, so the assertion turns over and the reason stays visible.
+    //
+    // Resolving the src is the half that matters. While the covers were
+    // withheld the `<img>` was never emitted, so a `src` broken by moving
+    // these pages from `docs/` to `library/` (bean `zgba`) sat undetected --
+    // two faults stacked, the outer hiding the inner. Containing the filename
+    // would have passed throughout. Existing on disk is what would not.
+    const covers = readdirSync(LIB).filter((f) => f.endsWith("-cover.png"));
     expect(covers.length).toBeGreaterThan(0);
-    for (const c of covers) expect(home).not.toContain(`assets/covers/${c}`);
-    expect(home).not.toMatch(/<img[^>]*>/);
+    for (const c of covers) {
+      const m = new RegExp(`<img[^>]*src="([^"]*${c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})"`).exec(home);
+      expect(m, `no <img> for ${c}`).not.toBeNull();
+      expect(existsSync(join(LIB, m![1]!)), `${m![1]} does not resolve from library/`).toBe(true);
+    }
   });
 
-  it("says WITHHELD where a cover exists, and NO COVER where none does", () => {
-    // Two different facts, and a placeholder that conflates them tells a
-    // reader nothing: "we chose not to show it" and "the catalogue has none"
-    // look identical in a layout. R15's rule, applied to an image.
-    const covers = readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png"));
-    const withheld = [...home.matchAll(/>cover<br>withheld</g)].length;
-    expect(withheld).toBe(covers.length);
-    expect(home).toContain("this replica is not published under WHO");
+  it("the emblem is absent from the BYTES, not merely undisplayed", () => {
+    // The display flag is not the guarantee. `pdf-cover.py` blanks the region
+    // before it computes the digests, so the committed PNG cannot carry the
+    // emblem whatever any page decides to do with it -- and this asserts the
+    // rectangle really is flat fill in the file rather than trusting that the
+    // renderer was asked nicely.
+    //
+    // MASK_FILL, spelled here rather than imported: this test's job is to be
+    // an independent witness, and a constant shared with the thing it checks
+    // agrees with it by construction.
+    const nodes = readdirSync(join(INSTANCE, "catalogue", "nodes")).filter((f) => f.endsWith(".json"));
+    let checked = 0;
+    for (const f of nodes) {
+      const n = JSON.parse(readFileSync(join(INSTANCE, "catalogue", "nodes", f), "utf-8"));
+      for (const b of n.bitstreams ?? []) {
+        for (const r of b.maskedRegions ?? []) {
+          // Coordinates are ARGV, never interpolated into the program text.
+          // Building source in a template literal is how `57n3` happened --
+          // and a generated program is also one that cannot be run by hand to
+          // check what it did.
+          const png = execFileSync("python3", [
+            "-c",
+            [
+              "import pymupdf,sys",
+              "p,x0,y0,x1,y1 = sys.argv[1], *map(int, sys.argv[2:6])",
+              "pm = pymupdf.Pixmap(p)",
+              "pm = pymupdf.Pixmap(pm, 0) if pm.alpha else pm",
+              "b,W,n = pm.samples, pm.width, pm.n",
+              "cols = {tuple(b[(y*W+x)*n:(y*W+x)*n+3]) for y in range(y0,y1) for x in range(x0,x1)}",
+              "print(len(cols), sorted(cols)[0] if cols else ())",
+            ].join("\n"),
+            join(INSTANCE, b.materialization.localPath),
+            String(r.x0), String(r.y0), String(r.x1), String(r.y1),
+          ]).toString().trim();
+          expect(png, `${b.name} mask is not a single flat colour`).toMatch(/^1 /);
+          expect(png).toContain("128, 128, 128");
+          checked++;
+        }
+      }
+    }
+    // A sweep that found nothing must not report clean -- the `dh4f` shape.
+    expect(checked).toBeGreaterThan(0);
   });
 
   it("states the upstream item count it was given, not a remembered one", () => {
