@@ -102,8 +102,47 @@ appropriate**"*. When is a thing on the folio a tile, and when its own avatar?
 
 | the thing | renders as | because |
 |---|---|---|
-| a declared visualiser (`SubgraphCoverageSchema.visualiser`) — `fsh-guts`, `todos`, `docs` | **tile** | the harness declares it; §"A tile is the harness's" above |
+| a declared visualiser (`SubgraphCoverageSchema.visualiser`) — a directory or sub-graph | **tile**, *functional* | the harness declares it; §"A tile is the harness's" above |
+| a set of schema instances — `todos` | **tile**, *content* | the harness declares the set; the instances are the folio's |
 | a note, a document, a materialised asset under `folio/` | **avatar** | the folio holds it; it is the reader's, not the harness's |
+
+### A TILE IS ONE OF TWO KINDS, and they bind to different things
+
+The owner, correcting the first draft of this rule:
+
+> content tiles = todos are schema instances. different from dir/sub-graph
+> tiles = functional (they infact visual interfaces to skills implemented by
+> some (potential choice of) tools)
+
+"Who declared it" answers **tile or avatar** and stops there. It does not say
+what a tile IS, and the two kinds are not interchangeable:
+
+| | **functional** tile | **content** tile |
+|---|---|---|
+| subject | a directory or sub-graph | a set of schema instances |
+| **bound to** | a **SKILL** | a **SCHEMA** |
+| resolved when opened | a **tool** that implements the skill | the **instances** |
+| what empty means | **a gap to report** — a skill nothing implements is unreachable | **a real state** — "nothing outstanding" is not "broken" |
+
+**A functional tile names the SKILL, never the tool**, and that is the
+operative rule rather than a distinction for its own sake. `schemas/tool-types.ts`
+exists to make tools interchangeable — *"Two tools satisfying one skill —
+`beans-cli` and `beans-manual` — must declare the same input type, or 'these
+are interchangeable' is an assertion nothing can verify"* — so a tile bound to
+a tool is a tile that breaks the moment the other tool is chosen. The choice is
+the point; binding past it throws it away.
+
+**The same latitude exists one level out**, which is why this is a shape the
+corpus already has rather than a new one: `VisualiserDeclarationSchema` takes
+*"one path, or several visualisations"*. A sub-graph may be rendered more than
+one way, exactly as a skill may be implemented by more than one tool.
+
+**The empty asymmetry is not a detail.** `head_custom.html` already records the
+content half — *"a board that opens empty is indistinguishable from a person
+with nothing outstanding, and those are opposite facts"* — so a content tile
+opening on zero instances is CORRECT and must not be hidden. A functional tile
+whose skill has no tool is `pb04`: an affordance that promises and delivers
+nothing, and a gap to report rather than a state to render.
 
 **THEME IS NOT A THIRD KIND, and reading it as one is the mistake the
 question invites.** A theme is a palette and its art. A tile already takes
@@ -130,17 +169,26 @@ reader's `folio/` however big it is**, and that is the fact being read.
 
 ### The consequence that looks like an inconsistency and is not
 
-**The same subject can be both.** `todos` is a tile in the strip *and* an
-individual todo is an avatar on the glass. Those are not two answers: the
-todo **viewer** is harness-declared and the todo **item** is folio content,
-so the rule gives one answer per object and they happen to share a name.
+**The same subject can be both.** `todos` is a **content tile** in the strip
+*and* an individual todo is an **avatar** on the glass. Those are not two
+answers: the tile is bound to the SCHEMA and the avatar is one INSTANCE of it,
+so the rule gives one answer per object and they happen to share a name. The
+content/functional split above is what makes that legible — a content tile is
+*supposed* to stand for instances that render individually.
 
-### Why there is no check for this
+### What is checkable here, and what is not
 
-Nothing classifies a folio item yet — the rule governs authoring and the
-renderer reads the graph an item came from, which is already unambiguous. A
-gate here would be a declared property whose check cannot answer its own
-claim, which R17 already recorded as worse than prose.
+**Tile-vs-avatar is not.** Nothing classifies a folio item yet; the rule
+governs authoring and the renderer reads the graph an item came from, which is
+already unambiguous. A gate there would be a declared property whose check
+cannot answer its own claim — R17's lesson.
+
+**"A functional tile names the skill, never the tool" IS**, and it is written
+down as a claim with a subject rather than as advice: a declared visualisation
+naming a tool id where a skill name belongs is decidable against
+`knownSkills()` and the Tool graph. No such tile exists yet, so nothing is
+gated today — but the difference between the two halves is that this one has a
+subject the moment one does, and the other still would not.
 
 ## Where a tile lives, and what it must not eat
 

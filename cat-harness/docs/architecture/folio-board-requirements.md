@@ -353,7 +353,45 @@ four options put to them:
 
 | | the rule |
 |---|---|
-| **R19b** | a thing renders as a **tile** iff the **harness** declares it (a visualiser); as an **avatar** iff the **folio** holds it (a note, a document, a materialised asset under `folio/`). A **theme** is how either one looks, never a third kind |
+| **R19b** | a thing renders as a **tile** iff the **harness** declares it; as an **avatar** iff the **folio** holds it (a note, a document, a materialised asset under `folio/`). A **theme** is how either one looks, never a third kind |
+| **R19c** | a tile is one of **two kinds**. A **functional** tile (a directory or sub-graph) is the visual interface to a **skill**, implemented by a **tool** chosen from potentially several — so it names the skill, never the tool. A **content** tile stands for a set of **schema instances** |
+
+**R19c is the owner's correction to R19b, the same day**, and it is recorded
+as its own requirement rather than folded in because R19b is still true and
+still insufficient:
+
+> content tiles = todos are schema instances. different from dir/sub-graph
+> tiles = functional (they infact visual interfaces to skills implemented by
+> some (potential choice of) tools)
+
+*Who declared it* answers **tile or avatar** and stops. It does not say what a
+tile **is**, and the two kinds bind to different things, resolve different
+things when opened, and mean opposite things when empty:
+
+| | **functional** | **content** |
+|---|---|---|
+| bound to | a **skill** | a **schema** |
+| resolved on open | a **tool** implementing it | the **instances** |
+| empty means | a **gap to report** — a skill nothing implements is unreachable | a **real state** — "nothing outstanding" is not "broken" |
+
+**The operative half is "names the skill, never the tool."**
+`schemas/tool-types.ts` exists to make tools interchangeable — *"Two tools
+satisfying one skill — `beans-cli` and `beans-manual` — must declare the same
+input type, or 'these are interchangeable' is an assertion nothing can
+verify"* — so a tile bound to a tool breaks the moment the other tool is
+chosen. The choice is the point.
+
+**This is a shape the corpus already had**, which is the argument for it:
+`VisualiserDeclarationSchema` takes *"one path, or several visualisations"*, so
+a sub-graph may be rendered more than one way exactly as a skill may be
+implemented more than one way. R19c names the two latitudes as the same
+latitude.
+
+**The empty asymmetry was already half-written too.** `head_custom.html`
+records the content side — *"a board that opens empty is indistinguishable
+from a person with nothing outstanding, and those are opposite facts"* — while
+`pb04` covers the functional side: an affordance that promises and delivers
+nothing.
 
 **The provenance is kept rather than tidied away**, the same as R15/R16: this
 is a rule recovered by argument and then ratified, not one written down at the

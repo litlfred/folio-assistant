@@ -58,6 +58,45 @@ individual todo is an avatar on the glass. One answer per OBJECT — the viewer
 is harness-declared, the item is folio content — and they share a name.
 Written into the skill because a reader will otherwise read it as drift.
 
+## R19c — the owner's correction, same day
+
+> content tiles = todos are schema instances. different from dir/sub-graph
+> tiles = functional (they infact visual interfaces to skills implemented by
+> some (potential choice of) tools)
+
+**R19b was true and insufficient.** *Who declared it* answers tile-or-avatar
+and stops; it does not say what a tile IS. A tile is one of two kinds:
+
+| | **functional** (dir / sub-graph) | **content** |
+|---|---|---|
+| bound to | a **skill** | a **schema** |
+| resolved on open | a **tool** implementing it | the **instances** |
+| empty means | a **gap to report** | a **real state** |
+
+**The operative half is "names the SKILL, never the tool."** A tile bound to a
+tool breaks the moment the other tool is chosen — and `schemas/tool-types.ts`
+exists precisely to keep them interchangeable: *"Two tools satisfying one
+skill — `beans-cli` and `beans-manual` — must declare the same input type, or
+'these are interchangeable' is an assertion nothing can verify."*
+
+**Already a shape the corpus had, on both axes.**
+`VisualiserDeclarationSchema` takes *"one path, or several visualisations"*: a
+sub-graph may be rendered more than one way exactly as a skill may be
+implemented more than one way. R19c names them as the same latitude rather
+than introducing one.
+
+**The empty asymmetry was half-written too** — `head_custom.html` carries the
+content side (*"a board that opens empty is indistinguishable from a person
+with nothing outstanding, and those are opposite facts"*) and `pb04` the
+functional side.
+
+**One claim became checkable.** The first draft said there is no check here,
+full stop. That is still right for tile-vs-avatar, and now wrong as a blanket:
+*a functional tile naming a tool id where a skill name belongs* is decidable
+against `knownSkills()` and the Tool graph. No such tile exists yet so nothing
+is gated, and the skill says so — but the difference is that this claim has a
+subject the moment one does.
+
 ## Summary of Changes
 
 - `skills/folio-core/harness-tiles.md` — §"A tile, or an avatar? WHO DECLARED
