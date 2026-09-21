@@ -260,25 +260,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T23:13:30.212Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/183d36f50d485da95e6981e5d21f137e7fa4e9b0",
-  "sourceCommitSha": "183d36f50d485da95e6981e5d21f137e7fa4e9b0",
-  "sourceCommitAt": "2026-09-20T23:09:53Z",
+  "generatedAt": "2026-09-21T05:25:35.257Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2de27488b623dfbcd2122f950b227ca213e3c53c",
+  "sourceCommitSha": "2de27488b623dfbcd2122f950b227ca213e3c53c",
+  "sourceCommitAt": "2026-09-21T05:21:53Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 217,
+    "Skill": 219,
     "Actor": 27,
     "Capability": 28,
-    "Role": 124,
+    "Role": 130,
     "Convention": 2,
     "SkillPackage": 18,
-    "Process": 54,
-    "SequenceFlow": 697,
-    "ProcessNode": 662,
-    "Tool": 68,
-    "Schema": 82,
+    "Process": 55,
+    "SequenceFlow": 714,
+    "ProcessNode": 680,
+    "Tool": 69,
+    "Schema": 83,
     "GraphKind": 22,
-    "Directory": 32,
+    "Directory": 33,
     "Asset": 3
   },
   "@graph": [
@@ -1218,6 +1218,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/upstream-version-adoption"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "kg-to-portal",
+      "title": "KG → package → distribution → portal",
+      "description": "Getting a knowledge graph out to a public portal — the six stages between \"the graph is in the repository\" and \"a reader's browser has the bytes\", why a CDN is a layer rather than a publication host, and which decisions are the deployment's to make rather than the pipeline's.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/kg-to-portal.md",
+      "instructionLines": 239,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-to-portal"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/asset-extraction",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "asset-extraction",
@@ -1227,7 +1244,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/asset-extraction.md",
-      "instructionLines": 110,
+      "instructionLines": 181,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1842,6 +1859,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/getting-started"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/docs-auto",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "docs-auto",
+      "title": "docs-auto — the index is generated, the meaning is authored",
+      "description": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/docs-auto.md",
+      "instructionLines": 127,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/docs-auto"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/interaction-modality",
@@ -3960,7 +3994,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
-      "instructionLines": 151,
+      "instructionLines": 222,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5302,6 +5336,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-contribution-offer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/docs-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/markdown-render-check",
@@ -15647,6 +15683,596 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/node/End_TUR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Process",
+      "name": "KG to public portal",
+      "enforcement": "advisory",
+      "sourcePath": "skills/workflows/kg-to-portal.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/Start_Graph"
+      ],
+      "nodeCount": 18,
+      "flowCount": 17,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/Start_Graph",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Constraints",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Constraints",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/E_Scope",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F3",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/E_Scope",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Select",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F4",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Select",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Serialize",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F5",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Serialize",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Package",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F6",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Package",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F7",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "within budget",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/S_Sign",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F8",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "over budget",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/End_OverBudget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F9",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/S_Sign",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/E_HumanEyes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F10",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/E_HumanEyes",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F11",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "a transport was chosen",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Distribute",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F12",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "still undetermined",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Undetermined",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F13",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Undetermined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Blocked",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F14",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Distribute",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/P_Verify",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F15",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/P_Verify",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F16",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "signature and digests match",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Served",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F17",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "mismatch",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Rejected",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/flow/F17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Editorial",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Editorial",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Editorial"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Deployment%20owner",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Deployment owner",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Deployment%20owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Build%20pipeline",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Build pipeline",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Attestation%20(GDHCN%20/%20WHO%20SMART%20Trust)",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Attestation (GDHCN / WHO SMART Trust)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20(GDHCN%20/%20WHO%20SMART%20Trust)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Publish%20target",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Publish target",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publish%20target"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Portal (external consumer)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Portal%20(external%20consumer)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/Start_Graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "A graph exists, and a portal needs it",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/Start_Graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Constraints",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "State the constraints, with denominators",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Constraints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/E_Scope",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Decide what may leave the repository",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Editorial",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/E_Scope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Select",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Cut the subgraph that leaves",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Select"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Serialize",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Serialize to JSON-LD",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Serialize"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Package",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Package: files plus a manifest of digests",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Within the stated budget?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Budget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/End_OverBudget",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Refused — over budget",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Build%20pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F8"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/End_OverBudget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/S_Sign",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Sign the package and/or each asset",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Attestation%20(GDHCN%20/%20WHO%20SMART%20Trust)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/S_Sign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/E_HumanEyes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Human eyes on the rendered artefact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Editorial",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/continual-progress"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/E_HumanEyes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Which transport? (UNDETERMINED)",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Transport"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Undetermined",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Record the decision as still open",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/bean-blocking"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/D_Undetermined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Blocked",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Open — awaiting a deployment decision",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Deployment%20owner",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F13"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Blocked"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Distribute",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Publish to the origin (a cache may front it)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Publish%20target",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/A_Distribute"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/P_Verify",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Verify what arrived against what was signed",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/P_Verify"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Verifies?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F16",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F17"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/GW_Verified"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Rejected",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Rejected — serve the previous version",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F17"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Rejected"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Served",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Readers have the bytes",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#role/Portal%20(external%20consumer)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_KgToPortal/flow/F16"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_KgToPortal/node/End_Served"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#process/Process_RenderLog",
@@ -27392,6 +28018,86 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/beans-manual"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#tool/pdf-cover",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "pdf-cover",
+      "title": "PDF page raster",
+      "description": "Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer.",
+      "install": {
+        "cli": "pip install pymupdf"
+      },
+      "invoke": {
+        "shell": "python3 cat-harness/scripts/pdf-cover.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "pdf",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF to render from. Its bytes must be here; nothing is fetched.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PNG to write.",
+            "required": true,
+            "arg": {
+              "flag": "--out"
+            }
+          },
+          {
+            "name": "page",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/tool-types.schema.json#/$defs/Count",
+            "description": "1-based page to render, default 1. Asking for a page past the end is refused, not clamped.",
+            "required": false,
+            "arg": {
+              "flag": "--page"
+            }
+          },
+          {
+            "name": "width",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/tool-types.schema.json#/$defs/Count",
+            "description": "Output width in pixels, default 300. `Count` admits zero and a zero width does not; the script refuses it rather than writing a 0x0 PNG, which is the tighter bound stated at the port as `CountSchema` asks. Height follows the page's own aspect and is never forced.",
+            "required": false,
+            "arg": {
+              "flag": "--width"
+            }
+          },
+          {
+            "name": "checkOnly",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/tool-types.schema.json#/$defs/Flag",
+            "description": "Write nothing; exit non-zero if the target differs from what would be written.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "facts",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/tool-types.schema.json#/$defs/Text",
+            "description": "With `--json`: source path and sha256, page, page count, point geometry, pixel geometry, output bytes and sha256, media type, renderer version. Everything a provenance record needs and nothing it has to guess."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "pymupdf"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#skill/asset-extraction"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/pdf-cover"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#tool/ingest-stdlib",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "ingest-stdlib",
@@ -31741,6 +32447,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/detangle"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#schema/discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "discussion",
+      "title": "The two documents the `discussion` process carries, as Zod.",
+      "module": "../cat-bootstrap-tools/schemas/discussion.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/discussion"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/tools",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
       "name": "tools",
@@ -33320,6 +34035,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/detangle-schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#directory/cat-bootstrap-tools-schemas",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
+      "name": "cat-bootstrap-tools-schemas",
+      "path": "cat-bootstrap-tools/schemas/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+      ],
+      "description": "The Zod that cat-bootstrap's two published JSON Schemas are GENERATED from. Declared here AND in cat-bootstrap-tools/harness.json, for the reason the sibling detangle/kg-navigation/large-datasets entries give: a directory declared only in an instance that is not a DEPENDENCY of this one is invisible from this root, because resolution walks this declaration plus its dependencies and cat-bootstrap-tools is composed under the repository rather than depended on. Without this entry the schema graph reads 113 modules across four instances and cat-bootstrap-tools contributes nothing — which is exactly the state this instance was created to end, since cat-bootstrap itself contributed 0 of 113. The duplicate goes when the composition is wired, with the others.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap-tools-schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/folio-assistant.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -33353,8 +34080,8 @@
   ],
   "staging": {
     "branch": "claude/lhs-navbar-harness-folios-cqo9mu",
-    "sha": "59884e90e1808b9632de47ad64e0a55692b74f55",
+    "sha": "3feed2ad44930f5c99bf940d06d8a0a2dd45eeda",
     "pr": "601/merge",
-    "run": "35543929026"
+    "run": "35564421978"
   }
 }
