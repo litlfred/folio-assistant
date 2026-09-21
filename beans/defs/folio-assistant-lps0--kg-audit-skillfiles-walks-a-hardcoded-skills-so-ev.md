@@ -1,10 +1,11 @@
 ---
 # folio-assistant-lps0
 title: 'KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-20T18:59:22Z
-updated_at: 2026-09-20T18:59:22Z
+updated_at: 2026-09-21T12:37:26Z
 parent: folio-assistant-zzmr
 ---
 
@@ -73,9 +74,100 @@ package by its DECLARED ID (`cat-harness-src`, `cat-bootstrap-render`) while
 
 ## Done when
 
-- [ ] `skillFiles()` walks every declared `cat-harness` directory, not `skills/`
-- [ ] Falsified in both directions: a skill in a topical directory IS audited,
+- [x] `skillFiles()` walks every declared `cat-harness` directory, not `skills/`
+- [x] Falsified in both directions: a skill in a topical directory IS audited,
       and removing that directory's declaration makes it stop being
-- [ ] The findings the widened walk surfaces are triaged, not blanket-suppressed
+- [x] The findings the widened walk surfaces are triaged, not blanket-suppressed
 - [ ] A relocated skill's sidecar MOVES with it, rather than dying in place
 - [ ] One answer to "what is this package called", or a stated reason for two
+
+---
+
+## FIXED 2026-09-21
+
+`ownKgRoots(root)` in `scripts/known-skills.ts` — exported and pure, so it is
+testable without importing `kg-audit.ts`, which runs the whole audit at module
+scope. `skillFiles()` walks those roots instead of `KG_ROOT`.
+
+**Placed in `known-skills.ts` rather than in the audit**, because that is the
+module whose doctrine is already *"declaration over location"* and which
+already exports `kgRoots`, `skillMdDirs` and `isSkillMd`. The helpers this bean
+asks for existed; the audit simply did not use them.
+
+### Three of this bean's own numbers were wrong, and so was one of mine
+
+| claim | measured |
+|---|---|
+| bean: *"roughly twenty"* skills newly audited | **10**, of which **5** are in this instance |
+| bean: *"295 sidecars"* under `skills/**` | 219 skills under the literal, 229 under the declaration |
+| bean: *"a change that flips `kg:audit:check` red"* | **`kg:audit:check` exits 0.** One finding across 5 skills, and `skill-is-brief` is `minor` |
+| MY first count: 25 newly audited | wrong — I fed `isSkillMd` every file. It only excludes READMEs and `$schema`-tagged nodes; callers filter `.md` first, as `skill-fetch` and `stakeholder-map` both do |
+
+`kg:audit:strict` exits 1 — **and did so before this change too**, checked by
+stashing. Pre-existing, not caused here.
+
+### The triage this bean asks for, in full
+
+19 of 20 criteria pass across the five. The single finding:
+
+```
+crdm-requirements-workflow   skill-is-brief   293 lines; p75 of the corpus is 279
+```
+
+`minor`, 14 lines over p75, and the skill is the six-phase process description —
+**not suppressed and not "fixed" by cutting it**, because the threshold says
+*"longer than three quarters of its peers"* rather than *too long*.
+
+### Another instance's roots are excluded, and that was not my call to make
+
+`kgRoots` resolves a DEPENDENCY's directories, so it returns `../cat-bootstrap/render`
+and three more. Walking them is forbidden by `instance-graph-isolation.test.ts`,
+guarding a live 2026-09-19 leak of 88 references, and `unreadNestedInstances`'
+own finding text says *"do NOT declare its directories here"*.
+
+It would also break this audit's output: `sidecarPath` mirrors
+`dirname(join(root, subject.path))` under `test/results/kg-qa/`, so a `../`
+subject normalises to `test/results/cat-bootstrap/render` — **outside the
+results tree**, the escaping-path defect `chq5` fixed one store over. Simulated
+both cases before writing anything.
+
+**A first draft added `foreignKgRoots()` to report them. It was removed**: the
+`nested-instance-audited` criterion (bean `sa8y`) already names every unread
+nested instance and counts what it holds. A second report would be a second
+answer to one question, free to disagree with the first.
+
+### A duplicate found on the way
+
+`resolveDirectories` supplies the conventional defaults ALONGSIDE the
+declaration, so an instance that also declares `skills/` got it **twice**.
+`ownKgRoots` deduplicates. Two of my tests were written to the intuition
+*"declare none, get none"* and failed against correct behaviour — `skills/` is
+a default and survives being undeclared. They assert the measured behaviour
+now, and say why.
+
+### Falsified
+
+Reverting `ownKgRoots` to `[join(root, "skills")]`: **2 of the 7 tests fail** —
+the two about topical directories. The other five stay green, correctly: they
+assert behaviour the widening does not provide.
+
+### Verified
+
+```
+bun run gates                         85 pass
+own-kg-roots.test.ts                   7 pass, 0 fail
+instance-graph-isolation.test.ts       5 pass, 0 fail
+kg:audit:check                         exit 0
+```
+
+The qa dashboard picked the five up with no change to it: `assets/qa/index.json`
+went 604 → **609** documents, `kg-qa/v1` 328 → **333**.
+
+### The checklist stays in ONE place
+
+This section ended with a second `## Done when` restating the list with the
+finished items ticked. `check:bean-bodies` failed it as a **shadow checklist** —
+the same mistake made on `chq5` an hour earlier, so the habit is appending a
+list rather than editing the one above. Caught locally this time, because the
+check ran AFTER the last edit rather than before it. Canonical list ticked;
+no second copy.
