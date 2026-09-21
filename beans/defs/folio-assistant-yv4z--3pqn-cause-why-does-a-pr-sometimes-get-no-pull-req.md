@@ -48,6 +48,84 @@ as the surviving hypothesis, not a finding — the correct test is to open a PR
 on a freshly-created branch name whose predecessor did not just merge, and
 compare.
 
+---
+
+## Observation SEVEN, 2026-09-21 — and it refines the surviving hypothesis
+
+session_01AYHimvYMmf8h8e9fFN6dW5, PR #715, observed end to end rather than
+reconstructed.
+
+| | |
+|---|---|
+| head `fa87e3cbfc` pushed | 13:19Z |
+| PR #715 opened | 13:19:48Z |
+| `pull_request` runs for that head | **zero**, confirmed via the runs list — the newest run on the branch was for the PREVIOUS head |
+| `mergeable_state` when checked | **`dirty`** |
+| conflicting commit `fdb5097f4e` reached main | **12:52:22Z — 27 minutes BEFORE the PR was opened** |
+| after merging main and resolving (`c4abe241ea`) | CI fired **immediately**; five checks, all green |
+
+So the PR was **unmergeable at the moment it was created**, and this is the
+first observation in this bean where that was measured rather than inferred.
+
+### The refinement: "previous PR had just merged" looks like a CORRELATE
+
+This case satisfies the surviving hypothesis too — #704 merged at ~13:06,
+shortly before. But it also satisfies a narrower one that supplies a
+**mechanism**, which the surviving hypothesis does not:
+
+> `code-quality-gates.yml` is `on: pull_request:` and uses
+> `actions/checkout@v4` with **no `ref:`**. For a `pull_request` event that
+> default is `refs/pull/N/merge` — the merge commit GitHub computes between
+> head and base. **A conflicting PR has no such commit.**
+
+And the two hypotheses are linked rather than rival: *the previous PR merging*
+moves `main`, which is exactly what makes the next PR from a branch cut earlier
+conflict. The correlate has a causal path to the proposed cause.
+
+**It also explains the one fact every previous observation shares and none of
+them accounts for: `workflow_dispatch` always fixed it.** A dispatch run
+resolves `refs/heads/<branch>`, not the merge ref, so it is unaffected by a
+conflict. Six times the workaround worked, and the reason it worked is evidence
+about the cause.
+
+### What was NOT tested, stated so nobody reads this as settled
+
+- **No live conflicted PR was available to test the merge ref directly.** All
+  seven open PRs had `refs/pull/N/merge` present; #715's was already gone
+  because it had merged, so that check could not discriminate. The claim that
+  an unmergeable PR has no merge ref is **the mechanism this observation is
+  consistent with, not something measured here.**
+- **The six earlier observations were not re-checked for conflict.** GitHub
+  does not retain historical mergeability, so #340, #383, #390, #409 and #552
+  cannot be confirmed or refuted retroactively.
+
+### The test that would settle it
+
+Cheaper and sharper than the one this bean proposes. On any branch: push a
+commit that **conflicts with `main`**, open a PR, and record whether a
+`pull_request` run fires and whether `refs/pull/N/merge` exists. Then resolve
+the conflict and record both again. One PR, two observations, and it
+discriminates conflict from "previous PR just merged" directly — the second
+half of that is already observed here.
+
+### One thing DID change in the guardrail, and it stands whatever the cause
+
+`prepare-merge` §Guardrails said: no run for that sha → dispatch the workflow.
+That is right for a mergeable PR and **actively unsafe for a conflicted one**,
+and this is independent of whether the conflict hypothesis is correct:
+
+> A `workflow_dispatch` run resolves `refs/heads/<branch>`, so it tests **the
+> branch, not the merge result.** On a conflicted PR that is a green signal for
+> a tree that will never exist — worse than the absence it replaced.
+
+So a **step 0** was added: read `mergeable_state` first, and when it is
+`dirty`, merge the base branch in rather than dispatching. The workaround is
+now scoped to the case it was measured on.
+
+*The cause is recorded as a refinement of the surviving hypothesis, not as a
+finding. The guardrail change does not rest on it — `3pqn` closed the harm and
+nothing here reopens it.*
+
 ## Why this is LOW priority
 
 The harm is closed. An agent that follows the guardrail cannot read zero

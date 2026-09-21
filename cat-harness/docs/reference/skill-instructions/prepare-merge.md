@@ -195,6 +195,24 @@ harness git instructions). Do not include the model identifier in the PR.
 
   So before calling a branch ready, and **before any merge**:
 
+  0. **Read `mergeable_state` FIRST.** If it is `dirty`, the PR conflicts with
+     its base and that is very likely why nothing ran: this workflow is
+     `on: pull_request:` with `actions/checkout@v4` and no `ref:`, so it checks
+     out `refs/pull/N/merge` — the merge commit GitHub computes between head
+     and base — and **a conflicting PR has no such commit**. Measured on
+     PR #715, 2026-09-21: the conflicting commit reached `main` 27 minutes
+     BEFORE the PR was opened, zero runs fired for that head, and CI fired
+     immediately once the base was merged in and the conflict resolved. Bean
+     `yv4z`, observation seven; stated there as a refinement of the surviving
+     hypothesis rather than as a settled cause.
+
+     **When it is `dirty`, merge the base branch in — do NOT dispatch.** This
+     part does not depend on the cause being right: a `workflow_dispatch` run
+     resolves `refs/heads/<branch>`, so it tests **the branch, not the merge
+     result**. On a conflicted PR that is a green signal for a tree that will
+     never exist, which is worse than the absence it replaced. The workaround
+     in step 3 is for a MERGEABLE PR whose run never fired.
+
   1. Read the PR's `head_sha`.
   2. `mcp__github__actions_list` → `list_workflow_runs`, filtered by branch, and
      find a run whose `head_sha` matches.
