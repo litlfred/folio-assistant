@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-21T14:05:00Z
+updated_at: 2026-09-21T14:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -407,3 +407,13 @@ on it. Left `in-progress` rather than completed for one reason: the "Done when"
 also asks whether the cut can be made, and the honest answer is *not yet* — five
 declared runtime edges cross layers, and who registers a built-in adapter's
 contributions (A / B / C above) is still the owner's open call.
+
+### The A/B/C decision is settled — `rfev`
+
+Owner, 2026-09-21: **C now, B as the destination.** Built-ins self-register at
+the outermost layer, and each converts to a real `contributes` dependency one
+at a time rather than on a flag day. Carried into `folio-assistant-rfev`, which
+also records the first thing that had to be fixed before any registration was
+possible: a contributed QA checker had no source file, so it could not be
+freshness-hashed, and every one would have arrived with verdicts that can never
+go stale.
