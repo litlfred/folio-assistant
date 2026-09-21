@@ -28,8 +28,8 @@ describe("the declaration and the directory agree", () => {
   });
 
   test("the declared directory EXISTS — declare only what exists", () => {
-    expect(existsSync(TODO_ROOT)).toBe(true);
-    expect(existsSync(join(TODO_ROOT, TODO_GRAPH_FILE))).toBe(true);
+    expect(existsSync(TODO_ROOT())).toBe(true);
+    expect(existsSync(join(TODO_ROOT(), TODO_GRAPH_FILE))).toBe(true);
   });
 
   test("its own declaration parses, and names every node", () => {
@@ -39,7 +39,7 @@ describe("the declaration and the directory agree", () => {
     // its Diagram Interchange, where each note was drawn. They share a `path`
     // deliberately, because the layout belongs beside the thing it lays out.
     const g = parseTodoGraph(
-      JSON.parse(readFileSync(join(TODO_ROOT, TODO_GRAPH_FILE), "utf8")),
+      JSON.parse(readFileSync(join(TODO_ROOT(), TODO_GRAPH_FILE), "utf8")),
     );
     expect(g.directories.map((d) => d.id).sort()).toEqual([
       "boards",

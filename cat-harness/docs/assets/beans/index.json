@@ -4288,7 +4288,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T15:35:46Z",
-      "updatedAt": "2026-09-21T15:35:46Z",
+      "updatedAt": "2026-09-21T16:40:00Z",
       "preview": "Carved out of `1hkj` (#719) after it merged, from three gaps found by running\nits gate rather than by reading it.\n\n## Three gaps, each measured\n\n**1. Only `folioDir` was on the list.** Measured on main against a directory\nholding `{ not json`:\n\n| `folioDir` | THREW |\n| `directoryForGraph` | THREW |\n| `directoriesForGraph` | THREW |\n| `findContentRepoRoot` | returned its declared fallback |\n\n`findC",
       "file": "beans/defs/folio-assistant-tdu3--the-module-scope-gate-covers-foliodir-only-and-wal.md"
     },
