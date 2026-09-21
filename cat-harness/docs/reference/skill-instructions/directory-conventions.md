@@ -360,7 +360,7 @@ on this instance **materialises its own copy**, and the two are independent:
   `folio/`, `voices/`, `translations/`. A dependent gets its own, empty, with a
   keep marker.
 - **`skip`** — merely WHERE THIS INSTANCE'S CONTENT LIVES. `schemas/`,
-  `tools/`, `src/skills/`, `methodologies/`. A dependent reads it through the
+  `tools/`, `methodologies/`. A dependent reads it through the
   overlay and creates nothing.
 
 Before this existed, a fresh folio depending on `cat-harness` resolved **12**

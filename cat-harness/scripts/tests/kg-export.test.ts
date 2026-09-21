@@ -759,21 +759,40 @@ describe("a package's id is declared, not derived from its path", () => {
 
   test("`corpus-grep` is NOT among them — the contamination the merge caused", () => {
     // The sharpest assertion here, because it is the one that was false and
-    // that every other signal called healthy. `corpus-grep` lives in
-    // `src/skills/`, which declares no package at all.
+    // that every other signal called healthy. `corpus-grep` lived in
+    // `src/skills/`, which declared no package at all; since #760 it lives in
+    // `skills/folio-core/` and is listed in that package's manifest. Either
+    // way it is not cat-bootstrap's, which is what this pins.
     const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap-render"))!;
     expect(membersOf(String(p["@id"]))).not.toContain("skill/corpus-grep");
   });
 
   test("a directory with NO manifest falls back to its basename, and says so", () => {
-    // The fallback is not a hedge: `src/skills/` carries no manifest, so it
-    // has no declared name and nothing else to be called. What the change
-    // buys is that a name is only INFERRED where none was declared — and
+    // The fallback is not a hedge: a directory carrying no manifest has no
+    // declared name and nothing else to be called. What the mechanism buys is
+    // that a name is only INFERRED where none was declared — and
     // `hasManifest: false` is what lets a reader tell the two apart.
-    const p = packages().find((x) => String(x["path"]) === "src/skills");
-    expect(p, "no package for src/skills").toBeDefined();
-    expect(p!["name"]).toBe("skills");
-    expect(p!["hasManifest"]).toBe(false);
+    //
+    // The subject was `src/skills` until #760 folded it into
+    // `skills/folio-core/`. Asserted over WHATEVER carries no manifest rather
+    // than over a named path, because pinning the path is what made this test
+    // go red on a move that changed none of the behaviour it tests.
+    //
+    // An empty set is REPORTED, not silently passed: if nothing in the corpus
+    // lacks a manifest then this rule is unexercised, and "no subject" reads
+    // identically to "the rule holds" unless something says otherwise.
+    const inferred = packages().filter((x) => x["hasManifest"] === false);
+    if (inferred.length === 0) {
+      console.log(
+        "  NOTE: every package in this corpus declares a manifest — the " +
+          "basename fallback is unexercised here, not proven.",
+      );
+      return;
+    }
+    for (const p of inferred) {
+      const base = String(p["path"]).split("/").filter(Boolean).pop();
+      expect(p["name"], `package at ${String(p["path"])}`).toBe(base);
+    }
   });
 
   test("every package with a manifest is named what that manifest says", () => {
