@@ -85,12 +85,17 @@
  * @module folio-assistant/scripts/check-bean-front-matter
  */
 
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
 
 import { parse as parseYaml } from "yaml";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
-import { beanDefsDir, readBeanFiles } from "./bean-store-read.ts";
+import {
+  beanDefsDir,
+  readBeanStore,
+  type BeanStore,
+  type SkippedFile,
+} from "./bean-store-read.ts";
 
 /**
  * The two beans whose front matter carries a duplicate key today.
@@ -113,7 +118,18 @@ export type DefectKind =
   /** Even a tolerant parse refuses it: the store is down for everybody. */
   | "unparseable"
   /** Parses under `beans`' own loader, but a key is given twice. */
-  | "duplicate-key";
+  | "duplicate-key"
+  /**
+   * No parseable `---` fences at all, so no reader here ever sees it.
+   *
+   * Bean `t6s7`, and the QUIET sibling of `unparseable`. That one takes the
+   * store down and announces itself; this one is silent in both directions —
+   * every check skips the file, while `beans` loads it as a ghost row with the
+   * id taken from the FILENAME, status `?` and no title. Measured: one planted
+   * file moved `beans list` 626 -> 627 and left this gate's count at 629, `no
+   * NEW defect`, exit 0.
+   */
+  | "unfenced";
 
 /** One bean whose front matter a YAML loader objected to. */
 export interface FrontMatterDefect {
@@ -144,6 +160,50 @@ export interface FrontMatterReport {
   readonly defects: FrontMatterDefect[];
   /** Baseline ids that matched nothing — repaired, so the entry should go. */
   readonly staleBaseline: string[];
+  /**
+   * WHICH absence, when {@link beans} is `null`.
+   *
+   * `absent` is an instance that legitimately has no bean store and is a pass;
+   * `declared-but-absent` is one whose declaration names a directory that is
+   * not there, which is `dh4f` and is not. Both were `null` until `t6s7`, and
+   * both printed *"no store in this repository, nothing to check"*, exit 0.
+   */
+  readonly storeState: BeanStore["state"];
+  /**
+   * Every `.md` the reader could not fence, INCLUDING the expected ones.
+   *
+   * Carried rather than filtered so the reconciliation below can account for
+   * each file exactly once. A `README.md` is `expected` and not a defect; it
+   * still has to be somewhere in the arithmetic.
+   */
+  readonly skipped: SkippedFile[];
+  /** Every `.md` in the directory — `beans + skipped` must equal it. */
+  readonly filesSeen: number;
+}
+
+/**
+ * Does every `.md` in the directory appear exactly once in the report?
+ *
+ * Returns `null` when it does, and the complaint when it does not. A FUNCTION
+ * rather than an inline comparison because the read path cannot currently
+ * produce a mismatch — every file goes into `beans` or `skipped` — so the only
+ * way to feed this guard the condition it exists for is to hand it the numbers
+ * directly. A guard whose failing branch has never been executed is the thing
+ * bean `t6s7` is about.
+ *
+ * What it actually protects: a future `continue` in `readBeanStore`'s loop
+ * that forgets to record what it dropped. `filesSeen` is counted by a separate
+ * traversal, so such an edit makes the two disagree instead of silently
+ * undercounting — which is precisely how a bean went missing from every check
+ * while the total held steady.
+ */
+export function reconcile(beans: number, skipped: number, filesSeen: number): string | null {
+  const accounted = beans + skipped;
+  if (accounted === filesSeen) return null;
+  return (
+    `${filesSeen} .md file(s) in the store, but ${beans} bean(s) + ${skipped} skipped = ` +
+    `${accounted}. A file is unaccounted for, so every count in this report is unreliable`
+  );
 }
 
 /** `linePos` is the `yaml` package's; every field is optional in its types. */
@@ -159,10 +219,37 @@ function firstLine(err: unknown): string {
 }
 
 export function checkBeanFrontMatter(root: string): FrontMatterReport {
-  const files = readBeanFiles(root);
-  if (files === null) return { beans: null, defects: [], staleBaseline: [] };
+  const store = readBeanStore(root);
+  if (store.state !== "read") {
+    return {
+      beans: null,
+      defects: [],
+      staleBaseline: [],
+      storeState: store.state,
+      skipped: [],
+      filesSeen: 0,
+    };
+  }
+  const files = store.beans;
 
   const defects: FrontMatterDefect[] = [];
+  // FIRST, because a file the reader could not fence never reaches the loop
+  // below — that is the defect, not an ordering preference. `id` is the
+  // filename stem, which is exactly what `beans` falls back to when the front
+  // matter yields nothing, so the gate names the row a person will see.
+  for (const sk of store.skipped) {
+    if (sk.expected) continue;
+    defects.push({
+      kind: "unfenced",
+      id: sk.file.replace(/\.md$/, ""),
+      file: sk.archived ? join("archive", sk.file) : sk.file,
+      line: null,
+      message:
+        "no parseable `---` front-matter fences, so every check here skips the " +
+        "file while `beans` loads it as a titleless ghost row",
+      baselined: false,
+    });
+  }
   const seen = new Set<string>();
   for (const b of files) {
     try {
@@ -197,7 +284,14 @@ export function checkBeanFrontMatter(root: string): FrontMatterReport {
   }
 
   const staleBaseline = [...DUPLICATE_KEY_BASELINE].filter((id) => !seen.has(id)).sort();
-  return { beans: files.length, defects, staleBaseline };
+  return {
+    beans: files.length,
+    defects,
+    staleBaseline,
+    storeState: store.state,
+    skipped: store.skipped,
+    filesSeen: store.filesSeen,
+  };
 }
 
 function main(): void {
@@ -219,6 +313,18 @@ function main(): void {
     process.exit(2);
   }
 
+  // TWO ABSENCES, TWO EXITS. Bean `t6s7`: these were one branch, and the
+  // fallback in `resolveBeanDefs` hands back a plausible `beans/defs` for a
+  // repository that never mentioned one — so a folio whose store had been
+  // moved or deleted reported exactly like a folio that never had one, as
+  // `nothing to check`, exit 0.
+  if (report.storeState === "declared-but-absent") {
+    console.error(
+      `::error::check-bean-front-matter: the bean graph declares ${beanDefsDir(root) ?? "(unresolved)"} ` +
+        "and it is not there. NOT a pass — nothing scanned it, so nothing here was checked",
+    );
+    process.exit(2);
+  }
   if (report.beans === null) {
     console.log("Bean front matter — no store in this repository, nothing to check");
     process.exit(0);
@@ -239,19 +345,38 @@ function main(): void {
 
   console.log(`Bean front matter (${report.beans} bean(s), including the archive)`);
 
+  // RECONCILE, rather than print. Every `.md` in the directory is a bean or a
+  // skipped file, and if that arithmetic does not close then a file went
+  // somewhere this report cannot see — which is `t6s7`'s defect returning by
+  // another route. Checked rather than assumed, because the whole finding was
+  // that a count can stay perfectly steady while a file disappears.
+  const mismatch = reconcile(report.beans, report.skipped.length, report.filesSeen);
+  if (mismatch !== null) {
+    console.error(`::error::check-bean-front-matter: ${mismatch}`);
+    process.exit(2);
+  }
+
+  const unfenced = report.defects.filter((d) => d.kind === "unfenced");
+  const expected = report.skipped.filter((sk) => sk.expected);
   const unparseable = report.defects.filter((d) => d.kind === "unparseable");
   const newDuplicates = report.defects.filter((d) => d.kind === "duplicate-key" && !d.baselined);
   const outstanding = report.defects.filter((d) => d.kind === "duplicate-key" && d.baselined);
 
   const at = (d: FrontMatterDefect): string => (d.line === null ? "" : `:${d.line}`);
 
-  if (unparseable.length === 0 && newDuplicates.length === 0) {
+  if (unparseable.length === 0 && newDuplicates.length === 0 && unfenced.length === 0) {
     console.log(
       "  ✓ no NEW defect — every bean's front matter loads, so `beans list`, `roadmap` " +
         "and `prime` can read the store",
     );
   }
 
+  for (const d of unfenced) {
+    console.error(`  ✗ ${d.file} [${d.id}] UNFENCED: ${d.message}`);
+  }
+  for (const sk of expected) {
+    console.log(`  · ${sk.file} is not a bean and is not expected to be (NOT_BEANS)`);
+  }
   for (const d of unparseable) {
     console.error(`  ✗ ${d.file}${at(d)} [${d.id}] UNPARSEABLE: ${d.message}`);
   }
@@ -268,6 +393,15 @@ function main(): void {
     );
   }
 
+  if (unfenced.length > 0) {
+    console.error(
+      `\n${unfenced.length} file(s) in the bean directory carry no parseable \`---\` fences. ` +
+        "This is the QUIET half of `t7ao`: the store still loads, so nothing announces it, " +
+        "and every check here skips the file — while `beans` loads it as a row with the id " +
+        "taken from the FILENAME, status `?` and NO TITLE. Restore the fences, or add the " +
+        "name to NOT_BEANS in bean-store-read.ts if it is genuinely not a bean.",
+    );
+  }
   if (unparseable.length > 0) {
     console.error(
       `\n${unparseable.length} bean(s) NO loader will read. \`beans\` loads the store as a ` +
@@ -289,7 +423,7 @@ function main(): void {
     );
   }
 
-  process.exit(unparseable.length > 0 || newDuplicates.length > 0 ? 1 : 0);
+  process.exit(unparseable.length > 0 || newDuplicates.length > 0 || unfenced.length > 0 ? 1 : 0);
 }
 
 if (import.meta.main) main();
