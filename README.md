@@ -32,6 +32,25 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
+## Cold start — what an arriving agent does first
+
+<!-- cat-harness:cold-start:begin -->
+
+**Read this before you do anything else.**
+
+**This repository is an ACTIVE knowledge graph.** `cat-harness` declares `beans` and `todos` — work somebody is partway through, which you can pick up.
+
+| | |
+|---|---|
+| **1. What the harness is, from nothing** | [`cat-bootstrap/README.md`](cat-bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
+| **2. How to find the graph, and the skills in it** | [`kg-navigation`](kg-navigation/skills/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `harness.json` and read the directory it names. |
+| **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |
+| **4. It is active, so** | Work out your role, process and task from the BPMN under [`skills/workflows/`](cat-harness/skills/workflows/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |
+
+*Why no list of skills: a README is the one file no check reads, so a list in it is wrong the day a skill is added and nothing says so. The two calls above ask the graph instead.*
+
+<!-- cat-harness:cold-start:end -->
+
 ## Harness instances
 
 This repository holds several **instances**, each declaring its own
@@ -51,7 +70,7 @@ rename a directory and the links follow.
 | `agent-skills` | agent-skills | [AGENTS.md](./agent-skills/AGENTS.md) | [README](./agent-skills/README.md) |
 | `cat-bootstrap` | cat-bootstrap | [AGENTS.md](./cat-bootstrap/AGENTS.md) | [README](./cat-bootstrap/README.md) |
 | `cat-bootstrap-tools` | cat-bootstrap-tools | [AGENTS.md](./cat-bootstrap-tools/AGENTS.md) | [README](./cat-bootstrap-tools/README.md) |
-| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
+| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) · [docs](docs/) |
 | `detangle` | detangle | [AGENTS.md](./detangle/AGENTS.md) | [README](./detangle/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |

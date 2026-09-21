@@ -1015,6 +1015,20 @@
       "file": "beans/defs/folio-assistant-70c7--docs-assets-qa-was-undeclared-134-committed-files-.md"
     },
     {
+      "id": "folio-assistant-76sa",
+      "title": "ROOT README: the four pointers, driven by the KG rather than listed — bootstrap overview, skill query, active-vs-static, BPMN role/process",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T05:50:07Z",
+      "updatedAt": "2026-09-21T06:26:04Z",
+      "preview": "Carved out of `ie9l` when issue #592 was closed (2026-09-21, owner's word).\n`ie9l`'s second `Done when` box, **partly** landed and recorded as partial\nrather than ticked.\n\n**What landed** (PR #593): the `cat-harness:instances` section — a generated\ntable of every instance, both entries per row, resolved from each instance's\nown declaration. That is \"by query rather than by list\" for the INSTANCES.",
+      "file": "beans/defs/folio-assistant-76sa--root-readme-the-four-pointers-driven-by-the-kg-rat.md"
+    },
+    {
       "id": "folio-assistant-77ex",
       "title": "AGENTS.md makes claims ABOUT CODE that nothing checks",
       "status": "completed",
@@ -1139,6 +1153,34 @@
       "updatedAt": "2026-09-19T00:37:53Z",
       "preview": "Queued 2026-09-19 while the `skill-not-a-document` split was in flight; not\nstarted. Requested as: *\"move MEMORY.md into kg and make sure in right skill /\ntask pairings\"*.\n\n## What is there now\n\n`.claude/agents/` defines three subagents carrying `memory: project`, each with\na `MEMORY.md` under `.claude/agent-memory/<agent>/`:\n\n- `platform-boundary-guard` — folio-vs-platform boundary, adapter vs pr",
       "file": "beans/defs/folio-assistant-7sf1--move-memorymd-into-the-kg-graph-with-correct-skill.md"
+    },
+    {
+      "id": "folio-assistant-7sfm",
+      "title": "INIT: bootstrap creates a root README with install status — and says why creation at initialisation is not a process write",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T05:50:07Z",
+      "updatedAt": "2026-09-21T05:50:07Z",
+      "preview": "Carved out of `ie9l` when issue #592 was closed (2026-09-21, owner's word).\nTwo of `ie9l`'s six `Done when` boxes, together because `ie9l` itself showed\nthey are one thing.\n\nOwner, on `ie9l`:\n\n> whwn cat-harness boostrap init takes over it creates README.md if it does\n> not exist and add link and overall harness install statue.\n\n**Neither box was started.** Nothing in `cat-bootstrap`'s initialisat",
+      "file": "beans/defs/folio-assistant-7sfm--init-bootstrap-creates-a-root-readme-with-install.md"
+    },
+    {
+      "id": "folio-assistant-7syd",
+      "title": "ASSET LAYER: instance-readme and agent-instructions declare layer context, and the read-as-a-file trigger is tested",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T05:50:07Z",
+      "updatedAt": "2026-09-21T05:50:07Z",
+      "preview": "Carved out of `ie9l` when issue #592 was closed (2026-09-21, owner's word).\nTwo of `ie9l`'s `Done when` boxes, both **partly** landed.\n\n**What landed** (PR #593): both roles are declared assets on all eleven\ninstances, they appear in the published `.jsonld`, and\n`ASSET_ROLE_PURPOSE` states each role's purpose once, per role.\n`agent-memory` carries the delivery rule — a file is READ and nothing\ntru",
+      "file": "beans/defs/folio-assistant-7syd--asset-layer-instance-readme-and-agent-instructions.md"
     },
     {
       "id": "folio-assistant-7u3g",
@@ -1903,14 +1945,14 @@
     {
       "id": "folio-assistant-cvab",
       "title": "BRANCH-ONLY WORK PLAN: 12 of 13 IRIS beans live only on PR #477, so the store on main is blind to a whole goal",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T19:00:00Z",
+      "updatedAt": "2026-09-21T05:53:44Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\nBranch `claude/sleepy-rubin-mr6kdu` (PR #477, 65 commits ahead, 1,937 files) carries the `kupb` epic and 12 of its 13 children. None exist on ",
       "file": "beans/defs/folio-assistant-cvab--branch-only-work-plan-12-of-13-iris-beans-live-onl.md"
     },
@@ -2145,14 +2187,14 @@
     {
       "id": "folio-assistant-f76l",
       "title": "TODO INDEX: define folio-todo-index/v1 as published, and emit target{page,node,label}",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:46:04Z",
-      "updatedAt": "2026-09-21T05:26:48Z",
+      "updatedAt": "2026-09-21T05:31:45Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R3 + the Phase 4 §0 finding. Unit 2 of 10.\n\n**`folio-todo-index/v1` has no schema.** The string appears twice in the whole\nrepository: a literal in `gen-docs-pages.ts` and four e2e fixtures. No Zod type, no\npublished JSON Schema, no module — a consumer reading `\"$schema\":\n\"folio-todo-index/v1\"` and going looking finds nothing. And the",
       "file": "beans/defs/folio-assistant-f76l--todo-index-define-folio-todo-indexv1-as-published.md"
     },
@@ -2399,12 +2441,12 @@
       "title": "INTERACTION: the asking rule is enforced by three layers, not remembered",
       "status": "in-progress",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:31:09Z",
-      "updatedAt": "2026-09-20T20:55:00Z",
+      "updatedAt": "2026-09-21T05:29:17Z",
       "preview": "The owner, 2026-09-20, after four questions that broke the rule:\n\n> *\"ask specific questiosn w/ context/ recommendations/pros/cons (see skills,\n> why not invoked?)\"*\n>\n> *\"fix skills so interaction modality would be triggered\"*\n>\n> *\"can we struture schema better to help enforce?\"*\n\n## The measurement\n\n`interaction-modality` §4.1 was STRICT and complete, and was broken the same day\nby the agent im",
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
@@ -2523,14 +2565,14 @@
     {
       "id": "folio-assistant-ie9l",
       "title": "READMEs: every instance kind needs its own starting README, driven by the KG rather than listed — and the root README is cat-harness's by accident",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T17:00:50Z",
-      "updatedAt": "2026-09-20T19:27:11Z",
+      "updatedAt": "2026-09-21T05:50:43Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> update each instance kind's staring readme (QA check, each harness kind needs\n> readme, it is added as a reference to repo's root readme.md to explain what is\n> in it).  whwn cat-harness boostrap init takes over it creates README.md if it\n> does not exist and add link and overall harness install statue.\n>\n> the reaadme in repo root should:\n>   *   point to the boots",
       "file": "beans/defs/folio-assistant-ie9l--readmes-every-instance-kind-needs-its-own-starting.md"
     },
@@ -2789,6 +2831,20 @@
       "updatedAt": "2026-09-20T08:27:47Z",
       "preview": "Owner, 2026-09-20, one question: 'are arrows in wrong direction somewhere?' Yes. Measured the same hour. Parent is the epic because a bug may not hang off a task; the topic bean is `j79e` (detangle).\n\n| extractor | cross-group edges | direction is |\n|---|---|---|\n| `bpmn-skill` | 340 | RECORDED |\n| `json-skill` | 125 | RECORDED |\n| `ts-import` | 28 | ENFORCED |\n| `md-link` | 5 | RECORDED |\n\n**470 ",
       "file": "beans/defs/folio-assistant-kvsx--arrow-direction-94-of-kg-edges-point-where-the-aut.md"
+    },
+    {
+      "id": "folio-assistant-l4zi",
+      "title": "POST-IT PANEL: dismissing it has no inverse — no way to get the panel back",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T06:20:35Z",
+      "updatedAt": "2026-09-21T06:20:35Z",
+      "preview": "Owner, 2026-09-21, on the deployed preview:\n\n> clicking https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/\n> on postit display panel, hides it, no place to get it back. see sibling work\n> on defaul harness folio with tiles.\n\n## The defect\n\nClicking the todo/post-it display panel **dismisses it, and nothing brings it\nback**. A control that removes something ",
+      "file": "beans/defs/folio-assistant-l4zi--post-it-panel-dismissing-it-has-no-inverse-no-way.md"
     },
     {
       "id": "folio-assistant-lcwz",
@@ -3213,14 +3269,14 @@
     {
       "id": "folio-assistant-op30",
       "title": "DOCS OBLIGATION: an instance owes its own docs/, with a QA axis — 1 of 11 has one, and it is the instance with no README",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:23:57Z",
-      "updatedAt": "2026-09-20T20:23:57Z",
+      "updatedAt": "2026-09-21T05:53:29Z",
       "preview": "Owner, 2026-09-20:\n\n> bean up that other harnesses need `docs/` make QA sidecar. (like harnesses\n> need READme)\n\nSo `docs/` becomes an instance-level **obligation** with a QA axis behind it,\nthe same shape the README requirement already has — `check:subgraph-coverage`\nalready reports *\"N instance(s) have no starting README OF THEIR OWN — an\ninstance a reader cannot enter.\"*\n\n## Measured 2026-09-20",
       "file": "beans/defs/folio-assistant-op30--docs-obligation-an-instance-owes-its-own-docs-with.md"
     },
@@ -3658,7 +3714,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T19:00:00Z",
+      "updatedAt": "2026-09-21T05:14:56Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`beans check` passes (\"No link issues found\"), and three beans are unreadable by the tooling or by a person: `70c7` is `in-progress` with an E",
       "file": "beans/defs/folio-assistant-sfhr--store-defects-the-check-does-not-see-an-empty-in-p.md"
     },
@@ -4497,7 +4553,7 @@
     {
       "id": "folio-assistant-y90d",
       "title": "state-visualizer has ankg's defect too, and cannot take ankg's fix — its dashboards carry no self-identifying marker and it publishes at the SITE ROOT",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -4588,7 +4644,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:33:37Z",
-      "updatedAt": "2026-09-20T17:19:50Z",
+      "updatedAt": "2026-09-21T05:40:33Z",
       "preview": "Split out of `3pqn` on the owner's instruction, 2026-09-20. `3pqn` closed on\nits Done-when 2 and 3 — the **damage** is stopped, because\n[`prepare-merge`](../../cat-harness/skills/folio-core/prepare-merge.md)\n§Guardrails now says *\"NO CHECKS IS NOT GREEN\"* and gives the procedure. This\nbean carries the remaining **why**, at low priority, with the evidence\nattached so nobody re-derives it.\n\n## The o",
       "file": "beans/defs/folio-assistant-yv4z--3pqn-cause-why-does-a-pr-sometimes-get-no-pull-req.md"
     },

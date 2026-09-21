@@ -3,8 +3,9 @@
 title: 'INTERACTION: the asking rule is enforced by three layers, not remembered'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-20T19:31:09Z
-updated_at: 2026-09-20T20:55:00Z
+updated_at: 2026-09-21T05:29:17Z
 parent: folio-assistant-ahvw
 ---
 
@@ -113,3 +114,57 @@ store of decision objects would be a parallel count free to disagree with
 worth keeping goes into the bean it belongs to, under `## Options`, where
 `madr.md`'s two-option floor and `bean-thin-decision-records` already govern
 it. `renderDecision` composes the chat message; the bean keeps the record.
+
+*2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5.* — **The threshold was counting the wrong population, and the evidence it waited for was zero.**
+
+`bean-decision-records` counts beans with an `## Options` heading. It has
+nothing to do with `DecisionRequestSchema`. Measured today:
+
+| counted | value |
+|---|---|
+| beans with an `## Options` heading | **10** |
+| beans carrying a decision put THROUGH the schema | **0** |
+
+So "revisit gating at twelve records" names a set containing none of the
+evidence the wait was chosen to buy — evidence about whether
+`DecisionRequestSchema` is too narrow, which only a decision that went
+through it can supply. The store would have reached twelve and the condition
+would have read as met.
+
+**`renderDecision` had produced zero durable records in a day of heavy
+decision-making**, including on this bean, which described its own decision
+in prose. `bean-rendered-decision-records` now counts the right population,
+detected from the five-row table the renderer emits rather than from a marker
+somebody has to remember to write — the same reason `check:bean-bodies` reads
+the body rather than trusting front matter.
+
+**The gate would have caught two of the three breaches I committed this
+session** — a missing recommendation and a missing "if you say nothing" are
+both required fields. It would NOT have caught the third, the comparison put
+in the tool's option labels instead of the prose, because the hook sees the
+call and never the prose written before it. So a gate is worth something and
+is not sufficient.
+
+## Options
+
+`hajp` deferred gating the asking rule until twelve decision records had accumulated. Measured today, the store holds 10 beans with an `## Options` heading and **0** carrying a decision actually put through the schema — so the threshold counts a population containing none of the evidence it was chosen to buy. The counter is now split into two metrics; this decides what to do about the threshold itself.
+
+- **the gate** — a PreToolUse hook that refuses `AskUserQuestion` until a validated `DecisionRequest` exists
+- **the reminder** — what ships today — it fires on every `AskUserQuestion` and can only remind
+- **rendered record** — a decision put through `DecisionRequestSchema` and left in a bean as the five-row table
+
+| | **make-evidence-accumulate** *(recommended)* | gate-now-fail-open | drop-the-threshold |
+|---|---|---|---|
+| **What it does** | Keep the reminder. The new `bean-rendered-decision-records` metric now counts the right population, so revisit gating at twelve of THOSE. | Turn the reminder into a gate immediately, but fail OPEN on infrastructure error: a missing scratch path or a crashing validator allows the call through. | Delete the twelve-record condition as unmeetable, keep the reminder indefinitely, and record on the bean that the window stays open by choice. |
+| **Pro** | The threshold finally measures the thing it names, and this turn makes it 1. Nothing blocks anyone meanwhile. | Directly answers the one risk that caused the deferral — the agent can never be left unable to ask anything. Catches 2 of the 3 rule breaches I actually committed this session. | Honest. Stops a condition sitting in the store that would have been read as met by the wrong counter. |
+| **Con** | Evidence only accrues if agents actually use renderDecision, which is house style and unenforced — 0 uses in a day of heavy decision-making is not encouraging. | The schema was written by one author against their own four mistakes. A well-formed question refused by a too-narrow schema costs you the channel you use to correct an agent. | Leaves the rule enforced only by an agent's attention — which is exactly what failed this session. |
+| **Downstream** | If the count is still near 0 in a week, that IS the evidence: the mechanism is not being used voluntarily and only a gate would change it. So the wait has a defined end rather than being open-ended. | Every session's questions change shape at once, with no prior evidence about the schema's narrowness. | `hajp` closes with the reminder as the permanent answer; any future gate needs a fresh decision. |
+| **Reversibility** | Fully reversible — it is a metric and a note. | One settings edit to revert, but painful while wrong. | Fully reversible. |
+
+**Recommendation: make-evidence-accumulate** — The deferral was chosen to buy evidence about whether the schema is too narrow, and that evidence has never been recorded anywhere — so waiting bought nothing, but the fix is one metric rather than abandoning the plan. It now has a falsifiable end: if rendered records stay near zero, that result argues for the gate better than any count of twelve would have.
+
+**If you say nothing:** I take make-evidence-accumulate: the two metrics ship, `hajp` records that the threshold now reads the rendered count, and nothing starts blocking.
+
+2 other decisions are waiting; I will put each properly when it is next.
+
+Which way on the gate?
