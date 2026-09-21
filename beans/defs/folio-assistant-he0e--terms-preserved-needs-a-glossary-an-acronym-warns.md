@@ -1,11 +1,11 @@
 ---
 # folio-assistant-he0e
 title: 'TERMS-PRESERVED NEEDS A GLOSSARY: an acronym warns because the check cannot tell WHO to OMS from WHO dropped'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T12:02:00Z
-updated_at: 2026-09-21T12:02:00Z
+updated_at: 2026-09-21T13:34:02Z
 parent: folio-assistant-bzyu
 ---
 

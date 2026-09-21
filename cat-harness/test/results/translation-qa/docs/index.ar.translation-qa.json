@@ -23,11 +23,11 @@
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
           "version": "v1",
-          "script_hash": "e4076bc0cf43",
+          "script_hash": "7eb346adbac4",
           "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
         },
-        "reviewed_at": "2026-09-21T12:05:46.400Z",
-        "reviewed_sha": "1d7a09c5ada420b043e035863e41ab99a7573997",
+        "reviewed_at": "2026-09-21T13:29:42.043Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
         "severity": "minor",
         "metrics": {
           "translated": 36,
@@ -43,53 +43,25 @@
           "md": "9c4bedd70d1e",
           "po": "3ffef16e37c9"
         },
-        "result": "warn",
+        "result": "pass",
         "reviewer": {
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
           "version": "v1",
-          "script_hash": "e4076bc0cf43",
+          "script_hash": "7eb346adbac4",
           "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
         },
-        "reviewed_at": "2026-09-21T12:05:46.404Z",
-        "reviewed_sha": "1d7a09c5ada420b043e035863e41ab99a7573997",
-        "severity": "minor",
-        "evidence": [
-          {
-            "text": "WHO — absent from: \"إطار عمل لمهارات الوكيل غير المرتبط بمحتوى محدد لتأليف محتوى دقيق باستخدام نموذج\""
-          },
-          {
-            "text": "LLM — absent from: \"إن folio-assistant هو المنصة — وهو لا يحتوي على المحتوى بحد ذاته. بل يوفر المهار\""
-          },
-          {
-            "text": "WHO — absent from: \"حزم التكيف الرقمي (DAK) لإرشادات منظمة الصحة العالمية SMART\""
-          },
-          {
-            "text": "WHO — absent from: \"أدلة تطبيق إرشادات منظمة الصحة العالمية SMART\""
-          },
-          {
-            "text": "LLM — absent from: \"البدء — توصيل خادم MCP بنموذجك اللغوي وتشغيل مهاراتك الأولى.\""
-          },
-          {
-            "text": "LLM — absent from: \"درس تعليمي: كتابة ورقة بحثية باستخدام folio-assistant — دليل تطبيقي كامل مدفوع ب\""
-          },
-          {
-            "text": "LLM — absent from: \"توجيه الوكيل — تدريب تمهيدي لوكيل الذكاء الاصطناعي عند دمجه في ملف المحتوى: الخط\""
-          },
-          {
-            "text": "LLM — absent from: \"المهارات والأدوار — جميع المهارات والأدوار، وكيفية عملها مع النموذج اللغوي الكبي\""
-          },
-          {
-            "text": "API — absent from: \"مرجع واجهة برمجة تطبيقات TypeScript — نموذج كائنات المحتوى (Block وChapter وPape\""
-          }
-        ],
+        "reviewed_at": "2026-09-21T13:29:42.049Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
         "metrics": {
           "checked": 36,
-          "missing": 9,
+          "missing": 0,
           "missing_strict": 0,
-          "missing_acronyms": 9
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 9
         },
-        "notes": "9 acronym(s) from the source do not appear verbatim in the translation. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart, which is why it warns. A glossary would settle it."
+        "notes": "9 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; API — the glossary marks it localised, so an absent verbatim form is expected."
       }
     ],
     "translation-not-echo": [
@@ -103,11 +75,11 @@
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
           "version": "v1",
-          "script_hash": "e4076bc0cf43",
+          "script_hash": "7eb346adbac4",
           "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
         },
-        "reviewed_at": "2026-09-21T12:05:46.409Z",
-        "reviewed_sha": "1d7a09c5ada420b043e035863e41ab99a7573997",
+        "reviewed_at": "2026-09-21T13:29:42.054Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
         "severity": "minor",
         "metrics": {
           "echoed": 1,
@@ -118,5 +90,5 @@
     ],
     "translation-semantic-roundtrip": []
   },
-  "updated_at": "2026-09-21T12:05:46.411Z"
+  "updated_at": "2026-09-21T13:29:42.056Z"
 }

@@ -2579,14 +2579,14 @@
     {
       "id": "folio-assistant-he0e",
       "title": "TERMS-PRESERVED NEEDS A GLOSSARY: an acronym warns because the check cannot tell WHO to OMS from WHO dropped",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T12:02:00Z",
-      "updatedAt": "2026-09-21T12:02:00Z",
+      "updatedAt": "2026-09-21T13:18:41Z",
       "preview": "Split out of pp93 (PR #691). translation-terms-preserved now reports a missing acronym as warn/minor rather than fail/major, because it genuinely cannot distinguish a correct localisation from a silently dropped term. That is the honest confidence, not the useful one.\n\nA per-locale glossary would settle it: translations/<locale>/glossary.po already exists as a hand-authored PO with no POT, and sch",
       "file": "beans/defs/folio-assistant-he0e--terms-preserved-needs-a-glossary-an-acronym-warns.md"
     },
@@ -3141,6 +3141,20 @@
       "file": "beans/defs/folio-assistant-lr7h--ci-health-the-window-is-61-hours-so-the-weekly-wat.md"
     },
     {
+      "id": "folio-assistant-lrbx",
+      "title": "EXTRACTION: the kramdown {:toc} placeholder is extracted as translatable prose, and translators dutifully translate it",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:22:39Z",
+      "updatedAt": "2026-09-21T13:22:39Z",
+      "preview": "Found while doing he0e (PR #691). `1. TOC` at docs/guides/agent-onboarding.md:20 is the list item kramdown REPLACES with the generated table of contents, immediately followed by `{:toc}`. Its text never reaches a reader in any language.\n\npot-extract.ts picks it up as a translatable string anyway, and the Arabic and Russian translators rendered it — ar has جدول المحتويات. That is a sensible human r",
+      "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
+    },
+    {
       "id": "folio-assistant-lv3j",
       "title": "BPMN has no precondition element, and initialize-harness needs one",
       "status": "completed",
@@ -3297,14 +3311,14 @@
     {
       "id": "folio-assistant-n7vv",
       "title": "BADGE PALETTE: the coverage and sweep badges are inline dark-palette literals, beside a themed TR badge on the same row",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T11:38:02Z",
-      "updatedAt": "2026-09-21T11:38:02Z",
+      "updatedAt": "2026-09-21T13:16:37Z",
       "preview": "Seen directly while verifying PR #691 against the real generated page: the badge row under a title renders a dark-brown 2/6 languages chip and a dark-green Swept 8/289 chip next to a correctly themed light TR chip, on a light page.\n\nfa-lang-coverage-badge and fa-sweep-badge are built in mountTranslationBadges with inline colour literals (#78350f, #14532d, #1e293b, #e2e8f0). Contrast WITHIN each ch",
       "file": "beans/defs/folio-assistant-n7vv--badge-palette-the-coverage-and-sweep-badges-are-in.md"
     },

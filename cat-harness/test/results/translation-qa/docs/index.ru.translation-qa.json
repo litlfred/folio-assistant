@@ -23,11 +23,11 @@
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
           "version": "v1",
-          "script_hash": "e4076bc0cf43",
+          "script_hash": "7eb346adbac4",
           "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
         },
-        "reviewed_at": "2026-09-21T12:05:46.454Z",
-        "reviewed_sha": "1d7a09c5ada420b043e035863e41ab99a7573997",
+        "reviewed_at": "2026-09-21T13:29:42.118Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
         "severity": "minor",
         "metrics": {
           "translated": 36,
@@ -43,35 +43,25 @@
           "md": "9c4bedd70d1e",
           "po": "548d66c1a73a"
         },
-        "result": "warn",
+        "result": "pass",
         "reviewer": {
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
           "version": "v1",
-          "script_hash": "e4076bc0cf43",
+          "script_hash": "7eb346adbac4",
           "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
         },
-        "reviewed_at": "2026-09-21T12:05:46.458Z",
-        "reviewed_sha": "1d7a09c5ada420b043e035863e41ab99a7573997",
-        "severity": "minor",
-        "evidence": [
-          {
-            "text": "WHO — absent from: \"Не зависящий от контента фреймворк навыков агента для создания строгого контента\""
-          },
-          {
-            "text": "WHO — absent from: \"Комплекты цифровой адаптации (DAK) руководств ВОЗ SMART Guidelines\""
-          },
-          {
-            "text": "WHO — absent from: \"Руководства по реализации ВОЗ SMART Guidelines\""
-          }
-        ],
+        "reviewed_at": "2026-09-21T13:29:42.123Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
         "metrics": {
           "checked": 36,
-          "missing": 3,
+          "missing": 0,
           "missing_strict": 0,
-          "missing_acronyms": 3
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 3
         },
-        "notes": "3 acronym(s) from the source do not appear verbatim in the translation. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart, which is why it warns. A glossary would settle it."
+        "notes": "3 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected."
       }
     ],
     "translation-not-echo": [
@@ -85,11 +75,11 @@
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
           "version": "v1",
-          "script_hash": "e4076bc0cf43",
+          "script_hash": "7eb346adbac4",
           "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
         },
-        "reviewed_at": "2026-09-21T12:05:46.463Z",
-        "reviewed_sha": "1d7a09c5ada420b043e035863e41ab99a7573997",
+        "reviewed_at": "2026-09-21T13:29:42.128Z",
+        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
         "severity": "minor",
         "metrics": {
           "echoed": 1,
@@ -100,5 +90,5 @@
     ],
     "translation-semantic-roundtrip": []
   },
-  "updated_at": "2026-09-21T12:05:46.465Z"
+  "updated_at": "2026-09-21T13:29:42.131Z"
 }

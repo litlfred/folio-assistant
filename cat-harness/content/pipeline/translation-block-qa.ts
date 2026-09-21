@@ -68,6 +68,7 @@ import { basename, dirname, join, relative } from "node:path";
 
 import type { QaCriterionEntry, QaFieldHash, QaReviewer } from "../../schemas/block-qa.ts";
 import { parsePo, parsePoEntries } from "./po-inject.ts";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 import { resolvePoSources } from "./po-resolve.ts";
 import { extractMarkdown } from "./pot-extract.ts";
 import { gitFileCommitSha, gitHeadSha, hashFile, walkBlocks } from "./qa-utils.ts";
@@ -198,6 +199,103 @@ export function invariantTokens(text: string): InvariantToken[] {
     .map(([token, kind]) => ({ token, kind }));
 }
 
+/**
+ * The terminology glossary for one locale — what a term is expected to become.
+ *
+ * ## Why the checker needs one
+ *
+ * `translation-terms-preserved` can see that `WHO` is absent from a French
+ * translation. It cannot see whether that is `OMS` (correct) or a silently
+ * dropped term (a real loss), so it warns on both — four unactionable warns on
+ * `docs/index.md` alone, on a page whose translations are fine. Bean `he0e`.
+ *
+ * ## What an entry says, and what it deliberately does not
+ *
+ * `translations/<locale>/glossary.po`, the slot `schemas/translation.ts`
+ * already declares ("shared glossary PO (no POT — hand-authored)"). Three
+ * shapes, and the third is the one that matters:
+ *
+ * | entry | meaning | when the term is absent |
+ * |---|---|---|
+ * | `msgstr "OMS"` | the expected form, pinned | **fail** — the glossary said what it should be |
+ * | `msgstr "FHIR"` (identity) | must survive verbatim | **fail** |
+ * | `#, localised` | rendered in the target language, form NOT pinned | **pass** — absence is the expected outcome |
+ * | absent from the glossary | unknown | **warn**, as before |
+ *
+ * **The third shape is why this needs no translated content.** Pinning forms
+ * would mean authoring the Arabic, Chinese, Russian, Spanish and French of
+ * every term — target-language material invented to quieten a checker, in a
+ * repository whose first rule is that it holds no content. `#, localised` says
+ * the one thing the checker actually needs and the one thing a reader of
+ * English can review: *this term gets localised; I am not pinning how*. A folio
+ * that wants the stricter check pins the form, and gets it.
+ *
+ * ## It cannot become a mute button
+ *
+ * A flag that made a criterion pass unconditionally would be a defect wearing a
+ * glossary's clothes. `localised` only ever converts a would-be finding about
+ * THAT term into a pass; it cannot suppress `strict` tokens (URLs, numbers),
+ * cannot act on a term it does not name, and every locale's glossary is read
+ * separately, so marking a term in French says nothing about Arabic.
+ */
+export interface GlossaryTerm {
+  /** The expected form in this locale, when the glossary pins one. */
+  expected?: string;
+  /** The term is rendered in the target language; no form is pinned. */
+  localised: boolean;
+}
+
+/** `<term> -> rule`, for one locale. Empty when the locale has no glossary. */
+export type Glossary = Map<string, GlossaryTerm>;
+
+/** The flag that marks a term as localised-without-a-pinned-form. */
+const LOCALISED_FLAG = "localised";
+
+export function readGlossary(folioRoot: string, locale: string): Glossary {
+  const out: Glossary = new Map();
+  // declared-path-literal: the convention fallback for a folio that declares no
+  // `translation-sources` graph, matching `translationDir` in `po-resolve.ts`.
+  // The declaration is asked FIRST and this is only reached when there is none.
+  const dir = directoryForGraph(folioRoot, "translation-sources") ?? join(folioRoot, "translations");
+  const path = join(dir, locale, "glossary.po");
+  if (!existsSync(path)) return out;
+  for (const e of parsePoEntries(readFileSync(path, "utf-8"))) {
+    const term = e.msgid.trim();
+    if (!term) continue;
+    const localised = (e.flags ?? []).includes(LOCALISED_FLAG);
+    const expected = e.msgstr.trim();
+    out.set(term, { expected: expected || undefined, localised });
+  }
+  return out;
+}
+
+/**
+ * What the glossary says about one absent token, if anything.
+ *
+ * `undefined` means the glossary does not name it, which is the `warn` the
+ * criterion reported before any of this existed — an unnamed term is not
+ * silently forgiven.
+ */
+function glossaryVerdict(
+  g: Glossary,
+  token: string,
+  msgstr: string,
+): { ok: boolean; why: string } | undefined {
+  const rule = g.get(token);
+  if (!rule) return undefined;
+  if (rule.expected !== undefined) {
+    return msgstr.includes(rule.expected)
+      ? { ok: true, why: `rendered as "${rule.expected}", as the glossary pins it` }
+      : { ok: false, why: `the glossary pins "${rule.expected}" for this locale, and it is absent too` };
+  }
+  if (rule.localised) {
+    return { ok: true, why: "the glossary marks it localised, so an absent verbatim form is expected" };
+  }
+  // Named, but the entry says nothing: neither a form nor the flag. Treated as
+  // unknown rather than as permission — an empty entry is an unfinished one.
+  return undefined;
+}
+
 /** Normalised equality, for spotting a msgstr that is just the msgid back. */
 function isEcho(msgid: string, msgstr: string): boolean {
   const norm = (s: string) => s.replace(/\s+/g, " ").trim().toLowerCase();
@@ -210,16 +308,33 @@ interface Measured {
   echoed: number;
   /** Missing URLs and numbers — the class that cannot legitimately change. */
   missingStrict: string[];
-  /** Missing acronyms — possibly localised, possibly dropped. A question. */
+  /** Missing acronyms the glossary does not name — still a question. */
   missingAcronyms: string[];
+  /**
+   * Missing acronyms the glossary ACCOUNTS FOR — reported, never a finding.
+   *
+   * Kept rather than dropped: "absent because the glossary says it is
+   * localised" is a different fact from "present", and a reader auditing the
+   * glossary needs to see which terms it is speaking for. A rule nobody can see
+   * working is a rule nobody can tell is wrong.
+   */
+  resolvedAcronyms: string[];
+  /** Missing acronyms whose glossary-pinned form is ALSO absent. A loss. */
+  brokenGlossaryTerms: string[];
 }
 
 /** Measure one block's strings against one locale's merged PO map. */
-export function measureBlock(md: string, source: string, po: Map<string, string>): Measured {
+export function measureBlock(
+  md: string,
+  source: string,
+  po: Map<string, string>,
+  glossary: Glossary = new Map(),
+): Measured {
   const entries = extractMarkdown(md, source);
   const m: Measured = {
     total: entries.length, translated: 0, echoed: 0,
     missingStrict: [], missingAcronyms: [],
+    resolvedAcronyms: [], brokenGlossaryTerms: [],
   };
   for (const e of entries) {
     const msgstr = po.get(e.msgid);
@@ -232,7 +347,16 @@ export function measureBlock(md: string, source: string, po: Map<string, string>
       // written — a dropped token is the finding, not a re-spelled one.
       if (msgstr.includes(token)) continue;
       const line = `${token} — absent from: "${msgstr.slice(0, 80)}"`;
-      (kind === "strict" ? m.missingStrict : m.missingAcronyms).push(line);
+      if (kind === "strict") {
+        // A URL or a number. No glossary speaks for these: nothing localises
+        // a `3`, and a changed URL is broken in every language.
+        m.missingStrict.push(line);
+        continue;
+      }
+      const said = glossaryVerdict(glossary, token, msgstr);
+      if (said === undefined) m.missingAcronyms.push(line);
+      else if (said.ok) m.resolvedAcronyms.push(`${token} — ${said.why}`);
+      else m.brokenGlossaryTerms.push(`${token} — ${said.why}`);
     }
   }
   return m;
@@ -344,7 +468,7 @@ export function buildReport(
   // does not belong to it. Absence, exactly as if no PO had resolved at all.
   if (merged.size === 0) return undefined;
   const md = readFileSync(blockMd, "utf-8");
-  const m = measureBlock(md, rel, merged);
+  const m = measureBlock(md, rel, merged, readGlossary(INSTANCE_ROOT, locale));
   // Nothing of this block is in the PO: it is untranslated, which is an absence
   // and not a failing translation. See the header.
   if (m.translated === 0) return undefined;
@@ -373,17 +497,41 @@ export function buildReport(
     }),
   ];
 
-  // `fail` only for the class that cannot legitimately change. A missing
-  // acronym is a `warn`, because the checker cannot tell `WHO` → `OMS` from
-  // `WHO` dropped, and saying `fail` would claim a confidence it does not have.
-  const missingAll = [...m.missingStrict, ...m.missingAcronyms];
+  // Three tiers of confidence, and the verdict is the worst that applies.
+  //
+  //  · `fail` — something the check CANNOT be wrong about: a URL or a number
+  //    gone, or a term whose glossary-pinned form is absent too.
+  //  · `warn` — an acronym no glossary speaks for. The check still cannot tell
+  //    `WHO` → `OMS` from `WHO` dropped, so it says so rather than guessing.
+  //  · `pass` — nothing missing, or everything missing is accounted for by the
+  //    glossary. `resolvedAcronyms` is still reported, because a rule nobody
+  //    can see working is a rule nobody can tell is wrong.
+  const hardMissing = [...m.missingStrict, ...m.brokenGlossaryTerms];
+  const missingAll = [...hardMissing, ...m.missingAcronyms];
+  const notes: string[] = [];
+  if (m.missingAcronyms.length > 0) {
+    notes.push(
+      `${m.missingAcronyms.length} acronym(s) from the source do not appear verbatim in the ` +
+        `translation and no glossary entry speaks for them. That is right for one the target ` +
+        `language localises — WHO is OMS in French — and wrong for one silently dropped, and ` +
+        `this check cannot tell the two apart. Add them to translations/${locale}/glossary.po: ` +
+        `a pinned msgstr says what the term must become, and a "#, localised" flag says it is ` +
+        `rendered in the target language without pinning how.`,
+    );
+  }
+  if (m.resolvedAcronyms.length > 0) {
+    notes.push(
+      `${m.resolvedAcronyms.length} further acronym(s) are absent verbatim and the glossary ` +
+        `accounts for each: ${m.resolvedAcronyms.join("; ")}.`,
+    );
+  }
   criteria["translation-terms-preserved"] = [
     entry(
-      m.missingStrict.length > 0 ? "fail" : m.missingAcronyms.length > 0 ? "warn" : "pass",
+      hardMissing.length > 0 ? "fail" : m.missingAcronyms.length > 0 ? "warn" : "pass",
       fieldHash,
       {
         severity:
-          m.missingStrict.length > 0 ? "major" : m.missingAcronyms.length > 0 ? "minor" : undefined,
+          hardMissing.length > 0 ? "major" : m.missingAcronyms.length > 0 ? "minor" : undefined,
         // The structured evidence shape, which `qa-witness` flattens for the
         // panel — `evidence` is `string | {line?, text?}[]`, never `string[]`.
         evidence: missingAll.length > 0 ? missingAll.map((t) => ({ text: t })) : undefined,
@@ -392,14 +540,10 @@ export function buildReport(
           missing: missingAll.length,
           missing_strict: m.missingStrict.length,
           missing_acronyms: m.missingAcronyms.length,
+          glossary_broken: m.brokenGlossaryTerms.length,
+          glossary_resolved: m.resolvedAcronyms.length,
         },
-        notes:
-          m.missingStrict.length === 0 && m.missingAcronyms.length > 0
-            ? `${m.missingAcronyms.length} acronym(s) from the source do not appear verbatim in ` +
-              `the translation. That is right for one the target language localises — WHO is OMS ` +
-              `in French — and wrong for one silently dropped, and this check cannot tell the ` +
-              `two apart, which is why it warns. A glossary would settle it.`
-            : undefined,
+        notes: notes.length > 0 ? notes.join(" ") : undefined,
       },
     ),
   ];
