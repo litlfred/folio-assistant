@@ -817,12 +817,30 @@ repository root.
 &gt; repository root**, named for their instance rather than placed inside it,
 &gt; which is why looking in `cat-harness/` for one turns up nothing.
 &gt;
-&gt; **What that does NOT establish is the consequence below.** The 235 committed
-&gt; sidecars carrying `detangler-archimedean-wall` were written under the old
-&gt; behaviour and are still in the tree; whether a fresh run still emits them
-&gt; depends on the criterion gating rather than on the profile lookup alone, and
-&gt; that was not measured. Bean `zq3f`. Reading a fixed resolver as a fixed
-&gt; defect is how a stale sidecar gets mistaken for a current verdict.
+&gt; **But the resolver is not what controls this criterion, and the consequence
+&gt; below never occurred.** Measured on the same day under bean `zq3f`, which
+&gt; opened to check exactly that and closed by falsifying its own premise:
+&gt;
+&gt; - **The fence is the mechanism, not the resolver.** Probed here,
+&gt;   `folioOptionalAxes()` is `[]` and `inRegistry` is `false` — neither config
+&gt;   declares `qaAxes`, so `detangler-archimedean-wall` is not registered at
+&gt;   all. What stops it firing is the `archimedean-wall` opt-in this very
+&gt;   section introduced. `folio-optional-axes.test.ts` pins both states and is
+&gt;   the evidence to read first.
+&gt; - **There were never any bad verdicts.** 122 `block-qa` sidecars and 113
+&gt;   witnesses carry the criterion, and **every one records `"result": "n/a"`**
+&gt;   — not one `critical`, not one finding. The paragraph below describes a
+&gt;   harm that did not happen for this criterion; what the sidecars record is
+&gt;   that it was evaluated and found not applicable.
+&gt; - **"235" was a grep artefact.** `grep -rl` counts files CONTAINING a
+&gt;   string, so it swept witnesses in with sidecars and counted a substring
+&gt;   rather than a verdict — the same error shape as `cat-harness.json`
+&gt;   containing `harness.json`, one directory over, and it reached a skill and
+&gt;   a PR body before anything parsed it.
+&gt;
+&gt; Read the paragraph below as the reasoning that motivated the fence, not as a
+&gt; live defect. Reading a fixed resolver as a fixed defect would have been one
+&gt; error; reading it as *the* fix was the one actually made.
 
 The consequence is already committed in the tree. The config file's own comment
 says the third state *"runs every criterion, and the paper adapter's
@@ -1117,7 +1135,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35652429222"><code>d19de25</code></a> &middot; 2026-09-21T20:40:23Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35653606406"><code>81e4e82</code></a> &middot; 2026-09-21T20:51:42Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
