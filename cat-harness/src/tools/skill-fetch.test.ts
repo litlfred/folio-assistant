@@ -10,6 +10,7 @@ import { join, resolve } from "node:path";
 
 import { LOCAL_PACKAGES, discoverLocalPackages } from "./skill-fetch.js";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -17,7 +18,7 @@ const ROOT = resolve(import.meta.dir, "../..");
 function instance(pkgs: Record<string, string>, kgPath = "skills"): string {
   const root = mkdtempSync(join(tmpdir(), "pkgs-"));
   writeFileSync(
-    join(root, "harness.json"),
+    join(root, DECLARATION_FILENAME),
     JSON.stringify({
       name: "t",
       directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"] }],
@@ -148,7 +149,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // The sibling, with its OWN declaration — this is what makes it nameable.
     mkdirSync(join(repo, "sibling", "skills"), { recursive: true });
     writeFileSync(
-      join(repo, "sibling", "harness.json"),
+      join(repo, "sibling", DECLARATION_FILENAME),
       JSON.stringify({
         name: "sibling",
         directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphs: ["cat-harness"] }],
@@ -162,7 +163,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     mkdirSync(join(inst, "kg"), { recursive: true });
     writeFileSync(join(inst, "kg", "i.md"), SKILL);
     writeFileSync(
-      join(inst, "harness.json"),
+      join(inst, DECLARATION_FILENAME),
       JSON.stringify({
         name: "inst",
         directories: [
@@ -198,7 +199,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
       writeFileSync(join(inst, d, "s.md"), SKILL);
     }
     writeFileSync(
-      join(inst, "harness.json"),
+      join(inst, DECLARATION_FILENAME),
       JSON.stringify({
         name: "inst",
         directories: ["src/skills", "theming", "a", "b"].map((path, i) => ({
@@ -231,7 +232,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
       writeFileSync(join(inst, d, "s.md"), SKILL);
     }
     writeFileSync(
-      join(inst, "harness.json"),
+      join(inst, DECLARATION_FILENAME),
       JSON.stringify({
         name: "inst",
         directories: ["b", "a", "theming", "src/skills"].map((path, i) => ({
@@ -256,7 +257,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     mkdirSync(join(inst, "kg"), { recursive: true });
     writeFileSync(join(inst, "kg", "s.md"), SKILL);
     writeFileSync(
-      join(inst, "harness.json"),
+      join(inst, DECLARATION_FILENAME),
       JSON.stringify({
         name: "inst",
         directories: [{ id: "cat-harness", path: "kg", dependents: "reproduce", graphs: ["cat-harness"] }],

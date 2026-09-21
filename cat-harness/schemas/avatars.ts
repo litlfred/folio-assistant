@@ -137,6 +137,22 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // THE BOARD AND ITS LAYOUT. Two glyphs because they are two kinds, and the
+  // pair says the split: a frame with cards ON it, and the same frame with the
+  // cards' POSITIONS marked. A reader who sees them side by side should be
+  // able to guess which is the semantic model and which is the interchange.
+  boards: {
+    // a frame with two cards on it — a diagram OF a folio
+    glyph: "M3 5h18v14H3zM7 9h4v6H7zM14 9h3v3h-3z",
+    tone: 205,
+    reads: "a framed board carrying two cards — a diagram of a folio",
+  },
+  "board-positions": {
+    // the same frame, with crosshairs where the cards go — where, not what
+    glyph: "M3 5h18v14H3zM9 12h.01M15 10h.01M9 9v6M15 7v6M6 12h6M12 10h6",
+    tone: 205,
+    reads: "a board marked with positions — where each note was drawn",
+  },
   todos: {
     glyph: "M5 4h11l3 3v13H5zM16 4v3h3M8 12l2 2 4-4",
     tone: 48,

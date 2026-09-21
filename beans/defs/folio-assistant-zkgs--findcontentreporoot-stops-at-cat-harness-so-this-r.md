@@ -176,3 +176,22 @@ day, and keeping them separate leaves the `.config`-suffixed file as the config
 and the unsuffixed one as the declaration, with neither name saying so.
 
 Do not start the rename without settling that. `b5f0` carries it as an owner item.
+
+---
+
+*2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5 — **this bean's Done-when is
+written against the reading the owner did not take.***
+
+The Done-when here assumes a *config* file **beside** the declaration, with a
+separate resolver for the instantiation root. The owner ruled **REPLACE** on
+`b5f0`: one file per instantiation root, `<name>.config.json` absorbing
+`harness.json`. Reconfirmed 2026-09-21 and widened to `cat-bootstrap/` and the
+`folio-assistant-*` instances.
+
+The separate-resolver half of this bean survives the ruling — `findContentRepoRoot()`
+answers a different question either way. The two-files half does not.
+
+**Not edited here** — a sibling's bean. `b5f0` carries the ruling, the measured
+migration cost, and the ordering constraint that the 21 literals bypassing
+`DECLARATION_FILENAME` are routed through it first, as a change that is correct
+under either filename.

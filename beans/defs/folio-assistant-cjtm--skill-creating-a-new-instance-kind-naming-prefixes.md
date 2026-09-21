@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cjtm
 title: 'SKILL: creating a new instance KIND — naming, prefixes, and repointing cat-bootstrap/README.md'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T16:45:37Z
-updated_at: 2026-09-20T16:58:50Z
+updated_at: 2026-09-21T07:54:06Z
 parent: folio-assistant-yj32
 blocking:
     - folio-assistant-jbx2
@@ -120,3 +120,83 @@ A kind answers two questions (`renderable`, and `holds`: content / context /
 state — see `content-context-and-state-graphs`), and a visualiser is the first
 kind where the answer is not obvious: it RENDERS, and what it renders is
 another graph's content rather than its own.
+
+---
+
+## Built 2026-09-21 — issue #672
+
+`skills/folio-core/instance-kinds.md`, reachable by `skill_fetch`; registered in
+`folio-core`'s `package-manifest.json`; published at
+`docs/reference/skill-instructions/instance-kinds.html`. All four KG-QA criteria
+pass, 79 gates green.
+
+### Two corrections to this bean, recorded rather than quietly worked around
+
+**1. There is no `cat-harness.md`.** The §"concrete defect" above says
+`bootstrap/README.md` references it. No file of that name exists anywhere in the
+repo. What `cat-bootstrap/README.md` actually does is resolve **13 links into
+`../cat-harness/`** across **6 distinct files** — `dak-blocks.ts` ×5,
+`role-graph.ts` ×3, `cat-harness.ts` ×2, `skill-package.ts`, `tool.ts`,
+`skills/workflows`. Every one is a TERM DEFINITION. The owner's point holds
+exactly as stated; the artefact is a link family rather than one filename, so
+the instruction written into
+`cat-harness/docs/cat-bootstrap/initialization.md` is to repoint the family and
+keep the user-scenario structure, not to swap a filename.
+
+**2. A visualiser is not a new graph kind, so the hard case this bean names
+does not arise.** §"What a new KIND has to declare" expects `visualiser` to be
+the first kind where `renderable` / `holds` is not obvious. Two measurements say
+otherwise:
+
+- `coverage.visualiser` is a rendered PATH — every value in the corpus has the
+  shape `cat-harness/docs/cat-harness/<graph>/<instance>/index.html`. It names
+  an artefact, as `coverage.docs` does.
+- `v1hw` records the owner's own placement rule: *"the visualiser lives as a
+  tool in the harness that DEFINES the schema, declared in `skills`/`tools`."*
+
+So a visualiser is a **Tool node** in the existing `tools` graph emitting a
+**page** in the existing `docs`/`folio` graph. Two kinds that already exist,
+composed; nothing to register. That inverted the skill's most useful content:
+its opening section is now the test that usually says **"this is not a new
+graph kind"**, because a registry value is cheap to add and expensive to
+remove, and the failure mode is silent.
+
+### A defect found in the file a new-kind author reads
+
+`GraphLayer` gained a FOURTH value, `derived`, in `1861cd0e` (bean `hqku`,
+*"library/ is derived, not content"*). Two docstrings in
+`schemas/cat-harness.ts` were never updated:
+
+| | said | now |
+|---|---|---|
+| the `GraphLayer` docstring | *"Three values and no fourth."* | four, with `derived` defined |
+| `GraphKindDef.holds` | three bullets, `derived` absent | four bullets |
+
+`content-context-and-state-graphs.md` already knew (7 mentions, a dedicated
+section), so this is the `AGENTS.md` rule applied literally — *where a skill and
+a non-skill copy disagree, the skill wins and the copy is wrong*. Both corrected
+here.
+
+### What this unblocks, and how the finding changes it
+
+| bean | was waiting for | what it now gets |
+|---|---|---|
+| `jbx2` | the `visualiser` kind's recipe | **there is no kind to add** — a Tool + a page, both existing kinds |
+| `v1hw` | same | same, and its own placement rule is what settled it |
+| `x4a6` | what `docs/` should be declared as | `docs` is now a REAL renderable kind in `defaultGraphKinds` (added 2026-09-20) — the `folio`-registers-by-core blocker this bean recorded no longer applies |
+
+`x4a6`'s body still describes the old blocker and should be re-measured by
+whoever picks it up; not edited here, because it is another bean's body.
+
+### Measured while writing, worth keeping
+
+**Four of the eleven instances carry no prefix at all** — `agent-skills`,
+`detangle`, `kg-navigation`, `large-datasets`. The skill states this as the
+state of the corpus and explicitly NOT as a backlog: an unprefixed name is
+undecided, not wrong, and a rename is the one act whose consequences cannot be
+undone.
+
+### Not done
+
+Closing waits on the merge of the PR for #672. No renames were made or
+proposed.

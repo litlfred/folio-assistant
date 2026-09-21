@@ -8,6 +8,7 @@ import {
   TRIVIAL_STEP_THRESHOLD,
 } from "../../content/pipeline/qa-checkers-triviality";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 // The checker resolves the content repo from process.cwd(), so each test
 // builds a throwaway repo-shaped tree and runs inside it.
@@ -18,7 +19,7 @@ function makeRepo(entries?: Record<string, unknown>) {
   // A temp instance needs its declaration: the probe resolves its output
   // through `siteDirFor`, so a fixture without one is not an instance at all
   // and throws rather than silently writing to a guessed `docs/`.
-  writeFileSync(join(root, "harness.json"), JSON.stringify({ name: "fixture", stub: "fixture" }));
+  writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "fixture", stub: "fixture" }));
   const site = siteDirFor(root);
   mkdirSync(join(root, site, "audits"), { recursive: true });
 

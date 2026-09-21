@@ -64,13 +64,13 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFile
 import { join, relative, resolve } from "node:path";
 
 import {
+  type ContentDirectory,
   DECLARATION_FILENAME,
   findInstanceRoot,
   instanceRootFor,
   readDeclaration,
   repoRootFor,
   rootForScope,
-  type ContentDirectory,
 } from "../schemas/cat-harness.js";
 // REQUIRED, and not merely tidy: `folio` is registered by CORE as a load-time
 // side effect (`schemas/folio-graph-kind.ts`, "a layer that cannot render must
@@ -380,7 +380,7 @@ export function contributingRoots(root: string): string[] {
       if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
       const abs = resolve(repoRoot, entry.name);
       if (abs === own) continue;
-      if (existsSync(join(abs, "harness.json"))) nested.push(abs);
+      if (existsSync(join(abs, DECLARATION_FILENAME))) nested.push(abs);
     }
   }
 
@@ -507,7 +507,7 @@ export function nextInitiation(
  * A sticky whose file is absent or unparseable is skipped rather than faked.
  */
 export function readLandingStickies(root: string): LandingSticky[] {
-  const decl = JSON.parse(readFileSync(join(root, "harness.json"), "utf8")) as {
+  const decl = JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf8")) as {
     directories?: ContentDirectory[];
   };
   const dir = join(root, folioDirPath(decl));
@@ -521,7 +521,7 @@ export function ensureLandingSticky(
   now: string,
   opts: { check?: boolean; initiation?: InitiationUpdate } = {},
 ): EnsureReport {
-  const raw = readFileSync(join(root, "harness.json"), "utf8");
+  const raw = readFileSync(join(root, DECLARATION_FILENAME), "utf8");
   const decl = JSON.parse(raw) as { directories?: ContentDirectory[] };
   const already = declaresFolio(decl);
   const folioDir = folioDirPath(decl);
@@ -547,7 +547,7 @@ export function ensureLandingSticky(
   };
   if (opts.check) return report;
 
-  if (!already) writeFileSync(join(root, "harness.json"), insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY));
+  if (!already) writeFileSync(join(root, DECLARATION_FILENAME), insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY));
   mkdirSync(absDir, { recursive: true });
   for (const p of planned) if (p.currentText !== p.wantedText) writeFileSync(p.abs, p.wantedText);
   for (const f of prunable) unlinkSync(join(absDir, f));

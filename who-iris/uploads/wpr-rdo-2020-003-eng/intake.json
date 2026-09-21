@@ -33,7 +33,15 @@
       "path": "iris-capture/Publication and information products style guide.pdf",
       "kind": "item-page-print",
       "role": "none",
-      "note": "The ITEM PAGE printed to PDF, 201 KB — NOT the publication. The publication itself is 2.68 MB and is `uploads/WPR-RDO-2020-003-eng.pdf` in cat-harness, already ingested as `library/wpr-rdo-2020-003-eng`. Recorded with role `none` rather than dropped: 'we looked at it and it is not what it appears to be' is a different fact from 'nobody looked'."
+      "note": "The ITEM PAGE printed to PDF, 201 KB — NOT the publication. The publication itself is 2.68 MB and is `WPR-RDO-2020-003-eng.pdf`, listed below in this same intake since bean `yl5w` moved it here from `cat-harness/uploads/`; it is ingested as `library/wpr-rdo-2020-003-eng`. Recorded with role `none` rather than dropped: 'we looked at it and it is not what it appears to be' is a different fact from 'nobody looked'."
+    },
+    {
+      "path": "WPR-RDO-2020-003-eng.pdf",
+      "kind": "publication",
+      "role": "original-bitstream",
+      "note": "The PUBLICATION ITSELF — 2.68 MB, not to be confused with the 201 KB `…style guide.pdf` above, which is the item PAGE printed to PDF. The bytes `library/wpr-rdo-2020-003-eng` was derived from (its `structure.json` records this same sha256). Relocated here 2026-09-21 from `cat-harness/uploads/` (bean `yl5w`, issue #663): #477 moved `library/` into `who-iris/` and left the sources behind, so the catalogue's `localPath` claimed bytes that were one instance over. Recorded in this intake rather than only in the catalogue, because this file describes what is IN this directory.",
+      "bytes": 2810648,
+      "sha256": "5021518ccd91e26a9533edd8efc643bc24ab7bf2d4eb425c9644967e0bf72842"
     }
   ],
   "materialization": {

@@ -65,6 +65,7 @@ import {
   repoRootFor,
   instanceRootFor,
   owesVisualiser,
+  resolveCoveragePath,
   type CatHarnessDeclaration,
 } from "../schemas/cat-harness.js";
 // `folio` is registered by CORE as a load-time side effect, and this module
@@ -138,15 +139,28 @@ export interface InstanceCoverage {
  */
 export const VISUALISER_EXEMPT_INSTANCES = new Set(["cat-bootstrap", "bootstrap"]);
 
-/** Does this entry's declared target actually resolve? */
-function targetExists(root: string, target: string): boolean {
-  // A target may name a path in the instance, a path in the repository, or a
-  // node id (a skill or tool). Only a path can be checked here; an id that
-  // names nothing is the knowledge-graph audit's job, not this one — and
-  // reporting an id as "missing" because it is not a file would be the axis
-  // lying about what it looked at.
+/**
+ * Does this entry's declared target actually resolve?
+ *
+ * **Against the REPOSITORY root and nothing else**, via
+ * {@link resolveCoveragePath} — the owner's ruling of 2026-09-21 on bean
+ * `yt7j`, and one call site rather than a `resolve()` per consumer.
+ *
+ * This tried the instance root first and fell back to the repository root,
+ * accepting either. That reads as tolerance and is the opposite: a path
+ * incorrect in its declared base passed anyway through the other, so this
+ * check could not enforce the convention its own schema documents. Measured
+ * before the fallback came out — of **45** coverage paths in this repository,
+ * **45** resolve from the repository root, and the fallback was load-bearing
+ * for none.
+ */
+function targetExists(repoRoot: string, target: string): boolean {
+  // A target may name a PATH or a node id (a skill or tool). Only a path can
+  // be checked here; an id that names nothing is the knowledge-graph audit's
+  // job, not this one — and reporting an id as "missing" because it is not a
+  // file would be the axis lying about what it looked at.
   if (!target.includes("/") && !target.includes(".")) return true;
-  return existsSync(resolve(root, target)) || existsSync(resolve(repoRootFor(root), target));
+  return existsSync(resolveCoveragePath(repoRoot, target));
 }
 
 /**
@@ -326,7 +340,7 @@ export function ownDocsFinding(
   };
 }
 
-export function auditInstance(root: string): InstanceCoverage {
+export function auditInstance(root: string, repoRoot: string = repoRootFor(root)): InstanceCoverage {
   const instance = root.split("/").pop() ?? root;
   let decl: CatHarnessDeclaration | undefined;
   try {
@@ -416,7 +430,7 @@ export function auditInstance(root: string): InstanceCoverage {
         });
         continue;
       }
-      if (!targetExists(root, declared)) {
+      if (!targetExists(repoRoot, declared)) {
         findings.push({
           instance,
           directory: dir.id,
@@ -428,7 +442,16 @@ export function auditInstance(root: string): InstanceCoverage {
     }
   }
 
-  const isRoot = resolve(root) === resolve(repoRootFor(root));
+  // `resolve(root) === resolve(repoRootFor(root))` — a directory compared with
+  // its own PARENT, which can only be equal at the filesystem root. So this was
+  // false for every instance including the repository root itself, and the
+  // guard below ("the repository root legitimately owns the repository's
+  // files") could never fire for the one instance it exists for. Latent rather
+  // than visible today: the root declaration's two assets carry no `scope`, so
+  // nothing was being wrongly accused yet. Found while building
+  // `resolveCoveragePath` (bean `yt7j`); the repository root is now passed in
+  // rather than guessed at, which is the same fix in both places.
+  const isRoot = resolve(root) === resolve(repoRoot);
   const readme = readmeFinding(root, decl, isRoot);
   const agentInstructions = agentInstructionsFinding(root, decl, isRoot);
   const ownDocs = ownDocsFinding(root, decl);
@@ -445,7 +468,7 @@ export function auditInstance(root: string): InstanceCoverage {
 }
 
 export function auditAll(repoRoot: string): InstanceCoverage[] {
-  return instanceRootsIn(repoRoot).map((r) => auditInstance(r));
+  return instanceRootsIn(repoRoot).map((r) => auditInstance(r, repoRoot));
 }
 
 export function formatReport(rs: InstanceCoverage[]): string {

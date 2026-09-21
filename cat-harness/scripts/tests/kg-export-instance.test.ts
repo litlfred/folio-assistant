@@ -20,7 +20,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { COLLECTOR_SCOPE, collectInstanceNodes } from "../kg-export.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const BASE = "https://example.org";
@@ -104,7 +104,7 @@ describe("what was not looked for is not reported as clean", () => {
     mkdirSync(join(root, "skills"), { recursive: true });
     writeFileSync(join(root, "skills", "a-skill.md"), "# A skill\n\nBody.\n");
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "noflows",
         directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
@@ -157,7 +157,7 @@ describe("what was not looked for is not reported as clean", () => {
     // not carry it, which is the `dh4f` defect this test claims to be about.
     const root = mkdtempSync(join(tmpdir(), "kgx-absent-"));
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "absent",
         directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],

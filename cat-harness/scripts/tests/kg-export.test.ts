@@ -28,7 +28,7 @@ import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
-import { readDeclaration, artefactStub } from "../../schemas/cat-harness.js";
+import { artefactStub, DECLARATION_FILENAME, readDeclaration } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
 
 /**
@@ -90,7 +90,13 @@ describe("kg export", () => {
   test("the document identifies itself — @id, @type, provenance", () => {
     // smart-base's pattern: the document IRI is the URL it is served from, so
     // fetching an `@id` returns the document that defines it.
-    expect(EXPORT["@id"]).toBe(`${BASE}/folio-assistant.jsonld`);
+    //
+    // DERIVED from the declaration rather than restating the stub. This read
+    // `${BASE}/folio-assistant.jsonld` and went red on the 2026-09-21 stub
+    // rename — correctly, but for the wrong reason: the property here is that
+    // the document names ITSELF, which holds whatever the stub is. The value
+    // is pinned once, in the naming test below, where it IS the subject.
+    expect(EXPORT["@id"]).toBe(`${BASE}/${artefactStub(readDeclaration(join(import.meta.dir, "../.."))!)}.jsonld`);
     expect(EXPORT["@type"]).toBe("http://www.w3.org/ns/prov#Entity");
     expect(EXPORT.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
   });
@@ -287,12 +293,19 @@ describe("kg export", () => {
     // it from the directory finds nothing when the repo is cloned elsewhere.
     const decl = readDeclaration(join(import.meta.dir, "../.."))!;
     const stub = artefactStub(decl);
-    expect(stub).toBe("folio-assistant");
+    // `cat-harness` since 2026-09-21, on the owner's ruling (issue #649).
+    // While this read `folio-assistant` it was the same string the REPOSITORY
+    // ROOT instance carries as its `name`, and `artefactStub` falls through to
+    // `name` when no stub is declared — so both instances resolved to
+    // `<base>/folio-assistant.jsonld`. Two vocabularies, one path. The literal
+    // is pinned HERE and derived everywhere else, because this test is the one
+    // whose subject is the name itself.
+    expect(stub).toBe("cat-harness");
     expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/${stub}.jsonld`);
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/${stub}.schema.json`);
 
     // The declaration is read from a fixed filename, whatever the stub is.
-    expect(existsSync(join(import.meta.dir, "../..", "harness.json"))).toBe(true);
+    expect(existsSync(join(import.meta.dir, "../..", DECLARATION_FILENAME))).toBe(true);
     expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
   });
 

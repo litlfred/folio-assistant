@@ -87,6 +87,20 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="boards"] {
+  /* a framed board carrying two cards — a diagram of a folio */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 5h18v14H3zM7 9h4v6H7zM14 9h3v3h-3z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="board-positions"] {
+  /* a board marked with positions — where each note was drawn */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 5h18v14H3zM9 12h.01M15 10h.01M9 9v6M15 7v6M6 12h6M12 10h6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="todos"] {
   /* a sticky with a tick */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 4h11l3 3v13H5zM16 4v3h3M8 12l2 2 4-4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -250,6 +264,8 @@
   .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 46% 34%); }
   .fa-avatar[data-fa-kind="bean-defs"] { background-color: hsl(28 46% 34%); }
   .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 46% 34%); }
+  .fa-avatar[data-fa-kind="boards"] { background-color: hsl(205 46% 34%); }
+  .fa-avatar[data-fa-kind="board-positions"] { background-color: hsl(205 46% 34%); }
   .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 46% 34%); }
   .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 46% 34%); }
   .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 46% 34%); }
@@ -283,6 +299,8 @@
     .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 46% 34%); }
     .fa-avatar[data-fa-kind="bean-defs"] { background-color: hsl(28 46% 34%); }
     .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 46% 34%); }
+    .fa-avatar[data-fa-kind="boards"] { background-color: hsl(205 46% 34%); }
+    .fa-avatar[data-fa-kind="board-positions"] { background-color: hsl(205 46% 34%); }
     .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 46% 34%); }
     .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 46% 34%); }
     .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 46% 34%); }
@@ -317,6 +335,8 @@
   .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 42% 72%); }
   .fa-avatar[data-fa-kind="bean-defs"] { background-color: hsl(28 42% 72%); }
   .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 42% 72%); }
+  .fa-avatar[data-fa-kind="boards"] { background-color: hsl(205 42% 72%); }
+  .fa-avatar[data-fa-kind="board-positions"] { background-color: hsl(205 42% 72%); }
   .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 42% 72%); }
   .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 42% 72%); }
   .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 42% 72%); }
@@ -350,6 +370,8 @@
     .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 42% 72%); }
     .fa-avatar[data-fa-kind="bean-defs"] { background-color: hsl(28 42% 72%); }
     .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 42% 72%); }
+    .fa-avatar[data-fa-kind="boards"] { background-color: hsl(205 42% 72%); }
+    .fa-avatar[data-fa-kind="board-positions"] { background-color: hsl(205 42% 72%); }
     .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 42% 72%); }
     .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 42% 72%); }
     .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 42% 72%); }
@@ -386,6 +408,8 @@
   .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
   .fa-avatar[data-fa-kind="bean-defs"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
   .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 16% 52%); }
+  .fa-avatar[data-fa-kind="boards"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
+  .fa-avatar[data-fa-kind="board-positions"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
   .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
   .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
   .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 16% 52%); }
@@ -418,6 +442,8 @@
     .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
     .fa-avatar[data-fa-kind="bean-defs"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
     .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 16% 52%); }
+    .fa-avatar[data-fa-kind="boards"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
+    .fa-avatar[data-fa-kind="board-positions"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
     .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
     .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
     .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 16% 52%); }
@@ -450,6 +476,8 @@
   .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
   .fa-avatar[data-fa-kind="bean-defs"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
   .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 14% 56%); }
+  .fa-avatar[data-fa-kind="boards"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
+  .fa-avatar[data-fa-kind="board-positions"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
   .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
   .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
   .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 14% 56%); }
@@ -482,6 +510,8 @@
     .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
     .fa-avatar[data-fa-kind="bean-defs"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
     .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 14% 56%); }
+    .fa-avatar[data-fa-kind="boards"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
+    .fa-avatar[data-fa-kind="board-positions"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
     .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
     .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
     .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 14% 56%); }

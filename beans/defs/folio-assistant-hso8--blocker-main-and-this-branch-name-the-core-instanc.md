@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hso8
 title: 'BLOCKER: main and this branch name the core instance differently — folio-assist-core vs folio-assistant-core'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T16:36:01Z
-updated_at: 2026-09-21T07:52:20Z
+updated_at: 2026-09-20T16:36:22Z
 parent: folio-assistant-vke6
 ---
 
@@ -75,82 +75,169 @@ the populated one were one key, and the stub won."*
       (`cat-harness.test.ts`, `instance-render.test.ts`) are updated, and the
       rename is verified by `check:instance-render` rendering every instance.
 
-## RE-MEASURED 2026-09-21 ON MAIN (`519e8c01`) — THE BLOCKER IS GONE
-
-Everything above was measured 2026-09-20 and its premise no longer holds.
-**Main adopted the owner's name.** Measured, not read from this bean:
-
-| | 2026-09-20 (this bean) | 2026-09-21 (main) |
-|---|---|---|
-| directory | `folio-assistant-core/` here, `folio-assist-core/` on main | **`folio-assistant-core/`** |
-| declared `name` | disagreed | **`folio-assistant-core`** |
-| sibling | — | `folio-assistant-sci/`, long form too |
-
-`folio-assistant-core/harness.json` records the fix against itself, dated
-2026-09-20: *"the DIRECTORY and the declared NAME are BOTH spelled out in
-full … Corrected"*. So the fourteen-conflict merge this bean blocks cannot
-recur: there is one spelling, and it is the one the owner named.
-
-**115 files still say `folio-assist-core`, and almost none of it matters.**
-Checked rather than swept: 42 are `beans/defs` — historical record, which is
-never rewritten — and every one of the five `harness.json` hits is prose in a
-`_comment` or `description`. **No `dependencies` field names the short form**,
-so nothing resolves through it. The rest is docs, translations and generated
-pages.
-
-## What the settlement left behind, and it cost the instance its face
-
-**`AVATARS["folio-assist-core"]` was a live keyed lookup on a name nothing
-carries.** `harness-tiles.ts:223` calls `avatarFor(decl.name)` — the DECLARED
-INSTANCE NAME — so measured on 2026-09-21:
-
-    avatarFor("folio-assistant-core")  ->  GENERIC   (the question mark)
-    avatarFor("folio-assist-core")     ->  the leaf of paper, unreachable
-
-The instance rendered "no avatar is declared for this" while its own
-hand-drawn art sat in the table under the dead spelling. **A key nobody can
-reach is worse than a missing one**: `check-avatar-coverage` counted it as
-declared, so coverage read clean over it.
-
-The comment explaining the entry had gone stale in the same direction — *"the
-split (#223) has not happened, so `cat-bootstrap` and `folio-assist-core`
-exist as layers in the namespace and as nothing in `harness.json`"*. Both
-halves false: both files exist and both declare a `name`. The test asserting
-it repeated the claim verbatim.
-
-Fixed: the key, the comment, the test, and an asset `title` reading
-`AGENTS.md — folio-assist-core`. A new test states the property rather than
-the spelling — **every instance-keyed avatar must match a real declared
-name** — so the next drift fails instead of rendering a question mark.
-
-**The table serves two key spaces and only one is checked.** `kind-fan` and
-`gen-avatars-css` key by GRAPH KIND; `harness-tiles` keys by INSTANCE NAME.
-`check-avatar-coverage` asks only about kinds, which is why it reports these
-two as orphans — correct about its own axis, silent about the other. Instance
-coverage is bean `4kj4`'s and is deliberately **not** taken here.
-
-## Done when — restated against what is actually left
-
-- [x] The conflict is settled: main declares `folio-assistant-core`, directory
-      and name, and `folio-assistant-sci` alongside it.
-- [x] The namespace constant moved with the directory — one spelling in the
-      tree, no half-published IRI.
-- [x] `bootstrap` vs `cat-bootstrap` settled in the same direction:
-      `cat-bootstrap/` declares `name: "cat-bootstrap"`.
-- [x] The rename's live leftovers are gone, verified by `check:instance-render`
-      and `bun run gates` 80 of 80.
-- [ ] **STILL THE OWNER'S, and the only thing left:** does the `cat-` prefix
-      extend to the core instance? The trunk's state is not a ruling — it
-      carries `cat-harness` and `cat-bootstrap` with the prefix,
-      `folio-assistant-core` and `folio-assistant-sci` without. Nobody said
-      that was the intended line; it is where things landed. Nothing is
-      blocked on the answer, so this is a question and no longer a BLOCKER.
-
-**The bean is not closed**, because one box is a decision only the owner can
-make. It is no longer `high`/blocking: what it blocked has already happened.
-
 ## Not a naming quibble
 
 `instanceRoots` is keyed on the declared NAME. Two spellings is not two
 labels for one thing — it is two instances as far as every declaration-driven
 consumer is concerned, which is how the stub won last time.
+
+---
+
+*2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5 — **this blocker now gates more
+than it did, and `cjtm` may already answer it.***
+
+The owner ruled REPLACE on `b5f0` (one `<name>.config.json` per instantiation
+root) and widened it to the `folio-assistant-*` instances. **The filename
+derives from the declared `name`**, so those two cannot be migrated until this
+bean is answered — `folio-assist-core` on main against `folio-assistant-core`
+on disk and on the branch. One spelling, two files, two instances to every
+declaration-driven reader.
+
+Worth checking before asking again: `cjtm` records a ruling — *"cat- prefix
+does not extend to folio-assistant-\*"* — and states it settled this live merge
+conflict, naming `folio-assistant-core`. If that is the answer, this bean is
+blocked on nothing and says so; if it is not, the two beans disagree and that
+is the thing to put to the owner.
+
+**Not edited here** — a sibling's bean.
+
+### Re-derived the same day: **the blocker is VOID**
+
+The note above said `cjtm` *may* already answer this. It does better than that
+— the declarations themselves agree, on both refs:
+
+```
+$ grep -o '"name": "[^"]*"' folio-assistant-core/harness.json | head -1
+"name": "folio-assistant-core"
+$ git show origin/main:folio-assistant-core/harness.json | grep -o '"name": "[^"]*"' | head -1
+"name": "folio-assistant-core"
+```
+
+This bean's title asserts *"main and this branch name the core instance
+differently — folio-assist-core vs folio-assistant-core"*. **Neither side says
+`folio-assist-core` any more.** `folio-assistant-core/harness.json`'s own
+`_comment` records the owner's ruling — *"use folio-assistant-core/"*,
+2026-09-20 — and states that the directory and the declared name are both
+spelled out in full, after exactly this contradiction was found and corrected.
+
+So nothing downstream waits on this. The `folio-assistant-*` half of the
+REPLACE ruling (`b5f0`, 2026-09-21) can proceed: the filename derives from the
+declared `name`, and the declared name is settled at `folio-assistant-core`.
+
+**Not closed, and not tagged `ready-to-close`.** That tag is for a bean a
+session judged finished but *could not re-derive*; this one re-derives in two
+commands, which is the evidence `bean-coordination` asks for rather than a
+reason to park it. Closing a sibling's bean remains the collision `bbbl`
+names and the owner has not ruled on it — so the evidence is recorded here and
+the close stays theirs.
+
+What is left on this bean, if anything, is the residue its owner can see and I
+cannot: whether any *reader* still keys on the short spelling. `8xtj` tracks
+that residue and says a sweep must not touch it blindly.
+
+---
+
+*2026-09-21, session_017MEZnJxx7WeekiNCabx4hx — **reached the same verdict
+independently, from the other end.** The section above works forward from the
+declarations and `cjtm`'s ruling; the one below works backward from #477
+having merged. Two sessions, two routes, one answer — kept side by side
+rather than deduplicated, because agreement reached twice by different
+evidence is worth more than either half.*
+
+
+## RESOLVED — and it was resolved on 2026-09-20, not today
+
+Re-measured 2026-09-21 rather than re-diagnosed, because a stale `!BLOCKER`
+at the top of GOAL 1 draws a session in to solve something already settled.
+
+### The premise is gone
+
+This bean's first line is *"merging **main** into PR #477 is blocked on
+this."* **[#477](https://github.com/litlfred/folio-assistant/pull/477) merged
+at 2026-09-20T18:18:43Z** — 1,937 files, 65 commits. There is nothing left to
+block.
+
+### The owner's ruling is what landed
+
+| | today on `main` |
+|---|---|
+| `folio-assistant-core/` | **exists** |
+| `folio-assist-core/` | **does not exist** |
+
+So the long name won, which is what the owner said twice (*"use
+folio-assistant-core/"*). This bean's worry — *"the minority spelling is the
+one with the explicit instruction behind it, and the majority spelling is the
+one the trunk is actually built on"* — resolved in favour of the instruction,
+and #477's own body records the collision being fixed rather than merged into.
+
+### The 115 remaining references are deliberate, not debris
+
+The short name still appears in 115 files, which looks alarming and is not.
+Categorised rather than swept:
+
+- **Prose documenting the rename** — the sentences bean `8xtj` warns a sweep
+  turns into *"X became X"*.
+- **The landing card id**, which is `folio-assist-core` **on purpose**:
+  a card id is a PUBLISHED IDENTIFIER and does not move with a directory.
+  `folio-assistant-core/harness.json` says so in its own `_comment`,
+  `landing-sticky.test.ts:135` says so, and `8xtj` records the cost of
+  assuming the two are one string — a session swept every spelling at once,
+  renamed the card by accident, and had to put it back.
+
+**No `harness.json` declares the dead name as a directory**, and no path
+reference resolves to nothing. Checked, because that is the only version of
+this that would still be a defect.
+
+### What is genuinely still open, and it is not a blocker
+
+The second done-when asks whether the `cat-` prefix extends to the core
+instance. Today `cat-harness` and `cat-bootstrap` carry it and
+`folio-assistant-core` does not. That is a naming question with nothing
+waiting on it, so it belongs in whatever bean owns the prefix convention
+rather than in a blocker. **Not swept, not assumed either way** — the last
+thing this instance needs is a third rename of a published IRI in two days.
+
+## Done when
+
+- [x] The owner names the core instance, ONCE — done 2026-09-20, and
+      `folio-assistant-core/` is what is on `main`
+- [x] Whichever loses is renamed — done in #477, which merged
+
+## REOPENED FINDING, 2026-09-21: one path reference DID resolve to nothing
+
+This bean was closed with *"No `harness.json` declares the dead name as a
+directory, and no path reference resolves to nothing. Checked."* That sweep
+looked at DIRECTORY and PATH references. The dead name also survived as a
+**live keyed lookup**, which is neither, and it cost the instance its face:
+
+    avatarFor("folio-assistant-core")  ->  GENERIC   (the question mark)
+    avatarFor("folio-assist-core")     ->  the leaf of paper, unreachable
+
+`harness-tiles.ts:223` calls `avatarFor(decl.name)` — the DECLARED INSTANCE
+NAME — so `folio-assistant-core` rendered *"no avatar is declared for this"*
+while its own hand-drawn art sat in `AVATARS` under a spelling nothing
+carries. **A key nobody can reach is worse than a missing one**:
+`check-avatar-coverage` counted it as declared, so coverage read clean over
+it — which is also why the closing sweep did not see it.
+
+The comment beside the entry had gone stale the same way (*"the split has not
+happened, so `cat-bootstrap` and `folio-assist-core` exist … as nothing in
+`harness.json`"* — both files exist and both declare a `name`), and the test
+asserting it repeated the claim verbatim. One stale premise, load-bearing in
+three places.
+
+**The landing card id is UNTOUCHED.** This bean is explicit that
+`folio-assist-core` is deliberate there — a published identifier does not move
+with a directory, and `8xtj` records the cost of sweeping every spelling at
+once. The avatar key is a different string answering a different question:
+`avatarFor` is keyed on the DECLARED NAME. `landing-sticky.test.ts` still
+passes.
+
+Fixed in PR #677 (issue #676), with a test that states the PROPERTY rather
+than a spelling — every instance-keyed avatar must match a real declared name
+— so the next drift fails instead of rendering a question mark.
+
+**Left completed**, because the blocker this bean is about really is settled;
+this is a missed leftover recorded where the next reader will find it, not a
+reason to reopen.
+

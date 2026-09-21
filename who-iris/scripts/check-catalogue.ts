@@ -21,17 +21,26 @@
  *   2. every `libraryId` names a directory that is actually ingested — the
  *      catalogue and `library/` agreeing about what exists;
  *   3. every `parents` path names nodes that are in the catalogue;
+ *   3a. every `materialization.localPath` names a file that is THERE. Bean
+ *      `yl5w`: this was the one edge nothing verified, and all three
+ *      `ORIGINAL` claims resolved to nothing while the run printed
+ *      "every metadataRef, libraryId and parent path resolves" — a clean
+ *      pass over exactly the state the three-state model exists to make
+ *      impossible. `materialized` is supposed to mean the bytes are here;
+ *      an unchecked `localPath` makes that adjective decorative;
  *   4. the census, printed rather than asserted, because the ratio of
  *      referenced to materialized is the whole point of a catalogue by
  *      reference and a number nobody looks at is a number nobody checks.
  */
 import { existsSync, readFileSync, readdirSync } from "fs";
-import { join, resolve } from "path";
+import { join, relative, resolve } from "path";
 import { CatalogueNodeSchema, CatalogueSchema, materializationCensus, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { DublinCoreRecordSchema } from "../../folio-assistant-core/schemas/dublin-core.js";
 import { instanceDirectoryForGraph } from "../../cat-harness/schemas/cat-harness.js";
+import { checkLocalPath } from "./lib/local-path.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
+const REPO = resolve(INSTANCE, "..");
 /**
  * Where ingested content lives — READ from this instance's declaration.
  *
@@ -108,6 +117,28 @@ for (const n of nodes) {
         `The catalogue and library/ disagree about what exists.`,
     );
   }
+  for (const b of n.bitstreams ?? []) {
+    const m = b.materialization;
+    const lp = m?.localPath;
+    if (m === undefined || lp === undefined) continue;
+    // Three states, and the third is not an error: `lib/local-path.ts` carries
+    // why unreadable and absent must not be reported the same way.
+    const { state, detail: why } = checkLocalPath(INSTANCE, lp);
+    if (state === "ok") continue;
+    if (state === "unknown") {
+      problems.push(
+        `${n.id}: ${b.bundle} localPath "${lp}" COULD NOT BE CHECKED — ${why}. ` +
+          `That is not a pass: unreadable and absent are different facts and this run can tell neither.`,
+      );
+      continue;
+    }
+    problems.push(
+      `${n.id}: ${b.bundle} localPath "${lp}"${why ? ` ${why} and` : ""} does not exist — ` +
+        `an edge to nothing, and this one claims state "${m.state}". ` +
+        `\`materialized\` means the bytes are HERE; localPath is instance-relative, so it resolves under ` +
+        `${relative(REPO, INSTANCE) || "."}/ and nowhere else.`,
+    );
+  }
   for (const path of n.parents) {
     for (const step of path) {
       if (!ids.has(step)) problems.push(`${n.id}: parent path names "${step}", which is not a node in this catalogue`);
@@ -136,4 +167,4 @@ if (problems.length) {
   for (const p of problems) console.error(`    ${p}`);
   process.exit(1);
 }
-console.log("✓ every node validates; every metadataRef, libraryId and parent path resolves\n");
+console.log("✓ every node validates; every metadataRef, libraryId, localPath and parent path resolves\n");

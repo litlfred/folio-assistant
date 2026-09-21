@@ -11,7 +11,7 @@
  * cannot parse must not silently lose every voice check while reporting clean.
  */
 import { describe, test, expect } from "bun:test";
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
@@ -137,19 +137,33 @@ describe("readActiveVoices", () => {
     expect(readActiveVoices(inst)).toEqual([]);
   });
 
-  test("the CHECKOUT is a different instance, and its silence is `undefined`", () => {
-    // The contrast that keeps the assertion above meaningful. The repo root
-    // declares `folio-assistant-checkout` — a real instance, deliberately not
-    // sharing the platform's name — and it has no config of its own. That is
-    // "could not determine", NOT "activates nothing", and collapsing the two
-    // would let the test above pass over a directory that was never read.
+  test("an instance with NO config of its own is `undefined`, not `[]`", () => {
+    // The contrast that keeps the assertion above meaningful: "activates
+    // nothing" and "could not determine" are different answers, and
+    // collapsing them would let that test pass over a directory nobody read.
     //
-    // It also says why `repoRootFor` is the wrong move here now: under one
-    // global filename any directory in the checkout resolved to one config,
-    // so walking to the repo root was harmless. With a config per instance
-    // the repo root is a DIFFERENT instance's question.
+    // It USED to be made with the checkout root, which had no config. That
+    // stopped being true on 2026-09-21, when the owner instantiated three
+    // harnesses here — "boot strap, cat harness and folioasistant should be
+    // instantaited" — so `folio-assistant.config.json` exists and the root now
+    // answers `[]` like any other configured instance. The PROPERTY is
+    // unchanged and still guarded; it is demonstrated on an instance that
+    // genuinely has no config, which `check:instance-config` calls a
+    // legitimate state.
+    //
+    // It also still says why `repoRootFor` is the wrong move here: with a
+    // config per instance, the repo root is a DIFFERENT instance's question.
+    const unconfigured = join(repoRootFor(join(import.meta.dir, "../..")), "who-iris");
+    expect(existsSync(join(unconfigured, "who-iris.config.json"))).toBe(false);
+    expect(readActiveVoices(unconfigured)).toBeUndefined();
+  });
+
+  test("the instantiated checkout root now answers like any configured instance", () => {
+    // The other half of the change, asserted rather than left implicit: the
+    // root is instantiated, so its silence is a DECISION (no voice active)
+    // rather than an absence.
     const root = repoRootFor(join(import.meta.dir, "../.."));
-    expect(readActiveVoices(root)).toBeUndefined();
+    expect(readActiveVoices(root)).toEqual([]);
   });
 });
 

@@ -1,28 +1,28 @@
 /**
- * Where a catalogue bitstream's bytes actually are, as opposed to where the
- * catalogue says they are.
+ * Where a catalogue bitstream's bytes are.
  *
  * @module who-iris/scripts/lib/bytes
  *
- * **This is the `yl5w` workaround, stated ONCE.** Every `localPath` on an
- * ORIGINAL bitstream in this catalogue points at `who-iris/uploads/…`, and all
- * of them are missing: #477 moved `library/` and left `uploads/` behind, so the
- * bytes are under `cat-harness/uploads/`. `check:catalogue` validates
- * `metadataRef`, `libraryId` and `parents` and does not look at `localPath` at
- * all, which is how three `materialized` claims resolved to nothing while the
- * gate printed "clean".
+ * **This was the `yl5w` workaround, and `yl5w` is settled.** Every `localPath`
+ * on an ORIGINAL bitstream pointed at `who-iris/uploads/…` while the bytes sat
+ * in `cat-harness/uploads/` — #477 moved `library/` and left the sources
+ * behind — so this module resolved the declared path first and fell back to
+ * the real location. Two consumers needed it: the page generator, to emit a
+ * link that works, and the cover renderer, to have something to render.
  *
- * Two consumers need the real location — the page generator, to emit a link
- * that works, and the cover renderer, to have something to render. It lived in
- * the page generator and was about to be copied into the second, which is the
- * point at which a workaround becomes folklore: the copy that is not fixed
- * when `yl5w` is fixed outlives it silently.
+ * 2026-09-21 the owner ruled that a folio's sources live in the folio. The
+ * three PDFs were `git mv`-ed to `who-iris/uploads/<slug>/`, beside each item's
+ * own `intake.json` and IRIS capture, and `check:catalogue` now verifies every
+ * `localPath`. **So the fallback is gone rather than left in place**, and that
+ * is what the old note promised: the declared path was already tried first, so
+ * settling the bean was a deletion rather than a rewrite.
  *
- * When `yl5w` is settled — either the uploads move under `who-iris/`, or
- * `localPath` becomes repository-relative — this module is the one edit, and
- * the `DECLARED_FIRST` order below is what makes that edit a deletion rather
- * than a rewrite: the declared path is already tried first, so the fallback
- * simply stops being reached.
+ * What survives is the resolver itself, because the two consumers still need
+ * one answer rather than two — and because `undefined` is a real outcome. A
+ * node may name no `localPath` at all, and **that is not the same as naming one
+ * that is missing**: the first is a bitstream this repository does not hold,
+ * the second is a claim that failed, and `check:catalogue` is what reports the
+ * second. A generator that conflated them would print "no asset" over a defect.
  */
 import { existsSync } from "fs";
 import { join, resolve } from "path";
@@ -31,22 +31,22 @@ const INSTANCE = resolve(import.meta.dir, "..", "..");
 const REPO = resolve(INSTANCE, "..");
 
 /**
- * Candidate locations, **declared path first**.
+ * The declared path, resolved — and nothing else is tried.
  *
- * Order is the contract. A resolver that preferred the fallback would keep
- * working after the declaration is fixed and would keep reading the old copy
- * if both existed — a silently stale answer, which is worse than the missing
- * file it was written to work around.
+ * Instance-relative, per `MaterializationSchema.localPath`: *"where the bytes
+ * landed, instance-relative"*. Searching elsewhere is what the removed
+ * fallback did, and it is precisely what made the contract unenforceable —
+ * a resolver that finds the file one instance over reports a false claim as
+ * true, which is the defect `yl5w` was opened for.
+ *
+ * `name` is no longer read. It stays in the signature because both callers
+ * pass it and it is what a future fixity check would compare against; drop it
+ * only alongside them.
  */
-export function bytesFor(localPath: string | undefined, name: string): string | undefined {
-  const candidates = [
-    // The declaration, honoured first. Instance-relative, per
-    // `MaterializationSchema.localPath`.
-    localPath ? join(INSTANCE, localPath) : undefined,
-    // The fallback, and the reason this module exists.
-    join(REPO, "cat-harness", "uploads", name),
-  ].filter((p): p is string => p !== undefined);
-  return candidates.find((p) => existsSync(p));
+export function bytesFor(localPath: string | undefined, _name: string): string | undefined {
+  if (localPath === undefined) return undefined;
+  const p = join(INSTANCE, localPath);
+  return existsSync(p) ? p : undefined;
 }
 
 /** A resolved path, made repository-relative — what a raw or CDN URL is built from. */

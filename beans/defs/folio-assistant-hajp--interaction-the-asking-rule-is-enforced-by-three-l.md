@@ -168,3 +168,7 @@ is not sufficient.
 2 other decisions are waiting; I will put each properly when it is next.
 
 Which way on the gate?
+
+*Issue link, recorded 2026-09-21.* **[#645](https://github.com/litlfred/folio-assistant/issues/645)** — the decision-record metrics.
+
+Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.
