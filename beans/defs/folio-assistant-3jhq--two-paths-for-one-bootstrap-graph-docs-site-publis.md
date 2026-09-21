@@ -126,3 +126,43 @@ bean, and recorded rather than attempted: bean `qgpo`.
 
 The one-graph-two-`@id`s question is bean `dyd3`, with the three options tabled
 and the measurements already in it.
+
+## Served, confirmed by the owner — the one link this session could not check
+
+The verification chain had a gap this environment cannot close: the agent
+proxy denies `litlfred.github.io:443`, so a staged URL cannot be fetched from
+here.
+
+    curl: (56) CONNECT tunnel failed, response 403
+      host: litlfred.github.io:443  (policy denial)
+
+A green `stage` job proves the file was WRITTEN INTO `_site/`. It does not
+prove it is SERVED. Those were the same claim for `gen-cat-bootstrap-graph.ts`
+for months, and `blv9` is what the difference cost — so it was reported as a
+third state rather than rounded up into the green.
+
+The owner opened it, 2026-09-21:
+
+    https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-3jhq/cat-bootstrap.jsonld
+    → served, valid JSON-LD
+
+So the document staging did not publish before this change is now on the
+staged site, at the path cat-harness's own links name. That is the bean's
+claim, closed on observation rather than on an exit code.
+
+**One detail visible in the capture and worth recording**: the `@context`
+carries the CANONICAL namespace IRIs (`…/cat-harness/ns#`, not a staged
+variant), which is correct and deliberate — `feature-staging.yml` says so
+directly, that "a vocabulary's IRIs are the vocabulary, and they are the same
+document at any base". A staged namespace would be a different vocabulary,
+which is not what a preview is for.
+
+**And one the capture does not settle**: the document's own `@id`. The
+screenshot shows the `@context` block, above where `@id` appears. The export
+is invoked with `--base-url "$BASE"`, and `exportIdentity` with a `baseUrl`
+was measured here to mint `<baseUrl>/<stub>.jsonld`, so it should end in the
+staged path — but that is inference from the code, not a reading of the served
+bytes, and the two are exactly what this bean exists to keep apart. An `@id`
+naming the LIVE document while served from a staged path would be worse than
+the 404 it replaced, which is the hazard `feature-staging.yml`'s own comment
+names.
