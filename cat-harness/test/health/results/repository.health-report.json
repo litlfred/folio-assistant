@@ -2,13 +2,13 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "c44c03bd2e40"
+    "script_hash": "a0d15a218f24"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T19:50:42.008Z",
+  "updated_at": "2026-09-21T05:33:02.351Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,13 +34,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 271694632,
+          "value": 61893307,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 5,
+          "value": 1,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
@@ -75,7 +75,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 5,
+          "value": 1,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -119,38 +119,38 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 92432553,
+          "value": 98830051,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 833093585,
+          "value": 919240308,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 827955200,
+          "value": 910169088,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 12,
+          "value": 23,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 9.01,
+          "value": 9.3,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 794.5 MB against 88.2 MB of tracked content — 9.0x, in 12 pack(s).",
+          "summary": "`.git` is 876.7 MB against 94.3 MB of tracked content — 9.3x, in 23 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -208,19 +208,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 300,
+          "value": 339,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 178,
+          "value": 198,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 122,
+          "value": 141,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -238,7 +238,7 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 75,
+          "value": 82,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -250,26 +250,38 @@
         },
         {
           "metric": "bean-decision-records",
-          "value": 8,
+          "value": 10,
           "unit": "count",
           "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         },
         {
+          "metric": "bean-rendered-decision-records",
+          "value": 1,
+          "unit": "count",
+          "command": "beans/defs/*.md — the five-row table `renderDecision` emits"
+        },
+        {
           "metric": "bean-thin-decision-records",
-          "value": 0,
+          "value": 1,
           "unit": "count",
           "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         }
       ],
       "findings": [
         {
-          "summary": "122 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "`folio-assistant-xgd8` records a decision and lists no options (\"SCHEMA VISUALISER: schemas/ is a content kind with no renderer — options, and three generators that were never wired\").",
+          "metric": "bean-thin-decision-records",
+          "severity": "minor",
+          "action": "Either list the options that were weighed, or drop the section — an empty options section claims an analysis that did not happen, which is worse than not claiming one."
+        },
+        {
+          "summary": "141 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
         },
         {
-          "summary": "178 open beans (todo + in-progress), past the 150 calibration point.",
+          "summary": "198 open beans (todo + in-progress), past the 150 calibration point.",
           "metric": "bean-open",
           "severity": "minor",
           "action": "Read `beans roadmap` rather than `beans list` and check the backlog still has a shape. This is a fact about the plan, not about any one item."
