@@ -5,11 +5,13 @@
  *
  * ## Why this gate exists at all
  *
- * `docs-site.yml` failed on `main` **seven consecutive times**, from 12:01 to
- * 13:16 on 2026-09-21, and the fast gate set was green through every one of
- * them. Six merges landed against that green. The break was a single command
- * — `kg-export.ts --instance ./cat-bootstrap` — that no gate ran, because the
- * gate set ran `kg-export` only for THIS instance.
+ * `docs-site.yml` failed on `main` for over two hours on 2026-09-21 and the
+ * fast gate set was green through every one of those runs; several merges
+ * landed against that green. The break was a single command —
+ * `kg-export.ts --instance ./cat-bootstrap` — that no gate ran, because the
+ * gate set ran `kg-export` only for THIS instance. The export defect itself
+ * is fixed (bean `40fl`); this gate is the part that was missing, and it is
+ * the reason the outage was findable only from the forge.
  *
  * That is `xom7`'s finding one workflow over: a red workflow looks exactly
  * like a green one from a checkout. A gate is the only thing that makes the
@@ -157,12 +159,11 @@ export function formatReport(r: PublishedExportReport): string {
   out.push("");
   out.push("  This is the command `docs-site.yml` runs, run the way it runs it. A failure");
   out.push("  here is the Pages deploy already broken — it will not be caught later by");
-  out.push("  anything else in this gate set, which is how the same break survived six");
-  out.push("  merges on 2026-09-21.");
+  out.push("  anything else in this gate set, which is how one such break survived");
+  out.push("  several merges on 2026-09-21 with every local gate green.");
   out.push("");
-  out.push("  An instance publishing into THIS repository's site inherits its base: it is");
-  out.push("  the publication that has an address, not the instance. Only an instance");
-  out.push("  resolving outside this repository is left with a relative `@id`.");
+  out.push("  An instance publishing into THIS repository's site inherits the publishing");
+  out.push("  instance's base — see `exportIdentity` in `kg-export.ts` for that rule.");
   return out.join("\n");
 }
 

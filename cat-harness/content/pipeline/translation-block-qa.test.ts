@@ -14,6 +14,7 @@ import { join } from "node:path";
 
 import {
   buildReport,
+  type Glossary,
   invariantTokens,
   measureBlock,
   mergeCriteria,
@@ -36,15 +37,37 @@ function po(pairs: Array<[string, string]>): string {
 }
 
 describe("invariantTokens — what a translation may not silently drop", () => {
-  test("acronyms, numbers and URLs", () => {
-    const t = invariantTokens("The CRDM gate ran 3 times; see https://phii.org/x for QA notes.");
-    expect(t).toContain("CRDM");
-    expect(t).toContain("QA");
-    expect(t).toContain("3");
-    expect(t).toContain("https://phii.org/x");
+  const kindOf = (text: string, token: string) =>
+    invariantTokens(text).find((t) => t.token === token)?.kind;
+
+  test("acronyms, numbers and URLs are all found", () => {
+    const text = "The CRDM gate ran 3 times; see https://phii.org/x for QA notes.";
+    const tokens = invariantTokens(text).map((t) => t.token);
+    expect(tokens).toContain("CRDM");
+    expect(tokens).toContain("QA");
+    expect(tokens).toContain("3");
+    expect(tokens).toContain("https://phii.org/x");
   });
 
-  test("an ordinary capitalised word is not an acronym", () => {
+  test("a number or a URL is STRICT — it cannot legitimately change", () => {
+    const text = "ran 3 times; see https://phii.org/x";
+    expect(kindOf(text, "3")).toBe("strict");
+    expect(kindOf(text, "https://phii.org/x")).toBe("strict");
+  });
+
+  test("an acronym is NOT strict, because a good translation localises it", () => {
+    // `WHO` is `OMS` in French. Treating that as a dropped term made the
+    // criterion fail four locales of `docs/index.md` on translations that were
+    // correct — bean `pp93`.
+    expect(kindOf("the WHO SMART Guidelines", "WHO")).toBe("acronym");
+  });
+
+  test("a number inside a URL does not demote the URL to an acronym", () => {
+    expect(kindOf("see https://example.org/v2/spec", "https://example.org/v2/spec"))
+      .toBe("strict");
+  });
+
+  test("an ordinary capitalised word is not an invariant token at all", () => {
     // Proper nouns are translated or transliterated all the time; requiring
     // them verbatim would make the criterion fire on correct translations.
     expect(invariantTokens("Public Health Informatics Institute")).toEqual([]);
@@ -76,9 +99,24 @@ describe("measureBlock", () => {
       "b.md",
       new Map([["The CRDM gate is a checkpoint.", "La barrière est un point de contrôle."]]),
     );
-    expect(m.missingTerms).toHaveLength(1);
-    expect(m.missingTerms[0]).toContain("CRDM");
-    expect(m.missingTerms[0]).toContain("barrière");
+    // An acronym, so it lands in the class the criterion WARNS about rather
+    // than the one it fails on — it is still reported, and still quotes the
+    // translation so a reader can judge whether it was localised or lost.
+    expect(m.missingAcronyms).toHaveLength(1);
+    expect(m.missingAcronyms[0]).toContain("CRDM");
+    expect(m.missingAcronyms[0]).toContain("barrière");
+    expect(m.missingStrict).toEqual([]);
+  });
+
+  test("a dropped NUMBER is strict — nothing localises a 3", () => {
+    const m = measureBlock(
+      "The gate ran 3 times.\n",
+      "b.md",
+      new Map([["The gate ran 3 times.", "La barrière a été exécutée plusieurs fois."]]),
+    );
+    expect(m.missingStrict).toHaveLength(1);
+    expect(m.missingStrict[0]).toContain("3");
+    expect(m.missingAcronyms).toEqual([]);
   });
 
   test("a real translation that keeps its terms is clean", () => {
@@ -89,7 +127,8 @@ describe("measureBlock", () => {
     );
     expect(m.translated).toBe(1);
     expect(m.echoed).toBe(0);
-    expect(m.missingTerms).toEqual([]);
+    expect(m.missingStrict).toEqual([]);
+    expect(m.missingAcronyms).toEqual([]);
   });
 });
 
@@ -227,5 +266,129 @@ describe("mergeCriteria — a re-run must not delete what it did not write", () 
   test("a criterion only the existing sidecar has is carried through untouched", () => {
     const out = mergeCriteria({ "human-only-axis": [agentEntry("fail")] }, {});
     expect(out["human-only-axis"]).toHaveLength(1);
+  });
+});
+
+/**
+ * The glossary tells the checker how to read an ABSENT term — and cannot be
+ * used to stop it checking.
+ *
+ * Bean `he0e`. `translation-terms-preserved` warned on every acronym missing
+ * from a translation, because it cannot tell `WHO` -> `OMS` from `WHO` dropped.
+ * `translations/<locale>/glossary.po` settles it: a pinned `msgstr` says what
+ * the term must become, a `#, localised` flag says it is rendered in the target
+ * language without pinning how.
+ *
+ * **The danger is obvious and is what most of this block tests.** A flag that
+ * made a criterion pass unconditionally would be a mute button wearing a
+ * glossary's clothes, so each case below asks what the glossary CANNOT do.
+ */
+describe("the glossary is a reading rule, not a mute button", () => {
+  const g = (entries: Record<string, { expected?: string; localised?: boolean }>): Glossary =>
+    new Map(
+      Object.entries(entries).map(([k, v]) => [k, { expected: v.expected, localised: !!v.localised }]),
+    );
+
+  const measure = (src: string, target: string, glossary: Glossary) =>
+    measureBlock(src + "\n", "b.md", new Map([[src, target]]), glossary);
+
+  test("a localised term absent from the translation PASSES, and says why", () => {
+    const m = measure(
+      "The WHO guidelines apply.",
+      "Les lignes directrices de l'OMS s'appliquent.",
+      g({ WHO: { localised: true } }),
+    );
+    expect(m.missingAcronyms).toEqual([]);
+    expect(m.brokenGlossaryTerms).toEqual([]);
+    expect(m.resolvedAcronyms).toHaveLength(1);
+    expect(m.resolvedAcronyms[0]).toContain("WHO");
+    expect(m.resolvedAcronyms[0]).toContain("localised");
+  });
+
+  test("a PINNED form present in the translation passes", () => {
+    const m = measure(
+      "The WHO guidelines apply.",
+      "Les lignes directrices de l'OMS s'appliquent.",
+      g({ WHO: { expected: "OMS" } }),
+    );
+    expect(m.resolvedAcronyms).toHaveLength(1);
+    expect(m.brokenGlossaryTerms).toEqual([]);
+  });
+
+  test("a PINNED form that is ALSO absent FAILS — the glossary said what it should be", () => {
+    const m = measure(
+      "The WHO guidelines apply.",
+      "Les lignes directrices s'appliquent.",
+      g({ WHO: { expected: "OMS" } }),
+    );
+    expect(m.brokenGlossaryTerms).toHaveLength(1);
+    expect(m.brokenGlossaryTerms[0]).toContain("OMS");
+    expect(m.resolvedAcronyms).toEqual([]);
+  });
+
+  test("a VERBATIM term that was dropped still fails — the identity mapping bites", () => {
+    // The case the whole mechanism has to keep catching: a standard's name
+    // silently gone is exactly what a fluent mistranslation looks like.
+    const m = measure(
+      "The FHIR profile is normative.",
+      "Le profil est normatif.",
+      g({ FHIR: { expected: "FHIR" } }),
+    );
+    expect(m.brokenGlossaryTerms).toHaveLength(1);
+    expect(m.brokenGlossaryTerms[0]).toContain("FHIR");
+  });
+
+  test("a term the glossary does not name still WARNS — silence is not permission", () => {
+    const m = measure(
+      "The CRDM gate is a checkpoint.",
+      "La barrière est un point de contrôle.",
+      g({ WHO: { localised: true } }),
+    );
+    expect(m.missingAcronyms).toHaveLength(1);
+    expect(m.missingAcronyms[0]).toContain("CRDM");
+  });
+
+  test("an EMPTY entry — no form, no flag — is unfinished, not permission", () => {
+    const m = measure(
+      "The CRDM gate is a checkpoint.",
+      "La barrière est un point de contrôle.",
+      g({ CRDM: {} }),
+    );
+    expect(m.missingAcronyms).toHaveLength(1);
+    expect(m.resolvedAcronyms).toEqual([]);
+  });
+
+  test("localised CANNOT forgive a number — no glossary speaks for strict tokens", () => {
+    // The mute-button test. `strict` never consults the glossary at all, so an
+    // entry naming a number cannot buy it a pass.
+    const m = measure(
+      "The gate ran 3 times.",
+      "La barrière a été exécutée plusieurs fois.",
+      g({ "3": { localised: true } }),
+    );
+    expect(m.missingStrict).toHaveLength(1);
+    expect(m.missingStrict[0]).toContain("3");
+    expect(m.resolvedAcronyms).toEqual([]);
+  });
+
+  test("localised CANNOT forgive a dropped URL either", () => {
+    const m = measure(
+      "See https://example.org/spec for details.",
+      "Voir la spécification pour plus de détails.",
+      g({ "https://example.org/spec": { localised: true } }),
+    );
+    expect(m.missingStrict).toHaveLength(1);
+  });
+
+  test("a glossary for ANOTHER locale is not consulted — the map is per-locale", () => {
+    // `readGlossary` is called with one locale's file. An empty map is what a
+    // locale with no glossary gets, and it must behave exactly as before.
+    const m = measure(
+      "The WHO guidelines apply.",
+      "Las directrices se aplican.",
+      new Map(),
+    );
+    expect(m.missingAcronyms).toHaveLength(1);
+    expect(m.missingAcronyms[0]).toContain("WHO");
   });
 });

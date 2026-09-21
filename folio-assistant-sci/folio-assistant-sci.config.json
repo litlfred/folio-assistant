@@ -1,37 +1,5 @@
 {
-  "_comment": "The SCIENCE folio instance, staged as a top-level directory ahead of becoming its own repository -- the same pattern as who-iris/ and folio-assistant-core/. Owner, 2026-09-20: 'milnor goes in f-a-sci library/, move all 4 and fix fallout'. It exists because `milnorlink` is source material for mathematics and has nothing to do with the WHO IRIS catalogue, so sending it to who-iris/ alongside the three IRIS items would have put one thing in a place named for another. Bean r1lz. DECLARE ONLY WHAT EXISTS, per the dh4f rule: `library/` is the only entry, because it is the only directory here.",
-  "name": "folio-assistant-sci",
-  "description": "Scientific source material used by folios that formalise mathematics — one document today.",
-  "assets": [
-    {
-      "id": "agent-instructions",
-      "src": "AGENTS.md",
-      "role": "agent-instructions",
-      "title": "AGENTS.md — folio-assistant-sci",
-      "description": "Cold start for work in this layer. Source material a folio READS, never mathematics this repository authors — and the placement rule that has already been got wrong once: a repository named for one catalogue is not a place to keep things belonging to another (beans `r1lz`, `frs5`)."
-    },
-    {
-      "id": "readme",
-      "src": "README.md",
-      "role": "instance-readme",
-      "title": "folio-assistant-sci",
-      "description": "What is here and why it is not in who-iris."
-    }
-  ],
-  "directories": [
-    {
-      "id": "library",
-      "path": "library/",
-      "dependents": "reproduce",
-      "description": "Ingested L1 source material for the sciences. `milnorlink` is the whole of it: the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
-      "graphs": [
-        "library"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "library-ingestion"
-      }
-    }
-  ]
+  "_comment": "CONFIG, not declaration -- #727 split them, and `contributes` is on HarnessConfig rather than on the declaration because it says how this instance behaves when a folio LOADS it, not what it is. `loadContributions` reads it through `readHarnessConfig`, which resolves `<name>.config.json` from the instance root outward, so a dependency with no config file can contribute nothing however it is declared. That is why this file exists at all: folio-assistant-sci is a DEPENDENCY here rather than an instantiated harness, and it carries no `contentType` -- the instantiation marker the root's siblings carry is the file AT THE REPO ROOT, not one inside an instance's own directory.",
+  "_contributes_comment": "THE FIRST REAL CONTRIBUTOR. `ContributionRegistry` (Phase 0.1 of #223) had no production consumer at all until this entry -- every reference outside schemas/contributions.ts was its own test, and a mechanism with no caller is free to be subtly wrong in ways no test shape catches (bean rfev). The module contributes the two elaboration-cost QA checkers: `qa-checkers-cost.ts` moved here from cat-harness/content/pipeline/ because elaboration cost is a LEAN measurement, so the checker is this layer's tooling. The CRITERIA stay declared in core -- a criterion is a rule about content, a checker is the tooling that answers it, which is the owner's cut: 'f-a-core has high level processes only, no tooling'. Bean zlmp measured five core-or-harness runtime edges that `check:partition` cannot see because the target is named as a string; this drains the first of them.",
+  "contributes": "./contributions.ts"
 }

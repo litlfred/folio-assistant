@@ -48,7 +48,7 @@ earns a requirement of its own — the derived title for one of them is `Abies`.
 
 ## The library, now that it is here
 
-`who-iris.config.json` declares **`library/`**, and the three documents are in it. They
+`who-iris.json` declares **`library/`**, and the three documents are in it. They
 arrived by `git mv` from `cat-harness/library/` (bean `frs5`), so history
 follows each file rather than showing 1,367 additions and as many deletions.
 

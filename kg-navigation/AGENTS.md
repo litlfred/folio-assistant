@@ -35,5 +35,5 @@ nothing checks.
 
 ---
 
-*A declared asset of this instance ([`kg-navigation.config.json`](kg-navigation.config.json), role
+*A declared asset of this instance ([`kg-navigation.json`](kg-navigation.json), role
 `agent-instructions`). Issue #592.*

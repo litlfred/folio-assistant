@@ -1137,6 +1137,9 @@ const PROOF: QaCriterionDefinition[] = [
   {
     id: "proof-compile-cost",
     domain: "proof",
+    // The rule is core's; the checker is `folio-assistant-sci`'s, because
+    // elaboration cost is a Lean measurement. See `checker_contributed`.
+    checker_contributed: true,
     description:
       "MEASUREMENT, not a gate — always `pass` when data exists. Records " +
       "`elab_ms` / `tactic_count` (and `elab_ms_prev` / `elab_delta_pct` " +
@@ -1155,6 +1158,9 @@ const PROOF: QaCriterionDefinition[] = [
   {
     id: "proof-no-cost-regression",
     domain: "proof",
+    // The rule is core's; the checker is `folio-assistant-sci`'s, because
+    // elaboration cost is a Lean measurement. See `checker_contributed`.
+    checker_contributed: true,
     description:
       "Elaboration cost did not regress materially (>25%) versus the prior " +
       "measurement. Catches the standard refactoring trap: a proof that got " +
@@ -2579,8 +2585,18 @@ export const EXTENDED_CHECKER_FILE =
  * to the graph builder must invalidate their sidecar entries.
  */
 export const USES_CHECKER_FILE = "content/pipeline/qa-checkers-uses.ts";
-/** Hosts the elaboration-cost checkers. */
-export const COST_CHECKER_FILE = "content/pipeline/qa-checkers-cost.ts";
+// The elaboration-cost checkers USED to be hosted here, and this constant
+// named them: `content/pipeline/qa-checkers-cost.ts`. They moved to
+// `folio-assistant-sci` on 2026-09-21 (bean `rfev`) because elaboration cost
+// is a Lean measurement, so the checker is the science layer's tooling while
+// the criterion stays core's rule.
+//
+// The constant is GONE rather than repointed. A core module holding the string
+// `folio-assistant-sci/...` would be core naming a higher layer — invisible to
+// `check:partition`, which counts imports and not strings, and precisely the
+// runtime edge bean `zlmp` measured five of. Both criteria now carry
+// `checker_contributed: true`, and `resolveCriterionSource` asks the
+// contribution registry.
 /** Hosts the machine-triviality oracle checker (scaffold). */
 export const TRIVIALITY_CHECKER_FILE = "content/pipeline/qa-checkers-triviality.ts";
 
@@ -2644,13 +2660,26 @@ const DAK_FILE_IDS = new Set<string>([
  */
 export function getCriterionSourceFile(criterionId: string): string {
   const def = QA_CRITERIA_BY_ID[criterionId];
+  // A criterion whose checker a DEPENDENCY owns has no answer here, and the
+  // cascade below ends in a default — so without this it would quietly resolve
+  // to `qa-checkers-extended.ts`, whose bytes have nothing to do with it. That
+  // is the never-invalidates state this whole block exists to prevent, so the
+  // state is made unreachable rather than merely avoided by every caller
+  // remembering. `resolveCriterionSource` is the one that can answer.
+  if (def?.checker_contributed) {
+    throw new Error(
+      `criterion "${criterionId}" declares checker_contributed, so its checker is ` +
+        `not in this instance and this function cannot locate it. Use ` +
+        `resolveCriterionSource(id, root, registry), which asks the contribution ` +
+        `registry and reports an unsupplied checker as unresolved rather than ` +
+        `resolving it to a default whose hash would never go stale.`,
+    );
+  }
   if (def?.source_file) return def.source_file;
   if (VOICE_FILE_IDS.has(criterionId)) return VOICE_CHECKER_FILE;
   if (DAK_FILE_IDS.has(criterionId)) return DAK_CHECKER_FILE;
   if (criterionId.startsWith("uses-") || criterionId === "lean-ref-owns-decl")
     return USES_CHECKER_FILE;
-  if (criterionId === "proof-compile-cost" || criterionId === "proof-no-cost-regression")
-    return COST_CHECKER_FILE;
   if (criterionId === "proof-not-machine-trivial") return TRIVIALITY_CHECKER_FILE;
   return EXTENDED_CHECKER_FILE;
 }

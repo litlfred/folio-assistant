@@ -182,6 +182,12 @@ export const RULES: Rule[] = [
       "scripts/compose-docs.ts",             // docs layers -> one composed tree
       "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
+      // ...and the signals themselves, lifted out of it by bean `xfoh` so the
+      // patterns could be checked against the skill prose they transcribe.
+      // Same side as its runner, and harness by subject too: whether a request
+      // is a PLATFORM capability change is a question about the platform, and a
+      // folio that never asks for one still needs the answer to be "no".
+      "src/crdm/detect-signals.ts",         // ...the patterns, checked against the skill
       "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI
       "src/tools/stakeholder-map.ts",        // ...as an MCP tool
 

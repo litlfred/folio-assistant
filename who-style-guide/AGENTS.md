@@ -34,5 +34,5 @@ the document it came from.
 
 ---
 
-*A declared asset of this instance ([`who-style-guide.config.json`](who-style-guide.config.json), role
+*A declared asset of this instance ([`who-style-guide.json`](who-style-guide.json), role
 `agent-instructions`). Issue #592.*

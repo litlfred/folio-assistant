@@ -171,3 +171,62 @@ the same mistake made on `chq5` an hour earlier, so the habit is appending a
 list rather than editing the one above. Caught locally this time, because the
 check ran AFTER the last edit rather than before it. Canonical list ticked;
 no second copy.
+
+---
+
+## 2026-09-21 — a SECOND session built this in parallel, and withdrew
+
+session_01AYHimvYMmf8h8e9fFN6dW5 built the same widening and opened PR #715 and
+issue #714. `fdb5097f4e` landed first. The duplicate is **withdrawn wholesale**:
+main's `skillFiles()` is kept and mine deleted.
+
+**Theirs is better on one point**, which is why this is not a coin toss: it
+try/catches a declared-but-absent directory and defers that question to
+`check:harness-dirs`, the check that owns it. Mine relied on `kgDirectories`
+filtering by `existsSync`, which is the same outcome by a weaker route — the
+absent case is handled where somebody looking for it would look.
+
+### The sibling check was RUN this time, and did not prevent it
+
+This is the second duplication in one session for the same account, and the
+first (`yl5w`) prompted a rule: before claiming, check for an open PR, a remote
+branch naming the bean, and the bean's status on main. **All three were checked
+and all three were clear** — `lps0` read `todo`, no branch carried code for it,
+no open PR named it. The other session had not pushed yet.
+
+So the procedure is not the gap. `bean-coordination` already states the limit
+exactly — *"a claim is branch-local: it ANNOUNCES rather than reserves until
+your PR exists"* — and what this adds is that **running the check faithfully
+does not close it.** Two sessions can both pass the check and both be right.
+
+### The 6-vs-5 difference RESOLVED, and it is the substantive design point
+
+Main's record says 5 new sidecars; the withdrawn branch measured 6. Resolved on
+merging, and the answer is why `ownKgRoots` is the right function:
+
+**`kgDirectories` reaches OUTSIDE the instance.** The withdrawn walk used it and
+wrote five sidecars under an `_external/` mirror — `cat-bootstrap/render/`,
+`kg-navigation/`, `large-datasets/`, `who-iris/` — auditing **other instances'
+skills into this instance's tree**. `ownKgRoots` stays inside, which is what
+"own" is for: a nested instance's skills belong to that instance's own audit,
+and the `nested-instance-audited` criterion already reports the boundary.
+
+Main's own `kg:audit:check` said so immediately on the merged tree — *"5
+sidecar(s) audit a subject no report covers … SUBJECT PRESENT, NOT AUDITED"*,
+naming all five `_external/` paths. They were deleted; the sidecar tree is now
+byte-identical to main.
+
+So the withdrawn implementation was not merely second, it was **wrong at the
+instance boundary**, and the check caught it in one run.
+
+### One lesson worth keeping from the withdrawn work
+
+Its first falsification attempt edited `cat-harness/harness.json` — **a file
+that no longer exists**, since the REPLACE rename has landed and the
+declaration is `cat-harness.config.json`. The test reported *"rule failed"*
+against a file it never opened.
+
+**A test that cannot find its subject must say so, not report a verdict.** That
+is the `dh4f` shape inside a falsification: a check that examined nothing,
+announcing a result. Re-run against the real declaration, the rule held in both
+directions.

@@ -19,9 +19,29 @@ is the page itself and not a figure on it -- against 24 candidate figures.
 
 The two clusters do not overlap -- nothing in the corpus sits between 0.50 and
 0.99 -- so no content heuristic is needed, and none is used. The rule is
-geometric and stated once, in `schemas/document-image.ts` (`roleFor`); this
-script computes the same thing from the same two numbers and
-`scripts/tests/pdf-images.test.py` pins the two against shared cases.
+stated once, in `schemas/document-image.ts` (`roleFor`); this script computes
+the same thing from the same numbers and `scripts/tests/pdf-images.test.py`
+pins the two against shared cases.
+
+The CAPTURE RUNG -- bean `r8br`, issue #722
+-------------------------------------------
+Geometry alone gives one bit, and a browser print needs two. A four-page print
+of a docs site places 104 images, every one of them a navigation icon or a
+copy button, and the rule above calls all 104 `figure` by construction: there
+is no verdict between "this image IS the page" and "this image is a figure".
+Only a figure gets a narrative slot, and that slot is what `image-descriptions`
+gates on, so nav chrome blocked seven documents from promotion.
+
+A PDF says who made it. Measured 2026-09-21 over all 18 PDFs here, `Producer`
+and `Creator` partition the corpus with no overlap in either direction:
+
+    Skia/PDF m152   + Mozilla/5.0 (Macintosh...)   11   browser prints
+    pikepdf 8.15.1  + arXiv GenPDF (tex2pdf...)     3   typeset papers
+    (none) x2, Atypon Systems, Pixel Translations   4   other
+
+So a capture is DETECTED rather than assumed, from evidence that travels with
+the file, and `chrome` is assigned only inside that rung. Outside it nothing
+changes -- a typeset PDF classifies today exactly as it did before.
 
 Coverage is measured on the PLACED RECTANGLE (`page.get_image_rects`), not on
 the image's own pixel dimensions. A 4000px scan placed into a thumbnail box is
@@ -55,13 +75,43 @@ from _pdf_doc_id import derive_doc_id_from_pdf as _doc_id  # noqa: E402
 # scripts/tests/pdf-images.test.py, which reads both rather than restating either.
 PAGE_COVERAGE_THRESHOLD = 0.8
 
+# Likewise CAPTURE_CHROME_THRESHOLD. Below this fraction of the page, an image
+# in a CAPTURE RUNG is the browser's own furniture rather than content. The
+# derivation is in document-image.ts and is not restated here: measured over
+# all 219 placed images in the six browser prints under uploads/, nav chrome
+# tops out at 0.005804 and the smallest real figure is 0.139632, a 24.1x gap
+# with nothing in it. Set low on purpose -- filing a real figure as chrome
+# would drop it silently from every description pass.
+CAPTURE_CHROME_THRESHOLD = 0.02
+
 SCHEMA = "folio-document-images/v1"
 
 
-def role_for(coverage: float, images_on_page: int) -> str:
-    """The role geometry implies. Mirrors `roleFor` in document-image.ts."""
+def is_capture_print(producer: str | None, creator: str | None) -> bool:
+    """Is this a captured web page? Mirrors `isCapturePrint` in document-image.ts.
+
+    BOTH signals, never either. Skia is Chromium's graphics library and reaches
+    past printing -- Android and Flutter emit it too -- so it alone says "a
+    Chromium-family renderer", not "a browser printed a web page". The
+    user-agent in Creator says the second thing. Requiring both also fails
+    SAFE: a capture missing one field is not a rung, so its images stay
+    `figure` and keep blocking exactly as they do today, rather than being
+    reclassified on half the evidence.
+    """
+    return "Skia/PDF" in (producer or "") and (creator or "").startswith("Mozilla/")
+
+
+def role_for(coverage: float, images_on_page: int, capture: bool = False) -> str:
+    """The role a computable basis implies. Mirrors `roleFor` in document-image.ts.
+
+    `page-scan` is tried FIRST, in both rungs: a browser print can still place a
+    full-bleed image alone on a page, and that image is the page. The capture
+    being a web page does not change what full-bleed means.
+    """
     if coverage >= PAGE_COVERAGE_THRESHOLD and images_on_page == 1:
         return "page-scan"
+    if capture and coverage < CAPTURE_CHROME_THRESHOLD:
+        return "chrome"
     return "figure"
 
 
@@ -92,6 +142,14 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
             "undetermined_reason": f"could not open {pdf.name}: {exc}",
         }
 
+    # The capture's own provenance, read once. `doc.metadata` is already in
+    # hand from the open above, so detecting the rung costs nothing and needs
+    # no plumbing from the ingest layer -- the evidence travels with the file.
+    meta = doc.metadata or {}
+    producer = (meta.get("producer") or "").strip()
+    creator = (meta.get("creator") or "").strip()
+    capture = is_capture_print(producer, creator)
+
     images: list[dict] = []
     for index in range(doc.page_count):
         page = doc[index]
@@ -121,11 +179,23 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
         for ordinal, (xref, coverage) in enumerate(placed, start=1):
             image_id = f"img-p{index + 1:03d}-{ordinal}"
             rel = f"images/{image_id}.png"
-            entry = {
-                "id": image_id,
-                "file": rel,
-                "role": role_for(coverage, len(placed)),
-                "basis": {
+            # In a capture rung EVERY image carries the capture basis, not just
+            # the chrome. The producer is why the verdict came out as it did --
+            # including for the figures that survived the bound -- so recording
+            # it only on the reclassified ones would leave a reader unable to
+            # tell "a figure in a browser print" from "a figure in a typeset
+            # PDF". Both are checkable; only one has a rung.
+            basis = (
+                {
+                    "method": "capture",
+                    "producer": producer,
+                    "creator": creator,
+                    "coverage": round(coverage, 6),
+                    "imagesOnPage": len(placed),
+                    "page": index + 1,
+                }
+                if capture
+                else {
                     # Geometry, explicitly. A role assigned by LOOKING carries
                     # `method: "inspection"` and names who looked -- see
                     # schemas/document-image.ts. This script never looks.
@@ -133,7 +203,13 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                     "coverage": round(coverage, 6),
                     "imagesOnPage": len(placed),
                     "page": index + 1,
-                },
+                }
+            )
+            entry = {
+                "id": image_id,
+                "file": rel,
+                "role": role_for(coverage, len(placed), capture),
+                "basis": basis,
             }
             # Only a figure gets a narrative slot. The 140 scans get none --
             # that is the measurement, enforced in the schema and applied here.
@@ -141,7 +217,12 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                 entry["narrative"] = {"text": None, "state": "not-authored"}
             images.append(entry)
 
-            # Only a FIGURE gets its pixels written. A page scan IS the page:
+            # Only a FIGURE gets its pixels written. `chrome` earns none for the
+            # same reason a scan does not: nothing downstream reads a copy of
+            # the browser's search glyph, and the two Antigravity prints alone
+            # would have written 208 of them.
+            #
+            # A page scan IS the page:
             # its content already reaches the library through the page tree
             # that `pdf-pages.py` / `pdf-ocr.py` build, so a copy under
             # `images/` is duplication a clone pays for forever. Measured

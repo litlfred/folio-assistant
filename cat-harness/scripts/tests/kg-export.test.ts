@@ -22,13 +22,12 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
-import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
-import { artefactStub, findDeclarationFile, readDeclaration } from "../../schemas/cat-harness.js";
+import { artefactStub, findDeclarationFile, instanceRootsIn, readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
 
 /**
@@ -304,9 +303,77 @@ describe("kg export", () => {
     expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/${stub}.jsonld`);
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/${stub}.schema.json`);
 
-    // The declaration is read from a fixed filename, whatever the stub is.
-    expect(findDeclarationFile(join(import.meta.dir, "../..")) !== undefined).toBe(true);
-    expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
+    // THE OTHER HALF OF THIS TEST WAS REVERSED BY THE OWNER, 2026-09-21, and
+    // the reasoning is worth keeping rather than just the new assertion.
+    //
+    // It read: the declaration is at a FIXED filename, whatever the stub is —
+    // and asserted `<stub>.json` must NOT exist. Migration-plan I.8's argument
+    // was that a fixed name is what lets a consumer open a repo it has never
+    // seen, because "a resolver deriving it from the DIRECTORY finds nothing
+    // when the repo is cloned elsewhere".
+    //
+    // That argument is about deriving a filename from the DIRECTORY, and no
+    // resolver here does. `findDeclarationFile` scans, parses, and takes the
+    // file whose stem equals its own declared `name` — so a declaration is
+    // SELF-IDENTIFYING and a clone renamed on disk still resolves. The
+    // property I.8 wanted is preserved by the check rather than by the
+    // constant, which is what made the suffix free to move.
+    //
+    // So `<name>.json` exists now, deliberately, and what is asserted is the
+    // self-agreement that replaced the fixed name.
+    const declFile = findDeclarationFile(join(import.meta.dir, "../.."));
+    expect(declFile).toBe(`${readDeclaration(join(import.meta.dir, "../.."))!.name}.json`);
+    // ...and the stub does NOT name it. The stub names published ARTEFACTS;
+    // the declaration is named for the instance. They are equal here only
+    // because cat-harness's stub is its own name, so asserting on the stub
+    // would pass for the wrong reason in any instance that sets one.
+    expect(declFile).not.toBe(`${stub}.config.json`);
+  });
+
+  test("EVERY declared instance exports at an absolute IRI — the base is the SITE's, not the instance's", () => {
+    // Bean `40fl`. `exportIdentity` read `canonicalUrl` off the instance being
+    // EXPORTED. `cat-bootstrap` declares none deliberately — it has no site of
+    // its own — so the moment `docs-site.yml` started publishing its graph
+    // (2026-09-21, 11:31) the export minted a document-relative `@id`, pushed
+    // that onto `problems`, and exited 1. Every push to `main` for the next
+    // two hours failed to publish the site.
+    //
+    // DERIVED over the declared instances rather than listing cat-bootstrap:
+    // the defect is not about that instance, it is about any instance whose
+    // graph this site publishes, and the next one to be added would have
+    // reproduced it against a literal list that still read green.
+    //
+    // The invariant is the one the export's own error text states: a graph
+    // whose nodes have no absolute identity cannot be merged with anyone
+    // else's. It holds per-instance, so it is asserted per-instance.
+    const repoRoot = repoRootFor(join(import.meta.dir, "../.."));
+    const instances = instanceRootsIn(repoRoot);
+    // An empty list is a broken probe, not a clean run — the `dh4f` shape.
+    // Without this, a resolver that stopped finding instances would make every
+    // assertion below vacuous and this test would pass by checking nothing.
+    expect(instances.length).toBeGreaterThan(1);
+
+    const relative_ = (d: string): string => d.slice(repoRoot.length + 1) || ".";
+    const notAbsolute = instances
+      .map((instanceRoot) => ({ at: relative_(instanceRoot), iri: exportIdentity({ instanceRoot }).docIri }))
+      .filter((r) => !r.iri.startsWith("http"));
+    expect(notAbsolute).toEqual([]);
+  });
+
+  test("a foreign instance's export reports no unread source — the publish step exits 0", async () => {
+    // The companion to the above, one level up: `publishedPaths()` already
+    // asserted that `cat-bootstrap.jsonld` is a path the deploy WRITES, and
+    // that assertion stayed green throughout the outage — because a path the
+    // workflow names is not a step that succeeds. `problems` is what the exit
+    // code is computed from, so this is the assertion that was missing.
+    const boot = join(repoRootFor(join(import.meta.dir, "../..")), "cat-bootstrap");
+    const ex = await buildExport({ instanceRoot: boot });
+    expect(ex.problems).toEqual([]);
+    // `BASE` is THIS instance's declared canonicalUrl, which is the whole
+    // point: the foreign document is published at the publishing site's base,
+    // under its own stub. Spelling the URL as a literal here would pass even
+    // if the fallback started reading some other instance's declaration.
+    expect(ex["@id"]).toBe(`${BASE}/cat-bootstrap.jsonld`);
   });
 
   test("no canonicalUrl and no base → no absolute IRI, and it says so", () => {
