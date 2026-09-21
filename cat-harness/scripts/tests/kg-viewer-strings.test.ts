@@ -59,7 +59,8 @@ const ROOT = join(import.meta.dir, "../..");
 // is a reader that has to be edited every time the layout moves.
 // declared-path-literal: the convention fallback for an instance that declares
 // nothing, matching `translationSourcesDir` in src/tools/translation.ts.
-const TRANSLATIONS = directoryForGraph(ROOT, "translation-sources") ?? join(ROOT, "translations");
+let _translationsMemo: string | undefined;
+const TRANSLATIONS = (): string => (_translationsMemo ??= directoryForGraph(ROOT, "translation-sources") ?? join(ROOT, "translations"));
 const GENERATOR = readFileSync(join(ROOT, "scripts/kg-viewer.ts"), "utf-8");
 
 /** A double-quoted JS string literal, with escapes. */
@@ -125,7 +126,7 @@ describe("the catalogues that ship", () => {
   test("every locale has a stub carrying every msgid the viewer says", () => {
     const declared = UI_STRINGS.map((s) => s.en);
     for (const loc of LOCALES) {
-      const po = readFileSync(join(TRANSLATIONS, loc, "kg-viewer.po"), "utf-8");
+      const po = readFileSync(join(TRANSLATIONS(), loc, "kg-viewer.po"), "utf-8");
       const entries = parsePoEntries(po);
       expect(entries.map((e) => e.msgid).sort()).toEqual([...declared].sort());
     }
@@ -138,7 +139,7 @@ describe("the catalogues that ship", () => {
     // reader sees. If this test ever fails because somebody translated a
     // catalogue by hand, delete the test rather than the translation.
     for (const loc of LOCALES) {
-      const po = readFileSync(join(TRANSLATIONS, loc, "kg-viewer.po"), "utf-8");
+      const po = readFileSync(join(TRANSLATIONS(), loc, "kg-viewer.po"), "utf-8");
       for (const e of parsePoEntries(po)) expect(e.msgstr).toBe("");
     }
   });
@@ -156,7 +157,7 @@ describe("the catalogues that ship", () => {
     expect(poHeader('"X-Folio-Official: yes\\n"', "X-Folio-Official")).toBe("yes");
     expect(poHeader('"Language: fr\\n"', "X-Folio-Official")).toBeUndefined();
     for (const loc of LOCALES) {
-      const po = readFileSync(join(TRANSLATIONS, loc, "kg-viewer.po"), "utf-8");
+      const po = readFileSync(join(TRANSLATIONS(), loc, "kg-viewer.po"), "utf-8");
       expect((poHeader(po, "X-Folio-Official") ?? "").toLowerCase()).toBe("no");
     }
   });

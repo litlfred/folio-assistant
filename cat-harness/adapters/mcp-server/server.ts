@@ -275,7 +275,8 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
 
 // ── Content resolution (dynamic, no static JSON) ────────────────
 
-const FOLIO_DIR = folioDir(REPO_ROOT);
+let _folio_dirMemo: string | undefined;
+const FOLIO_DIR = (): string => (_folio_dirMemo ??= folioDir(REPO_ROOT));
 
 /**
  * The node populations the graph tools read: `content`, plus EVERY declared
@@ -292,7 +293,7 @@ const FOLIO_DIR = folioDir(REPO_ROOT);
 const GRAPH_ROOTS = [
   // `FOLIO_DIR`, not `CONTENT_DIR`: bean `hs08` made a folio SAY where its
   // content is rather than the platform assuming `content/`.
-  { name: "folio", dir: FOLIO_DIR },
+  { name: "folio", dir: FOLIO_DIR() },
   ...LIBRARY_DIRS.map((dir, i) => ({
     name: LIBRARY_DIRS.length === 1 ? "library" : `library:${relative(REPO_ROOT, dir) || String(i)}`,
     dir,
@@ -1620,7 +1621,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
         if (rootName) {
           // Get chapter dir from the chapter's label or directory listing
           const { readdirSync } = await import("fs");
-          const paperDir = join(FOLIO_DIR, id);
+          const paperDir = join(FOLIO_DIR(), id);
           for (const d of readdirSync(paperDir)) {
             const candidate = join(paperDir, d, `${rootName}.ts`);
             if (existsSync(candidate)) { chapterDir = d; break; }
@@ -2124,7 +2125,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
   // URL pattern: /api/content-asset/<paper>/<chapter>/rendered/<file>
   if (path.startsWith("/api/content-asset/")) {
     const rel = path.slice("/api/content-asset/".length);
-    const assetPath = join(FOLIO_DIR, rel);
+    const assetPath = join(FOLIO_DIR(), rel);
     return serveFile(assetPath)
       || new Response("Asset not found", { status: 404 });
   }
@@ -2173,7 +2174,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
       const { writeFileSync, readdirSync } = await import("fs");
 
       // Find the block's chapter directory
-      const paperDir = join(FOLIO_DIR, body.paperId);
+      const paperDir = join(FOLIO_DIR(), body.paperId);
       if (!existsSync(paperDir)) {
         return Response.json({ error: "Paper not found" }, { status: 404 });
       }
@@ -2203,7 +2204,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
     try {
       const body = await req.json() as { paperId: string; rootName: string; sha: string };
       const { readdirSync } = await import("fs");
-      const paperDir = join(FOLIO_DIR, body.paperId);
+      const paperDir = join(FOLIO_DIR(), body.paperId);
       if (!existsSync(paperDir)) {
         return Response.json({ error: "Paper not found" }, { status: 404 });
       }

@@ -75,7 +75,8 @@ if (MODES.size === 0) {
 // so the `**/*.lean` glob below had nothing to walk. Never noticed, because
 // this file threw `Cannot find module` at import and could not run at all.
 const REPO_ROOT = findContentRepoRoot();
-const FOLIO_ROOT = folioDir(REPO_ROOT);
+let _folio_rootMemo: string | undefined;
+const FOLIO_ROOT = (): string => (_folio_rootMemo ??= folioDir(REPO_ROOT));
 
 /**
  * The year from a CSL `issued` date, as a number.
@@ -150,9 +151,9 @@ async function modeCrossCheck(): Promise<CheckResult[]> {
   const refMap = new Map(references.map((r) => [r.id, r]));
   // Find all .lean files containing `-- Ref: [key] <description>` lines
   const leanFiles: string[] = [];
-  for await (const f of glob("**/*.lean", { cwd: path.join(FOLIO_ROOT) })) {
+  for await (const f of glob("**/*.lean", { cwd: path.join(FOLIO_ROOT()) })) {
     if (f.includes(".lake/")) continue;
-    leanFiles.push(path.join(FOLIO_ROOT, f as string));
+    leanFiles.push(path.join(FOLIO_ROOT(), f as string));
   }
   console.log(`\n[cross-check] scanning ${leanFiles.length} .lean files for -- Ref: comments...`);
   let comments = 0;
@@ -344,7 +345,7 @@ async function modePandoc(): Promise<CheckResult[]> {
     return out;
   }
   // Use existing references.bib (auto-generated)
-  const bibPath = path.join(FOLIO_ROOT, "..", "references.bib");
+  const bibPath = path.join(FOLIO_ROOT(), "..", "references.bib");
   if (!fs.existsSync(bibPath)) {
     out.push({ entry: "(references.bib)", severity: "warn", note: `not found at ${bibPath}; run "cd content && bun run export-bibtex" first` });
     return out;

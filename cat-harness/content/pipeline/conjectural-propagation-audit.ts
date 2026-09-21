@@ -45,7 +45,8 @@ const REPO_ROOT = findContentRepoRoot();
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
-const ROOT = join(folioDir(REPO_ROOT),  requirePaper(_paperArg));
+let _rootMemo: string | undefined;
+const ROOT = (): string => (_rootMemo ??= join(folioDir(REPO_ROOT),  requirePaper(_paperArg)));
 // First non-flag argument. `process.argv[2]` alone would pick up `--paper`
 // (or its value), which is how this script came to write its witness to a
 // file literally named `--paper`.
@@ -202,7 +203,7 @@ function escapeRe(s: string): string {
  * that: this audit exists to trace what rests on a conjecture.
  */
 async function loadAll(): Promise<Map<string, Block>> {
-  const { blocks, failures } = await loadBlocksUnder(ROOT);
+  const { blocks, failures } = await loadBlocksUnder(ROOT());
   if (reportLoadFailures(failures)) LOAD_FAILURES.push(...failures);
   return blocks;
 }

@@ -54,9 +54,10 @@ const REPO_ROOT = findContentRepoRoot();
 // references.ts, and the paper manifests. The paper lookup therefore always
 // missed and the ENTIRE detangler axis reported n/a on every folio,
 // silently, while looking healthy.
-const FOLIO_DIR = folioDir(REPO_ROOT);
+let _folio_dirMemo: string | undefined;
+const FOLIO_DIR = (): string => (_folio_dirMemo ??= folioDir(REPO_ROOT));
 const COMPUTATIONS_DIR = join(REPO_ROOT, "computations");
-const BIB_QA_REPORT = join(FOLIO_DIR, "bib-qa.json");
+const BIB_QA_REPORT = join(FOLIO_DIR(), "bib-qa.json");
 
 
 // ── Lazy-loaded bib-qa report (cached across calls per process) ─
@@ -95,7 +96,7 @@ let profileCheckCache: ProfileCheckResult | null | undefined;
 function loadProfileCheck(): ProfileCheckResult | null {
   if (profileCheckCache !== undefined) return profileCheckCache;
   try {
-    profileCheckCache = checkFolioProfile(REPO_ROOT, FOLIO_DIR);
+    profileCheckCache = checkFolioProfile(REPO_ROOT, FOLIO_DIR());
   } catch {
     // A throw is COULD-NOT-DETERMINE, never conformance. Swallowing it into a
     // pass is how `qa-checkers-extended`'s detangler axis once reported n/a on
@@ -212,7 +213,7 @@ function loadBibIdSet(): Set<string> {
   // Primary source: references.ts. Parse out every `id: "<key>"`.
   // This is robust to bib-qa.json absence (the file is gitignored).
   try {
-    const refsPath = join(FOLIO_DIR, "schema", "references.ts");
+    const refsPath = join(FOLIO_DIR(), "schema", "references.ts");
     if (existsSync(refsPath)) {
       const src = readFileSync(refsPath, "utf-8");
       const idRe = /\bid:\s*"([^"]+)"/g;
@@ -2021,12 +2022,12 @@ function loadChapterGraph(): void {
   let sawAnyPaper = false;
 
   for (const paper of papers) {
-    const paperTs = join(FOLIO_DIR, paper, `${paper}.ts`);
+    const paperTs = join(FOLIO_DIR(), paper, `${paper}.ts`);
     if (!existsSync(paperTs)) continue;
     sawAnyPaper = true;
     const src = readFileSync(paperTs, "utf-8");
     const dirs = [...src.matchAll(/dir:\s*"([^"]+)"/g)].map(m => m[1]);
-    const base = join(FOLIO_DIR, paper);
+    const base = join(FOLIO_DIR(), paper);
 
     // Reserve this paper's chapter index range up front so the block
     // scan and the position pass agree on indices.
@@ -2310,7 +2311,7 @@ export function checkDetanglerBlockTanglement(
   // Chapter key is `"<paper>/<chapter>"`, matching loadChapterGraph's
   // namespacing — a multi-paper folio must not collide two same-named
   // chapters. Platform-aware split: `relative()` yields `\` on Windows.
-  const relSeg = relative(FOLIO_DIR, tsPath).split(/[\\/]/);
+  const relSeg = relative(FOLIO_DIR(), tsPath).split(/[\\/]/);
   const thisChapter = relSeg.length >= 2 ? `${relSeg[0]}/${relSeg[1]}` : relSeg[0];
   const thisIdx = _chapterOrder.get(thisChapter) ?? 999;
 
@@ -2520,7 +2521,7 @@ function topicKeywords(): Record<string, string[]> {
   if (_topicKeywords) return _topicKeywords;
   const merged: Record<string, string[]> = {};
   for (const paper of findPapers(REPO_ROOT)) {
-    const f = join(FOLIO_DIR, paper, "topic-keywords.json");
+    const f = join(FOLIO_DIR(), paper, "topic-keywords.json");
     if (!existsSync(f)) continue;
     try {
       const parsed = JSON.parse(readFileSync(f, "utf-8"));
@@ -2580,7 +2581,7 @@ export function checkDetanglerTopicCoherence(
 
   // Bare chapter name here (not the `paper/chapter` key): the keyword
   // table below is keyed by chapter directory name.
-  const homeSeg = relative(FOLIO_DIR, mdPath).split(/[\\/]/);
+  const homeSeg = relative(FOLIO_DIR(), mdPath).split(/[\\/]/);
   const homeChapter = homeSeg.length >= 2 ? homeSeg[1] : homeSeg[0]; // platform-aware (relative() yields `\` on Windows)
   // If we have no keyword profile for the home chapter we cannot judge
   // coherence — its home score is structurally 0, so ANY other-chapter

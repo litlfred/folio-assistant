@@ -452,7 +452,8 @@ function formatWarningsLog(report: ValidationReport): string {
 
 // Was `join(import.meta.dir, "..")` — `<platform>/content`, which holds only
 // `pipeline/`. The papers this validates live in the folio.
-const FOLIO_ROOT = folioDir(findContentRepoRoot());
+let _folio_rootMemo: string | undefined;
+const FOLIO_ROOT = (): string => (_folio_rootMemo ??= folioDir(findContentRepoRoot()));
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
@@ -479,8 +480,8 @@ if (import.meta.main) {
     mdFiles = [singleFile];
   } else {
     const searchDir = paper
-      ? join(FOLIO_ROOT, paper)
-      : FOLIO_ROOT;
+      ? join(FOLIO_ROOT(), paper)
+      : FOLIO_ROOT();
 
     const glob = new Glob("**/*.md");
     for (const match of glob.scanSync({ cwd: searchDir })) {
@@ -515,7 +516,7 @@ if (import.meta.main) {
   // "No errors found." and exited 0 having read no files at all.
   if (report.snippetsFound === 0) {
     console.error(
-      `\nNo TeX snippets found under ${FOLIO_ROOT} — refusing to report success.\n` +
+      `\nNo TeX snippets found under ${FOLIO_ROOT()} — refusing to report success.\n` +
       "This validates a FOLIO's .md content; folio-assistant is the platform.\n" +
       "Run it from the content repo, or pass --paper.",
     );

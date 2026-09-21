@@ -46,7 +46,8 @@ import { expectedInstanceConfigPath } from "../schemas/harness-config";
 // ── Repo layout ──────────────────────────────────────────────────────────────
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
-const FOLIO_DIR = folioDir(INSTANCE_ROOT);
+let _folio_dirMemo: string | undefined;
+const FOLIO_DIR = (): string => (_folio_dirMemo ??= folioDir(INSTANCE_ROOT));
 const PREAMBLE_PATH = join(INSTANCE_ROOT, "latex", "preamble.tex");
 const BLOCK_PDFS_DIR = join(INSTANCE_ROOT, "build", "block-pdfs");
 const GOOGLE_DRIVE_MCP = join(INSTANCE_ROOT, "src", "google-drive-mcp.py");
@@ -98,7 +99,7 @@ function hasCommand(cmd: string): boolean {
 function getChangedBlockFiles(): string[] {
   if (EXPLICIT_FILES.length > 0) return EXPLICIT_FILES.map(f => resolve(f));
 
-  const paperDir = join(FOLIO_DIR, PAPER);
+  const paperDir = join(FOLIO_DIR(), PAPER);
   if (!existsSync(paperDir)) {
     console.error(`[render-changed-blocks] Paper directory not found: ${paperDir}`);
     process.exit(2);
@@ -191,9 +192,9 @@ async function loadAllBlocks(): Promise<{
   entries: Map<string, BlockEntry>;
 }> {
   const { buildPaper } = await import(
-    join(FOLIO_DIR, "pipeline", "build.ts")
+    join(FOLIO_DIR(), "pipeline", "build.ts")
   );
-  const paperManifestPath = join(FOLIO_DIR, PAPER, `${PAPER}.ts`);
+  const paperManifestPath = join(FOLIO_DIR(), PAPER, `${PAPER}.ts`);
   if (!existsSync(paperManifestPath)) {
     console.error(`[render-changed-blocks] Paper manifest not found: ${paperManifestPath}`);
     process.exit(2);
@@ -207,7 +208,7 @@ async function loadAllBlocks(): Promise<{
 
   // Build a flat map blockName → entry by scanning paper chapter dirs
   const entries = new Map<string, BlockEntry>();
-  const paperDir = join(FOLIO_DIR, PAPER);
+  const paperDir = join(FOLIO_DIR(), PAPER);
 
   for (const chapterRef of paper.chapters ?? []) {
     const chDir = join(paperDir, chapterRef.dir);
@@ -340,7 +341,7 @@ interface BlockResult {
 
 async function renderBlock(entry: BlockEntry, paper: Paper): Promise<BlockResult> {
   const { generateBlockStandaloneTex } = await import(
-    join(FOLIO_DIR, "pipeline", "generate-block-tex.ts")
+    join(FOLIO_DIR(), "pipeline", "generate-block-tex.ts")
   );
 
   // Load block

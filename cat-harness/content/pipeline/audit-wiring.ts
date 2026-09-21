@@ -42,7 +42,8 @@ import { paperArg } from "./cli-args";
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
 const PAPER = requirePaper(_paperArg);
-const PAPER_DIR = join(folioDir(findContentRepoRoot()),  PAPER);
+let _paper_dirMemo: string | undefined;
+const PAPER_DIR = (): string => (_paper_dirMemo ??= join(folioDir(findContentRepoRoot()),  PAPER));
 const OUT_JSON = resolve(__dirname, "../audit-wiring.json");
 
 // Block kinds that don't require a .lean file.
@@ -162,13 +163,13 @@ function bucketFor(audit: BlockAudit, _allLabels: Set<string>): Bucket {
 }
 
 async function auditPaper(): Promise<AuditReport> {
-  const chapters = listChapters(PAPER_DIR);
+  const chapters = listChapters(PAPER_DIR());
   const blocks: BlockAudit[] = [];
 
   // First pass: load all blocks to build the label registry.
   const blocksByLabel = new Map<string, BlockAudit>();
   for (const chapter of chapters) {
-    const chapterDir = join(PAPER_DIR, chapter);
+    const chapterDir = join(PAPER_DIR(), chapter);
     const blockNames = listBlockManifests(chapterDir);
     for (const name of blockNames) {
       const tsPath = join(chapterDir, `${name}.ts`);
@@ -213,7 +214,7 @@ async function auditPaper(): Promise<AuditReport> {
   // Second pass: resolve uses[] and assign buckets.
   const allLabels = new Set(blocksByLabel.keys());
   for (const audit of blocks) {
-    const tsPath = join(PAPER_DIR, audit.chapter, `${audit.blockName}.ts`);
+    const tsPath = join(PAPER_DIR(), audit.chapter, `${audit.blockName}.ts`);
     let block: Block | null = null;
     try {
       block = (await import(tsPath)).default;

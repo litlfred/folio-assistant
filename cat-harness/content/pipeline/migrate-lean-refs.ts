@@ -31,7 +31,8 @@ import { findContentRepoRoot } from "./repo-root";
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-const FOLIO_ROOT = folioDir(REPO_ROOT);
+let _folio_rootMemo: string | undefined;
+const FOLIO_ROOT = (): string => (_folio_rootMemo ??= folioDir(REPO_ROOT));
 const WRITE = process.argv.includes("--write");
 
 /** Paper directory → Lake package short-name. */
@@ -76,7 +77,7 @@ function walk(dir: string): string[] {
  * paper (caller then logs + skips).
  */
 function packageForFile(absPath: string): string | undefined {
-  const rel = relative(FOLIO_ROOT, absPath);
+  const rel = relative(FOLIO_ROOT(), absPath);
   // Cross-platform: `relative()` returns `\` on Windows, `/` on POSIX.
   // Split on either separator so the paper-directory lookup works on
   // both platforms.
@@ -172,7 +173,7 @@ function transform(src: string, pkg: string): { src: string; matches: number } {
 }
 
 function main() {
-  const files = walk(FOLIO_ROOT);
+  const files = walk(FOLIO_ROOT());
   const stats: FileStats[] = [];
   let totalMatches = 0;
   let totalFiles = 0;
