@@ -2691,6 +2691,42 @@ export function siteDirFor(root: string): string {
 }
 
 /**
+ * {@link artefactStub} for the instance rooted at `root`, read from its
+ * declaration — the RAW read, for the same reason {@link siteDirFor} takes one.
+ *
+ * `readDeclaration` validates the whole declaration, which means it throws
+ * when ANY directory in it names a graph kind the harness layer has not
+ * registered. `siteDirFor` documents that hazard above and avoids it; this is
+ * the missing half, and its absence was a real cost rather than a tidiness
+ * point: the 2026-09-21 stub rename (issue #649) needed the published artefact
+ * name in two Playwright suites, and `readDeclaration` threw there on exactly
+ * the unregistered-kind path `siteDirFor` warns about — in a browser job,
+ * where the failure reads as "no tests found" rather than as a bad read.
+ *
+ * Throws rather than defaulting, like its sibling. A guessed artefact name
+ * sends a consumer to a document nothing publishes, and "could not determine"
+ * is never rendered as an answer.
+ */
+export function artefactStubFor(root: string): string {
+  const p = join(root, DECLARATION_FILENAME);
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    throw new Error(
+      `cannot determine the artefact stub: ${p} is unreadable or not valid JSON ` +
+        `(${e instanceof Error ? e.message : String(e)})`,
+    );
+  }
+  const d = raw as { name?: unknown; stub?: unknown };
+  const stub = typeof d.stub === "string" && d.stub ? d.stub : d.name;
+  if (typeof stub !== "string" || !stub) {
+    throw new Error(`cannot determine the artefact stub: ${p} declares neither \`stub\` nor \`name\``);
+  }
+  return stub;
+}
+
+/**
  * A declared asset's path, as the PUBLISHED site serves it.
  *
  * `docs/assets/img/x.webp` → `/assets/img/x.webp`. An instance declares an
