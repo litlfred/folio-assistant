@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/skills/quality-control/output.schema.json",
+  "title": "Quality Control Output",
+  "description": "Output schema for quality control results.",
+  "type": "object",
+  "required": [
+    "overallResult"
+  ],
+  "properties": {
+    "overallResult": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "pass-with-warnings",
+        "fail"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "category",
+          "message"
+        ],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "category": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "remediation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checklistResults": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail",
+          "not-applicable"
+        ]
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/peaceful-heisenberg-dzgsf1",
+    "sha": "beb7256fe9e74ab3df656b97b55f995e70103925",
+    "pr": "671/merge",
+    "run": "35574567527"
+  }
+}

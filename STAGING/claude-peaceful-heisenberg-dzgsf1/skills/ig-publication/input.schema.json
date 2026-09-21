@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/skills/ig-publication/input.schema.json",
+  "title": "IG Publication Input",
+  "description": "Input schema for FHIR Implementation Guide publication.",
+  "type": "object",
+  "required": [
+    "igRoot",
+    "versionIncrement"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "description": "Semantic version increment type."
+    },
+    "releaseNotes": {
+      "type": "string",
+      "description": "Release notes for this publication."
+    },
+    "publicationTarget": {
+      "type": "string",
+      "enum": [
+        "github-pages",
+        "smart-who-int",
+        "both"
+      ],
+      "default": "github-pages"
+    }
+  },
+  "staging": {
+    "branch": "claude/peaceful-heisenberg-dzgsf1",
+    "sha": "beb7256fe9e74ab3df656b97b55f995e70103925",
+    "pr": "671/merge",
+    "run": "35574567527"
+  }
+}

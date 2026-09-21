@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/skills/document-structure/output.schema.json",
+  "title": "Document Structure Output",
+  "type": "object",
+  "required": [
+    "manifestsChanged"
+  ],
+  "properties": {
+    "manifestsChanged": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Chapter directory names in their new reading order."
+    },
+    "forwardReferences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] now points forward in reading order. A real finding after a reorder, not a mechanical detail."
+    }
+  },
+  "staging": {
+    "branch": "claude/peaceful-heisenberg-dzgsf1",
+    "sha": "beb7256fe9e74ab3df656b97b55f995e70103925",
+    "pr": "671/merge",
+    "run": "35574567527"
+  }
+}

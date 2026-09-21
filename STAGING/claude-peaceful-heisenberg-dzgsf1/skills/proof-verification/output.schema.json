@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/skills/proof-verification/output.schema.json",
+  "title": "Proof Verification Output",
+  "description": "Output schema for the proof-verification skill.",
+  "type": "object",
+  "required": [
+    "verified",
+    "sorryCount"
+  ],
+  "properties": {
+    "verified": {
+      "type": "boolean"
+    },
+    "sorryCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sorries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "file",
+          "line",
+          "obligation"
+        ],
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "obligation": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/peaceful-heisenberg-dzgsf1",
+    "sha": "beb7256fe9e74ab3df656b97b55f995e70103925",
+    "pr": "671/merge",
+    "run": "35574567527"
+  }
+}

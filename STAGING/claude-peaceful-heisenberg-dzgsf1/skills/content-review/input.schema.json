@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/skills/content-review/input.schema.json",
+  "title": "Content Review Input",
+  "description": "Input schema for formal content review and approval workflow.",
+  "type": "object",
+  "required": [
+    "reviewType",
+    "contentRef"
+  ],
+  "properties": {
+    "reviewType": {
+      "type": "string",
+      "enum": [
+        "l2-to-l3-gate",
+        "l3-to-publish-gate",
+        "change-assessment",
+        "final-signoff"
+      ],
+      "description": "Type of review phase gate."
+    },
+    "contentRef": {
+      "type": "string",
+      "description": "Git ref or path to the content being reviewed."
+    },
+    "previousVersion": {
+      "type": "string",
+      "description": "Git ref of the previous approved version (for diff)."
+    },
+    "validationReport": {
+      "type": "string",
+      "description": "Path to the validation report for this content."
+    }
+  },
+  "staging": {
+    "branch": "claude/peaceful-heisenberg-dzgsf1",
+    "sha": "beb7256fe9e74ab3df656b97b55f995e70103925",
+    "pr": "671/merge",
+    "run": "35574567527"
+  }
+}
