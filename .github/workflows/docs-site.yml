@@ -298,7 +298,13 @@ jobs:
       # `.jsonld` stays canonical — it is what every `@id` names — so this is
       # an alias, not a rename. See `skills/folio-core/serving-renderings.md`.
       #
-      # No --base-url: the declaration's canonicalUrl is correct for main.
+      # No --base-url: the declaration's canonicalUrl is correct for main,
+      # and a foreign instance declaring none falls back to it — see
+      # `exportIdentity`, which carries that rule and why (bean `40fl`).
+      #
+      # `check:published-instance-exports` runs the `--instance` commands
+      # below from a checkout, so a break in them is visible before a merge
+      # rather than only in this workflow's own run (bean `u1iu`).
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)

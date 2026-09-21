@@ -701,6 +701,15 @@ jobs:
           # every export below it — which is how bean `95s1` got an error
           # 3,186 lines from its cause that looked like a circular import.
           bun run check:module-scope-resolution
+          # Every foreign-instance export `docs-site.yml` actually runs, run
+          # the way it runs it — no `--base-url`, on the declaration's own
+          # authority. The deploy failed SEVEN consecutive times on `main`
+          # (2026-09-21) on one command this set did not contain, and six
+          # merges landed against the green it printed meanwhile. The
+          # invocations are read out of the deploy YAML rather than listed,
+          # so adding one there is covered here with no edit; finding none
+          # is exit 1, not a pass (issue #720, bean `u1iu`).
+          bun run check:published-instance-exports
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no

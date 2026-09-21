@@ -143,6 +143,12 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
+      // HARNESS for the same reason as `check-ci-health` above: its subject
+      // is this repository's own deploy workflow — which commands it runs
+      // and whether they succeed — and it reads no folio content at all.
+      // It builds an instance's KG the way `kg-export` (already harness,
+      // below) does, one instance at a time (issue #720).
+      "scripts/check-published-instance-exports.ts",
       // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
       // entry was added to `RULES` while `RULES` was moving to this file,
       // so it arrives here rather than where it was written.

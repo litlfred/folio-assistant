@@ -2356,7 +2356,27 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // the published document and renders it — so removing them needs the viewer
   // pointed at the published result first, and a half-moved field would take
   // the viewer's panel with it.
-  const resultPath = writeQaResult(ROOT, "kg-export", buildQaResult({
+  // ── ONE SIDECAR PER SUBJECT, because the stem is the only thing keeping
+  //    two instances' findings apart ─────────────────────────────────────
+  //
+  // The stem was the constant `"kg-export"`, so EVERY instance's export wrote
+  // the same committed file and the last writer won. Measured 2026-09-21: one
+  // `--instance ./cat-bootstrap` run replaced this instance's committed result
+  // wholesale — `subject.id` flipped from `cat-harness.jsonld` to
+  // `cat-bootstrap.jsonld` and the findings with it, in a file whose whole
+  // purpose is saying what was found about WHICH graph.
+  //
+  // Invisible while one document was ever built, and it stayed invisible in CI
+  // because the deploy does not commit the sidecar. It surfaced the moment a
+  // gate ran the deploy's own commands from a checkout.
+  //
+  // Same rule the `kg-qa` tree already follows — a sidecar mirrors its
+  // subject's path "because flat would collide". The HOST keeps the bare stem
+  // so its committed path is unchanged; a foreign instance is qualified by its
+  // own stub.
+  const hostStub = artefactStub(readDeclaration(ROOT)!);
+  const qaStem = stub === hostStub ? "kg-export" : `kg-export.${stub}`;
+  const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
     subject: { kind: "graph", id: `${stub}.jsonld` },
