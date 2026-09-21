@@ -4,7 +4,6 @@ title: 'UNTAINTED VERIFICATION: one dispatch mechanism for code QC and for evide
 status: in-progress
 type: epic
 priority: high
-parent: folio-assistant-ahvw
 created_at: 2026-09-21T21:53:39Z
 updated_at: 2026-09-21T21:53:39Z
 ---
