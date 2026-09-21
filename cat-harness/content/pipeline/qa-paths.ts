@@ -91,6 +91,84 @@ export function existingBlockQaPath(repoRoot: string, blockRoot: string): string
   return blockQaReadPaths(repoRoot, blockRoot).find((p) => existsSync(p));
 }
 
+// ── Translation verdicts ────────────────────────────────────────
+
+/**
+ * Where a TRANSLATION verdict lives — one per (subject, locale).
+ *
+ * The same three properties as the block tree above, for the same reasons: the
+ * results tree MIRRORS the subject's directory (stems repeat across chapters
+ * and locales), reading falls back to the legacy sibling so a downstream folio
+ * does not report every translation unaudited the day it upgrades, and writing
+ * never falls back so one subject cannot end up with two verdicts that
+ * disagree.
+ *
+ * **One reason here is not in the block case, and it is the stronger one.** A
+ * translation subject may be a page under the Jekyll site — `docs/index.md` is
+ * the one that prompted this (bean `pp93`) — and a sibling verdict there is not
+ * merely untidy, it is PUBLISHED. `docs/index.fr.translation-qa.json` would be
+ * copied into `_site` and served, an internal QA artefact on the public docs
+ * site with no page linking to it. The results tree is outside the site, so the
+ * question does not arise.
+ */
+export const TRANSLATION_QA_RESULTS_DIR = join("test", "results", "translation-qa");
+
+/** The sidecar suffix, given a locale. One spelling, as above. */
+export function translationQaSuffix(locale: string): string {
+  return `.${locale}.translation-qa.json`;
+}
+
+/**
+ * The canonical write location for one (subject, locale) translation verdict.
+ *
+ * @param repoRoot     absolute instance root
+ * @param subjectRoot  absolute subject path prefix — the `.md` without its
+ *                     extension, whether that is a block or a docs page
+ */
+export function translationQaPath(
+  repoRoot: string,
+  subjectRoot: string,
+  locale: string,
+): string {
+  return join(
+    repoRoot,
+    TRANSLATION_QA_RESULTS_DIR,
+    relative(repoRoot, subjectRoot) + translationQaSuffix(locale),
+  );
+}
+
+/** The legacy location: the verdict as a companion of the subject. */
+export function legacyTranslationQaPath(subjectRoot: string, locale: string): string {
+  return subjectRoot + translationQaSuffix(locale);
+}
+
+/**
+ * Every place a (subject, locale) verdict might be, newest convention first.
+ */
+export function translationQaReadPaths(
+  repoRoot: string,
+  subjectRoot: string,
+  locale: string,
+): string[] {
+  return [
+    translationQaPath(repoRoot, subjectRoot, locale),
+    legacyTranslationQaPath(subjectRoot, locale),
+  ];
+}
+
+/**
+ * The verdict to READ for one (subject, locale), or `undefined` when it has
+ * none. `undefined` means genuinely unaudited, never "looked in the wrong
+ * place".
+ */
+export function existingTranslationQaPath(
+  repoRoot: string,
+  subjectRoot: string,
+  locale: string,
+): string | undefined {
+  return translationQaReadPaths(repoRoot, subjectRoot, locale).find((p) => existsSync(p));
+}
+
 /**
  * The block manifest a results-tree verdict belongs to.
  *
