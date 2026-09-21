@@ -3467,14 +3467,14 @@
     {
       "id": "folio-assistant-lps0",
       "title": "KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:59:22Z",
-      "updatedAt": "2026-09-21T12:37:26Z",
+      "updatedAt": "2026-09-21T20:17:11Z",
       "preview": "`kg-audit.ts` walks a hardcoded `KG_ROOT = join(root, \"skills\")` when it\ncollects skill subjects (`skillFiles()`, line ~578). **Every skill outside\n`skills/` is therefore unaudited** — not reported as unknown, not reported at\nall. It is the `dh4f` shape in the tool whose job is finding that shape.\n\n## Measured, 2026-09-20\n\nThe instance declares several `cat-harness` directories that hold skills\nDI",
       "file": "beans/defs/folio-assistant-lps0--kg-audit-skillfiles-walks-a-hardcoded-skills-so-ev.md"
     },
@@ -4153,6 +4153,20 @@
       "file": "beans/defs/folio-assistant-q2wm--render-safety-declared-xss-hints-on-tools-and-skil.md"
     },
     {
+      "id": "folio-assistant-q2wn",
+      "title": "check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T22:20:00Z",
+      "updatedAt": "2026-09-21T22:20:00Z",
+      "preview": "Found 2026-09-21 while measuring `x4a6`, and **not fixed there** because it is\nabout the partition checker rather than about graph kinds.\n\n`scripts/partition/engine.ts`:\n\n```ts\nconst IMPORT_RE = /(?:^|\\n)\\s*(?:import|export)[\\s\\S]{0,400}?from\\s*[\"']([^\"']+)[\"']|import\\s*\\(\\s*[\"']([^\"']+)[\"']\\s*\\)/g;\n```\n\nTwo alternatives: a statement containing `from`, and a dynamic `import()`.\n**Neither matches `",
+      "file": "beans/defs/folio-assistant-q2wn--checkpartitions-import-regex-cannot-see-a-bare-si.md"
+    },
+    {
       "id": "folio-assistant-q6ud",
       "title": "DEGRADATION ENFORCED: join a skill's declared strategy to the capability probes",
       "status": "completed",
@@ -4549,14 +4563,14 @@
     {
       "id": "folio-assistant-sfhr",
       "title": "STORE DEFECTS the check does not see: an empty in-progress body, a title that ate its Done-when, a blocker on a scrapped bean",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-21T19:22:36Z",
+      "updatedAt": "2026-09-21T21:34:26Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`beans check` passes (\"No link issues found\"), and three beans are unreadable by the tooling or by a person: `70c7` is `in-progress` with an E",
       "file": "beans/defs/folio-assistant-sfhr--store-defects-the-check-does-not-see-an-empty-in-p.md"
     },
@@ -4699,6 +4713,20 @@
       "updatedAt": "2026-09-21T12:44:47Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R10 + R7. Unit 6 of 10.\n\nThe owner: *\"each content type controls its own avatar, visualtion/rendering. but\nassume they can open a full screen panel w/ fixed controls like [x] or [linksrc] or\n[edit] or what not depedning on conent.\"*\n\n**CRDM Q7, answered: the kind declares its controls; the platform fixes the chrome.**\n`[x]` is always ",
       "file": "beans/defs/folio-assistant-t4my--panel-chrome-the-kind-declares-its-controls-the-pl.md"
+    },
+    {
+      "id": "folio-assistant-t6s7",
+      "title": "A bean whose FENCE is mangled is skipped by every check, and a declared-but-absent store reports clean",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:41:44Z",
+      "updatedAt": "2026-09-21T20:48:56Z",
+      "preview": "`t7ao` closed the LOUD case: a bean whose YAML does not parse takes the whole\nstore down, and 92 gates passed over it. This is the QUIET case, and it\nsurvived that fix because the new gate inherits the blind spot from the reader\nit is built on.\n\n`readBeanFiles` in `cat-harness/scripts/bean-store-read.ts` collapses two\ndifferent answers into \"nothing here\", and every one of its four consumers\ninher",
+      "file": "beans/defs/folio-assistant-t6s7--a-bean-whose-fence-is-mangled-is-skipped-by-every.md"
     },
     {
       "id": "folio-assistant-t7ao",
@@ -4859,14 +4887,14 @@
     {
       "id": "folio-assistant-ug4r",
       "title": "A lane deliberately bound to NO role is indistinguishable from one nobody got round to",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:17:46Z",
-      "updatedAt": "2026-09-21T19:18:11Z",
+      "updatedAt": "2026-09-21T20:41:59Z",
       "preview": "Found 2026-09-21 working bean `sqtq`, by nearly making the mistake it\ndescribes.\n\n## What happened\n\n157 task-containing lanes, and exactly one resolves to no role: `Actor`, in\n`bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s\n§\"Adding a role\", worked out the `actorKinds` and the `skills`, and was about\nto add it when the end of the file said:\n\n> THE FIFTH LANE IS DELIBERATELY UN",
       "file": "beans/defs/folio-assistant-ug4r--a-lane-deliberately-bound-to-no-role-is-indistingu.md"
     },
@@ -4967,6 +4995,20 @@
       "updatedAt": "2026-09-21T17:31:42Z",
       "preview": "Owner, 2026-09-21: \"folios have tiles do not go to the window. they are stacked around (bottom?, again read exsiting docs/siblings/beans) of folio, slid away, open to tiles to things like fsh-gts, todos, docs, etc.\"\n\nCORPUS CHECK. harness-tiles already states the rule this refines: 'Tiles render in the navbar AND on the board: one declaration, per-surface visibility, never two registries.' So the ",
       "file": "beans/defs/folio-assistant-v0jv--folio-tiles-belong-to-the-folio-edge-slid-away-not.md"
+    },
+    {
+      "id": "folio-assistant-v18c",
+      "title": "Navbar tiles: uploads and library are two tiles for ONE page, and cat-harness's library is empty",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:09:01Z",
+      "updatedAt": "2026-09-21T21:09:01Z",
+      "preview": "Found 2026-09-21 while fixing the library viewers' parse error (the owner:\n*\"way too many tiles (non functional) on LHS explode menu\"*). **The parse error\nis fixed and shipped separately**; this is what is left after it.\n\n## Measured in a browser, after the fix — 12 navbar tiles\n\n| tile | renders |\n|---|---|\n| `schemas` (cat-harness) | 773 declarations |\n| `detangle-schemas` / `large-datasets-sche",
+      "file": "beans/defs/folio-assistant-v18c--navbar-tiles-uploads-and-library-are-two-tiles-for.md"
     },
     {
       "id": "folio-assistant-v1hw",
@@ -5353,7 +5395,7 @@
     {
       "id": "folio-assistant-x4a6",
       "title": "Declare docs/ as the instance's renderable graph — blocked on core's folio registration reaching every declaration reader",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -5362,7 +5404,7 @@
         "folio-assistant-cjtm"
       ],
       "createdAt": "2026-09-19T08:00:02Z",
-      "updatedAt": "2026-09-19T10:19:49Z",
+      "updatedAt": "2026-09-21T22:22:00Z",
       "preview": "Found and measured while doing bean `lgwe` (PR #351).\n\n## The gap\n\n`docs/` is this instance's Jekyll site — 150+ pages, `_config.yml`, the whole\npublished documentation — and **nothing declares it**. `cat-harness.json`\ndeclares `docs/assets/qa/` (the witnesses) and nothing else under it. So a\nconsumer asking \"which directories does this instance scan\" is not told about\nthe one a reader actually se",
       "file": "beans/defs/folio-assistant-x4a6--declare-docs-as-the-instances-renderable-graph-blo.md"
     },
@@ -5968,7 +6010,7 @@
       "kind": "blocker-closed",
       "bean": "folio-assistant-cjtm",
       "blocks": "folio-assistant-x4a6",
-      "detail": "is completed but still blocks `folio-assistant-x4a6`, which is todo"
+      "detail": "is completed but still blocks `folio-assistant-x4a6`, which is in-progress"
     }
   ]
 }

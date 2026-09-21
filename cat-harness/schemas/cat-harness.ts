@@ -1447,6 +1447,34 @@ export class GraphKindConflictError extends Error {
  * call site — a second place that knows the old name is a second place that
  * can forget it.
  */
+/**
+ * Where a known-but-unregistered kind is registered, for the error message.
+ *
+ * **The message named the DECLARATION ENTRY and not the caller**, so it
+ * pointed at `cat-harness.json` — a file that is correct — while the mistake
+ * was a missing import in whichever module happened to read it first. Telling
+ * somebody a kind "must be registered" without naming the import leaves them
+ * to grep for it.
+ *
+ * Measured 2026-09-21 before adding this: of the **31 real call sites** of
+ * `directoryForGraph`/`directoriesForGraph`, **31 reach the registration**, so
+ * nothing is broken today and this is a guard against regression rather than a
+ * fix. It is worth having because the repository has already paid for this
+ * once — `bunfig.toml` records the suite green locally (3198 pass) and red in
+ * CI on the same commit, 2026-09-20, from exactly this load-order dependence,
+ * with five files latently order-dependent and CI catching only the first.
+ *
+ * Deliberately a lookup rather than a field on `GraphKindDef`: a kind that is
+ * not registered has no def to carry one, which is the whole situation here.
+ */
+const REGISTRATION_MODULE: Readonly<Record<string, string>> = {
+  // declared-path-literal: NOT a declared path — this is the module SPECIFIER
+  // a reader must import, quoted inside an error message so the remedy can be
+  // pasted. It resolves through the module graph, not through the declaration,
+  // so routing it through a directory resolver would be a category error.
+  folio: "schemas/folio-graph-kind.js",
+};
+
 export const GRAPH_KIND_ALIASES: Readonly<Record<string, string>> = {
   kg: "cat-harness",
 };
@@ -3756,7 +3784,12 @@ export function readDeclaration(
           `${p}: directory "${dir.id}" declares unknown graph kind "${g}". ` +
             `Known kinds: ${registry.names().join(", ")}. ` +
             `A kind contributed by a dependency must be registered before the ` +
-            `declaration is read.`,
+            `declaration is read.` +
+            (REGISTRATION_MODULE[g] === undefined
+              ? ""
+              : ` Add \`import "${REGISTRATION_MODULE[g]}";\` to the module that ` +
+                `reads this declaration — the import is for its SIDE EFFECT, so it ` +
+                `takes no binding and must not be elided.`),
         );
       }
     }
