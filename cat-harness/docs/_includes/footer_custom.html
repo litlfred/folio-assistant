@@ -20,6 +20,24 @@
   than no stamp at all. A local `jekyll serve` has no data file and shows
   "dev".
 {%- endcomment -%}
+{%- comment -%}
+  THE LINEAR FLOOR, and it is page content rather than a script's output.
+
+  `generated/todo-listing.html` is written by `gen-docs-pages.ts` from the same
+  `items` array that produces `assets/todos/index.json`. The JSON is FETCHED by
+  `docs-ui.js` after the page loads; this fragment is already in the bytes the
+  server sent, which is the whole point — measured on `main`, 2026-09-21, a
+  reader with JavaScript off got no note, no count, and no hint that notes
+  exist.
+
+  IT IS INCLUDED HERE, in the footer of every page, and not only where
+  somebody remembered to put it: the board is launched from every page, so a
+  floor that exists on some of them is not a floor. `docs-ui.js` collapses it
+  into a disclosure once the board is available — collapsed, never removed,
+  because an action whose inverse is not reachable is not a toggle
+  (`board-windows`, bean `l4zi`).
+{%- endcomment -%}
+{%- include generated/todo-listing.html -%}
 {%- if site.footer_content -%}
   <p class="text-small mb-0">{{ site.footer_content }}</p>
 {%- endif -%}

@@ -32,6 +32,8 @@ and a typed content-object model.
 [Install](installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
 
+{% include harness_details.html %}
+
 ---
 
 ## Four things, in order

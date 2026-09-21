@@ -254,6 +254,32 @@ region untouched, and an empty directory is still a determined empty), why every
 link is resolved rather than composed, why `raw` is not the private-repo answer,
 and the two defects in the whole-file generator it replaced.
 
+## Boards, windows and harness tiles — pointers only
+
+A **board is a diagram OF a folio**, in the OMG sense that `BPMNDiagram` is a
+diagram of a `bpmn:process`: the folio carries what is true, the layout layer
+carries where it was drawn, and the arrow runs `folio → board → position →
+note` and never back. A folio is complete with no board.
+
+**The discipline is in the skills, not here** —
+[`board-diagram-interchange`](cat-harness/skills/folio-core/board-diagram-interchange.md)
+carries that split, why a note holds no coordinate, and how an orphan is swept
+from the LAYER;
+[`board-windows`](cat-harness/skills/folio-core/board-windows.md) carries the
+two mechanisms that must not be conflated — semantic zoom is automatic and
+driven by size, open and close are a person's — and the `l4zi` rule that an
+action whose inverse is not reachable is not a toggle;
+[`harness-tiles`](cat-harness/skills/folio-core/harness-tiles.md) carries why a
+tile belongs to the **harness** rather than to a node, why `instantiated` is a
+different question from `declared`, and the two gaps it reports rather than
+hides.
+
+The processes are executable diagrams, not prose: `board-open-close.bpmn`,
+`board-relocate.bpmn` and `board-place-note.bpmn` under `skills/workflows/`,
+indexed with the rest on the [publication-workflow
+page](cat-harness/docs/publication-workflow.md). **Count the directory rather
+than quoting a number from this paragraph** — `bpmn-processes` says why.
+
 ## CI health — a red workflow looks exactly like a green one from in here
 
 A workflow's outcome is invisible from a checkout, so one here fired on every

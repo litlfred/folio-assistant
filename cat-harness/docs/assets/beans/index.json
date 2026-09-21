@@ -147,14 +147,14 @@
     {
       "id": "folio-assistant-0jtj",
       "title": "LINEAR FLOOR: the tile listing is the artefact and the board is an overlay over it",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:46:31Z",
-      "updatedAt": "2026-09-20T21:46:31Z",
+      "updatedAt": "2026-09-21T10:51:15Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R4 + R8. Unit 5 of 10.\n\nThe owner: *\"this dymanic moving state is overlayed, its an 'extra'. on stndard\nfolio just simple tile based listing.\"* and, from the original ask, *\"but ALWAYS\ncollapsable to linearly rendablee/just the docs.\"*\n\n**This is an accessibility floor, not a fallback.** A board that cannot be read\nlinearly cannot be ",
       "file": "beans/defs/folio-assistant-0jtj--linear-floor-the-tile-listing-is-the-artefact-and.md"
     },
@@ -1953,6 +1953,20 @@
       "file": "beans/defs/folio-assistant-cflw--generated-artefacts-collide-218-sidecars-rewritten.md"
     },
     {
+      "id": "folio-assistant-chq5",
+      "title": "STUCK-CHECK TRAP: a parent token in the agent's lane, a live position two lanes away — and one instance commits an absolute path",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T11:10:26Z",
+      "updatedAt": "2026-09-21T11:12:15Z",
+      "preview": "Found 2026-09-21 while measuring `v49e`'s join. **This bean was written once\nwith the opposite conclusion and rewritten after a roast.** The wrong version\nis kept below as the worked example, because the mistake it made is precisely\nthe mistake the check this bean asks for would make.\n\n## What is actually true\n\nTwo `running` CRDM instances. **Both are waiting on a human, correctly.**\n\n| instance |",
+      "file": "beans/defs/folio-assistant-chq5--stuck-check-trap-a-parent-token-in-the-agents-lane.md"
+    },
+    {
       "id": "folio-assistant-ci29",
       "title": "BEAN ARCHIVING: document both dispositions — per-activity op and periodic sweep — in the skill",
       "status": "completed",
@@ -2467,7 +2481,7 @@
     {
       "id": "folio-assistant-gn4l",
       "title": "kg-export is written for THIS instance's shape, not just hardcoded to its root",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -2533,6 +2547,20 @@
       "updatedAt": "2026-09-21T05:29:17Z",
       "preview": "The owner, 2026-09-20, after four questions that broke the rule:\n\n> *\"ask specific questiosn w/ context/ recommendations/pros/cons (see skills,\n> why not invoked?)\"*\n>\n> *\"fix skills so interaction modality would be triggered\"*\n>\n> *\"can we struture schema better to help enforce?\"*\n\n## The measurement\n\n`interaction-modality` §4.1 was STRICT and complete, and was broken the same day\nby the agent im",
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
+    },
+    {
+      "id": "folio-assistant-he0e",
+      "title": "TERMS-PRESERVED NEEDS A GLOSSARY: an acronym warns because the check cannot tell WHO to OMS from WHO dropped",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T12:02:00Z",
+      "updatedAt": "2026-09-21T12:02:00Z",
+      "preview": "Split out of pp93 (PR #691). translation-terms-preserved now reports a missing acronym as warn/minor rather than fail/major, because it genuinely cannot distinguish a correct localisation from a silently dropped term. That is the honest confidence, not the useful one.\n\nA per-locale glossary would settle it: translations/<locale>/glossary.po already exists as a hand-authored PO with no POT, and sch",
+      "file": "beans/defs/folio-assistant-he0e--terms-preserved-needs-a-glossary-an-acronym-warns.md"
     },
     {
       "id": "folio-assistant-hfkl",
@@ -3449,6 +3477,20 @@
       "file": "beans/defs/folio-assistant-ovkk--the-context-declares-19-terms-the-graph-uses-53-34.md"
     },
     {
+      "id": "folio-assistant-owt6",
+      "title": "NAVBAR DIVIDERS: harness tiles read as a dashboard; they should read as the tabbed dividers of one giant folio",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:50:42Z",
+      "updatedAt": "2026-09-21T11:12:46Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — owner feedback, 2026-09-21, on the deployed staging preview, with a screenshot of the sidebar and a reference photo of a ring-bound notebook with coloured index dividers.\n\n> those are too much like a dashboard, i want them to be more like diverders. as\n> if you are opening a giant tabbed folio, but the tabs are oriented hoizontally.\n\n",
+      "file": "beans/defs/folio-assistant-owt6--navbar-dividers-harness-tiles-read-as-a-dashboard.md"
+    },
+    {
       "id": "folio-assistant-p5wm",
       "title": "GOAL 2: LHS navbar working with instantiated harness, showing folios with the bootstrap exception, and stickies that move around on the folio",
       "status": "in-progress",
@@ -3551,14 +3593,14 @@
     {
       "id": "folio-assistant-pp93",
       "title": "TRANSLATED PAGES HAVE NO TR PANEL: the roll-up is over blocks, and the locale index pages have none",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T11:23:21Z",
-      "updatedAt": "2026-09-21T11:46:25Z",
+      "updatedAt": "2026-09-21T12:02:00Z",
       "preview": "The page-level translation roll-up (PR #691, issue #687) reaches the 12 generated pages, whose blocks can carry translation sidecars.\n\nThe 5 hand-authored translated pages — docs/{ar,es,fr,ru,zh}/index.md — get the corrected counts and the language bar, but no TR panel: their source docs/index.md carries no block triples, so there is nothing to roll up.\n\n## Done when\n\n- (docs page, locale) pairs a",
       "file": "beans/defs/folio-assistant-pp93--translated-pages-have-no-tr-panel-the-roll-up-is-o.md"
     },
@@ -3577,9 +3619,23 @@
       "file": "beans/defs/folio-assistant-ppkm--route-b-bind-the-derived-gates-as-tool-nodes-so-a.md"
     },
     {
+      "id": "folio-assistant-prc5",
+      "title": "BROKEN IMAGE: a harness tile renders a missing-image placeholder, and two tiles are both titled folio-assistant",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:50:42Z",
+      "updatedAt": "2026-09-21T11:02:09Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — owner, 2026-09-21: *\"broken image on LHS navbar\"*, with a screenshot.\n\nTwo defects visible in the same screenshot, and they may share a cause:\n\n1. **A broken image.** The topmost tile renders the browser's missing-image\n   placeholder (`?`) where its mark should be. `harness-tiles.ts` resolves an\n   icon and `nav_footer_custom.html` e",
+      "file": "beans/defs/folio-assistant-prc5--broken-image-a-harness-tile-renders-a-missing-imag.md"
+    },
+    {
       "id": "folio-assistant-pve3",
       "title": "The root declares HALF of bootstrap — its skills but not its process",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -3931,14 +3987,14 @@
     {
       "id": "folio-assistant-sd8x",
       "title": "BOARD SKILLS + BPMN: author the disciplines as skills and the processes as executable diagrams",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:47:28Z",
-      "updatedAt": "2026-09-20T21:47:28Z",
+      "updatedAt": "2026-09-21T10:34:27Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — the owner's *\"do all the skills and bpmn workflows\"*.\n\nNine implementation units above carry the code. This one carries the part that is\neasy to skip and is the reason the others will still make sense in a month: **every\nprocess here is BPMN, and the diagrams are executable.** A behaviour that exists\nonly in `docs-ui.js` is a behaviou",
       "file": "beans/defs/folio-assistant-sd8x--board-skills-bpmn-author-the-disciplines-as-skills.md"
     },
