@@ -18,7 +18,7 @@ Exactly three things, and they are all files:
 | | |
 |---|---|
 | `cat-bootstrap/README.md` | the flow, with every term linked to the schema that defines it |
-| `cat-bootstrap/harness.json` | this instance's own declaration |
+| `cat-bootstrap/cat-bootstrap.json` | this instance's own declaration |
 | `cat-bootstrap/skills/` | the skills the processes name, plus the roles they act as — `skills/package-manifest.json` is the list |
 | `cat-bootstrap/workflows/` | ONE process: `initialize-harness.bpmn` |
 | your ability to read a file | that is the entire toolchain |

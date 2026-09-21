@@ -32,7 +32,7 @@ exists for.
 Three facts carry the whole model, and every one of them is checkable by
 reading:
 
-1. **An instance declares the directories it scans**, in `harness.json` at its
+1. **An instance declares the directories it scans**, in its declaration at its
    root. Each entry is an id, a path, and the **kinds of graph** found there.
 2. **A directory is a place to look, not a type.** One may hold more than one
    part of a graph, so the directory does not say what its files are —
@@ -43,7 +43,7 @@ reading:
 
 ## Do this, in order
 
-1. **Read the root `harness.json`.** If there is none, this repository is not
+1. **Read the repository's declaration.** If there is none, this repository is not
    an instance yet, and that is the case cat-bootstrap exists for.
 2. **Find the entry whose `graphs` name the kind you want.** For skills,
    workflows and roles that kind is `cat-harness`. The entry's `path` is
@@ -62,8 +62,8 @@ them is the mistake this section exists to prevent:
 
 | what you found | what it means | what to do |
 |---|---|---|
-| no `harness.json` | not an instance yet | this is cat-bootstrap's case — continue |
-| `harness.json` that will not parse | an instance asserting something broken | **stop and say so**; do not fall back |
+| no declaration | not an instance yet | this is cat-bootstrap's case — continue |
+| a declaration that will not parse | an instance asserting something broken | **stop and say so**; do not fall back |
 | a declared directory that is not there | the declaration is wrong | **stop and say so** — scanning nothing and reporting a clean run is the defect |
 | no declaration for a kind you want | this instance has none of it | that is an answer, not a failure |
 

@@ -12,7 +12,7 @@ parent: Skill instructions
 {% raw %}
 # Directory conventions — what an instance declares it scans
 
-Every instance carries an **`harness.json`** at its repository root. It declares the directories the instance scans for content,
+Every instance carries a **declaration** at its repository root — a `*.json` whose `name` field equals its own filename stem, found with `findDeclarationFile` and never composed from a path. It declares the directories the instance scans for content,
 and what **kind of graph** each one holds.
 
 Schema and resolution: `schemas/cat-harness.ts`.
@@ -325,7 +325,7 @@ a person looks for first were the two hardest to find.
 
 ```
 agentic-harness/          folio-assistant-core/
-  harness.json        harness.json
+  cat-harness.json    folio-assistant-core.json
   tools/     → tools        folio/     → folio
   kg/        → kg           (inherits tools/, kg/, schemas/)
   schemas/   → schemas
@@ -412,7 +412,7 @@ declaration several sessions are editing at once:
 
 ## Three states, as everywhere else here
 
-- **No `harness.json`** → `readDeclaration` returns `undefined`. An
+- **No declaration** → `readDeclaration` returns `undefined`. An
   instance not yet migrated is ordinary, and callers fall back to today's
   conventions. Not an error.
 - **Present but unreadable** → **throws.** A declaration nobody can parse
@@ -428,7 +428,7 @@ bean `dh4f` found in thirty pipeline scripts, where three were passing over a
 corpus they could not read.
 
 This repository's own declaration is the worked example, and **no count is
-given here on purpose**: `harness.json` is the list. That sentence said
+given here on purpose**: the declaration is the list. That sentence said
 "declares `schemas/` and `skills/`" until 2026-09-20, by which point it
 declared **twenty-one** directories — a number in prose is a claim, and this
 one had been false for long enough that `AGENTS.md` carries its own flagged
@@ -477,7 +477,7 @@ and there cannot be one:
 |---|---|
 | `sushi-config.yaml` | SUSHI reads that exact name, and it is YAML |
 | `dak.json` | WHO's `smart-base` |
-| `harness.json`, `harness.config.json` | ours |
+| `<name>.json`, `<name>.config.json` | ours — the declaration is named after its own `name` field |
 | `beans.json`, `todos.json` | ours, and named after the graph KIND |
 
 Two of those are not ours to rename, so any rule claiming to cover the set
@@ -519,7 +519,7 @@ as its **source root** (`source: ./docs/<stub>`), leaving the site's internal
 layout untouched. Verified on `gh-pages` after the move.
 
 **It is not the `folio` graph-kind declaration.** `docs/` still does not appear
-in `harness.json`: measured 2026-09-19, adding it makes `harness:dirs`,
+in the declaration: measured 2026-09-19, adding it makes `harness:dirs`,
 `kg:schema:check` and `docs:harness:check` throw `unknown graph kind "folio"`,
 because `folio` is contributed by **core** and those readers do not load its
 registration. Packaging is unblocked; the declaration waits. Bean `x4a6`.
