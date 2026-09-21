@@ -708,6 +708,29 @@ export interface QaCriterionDefinition {
    */
   source_file?: string;
   /**
+   * This criterion is declared here, but its checker belongs to a dependency.
+   *
+   * Core owns the RULE — what the criterion asserts about content — while the
+   * tooling that answers it may live in the layer whose subject it is;
+   * elaboration cost is a Lean measurement, so its checkers are
+   * `folio-assistant-sci`'s. The owner's cut: *"f-a-core has high level
+   * processes only, no tooling"*.
+   *
+   * It is a flag rather than an absent `source_file` because absence is not
+   * distinguishable from "never declared one": `getCriterionSourceFile` ends
+   * in a DEFAULT, so a criterion whose checker moved out of core would
+   * silently resolve to `qa-checkers-extended.ts` — and `script_hash` is
+   * computed over the resolved path, so it would never invalidate again.
+   * Eleven criteria were measured in that state on 2026-09-18. With the flag,
+   * `resolveCriterionSource` refuses the cascade for this criterion and
+   * reports an unsupplied checker as unresolved, which is a third state rather
+   * than a wrong path.
+   *
+   * Setting both this and `source_file` is a collision and throws: two answers
+   * to "where is this checker" are two answers free to disagree.
+   */
+  checker_contributed?: boolean;
+  /**
    * Repo-relative paths to extra inputs the checker consults beyond
    * the block under audit — for example, cached audit witnesses
    * (`docs/audits/*.json`), the bibliography database
