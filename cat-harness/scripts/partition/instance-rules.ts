@@ -1073,6 +1073,13 @@ export const RULES: Rule[] = [
       // it PRODUCES is folio content, a board, whose type core owns. The
       // instance questions are how it decides WHICH folios, not what it makes.
       "scripts/gen-default-boards.ts",
+      // The linear floor's renderer, and CORE for the reason
+      // `state-visualizer.ts` records two entries down: it is a RENDERER, and
+      // rendering is core's. Its only import is `schemas/todo-index.ts`, its
+      // subject is a folio's own notes, and what it produces is the artefact a
+      // reader gets when JavaScript never runs. `gen-docs-pages.ts` calling it
+      // is core calling core; nothing about it is instance machinery.
+      "scripts/todo-listing.ts",
       // The state visualiser, and it is core for the reason `gen-landing-data.ts`
       // records about itself: it is a RENDERER, and rendering is core's.
       //

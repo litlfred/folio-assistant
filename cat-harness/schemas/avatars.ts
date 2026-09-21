@@ -64,16 +64,29 @@ export interface Avatar {
 export const AVATARS: Readonly<Record<string, Avatar>> = {
   // ── The layer identities the owner named ───────────────────────────
   //
-  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*. Two of
-  // these three are NOT graph kinds this repo declares — the split (#223) has
-  // not happened, so `cat-bootstrap` and `folio-assist-core` exist as layers in
-  // the namespace and as nothing in `harness.json`.
+  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*.
   //
-  // They are here anyway, and `check-avatar-coverage` reports them as
-  // `avatar-has-kind` findings rather than pruning them. Drawing art for a
-  // layer before its directory exists is the right way round: the alternative
-  // is a split that lands with three blank avatars, discovered by a reader.
-  // The finding is the honest record that they are ahead of the declaration.
+  // THIS TABLE SERVES TWO KEY SPACES, and the entries below are the second
+  // one. `kind-fan` and `gen-avatars-css` key by GRAPH KIND; `harness-tiles`
+  // calls `avatarFor(decl.name)` — an INSTANCE's declared name. Most entries
+  // are kinds; these three are instances, which is why `check-avatar-coverage`
+  // reports them as "an avatar for a kind this instance does not declare" and
+  // will go on doing so. That finding is correct about the kind axis and says
+  // nothing about the instance axis, which nothing currently checks. Bean
+  // `4kj4` is where instance coverage belongs; it is not this table's to
+  // assert.
+  //
+  // THE COMMENT HERE WAS STALE AND COST THE INSTANCE ITS FACE. It read: *"the
+  // split (#223) has not happened, so `cat-bootstrap` and `folio-assist-core`
+  // exist as layers in the namespace and as nothing in `harness.json`"*. Both
+  // halves were false by 2026-09-21 — `cat-bootstrap/harness.json` and
+  // `folio-assistant-core/harness.json` both exist and both declare a `name`
+  // — and the second is not even the name that was adopted. Measured on
+  // 2026-09-21: `avatarFor("folio-assistant-core")` returned GENERIC, the
+  // question mark that means "no avatar is declared for this", while the leaf
+  // of paper below sat in the table under a spelling nothing carries. A key
+  // nobody can reach is worse than a missing one: the coverage check counted
+  // it as declared. Bean `hso8`, whose rename this completes.
   "cat-bootstrap": {
     // A seed with a shoot: the graph an agent reads before it knows anything.
     glyph: "M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z",
@@ -86,7 +99,10 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
   },
-  "folio-assist-core": {
+  // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
+  // and name both spelled in full, per the owner's ruling of 2026-09-20 and
+  // as `folio-assistant-core/harness.json` records against itself.
+  "folio-assistant-core": {
     glyph: "M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h5",
     tone: 212,
     reads: "a leaf of paper with lines — the folio itself",

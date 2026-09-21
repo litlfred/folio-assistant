@@ -202,3 +202,42 @@ thing this instance needs is a third rename of a published IRI in two days.
 - [x] The owner names the core instance, ONCE — done 2026-09-20, and
       `folio-assistant-core/` is what is on `main`
 - [x] Whichever loses is renamed — done in #477, which merged
+
+## REOPENED FINDING, 2026-09-21: one path reference DID resolve to nothing
+
+This bean was closed with *"No `harness.json` declares the dead name as a
+directory, and no path reference resolves to nothing. Checked."* That sweep
+looked at DIRECTORY and PATH references. The dead name also survived as a
+**live keyed lookup**, which is neither, and it cost the instance its face:
+
+    avatarFor("folio-assistant-core")  ->  GENERIC   (the question mark)
+    avatarFor("folio-assist-core")     ->  the leaf of paper, unreachable
+
+`harness-tiles.ts:223` calls `avatarFor(decl.name)` — the DECLARED INSTANCE
+NAME — so `folio-assistant-core` rendered *"no avatar is declared for this"*
+while its own hand-drawn art sat in `AVATARS` under a spelling nothing
+carries. **A key nobody can reach is worse than a missing one**:
+`check-avatar-coverage` counted it as declared, so coverage read clean over
+it — which is also why the closing sweep did not see it.
+
+The comment beside the entry had gone stale the same way (*"the split has not
+happened, so `cat-bootstrap` and `folio-assist-core` exist … as nothing in
+`harness.json`"* — both files exist and both declare a `name`), and the test
+asserting it repeated the claim verbatim. One stale premise, load-bearing in
+three places.
+
+**The landing card id is UNTOUCHED.** This bean is explicit that
+`folio-assist-core` is deliberate there — a published identifier does not move
+with a directory, and `8xtj` records the cost of sweeping every spelling at
+once. The avatar key is a different string answering a different question:
+`avatarFor` is keyed on the DECLARED NAME. `landing-sticky.test.ts` still
+passes.
+
+Fixed in PR #677 (issue #676), with a test that states the PROPERTY rather
+than a spelling — every instance-keyed avatar must match a real declared name
+— so the next drift fails instead of rendering a question mark.
+
+**Left completed**, because the blocker this bean is about really is settled;
+this is a missed leftover recorded where the next reader will find it, not a
+reason to reopen.
+

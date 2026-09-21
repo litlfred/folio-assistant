@@ -659,6 +659,23 @@
       ]
     },
     {
+      "id": "board-renderer",
+      "title": "Board renderer",
+      "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane \u2014 it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
+      "actorKinds": [
+        "system"
+      ],
+      "lanes": [
+        "Board renderer"
+      ],
+      "skills": [
+        "board-windows",
+        "board-diagram-interchange",
+        "harness-tiles",
+        "deletion-requires-confirmation"
+      ]
+    },
+    {
       "id": "validation-pipeline",
       "title": "Validation pipeline",
       "description": "The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.",
