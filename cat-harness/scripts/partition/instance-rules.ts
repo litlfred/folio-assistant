@@ -197,6 +197,12 @@ export const RULES: Rule[] = [
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
+      // Its tile half, and harness-level for the same reason: it reads every
+      // INSTANCE's declaration and the published viewer tree, and asks which
+      // harnesses exist and what each one has to look at. Nothing in it is
+      // about any folio's subject matter — a folio could not make it answer
+      // differently, only add a row.
+      "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
       // Same question, same answer: it projects the PLATFORM's own term
       // vocabulary — every class and property hanging off `FOLIO_NS` — and
@@ -408,15 +414,13 @@ export const RULES: Rule[] = [
       // harness", and a page under `docs/` is exactly that.
       "scripts/schema-graph.ts",             // schemas/*.ts → declarations + edges
       "scripts/gen-schema-viz.ts",           // that graph → projection + viewer
-      // Shared by both viewer generators: which published subject pages no
-      // longer answer to a subject, and whether this generator wrote them.
-      "scripts/viewer-prune.ts",
       // Zod in `cat-bootstrap-tools` → JSON Schema in `cat-bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
       "scripts/gen-bootstrap-schemas.ts",
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
+      "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there

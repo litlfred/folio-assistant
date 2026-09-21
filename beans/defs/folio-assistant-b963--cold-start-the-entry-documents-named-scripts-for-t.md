@@ -56,8 +56,17 @@ Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS
 `check:agents-claims` reads LOCATION claims of the shape `symbol` in `module.ts` and ABSENCE claims; `check:agent-entry-links` reads links. Neither reads a **command line**, so a path inside a fenced command can rot silently. AGENTS.md itself records the same defect for the two generator commands "until 2026-09-20" — it was fixed in one file and not in the other two.
 
 ## Done when
-- [ ] A check reads every fenced command in the entry documents (AGENTS.md, README.md, the onboarding guide) and fails when a path in it does not resolve
-- [ ] The nine occurrences are confirmed repointed on main
+- [x] A check reads every fenced command in the entry documents (AGENTS.md, README.md, the onboarding guide) and fails when a path in it does not resolve
+- [x] The nine occurrences are confirmed repointed on main
+
+*Ticked IN PLACE 2026-09-21, not appended below.* This bean carried its own
+`shadow-checklist` defect — three ticked copies further down while these two
+read open, so the section every reader and tool consults said the work had not
+started. `check:command-paths` shipped in #604 and is in the gate set; it
+passes on main over every fenced command, printed command and hook, which is
+the confirmation the second item asks for and is stronger than a count of nine.
+The later copies stay where they are: they are dated entries and rewriting them
+would edit the record rather than correct it.
 
 ---
 

@@ -47,12 +47,11 @@
  *   bun run library:viz          # write
  *   bun run library:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative } from "node:path";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { basename, dirname, join } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
-import { viewerPlacement } from "./gen-schema-viz.ts";
-import { findOrphans, pruneOrphans, viewerMarker } from "./viewer-prune.ts";
+import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
 import { directoriesForGraph, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
@@ -75,7 +74,6 @@ export function viewerHtml(dataHref: string, scope = ""): string {
   // declaration. `viz-generators.test.ts` imports this module, so a stray one
   // reddens the suite rather than only the generator.
   return `<!doctype html>
-${viewerMarker("gen-library-viz")}
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -413,20 +411,28 @@ if (import.meta.main) {
     emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
   }
 
-  // ORPHANS — see `viewer-prune.ts`. Bean `ankg`: this generator's own rename
-  // left a page serving a subject no declaration describes, and `emit` cannot
-  // see it because a file no longer written is outside what `--check` reads.
-  const orphans = findOrphans(pageDir, subjects, "gen-library-viz");
-  for (const o of orphans) {
-    if (o.kind === "owned") {
-      console.log(`  ${check ? "✗ orphan" : "− pruned"} ${relative(ROOT, o.path)}`);
-    } else {
-      console.log(`  ? ${relative(ROOT, o.path)} — under this root but NOT written by this generator; left alone`);
-    }
+
+  // ── ORPHANS (bean `ankg`) ──────────────────────────────────────────────
+  //
+  // A subject page the declaration no longer describes. `emit()` cannot see
+  // one — it compares only the files it is about to write — so this is asked
+  // separately, and in `--check` an orphan is a FINDING rather than silence.
+  const { owned, foreign } = orphanSubjectPages(pageDir, subjects);
+  for (const name of foreign) {
+    // Reported and LEFT. Ownership could not be established from the file, and
+    // `deletion-requires-confirmation` is about exactly this case.
+    console.error(`  ! ${join(pageDir, name)} is not a subject and does not identify itself — left in place`);
   }
-  const ownedOrphans = orphans.filter((o) => o.kind === "owned");
-  if (check) stale += ownedOrphans.length;
-  else pruneOrphans(pageDir, orphans);
+  for (const name of owned) {
+    const dir = join(pageDir, name);
+    if (check) {
+      console.error(`  ✗ ${dir} is an orphan — it serves a subject the declaration no longer describes`);
+      stale++;
+      continue;
+    }
+    rmSync(dir, { recursive: true });
+    console.log(`  ✗ pruned ${dir}`);
+  }
 
   if (!check) {
     console.log(

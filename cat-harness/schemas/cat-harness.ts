@@ -1396,6 +1396,19 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * names, and it is refused without a `reason` and an `owes`.
    */
   renderExemption?: RenderExemption;
+
+  /**
+   * The instances this one is BUILT ON — its layer stack, foundation first.
+   *
+   * The owner, 2026-09-20: *"So bootsteap, cat harness, fa-core, f-a, from
+   * bottom to top."*
+   *
+   * **Absent is UNDETERMINED, `[]` is the floor**, and a consumer that
+   * treated them as the same would place every unlabelled instance beside
+   * the bootstrap. See the schema field for why this is declared rather
+   * than computed, and why it is optional.
+   */
+  needs?: string[];
 }
 
 /**
@@ -2166,6 +2179,38 @@ export const CatHarnessDeclarationSchema = z.object({
   remoteGraphs: z.array(RemoteGraphSchema).default([]),
   stickies: z.array(StickyContributionSchema).optional(),
   renderExemption: RenderExemptionSchema.optional(),
+  /**
+   * The instances this one is BUILT ON — its layer stack, foundation first.
+   *
+   * The owner, 2026-09-20, giving the spine in one sentence:
+   *
+   * > So bootsteap, cat harness, fa-core, f-a, from bottom to top.
+   *
+   * ## Why this is declared rather than computed
+   *
+   * The layering was real before it was written down — `cat-bootstrap`'s
+   * `renderExemption` already argues from it (*"a floor that RISES … it starts
+   * at cat-harness, which is obliged because it supplies the layers above with
+   * `folio/`"*) — but it lived only in prose, so every consumer that needed the
+   * order had to know it. The navbar needed it and would otherwise have
+   * hardcoded four names, which is the failure `hfkl` put the exemption in the
+   * declaration to avoid: a rule true only for the instances somebody
+   * remembered.
+   *
+   * ## OPTIONAL, and an absent value is UNDETERMINED rather than "needs nothing"
+   *
+   * Required would be a change every concurrent branch pays for — `dependents`
+   * cost a sibling branch 166 failures on the merged tree four hours after it
+   * was made required. And the two states are genuinely different: `[]` is an
+   * instance asserting it sits on nothing, which is true of exactly one
+   * instance here, while absent is nobody having said. A consumer that treated
+   * absent as `[]` would place every unlabelled instance on the floor beside
+   * the bootstrap.
+   *
+   * Names, not paths: an instance is identified by its `name` everywhere else
+   * in this schema, and a path would break the moment a directory moved.
+   */
+  needs: z.array(z.string().min(1)).optional(),
 });
 
 /**

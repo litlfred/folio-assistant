@@ -1,0 +1,501 @@
+#!/usr/bin/env bun
+/**
+ * Derived documentation for a sub-graph — one index per (type, sub-graph).
+ *
+ * @module scripts/gen-docs-auto
+ *
+ * Owner, 2026-09-20, bean `06e3`:
+ *
+ * > in cat-harness needs to be harness/handler at
+ * > `cat-harness/docs-auto/<auto-doc-type>/<path>` defined. which will
+ * > auto-generate extracatable documentation at `<path>` sub-graph.
+ * > extracablle = bpmn, tasks, glossary, etc.
+ *
+ * ## Why this is a NEW generator rather than a kind of an existing one
+ *
+ * A note on `06e3` guessed the opposite — that docs-auto would be a `kind`
+ * handled by `state-visualizer.ts`, which had just landed. Reading the three
+ * existing generators says no, and the reason is structural rather than a
+ * matter of taste: **every one of them is one-axis.** `gen-schema-viz`,
+ * `gen-library-viz` and `state-visualizer` each map ONE graph kind to ONE
+ * viewer at a fixed route, with optional subject pages beneath it. docs-auto
+ * is **two-axis** — an auto-doc TYPE crossed with a SUB-GRAPH — and there is
+ * nowhere in a one-axis generator to put the second axis without it becoming
+ * this file anyway.
+ *
+ * What IS reused, and it is the part worth reusing: the routing.
+ * `viewerPlacement(site, "<handler>/docs-auto/<type>", …)` is the owner's
+ * `<base>/<handler>/<kind>/<subject>` rule with the type as a segment, and
+ * `orphanSubjectPages()` prunes the result. No new URL rule, no fourth pruner.
+ *
+ * ## The sub-graph segment is the declared directory's `id`, not its path
+ *
+ * The owner wrote `<path>`. This publishes under the declared entry's **id**
+ * instead, and the choice is deliberate and worth arguing with:
+ *
+ * - **Precedent.** `state-visualizer.ts` settled the same question the same
+ *   way, and gave the reason: `id` is what `harness.json` declares and what an
+ *   override matches on, so an id-derived URL survives the directory moving.
+ *   A path-derived one does not.
+ * - **It stays one segment.** A path has slashes, so page directories would
+ *   nest — and `orphanSubjectPages` scans one level, which is what makes
+ *   pruning's ownership test exact. A nested tree would need a fourth pruner,
+ *   which bean `ankg` explicitly asks nobody to write.
+ * - **Nothing is lost.** Each page STATES its declared path, so the mapping
+ *   from id to path is on the artefact rather than only in the URL.
+ *
+ * ## What this emits is an INDEX, and an index is not the documentation
+ *
+ * Owner, same bean:
+ *
+ * > then when authong `<harness>/docs` the author should make use of auto-doc
+ * > referneces and provide a summary / overvuew of each of the business
+ * > processes defined. as part of skills and judgement
+ *
+ * and, on how:
+ *
+ * > ..reuse assets in explain.
+ *
+ * So this file deliberately stops at the index. The per-process summary — what
+ * each one is FOR, when you would be in it, what it is not — is a HUMAN or
+ * AGENT obligation carried by the `docs-auto` skill, and it reuses these
+ * assets rather than paraphrasing them into a second copy. A generated index
+ * with no authored prose around it reads as complete while explaining nothing,
+ * which is the `xom7` shape moved into documentation.
+ *
+ * ## Empty is not rendered
+ *
+ * A sub-graph contributing no items of a type gets NO page. A declared-but-
+ * empty directory with a page claiming to index it is the `dh4f` defect as a
+ * nav entry — a link that resolves to nothing while reading as a section.
+ *
+ * Usage:
+ *   bun run docs:auto          # write
+ *   bun run docs:auto --check  # fail if any artefact is stale, or orphaned
+ */
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { basename, dirname, join, relative } from "node:path";
+
+import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
+import { isSkillMd, skillMdDirs } from "./known-skills.ts";
+import { readDeclaration, resolveDirectories, siteDirFor } from "../schemas/cat-harness.ts";
+import "../schemas/folio-graph-kind.js";
+
+const ROOT = join(import.meta.dir, "..");
+const REPO = join(ROOT, "..");
+const check = process.argv.includes("--check");
+
+/** One artefact an index lists. */
+export interface AutoDocItem {
+  /** Repository-relative path — what a reader opens, and how a sub-graph claims it. */
+  path: string;
+  /** What to call it in a listing. */
+  name: string;
+  /** One line, EXTRACTED from the artefact. Absent means the artefact does not carry one. */
+  summary?: string;
+  /** Type-specific facts, rendered as a small table. */
+  facts?: Record<string, string>;
+}
+
+/**
+ * An extractable documentation type.
+ *
+ * One `collect` per type, and the contract is the same for all of them —
+ * which is the test of whether "docs-auto" names one thing. If a type cannot
+ * produce `AutoDocItem[]`, it is a different generator wearing this one's
+ * name.
+ */
+export interface AutoDocType {
+  /** The URL segment(s), e.g. `index/skills`. Slashes nest. */
+  id: string;
+  title: string;
+  /**
+   * The graph kind whose declared directories hold this type's artefacts.
+   *
+   * **Not optional, and the first draft not having it was a real defect.**
+   * Walking EVERY declared directory reported **1,522** skills where
+   * `knownSkills()` finds ~136: `docs/` is declared too, and it holds a
+   * generated markdown rendering of every skill, so each one was counted
+   * again as though it were a second skill. A RENDERING of an artefact is not
+   * the artefact. Naming the graph is what keeps an index about the thing
+   * rather than about its copies.
+   */
+  graph: string;
+  /** One line on the page saying what was extracted and from where. */
+  extracts: string;
+  collect(): AutoDocItem[];
+}
+
+/** YAML front matter's `description`, folded to one line. Absent is absent. */
+function frontMatterDescription(text: string): string | undefined {
+  if (!text.startsWith("---")) return undefined;
+  const end = text.indexOf("\n---", 3);
+  if (end < 0) return undefined;
+  const fm = text.slice(3, end);
+  const m = /^description:\s*(.*)$/m.exec(fm);
+  if (!m) return undefined;
+  let body = m[1]!.trim();
+  if (body === ">" || body === "|" || body === ">-" || body === "|-") {
+    // A folded block: take the indented lines that follow.
+    const after = fm.slice(m.index + m[0].length).split("\n");
+    const lines: string[] = [];
+    for (const l of after) {
+      if (l.trim() === "") continue;
+      if (!/^\s+/.test(l)) break;
+      lines.push(l.trim());
+    }
+    body = lines.join(" ");
+  }
+  return body.replace(/\s+/g, " ").trim() || undefined;
+}
+
+/** The first sentence of a longer string, for a listing line. */
+function firstSentence(s: string, max = 220): string {
+  const one = s.replace(/\s+/g, " ").trim();
+  const stop = one.search(/\.\s|\.$/);
+  const cut = stop > 0 ? one.slice(0, stop + 1) : one;
+  return cut.length > max ? cut.slice(0, max - 1).trimEnd() + "…" : cut;
+}
+
+function walk(dir: string, pred: (name: string) => boolean): string[] {
+  if (!existsSync(dir)) return [];
+  const out: string[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    // A dot-prefixed segment is skipped for the reason `directory-conventions`
+    // gives: it is not a place this graph declares.
+    if (e.name.startsWith(".")) continue;
+    if (e.isDirectory()) out.push(...walk(p, pred));
+    else if (pred(e.name)) out.push(p);
+  }
+  return out.sort();
+}
+
+/**
+ * The declared directories holding one graph kind, by id.
+ *
+ * Existence-filtered, because a declared-but-absent directory is the `dh4f`
+ * defect — a consumer scans nothing and reports a clean run over it.
+ */
+export function declaredDirectories(graph: string): Array<{ id: string; absPath: string; path: string }> {
+  return resolveDirectories([{ name: "(local)", root: ROOT, own: true }])
+    .filter((d) => (d.graphs ?? []).includes(graph))
+    .map((d) => ({ id: d.id, absPath: d.absPath, path: relative(REPO, d.absPath).split("\\").join("/") }))
+    .filter((d) => existsSync(d.absPath))
+    .sort((a, b) => a.id.localeCompare(b.id, "en"));
+}
+
+/**
+ * The types this handler implements.
+ *
+ * **`toc` is deliberately absent.** It was in the owner's first list and was
+ * withdrawn in the same session — *"no toc,... ther is no meanging at folio
+ * level"* — because a table of contents is a document-order notion and a
+ * sub-graph has no single order to take one over. Recorded here as well as on
+ * the bean, since this array is what a reader checks against that list.
+ *
+ * Declared but NOT built: `glossary` (bean `lqo9` holds a roast that gates
+ * it), `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles`.
+ * Absent rather than stubbed: a type that emits an empty page is indis-
+ * tinguishable from one whose sub-graphs are empty.
+ */
+export const TYPES: AutoDocType[] = [
+  {
+    id: "index/skills",
+    title: "Skills",
+    graph: "cat-harness",
+    extracts: "every skill markdown file, with the description it declares in its own front matter",
+    collect(): AutoDocItem[] {
+      // `skillMdDirs()`, NOT a recursive walk of the declared directories.
+      //
+      // The first draft walked them recursively and reported 227 skills
+      // against `knownSkills()`'s 219. The seven extras were all the same
+      // shape — `skills/<package>/<skill>/<page>.md`, a SUPPORTING PAGE of a
+      // skill rather than a skill — and `isSkillMd` accepts them because they
+      // carry the same front matter. `knownSkills` gets this right by listing
+      // the directories that hold skill markdown instead of descending into
+      // whatever is under them, so this asks the same function rather than
+      // re-deriving the rule and disagreeing by seven.
+      const items: AutoDocItem[] = [];
+      for (const parts of skillMdDirs(ROOT)) {
+        const dir = join(ROOT, ...parts);
+        if (!existsSync(dir)) continue;
+        for (const f of readdirSync(dir)) {
+          if (!f.endsWith(".md")) continue;
+          const abs = join(dir, f);
+          // Per FILE, not per directory: admitting a package says the
+          // directory holds skills, never that everything in it is one.
+          if (!isSkillMd(abs)) continue;
+          const desc = frontMatterDescription(readFileSync(abs, "utf-8"));
+          items.push({
+            path: relative(REPO, abs).split("\\").join("/"),
+            name: basename(f, ".md"),
+            summary: desc ? firstSentence(desc) : undefined,
+          });
+        }
+      }
+      return dedupeByPath(items);
+    },
+  },
+  {
+    id: "index/processes",
+    title: "Processes",
+    graph: "cat-harness",
+    extracts: "every BPMN process, with its own documentation, its lanes, and the skills its activities name",
+    collect(): AutoDocItem[] {
+      const items: AutoDocItem[] = [];
+      for (const d of declaredDirectories("cat-harness")) {
+        for (const f of walk(d.absPath, (n) => n.endsWith(".bpmn"))) {
+          const xml = readFileSync(f, "utf-8");
+          const name = /<bpmn:process[^>]*\sname="([^"]*)"/.exec(xml)?.[1];
+          const doc = /<bpmn:documentation>([\s\S]*?)<\/bpmn:documentation>/.exec(xml)?.[1];
+          const lanes = [...xml.matchAll(/<bpmn:lane\b[^>]*\sname="([^"]*)"/g)].map((m) => m[1]!);
+          const skills = [...new Set([...xml.matchAll(/<folio:skill\s+ref="([^"]+)"/g)].map((m) => m[1]!))];
+          const acts = (xml.match(/<bpmn:(task|serviceTask|userTask|callActivity)\b/g) ?? []).length;
+          const facts: Record<string, string> = { activities: String(acts) };
+          if (lanes.length) facts.lanes = lanes.join(" · ");
+          if (skills.length) facts.skills = skills.sort().join(", ");
+          items.push({
+            path: relative(REPO, f).split("\\").join("/"),
+            name: name ?? basename(f, ".bpmn"),
+            summary: doc ? firstSentence(decodeEntities(doc)) : undefined,
+            facts,
+          });
+        }
+      }
+      return dedupeByPath(items);
+    },
+  },
+];
+
+function decodeEntities(s: string): string {
+  return s
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"').replace(/&#10;/g, " ")
+    .replace(/&amp;/g, "&");
+}
+
+/**
+ * One item per path.
+ *
+ * Declared directories NEST — `cat-harness/skills/` contains
+ * `cat-harness/skills/workflows/`, and both are declared — so a naive walk
+ * lists the inner files twice. Deduplicating by path keeps the count honest;
+ * the SUB-GRAPH a file is attributed to is decided separately, by
+ * {@link owningDirectory}, which picks the most specific declaration.
+ */
+function dedupeByPath(items: AutoDocItem[]): AutoDocItem[] {
+  const byPath = new Map<string, AutoDocItem>();
+  for (const i of items) if (!byPath.has(i.path)) byPath.set(i.path, i);
+  return [...byPath.values()].sort((a, b) => a.path.localeCompare(b.path, "en"));
+}
+
+/**
+ * Which declared directory an item belongs to — the MOST SPECIFIC one.
+ *
+ * `cat-harness/skills/workflows/x.bpmn` is inside both `cat-harness` (id
+ * `cat-harness`, path `cat-harness/skills/`) and the workflow directory. The
+ * longest matching declared path wins, because that is the sub-graph that
+ * actually describes it; attributing it to the outer one would make the inner
+ * declaration index nothing while looking populated.
+ */
+export function owningDirectory(
+  itemPath: string,
+  dirs: Array<{ id: string; path: string }>,
+): { id: string; path: string } | undefined {
+  let best: { id: string; path: string } | undefined;
+  for (const d of dirs) {
+    const prefix = d.path.endsWith("/") ? d.path : `${d.path}/`;
+    if (!itemPath.startsWith(prefix)) continue;
+    if (!best || prefix.length > best.path.length) best = { id: d.id, path: prefix };
+  }
+  return best;
+}
+
+function esc(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+const BLOB = "https://github.com/litlfred/folio-assistant/blob/main";
+
+/**
+ * One index page.
+ *
+ * `scope` carries the declared directory's id, and it is emitted as the same
+ * `var SCOPE = "…";` line the viewer generators use — deliberately, because
+ * that line is what `orphanSubjectPages` reads to establish ownership before
+ * pruning. A fourth marker would mean a fourth pruner.
+ */
+export function autoDocPage(
+  type: AutoDocType,
+  items: AutoDocItem[],
+  scope: string,
+  scopePath: string | undefined,
+  siblings: Array<{ id: string; path: string; count: number }>,
+): string {
+  const rows = items
+    .map((i) => {
+      const facts = i.facts
+        ? Object.entries(i.facts)
+            .map(([k, v]) => `<div class="f"><span class="k">${esc(k)}</span> ${esc(v)}</div>`)
+            .join("")
+        : "";
+      return `<tr>
+  <td><a href="${esc(`${BLOB}/${i.path}`)}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.path)}</span></td>
+  <td>${i.summary ? esc(i.summary) : '<span class="none">no description in the artefact</span>'}${facts}</td>
+</tr>`;
+    })
+    .join("\n");
+
+  const nav = siblings
+    .map(
+      (s) =>
+        `<li>${s.id === scope ? "<strong>" : `<a href="../${esc(s.id)}/">`}${esc(s.id)}${s.id === scope ? "</strong>" : "</a>"}` +
+        ` <span class="p">${esc(s.path)}</span> <span class="n">${s.count}</span></li>`,
+    )
+    .join("\n");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(type.title)}${scope ? ` — ${esc(scope)}` : ""} · docs-auto</title>
+<style>
+  :root { color-scheme: light dark; --ink: #1b2733; --muted: #5b6b7a; --edge: #c3ccd6; --paper: #fff; --accent: #0a5c7a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e6edf3; --muted: #9fb0c0; --edge: #3a4652; --paper: #0f1720; --accent: #6fc4e4; }
+  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
+  a { color: var(--accent); }
+  h1 { font-size: 1.7rem; margin: 0 0 .3rem; }
+  .lede { color: var(--muted); margin: 0 0 1.4rem; }
+  .note { border-left: 4px solid var(--edge); padding: .7rem 1rem; margin: 1.4rem 0; font-size: .93rem; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
+  th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
+  td:first-child { width: 26rem; }
+  /* A repo-relative path is long and has no spaces, so it breaks mid-word
+     unless the breakpoints are named. Slashes are where a reader expects it. */
+  .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
+  .none { color: var(--muted); font-style: italic; }
+  .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
+  .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
+  ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>${esc(type.title)}${scope ? ` <span class="p">${esc(scope)}</span>` : ""}</h1>
+<p class="lede">Derived: ${esc(type.extracts)}.${scopePath ? ` Sub-graph <code>${esc(scopePath)}</code>.` : ""}</p>
+
+<div class="note">
+  <strong>This is an index, not the documentation.</strong> It says what exists and what each
+  artefact declares about itself. What a process is <em>for</em>, when you would be in it, and
+  what it is not, is authored beside it and reuses these entries rather than restating them —
+  see the <code>docs-auto</code> skill.
+</div>
+
+<ul class="subs">
+${nav}
+</ul>
+
+<table>
+<thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
+<tbody>
+${rows || '<tr><td colspan="2" class="none">Nothing in scope.</td></tr>'}
+</tbody>
+</table>
+</div>
+<script>
+/* The sub-graph this page indexes. Read by orphanSubjectPages() to establish
+   ownership before pruning — the same line the viewer generators emit. */
+var SCOPE = "${scope}";
+</script>
+</body>
+</html>
+`;
+}
+
+let stale = 0;
+function emit(path: string, content: string): void {
+  if (check) {
+    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
+    if (current === content) return;
+    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
+    stale++;
+    return;
+  }
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, content);
+}
+
+if (import.meta.main) {
+  const handler = readDeclaration(ROOT)?.name;
+  if (!handler) {
+    console.log("  · this instance declares no name — no handler segment to publish under");
+    process.exit(0);
+  }
+  const site = join(ROOT, siteDirFor(ROOT));
+
+  for (const type of TYPES) {
+    const dirs = declaredDirectories(type.graph);
+    const items = type.collect();
+    // Attribute each item to its most specific declared sub-graph, then keep
+    // only the sub-graphs that actually have something. An empty one gets no
+    // page: `dh4f` as a nav entry.
+    const byDir = new Map<string, AutoDocItem[]>();
+    for (const i of items) {
+      const owner = owningDirectory(i.path, dirs);
+      if (!owner) continue;
+      (byDir.get(owner.id) ?? byDir.set(owner.id, []).get(owner.id)!).push(i);
+    }
+    const populated = [...byDir.keys()].sort((a, b) => a.localeCompare(b, "en"));
+    const siblings = populated.map((id) => ({
+      id,
+      path: dirs.find((d) => d.id === id)?.path ?? "",
+      count: byDir.get(id)!.length,
+    }));
+
+    const { pageDir } = viewerPlacement(site, `${handler}/docs-auto/${type.id}`, "docs-auto");
+    emit(join(pageDir, "index.html"), autoDocPage(type, items, "", undefined, siblings));
+    for (const id of populated) {
+      const sub = viewerPlacement(site, `${handler}/docs-auto/${type.id}/${id}`, "docs-auto");
+      emit(
+        join(sub.pageDir, "index.html"),
+        autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings),
+      );
+    }
+
+    // Orphans — bean `ankg`'s helper, unchanged. A sub-graph that stops
+    // contributing items keeps its page otherwise, indexing a set that no
+    // longer exists.
+    const { owned, foreign } = orphanSubjectPages(pageDir, populated);
+    for (const name of foreign) {
+      console.error(`  ! ${join(pageDir, name)} does not identify itself — left in place`);
+    }
+    for (const name of owned) {
+      const dir = join(pageDir, name);
+      if (check) {
+        console.error(`  ✗ ${dir} is an orphan — its sub-graph contributes nothing to this type`);
+        stale++;
+        continue;
+      }
+      rmSync(dir, { recursive: true });
+      console.log(`  ✗ pruned ${dir}`);
+    }
+
+    if (!check) {
+      console.log(`  ✓ ${type.id}: ${items.length} item(s) across ${populated.length} sub-graph(s)`);
+    }
+  }
+
+  if (stale > 0) {
+    console.error(`\n${stale} artefact(s) stale — run \`bun run docs:auto\``);
+    process.exit(1);
+  }
+  if (check) console.log(`docs-auto: ${TYPES.length} type(s) up to date`);
+}
