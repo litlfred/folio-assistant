@@ -88,7 +88,7 @@ describe("declared and unservable is a THIRD state, not a second", () => {
 
   test("with no source at all, only the capability-free controls show", () => {
     const { shown, hidden } = servableControls(todo, {});
-    expect(shown.map((c) => c.id)).toEqual(["close", "pin", "discard"]);
+    expect(shown.map((c) => c.id)).toEqual(["close", "pin", "discard", "relocate"]);
     expect(hidden.map((h) => h.control.id)).toEqual(["view", "edit"]);
   });
 
@@ -105,7 +105,14 @@ describe("declared and unservable is a THIRD state, not a second", () => {
       "source-read": true,
       "source-write": true,
     });
-    expect(shown.map((c) => c.id)).toEqual(["close", "view", "edit", "pin", "discard"]);
+    expect(shown.map((c) => c.id)).toEqual([
+      "close",
+      "view",
+      "edit",
+      "pin",
+      "discard",
+      "relocate",
+    ]);
     expect(hidden).toEqual([]);
   });
 

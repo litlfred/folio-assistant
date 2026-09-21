@@ -1761,9 +1761,10 @@
     edit: { id: "edit", label: "Edit", needs: "source-write" },
     pin: { id: "pin", label: "Pin to the page", needs: "none" },
     discard: { id: "discard", label: "Discard", needs: "none" },
+    relocate: { id: "relocate", label: "Send to the trashcan", needs: "none" },
   };
   var KIND_CONTROLS = {
-    todo: ["view", "edit", "pin", "discard"],
+    todo: ["view", "edit", "pin", "discard", "relocate"],
     bean: ["view"],
   };
 
@@ -1815,15 +1816,109 @@
     return chip;
   }
 
+  /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
+   *
+   * Owner: *"confrim arctions [fishbones] on open content puts in fsh guts"*,
+   * and CRDM Q5: **delete becomes MOVE**. `skills/workflows/board-relocate.bpmn`
+   * is the drawn process; this is its reader-facing half.
+   *
+   * ## THE CONFIRM IS THE REQUIREMENT, AND IT MUST NOT OVERSTATE EITHER WAY
+   *
+   * `deletion-requires-confirmation` names the failure: a dialog that says
+   * "remove?" when it means "unpublish everywhere". The same lie pointed the
+   * other way is just as bad, and it is the one THIS surface could tell — a
+   * published page cannot move a file in the repository, so a dialog
+   * promising "off the site, everywhere" would be describing something that
+   * did not happen.
+   *
+   * So the dialog says exactly two things: what this does (takes the card off
+   * THIS BROWSER's board, reversibly, from the trashcan tile), and what it
+   * does not (the durable move out of the rendered folio, which an agent or a
+   * tool performs against the repository). Naming the second is not an
+   * apology; it is the difference between a reader thinking they cleared
+   * something for the team and knowing they did not.
+   *
+   * ## ONE PATH, shared with `d1r6`
+   *
+   * The relocation itself is `discardTodo` — the same function, the same
+   * `localStorage` key, the same `fa:todos-discarded` event the trashcan
+   * counter already listens to. The bean asked for one path rather than a
+   * second answer, and a second store would have been two counts of one thing.
+   */
+  function relocateDialog(todo, onConfirm) {
+    var dialog = el("div", {
+      class: "fa-relocate",
+      role: "dialog",
+      "aria-modal": "true",
+      "aria-labelledby": "fa-relocate-title",
+      "aria-describedby": "fa-relocate-scope",
+    });
+    dialog.appendChild(el("h3", { class: "fa-relocate-title", id: "fa-relocate-title" },
+      "Send \u201C" + todo.summary + "\u201D to the trashcan?"));
+
+    var scope = el("div", { class: "fa-relocate-scope", id: "fa-relocate-scope" });
+    // WHAT WILL HAPPEN, in the words of what it actually does.
+    scope.appendChild(el("p", { class: "fa-relocate-does" },
+      "This takes the card off your board in this browser. It is saved here, not " +
+      "sent anywhere, and not removed for anyone else. You can put it back from " +
+      "the trashcan tile."));
+    // WHAT WILL NOT, which is the half a reader would otherwise assume.
+    scope.appendChild(el("p", { class: "fa-relocate-does-not" },
+      "It does not move the content out of the folio. That is a change to the " +
+      "repository \u2014 the content is MOVED into fsh-guts rather than deleted, so " +
+      "every reference to it still resolves \u2014 and a published page cannot make " +
+      "it. An agent or a tool does that against the repository."));
+    dialog.appendChild(scope);
+
+    var row = el("div", { class: "fa-relocate-actions" });
+    var cancel = el("button", { type: "button", class: "fa-relocate-cancel" },
+      "Leave it where it is");
+    var confirm = el("button", { type: "button", class: "fa-relocate-confirm" },
+      "Send to the trashcan");
+    row.appendChild(cancel);
+    row.appendChild(confirm);
+    dialog.appendChild(row);
+
+    function close() {
+      if (dialog.parentNode) dialog.parentNode.removeChild(dialog);
+    }
+    cancel.addEventListener("click", function () { close(); });
+    confirm.addEventListener("click", function () { close(); onConfirm(); });
+    // ESCAPE IS THE CANCEL, never the confirm. A dialog whose dismissal
+    // performs the action is a dialog that did not ask.
+    dialog.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { e.stopPropagation(); close(); }
+    });
+    // Focus lands on the SAFE choice. The reader who hits Enter without
+    // reading has left the content where it is, which is the recoverable
+    // outcome of the two.
+    setTimeout(function () { cancel.focus(); }, 0);
+    return dialog;
+  }
+
   /**
    * One declared control, as a button the frame can place.
    *
-   * `close` is the platform's and is wired here; everything else delegates to
-   * the behaviour the board already owns. A kind declares WHICH controls it
+   * The frame decides the SHAPE and the placement; `handlers` supplies the
+   * behaviour, which the board already owns. A kind declares WHICH controls it
    * offers, never what they do — two panels whose `[x]` did different things
-   * would be two frames.
+   * would be two frames, and the whole point of a fixed chrome is that a
+   * reader learns it once.
+   *
+   * A control with no handler renders and does nothing rather than throwing.
+   * That is deliberate: it is the visible half of a wiring gap, and a panel
+   * that refused to build would hide which control was unwired.
    */
-  function controlButton(control, todo, onClose) {
+  /**
+   * What a frame control shows, where a glyph is clearer than the words.
+   *
+   * The accessible name is always the control's LABEL — a glyph alone is a
+   * guess, and `aria-label` is what a screen reader announces. `\u2A37` is the
+   * owner's `[fishbones]`.
+   */
+  var CONTROL_GLYPHS = { close: "\u00D7", relocate: "\u2A37" };
+
+  function controlButton(control, todo, handlers) {
     if (control.id === "view" || control.id === "edit") {
       return el("a", {
         class: "fa-board-window-control fa-node-edit",
@@ -1837,9 +1932,14 @@
       class: "fa-board-window-control",
       "data-fa-control": control.id,
       "aria-label": control.label + " — " + todo.summary,
-    }, control.id === "close" ? "\u00D7" : control.label);
-    if (control.id === "close") {
-      b.addEventListener("click", function (e) { e.stopPropagation(); onClose(todo); });
+    }, CONTROL_GLYPHS[control.id] || control.label);
+    // The frame wires what the frame owns; everything else delegates to the
+    // behaviour the board already has. A kind declares WHICH controls it
+    // offers, never what they do — two panels whose `[x]` did different
+    // things would be two frames.
+    var act = handlers[control.id];
+    if (act) {
+      b.addEventListener("click", function (e) { e.stopPropagation(); act(todo, b); });
     }
     return b;
   }
@@ -2550,8 +2650,25 @@
        * would 404 for exactly the reader who cannot use it (`pb04`). */
       var caps = { "source-read": !!todo.viewHref, "source-write": !!todo.editHref };
       var split = servableControls(controlsFor("todo"), caps);
+      var handlers = {
+        close: function (t) { closeCard(t); },
+        pin: function (t) { float(t); },
+        discard: function (t) { closeCard(t); discard(t); },
+        // THE FISHBONE. The only control that asks first, because it is the
+        // only one whose subject is the content rather than this reader's
+        // view of it.
+        relocate: function (t, button) {
+          var dialog = relocateDialog(t, function () {
+            closeCard(t);
+            // ONE PATH, shared with `d1r6`: the same function, the same key,
+            // the same event the trashcan counter already listens to.
+            discard(t);
+          });
+          (button.closest(".fa-board-window") || document.body).appendChild(dialog);
+        },
+      };
       for (var ci = 0; ci < split.shown.length; ci++) {
-        bar.appendChild(controlButton(split.shown[ci], todo, closeCard));
+        bar.appendChild(controlButton(split.shown[ci], todo, handlers));
       }
       if (split.hidden.length) {
         // Reported once per panel rather than swallowed: "this kind does not

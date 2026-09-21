@@ -107,6 +107,17 @@ export const PANEL_CONTROLS: Readonly<Record<string, PanelControl>> = {
       "takes the card off this reader's board. Reversible by construction — it goes " +
       "somewhere with a way back rather than being deleted (`d1r6`).",
   },
+  relocate: {
+    id: "relocate",
+    label: "Send to the trashcan",
+    needs: "none",
+    because:
+      "the owner's `[fishbones]` on open content. CRDM Q5: delete becomes MOVE — the " +
+      "content keeps its identity, so every reference to it still resolves. Behind a " +
+      "confirm that names the scope, because the action is durable and folio-wide " +
+      "and a dialog saying \"remove?\" when it means \"unpublish everywhere\" is the " +
+      "failure `deletion-requires-confirmation` exists to stop.",
+  },
 };
 
 /**
@@ -126,7 +137,7 @@ export const FIXED_CONTROLS: readonly string[] = ["close"];
  * state an empty list would make silence look like an oversight.
  */
 export const KIND_CONTROLS: Readonly<Record<string, readonly string[]>> = {
-  todo: ["view", "edit", "pin", "discard"],
+  todo: ["view", "edit", "pin", "discard", "relocate"],
   bean: ["view"],
 };
 
