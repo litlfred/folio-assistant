@@ -88,6 +88,28 @@ function pageName(a: FhirArtifact): string {
   return `${a.resourceType}-${a.id}`.replace(/[^A-Za-z0-9._-]/g, "_");
 }
 
+/**
+ * Above this many artefacts a category is SUMMARISED and linked out rather
+ * than listed inline.
+ *
+ * The owner's call, 2026-09-21, on measuring the first build: the index page
+ * came to 524KB and one category was 90% of it.
+ *
+ * **The number is not load-bearing, and that is the point.** smart-trust's
+ * categories measure 604, 29, 15, 14, 5, 5, 1 — a 20x gap between the largest
+ * and the next. Any threshold in 30..603 separates them identically, so 100 is
+ * a round number inside a wide gap rather than a tuned constant. If a future
+ * IG lands a category near the boundary, the right response is to look at that
+ * distribution, not to nudge this.
+ *
+ * What makes linking out lossless HERE, checked rather than assumed: every one
+ * of smart-trust's 604 `Other` artefacts is an Endpoint or an Organization and
+ * NONE carries a DAK overlay, so none would have had an artefact page to link
+ * to. The summary reports the DAK count it actually finds, so a future
+ * category that does carry sidecars says so instead of hiding them.
+ */
+const INLINE_LIMIT = 100;
+
 const CSS = `
 :root {
   --ink: #17242e; --muted: #5c6b77; --edge: #d5dde3; --surface: #ffffff;
@@ -259,8 +281,49 @@ ${(ix.contexts ?? [])
     : ""
 }`;
 
+  // Resolved from provenance + the source base, never composed from a guess:
+  // `provenance.artifactsHtml` names the file the categories were read out of,
+  // and `source.of` is where that file is published.
+  const upstreamArtifacts = ix.provenance.artifactsHtml
+    ? `${ix.source.of.replace(/\/$/, "")}/${ix.provenance.artifactsHtml}`
+    : undefined;
+
   const sections = ordered
     .map(([cat, list]) => {
+      const label = cat ?? "Not listed on the IG's artefact page";
+      if (list.length > INLINE_LIMIT) {
+        const byType = new Map<string, number>();
+        for (const a of list) byType.set(a.resourceType, (byType.get(a.resourceType) ?? 0) + 1);
+        const withDak = list.filter((a) => a.dak).length;
+        const types = [...byType.entries()]
+          .sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0]))
+          .map(([t, n]) => `<tr><td>${esc(t)}</td><td style="text-align:right">${n}</td></tr>`)
+          .join("\n");
+        return `<details>
+  <summary><span>${esc(label)}</span><span class="n">${list.length}</span></summary>
+  <div class="inner">
+  <p class="lede">These ${list.length} are <strong>summarised rather than listed</strong>: over
+  ${INLINE_LIMIT} in one category, and ${
+    withDak === 0
+      ? "none of them carries a DAK API sidecar, so none has an artefact page here to link to"
+      : `${withDak} of them carry a DAK API sidecar &mdash; those appear under their own categories above`
+  }. They are instance data of the trust network rather than definitional artefacts.</p>
+  <table>
+    <thead><tr><th>Resource type</th><th style="text-align:right">Count</th></tr></thead>
+    <tbody>
+${types}
+    </tbody>
+  </table>
+  <p>Read them upstream, where the IG documents them in full:${
+    upstreamArtifacts
+      ? `\n  <a href="${esc(upstreamArtifacts)}">${esc(upstreamArtifacts)}</a>.`
+      : " the IG published no artefact page, so there is nowhere to link."
+  }
+  Every one is also in this instance's <code>fhir-artifact-index/index.json</code>, with its canonical
+  URL and published representations &mdash; that file is the index, this page is only a reading of it.</p>
+  </div>
+</details>`;
+      }
       const rows = [...list]
         .sort((a, b) => a.key.localeCompare(b.key))
         .map((a) => {
@@ -280,7 +343,6 @@ ${(ix.contexts ?? [])
 </tr>`;
         })
         .join("\n");
-      const label = cat ?? "Not listed on the IG's artefact page";
       return `<details>
   <summary><span>${esc(label)}</span><span class="n">${list.length}</span></summary>
   <div class="inner">
