@@ -809,16 +809,15 @@ caller re-derives.</p>
   </tbody>
 </table></div>
 
-<p>Keep the wording <strong>verbatim</strong> wherever the output echoes it. A request
-paraphrased by the agent is a different request, and the reader cannot tell
-which one the list was built for — the same rule
-<a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/goal-review.html"><code class="language-plaintext highlighter-rouge">goal-review</code></a> applies to a goal.</p>
+<p>Keep the wording <strong>verbatim</strong> wherever the output echoes it — the same rule
+<a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/goal-review.html"><code class="language-plaintext highlighter-rouge">goal-review</code></a> applies to a goal, and for the same reason: a
+request the agent paraphrased is a different request, and the reader cannot
+tell which one the list was built for.</p>
 
-<p>The input <strong>narrows</strong>; it never adds. A reader who asks for “the navbar” gets
-the pages carrying it, not a page that merely mentions it. <strong>If the ask matches
-nothing that changed, say so</strong> rather than returning the whole preview as
-though it had been asked for — a list that silently ignores its input is worse
-than an empty one, because the reader believes it was answered.</p>
+<p>It <strong>narrows</strong>; it never adds. <em>“The navbar”</em> gets the pages carrying it, not a
+page that mentions it. <strong>An ask matching nothing that changed is said, not
+answered with the whole preview</strong> — a list that silently ignores its input is
+worse than an empty one, because the reader believes it was answered.</p>
 <h3 id="output">
   
   
@@ -828,16 +827,16 @@ than an empty one, because the reader believes it was answered.</p>
 </h3>
     
 
-<p>Markdown, in this order. Every part is required; an absent part is stated, not
-dropped.</p>
+<p>Markdown, in this order. Every part is required; an absent part is <strong>stated</strong>,
+not dropped.</p>
 
 <ol>
-  <li><strong>One line: where to start.</strong> The single URL that best answers the input, or
-the page with the most change behind it when there was no input. A reader
+  <li><strong>Where to start</strong> — one line, one URL: the one that best answers the input,
+or the page with the most change behind it when there was none. A reader
 opens one thing first whether or not you choose it for them.</li>
-  <li><strong>The comparison table</strong> below — before (main), after (staging), and <strong>what
-to review there</strong>.</li>
-  <li><strong>What could not be checked</strong>, as the third state below.</li>
+  <li><strong>The comparison table</strong> below — before (main), after (staging), what to
+review.</li>
+  <li><strong>What could not be checked</strong>, per the three states below.</li>
 </ol>
 <h3 id="the-third-column-is-the-one-with-value">
   
@@ -898,8 +897,8 @@ because the gate that swept the page never opened the view.</p>
 </h3>
     
 
-<p>“Could not determine” is never rendered as clean, and a change with no rendered
-surface is <strong>not</strong> a failure — it is the useful answer.</p>
+<p>“Could not determine” is never rendered as clean — and a change with <strong>no
+rendered surface</strong> is not a failure, it is the useful answer.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -910,23 +909,23 @@ surface is <strong>not</strong> a failure — it is the useful answer.</p>
   </thead>
   <tbody>
     <tr>
-      <td>the preview has not deployed yet</td>
-      <td>not deployed, with the timing below — never a link to where it will be</td>
+      <td>not deployed yet</td>
+      <td>not deployed, with the timing from §”Say how long” — never a link to where it will be</td>
     </tr>
     <tr>
-      <td>a changed page is absent from the publish ref</td>
-      <td><strong>a finding</strong>: the build dropped it, or it is not a page</td>
+      <td>a changed page absent from the publish ref</td>
+      <td><strong>a finding</strong> — the build dropped it, or it is not a page</td>
     </tr>
     <tr>
-      <td>the change has no rendered surface</td>
-      <td>reviewed in the diff, and say which files</td>
+      <td>no rendered surface</td>
+      <td>reviewed in the diff, naming the files</td>
     </tr>
   </tbody>
 </table></div>
 
 <p>The middle row is the most useful thing this skill can report, and composing
-its URL anyway would hide exactly that. See §”Before you report a staging URL
-as broken” — a URL is <strong>looked up</strong>, never composed.</p>
+its URL anyway would hide exactly that — §”Before you report a staging URL as
+broken”.</p>
 <h2 id="when-to-provide-beforeafter-urls">
   
   
