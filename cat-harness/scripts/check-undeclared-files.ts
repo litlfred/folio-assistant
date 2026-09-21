@@ -266,7 +266,7 @@ export function accountedRootPaths(repoRoot: string): Map<string, string> {
     // An instance declares itself. That is the contract everywhere else here,
     // and it means a new instance is accounted for the moment it exists rather
     // than when somebody remembers to add it to a list.
-    if (existsSync(join(repoRoot, entry.name, "harness.json"))) {
+    if (existsSync(join(repoRoot, entry.name, DECLARATION_FILENAME))) {
       out.set(entry.name, "an instance: it declares itself");
       instances.push(entry.name);
     }
@@ -294,8 +294,8 @@ export function accountedRootPaths(repoRoot: string): Map<string, string> {
   // repository-scoped entry to the checkout's PARENT — outside the repository
   // entirely. A root instance declaring repository scope is a contradiction in
   // terms; it is not special-cased because nothing should write one.
-  if (existsSync(join(repoRoot, "harness.json"))) {
-    out.set("harness.json", "the repository's own declaration: it acts as an initialized instance");
+  if (existsSync(join(repoRoot, DECLARATION_FILENAME))) {
+    out.set(DECLARATION_FILENAME, "the repository's own declaration: it acts as an initialized instance");
     const rootDecl = readDeclaration(repoRoot);
     for (const dir of rootDecl?.directories ?? []) {
       const top = dir.path.replace(/^\.\//, "").split("/")[0];

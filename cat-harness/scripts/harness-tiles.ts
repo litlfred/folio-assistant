@@ -57,6 +57,7 @@ import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { flattenDependencies } from "./dependency-order.js";
 import {
   type CatHarnessDeclaration,
+  DECLARATION_FILENAME,
   isExemptFrom,
   readDeclaration,
   siteDirFor,
@@ -149,10 +150,10 @@ export function ownStatePage(kind: string): string {
 /** Every `harness.json` in the tree: the repository root and one level down. */
 function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
   const out: string[] = [];
-  if (existsSync(join(repoRoot, "harness.json"))) out.push(repoRoot);
+  if (existsSync(join(repoRoot, DECLARATION_FILENAME))) out.push(repoRoot);
   for (const name of names) {
     const dir = join(repoRoot, name);
-    if (dir !== repoRoot && existsSync(join(dir, "harness.json"))) out.push(dir);
+    if (dir !== repoRoot && existsSync(join(dir, DECLARATION_FILENAME))) out.push(dir);
   }
   return out;
 }

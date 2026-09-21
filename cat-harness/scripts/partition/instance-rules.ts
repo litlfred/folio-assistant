@@ -549,6 +549,11 @@ export const RULES: Rule[] = [
       "scripts/check-agent-entry-links.ts",
       "scripts/check-command-paths.ts",
       "scripts/check-anchor-names.ts",
+      // Its subject is the harness's OWN declaration filename — which file
+      // names an instance — so it is harness by subject as well as by
+      // dependency: it imports `schemas/cat-harness.js` for the constant and
+      // nothing else, and a folio declares no instances. Bean `jijc`.
+      "scripts/check-declaration-filename.ts",
       // Who else is working THIS repository — a fact about the forge and this
       // checkout, not about any folio's material.
       "scripts/sibling-sessions.ts",

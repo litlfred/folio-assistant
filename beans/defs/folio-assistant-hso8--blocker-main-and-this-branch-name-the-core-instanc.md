@@ -100,3 +100,37 @@ blocked on nothing and says so; if it is not, the two beans disagree and that
 is the thing to put to the owner.
 
 **Not edited here** — a sibling's bean.
+
+### Re-derived the same day: **the blocker is VOID**
+
+The note above said `cjtm` *may* already answer this. It does better than that
+— the declarations themselves agree, on both refs:
+
+```
+$ grep -o '"name": "[^"]*"' folio-assistant-core/harness.json | head -1
+"name": "folio-assistant-core"
+$ git show origin/main:folio-assistant-core/harness.json | grep -o '"name": "[^"]*"' | head -1
+"name": "folio-assistant-core"
+```
+
+This bean's title asserts *"main and this branch name the core instance
+differently — folio-assist-core vs folio-assistant-core"*. **Neither side says
+`folio-assist-core` any more.** `folio-assistant-core/harness.json`'s own
+`_comment` records the owner's ruling — *"use folio-assistant-core/"*,
+2026-09-20 — and states that the directory and the declared name are both
+spelled out in full, after exactly this contradiction was found and corrected.
+
+So nothing downstream waits on this. The `folio-assistant-*` half of the
+REPLACE ruling (`b5f0`, 2026-09-21) can proceed: the filename derives from the
+declared `name`, and the declared name is settled at `folio-assistant-core`.
+
+**Not closed, and not tagged `ready-to-close`.** That tag is for a bean a
+session judged finished but *could not re-derive*; this one re-derives in two
+commands, which is the evidence `bean-coordination` asks for rather than a
+reason to park it. Closing a sibling's bean remains the collision `bbbl`
+names and the owner has not ruled on it — so the evidence is recorded here and
+the close stays theirs.
+
+What is left on this bean, if anything, is the residue its owner can see and I
+cannot: whether any *reader* still keys on the short spelling. `8xtj` tracks
+that residue and says a sweep must not touch it blindly.
