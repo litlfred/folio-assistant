@@ -29,7 +29,7 @@ navbar-avatar specialisation, and they are below.
 | **sticky** | the container sizes to its CONTENT, so a text region would reimpose the geometry the sticky removes | `schemas/landing-sticky.ts`, `.fa-sticky` |
 | **landing board** | text is composited INTO the art, so it needs `textRegion` per layout and a crop chosen by content shape | `docs/_includes/landing.html` |
 | **docs background** | the page ground, not a card — a different CSS surface and probably a different crop set | not built; bean `yj32` |
-| **navbar avatar** | the art CLIPPED to the subject in a square frame — `avatarRegion` | the declaration, `bun run avatar:crops` |
+| **navbar avatar** | the art CLIPPED to the subject in a square frame — `avatarRegion` | `<name>.json`, `bun run avatar:crops` |
 
 ## Sticky: art backs it, text does not sit IN it
 

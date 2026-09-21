@@ -70,7 +70,7 @@ than an error.
 ## Step 2 — which declared graph, and where does that instance put it?
 
 **A node's location is not a path you memorise.** Every instance declares the
-directories it scans in the declaration, and each entry names the **kind of
+directories it scans in `<name>.json`, and each entry names the **kind of
 graph** it holds — `cat-harness` (skills, roles, workflows, decisions,
 requirements, permissions), `schemas`, `tools`, `qa`, `beans`, `folio` and the
 rest. The vocabulary is open.
@@ -321,7 +321,7 @@ content object:
 
 1. **Instance** — platform, folio, or the folio's config? Does anything in it
    name one folio?
-2. **Graph** — which declared entry, resolved from the declaration by **id**?
+2. **Graph** — which declared entry, resolved from `<name>.json` by **id**?
    Not a path you remember.
 3. **Kind** — which side of the separating question in Step 3, and can you say
    why in one sentence?

@@ -21,7 +21,7 @@ allowed-tools: Read Edit Write Bash Grep Glob Agent Monitor Skill
 > **Folio-optional axis.** The `q-usage` criteria encode a substrate
 > deformation parameter `q` and its regimes — one folio's mathematics,
 > not a platform concern. They are registered only when the folio opts
-> in via `harness.config.json`:
+> in via `<name>.config.json`:
 >
 > ```json
 > { "qaAxes": ["q-usage"] }
