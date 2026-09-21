@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/skills/content-test/output.schema.json",
+  "title": "Content Test Output",
+  "description": "Output schema for content testing results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "testResults"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "testResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "testId",
+          "status"
+        ],
+        "properties": {
+          "testId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "passed": {
+          "type": "integer"
+        },
+        "failed": {
+          "type": "integer"
+        },
+        "skipped": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/lhs-navbar-harness-folios-cqo9mu",
+    "sha": "b8abc3ca09979480a3b3ce43c9e42cd6e864cfc5",
+    "pr": "828/merge",
+    "run": "35665322511"
+  }
+}

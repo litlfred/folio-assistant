@@ -1,0 +1,2146 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(185)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(185) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(185) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(185) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Translation manager | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Translation manager" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Translation manager" />
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  The browser-tab icon, from the same declared mark the sidebar title
+  (`title.html`) renders — reused rather than looked up by its own
+  `browser-icon` role. There WAS a second role for exactly that, on
+  `mark-small` in `harness.json`, and it went unread: nothing in this
+  repo ever emitted a favicon at all, `rel="icon"` included. It also could
+  not have driven this lookup as declared — `imagesForRole()`
+  (`schemas/kg-node.ts`) requires an image's `layout` field, which neither
+  mark entry carries, so a `browser-icon`-role lookup returns nothing. Reusing
+  the already-resolved `icon` (the same field `title.html` reads) sidesteps
+  that and, more importantly, is what was asked for: the sidebar mark and the
+  tab icon are meant to be the SAME glyph, so one declaration driving both is
+  correct, not just convenient — flip `icon` in `harness.json` and both
+  follow in one edit, no template change needed.
+
+  SVG-only. No PNG/ICO fallback exists in the repo and none is generated
+  here — every browser this matters for (evergreen Chrome/Firefox/Edge, and
+  Safari since 16) reads `type="image/svg+xml"` directly; a raster fallback
+  would need generating actual image files, which is out of scope for this
+  change.
+
+  `relative_url`, same as `title.html` and `landing.html` — a bare
+  `/assets/...` 404s on the same baseurl this file's landing-panel fix exists
+  for.
+--><link rel="icon" type="image/svg+xml" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/img/icons/cat-mark.svg"><link rel="icon" type="image/svg+xml" sizes="16x16" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/img/icons/cat-mark-small.svg"><!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+<!--
+  Site UI: a QR of the current page in the sidebar header, and zoom /
+  full-width controls on the figures.
+
+  Loaded as same-origin files with no inline script, so no script-src
+  relaxation is needed. The QR is generated in the browser from
+  window.location.href rather than baked per page at build time, so it is
+  right for anchors, query strings, and both the directory and .html forms of
+  the same page. The UTF-8 shim must come after the encoder: without it the
+  encoder's stringToBytes is single-byte and a non-ASCII character in a URL
+  silently encodes to mojibake.
+-->
+<!--
+  The configured colour scheme, published for docs/assets/js/docs-ui.js.
+
+  just-the-docs' first stylesheet is `just-the-docs-default.css`, which is
+  whatever `color_scheme` in _config.yml compiled to -- so `jtd.getTheme()`
+  returns the string "default" on a fresh load, never "dark". The scheme
+  toggle needs to know what "default" MEANS here, and reading it from the
+  config is the one way that does not go stale when the config changes.
+-->
+<script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script>
+<!--
+  The TRANSLATION INDEX — which source page has a translation in which locale.
+
+  `mountNavLocale` in docs-ui.js reads this to decide what the left-hand navbar
+  shows: with the source language selected it does nothing, and with `fr`
+  selected it swaps each nav item that HAS a French page for that page, IN
+  PLACE OF the English one. An item with no translation is left exactly as it
+  is — that is the fallback, and it is the absence of a rewrite rather than a
+  code path of its own.
+
+  Generated into `docs/_data/translations.json` by
+  `content/pipeline/translation-index.ts`, from what each page DECLARES about
+  itself: `lang`, and `translation_source` naming the page it expresses. NOT
+  from a scan for directories whose names look like language subtags — see
+  that module's header for why that inference is wrong in both directions.
+
+  THREE STATES, and the third is the reason this is a JSON island rather than
+  a conditional. (The tag name is written inside {% raw %}
+  below because LIQUID PARSES TAGS INSIDE AN HTML COMMENT — the comment
+  wrapper means nothing to it — so naming a tag in prose is a syntax error at
+  build time, and the message points at the THEME's head.html because Liquid
+  attributes an include's line to the includer. This comment cost one red
+  deploy.
+
+  AND THEN IT COST A SECOND ONE, differently, which is why this paragraph now
+  describes the wrapper rather than spelling it. It used to SPELL both halves
+  as an example — and the closing half ENDED THIS COMMENT eighteen lines
+  early, so every line below it rendered as visible body text at the top of
+  EVERY PAGE on the site. Reported by the owner from the staging URL,
+  2026-09-19.
+
+  The asymmetry is the lesson: a Liquid tag has an escape, and the closing
+  comment delimiter has NONE. There is no way to write those three characters
+  inside a comment and have the comment survive them, because the parser is
+  not looking for an escape — it stops at the first match. So the rule is not
+  "escape it carefully", it is DO NOT WRITE IT: describe it, or name it one
+  character at a time. Guarded by
+  scripts/tests/html-comment-delimiters.test.ts, which fails on an opening
+  delimiter appearing inside an open comment — the one machine-detectable
+  signature of somebody trying.)
+  A {% if %} would have to choose between the second and
+  third rows below, and there is no expression that can:
+
+    1. the data file is there      -> `index` is an object; filter the nav.
+    2. it is there and EMPTY       -> `pages` is `{}`; there is nothing to
+                                      swap, so every item correctly falls back
+                                      to the source language.
+    3. the data file is ABSENT     -> `jsonify` emits `null`, and docs-ui.js
+                                      leaves the navbar EXACTLY as built.
+
+  A build that could not determine the translation set must never render as a
+  folio that has no translations. `null` is how that is said.
+
+  `baseurl` travels with it because the client has no other way to strip the
+  site prefix off a nav `href` before matching it.
+-->
+<script type="application/json" id="fa-translation-index">{
+  "baseurl": "/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu",
+  "index": {"$schema":"folio-translation-index/v1","sourceLocale":"en","locales":["ar","es","fr","ru","zh"],"pages":{"":{"sourceUrl":"/","sourceTitle":"Home","translations":{"ar":{"url":"/ar/index.html","title":"الصفحة الرئيسية (AR)","status":"unverified","dir":"rtl"},"es":{"url":"/es/index.html","title":"Inicio (ES)","status":"unverified","dir":"ltr"},"fr":{"url":"/fr/index.html","title":"Accueil (FR)","status":"unverified","dir":"ltr"},"ru":{"url":"/ru/index.html","title":"Главная (RU)","status":"unverified","dir":"ltr"},"zh":{"url":"/zh/index.html","title":"首页 (ZH)","status":"unverified","dir":"ltr"}}},"guides/agent-onboarding":{"sourceUrl":"/guides/agent-onboarding.html","sourceTitle":"Agent onboarding","translations":{"ar":{"url":"/guides/ar/agent-onboarding.html","title":"تأهيل الوكيل (AR)","status":"unverified","dir":"rtl"},"es":{"url":"/guides/es/agent-onboarding.html","title":"Incorporación del agente (ES)","status":"unverified","dir":"ltr"},"fr":{"url":"/guides/fr/agent-onboarding.html","title":"Intégration de l'agent (FR)","status":"unverified","dir":"ltr"},"ru":{"url":"/guides/ru/agent-onboarding.html","title":"Введение для агента (RU)","status":"unverified","dir":"ltr"},"zh":{"url":"/guides/zh/agent-onboarding.html","title":"代理入门 (ZH)","status":"unverified","dir":"ltr"}}}}}
+}</script>
+<!--
+  Translation metadata for this page, consumed by docs-ui.js to auto-render
+  language coverage and QA badges. The translation pipeline stamps front matter;
+  this block publishes it to the client. No manual editing needed.
+-->
+<script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":null,
+  "sweep": {
+    "run": true,
+    "sweptAt": "2026-09-21T11:25:19.602Z",
+    "totalPages": 289,
+    "pagesWithTranslations": 8,
+    "complete": true
+  }
+}</script>
+<!--
+  Where the action tiles point.
+
+  RESOLVED, not composed. `scripts/sync-docs-harness.ts` writes
+  `docs/_data/harness.json` from the instance's own `cat-harness.json`,
+  through `siteLinks` in `scripts/site-links.ts` -- which computes every path
+  with `artefactStub` and `renderingPath`, the same functions the knowledge
+  graph exporter and the Pages workflow use. The tile therefore cannot
+  disagree with what is published.
+
+  This block previously wrote `/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/kg/` by hand. Nothing
+  has ever been published at `<base>/kg/` -- the renderings sit at the base,
+  named after the stub -- so the only entry point to the viewer anywhere on
+  this site was a 404 from the day it was added. See bean `udx8`, and the
+  identical defect AGENTS.md records against the README's chapter PDFs. A
+  path built by convention is a claim; `bun run site:links --site _site`
+  checks it against the tree that actually ships, and the Pages workflow runs
+  that check after the export.
+
+  `path` is site-ROOT-relative and gets `relative_url`, which is what makes it
+  right under this site's `/folio-assistant/` baseurl. `url` is off-site and
+  is printed as-is. `source` is no longer taken from `aux_links`: those were
+  removed so the forge link stops appearing as text at the top of the main
+  panel (the owner asked for it as an icon, not a header), and the URL is
+  resolved from the git remote instead of written down twice.
+-->
+<script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/","jsonld":"/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/todos/index.json">
+
+<!--
+  THE SEMANTIC-ZOOM DECLARATION — when the card stops rendering its words and
+  becomes its avatar.
+
+  R2 of issue #602: *"The threshold SHALL be declared data, not a literal in
+  the renderer."* `gen-docs-pages.ts` publishes the folio's own
+  `semantic-zoom.json`, and publishes NOTHING when the folio has not declared
+  one. So this `<meta>` may point at a 404, and that is a real state rather
+  than a defect: `docs-ui.js` reports it could not determine a threshold and
+  leaves every card's words in place. A default in either file would be the
+  literal R2 forbids, one layer further from where anybody looks for it.
+
+  The pointer is emitted UNCONDITIONALLY because Liquid cannot see whether the
+  generator wrote the file, and a conditional that guessed would make "this
+  folio declares no threshold" and "the build did not run" the same page.
+-->
+<meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/semantic-zoom.json">
+
+<!--
+  THE DECLARED VISUALISATIONS, as tiles.
+
+  Owner, 2026-09-20: *"if harness declares visaluzers, those should have tile"*
+  — so the tile set is the `coverage.visualiser` obligation made reachable, not
+  a second registry. `graph-tiles.ts` derives it into `_data/harness.json`;
+  this hands it to `docs-ui.js` for BOTH surfaces, because a tile is declared
+  once and says where it shows.
+
+  INLINE rather than a second fetch, unlike the todo index above, and the two
+  are different for a reason worth stating: that index grows with the todo
+  corpus, while this one is bounded by the number of directories an instance
+  DECLARES — twelve here — and every page needs it before first paint or the
+  navbar would visibly grow tiles a moment after the reader arrives.
+
+  `jsonify` and not a hand-built string: a title carrying a quote would
+  otherwise close the attribute, and the quoting rule is Liquid's rather than
+  something this comment has to be right about.
+-->
+<meta name="fa-tiles" content="[{&quot;id&quot;:&quot;agent-skills-library&quot;,&quot;directory&quot;:&quot;agent-skills-library&quot;,&quot;title&quot;:&quot;agent-skills-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/agent-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/agent-skills/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;beans&quot;,&quot;ref&quot;:&quot;cat-harness/docs/beans/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/beans/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;bootstrap-tools-schemas&quot;,&quot;directory&quot;:&quot;bootstrap-tools-schemas&quot;,&quot;title&quot;:&quot;bootstrap-tools-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/bootstrap-tools/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;detangle-schemas&quot;,&quot;directory&quot;:&quot;detangle-schemas&quot;,&quot;title&quot;:&quot;detangle-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/detangle/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/detangle/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assist-core-schemas&quot;,&quot;directory&quot;:&quot;folio-assist-core-schemas&quot;,&quot;title&quot;:&quot;folio-assist-core-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-sci-library&quot;,&quot;directory&quot;:&quot;folio-assistant-sci-library&quot;,&quot;title&quot;:&quot;folio-assistant-sci-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/folio-assistant-sci/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;large-datasets-schemas&quot;,&quot;directory&quot;:&quot;large-datasets-schemas&quot;,&quot;title&quot;:&quot;large-datasets-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/large-datasets/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/large-datasets/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;library&quot;,&quot;directory&quot;:&quot;library&quot;,&quot;title&quot;:&quot;library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/cat-harness/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;schemas&quot;,&quot;directory&quot;:&quot;schemas&quot;,&quot;title&quot;:&quot;schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/cat-harness/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/todos/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;uploads&quot;,&quot;directory&quot;:&quot;uploads&quot;,&quot;title&quot;:&quot;uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/cat-harness/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;who-iris-library&quot;,&quot;directory&quot;:&quot;who-iris-library&quot;,&quot;title&quot;:&quot;who-iris-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/who-iris/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/who-iris/&quot;,&quot;hidden&quot;:false}]">
+
+<!--
+  The bean index — the AGENT work plan, published by the same generator beside
+  the todo index above, for the same reason and read the same way. Separate
+  files rather than one combined document because the two stores are separate
+  graphs with separate declarations, and a consumer that wants only the human
+  half should not fetch 239 beans to get three todos.
+-->
+<meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/beans/index.json">
+
+<!--
+  The discarded-items document — `fsh-guts.jsonld`, published at the base by
+  `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
+  then some: it carries every node's BODY, which is 64 KB against a 5 KB
+  document without them. Inlining that into every page's <head> would be
+  absurd for content reached through one control inside Settings.
+
+  `.json` rather than `.jsonld`. Both are published and they are the same
+  bytes; Pages has no media type for `.jsonld` and serves it as
+  octet-stream. `fetch().json()` would parse it anyway, but every other
+  rendering here uses the alias and one that did not would be the odd case a
+  later reader has to work out.
+
+  The viewer fetches this WHEN SETTINGS OPENS, never on page load, and a
+  fetch that fails is reported rather than shown as an empty trashcan —
+  "nothing discarded" and "could not read the document" are opposite facts.
+-->
+<meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/fsh-guts.json">
+<!--
+  ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
+  failure, not a performance one.
+
+  These five are served from stable paths with no hash in the name, so a
+  browser that has the page cached keeps the old CSS and JS until its
+  `max-age` runs out. On the live site that is invisible. On a STAGING
+  preview it is the whole point of the deployment: the reviewer opens the URL
+  they opened an hour ago, gets yesterday's stylesheet, and reports "i dont
+  see changes" — which is indistinguishable from a deploy that never
+  happened, and sends the next hour after the wrong cause. Measured
+  2026-09-21 on this branch: every byte of the change was verified present in
+  the publish ref while the page rendered the previous build.
+
+  `site.time` is the BUILD's timestamp, so the query changes exactly when the
+  bytes might have, and never between two readers of the same build. A
+  content hash would be tighter and needs a pipeline step; this needs none
+  and closes the case that costs review time.
+
+  NOT a cache-busting strategy for third-party assets, and not applied to
+  them: those are versioned in their own URLs already.
+-->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790031584">
+
+<!--
+  The work-plan dashboard's styles, split from docs-ui.css so that
+  `state-visualizer.ts` can inline exactly these bytes into the generated
+  `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
+-->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790031584">
+<!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
+     `bun run themes:css`; `themes:css:check` fails the build when it is stale.
+     Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
+     roles that docs-ui.css consumes, and a custom property has to be set on a
+     matching element before the rule reading it takes effect. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790031584">
+<!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
+     `avatars:css:check` fails the build when it is stale. One stylesheet
+     rather than 68 assets: the glyph is a mask and the colour is a property,
+     so a scheme swap is a custom property and the trash state is a selector. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790031584">
+
+<!--
+  The kinds THIS INSTANCE DECLARES, for the avatar fan.
+
+  Owner: "shows the DECLared kinds for that instance, not inheritance." Written
+  by `sync-docs-harness.ts` from the instance's own `harness.json`, BEFORE
+  `resolveDirectories` overlays a dependency's. The effective set is strictly
+  larger, and showing it would name kinds this repository never claimed.
+
+  Inline rather than a fetched URL, unlike the todo index and the discarded
+  document: this is a dozen short strings, it is needed to render the fan at
+  all, and a fetch for that would put a spinner in front of a badge.
+-->
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
+<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode.js" defer></script>
+<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode_UTF8.js" defer></script>
+<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790031584" defer></script>
+
+<!--
+  The work-plan dashboard. SELF-MOUNTING on any page carrying
+  `[data-fa-workplan]`, so docs-ui.js neither calls it nor knows it exists; a
+  page without that container pays one failed querySelector. The same file is
+  inlined verbatim into the generated state-visualiser pages.
+-->
+<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/work-plan.js" defer></script>
+
+<!--
+  The landing panel — the instance's declared description drawn inside the
+  quiet part of its declared backdrop. Markup: `_includes/landing.html`.
+
+  The region comes in as custom properties (`--fl-x` …) set per instance from
+  `harness.json`, so this stylesheet knows nothing about where any
+  particular picture is quiet. That is the whole design: a downstream folio
+  swaps the art and the numbers and needs no CSS.
+-->
+<style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+  .folio-landing__art { display: block; }
+  .folio-landing__art img {
+    display: block; width: 100%; height: auto; border-radius: 8px;
+  }
+  /* Fade the backdrop so the overlaid text reads more clearly against it.
+     Scoped to the region-overlay case only: `--no-region` puts the words
+     BELOW the picture rather than over it, so there is nothing there for a
+     fade to help legibility of — it would just be a dimmer picture.
+
+     The two schemes need different values, not the same one, because
+     `opacity` does not tint toward a fixed colour: it blends the image with
+     whatever renders behind it, which is the page background — near-black
+     under this site's default `color_scheme: dark`, near-white under the
+     `data-fa-scheme="light"` override `docs-ui.js` sets (see docs-ui.css).
+     The overlay's ink is a fixed dark green (`#2f4636`, above) sized against
+     the cream thought-cloud in the artwork, so fading toward WHITE only
+     brightens that cloud and widens the contrast margin; fading toward BLACK
+     by the same amount darkens it and narrows it — enough fade in dark mode
+     reads as the ink sinking into a dimmed cloud rather than standing out
+     from one. Dark mode therefore gets the gentler value.
+
+     Chosen without being able to render the page (see the commit message) —
+     modest on both sides so the art is dimmed, not washed out: 0.9 by
+     default, 0.8 under the light override where fading only helps. */
+  .folio-landing:not(.folio-landing--no-region) .folio-landing__art img {
+    opacity: 0.9;
+  }
+  :root[data-fa-scheme="light"] .folio-landing:not(.folio-landing--no-region) .folio-landing__art img {
+    opacity: 0.8;
+  }
+  .folio-landing__text {
+    position: absolute;
+    /* The properties are set by `landing.html`, per breakpoint, from each
+       variant's OWN region — the swap has to happen at the same breakpoint as
+       the `<picture>` swap or the words stay where the wide crop was quiet. */
+    left: var(--fl-x); top: var(--fl-y);
+    width: var(--fl-w); height: var(--fl-h);
+    /* The type scales with THIS BOX, not with the picture and not with the
+       viewport — so `cqw` below is a fraction of the space the words actually
+       have. Sizing against the picture was the second attempt and it is wrong
+       for a reason worth keeping: each layout's box is a different fraction of
+       its image (62.5% wide on the laptop crop, 72% on the phone), so one
+       ratio against the image is too small on one and too large on another.
+       Against the box, one ratio is right everywhere. */
+    container-type: inline-size;
+    display: flex; flex-direction: column; justify-content: center;
+    /* `overflow: visible`, deliberately. The region is where the text is AIMED,
+       not a clip path: it is centred in the quiet area, so a description too
+       long for the box grows symmetrically into the margin that area has on
+       either side. `hidden` was the first version and it silently truncated
+       the last line on the square crop — a landing page that drops words is
+       strictly worse than one whose words sit a little proud of their box. */
+    overflow: visible;
+    /* The cloud is cream in both colour schemes — it is part of the picture,
+       not of the theme — so the overlay fixes its own ink rather than
+       inheriting a light-on-light body colour under `color_scheme: dark`. */
+    color: #2f4636;
+  }
+  .folio-landing__text > :first-child { margin-top: 0; }
+  .folio-landing__text > :last-child { margin-bottom: 0; }
+  .folio-landing__text p {
+    margin: 0; line-height: 1.35; font-weight: 600;
+    /* The LEAD size. 6% of the box's width — deliberately large enough that
+       the claim wraps to two lines rather than being sized down to fit one:
+       it is the headline, and a headline that fits on one line only because
+       it was shrunk is not a headline. The rungs below are sized to leave
+       room for that wrap.
+
+       It lives HERE, on the children, and not on `.folio-landing__text`: an
+       element that declares `container-type` is not its own query container,
+       so `cqw` in a rule on the box resolves against an ancestor and every
+       layout came out the same size. The first declaration is the fallback
+       for browsers without container queries — viewport-relative, rather than
+       a default 16px that overflows the cloud. */
+    font-size: clamp(0.95rem, 2.5vw, 1.85rem);
+    font-size: clamp(0.95rem, 5.6cqw, 1.85rem);
+    /* 3.6% of the box's width, ceiling 1.35rem. Derived rather than picked:
+       the longest line here is 47 characters, a bold sans runs about 0.52em
+       per character, and 47 x 0.52 x F must stay under the box width — which
+       gives F <= 0.0387 of it. 4.2% was the first try and it wrapped that line
+       on the laptop crop, pushing a fifth line down onto the cat's ear.
+       Bounded at both ends because the box is not the only constraint — below
+       about 11px nobody can read
+       it however roomy the cloud, and on a 4K monitor an unbounded ratio is
+       absurd. The first declaration is the fallback for browsers without
+       container queries: viewport-relative, rather than a default 16px that
+       overflows the cloud. */
+  }
+
+  /* The FIRST block of the description leads; everything after it supports.
+     Styled by POSITION rather than by class, because the description is one
+     markdown node an instance authors freely — there is no class to put on it,
+     and requiring one would make the landing page a second thing to maintain
+     beside the declaration.
+
+     An instance whose description is a single block gets the lead size for all
+     of it, which is the right default: one paragraph is all lead. */
+  .folio-landing__text > p + p {
+    /* Quieter, not hidden. The ladder is the point of the lead line — it shows
+       where `c@t-harness` comes from — so it stays legible on a cream cloud.
+       0.72 is about as far as it goes before thin strokes start dropping out
+       at phone sizes. */
+    /* SUBTITLE size — about a third of the lead, stated in the same units
+       rather than as `em`: `em` on a sibling resolves against the CONTAINER's
+       inherited 16px, not against the lead, and came out a constant 10.56px at
+       every viewport. Its own floor is proportionally higher than the lead's,
+       because on the square crop the lead is already at ITS floor and a third
+       of that is 4px — small enough that the ladder stops being readable,
+       which defeats the point of showing it at all. */
+    font-size: clamp(0.6rem, 0.95vw, 0.82rem);
+    font-size: clamp(0.6rem, 2.1cqw, 0.82rem);
+    font-weight: 500;
+    opacity: 0.66;
+    margin-top: 0.45em;
+    /* The rungs align on their leading characters, so they must not be
+       re-flowed and their leading whitespace must not be collapsed. */
+    white-space: pre-wrap;
+  }
+  /* Only the first rung needs the gap; the rest of the ladder is tight. */
+  .folio-landing__text > p + p + p { margin-top: 0; }
+
+  /* No declared region → the picture stands alone and the words go beneath it.
+     Guessing a position is how text lands on the cat. */
+  .folio-landing--no-region .folio-landing__text,
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--no-region .folio-landing__text { margin-top: 1rem; }
+  .folio-landing--no-region .folio-landing__text p,
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .folio-landing__art img { transition: opacity .2s ease; }
+  }
+</style>
+
+
+</head>
+
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/" class="site-title lh-tight"><img src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/img/icons/cat-mark.svg" alt="" aria-hidden="true"
+       class="fa-site-mark" width="32" height="32" /><span class="fa-site-title">folio-assistant</span>
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/agentic-harness.html" class="nav-list-link">Agentic harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/crdm-methodology.html" class="nav-list-link">CRDM methodology</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/beans-and-todos.html" class="nav-list-link">Beans and todos</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/getting-started.html" class="nav-list-link">/getting-started</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/interaction-modality.html" class="nav-list-link">/interaction-modality</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/local-language-trap-agent-audit.html" class="nav-list-link">/language-trap-agent-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/repo-conversion.html" class="nav-list-link">/repo-conversion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/confirmation-waiver.html" class="nav-list-link">A confirmation can be waived</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/decision-audit.html" class="nav-list-link">A decision is not a finding, and neither is a substitute for the other</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/retry-backoff.html" class="nav-list-link">A falling-off retry rate, on every error</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/readme-sections.html" class="nav-list-link">A folio's README</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/harness-tiles.html" class="nav-list-link">A tile is the harness's, not the node's</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/AGENTS.html" class="nav-list-link">AGENTS.md</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-acquisition.html" class="nav-list-link">Acquisition is the step before ingestion, and it had no home</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/activity-log.html" class="nav-list-link">Activity log</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/methodology-adoption.html" class="nav-list-link">Adopting a methodology, and choosing between them</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/upstream-version-adoption.html" class="nav-list-link">Adopting an upstream version bump</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/ui-accessibility.html" class="nav-list-link">All UI must follow accessibility guidelines</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/asset-extraction.html" class="nav-list-link">Asset extraction</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bean-blocking.html" class="nav-list-link">Blocking is a claim about the work, not a mood</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/ci-health.html" class="nav-list-link">CI health</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/crdm-data-model.html" class="nav-list-link">CRDM</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/crdm-requirements-workflow.html" class="nav-list-link">CRDM requirements workflow</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/code-node-review.html" class="nav-list-link">Code node review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-profiles.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-context-and-state-graphs.html" class="nav-list-link">Content, context and state graphs</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/theme-contrast.html" class="nav-list-link">Contrast: measured over the darkest thing that could be there</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/covered-is-not-reachable.html" class="nav-list-link">Covered is not reachable</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/create-sticky-note.html" class="nav-list-link">Create a sticky note</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/data-modelling.html" class="nav-list-link">Data modelling</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/theme-declaration.html" class="nav-list-link">Declaring a theme</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/deletion-requires-confirmation.html" class="nav-list-link">Deletion requires explicit confirmation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/directory-conventions.html" class="nav-list-link">Directory conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/domain-fencing.html" class="nav-list-link">Domain fencing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/edge-kinds-and-blast-radius.html" class="nav-list-link">Edge kinds and blast radius</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bootstrap-graph-emission.html" class="nav-list-link">Emitting bootstrap's own graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/evidence-appraisal.html" class="nav-list-link">Evidence Appraisal</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/feature-staging.html" class="nav-list-link">Feature-branch staging</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/crdm-detect.html" class="nav-list-link">Feature-request detection (CRDM trigger)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/flushable-containers.html" class="nav-list-link">Flushable containers</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/theme-generation.html" class="nav-list-link">Generating a theme's CSS</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/goal-review.html" class="nav-list-link">Goal review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/graph-detanglement.html" class="nav-list-link">Graph detanglement</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/harness-requirements.html" class="nav-list-link">Harness requirements</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/iris-dspace.html" class="nav-list-link">IRIS, DSpace and Dublin Core</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/incremental-render.html" class="nav-list-link">Incremental render</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/instance-kinds.html" class="nav-list-link">Instance kinds</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/kg-export.html" class="nav-list-link">KG export</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/kg-to-portal.html" class="nav-list-link">KG → package → distribution → portal</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-cache-restore.html" class="nav-list-link">Lean cache: the authoring loop</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/library-ingestion.html" class="nav-list-link">Library ingestion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/log-message.html" class="nav-list-link">Logging what you are doing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/mcp-assembly.html" class="nav-list-link">MCP assembly</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/mcp-contract.html" class="nav-list-link">MCP contract</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/mcp-projection.html" class="nav-list-link">MCP projection</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/schema-management.html" class="nav-list-link">Managing a schema</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/materialize-remote.html" class="nav-list-link">Materializing remote content</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/unverified-constraints.html" class="nav-list-link">Never encode a constraint you have not verified</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/kg-contribution-offer.html" class="nav-list-link">Offering the knowledge graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/opening-brief.html" class="nav-list-link">Opening brief</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/theme-artefacts.html" class="nav-list-link">Per-artefact specialisation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/placement.html" class="nav-list-link">Placement</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/session-state-machine.html" class="nav-list-link">Playing a state machine</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/theme-ui-review.html" class="nav-list-link">Post-MVP, because there is nothing to check before there is a render</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/prepare-merge.html" class="nav-list-link">Prepare-merge</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/process-state.html" class="nav-list-link">Process state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bpmn-processes.html" class="nav-list-link">Processes are BPMN, and the diagrams are executable</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bootstrap-graph-publication.html" class="nav-list-link">Publishing bootstrap's graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/qa-report-signing.html" class="nav-list-link">QA report signing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/qa-witness.html" class="nav-list-link">QA witnesses</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/raci.html" class="nav-list-link">RACI</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/github-state-inspection.html" class="nav-list-link">Reading GitHub state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bootstrap-kg-navigation.html" class="nav-list-link">Reading a knowledge graph before you have anything</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/kg-navigation.html" class="nav-list-link">Reading the knowledge graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/board-diagram-interchange.html" class="nav-list-link">Relationship first, visualisation later</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/render-logging.html" class="nav-list-link">Render logging</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/render-order.html" class="nav-list-link">Render order</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/kg-viewer.html" class="nav-list-link">Rendering the knowledge graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/role-model.html" class="nav-list-link">Roles are swimlanes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/serving-renderings.html" class="nav-list-link">Serving a rendering</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/session-context.html" class="nav-list-link">Session context</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/site-presentation-assets.html" class="nav-list-link">Site presentation assets</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/skills-and-tools.html" class="nav-list-link">Skills and Tools</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/staging-review.html" class="nav-list-link">Staging review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/board-windows.html" class="nav-list-link">Start in the avatar, open into a window</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/workflow-state.html" class="nav-list-link">State in a running process</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/agent-memory.html" class="nav-list-link">Subagent memory</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/swarm-management.html" class="nav-list-link">Swarm management</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/tabular-metadata.html" class="nav-list-link">Tabular metadata</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/technical-documentation.html" class="nav-list-link">Technical documentation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/milnor-exposition-standard.html" class="nav-list-link">The Milnor exposition standard</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/decision-comparison.html" class="nav-list-link">The comparison goes BEFORE the question, not inside the options</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/deterministic-and-agentic.html" class="nav-list-link">The deterministic-to-agentic spectrum</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/platform-gates.html" class="nav-list-link">The platform's own gates</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/root-readme.html" class="nav-list-link">The root README, and the one fact it must carry</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/theme-art-intake.html" class="nav-list-link">Theme art intake</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/theming.html" class="nav-list-link">Theming, split on the stage it fails at</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/translation-manager.html" class="nav-list-link">Translation manager</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/turn-reporting.html" class="nav-list-link">Turn reporting</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/untrusted-input.html" class="nav-list-link">Untrusted input</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/voice-authoring-guidance.html" class="nav-list-link">Voice authoring guidance</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/voice-editorial-review.html" class="nav-list-link">Voice editorial review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/voice-overlay-review.html" class="nav-list-link">Voice overlay review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/uploads-watch.html" class="nav-list-link">Watching the queue</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/where-a-proposal-goes.html" class="nav-list-link">Where a proposal goes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/confirm-harness.html" class="nav-list-link">Which harness, and where</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/issue-working.html" class="nav-list-link">Working an issue</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-mathlibext-curator.html" class="nav-list-link">`MathlibExt` Curator</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/fsh-guts.html" class="nav-list-link">`fsh-guts/`</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/uses-editorial-review.html" class="nav-list-link">`uses[]` Editorial Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/local-bean-coordination.html" class="nav-list-link">bean-coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bpmn-authoring.html" class="nav-list-link">bpmn-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/discussion.html" class="nav-list-link">discussion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/dmn-authoring.html" class="nav-list-link">dmn-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/docs-auto.html" class="nav-list-link">docs-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/document-authoring.html" class="nav-list-link">document-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/document-publishing.html" class="nav-list-link">document-publishing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/document-structure.html" class="nav-list-link">document-structure</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/fhir-client-operations.html" class="nav-list-link">fhir-client-operations</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/fhir-validation.html" class="nav-list-link">fhir-validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/hypothesis-generation.html" class="nav-list-link">hypothesis-generation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/ig-artifact-ingestion.html" class="nav-list-link">ig-artifact-ingestion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/ig-publication.html" class="nav-list-link">ig-publication</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/l2-dak-authoring.html" class="nav-list-link">l2-dak-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/l3-fhir-authoring.html" class="nav-list-link">l3-fhir-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/latex-authoring.html" class="nav-list-link">latex-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-formalization.html" class="nav-list-link">lean-formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/normative-statements.html" class="nav-list-link">normative-statements</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/proof-verification.html" class="nav-list-link">proof-verification</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/quality-control.html" class="nav-list-link">quality-control</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/scientific-critical-thinking.html" class="nav-list-link">scientific-critical-thinking</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/scientific-visualization.html" class="nav-list-link">scientific-visualization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/smart-base-tools.html" class="nav-list-link">smart-base Toolchain</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/smart-launch.html" class="nav-list-link">smart-launch</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/terminology-management.html" class="nav-list-link">terminology-management</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/local-todo-manager.html" class="nav-list-link">todo-manager</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/document-ingestion.html" class="nav-list-link">Document ingestion</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/document-authoring.html" class="nav-list-link">Document Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/document-publishing.html" class="nav-list-link">Document Publishing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/document-structure.html" class="nav-list-link">Document Structure</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/normative-statements.html" class="nav-list-link">Normative Statement</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/evidence.html" class="nav-list-link">Evidence for a recommendation</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/writing-a-document.html" class="nav-list-link">Writing a document</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Architecture submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture/harness-instances.html" class="nav-list-link">Harness instances</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture/theming.html" class="nav-list-link">Theming</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/architecture/folio-board-requirements.html" class="nav-list-link">The folio board — requirements as agreed</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/managing-agent-context.html" class="nav-list-link">Managing agent context</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/kgraph.html" class="nav-list-link">The KGraph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/harness.html" class="nav-list-link">The Harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/swarm-management.html" class="nav-list-link">Swarm management</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/subgraph-viewers.html" class="nav-list-link">Subgraph viewers</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/smart-trust/" class="nav-list-link">WHO SMART Trust — artefact index</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    <input type="checkbox" class="fa-nav-pin" id="fa-nav-pin">
+<label class="fa-nav-pin-toggle" for="fa-nav-pin">
+  <span class="fa-nav-pin-glyph" aria-hidden="true">&#9776;</span>
+  <span class="fa-nav-pin-text">Keep navigation open</span>
+</label><details class="fa-harness-tabs" open>
+  <summary class="fa-harness-tabs__heading">
+    Harnesses <span class="fa-harness-tabs__count">5</span>
+  </summary>
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab"
+        style="--fa-tile-tone: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/smart-trust/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">smart-trust</span></a></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/who-iris/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">who-iris</span></a></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">folio-assistant</span></a></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 268; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">folio-assistant (cat-harness)</span></a></li><li class="fa-harness-tab fa-harness-tab--floor"
+        style="--fa-tile-tone: 96; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">bootstrap</span></span></li></ul>
+</details><details class="fa-harness-tabs fa-harness-tabs--deps">
+  <summary class="fa-harness-tabs__heading">
+    Dependencies <span class="fa-harness-tabs__count">9</span>
+  </summary>
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/agent-skills/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">agent-skills</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/bootstrap-tools/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/detangle/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/folio-assistant-sci/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/large-datasets/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
+</details>
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Translation manager</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/translation-manager.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/translation-manager.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/translation-manager.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="translation-manager">
+  
+  
+    <a href="#translation-manager" class="anchor-heading" aria-labelledby="translation-manager"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Translation manager
+  
+  
+</h1>
+    
+
+<blockquote>
+  <p>Skill id: <code class="language-plaintext highlighter-rouge">translation-manager</code> · Capability: <code class="language-plaintext highlighter-rouge">translation</code> · Package:
+<code class="language-plaintext highlighter-rouge">folio-core</code></p>
+</blockquote>
+
+<p>Manage the translation lifecycle for folio content. This skill covers the full
+round trip from source content to translated content, including extraction,
+translation, injection, quality assurance, sign-off, and automatic badge
+rendering.</p>
+<h2 id="reference">
+  
+  
+    <a href="#reference" class="anchor-heading" aria-labelledby="reference"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reference
+  
+  
+</h2>
+    
+
+<p>The authoritative documentation is
+<a href="../../docs/translation-support.md"><code class="language-plaintext highlighter-rouge">docs/translation-support.md</code></a>. Read it
+before using this skill. This file is the operational checklist, not the
+architecture.</p>
+<h2 id="the-two-axis-model">
+  
+  
+    <a href="#the-two-axis-model" class="anchor-heading" aria-labelledby="the-two-axis-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two-axis model
+  
+  
+</h2>
+    
+
+<p>A content node varies along two axes:</p>
+
+<ol>
+  <li><strong>Format</strong> — <code class="language-plaintext highlighter-rouge">.md</code> (Markdown), <code class="language-plaintext highlighter-rouge">.lean</code> (Lean 4), <code class="language-plaintext highlighter-rouge">.tex</code> (LaTeX), <code class="language-plaintext highlighter-rouge">.bpmn</code>,
+<code class="language-plaintext highlighter-rouge">.dmn</code>, etc.</li>
+  <li><strong>Language</strong> — BCP 47 locale tags (<code class="language-plaintext highlighter-rouge">en</code>, <code class="language-plaintext highlighter-rouge">fr</code>, <code class="language-plaintext highlighter-rouge">es</code>, <code class="language-plaintext highlighter-rouge">ar</code>, <code class="language-plaintext highlighter-rouge">zh</code>, <code class="language-plaintext highlighter-rouge">ru</code>).</li>
+</ol>
+
+<p>The format axis is handled by companions. The language axis is handled by the
+PO/POT pipeline with <code class="language-plaintext highlighter-rouge">TranslationNode</code> manifests in <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/</code>.</p>
+<h2 id="translationnode--popot-files-as-kg-nodes">
+  
+  
+    <a href="#translationnode--popot-files-as-kg-nodes" class="anchor-heading" aria-labelledby="translationnode--popot-files-as-kg-nodes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TranslationNode — .po/.pot files as KG nodes
+  
+  
+</h2>
+    
+
+<p>Each <code class="language-plaintext highlighter-rouge">.po</code>/<code class="language-plaintext highlighter-rouge">.pot</code> pair is wrapped by a <code class="language-plaintext highlighter-rouge">.ts</code> manifest that makes it a
+<strong>first-class node in the knowledge graph</strong>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="kd">type</span> <span class="p">{</span> <span class="nx">TranslationNode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../schemas/translation</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">node</span><span class="p">:</span> <span class="nx">TranslationNode</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">trans:fr/index</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">locale</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fr</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">sourceFile</span><span class="p">:</span> <span class="dl">"</span><span class="s2">docs/index.md</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">potFile</span><span class="p">:</span> <span class="dl">"</span><span class="s2">translations/fr/index.pot</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">poFile</span><span class="p">:</span> <span class="dl">"</span><span class="s2">translations/fr/index.po</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">status</span><span class="p">:</span> <span class="p">{</span> <span class="na">locale</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fr</span><span class="dl">"</span><span class="p">,</span> <span class="na">official</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">generatedBy</span><span class="p">:</span> <span class="dl">"</span><span class="s2">agent</span><span class="dl">"</span> <span class="p">},</span>
+  <span class="na">coverage</span><span class="p">:</span> <span class="p">{</span> <span class="na">translated</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="na">total</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="na">pct</span><span class="p">:</span> <span class="mi">100</span> <span class="p">},</span>
+<span class="p">};</span>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">node</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The manifest carries the status, coverage, and QA results inline — no
+separate <code class="language-plaintext highlighter-rouge">status.json</code> or <code class="language-plaintext highlighter-rouge">.qa.json</code> files.</p>
+<h2 id="po-source-resolution-fallback-behavior">
+  
+  
+    <a href="#po-source-resolution-fallback-behavior" class="anchor-heading" aria-labelledby="po-source-resolution-fallback-behavior"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PO source resolution (fallback behavior)
+  
+  
+</h2>
+    
+
+<p>Content blocks can declare explicit PO sources via <code class="language-plaintext highlighter-rouge">poSources[]</code> on
+<code class="language-plaintext highlighter-rouge">BlockBase</code>. When not declared, the pipeline resolves by convention:</p>
+
+<ol>
+  <li><strong>Block-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;block-stem&gt;.po</code></li>
+  <li><strong>Chapter-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;chapter-slug&gt;.po</code></li>
+  <li><strong>Folio-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/global.po</code></li>
+  <li><strong>Dependency walk:</strong> walk <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> dependencies depth-first</li>
+</ol>
+
+<p>When <code class="language-plaintext highlighter-rouge">poSources</code> is declared, only the listed files are consulted (no
+fallback). Later entries override earlier for the same msgid.</p>
+<h2 id="what-is-translatable">
+  
+  
+    <a href="#what-is-translatable" class="anchor-heading" aria-labelledby="what-is-translatable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is translatable
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Translatable?</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Block titles</td>
+      <td>✅</td>
+      <td>From <code class="language-plaintext highlighter-rouge">.ts</code> manifests</td>
+    </tr>
+    <tr>
+      <td>Prose bodies (<code class="language-plaintext highlighter-rouge">.md</code>)</td>
+      <td>✅</td>
+      <td>Segmented by paragraph</td>
+    </tr>
+    <tr>
+      <td>Chapter/section titles</td>
+      <td>✅</td>
+      <td>From <code class="language-plaintext highlighter-rouge">chapter.ts</code> / <code class="language-plaintext highlighter-rouge">section.ts</code></td>
+    </tr>
+    <tr>
+      <td>Kind headings</td>
+      <td>✅</td>
+      <td>“Definition”, “Theorem”, etc. → locale catalogue</td>
+    </tr>
+    <tr>
+      <td>LaTeX math</td>
+      <td>❌</td>
+      <td>Universal notation</td>
+    </tr>
+    <tr>
+      <td>Block labels</td>
+      <td>❌</td>
+      <td>Structural identifiers</td>
+    </tr>
+    <tr>
+      <td>Code blocks</td>
+      <td>❌</td>
+      <td>Programming language content</td>
+    </tr>
+    <tr>
+      <td>Lean companions</td>
+      <td>❌</td>
+      <td>Formal mathematics</td>
+    </tr>
+    <tr>
+      <td>FHIR resources</td>
+      <td>⚠️</td>
+      <td>Use FHIR’s own <code class="language-plaintext highlighter-rouge">designation</code> system, not gettext</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="workflow">
+  
+  
+    <a href="#workflow" class="anchor-heading" aria-labelledby="workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow
+  
+  
+</h2>
+    
+<h3 id="1-extract-pot-generation">
+  
+  
+    <a href="#1-extract-pot-generation" class="anchor-heading" aria-labelledby="1-extract-pot-generation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Extract (POT generation)
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/pot-extract.ts <span class="o">[</span><span class="nt">--chapter</span> &lt;<span class="nb">dir</span><span class="o">&gt;]</span> <span class="o">[</span><span class="nt">--block</span> &lt;label&gt;]
+</code></pre></div></div>
+
+<p>Or use the <code class="language-plaintext highlighter-rouge">translation_extract</code> MCP tool. Produces <code class="language-plaintext highlighter-rouge">.pot</code> files at the
+configured granularity.</p>
+<h3 id="2-translate">
+  
+  
+    <a href="#2-translate" class="anchor-heading" aria-labelledby="2-translate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Translate
+  
+  
+</h3>
+    
+
+<p>Options, in order of preference:</p>
+
+<ol>
+  <li><strong>Existing <code class="language-plaintext highlighter-rouge">.po</code> from smart-base</strong> — if the DAK already has translations
+from Weblate/Crowdin, use them.</li>
+  <li><strong>FHIR/translation-utils</strong> — the <code class="language-plaintext highlighter-rouge">po-translate</code> CLI for batch machine
+translation via DeepL/Google Translate. Tags results <code class="language-plaintext highlighter-rouge"># fuzzy</code>.</li>
+  <li><strong>Agent translation</strong> — LLM translation of <code class="language-plaintext highlighter-rouge">.pot</code> → <code class="language-plaintext highlighter-rouge">.po</code>. Also tagged
+unofficial.</li>
+  <li><strong>Human translation</strong> — the gold standard.</li>
+</ol>
+<h3 id="3-inject-po--translated-markdown">
+  
+  
+    <a href="#3-inject-po--translated-markdown" class="anchor-heading" aria-labelledby="3-inject-po--translated-markdown"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Inject (PO → translated Markdown)
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/po-inject.ts <span class="nt">--locale</span> &lt;locale&gt; <span class="o">[</span><span class="nt">--chapter</span> &lt;<span class="nb">dir</span><span class="o">&gt;]</span>
+</code></pre></div></div>
+
+<p>Or use the <code class="language-plaintext highlighter-rouge">translation_inject</code> MCP tool. Reads <code class="language-plaintext highlighter-rouge">.po</code> files and produces
+translated <code class="language-plaintext highlighter-rouge">.md</code> in <code class="language-plaintext highlighter-rouge">docs/&lt;locale&gt;/</code> for docs pages, or in the content
+directory for content blocks.</p>
+<h3 id="4-create-translationnode-manifest">
+  
+  
+    <a href="#4-create-translationnode-manifest" class="anchor-heading" aria-labelledby="4-create-translationnode-manifest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Create TranslationNode manifest
+  
+  
+</h3>
+    
+
+<p>After injection, create or update the <code class="language-plaintext highlighter-rouge">.ts</code> manifest:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># The pipeline does this automatically, or create manually:</span>
+translations/&lt;locale&gt;/&lt;stem&gt;.ts
+</code></pre></div></div>
+
+<p>The manifest carries status, coverage, and round-trip QA results inline.
+Validate with <code class="language-plaintext highlighter-rouge">TranslationNodeSchema</code> from <code class="language-plaintext highlighter-rouge">schemas/translation.ts</code>.</p>
+<h3 id="5-round-trip-qa">
+  
+  
+    <a href="#5-round-trip-qa" class="anchor-heading" aria-labelledby="5-round-trip-qa"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Round-trip QA
+  
+  
+</h3>
+    
+
+<p>After injection, run round-trip translation QA:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/translation-qa.ts <span class="nt">--locale</span> &lt;locale&gt;
+</code></pre></div></div>
+
+<p>Or use the <code class="language-plaintext highlighter-rouge">translation_validate</code> MCP tool for coverage and staleness.
+<strong>Semantic verification is per block and lives in the sidecar</strong>, not in a
+node-level summary field: <code class="language-plaintext highlighter-rouge">TranslationNode.roundTripQA</code> was removed with the
+numbers it held. See §”Per-block translation QA” below, and route drift to a
+human reviewer.</p>
+<h3 id="6-sign-off">
+  
+  
+    <a href="#6-sign-off" class="anchor-heading" aria-labelledby="6-sign-off"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Sign-off
+  
+  
+</h3>
+    
+
+<p>A human reviewer signs off at the desired level:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/translation-signoff.ts <span class="nt">--locale</span> &lt;locale&gt; <span class="nt">--level</span> &lt;block|section|chapter|folio&gt; <span class="o">[</span><span class="nt">--path</span> &lt;content-path&gt;]
+</code></pre></div></div>
+
+<p>Or use the <code class="language-plaintext highlighter-rouge">translation_signoff</code> MCP tool. Updates the <code class="language-plaintext highlighter-rouge">TranslationNode</code>
+manifest with sign-off metadata and source hash.</p>
+<h3 id="7-staleness-watch">
+  
+  
+    <a href="#7-staleness-watch" class="anchor-heading" aria-labelledby="7-staleness-watch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Staleness watch
+  
+  
+</h3>
+    
+
+<p>On every content change, the pipeline checks whether any official translation’s
+<code class="language-plaintext highlighter-rouge">sourceHash</code> no longer matches the source <code class="language-plaintext highlighter-rouge">.md</code>. Stale translations are flagged
+in the viewer and in <code class="language-plaintext highlighter-rouge">translation_status</code> output.</p>
+<h2 id="per-block-translation-qa-and-the-agentic-round-trip">
+  
+  
+    <a href="#per-block-translation-qa-and-the-agentic-round-trip" class="anchor-heading" aria-labelledby="per-block-translation-qa-and-the-agentic-round-trip"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Per-block translation QA, and the agentic round trip
+  
+  
+</h2>
+    
+
+<p>Two sweeps, two subjects, and confusing them is how a site reports a
+translation nobody measured.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">translation-qa-sweep.ts</code></strong> measures the docs <strong>site</strong>: how much of each
+page exists in each language. It writes <code class="language-plaintext highlighter-rouge">docs/_data/translation-qa.json</code> and
+feeds the badge under a page title.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">translation-block-qa.ts</code></strong> measures a <strong>block</strong>, one sidecar per
+<code class="language-plaintext highlighter-rouge">(block, locale)</code>: <code class="language-plaintext highlighter-rouge">&lt;stem&gt;.&lt;locale&gt;.translation-qa.json</code>, in the
+<code class="language-plaintext highlighter-rouge">block-qa/v1</code> entry shape, which is what the per-block <code class="language-plaintext highlighter-rouge">TR</code> icon opens.</li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run translation:block-qa          <span class="c"># write the sidecars</span>
+bun run translation:block-qa:check    <span class="c"># fail if any is stale</span>
+</code></pre></div></div>
+<h3 id="what-a-script-may-claim-and-what-it-may-not">
+  
+  
+    <a href="#what-a-script-may-claim-and-what-it-may-not" class="anchor-heading" aria-labelledby="what-a-script-may-claim-and-what-it-may-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a script may claim, and what it may not
+  
+  
+</h3>
+    
+
+<p>Three criteria are deterministic and carry a <code class="language-plaintext highlighter-rouge">script</code> witness:
+<code class="language-plaintext highlighter-rouge">translation-coverage</code>, <code class="language-plaintext highlighter-rouge">translation-terms-preserved</code> (acronyms, numbers and
+URLs that must survive translation and did not — the class a fluent
+mistranslation passes) and <code class="language-plaintext highlighter-rouge">translation-not-echo</code> (a “translation” identical to
+its source; a <em>warn</em>, because that is right for a proper noun and wrong for a
+sentence).</p>
+
+<p><code class="language-plaintext highlighter-rouge">translation-semantic-roundtrip</code> is written <strong>with no entry</strong>. A round trip
+asks whether the MEANING survived, and that needs a translator that has not
+seen the original. The only back-translation available to a script here is the
+PO’s own <code class="language-plaintext highlighter-rouge">msgid→msgstr</code> map read backwards, which returns the source exactly,
+always: a perfect similarity score measuring the lookup table. <strong>Do not fill
+this criterion mechanically.</strong> A green tick nobody should trust is worse than a
+gap that says it is a gap — a reader who sees the tick stops asking.</p>
+
+<blockquote>
+  <p>This was not hypothetical. <code class="language-plaintext highlighter-rouge">translations/fr/index.ts</code> carried
+<code class="language-plaintext highlighter-rouge">roundTripQA: { fail: 21, total: 36, method: "jaccard-word-overlap" }</code>, and
+its own <code class="language-plaintext highlighter-rouge">description</code> explained those failures away as expected “with limited
+vocabulary back-translator” — a measurement whose author has to explain it
+away is about the instrument, not the translation. The generator’s
+back-translation map held <strong>6 entries for 36 strings</strong>: every string nobody
+had back-translated scored 0 similarity and was counted as drift, so <code class="language-plaintext highlighter-rouge">fail:
+21</code> was a count of absences. A second script back-translated by applying a
+40-pair word-substitution table to the French and wrote the result as a
+<code class="language-plaintext highlighter-rouge">block-qa/v1</code> sidecar with an <strong>agent</strong> reviewer.</p>
+
+  <p>All of it is removed — the numbers, the <code class="language-plaintext highlighter-rouge">roundTripQA</code> field, the page badge
+that displayed them, and both scripts.</p>
+</blockquote>
+<h3 id="the-agentic-round-trip--a-pair-of-agents-and-the-separation-is-the-measurement">
+  
+  
+    <a href="#the-agentic-round-trip--a-pair-of-agents-and-the-separation-is-the-measurement" class="anchor-heading" aria-labelledby="the-agentic-round-trip--a-pair-of-agents-and-the-separation-is-the-measurement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agentic round trip — a PAIR of agents, and the separation is the measurement
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>agent</th>
+      <th>is given</th>
+      <th>produces</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>back-translator</strong></td>
+      <td>the target-language text, and nothing else</td>
+      <td>an independent rendering back into the source language</td>
+    </tr>
+    <tr>
+      <td><strong>adjudicator</strong></td>
+      <td>the original and the back-translation, never the target text</td>
+      <td><code class="language-plaintext highlighter-rouge">pass</code> / <code class="language-plaintext highlighter-rouge">warn</code> / <code class="language-plaintext highlighter-rouge">fail</code>, with each drift named</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Three rules make it a measurement rather than a ritual:</p>
+
+<ol>
+  <li><strong>Neither agent sees what would let it shortcut.</strong> A back-translator shown
+the English writes the English back and the check passes vacuously. An
+adjudicator shown the French can talk itself into any reading of the
+back-translation.</li>
+  <li><strong>The back-translator must use no tools, and must say so.</strong> The source is in
+the repository; an agent with filesystem access can find it, and then the
+verdict measures its search. Ask for a <code class="language-plaintext highlighter-rouge">TOOLS_USED</code> line and record the
+answer.</li>
+  <li><strong>One agent doing both halves is not this check.</strong> It compares a text with
+its own paraphrase of itself.</li>
+</ol>
+
+<p>Tell the adjudicator explicitly what is <em>not</em> drift — synonyms, articles,
+re-ordering — and what is: a claim added, dropped, weakened, strengthened or
+reversed; a term of art swapped for something that means a different thing; a
+named entity or a quantifier moved. Without that, a round trip degenerates into
+a style review, and every translation “fails”.</p>
+
+<p>Record the result with:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/translation-roundtrip.ts <span class="nt">--payload</span> &lt;file.json&gt;
+</code></pre></div></div>
+
+<p>It writes <strong>both</strong> agents as witnesses. The adjudicator’s entry carries the
+verdict and leads the criterion (the first entry is the operative one
+everywhere in this repo); the back-translator’s sits behind it with
+<code class="language-plaintext highlighter-rouge">result: "n/a"</code> and the back-translation itself in <code class="language-plaintext highlighter-rouge">notes</code>, because a reader
+asking “on what basis?” needs the intermediate text and a reader asking “who
+did this?” needs both names.</p>
+
+<p><strong>Record <code class="language-plaintext highlighter-rouge">model</code> with <code class="language-plaintext highlighter-rouge">modelSource</code>, or not at all.</strong> A subagent’s serving
+model is not directly observable from the session that dispatched it: it
+inherits the parent unless the harness overrides, and the hand-back does not
+say which model served the turn. A bare model string on an agent witness is
+therefore an inference printed as a fact — the same move as the round-trip
+numbers this skill tells you not to write. <code class="language-plaintext highlighter-rouge">modelSource</code> states how the
+identifier was established (for example: read from <code class="language-plaintext highlighter-rouge">get_session</code> at record
+time, subagent inheritance assumed, not independently observed), and the panel
+renders it beside the model. Absent both, the panel prints “not recorded”,
+which is a true statement and an acceptable one.</p>
+<h3 id="two-traps-this-process-has-already-sprung">
+  
+  
+    <a href="#two-traps-this-process-has-already-sprung" class="anchor-heading" aria-labelledby="two-traps-this-process-has-already-sprung"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two traps this process has already sprung
+  
+  
+</h3>
+    
+
+<p><strong>A script sweep must not clobber an agent’s verdict.</strong> <code class="language-plaintext highlighter-rouge">translation-block-qa</code>
+writes <code class="language-plaintext highlighter-rouge">translation-semantic-roundtrip: []</code> on every run. Before
+<code class="language-plaintext highlighter-rouge">mergeCriteria</code>, the next unrelated re-run deleted the round trip a pair of
+agents had produced, silently and with nothing in the output to say so. The
+rule: <strong>a sweep replaces only entries whose reviewer is itself</strong>, and carries
+everything else through.</p>
+
+<p><strong>The verdict is hashed to the text it was about.</strong> The entries hash the <code class="language-plaintext highlighter-rouge">.md</code>,
+the <code class="language-plaintext highlighter-rouge">.ts</code> and the <code class="language-plaintext highlighter-rouge">.po</code>, so editing the source stales every locale’s round trip
+and editing a translation stales that locale’s. This matters more for an agent
+ruling than a script one: nobody can cheaply re-run it, so an agent verdict is
+exactly the kind that quietly outlives its subject.</p>
+<h2 id="automatic-badge-rendering">
+  
+  
+    <a href="#automatic-badge-rendering" class="anchor-heading" aria-labelledby="automatic-badge-rendering"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Automatic badge rendering
+  
+  
+</h2>
+    
+
+<p>Translation badges are <strong>automatically rendered</strong> on every docs page by
+<code class="language-plaintext highlighter-rouge">docs-ui.js</code>. There is no need to manually add badge includes or front matter.</p>
+<h3 id="how-it-works">
+  
+  
+    <a href="#how-it-works" class="anchor-heading" aria-labelledby="how-it-works"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it works
+  
+  
+</h3>
+    
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">head_custom.html</code></strong> publishes a <code class="language-plaintext highlighter-rouge">&lt;script type="application/json"
+id="fa-translation-meta"&gt;</code> block on every page, reading from page front
+matter</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">docs-ui.js</code></strong> reads that block and auto-injects into the page title:
+    <ul>
+      <li><strong>🌐 Language coverage badge</strong> — <code class="language-plaintext highlighter-rouge">0/5 languages</code> (grey), <code class="language-plaintext highlighter-rouge">1/5</code> (amber),
+<code class="language-plaintext highlighter-rouge">5/5</code> (green)</li>
+      <li><strong>⚠️ Unverified warning</strong> — auto-injected when <code class="language-plaintext highlighter-rouge">translation_status:
+unverified</code></li>
+    </ul>
+  </li>
+</ol>
+<h3 id="front-matter-for-the-translation-pipeline-to-stamp">
+  
+  
+    <a href="#front-matter-for-the-translation-pipeline-to-stamp" class="anchor-heading" aria-labelledby="front-matter-for-the-translation-pipeline-to-stamp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Front matter for the translation pipeline to stamp
+  
+  
+</h3>
+    
+
+<p>The translation pipeline stamps this front matter on generated pages:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Source pages (English):</span>
+<span class="na">lang</span><span class="pi">:</span> <span class="s">en</span>
+<span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">en"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>    <span class="c1"># every locale the page can be read in</span>
+
+<span class="c1"># Translated pages:</span>
+<span class="na">lang</span><span class="pi">:</span> <span class="s">fr</span>
+<span class="na">translation_status</span><span class="pi">:</span> <span class="s">unverified</span>     <span class="c1"># or "official"</span>
+<span class="na">translation_source</span><span class="pi">:</span> <span class="s">index.md</span>       <span class="c1"># source file</span>
+<span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">en"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>
+</code></pre></div></div>
+<h3 id="the-terminology-glossary--translationslocaleglossarypo">
+  
+  
+    <a href="#the-terminology-glossary--translationslocaleglossarypo" class="anchor-heading" aria-labelledby="the-terminology-glossary--translationslocaleglossarypo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The terminology glossary — <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/glossary.po</code>
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">translation-terms-preserved</code> can see that a source term is absent from a
+translation. It cannot see whether that is a correct localisation or a silent
+loss: <code class="language-plaintext highlighter-rouge">WHO</code> missing from a French sentence is either <code class="language-plaintext highlighter-rouge">OMS</code> or a dropped term,
+and guessing either way is worse than saying so. The glossary is how a folio
+tells it which.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>entry</th>
+      <th>meaning</th>
+      <th>when the term is absent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">msgstr "OMS"</code></td>
+      <td>the expected form, pinned</td>
+      <td><strong>fail</strong> — the glossary said what it should be</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">msgstr "FHIR"</code> (identity)</td>
+      <td>must survive verbatim</td>
+      <td><strong>fail</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">#, localised</code></td>
+      <td>rendered in the target language, form NOT pinned</td>
+      <td><strong>pass</strong></td>
+    </tr>
+    <tr>
+      <td>no entry</td>
+      <td>unknown</td>
+      <td><strong>warn</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">#, localised</code> exists so a glossary needs no translated content.</strong> Pinning a
+form means authoring target-language material; the flag says the one thing the
+checker needs — <em>this term gets localised, I am not pinning how</em> — and it is
+reviewable by someone who reads only English. Pin a form when you want the
+stricter check.</p>
+
+<p><strong>It is a reading rule and cannot become a mute button</strong>, which is the property
+to preserve if you touch it. <code class="language-plaintext highlighter-rouge">localised</code> only converts a would-be finding about
+that term into a pass: it never reaches <code class="language-plaintext highlighter-rouge">strict</code> tokens (a URL or a number
+consults no glossary — nothing localises a <code class="language-plaintext highlighter-rouge">3</code>), it cannot act on a term it does
+not name, an entry with neither a form nor the flag is <em>unfinished</em> rather than
+permission, and each locale’s file is read alone, so marking a term in French
+says nothing about Arabic. Every one of those is a test in
+<code class="language-plaintext highlighter-rouge">translation-block-qa.test.ts</code>.</p>
+
+<p>The file is hand-authored and has no POT — <code class="language-plaintext highlighter-rouge">schemas/translation.ts</code> declares
+that slot, and <code class="language-plaintext highlighter-rouge">TranslationNode.potFile</code> is optional for exactly this. Bean
+<code class="language-plaintext highlighter-rouge">he0e</code>.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">available_locales</code> includes the SOURCE language, and that is not a
+formality.</strong> It is the list a reader’s language bar and coverage badge are
+computed from — “which languages can I read this page in” — and the page is
+certainly readable in the one it was written in. It is <em>not</em> the list of
+translations that exist, which is what <code class="language-plaintext highlighter-rouge">availableLocales()</code> in
+<code class="language-plaintext highlighter-rouge">content/pipeline/po-resolve.ts</code> returns by resolving
+<code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;stem&gt;.po</code>; that lookup can never name the source
+language, because there is no <code class="language-plaintext highlighter-rouge">translations/en/</code> and there never will be. Use
+<code class="language-plaintext highlighter-rouge">localesAvailableFor()</code> in <code class="language-plaintext highlighter-rouge">content/pipeline/translation-index.ts</code> to go from
+one to the other.</p>
+
+<p>Both halves of the corpus must stamp the same meaning. They did not until issue
+#687: the generator stamped the PO-derived list while the hand-authored
+translated pages stamped the full set, so <code class="language-plaintext highlighter-rouge">docs/fr/index.md</code> rendered a badge
+reading <code class="language-plaintext highlighter-rouge">6/5 languages</code> — a numerator larger than its denominator, which is the
+shape a disagreement about what a field means takes when it finally surfaces.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">qa_translation_*</code> keys are <strong>gone</strong>, along with the badge that read them.
+They were stamped from a node-level round trip whose back-translation map held
+6 entries for 36 strings, so every string nobody had back-translated was
+published as semantic drift. Per-block QA replaces them: the <code class="language-plaintext highlighter-rouge">TR</code> icon beside
+each block opens <code class="language-plaintext highlighter-rouge">&lt;stem&gt;.&lt;locale&gt;.translation-qa.json</code>, where a verdict names
+the witness that reached it.</p>
+
+<p><code class="language-plaintext highlighter-rouge">docs-ui.js</code> injects the unverified-translation warning itself, from the page’s
+own front matter. <strong>There is no include to add</strong>:
+<code class="language-plaintext highlighter-rouge">_includes/translation-warning.html</code> is deleted, not deprecated, as is
+<code class="language-plaintext highlighter-rouge">_includes/language-selector.html</code> — <code class="language-plaintext highlighter-rouge">buildLanguageBar</code> renders the six UN
+languages and greys out the ones not yet translated, which the include only
+promised in a comment. (<code class="language-plaintext highlighter-rouge">qa-translation-badge.html</code> went the same way: it
+rendered the removed numbers.)</p>
+<h2 id="the-navbar-filters-by-locale">
+  
+  
+    <a href="#the-navbar-filters-by-locale" class="anchor-heading" aria-labelledby="the-navbar-filters-by-locale"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The navbar filters by locale
+  
+  
+</h2>
+    
+
+<p>Reported by the owner, 2026-09-19:</p>
+
+<blockquote>
+  <p>translations are still not handled right. i have english selected, but i see
+the translated pages in LHS navbar. the <code class="language-plaintext highlighter-rouge">fr/</code> <code class="language-plaintext highlighter-rouge">ru/</code> etc. sub-dirs need to be
+explicitly labeled as translated content in the graph and not shown in navbar
+unless that locale is selected. (if not present, fall back to source
+language)</p>
+</blockquote>
+
+<p>Three rules, and each is enforced somewhere different because each can break
+somewhere different.</p>
+<h3 id="1-a-page-is-a-translation-because-the-page-says-so">
+  
+  
+    <a href="#1-a-page-is-a-translation-because-the-page-says-so" class="anchor-heading" aria-labelledby="1-a-page-is-a-translation-because-the-page-says-so"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. A page is a translation because the PAGE says so
+  
+  
+</h3>
+    
+
+<p>Three fields in its own front matter, and nothing else anywhere:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">lang</span><span class="pi">:</span> <span class="s">fr</span>                              <span class="c1"># this page is French</span>
+<span class="na">nav_exclude</span><span class="pi">:</span> <span class="no">true</span>                     <span class="c1"># keep it OUT of the static nav</span>
+<span class="na">translation_source</span><span class="pi">:</span> <span class="s">index.md</span>          <span class="c1"># which page it expresses</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">content/pipeline/translation-index.ts</code> walks the site and reads those. A page
+with no <code class="language-plaintext highlighter-rouge">lang</code> is the instance’s <strong>source language</strong> — absent means the
+default, not unknown.</p>
+
+<p><strong>Never match a directory name against a list of language subtags.</strong> That is
+the <em>“distinguishable by extension … a coincidence of the current layout, not a
+contract”</em> defect #263 named, moved to directory names, and it is wrong in both
+directions: a folio with a <code class="language-plaintext highlighter-rouge">no/</code> chapter (Norwegian, or the English word) is
+silently hidden from its own navbar, and a <code class="language-plaintext highlighter-rouge">pt-BR/</code> or <code class="language-plaintext highlighter-rouge">translated-fr/</code>
+directory is silently shown as source. Neither announces itself — the navbar
+simply has the wrong entries in it. Put the French page at <code class="language-plaintext highlighter-rouge">accueil-fr.md</code>
+beside its source and it is indexed correctly; put an English page in a folder
+called <code class="language-plaintext highlighter-rouge">fr/</code> and it is left alone.</p>
+
+<p><strong>There is deliberately no <code class="language-plaintext highlighter-rouge">translated-content</code> graph kind.</strong> A first draft of
+PR #351 added one, with a <code class="language-plaintext highlighter-rouge">locale</code> field on <code class="language-plaintext highlighter-rouge">ContentDirectory</code> and one
+<code class="language-plaintext highlighter-rouge">cat-harness.json</code> entry per locale subtree — ten entries for five locales
+across two subtrees. It worked and it was the wrong axis: it restated what all
+ten files already said, and it grew as O(locales × subtrees). The owner’s
+framing is what settles it:</p>
+
+<blockquote>
+  <p>narrative/audio/visual content with text should be translatable. its not so
+much the node schema itself but its content (e.g. markdown, bpmn) should be
+translatable.</p>
+</blockquote>
+
+<p>Translatability is a property of a <strong>format within a content type</strong>, and that
+model already exists: <code class="language-plaintext highlighter-rouge">schemas/translation-tools.ts</code> declares, per content
+type, which formats have an extract/inject pair — Markdown, LaTeX, PlantUML,
+SVG, ArchiMate, Excel, BPMN, FSH, FHIR JSON — and <code class="language-plaintext highlighter-rouge">isTranslatable(contentType,
+extension)</code> is the predicate. The index asks it rather than inventing a second
+answer, so a <code class="language-plaintext highlighter-rouge">.json</code> beside a page is data and never a language.</p>
+
+<p><code class="language-plaintext highlighter-rouge">translations/</code> <strong>is</strong> declared, as <code class="language-plaintext highlighter-rouge">translation-sources</code>. That one earns a
+kind: a <code class="language-plaintext highlighter-rouge">.po</code> catalogue is not content in any language, so no file inside it
+can declare one.</p>
+
+<p><strong>There is no <code class="language-plaintext highlighter-rouge">nav_order</code> on a translated page.</strong> It stands where its <em>source</em>
+stands, because it replaces that item rather than joining the list. A
+<code class="language-plaintext highlighter-rouge">nav_order</code> beside a <code class="language-plaintext highlighter-rouge">nav_exclude</code> is two facts that contradict each other, and
+the check refuses it.</p>
+<h3 id="2-nav_exclude-is-the-half-that-javascript-cannot-do">
+  
+  
+    <a href="#2-nav_exclude-is-the-half-that-javascript-cannot-do" class="anchor-heading" aria-labelledby="2-nav_exclude-is-the-half-that-javascript-cannot-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. <code class="language-plaintext highlighter-rouge">nav_exclude</code> is the half that JavaScript cannot do
+  
+  
+</h3>
+    
+
+<p>just-the-docs builds the navbar <strong>at build time</strong>, from front matter, on a
+static site serving the same HTML to every reader. It cannot know which locale
+anybody chose, so a translated page left in the nav is in it <strong>for everybody</strong> —
+which is the reported bug exactly. A script can swap a nav item; it cannot
+un-render one without a flash of the wrong nav first.</p>
+
+<p>So the translations leave the static nav entirely, and a reader with no
+JavaScript gets the <strong>source-language</strong> navbar — the correct degraded answer
+rather than an arbitrary one.</p>
+<h3 id="3-the-swap-and-the-fallback-that-is-not-a-code-path">
+  
+  
+    <a href="#3-the-swap-and-the-fallback-that-is-not-a-code-path" class="anchor-heading" aria-labelledby="3-the-swap-and-the-fallback-that-is-not-a-code-path"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. The swap, and the fallback that is not a code path
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">content/pipeline/translation-index.ts</code> writes <code class="language-plaintext highlighter-rouge">docs/_data/translations.json</code>; <code class="language-plaintext highlighter-rouge">_includes/head_custom.html</code> publishes it
+into every page as <code class="language-plaintext highlighter-rouge">#fa-translation-index</code>; <code class="language-plaintext highlighter-rouge">mountNavLocale</code> in
+<code class="language-plaintext highlighter-rouge">docs/assets/js/docs-ui.js</code> reads it.</p>
+
+<p>With a non-source locale selected, each nav item that <strong>has</strong> a page in that
+locale is rewritten in place — same position, same parent, translated title,
+translated href, and its own <code class="language-plaintext highlighter-rouge">dir</code> so an Arabic item inside an English column
+is not laid out backwards.</p>
+
+<p><strong>Fallback is the absence of a rewrite.</strong> An item with no page in the selected
+locale is not touched, so it keeps its source-language title and link. There is
+deliberately no branch for it: a fallback implemented as its own code path is a
+code path that can be wrong, and this one cannot be.</p>
+
+<p>Which locale is “selected”, in precedence order: <code class="language-plaintext highlighter-rouge">?lang=</code> on the URL, then the
+page’s own <code class="language-plaintext highlighter-rouge">lang</code> when the page <em>is</em> a translation, then the remembered
+<code class="language-plaintext highlighter-rouge">fa-locale</code>, then the source language. A locale the index has never heard of is
+not honoured — labelling the navbar <code class="language-plaintext highlighter-rouge">tlh</code> while every item is in English is a
+claim the page cannot support.</p>
+<h3 id="three-states-and-the-third-is-why-the-index-is-published-as-null">
+  
+  
+    <a href="#three-states-and-the-third-is-why-the-index-is-published-as-null" class="anchor-heading" aria-labelledby="three-states-and-the-third-is-why-the-index-is-published-as-null"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three states, and the third is why the index is published as <code class="language-plaintext highlighter-rouge">null</code>
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">data-fa-nav-index</code></th>
+      <th>when</th>
+      <th>what the navbar does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ok</code></td>
+      <td>the index parsed and holds pages</td>
+      <td>filter it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">empty</code></td>
+      <td>it parsed and holds none</td>
+      <td>nothing to swap; every item is source language</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">unknown</code></td>
+      <td>no island, unparseable, or <code class="language-plaintext highlighter-rouge">index: null</code> because the data file was absent at build time</td>
+      <td>left <strong>exactly</strong> as built</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">empty</code> and <code class="language-plaintext highlighter-rouge">unknown</code> produce the same navbar and are <strong>not the same answer</strong>:
+one is <em>“this folio has no translations”</em>, the other is <em>“this build could not
+tell”</em>. A build that could not determine the translation set must never render
+as a folio that has none — so <code class="language-plaintext highlighter-rouge">translation:index</code> exits <strong>2</strong> rather than
+writing a partial index over a complete one, and the deploy fails rather than
+publishing it.</p>
+<h3 id="adding-a-locale">
+  
+  
+    <a href="#adding-a-locale" class="anchor-heading" aria-labelledby="adding-a-locale"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a locale
+  
+  
+</h3>
+    
+
+<ol>
+  <li>Write the pages, each carrying <code class="language-plaintext highlighter-rouge">lang</code>, <code class="language-plaintext highlighter-rouge">nav_exclude: true</code> and
+<code class="language-plaintext highlighter-rouge">translation_source</code>. Where they sit is up to you — the convention here is
+<code class="language-plaintext highlighter-rouge">&lt;dir&gt;/&lt;locale&gt;/&lt;page&gt;.md</code>, and nothing depends on it.</li>
+  <li><code class="language-plaintext highlighter-rouge">bun run translation:index</code> and commit <code class="language-plaintext highlighter-rouge">docs/_data/translations.json</code>.</li>
+</ol>
+
+<p>There is no third step and no declaration to remember. The thing that IS easy
+to forget is <code class="language-plaintext highlighter-rouge">nav_exclude</code>, which is why <code class="language-plaintext highlighter-rouge">translation:index:check</code> fails
+without it: a translated page left in the static nav is in it for every
+reader, whatever locale they chose, which is the bug this section records.</p>
+<h2 id="official-vs-unofficial">
+  
+  
+    <a href="#official-vs-unofficial" class="anchor-heading" aria-labelledby="official-vs-unofficial"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Official vs unofficial
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Official</th>
+      <th>Unofficial</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Human sign-off</td>
+      <td>✅ Required</td>
+      <td>❌ Not required</td>
+    </tr>
+    <tr>
+      <td>Viewer badge</td>
+      <td>✅ Green</td>
+      <td>🔄 Grey/amber</td>
+    </tr>
+    <tr>
+      <td>Source hash tracking</td>
+      <td>✅ Yes</td>
+      <td>❌ No</td>
+    </tr>
+    <tr>
+      <td>Staleness detection</td>
+      <td>✅ Yes</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Can be shown in viewer</td>
+      <td>Always</td>
+      <td>Configurable (<code class="language-plaintext highlighter-rouge">officialRequired</code> in config)</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="six-un-languages">
+  
+  
+    <a href="#six-un-languages" class="anchor-heading" aria-labelledby="six-un-languages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Six UN languages
+  
+  
+</h2>
+    
+
+<p>The default <code class="language-plaintext highlighter-rouge">supportedLocales</code> in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Language</th>
+      <th>Native</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ar</code></td>
+      <td>Arabic</td>
+      <td>العربية</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">zh</code></td>
+      <td>Chinese</td>
+      <td>中文</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">en</code></td>
+      <td>English</td>
+      <td>English</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fr</code></td>
+      <td>French</td>
+      <td>Français</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ru</code></td>
+      <td>Russian</td>
+      <td>Русский</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">es</code></td>
+      <td>Spanish</td>
+      <td>Español</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Folios may add or remove locales. The viewer reads the list from config.</p>
+<h2 id="translations-directory-rules">
+  
+  
+    <a href="#translations-directory-rules" class="anchor-heading" aria-labelledby="translations-directory-rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> translations/ directory rules
+  
+  
+</h2>
+    
+
+<p>The <code class="language-plaintext highlighter-rouge">translations/</code> directory contains <strong>only</strong> three file types:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">.pot</code> — POT templates (extractable strings)</li>
+  <li><code class="language-plaintext highlighter-rouge">.po</code> — PO translated strings</li>
+  <li><code class="language-plaintext highlighter-rouge">.ts</code> — TranslationNode manifests (KG nodes)</li>
+</ol>
+
+<p><strong>Do not</strong> put <code class="language-plaintext highlighter-rouge">.md</code>, <code class="language-plaintext highlighter-rouge">.qa.json</code>, or <code class="language-plaintext highlighter-rouge">status.json</code> files in <code class="language-plaintext highlighter-rouge">translations/</code>.
+Rendered output lives in <code class="language-plaintext highlighter-rouge">docs/&lt;locale&gt;/</code>; QA and status are properties of
+the TranslationNode manifest.</p>
+<h2 id="who-smart-base-integration">
+  
+  
+    <a href="#who-smart-base-integration" class="anchor-heading" aria-labelledby="who-smart-base-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WHO smart-base integration
+  
+  
+</h2>
+    
+
+<p>The WHO <code class="language-plaintext highlighter-rouge">smart-base</code> repository defines the formal actor
+<code class="language-plaintext highlighter-rouge">SGAuthoring.Persona.Translator</code> with skill requirements
+<code class="language-plaintext highlighter-rouge">SGAuthoring.Skills.TranslateContent</code> and
+<code class="language-plaintext highlighter-rouge">SGAuthoring.Skills.ReviewTranslations</code>.</p>
+
+<p>Follow the principle in
+<a href="../authoring-who-smart-guidelines/smart-base-tools.md"><code class="language-plaintext highlighter-rouge">smart-base-tools.md</code></a>:
+<strong>load it; never vendor it.</strong> The translation subsystem is invoked from the
+smart-base checkout, not copied.</p>
+<h2 id="ig-publisher-i18n">
+  
+  
+    <a href="#ig-publisher-i18n" class="anchor-heading" aria-labelledby="ig-publisher-i18n"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> IG Publisher i18n
+  
+  
+</h2>
+    
+
+<p>For FHIR IG folios, the IG Publisher’s own i18n system is used in parallel:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">i18n-default-lang</code> in <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> — source language.</li>
+  <li><code class="language-plaintext highlighter-rouge">i18n-lang</code> — target languages.</li>
+  <li><code class="language-plaintext highlighter-rouge">translation-sources</code> — path to <code class="language-plaintext highlighter-rouge">input/translations/{lang}/</code> containing
+per-resource <code class="language-plaintext highlighter-rouge">.po</code> files.</li>
+  <li>Run with <code class="language-plaintext highlighter-rouge">-generation-off -validation-off</code> flags for fast translation-only
+builds.</li>
+</ul>
+
+<p>The prose translation pipeline (this skill) and the FHIR resource translation
+pipeline (IG Publisher) are complementary and independent.</p>
+<h2 id="do-not">
+  
+  
+    <a href="#do-not" class="anchor-heading" aria-labelledby="do-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>Do not manually add badge includes.</strong> <code class="language-plaintext highlighter-rouge">docs-ui.js</code> renders them
+automatically from front matter. The include it replaced is <strong>deleted, not
+deprecated</strong> — an include that still exists is one somebody adds back.</li>
+  <li><strong>Do not publish a semantic-QA number a script cannot establish.</strong> A
+back-translation from this repo’s own PO map, or from a word-substitution
+table, scores the table rather than the translation — and a string with no
+back-translation at all scores 0 and reads as drift. If no independent
+back-translator has run, the criterion has no verdict, and saying so is the
+honest output.</li>
+  <li><strong>Do not infer a locale from a directory name.</strong> <code class="language-plaintext highlighter-rouge">docs/fr/index.md</code> is
+French because it says <code class="language-plaintext highlighter-rouge">lang: fr</code>. A subtag match is wrong in both
+directions and neither failure announces itself — see
+<a href="#the-navbar-filters-by-locale">The navbar filters by locale</a>.</li>
+  <li><strong>Do not add a graph kind for translated content.</strong> It is the same kind of
+thing as the page it translates, differing by a field the file declares.
+Translatability is a property of a FORMAT within a content type —
+<code class="language-plaintext highlighter-rouge">schemas/translation-tools.ts</code> and <code class="language-plaintext highlighter-rouge">isTranslatable</code> — not of a directory.</li>
+  <li><strong>Do not leave a translated page in the static nav.</strong> <code class="language-plaintext highlighter-rouge">nav_exclude: true</code> is
+what keeps it out, and no amount of client-side work substitutes for it: the
+nav is built once, for every reader, before anybody has chosen a locale.</li>
+  <li><strong>Do not put non-PO files in translations/.</strong> Only <code class="language-plaintext highlighter-rouge">.pot</code>, <code class="language-plaintext highlighter-rouge">.po</code>, and <code class="language-plaintext highlighter-rouge">.ts</code>
+manifests belong there. Rendered <code class="language-plaintext highlighter-rouge">.md</code> goes in <code class="language-plaintext highlighter-rouge">docs/&lt;locale&gt;/</code>.</li>
+  <li><strong>Do not vendor smart-base translation scripts.</strong> Load from checkout.</li>
+  <li><strong>Do not translate math, labels, or code.</strong> Exclude in extraction.</li>
+  <li><strong>Do not auto-sign-off.</strong> Official status requires a human.</li>
+  <li><strong>Do not treat staleness as “wrong”.</strong> A stale translation is still useful;
+it just needs re-review.</li>
+  <li><strong>Do not conflate FHIR resource translation with prose translation.</strong> They
+are different pipelines with different tooling.</li>
+  <li><strong>Do not auto-remove staging previews.</strong> Require <code class="language-plaintext highlighter-rouge">staging:cleanup</code> label.</li>
+</ul>
+<h2 id="content-type-specific-translation-tools">
+  
+  
+    <a href="#content-type-specific-translation-tools" class="anchor-heading" aria-labelledby="content-type-specific-translation-tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content-type-specific translation tools
+  
+  
+</h2>
+    
+
+<p>Each content type declares what formats it can translate and what scripts
+handle each format. See <code class="language-plaintext highlighter-rouge">schemas/translation-tools.ts</code> for the full
+registry.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Content type</th>
+      <th>Formats</th>
+      <th>RTL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>document</strong></td>
+      <td>Markdown</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td><strong>paper</strong></td>
+      <td>Markdown + LaTeX</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>dak</strong> (WHO L2)</td>
+      <td>Markdown + PlantUML + SVG + ArchiMate + Excel + BPMN</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td><strong>ig</strong> (WHO L3)</td>
+      <td>Markdown + FSH + FHIR JSON</td>
+      <td>✅</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The generic pipeline (<code class="language-plaintext highlighter-rouge">pot-extract.ts</code>, <code class="language-plaintext highlighter-rouge">po-inject.ts</code>) handles Markdown.
+Adapter-specific tools extend it with format-specific extractors. The
+Python originals from smart-base live in <code class="language-plaintext highlighter-rouge">scripts/translation/</code> and are
+referenced in the registry.</p>
+<h3 id="rtl-support">
+  
+  
+    <a href="#rtl-support" class="anchor-heading" aria-labelledby="rtl-support"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RTL support
+  
+  
+</h3>
+    
+
+<p>Arabic (and Hebrew, Farsi, Urdu) pages are detected at load time by
+<code class="language-plaintext highlighter-rouge">docs-ui.js</code> and get <code class="language-plaintext highlighter-rouge">dir="rtl"</code> on <code class="language-plaintext highlighter-rouge">&lt;html&gt;</code>. The CSS in <code class="language-plaintext highlighter-rouge">docs-ui.css</code>
+provides smooth 0.4s transitions for sidebar and content layout:</p>
+
+<ul>
+  <li>Sidebar slides to the right side</li>
+  <li>Content flows RTL</li>
+  <li>Mermaid diagrams and badges stay LTR</li>
+  <li>BPMN diagrams need re-rendering with translated labels</li>
+</ul>
+<h3 id="staging-review">
+  
+  
+    <a href="#staging-review" class="anchor-heading" aria-labelledby="staging-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Staging review
+  
+  
+</h3>
+    
+
+<p>When presenting translated content for review, use the <code class="language-plaintext highlighter-rouge">staging-review</code>
+skill to provide before/after URL comparison tables. See
+<code class="language-plaintext highlighter-rouge">schemas/staging.ts</code> for the <code class="language-plaintext highlighter-rouge">StagingComparison</code> schema.</p>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <!-- GENERATED by scripts/gen-docs-pages.ts. Do not hand-edit: `bun run cat-harness/scripts/gen-docs-pages.ts` rewrites it, and `--check` fails the build if it is stale. -->
+<section class="fa-todo-listing" id="fa-todo-listing" aria-labelledby="fa-todo-listing-heading" data-fa-todo-count="3">
+  <h2 class="fa-todo-listing-heading" id="fa-todo-listing-heading">Open notes (3)</h2>
+  <p class="fa-todo-listing-lead">Every note in this folio, in document order. This listing is the artefact; the board is an overlay over it.</p>
+  <ol class="fa-todo-listing-items">
+    <li class="fa-todo-listing-item" id="fa-todo-listing-human-todos-page-says-not-built-yet" data-fa-todo="human-todos-page-says-not-built-yet">
+      <h3 class="fa-todo-listing-summary">The human-todos page still says &#39;Not built yet&#39; — the store now exists</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>open</dd>
+        <dt>Priority</dt><dd>high</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/beans-and-todos.html#human-todos">beans-and-todos &rsaquo; human-todos</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>`content/docs/beans-and-todos/human-todos.md` opens **&quot;Not built yet&quot;**, and
+that is no longer true. `todos/` is a declared graph with items on disk, a
+reader, a published JSON index and a board on the site.</p>
+        <p>This todo is attached to that block, so it renders beside the sentence it
+contradicts. That is the per-page assignment working on a real case rather
+than a demonstration — the page is genuinely stale and somebody has to decide
+what it should say now.</p>
+        <p>## What the page still gets RIGHT, and must not lose</p>
+        <p>Three of its four claims survive, and they are the valuable part:</p>
+        <p>- **&quot;Do not repurpose beans for it.&quot;** Still correct, and now structural:
+  `beans/` and `todos/` are separate declared graphs.
+- **When a todo is shown.** Still undecided. This PR answers it for the
+  navbar and the board; it does not answer whether an open item should
+  surface unasked, and the page&#39;s objection stands — surfacing every item on
+  every turn is noise, surfacing none is a list nobody reads.
+- **How one is retired.** Still undecided. `TodoStatus` carries `resolved`
+  and `wontfix`, but nothing retires one, and the page&#39;s point holds: a
+  person abandoning a reminder is ordinary and needs no ceremony, so the bean
+  rules do not transfer.</p>
+        <p>## What has changed and needs writing down</p>
+        <p>- **How a person creates one** is answered in the worst way: by an agent
+  writing a file. There is no human path at all yet.
+- The 2×2 the page is missing — memory against workflow management, human
+  against agent — with the empty quadrant named.</p>
+        <p>## Done when</p>
+        <p>The page says what is true. Cheapest correct move is an edit to that block,
+not a rewrite: strike &quot;Not built yet&quot;, keep the three open questions, add
+what now exists and who created it.</p>
+        <p>Every todo carries a pencil to exactly this file, so the edit is one click
+from where the stale sentence renders.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/human-todos-page-says-not-built-yet.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/human-todos-page-says-not-built-yet.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md">bean: folio-assistant-h32d</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/336">PR: #336</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/314">PR: #314</a></li>
+      </ul>
+    </li>
+    <li class="fa-todo-listing-item" id="fa-todo-listing-subagent-roles-for-the-two-judgement-agents" data-fa-todo="subagent-roles-for-the-two-judgement-agents">
+      <h3 class="fa-todo-listing-summary">Decide which roles content-pipeline-navigator and platform-boundary-guard take on</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>blocked</dd>
+        <dt>Priority</dt><dd>medium</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/publication-workflow.html#agents-and-system-actors">publication-workflow &rsaquo; agents-and-system-actors</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>`ci-health-watcher` is settled: it is a mechanical participant in the CI
+process, so it takes `build-pipeline` and `validation-pipeline`, both
+`actorKind: &quot;system&quot;`. Declared, and `memoryForRoles` now discriminates
+because of it.</p>
+        <p>**The other two are not settled by that argument, and the reason is precise.**
+Both system roles are described as running a fixed program and exercising *no
+judgement*. That is exactly what makes them the right home for a watcher — and
+exactly why they are the wrong home for these two:</p>
+        <p>- **`platform-boundary-guard`** decides whether a literal naming one folio
+  belongs in platform code, and whether a new content type needs an adapter or
+  only a profile. Those are judgements; a wrong one is not a failed check.
+- **`content-pipeline-navigator`** is closer to mechanical — it knows which
+  stage owns which file — but it also answers &quot;should this be a block kind&quot;,
+  which is not.</p>
+        <p>## What differs depending on the answer</p>
+        <p>Nothing breaks either way today: memory is scoped by agent and the duplication
+is already fixed, because one node can reach several agents. What changes is
+whether a fact written for one of these two reaches an agent standing in that
+lane, or only the agent named in the file.</p>
+        <p>## Options</p>
+        <p>1. **Leave both agent-scoped, and say so in the role model.** Costs nothing,
+   and is honest — neither is a lane anyone else acts in. The cost is that the
+   role axis stays half-used, with one actor on it.
+2. **Give them a judgement-bearing existing role** — `editor` and
+   `code-reviewer` are the nearest. Cheap, and wrong if the fit is loose: a
+   forced edge is one every later audit trusts as true.
+3. **Add roles for them.** Honest edges. But `AGENTS.md` warns under
+   `skill-in-role-or-process` against &quot;inventing roles and activities to
+   absorb tools that do not want them&quot;, and a role with one actor describes
+   the tool rather than the work.</p>
+        <p>No recommendation. The `ci-health-watcher` case was settled by a property of
+the work (it exercises no judgement); neither option here has an equivalent,
+which is why it is a person&#39;s call and not an agent&#39;s.</p>
+        <p>## If nothing is decided</p>
+        <p>Option 1 is the status quo and nothing regresses.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/subagent-roles-for-the-two-judgement-agents.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/subagent-roles-for-the-two-judgement-agents.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li>bean: folio-assistant-29ij</li>
+        <li><a href="https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md">bean: folio-assistant-h32d</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/314">PR: #314</a></li>
+      </ul>
+    </li>
+    <li class="fa-todo-listing-item" id="fa-todo-listing-what-kick-off-means-for-a-ci-watcher" data-fa-todo="what-kick-off-means-for-a-ci-watcher">
+      <h3 class="fa-todo-listing-summary">Decide what &#39;kick off&#39; means mechanically for the two CI-watcher dispatch points</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>in_progress</dd>
+        <dt>Priority</dt><dd>medium</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/publication-workflow.html#agents-and-system-actors">publication-workflow &rsaquo; agents-and-system-actors</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>Stated 2026-09-19: a CI watcher *&quot;should kick off during feature development
+once changes are made to feature branch. and when approved for final
+publication/merge to main.&quot;*</p>
+        <p>The two dispatch points are clear. **What performs the dispatch is not**, and
+the three candidates differ enough that guessing would be wasted work.</p>
+        <p>## ANSWERED, 2026-09-19</p>
+        <p>Owner: *&quot;kick off if like task or workflow initation or bean roast&quot;*.</p>
+        <p>**Option 2.** A dispatch point is a **task / workflow initiation**, and it
+opens a **bean** — not a GitHub Actions job. That is the answer the repo&#39;s own
+machinery is already shaped for: an activity carrying
+`&lt;folio:bean op=&quot;claim&quot;/&gt;` performs the bean operation when the step
+completes, so &quot;start the watcher&quot; and &quot;record that it is running&quot; are one
+declared step rather than two mechanisms that can disagree.</p>
+        <p>It also settles the cost I flagged against option 2 — that a BPMN activity
+only fires while somebody is working. With a bean opened at initiation, the
+work is *durable*: a later session sees the bean whether or not the session
+that opened it is still alive.</p>
+        <p>Remaining, and now narrow: which diagrams host the two steps, and whether the
+feature-branch one needs a process that does not yet exist.</p>
+        <p>## Options, with what each costs</p>
+        <p>1. **A GitHub Actions job.** Fires without anybody present, which is the whole
+   premise of `xom7` — the failure being guarded against is a quiet stretch
+   with nobody looking. Cost: it cannot read the session&#39;s memory, so the
+   &quot;dispatch an agent with a specific memory context&quot; half does not happen.
+2. **An activity in a BPMN process**, performed by a session. Gets the memory
+   context, and puts the dispatch where `workflow_next` can report it. Cost: it
+   only fires while somebody is working — precisely the stretch that is already
+   covered.
+3. **An MCP tool a workflow step calls.** Both, at the price of building the
+   tool and deciding who calls it.</p>
+        <p>## Where the two dispatch points already live</p>
+        <p>Both are steps in diagrams that exist, which is why this todo is tagged with
+them rather than describing them:</p>
+        <p>- **&quot;approved for final publication / merge to `main`&quot;** is
+  `Process_Publication` (`draft-to-publication.bpmn`), whose lane carries
+  *Authorise the release* and *Version, tag and publish*. The dispatch point
+  the owner named is that authorisation step.
+- **&quot;once changes are made to feature branch&quot;** is `Process_CodeReview`,
+  reached from `Process_Review`.</p>
+        <p>## What is already true, so this is not started from nothing</p>
+        <p>The two dispatch points are process events, so wherever they are performed they
+should be DRAWN in BPMN under `skills/workflows/`. The likely homes are
+`draft-to-publication` for the merge-to-main gate and a feature-branch process
+that may not exist yet — that needs checking rather than assuming.</p>
+        <p>## If nothing is decided</p>
+        <p>Nothing fires. `bun run check:ci-health` still runs in the session-start sweep
+and `ci-health.yml` still runs weekly, so the watcher is not silent — it is
+just not tied to the two moments named above.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/what-kick-off-means-for-a-ci-watcher.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/what-kick-off-means-for-a-ci-watcher.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li>process: Process_CodeReview</li>
+        <li>process: Process_Publication</li>
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li>bean: folio-assistant-29ij</li>
+      </ul>
+    </li>
+  </ol>
+</section>
+<p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p>
+
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      <input type="checkbox" class="fa-nav-pin" id="fa-nav-pin">
+<label class="fa-nav-pin-toggle" for="fa-nav-pin">
+  <span class="fa-nav-pin-glyph" aria-hidden="true">&#9776;</span>
+  <span class="fa-nav-pin-text">Keep navigation open</span>
+</label><details class="fa-harness-tabs" open>
+  <summary class="fa-harness-tabs__heading">
+    Harnesses <span class="fa-harness-tabs__count">5</span>
+  </summary>
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab"
+        style="--fa-tile-tone: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/smart-trust/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">smart-trust</span></a></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/who-iris/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">who-iris</span></a></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">folio-assistant</span></a></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 268; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">folio-assistant (cat-harness)</span></a></li><li class="fa-harness-tab fa-harness-tab--floor"
+        style="--fa-tile-tone: 96; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">bootstrap</span></span></li></ul>
+</details><details class="fa-harness-tabs fa-harness-tabs--deps">
+  <summary class="fa-harness-tabs__heading">
+    Dependencies <span class="fa-harness-tabs__count">9</span>
+  </summary>
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/agent-skills/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">agent-skills</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/bootstrap-tools/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/detangle/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/folio-assistant-sci/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/large-datasets/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
+</details>
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (docs/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+
