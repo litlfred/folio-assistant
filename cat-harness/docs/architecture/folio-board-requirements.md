@@ -219,6 +219,145 @@ prose is honestly unchecked.
 
 ---
 
+## Round three — R18 to R32, the folio *visualisation*
+
+These arrived on 2026-09-21, after R1–R17 had shipped and while `v0jv`'s tile
+dock was still unmerged. They are the first round that is **about the folio as
+a surface** rather than about the board's mechanics, and two of them corrected
+work that had not yet landed — which is why they are recorded as a round rather
+than folded into the requirements they revise. Reading them as amendments would
+lose the fact that a shipped-to-branch design was turned round before a reader
+ever saw it.
+
+### Geometry — R18 to R23
+
+| | requirement | in the requester's words |
+|---|---|---|
+| **R18** | the board's spacing SHALL be condensed | *"to much padding between panels, condense"* |
+| **R19** | the board's tiles SHALL be the **same square tiles** as the LHS navbar's expanding menu, *or* a theme/avatar where that is the better fit | *"i meant to use same SQUARE TILES taht are in the expanding menu of LHS navbar OR use theme/avatars as appraopriate"* |
+| **R20** | **no sub-panels.** One open, Miro-like board; everything lives on `fa-sticky-board` / `fa-landing-board` | *"i dont want sub-panels of the folio, just one open (miro-like) board"* |
+| **R21** | stickies SHALL be **closed avatars, and small** | *"THE STICKIES MUST BE CLOSED AVATRS AND SMALL"* |
+| **R22** | the folio visualisation SHALL have **no rounded corners** | *"drop all the rounded corners… too much dead space"* |
+| **R23** | the square tiles SHALL be lined up along the **top** of the board, and the whole strip SHALL slide up when the reader does not want it | *"lets have the square tiles lined up on the top of the folio-sicky-board-landingpanel whole slides up if user doesnt want"* |
+
+**R23 reverses `v0jv`, and that bean's own text says why the reversal was
+available.** `v0jv` quoted the owner as *"stacked around (bottom?) of folio"* —
+the parenthesis and the question mark are the requester's, and were carried
+into the bean verbatim precisely because they marked an open question rather
+than a decision. The dock was built to the bottom, closed, and R23 settles both
+halves the other way: **top**, and **open by default**. The default is the half
+that would have shipped silently — tiles a reader must open before they can see
+what a folio offers read as absent, which is the complaint `v0jv` itself opened
+with about the in-flow row.
+
+**R21 and R22 share one reason, and it is not taste.** *"Too much dead space"*
+is the stated cost in both. A corner radius on a card that is 320px wide spends
+its corners on nothing; a sticky that opens by default spends the board on one
+note. Recording the reason matters because the two requirements have different
+*limits*: dead space is recoverable from a panel and is not recoverable from a
+pill, which is why the count badges keep their `999px` and the record says so
+rather than leaving a reader to discover the exception in the stylesheet.
+
+### The folio is a **convention**, not a page — R24 to R29
+
+This is the layering statement of the round, and it is the one a paraphrase
+would lose:
+
+> these requriements are really for how the "folio" visuallation from
+> cat-harness should work. that should by convention be available on any
+> harness for consistent feel. who-iris, smart-\*, etc are content libraries a
+> user is browsing and their "folio" from the cat-harness is consistent across
+> them. todo, etc can refernces cross KG library. who-iris, implements its own
+> landing page and smart-\* has/will have its own harness
+
+| | requirement | note |
+|---|---|---|
+| **R24** | the folio visualisation is **`cat-harness`'s**, and SHALL be available by convention on **any** harness, for a consistent feel | the harness supplies the folio; the instance supplies the library |
+| **R25** | a reader SHALL be able to **pull their folio down** over whatever they are browsing | *"the user in visualization should be able to pull down their folio"* |
+| **R26** | `cat-harness` SHALL declare **`folio/`** as the directory of the reader's own content | a declared `ContentDirectory`, like every other graph |
+| **R27** | **materialised** assets from the static KG SHALL live in `folio/` | *"clarifying if KG is static w/ materizlied…, materialized should live in folio"* |
+| **R28** | new documents a reader creates **or links to** go in `folio/` | linking is a creation act here, not a reference |
+| **R29** | todos and sticky notes MAY reference things **across** KG libraries | *"todo, etc can refernces cross KG library"* |
+
+**A content library is not a folio, and the distinction is what R24 buys.**
+`who-iris` and the `smart-*` instances are things a reader *browses*; each may
+implement its own landing page and its own harness. What travels with the
+reader between them is the folio — their notes, their materialised assets,
+their links — and it looks and behaves the same in each because it belongs to
+`cat-harness` rather than to any one library. **Consistency is the
+requirement**, not similarity: two harnesses that each build a good folio have
+failed R24.
+
+### An asset has **three** states, not two — R30
+
+Clarified in a follow-up the same day, and it is the requirement most likely to
+be implemented as two states by somebody reading quickly:
+
+> pulling down folio panel = glass/window on which stikcy notes/avatrs of
+> materialized assets (including materialzied KG like bootrstap, cat-harness
+> are visualized. they can also be closed and returned to their homes (e.g.
+> "back in library", matieral asset still in folio/ but not displayed in
+> folio, need to go back to library and pull it out to folio display window)
+
+| | requirement |
+|---|---|
+| **R30** | an asset SHALL have three distinguishable states: **in the library** (not the reader's), **in `folio/` but not displayed** (materialised, theirs, off the glass), and **on the glass** (displayed in the pulled-down folio). Closing it from the glass returns it to the second state, never the first; returning it to the first is a separate act performed **from the library** |
+
+**Why three rather than two.** A two-state model — *in the folio* or *not* —
+makes closing a sticky and un-materialising an asset the same gesture, so a
+reader tidying their glass silently discards work. The middle state is what
+makes closing safe: the asset stays in `folio/`, and the way back onto the
+glass is *"go back to the library and pull it out"*. That is also `l4zi`
+applied one level up — the inverse of **close** must be reachable, and here it
+is reachable from a different surface than the one that closed it, which is a
+thing a design can get wrong without any single screen looking wrong.
+
+### A sticky's face — R31 and R32
+
+| | requirement | in the requester's words |
+|---|---|---|
+| **R31** | a closed sticky SHALL show its **condensed own text** — whitespace, newlines, bullets and list markers stripped. **No second string** | *"no, not hidden label, that's new data to maintain… just the condensend text"*, *"(strip whitesaplnce, newlines, bullets….)"* |
+| **R32** | a sticky SHALL still be about **2.5 physical inches** on a large MacBook screen | *"sticky should stilll be ~2.5\" in large macbook screen"* |
+
+**R31 rejected the recommendation that was put to the owner**, which had been a
+hidden accessible label alongside the visible summary. The reason given is the
+better one and is worth keeping: *"that's new data to maintain"* — a second
+string is a second thing that can drift from the first, and a hidden label that
+disagrees with the visible text is a defect no reader can see. Condensing the
+text the sticky already carries has no such failure mode.
+
+**R32 is a PHYSICAL measurement, and CSS cannot express it.** A CSS `in` is
+defined as exactly 96 CSS px and is not an inch of glass. The 16" MacBook Pro
+named in the requirement is 3456x2234 over a 16.2" diagonal — about 13.6" of
+width — and presents 1728 CSS px across it, so one physical inch is roughly
+**127 CSS px** and 2.5" is about 318px. `20rem` is 320px. Writing `2.5in` would
+have rendered about 1.9" and looked like the requirement had been ignored. The
+device is named in the code comment because the conversion is device-dependent:
+the same `20rem` is about 3.7 physical inches on a 27" 1440p display, and that
+is correct rather than a defect — the size was chosen for the screen the
+requester uses.
+
+**R21 and R32 are a pair, not a contradiction.** *"Small"* without R32 shrinks
+the card until its condensed text is unreadable; R32 without *"small"* leaves
+the dead space R18 was about. Either alone satisfies half the round and looks
+like it satisfied all of it, which is why both are asserted.
+
+### Still open from this round
+
+**R19's second clause has no rule yet.** *"OR use theme/avatars as
+appropriate"* names a choice — when is a thing a tile, and when is it a
+theme or an avatar? — and nothing here says how to make it. It is recorded as
+open rather than resolved, because a rule invented to close the gap would read
+exactly like a rule that was agreed. Tracked on
+[issue #796](https://github.com/litlfred/folio-assistant/issues/796).
+
+**Whether the library view distinguishes materialised from not-materialised**
+is the other half R30 leaves unsaid: the three states are the *asset's*, and
+nothing yet states whether a reader browsing a library can see which of its
+items they already hold.
+
+---
+
 ## What the set produced
 
 Each requirement's artefacts, so the record points at the code rather than

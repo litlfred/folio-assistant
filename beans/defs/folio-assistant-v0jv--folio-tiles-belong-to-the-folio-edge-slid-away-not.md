@@ -78,3 +78,29 @@ true. Two assertions because they are two properties — the same shape as
 The *three rows of board furniture* `qefk`'s title also named: the filter row
 and the board head are `z1ug`'s subject, and collapsing them from inside this
 bean would decide that layout for it.
+
+## SUPERSEDED IN PLACEMENT, 2026-09-21 — see `folio-assistant-j2if`
+
+**What this bean built is not what shipped, and the difference is the edge and
+the default.** R23 puts the tiles along the board's **TOP**, **open**. This
+bean built them at the bottom, closed, on the same branch and before it merged.
+
+**This bean's own text is why that was available rather than a contradiction.**
+It quotes the owner as *"stacked around (bottom?) of folio"* — the parenthesis
+and the question mark are the requester's and were carried in verbatim because
+they marked an open question, not a decision. Keeping them is what let the
+reversal be read as settling a question instead of overturning an agreement.
+
+Everything else here stands and was not rebuilt: `sticky` rather than `fixed`,
+chrome passing under an open window, the empty-strip rule, and above all the
+registry — the placement change never became a declaration change, which is
+what the first spec exists to hold.
+
+**Two consequences for a reader of the checklist above.** *"docked at the
+folio's bottom edge, slid away by default"* is now false of the code and is
+left rather than edited, because an edited checklist cannot be told from one
+that was right the first time. And *"opening it does not move the board's own
+content"* — that spec was **deleted**, not repaired: it asserted no reflow,
+which is right for a bottom dock and wrong for a top strip, since *"whole
+slides up"* means the content moves. A spec that keeps passing against a
+changed requirement is worse than no spec.
