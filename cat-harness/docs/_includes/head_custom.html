@@ -37,8 +37,34 @@
   the face rather than as whiskers. One link would have meant choosing between
   losing them everywhere and showing them where they cannot be drawn.
 {%- endcomment -%}
+{%- comment -%}
+  THE TAB ICON FOLLOWS THE OPERATING SYSTEM, not the page's own toggle, and
+  that difference is deliberate rather than an oversight.
+
+  A `<link rel="icon">` cannot read `data-fa-scheme` — it is resolved by the
+  browser before and outside the page's own styling, so the only switch
+  available to it is `media`, which asks the OS. The sidebar mark
+  (`title.html`) DOES follow the page toggle, so a reader who sets the page
+  against their system will see the two disagree.
+
+  That is the right way round. The tab strip is painted by the browser
+  chrome, which follows the OS — so an icon matching the OS is matching what
+  it actually sits on, while one matching the page would be the odd one out
+  in the tab bar. The sidebar mark sits on the page and follows the page.
+  Each matches its own background, which is the only rule that can be
+  satisfied everywhere at once.
+
+  Narrowest-first is not needed here: the two queries are mutually exclusive,
+  and a browser with no `prefers-color-scheme` support takes the unmedia'd
+  light one.
+{%- endcomment -%}
 {%- if h.icon.src -%}
+{%- if h.iconDark.src -%}
+<link rel="icon" type="image/svg+xml" href="{{ h.icon.src | relative_url }}" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="{{ h.iconDark.src | relative_url }}" media="(prefers-color-scheme: dark)">
+{%- else -%}
 <link rel="icon" type="image/svg+xml" href="{{ h.icon.src | relative_url }}">
+{%- endif -%}
 {%- endif -%}
 {%- if h.smallIcon.src -%}
 <link rel="icon" type="image/svg+xml" sizes="16x16" href="{{ h.smallIcon.src | relative_url }}">

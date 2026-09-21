@@ -4503,3 +4503,22 @@ a.fa-harness-tab__body:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 2px;
 }
+
+/* ── The sidebar mark, one per scheme ─────────────────────────────────────
+ *
+ * `title.html` emits BOTH when the instance declares a `mark-dark`, and this
+ * shows whichever matches. Liquid cannot choose: the scheme lives in
+ * `data-fa-scheme` on `<html>`, written by `docs-ui.js` from the reader's
+ * stored choice, which the server does not know.
+ *
+ * DARK IS THE DEFAULT here, matching `color_scheme: dark` in `_config.yml`.
+ * The light mark shows only under the explicit light override, so a reader
+ * who never touches the toggle gets the right one with no JavaScript having
+ * run — which matters because `docs-ui.js` is `defer`red and would otherwise
+ * flash the wrong mark on every page load.
+ */
+.fa-site-mark--light { display: none; }
+.fa-site-mark--dark { display: inline-block; }
+
+:root[data-fa-scheme="light"] .fa-site-mark--light { display: inline-block; }
+:root[data-fa-scheme="light"] .fa-site-mark--dark { display: none; }

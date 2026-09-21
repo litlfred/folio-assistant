@@ -30,6 +30,7 @@ navbar-avatar specialisation, and they are below.
 | **landing board** | text is composited INTO the art, so it needs `textRegion` per layout and a crop chosen by content shape | `docs/_includes/landing.html` |
 | **docs background** | the page ground, not a card — a different CSS surface and probably a different crop set | not built; bean `yj32` |
 | **navbar avatar** | the art CLIPPED to the subject in a square frame — `avatarRegion` | `<name>.json`, `bun run avatar:crops` |
+| **the mark** | ONE geometry, TWO inks — a scheme pair, because one ink cannot clear 3:1 on both grounds | `<name>.json` `mark` + `mark-dark`, `docs/assets/img/icons/` |
 
 ## Sticky: art backs it, text does not sit IN it
 
@@ -102,4 +103,81 @@ said so. **The schema cannot see a hat.** So:
 
 - [`theming`](theming.md) — which stage owns your question
 - [`theme-declaration`](theme-declaration.md) — the rule these specialise
+
+
+## The mark: one geometry, two inks, and the pair is a MEASUREMENT
+
+A mark is not a sticky backdrop — it is a small glyph that sits on the sidebar
+header, on the page, and in the browser's tab strip. The rule that makes it
+different from every other artefact above:
+
+> **One ink cannot clear 3:1 on both grounds. So a mark is a PAIR, and the
+> second file exists because of a number rather than because somebody wanted
+> a darker one.**
+
+Worked, from `cat-harness` on 2026-09-21 (bean `5r57`):
+
+| ink | on white | on the light sidebar `#f5f6fa` | on the dark sidebar `#27262b` |
+|---|---|---|---|
+| `#596a5b` (the supplied art's own) | 5.77:1 | 5.35:1 | **2.60:1** |
+| `#9db89f` (same hue, lifted) | — | — | 7.00:1 |
+
+3:1 is the bar for **meaningful non-text content**, and the light ink is under
+it on the dark ground. That is the whole argument for the second file.
+
+### Two inks, never two drawings
+
+Both variants are emitted from **one trace**, differing in a single `fill`
+attribute. They cannot drift, because there is nothing to drift: re-run the
+generator and both change together. A second hand-drawn dark mark is the
+`themes.css`-beside-`theme.ts` failure in a new place.
+
+### Not a CSS filter
+
+The obvious cheaper move is one file plus a `filter: brightness()` under the
+dark scheme. Do not: a filter over an arbitrary path is a **guess** about the
+resulting colour, and the entire reason the pair exists is a measured ratio.
+You cannot measure what a filter will produce without rendering it, and if you
+are rendering it you may as well declare it.
+
+### Which surface follows which scheme
+
+They are not the same question and the answer differs per surface:
+
+| surface | follows | why |
+|---|---|---|
+| sidebar mark | the PAGE's `data-fa-scheme` | it sits on the page; both `<img>`s are emitted and CSS picks one, because Liquid cannot read a client-side attribute |
+| browser tab icon | the OPERATING SYSTEM, via `media="(prefers-color-scheme: …)"` | a `<link rel="icon">` is resolved outside the page's styling and cannot read the DOM — and the tab strip is browser chrome, which follows the OS, so matching the OS is matching what it actually sits on |
+
+A reader who sets the page against their system will see the two disagree.
+**That is correct**, and the note in `head_custom.html` says so: each matches
+its own background, which is the only rule satisfiable everywhere at once.
+
+### Absent is a real state
+
+An instance that declares no `mark-dark` renders its one mark in both
+schemes — what every instance did before the role existed. `imageForRole`
+returns undefined and both templates fall back; nothing downstream
+special-cases a folio that never opted in.
+
+### Tracing supplied art
+
+When the owner hands over a raster mark, trace it rather than approximating
+it by hand — the mark this replaced was a hand-drawn approximation that
+differed in kind from the original (a solid silhouette where the art was line
+work). Three things that cost a cycle each here, worth knowing before the next
+one:
+
+- **`potracer` treats ZERO as foreground**, the inverse of what the name
+  suggests. Passing the ink mask directly traces the *background*.
+- **Crop to square with an explicit canvas**, not `Image.crop` past the edge:
+  PIL pads with black, and the tracer reads that as ink.
+- **Measure the result.** Rasterise the traced path and compare it to the
+  source bitmap — IoU against the original is a fact, "it looks right" over a
+  2 KB path is not. The mark here shipped at **0.981**.
+
+Check the reduction too, rather than assuming a small variant is needed: the
+old mark needed one because its whiskers were `stroke-width="2.4"` on a 120
+viewBox, 0.32px at tab size. Fill-only art has no such floor, and the holes
+here still survive at 16px (measured ink fraction 0.36, flat from 16 to 32).
 {% endraw %}
