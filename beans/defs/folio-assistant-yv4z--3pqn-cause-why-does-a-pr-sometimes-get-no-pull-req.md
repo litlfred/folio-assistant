@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: low
 created_at: 2026-09-20T16:33:37Z
-updated_at: 2026-09-21T05:37:38Z
+updated_at: 2026-09-21T05:40:33Z
 parent: folio-assistant-1xhc
 ---
 
@@ -120,3 +120,10 @@ load-bearing for the tool as much as for the cause:
 Recorded here rather than as a new bean: this is evidence on the open question
 this bean exists to hold, and a duplicate would split the six observations
 from the seventh.
+
+
+**And the refutation is cleaner still**: at 05:40Z a `check_suite.completed`
+event arrived for **`5f80b5cd`** — the very head `check:head-has-run` had
+reported as having *"NO workflow run of any kind"* and attributed to a dropped
+event. That head did not merely acquire runs late; it **finished** them. Both
+heads in this occurrence lagged, and the tool was wrong about both.
