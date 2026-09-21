@@ -970,7 +970,9 @@ every run by design.</p>
 smart-trust’s is 342,656 files).</li>
   <li>Run the ingest with a new <code class="language-plaintext highlighter-rouge">--id</code> and <code class="language-plaintext highlighter-rouge">--out</code>.</li>
   <li>Give the new directory a <code class="language-plaintext highlighter-rouge">harness.json</code> declaring one directory of kind
-<code class="language-plaintext highlighter-rouge">fhir-artifact-index</code>, as <code class="language-plaintext highlighter-rouge">smart-trust/harness.json</code> does.</li>
+<code class="language-plaintext highlighter-rouge">fhir-artifact-index</code>, as <code class="language-plaintext highlighter-rouge">smart-trust/smart-trust.config.json</code> does. The
+declaration is <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> since #695 — resolve it with
+<code class="language-plaintext highlighter-rouge">declarationPathIn</code>, never by joining a filename.</li>
   <li>Add its <code class="language-plaintext highlighter-rouge">ingest:ig:check</code> invocation to the gate set, so the index cannot go
 stale silently.</li>
 </ol>
