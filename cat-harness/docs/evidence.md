@@ -57,7 +57,7 @@ skipped there rather than satisfied vacuously.
 ## The subprocess
 {: #the-subprocess data-fa-label="sec:evidence-the-subprocess" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/evidence-retrieval.bpmn){: .fa-node-edit title="Edit processes/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-kg" title="Knowledge-graph QA: not swept — no sidecar for this diagram" aria-label="Knowledge-graph QA: not swept — no sidecar for this diagram"><span class="fa-qa-tag">KG</span></span></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/evidence-retrieval.bpmn){: .fa-node-edit title="Edit processes/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-subprocess.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/evidence/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 Four lanes, because four different kinds of actor are involved and conflating
 them is how accountability gets lost:

@@ -49,6 +49,15 @@ const ROOT = resolve(import.meta.dir, "../..");
 /** Directories scanned, each mapped to the depth at which a candidate group is named. */
 const SCAN: Array<{ path: string; groupDepth: number }> = [
   { path: "cat-harness/skills", groupDepth: 3 },
+  // `processes/` and `scenarios/` are SIBLINGS of `skills/` since 2026-09-21,
+  // not subdirectories of it. At depth 3 the old layout named them
+  // `cat-harness/skills/workflows` and `.../roles`; once they moved out, the
+  // `cat-harness/skills` entry above stopped reaching them and they were
+  // measured nowhere — the detangle report is only as wide as this list, so a
+  // directory missing from it reads as "nothing to report" rather than as a
+  // gap. Depth 2 names them for the same reason `bootstrap/processes` does.
+  { path: "cat-harness/processes", groupDepth: 2 },
+  { path: "cat-harness/scenarios", groupDepth: 2 },
   { path: "cat-harness/schemas", groupDepth: 2 },
   { path: "cat-harness/tools", groupDepth: 2 },
   { path: "cat-harness/src/skills", groupDepth: 3 },

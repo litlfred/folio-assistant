@@ -92,7 +92,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX, instanceDirectoryForGraph } from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, resolveDirectories } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 
 const ENGINE_VERSION = "1";
@@ -118,10 +118,33 @@ function readsProse(r: { actedUpon?: boolean; actorKinds: string[] }): boolean {
 }
 
 const root = resolve(import.meta.dir, "..");
+
+/**
+ * THIS instance's own directory with `id`, or the convention if it declares none.
+ *
+ * Not {@link instanceDirectoryForGraph}: that asks by KIND, and this instance
+ * declares TWO directories holding `processes` — its own `processes/` and
+ * CRDM's `methodologies/crdm/processes/` — so a by-kind lookup throws rather
+ * than choosing, which is bean `wggr` working as designed. A path-less
+ * subject belongs to the instance's own graph, and that is a question only
+ * the id answers: *"a by-ID lookup through `resolveDirectories` is the answer
+ * when you want a particular one."*
+ */
+function ownDirectoryById(root: string, id: string, fallback: string): string {
+  const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(
+    (d) => d.id === id && d.own && d.scope !== "repository",
+  );
+  return found?.absPath ?? join(root, fallback);
+}
+
 // declared-path-literal: the convention fallback, at the call site — an
-// instance that declares no `processes` graph still needs a sidecar home
+// instance that declares no `processes` directory still needs a sidecar home
 // for a path-less subject, and the convention is where one would look.
-const WORKFLOW_DIR = instanceDirectoryForGraph(root, "processes") ?? join(root, "processes");
+const WORKFLOW_DIR = ownDirectoryById(root, "processes", "processes");
+// declared-path-literal: the convention fallback, at the call site. Same
+// reasoning as `WORKFLOW_DIR` — the role graph moved out of the skills tree
+// on 2026-09-21 and a path-less subject needs a sidecar home.
+const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
@@ -1387,10 +1410,10 @@ function sidecarPath(r: KgQaReport): string {
   const dirFor: Record<KgSubjectKind, string> = {
     process: WORKFLOW_DIR,
     decision: DECISION_DIR,
-    role: join(KG_ROOT, "roles"),
+    role: SCENARIO_DIR,
     requirement: join(KG_ROOT, "requirements"),
     skill: KG_ROOT,
-    graph: join(KG_ROOT, "roles"),
+    graph: SCENARIO_DIR,
   };
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json|md)$/, "") : r.subject.id;
   const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
@@ -1430,9 +1453,8 @@ try {
   // role graph moved out of the skills tree on 2026-09-21 and is a declared
   // directory of its own; `KG_ROOT` is the second branch for an instance
   // that has not migrated.
-  const scenarios = instanceDirectoryForGraph(root, "scenarios") ?? join(root, "scenarios");
-  graph = readRoleGraph(scenarios);
-  roleGraphPath = join(scenarios, "roles.json");
+  graph = readRoleGraph(SCENARIO_DIR);
+  roleGraphPath = join(SCENARIO_DIR, "roles.json");
   if (!graph) {
     graph = readRoleGraph(KG_ROOT);
     if (graph) roleGraphPath = join(KG_ROOT, "roles", "roles.json");

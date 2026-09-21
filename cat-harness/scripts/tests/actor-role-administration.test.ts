@@ -21,7 +21,6 @@ import { join, resolve } from "path";
 import { loadProcessModel } from "../../src/workflow/process-model";
 import { fulfilmentKindsForBpmnType, findRole } from "../../schemas/role-graph";
 import { roleGraphFor } from "../known-skills";
-import { kgRoots } from "../known-skills";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const WF = join(ROOT, "processes");

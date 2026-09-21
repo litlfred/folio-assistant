@@ -131,6 +131,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - folio-assistant (cat-harness) — *declared, not published*
 
+### `processes`
+
+0 of 2 published.
+{: .fa-hx-dim }
+
+- bootstrap — *declared, not published*
+- folio-assistant (cat-harness) — *declared, not published*
+
 ### `qa`
 
 1 of 2 published.
@@ -221,14 +229,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
-- folio-assistant (cat-harness) — *declared, not published*
-
-### `workflows`
-
-0 of 2 published.
-{: .fa-hx-dim }
-
-- bootstrap — *declared, not published*
 - folio-assistant (cat-harness) — *declared, not published*
 
 ---

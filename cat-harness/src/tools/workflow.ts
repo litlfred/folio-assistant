@@ -42,8 +42,8 @@ import { describeCapture, writeLogEntry } from "../logging/log-writer.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
-import { readRoleGraph, type RoleGraph } from "../../schemas/role-graph.js";
-import { kgRoots, roleGraphFor } from "../../scripts/known-skills.js";
+import { type RoleGraph } from "../../schemas/role-graph.js";
+import { roleGraphFor } from "../../scripts/known-skills.js";
 
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
 
