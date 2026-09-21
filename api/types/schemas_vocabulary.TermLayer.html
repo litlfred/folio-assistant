@@ -11,30 +11,29 @@
 <li><a href="../modules/schemas_vocabulary.html">schemas/vocabulary</a></li>
 <li><a href="" aria-current="page">TermLayer</a></li></ul>
 <h1>Type Alias TermLayer</h1></div>
-<div class="tsd-signature"><span class="tsd-kind-type-alias">TermLayer</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;bootstrap&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;harness&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;core&quot;</span></div>
-<div class="tsd-comment tsd-typography"><p>Which layer owns a term — and therefore which instances must carry it.</p>
-<p>The owner, 2026-09-19: &quot;we shouldnt need voicegraph or librarygrph or
-previewgrapjh in bootstrap!!&quot; Exactly right, and the flat vocabulary I first
-wrote had no way to say so. A bootstrap instance reads a declaration, walks
-a dependency tree and hands over; it has no opinion about editorial voices,
-an L1 library or a preview target, and a vocabulary that makes it define
-them has made bootstrap carry the thing bootstrap exists to defer.</p>
-<p>Same three layers the repository split uses, so this does not invent a
-fourth axis:</p>
-<ul>
-<li><code>bootstrap</code> — readable with nothing loaded: the declaration, its
-directories, and the actor/role/process/skill sentence the first BPMN
-needs. Nothing here may require the harness.</li>
-<li><code>harness</code> — the agentic machinery: tools, capabilities, requirements,
-work plan, process detail.</li>
-<li><code>core</code> — authored content and what surrounds it: voices, library,
-uploads, todos, the folio itself.</li>
-</ul>
-<p>The direction rule holds here as everywhere: core may name a harness term,
-harness may name a bootstrap term, and never the reverse.</p>
+<div class="tsd-signature"><span class="tsd-kind-type-alias">TermLayer</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">typeof</span> <a href="../variables/schemas_vocabulary.TERM_LAYERS.html" class="tsd-signature-type tsd-kind-variable">TERM_LAYERS</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></div>
+<div class="tsd-comment tsd-typography"><p>The layers, as a value — and THE ORDER IS PART OF THE CONTRACT.</p>
+<p>It is the direction rule above, written so code can read it: index 0 may be
+named by nothing below it, and each layer may name the ones before it. Two
+consumers already depend on that reading — the <code>--layer</code> slice in
+<code>ns-export.ts</code> compares indices, and its SKOS scheme ordering sorts by them —
+so this is not an incidental array order that a tidy-up may sort.</p>
+<p>IT EXISTS BECAUSE THE TYPE ALONE COULD NOT BE READ AT RUNTIME (#807). A
+union has no value, so every site that needed to CHECK a layer wrote the
+three names out again, and the copies drifted: <code>ns-export.ts</code> validated
+against <code>cat-bootstrap</code> while the error message beside it already said
+<code>bootstrap</code>, so a rejected <code>--layer bootstrap</code> printed</p>
+<pre><code>--layer must be bootstrap, harness or core (got bootstrap)
+</code></pre>
+<p>— a message that names the value it just refused. The failure was real and
+ordinary; what made it cost an afternoon is that it was UNREADABLE, so it
+looked like an impossible state rather than two lists out of step.</p>
+<p>So the type is derived from this tuple rather than declared beside it: a
+layer added here is a layer the type gains, and a message composed from it
+cannot disagree with the predicate that used it.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/09e45523dd78745fc3a688cd403a0e45766c951f/cat-harness/schemas/vocabulary.ts#L62">work/folio-assistant/folio-assistant/cat-harness/schemas/vocabulary.ts:62</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/aa462f7a85037a2e4ca4bcf71b71b8f9c1daa85d/cat-harness/schemas/vocabulary.ts#L89">work/folio-assistant/folio-assistant/cat-harness/schemas/vocabulary.ts:89</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

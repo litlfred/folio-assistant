@@ -260,13 +260,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T22:49:49.125Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/09e45523dd78745fc3a688cd403a0e45766c951f",
-  "sourceCommitSha": "09e45523dd78745fc3a688cd403a0e45766c951f",
-  "sourceCommitAt": "2026-09-22T00:48:13+02:00",
+  "generatedAt": "2026-09-21T22:55:19.970Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/aa462f7a85037a2e4ca4bcf71b71b8f9c1daa85d",
+  "sourceCommitSha": "aa462f7a85037a2e4ca4bcf71b71b8f9c1daa85d",
+  "sourceCommitAt": "2026-09-22T00:52:53+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 222,
+    "Skill": 223,
     "Actor": 28,
     "Capability": 28,
     "Role": 131,
@@ -1227,6 +1227,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untainted-verification",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "untainted-verification",
+      "title": "Untainted verification — the producer never writes the verdict",
+      "description": "The party that produced an artefact does not write the verdict on it. How a checker and an adjudicator are dispatched with controlled context, the three rules that make it a measurement rather than a ritual, and the third state that lets it gate at all.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/untainted-verification.md",
+      "instructionLines": 159,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "asset-extraction",
@@ -1619,7 +1635,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 200,
+      "instructionLines": 239,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1873,7 +1889,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 384,
+      "instructionLines": 394,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5143,6 +5159,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ui-accessibility",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untainted-verification",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/unverified-constraints",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch",
@@ -31754,8 +31771,9 @@
         "person"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/quality-control",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untainted-verification"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/QC%20reviewer",
@@ -32929,8 +32947,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "09e45523dd78745fc3a688cd403a0e45766c951f",
+    "sha": "aa462f7a85037a2e4ca4bcf71b71b8f9c1daa85d",
     "pr": "main",
-    "run": "35664528761"
+    "run": "35664906420"
   }
 }
