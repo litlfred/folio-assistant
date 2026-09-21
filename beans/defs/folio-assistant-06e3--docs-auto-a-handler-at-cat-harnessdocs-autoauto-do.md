@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-20T22:58:07Z
+updated_at: 2026-09-21T10:28:48Z
 parent: folio-assistant-0lmb
 ---
 
@@ -291,3 +291,165 @@ has none.
 - **Types declared and not built**: `glossary` (gated by `lqo9`'s roast),
   `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles`. Absent
   rather than stubbed, on purpose.
+
+
+---
+
+## §4(a) done — 2026-09-21 (session_014HGPQoUnzXGqSspA8x6YyD)
+
+`cat-harness/docs/cat-harness/index.md`, published at `<base>/cat-harness/`.
+**That route had no index at all**: the directory held `docs-auto/`,
+`library/` and `schemas/` and nothing above them, so a path that reads like a
+section answered nothing.
+
+**Written under §2 and §3, with both rules stated in the file** so the next
+editor meets them:
+
+- **Reference, never restate.** If a sentence could be produced by reading a
+  generated page, it does not belong here. The page carries the model (actor /
+  role / task / process / skill, and why each is not the one beside it), what a
+  BPMN process *is* in this repository, what a lane means, and what is
+  authored versus generated — then links the indexes for the enumeration.
+- **No counts in prose.** The indexes are regenerated and carry live counts; a
+  number typed on an authored page is wrong the next time somebody adds a
+  diagram and nothing checks it. Measured in prep and deliberately NOT written
+  down: 55 BPMN files, 54 processes, 22 named as a call target.
+
+**One concept is derived rather than listed**, and it is the answer to "which
+are the MAIN business processes": a process **no other diagram calls** is an
+entry point; one named by a `callActivity` is a step inside a larger one, so
+entering it directly means starting in the middle. Nothing marks this in the
+file — it falls out of who calls whom, so it stays true as diagrams are added.
+That is the same discipline as `recordsWork` and as the referrer kind in
+`library-refs.ts`.
+
+`nav_exclude: true` is deliberate: the left-hand navbar's structure is bean
+`603s`, in flight in another session, and a nav entry here would collide with
+the section model it is building.
+
+### FINDING, found by checking the links rather than assuming
+
+**`/cat-harness/docs-auto/` and `/cat-harness/docs-auto/index/` have no index
+page either** — the same defect as `/cat-harness/`, one level down.
+`gen-docs-auto.ts` writes an `index.html` per TYPE (`index/processes`,
+`index/skills`) and nothing at the levels above them. The new page therefore
+links the two leaves that exist and names `docs-auto` without a link, with a
+comment saying why and that the link returns when the generator writes a
+parent index at each level.
+
+**Open, and the next piece of `06e3`:** `gen-docs-auto.ts` should write a
+parent index at each level it publishes under. It is the same shape it already
+has — an index listing what is below it — and until it exists, every link to a
+docs-auto level above a leaf lands on a bare directory.
+
+### Still open in this bean
+
+- §4(b) the "meaningfully populated" QA check — now has a page to pass over,
+  which it did not before.
+- §4(c) the navbar over harnesses with a populated `docs/` — **blocked**: bean
+  `603s` is in flight in another session on branch
+  `claude/lhs-navbar-harness-folios-cqo9mu`, editing `harness-tiles.ts` and
+  `nav_footer_custom.html`, which is exactly what §4(c) needs.
+- §5 the KG viewer.
+- The declared-but-unbuilt types: `glossary`, `index`, `index/bpmn`,
+  `index/dmn`, `index/tasks`, `index/roles`.
+
+
+## The docs-auto level pages — done, same session
+
+The finding recorded above is fixed. `gen-docs-auto.ts` now writes an index at
+**every level above a built type**, derived from the types actually built:
+`/cat-harness/docs-auto/` and `/cat-harness/docs-auto/index/` had none, so any
+link to them landed on a bare directory.
+
+- **Derived, never listed.** The children of a level come from the built type
+  ids by splitting on `/`. A type added to `TYPES` appears the day it builds; a
+  level with nothing under it gets **no page at all** rather than an empty one,
+  which is the same absent-rather-than-stubbed rule already on `TYPES` — an
+  empty list and a complete list look identical.
+- **Each level page names ITSELF** in the same `var SCOPE` line every other
+  page here emits, so ownership is read off the file by the one pruner rather
+  than assumed from the path. A level page that got this wrong would be
+  unprunable forever and nothing else would say so.
+- **The shared stylesheet was extracted** to `PAGE_CSS` rather than copied into
+  the second renderer. Two copies of one stylesheet is two answers to what this
+  looks like, and the copy nobody edits is the one a reader meets first.
+
+§4(a)'s landing page gets its `docs-auto` link back, and the comment explaining
+its absence is replaced by one recording why it was briefly missing.
+
+5 tests added: every level has an index, each names itself, links are relative
+(and never absolute from a base this generator does not know), an empty level
+renders a stated absence, and a level counts a type's items while saying what a
+nested level holds.
+
+
+## §4(b) done — the "meaningfully populated" check — 2026-09-21
+
+`cat-harness/scripts/check-docs-populated.ts`, registered as
+`check:docs-populated` and gated in `code-quality-gates.yml`. Green for both
+harnesses that declare a `docs` graph, so it gates from the first commit rather
+than reddening the build on arrival.
+
+**The adjective is what it measures.** A page counts only when it is AUTHORED —
+nothing in its bytes says a generator wrote it — and carries at least 250 words
+of PROSE, which excludes front matter, markup, code fences and any line that is
+only a link. The threshold carries its basis rather than being tuned: §4(a)
+asks a page to say what a process is for, when you would be in it and what it
+is not; two or three of those plus a sentence on what the harness does is a few
+hundred words, and below that the page is a title and a link list.
+
+Measured: **cat-harness** ✓ `publication-workflow.md`, 8,199 words (76 authored,
+261 generated). **who-iris** ✓ `kg-to-portal.html`, 1,496 words (9 authored).
+
+### Three defects this found, two of them in itself
+
+1. **It reported a clean pass over a sweep that looked at nothing.**
+   `repoRootFor(process.cwd())` resolved to the repository's PARENT, so
+   `instanceRootsIn` found one instance, no `docs` graph, and the check printed
+   *"✓ every harness declaring docs has one"*. That is the CWD-vs-instance-root
+   defect bean `a6kl` swept every gate for — committed by the gate written
+   after it. Root now comes from `instanceRootFor(import.meta.dir)`, and **an
+   empty harness list is exit 2**, because a sweep that found nothing has not
+   cleared anything.
+2. **A substring search for "generated" is wrong in both directions.** It marks
+   `docs/getting-started.md` generated — an authored page that says an SVG is
+   generated by `render:bpmn` — and misses `docs/publication-workflow.md`,
+   which `gen-docs-pages.ts` writes. The markers are anchored now.
+3. **`gen-docs-pages.ts` marks nothing it writes**, so its output is
+   byte-indistinguishable from authored content. Nothing downstream can tell
+   them apart, and this check does not pretend to: it is named in the module
+   note as the fix belonging in that generator. **Open, and small:** a marker
+   in what it writes, like every other generator here.
+
+### Verified both ways
+
+12 tests, and the one that matters is the falsifier the brief demanded: a page
+that is a title plus a list of links comes out **thin**, and a generated page
+never carries a harness however long it is. Plus: a declared directory that is
+absent is `unknown` rather than thin (`dh4f`), an unreadable page is `unknown`,
+and dot-prefixed directories are not searched.
+
+The planted directories in the test are called `pages`, not `docs` — twice
+deliberate. `site-dir-single-answer` refuses a hardcoded site root in any
+source file and was right to fail the first draft; and a harness's docs
+directory is whatever its DECLARATION names, so a check that only worked for
+one called `docs` would be reading the name instead of the declaration.
+
+Gates **83/83**.
+
+
+### The `gen-docs-pages.ts` ambiguity is closed — same session
+
+It now writes an HTML comment carrying the same phrase every other generator
+here uses, naming the manifest directory to edit instead of the output. An HTML
+comment because it must be invisible in the rendered page and present in the
+source a reader opens on the forge; the same phrase because that is what lets
+ONE reader recognise every generator rather than a list of spellings.
+
+**It changed the answer, which is the point.** Before, `check:docs-populated`
+credited cat-harness with `publication-workflow.md` — 8,199 words, and
+generated. After: 65 authored rather than 76, and the evidence page is
+`architecture/cat-harness-minimum.md`, 4,635 words, which somebody actually
+wrote. The check was passing the harness on documentation nobody authored, and
+neither the check nor anything else could have known.
