@@ -69,3 +69,58 @@ a skill and a place in the sweep's output.
       artefacts is stated, not left to judgement
 - [ ] the session-start sweep reports the determination, so "never decided"
       is visible rather than silent
+
+## Owner, 2026-09-21 — the MODEL's own languages are part of the determination
+
+> note if agent was not trained primaruily in english, the agent/person
+> staring the bootstrap on that model should potentially use other lanuges
+> than english (especially if human validated) should clarify each new model
+> added to bootstrap which of the preferred languages
+
+This sharpens the bean considerably, and in a direction it had not considered
+at all.
+
+### What it adds
+
+The bean asked what the determination is made FROM and offered two weak
+answers — the person's own turns, and a declared preference. **A third input
+is the model the agent is running on.** A model trained primarily in a
+language other than English is not well served by a harness that assumes
+English, and neither is the person working with it: the competent language for
+that pairing may be neither the corpus's nor the requester's first guess.
+
+*"Especially if human validated"* is the load-bearing qualifier. A model's own
+claim about which languages it handles well is not evidence; a person having
+checked it is. So the declaration carries a **validation state**, not just a
+list — the same distinction this repository draws everywhere between a
+determined answer and an assumed one.
+
+### Where it goes: bootstrap, per model
+
+> should clarify each new model added to bootstrap which of the preferred
+> languages
+
+So this is a **declaration on the model**, in bootstrap, made when a model is
+added — not something derived at runtime and not something an agent decides
+about itself. Bootstrap is the right home for the same reason it holds the
+other things true before a harness exists: an agent reaching for its
+communication language has not yet loaded the harness that would otherwise
+answer.
+
+### What this does NOT license
+
+An agent choosing a language because its model prefers one. The person's
+needs outrank the model's competence: a model strong in a language the person
+does not read is worse than the fallback, not better. The model's languages
+are an INPUT to the determination and never the determination itself — and
+the bean's existing question about where the answer is recorded still stands.
+
+## Done when — added
+
+- [ ] each model declared in bootstrap names its preferred language(s)
+- [ ] that declaration carries whether a HUMAN validated the claim, because
+      a model's own word for it is not evidence
+- [ ] adding a model without the declaration is a finding rather than a
+      silent default to English
+- [ ] the determination reads the model's languages as one input among the
+      person's stated preference and their own turns — never as the answer
