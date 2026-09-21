@@ -2030,7 +2030,20 @@ export const RemoteGraphSchema = z
  * subgraph nobody can look at, and a process nobody can look at. Closed, so a
  * declaration cannot excuse itself from an obligation nobody has defined.
  */
-export const RENDER_OBLIGATIONS = ["visualiser", "workflow-visualiser"] as const;
+export const RENDER_OBLIGATIONS = [
+  "visualiser",
+  "workflow-visualiser",
+  /**
+   * The instance's OWN `docs/` — its source documentation, at
+   * `<instance>/docs/`, as against a handler's rendering of it.
+   *
+   * Added 2026-09-21 for bean `op30`, and it reuses this mechanism rather than
+   * minting a second opt-out because the requirements are identical: an
+   * exemption needs a REASON, and a reason with no substitute is a hole. The
+   * `owes` field already refuses the hole.
+   */
+  "own-docs",
+] as const;
 export type RenderObligation = (typeof RENDER_OBLIGATIONS)[number];
 
 /**
