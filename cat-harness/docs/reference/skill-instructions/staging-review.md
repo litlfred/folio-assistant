@@ -89,6 +89,29 @@ The middle row is the most useful thing this skill can report, and composing
 its URL anyway would hide exactly that — §"Before you report a staging URL as
 broken".
 
+### The commit in the bot's comment is NOT your branch head
+
+Measured 2026-09-21, by getting it wrong in this skill's own first use. The
+comment named `3894c41`; the branch head was `037812c7`; I reported the preview
+as *"one commit behind"*. **It was current.** On a `pull_request` trigger the
+stage job builds `refs/pull/<n>/merge` — your head merged into the base — so
+the commit it names is an object that **never** equals your head and is not
+even in your clone. Comparing the two reports a stale preview on every PR,
+forever.
+
+Resolve it instead. The merge commit's **second parent** is the head it was
+built from:
+
+```sh
+git fetch origin "refs/pull/<n>/merge:refs/remotes/origin/pr-<n>-merge" -q
+git log --format="%h %p" -1 origin/pr-<n>-merge   # <merge> <base> <YOUR HEAD>
+```
+
+Stale means that second parent is not your head — nothing else does. This is
+the same fact `bun run gates` exists around: **CI tests the merge**, and so
+does the preview, so a branch behind its base is previewing a tree nobody will
+have.
+
 ## When to provide before/after URLs
 
 Provide before/after URLs in **every** interaction where:

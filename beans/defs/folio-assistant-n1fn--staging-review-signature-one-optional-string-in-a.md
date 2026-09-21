@@ -106,3 +106,35 @@ skill rather than in each caller.
 **If the owner would rather have brevity**, the cut is the justification prose
 around the tables, not the tables. That is a call about this repository's house
 style, not about this bean.
+
+
+## Used it once, and its first use found a defect in ITS OWN OUTPUT
+
+The staging preview for #749 deployed at 16:54 and the skill was run against
+it with no narrowing ask. It produced the start-here line, two rows, and four
+could-not-check items — and **one of the four was wrong**.
+
+I reported the preview as *"one commit behind"*: the bot's comment named
+`3894c41`, the branch head was `037812c7`. Checked instead of asserted, and
+the comparison is a category error. On a `pull_request` trigger the stage job
+builds `refs/pull/749/merge`, so the commit the comment names is
+
+    5ed8f9cc9 220233c76 037812c7c
+    Merge 037812c7c into 220233c76
+
+— my head merged into main, an object that is not in my clone and **never**
+equals my head. Comparing the two reports a stale preview on every PR, forever.
+The preview was current.
+
+**The right check is the merge commit's SECOND PARENT.** Added to the skill as
+§"The commit in the bot's comment is NOT your branch head", with the two
+commands. It is the same fact `gates` exists around — CI tests the merge, and
+so does the preview — which is why the error is worth 20 lines rather than a
+footnote.
+
+Two things about this are worth keeping. The skill **had no rule here at all**,
+right or wrong: the wrong instruction was in the draft I overwrote and
+reverted, so nothing told me not to make the mistake, and nothing would have
+told the next agent either. And the defect surfaced because the skill makes the
+agent state what it could not check — a report with no third section would have
+carried the same error silently.
