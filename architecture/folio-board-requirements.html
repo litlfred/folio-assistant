@@ -716,7 +716,7 @@
     </ol>
   </li>
   <li><a href="#round-two--r8-to-r14" id="markdown-toc-round-two--r8-to-r14">Round two — R8 to R14</a></li>
-  <li><a href="#r15-and-r16-are-referenced-but-never-defined" id="markdown-toc-r15-and-r16-are-referenced-but-never-defined">R15 and R16 are REFERENCED BUT NEVER DEFINED</a></li>
+  <li><a href="#r15-and-r16--reconstructed-then-confirmed" id="markdown-toc-r15-and-r16--reconstructed-then-confirmed">R15 and R16 — reconstructed, then confirmed</a></li>
   <li><a href="#r17--render-safety" id="markdown-toc-r17--render-safety">R17 — render safety</a></li>
   <li><a href="#what-the-set-produced" id="markdown-toc-what-the-set-produced">What the set produced</a>    <ol>
       <li><a href="#one-framing-worth-keeping" id="markdown-toc-one-framing-worth-keeping">One framing worth keeping</a></li>
@@ -1017,47 +1017,54 @@ nothing already agreed was invalidated.</p>
 <p>Recorded alongside them as scope rather than as a requirement: <strong>“do all the
 skills and bpmn workflows”</strong> — each of these gets its skill and its diagram,
 not only its schema.</p><hr />
-<h2 id="r15-and-r16-are-referenced-but-never-defined">
+<h2 id="r15-and-r16--reconstructed-then-confirmed">
   
   
-    <a href="#r15-and-r16-are-referenced-but-never-defined" class="anchor-heading" aria-labelledby="r15-and-r16-are-referenced-but-never-defined"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R15 and R16 are REFERENCED BUT NEVER DEFINED
+    <a href="#r15-and-r16--reconstructed-then-confirmed" class="anchor-heading" aria-labelledby="r15-and-r16--reconstructed-then-confirmed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R15 and R16 — reconstructed, then confirmed
   
   
 </h2>
     
 
-<p>Stated plainly because a design record that fills its own gaps with plausible
-sentences is worse than one that names them — invented text reads exactly like
-agreed text.</p>
+<p><strong>They were referenced but never written down.</strong> Bean <code class="language-plaintext highlighter-rouge">51wf</code> is assigned
+<em>“R2, R9, R15”</em> and bean <code class="language-plaintext highlighter-rouge">zsah</code> <em>“R12, R16”</em>, and no comment on #602 states
+either requirement. When this record was first written they were therefore
+reported as <strong>undefined</strong>, with the recoverable meaning marked as inference —
+because a design record that fills its own gaps with plausible sentences is
+worse than one that names them, since invented text reads exactly like agreed
+text.</p>
 
-<p>Bean <code class="language-plaintext highlighter-rouge">51wf</code> is assigned <em>“R2, R9, R15”</em> and bean <code class="language-plaintext highlighter-rouge">zsah</code> <em>“R12, R16”</em>. <strong>No
-comment on #602 states either requirement.</strong> What they appear to mean is
-recoverable only by inference, and is recorded here as inference:</p>
+<p><strong>The owner confirmed both readings on 2026-09-21</strong> (<em>“agreed on r15/16”</em>), so
+they are now agreed requirements rather than reconstructions:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
       <th> </th>
-      <th>what it appears to mean</th>
-      <th>evidence</th>
+      <th>requirement</th>
+      <th>how it was recovered</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>R15</strong></td>
-      <td>z-order — selecting any part of an open window raises it</td>
+      <td>selecting any part of an open window <strong>raises</strong> it — z-order is a reader’s act</td>
       <td><code class="language-plaintext highlighter-rouge">51wf</code>’s unit description, <em>“z-order with raise-on-select”</em></td>
     </tr>
     <tr>
       <td><strong>R16</strong></td>
       <td>a tile opens the <strong>existing</strong> visualisation; nothing builds a second viewer</td>
-      <td>a later aside on the issue, <em>“R12/R16 said a tile opens the existing visualisation”</em></td>
+      <td>an aside on the issue, <em>“R12/R16 said a tile opens the existing visualisation”</em></td>
     </tr>
   </tbody>
 </table></div>
 
-<p>Both were implemented to that reading. If either is wrong, the code is what
-needs re-checking, not this page.</p><hr />
+<p>Both were implemented to that reading before it was confirmed, which is why the
+gap mattered: the code was already committed to an interpretation nothing had
+stated. <strong>The provenance is kept rather than tidied away</strong> — a requirement
+recovered from a bean’s unit description and later ratified is not the same
+artefact as one written down at the time, and a reader re-checking this
+subsystem should know which it is.</p><hr />
 <h2 id="r17--render-safety">
   
   
@@ -1338,7 +1345,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35642454549"><code>208956a</code></a> &middot; 2026-09-21T19:05:46Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35644182415"><code>936d1b4</code></a> &middot; 2026-09-21T19:21:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
