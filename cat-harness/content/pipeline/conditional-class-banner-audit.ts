@@ -47,8 +47,7 @@ const REPO_ROOT = findContentRepoRoot();
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
-let _rootMemo: string | undefined;
-const ROOT = (): string => (_rootMemo ??= join(folioDir(REPO_ROOT),  requirePaper(_paperArg)));
+const ROOT = join(folioDir(REPO_ROOT),  requirePaper(_paperArg));
 const STRICT = process.argv.includes("--strict");
 
 // Optional baseline-allowlist file (declared before WITNESS_OUT so its
@@ -106,7 +105,7 @@ const LOAD_FAILURES: BlockLoadFailure[] = [];
  * qou corpus across five other lists. Importing has no list to drift.
  */
 async function loadAll(): Promise<Map<string, Block>> {
-  const { blocks, failures } = await loadBlocksUnder(ROOT());
+  const { blocks, failures } = await loadBlocksUnder(ROOT);
   if (reportLoadFailures(failures)) LOAD_FAILURES.push(...failures);
   return blocks;
 }
@@ -326,7 +325,7 @@ console.log(`§3b-cond conditional-class banner audit`);
 // passes for free because it read nothing. Auditing nothing is a failure.
 if (blocks.size === 0) {
   console.error(
-    `No content blocks found under ${ROOT()} — refusing to report success.\n` +
+    `No content blocks found under ${ROOT} — refusing to report success.\n` +
     "This audits a FOLIO's blocks; folio-assistant is the platform.\n" +
     "Run it from the content repo.",
   );

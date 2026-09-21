@@ -423,13 +423,6 @@ export const RULES: Rule[] = [
       // Guards the page template all four viewer generators build as one
       // string literal; the generators are core, so its gate is too.
       "scripts/check-viewer-backticks.ts",
-      // Refuses declaration-resolving work at module scope. CORE by the same
-      // test as the line above — a gate belongs with what it guards, and 26 of
-      // the 29 sites it certified are `content/pipeline/` modules. It reaches
-      // harness and adapter files too, but a guard is classified by its
-      // subject and not by its widest reach, or every repo-wide check would be
-      // harness by default and none would sit with the code it protects.
-      "scripts/check-module-scope-resolution.ts",
       // Zod in `cat-bootstrap-tools` → JSON Schema in `cat-bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.

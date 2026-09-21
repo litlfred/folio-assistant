@@ -56,13 +56,10 @@ import type { LedgerEntry, SourceLedger, SourceRef } from "../../schemas/bib-ver
 import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
-let _ledger_pathMemo: string | undefined;
-const LEDGER_PATH = (): string => (_ledger_pathMemo ??= join(folioDir(REPO_ROOT),  "bib-qa-verifications.json"));
-let _references_pathMemo: string | undefined;
-const REFERENCES_PATH = (): string => (_references_pathMemo ??= join(folioDir(REPO_ROOT),  "schema", "references.ts"));
+const LEDGER_PATH = join(folioDir(REPO_ROOT),  "bib-qa-verifications.json");
+const REFERENCES_PATH = join(folioDir(REPO_ROOT),  "schema", "references.ts");
 // declared-path-literal: the convention fallback, at the call site so the choice is visible.
-let _uploads_dirMemo: string | undefined;
-const UPLOADS_DIR = (): string => (_uploads_dirMemo ??= directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads"));
+const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
 
 const SCHEMA_ID = "source-ledger/v1";
 
@@ -86,7 +83,7 @@ interface RefIndex {
 }
 
 function readReferences(): RefIndex {
-  const src = readFileSync(REFERENCES_PATH(), "utf-8");
+  const src = readFileSync(REFERENCES_PATH, "utf-8");
   const ids = new Set<string>();
   const byArxiv = new Map<string, string>();
   const urls = new Map<string, string>();
@@ -191,7 +188,7 @@ function main(): void {
   }
 
   const refs = readReferences();
-  const raw = JSON.parse(readFileSync(LEDGER_PATH(), "utf-8"));
+  const raw = JSON.parse(readFileSync(LEDGER_PATH, "utf-8"));
   const legacy: LegacyEntry[] = raw.entries ?? [];
 
   const entries: LedgerEntry[] = legacy.map((e) =>
@@ -213,8 +210,8 @@ function main(): void {
   let addedOrphan = 0;
   const unresolvedRefIds: string[] = [];
 
-  if (existsSync(UPLOADS_DIR())) {
-    for (const f of readdirSync(UPLOADS_DIR()).sort()) {
+  if (existsSync(UPLOADS_DIR)) {
+    for (const f of readdirSync(UPLOADS_DIR).sort()) {
       if (!SOURCE_EXTENSIONS.some((ext) => f.toLowerCase().endsWith(ext))) continue;
       if (haveFile.has(f)) continue;
 
@@ -290,8 +287,8 @@ function main(): void {
   }
 
   if (write) {
-    writeFileSync(LEDGER_PATH(), `${JSON.stringify(ledger, null, 2)}\n`);
-    console.log(`\nwrote ${LEDGER_PATH()}`);
+    writeFileSync(LEDGER_PATH, `${JSON.stringify(ledger, null, 2)}\n`);
+    console.log(`\nwrote ${LEDGER_PATH}`);
   } else {
     console.log("\n(dry run — pass --write to persist)");
   }

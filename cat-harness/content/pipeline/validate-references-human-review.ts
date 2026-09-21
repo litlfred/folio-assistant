@@ -58,8 +58,7 @@ interface ReviewSidecar {
 // `import.meta.dir` pointed at `<folio-assistant>/schemas/` — a path that does
 // not exist, and one the folio's symlinked embedding resolves to even when the
 // pipeline is run from the content repo.
-let _sidecar_pathMemo: string | undefined;
-const SIDECAR_PATH = (): string => (_sidecar_pathMemo ??= join(folioDir(findContentRepoRoot()),  "schema", "references.review.json"));
+const SIDECAR_PATH = join(folioDir(findContentRepoRoot()),  "schema", "references.review.json");
 
 /** Recursively key-sorted JSON, so the hash is independent of source key order.
  *  Mimics `JSON.stringify` semantics for the non-JSON values that can appear in a
@@ -90,8 +89,8 @@ export function entryHash(entry: CSLData): string {
 }
 
 function loadSidecar(): ReviewSidecar {
-  if (!existsSync(SIDECAR_PATH())) return { reviews: {} };
-  const raw = JSON.parse(readFileSync(SIDECAR_PATH(), "utf-8"));
+  if (!existsSync(SIDECAR_PATH)) return { reviews: {} };
+  const raw = JSON.parse(readFileSync(SIDECAR_PATH, "utf-8"));
   return { _meta: raw._meta, reviews: raw.reviews ?? {} };
 }
 

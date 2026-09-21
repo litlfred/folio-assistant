@@ -239,13 +239,12 @@ function auditMathTextSeams(file: string) {
 // ── Run ──────────────────────────────────────────────────────────────────────
 console.log("Auditing TeX-source hazards...");
 auditReferencesTs();
-let _foliorootMemo: string | undefined;
-const folioRoot = (): string => (_foliorootMemo ??= folioDir(REPO_ROOT));
-const mdFiles = walk(folioRoot(), ".md");
+const folioRoot = folioDir(REPO_ROOT);
+const mdFiles = walk(folioRoot, ".md");
 // Same rule: a report over zero files is not a clean result.
 if (mdFiles.length === 0) {
   console.error(
-    `No .md files found under ${folioRoot()} — refusing to report success.\n` +
+    `No .md files found under ${folioRoot} — refusing to report success.\n` +
     "This audits a FOLIO's content; folio-assistant is the platform.\n" +
     "Run it from the content repo.",
   );

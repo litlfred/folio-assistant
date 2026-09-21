@@ -129,11 +129,9 @@ const leanCitations = new Set<string>();
 
 // Scan .lean files for -- Ref: [key] patterns
 const leanDir = join(REPO_ROOT, "lean");
-let _foliorootMemo: string | undefined;
-const folioRoot = (): string => (_foliorootMemo ??= folioDir(REPO_ROOT));
+const folioRoot = folioDir(REPO_ROOT);
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-let _leanarchivedirMemo: string | undefined;
-const leanArchiveDir = (): string => (_leanarchivedirMemo ??= join(folioDir(REPO_ROOT),  requirePaper(_paperArg), "lean"));
+const leanArchiveDir = join(folioDir(REPO_ROOT),  requirePaper(_paperArg), "lean");
 
 function scanFilesRecursive(dir: string, ext: string): string[] {
   if (!existsSync(dir)) return [];
@@ -155,8 +153,8 @@ function scanFilesRecursive(dir: string, ext: string): string[] {
 
 const leanFiles = [
   ...scanFilesRecursive(leanDir, ".lean"),
-  ...scanFilesRecursive(leanArchiveDir(), ".lean"),
-  ...scanFilesRecursive(folioRoot(), ".lean"),
+  ...scanFilesRecursive(leanArchiveDir, ".lean"),
+  ...scanFilesRecursive(folioRoot, ".lean"),
 ];
 
 // Bare bracket citation `[authorYYYY]` in .lean docstrings — matches
@@ -199,7 +197,7 @@ const CITE_PATTERN = /\\cite(?:\[[^\]]*\])?\{([^}]+)\}/g;
 const BRACKET_CITE_PATTERN = /(?<![!\w])\[([a-z][a-z0-9-]*\d{4}[a-z]*)\](?!\()/g;
 const texFiles = [
   ...scanFilesRecursive(join(REPO_ROOT, "chapters"), ".tex"),
-  ...scanFilesRecursive(folioRoot(), ".md"),
+  ...scanFilesRecursive(folioRoot, ".md"),
   join(REPO_ROOT, "main.tex"),
   join(REPO_ROOT, "blueprint/src/content.tex"),
 ].filter(existsSync);
@@ -240,7 +238,7 @@ console.log("Cross-checking .ts manifest cites: arrays...");
 const TS_CITES_BLOCK = /\bcites\s*:\s*\[([^\]]*?)\]/gs;
 const TS_CITES_KEY = /["'`]([a-z][a-z0-9_-]*\d{4}[a-z0-9_-]*)["'`]/gi;
 const tsCitations = new Set<string>();
-const tsFiles = scanFilesRecursive(folioRoot(), ".ts");
+const tsFiles = scanFilesRecursive(folioRoot, ".ts");
 for (const file of tsFiles) {
   const content = readFileSync(file, "utf-8");
   let blockMatch;

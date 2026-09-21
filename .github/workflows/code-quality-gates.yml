@@ -663,16 +663,6 @@ jobs:
           # four separate sessions have lost a build to that. Four in-file
           # warnings did not stop it.
           bun run check:viewer-backticks
-          # `folioDir` and the graph-directory resolvers THROW on a
-          # declaration that will not parse, and a throw at module scope
-          # aborts evaluation — leaving every export below it unbound, and
-          # `await import()` handing back the half-built namespace rather
-          # than re-throwing. The error then names a binding thousands of
-          # lines from the cause: a sweep died on
-          # `EXTENDED_AUTOMATED_CHECKERS` when the real failure was a root
-          # resolution 3,186 lines above it, and looked so much like a
-          # circular import that a bean was opened as one (`95s1`, `1hkj`).
-          bun run check:module-scope-resolution
           # One config per instance: `<name>.config.json` at the
           # instantiation root. This repository instantiates more than
           # one harness, so a single `harness.config.json` at the repo

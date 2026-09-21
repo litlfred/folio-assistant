@@ -43,8 +43,7 @@ import { directoryForGraph } from "../../schemas/cat-harness.js";
 const ROOT = join(import.meta.dir, "../..");
 const DEFAULT_PAGE = "docs/guides/agent-onboarding.md";
 const TARGET_LOCALE = "fr";
-let _output_dirMemo: string | undefined;
-const OUTPUT_DIR = (): string => (_output_dirMemo ??= join(directoryForGraph(ROOT, "translation-sources") ?? join(ROOT, "translations"), TARGET_LOCALE));
+const OUTPUT_DIR = join(directoryForGraph(ROOT, "translation-sources") ?? join(ROOT, "translations"), TARGET_LOCALE);
 
 // ── Agentic translation (simulated) ─────────────────────────────
 
@@ -126,8 +125,8 @@ function main() {
 
   // Write POT file
   const pot = formatPot(entries, { projectName: "folio-assistant", locale: "fr" });
-  mkdirSync(OUTPUT_DIR(), { recursive: true });
-  const potPath = join(OUTPUT_DIR(), `${sourceFile.replace(".md", "")}.pot`);
+  mkdirSync(OUTPUT_DIR, { recursive: true });
+  const potPath = join(OUTPUT_DIR, `${sourceFile.replace(".md", "")}.pot`);
   writeFileSync(potPath, pot);
   console.log(`  ✅ POT written: ${potPath}\n`);
 
@@ -163,7 +162,7 @@ function main() {
   }
 
   const poContent = poLines.join("\n");
-  const poPath = join(OUTPUT_DIR(), `${sourceFile.replace(".md", "")}.po`);
+  const poPath = join(OUTPUT_DIR, `${sourceFile.replace(".md", "")}.po`);
   writeFileSync(poPath, poContent);
 
   console.log(`  Translated: ${translatedCount}/${entries.length} strings`);
@@ -182,7 +181,7 @@ function main() {
   console.log(`  Spans translated: ${result.stats.translatedSpans}`);
   console.log(`  Spans untranslated: ${result.stats.untranslatedSpans}`);
 
-  const frMdPath = join(OUTPUT_DIR(), sourceFile);
+  const frMdPath = join(OUTPUT_DIR, sourceFile);
   writeFileSync(frMdPath, result.translated);
   console.log(`  ✅ French markdown written: ${frMdPath}\n`);
 
@@ -218,7 +217,7 @@ function main() {
     // found wanting" about a measurement that never happened.
   };
 
-  const statusPath = join(OUTPUT_DIR(), "status.json");
+  const statusPath = join(OUTPUT_DIR, "status.json");
   writeFileSync(statusPath, JSON.stringify(status, null, 2));
   console.log(`  ✅ Status written: ${statusPath}`);
   console.log(`  Official: ${status.official}`);
