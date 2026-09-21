@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/skills/proof-verification/input.schema.json",
+  "title": "Proof Verification Input",
+  "description": "Input schema for the proof-verification skill. Verifies Lean proofs and tracks sorry obligations.",
+  "type": "object",
+  "required": [
+    "projectRoot"
+  ],
+  "properties": {
+    "projectRoot": {
+      "type": "string",
+      "description": "Path to the Lean project root (containing lakefile.lean)."
+    },
+    "targetFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific files to verify (empty = entire project)."
+    },
+    "trackSorries": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to track and report sorry placeholders."
+    }
+  },
+  "staging": {
+    "branch": "claude/bean-8h42-layout",
+    "sha": "d93cf74fd7f0625f248529f4e86f5dbec1c4537a",
+    "pr": "773/merge",
+    "run": "35635268270"
+  }
+}
