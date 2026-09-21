@@ -278,10 +278,29 @@ jobs:
           echo "# Auto-appended by feature-staging.yml" >> cat-harness/docs/_config.yml
           echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
 
+      # COMPOSE the documentation tree before Jekyll sees it.
+      #
+      # Owner's ruling, 2026-09-21 (bean `n0nf`, issue #638): *"there is also
+      # docs/ dir in repo root managed by cat-harness. other harness augment or
+      # overlay ontop of that"*. `cat-harness/docs/` is the BASE and stays
+      # exactly where it is — the compose ruling is what makes moving its 241
+      # files unnecessary — and the repository root's `docs/` overlays it.
+      #
+      # It runs AFTER the build stamp, so `_data/build.yml` is composed in
+      # rather than stranded in a directory Jekyll no longer reads.
+      #
+      # WHY CHANGING `source:` ON THE LIVE PUBLISH PATH IS SAFE: an EMPTY
+      # overlay composes byte-identically to the base, proven against the real
+      # tree by `compose-docs.test.ts` rather than asserted here. So this is a
+      # no-op until somebody deliberately authors a page under `docs/`, and the
+      # risk is bounded to that moment instead of to this commit.
+      - name: Compose the docs layers
+        run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs
+
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./cat-harness/docs
+          source: ./_docs
           destination: ./_site
 
       - name: Take ownership of Jekyll output
