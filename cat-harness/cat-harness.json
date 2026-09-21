@@ -428,7 +428,7 @@
       ]
     },
     {
-      "id": "cat-harness-roles",
+      "id": "scenarios",
       "path": "scenarios/",
       "dependents": "skip",
       "description": "Scenarios \u2014 the Roles an Actor takes on, in `roles.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need, the lanes it binds, and the Actor kinds that may play it. SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path. One third of what this kind is named for is NOT here yet: a Role's `useCases` are free-text strings, so a User Story cannot be pointed at or traced to the Workflow it justifies.",
@@ -437,7 +437,7 @@
       ]
     },
     {
-      "id": "cat-harness-processes",
+      "id": "processes",
       "path": "processes/",
       "dependents": "skip",
       "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here \u2014 that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs.",

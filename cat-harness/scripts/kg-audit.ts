@@ -91,7 +91,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX } from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 
 const ENGINE_VERSION = "1";
@@ -117,7 +117,10 @@ function readsProse(r: { actedUpon?: boolean; actorKinds: string[] }): boolean {
 }
 
 const root = resolve(import.meta.dir, "..");
-const WORKFLOW_DIR = join(root, "processes");
+// declared-path-literal: the convention fallback, at the call site — an
+// instance that declares no `processes` graph still needs a sidecar home
+// for a path-less subject, and the convention is where one would look.
+const WORKFLOW_DIR = instanceDirectoryForGraph(root, "processes") ?? join(root, "processes");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
@@ -1379,7 +1382,12 @@ try {
   // `scenarios/`, not `KG_ROOT` — the role graph moved out of the skills tree
   // on 2026-09-21 and is a declared directory of its own now. `KG_ROOT` is
   // still the skills root, which is what every other use of it here wants.
-  graph = readRoleGraph(join(root, "scenarios")) ?? readRoleGraph(KG_ROOT);
+  // declared-path-literal: the convention fallback, at the call site. The
+  // role graph moved out of the skills tree on 2026-09-21 and is a declared
+  // directory of its own; `KG_ROOT` is the second branch for an instance
+  // that has not migrated.
+  const scenarios = instanceDirectoryForGraph(root, "scenarios") ?? join(root, "scenarios");
+  graph = readRoleGraph(scenarios) ?? readRoleGraph(KG_ROOT);
 } catch (e) {
   graphError = e instanceof Error ? e.message : String(e);
 }

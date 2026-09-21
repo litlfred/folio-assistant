@@ -693,6 +693,10 @@ export function workflowDirs(root: string): string[] {
     // `processes/`, the convention since 2026-09-21. An instance that has not
     // migrated declares its diagrams directly and is reached by the second
     // branch below, so no legacy name is needed here.
+    // declared-path-literal: the convention fallback, at the call site. This
+    // walks a DEPENDENCY's directory, so the local declaration cannot answer
+    // for it — the second branch below is what catches an instance that
+    // declares its diagrams directly instead.
     const wf = joinPath(d.absPath, "processes");
     if (existsSync(wf)) out.push(wf);
     else if (readdirSync(d.absPath).some((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))) {
