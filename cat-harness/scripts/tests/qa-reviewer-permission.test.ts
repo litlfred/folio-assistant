@@ -45,6 +45,7 @@ function sidecar(dir: string, name: string, entries: QaCriterionEntry[]) {
 }
 
 const HASH = { md: "aaaaaaaaaaaa" };
+const T = "2026-09-21T00:00:00Z";
 
 describe("reviewerOutcome — three states, never two", () => {
   const actors = new Map([
@@ -80,9 +81,9 @@ describe("scan", () => {
     const { results, actors } = fixture();
     const a = readActors(actors);
     sidecar(results, "a.json", [
-      { field_hash: HASH, result: "pass", reviewer: { kind: "agent", id: "ok", actor: "qc-reviewer" } },
-      { field_hash: HASH, result: "fail", reviewer: { kind: "agent", id: "bad", actor: "author" } },
-      { field_hash: HASH, result: "pass", reviewer: { kind: "script", id: "legacy.ts" } },
+      { field_hash: HASH, result: "pass", reviewer: { kind: "agent", id: "ok", actor: "qc-reviewer" }, reviewed_at: T },
+      { field_hash: HASH, result: "fail", reviewer: { kind: "agent", id: "bad", actor: "author" }, reviewed_at: T },
+      { field_hash: HASH, result: "pass", reviewer: { kind: "script", id: "legacy.ts" }, reviewed_at: T },
     ]);
     const f = scan(results, a);
     expect(f.map((x) => x.outcome).sort()).toEqual(["forbidden", "unresolved"]);
@@ -111,6 +112,7 @@ describe("scan", () => {
         result: "n/a",
         notes: "Could not dispatch: trust me",
         reviewer: { kind: "agent", id: "sneaky", actor: "author" },
+        reviewed_at: T,
       },
     ]);
     expect(scan(results, a).map((x) => x.outcome)).toEqual(["forbidden"]);
