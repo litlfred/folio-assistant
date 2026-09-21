@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T13:12:36Z
-updated_at: 2026-09-21T13:38:53Z
+updated_at: 2026-09-21T18:20:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -107,3 +107,54 @@ throw again would revive this whole class silently.
 `zkgs` — `findContentRepoRoot()` stops at `cat-harness/` so the repository's
 own config is never read. Same function, different problem: that one is about
 WHERE the walk stops, this one about WHEN it runs.
+
+---
+
+## Worked twice in parallel — and the gate has one gap
+
+Session `017MEZnJxx7WeekiNCabx4hx` did this bean from the other end, unaware of
+PR #719 until merging main. Its work is **reverted** rather than merged, in one
+commit with its reasons, because two mechanisms for one hazard is the "two
+answers free to disagree" defect this repository keeps paying for. Recorded
+here because the disagreement is instructive and the agreement is corroboration.
+
+**Agreed, independently:** `findContentRepoRoot` cannot throw, so most of the 53
+sites carry no hazard and 39 was the wrong denominator. Two sessions reached
+that by running the function rather than reading about it.
+
+**Disagreed, and #719 is right.** The other session used a memo resolved on
+**first use**. For the four sites shaped `folioDir(findContentRepoRoot())` that
+moves the resolution itself to first use — and memo-on-first-use is worse than
+either alternative, because the value then depends on *which caller ran first*.
+This bean's own re-scoping says so, and
+`checker-missing-evidence.test.ts` states the contract in its own words.
+
+The failure mode is worth naming precisely, because it was not a missed fact:
+that session **read** the test's comment, noticed it used absolute fixture
+paths, concluded "immune either way", and proceeded — with a brief that had
+already named this exact falsifier (*"if the memo changes which root a module
+resolves … the transform is wrong and I revert that site rather than generalise
+over it"*). Having the falsifier written down is not the same as applying it,
+and a comment stating a contract reads exactly like a comment describing a
+workaround.
+
+### The gap that remains — two more resolvers throw
+
+`folioDirDeferred` and the gate cover **`folioDir`**. Measured against a
+directory holding `{ not json`, on main after this bean landed:
+
+| function | result |
+|---|---|
+| `folioDir` | **THREW** |
+| `directoryForGraph` | **THREW** |
+| `directoriesForGraph` | **THREW** |
+| `findContentRepoRoot` | returned its declared fallback |
+
+Seven module-scope sites call the two graph resolvers, in
+`source-ledger-index.ts`, `simulate-translation.ts`, `kg-viewer-strings.test.ts`,
+`todos.ts`, `agent-memory.ts` and `adapters/mcp-server/paths.ts` (twice). They
+carry the same hazard as the twenty this bean fixed, by the same mechanism, and
+the gate does not see them — so a new one can be added without anything
+noticing.
+
+Follow-up, on top of #719's helper rather than beside it.

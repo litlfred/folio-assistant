@@ -33,7 +33,7 @@ required one would fail in exactly the cold-start case it exists for.
    and the three-step handoff. This file does not repeat it — a flow described
    twice is a flow one copy gets wrong.
 2. **Find out whether this repository is already an instance.** It is if it has
-   a `cat-bootstrap.config.json` at its root declaring a `name`. If it has one, read it and
+   a `cat-bootstrap.json` at its root declaring a `name`. If it has one, read it and
    stop: you now know what this repository is, and the rest of cat-bootstrap is not
    for you.
 3. **If it is not, you need one reference** — *"make this repo an instance of
@@ -60,7 +60,7 @@ The honest response to *"what should I do about X"* at this stage is usually
 ---
 
 *This file is a declared asset of the cat-bootstrap instance
-([`cat-bootstrap.config.json`](cat-bootstrap.config.json), role `agent-instructions`). It is copied into
+([`cat-bootstrap.json`](cat-bootstrap.json), role `agent-instructions`). It is copied into
 repositories being initialised, so it carries its provenance and can be checked
 against its source rather than drifting quietly — which is what happened to the
 root `AGENTS.md`, where five links broke in one directory move and nothing
