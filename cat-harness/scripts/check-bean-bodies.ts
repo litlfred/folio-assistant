@@ -62,7 +62,7 @@ import {
  * id must be **in a code span** and must be **id-shaped**: the store's
  * `id_length` is 4, with the instance prefix optional.
  */
-const BLOCKER = /(not\s+)?blocked\s+on\s+(?:bean\s+)?`((?:[a-z0-9-]+-)?[a-z0-9]{4})`/gi;
+export const BLOCKER = /(not\s+)?blocked\s+on\s+(?:bean\s+)?`((?:[a-z0-9-]+-)?[a-z0-9]{4})`/gi;
 
 /**
  * Is the match inside a quotation on its own line?
@@ -75,8 +75,42 @@ const BLOCKER = /(not\s+)?blocked\s+on\s+(?:bean\s+)?`((?:[a-z0-9-]+-)?[a-z0-9]{
  *
  * Counted rather than pattern-matched: an odd number of unescaped `"` before
  * the match on that line means the match sits inside one.
+ *
+ * ## SCOPE: the quote mark is the whole signal, and a TABLE CELL is not one
+ *
+ * `k59d` asked whether this should also read a markdown table cell — *"the
+ * guard covers a markdown table cell, or the guard's stated scope says it
+ * does not and why — a workaround in one bean is not a fix"*. It does not,
+ * and the corpus is what settles it rather than taste.
+ *
+ * Measured 2026-09-21 over every bean body, for `blocked on \`id\`` on a line
+ * beginning `|`. **Two occurrences, and they point opposite ways:**
+ *
+ * | bean | the cell | what it is |
+ * |---|---|---|
+ * | `k59d` | `"blocked on \`hqku\`, …"` | yg29's sentence, quoted — already marked, already skipped |
+ * | `xgd8` | `blocked on \`slw1\`, see above` | **its own** blocker, asserted in a cell. `slw1` is `todo`, so the block is live |
+ *
+ * So the only unquoted cell in the store is a genuine self-assertion that
+ * must keep being read. **Treating a cell as a quotation would silently
+ * exempt exactly it** — and every future one, since a table is where a bean
+ * naturally states structured facts about itself.
+ *
+ * That also means `k59d`'s double-quoting was never a workaround. Quoting
+ * text you are quoting is correct English and is precisely the signal this
+ * function reads; the finding message below says so, on the one line shape
+ * where an author is most likely to leave it off.
+ *
+ * ## What is deliberately NOT read, and why nothing was built for it
+ *
+ * A **blockquote** (`> blocked on \`x\``) is unambiguously a quotation in
+ * markdown and would be a defensible extension. The store contains **zero**
+ * of them, measured the same way, so implementing it would be building for a
+ * case that does not exist. Emphasis (`*…*`) is not attribution at all and is
+ * not a candidate. If a blockquote form appears later, this is the paragraph
+ * that says the gap was known and priced rather than missed.
  */
-function insideQuotation(line: string, at: number): boolean {
+export function insideQuotation(line: string, at: number): boolean {
   let quotes = 0;
   for (let i = 0; i < at && i < line.length; i++) {
     if (line[i] === '"' && line[i - 1] !== "\\") quotes++;
@@ -303,13 +337,23 @@ export function checkBeanBodies(root: string): BeanBodyReport {
       if (insideQuotation(line, m.index ?? 0)) continue;
       const ref = m[2]!;
       const target = lookup(all, ref);
+      // A TABLE ROW is the one line shape where an author is likely to have
+      // MEANT a quotation and left the marks off — the evidence a bean of
+      // this kind carries is a table of "what it says" against "what the
+      // store says". The rule does not bend for it (see `insideQuotation`:
+      // the only unquoted cell in the store is a real self-assertion), so the
+      // message teaches the marking instead of the checker guessing at it.
+      const hint = line.trimStart().startsWith("|")
+        ? ". This is a table cell — if it quotes another bean, put the cell's " +
+          "text in double quotes and this check will read it as a quotation"
+        : "";
       if (!target) {
-        problems.push({ id: b.id, kind: "dead-blocker", detail: `"blocked on \`${ref}\`" — no such bean in the store or its archive` });
+        problems.push({ id: b.id, kind: "dead-blocker", detail: `"blocked on \`${ref}\`" — no such bean in the store or its archive${hint}` });
       } else if (CLOSED_STATUSES.has(target.status)) {
         problems.push({
           id: b.id,
           kind: "dead-blocker",
-          detail: `"blocked on \`${ref}\`" — that bean is \`${target.status}\`, so the block can never lift on its own`,
+          detail: `"blocked on \`${ref}\`" — that bean is \`${target.status}\`, so the block can never lift on its own${hint}`,
         });
       }
       }

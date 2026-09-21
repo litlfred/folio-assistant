@@ -41,7 +41,9 @@ reverse: it is one optional field in the DI document.
 
 ## Done when
 
-- [x] every card starts as its avatar, at any size
+- [x] every card starts CLOSED, and a closed card is its avatar below the
+  declared threshold and its words above it — the avatar is present at every
+  width as the control that opens the window
 - [x] opening projects a window; `[x]` closes back to the avatar
 - [x] an open window survives a zoom-out past the threshold
 - [x] selecting any part of a window raises it
@@ -113,3 +115,19 @@ every width as the control that opens the window. Flagged rather than silently
 chosen.
 
 `bun run gates --all` — 88/88, 234 e2e.
+
+
+## The wording is settled, 2026-09-21 — owner's ruling
+
+The section above recorded a conflict this bean could not settle: *"every card
+starts as its avatar, at any size"* against R2, *"as the board shrinks, a card
+SHALL stop rendering its words"*. Both cannot be literal — if cards are avatars
+at every width, R2 is vacuous.
+
+**Asked as a selection, 2026-09-21. The owner confirmed "starts closed"**, which
+is what was built and what leaves R2 with work to do. The first Done-when above
+is reworded to say that, so the checklist no longer carries a sentence the
+implementation contradicts.
+
+Nothing in the code changes. What changes is that the next agent reading this
+bean finds one statement instead of two, and does not re-derive the conflict.
