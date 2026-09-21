@@ -27,6 +27,7 @@
     <!-- ── Lanes ──────────────────────────────────────────────── -->
     <bpmn:laneSet id="LaneSet_Main">
       <bpmn:lane id="Lane_Coordinator" name="Translation Coordinator">
+        <bpmn:documentation>Owns the completeness gate, Gateway_Complete, a different question from the accuracy Lane_Reviewer judges later: this lane can send work back to the translator for missing or fuzzy strings before a single sentence has been checked for meaning.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_TranslationNeeded</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_IdentifyContent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AssignTranslator</bpmn:flowNodeRef>
@@ -35,11 +36,13 @@
         <bpmn:flowNodeRef>Task_RequestMoreWork</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Translator" name="Human Translator">
+        <bpmn:documentation>Task_TranslateInTool is where both loops in this process land — an incompleteness request from the coordinator and a correction from the reviewer — so nothing in the task itself says which one sent the work back; only the annotations that travel with each loop carry that distinction.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_ReceiveAssignment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TranslateInTool</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SubmitPO</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Subject-Matter Expert / Reviewer">
+        <bpmn:documentation>The one reviewer lane in this corpus where sign-off is acceptance: Task_Signoff makes the translation official directly, with no separate editor lane after it, because translation fidelity is the acceptance criterion and there is no different judgement left for an editor to add.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_SMEReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Accurate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReturnForCorrection</bpmn:flowNodeRef>
@@ -47,6 +50,7 @@
         <bpmn:flowNodeRef>End_OfficialTranslation</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="Automated Pipeline">
+        <bpmn:documentation>Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — but Gateway_Drift sends both outcomes to Task_SMEReview, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_ExtractPOT</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_PrepareGlossary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_InjectPO</bpmn:flowNodeRef>
@@ -71,7 +75,7 @@ nodes that require human translation into a target locale.</bpmn:documentation>
 
       <bpmn:documentation>The coordinator selects:
 - Which content nodes need translation (block, section, chapter, or folio)
-- The target locale (one of the supportedLocales in harness.config.json)
+- The target locale (one of the supportedLocales in &lt;name&gt;.config.json)
 - The priority and deadline</bpmn:documentation>
     </bpmn:userTask>
 

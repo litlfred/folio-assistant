@@ -72,10 +72,19 @@ checkable:
 - [x] `HookEventSchema` can express `PreToolUse`
 - [x] `check:command-paths` covers hook commands in `.claude/settings.json`
 - [x] A check asserts the `.claude/skills/` stub's links resolve (`check:command-paths` covers `.claude/skills/`)
-- [ ] **REVISIT GATING at twelve decision records.** `bun run health` →
-      `bean-decision-records`; it read **7** on 2026-09-20. This box is the
-      trigger, and it is the whole of what makes "gate later" a deferral rather
-      than a decision nobody made.
+- [ ] **REVISIT GATING at twelve RENDERED decision records.** `bun run health`
+      → **`bean-rendered-decision-records`**; it read **1** on 2026-09-21, and
+      the one was this bean. This box is the trigger, and it is the whole of
+      what makes "gate later" a deferral rather than a decision nobody made.
+
+      *Corrected 2026-09-21, owner's option C. It named `bean-decision-records`
+      — a different metric, which counts any bean carrying a considered-options
+      section and had grown 7 → 10 in a day without anyone adopting anything.
+      It would have reached twelve on ordinary practice and delivered none of
+      the evidence this deferral was set to buy, which by its own recorded
+      reasoning is whether `renderDecision` works for authors other than the
+      one who wrote it. `checks.test.ts` states the distinction: "an `## Options`
+      heading is NOT a rendered decision".*
 
 ## Options
 
@@ -172,3 +181,130 @@ Which way on the gate?
 *Issue link, recorded 2026-09-21.* **[#645](https://github.com/litlfred/folio-assistant/issues/645)** — the decision-record metrics.
 
 Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.
+
+---
+
+## 2026-09-21 — the trigger is readable, and it counts the wrong thing
+
+**Correcting the first version of this entry, which said the trigger "cannot be
+read". That was wrong.** `bean-decision-records` exists as a health metric and
+reads **10** today, up from the **7** this bean recorded on 2026-09-20. It is
+readable, it has moved, and it is 10 of 12. The error was mine: I looked for the
+metric in the findings list, where only findings appear, instead of in the
+measurements the report writes.
+
+### What survives, and it is the sharper finding
+
+| metric | today | 2026-09-20 |
+|---|---|---|
+| `bean-decision-records` — **what the trigger counts** | **10** | 7 |
+| `bean-rendered-decision-records` — **what the deferral was waiting for** | **1** | — |
+| `bean-thin-decision-records` | 0 | 0 |
+
+**The trigger counts one thing and the reasoning wanted another.** The box will
+fire when `bean-decision-records` reaches 12 — a count of beans carrying a
+considered-options section, which this store writes as a matter of ordinary
+practice and which has grown 7 → 10 in a day without anyone adopting anything.
+
+But the reason the deferral was granted, recorded on this bean, is about
+`renderDecision`:
+
+> decision-request.ts was written in one sitting against four questions its own
+> author had got wrong — a sample of one author
+
+The evidence that would answer that is **`bean-rendered-decision-records`**, and
+it stands at **1** — this bean's own record. `renderDecision` has been used by
+nobody but its author.
+
+So the trigger will fire on schedule and deliver none of the evidence it was
+set to buy. `checks.test.ts` already states the distinction the trigger misses:
+
+> an `## Options` heading is NOT a rendered decision — the gating condition it
+> was read against wanted decisions put THROUGH `DecisionRequestSchema`
+
+### And the mechanism has no moment that asks for it
+
+`ask-well.sh` fires on every `AskUserQuestion` and teaches the six parts of
+§4.1. **It never mentions `renderDecision`.** So the one enforced moment in the
+whole loop — the moment the rule certainly applies — says nothing about leaving
+a record, which is why records do not accrue.
+
+Measured on this session: **five multi-option questions asked today, zero
+rendered decisions written.** House style that nothing asks for is not followed,
+which is this bean's own thesis applied to its own remedy — *a rule that
+depends on being remembered is not enforced.*
+
+**Owner's ruling, 2026-09-21: option C** — make `renderDecision` required at the
+moment of asking so records accrue, and keep the twelve-record revisit.
+
+## Options — the gating revisit, 2026-09-21
+
+**Chosen: C.** The owner, 2026-09-21: *"C — require renderDecision, then
+revisit"*.
+
+Rendered through `renderDecision` from a validated `DecisionRequest`, which is
+the point of recording it here: the bean's own trigger now measures
+`renderDecision` adoption, and a decision ABOUT that trigger that was
+hand-written would be the same defect it exists to catch. The source object is
+in the session; what follows is its output, unedited.
+
+Whether `hajp`'s deferral keeps waiting on a count that will arrive on its own, and what changes at the moment an agent asks a multi-option question. Nothing about the hook's blocking behaviour differs between these — the owner settled that on 2026-09-20 and none of them reopens it.
+
+- **`hajp`** — the bean holding the asking rule's three enforcement layers; its last open box is a revisit trigger
+- **`renderDecision`** — `cat-harness/schemas/decision-request.ts` — turns one validated object into both the prose comparison and the offered choices, so the two cannot drift
+- **`bean-decision-records`** — health metric counting beans with a considered-options section. Read 10 on 2026-09-21, up from 7 on 09-20
+- **`bean-rendered-decision-records`** — health metric counting beans whose decision went through `renderDecision`. Read 1 — `hajp` itself
+- **`ask-well.sh`** — the PreToolUse hook on AskUserQuestion; the one enforced moment in the loop. It taught §4.1's six parts and never named `renderDecision`
+
+| | **C — require renderDecision, then revisit** *(recommended)* | A — fix the trigger's wording, keep deferring | B — drop the condition, decide gating now | Record it and move on |
+|---|---|---|---|---|
+| **What it does** | Names `renderDecision` in `ask-well.sh` at the moment of asking, and re-points the trigger at `bean-rendered-decision-records`. Keeps the twelve-record revisit. | Re-points the trigger at the strict metric and changes nothing else. | Abandons the twelve-record trigger and settles blocking-or-not on present grounds. | Leaves the trigger as written; the measurement stays on the bean. |
+| **Pro** | Treats the measured cause. Adoption is zero rather than slow — 1 record in a day and a half, and five multi-option questions asked the same day by an agent that had just read the bean — so nothing accrues because nothing at the asking moment requests it. | Honest and the cheapest of the three; the original reasoning stands untouched. | Ends a deferral whose condition is not being met, and forces the real question. | No new mechanism, and the numbers are durable whichever way it is settled later. |
+| **Con** | A fourth enforcement layer before the decision it is meant to inform, and it still cannot tell a good record from a perfunctory one. | At 1 record in a day and a half the threshold may never arrive, so the deferral becomes indefinite and the window `hajp` opened to close stays open. | Decides without the evidence that was the entire point of waiting. `hajp` recorded the risk: a blocking hook that misfires removes the escape hatch, leaving the agent unable even to report that the gate is broken. | The trigger keeps counting the wrong metric, so it fires on schedule and delivers none of the evidence it was set to buy — a deferral that expires without answering anything. |
+| **Downstream** | The trigger starts measuring what the deferral was actually waiting for, so twelve becomes evidence about `renderDecision` rather than about ordinary `## Options` sections. | The same question returns, with the same numbers, at an unpredictable date. | If it lands on blocking, a bad validator can strand the person with no way to say so. | Twelve arrives on ordinary practice and the gating question is reopened with nothing new. |
+| **Reversibility** | Trivial. Two text edits — a paragraph in a shell heredoc and a metric name in a checkbox. | Trivial — one metric name. | Easy to revert and painful while wrong — the failure mode removes the channel you would use to report it. | Nothing to revert. |
+
+**Recommendation: C — require renderDecision, then revisit** — The measurement says the deferral is not stalled on time but on nothing requesting the mechanism, and waiting longer under the same conditions produces the same number. It is also `hajp`'s own thesis — a rule that depends on being remembered is not enforced — applied to `hajp`'s own remedy.
+
+**If you say nothing:** Record the measurement on the bean, change no code, and leave the trigger naming a metric that will reach twelve without answering the question.
+
+3 other decisions are waiting; I will put each properly when it is next.
+
+How should the deferral be resolved?
+
+---
+
+## The metric counts BEANS, not decisions — found by exercising it
+
+Writing the record above was meant to move
+`bean-rendered-decision-records` from 1 to 2, as `renderDecision`'s first use
+by an author other than the one who wrote it. **It did not move.** This bean
+now carries TWO rendered decisions and the metric still reads **1**, because
+`hasRenderedDecision` is a per-bean boolean and `checks.ts` counts
+`beans.filter((b) => b.renderedDecision === true)`.
+
+So the trigger — *"twelve RENDERED decision records"* — actually requires
+**twelve different beans**. A bean that makes five decisions contributes one.
+
+### Why that is not a nit
+
+It is the same defect this bean was corrected for an hour ago, one level in.
+The trigger was re-pointed from `bean-decision-records` to
+`bean-rendered-decision-records` so it would measure what the deferral waits
+for. It now measures the right KIND of thing and the wrong UNIT — and the
+error runs the same direction, under-counting adoption rather than over-.
+
+If `renderDecision` becomes house style, decisions will cluster on the beans
+that already have one, and the metric will lag real adoption by however much
+clustering there is. Twelve could be met late, or not at all, while the
+mechanism is in daily use.
+
+### Not fixed here, and the reason is not caution
+
+Changing the metric to count decisions rather than beans changes what **12**
+means — the threshold was set against a bean count, and moving the unit without
+moving the number is a silent re-calibration. That is a decision, and this bean
+already carries two.
+
+**Recorded for the revisit**, which is the moment it matters: whoever reads the
+trigger then needs to know it is counting beans.

@@ -51,6 +51,7 @@ import { directoriesForGraph } from "../schemas/cat-harness.js";
 import {
   DESCRIBABLE_ROLES,
   ImagesSidecarSchema,
+  SETTLED_BY_COMPUTATION,
   requiresInspection,
   type ImageRole,
 } from "../schemas/document-image.ts";
@@ -113,10 +114,16 @@ export function applyTo(
   const next = images.map((img) => {
     const v = docVerdicts[img.id];
     if (!v) {
-      // A page scan needs no inspection — geometry settles it. Anything else
+      // A page scan needs no inspection — geometry settles it — and neither
+      // does `chrome`, which the capture's own producer settles. Anything else
       // without a verdict is REPORTED, because an image nobody looked at is
       // not the same as one judged unremarkable.
-      if (img.role !== "page-scan") unjudged.push(img.id);
+      //
+      // Asked as "is this role already settled" rather than "is it a page
+      // scan": the literal was right while geometry was the only computable
+      // basis, and adding `chrome` to the enum without changing it here would
+      // have reported 104 navigation icons as awaiting inspection.
+      if (!SETTLED_BY_COMPUTATION.includes(img.role)) unjudged.push(img.id);
       return img;
     }
     seen.add(img.id);

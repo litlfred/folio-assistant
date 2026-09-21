@@ -28,7 +28,27 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
-      - 'cat-harness/scripts/mount-instance-docs.ts'
+      # EVERY script under here, not the handful somebody remembered.
+      #
+      # This list was eight named scripts, each added with a comment arguing
+      # that a change to THAT generator changes the published page while
+      # touching nothing under `docs/`. The argument was right every time and
+      # the list still drifted: bean `tyyc` derived the set of scripts this
+      # workflow actually runs and found **11 of 22 uncovered**, among them
+      # `kg-export.ts`, which produces both graph documents the site serves,
+      # and `publish-gh-pages.sh`, which performs the deploy.
+      #
+      # It was measured, not guessed: `40fl` fixed a `kg-export` defect that
+      # had kept `docs-site` red for over two hours, merged it to `main`, and
+      # NO RUN FIRED. A fix to the publisher did not rebuild what it publishes.
+      #
+      # A wildcard over-triggers — a change to a script this workflow never
+      # runs now rebuilds the site. That is the cheap direction, and it is the
+      # same trade `incremental-render` states: over-declaring costs a needless
+      # run, under-declaring serves a stale page that looks fresh. `bun run
+      # check:workflow-script-paths` holds the line by DERIVING the invoked set
+      # rather than trusting this comment.
+      - 'cat-harness/scripts/**'
       # The BPMN/DMN sources moved OUT of docs/ into the `kg` graph, where the
       # roles and skills they reference live. The SVGs the site embeds are
       # still rendered from them at deploy time, so without this path a diagram
@@ -36,28 +56,34 @@ on:
       # stale render — exactly the "move the wiring with the script" failure.
       - 'cat-harness/skills/workflows/**'
       - 'cat-harness/schemas/**'
-      - 'cat-harness/scripts/gen-schema-docs.ts'
-      - 'cat-harness/scripts/gen-docs-pages.ts'
       # The schema viewer is generated, so a change to the generator or to the
       # reader behind it changes the published page while touching nothing
       # under `docs/` — without these paths the site would serve a stale one.
-      - 'cat-harness/scripts/gen-schema-viz.ts'
-      - 'cat-harness/scripts/schema-graph.ts'
       # Same reasoning for the library viewer, plus the corpus itself: an
       # entry added to `library/` or a file dropped in `uploads/` changes the
       # published counts while touching nothing under `docs/`.
-      - 'cat-harness/scripts/gen-library-viz.ts'
-      - 'cat-harness/scripts/library-graph.ts'
       - 'cat-harness/library/**'
       - 'cat-harness/uploads/**'
       - 'uploads/**'
       - 'cat-harness/content/docs/**'
-      - 'cat-harness/scripts/render-bpmn.ts'
       # The navbar's locale filter reads `docs/_data/translations.json`, built
       # by this module from the pages' own front matter. A change to how that
       # is derived changes the published navbar while touching nothing under
       # `docs/`, so without this path the site would not rebuild.
       - 'cat-harness/content/pipeline/translation-index.ts'
+      # The DECLARATION decides every `@id` the graph documents mint —
+      # `canonicalUrl` is read from it — so a change here changes the published
+      # bytes while touching no script. `cat-harness/schemas/**` above covers
+      # the schema, never the instance's own config.
+      # `<instance>/<name>.json` since #727 reversed the suffix (declarations
+      # are `.json`; `.config.json` is now a different file). Written as a
+      # wildcard over the instance root rather than the two names, because THIS
+      # PATTERN WAS ALREADY WRONG ONCE: it was added as `*.config.json` hours
+      # before #727 landed, and would have matched nothing while looking
+      # deliberate — the same silent miss `tyyc` is about, inside `tyyc`'s own
+      # fix. A suffix that moves twice in a day is not a thing to spell twice.
+      - 'cat-harness/*.json'
+      - 'bootstrap/*.json'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -130,6 +156,26 @@ jobs:
       # (bean `jbx2`).
       - name: Regenerate the library projection and viewer
         run: bun run library:viz
+
+      # Every voice its instance declares, with the passage each rule was read
+      # from. Same contract as the two viewers above: the committed copy is
+      # browsable on GitHub and the published one must never be its stale half.
+      #
+      # This one carries a claim the others do not. `check-voices.ts` exists
+      # because PR #210 shipped ten plausible rules per voice with
+      # `source: null`, one asserting the opposite of its source — so every
+      # rule now cites a page and a quote, and until this page NONE of those
+      # citations was readable without opening JSON (bean `bu2q`).
+      - name: Regenerate the voices projection and viewer
+        run: bun run voices:viz
+
+      # The handler namespace's own index, at `/<handler>/`. It lists what the
+      # four generators above publish, so it runs AFTER them — not because it
+      # reads their output (it derives from the declarations) but because a
+      # reader arriving at the index should not find it describing a kind the
+      # build has not written yet.
+      - name: Regenerate the handler namespace index
+        run: bun run handler:index
 
       # Same reasoning as the three regenerations above: the committed copy is
       # browsable on GitHub and the PUBLISHED one must never be the stale half
@@ -254,8 +300,9 @@ jobs:
       # is published as DATA rather than as a page. Something else may draw it.
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
-      # Both artefacts are named after the repository (the `stub` in
-      # harness.json) and land AT THE BASE, at the URLs their own
+      # Both artefacts are named after the repository (the `stub` in the
+      # instance's own declaration -- `cat-harness/cat-harness.json` here)
+      # and land AT THE BASE, at the URLs their own
       # `@id`/`$id` claim. There is no `kg/` subdirectory: the repository IS
       # its declaration that it holds a graph, and the stub is what separates
       # one instance's renderings from another's in a tree that overlays
@@ -272,7 +319,13 @@ jobs:
       # `.jsonld` stays canonical — it is what every `@id` names — so this is
       # an alias, not a rename. See `skills/folio-core/serving-renderings.md`.
       #
-      # No --base-url: the declaration's canonicalUrl is correct for main.
+      # No --base-url: the declaration's canonicalUrl is correct for main,
+      # and a foreign instance declaring none falls back to it — see
+      # `exportIdentity`, which carries that rule and why (bean `40fl`).
+      #
+      # `check:published-instance-exports` runs the `--instance` commands
+      # below from a checkout, so a break in them is visible before a merge
+      # rather than only in this workflow's own run (bean `u1iu`).
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
@@ -281,21 +334,44 @@ jobs:
           bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
-          # cat-bootstrap's OWN graph, as its own document.
+          # bootstrap's OWN graph, as its own document.
           #
           # Not decoration: this instance's graph LINKS INTO it. Bean `pve3`,
           # the owner's ruling of 2026-09-21 ("neither"), removed
-          # `cat-bootstrap/skills/` from cat-harness's declared directories, so
+          # `bootstrap/skills/` from cat-harness's declared directories, so
           # a Tool here that satisfies a skill there now mints
-          # `cat-bootstrap.jsonld#skill/<id>`. Publishing the target is what
+          # `bootstrap.jsonld#skill/<id>`. Publishing the target is what
           # keeps that an IRI rather than a 404 with an `@id` in front of it,
           # and `kg-export.test.ts` fails if this step is removed.
           #
           # `--instance` builds the GENERIC collectors against that root, never
           # this instance's content under that name — see `buildExport`.
-          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-bootstrap)
-          bun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out "./_site/${BOOT_STUB}.jsonld"
-          cp "./_site/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}.json"
+          #
+          # TWO publishers wrote a bootstrap graph until bean `dyd3`: this one,
+          # at `<base>/bootstrap.jsonld`, and `gen-bootstrap-graph.ts` at
+          # `<base>/bootstrap/bootstrap.jsonld`. Measured 2026-09-21: 88 nodes
+          # each, 85 of them doc-relative — so 85 subjects under two identities
+          # no consumer merges, with only the 3 absolute namespace IRIs shared.
+          # A reader got whichever URL they happened to hold.
+          #
+          # Collapsing the PATHS alone would not have settled it: at one URL the
+          # two still disagree on 74 of the 88 nodes, so the site would publish
+          # whichever step ran last. One publisher is the fix.
+          #
+          # The surviving path is `<stub>/<stub>.jsonld` rather than
+          # `<stub>.jsonld` because `bootstrap/` already holds that instance's
+          # OTHER rendered documents — `ns.jsonld` among them — so the graph
+          # belongs beside them rather than one level up.
+          # `gen-bootstrap-graph.ts` stays as a generator and a test subject;
+          # it no longer publishes.
+          #
+          # `.json` alongside for the reason every other rendering here has
+          # one: Pages has no media type for `.jsonld` and serves it as
+          # octet-stream. The `.jsonld` stays canonical — it is what the `@id`
+          # names — so this is an alias, not a rename.
+          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
+          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
+          cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
 
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
@@ -320,7 +396,7 @@ jobs:
           # THE VOCABULARY — one document per namespace, plus the union.
           #
           # Every term now hangs off its declaring layer's namespace: bs: for
-          # cat-bootstrap, cat: for the harness, fac: for core. Each of those is an
+          # bootstrap, cat: for the harness, fac: for core. Each of those is an
           # IRI stem, so each needs a document or `bs:Actor` dereferences to
           # nothing — the very defect this work exists to fix, and splitting
           # one namespace into three created three fresh instances of it. The
@@ -351,32 +427,13 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
+          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
-
-          # THE CAT_BOOTSTRAP GRAPH, and this is the first build that publishes it.
-          #
-          # It was COMMITTED to `cat-bootstrap/cat-bootstrap.jsonld` instead, on a
-          # rationale that said a cold reader with nothing installed could not
-          # build it — which was true — and cited a README step telling that
-          # reader to load it, which does not exist: no prose file under
-          # `cat-bootstrap/` mentions this document at all. Meanwhile the loop
-          # above published `cat-bootstrap/ns.jsonld`, the NAMESPACE document, and
-          # nothing published the GRAPH, so the `@id` it names itself by —
-          # `<base>/cat-bootstrap/cat-bootstrap.jsonld` — resolved to nothing. Bean
-          # `blv9`, in the artefact whose entire purpose is being resolved.
-          #
-          # `.json` alongside for the reason every other rendering here has
-          # one: Pages has no media type for `.jsonld` and serves it as
-          # octet-stream. The `.jsonld` stays canonical — it is what the `@id`
-          # names — so this is an alias, not a rename.
-          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
-          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
 
       # Every `maintains` claim, checked where the answer exists.
       #

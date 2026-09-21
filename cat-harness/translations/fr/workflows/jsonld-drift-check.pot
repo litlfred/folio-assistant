@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: jsonld-drift-check\n"
-"POT-Creation-Date: 2026-09-20T14:27:23.152Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.493Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -29,37 +29,42 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: skills/workflows/jsonld-drift-check.bpmn:46
+#: skills/workflows/jsonld-drift-check.bpmn:47
 #. Diagram label
 msgid "Did anything&#10;change?"
 msgstr ""
 
-#: skills/workflows/jsonld-drift-check.bpmn:51
+#: skills/workflows/jsonld-drift-check.bpmn:52
 #. Diagram label
 msgid "Every sibling in sync"
 msgstr ""
 
-#: skills/workflows/jsonld-drift-check.bpmn:54
+#: skills/workflows/jsonld-drift-check.bpmn:55
 #. Diagram label
 msgid "Job RED &#8212; the generated&#10;file is stale"
 msgstr ""
 
-#: skills/workflows/jsonld-drift-check.bpmn:59
+#: skills/workflows/jsonld-drift-check.bpmn:60
 #. Diagram label
 msgid "no &#8212; in sync"
 msgstr ""
 
-#: skills/workflows/jsonld-drift-check.bpmn:33
+#: skills/workflows/jsonld-drift-check.bpmn:34
 #. Diagram label
 msgid "Pull request, push to main,&#10;or dispatch"
 msgstr ""
 
-#: skills/workflows/jsonld-drift-check.bpmn:39
+#: skills/workflows/jsonld-drift-check.bpmn:40
 #. Diagram label
 msgid "Regenerate the context, block,&#10;library and site graphs &#8212; and diff"
 msgstr ""
 
-#: skills/workflows/jsonld-drift-check.bpmn:60
+#: skills/workflows/jsonld-drift-check.bpmn:26
+#. Diagram element documentation
+msgid "The only lane, running the one task this diagram draws deliberately as a single box rather than five: the five checks it performs are independent of each other and only sequential because one job runs them, so five boxes would assert an ordering that does not exist. Its declared job is also the reason this diagram exists at all — without it, check:workflow-coverage would have nothing here to compare a real job against."
+msgstr ""
+
+#: skills/workflows/jsonld-drift-check.bpmn:61
 #. Diagram label
 msgid "yes &#8212; drifted"
 msgstr ""

@@ -71,7 +71,7 @@ export type UploadTarget =
 export function queueRepoRelative(root: string): string | undefined {
   const decl = readDeclaration(root);
   const entry = (decl?.directories ?? []).find((d: ContentDirectory) =>
-    d.graphs.includes(UPLOADS_GRAPH_KIND),
+    d.graphKinds.includes(UPLOADS_GRAPH_KIND),
   );
   if (!entry) return undefined;
   const abs = resolve(rootForScope(root, entry.scope), entry.path);
@@ -102,7 +102,7 @@ export function uploadUrl(root: string, branch = "main"): UploadTarget {
       ok: false,
       reason: `${decl.name} declares no \`${UPLOADS_GRAPH_KIND}\` graph`,
       remedy:
-        "declare one in harness.json, or acquire the resource through another channel — see the content-acquisition skill",
+        "declare one in the instance's <name>.json, or acquire the resource through another channel — see the content-acquisition skill",
     };
   }
   if (!existsSync(resolve(repoRootFor(root), rel))) {

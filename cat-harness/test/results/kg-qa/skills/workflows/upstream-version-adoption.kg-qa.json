@@ -5,7 +5,7 @@
     "id": "Process_UpstreamAdoption",
     "path": "skills/workflows/upstream-version-adoption.bpmn"
   },
-  "source_hash": "sha256:ac3c24a9f676b5a9473a4ee4fb7ba29539860ad2b2dfa52f93edc7d46d7b840e",
+  "source_hash": "sha256:b36a40fa20759b9132d53e546a8d51c3e86cb84ece3a05582e4d06ebc06b6785",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 9,
     "fail": 0,
-    "n/a": 5,
+    "n/a": 6,
     "unknown": 0
   }
 }

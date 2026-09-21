@@ -22,7 +22,7 @@ Owner, 2026-09-20, verbatim — three separate instructions in one message:
 
 ## What is true today, measured
 
-- `cat-bootstrap/harness.json` declares `workflows/` under the id
+- `bootstrap/harness.json` declares `workflows/` under the id
   **`cat-harness-workflows`** (renamed from `workflows`; the rename is why
   `harness:dirs:check` now reports `20 declared, 0 missing` rather than the
   `21 / 1 missing` still written into `cat-harness/harness.json`).

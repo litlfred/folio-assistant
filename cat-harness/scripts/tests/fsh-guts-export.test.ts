@@ -48,7 +48,7 @@ function instance(declare = true): string {
               path: "fsh-guts/", dependents: "reproduce",
               scope: "repository",
               description: "trashcan",
-              graphs: ["fsh-guts"],
+              graphKinds: ["fsh-guts"],
             },
           ]
         : [],

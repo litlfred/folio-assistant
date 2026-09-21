@@ -73,9 +73,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // Bean `3jj9`, and the owner's ruling that human/agent and agent/agent
     // interaction is documented as a skill plus a tool. The SKILL lives in
-    // `cat-bootstrap/skills/discussion.md`, because an Initiator must be able to
+    // `bootstrap/skills/discussion.md`, because an Initiator must be able to
     // READ it with nothing installed; the typed node lives here, because a
-    // Tool is cat-harness's vocabulary and cat-bootstrap may not import it.
+    // Tool is cat-harness's vocabulary and bootstrap may not import it.
     //
     // `invoke: { manual: true }` — "performed by a person following the
     // skill, with no command", and the `beans-manual` precedent is explicit
@@ -113,7 +113,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["discussion"],
       selection: {
         when:
-          "A fact is needed that no file in reach holds — which harness, or which repositories. Narrow the candidates from context first; a repository already carrying `cat-harness/harness.json` is not a blank slate, and a question the agent could have answered itself wastes the one it is entitled to.",
+          "A fact is needed that no file in reach holds — which harness, or which repositories. Narrow the candidates from context first; a repository already carrying `cat-harness/cat-harness.json` is not a blank slate, and a question the agent could have answered itself wastes the one it is entitled to.",
         limits:
           "It cannot manufacture an answer. A participant may decline, and that is `outcome: unsettled` with what is still open — not an error and not a default. An agent that reaches for a documented default because nobody replied has produced a guess.",
         cost: "One round trip through a person's attention, which is the most expensive input in the system and the reason the skill's rule is to ask once.",
@@ -961,7 +961,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "bun run ns:export" },
       io: {
         inputs: [
-          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `cat-bootstrap` for the layer that must resolve before anything else does." },
+          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults under `_kg/`, which is build output." },
         ],
         outputs: [{ name: "vocabulary", schema: t("RepoPath"), description: "The written namespace document." }],
@@ -1348,7 +1348,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "cat-harness-schema",
       title: "Instance declaration schema",
       description:
-        "The zod definition of `harness.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+        "The zod definition of `<name>.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
       install: { none: true },
       invoke: { shell: "bun run kg:schema" },
       io: {
@@ -1402,11 +1402,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // ── Logging ────────────────────────────────────────────────────────
     //
     // Declared HERE although the skill and the sub-process it serves live in
-    // `cat-bootstrap/`, and that is a limitation rather than a decision. Tool
+    // `bootstrap/`, and that is a limitation rather than a decision. Tool
     // collection is import-bound — `tools/index.ts` merges what it imports —
     // so a Tool node contributed by a nested instance is not reachable from
     // the barrel yet. Bean `gn4l`. When it is, this node moves to
-    // `cat-bootstrap/tools/` unchanged, and nothing that references it by id
+    // `bootstrap/tools/` unchanged, and nothing that references it by id
     // notices.
     defineTool({
       id: "log-message",

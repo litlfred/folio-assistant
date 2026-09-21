@@ -5,7 +5,7 @@
     "id": "Process_ThemeUIReview",
     "path": "skills/workflows/theme-ui-review.bpmn"
   },
-  "source_hash": "sha256:69d1dbc8bd40e6134aba0bd677ef95071c7da70c575e5642f68090c6ad497a44",
+  "source_hash": "sha256:c1a4afe345dd397d2769d2d6d5574d1ada8284a4b5fa3417b2fe24bdc82683da",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -45,6 +45,10 @@
     },
     "lane-binds-role": {
       "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
@@ -88,7 +92,7 @@
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

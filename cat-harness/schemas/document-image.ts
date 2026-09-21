@@ -44,6 +44,9 @@ import { NarrativeSchema, NOT_AUTHORED, type Narrative } from "./narrative.ts";
  *
  * - `page-scan` — the rendered page. Describing it produces "a scanned page".
  * - `figure` — content of the document: a chart, a table, a diagram.
+ * - `chrome` — interface furniture placed by the CAPTURE rather than present in
+ *   the document: a navigation icon, a copy button, a search glyph, a cookie
+ *   control. Not content, and not describable — see {@link CaptureBasisSchema}.
  * - `logo` — an organisational or publisher mark. Furniture, not content.
  * - `decorative` — a photograph or ornament carrying no information the prose
  *   does not. Describable for accessibility, but not a figure of the document.
@@ -70,6 +73,7 @@ import { NarrativeSchema, NOT_AUTHORED, type Narrative } from "./narrative.ts";
 export const IMAGE_ROLES = [
   "page-scan",
   "figure",
+  "chrome",
   "logo",
   "decorative",
   "undetermined",
@@ -84,6 +88,12 @@ export type ImageRole = (typeof IMAGE_ROLES)[number];
  * `decorative` earns one for the same reason. `page-scan` earns none — the
  * page's own text is already extracted — and `undetermined` earns none
  * because nothing is known about it yet.
+ *
+ * `chrome` earns none either, and that is the whole point of the role. A
+ * navigation icon the CAPTURE placed is not in the document a reader is
+ * reading; describing it produces "a search glyph", 104 times over on a
+ * four-page print. This is the one role whose absence here is load-bearing —
+ * it is what lets such a document satisfy `image-descriptions`.
  */
 export const DESCRIBABLE_ROLES: readonly ImageRole[] = IMAGE_ROLES.filter(
   (r): r is ImageRole => r === "figure" || r === "logo" || r === "decorative",
@@ -140,12 +150,116 @@ export const InspectionBasisSchema = z.object({
   page: z.number().int().min(1),
 });
 
+/**
+ * Fraction of the page below which an image in a CAPTURE RUNG is interface
+ * furniture rather than content — see {@link CaptureBasisSchema}.
+ *
+ * 0.02 sits in an empty band, derived the same way {@link
+ * PAGE_COVERAGE_THRESHOLD} was rather than picked. Measured 2026-09-21 over
+ * all 219 placed images in the six browser prints under `uploads/`: nav
+ * chrome tops out at **0.005804** (the single image in `Skills in OpenAI
+ * API`), the smallest real figure is **0.139632** (`Equipping agents… —
+ * Anthropic`), and the largest ratio gap anywhere in the sorted series is the
+ * **24.1×** between exactly those two. Nothing lies between them.
+ *
+ * Placed at 0.02 rather than at the midpoint, deliberately low: ~3.4× above
+ * the largest chrome image and ~7× below the smallest figure. Being wrong
+ * HIGH would file a small real figure as `chrome` and drop it silently from
+ * every description pass — the expensive direction, and the same one the
+ * `page-scan` doc warns about. Being wrong low leaves an icon as a `figure`,
+ * which merely blocks promotion the way it does today.
+ *
+ * A small image CAN be load-bearing — a status glyph in a table, an inline
+ * equation. That risk is inherent to any bound, which is why the basis records
+ * `coverage` alongside the producer: the verdict is checkable per image rather
+ * than merely asserted.
+ */
+export const CAPTURE_CHROME_THRESHOLD = 0.02;
+
+/**
+ * A role computed from the CAPTURE the document came out of, plus geometry.
+ *
+ * Distinct from {@link GeometryBasisSchema} because it is a different claim.
+ * Geometry alone yields one bit — is this image the whole page — and
+ * {@link InspectionBasisSchema} exists because "no measurement of the placed
+ * rectangle can tell a WHO emblem from a chart". Both remain true. What a
+ * capture basis adds is evidence that is NOT a rectangle: a browser printed
+ * this page, so the small images on it are the browser's own furniture.
+ *
+ * ## Why the producer string is evidence rather than a guess
+ *
+ * Measured 2026-09-21 across all 18 PDFs in this repository, the two fields
+ * partition the corpus with no overlap in either direction:
+ *
+ * | class | producer | creator | n |
+ * |---|---|---|---|
+ * | browser print | `Skia/PDF m152` | `Mozilla/5.0 (Macintosh…)` | 11 |
+ * | arXiv | `pikepdf 8.15.1` | `arXiv GenPDF (tex2pdf…)` | 3 |
+ * | other | `(none)` ×2, `Atypon Systems`, `Pixel Translations` | — | 4 |
+ *
+ * BOTH are required by {@link isCapturePrint}, not either. Skia is Chromium's
+ * graphics library and reaches well past printing — Android and Flutter emit
+ * it too — so it alone says "a Chromium-family renderer", not "a browser
+ * printed a web page". The user-agent in `creator` is what says the second
+ * thing. Requiring both also fails SAFE: a capture missing one field is not a
+ * rung, so its images stay `figure` and merely keep blocking, which is
+ * today's behaviour rather than a silent reclassification.
+ */
+export const CaptureBasisSchema = z.object({
+  method: z.literal("capture"),
+  /** The PDF's `Producer`, verbatim. The evidence, not a derived flag. */
+  producer: z.string().min(1),
+  /** The PDF's `Creator`, verbatim — the browser user-agent for a print. */
+  creator: z.string().min(1),
+  /** Placed area over page area, as for geometry. */
+  coverage: z.number().min(0),
+  /** How many images share this page. */
+  imagesOnPage: z.number().int().min(1),
+  /** The page it sits on, 1-based as a reader counts. */
+  page: z.number().int().min(1),
+});
+
+/** Roles reachable only from a CAPTURE basis. Geometry alone cannot reach them. */
+export const CAPTURE_ONLY_ROLES: readonly ImageRole[] = ["chrome"];
+
+/**
+ * Roles a COMPUTABLE basis settles outright, so no inspection is owed.
+ *
+ * `page-scan` because geometry settles it: a near-full-bleed image alone on
+ * its page IS the page, and nobody needs to look. `chrome` for the same shape
+ * of reason one level along — the capture's own producer settles that a
+ * sub-threshold image on a browser-printed page is the browser's furniture.
+ *
+ * Named rather than written as a pair of literals at the call site, because
+ * the call site is `apply-image-verdicts.ts`, which reports every role NOT on
+ * this list as an image nobody has looked at. Adding `chrome` to the enum
+ * without adding it here would have reported 104 navigation icons as awaiting
+ * inspection — the gate this change exists to clear, re-appearing one tool
+ * downstream.
+ *
+ * `undetermined` is deliberately NOT here: nothing is known about it, which
+ * is the opposite of settled.
+ */
+export const SETTLED_BY_COMPUTATION: readonly ImageRole[] = ["page-scan", "chrome"];
+
+/**
+ * Is this document a captured web page?
+ *
+ * One definition, so the extractor and every consumer cannot disagree about
+ * what a rung is. Both signals required — see {@link CaptureBasisSchema}.
+ */
+export function isCapturePrint(producer: string | undefined, creator: string | undefined): boolean {
+  return (producer ?? "").includes("Skia/PDF") && (creator ?? "").startsWith("Mozilla/");
+}
+
 export const ImageBasisSchema = z.discriminatedUnion("method", [
   GeometryBasisSchema,
   InspectionBasisSchema,
+  CaptureBasisSchema,
 ]);
 export type ImageBasis = z.infer<typeof ImageBasisSchema>;
 export type GeometryBasis = z.infer<typeof GeometryBasisSchema>;
+export type CaptureBasis = z.infer<typeof CaptureBasisSchema>;
 
 export const DocumentImageSchema = z
   .object({
@@ -166,6 +280,17 @@ export const DocumentImageSchema = z
       "a decided role must carry its basis, and `undetermined` must not — " +
       "a verdict with no working is indistinguishable from a guess",
     path: ["basis"],
+  })
+  // `chrome` is unreachable from a rectangle ALONE, and claiming it from one
+  // would be the same error the refinement below exists to stop. What makes it
+  // reachable is evidence that is not a rectangle — the producer and creator
+  // of the capture — so it requires the basis that carries them.
+  .refine((i) => !requiresCapture(i.role) || i.basis?.method === "capture", {
+    message:
+      "`chrome` can only be assigned from a capture basis — it is a claim " +
+      "about where the image CAME FROM, and no measurement of a placed " +
+      "rectangle establishes that a browser printed the page",
+    path: ["basis", "method"],
   })
   // `logo` and `decorative` are unreachable from a rectangle. Claiming one on
   // a geometry basis would dress a judgement up as a measurement.
@@ -206,26 +331,47 @@ export const ImagesSidecarSchema = z.object({
 export type ImagesSidecar = z.infer<typeof ImagesSidecarSchema>;
 
 /**
- * The role implied by GEOMETRY. One definition, so the extractor and every
- * consumer cannot disagree about where the line is.
+ * The role implied by a COMPUTABLE basis. One definition, so the extractor and
+ * every consumer cannot disagree about where the lines are.
  *
- * Takes a {@link GeometryBasisSchema} specifically, not any basis. An
- * inspection basis carries a role the inspector ASSIGNED by looking, and
- * there is nothing here to recompute it from — `logo` and `decorative` are
- * unreachable from a rectangle. Accepting the union and quietly returning
- * `figure` for an inspected image would silently overwrite a judgement with
- * a measurement that cannot support it.
+ * Takes geometry or capture — the two bases that carry the numbers the verdict
+ * is computed from — and NOT {@link InspectionBasisSchema}. An inspection
+ * basis carries a role the inspector ASSIGNED by looking, and there is nothing
+ * here to recompute it from: `logo` and `decorative` are unreachable from a
+ * rectangle. Accepting that one and quietly returning `figure` would silently
+ * overwrite a judgement with a measurement that cannot support it.
+ *
+ * A capture basis is admitted for the opposite reason. It carries `coverage`
+ * and `imagesOnPage` exactly as geometry does, plus the `producer` and
+ * `creator` that say which rung the document is in, so the verdict is fully
+ * recomputable from what is stored. Nothing is assigned by hand.
+ *
+ * ## The order of the tests, which is not arbitrary
+ *
+ * `page-scan` is tried FIRST, in both rungs. A browser print can still place a
+ * full-bleed image alone on a page, and that image is the page — the capture
+ * being a web page does not change what full-bleed means. Only then does the
+ * chrome bound apply, and only inside a capture rung.
  */
-export function roleFor(basis: GeometryBasis | undefined): ImageRole {
+export function roleFor(basis: GeometryBasis | CaptureBasis | undefined): ImageRole {
   if (basis === undefined) return "undetermined";
-  return basis.coverage >= PAGE_COVERAGE_THRESHOLD && basis.imagesOnPage === 1
-    ? "page-scan"
-    : "figure";
+  if (basis.coverage >= PAGE_COVERAGE_THRESHOLD && basis.imagesOnPage === 1) {
+    return "page-scan";
+  }
+  if (basis.method === "capture" && basis.coverage < CAPTURE_CHROME_THRESHOLD) {
+    return "chrome";
+  }
+  return "figure";
 }
 
 /** True when this role could only have come from somebody looking. */
 export function requiresInspection(role: ImageRole): boolean {
   return INSPECTION_ONLY_ROLES.includes(role);
+}
+
+/** True when this role could only have come from the capture's own provenance. */
+export function requiresCapture(role: ImageRole): boolean {
+  return CAPTURE_ONLY_ROLES.includes(role);
 }
 
 /** A fresh entry for a figure: describable, and not yet described. */

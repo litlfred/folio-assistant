@@ -1,0 +1,102 @@
+{
+  "_comment": "The bootstrap instance. It declares two directories \u2014 `skills/` and `workflows/` \u2014 because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. TWO processes live here and exactly one of them is an ENTRY POINT: `workflows/initialize-harness.bpmn`. An Initiator that has read README.md is at its start event with nowhere else to begin. `workflows/log-message.bpmn` is the other, and it is an independent SUB-PROCESS \u2014 reached only by a callActivity from a step, never started \u2014 so it does not compete with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it.",
+  "name": "bootstrap",
+  "description": "The graph an agent reads before it knows what this repository is.",
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md \u2014 bootstrap",
+      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no beans. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin \u2014 an absent source means authored here, which is a different fact from an upstream that cannot be reached."
+    },
+    {
+      "id": "readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "bootstrap",
+      "description": "The flow, with every term linked to the schema that defines it. Self-documenting on GitHub: a person landing on the directory reads the thing itself rather than a pointer to a site."
+    }
+  ],
+  "_directories_comment": "ONE entry, and it is a subdirectory rather than `bootstrap/` itself. `isSkillMd` is declaration-over-location: a markdown file that does NOT declare `$schema:` is a skill. README.md and AGENTS.md declare neither, so a graph rooted at `bootstrap/` would count this instance's two DECLARED ASSETS as skill nodes \u2014 the instance has already said what those files are, and a scan would contradict its own declaration. Keeping the graph one level down means the two mechanisms cannot collide. Declared explicitly rather than relying on DEFAULT_DIRECTORIES: a declaration that exists is honoured as written, so defaults do not apply to an instance that declares anything at all.",
+  "stickies": [
+    {
+      "_comment": "CatBootstrap contributes its OWN card, which is the whole point of the contribution seam: this file cannot import cat-harness, so a code registry would be a seam bootstrap could not reach. ORDER 90 is bootstrap's own judgement that it is the least interesting card on the board \u2014 a layer can only state its own priority, it cannot see the others, and without a declared order the board would render in dependency-resolution order (deepest dependency first), putting this above the instance's own description. THEME `bootstrap`, its OWN, per the convention \"each harness hould have its own unique theme\". It was `pale-sage` \u2014 palette-only, no backdrop \u2014 for as long as bootstrap had no art of its own, which satisfied the earlier ruling (\"i want the grumpy cat moved out of bootstrap and into cat harness\") by having no cat at all. The owner supplied art on 2026-09-20, so the ruling is now satisfied the better way: bootstrap has a cat, and it is NOT cat-harness's. NO GH-PAGES LINK: the owner asked for \"link back to the source code + ghpaghes for boot strrap\", and bootstrap HAS NO SITE. This instance's canonicalUrl is cat-harness's site, not bootstrap's. Declaring a link to a page that does not exist would be a 404 on the landing page; add one line here when the URL exists.  RTFM LINK ADDED on the owner's instruction, 2026-09-20: \"all sticky notes should be at end of initiation process for that harnes and provife links to that harness's docs (RTFM=...)\". It points at bootstrap's OWN README rather than at this site, because this site is cat-harness's \u2014 and it is a github.com blob URL rather than a page URL for the same reason the gh-pages link is still absent: bootstrap has no site of its own yet. Its README is self-documenting on the forge, which the instance declares as an asset, so the link resolves to something that really is bootstrap's documentation.  TEXT BOX declared rather than left to the art's cloud: the measured cloud on the card crop is 0.80 x 0.24, and this card carries a sentence plus two links with notes \u2014 it clipped top and bottom at both ends. The box here is the cloud WIDENED DOWNWARD into the lower half of the cloud shape, which is still cloud rather than sky, plus a scale of 0.82. That is the trade the schema exists to make visible: the card says which way it bought the room.  SCOPE LINE added per \"also some guidance what is its scope\". `bodyAppend` rather than a literal body, so the description above stays the single source of the first sentence.",
+      "id": "bootstrap",
+      "order": 90,
+      "theme": "bootstrap",
+      "summary": "Before you know what this repository is",
+      "bodyFrom": "description",
+      "links": [
+        {
+          "label": "bootstrap, in the source",
+          "href": "https://github.com/litlfred/folio-assistant/tree/main/bootstrap",
+          "note": "One process lives here and only one: workflows/initialize-harness.bpmn."
+        },
+        {
+          "label": "RTFM \u2014 the bootstrap docs",
+          "href": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md",
+          "note": "The flow, with every term linked to the schema that defines it."
+        }
+      ],
+      "text": {
+        "box": {
+          "x": 0.09,
+          "y": 0.13,
+          "w": 0.82,
+          "h": 0.42
+        },
+        "scale": 0.82
+      },
+      "bodyAppend": "**Scope:** phase one of two, and valid with NOTHING installed \u2014 no skills, no knowledge graph, no MCP, no beans. One process lives here and only one. Everything else is composed on top of it, and nothing here may import from the layer above."
+    }
+  ],
+  "directories": [
+    {
+      "id": "cat-harness",
+      "path": "skills/",
+      "dependents": "skip",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "bootstrap-roles",
+      "path": "skills/roles/",
+      "dependents": "reproduce",
+      "description": "CatBootstrap's three Roles \u2014 Initiator, Knowledge Graph Data Store, and the person asking. Declared as `scenarios` on 2026-09-21, matching `cat-harness/skills/roles/`: before the split this inherited `skills` from the directory above it, so a consumer asking for the Scenarios got skill bodies and a consumer asking for Skills got a role registry. A lane name is a string the audit cannot bind to anything, which is why these Roles were declared at all rather than left implicit in the diagrams' lanes.",
+      "graphKinds": [
+        "scenarios"
+      ]
+    },
+    {
+      "id": "bootstrap-workflows",
+      "path": "workflows/",
+      "dependents": "skip",
+      "description": "The bootstrap PROCESSES \u2014 `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one \u2014 reusing it would replace bootstrap's skills with its workflows.",
+      "graphKinds": [
+        "workflows"
+      ]
+    },
+    {
+      "id": "bootstrap-render",
+      "path": "render/",
+      "dependents": "skip",
+      "description": "The skills for RENDERING this instance's own graph as `.jsonld`/`.json` \u2014 `bootstrap-graph-emission` (what the document contains and the four properties it holds) and `bootstrap-graph-publication` (where it lands, why its `@id` must equal that path, and why it is no longer committed). A SEPARATE id from `cat-harness`, which `skills/` already holds: overrides match on id, so reusing it would replace bootstrap's skills with these. SEPARATE from `skills/` as a package too, because the two answer different questions \u2014 `skills/` is about READING a graph cold and about the initialization flow, this is about bootstrap EMITTING its own. Until this directory existed the emission discipline lived in a code comment in `kg-export.ts` and a YAML comment in `docs-site.yml`, which is why it was rediscovered rather than read. Bean `hfkl`.",
+      "graphKinds": [
+        "skills"
+      ]
+    }
+  ],
+  "renderExemption": {
+    "_comment": "Owner, 2026-09-20, verbatim: \"it is exception to harness/layer not having visualtion/workflow visualizer. but it must have its json/jsonld... that is its existence.\" Declared here rather than hardcoded in the `2krx` checker, because a checker that names one instance states a rule true only for the instance somebody remembered. `owes` is required by the schema: an exemption with no substitute is a hole, and bootstrap is not dropping out of the requirement \u2014 it is trading a criterion it could fail quietly for one it cannot.",
+    "of": [
+      "visualiser",
+      "workflow-visualiser"
+    ],
+    "reason": "bootstrap IS the navbar footer. It is what an agent reads before it knows what this repository is, valid with nothing installed \u2014 no skills, no knowledge graph, no MCP, no beans \u2014 so it produces nothing a human browses. The requirement is a floor that RISES rather than a flat rule: it starts at cat-harness, which is obliged because it supplies the layers above with `folio/`, and a layer that hands its dependents a folio while rendering nothing itself is asking of them what it did not do.",
+    "owes": "Its own graph, emitted as `.jsonld` with a `.json` alias and published at `<base>/bootstrap/bootstrap.jsonld` \u2014 the exact path its `@id` names. Governed by `render/bootstrap-graph-emission.md` and `render/bootstrap-graph-publication.md`, generated by `cat-harness/scripts/gen-bootstrap-graph.ts`, published by `.github/workflows/docs-site.yml`, and asserted in `cat-harness/scripts/tests/bootstrap-graph.test.ts`."
+  },
+  "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first. An EMPTY list is an assertion that this instance sits on nothing \u2014 the floor \u2014 while an ABSENT one means nobody has said, and the two are different answers.",
+  "needs": []
+}

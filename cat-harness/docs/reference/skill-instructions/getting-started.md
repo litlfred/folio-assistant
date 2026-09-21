@@ -18,11 +18,11 @@ Decision table: [`decisions/folio-intent.dmn`](../../skills/workflows/decisions/
 ## The landing page is the instance's own description
 
 A folio's home page opens with **its** description inside **its** backdrop, both
-declared in `harness.json` at the repository root. Nothing about any
+declared in the repository's declaration. Nothing about any
 particular instance is written into the template, so a downstream folio does not
 inherit the platform's grumpy cat.
 
-**Where the markdown node is:** `description` in `harness.json`. It is
+**Where the markdown node is:** `description` in `<name>.json`. It is
 markdown and it is rendered as-is. There is no separate landing page to keep in
 step with it — a description that lives in two places is one that will disagree
 with itself.
@@ -107,7 +107,7 @@ that sentence is what the five requests have in common.
 > that carried it. Bean `79t3`.
 >
 > **`folio` and `harness` are different types, and the distinction is load-
-> bearing here.** `harness.json` says *this is an instance*; `harness.config.json`
+> bearing here.** The declaration says *this is an instance*; `harness.config.json`
 > says *this authors folio content*. `cat-harness/` carries the first and not
 > the second — it is a harness and is **not** a folio, which is the
 > platform-not-content rule as a fact about two files. `isFolio` is exactly

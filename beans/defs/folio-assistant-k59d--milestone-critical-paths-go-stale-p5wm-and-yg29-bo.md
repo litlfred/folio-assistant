@@ -170,3 +170,31 @@ rest are the guards themselves, which must keep passing if the rule is widened.
       edit them; baseline entries come out as they are
 
 *Issue link, recorded on creation.* **[#696](https://github.com/litlfred/folio-assistant/issues/696)**
+
+
+## The quotation-guard Done-when is closed, 2026-09-21 — `4v62`
+
+> [x] The quotation guard covers a markdown table cell, or the guard's stated
+> scope says it does not and why — a workaround in one bean is not a fix
+
+**The second branch, on the corpus's evidence rather than on taste.** Measured
+over every bean body for `blocked on \`id\`` on a line beginning `|`: two hits.
+This bean quotes yg29 and marks it; `xgd8` asserts its OWN blocker in a cell,
+and `slw1` was `todo`, so that block is live. The only unquoted cell in the
+store is a genuine self-assertion the checker must keep reading — treating a
+cell as a quotation would silently exempt exactly it.
+
+So this bean's double-quoting was **never a workaround**: quoting what you
+quote is correct English and is precisely the signal the guard reads. The
+scope now says so in `insideQuotation`'s docstring, `insideQuotation` and
+`BLOCKER` are exported and tested case by case, and a table row's finding
+message teaches the marking instead of the checker guessing at it.
+
+A blockquote rule was considered and **not built**: `>` is unambiguously a
+quotation, and the store contains zero of them. Priced, not missed, with a
+test recording the choice.
+
+Entered here rather than by editing the checklist above, because this bean is
+another session's and an append cannot collide. The remaining Done-when —
+*"`p5wm` and `yg29` are repaired by their owners"* — is untouched and is not
+an agent's.

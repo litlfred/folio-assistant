@@ -5,7 +5,7 @@
     "id": "Process_BoardOpenClose",
     "path": "skills/workflows/board-open-close.bpmn"
   },
-  "source_hash": "sha256:6ad7cdcc161283e821b0539918205e6121e69117d3ba20e2d6566881d7a78a7e",
+  "source_hash": "sha256:febaebec1a0d0605644725d3f7a220c033a53091fbb0e86c2d7415808596c9f0",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

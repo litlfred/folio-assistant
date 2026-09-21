@@ -5,7 +5,7 @@
     "id": "Process_RefreshMaterialized",
     "path": "skills/workflows/refresh-materialized.bpmn"
   },
-  "source_hash": "sha256:df97bb71707edbcd4475aaebff4fa8fc486770040ede8d432f6591da56e75aa7",
+  "source_hash": "sha256:e5ccba045c8acd8c90db427418ce1bbd0703acbb2db5ffccec74dce7d2e334e8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

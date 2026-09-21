@@ -57,6 +57,7 @@
 
     <bpmn:laneSet id="LaneSet_SessionStateMachine">
       <bpmn:lane id="Lane_Machine" name="Agent (playing the machine)">
+        <bpmn:documentation>Classifies every turn into exactly one of three effects at Gateway_TurnEffect — nothing changed, state changed, ending — a fresh judgement each time because a table cannot key on intent and a wrong read is corrected by the next turn. It records that a bean was claimed or an instance closed, at A_UpdateSession, but performs none of those actions itself: the record and the thing it describes are kept deliberately separate.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Session</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_IdentifyActor</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ActorKnown</bpmn:flowNodeRef>
@@ -69,6 +70,7 @@
         <bpmn:flowNodeRef>End_Session</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Human" name="Human actor">
+        <bpmn:documentation>Entered only when Gateway_ActorKnown cannot confirm an actor — the one fact in this whole record that the machine cannot recover by reading the repository — and answered once: the response is recorded so this lane is never re-entered for the same session, which is what keeps asking who is acting from becoming a repeated interruption.</bpmn:documentation>
         <bpmn:flowNodeRef>A_AskWhoIsActing</bpmn:flowNodeRef>
       </bpmn:lane>
       <!-- Written to, decides nothing. No flowNodeRef, which is what

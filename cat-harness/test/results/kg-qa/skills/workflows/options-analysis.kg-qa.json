@@ -5,7 +5,7 @@
     "id": "Process_OptionsAnalysis",
     "path": "skills/workflows/options-analysis.bpmn"
   },
-  "source_hash": "sha256:4dc68ee23456b80d4f234f703d2389b6b3ca4398be131c5f03e2163b5b44f9fd",
+  "source_hash": "sha256:842d01da34723a13cebd27dc26bdd30ec63eea7204a4f14898ddd0b72d30f6c2",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

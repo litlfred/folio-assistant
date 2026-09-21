@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ci-health-watch\n"
-"POT-Creation-Date: 2026-09-20T14:27:23.092Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.438Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -19,27 +19,27 @@ msgstr ""
 msgid "A WORKFLOW'S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean `xom7`: one workflow here fired on every push to `main` and FAILED ALL 30 TIMES OVER TWO MONTHS with nothing in the repository saying so. This is the backstop.&#10;&#10;WEEKLY, NOT DAILY, and the cadence is an argument rather than a default: the defect is \"nobody noticed for two months\", not \"nobody noticed for a day\", and the session-start sweep already covers every day somebody is working. A weekly run bounds the blind spot to seven days without turning the tracking issue into a feed.&#10;&#10;`Could we tell?` IS NOT SIMPLY THE EXIT CODE, and that is the subtlety worth drawing. `bun` exits 1 on an uncaught exception as well as on a live failure, so exit 1 alone does not separate \"found something red\" from \"crashed\". The REPORT FILE separates them: `--out` writes it before any exit path, so a genuine red always has one and a crash before that point does not. Exit 1 with no report is reclassified as `unknown`. Without that, a crash would open a tracking issue quoting a stale file.&#10;&#10;THE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.&#10;&#10;ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue &#8212; a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.&#10;&#10;`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label &#8212; the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job."
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:66
+#: skills/workflows/ci-health-watch.bpmn:67
 #. Diagram label
 msgid "Anything red&#10;on main?"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:96
+#: skills/workflows/ci-health-watch.bpmn:97
 #. Diagram label
 msgid "clean"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:71
+#: skills/workflows/ci-health-watch.bpmn:72
 #. Diagram label
 msgid "Close the&#10;tracking issue"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:51
+#: skills/workflows/ci-health-watch.bpmn:52
 #. Diagram label
 msgid "Could we&#10;tell?"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:59
+#: skills/workflows/ci-health-watch.bpmn:60
 #. Diagram label
 msgid "Ensure the tracking&#10;label exists"
 msgstr ""
@@ -49,32 +49,37 @@ msgstr ""
 msgid "Is CI actually working on the default branch?"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:78
+#: skills/workflows/ci-health-watch.bpmn:79
 #. Diagram label
 msgid "main is green"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:93
+#: skills/workflows/ci-health-watch.bpmn:26
+#. Diagram element documentation
+msgid "Named a 'sweep' but every path through it writes something — the report file, the tracking label, and the issue itself (opened, edited or closed) — and keeping all three in one lane is what makes 'one tracking issue, edited in place' enforceable: a write split across lanes would leave two different actors able to touch the same issue with no ordering between them."
+msgstr ""
+
+#: skills/workflows/ci-health-watch.bpmn:94
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:98
+#: skills/workflows/ci-health-watch.bpmn:99
 #. Diagram label
 msgid "not clean"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:81
+#: skills/workflows/ci-health-watch.bpmn:82
 #. Diagram label
 msgid "Open or EDIT the one&#10;tracking issue"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:88
+#: skills/workflows/ci-health-watch.bpmn:89
 #. Diagram label
 msgid "Recorded &#8212; job stays GREEN"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:44
+#: skills/workflows/ci-health-watch.bpmn:45
 #. Diagram label
 msgid "Run check:ci-health,&#10;WRITING the report file"
 msgstr ""
@@ -84,17 +89,17 @@ msgstr ""
 msgid "Scheduled log sweep"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:56
+#: skills/workflows/ci-health-watch.bpmn:57
 #. Diagram label
 msgid "Unknown &#8212; job RED,&#10;issue UNTOUCHED"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:38
+#: skills/workflows/ci-health-watch.bpmn:39
 #. Diagram label
 msgid "Weekly (Mon 09:17 UTC),&#10;or on dispatch"
 msgstr ""
 
-#: skills/workflows/ci-health-watch.bpmn:94
+#: skills/workflows/ci-health-watch.bpmn:95
 #. Diagram label
 msgid "yes"
 msgstr ""

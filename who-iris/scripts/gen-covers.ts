@@ -47,7 +47,7 @@ import { createHash } from "crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
 import { dirname, join, relative } from "path";
 
-import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import type { CatalogueNode, MaskedRegion } from "../../folio-assistant-core/schemas/catalogue.js";
 import { bytesFor, INSTANCE, REPO } from "./lib/bytes.js";
 
 const NODES = join(INSTANCE, "catalogue", "nodes");
@@ -76,6 +76,15 @@ type Cover = {
   declaredBytes: number | undefined;
   declaredW: number | undefined;
   declaredH: number | undefined;
+  /**
+   * Regions the catalogue asks to have blanked, in output pixels.
+   *
+   * Read from the node rather than decided here, for the same reason the
+   * cover LIST is: this script supplies bytes and the catalogue says what it
+   * wants. A generator choosing its own regions would blank different things
+   * as its heuristics moved and nothing would record that it had.
+   */
+  masks: MaskedRegion[];
 };
 
 function nodes(): CatalogueNode[] {
@@ -140,6 +149,7 @@ export function coversWanted(all: CatalogueNode[]): { covers: Cover[]; problems:
       declaredBytes: thumb.bytes,
       declaredW: thumb.pixelWidth,
       declaredH: thumb.pixelHeight,
+      masks: thumb.maskedRegions ?? [],
     });
   }
   return { covers, problems };
@@ -186,8 +196,15 @@ function backendAvailable(): boolean {
 function render(c: Cover): { png: Buffer; facts: Record<string, unknown> } {
   const tmp = join(REPO, "node_modules", ".cache", "who-iris-covers", `${createHash("sha256").update(c.outPath).digest("hex").slice(0, 16)}.png`);
   mkdirSync(dirname(tmp), { recursive: true });
+  // The masks go to the RENDERER, not applied afterwards here. `pdf-cover.py`
+  // blanks them before it computes the digests, so `facts.sha256` describes
+  // the bytes that actually get written -- and `--check` re-renders with the
+  // same regions, so a committed masked cover compares equal to a fresh one.
+  // Masking in this script instead would leave the renderer's provenance
+  // describing an image nobody has.
   const r = Bun.spawnSync([
     "python3", RENDERER, c.sourcePdf, "-o", tmp, "--width", String(COVER_WIDTH), "--json",
+    ...c.masks.flatMap((m) => ["--mask", `${m.x0},${m.y0},${m.x1},${m.y1}`]),
   ]);
   if (r.exitCode !== 0) {
     throw new Error(

@@ -1,0 +1,53 @@
+{
+  "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository — the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THIS INSTANCE HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING. Everything under it was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit here is a defect, because the next check will either overwrite it or fail. If something is wrong in this index, the fix is in the pipeline or in the upstream IG, never in these files.",
+  "name": "smart-trust",
+  "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
+  "directories": [
+    {
+      "id": "smart-trust-artifact-index",
+      "path": "fhir-artifact-index/",
+      "dependents": "skip",
+      "description": "The reconstructed artefact index, and the DAK API surface it points at. ONE directory rather than two on purpose: `dak/` sits INSIDE the declared graph because a sibling would be an undeclared directory holding the very bytes the index claims to have — the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. `index.json` carries a `provenance` block naming the published file every field came out of, because no IG publishes an artefact index and each row was therefore assembled rather than transcribed.",
+      "graphKinds": [
+        "fhir-artifact-index"
+      ],
+      "coverage": {
+        "skill": "ig-artifact-ingestion"
+      }
+    },
+    {
+      "id": "smart-trust-docs",
+      "path": "docs/",
+      "dependents": "skip",
+      "instanceRoot": true,
+      "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages`. THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate.",
+      "graphKinds": [
+        "docs"
+      ],
+      "coverage": {
+        "skill": "ig-artifact-ingestion"
+      },
+      "composed": true,
+      "_comment_composed": "Rendered THROUGH just-the-docs, not mounted after it. Owner, 2026-09-21: \"i want the input/page(s)/ content to be rendered viajustthedocs pipeline\". These pages are markdown with front matter, generated from fhir-artifact-index by smart-trust:pages, so they compose into the Jekyll source at _docs/smart-trust/ and come out as ordinary folio pages -- sidebar, search, language bar. They were finished HTML copied into _site AFTER Jekyll, which is why they inherited none of it and why hw9g had to inject a nav rail. who-iris does NOT set this and must not: it is a replica of IRIS, and just-the-docs' layout would replace IRIS's chrome with folio-assistant's."
+    }
+  ],
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — smart-trust",
+      "description": "Cold start for work in this layer, and one rule above all others: nothing here is authored, so nothing here is edited."
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "smart-trust",
+      "description": "What this index is, what it was reconstructed from, and how to re-derive it."
+    }
+  ],
+  "needs": [
+    "folio-assistant-core"
+  ]
+}

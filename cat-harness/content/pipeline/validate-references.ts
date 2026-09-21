@@ -19,7 +19,7 @@
  * @module content/pipeline/validate-references
  */
 
-import { folioDir, folioDirDeferred } from "../../schemas/cat-harness.js";
+import { folioDir, folioDirDeferred, deferResolution} from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { references, referenceMap, CSLEntrySchema } from "./references-registry-di";
@@ -131,7 +131,11 @@ const leanCitations = new Set<string>();
 const leanDir = join(REPO_ROOT, "lean");
 const folioRootOf = folioDirDeferred(REPO_ROOT, import.meta.url);
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-const leanArchiveDir = join(folioDir(REPO_ROOT),  requirePaper(_paperArg), "lean");
+const leanArchiveDir = deferResolution(() => join(folioDir(REPO_ROOT),  requirePaper(_paperArg), "lean"), {
+  moduleUrl: import.meta.url,
+  what: "leanArchiveDir",
+  under: REPO_ROOT,
+});
 
 function scanFilesRecursive(dir: string, ext: string): string[] {
   if (!existsSync(dir)) return [];
@@ -153,7 +157,7 @@ function scanFilesRecursive(dir: string, ext: string): string[] {
 
 const leanFiles = [
   ...scanFilesRecursive(leanDir, ".lean"),
-  ...scanFilesRecursive(leanArchiveDir, ".lean"),
+  ...scanFilesRecursive(leanArchiveDir(), ".lean"),
   ...scanFilesRecursive(folioRootOf(), ".lean"),
 ];
 

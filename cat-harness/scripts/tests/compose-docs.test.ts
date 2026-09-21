@@ -46,11 +46,11 @@ const INSTANCE = "cat-harness";
  * `site-dir-single-answer.test.ts` guards against. The fixture derives them.
  */
 const ENTRIES = [
-  { id: "docs", path: "docs/", dependents: "reproduce", graphs: ["docs"] },
-  { id: "root-docs", path: "docs/", scope: "repository", dependents: "skip", graphs: ["docs"] },
+  { id: "docs", path: "docs/", dependents: "reproduce", graphKinds: ["docs"] },
+  { id: "root-docs", path: "docs/", scope: "repository", dependents: "skip", graphKinds: ["docs"] },
   // A non-docs entry, so the filter is doing something rather than happening
   // to match everything.
-  { id: "schemas", path: "schemas/", dependents: "skip", graphs: ["schemas"] },
+  { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas"] },
 ] as const;
 
 const layerDir = (root: string, id: string): string => {
@@ -125,9 +125,36 @@ describe("an EMPTY overlay composes byte-identically — the safety property", (
 
     const before = treeDigest(base.dir);
     const after = treeDigest(dest);
-    expect(after.size).toBe(before.size);
+
+    // THE PROPERTY IS "COMPOSITION NEVER CHANGES A BASE FILE", not "the tree
+    // has the same number of files in it". Those were the same assertion until
+    // instances could be composed (`jut3`), and the size check is the half
+    // that stopped being true: `smart-trust/docs/` now lands under
+    // `smart-trust/`, so the composed tree is base PLUS that.
+    //
+    // Weakening it to "the base files match" alone would license a composer
+    // that scattered files anywhere, so the additions are checked too: every
+    // path the composed tree adds must sit under a composed instance's own
+    // prefix. That is strictly stronger than the count it replaces, which
+    // said nothing about WHERE a new file could appear.
     const differing = [...before].filter(([p, h]) => after.get(p) !== h).map(([p]) => p);
     expect(differing).toEqual([]);
+
+    const prefixes = report.composed.map((c) => `${c.under}/`);
+    const strays = [...after.keys()].filter(
+      (p) => !before.has(p) && !prefixes.some((pre) => p.startsWith(pre)),
+    );
+    expect(strays).toEqual([]);
+
+    // ...and the composition actually happened. Both checks above are
+    // satisfied by a composer that emitted nothing: no base file differs and
+    // there are no strays if there are no new files at all. The line this
+    // replaces read `expect(after.size).toBe(before.size + (after.size -
+    // before.size))`, which is an identity and guarded nothing — the same
+    // defect as a test that restates the expression it checks.
+    expect(report.composed.length).toBeGreaterThan(0);
+    const added = [...after.keys()].filter((p) => !before.has(p));
+    expect(added.length).toBeGreaterThan(0);
     rmSync(join(dest, ".."), { recursive: true, force: true });
   });
 

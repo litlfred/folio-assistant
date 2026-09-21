@@ -12,7 +12,7 @@ parent: folio-assistant-vke6
 
 ## Measured
 
-`cat-bootstrap/cat-bootstrap.jsonld`: **49 nodes / 807 lines → 34 nodes / 687 lines.**
+`bootstrap/bootstrap.jsonld`: **49 nodes / 807 lines → 34 nodes / 687 lines.**
 GraphKind nodes **16 → 1**. `check:instance-render` now reports bootstrap as
 `1 declared, 1 published`.
 
@@ -23,7 +23,7 @@ the `blv9` shape. `kg-export.ts` documents the opposite: lane-derived nodes are
 kept deliberately and a declared role joins them via `bindsLane`. And
 `roles.json`'s own `_lanes_comment` records why `lanes` is omitted — adding it
 produced *"three dangling links, measured 2026-09-20"* in the ROOT graph,
-because the root declares `cat-bootstrap/skills/` and not `cat-bootstrap/workflows/`.
+because the root declares `bootstrap/skills/` and not `bootstrap/workflows/`.
 That asymmetry is bean `pve3`. Removing the nodes would have widened the
 dangling-link allowance and recorded new debt as progress.
 
@@ -40,8 +40,8 @@ Renamed to `bootstrap-kg-navigation`, front matter included, which is what
 
 ## One root cause under three symptoms
 
-`pve3` — the root declares `cat-bootstrap/skills/` but not
-`cat-bootstrap/workflows/` — explains the empty `bindsLane`, the unaudited
+`pve3` — the root declares `bootstrap/skills/` but not
+`bootstrap/workflows/` — explains the empty `bindsLane`, the unaudited
 process, AND the orphan sidecar nothing pruned. Not fixed here: it is its own
 bean and the fix is a declaration decision, not a cleanup.
 
@@ -49,7 +49,7 @@ bean and the fix is a declaration decision, not a cleanup.
 
 `kg-audit` compared each report to its file and never looked the other way, so
 a sidecar whose subject moved was structurally invisible. The sweep added here
-found `cat-bootstrap/workflows/bootstrap.kg-qa.json` — auditing a path that does
+found `bootstrap/workflows/bootstrap.kg-qa.json` — auditing a path that does
 not exist — and **eight more** under `folio-core` and `folio-paper-adapter`
 whose subject files DO exist but which the audit's 256 subjects no longer
 discover. Those eight are reported, not deleted: their verdicts are real and
@@ -67,7 +67,7 @@ residue, not evidence. There is no discovery bug among them, and "fixing
 discovery" on the strength of the original sentence would re-admit eight
 fragments and re-introduce the findings `179f1f0998` removed.
 
-**The count is also no longer nine.** It is twelve: the `cat-bootstrap/workflows/`
+**The count is also no longer nine.** It is twelve: the `bootstrap/workflows/`
 one is gone, and four new dead sidecars arrived from two skill-package moves on
 2026-09-20 (`790ec2fe48`, `2fe43d5bb2`), each with a live replacement under
 `skills/workflow/` carrying identical totals.

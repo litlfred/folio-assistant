@@ -143,6 +143,16 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
+      // HARNESS for the same reason as `check-ci-health` above: its subject
+      // is this repository's own deploy workflow — which commands it runs
+      // and whether they succeed — and it reads no folio content at all.
+      // It builds an instance's KG the way `kg-export` (already harness,
+      // below) does, one instance at a time (issue #720).
+      "scripts/check-published-instance-exports.ts",
+      // HARNESS on the same argument: its subject is this repository's own
+      // workflows -- which generators each invokes -- and it reads no folio
+      // content at all (issue #777, bean `qgpo`).
+      "scripts/check-invocation-parity.ts",
       // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
       // entry was added to `RULES` while `RULES` was moving to this file,
       // so it arrives here rather than where it was written.
@@ -168,6 +178,19 @@ export const RULES: Rule[] = [
       // (`<base-url>/<path-to-kind-or-node>`) is a statement about harnesses,
       // not about what a folio holds.
       "scripts/mount-instance-docs.ts",      // instance-rendered content -> /<kind>/<instance>/
+      // The harness navigation it injects into those pages. Same layer by the
+      // same argument: the rail is the HARNESS's chrome, and it exists because
+      // a mounted page gets no Jekyll layout. Putting it in a folio's
+      // generator would give every instance its own copy of the platform's
+      // navbar, which is the boundary AGENTS.md opens with.
+      "scripts/lib/harness-rail.ts",
+      // The renderer that rail became an adapter over (bean `sjic`). HARNESS
+      // by the same argument and more strongly: it is now the ONE navbar, for
+      // a mounted page and for a Jekyll page alike, so a folio owning it would
+      // mean a folio owning the platform's chrome for every other instance
+      // too. It renders a model and reads no content object -- the model's
+      // regions are composed by the caller from declarations.
+      "scripts/lib/navbar.ts",
       // Its sibling: same question, same answer. `compose-docs.ts` reads the
       // `docs` declarations, works out which is the base and which the
       // overlay from `scope`, and lays them down in order. Every decision it
@@ -175,7 +198,19 @@ export const RULES: Rule[] = [
       // opens the files only to copy bytes, and never asks what a page says.
       "scripts/compose-docs.ts",             // docs layers -> one composed tree
       "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
+      // Whether a swimlane DEFINES itself — `name`, `<documentation>`, and
+      // both reaching the translation templates. Harness by subject for the
+      // same reason as its neighbour above: a lane is a ROLE boundary, which
+      // is a platform concept, and the diagrams it reads are the platform's
+      // own processes. A folio that draws none still inherits the rule.
+      "scripts/check-lane-documentation.ts", // a lane has a name AND a definition
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
+      // ...and the signals themselves, lifted out of it by bean `xfoh` so the
+      // patterns could be checked against the skill prose they transcribe.
+      // Same side as its runner, and harness by subject too: whether a request
+      // is a PLATFORM capability change is a question about the platform, and a
+      // folio that never asks for one still needs the answer to be "no".
+      "src/crdm/detect-signals.ts",         // ...the patterns, checked against the skill
       "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI
       "src/tools/stakeholder-map.ts",        // ...as an MCP tool
 
@@ -209,6 +244,19 @@ export const RULES: Rule[] = [
       // about any folio's subject matter — a folio could not make it answer
       // differently, only add a row.
       "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
+      // Beside its sibling, and HARNESS rather than core — the opposite
+      // classification to `gen-default-boards.ts`, for the reason that entry
+      // records: what settles it is what a module is ABOUT. That one produces
+      // folio content (a board); this one reads instance DECLARATIONS and
+      // answers a question about the machinery — which directories an instance
+      // says it renders. Its only import is `schemas/cat-harness.ts`, which is
+      // harness, so the direction is flat rather than upward.
+      //
+      // Classified core first, on the reasoning that a tile is something a
+      // reader sees. `check:partition` answered with a wrong-direction edge
+      // from `sync-docs-harness.ts`, which is harness and calls it — the
+      // import was right and the classification was wrong.
+      "scripts/graph-tiles.ts",              // every declared visualisation → its tile
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
       // Same question, same answer: it projects the PLATFORM's own term
       // vocabulary — every class and property hanging off `FOLIO_NS` — and
@@ -423,7 +471,7 @@ export const RULES: Rule[] = [
       // Guards the page template all four viewer generators build as one
       // string literal; the generators are core, so its gate is too.
       "scripts/check-viewer-backticks.ts",
-      // Zod in `cat-bootstrap-tools` → JSON Schema in `cat-bootstrap`. CORE for a
+      // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
       "scripts/gen-bootstrap-schemas.ts",
@@ -431,6 +479,9 @@ export const RULES: Rule[] = [
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
+      "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
+      "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
+      "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
       "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
@@ -566,6 +617,12 @@ export const RULES: Rule[] = [
       // dependency: it imports `schemas/cat-harness.js` for the constant and
       // nothing else, and a folio declares no instances. Bean `jijc`.
       "scripts/check-declaration-filename.ts",
+      // Its sibling, bean `hrv2`: prose claiming which file declares a graph,
+      // checked against the declarations. Harness by subject as well as by
+      // dependency -- which file declares which graph is a fact about
+      // instances, and a folio declares none.
+      "scripts/check-declaration-claims.ts",
+      "src/docs/declaration-claims.ts",
       // Who else is working THIS repository — a fact about the forge and this
       // checkout, not about any folio's material.
       "scripts/sibling-sessions.ts",
@@ -590,6 +647,7 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
       "scripts/check-ready-to-close.ts",
@@ -707,6 +765,12 @@ export const RULES: Rule[] = [
       // tree's own filenames, which is a fact about the checkout and not about
       // any folio's material.
       "scripts/check-portable-paths.ts",
+      // The CI-wiring gate, and harness by the same argument one line up: it
+      // reads this repository's own `.github/workflows/` and grades whether a
+      // path-filtered workflow rebuilds when the scripts it runs change. That
+      // is a fact about the checkout's build wiring, not about any folio's
+      // material — it imports `repoRootFor` and nothing else.
+      "scripts/check-workflow-script-paths.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge
@@ -753,7 +817,7 @@ export const RULES: Rule[] = [
       // folio authors no decision requests.
       "schemas/decision-request.ts",
       // Translation is cat-harness's, stated directly: "ui stuff like
-      // translations (skills, tooling) are not in cat-bootstrap, it is in
+      // translations (skills, tooling) are not in bootstrap, it is in
       // cat-harness/". These three are the gettext machinery and the registry
       // that binds a content type to its extractors — the tools that DO the
       // translating, not the translated content.
@@ -846,7 +910,7 @@ export const RULES: Rule[] = [
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
-      "scripts/gen-cat-bootstrap-graph.ts", // writes cat-bootstrap/cat-bootstrap.jsonld
+      "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld
       "scripts/gen-python-deps.ts",         // writes requirements.txt
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
@@ -1043,6 +1107,11 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // Its other half: the rules are cited, AND the instruction body beside
+      // them does not restate them uncited (bean `n8br`). Core for the same
+      // reason — its subject is a voice, which is content an instance derived,
+      // and it reads `schemas/voices.ts`.
+      "scripts/check-voice-skills.ts",
       // Counts every prefix the CONTENT `@context` binds against the published
       // `.jsonld` documents that emit it (bean `fd6i`). Core for the same
       // reason `check-voices.ts` is: its subject is content. It reads

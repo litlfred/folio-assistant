@@ -5,7 +5,7 @@
     "id": "Process_ContentAcquisition",
     "path": "skills/workflows/content-acquisition.bpmn"
   },
-  "source_hash": "sha256:0800a067354224033814f4cc425724f412aefee7db5bb41b940084eb0a59b1d0",
+  "source_hash": "sha256:9fd89d9c76a2bd42466d5d044e39ead895839a1035be8f28825828058730343d",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "fail",
       "findings": [
@@ -84,7 +88,7 @@
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

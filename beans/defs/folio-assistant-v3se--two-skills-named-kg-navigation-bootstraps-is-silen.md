@@ -19,7 +19,7 @@ Two different skills carry the name `kg-navigation`:
 
 | | assumes |
 |---|---|
-| `cat-bootstrap/skills/kg-navigation.md` | **nothing** — no MCP, no harness, no tools |
+| `bootstrap/skills/kg-navigation.md` | **nothing** — no MCP, no harness, no tools |
 | `skills/folio-core/kg-navigation.md` | the harness is installed |
 
 The generator keeps folio-core's and **silently drops bootstrap's**, so the
@@ -38,7 +38,7 @@ than by a missing file.
 ## Not introduced by the PR that found it
 
 Pre-existing on `main`: `skills/folio-core/kg-navigation.md` is there
-independently of `cat-bootstrap/skills/kg-navigation.md`. Found while fixing a
+independently of `bootstrap/skills/kg-navigation.md`. Found while fixing a
 stale-docs failure on #448 and recorded rather than fixed, because it is not
 that PR's to widen.
 
@@ -68,7 +68,7 @@ that PR's to widen.
 ## 2026-09-20 — two thirds of this were already fixed, by someone else
 
 Measured before touching anything, and the bean's own premise had expired:
-`cat-bootstrap/skills/kg-navigation.md` **no longer exists**. It was renamed to
+`bootstrap/skills/kg-navigation.md` **no longer exists**. It was renamed to
 `bootstrap-kg-navigation.md` in `6252e287f` ("bootstrap publishes only what it
 declares, and gains the discussion process"), under bean `3jj9` — not this one.
 

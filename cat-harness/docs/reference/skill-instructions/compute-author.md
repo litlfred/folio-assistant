@@ -48,7 +48,7 @@ production script or stays in a probe); the current optimization
 roadmap; and the reference implementations for the project's number
 kernels, exact-arithmetic types, and witness base.
 
-### §0.1 Sandbox / fresh-container cat-bootstrap
+### §0.1 Sandbox / fresh-container bootstrap
 
 A fresh container often ships **neither** the script-side deps **nor**
 the compiled native module. Do **not** declare a compute "blocked (no

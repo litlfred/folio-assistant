@@ -24,9 +24,9 @@ describe("a node's `kinds` is an array", () => {
   test("one directory may declare several kinds", () => {
     const g = parseBeanGraph({
       name: "t",
-      directories: [{ id: "all", path: "store", graphs: ["bean-defs", "workflow-state"] }],
+      directories: [{ id: "all", path: "store", graphKinds: ["bean-defs", "workflow-state"] }],
     });
-    expect(g.directories[0]!.graphs).toEqual(["bean-defs", "workflow-state"]);
+    expect(g.directories[0]!.graphKinds).toEqual(["bean-defs", "workflow-state"]);
     // Both resolve to the one node — the directory genuinely holds both.
     expect(nodeOfKind(g, "bean-defs")?.id).toBe("all");
     expect(nodeOfKind(g, "workflow-state")?.id).toBe("all");
@@ -36,13 +36,13 @@ describe("a node's `kinds` is an array", () => {
     // A node holding nothing is a directory nobody should scan; declaring it
     // is worse than omitting it.
     expect(() =>
-      parseBeanGraph({ name: "t", directories: [{ id: "x", path: "p", graphs: [] }] }),
+      parseBeanGraph({ name: "t", directories: [{ id: "x", path: "p", graphKinds: [] }] }),
     ).toThrow();
   });
 
   test("an unknown kind is refused, not accepted and ignored", () => {
     expect(() =>
-      parseBeanGraph({ name: "t", directories: [{ id: "x", path: "p", graphs: ["nonsense"] }] }),
+      parseBeanGraph({ name: "t", directories: [{ id: "x", path: "p", graphKinds: ["nonsense"] }] }),
     ).toThrow();
   });
 
@@ -53,8 +53,8 @@ describe("a node's `kinds` is an array", () => {
       parseBeanGraph({
         name: "t",
         directories: [
-          { id: "a", path: "one", graphs: ["bean-defs", "workflow-state"] },
-          { id: "b", path: "two", graphs: ["workflow-state"] },
+          { id: "a", path: "one", graphKinds: ["bean-defs", "workflow-state"] },
+          { id: "b", path: "two", graphKinds: ["workflow-state"] },
         ],
       }),
     ).toThrow(/workflow-state/);

@@ -30,5 +30,5 @@ reason to say so, not a reason to file it under the nearest one.
 
 ---
 
-*A declared asset of this instance ([`folio-assistant-sci.config.json`](folio-assistant-sci.config.json), role
+*A declared asset of this instance ([`folio-assistant-sci.json`](folio-assistant-sci.json), role
 `agent-instructions`). Issue #592.*

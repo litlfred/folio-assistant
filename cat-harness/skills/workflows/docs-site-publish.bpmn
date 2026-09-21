@@ -23,6 +23,7 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_DocsSite">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
+        <bpmn:documentation>Before it will even attempt the risky part, GW_Complete can refuse outright and end at End_Refused if a maintained artefact is missing — so an incomplete build never reaches Task_Publish's full replace at all, which is a harder stop than the restore/verify pair further down the same lane makes for a partial one.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Push</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Regenerate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Build</bpmn:flowNodeRef>

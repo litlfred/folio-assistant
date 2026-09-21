@@ -27,7 +27,7 @@ without a token, and a browser session cookie does not authenticate it.
 Default is **`blob`** (`github.com/<owner>/<repo>/blob/<ref>/<path>`): follows
 the viewer's GitHub session, works public or private, renders PDFs inline.
 `pages` and `raw` remain available under `readme.linkStyle` in
-`harness.config.json`, and each prints a note under the table saying who can
+`<name>.config.json`, and each prints a note under the table saying who can
 follow its links.
 
 ## STABLE — placement is a SKILL — run it before the first file exists
@@ -65,7 +65,7 @@ and fix it there rather than restating it back into this file.
 ## STABLE — the builder shim, and why `folio_init` is generic
 
 `bun run init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
-`uploads/`, `library/`, manifests, `harness.config.json`, the `content/schema/`
+`uploads/`, `library/`, manifests, `<name>.config.json`, the `content/schema/`
 builder shim, `AGENTS.md` + `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the
 session-start hook and the beans store.
 
@@ -87,10 +87,10 @@ A full replace does NOT preserve it: `CARRIED_PREFIXES` in
 as the previews. Add a prefix there, never a third code path. Skill:
 [`folio-core/render-logging.md`](../cat-harness/skills/folio-core/render-logging.md).
 
-## STABLE — top level = cat-bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
+## STABLE — top level = bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
 
 Owner, 2026-09-20: the top level is *"the contents of repos"* except
-`cat-bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
+`bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
 of cat-harness. keep it here (like beans and todos/) as this instance's own
 working memory."*
 
@@ -102,7 +102,7 @@ consequence.
 
 **Tooling and store separate.** All three kinds are introduced by cat-harness;
 the stores stay top-level. So "beans is a cat-harness concept" and "`beans/` is
-not inside `cat-harness/`" are both true. `cat-bootstrap/` introduces none — it is
+not inside `cat-harness/`" are both true. `bootstrap/` introduces none — it is
 read before any harness resolves. `scope: "repository"` means exactly these four.
 
 ## STABLE — there is no `recommendation` block kind
@@ -169,7 +169,7 @@ reader, before anybody picks a locale. Full rule:
 `content/pipeline/profile-check.ts` runs on every `content_validate` and
 catches what **Zod structurally cannot**: a `theorem` is a valid `theorem`
 whatever folio it sits in, and `constraints.ts` cannot read
-`harness.config.json`.
+`<name>.config.json`.
 
 Two rules: kind-within-profile, and (document only) **no `lean` field and no
 `.lean` sibling** — because `remark`, `example`, `algorithm` and `simulator`
@@ -187,7 +187,7 @@ Each shipped once:
 2. **Workflow descriptions from a hardcoded map of twelve `qou` filenames**,
    consulted *before* the workflow's own `name:`. Now always the `name:`.
 3. **The simulator directory as the literal `folio-assistant/simulators`.**
-   Now `harness.config.json`, and the fallback is the folio-root `simulators`
+   Now `<name>.config.json`, and the fallback is the folio-root `simulators`
    — the platform has no such directory since 2026-09-19.
 
 <!-- folio:memory:end -->

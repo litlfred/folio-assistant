@@ -1,5 +1,11 @@
 # Sage as an MCP server (lazily loaded)
 
+> One service among several. Composing several Tool nodes into one MCP service
+> — naming, collisions, grouping, versioning — is
+> [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html); verifying a
+> projected server's tools against the Tool nodes they came from is
+> [`mcp-contract`](reference/skill-instructions/mcp-contract.html).
+
 [SageMath](https://www.sagemath.org/) is exposed as a Model Context Protocol
 server so agents can call algebra / number-theory tools (Iwahori–Hecke trace,
 Faddeev quantum dilogarithm, nuclear β-decay scaffolding, and arbitrary

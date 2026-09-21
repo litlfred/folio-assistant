@@ -77,6 +77,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Content types](content-profiles.html) | `content-profiles` | — | A **document** folio is structured prose: policy guidance, a standard, a report. |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
+| [Corpus-Grep](corpus-grep.html) | `corpus-grep` | — | > **Disambiguation.** This skill formalizes the **backward** check |
 | [Covered is not reachable](covered-is-not-reachable.html) | `covered-is-not-reachable` | — | **A skill can be satisfied by the *neighbours* of its mechanism while the |
 | [Data modelling](data-modelling.html) | `data-modelling` | — | **One question, and everything else follows from it:** |
 | [A decision is not a finding, and neither is a substitute for the other](decision-audit.html) | `decision-audit` | — | A **finding** is an observation — a checker, an agent or a person saw something. |
@@ -87,7 +88,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/detangler-integration-watcher](detangler-integration-watcher.html) | `detangler-integration-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [/devils-advocate-watcher](devils-advocate-watcher.html) | `devils-advocate-watcher` | — | A concrete instance of [`integration-watcher`](integration-watcher.md). |
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
-| [Directory conventions](directory-conventions.html) | `directory-conventions` | — | Every instance carries an **`harness.json`** at its repository root. It declares the directories the |
+| [Directory conventions](directory-conventions.html) | `directory-conventions` | — | Every instance carries a **declaration** at its repository root — a `*.json` whose `name` field equa |
 | [/dispatch-agent](dispatch-agent.html) | `dispatch-agent` | — | The expensive failure mode of multi-agent dispatch is **going dark**: you |
 | [docs-auto](docs-auto.html) | `docs-auto` | — | `<base>/<handler>/docs-auto/<auto-doc-type>/<sub-graph>/` is an index of what |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
@@ -154,6 +155,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
+| [Technical documentation](technical-documentation.html) | `technical-documentation` | — | The register is an SDO's — W3C, IHE. The reader is an implementer who was not |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
 | [Post-MVP, because there is nothing to check before there is a render](theme-ui-review.html) | `theme-ui-review` | — | The owner, 2026-09-20: theme choice is *"authoring (human/agentic) |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
@@ -161,6 +163,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
 | [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
+| [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Capability: `quality-assurance` · Package: `folio-core` |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
 | [Watching the queue](uploads-watch.html) | `uploads-watch` | — | `uploads/` is the acquisition queue — |
@@ -277,12 +280,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
 
-## CatBootstrap rendering (cat-bootstrap/render)
+## CatBootstrap rendering (bootstrap/render)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [Emitting cat-bootstrap's own graph](cat-bootstrap-graph-emission.html) | `cat-bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** cat-bootstrap |
-| [Publishing cat-bootstrap's graph](cat-bootstrap-graph-publication.html) | `cat-bootstrap-graph-publication` | — |  |
+| [Emitting bootstrap's own graph](bootstrap-graph-emission.html) | `bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** bootstrap |
+| [Publishing bootstrap's graph](bootstrap-graph-publication.html) | `bootstrap-graph-publication` | — |  |
 
 ## RACI involvement model (methodologies/raci)
 
@@ -303,12 +306,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Spec Kit](spec-kit.html) | `spec-kit` | — | **Adopted whole, 2026-09-21**, on the owner's decision (issue #730, option A): |
-
-## Agent skills
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Corpus-Grep](corpus-grep.html) | `corpus-grep` | — | > **Disambiguation.** This skill formalizes the **backward** check |
 
 ## Knowledge-graph navigation (tooled)
 

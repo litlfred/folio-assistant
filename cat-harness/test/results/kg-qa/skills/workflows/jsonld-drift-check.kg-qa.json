@@ -5,7 +5,7 @@
     "id": "Process_JsonLdDrift",
     "path": "skills/workflows/jsonld-drift-check.bpmn"
   },
-  "source_hash": "sha256:720d3704527b916f42a66d6b32e90c865620e7a87a050605657a7f47576183a7",
+  "source_hash": "sha256:72fc714252b1e7ac7420bdd9ea474b8571400482c8bb71155223ea9c72525c49",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

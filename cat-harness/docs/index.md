@@ -74,6 +74,12 @@ is thorough, and the honest expectation is that you will arrive at it from a
 search engine at the exact moment something breaks. That is a fine way to use
 it. The three steps above are the ones worth reading now.
 
+When it is the *machinery* that has you puzzled rather than the authoring —
+who does a thing, under which process, using which skill — start at
+[The platform]({{ '/platform.html' | relative_url }}). One sentence there
+carries the whole model, and every word in it is a separately declared
+object.
+
 ---
 
 ## What is folio-assistant?
@@ -129,6 +135,14 @@ swimlanes, with the roles, the HCI validation gate, and the shared work plan.
 - **[Skill schema reference](reference/skills/)** — generated input/output contracts for every skill.
 - **[TypeScript API reference](api/)** — the content-object model (`Block`, `Chapter`, `Paper`, builders, Zod constraints).
 - **[Architecture](architecture.html)** — adapters, MCP server, RBAC, the block model.
+- **[The KGraph](kgraph.html)** — the subgraph taxonomy, which way the references run, and how repositories divide the work.
+- **[The Harness](harness.html)** — instantiation, the dependency walk, and what harnessing a directory obliges.
+
+Two Skills are worth reading before the pages above, because everything else
+assumes them: [`getting-started`](reference/skill-instructions/getting-started.html)
+routes what you are actually trying to do, and
+[`placement`](reference/skill-instructions/placement.html) settles where a new
+node belongs before you make one.
 
 ## Documentation map
 

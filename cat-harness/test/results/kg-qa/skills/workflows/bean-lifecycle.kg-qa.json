@@ -5,7 +5,7 @@
     "id": "Process_BeanLifecycle",
     "path": "skills/workflows/bean-lifecycle.bpmn"
   },
-  "source_hash": "sha256:4219b1739a159cabdf738f69850a760736cad6d9ac42586e13286e05444cbd7a",
+  "source_hash": "sha256:c951a6a82837c4bbbe96eca444ecc25b1d8c16f27a085214e82e07c261c7cc07",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

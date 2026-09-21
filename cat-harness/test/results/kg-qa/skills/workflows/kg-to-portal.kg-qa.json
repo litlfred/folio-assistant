@@ -5,7 +5,7 @@
     "id": "Process_KgToPortal",
     "path": "skills/workflows/kg-to-portal.bpmn"
   },
-  "source_hash": "sha256:97acd767c66d7f3b12515a86d3599f5c9fc05cca94b3f4796f3c8c6be21eea25",
+  "source_hash": "sha256:5612fb216f41543661101807d785544830a0819925dcdc82f2bd12989d6432ea",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -45,6 +45,10 @@
     },
     "lane-binds-role": {
       "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
@@ -108,7 +112,7 @@
   "totals": {
     "pass": 7,
     "fail": 1,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

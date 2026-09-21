@@ -23,7 +23,7 @@
  * @module content/pipeline/q-usage-audit
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDir, deferResolution} from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, relative } from "node:path";
@@ -164,7 +164,11 @@ const REPO_ROOT = findContentRepoRoot();
  * the pipeline).
  */
 const PAPERS: string[] = paperFilter ? [paperFilter] : findPapers(REPO_ROOT);
-const PAPER_ROOTS: string[] = PAPERS.map((p) => join(folioDir(REPO_ROOT),  p));
+const PAPER_ROOTS = deferResolution(() => PAPERS.map((p) => join(folioDir(REPO_ROOT),  p)), {
+  moduleUrl: import.meta.url,
+  what: "PAPER_ROOTS",
+  under: REPO_ROOT,
+});
 
 // ── Walk block files ────────────────────────────────────────────
 
@@ -188,7 +192,7 @@ interface BlockTriple {
  */
 function walkBlocks(): BlockTriple[] {
   const out: BlockTriple[] = [];
-  for (const b of PAPER_ROOTS.flatMap((r) => [...utilWalkBlocks(r)])) {
+  for (const b of PAPER_ROOTS().flatMap((r) => [...utilWalkBlocks(r)])) {
     const chapter = chapterFromPath(b.ts) ?? "";
     if (chapterFilter && chapter !== chapterFilter) continue;
     out.push({

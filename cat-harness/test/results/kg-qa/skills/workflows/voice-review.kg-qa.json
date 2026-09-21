@@ -5,7 +5,7 @@
     "id": "Process_VoiceReview",
     "path": "skills/workflows/voice-review.bpmn"
   },
-  "source_hash": "sha256:b9a9f5f70d5f03222e2e780cd408745a02a20cf244db3299b89d9eab31c3f050",
+  "source_hash": "sha256:55b23e1672aa4f47b8553ed7fb39ad2c032b2367fa25e81b7dd471cc8e3f7469",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

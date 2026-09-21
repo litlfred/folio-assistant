@@ -5,7 +5,7 @@
     "id": "Process_RepoHealth",
     "path": "skills/workflows/repository-health-watch.bpmn"
   },
-  "source_hash": "sha256:eb85d38472cd37e541f8ff2c665a623145a81729fa56f57d769d54ad7866b46b",
+  "source_hash": "sha256:c53305bcea55d04b0ad107a4a45f297d70c1fe7e5c84cd4fa4d9b5c616c3ebed",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "fail",
       "findings": [
@@ -84,7 +88,7 @@
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

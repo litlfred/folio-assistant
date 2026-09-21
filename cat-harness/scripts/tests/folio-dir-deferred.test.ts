@@ -14,7 +14,7 @@
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 import { folioDir, folioDirDeferred } from "../../schemas/cat-harness.ts";
 import "../../schemas/folio-graph-kind.ts";
@@ -22,7 +22,14 @@ import "../../schemas/folio-graph-kind.ts";
 /** A root whose declaration will not parse, so `folioDir` throws on it. */
 function unreadableRoot(): string {
   const d = mkdtempSync(join(tmpdir(), "folio-dir-deferred-"));
-  writeFileSync(join(d, "probe.config.json"), "{ not json", "utf-8");
+  // Named after the DIRECTORY, and `<name>.json` rather than
+  // `<name>.config.json`. Declarations became `<name>.json` on 2026-09-21, and
+  // an unparseable file has no `name` to agree with — so it counts as this
+  // instance's broken declaration only when its stem matches the directory or
+  // a paired `<stem>.config.json` sits beside it. `probe.config.json` matched
+  // neither, so this root stopped being unreadable and the precondition below
+  // stopped holding, which is exactly the vacuous green it guards against.
+  writeFileSync(join(d, `${basename(d)}.json`), "{ not json", "utf-8");
   return d;
 }
 

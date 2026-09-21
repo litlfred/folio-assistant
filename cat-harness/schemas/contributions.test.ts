@@ -36,6 +36,11 @@ beforeAll(() => {
          blockKinds: [{ kind: "knot-diagram", adapter: "sci" }],
          adapter: { name: "sci", module: "./adapters/sci/index.ts" },
          tools: [{ name: "lean", register: (s) => { (globalThis).__leanRegistered = s; } }],
+         qaCheckers: [{ criterion: "knot-well-formed", check: () => ({ result: "pass", hits: [] }), sourceFile: "checkers.ts" }],
+         // Claimed by the MODULE, and it must lose to the dependency entry —
+         // a contributor that could name its own root could point the sweep
+         // at bytes it does not own.
+         root: "/somewhere/else",
        };
      }`,
     "utf-8",
@@ -161,6 +166,16 @@ describe("loadContributions — the Phase 0.1 gate", () => {
     expect(r.contributedKinds()[0]?.contributor).toBe("dep-sci");
   });
 
+  it("the dependency entry's ROOT wins too, so a checker hashes the right bytes", async () => {
+    // Not the same field as `name`: this one says where the contributor's
+    // FILES are, and a contributed checker's source file is resolved against
+    // it to be freshness-hashed. The fixture module claims `/somewhere/else`.
+    const r = await loadContributions<FolioContribution, ContributionRegistry>(TMP, new ContributionRegistry());
+    const entry = r.qaCheckerEntry("knot-well-formed");
+    expect(entry?.root).toBe(join(TMP, "dep-sci"));
+    expect(entry?.label).toBe("dep-sci/checkers.ts");
+  });
+
   it("a declared-but-missing contributes module fails loudly", async () => {
     // A stated intention that silently did nothing is the exact failure mode
     // AGENTS.md records under "move wiring and script together".
@@ -178,32 +193,66 @@ describe("loadContributions — the Phase 0.1 gate", () => {
 
 describe("contributed QA checkers", () => {
   const checker = (result: "pass" | "fail") => () => ({ result, hits: [] });
+  /** A contribution carries its root, as `loadContributions` pins it. */
+  const from = (name: string, criterion: string, result: "pass" | "fail" = "pass") => ({
+    name,
+    root: `/deps/${name}`,
+    qaCheckers: [{ criterion, check: checker(result), sourceFile: "content/pipeline/checkers.ts" }],
+  });
 
   it("a dependency's checker is reachable by the criterion it answers", () => {
     const r = new ContributionRegistry();
-    r.register({ name: "smart-base", qaCheckers: [{ criterion: "dak-bpmn-has-process", check: checker("pass") }] });
+    r.register(from("smart-base", "dak-bpmn-has-process"));
     expect(r.qaChecker("dak-bpmn-has-process")).toBeDefined();
     expect(r.contributedQaCheckers()).toEqual([
-      { criterion: "dak-bpmn-has-process", contributor: "smart-base" },
+      {
+        criterion: "dak-bpmn-has-process",
+        contributor: "smart-base",
+        label: "smart-base/content/pipeline/checkers.ts",
+      },
     ]);
   });
 
   it("an unimplemented criterion is undefined, never a default pass", () => {
     const r = new ContributionRegistry();
     expect(r.qaChecker("nobody-implements-this")).toBeUndefined();
+    expect(r.qaCheckerEntry("nobody-implements-this")).toBeUndefined();
+  });
+
+  it("the entry carries where the bytes are, so the verdict can go stale", () => {
+    // The whole reason `sourceFile` is required. A checker the sweep can run
+    // but cannot hash is a checker whose verdicts are fresh forever.
+    const r = new ContributionRegistry();
+    r.register(from("smart-base", "dak-bpmn-has-process"));
+    expect(r.qaCheckerEntry("dak-bpmn-has-process")).toEqual({
+      check: expect.any(Function),
+      sourceFile: "content/pipeline/checkers.ts",
+      root: "/deps/smart-base",
+      label: "smart-base/content/pipeline/checkers.ts",
+    });
+  });
+
+  it("qaCheckers without a root is refused, naming the contributor", () => {
+    const r = new ContributionRegistry();
+    expect(() =>
+      r.register({
+        name: "smart-base",
+        qaCheckers: [{ criterion: "dak-bpmn-has-process", check: checker("pass"), sourceFile: "x.ts" }],
+      }),
+    ).toThrow(/"smart-base" supplies qaCheckers but no root/);
   });
 
   it("two contributors claiming one criterion throws, naming both", () => {
     const r = new ContributionRegistry();
-    r.register({ name: "smart-base", qaCheckers: [{ criterion: "shared", check: checker("pass") }] });
-    expect(() =>
-      r.register({ name: "folio-asst-sci", qaCheckers: [{ criterion: "shared", check: checker("fail") }] }),
-    ).toThrow(/both "smart-base" and "folio-asst-sci"/);
+    r.register(from("smart-base", "shared"));
+    expect(() => r.register(from("folio-asst-sci", "shared", "fail"))).toThrow(
+      /both "smart-base" and "folio-asst-sci"/,
+    );
   });
 
   it("the same contributor re-registering is a no-op, so a diamond loads", () => {
     const r = new ContributionRegistry();
-    const c = { name: "smart-base", qaCheckers: [{ criterion: "shared", check: checker("pass") }] };
+    const c = from("smart-base", "shared");
     r.register(c);
     expect(() => r.register(c)).not.toThrow();
     expect(r.contributedQaCheckers()).toHaveLength(1);

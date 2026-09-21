@@ -139,7 +139,7 @@ export interface FshGutsDir {
 export function fshGutsDirs(root: string): FshGutsDir[] {
   try {
     return resolveDirectories([{ name: "(local)", root, own: true }])
-      .filter((d) => d.graphs.includes("fsh-guts"))
+      .filter((d) => d.graphKinds.includes("fsh-guts"))
       .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
       .filter((d) => existsSync(d.absPath));
   } catch {

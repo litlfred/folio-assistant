@@ -34,7 +34,7 @@ drops the three: 106 → 103.
 
 **`skillMdDirs`'s own comment names `crdm` as the example.** Verbatim:
 *"This is what lets a topical directory (`bootstrap/`, `crdm/`, …) cost a
-declaration line and no code change."* `cat-bootstrap/skills/` was the first
+declaration line and no code change."* `bootstrap/skills/` was the first
 such root; this is the second. Nothing in the discovery path changed —
 `kgDirectories` and `workflowDirs` picked both up from `harness.json`.
 

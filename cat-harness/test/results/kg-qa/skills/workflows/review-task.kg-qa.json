@@ -5,7 +5,7 @@
     "id": "Process_Review",
     "path": "skills/workflows/review-task.bpmn"
   },
-  "source_hash": "sha256:a9aae69063deed8ece5554e8a239197bddc63f7529247e8635f9589fc77ccca4",
+  "source_hash": "sha256:d3fb8af21c25f08146f43cfecb965f6d87da7a0313bcc9d570f6ac5c10eb194f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

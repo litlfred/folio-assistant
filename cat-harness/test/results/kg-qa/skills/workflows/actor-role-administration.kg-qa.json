@@ -5,7 +5,7 @@
     "id": "Process_ActorRoleAdministration",
     "path": "skills/workflows/actor-role-administration.bpmn"
   },
-  "source_hash": "sha256:f5324a6dc779c9bcc3dc604bbc76f96108a8ea1035dc8c0072afdcc58ea50939",
+  "source_hash": "sha256:1a93aab59084f0a9e9090932f9b791a1c1056dfd4a2d4ac988e94e5b5142239f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "fail",
       "findings": [
@@ -80,7 +84,7 @@
   "totals": {
     "pass": 8,
     "fail": 1,
-    "n/a": 5,
+    "n/a": 6,
     "unknown": 0
   }
 }

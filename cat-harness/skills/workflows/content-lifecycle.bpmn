@@ -42,6 +42,7 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Lifecycle_LaneSet">
       <bpmn:lane id="Lane_ProgMgr" name="Programme manager">
+        <bpmn:documentation>Opens and closes the cycle rather than running any of it: Task_Plan commits scope, team and artefacts before Lane_WorkPlan turns them into beans, and Task_Retire is reached only when Gateway_NextCycle finds nothing left to do — so this lane's second appearance is a judgement that the cycle is actually finished, not a step inside it.</bpmn:documentation>
         <bpmn:flowNodeRef>StartEvent_Initiative</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Plan</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_NextCycle</bpmn:flowNodeRef>
@@ -49,19 +50,24 @@
         <bpmn:flowNodeRef>EndEvent_Retired</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
+        <bpmn:documentation>Touched twice, not once: Task_SeedBeans converts the programme manager's plan into trackable work at the start, and Task_FeedbackBeans converts triaged reader feedback into more of it at the end, immediately before Gateway_NextCycle asks whether to go around again — so this lane is what makes the lifecycle a LOOP rather than a line, carrying what closed one cycle into what opens the next.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_SeedBeans</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_FeedbackBeans</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Editors" name="Editors + authoring agents">
+        <bpmn:documentation>The single re-entry point for every round the cycle contains — Gateway_NextCycle's 'yes' branch (H09) loops straight back here rather than to Task_Plan — so this lane runs once per proposed change, not once per cycle, and is where the accept decision on each of those changes is made before anything reaches the corpus-wide Task_Test.</bpmn:documentation>
         <bpmn:flowNodeRef>CallActivity_Editing</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Qa" name="Validation and QA (mechanical + agents)">
+        <bpmn:documentation>The corpus-wide check no single block's HCI validation gate can perform — cross-references, whole-folio build status, proof status and QA axes — sitting between the editor's accept and the publication manager's release, so a change that passed block-level review still has to clear folio-level checks before CallActivity_Publication ever runs.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_Test</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Review" name="Review team and SMEs">
+        <bpmn:documentation>The only reviewing this lane does happens AFTER publication, not before it: Task_Feedback triages what implementers and readers report on the LIVE folio, by severity and scope, and that triage — not a fresh review — is what Task_FeedbackBeans turns into the next cycle's work.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_Feedback</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_PubMgr" name="Publication manager">
+        <bpmn:documentation>The single point in the cycle where the corpus becomes public: reached only after Task_Test has cleared the whole folio, and its own outcome is what Task_Feedback then collects reactions to — so whatever this lane calls out to in draft-to-publication.bpmn is the last gate before readers see anything.</bpmn:documentation>
         <bpmn:flowNodeRef>CallActivity_Publication</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>

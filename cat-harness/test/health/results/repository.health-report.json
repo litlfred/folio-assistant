@@ -8,12 +8,12 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-21T05:33:02.351Z",
+  "updated_at": "2026-09-21T20:04:06.173Z",
   "verdict": "findings",
   "checks": [
     {
       "id": "staging-preview-size",
-      "state": "ok",
+      "state": "finding",
       "summary": "The review previews under `STAGING/` on the publish branch have grown past what a GitHub Pages site can carry alongside the main site.",
       "thresholds": [
         {
@@ -34,18 +34,25 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 61893307,
+          "value": 525816404,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 1,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
-      "findings": []
+      "findings": [
+        {
+          "summary": "6 staging preview(s) total 501.5 MB, over the 500.0 MB warning point.",
+          "metric": "staging-total-bytes",
+          "severity": "major",
+          "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
+        }
+      ]
     },
     {
       "id": "staging-preview-orphans",
@@ -75,7 +82,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 1,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -119,38 +126,38 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 98830051,
+          "value": 102586569,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 919240308,
+          "value": 1101857411,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 910169088,
+          "value": 1087610880,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 23,
+          "value": 47,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 9.3,
+          "value": 10.74,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 876.7 MB against 94.3 MB of tracked content — 9.3x, in 23 pack(s).",
+          "summary": "`.git` is 1.03 GB against 97.8 MB of tracked content — 10.7x, in 47 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -208,19 +215,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 339,
+          "value": 406,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 198,
+          "value": 191,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 141,
+          "value": 215,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -238,7 +245,7 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 82,
+          "value": 90,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -275,13 +282,13 @@
           "action": "Either list the options that were weighed, or drop the section — an empty options section claims an analysis that did not happen, which is worse than not claiming one."
         },
         {
-          "summary": "141 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "215 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
         },
         {
-          "summary": "198 open beans (todo + in-progress), past the 150 calibration point.",
+          "summary": "191 open beans (todo + in-progress), past the 150 calibration point.",
           "metric": "bean-open",
           "severity": "minor",
           "action": "Read `beans roadmap` rather than `beans list` and check the backlog still has a shape. This is a fact about the plan, not about any one item."

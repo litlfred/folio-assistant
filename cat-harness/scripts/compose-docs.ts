@@ -128,7 +128,7 @@ interface DeclEntry {
   id?: string;
   path?: string;
   scope?: string;
-  graphs?: string[];
+  graphKinds?: string[];
 }
 
 /**
@@ -149,7 +149,7 @@ export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLay
   };
   const found: DocsLayer[] = [];
   for (const e of decl.directories ?? []) {
-    if (!e.path || !e.id || !(e.graphs ?? []).includes("docs")) continue;
+    if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
     const repositoryScoped = e.scope === "repository";
     const root = repositoryScoped ? repo : join(repo, "cat-harness");
     found.push({ id: e.id, dir: join(root, e.path), repositoryScoped });
@@ -160,6 +160,57 @@ export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLay
     layers: found.filter((l) => existsSync(l.dir)),
     missing: found.filter((l) => !existsSync(l.dir)),
   };
+}
+
+/** One instance directory composed into the Jekyll source under its own name. */
+export interface ComposedInstance {
+  instance: string;
+  /** Absolute source directory. */
+  dir: string;
+  /** Where it lands, relative to the composed tree — the instance's name. */
+  under: string;
+}
+
+/**
+ * Every OTHER instance's directory that asks to be composed rather than mounted.
+ *
+ * This is the owner's *"harness can have docs/ which then get listed under
+ * `cat-harness/docs/<harness>`"* — the clause neither consumer implemented.
+ * `mount-instance-docs.ts` copies built HTML into `_site` AFTER Jekyll, which
+ * is a different thing and is what leaves those pages with no layout at all.
+ *
+ * **Opt-in, read off `composed` on the directory.** A composed default would
+ * silently restyle `who-iris/`, which is a replica of somebody else's site and
+ * must not wear just-the-docs' chrome — the same reason `mount-instance-docs`
+ * gives where it declines to run Jekyll over these.
+ *
+ * `cat-harness` is excluded because it IS the base layer; composing it under
+ * its own name would publish the whole site twice, which is the double-publish
+ * `mount-instance-docs` already guards with `--built`.
+ */
+export function composedInstances(repo = REPO): ComposedInstance[] {
+  const out: ComposedInstance[] = [];
+  for (const e of readdirSync(repo, { withFileTypes: true })) {
+    if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
+    if (e.name === "cat-harness") continue;
+    const declPath = declarationPathIn(join(repo, e.name));
+    if (!declPath || !existsSync(declPath)) continue;
+    let d: { name?: string; directories?: (DeclEntry & { composed?: boolean })[] };
+    try {
+      d = JSON.parse(readFileSync(declPath, "utf-8"));
+    } catch {
+      // Not this script's finding — `kg:schema:check` owns an unparseable
+      // declaration, and reporting it here would be a second voice on it.
+      continue;
+    }
+    for (const entry of d.directories ?? []) {
+      if (!entry.path || entry.composed !== true) continue;
+      const abs = join(repo, e.name, entry.path);
+      if (!existsSync(abs)) continue;
+      out.push({ instance: d.name ?? e.name, dir: abs, under: d.name ?? e.name });
+    }
+  }
+  return out.sort((a, b) => a.under.localeCompare(b.under));
 }
 
 /** Every file beneath `dir`, as paths relative to it. Dotfiles are skipped. */
@@ -193,6 +244,15 @@ export interface ComposeReport {
    * collapsing it into either would make "what did the root change" unanswerable.
    */
   readonly merged: { path: string; baseLayer: string; by: string; keys: string[] }[];
+  /**
+   * Instances composed under their own name, rather than mounted after Jekyll.
+   *
+   * Reported separately from `layers`, and that is not tidiness: a layer
+   * OVERLAYS the site's own tree and a composed instance sits beside it under
+   * its own prefix. Folding them together would make "did the root change this
+   * page" and "did an instance add one" the same answer.
+   */
+  readonly composed: ComposedInstance[];
 }
 
 /**
@@ -294,7 +354,21 @@ export function compose(out: string, repo = REPO): ComposeReport {
       suppliedBy[rel] = layer.id;
     }
   }
-  return { layers, missing, suppliedBy, overrides, added, merged };
+
+  // Composed instances land UNDER THEIR OWN NAME, after the layers, so an
+  // instance cannot shadow a base page by accident: `who-iris/index.md` in a
+  // composed tree is `<out>/who-iris/index.md`, never `<out>/index.md`.
+  const composedInst = composedInstances(repo);
+  for (const c of composedInst) {
+    for (const rel of filesUnder(c.dir)) {
+      const dest = join(out, c.under, rel);
+      mkdirSync(join(dest, ".."), { recursive: true });
+      cpSync(join(c.dir, rel), dest);
+      suppliedBy[join(c.under, rel)] = c.instance;
+    }
+  }
+
+  return { layers, missing, suppliedBy, overrides, added, merged, composed: composedInst };
 }
 
 /** Every file beneath a directory with its bytes — for the identity check. */

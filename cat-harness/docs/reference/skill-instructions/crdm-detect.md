@@ -58,6 +58,7 @@ Phrases where the user explicitly asks for new functionality:
 - "the renderer should support …", "make the pipeline do …"
 - "can we add a new block kind for …", "we need a content type for …"
 - "it would be great if the agent could …"
+- "the agent should …", "the agent needs to …", "we will need to …"
 - "build me …", "create a tool …", "develop a feature …"
 
 ### Workflow gap descriptions
@@ -78,6 +79,9 @@ Phrases that imply changes to folio-assistant itself (not folio content):
 - "add a new adapter …", "the constraint should …"
 - "update the CI to …", "the workflow should fire when …"
 - "the MCP tool needs to …", "register a new tool for …"
+- "the upstream change requests to …", "upstream asks" — a change asked of a
+  tool this platform DEPENDS ON is still a platform change; the folio is not
+  where it lands either way
 - References to files under `schemas/`, `content/pipeline/`, `adapters/`,
   `src/`, `scripts/`, `.github/workflows/`
 
@@ -99,6 +103,21 @@ Phrases that emerge during content review:
 - "stakeholders need to be able to see …"
 - "can we make the review process more …"
 
+### Self-declared genre
+
+The mirror of `"Migration record: …"` below. Some documents say what they are in
+their own first line, and a **proposal** or a **design document** argues for a
+change that does not exist yet — which is a feature request whichever category
+its sentences fall into.
+
+- "Proposal: …" as a document's OPENING line
+- "design document for …"
+
+Anchored to the opening line on purpose. A document that *mentions* a proposal
+is not one: #187 asks for a write-up of a merged proposal's changes and is not
+a feature request, while #199 IS that write-up. An unanchored `proposal` costs
+that distinction — measured, not supposed.
+
 ## What is NOT a feature request
 
 Do not trigger CRDM for:
@@ -109,6 +128,8 @@ Do not trigger CRDM for:
 - "What does this block kind mean?" — information request
 - "Review chapter 5" — content review within existing workflow
 - "Create a bean for …" — work-plan management
+- "Migration record: …" — a record of work already DONE, not a request for
+  work; the tense is the signal
 - Bug reports about existing features (unless they imply a redesign)
 
 ## On detection — what to do

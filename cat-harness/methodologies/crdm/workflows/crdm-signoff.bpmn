@@ -13,10 +13,12 @@
     <bpmn:documentation>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_CRDM_Signoff">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
+        <bpmn:documentation>Makes two decisions of different character here: BA_Signoff approves what was drafted, and BA_ChooseKg commits it — or explicitly does not — to a knowledge-graph destination, where NONE is a legitimate answer rather than a refusal to answer. Only this lane may decide that a requirement is fully carried by the code and becomes a commit and nothing else; an agent that decided so on its own would be placing a node in somebody else's graph.</bpmn:documentation>
         <bpmn:flowNodeRef>BA_Signoff</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>BA_ChooseKg</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:documentation>Turns Lane_BA's two decisions into durable artefacts: A_CreateBeans and A_RecordKg each mint their own bean directly with the CLI, since the engine's own vocabulary has no create, only claim, note and resolve on an instance's bean. A_AnnounceBranch then closes the phase on its one path to End with no loop of its own, so it fires exactly once — Phase 6's own loops re-enter implementation on the same branch without ever crossing back through this edge.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Process_CRDM_Signoff</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CreateBeans</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_OfferKg</bpmn:flowNodeRef>
@@ -65,7 +67,7 @@ Announce once, when the branch is created.</bpmn:documentation>
 
 ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told.
 
-The options are DERIVED from the graphs this instance declares in `harness.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory.</bpmn:documentation>
+The options are DERIVED from the graphs this instance declares in `&lt;name&gt;.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="kg-contribution-offer"/>
       </bpmn:extensionElements>

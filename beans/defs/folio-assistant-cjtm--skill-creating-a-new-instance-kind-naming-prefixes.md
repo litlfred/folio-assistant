@@ -1,6 +1,6 @@
 ---
 # folio-assistant-cjtm
-title: 'SKILL: creating a new instance KIND — naming, prefixes, and repointing cat-bootstrap/README.md'
+title: 'SKILL: creating a new instance KIND — naming, prefixes, and repointing bootstrap/README.md'
 status: completed
 type: task
 priority: normal
@@ -28,7 +28,7 @@ families in this repository today are:
 
 | prefix | what it marks | instances here |
 |---|---|---|
-| `cat-` | the agentic-harness layer | `cat-harness`, `cat-bootstrap` |
+| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap` |
 | `folio-assistant-` | the content/core layer | `folio-assistant-core` |
 | `who-` | WHO material | `who-iris`, `who-style-guide` |
 | `litlfred-` | the owner's own | — none yet |
@@ -37,7 +37,7 @@ families in this repository today are:
 rather than inferring later: `main` had renamed the core instance to
 `folio-assist-core` while this branch carried `folio-assistant-core`, and the
 ruling above decided it — the `cat-` prefix reaches the harness layer
-(`bootstrap` -> `cat-bootstrap`, which was taken from main) and stops there.
+(`bootstrap` -> `bootstrap`, which was taken from main) and stops there.
 
 ## Renaming is a choice, and not renaming is also a choice
 
@@ -62,7 +62,7 @@ thing from a rule.
 > should give instructions to change that file to point to something other
 > can ca-harness, for example their new instance kind, if they want to.
 
-`cat-bootstrap/README.md` points at `cat-harness.md`. That is right for THIS
+`bootstrap/README.md` points at `cat-harness.md`. That is right for THIS
 repository and wrong for anybody bootstrapping a new instance kind of their
 own: they get a README aimed at a harness they are not using.
 
@@ -76,7 +76,7 @@ owner it is theirs to change.
       `skill_fetch`, covering: choosing the prefix family, the keep-the-kind's-name
       default and how to override it, what a new kind must declare in
       `harness.json`, and which inherited files are the new owner's to edit.
-- [ ] `cat-harness` documentation names `cat-bootstrap/README.md` as one of
+- [ ] `cat-harness` documentation names `bootstrap/README.md` as one of
       those files, with the instruction to repoint it.
 - [ ] The prefix table above lives in the skill, not only in this bean — a
       rule with no home is the failure `AGENTS.md` opens by warning about.
@@ -134,13 +134,13 @@ pass, 79 gates green.
 
 **1. There is no `cat-harness.md`.** The §"concrete defect" above says
 `bootstrap/README.md` references it. No file of that name exists anywhere in the
-repo. What `cat-bootstrap/README.md` actually does is resolve **13 links into
+repo. What `bootstrap/README.md` actually does is resolve **13 links into
 `../cat-harness/`** across **6 distinct files** — `dak-blocks.ts` ×5,
 `role-graph.ts` ×3, `cat-harness.ts` ×2, `skill-package.ts`, `tool.ts`,
 `skills/workflows`. Every one is a TERM DEFINITION. The owner's point holds
 exactly as stated; the artefact is a link family rather than one filename, so
 the instruction written into
-`cat-harness/docs/cat-bootstrap/initialization.md` is to repoint the family and
+`cat-harness/docs/bootstrap/initialization.md` is to repoint the family and
 keep the user-scenario structure, not to swap a filename.
 
 **2. A visualiser is not a new graph kind, so the hard case this bean names

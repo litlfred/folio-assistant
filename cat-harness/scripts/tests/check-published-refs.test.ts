@@ -6,7 +6,7 @@
  * nothing is not a pass.
  */
 import { describe, expect, it } from "bun:test";
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -20,7 +20,7 @@ import {
   publishedGraphRefs,
 } from "../check-published-refs";
 import {  } from "../../schemas/cat-harness.js";
-import { writeDeclaration } from "../../test/support/instance-fixture.js";
+import { writeDeclaration, writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 describe("classifyRef", () => {
   it("accepts a version, with or without the tag's leading v", () => {
@@ -49,12 +49,22 @@ describe("classifyRef", () => {
   });
 });
 
-/** An instance tree with a declaration and an optional folio config. */
+/**
+ * An instance tree with a declaration and an optional folio config.
+ *
+ * **The config goes through `writeInstanceConfig`, not a literal filename.**
+ * It wrote `harness.config.json` until 2026-09-21, matching a literal that
+ * `dependencyRefs` composed the same way — so both sides were wrong TOGETHER
+ * and the suite passed while the real check examined nothing in a real
+ * repository. That is the hazard `instance-fixture` already names: a fixture
+ * whose file discovery cannot see passes for the wrong reason, and here the
+ * agreement between two wrong literals hid it from the other direction too.
+ */
 function instance(decl: unknown, config?: unknown): string {
   const root = mkdtempSync(join(tmpdir(), "pubrefs-"));
   mkdirSync(join(root, "inst"), { recursive: true });
   writeDeclaration(join(root, "inst"), JSON.stringify(decl));
-  if (config !== undefined) writeFileSync(join(root, "inst", "harness.config.json"), JSON.stringify(config));
+  if (config !== undefined) writeInstanceConfig(join(root, "inst"), JSON.stringify(config));
   return root;
 }
 
@@ -91,7 +101,7 @@ describe("carrier 1 — instance dependencies", () => {
     const root = mkdtempSync(join(tmpdir(), "pubrefs-bad-"));
     mkdirSync(join(root, "inst"), { recursive: true });
     writeDeclaration(join(root, "inst"), JSON.stringify({ name: "t" }));
-    writeFileSync(join(root, "inst", "harness.config.json"), "{ not json");
+    writeInstanceConfig(join(root, "inst"), "{ not json");
     expect(dependencyRefs(root).findings).toHaveLength(1);
     rmSync(root, { recursive: true, force: true });
   });
@@ -117,7 +127,7 @@ describe("carrier 2 — asset sources", () => {
 
   it("this repository's own unpinned source is found", () => {
     // The real one, and the reason this gate is not a check over nothing: the
-    // root's `agent-instructions` names cat-bootstrap's file with no ref.
+    // root's `agent-instructions` names bootstrap's file with no ref.
     const repo = resolve(import.meta.dir, "..", "..", "..");
     const wheres = assetSourceRefs(repo).findings.map((f) => f.where);
     expect(wheres.some((w) => w.includes("agent-instructions"))).toBe(true);

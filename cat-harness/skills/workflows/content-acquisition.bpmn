@@ -13,6 +13,7 @@
     <bpmn:documentation>How a resource gets into the graph in the first place. `document-ingestion.bpmn` begins at "a file lands in uploads/" and calls that its only entry point — true of ingestion, and silent on how the file got there. This is the step before it. The channels are plural and the set is open: uploads/ is one, the conversation is another.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_ContentAcquisition">
       <bpmn:lane id="Lane_Person" name="Contributor">
+        <bpmn:documentation>Both of this lane's tasks are optional by design, not merely possible: P_Respond's 'or neither' is a real, accepted outcome rather than a stall, and A_Ask already states what happens if nothing comes back — so this lane can contribute nothing at all and the process still proceeds, which is not true of the sign-off lanes elsewhere in this corpus.</bpmn:documentation>
         <!-- Bound EXPLICITLY rather than by lane name. `roles.json` matches a
              lane to a role by name, and that indirection is how one role ended
              up carrying five aliases because five diagrams each named the same
@@ -23,6 +24,7 @@
         <bpmn:flowNodeRef>P_Upload</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:documentation>This lane is not unattended, unlike the same role elsewhere: A_Ask and A_Route both wait on Lane_Person, for minutes or days, because there is no material yet to make a gate decidable from — that only becomes true once a file or description exists. Acquisition ends at the moment something lands in the queue; everything past that boundary is document-ingestion.bpmn's actually-unattended run, not this one.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Acquire</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Offered</bpmn:flowNodeRef>

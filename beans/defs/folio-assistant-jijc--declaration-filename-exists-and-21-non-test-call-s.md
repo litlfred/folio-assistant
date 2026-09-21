@@ -105,8 +105,10 @@ header said "three".
       (`"needs": ["cat-harness"]`) — nothing new was created
 - [x] **Owner ruled 2026-09-21:** the test fixtures are migrated, not pinned —
       112 sites across 36 files, 15 of them object keys
-- [ ] The 3 workflow `.yml` files are handled by whatever does the rename;
-      they cannot import a constant and this check has no opinion on them
+- [x] **Done 2026-09-21.** The workflow `.yml` files are CLASSIFIED, not
+      counted. *The second clause — "this check has no opinion on them" — was
+      the defect rather than a scope note, so it is corrected here rather than
+      ticked as written.*
 
 *Ticked IN PLACE 2026-09-21. The rulings and what they cost are in the section
 below; this list is the one a reader and every tool consult, so it is the one
@@ -186,3 +188,95 @@ Merging 47 commits of `main` in brought **two new bypasses** —
 `harness-tiles.ts:205` and `compose-docs.ts:113` — written by other sessions
 while this bean was being worked. Exactly the regression the check exists to
 stop, caught within ten minutes of the merge. Both fixed.
+
+---
+
+## The workflow half, 2026-09-21 — the count was hiding two different things
+
+**Re-measured on `main` at `0fc29b9`** — 3 occurrences in 3 files. *This bean's
+own header says 2*, which is why it was measured again rather than quoted:
+
+| occurrence | verdict |
+|---|---|
+| `docs-site.yml:284` — *"the `stub` in harness.json"* | **stale.** The stub is in `cat-harness/cat-harness.json` (`"stub": "cat-harness"`, read) |
+| `health-check.yml:7` — *"Declared in `harness.json` as the `health` graph"* | **stale.** That graph is entry `health` → `test/health/results/`, in the same file |
+| `code-quality-gates.yml:605` — `docs/_data/harness.json` | **correct.** Jekyll's data file, still on disk, must NOT be renamed |
+
+All three are comments. So a bare count of **3** told a future rename to change
+three things, one of which must never change.
+
+### The defect was asymmetric rigour inside one checker
+
+The TypeScript side classifies with care — whole-value literal, prose, fixture,
+template — and argues in its own header that *"a rename REWORDS these"*. The
+YAML side had **one bucket**: does the file contain the string. *"Cannot import
+a constant"* was doing duty as *"cannot be wrong"*, and those are different
+claims.
+
+**Falsified before anything was written.** A real step planted in
+`health-check.yml`:
+
+```yaml
+- name: PLANTED bypass
+  run: cat cat-harness/harness.json
+```
+
+— a step reading a file that does not exist — produced `✓ no call site names
+the retired harness.json`, **exit 0**. And the count stayed at 3, because it
+counted FILES: a second occurrence in an already-listed file did not move the
+number either.
+
+`classifyWorkflowLine` now gives it the same three-way split, and a `use`
+FAILS. With the plant in place it exits 1 and names the line; with the plant
+removed: workflow prose **0**, jekyll **1**.
+
+### The second defect, found by writing the fix for the first
+
+**`cat-harness.json` contains `harness.json`.** The corrected `docs-site.yml`
+comment names `cat-harness/cat-harness.json` — and the naive `indexOf`
+classifier counted the correction as the defect.
+
+The TypeScript side was never exposed to this: its whole-value rule tests
+`"harness.json"` *with the quotes*, so `"cat-harness.json"` never matched. The
+YAML side needed the equivalent, and `boundedIndexOf` is it — a match must not
+be preceded by a filename character. The same collision class as the
+`docs/_data` rule this file already carried, one character further left.
+
+Guarded in both directions: the current declaration must not match, and the
+retired one must still.
+
+### Still open on this bean — nothing
+
+All six Done-whens are ticked. The two the owner ruled on (fixtures migrated,
+cross-instance imports) keep the arguments against them recorded above, because
+both remain the thing to check if a future rename lands green and nobody
+believes it.
+
+### Found alongside, NOT fixed here
+
+`AGENTS.md` says the health graph is *"declared in `folio-assistant.config.json`"*
+— wrong on the file family (`.config.json` is the folio config; the declaration
+is `<instance>/<instance>.json`) and on the instance (it is `cat-harness`).
+Queued as its own bean rather than pivoted to.
+
+## NOT closed 2026-09-21 — its own gate reports an open judgement on it
+
+Swept up by `fkjo` as an in-progress bean with all six boxes ticked, and
+re-derived rather than closed. `check:declaration-filename` is real, is wired
+at `code-quality-gates.yml:636`, and passes with *"no call site names the
+retired `harness.json`"*.
+
+But its own output carries:
+
+    test fixtures      11  (an open judgement on bean `jijc`, not a finding)
+
+while box 5 records the owner's ruling that *"the test fixtures are migrated,
+not pinned — 112 sites across 36 files"*. The gate and the box disagree about
+whether anything is left, and the gate is the side that re-derives itself
+every run.
+
+**Left open deliberately.** Either the 11 are the remainder of the 112 and the
+box was ticked early, or they are a residue the ruling permits and the gate's
+wording is stale. Both are one measurement away and neither is safe to assume
+— closing on the ticks is exactly what `fkjo` exists to stop.
+

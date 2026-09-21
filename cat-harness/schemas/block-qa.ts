@@ -223,6 +223,119 @@ export function incompatibleCompanions(def: {
   return def.depends_on.filter((r) => !allowed.has(r));
 }
 
+/**
+ * What each party of an untainted verification is given, and what it is not.
+ *
+ * Declared per criterion on {@link QaCriterionDefinition.untainted}. The
+ * discipline it encodes is generic — it is the translation round trip with the
+ * translation taken out, and it applies to a secret scan and to an evidence
+ * appraisal with nothing changed but the vocabulary:
+ *
+ * | party | is given | produces |
+ * |---|---|---|
+ * | producer | the task | the artefact |
+ * | **checker** | `checker_sees`, and nothing that would let it shortcut | an independent rendering or finding |
+ * | **adjudicator** | `adjudicator_sees` — never the artefact itself | `pass` / `warn` / `fail`, each drift named |
+ *
+ * See `skills/folio-core/untainted-verification.md` for the three rules and
+ * the failure each one is there to stop.
+ */
+export interface UntaintedDispatch {
+  /**
+   * Companion roles the CHECKER is given.
+   *
+   * Disjoint from {@link adjudicator_sees}: if both parties can read the same
+   * file, one of them is grading its own input.
+   */
+  checker_sees: CompanionRole[];
+  /**
+   * Companion roles deliberately WITHHELD from the checker.
+   *
+   * Listed rather than inferred, so that the omission is a decision somebody
+   * made. Together with `checker_sees` this must cover every companion the
+   * criterion depends on — see {@link untaintedPartitionDefects}.
+   */
+  checker_withheld: CompanionRole[];
+  /** Companion roles the ADJUDICATOR is given, alongside the checker's output. */
+  adjudicator_sees: CompanionRole[];
+  /**
+   * What counts as a finding for this criterion, and what does not.
+   *
+   * Required, and required to say both halves. Told only what to look for, an
+   * adjudicator returns a style review and everything "fails"; the translation
+   * round trip states it as *"synonyms, articles and re-ordering are not drift;
+   * a claim added, dropped, weakened, strengthened or reversed is"*, and that
+   * shape is what a useful one looks like.
+   */
+  drift: string;
+}
+
+/**
+ * Why a criterion's untainted declaration cannot be trusted — empty when it can.
+ *
+ * Four defects, and each is a way the separation decays without erroring:
+ *
+ * - **undeclared** — no `untainted` block at all. Reported rather than skipped:
+ *   "nobody said" is not "nothing to check", and a criterion silently exempt
+ *   from the discipline is how the discipline stops applying to anything.
+ * - **overlap** — a role in both `checker_sees` and `adjudicator_sees`. This is
+ *   the one that matters: the two parties can read the same file, so the check
+ *   compares a thing with its own paraphrase of itself and passes.
+ * - **unpartitioned** — a companion the criterion depends on that appears in
+ *   neither `checker_sees` nor `checker_withheld`. Usually a role added to
+ *   `depends_on` later; without this it would default to invisible, which is
+ *   safe, or to visible, which is not — either way nobody decided.
+ * - **phantom** — a role named in the declaration that the criterion does not
+ *   depend on. The declaration is describing a criterion other than this one.
+ *
+ * Deliberately NOT checked here: whether `drift` says anything useful. A
+ * non-empty string is checkable; "states what is not drift as well as what is"
+ * is a reading, and a gate that pretends to measure it would be the very thing
+ * this file exists to stop.
+ */
+export function untaintedPartitionDefects(def: {
+  id: string;
+  depends_on: CompanionRole[];
+  untainted?: UntaintedDispatch;
+}): string[] {
+  const u = def.untainted;
+  if (!u) return [`${def.id}: undeclared — no \`untainted\` block, so nobody has said what the checker may see`];
+
+  const out: string[] = [];
+  const depends = new Set<CompanionRole>(def.depends_on);
+  const sees = new Set<CompanionRole>(u.checker_sees);
+  const withheld = new Set<CompanionRole>(u.checker_withheld);
+
+  for (const r of u.adjudicator_sees) {
+    if (sees.has(r)) {
+      out.push(
+        `${def.id}: overlap — \`${r}\` is visible to BOTH the checker and the adjudicator, ` +
+          `so one of them is grading its own input`,
+      );
+    }
+  }
+  for (const r of u.checker_sees) {
+    if (withheld.has(r)) out.push(`${def.id}: overlap — \`${r}\` is both seen and withheld from the checker`);
+  }
+  for (const r of def.depends_on) {
+    if (!sees.has(r) && !withheld.has(r)) {
+      out.push(
+        `${def.id}: unpartitioned — \`${r}\` is a companion this criterion depends on and is in ` +
+          `neither \`checker_sees\` nor \`checker_withheld\`; nobody has decided whether the checker sees it`,
+      );
+    }
+  }
+  for (const r of [...u.checker_sees, ...u.checker_withheld, ...u.adjudicator_sees]) {
+    if (!depends.has(r)) {
+      out.push(`${def.id}: phantom — \`${r}\` is named in the untainted declaration but is not in \`depends_on\``);
+    }
+  }
+  if (u.drift.trim() === "") {
+    out.push(`${def.id}: \`drift\` is empty — an adjudicator told only what to look for returns a style review`);
+  }
+  return out;
+}
+
 /** The adapters a criterion applies to, with the documented default applied. */
 export function criterionAdapters(def: {
   adapters?: ContentAdapter[];
@@ -650,6 +763,36 @@ export interface QaCriterionDefinition {
    */
   also_invalidated_by?: Array<CompanionRole | "graph">;
   /**
+   * How an UNTAINTED verification of this criterion is dispatched — and, more
+   * to the point, what each dispatched party is NOT allowed to see.
+   *
+   * Absent means the criterion has no untainted form declared. That is a third
+   * state, not a permission: {@link untaintedPartitionDefects} reports it as
+   * undeclared rather than as clean, because "nobody said" and "nothing to
+   * check" are the two readings this field exists to keep apart.
+   *
+   * ## Why a declaration rather than a convention
+   *
+   * The separation IS the measurement, and it is the half that decays
+   * silently. A checker shown the thing the adjudicator is ruling against
+   * writes that thing back and the check passes vacuously; an adjudicator
+   * shown the artefact can talk itself into any reading of the checker's
+   * output. Neither failure produces an error — both produce a green verdict
+   * that measured nothing, which is the one outcome worse than a red one.
+   *
+   * So the visible sets are declared and **checked for totality**: every
+   * companion the criterion depends on is in exactly one of `checker_sees`
+   * and `checker_withheld`. A companion role added to a criterion later
+   * therefore cannot drift into the checker's view by default — it lands in
+   * neither set and the partition stops being total, which is a defect with a
+   * name rather than a quiet widening.
+   *
+   * `checker_sees` and `adjudicator_sees` must be **disjoint**. That single
+   * constraint is the whole discipline in one line: if the two parties can see
+   * the same file, one of them is grading its own input.
+   */
+  untainted?: UntaintedDispatch;
+  /**
    * Whether a deterministic script can run this criterion (true) or
    * it requires agent / human adjudication (false).
    */
@@ -707,6 +850,29 @@ export interface QaCriterionDefinition {
    * resolves a default based on the criterion id prefix.
    */
   source_file?: string;
+  /**
+   * This criterion is declared here, but its checker belongs to a dependency.
+   *
+   * Core owns the RULE — what the criterion asserts about content — while the
+   * tooling that answers it may live in the layer whose subject it is;
+   * elaboration cost is a Lean measurement, so its checkers are
+   * `folio-assistant-sci`'s. The owner's cut: *"f-a-core has high level
+   * processes only, no tooling"*.
+   *
+   * It is a flag rather than an absent `source_file` because absence is not
+   * distinguishable from "never declared one": `getCriterionSourceFile` ends
+   * in a DEFAULT, so a criterion whose checker moved out of core would
+   * silently resolve to `qa-checkers-extended.ts` — and `script_hash` is
+   * computed over the resolved path, so it would never invalidate again.
+   * Eleven criteria were measured in that state on 2026-09-18. With the flag,
+   * `resolveCriterionSource` refuses the cascade for this criterion and
+   * reports an unsupplied checker as unresolved, which is a third state rather
+   * than a wrong path.
+   *
+   * Setting both this and `source_file` is a collision and throws: two answers
+   * to "where is this checker" are two answers free to disagree.
+   */
+  checker_contributed?: boolean;
   /**
    * Repo-relative paths to extra inputs the checker consults beyond
    * the block under audit — for example, cached audit witnesses

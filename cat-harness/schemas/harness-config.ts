@@ -757,10 +757,22 @@ export async function loadContributions<C extends { name: string }, S extends Co
     // says about itself: the root declared the name, and a contributor that
     // could rename itself could impersonate another contributor's namespace
     // and turn a collision into a silent merge.
-    // The spread widens `C` to `C & { name: string }`, which is C's own shape
-    // with one field pinned; the cast states that rather than loosening the
-    // parameter.
-    registry.register({ ...contribution, name: dep.dependency.name } as C);
+    //
+    // `root` is pinned here for the same reason and is not the same field as
+    // `name`: it is where the contributor's FILES are, and a contributed QA
+    // checker's source file is resolved against it in order to be
+    // freshness-hashed. A contributor that could name its own root could point
+    // the sweep at bytes it does not own, and the resulting `script_hash`
+    // would be computed over a file the contribution never mentions.
+    //
+    // The spread widens `C` to `C & { name: string; root: string }`, which is
+    // C's own shape with two fields pinned; the cast states that rather than
+    // loosening the parameter.
+    registry.register({
+      ...contribution,
+      name: dep.dependency.name,
+      root: dep.rootPath,
+    } as C);
   }
 
   return registry;

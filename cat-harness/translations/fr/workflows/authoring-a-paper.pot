@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: authoring-a-paper\n"
-"POT-Creation-Date: 2026-09-19T10:47:34.719Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.431Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,52 +14,52 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/authoring-a-paper.bpmn:68
+#: skills/workflows/authoring-a-paper.bpmn:74
 #. Diagram label
 msgid "1 · Plan the paper [content-plan]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:76
+#: skills/workflows/authoring-a-paper.bpmn:82
 #. Diagram label
 msgid "2 · Seed the work plan [todo-manager]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:85
+#: skills/workflows/authoring-a-paper.bpmn:91
 #. Diagram label
 msgid "3 · Scaffold the folio repo [content-plan]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:92
+#: skills/workflows/authoring-a-paper.bpmn:98
 #. Diagram label
 msgid "4 · Author blocks [content-author]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:101
+#: skills/workflows/authoring-a-paper.bpmn:107
 #. Diagram label
 msgid "5 · Formalise in Lean [lean-formalization]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:118
+#: skills/workflows/authoring-a-paper.bpmn:124
 #. Diagram label
 msgid "6 · Validate [content-validate]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:125
+#: skills/workflows/authoring-a-paper.bpmn:131
 #. Diagram label
 msgid "7 · Render PDF / HTML [latex-authoring]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:132
+#: skills/workflows/authoring-a-paper.bpmn:138
 #. Diagram label
 msgid "8 · Review and feedback [content-review]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:144
+#: skills/workflows/authoring-a-paper.bpmn:150
 #. Diagram label
 msgid "9 · Publish [content-publish]"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:167
+#: skills/workflows/authoring-a-paper.bpmn:173
 #. Diagram label
 msgid "approved"
 msgstr ""
@@ -79,22 +79,22 @@ msgstr ""
 msgid "Authoring a paper — plan to published"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:46
+#: skills/workflows/authoring-a-paper.bpmn:48
 #. Diagram label
 msgid "Authoring agent (system)"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:110
+#: skills/workflows/authoring-a-paper.bpmn:116
 #. Diagram label
 msgid "Build green, no sorries?"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:54
+#: skills/workflows/authoring-a-paper.bpmn:58
 #. Diagram label
 msgid "Build pipeline — validate · render · publish"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:93
+#: skills/workflows/authoring-a-paper.bpmn:99
 #. Diagram element documentation
 msgid "Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn."
 msgstr ""
@@ -104,62 +104,92 @@ msgstr ""
 msgid "folio-assistant — authoring a scientific paper end to end (Lean + LaTeX). Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:162
+#: skills/workflows/authoring-a-paper.bpmn:66
+#. Diagram element documentation
+msgid "Gateway_ReviewOutcome sits in this lane rather than a separate editor's, so in this diagram the reviewer's finding and its disposition are the same decision — iterate back to Task_AuthorBlocks or clear Task_Publish — because paper authoring has no editor lane to hold the accept/reject split modelled elsewhere in this corpus."
+msgstr ""
+
+#: skills/workflows/authoring-a-paper.bpmn:168
 #. Diagram label
 msgid "green"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:166
+#: skills/workflows/authoring-a-paper.bpmn:172
 #. Diagram label
 msgid "iterate"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:50
+#: skills/workflows/authoring-a-paper.bpmn:59
+#. Diagram element documentation
+msgid "Its three tasks bracket the human review rather than replace it: Validate and Render turn the Lean-green manuscript into the artefact Task_Review actually reads, and Publish only fires once Gateway_ReviewOutcome has said 'approved' — this lane builds what gets judged and executes what was decided, and decides nothing itself."
+msgstr ""
+
+#: skills/workflows/authoring-a-paper.bpmn:53
 #. Diagram label
 msgid "Lean toolchain (lean-mcp)"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:65
+#: skills/workflows/authoring-a-paper.bpmn:71
 #. Diagram label
 msgid "New paper"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:161
+#: skills/workflows/authoring-a-paper.bpmn:167
 #. Diagram label
 msgid "not yet"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:152
+#: skills/workflows/authoring-a-paper.bpmn:54
+#. Diagram element documentation
+msgid "Owns its own loop: Gateway_LeanGreen's 'not yet' branch returns straight to Task_Formalize rather than out to a person, and the gateway itself is DMN-computed off the build result rather than argued, so nothing downstream can proceed on a proof that merely looks close enough. The paper does not reach Task_Validate until this lane's own gate says green."
+msgstr ""
+
+#: skills/workflows/authoring-a-paper.bpmn:158
 #. Diagram label
 msgid "Paper published"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:139
+#: skills/workflows/authoring-a-paper.bpmn:145
 #. Diagram label
 msgid "Ready to publish?"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:60
+#: skills/workflows/authoring-a-paper.bpmn:65
 #. Diagram label
 msgid "Reviewer / SME"
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:69
+#: skills/workflows/authoring-a-paper.bpmn:49
+#. Diagram element documentation
+msgid "Scaffolds the repo from the author's plan and then writes every block — including every revision, since Gateway_ReviewOutcome's 'iterate' branch re-enters Task_AuthorBlocks directly rather than sending the change back to Lane_Author to be re-scoped. The plan is the author's decision; executing against it, first draft through every rewrite, is this lane's."
+msgstr ""
+
+#: skills/workflows/authoring-a-paper.bpmn:75
 #. Diagram element documentation
 msgid "Scope the paper: chapters, the blocks each needs, what gets formalised."
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:145
+#: skills/workflows/authoring-a-paper.bpmn:151
 #. Diagram element documentation
 msgid "See draft-to-publication.bpmn for the review and release path this expands into."
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:77
+#: skills/workflows/authoring-a-paper.bpmn:45
+#. Diagram element documentation
+msgid "Sits between Task_Plan and Task_Scaffold as the one conversion point in this diagram: the author's plan becomes beans here, which is what lets a resumed session or a different agent pick up Task_Scaffold without having sat through Task_Plan itself."
+msgstr ""
+
+#: skills/workflows/authoring-a-paper.bpmn:83
 #. Diagram element documentation
 msgid "The plan becomes beans, so a resumed session or a sibling agent can pick it up."
 msgstr ""
 
-#: skills/workflows/authoring-a-paper.bpmn:43
+#: skills/workflows/authoring-a-paper.bpmn:40
+#. Diagram element documentation
+msgid "The plan set here — chapters, the blocks each needs, what gets formalised — is upstream of everything else in the diagram and is never revisited: Gateway_ReviewOutcome's 'iterate' branch re-enters Lane_Agent's Task_AuthorBlocks directly, not this lane, so a scoping mistake made here surfaces only as churn several lanes downstream."
+msgstr ""
+
+#: skills/workflows/authoring-a-paper.bpmn:44
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""

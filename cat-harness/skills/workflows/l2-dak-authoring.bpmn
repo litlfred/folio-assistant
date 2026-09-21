@@ -37,13 +37,16 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_L2Dak_LaneSet">
       <bpmn:lane id="Lane_Programme" name="Programme manager / technical officer">
+        <bpmn:documentation>Sets the scope once, before the fork into six parallel authoring tracks. The actors and processes enumerated here are what everything downstream, including the terminology and clinical lanes, is scoped against, and nothing later in this diagram revisits that boundary.</bpmn:documentation>
         <bpmn:flowNodeRef>StartEvent_Guideline</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ScopeDak</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
+        <bpmn:documentation>A single claim made once, right after scoping and before the parallel fork. Unlike the per-edit lifecycle in editing-hci-validation, this diagram seeds one bean for the whole DAK and never returns here to log or resolve it, so tracking any one track's own progress is not this lane's concern.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_SeedBeans</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Analyst" name="Business analyst">
+        <bpmn:documentation>Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds.</bpmn:documentation>
         <bpmn:flowNodeRef>Gateway_AuthorMerge</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_AuthorFork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Personas</bpmn:flowNodeRef>
@@ -56,9 +59,11 @@
         <bpmn:flowNodeRef>EndEvent_L2Ready</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Terminologist" name="Terminologist">
+        <bpmn:documentation>One parallel branch of the fork, producing bindings the other five tracks cite rather than author themselves. Kept a separate lane rather than folded into the analyst's because governance of a code binding is deliberately independent of the artefact that cites it.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_Terminology</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Sme" name="Clinical SME">
+        <bpmn:documentation>The one gate every authored track must clear before assembly: a "no" here does not return to the specific task that erred but loops back through Gateway_AuthorMerge into the fork itself, so this lane's judgement — not the analyst's — decides whether personas, BPMN, DMN, data dictionary and indicators all get revisited together.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_SmeValidate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Accurate</bpmn:flowNodeRef>
       </bpmn:lane>

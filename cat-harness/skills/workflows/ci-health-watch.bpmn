@@ -23,6 +23,7 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CiHealth">
       <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
+        <bpmn:documentation>Named a 'sweep' but every path through it writes something — the report file, the tracking label, and the issue itself (opened, edited or closed) — and keeping all three in one lane is what makes 'one tracking issue, edited in place' enforceable: a write split across lanes would leave two different actors able to touch the same issue with no ordering between them.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Sweep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Check</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>

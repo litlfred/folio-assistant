@@ -139,6 +139,86 @@ assertion has to be on bytes the server sent — in this instance, a browser
 context with `javaScriptEnabled: false` over the same renderer the generator
 writes with.
 
+## The folio belongs to the HARNESS, not to the library
+
+A **content library** is something a reader browses — `who-iris`, the `smart-*`
+instances, any folio published as a site. A **folio** is the reader's own
+surface: their notes, the assets they have materialised, the documents they
+created or linked. The library is the place; the folio is what they carry into
+it.
+
+So the folio visualisation is `cat-harness`'s, **available by convention on
+any harness**, and a library never implements its own. A library may implement
+its own landing page and may have its own harness — `who-iris` does — and
+neither of those is licence to build a second folio.
+
+**Consistency is the requirement, not quality.** Two harnesses that each build
+a good folio have failed this: a reader moving between libraries must find the
+same surface, because the point of carrying a folio is that it does not change
+underneath them. The test is not *"is this folio good"* but *"is this the same
+folio"*.
+
+One consequence worth stating, because it is the one a library author trips
+over: a note or a todo MAY reference nodes in **another** KG library. The
+folio is not scoped to the library it is currently pulled down over, so a
+reference that leaves the library is ordinary rather than exceptional, and a
+renderer that assumes local resolution will break on the reader's own data.
+
+## A tile, or an avatar?
+
+**Who declared it** — a tile is what the HARNESS declares, an avatar is what
+the FOLIO holds, and a theme is how either one looks rather than a third kind.
+The test, the case that settles it and the two rules it kills are in
+[`harness-tiles`](harness-tiles.md) §"A tile, or an avatar?", because the tile
+side already owned *"a tile is the harness's, not the node's"* and one rule
+with two homes is one rule free to drift.
+
+## An asset has THREE states, not two
+
+Pulling the folio down gives a **glass** — a surface over whatever is being
+browsed, carrying sticky notes and the avatars of materialised assets,
+including materialised KG like `cat-bootstrap` or `cat-harness` themselves.
+
+A thing on that glass can be closed. **What closing does is the rule:**
+
+| state | where the asset is | how it got there |
+|---|---|---|
+| **in the library** | not the reader's at all | the default |
+| **in the folio, not displayed** | materialised into the folio's own `reproduce` directories — `library/` for the bytes, `uploads/` for a source — off the glass | the reader closed it, *"back in library"* |
+| **on the glass** | displayed in the pulled-down folio | the reader pulled it out of the library |
+
+**"In the folio" is not `folio/`, and the difference is load-bearing.** R27
+says *"materialized should live in folio"*, and the folio is the reader's
+REPOSITORY, of which `library/` and `uploads/` are already declared parts —
+both carry `dependents: "reproduce"`, which is the schema saying *this is the
+reader's own copy*. `folio/` is a different graph kind: **renderable** authored
+content.
+
+Reading it as the directory would break a consumer that exists.
+`schemas/materialization.ts` states the dependency outright — ***`corpus-grep`
+searches `library/` only***, so a node materialised anywhere else reads as
+ABSENT to every consumer. That is the same defect the schema already forbids
+one state up, where collapsing `referenced` into `materialized` hides a node
+nobody holds.
+
+**Closing returns an asset to the middle state and NEVER to the first.** The
+asset stays in `folio/`; only its display goes. Putting it back on the glass is
+a separate act performed **from the library** — *"need to go back to the
+library and pull it out to folio display window"* — not from the glass it just
+left.
+
+**Why three rather than two, which is the whole point.** A two-state model —
+in the folio, or not — makes *closing a sticky* and *un-materialising an asset*
+the same gesture. A reader tidying their glass would then silently discard
+work, and would have no way to tell that they had. The middle state is what
+makes closing cheap enough to do freely.
+
+This is `l4zi` one level out, and the shape is easy to miss because no single
+screen looks wrong: the inverse of **close** must be reachable, and here it is
+reachable from a **different surface** than the one that closed it. When you
+implement close, the thing to check is that the library offers the way back —
+not that the glass does.
+
 ## Not this skill
 
 The layout layer and why a note carries no coordinates:

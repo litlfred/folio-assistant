@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-signoff\n"
-"POT-Creation-Date: 2026-09-20T12:20:30.403Z\n"
+"POT-Creation-Date: 2026-09-21T19:58:19.661Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,27 +14,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:86
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:88
 #. Diagram label
 msgid "A destination?"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:109
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:111
 #. Diagram label
 msgid "a graph"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:76
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:78
 #. Diagram element documentation
 msgid "A PERSON'S STEP, and `none` is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read. The default creates NOTHING. An agent that decides on its own that a requirement \"is really a skill\" has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:19
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:20
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:44
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:46
 #. Diagram label
 msgid "Announce the branch on the issue"
 msgstr ""
@@ -44,7 +44,7 @@ msgstr ""
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:75
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:77
 #. Diagram label
 msgid "Choose a destination, or none"
 msgstr ""
@@ -54,52 +54,57 @@ msgstr ""
 msgid "CRDM Phase 5 — beans and sign-off"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:87
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:89
 #. Diagram element documentation
 msgid "Drawn as a branch rather than folded into the task above, because `none` being a real outcome is the property worth being able to see. A diagram where every path ends in a created node is a diagram of a ritual."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:111
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:16
+#. Diagram element documentation
+msgid "Makes two decisions of different character here: BA_Signoff approves what was drafted, and BA_ChooseKg commits it — or explicitly does not — to a knowledge-graph destination, where NONE is a legitimate answer rather than a refusal to answer. Only this lane may decide that a requirement is fully carried by the code and becomes a commit and nothing else; an agent that decided so on its own would be placing a node in somebody else's graph."
+msgstr ""
+
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:113
 #. Diagram label
 msgid "none &#8212; recorded as an answer"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:63
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:65
 #. Diagram label
 msgid "Offer the knowledge-graph destinations for the agreed set"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:46
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:48
 #. Diagram element documentation
 msgid "On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:30
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:32
 #. Diagram label
 msgid "Phase 5: Create beans"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:29
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:31
 #. Diagram label
 msgid "Phase begins"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:60
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:62
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:95
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:97
 #. Diagram label
 msgid "Run placement, and raise a bean for the authoring"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:40
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:42
 #. Diagram label
 msgid "Sign off on requirements"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:31
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:33
 #. Diagram element documentation
 msgid "The agent mints the implementation beans itself with `beans create`, running the exact-title existence check first. The engine has no `create` op — it claims, notes and resolves the instance's OWN bean — so what this step records here is a note that the plan now exists."
 msgstr ""
@@ -109,12 +114,17 @@ msgstr ""
 msgid "The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:96
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:98
 #. Diagram element documentation
 msgid "The offer produces a DECISION, not a node. `placement` then decides instance, graph and node kind — it is the step that catches a hardcoded path or a literal naming one folio — and the authoring itself becomes a bean, because work here is a bean before it is a file. `op=\"note\"` and not `create`, for the reason `A_CreateBeans` above states: the engine has no `create` op — it claims, notes and resolves the instance's OWN bean. The agent mints the authoring bean itself with `beans create`, running the exact-title existence check first, and what this step records is a note that the decision was taken."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-signoff.bpmn:64
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:66
 #. Diagram element documentation
-msgid "THE STEP THAT WAS MISSING. Requirements were elicited, agreed and signed off, and then existed as an issue and a conversation — so the output of the process that exists to produce durable requirements was the one thing the knowledge graph never learned. ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told. The options are DERIVED from the graphs this instance declares in `harness.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory."
+msgid "THE STEP THAT WAS MISSING. Requirements were elicited, agreed and signed off, and then existed as an issue and a conversation — so the output of the process that exists to produce durable requirements was the one thing the knowledge graph never learned. ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told. The options are DERIVED from the graphs this instance declares in `<name>.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory."
+msgstr ""
+
+#: methodologies/crdm/workflows/crdm-signoff.bpmn:21
+#. Diagram element documentation
+msgid "Turns Lane_BA's two decisions into durable artefacts: A_CreateBeans and A_RecordKg each mint their own bean directly with the CLI, since the engine's own vocabulary has no create, only claim, note and resolve on an instance's bean. A_AnnounceBranch then closes the phase on its one path to End with no loop of its own, so it fires exactly once — Phase 6's own loops re-enter implementation on the same branch without ever crossing back through this edge."
 msgstr ""

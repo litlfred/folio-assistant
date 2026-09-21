@@ -79,7 +79,28 @@ import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
 import { formatPot } from "../content/pipeline/pot-extract.js";
 import { parsePo } from "../content/pipeline/po-inject.js";
 
-const root = resolve(import.meta.dir, "..");
+/**
+ * The instance whose diagrams are extracted — this one, or `--instance <root>`.
+ *
+ * Bean `j28g`. `bootstrap/` is a NESTED instance, so the root's scan does not
+ * reach its three diagrams by design (`7u3g`, enforced by
+ * `instance-graph-isolation.test.ts`) — and it must not, because widening the
+ * scan re-introduces the leak that test exists to stop. But their `.pot` files
+ * sat under `cat-harness/translations/` regardless, where nothing would ever
+ * refresh them: measured 2026-09-21, `log-message.pot` did not carry the lane
+ * documentation added to that diagram the same day, so a translator opening it
+ * would have translated text the diagram no longer contains.
+ *
+ * The fix is not a wider scan but a SECOND RUN, pointed at the instance that
+ * owns those diagrams — the same shape `kg-export.ts --instance ./bootstrap`
+ * already uses, and for the same reason.
+ */
+const instanceFlag = ((): string | undefined => {
+  const a = process.argv.slice(2);
+  const i = a.indexOf("--instance");
+  return i === -1 ? undefined : a[i + 1];
+})();
+const root = instanceFlag ? resolve(instanceFlag) : resolve(import.meta.dir, "..");
 const argv = process.argv.slice(2);
 
 function flag(name: string): string | undefined {
@@ -124,7 +145,7 @@ if (diagrams.length === 0) {
  */
 function translationsRoot(): string {
   const d = resolveDirectories([{ name: "(local)", root, own: true }]).find((x) =>
-    x.graphs.includes("translation-sources"),
+    x.graphKinds.includes("translation-sources"),
   );
   // declared-path-literal: the base case for an instance that declares
   // nothing. Reading a declaration to learn the fallback for having no
@@ -215,11 +236,40 @@ if (wantCheck) {
     }
   }
 
-  const bad = missing.length + stale.length + unreadable.length;
+  // THE REVERSE QUESTION, and nothing asked it until bean `j28g`.
+  //
+  // Everything above asks "does every diagram have a template". A template
+  // that outlives its diagram is invisible to all of it: `bootstrap.pot` sat
+  // in five locales for a day after `7d57e2d279` renamed the diagram away,
+  // while this check printed "Every diagram has a current .pot in every
+  // locale" — true of the diagrams it looked at, and silent about the file it
+  // never did. `fd6i`: declared and never used, so nothing breaks, which is
+  // exactly why it survived.
+  //
+  // Scoped to THIS instance's own templates. A nested instance's diagrams are
+  // deliberately unscanned (`7u3g`), so its templates are not orphans here —
+  // they are somebody else's to check, with their own `--instance` run.
+  const owned = new Set(diagrams.map((f) => basename(f, ".bpmn")));
+  const orphaned: string[] = [];
+  for (const loc of [...gating].sort()) {
+    const dir = join(TRANSLATIONS, loc, "workflows");
+    let names: string[];
+    try {
+      names = readdirSync(dir).filter((n) => n.endsWith(".pot"));
+    } catch {
+      continue;
+    }
+    for (const n of names.sort()) {
+      if (!owned.has(basename(n, ".pot"))) orphaned.push(`translations/${loc}/workflows/${n}`);
+    }
+  }
+
+  const bad = missing.length + stale.length + unreadable.length + orphaned.length;
   console.log(`  gating on: ${[...gating].sort().join(", ") || "(none)"}`);
   console.log(`  ${missing.length ? "✗" : "✓"} ${String(missing.length).padStart(3)}  never extracted`);
   console.log(`  ${stale.length ? "✗" : "✓"} ${String(stale.length).padStart(3)}  out of date`);
   if (unreadable.length) console.log(`  ✗ ${String(unreadable.length).padStart(3)}  could not be read`);
+  console.log(`  ${orphaned.length ? "✗" : "✓"} ${String(orphaned.length).padStart(3)}  template with no diagram`);
   for (const [loc, n] of [...notTarget].sort()) {
     console.log(`  · ${String(n).padStart(3)}  ${loc} — not a workflow-translation target yet, so not demanded`);
   }
@@ -237,11 +287,21 @@ if (wantCheck) {
     for (const m of unreadable) console.log(`  ✗ ${m}`);
   }
 
+  if (orphaned.length) {
+    console.log("\nNO DIAGRAM — a template this instance will never refresh again:");
+    for (const m of orphaned) console.log(`  ✗ ${m}`);
+    console.log(
+      "  Either the diagram was renamed or removed and this is a relic, or it belongs to a\n" +
+        "  nested instance and should live under ITS translations, extracted with\n" +
+        "  `--instance <root>`. Removing a translator's input is a person's call, not this check's.",
+    );
+  }
+
   if (bad) {
-    console.log(`\n${bad} template(s) need regenerating: bun run translate-bpmn --extract`);
+    console.log(`\n${bad} template(s) need attention: bun run translate-bpmn --extract`);
     process.exit(1);
   }
-  console.log("\nEvery diagram has a current .pot in every locale.");
+  console.log("\nEvery diagram has a current .pot in every locale, and every template has a diagram.");
 }
 
 if (wantExtract) {

@@ -64,10 +64,9 @@ import type {
   QaCriterionDefinition,
   QaCriterionSubject,
 } from "../../schemas/block-qa";
-import {
-  QA_CRITERIA_REGISTRY,
-  getCriterionSourceFile,
-} from "./qa-criteria-registry";
+import { QA_CRITERIA_REGISTRY } from "./qa-criteria-registry";
+import { isCriterionSourceMiss, resolveCriterionSource } from "./criterion-source";
+import type { ContributionRegistry } from "../../schemas/contributions";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -95,7 +94,15 @@ export function checkerFunctionName(criterionId: string): string {
 /** An automated criterion whose declared module yielded no checker. */
 export interface UnimplementedCriterion {
   criterion: string;
-  sourceFile: string;
+  /**
+   * The file that was supposed to hold the checker.
+   *
+   * ABSENT when no file could be named at all — a criterion declared
+   * `checker_contributed` with no contributor loaded has no source file, and
+   * an empty string here would read as one in a report. The third state gets
+   * its own shape rather than a sentinel value.
+   */
+  sourceFile?: string;
   reason: string;
 }
 
@@ -133,27 +140,127 @@ export function criterionSubject(def: QaCriterionDefinition): QaCriterionSubject
  * Load every automated block criterion's checker from the module the registry
  * names. One pass; call it before the sweep loop, not inside it.
  */
-export function discoverBlockCheckers(): Promise<CheckerDiscovery<BlockChecker>> {
-  return discoverFor<BlockChecker>("block");
+export function discoverBlockCheckers(
+  registry?: ContributionRegistry,
+): Promise<CheckerDiscovery<BlockChecker>> {
+  return discoverFor<BlockChecker>("block", registry);
 }
 
 /** The same, for the script axis. */
-export function discoverScriptCheckers(): Promise<CheckerDiscovery<ScriptChecker>> {
-  return discoverFor<ScriptChecker>("script");
+export function discoverScriptCheckers(
+  registry?: ContributionRegistry,
+): Promise<CheckerDiscovery<ScriptChecker>> {
+  return discoverFor<ScriptChecker>("script", registry);
 }
 
-async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDiscovery<T>> {
+/**
+ * A module the sweep tried to load: its namespace, or why it would not load.
+ *
+ * The failure is remembered rather than retried, and that is not an
+ * optimisation. On **Bun 1.3.11** a second dynamic import of a module whose
+ * evaluation threw **does not throw again** — measured in eight lines, with no
+ * import cycle anywhere:
+ *
+ * ```ts
+ * // boom.ts:  export const BEFORE = 1; const _ = explode(); export const AFTER = {};
+ * await import("./boom.ts");             // REJECTS: "top-level failure"
+ * const mod = await import("./boom.ts"); // RESOLVES
+ * Object.keys(mod);                      // THROWS: Cannot access 'AFTER' before initialization
+ * ```
+ *
+ * The single-import case rejects correctly, which is why one import proves
+ * nothing.
+ *
+ * **That quirk is a runtime's, not a contract**, and saying otherwise cost a
+ * red CI: a test pinned it and went red under `bun-version: latest` while
+ * passing locally on 1.3.11, which does not re-reject. The caching does not
+ * depend on which way it goes. What holds on every runtime is that **a module
+ * that threw is never re-evaluated**, so asking again can only return the same
+ * error or something worse — never a better answer. Caching keeps the cause
+ * either way, and on a runtime that hands back the half-built namespace it is
+ * also what stops `readModule` ever seeing one. Several criteria share one checker file, so discovery imported the
+ * same path once per criterion and hit exactly that: the first got the real
+ * error, and every one after it got the half-built namespace that
+ * {@link readModule} exists to survive.
+ *
+ * Caching keeps the CAUSE. Without it the first criterion reports
+ * `cold-chain-guidance.config.json is not valid JSON` and its siblings report
+ * "module did not finish evaluating" — the symptom {@link readModule}
+ * correctly declines to guess past. One broken checker module should be one
+ * finding, stated once, in the words of the thing that actually failed.
+ */
+export type LoadedModule = Record<string, unknown> | { loadError: string };
+
+/**
+ * Import a checker module at most once, remembering a failure as a failure.
+ *
+ * Exported for its test: the behaviour it guards against is the platform's, so
+ * it is pinned against a fixture that throws rather than against the corpus,
+ * which is green and therefore proves nothing here.
+ *
+ * The specifier is a VARIABLE — the target comes from the criterion — so this
+ * module names no checker file and depends on none.
+ */
+export async function loadCheckerModule(
+  abs: string,
+  cache: Map<string, LoadedModule>,
+): Promise<LoadedModule> {
+  const seen = cache.get(abs);
+  if (seen) return seen;
+  let mod: LoadedModule;
+  try {
+    mod = (await import(abs)) as Record<string, unknown>;
+  } catch (e) {
+    mod = { loadError: e instanceof Error ? e.message : String(e) };
+  }
+  cache.set(abs, mod);
+  return mod;
+}
+
+async function discoverFor<T>(
+  subject: QaCriterionSubject,
+  registry?: ContributionRegistry,
+): Promise<CheckerDiscovery<T>> {
   const checkers = new Map<string, T>();
   const unimplemented: UnimplementedCriterion[] = [];
   const orphaned: CheckerDiscovery<T>["orphaned"] = [];
-  const modules = new Map<string, Record<string, unknown>>();
+  const modules = new Map<string, LoadedModule>();
 
-  const load = (abs: string): Record<string, unknown> | undefined => modules.get(abs);
+  const load = (abs: string): Record<string, unknown> | undefined => {
+    const seen = modules.get(abs);
+    return seen && !("loadError" in seen) ? seen : undefined;
+  };
 
   for (const def of QA_CRITERIA_REGISTRY) {
     if (criterionSubject(def) !== subject) continue;
-    const sourceFile = getCriterionSourceFile(def.id);
-    const abs = join(ROOT, sourceFile);
+
+    // ONE answer to "where is this checker" — core's registry and a
+    // dependency's contribution partition the criteria between them, and a
+    // criterion claimed by both throws rather than picking a winner.
+    const located = resolveCriterionSource(def.id, ROOT, registry);
+    if (isCriterionSourceMiss(located)) {
+      if (def.automated) unimplemented.push({ criterion: def.id, reason: located.reason });
+      continue;
+    }
+
+    // A CONTRIBUTED checker arrives as a function: the contributor imported
+    // its own module, so there is nothing here to load and no path here to
+    // name. That is the whole point — this module names no checker file in any
+    // layer, and after the split it names no other package either.
+    if (located.contributed) {
+      if (def.automated) checkers.set(def.id, located.contributed as T);
+      // The same disagreement `orphaned` exists for, arriving from a
+      // dependency instead of a file: a checker for a criterion core declares
+      // `automated: false` never runs, so it is code with no caller ageing
+      // against a criterion nobody audits. Reported, not resolved — either the
+      // criterion should be automated or the contribution should go, and
+      // discovery cannot tell which.
+      else orphaned.push({ criterion: def.id, sourceFile: located.label });
+      continue;
+    }
+
+    const sourceFile = located.sourceFile;
+    const abs = join(located.root, sourceFile);
 
     if (!def.automated) {
       // Only reported off an ALREADY-loaded module. Importing a module for a
@@ -174,21 +281,14 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
       continue;
     }
 
-    let mod = modules.get(abs);
-    if (!mod) {
-      try {
-        // A VARIABLE specifier: the target comes from the criterion, so this
-        // module names no checker file and depends on none.
-        mod = (await import(abs)) as Record<string, unknown>;
-      } catch (e) {
-        unimplemented.push({
-          criterion: def.id,
-          sourceFile,
-          reason: `module did not load: ${e instanceof Error ? e.message : String(e)}`,
-        });
-        continue;
-      }
-      modules.set(abs, mod);
+    const mod = await loadCheckerModule(abs, modules);
+    if ("loadError" in mod) {
+      unimplemented.push({
+        criterion: def.id,
+        sourceFile,
+        reason: `module did not load: ${mod.loadError}`,
+      });
+      continue;
     }
 
     // READ BEFORE ASKING. A namespace that cannot be enumerated belongs to a

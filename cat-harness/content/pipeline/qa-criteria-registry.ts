@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "fs";
 import { findContentRepoRoot } from "./repo-root";
+import { voiceCriteriaFor } from "./voice-criteria.ts";
 /**
  * Registry of QA criteria the per-block sweep recognises.
  *
@@ -8,21 +9,32 @@ import { findContentRepoRoot } from "./repo-root";
  * whether to run the automated checker or queue an agent / human
  * adjudication request.
  *
- * Domain buckets (current):
+ * ## Domains — and this list is not the list
  *
- * - `voice` — scholarly voice + status-leak greps (extends
- *   `.claude/skills/local/one-voice-audit.md` with four new
- *   axes: scholarly-default, ai-slop, fit-section-chapter,
- *   framework-canonical, wall-side-correct).
- * - `fit` — does the block belong in its declared sub-section /
- *   section / chapter.
- * - `framework` — uses current canonical math (not deprecated
- *   notation, e.g. old 5-tuple, $\omega$ for fibre functor).
- * - `wall` — archimedean vs algebraic placement, per CLAUDE.md
- *   §7c base-ring convention.
+ * A domain is a bucket of criteria, and **the registry below is what exists**.
+ * Naming the domains here as well is a second index, free to disagree with the
+ * first, and it did: this header described four domains for a registry that
+ * carries many more, so a reader who trusted it got a list that was wrong by
+ * omission the day it was written. Count `QA_CRITERIA_REGISTRY`, or read the
+ * `── Domain: … ──` headings, rather than this paragraph.
  *
- * Future watchers (proof, canonical, compute, detangler) extend
- * the registry with their own criteria.
+ * What is worth saying here is the thing the entries cannot say about
+ * themselves:
+ *
+ * - `voice` — the editorial register. Its per-VOICE overlay criteria are
+ *   DERIVED from the voices an instance ships, not written here: see
+ *   `voice-criteria.ts`, and `qaCriteriaFor(root)` rather than
+ *   `QA_CRITERIA_REGISTRY` if you want them.
+ * - `framework` and `wall` — **one folio's mathematics**, not platform
+ *   concerns. Both are fenced behind the `archimedean-wall` opt-in axis —
+ *   see the note above each — so a folio that has not asked for that
+ *   mathematics is not measured against it.
+ *
+ * This header cited `.claude/skills/local/one-voice-audit.md` as what the
+ * `voice` domain extends. **That file does not exist in this repository** —
+ * it is a folio's local skill, named from the platform, in the most-read
+ * comment in the QA subsystem. Bean `btuv`: the registry's folio-specific
+ * content is not only the criteria, it is the prose around them.
  *
  * ── Chapter-scoped criteria (NOT per-block) ──────────────────────
  *
@@ -337,6 +349,34 @@ const FIT: QaCriterionDefinition[] = [
 ];
 
 // ── Domain: framework ───────────────────────────────────────────
+//
+// ── Folio-optional: ONE FOLIO'S NOTATION ────────────────────────
+//
+// `framework-canonical` asserts a canonical notation, and the notation is a
+// specific paper's. Read the checker rather than this comment — the patterns
+// in `qa-checkers-voice.ts` are `(M, Θ, G, P, E)`, `\omega` as a fibre
+// functor, `\mathcal{C}` for a category, and a bare `$H_q$`. Nothing about
+// those is platform.
+//
+// **It was registered unconditionally, so it ran on every folio**, and
+// `\mathcal{C}(?!_)` is the sharp end: any paper writing `\mathcal{C}` for
+// anything at all got a `major` finding telling it the canonical form is
+// `\mathbf{C}`. That is the platform asserting one paper's convention over
+// every other paper's, in the subsystem whose verdicts a folio is judged by.
+// Bean `btuv`, its last `Done when`.
+//
+// Fenced behind the SAME axis as the wall, because it is the same folio:
+//
+//   // harness.config.json
+//   { "qaAxes": ["archimedean-wall"] }
+//
+// **This one has no direct-call safety net, and the wall does.**
+// `q-usage-audit.ts` calls `checkWallSide` and `checkBaseRingMinimal`
+// itself, so closing the axis leaves a folio's own audit computing them.
+// `checkFrameworkCanonical` has no caller outside the registry's dispatch
+// table, so a folio that wants it MUST name the axis. Saying so here because
+// the alternative — leaving it on for everyone so one folio need not add a
+// line — is how the content got into the platform in the first place.
 
 const FRAMEWORK: QaCriterionDefinition[] = [
   {
@@ -1137,6 +1177,9 @@ const PROOF: QaCriterionDefinition[] = [
   {
     id: "proof-compile-cost",
     domain: "proof",
+    // The rule is core's; the checker is `folio-assistant-sci`'s, because
+    // elaboration cost is a Lean measurement. See `checker_contributed`.
+    checker_contributed: true,
     description:
       "MEASUREMENT, not a gate — always `pass` when data exists. Records " +
       "`elab_ms` / `tactic_count` (and `elab_ms_prev` / `elab_delta_pct` " +
@@ -1155,6 +1198,9 @@ const PROOF: QaCriterionDefinition[] = [
   {
     id: "proof-no-cost-regression",
     domain: "proof",
+    // The rule is core's; the checker is `folio-assistant-sci`'s, because
+    // elaboration cost is a Lean measurement. See `checker_contributed`.
+    checker_contributed: true,
     description:
       "Elaboration cost did not regress materially (>25%) versus the prior " +
       "measurement. Catches the standard refactoring trap: a proof that got " +
@@ -2153,69 +2199,21 @@ const EXPO_NARRATIVE_KINDS = [
 // judgement. Declaring a checker that can only ever confirm a handful of regexes
 // would misreport what the criterion covers.
 const VOICE_OVERLAYS: QaCriterionDefinition[] = [
-  {
-    id: "voice-overlay-who-editorial",
-    domain: "voice",
-    description:
-      "Block conforms to the WHO editorial style (voices/who-editorial.json, 9 rules " +
-      "derived from the WHO Editorial Style Manual, 1993): -ize rather than -ise; an " +
-      "eponym without the Saxon genitive; the manual's two capitalization lists " +
-      "(Member State and the Organization up, headquarters and primary health care " +
-      "down); all authors to three and et al. from four; journal names written out in " +
-      "full; and the non-discriminatory pairs, whose general rules are to delete " +
-      "redundant possessive pronouns, rephrase, use the first person plural and use " +
-      "neutral job titles. Open the cited page before upholding a finding.",
-    default_severity: "major",
-    voices: ["who-editorial"],
-    depends_on: ["md"],
-    automated: false,
-  },
-  {
-    id: "voice-overlay-who-guideline-development",
-    domain: "voice",
-    description:
-      "Normative statements conform to the WHO handbook for guideline development, 2nd ed " +
-      "(voices/who-guideline-development.json, 8 rules): \"should\" for strong and " +
-      "\"suggest\" for conditional; NEVER the ambiguous \"not recommended\"; active " +
-      "voice, worded consistently across the whole guideline; outcomes kept out of the " +
-      "statement; PICO shape; certainty stated as high/moderate/low/very low; and each " +
-      "recommendation carrying its justification, its remarks and a link to the evidence.",
-    default_severity: "critical",
-    voices: ["who-guideline-development"],
-    depends_on: ["md"],
-    automated: false,
-  },
-  {
-    id: "voice-overlay-who-publication-design",
-    domain: "voice",
-    description:
-      "Presentation conforms to the WHO Western Pacific Region publication style guide " +
-      "(voices/who-publication-design.json, 8 rules): never red with green or blue with " +
-      "yellow in a figure; 10pt inside figures and tables; Roman front matter and Arabic " +
-      "body; the logo placed and never redrawn, with 1cm clear space and a 3cm floor; the " +
-      "regional blue as given; one of the four typefaces; and photographs credited.",
-    default_severity: "major",
-    voices: ["who-publication-design"],
-    depends_on: ["md"],
-    automated: false,
-  },
-  {
-    id: "voice-overlay-milnor",
-    domain: "voice",
-    description:
-      "Block reads in the register measured from Milnor's \"Link Groups\" (1954) — " +
-      "voices/milnor.json, 12 rules. Complements expo-milnor-clarity rather than " +
-      "duplicating it: that criterion is the strict 16/16 gate on the eight hallmarks, " +
-      "this one is the three findings the measurement produced that the hallmarks do not " +
-      "cover. \"Clearly\" before a routine verification is proof economy and must not be " +
-      "failed (14 uses in the exemplar); \"I\" is correct in an acknowledgement and " +
-      "nowhere else (1 use against 20 of \"we\"); and median sentence length runs to 17 " +
-      "words.",
-    default_severity: "minor",
-    voices: ["milnor"],
-    depends_on: ["md"],
-    automated: false,
-  },
+  // ── The voice-overlay criteria are DERIVED, not written here ────────────
+  //
+  // Four entries stood at this point, one per voice, each restating that
+  // voice's rules in prose — three of them describing files in ANOTHER
+  // instance, and every one of them restating rules WITHOUT the citation the
+  // voice itself carries. The platform held an uncited copy of rules the
+  // owning instance holds cited, in the subsystem whose whole argument is that
+  // a voice is auditable rather than asserted. Bean `btuv`.
+  //
+  // `voice-criteria.ts` derives them from the voices instead, so a voice
+  // shipping in any instance gets its criterion with no edit here. They are
+  // NOT spliced into this array: deriving reads the filesystem, and this is a
+  // module-scope const — the work `1hkj` deferred and `check:module-scope-
+  // resolution` gates. Use `qaCriteriaFor(root)` below, which is lazy.
+
 ];
 
 const EXPO: QaCriterionDefinition[] = [
@@ -2451,7 +2449,10 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...VOICE,
   ...VOICE_OVERLAYS,
   ...FIT,
-  ...FRAMEWORK,
+  // Folio-optional — see `FRAMEWORK` above. One folio's notation, on the same
+  // `archimedean-wall` axis as the wall criteria, because it is the same
+  // folio's mathematics.
+  ...(folioOptionalAxes().includes("archimedean-wall") ? FRAMEWORK : []),
   ...RENDER,
   // Folio-optional — see `WALL` above. One folio's wall and one folio's
   // chapter names; the same `archimedean-wall` axis as the detangler
@@ -2579,8 +2580,18 @@ export const EXTENDED_CHECKER_FILE =
  * to the graph builder must invalidate their sidecar entries.
  */
 export const USES_CHECKER_FILE = "content/pipeline/qa-checkers-uses.ts";
-/** Hosts the elaboration-cost checkers. */
-export const COST_CHECKER_FILE = "content/pipeline/qa-checkers-cost.ts";
+// The elaboration-cost checkers USED to be hosted here, and this constant
+// named them: `content/pipeline/qa-checkers-cost.ts`. They moved to
+// `folio-assistant-sci` on 2026-09-21 (bean `rfev`) because elaboration cost
+// is a Lean measurement, so the checker is the science layer's tooling while
+// the criterion stays core's rule.
+//
+// The constant is GONE rather than repointed. A core module holding the string
+// `folio-assistant-sci/...` would be core naming a higher layer — invisible to
+// `check:partition`, which counts imports and not strings, and precisely the
+// runtime edge bean `zlmp` measured five of. Both criteria now carry
+// `checker_contributed: true`, and `resolveCriterionSource` asks the
+// contribution registry.
 /** Hosts the machine-triviality oracle checker (scaffold). */
 export const TRIVIALITY_CHECKER_FILE = "content/pipeline/qa-checkers-triviality.ts";
 
@@ -2644,13 +2655,26 @@ const DAK_FILE_IDS = new Set<string>([
  */
 export function getCriterionSourceFile(criterionId: string): string {
   const def = QA_CRITERIA_BY_ID[criterionId];
+  // A criterion whose checker a DEPENDENCY owns has no answer here, and the
+  // cascade below ends in a default — so without this it would quietly resolve
+  // to `qa-checkers-extended.ts`, whose bytes have nothing to do with it. That
+  // is the never-invalidates state this whole block exists to prevent, so the
+  // state is made unreachable rather than merely avoided by every caller
+  // remembering. `resolveCriterionSource` is the one that can answer.
+  if (def?.checker_contributed) {
+    throw new Error(
+      `criterion "${criterionId}" declares checker_contributed, so its checker is ` +
+        `not in this instance and this function cannot locate it. Use ` +
+        `resolveCriterionSource(id, root, registry), which asks the contribution ` +
+        `registry and reports an unsupplied checker as unresolved rather than ` +
+        `resolving it to a default whose hash would never go stale.`,
+    );
+  }
   if (def?.source_file) return def.source_file;
   if (VOICE_FILE_IDS.has(criterionId)) return VOICE_CHECKER_FILE;
   if (DAK_FILE_IDS.has(criterionId)) return DAK_CHECKER_FILE;
   if (criterionId.startsWith("uses-") || criterionId === "lean-ref-owns-decl")
     return USES_CHECKER_FILE;
-  if (criterionId === "proof-compile-cost" || criterionId === "proof-no-cost-regression")
-    return COST_CHECKER_FILE;
   if (criterionId === "proof-not-machine-trivial") return TRIVIALITY_CHECKER_FILE;
   return EXTENDED_CHECKER_FILE;
 }
@@ -2691,4 +2715,33 @@ export function getCriterionExtraInputs(criterionId: string): string[] {
   const def = QA_CRITERIA_BY_ID[criterionId];
   if (def?.extra_inputs) return def.extra_inputs;
   return CRITERION_EXTRA_INPUTS[criterionId] ?? [];
+}
+
+// ── The whole set: written + derived ──────────────────────────────────────
+
+/**
+ * Every criterion that applies to an instance — the static ones above plus the
+ * voice overlays derived from whatever voices the repository ships.
+ *
+ * **Callers should prefer this over {@link QA_CRITERIA_REGISTRY}.** That array
+ * is the criteria a reader can see by opening this file; it is no longer the
+ * whole set, and a consumer that iterates it alone silently skips every voice.
+ *
+ * It is a FUNCTION rather than a second const because deriving reads the
+ * filesystem, and module-scope filesystem work is what bean `1hkj` deferred and
+ * `check:module-scope-resolution` gates: a malformed declaration must not be
+ * able to abort this module and strand `QA_CRITERIA_REGISTRY` itself. The
+ * derivation memoises per root, so the cost is one read per process.
+ */
+export function qaCriteriaFor(instanceRoot: string): QaCriterionDefinition[] {
+  return [...QA_CRITERIA_REGISTRY, ...voiceCriteriaFor(instanceRoot)];
+}
+
+/** {@link qaCriteriaFor}, indexed by id. */
+export function qaCriteriaByIdFor(
+  instanceRoot: string,
+): Record<string, QaCriterionDefinition> {
+  const out: Record<string, QaCriterionDefinition> = { ...QA_CRITERIA_BY_ID };
+  for (const c of voiceCriteriaFor(instanceRoot)) out[c.id] = c;
+  return out;
 }

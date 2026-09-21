@@ -274,6 +274,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`library:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
+    // The WRITER's step in the site build. Its `--check` IS gated — see the
+    // reason beside it in code-quality-gates.yml — so this is the ordinary
+    // writer-runs-at-deploy case rather than the schema/library exception.
+    match: "run voices:viz",
+    kind: "covered-by",
+    reason: "`voices:viz:check` is in the gate set; the site build runs the writer at deploy",
+  },
+  {
+    match: "run handler:index",
+    kind: "covered-by",
+    reason: "`handler:index:check` is in the gate set; the site build runs the writer at deploy",
+  },
+  {
     match: "run translation:index",
     kind: "covered-by",
     reason: "`translation:index:check` is in the gate set; the site build runs the writer",

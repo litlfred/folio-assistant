@@ -109,7 +109,7 @@ package only adds the *authoring* skills unique to the type.
 
 - [ ] Considered a *profile* first — a subclass plus a kind list, not a new adapter
 - [ ] Adapter under `adapters/<type>/` implementing list/validate/build + tools
-- [ ] `harness.config.json` points at the adapter
+- [ ] `<name>.config.json` points at the adapter
 - [ ] Skill package + `package-manifest.json` with Docker deps
 - [ ] JSON Schemas under `schemas/skills/<skill>/`
 - [ ] `bun run scripts/gen-schema-docs.ts` regenerated

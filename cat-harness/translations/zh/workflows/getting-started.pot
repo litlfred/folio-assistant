@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: getting-started\n"
-"POT-Creation-Date: 2026-09-19T11:52:32.832Z\n"
+"POT-Creation-Date: 2026-09-21T19:58:19.744Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,64 +14,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/getting-started.bpmn:92
+#: skills/workflows/getting-started.bpmn:96
 #. Diagram label
 msgid "\"create a folio\""
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:239
+#: skills/workflows/getting-started.bpmn:243
 #. Diagram element documentation
 msgid "A measured 404. The author is told the address and that the first build has not landed there yet — which is useful, and is not the same as being told it is live."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:271
+#: skills/workflows/getting-started.bpmn:275
 #. Diagram label
 msgid "add-folio"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:266
+#: skills/workflows/getting-started.bpmn:66
+#. Diagram element documentation
+msgid "Answers the one question Gateway_Intent cannot compute for itself — \"ask\" is one of five outcomes decisions/folio-intent.dmn can return — and, only on the overlay path, three further questions a repo scan cannot answer on its own: what to import, where it goes, and who does the importing."
+msgstr ""
+
+#: skills/workflows/getting-started.bpmn:270
 #. Diagram label
 msgid "ask"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:98
+#: skills/workflows/getting-started.bpmn:102
 #. Diagram element documentation
 msgid "Before the first question is asked, establish HOW to ask it: audio, ordinary chat, selectable options for a user with limited hand function, large-type for low vision. A user who finds the questions unusable never reaches the rest of this diagram."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:133
+#: skills/workflows/getting-started.bpmn:137
 #. Diagram label
 msgid "Choose from the offered options"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:217
+#: skills/workflows/getting-started.bpmn:221
 #. Diagram element documentation
 msgid "Computed from decisions/pages-live-gate.dmn. Three outcomes, and `unknown` is not a softer `not-yet`."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:120
+#: skills/workflows/getting-started.bpmn:124
 #. Diagram element documentation
 msgid "Computed, not chosen. decisions/folio-intent.dmn returns one of five branches from statedIntent, isFolio and repoHasContent. Non-relaxable: this gateway IS the fix."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:229
+#: skills/workflows/getting-started.bpmn:233
 #. Diagram element documentation
 msgid "Confirmed live. The link is given as a link, and the author is told what is on it."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:185
+#: skills/workflows/getting-started.bpmn:189
 #. Diagram element documentation
-msgid "content/, uploads/, library/, the first manifests, harness.config.json, the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present."
+msgid "content/, uploads/, library/, the first manifests, <slug>.json and <slug>.config.json, the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:167
+#: skills/workflows/getting-started.bpmn:171
 #. Diagram label
 msgid "Create the repository"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:96
+#: skills/workflows/getting-started.bpmn:86
+#. Diagram element documentation
+msgid "Derives the URL and holds the three-way report that follows it: \"live\", \"not-yet\" and \"unknown\" are reached by exclusive branches of one DMN-computed gateway, and this lane is what keeps a failed probe from being reported as the softer \"not-yet\" it would be tempting to default to."
+msgstr ""
+
+#: skills/workflows/getting-started.bpmn:100
 #. Diagram label
 msgid "Detect the interaction modality"
+msgstr ""
+
+#: skills/workflows/getting-started.bpmn:72
+#. Diagram element documentation
+msgid "Every write in this diagram belongs to this lane, and each sits behind the non-relaxable read-first gate: nothing is created or scaffolded until Gateway_Intent has classified what was actually asked for, which is what stands between this lane and writing over somebody's existing project."
 msgstr ""
 
 #: skills/workflows/getting-started.bpmn:52
@@ -89,147 +104,152 @@ msgstr ""
 msgid "Getting started — \"create a folio\" to a live site"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:227
+#: skills/workflows/getting-started.bpmn:231
 #. Diagram label
 msgid "Hand over the live link"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:177
+#: skills/workflows/getting-started.bpmn:181
 #. Diagram label
 msgid "Handed to content authoring"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:155
+#: skills/workflows/getting-started.bpmn:159
 #. Diagram label
 msgid "Import what, where, and who does it"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:215
+#: skills/workflows/getting-started.bpmn:219
 #. Diagram label
 msgid "Is the site answering?"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:278
+#: skills/workflows/getting-started.bpmn:282
 #. Diagram label
 msgid "live"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:108
+#: skills/workflows/getting-started.bpmn:112
 #. Diagram element documentation
-msgid "Mechanical, read-only: is there a harness.config.json, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project."
+msgid "Mechanical, read-only: does a `<name>.config.json` declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:270
+#: skills/workflows/getting-started.bpmn:274
 #. Diagram label
 msgid "new-content"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:269
+#: skills/workflows/getting-started.bpmn:273
 #. Diagram label
 msgid "new-repo"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:249
+#: skills/workflows/getting-started.bpmn:253
 #. Diagram element documentation
 msgid "No URL, no probe, or a failed request. Reported as \"could not check\", never as \"not yet\" and never as \"live\"."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:279
+#: skills/workflows/getting-started.bpmn:283
 #. Diagram label
 msgid "not-yet"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:70
+#: skills/workflows/getting-started.bpmn:71
 #. Diagram label
 msgid "Onboarding agent (system)"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:169
+#: skills/workflows/getting-started.bpmn:173
 #. Diagram element documentation
 msgid "Only on the new-repo branch, and only after the user has named it. An empty working directory is scaffolded in place instead."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:268
+#: skills/workflows/getting-started.bpmn:272
 #. Diagram label
 msgid "overlay"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:82
+#: skills/workflows/getting-started.bpmn:85
 #. Diagram label
 msgid "Publish — GitHub Pages"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:106
+#: skills/workflows/getting-started.bpmn:110
 #. Diagram label
 msgid "Read the repository facts"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:146
+#: skills/workflows/getting-started.bpmn:150
 #. Diagram element documentation
 msgid "Read-only. Classifies candidates into library/ (external source) and content/ (authored here), and reports what it could not classify as its own bucket rather than forcing every file into one of the two."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:257
+#: skills/workflows/getting-started.bpmn:261
 #. Diagram label
 msgid "Ready to author"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:247
+#: skills/workflows/getting-started.bpmn:251
 #. Diagram label
 msgid "Say it could not be confirmed"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:237
+#: skills/workflows/getting-started.bpmn:241
 #. Diagram label
 msgid "Say where it will be"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:183
+#: skills/workflows/getting-started.bpmn:187
 #. Diagram label
 msgid "Scaffold the folio (folio_init)"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:144
+#: skills/workflows/getting-started.bpmn:148
 #. Diagram label
 msgid "Scan the repo for content worth importing"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:207
+#: skills/workflows/getting-started.bpmn:211
 #. Diagram element documentation
-msgid "scripts/pages-bootstrap.ts: derive the site URL from the git remote or harness.config.json, report whether a publish workflow exists, and optionally probe until the site answers."
+msgid "scripts/pages-bootstrap.ts: derive the site URL from the git remote or <name>.config.json, report whether a publish workflow exists, and optionally probe until the site answers."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:195
+#: skills/workflows/getting-started.bpmn:199
 #. Diagram label
 msgid "Seed the work plan"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:205
+#: skills/workflows/getting-started.bpmn:82
+#. Diagram element documentation
+msgid "Seeds one bean per top-level content object the author named, positioned after scaffolding but before the Pages probe — a work plan exists for a folio whose publication status is not yet known, rather than waiting on that answer."
+msgstr ""
+
+#: skills/workflows/getting-started.bpmn:209
 #. Diagram label
 msgid "Start the Pages build and derive the URL"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:196
+#: skills/workflows/getting-started.bpmn:200
 #. Diagram element documentation
 msgid "The first beans: what the author said they want to get started on, one bean per top-level content object they named."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:179
+#: skills/workflows/getting-started.bpmn:183
 #. Diagram element documentation
 msgid "The misspeak case. The user has a folio and wants a document in it; this process ends and authoring-a-document.bpmn or authoring-a-paper.bpmn begins. Ending here rather than scaffolding is the whole value of the triage."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:135
+#: skills/workflows/getting-started.bpmn:139
 #. Diagram element documentation
 msgid "The question is presented as a short list of selectable options, never as free prose, and the list names the top-level content types the agent knows about. The answer becomes the statedIntent fact and the table is evaluated again — the user's answer is read as evidence, like any other fact."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:157
+#: skills/workflows/getting-started.bpmn:161
 #. Diagram element documentation
 msgid "Three questions the scan cannot answer: import these or not; library or content for each group; leave the files where they are or reorganize to declutter. Plus whether to dispatch one ingestion agent or a small swarm. Non-relaxable: nobody's files are moved or imported on inference."
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:280
+#: skills/workflows/getting-started.bpmn:284
 #. Diagram label
 msgid "unknown"
 msgstr ""
@@ -239,12 +259,12 @@ msgstr ""
 msgid "User (person)"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:118
+#: skills/workflows/getting-started.bpmn:122
 #. Diagram label
 msgid "What is the user asking for?"
 msgstr ""
 
-#: skills/workflows/getting-started.bpmn:79
+#: skills/workflows/getting-started.bpmn:81
 #. Diagram label
 msgid "Work plan (beans)"
 msgstr ""

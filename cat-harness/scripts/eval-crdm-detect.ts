@@ -28,11 +28,20 @@
  * weakness and is the first thing to fix before quoting these numbers as a
  * property of the skill rather than of this corpus.
  *
+ * ## The signals are not in this file
+ *
+ * They are in `src/crdm/detect-signals.ts`, with the check that they still say
+ * what the skill says. They lived here as literals under the comment *"the
+ * skill's explicit exclusions"* until bean `xfoh`, by which point the
+ * transcription had lost a bullet and nothing noticed — the runner's own output
+ * reported a false alarm it could not explain.
+ *
  * Usage: bun run eval:crdm-detect [--verbose]
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
+import { detect, parseSkillExclusions } from "../src/crdm/detect-signals.ts";
 import { buildTestRun, hashesReproduce, TestRunSchema } from "../schemas/test-run.ts";
 
 const root = resolve(import.meta.dir, "..");
@@ -40,67 +49,8 @@ const verbose = process.argv.includes("--verbose");
 
 interface Item { number: number; title: string; isFeature: boolean; why: string; text: string }
 
-/** The five categories from crdm-detect.md, as matchable patterns. */
-const CATEGORIES: { name: string; patterns: RegExp[] }[] = [
-  {
-    name: "direct-capability",
-    patterns: [
-      /\bi need a way to\b/i, /\bcan you add\b/i, /\bwe need a tool\b/i, /\bneed some tooling\b/i,
-      /\bthere should be a skill\b/i, /\badd a QA check\b/i, /\bshould support\b/i,
-      /\bmake the pipeline\b/i, /\bnew block kind\b/i, /\bneed a content type\b/i,
-      /\bit would be great if\b/i, /\bbuild me\b/i, /\bcreate a tool\b/i, /\bdevelop a feature\b/i,
-      /\bwe need to have\b/i, /\bwe (?:also )?need to\b/i,
-    ],
-  },
-  {
-    name: "workflow-gap",
-    patterns: [
-      /\bright now i have to\b/i, /\bthere is no way to\b/i, /\bcurrent process\b/i,
-      /\bdoes ?n[o']?t handle\b/i, /\bcan[' ]?t do\b/i, /\bit'?s missing\b/i,
-      /\bdoes ?n[o']?t support\b/i, /\bevery time i\b/i, /\bneed to be able to\b/i,
-    ],
-  },
-  {
-    name: "platform-change",
-    patterns: [
-      /\bchange the schema\b/i, /\bmodify the pipeline\b/i, /\badd a new adapter\b/i,
-      /\bthe constraint should\b/i, /\bupdate the CI\b/i, /\bworkflow should fire\b/i,
-      /\bMCP tool\b/i, /\bregister a new tool\b/i, /\bmigrate\b/i, /\bdeprecat/i,
-      /\b(?:schemas|content\/pipeline|adapters|scripts|\.github\/workflows)\//,
-    ],
-  },
-  {
-    name: "cross-cutting",
-    patterns: [
-      /\bfor all papers\b/i, /\bevery folio\b/i, /\bacross all content types\b/i,
-      /\bthe platform should\b/i, /\bboth document and paper\b/i, /\bwrit large\b/i,
-    ],
-  },
-  {
-    name: "review-surfaced",
-    patterns: [
-      /\bwould be easier if\b/i, /\btriage these comments\b/i, /\bfeedback workflow\b/i,
-      /\bstakeholders need\b/i, /\breview process more\b/i, /\bfor comment review\b/i,
-    ],
-  },
-];
-
-/** The skill's explicit exclusions. */
-const EXCLUSIONS: RegExp[] = [
-  /\bwrite the next section\b/i,
-  /\bfix the typo\b/i,
-  /\brun content_validate\b/i,
-  /\breview chapter\b/i,
-  /\bcreate a bean\b/i,
-];
-
-interface Verdict { fires: boolean; categories: string[]; excluded: boolean }
-
-function detect(text: string): Verdict {
-  const categories = CATEGORIES.filter((c) => c.patterns.some((p) => p.test(text))).map((c) => c.name);
-  const excluded = EXCLUSIONS.some((p) => p.test(text));
-  return { fires: categories.length > 0 && !excluded, categories, excluded };
-}
+const SKILL = join(root, "methodologies/crdm/crdm-detect.md");
+const skillExclusions = parseSkillExclusions(readFileSync(SKILL, "utf-8"));
 
 const corpus: Item[] = JSON.parse(
   readFileSync(join(root, "scripts/eval/crdm-detect-corpus.json"), "utf-8"),
@@ -146,6 +96,21 @@ if (falseAlarms.length) {
   for (const f of falseAlarms) console.log(`  · #${f.number} ${f.title.slice(0, 68)}\n      ${f.why}`);
 }
 
+// The third state. A phrase matcher structurally cannot decide "bug reports
+// about existing features"; printing the count is the difference between a
+// declared limit and an unexplained false alarm. `dh4f` in miniature — the
+// silent version of this reported a clean implementation of a list it had only
+// partly implemented.
+if (skillExclusions.judgementOnly.length) {
+  console.log(
+    `\nNOT IMPLEMENTABLE BY PHRASE — exclusions the skill states as a judgement` +
+      ` (${skillExclusions.judgementOnly.length} of ` +
+      `${skillExclusions.quoted.length + skillExclusions.judgementOnly.length}):`,
+  );
+  for (const j of skillExclusions.judgementOnly) console.log(`  · ${j}`);
+  console.log(`  A false alarm matching one of these is a limit of the LOWER BOUND, not a defect in it.`);
+}
+
 console.log(
   `\nLOWER BOUND. This runs the phrase list only; the skill also asks for\n` +
     `judgement, which catches wording the list never anticipated. Ground truth\n` +
@@ -172,7 +137,11 @@ const run = buildTestRun({
   root,
   subject: "crdm-detect phrase signals against the issue corpus",
   dataInputs: ["scripts/eval/crdm-detect-corpus.json"],
-  processInputs: ["scripts/eval-crdm-detect.ts", "methodologies/crdm/crdm-detect.md"],
+  processInputs: [
+    "scripts/eval-crdm-detect.ts",
+    "src/crdm/detect-signals.ts",
+    "methodologies/crdm/crdm-detect.md",
+  ],
   outcome: {
     population: corpus.length,
     truePositives: tp,

@@ -36,6 +36,7 @@ import type {
   QaCriterionEntry,
   QaScriptSidecar,
   CompanionRole,
+  QaCriterionDefinition,
 } from "../../schemas/block-qa";
 import { COMPANION_ROLES } from "../../schemas/block-qa";
 import { ALL_BLOCK_BUILDER_ALT, kindForBuilder } from "../../schemas/block-kinds";
@@ -366,6 +367,21 @@ export function computeCriterionScriptHashes(
    * a re-scoping, which is the whole point of the field, so pass it.
    */
   def?: Parameters<typeof criterionDefHash>[0],
+  /**
+   * What the sidecar should RECORD as `source_file`, when that differs from
+   * the path the bytes are read at. Defaults to `sourceFile`.
+   *
+   * They differ for a CONTRIBUTED checker: the bytes live in the contributing
+   * instance, so `repoRoot`/`sourceFile` point there, while the recorded label
+   * is `<contributor>/<sourceFile>`. Without it two instances holding the same
+   * relative path would write the same `source_file` into different sidecars,
+   * and a reader could not tell whose checker a verdict came from.
+   *
+   * `script_commit_sha` deliberately still uses `sourceFile` against
+   * `repoRoot`: it is a git pathspec, and git must be asked about the file
+   * that actually exists.
+   */
+  recordAs?: string,
 ): CriterionScriptHashes {
   const absSource = join(repoRoot, sourceFile);
   // Hash extra inputs with their repo-relative labels (NOT
@@ -379,7 +395,7 @@ export function computeCriterionScriptHashes(
   }));
   return {
     criterion_id: criterionId,
-    source_file: sourceFile,
+    source_file: recordAs ?? sourceFile,
     // Prefer the per-criterion closure hash; fall back to the whole file when
     // the criterion cannot be located or its closure cannot be trusted. The
     // fallback over-invalidates (churn) rather than under-invalidating (stale
@@ -1108,7 +1124,7 @@ export function* walkBlocks(
   if (!opts.includeNonContent) {
     try {
       for (const e of readDeclaration(declaringRootFor(rootDir))?.directories ?? []) {
-        const layers = (e.graphs ?? []).map((g) => graphLayer(g));
+        const layers = (e.graphKinds ?? []).map((g) => graphLayer(g));
         // Skip only when the entry DECLARES graphs and none of them is
         // content. An entry declaring none says nothing about being retired,
         // so it stays walked — silence is not evidence.
@@ -1651,10 +1667,26 @@ export function summariseFreshness(
   report: BlockQaReport,
   current: QaFieldHash,
   scriptHashesByCriterion?: Record<string, CriterionScriptHashes>,
+  /**
+   * The criterion index to resolve definitions against.
+   *
+   * Defaults to the static registry, which is right for every criterion
+   * written out in it — but NOT for the voice-overlay criteria, which since
+   * bean `btuv` are derived from the voices an instance ships. A caller that
+   * has an instance root passes `qaCriteriaByIdFor(root)`.
+   *
+   * The fallback below happens to give a voice criterion the right answer
+   * today, because its `depends_on` is `["md"]` and so is the fallback. That
+   * is a COINCIDENCE, not a design: the fallback exists for a criterion that
+   * is unknown or fenced out, and reading it as coverage for a criterion that
+   * is merely registered somewhere else would make the first `depends_on`
+   * change on a voice silently produce stale-looking-fresh entries.
+   */
+  criteriaById: Record<string, QaCriterionDefinition> = QA_CRITERIA_BY_ID,
 ): CriterionFreshness[] {
   const out: CriterionFreshness[] = [];
   for (const [criterion, entries] of Object.entries(report.criteria)) {
-    const def = QA_CRITERIA_BY_ID[criterion];
+    const def = criteriaById[criterion];
     const dependsOn = def ? freshnessKeys(def) : (["md"] as CompanionRole[]);
     const sh = scriptHashesByCriterion?.[criterion];
     const fresh: QaCriterionEntry[] = [];

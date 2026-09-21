@@ -10,7 +10,7 @@ agents:
   - platform-boundary-guard
 ---
 `bun run init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
-`uploads/`, `library/`, manifests, `harness.config.json`, the `content/schema/`
+`uploads/`, `library/`, manifests, `<name>.config.json`, the `content/schema/`
 builder shim, `AGENTS.md` + `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the
 session-start hook and the beans store.
 

@@ -47,7 +47,7 @@
  * it would churn every consumer to no effect: the IRI is what is published,
  * and that does not change.
  */
-import { termLayer } from "./vocabulary";
+import { type TermLayer, termLayer } from "./vocabulary";
 
 /**
  * The namespace that WAS — kept only so the vocabulary document can name the
@@ -68,7 +68,7 @@ export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
  * the terms were layered. The owner, 2026-09-19: "folio:Actor, folio:Role,
  * folio:Skill, folio:CatHarness seem to have wrong prefix, it should match the
  * planned declaring instance once separation is done, like i guess bs:Actor
- * for cat-bootstrap? cat: for catharness?"
+ * for bootstrap? cat: for catharness?"
  *
  * **Now is the only cheap moment and it is why this changed immediately.**
  * Nothing served `<base>/ns` until this branch, so no consumer holds any of
@@ -81,7 +81,7 @@ export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
  * that after separation each namespace is already the IRI its own instance
  * publishes at and nothing has to move a second time.
  */
-export const CAT_BOOTSTRAP_NS = "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#";
+export const CAT_BOOTSTRAP_NS = "https://litlfred.github.io/folio-assistant/bootstrap/ns#";
 export const CAT_HARNESS_NS = "https://litlfred.github.io/folio-assistant/cat-harness/ns#";
 export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#";
 
@@ -132,13 +132,13 @@ export const NS_PREFIXES = {
 } as const;
 
 /** The namespace a layer's terms hang off. */
-export function namespaceForLayer(layer: "cat-bootstrap" | "harness" | "core"): string {
-  return layer === "cat-bootstrap" ? CAT_BOOTSTRAP_NS : layer === "core" ? CORE_NS : CAT_HARNESS_NS;
+export function namespaceForLayer(layer: TermLayer): string {
+  return layer === "bootstrap" ? CAT_BOOTSTRAP_NS : layer === "core" ? CORE_NS : CAT_HARNESS_NS;
 }
 
 /** The prefix a layer's terms are written with. */
-export function prefixForLayer(layer: "cat-bootstrap" | "harness" | "core"): "bs" | "cat" | "fac" {
-  return layer === "cat-bootstrap" ? "bs" : layer === "core" ? "fac" : "cat";
+export function prefixForLayer(layer: TermLayer): "bs" | "cat" | "fac" {
+  return layer === "bootstrap" ? "bs" : layer === "core" ? "fac" : "cat";
 }
 
 /**
@@ -147,8 +147,8 @@ export function prefixForLayer(layer: "cat-bootstrap" | "harness" | "core"): "bs
  * This replaced 93 hand-written per-term template literals
  * across four modules. Each of those was a place to pick the wrong namespace
  * once the namespaces stopped being one, and `cat-harness.ts` alone mints
- * terms in all three layers — `KnowledgeGraph` and `SchemaGraph` are
- * cat-bootstrap's, `BeanGraph` is the harness's, `VoiceGraph` is core's — so
+ * terms in all three layers — `KGraph` and `SchemaGraph` are
+ * bootstrap's, `BeanGraph` is the harness's, `VoiceGraph` is core's — so
  * "which namespace does this file use" has no file-level answer.
  */
 export function termIri(name: string): string {

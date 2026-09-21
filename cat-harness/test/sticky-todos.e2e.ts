@@ -693,14 +693,20 @@ test.describe("todos attached to a block", () => {
     });
   });
 
-  test("a badge appears beside each block that has them, carrying its count", async ({ page }) => {
+  test("a badge appears beside each block that has them, and shows a count only above one", async ({ page }) => {
+    // R5, the owner: *"badge of # if > 1"*. Updated for bean `1rta` — this
+    // asserted a rendered "1" on the single-note block, which is exactly the
+    // behaviour the requirement removes.
     await page.goto(PAGE_URL);
     const badges = page.locator(".fa-sticky-badge");
     await expect(badges).toHaveCount(2);
     await expect(badges.nth(0).locator(".fa-sticky-badge-count")).toHaveText("2");
-    await expect(badges.nth(1).locator(".fa-sticky-badge-count")).toHaveText("1");
-    // The count is in the accessible name too, not only the glyph.
-    await expect(badges.nth(0)).toHaveAttribute("aria-label", "2 todo(s) on this section");
+    await expect(badges.nth(1).locator(".fa-sticky-badge-count")).toHaveCount(0);
+    // THE EXACT NUMBER IS IN THE ACCESSIBLE NAME IN BOTH CASES. The threshold
+    // is a density decision about the visual; a screen-reader user must not be
+    // told less than a sighted one, so the single-note badge still says "1".
+    await expect(badges.nth(0)).toHaveAttribute("aria-label", "2 notes on this section");
+    await expect(badges.nth(1)).toHaveAttribute("aria-label", "1 note on this section");
   });
 
   test("a block with no todos gets no badge", async ({ page }) => {
@@ -744,6 +750,20 @@ test.describe("todos attached to a block", () => {
     // would silently accept two pencils.
     await expect(first.locator("a.fa-sticky-view")).toHaveCount(1);
     await expect(first.locator("a.fa-sticky-edit")).toHaveCount(1);
+  });
+
+  test("an inline sticky carries no Move either — it is already beside its subject", async ({ page }) => {
+    // Bean `ivfw`'s fourth Done-when. Move is the same case as Pin: an inline
+    // sticky sits next to the content it annotates, and moving it would take
+    // it AWAY from that content. It lives in THIS describe rather than beside
+    // the other `ivfw` specs because the badge only exists on the labelled
+    // fixture — a copy at the file's end found no badge and timed out, which
+    // is the right failure and the wrong place for the test.
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-sticky-badge").first().click();
+    const first = page.locator(".fa-sticky-inline-list .fa-sticky").first();
+    await expect(first).toBeVisible();
+    await expect(first.locator(".fa-sticky-move")).toHaveCount(0);
   });
 
   test("a todo targeting a block this page lacks still reaches the board", async ({ page }) => {
@@ -922,5 +942,251 @@ test.describe("the inline board's close has a reachable inverse", () => {
     await page.locator(".fa-sticky-board-close").click();
     await expect(page.locator(".fa-sticky-board")).toBeHidden();
     await expect(page.locator(".fa-sticky-board-reopen")).toHaveCount(0);
+  });
+});
+
+/* ── The MOVE half of `ivfw` ─────────────────────────────────────────────
+ *
+ * The owner, verbatim: *"when you unpin, sticky, it loses its theme and you
+ * cant move around dispaly. treate it as visible to move in fixed place around
+ * miro build like folio visualtion."*
+ *
+ * The theme half landed 2026-09-20. The move half was recorded blocked, and
+ * the recorded reason was precise: *"a note's position is STATE and two
+ * sessions moving one note is a merge conflict."* `6lb8` then landed the board
+ * window's movement model and the owner ruled on `db7g` that a relocation is
+ * **reader-local** — which dissolves that blocker rather than working around
+ * it, because a reader-local move has no second session to conflict with.
+ *
+ * So these specs assert the bean's remaining three Done-whens: the sticky is
+ * visible and movable in the board frame, the keyboard path survives with no
+ * drag-only affordance, and the inline case is untouched.
+ */
+test("a pinned sticky can be moved, and by the keyboard alone", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+
+  const floating = page.locator(".fa-sticky-layer .fa-sticky");
+  await expect(floating).toHaveCount(1);
+
+  // It has a position at all. Before `ivfw` the layer was a small
+  // bottom-right box that stacked its children in flow, so the card had no
+  // geometry to read and nowhere to go.
+  const before = await floating.evaluate((el) => ({
+    left: parseFloat((el as HTMLElement).style.left),
+    top: parseFloat((el as HTMLElement).style.top),
+  }));
+  expect(Number.isFinite(before.left)).toBe(true);
+  expect(Number.isFinite(before.top)).toBe(true);
+
+  // NO POINTER FROM HERE ON. `mouse` is never touched below: this instance's
+  // declared interaction profile is low-dexterity, and a move that needs a
+  // drag excludes the person who asked for it.
+  const move = floating.locator(".fa-sticky-move");
+  await expect(move).toHaveAttribute("aria-pressed", "false");
+  await move.press("Enter");
+  await expect(floating).toHaveAttribute("data-fa-moving", "true");
+  await expect(move).toHaveAttribute("aria-pressed", "true");
+
+  await page.keyboard.press("ArrowLeft");
+  await page.keyboard.press("ArrowUp");
+  const after = await floating.evaluate((el) => ({
+    left: parseFloat((el as HTMLElement).style.left),
+    top: parseFloat((el as HTMLElement).style.top),
+  }));
+  expect(after.left).toBe(before.left - 16);
+  expect(after.top).toBe(before.top - 16);
+
+  // And the mode is leavable — `l4zi`: an action whose inverse is not
+  // reachable is not a toggle.
+  await page.keyboard.press("Escape");
+  await expect(floating).toHaveAttribute("data-fa-moving", "false");
+});
+
+test("the arrows only move IN the mode — outside it they still scroll", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+
+  const floating = page.locator(".fa-sticky-layer .fa-sticky");
+  const before = await floating.evaluate((el) => (el as HTMLElement).style.left);
+  await floating.evaluate((el) => (el as HTMLElement).focus());
+  await page.keyboard.press("ArrowLeft");
+  // Unchanged: a card that moved whenever a reader pressed an arrow while
+  // reading it would have stolen the page's own navigation.
+  await expect(floating).toHaveAttribute("style", new RegExp(`left: ${before.replace(".", "\\.")}`));
+});
+
+test("a moved sticky comes back where it was, not in the corner", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+
+  const floating = page.locator(".fa-sticky-layer .fa-sticky");
+  await floating.locator(".fa-sticky-move").press("Enter");
+  await page.keyboard.press("ArrowLeft");
+  await page.keyboard.press("ArrowLeft");
+  const moved = await floating.evaluate((el) => (el as HTMLElement).style.left);
+  await page.keyboard.press("Escape");
+
+  // dock DESTROYS the card and float CONSTRUCTS a new one — the same
+  // round-trip that dropped the theme. A reader who moved it and put it back
+  // has not asked for it to jump to the corner.
+  await page.locator(".fa-sticky-slot .fa-sticky-recall").click();
+  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveAttribute(
+    "style",
+    new RegExp(`left: ${moved.replace(".", "\\.")}`),
+  );
+});
+
+test("the layer is a coordinate frame, not a surface that swallows the page", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+
+  // The layer covers the whole viewport now, so if it took pointer events the
+  // page would be unusable the moment one sticky was pinned. This is the one
+  // assertion that would fail catastrophically in production and silently in
+  // a spec that only checked the card.
+  const layer = page.locator(".fa-sticky-layer");
+  await expect(layer).toHaveCSS("pointer-events", "none");
+  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCSS("pointer-events", "auto");
+});
+
+/* ── `qefk` — three on the face, one that holds the rest ──────────────────
+ *
+ * Owner: *"the todos controls are too clunky / take up too much real
+ * estate."* Four buttons on a card whose content is one line of summary, five
+ * once it floated. Asked how far to go, the owner answered **"3+1"**.
+ *
+ * The split is by WHAT THE GESTURE DOES: board gestures (Pin, Discard, and
+ * Move once floating) stay on the face; the two that leave for the forge
+ * (View, Edit) go behind one `<details>`. `pb04` required both to be
+ * PRESENT — that is satisfied; competing with the summary was never what it
+ * asked for.
+ */
+test("a board sticky's face carries the board gestures, not the forge links", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const card = page.locator(".fa-sticky-slot .fa-sticky").first();
+  const tools = card.locator(".fa-sticky-tools");
+
+  // On the face.
+  await expect(tools.locator("> .fa-sticky-pin")).toHaveCount(1);
+  await expect(tools.locator("> .fa-sticky-discard")).toHaveCount(1);
+  await expect(tools.locator("> .fa-sticky-more")).toHaveCount(1);
+
+  // NOT on the face — still present, one level in. `>` is the whole point of
+  // this assertion: a descendant selector would pass for both arrangements
+  // and prove nothing.
+  await expect(tools.locator("> a.fa-sticky-view")).toHaveCount(0);
+  await expect(tools.locator("> a.fa-sticky-edit")).toHaveCount(0);
+  await expect(card.locator("a.fa-sticky-view")).toHaveCount(1);
+  await expect(card.locator("a.fa-sticky-edit")).toHaveCount(1);
+
+  // The drawer is LAST, so the row ends with it rather than starting with it.
+  const ids = await tools.evaluate((el) =>
+    Array.from(el.children).map((c) => c.className));
+  expect(ids[ids.length - 1]).toContain("fa-sticky-more");
+});
+
+test("the drawer opens from the keyboard and names what it holds", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const more = page.locator(".fa-sticky-slot .fa-sticky").first().locator(".fa-sticky-more");
+  const summary = more.locator("summary");
+
+  // It names its CONTENTS, not its shape: "More" tells a screen-reader user
+  // nothing about whether opening it is worth the keystroke.
+  await expect(summary).toHaveAttribute("aria-label", /Source links for .+ — 2 links/);
+
+  await expect(more).not.toHaveAttribute("open", "");
+  await summary.press("Enter");
+  await expect(more).toHaveAttribute("open", "");
+  await expect(more.locator("a.fa-sticky-view")).toBeVisible();
+  await expect(more.locator("a.fa-sticky-edit")).toBeVisible();
+
+  // An inverse that is reachable — `l4zi`.
+  await summary.press("Enter");
+  await expect(more).not.toHaveAttribute("open", "");
+});
+
+test("Move joins the face when the card floats, ahead of the drawer", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+
+  const tools = page.locator(".fa-sticky-layer .fa-sticky .fa-sticky-tools");
+  const order = await tools.evaluate((el) =>
+    Array.from(el.children).map((c) => c.className));
+  const moveAt = order.findIndex((c) => c.includes("fa-sticky-move"));
+  const drawerAt = order.findIndex((c) => c.includes("fa-sticky-more"));
+  expect(moveAt).toBeGreaterThan(-1);
+  // Move is a BOARD gesture, so it belongs on the face. It used to go in at
+  // `firstChild`, which reordered the row every time a card floated.
+  expect(moveAt).toBeLessThan(drawerAt);
+});
+
+/* ── The board's geometry is a MEASUREMENT, not a taste ──────────────────
+ *
+ * Owner, 2026-09-21: *"to much padding between panels, condense"* and
+ * *"sticky should stilll be ~2.5" in large macbook screen"* — two halves of
+ * one instruction. Condensing without the floor shrinks the card; the floor
+ * without the condensing leaves the dead space. Both are asserted, because a
+ * later "tighten this up" that took the card with it would satisfy half the
+ * request and look like it satisfied all of it.
+ */
+test.describe("board geometry", () => {
+  // The screen the request names. 3456x2234 over a 16.2" diagonal is 13.6" of
+  // width, presented as 1728 CSS px — about 127 CSS px per PHYSICAL inch. That
+  // ratio is the whole point: a CSS `in` is exactly 96 CSS px and is NOT a
+  // physical inch, so `2.5in` in the stylesheet would have rendered ~1.9" of
+  // glass. 2.5 x 127 = 318px, and 20rem is 320px.
+  test.use({ viewport: { width: 1728, height: 1000 } });
+
+  test('a sticky is ~2.5 physical inches on the screen the owner named', async ({ page }) => {
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+    const card = page.locator(".fa-sticky-grid > *").first();
+    const box = await card.boundingBox();
+    expect(box).not.toBeNull();
+    // 320px exactly, but asserted as a BAND. The tolerance is not slack for
+    // the implementation — it is what "~2.5 inches" means. A spec that
+    // demanded 320.0 would fail on a rounding change nobody could see.
+    expect(box!.width).toBeGreaterThanOrEqual(310);
+    expect(box!.width).toBeLessThanOrEqual(330);
+  });
+
+  test("the cards do not stretch to fill the row", async ({ page }) => {
+    // `1fr` WAS THE BUG, and this is the spec that would have caught it: with
+    // a `1fr` track every column absorbs the leftover width, so the card's
+    // size is whatever the viewport happens to leave — a number nobody chose
+    // and the test above could only pass by luck of the viewport.
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+    const widths = await page
+      .locator(".fa-sticky-grid > *")
+      .evaluateAll((els) => els.map((e) => (e as HTMLElement).getBoundingClientRect().width));
+    expect(widths.length).toBeGreaterThan(0);
+    const grid = await page.locator(".fa-sticky-grid").boundingBox();
+    // Every card is capped well under the board's own width; none of them has
+    // been handed the remainder.
+    for (const w of widths) expect(w).toBeLessThan(grid!.width / 2);
   });
 });

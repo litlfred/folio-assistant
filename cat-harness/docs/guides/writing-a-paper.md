@@ -67,7 +67,7 @@ review and release that follow, as BPMN swimlane diagrams.
 2. [Connect your LLM harness](../installation.html#connecting-an-llm-harness)
    (Claude Code, Antigravity, …) so the agent has the MCP tools.
 3. Create an (empty) content repository for your paper and add a
-   `harness.config.json` with `"contentType": "paper"`.
+   `<name>.config.json` with `"contentType": "paper"`.
 
 ---
 

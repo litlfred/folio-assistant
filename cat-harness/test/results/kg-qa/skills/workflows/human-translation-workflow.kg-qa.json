@@ -5,7 +5,7 @@
     "id": "Process_HumanTranslation",
     "path": "skills/workflows/human-translation-workflow.bpmn"
   },
-  "source_hash": "sha256:00b91a2a4966bedff728405e3bec51bfd59c6456b64e7da43039c21435d033d6",
+  "source_hash": "sha256:42043b49adf85c35d71655f8a15bf5df4f293abe2eee4a3160b9a877bf41d875",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

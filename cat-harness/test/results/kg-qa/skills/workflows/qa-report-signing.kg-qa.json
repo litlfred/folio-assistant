@@ -5,7 +5,7 @@
     "id": "Process_QaReportSigning",
     "path": "skills/workflows/qa-report-signing.bpmn"
   },
-  "source_hash": "sha256:6a3e383950940e21ef865e0cc03cd966a984e790601fff821a68b04163e83427",
+  "source_hash": "sha256:6d0ca7c017d3fb968acaa30ab3e1ef97eff6772b395f1d34516cfd9c979c63de",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "fail",
       "findings": [
@@ -80,7 +84,7 @@
   "totals": {
     "pass": 8,
     "fail": 1,
-    "n/a": 5,
+    "n/a": 6,
     "unknown": 0
   }
 }

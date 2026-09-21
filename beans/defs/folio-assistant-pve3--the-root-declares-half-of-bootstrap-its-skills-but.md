@@ -11,9 +11,9 @@ parent: folio-assistant-vke6
 
 ## Measured 2026-09-20
 
-The root `harness.json` declares `bootstrap` → `cat-bootstrap/skills/`, so
+The root `harness.json` declares `bootstrap` → `bootstrap/skills/`, so
 folio-assistant's graph carries **bootstrap's skills and roles**. It does NOT
-declare `cat-bootstrap/workflows/`, so it does not carry **bootstrap's process** —
+declare `bootstrap/workflows/`, so it does not carry **bootstrap's process** —
 that isolation was deliberate (#432, where bootstrap's process was leaking into
 the root graph 88 times).
 
@@ -32,7 +32,7 @@ Both are symptoms of the same asymmetry.
 
 ## Worked around, not fixed
 
-`lanes` was omitted from `cat-bootstrap/skills/roles/roles.json` to keep the graph
+`lanes` was omitted from `bootstrap/skills/roles/roles.json` to keep the graph
 honest without widening the dangling-link allowance — which would have recorded
 new debt as progress. Bootstrap's own graph binds correctly either way (0
 dangling), because it carries both halves.
@@ -142,22 +142,22 @@ reverted, and both halves of that are worth recording.
 ### The measurement that misled me, and why
 
 This bean says *"the root `harness.json` declares bootstrap →
-`cat-bootstrap/skills/`"*. I read the ROOT's `harness.json`, found **no**
-`cat-bootstrap` directory in it — only an `assets` entry naming
-`cat-bootstrap/AGENTS.md` as the `source` this checkout's own AGENTS.md
+`bootstrap/skills/`"*. I read the ROOT's `harness.json`, found **no**
+`bootstrap` directory in it — only an `assets` entry naming
+`bootstrap/AGENTS.md` as the `source` this checkout's own AGENTS.md
 descends from — and concluded the asymmetry was gone and the root now carried
 neither half.
 
 **The declaration is in `cat-harness/harness.json`, not the root's:**
 
 ```
-id= cat-bootstrap          path= cat-bootstrap/skills/   scope= repository
-id= cat-bootstrap-render   path= cat-bootstrap/render/   scope= repository
+id= bootstrap          path= bootstrap/skills/   scope= repository
+id= bootstrap-render   path= bootstrap/render/   scope= repository
 ```
 
 `scope: "repository"` resolves against the REPOSITORY root rather than the
 declaring instance, so the entry lands in folio-assistant's graph while living
-in cat-harness's file. `cat-bootstrap/workflows/` has no such entry. The
+in cat-harness's file. `bootstrap/workflows/` has no such entry. The
 asymmetry is exactly as this bean describes it; only the file is wrong.
 
 **Corrected in the text above?** No — left as written, with this section as
@@ -197,8 +197,8 @@ would assert the opposite. Worth stating so the next reader does not "fix" it.
 process the root does not own into its published graph and undoes #432's
 isolation; neither stops bootstrap's skills appearing in folio-assistant's
 docs. What is now known is where the one-line change goes — the
-`cat-bootstrap` entry in `cat-harness/harness.json`, plus a sibling entry for
-`cat-bootstrap/workflows/` if the answer is *both*.
+`bootstrap` entry in `cat-harness/harness.json`, plus a sibling entry for
+`bootstrap/workflows/` if the answer is *both*.
 
 
 ## RULED "NEITHER" 2026-09-21 — and implementing it found the bean's cost estimate wrong
@@ -213,8 +213,8 @@ lines) so the next session starts from working code rather than this prose.
 
 | consumer | what the ruling does to it | status |
 |---|---|---|
-| `cat-harness/harness.json` | drop the `cat-bootstrap` entry | **done** — one line, as advertised |
-| `cat-bootstrap/skills/roles/roles.json` | `lanes` restorable at last | **done** — all four roles |
+| `cat-harness/harness.json` | drop the `bootstrap` entry | **done** — one line, as advertised |
+| `bootstrap/skills/roles/roles.json` | `lanes` restorable at last | **done** — all four roles |
 | `check-tools.ts` | 2 `satisfies` resolve to nothing | **done** — see below |
 | `tools.test.ts:177` | asserts bootstrap's 2 skills ARE this instance's | **done** — inverted, not deleted |
 | `kg-export` + its 3 package tests | **blocked** — needs a design ruling | **NOT done** |
@@ -223,8 +223,8 @@ lines) so the next session starts from working code rather than this prose.
 
 Removing the entry made `discuss → discussion` and `log-message → log-message`
 report as dangling. Both skills exist, declared, in
-`cat-bootstrap/harness.json`. The Tools live in cat-harness because *a Tool is
-cat-harness's vocabulary and cat-bootstrap may not import it* — bean `gn4l`
+`bootstrap/harness.json`. The Tools live in cat-harness because *a Tool is
+cat-harness's vocabulary and bootstrap may not import it* — bean `gn4l`
 records that as **a limitation rather than a decision**, with the nodes moving
 unchanged when tool collection stops being import-bound. So the cross-instance
 edge is the architecture, not a defect.
@@ -251,16 +251,16 @@ Two failures, one cause.
 another instance's graph the link dangles, and `kg-export.test.ts` pins that
 every dangling edge is `declaresSkill` or `providesCapability`. There is **no
 cross-instance IRI minting** anywhere in `kg-export.ts` (grepped, not assumed),
-so expressing "this Tool satisfies a skill published in cat-bootstrap's graph"
+so expressing "this Tool satisfies a skill published in bootstrap's graph"
 requires deciding how such an IRI is formed AND ensuring it resolves once
 published. That is a design step with publication consequences.
 
-**2. Three package tests cannot be relocated.** They assert the `cat-bootstrap`
+**2. Three package tests cannot be relocated.** They assert the `bootstrap`
 package's id comes from its manifest rather than its basename, that its
 members are exactly five named skills, and that `corpus-grep` is NOT among them
 — *"the sharpest assertion here, because it is the one that was false and that
 every other signal called healthy."* Under the ruling that package is
-cat-bootstrap's own, so the guard should move to cat-bootstrap's export.
+bootstrap's own, so the guard should move to bootstrap's export.
 **`ExportOptions` carries only `baseUrl`**: `buildExport` always exports THIS
 instance, so there is no second export to assert against.
 
@@ -289,9 +289,9 @@ one. A red branch carrying a correct ruling is worse than a recorded one.
 The owner ruled **neither**, then ruled **yes** on the blocker
 (*"make kg-export multi-instance"*). Both are in.
 
-`cat-harness/harness.json` no longer declares `cat-bootstrap/skills/`.
-`lanes` is restored on all four cat-bootstrap roles — the workaround this bean
-existed to retire. `v3se`'s collision source is gone: `cat-bootstrap-kg-navigation`
+`cat-harness/harness.json` no longer declares `bootstrap/skills/`.
+`lanes` is restored on all four bootstrap roles — the workaround this bean
+existed to retire. `v3se`'s collision source is gone: `bootstrap-kg-navigation`
 no longer appears in the root graph beside `skills/folio-core/kg-navigation`.
 
 **The blocker turned out to be `gn4l`'s last open box**, and this ruling made
@@ -300,9 +300,9 @@ export, the 2079-vs-85 hazard, and the three defects found building it.
 
 **The corpus witness that had to move.** Three tests guarded `packageIdFor`'s
 rule — an id comes from the manifest's `name`, never the directory basename —
-by asserting it of `#package/cat-bootstrap`, which this ruling removes from
-the graph. Retargeted to `cat-bootstrap-render` (directory `render`, manifest
-`cat-bootstrap-render`), a live witness with the same shape, rather than
+by asserting it of `#package/bootstrap`, which this ruling removes from
+the graph. Retargeted to `bootstrap-render` (directory `render`, manifest
+`bootstrap-render`), a live witness with the same shape, rather than
 deleted. **A test that asserts a rule through one named example dies with that
 example**; where `packageIdFor` can be called directly against a root, prefer
 that.

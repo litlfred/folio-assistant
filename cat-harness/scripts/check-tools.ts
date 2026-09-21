@@ -145,7 +145,7 @@ export function unresolvedPaths(): { field: string; tool: string; value: string;
  *    {@link isSkillMd} excludes them by their `$schema:` line; a directory
  *    scan cannot. So `satisfies: ["the-complement"]` would have RESOLVED —
  *    a Tool claiming to implement a memory entry, checked and passed.
- *  - **2 real skills missed.** `cat-bootstrap/skills/` holds its skills DIRECTLY
+ *  - **2 real skills missed.** `bootstrap/skills/` holds its skills DIRECTLY
  *    rather than in packages, and a scan of one root's subdirectories never
  *    looks at the root itself. `confirm-harness` and `log-message` read as
  *    dangling — which is how this was found: a Tool naming a skill that is
@@ -233,11 +233,11 @@ export interface ToolCheck {
  * repository keeps paying for: **not in my overlay is not does not exist.**
  *
  * Found 2026-09-21 by the owner's ruling on `pve3` (*"neither"*), which
- * removed `cat-bootstrap/skills/` from the root's declared directories. Two
+ * removed `bootstrap/skills/` from the root's declared directories. Two
  * Tools then reported as dangling — `discuss` → `discussion` and
  * `log-message` → `log-message` — and both skills exist, declared, in
- * `cat-bootstrap/harness.json`. The Tools live here because a Tool is
- * cat-harness's vocabulary and cat-bootstrap may not import it (bean `gn4l`
+ * `bootstrap/harness.json`. The Tools live here because a Tool is
+ * cat-harness's vocabulary and bootstrap may not import it (bean `gn4l`
  * records that as a limitation, with the node moving unchanged when tool
  * collection stops being import-bound), so the cross-instance edge is the
  * architecture rather than a defect.

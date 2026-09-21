@@ -1,13 +1,13 @@
 ---
 # folio-assistant-sfhr
 title: 'STORE DEFECTS the check does not see: an empty in-progress body, a title that ate its Done-when, a blocker on a scrapped bean'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-21T05:14:56Z
+updated_at: 2026-09-21T21:34:26Z
 parent: folio-assistant-ahvw
 ---
 
@@ -118,3 +118,93 @@ either way, one per rejected candidate above.
 *Issue link, recorded 2026-09-21.* **[#639](https://github.com/litlfred/folio-assistant/issues/639)** — the shadow-checklist detector.
 
 Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.
+
+---
+
+## 2026-09-21 — the closed-bean question, answered with a number
+
+It sat as *"raised, not decided"* because nobody had measured it. Measured now,
+and **the dates decide it, not the count**:
+
+| | |
+|---|---|
+| CLOSED beans carrying the shape | **30** (75 items), against 3 open |
+| **ARCHIVED** beans carrying it | **0 of 219** — and archived beans are the OLD ones |
+| last updated 2026-09-20 | **21** |
+| last updated 2026-09-21 | 9 |
+| this check shipped (#589) | **2026-09-21** |
+
+So it is neither sediment nor a trend. It is a **one-day burst on 2026-09-20** —
+the 54-merge window `vlhk` describes — and this check shipped the day after, in
+response to it. The zero across 219 archived beans is what rules out "it has
+always been like this".
+
+### Decided: closed beans are COUNTED, never failed
+
+**Every bean is open before it is closed**, so the open-bean rule already
+prevents recurrence. Extending it backwards would add **75 baseline entries,
+all belonging to other owners, for work already finished** — and a completed
+bean's unticked checklist misleads nobody about what to do next, because its
+`status` says `completed` and dominates.
+
+That is the same argument I made on `vzur` four hours ago and would be
+contradicting here: **a gate that is red on arrival is not a gate.**
+
+### But not silent, either
+
+`closedWithShadow` is reported every run. *"Not scanned"* and *"none there"*
+must not look alike — the three-state rule this repository applies everywhere
+else. A **rising** number means the open-bean gate is being evaded; a flat one
+means the burst is history. A measurement that lives only in a bean is a
+printed verdict: gone, and unaskable later.
+
+### The other open item is NOT mine
+
+*"The five baselined `shadow-checklist` beans are repaired by their owners."*
+Two already are — `ivfw` and `jbx2` are gone from the baseline, which is the
+shrink rule working. Three remain: `0hi8`, `81t5`, `xgd8`. **I own none of
+them**, and this check's own output says so in as many words:
+
+> Outstanding defects are repaired by the bean's OWNER, not by this check and
+> not by whoever ran it.
+
+Left open, and it is the only thing standing between `sfhr` and done.
+
+### Noticed while measuring, not touched
+
+Six `dead-blocker` findings the issue does not mention — four beans blocked on
+`68dt` (`completed`), two on `fsch` (`scrapped`), one on `qif9` (`completed`) —
+plus a `folded-title` (`52dz`) and an `empty-body` (`70c7`). All baselined, all
+other owners'.
+
+`bun run gates` — 93 of 93.
+
+---
+
+## 2026-09-21 — the last item, and the baseline shrank 11 → 8
+
+The owner authorised repairing the three that remained. `ivfw` and `jbx2` had
+already been done by their owners; `b963` was repaired when this bean shipped.
+
+**Each was a different shape of the same defect, and none was carelessness:**
+
+| bean | what was actually there |
+|---|---|
+| `0hi8` | a **deliberate status report** with reasoning — two items verified, the third argued open on the merits. The canonical list simply never caught up |
+| `81t5` | **THREE** checklists. The last declared itself *"REPLACES both lists above"* — so the authoritative list was the one nobody consults |
+| `xgd8` | a revision sitting **160 lines below** the list every reader and tool reads |
+
+In every case the author's verdicts are unchanged. **What moved is which list a
+reader finds first** — which is the whole of what this bean is about.
+
+`0hi8`'s second item stays open on purpose, and its reasoning is worth keeping:
+a generic static server fails `compound-extension-wins` because every OS table
+resolves `.schema.json` to `application/json`, and declaring Caddy would
+*"assert conformance nobody measured"*.
+
+### The baseline shrank rather than fossilised
+
+The check reported all three entries **stale** and kept failing until they were
+removed: 11 → 8. That is the shrink rule doing its job, not a tidy-up.
+
+`sfhr` is complete.

@@ -125,5 +125,5 @@ layer that cannot emit its own graph has not shown it is a graph.
 
 Recorded on `hfkl`, which also carries a contradiction to resolve first:
 `kg-export` WRITES `_kg/<stub>.jsonld` while a comment in the same file calls
-`cat-bootstrap/cat-bootstrap.jsonld` "a COMMITTED artefact". Which is true decides
+`bootstrap/bootstrap.jsonld` "a COMMITTED artefact". Which is true decides
 whether this criterion is checkable from a checkout or only after a build.

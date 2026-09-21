@@ -38,7 +38,7 @@ healthy.
 **1. Nothing records where a harness got to in its initialisation.**
 `beans/workflows/` — the declared `workflow-state` graph, one JSON per running
 BPMN instance, committed so a sibling session sees the same position — is
-**EMPTY**. `cat-bootstrap/workflows/initialize-harness.bpmn` is the process an
+**EMPTY**. `bootstrap/workflows/initialize-harness.bpmn` is the process an
 Initiator starts, and no instance state for it exists. So "current state of
 where harness got to in its initialization" is not a question anybody can
 answer today.

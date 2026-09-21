@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "skills/workflows/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:4a5f9bdeb5713d930fc4aebfd11957310d5b52dcec7e85d8959d2b26ac47df17",
+  "source_hash": "sha256:3d410538399a57bb826eac7615e4a5d115aa4b3e0d33dd3bb6305f075238fd52",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -45,6 +45,10 @@
     },
     "lane-binds-role": {
       "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
@@ -88,7 +92,7 @@
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

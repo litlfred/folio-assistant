@@ -290,6 +290,14 @@ test.describe("accessibility — the docs-site UI", () => {
       // The search field is the new control and the one most likely to fail
       // contrast: it lands on an opaque sidebar panel it was not styled for.
       ["the search view", ["Search"]],
+      // THE VIEW THIS LOOP DID NOT OPEN, and the gap is the whole of `rptk`'s
+      // second half. `buildLanguageBar()` kept the inline literals the
+      // per-page bar was fixed for -- an unavailable tab at `opacity:0.5`
+      // composited to 1.39:1, the current tab to 3.67:1 -- for two days after
+      // the scope came off the run above, because a page-wide axe pass only
+      // measures what is ON the page, and this bar is behind a tile nobody
+      // clicked. Three of four tiles checked is not the tiles checked.
+      ["the language view", ["Language"]],
     ] as const) {
       test(`no WCAG A/AA violations — ${state}, ${colorScheme}`, async ({ browser }) => {
         const ctx = await browser.newContext({ colorScheme });
@@ -322,6 +330,72 @@ test.describe("accessibility — the docs-site UI", () => {
         await ctx.close();
       });
     }
+  }
+});
+
+test.describe("scheme coherence — the question axe cannot ask", () => {
+  /* Bean `23bc`, owner: *"class=\"fa-qr-toggle fa-tiles-toggle\" does not
+   * respect light mode."*
+   *
+   * The axe runs above drive this exact harness in BOTH schemes and passed
+   * throughout, while `.fa-tiles` painted `#27262b` on a light page. They were
+   * right to: a dark panel with light text PASSES contrast. Scheme incoherence
+   * is not a WCAG failure, so no amount of axe coverage would have found it —
+   * which makes the gate's silence evidence of nothing, and is the whole
+   * reason this describe block exists beside it.
+   *
+   * What it asserts is the property a reader actually notices: **in light
+   * mode, the panel is light.** Stated as a luminance comparison rather than a
+   * hex equality, so a future palette change that keeps the intent passes and
+   * only an inverted one fails. */
+  const luminance = (rgb: string): number => {
+    const [r, g, b] = (rgb.match(/\d+(\.\d+)?/g) ?? ["0", "0", "0"]).slice(0, 3)
+      .map((n) => Number(n) / 255)
+      .map((c) => (c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)));
+    return 0.2126 * (r ?? 0) + 0.7152 * (g ?? 0) + 0.0722 * (b ?? 0);
+  };
+
+  for (const [scheme, expectation] of [
+    ["light", "light"],
+    ["dark", "dark"],
+  ] as const) {
+    test(`the tiles panel is ${expectation} in the ${scheme} scheme`, async ({ browser }) => {
+      const ctx = await browser.newContext({ colorScheme: scheme });
+      const page = await ctx.newPage();
+      await page.setContent(tilesPage(scheme));
+      await page.locator(".fa-tiles-toggle").click();
+      const bg = await page.locator(".fa-tiles").evaluate(
+        (el) => getComputedStyle(el).backgroundColor,
+      );
+      // 0.5 is the midpoint of relative luminance: everything above it reads
+      // as a light surface, everything below as a dark one. A threshold rather
+      // than a value, so the assertion survives a palette that changes shade
+      // without changing side.
+      const L = luminance(bg);
+      if (expectation === "light") expect(L, `panel was ${bg}`).toBeGreaterThan(0.5);
+      else expect(L, `panel was ${bg}`).toBeLessThan(0.5);
+      await ctx.close();
+    });
+
+    test(`the language bar sits on the same side as its panel — ${scheme}`, async ({ browser }) => {
+      // The coupling this change had to repair. `.fa-lang-bar` was tokenised
+      // hours earlier with a comment arguing ONE palette was correct *because*
+      // `.fa-tiles` had no light override. Fixing `23bc` falsified that, and a
+      // bar still painting #27262b inside a light panel is the visible form of
+      // a claim that outlived its reason.
+      const ctx = await browser.newContext({ colorScheme: scheme });
+      const page = await ctx.newPage();
+      await page.setContent(tilesPage(scheme));
+      await page.locator(".fa-tiles-toggle").click();
+      await page.locator(".fa-tile", { hasText: "Language" }).click();
+      const [panel, bar] = await Promise.all([
+        page.locator(".fa-tiles").evaluate((el) => getComputedStyle(el).backgroundColor),
+        page.locator(".fa-lang-bar").evaluate((el) => getComputedStyle(el).backgroundColor),
+      ]);
+      const side = (c: string) => luminance(c) > 0.5;
+      expect(side(bar), `panel ${panel}, bar ${bar}`).toBe(side(panel));
+      await ctx.close();
+    });
   }
 });
 

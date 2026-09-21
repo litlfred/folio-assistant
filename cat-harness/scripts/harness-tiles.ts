@@ -16,10 +16,10 @@
  *
  * ## "Bootstrap at bottom" is DECLARED, not a name literal
  *
- * `cat-bootstrap/harness.json` carries a `renderExemption` whose reason says
- * it in those words — *"cat-bootstrap IS the navbar footer"* — so the ordering
+ * `bootstrap/harness.json` carries a `renderExemption` whose reason says
+ * it in those words — *"bootstrap IS the navbar footer"* — so the ordering
  * reads {@link isExemptFrom}`(decl, "visualiser")` rather than testing for the
- * string `cat-bootstrap`. A checker that names one instance states a rule true
+ * string `bootstrap`. A checker that names one instance states a rule true
  * only for the instance somebody remembered, which is the argument that put
  * the exemption in the declaration in the first place (bean `hfkl`).
  *
@@ -56,7 +56,14 @@ import { join } from "node:path";
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { flattenDependencies } from "./dependency-order.js";
-import { type CatHarnessDeclaration, findDeclarationFile, isExemptFrom, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import {
+  type CatHarnessDeclaration,
+  findDeclarationFile,
+  isExemptFrom,
+  readDeclaration,
+  siteDirFor,
+  visualisationsOf,
+} from "../schemas/cat-harness.js";
 // REQUIRED, for the side effect: `folio` is registered by core on import, and
 // this instance declares a folio graph. Without it `readDeclaration` throws on
 // a perfectly valid declaration — which is exactly how three inline evals in
@@ -102,7 +109,7 @@ export type HarnessTile = {
   label: string;
   description: string;
   /**
-   * Exempt from owing a visualiser — the declared reason cat-bootstrap sorts
+   * Exempt from owing a visualiser — the declared reason bootstrap sorts
    * last. See the module docs.
    */
   footer: boolean;
@@ -275,7 +282,7 @@ function tileFor(
   instanceDir: string,
 ): HarnessTile {
   const dirs = decl.directories ?? [];
-  const kinds = [...new Set(dirs.flatMap((d) => d.graphs ?? []))].sort();
+  const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
   const findings: string[] = [];
 
   // CANDIDATES FROM THE DECLARATION, presence checked on disk. Both pages a
@@ -303,11 +310,17 @@ function tileFor(
   // a different finding from "no viewer": one says nobody built it, the other
   // says the declaration is wrong.
   for (const d of dirs) {
-    const declared = d.coverage?.visualiser;
-    if (declared && !existsSync(join(siteDir, "..", "..", declared))) {
-      findings.push(
-        `${decl.name}/${d.id}: declares visualiser "${declared}", which does not resolve on disk.`,
-      );
+    // EVERY declared visualisation, not "the" one: a directory may now declare
+    // several — the owner's *"harness can declare >= 1 visualiztion (which
+    // then has a title)"* — and checking only the first would report a clean
+    // directory whose second viewer is missing.
+    for (const v of visualisationsOf(d.coverage, d.id)) {
+      if (!existsSync(join(siteDir, "..", "..", v.ref))) {
+        findings.push(
+          `${decl.name}/${d.id}: declares visualiser "${v.title}" at "${v.ref}", ` +
+            `which does not resolve on disk.`,
+        );
+      }
     }
   }
 
@@ -482,7 +495,7 @@ const byName = (a: HarnessTile, b: HarnessTile) => (a.name < b.name ? -1 : a.nam
  * else in this repository. So it is computed from the declared `needs` rather
  * than written out as four names: a list of names would be a rule true only
  * for the instances somebody remembered, which is exactly why
- * `cat-bootstrap`'s footer position is read from its declared exemption
+ * `bootstrap`'s footer position is read from its declared exemption
  * instead of from its name.
  *
  * ## The sort is `flattenDependencies`, not a second topological sort
@@ -565,8 +578,8 @@ export function orderTiles(tiles: readonly HarnessTile[]): HarnessTile[] {
  * The declared floor goes last, whatever the dependency graph said.
  *
  * TWO RULES THAT AGREE TODAY, kept as two on purpose. The dependency order
- * puts `cat-bootstrap` last because it is what everything sits on; its own
- * `renderExemption` puts it last because *"cat-bootstrap IS the navbar
+ * puts `bootstrap` last because it is what everything sits on; its own
+ * `renderExemption` puts it last because *"bootstrap IS the navbar
  * footer"*. In this repository they give the same answer, and a test asserts
  * it.
  *

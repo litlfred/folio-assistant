@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-needs\n"
-"POT-Creation-Date: 2026-09-20T12:20:30.396Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.416Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:18
+#: methodologies/crdm/workflows/crdm-needs.bpmn:19
 #. Diagram label
 msgid "Agent"
 msgstr ""
@@ -24,12 +24,12 @@ msgstr ""
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:48
+#: methodologies/crdm/workflows/crdm-needs.bpmn:51
 #. Diagram label
 msgid "BA approves?"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:46
+#: methodologies/crdm/workflows/crdm-needs.bpmn:49
 #. Diagram label
 msgid "Confirm needs statement"
 msgstr ""
@@ -39,57 +39,72 @@ msgstr ""
 msgid "CRDM Phase 1 — needs"
 msgstr ""
 
+#: methodologies/crdm/workflows/crdm-needs.bpmn:20
+#. Diagram element documentation
+msgid "Drafts the needs statement but never decides it is right — A_Synthesise is the sole target when GW_Needs loops back — and this process's own documentation calls an unconfirmed synthesis \"an agent's summary, not a requirement,\" which is exactly what this lane alone produces before the two lanes below it look at it."
+msgstr ""
+
 #: methodologies/crdm/workflows/crdm-needs.bpmn:13
 #. Diagram element documentation
 msgid "Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it. The loop is the phase: a needs statement nobody confirmed is an agent's summary, not a requirement."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:30
+#: methodologies/crdm/workflows/crdm-needs.bpmn:33
 #. Diagram label
 msgid "Phase 1: Identify stakeholders"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:36
+#: methodologies/crdm/workflows/crdm-needs.bpmn:39
 #. Diagram label
 msgid "Phase 1: Synthesise needs from sources"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:29
+#: methodologies/crdm/workflows/crdm-needs.bpmn:32
 #. Diagram label
 msgid "Phase begins"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:49
+#: methodologies/crdm/workflows/crdm-needs.bpmn:52
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:40
+#: methodologies/crdm/workflows/crdm-needs.bpmn:43
 #. Diagram label
 msgid "Review synthesised needs statement"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:55
+#: methodologies/crdm/workflows/crdm-needs.bpmn:58
 #. Diagram label
 msgid "revise"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:25
+#: methodologies/crdm/workflows/crdm-needs.bpmn:27
 #. Diagram label
 msgid "Stakeholders"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:32
+#: methodologies/crdm/workflows/crdm-needs.bpmn:35
 #. Diagram element documentation
 msgid "The agent asks the BA who is affected by this change. The BA knows the domain — the agent does not guess."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:42
+#: methodologies/crdm/workflows/crdm-needs.bpmn:45
 #. Diagram element documentation
 msgid "The BA reviews what the agent synthesised and checks it against what they actually need."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-needs.bpmn:56
+#: methodologies/crdm/workflows/crdm-needs.bpmn:16
+#. Diagram element documentation
+msgid "The single review here is what GW_Needs is literally named for — \"BA approves?\" — even though Lane_Stakeholders' confirmation sits between this task and that gateway in the flow; the phase's own documentation makes clear the loop needs both, so reading the gate label alone would miss half of what it takes to exit it."
+msgstr ""
+
+#: methodologies/crdm/workflows/crdm-needs.bpmn:28
+#. Diagram element documentation
+msgid "The task itself carries no documentation of its own, so this lane's entry is the only place recording what \"confirm\" means in Phase 1: recognising the synthesised needs statement as actually theirs, immediately before the loop gate — not, as in the later data-model phase, judging a cardinality, because there is no model yet to have one."
+msgstr ""
+
+#: methodologies/crdm/workflows/crdm-needs.bpmn:59
 #. Diagram label
 msgid "yes"
 msgstr ""

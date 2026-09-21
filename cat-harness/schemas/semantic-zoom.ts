@@ -50,6 +50,9 @@
  * 40 board units is legible or not depending on the scale, and the scale is
  * what the reader is changing.
  */
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import { z } from "zod";
 
 /** The document's own declaration of what it is, inside the file. */
@@ -120,4 +123,53 @@ export function zoomThresholdFor(zoom: SemanticZoom, kind: string): ResolvedZoom
  */
 export function rendersAvatar(zoom: SemanticZoom, kind: string, widthPx: number): boolean {
   return widthPx < zoomThresholdFor(zoom, kind).belowPx;
+}
+
+/**
+ * The folio's declaration, or `undefined` when it has not made one.
+ *
+ * ## Where the file lives, and why it took a bean to decide
+ *
+ * At the **root of the instance that owns the folio**, beside its
+ * `<name>.config.json` — because the threshold is a fact about the FOLIO, and
+ * that is where a folio's own declarations sit. (It said `harness.json` until
+ * #649 renamed every declaration to carry its instance's name; the rule is
+ * unchanged, the filename is not composable any more.) Not the instantiation root: that is
+ * where `<name>.config.json` says an instance is instantiated HERE, which is a
+ * different question from what one of them declares about its content.
+ *
+ * The other two candidates were wrong for reasons worth keeping. A board
+ * cannot own it, because the threshold survives deleting every board and
+ * `board-diagram-interchange`'s test says a fact that survives the layout is
+ * not layout. And a new graph KIND would have been a directory, a declaration
+ * entry and a consumer contract for one object with no identifier of its
+ * own.
+ *
+ * ## `undefined` is a real answer and is never a number
+ *
+ * The schema gives `belowPx` no default *"so nothing is ever unstated"*, and
+ * this function keeps that promise at the file boundary: a folio that has not
+ * declared a threshold gets `undefined`, and every consumer must then say it
+ * could not determine one rather than reaching for a literal. That is the
+ * whole of R2 — *"the threshold SHALL be declared data, not a literal in the
+ * renderer"* — and a fallback here would have put the literal one layer down
+ * where nobody would look for it.
+ *
+ * A present-but-unparseable file **throws**, on the rule this repository
+ * applies to every declaration: absent is a decision, malformed is a defect,
+ * and treating the second as the first hides it.
+ */
+export function readSemanticZoom(root: string): SemanticZoom | undefined {
+  const p = join(root, SEMANTIC_ZOOM_FILE);
+  if (!existsSync(p)) return undefined;
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    throw new Error(
+      `${p} is not valid JSON (${e instanceof Error ? e.message : String(e)}). ` +
+        `A malformed declaration is a defect, not an absent one.`,
+    );
+  }
+  return SemanticZoomSchema.parse(raw);
 }

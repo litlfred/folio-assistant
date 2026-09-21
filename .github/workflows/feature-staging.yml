@@ -35,12 +35,15 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
-      - 'cat-harness/scripts/mount-instance-docs.ts'
+      # EVERY script, for the reason bean `tyyc` measured on `docs-site.yml`:
+      # a named list of generators drifts, and the drift is invisible because
+      # a preview that was never built looks exactly like one nobody opened.
+      # 14 of the 28 scripts this workflow runs were uncovered, `kg-export.ts`
+      # and `publish-gh-pages.sh` among them.
+      - 'cat-harness/scripts/**'
       - 'cat-harness/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
-      - 'cat-harness/scripts/gen-schema-docs.ts'
-      - 'cat-harness/scripts/gen-docs-pages.ts'
       # The state-dashboard generator and the bean reader behind it.
       #
       # Their OUTPUT is committed under `cat-harness/docs/`, which the first
@@ -49,9 +52,8 @@ on:
       # case: a commit that edits the generator and forgets to regenerate
       # touches no `docs/` path, gets no preview, and the reviewer sees a green
       # PR with nothing to look at. `state:visualizer:check` then fails in the
-      # gates — this makes the preview available while that is diagnosed.
-      - 'cat-harness/scripts/state-visualizer.ts'
-      - 'cat-harness/scripts/beans.ts'
+      # gates — the wildcard makes the preview available while that is
+      # diagnosed.
       - '.github/workflows/feature-staging.yml'
   pull_request_target:
     types: [closed]
@@ -565,7 +567,7 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
+          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
@@ -573,15 +575,44 @@ jobs:
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
-          # THE BOOTSTRAP GRAPH, with `--base-url` so the staged copy names
-          # ITSELF rather than the live document. `gen-cat-bootstrap-graph.ts` took
-          # no such flag until this change — it minted `@id` from the canonical
-          # URL whatever tree it wrote into, so a staged copy would have
-          # asserted it lives on the live site. That is worse than the 404 it
-          # replaces: a reader following the `@id` lands on a different document
-          # that looks correct.
-          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --base-url "$BASE" --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
-          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
+          # THE BOOTSTRAP GRAPH — ONE publisher, at the path its `@id` names.
+          #
+          # `--base-url` so the staged copy names ITSELF rather than the live
+          # document: a staged copy minting the canonical `@id` would claim to
+          # BE the live document, which is worse than a 404, because a reader
+          # following it lands somewhere that looks right.
+          #
+          # This workflow did not write this document at all until `3jhq` — the
+          # omission that bean was opened to measure. THIS INSTANCE'S OWN GRAPH
+          # LINKS INTO IT: `skillHome` mints a foreign skill against the
+          # exporting document's base, so a graph staged at `$BASE` carries
+          #
+          #   $BASE/bootstrap/bootstrap.jsonld#skill/discussion
+          #   $BASE/bootstrap/bootstrap.jsonld#skill/log-message
+          #
+          # — measured by building the export with a staged `--base-url` and
+          # reading the link targets out of it, not inferred. Without this
+          # step both 404 on every preview, which is `blv9` exactly: a
+          # link-shaped value that does not resolve, on the artefact whose
+          # purpose is being resolved.
+          #
+          # `gen-bootstrap-graph.ts` published a SECOND bootstrap graph here,
+          # at `bootstrap/bootstrap.jsonld` — bean `dyd3`. Measured 2026-09-21:
+          # 88 nodes each, 85 of them doc-relative, so 85 subjects existed
+          # under two identities that no consumer will ever merge; only the 3
+          # absolute namespace IRIs were shared.
+          #
+          # Collapsing the PATHS alone would not have settled it. With both at
+          # one URL the documents still disagree — 74 of the 88 nodes differ in
+          # content, and the top level differs on six fields — so the site would
+          # publish whichever step ran last. One publisher is the fix; the other
+          # stays as a generator and a test subject.
+          #
+          # The surviving export moved to `<stub>/<stub>.jsonld`, which is where
+          # that instance's other rendered documents (`ns.jsonld`) already sit.
+          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
+          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
+          cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.

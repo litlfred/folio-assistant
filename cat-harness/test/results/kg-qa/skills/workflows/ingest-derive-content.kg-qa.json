@@ -5,7 +5,7 @@
     "id": "Process_DeriveContent",
     "path": "skills/workflows/ingest-derive-content.bpmn"
   },
-  "source_hash": "sha256:2f1315e293ae5f7fa837b3ef6d8dfc8a7d28a3a735ac1b386db6700733f270c5",
+  "source_hash": "sha256:3dacf48d13e76b8cefa7de81391dc1754263751d6837f872f763a90899d232bf",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

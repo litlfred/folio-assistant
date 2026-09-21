@@ -8,7 +8,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -20,7 +20,7 @@ import {
   undeclaredAtRoot,
 } from "../check-undeclared-files.js";
 import "../../schemas/folio-graph-kind.js";
-import { DECLARATION_SUFFIX, findDeclarationFile } from "../../schemas/cat-harness.js";
+import { findDeclarationFile } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repository with one instance, which declares a repository-scoped directory. */
@@ -31,8 +31,8 @@ function repo(): string {
       {
         name: "an-instance",
         directories: [
-          { id: "work", path: "work/", dependents: "reproduce", graphs: ["beans"], scope: "repository" },
-          { id: "own", path: "own/", dependents: "reproduce", graphs: ["schemas"] },
+          { id: "work", path: "work/", dependents: "reproduce", graphKinds: ["beans"], scope: "repository" },
+          { id: "own", path: "own/", dependents: "reproduce", graphKinds: ["schemas"] },
         ],
       },
       null,
@@ -79,7 +79,7 @@ describe("the ROOT may itself be an instance", () => {
   function repoWithRootInstance(): string {
     const root = repo();
     writeDeclaration(root, JSON.stringify(
-        { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] }] },
+        { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] }] },
         null,
         2,
       ));
@@ -125,7 +125,7 @@ describe("the ROOT may itself be an instance", () => {
     // BY ITSELF, and another declaration claiming its name does not unmake it.
     const root = repo();
     writeDeclaration(root, JSON.stringify(
-        { name: "the-repo", directories: [{ id: "x", path: "an-instance/", dependents: "reproduce", graphs: ["uploads"] }] },
+        { name: "the-repo", directories: [{ id: "x", path: "an-instance/", dependents: "reproduce", graphKinds: ["uploads"] }] },
         null,
         2,
       ));
@@ -237,15 +237,26 @@ describe("this repository, as it stands", () => {
     //
     // Over the real repository on purpose. A fixture would pin the collision I
     // already fixed; this pins the property for whatever is declared next.
+    // The ROOT's declaration is found the same way a subdirectory's is —
+    // `findDeclarationFile`, never a bare suffix filter. This scanned for
+    // `entry.name.endsWith(DECLARATION_SUFFIX)`, which was safe while that
+    // suffix was `.config.json` and became wrong the moment it turned into a
+    // bare `.json` on 2026-09-21: it then matched `tsconfig.json`, whose JSONC
+    // comments threw a parse error, and would have matched `package.json` next.
+    // The suffix is not the discriminator; agreeing with your own `name` is.
     const names = new Map<string, string[]>();
+    const rootDecl = findDeclarationFile(REPO);
+    if (rootDecl !== undefined) {
+      const name = (JSON.parse(readFileSync(join(REPO, rootDecl), "utf-8")) as { name?: string }).name;
+      if (name) names.set(name, [rootDecl]);
+    }
     for (const entry of readdirSync(REPO, { withFileTypes: true })) {
-      const sub = entry.isDirectory() ? findDeclarationFile(join(REPO, entry.name)) : undefined;
-      const rel = sub === undefined ? null : join(entry.name, sub);
-      for (const p of [rel, entry.name.endsWith(DECLARATION_SUFFIX) ? entry.name : null]) {
-        if (!p || !existsSync(join(REPO, p))) continue;
-        const name = (JSON.parse(readFileSync(join(REPO, p), "utf-8")) as { name?: string }).name;
-        if (name) names.set(name, [...(names.get(name) ?? []), p]);
-      }
+      if (!entry.isDirectory()) continue;
+      const sub = findDeclarationFile(join(REPO, entry.name));
+      if (sub === undefined) continue;
+      const rel = join(entry.name, sub);
+      const name = (JSON.parse(readFileSync(join(REPO, rel), "utf-8")) as { name?: string }).name;
+      if (name) names.set(name, [...(names.get(name) ?? []), rel]);
     }
     // The vacuity guard this repository asks for everywhere: a clean run over
     // zero declarations proves nothing, and there are at least three.
@@ -258,14 +269,14 @@ describe("this repository, as it stands", () => {
     expect(() => undeclaredAtRoot(REPO)).not.toThrow();
   });
 
-  test("cat-harness and cat-bootstrap are accounted for as instances", () => {
+  test("cat-harness and bootstrap are accounted for as instances", () => {
     const accounted = accountedRootPaths(REPO);
     // The diagnostic matters more than the assertion: when this fails, the
     // first question is "what did it actually look at", and a bare `undefined`
     // does not answer it.
     const seen = [...accounted.keys()].sort().join(", ");
     expect(accounted.get("cat-harness"), `REPO=${REPO}; saw: ${seen}`).toContain("declares itself");
-    expect(accounted.get("cat-bootstrap"), `REPO=${REPO}; saw: ${seen}`).toContain("declares itself");
+    expect(accounted.get("bootstrap"), `REPO=${REPO}; saw: ${seen}`).toContain("declares itself");
   });
 
   test("beans/ and todos/ are accounted for by declaration, not by a list", () => {
@@ -307,9 +318,9 @@ describe("an instance's own declaration outranks another instance naming it", ()
   /**
    * The exact live shape, and the defect it exposed.
    *
-   * `cat-harness/harness.json` declares `cat-bootstrap/skills/` at REPOSITORY scope,
-   * whose first path segment is `cat-bootstrap` — which is itself an instance. A
-   * single-pass implementation marked `cat-bootstrap` "an instance", then walked
+   * `cat-harness/harness.json` declares `bootstrap/skills/` at REPOSITORY scope,
+   * whose first path segment is `bootstrap` — which is itself an instance. A
+   * single-pass implementation marked `bootstrap` "an instance", then walked
    * cat-harness's declarations and OVERWROTE it with "declared by". Which value
    * survived depended on the order `readdirSync` returned the two directories.
    *
@@ -320,7 +331,7 @@ describe("an instance's own declaration outranks another instance naming it", ()
     const root = mkdtempSync(join(tmpdir(), "outrank-"));
     // `outer` declares a repository-scoped directory INSIDE `inner`, which is
     // itself an instance.
-    const outer = { name: "outer", directories: [{ id: "inner-skills", path: `${secondName}/skills/`, dependents: "reproduce", graphs: ["cat-harness"], scope: "repository" }] };
+    const outer = { name: "outer", directories: [{ id: "inner-skills", path: `${secondName}/skills/`, dependents: "reproduce", graphKinds: ["cat-harness"], scope: "repository" }] };
     const inner = { name: "inner", directories: [] };
     const byName: Record<string, unknown> = { [firstName]: outer, [secondName]: inner };
     for (const [dir, decl] of Object.entries(byName)) {
@@ -348,11 +359,11 @@ describe("an instance's own declaration outranks another instance naming it", ()
     }
   });
 
-  test("on the REAL repository, cat-bootstrap reads as an instance", () => {
-    // The live case. cat-harness declares cat-bootstrap/skills/ at repository
+  test("on the REAL repository, bootstrap reads as an instance", () => {
+    // The live case. cat-harness declares bootstrap/skills/ at repository
     // scope, so this is the pair above, with real names.
     const REPO = resolve(import.meta.dir, "..", "..", "..");
-    expect(accountedRootPaths(REPO).get("cat-bootstrap")).toContain("declares itself");
+    expect(accountedRootPaths(REPO).get("bootstrap")).toContain("declares itself");
   });
 });
 

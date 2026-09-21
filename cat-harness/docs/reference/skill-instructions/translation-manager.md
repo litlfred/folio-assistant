@@ -69,7 +69,7 @@ Content blocks can declare explicit PO sources via `poSources[]` on
 1. **Block-level:** `translations/<locale>/<block-stem>.po`
 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
 3. **Folio-level:** `translations/<locale>/global.po`
-4. **Dependency walk:** walk `harness.config.json` dependencies depth-first
+4. **Dependency walk:** walk `<name>.config.json` dependencies depth-first
 
 When `poSources` is declared, only the listed files are consulted (no
 fallback). Later entries override earlier for the same msgid.
@@ -513,7 +513,7 @@ reader, whatever locale they chose, which is the bug this section records.
 
 ## Six UN languages
 
-The default `supportedLocales` in `harness.config.json`:
+The default `supportedLocales` in `<name>.config.json`:
 
 | Code | Language | Native |
 |---|---|---|

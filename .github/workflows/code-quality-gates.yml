@@ -277,20 +277,29 @@ jobs:
       - name: no undeclared files at the repository root
         run: bun run check:undeclared-files:check
 
-      # `cat-bootstrap/cat-bootstrap.jsonld` HAD a staleness gate here, because it was
+      # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
       # committed. It no longer is — it is built at render time into the
       # published site by `docs-site.yml` — so there is no committed copy to
       # go stale and nothing for a byte gate to compare against.
       #
       # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
       # assuming: the gate compared bytes, while every property it was
-      # protecting is asserted directly in `scripts/tests/cat-bootstrap-graph.test.ts`
+      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
       # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
       # build paths, skills derived from disk, graph kinds a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
       # the TypeScript job above already runs. Removing a check whose
       # coverage lives elsewhere is fine; removing one and saying so is what
       # stops the next reader reinstating it.
+      #
+      # ONE QUALIFICATION, added by bean `dyd3`: `buildCatBootstrapDocument()`
+      # is no longer what the site publishes at that URL —
+      # `kg-export --instance ./bootstrap` is, and the two documents differ on
+      # 74 of their 88 nodes. Those assertions are properties of a builder
+      # that publishes nothing. `kg-export.test.ts` is where the published
+      # document's are, and the two guards in `bootstrap-graph.test.ts` that
+      # DO reach the site are the ones about publication: the path the `@id`
+      # names, and exactly one publisher per workflow.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
@@ -301,6 +310,17 @@ jobs:
       # fake ref onto a real step.
       - name: workflow skill refs
         run: bun run check:workflow-refs
+
+      # A task's containing swimlane must DEFINE itself -- bean `sqtq`, issue
+      # #596. Measured 2026-09-21: 157 task-containing lanes, every one named
+      # and NONE documented, so the defined-terms index #596 asks for would
+      # have shipped 157 labels with no definitions. Three axes, because a
+      # glossary term needs all three: a name, a definition, and both
+      # extractable for translation. An activity in NO lane is reported
+      # UNDETERMINED rather than counted as passing, and zero diagrams is a
+      # finding rather than a clean run (`6tkl`).
+      - name: swimlane definitions
+        run: bun run check:lane-documentation
 
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory
@@ -367,6 +387,23 @@ jobs:
       # extraction, which would have broken 28 citations silently.
       - name: voice citations resolve
         run: bun run check:voices
+
+      # The other half of the same claim: the rules are cited, AND the
+      # instruction body beside them does not restate them uncited.
+      #
+      # `schemas/voice-skill.ts` said "`check:voice-skills` enforces it" from
+      # the day it was written, and four `SKILL.md` files repeat the claim in
+      # their own prose — a promise made in five places and kept in none until
+      # this gate (bean `n8br`). An absent gate nobody was told about leaves a
+      # reviewer reading carefully; an absent gate a doc comment promises
+      # leaves them reading PAST.
+      #
+      # Measured over the four voices here, 37 rules: zero findings. A check
+      # that fires on every subject is wrong and so is one that can never
+      # fire, so it is falsified rather than trusted — five mutations, each
+      # caught, in `tests/voice-skills.test.ts`.
+      - name: voice skills do not restate their own rules
+        run: bun run check:voice-skills
 
       # Workflow YAML GitHub will actually parse, and no attacker-controlled
       # expression interpolated into a run body.
@@ -452,6 +489,15 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # The detangle measurements are PINNED, not graded. This fails on a STALE
+      # sidecar or an orphaned one — never on a number being "wrong", because
+      # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
+      # declared step"). Bean `sb6z`: the model was correct and unexercised, so
+      # a regression in it was invisible until somebody ran it by hand AND
+      # remembered last time's numbers.
+      - name: detangle measurements are current
+        run: bun run kg:detangle:check
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
@@ -468,8 +514,8 @@ jobs:
       - name: namespace vocabulary is complete
         run: bun run ns:check
 
-      # `cat-bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `cat-bootstrap-tools`, because bootstrap promises an Initiator it needs
+      # `bootstrap`'s two JSON Schemas are GENERATED from Zod in
+      # `bootstrap-tools`, because bootstrap promises an Initiator it needs
       # no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked
@@ -583,6 +629,15 @@ jobs:
           # stub that has outlived its tool must fail rather than linger.
           bun run check:tabular-stubs
           bun run translate-bpmn:check
+          # bootstrap/ is a NESTED instance, so the run above does not scan its
+          # three diagrams and must not -- widening that scan re-introduces the
+          # leak `instance-graph-isolation.test.ts` exists to stop (`7u3g`).
+          # Its templates therefore need their own run, pointed at the instance
+          # that owns them. Bean `j28g`: they previously sat under
+          # cat-harness/translations/ where nothing refreshed them, and
+          # log-message.pot was measured missing the lane documentation added
+          # to its own diagram the same day.
+          bun run translate-bpmn:bootstrap:check
           bun run landing:sticky:check
           bun run landing:data:check
           bun run check:agents-xref
@@ -605,6 +660,14 @@ jobs:
           # counted rather than failed -- and `docs/_data/harness.json` is a
           # different file that must NOT be renamed.
           bun run check:declaration-filename
+          # Bean `hrv2`: the sibling above hunts the RETIRED name, so it is blind
+          # to a filename that is wrong but real -- AGENTS.md named
+          # `folio-assistant.config.json`, a file that exists and declares no
+          # graph. This one checks the CLAIM: prose pairing a declared graph id
+          # with a declaration file, verified against the declarations. Its
+          # vocabulary is derived from them, so an empty result is reported as
+          # unknown rather than as a pass.
+          bun run check:declaration-claims
           bun run check:bean-parents
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
@@ -613,6 +676,16 @@ jobs:
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
           bun run check:bean-bodies
+          # Bean `t7ao`: check:bean-bodies reads front matter by REGEX, and a
+          # regex over a broken document does not notice the document is
+          # broken. A bean committed with a literal `\1` where `updated_at:`
+          # belonged passed 92 gates, then took `beans list`, `roadmap` and
+          # `prime` down for every reader -- the store loads as a unit, and
+          # `prime` is the first command in the AGENTS.md cold start. Fails
+          # hard on a bean NO loader will read; a duplicate key (which `beans`
+          # itself tolerates) is baselined at the two the store carries, so a
+          # NEW one fails and the existing two are listed rather than demanded.
+          bun run check:bean-front-matter
           # Bean `k59d`: check:bean-bodies reads a SENTENCE (`blocked on `id``).
           # A milestone states its blockers as a ROUTE, so both GOAL milestones
           # advertised finished work as next and neither detector could see it.
@@ -650,6 +723,14 @@ jobs:
           bun run smart-trust:pages:check
           bun run check:actor-reach
           bun run check:harness-dirs
+          # Does a path-filtered workflow rebuild when the scripts it RUNS
+          # change? `docs-site.yml` named eight generators and ran 22, so a
+          # fix to `kg-export.ts` -- the script producing both graph documents
+          # the site serves -- merged to `main` and fired NO RUN. The outage
+          # `40fl` fixed and the silence after the fix were one defect seen
+          # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
+          # never a list here.
+          bun run check:workflow-script-paths
           # Can this repository be CHECKED OUT? Every other gate here asks
           # whether the content is right; this one asks whether the tree can be
           # created at all. Seven sidecars named `req:<slug>` made the clone
@@ -693,6 +774,21 @@ jobs:
           # every export below it — which is how bean `95s1` got an error
           # 3,186 lines from its cause that looked like a circular import.
           bun run check:module-scope-resolution
+          # Every foreign-instance export `docs-site.yml` actually runs, run
+          # the way it runs it — no `--base-url`, on the declaration's own
+          # authority. The deploy failed SEVEN consecutive times on `main`
+          # (2026-09-21) on one command this set did not contain, and six
+          # merges landed against the green it printed meanwhile. The
+          # invocations are read out of the deploy YAML rather than listed,
+          # so adding one there is covered here with no edit; finding none
+          # is exit 1, not a pass (issue #720, bean `u1iu`).
+          bun run check:published-instance-exports
+          # A preview must run the generators the deploy runs, with the same
+          # instance arguments. `3jhq` was exactly this: staging ran the
+          # exporter but not for the foreign instance, so two links 404ed on
+          # every preview. Deploy and preview are DERIVED (the deploy passes no
+          # `--base-url`), so neither is named in the check (bean `qgpo`).
+          bun run check:invocation-parity
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no
@@ -801,6 +897,33 @@ jobs:
       # omission, every time.
       - name: generated docs pages are current
         run: bun run cat-harness/scripts/gen-docs-pages.ts --check
+
+      # GATED, unlike the two projections below, and the difference is the
+      # INPUT SET — which is the standard those two are excused against.
+      #
+      # `schema:viz` and `library:viz` derive from the WHOLE repository, so any
+      # branch alive for more than a few minutes finds them stale against the
+      # merge ref and a red means "somebody else merged". The voices projection
+      # derives from the declared `voices` directories and the declarations
+      # naming them: four voices in two instances, changed when somebody edits
+      # a voice. A red here means a voice was added or a rule was edited and
+      # the page was not regenerated — an omission by the author of the diff,
+      # every time, which is exactly the test stated twenty lines above.
+      - name: voices projection and viewer are current
+        run: bun run voices:viz:check
+
+      # The handler namespace's own index. Gated on the same ground as the
+      # voices projection: it derives from the DECLARATIONS (which kinds each
+      # instance declares, and whether a `coverage.visualiser` names a
+      # published path), not from the whole repository — so a red means
+      # somebody changed a declaration and did not regenerate.
+      #
+      # It is also the one page a navbar tile points at: `siteLinks` publishes
+      # `kg` as `/<stub>/`, and `verifySiteLinks` reports `unknown` rather
+      # than `dead` on an unbuilt tree, so nothing else here would notice it
+      # going missing until production (bean `8h42`).
+      - name: handler namespace index is current
+        run: bun run handler:index:check
 
       # NOT GATED: the schema and library projections.
       #

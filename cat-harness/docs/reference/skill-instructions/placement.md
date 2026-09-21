@@ -55,7 +55,7 @@ common mistake:
 | **the folio's config** | the value the mechanism reads | it varies per folio but platform code needs it |
 
 A value that varies per folio and is consumed by platform code is a **config
-field** — `harness.config.json`, `harness.json`, `lakefile.toml` — never a
+field** — `<name>.config.json`, `<name>.json`, `lakefile.toml` — never a
 literal in a script and never a file the platform has to go and find. The
 simulator directory was the literal `folio-assistant/simulators` until it
 became a config field; the Lake prefix was `QOU.` until it was read from
@@ -63,7 +63,7 @@ became a config field; the Lake prefix was `QOU.` until it was read from
 because a wrong namespace is worse than none.
 
 **Do not infer the instance from the directory you are standing in.** Read the
-declaration: `harness.json` at the repository root carries `name`, `stub` and
+declaration at the repository root, carrying `name`, `stub` and
 `directories`. `basename($PWD)` is not an identity — a repo cloned into a
 differently-named directory resolves to nothing, and reports no config rather
 than an error.
@@ -71,7 +71,7 @@ than an error.
 ## Step 2 — which declared graph, and where does that instance put it?
 
 **A node's location is not a path you memorise.** Every instance declares the
-directories it scans in `harness.json`, and each entry names the **kind of
+directories it scans in `<name>.json`, and each entry names the **kind of
 graph** it holds — `cat-harness` (skills, roles, workflows, decisions,
 requirements, permissions), `schemas`, `tools`, `qa`, `beans`, `folio` and the
 rest. The vocabulary is open.
@@ -94,6 +94,64 @@ rest. The vocabulary is open.
 
 Full rules, inheritance order and the three read states:
 [`directory-conventions.md`](directory-conventions.md).
+
+### The `docs` graph, and the filing question it answers
+
+`docs` is an authorable destination like the others, and it is the one an agent
+most often forgets to consider — measured 2026-09-21, when this agent derived
+the destination list for a CRDM sign-off straight from the declaration and
+still **omitted `docs`**, offering skill / proposal / nothing for a design
+record that belonged in none of them. Deriving the list is not enough if the
+derivation drops a declared graph.
+
+**What goes there:** a **design-memory asset** — something produced while
+BUILDING, rather than the thing built.
+[`kg-contribution-offer`](kg-contribution-offer.md) carries the one question
+that identifies the class and why `fsh-guts` is the tempting wrong answer
+(its content may be thrown away; a design record's value is that it survives).
+
+**WHOSE `docs/` comes first, and it is Step 1's question again.** Owner,
+2026-09-21: *"if it is realated to some harness/feature/tool that detailed
+infromation/design/planning/etc go into that harness' docs/"*. `docs` is a
+declared graph, and the instance that owns the feature owns the record of why
+it is shaped that way — measured the same day, `cat-harness/docs/` and
+`who-iris/docs/` both exist and `who-iris` declares `docs` among its own
+graphs. A feature's reasoning filed in the wrong instance's `docs/` reads fine
+and is unreachable from the place that needs it.
+
+**Then where inside it**, which is this skill's question and not
+`kg-contribution-offer`'s:
+
+| the asset is | it files under |
+|---|---|
+| why a subsystem is shaped as it is — requirements, options, rulings | `<instance>/docs/architecture/`, with `parent: Architecture` in the front matter |
+| how a person does a task with it | `<instance>/docs/guides/` |
+| how to REACH a data source the content describes — endpoints, shapes, quirks | `<instance>/docs/`, beside the subject it serves |
+| what a declared thing IS, generated from source | `<instance>/docs/reference/` — **never hand-edited** |
+
+Three rules that catch the usual mistakes:
+
+1. **A design record is dated and says what it was true OF.** It is history, so
+   it carries the commit, PR or issue it describes. A record written in the
+   present tense becomes a claim about today, and goes stale invisibly — the
+   `8nzu` failure, where a dated observation read as current guidance.
+2. **It states what it could NOT establish.** A requirement referenced but never
+   defined, a measurement not taken: named as such. A design record that reads
+   complete when it is not is worse than a short one.
+3. **It is prose for a person, not instructions for an agent.** If you find
+   yourself writing *"the agent SHALL"*, it is a skill and it is in the wrong
+   graph.
+
+**The line between the two, stated as a test** — the owner's, 2026-09-21:
+
+> **A skill carries what a competent practitioner needs IN ORDER TO DO the
+> task. Anything beyond that is documentation.**
+
+Background, derivations, options not taken, an API's full surface when the task
+touches three calls: real, worth keeping, and none of it needed to act. Both
+directions fail silently — a skill that swallows them makes every agent read a
+chapter to find a rule, and a rule filed in `docs/` because it arrived with
+context is a rule `skill_fetch` will never serve.
 
 ### The inheritance gap — know it before you rely on it
 
@@ -162,7 +220,7 @@ writes all three for a new folio.
 - **Never put guidance in a stub.** It reaches one tool's agents and nobody
   else, and the other two stubs are then quietly wrong.
 - **And prefer not to put it in `AGENTS.md` either.** That file's own banner
-  says it: it is a cat-bootstrap pointer, and *the discipline lives in the skills
+  says it: it is a bootstrap pointer, and *the discipline lives in the skills
   graph*. A rule that exists only in `AGENTS.md` is not in the generated
   reference, not in the published skill docs, and not found by an agent that
   went looking for the skill first. The turn-report discipline lived there
@@ -173,7 +231,7 @@ one, and register the skill in its package manifest.
 
 ### The artefact stub — resolve it, never compose it
 
-`harness.json` carries `stub`, the filename stem of **every artefact this
+The declaration carries `stub`, the filename stem of **every artefact this
 instance publishes**. `artefactStub()` is the one function that answers it
 (`stub` when declared, otherwise `name`), and `renderingPath()` / `siteDir()`
 derive the published paths from it:
@@ -264,7 +322,7 @@ content object:
 
 1. **Instance** — platform, folio, or the folio's config? Does anything in it
    name one folio?
-2. **Graph** — which declared entry, resolved from `harness.json` by **id**?
+2. **Graph** — which declared entry, resolved from `<name>.json` by **id**?
    Not a path you remember.
 3. **Kind** — which side of the separating question in Step 3, and can you say
    why in one sentence?

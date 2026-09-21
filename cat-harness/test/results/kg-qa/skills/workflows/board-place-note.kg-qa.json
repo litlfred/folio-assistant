@@ -5,7 +5,7 @@
     "id": "Process_BoardPlaceNote",
     "path": "skills/workflows/board-place-note.bpmn"
   },
-  "source_hash": "sha256:d9eca417c1ff6da16e1a013ccb2b869d2adb79a5d507fddf0518a614a2fca80c",
+  "source_hash": "sha256:73e014b044025992f45767c81d2043f68ac5de6b00de58a0d368903abd2d7a22",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "fail",
       "findings": [
@@ -80,7 +84,7 @@
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

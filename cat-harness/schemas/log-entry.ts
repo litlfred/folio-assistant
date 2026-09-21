@@ -62,7 +62,7 @@ export const LOG_NODE = "logs";
 export function logDirs(root: string): string[] {
   try {
     return resolveDirectories([{ name: "(local)", root, own: true }])
-      .filter((d) => d.graphs.includes("fsh-guts"))
+      .filter((d) => d.graphKinds.includes("fsh-guts"))
       .map((d) => join(d.absPath, LOG_NODE));
   } catch {
     return [];

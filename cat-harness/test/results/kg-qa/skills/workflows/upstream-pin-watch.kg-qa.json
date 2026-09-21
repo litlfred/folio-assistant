@@ -5,7 +5,7 @@
     "id": "Process_UpstreamPinWatch",
     "path": "skills/workflows/upstream-pin-watch.bpmn"
   },
-  "source_hash": "sha256:735da8d84f27adfea08ff7ffd061eba3d178a33123cc0f287964d09f2d355131",
+  "source_hash": "sha256:1308423041525e51d267abb0ebe19b1b92b364791f5f7ab880b79ee4d963c3a6",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 9,
     "fail": 0,
-    "n/a": 5,
+    "n/a": 6,
     "unknown": 0
   }
 }

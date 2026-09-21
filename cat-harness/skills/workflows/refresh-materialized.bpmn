@@ -33,10 +33,12 @@ An ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exis
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_RefreshMaterialized_LaneSet">
       <bpmn:lane id="Lane_0" name="Contributor (human or agent)">
+        <bpmn:documentation>Reached only when both upstream and local changed, which is the one case this process refuses to resolve by rule: which side wins depends on why the local edit was made, a fact only this lane has.</bpmn:documentation>
         <bpmn:flowNodeRef>StartEvent_Due</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Adjudicate</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
+        <bpmn:documentation>Runs whichever of the two paths Gateway_Purpose selects. On the working path it answers the two comparisons — upstream and local — whose combination Gateway_Both reads to decide whether a human must adjudicate; on the archival path it never compares to the source at all, since fixity asks only whether the copy itself rotted.</bpmn:documentation>
         <bpmn:flowNodeRef>Gateway_Purpose</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Fixity</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Upstream</bpmn:flowNodeRef>
@@ -44,6 +46,7 @@ An ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exis
         <bpmn:flowNodeRef>Gateway_Both</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_2" name="Corpus — L1 source knowledge graph">
+        <bpmn:documentation>Where the refreshed content actually lands, and the one place the five import gates are re-asked rather than inherited — a licence can change since the original import, and a collection can grow past a size somebody already agreed to, so passing the gates once is never treated as passing them for good.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_Apply</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Fresh</bpmn:flowNodeRef>
       </bpmn:lane>

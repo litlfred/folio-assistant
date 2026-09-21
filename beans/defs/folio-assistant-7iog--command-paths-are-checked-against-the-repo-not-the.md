@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7iog
 title: 'COMMAND PATHS ARE CHECKED AGAINST THE REPO, NOT THE RUN: three of four backoff calls in feature-staging resolved at check time and not at run time'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T21:55:16Z
-updated_at: 2026-09-20T22:45:13Z
+updated_at: 2026-09-21T22:18:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -288,3 +288,18 @@ documented class. All five are declared with those reasons rather than fixed
 or hidden.
 
 Corpus 61 -> 73 invocations, 0 missing, 0 undetermined. 34 tests.
+
+## Closed 2026-09-21 — re-derived on `645dd7dd91`, not taken from the boxes
+
+Both halves checked against `main` rather than against this bean's own ticks:
+
+- `check:workflow-paths` exists at `package.json:122` — the reader that
+  resolves a workflow command against the step's effective cwd.
+- `check:command-paths`' summary line no longer over-claims. It now reads
+  *"every repository-relative path resolves — FROM THE REPOSITORY ROOT, in
+  prose, printed commands and hooks"*, and names the other frame and this
+  bean outright: *"A workflow step runs somewhere else; that frame is
+  `bun run check:workflow-paths` (bean `7iog`)."* That is Done-when item 4
+  satisfied in the artefact, not in a claim about it.
+
+Found by the `fkjo` sweep: this was `in-progress` with every box ticked.

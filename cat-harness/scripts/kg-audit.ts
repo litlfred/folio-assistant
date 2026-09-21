@@ -45,7 +45,7 @@ import { createHash } from "node:crypto";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import {
@@ -69,6 +69,7 @@ import {
   type KgSubjectKind,
 } from "../schemas/kg-qa.js";
 import {
+  laneBinding,
   readRoleGraph,
   readActors,
   readPermissions,
@@ -284,21 +285,50 @@ async function auditProcess(
   // Lanes → roles.
   const danglingRoleRef: KgFinding[] = [];
   const unboundLane: KgFinding[] = [];
+  /** Lanes that declared a varying performer — counted, never a finding. */
+  const variablePerformer: KgFinding[] = [];
+  /** ...and those that declared one alongside a `ref`, which cannot be both. */
+  const contradictoryPerformer: KgFinding[] = [];
   const laneRole = new Map<string, string>(); // lane id → role id
   for (const lane of m.lanes) {
-    const role = graph ? roleForLane(graph, lane.name, lane.roleRef) : undefined;
-    if (lane.roleRef && graph && !role) {
-      danglingRoleRef.push({ where: lane.id, detail: `binds role "${lane.roleRef}", which is not declared in the role graph.` });
-      continue;
+    // One decision, in `laneBinding`, so the rule is testable without running
+    // this script — which matters because the case it exists for
+    // (`log-message.bpmn`'s `Actor`) is in a NESTED instance this audit does
+    // not read at all. A rule reachable only through a script that never sees
+    // its own subject is a rule nothing checks.
+    const b = laneBinding(graph, lane);
+    switch (b.kind) {
+      case "bound":
+        laneRole.set(lane.id, b.role.id);
+        break;
+      case "dangling":
+        danglingRoleRef.push({
+          where: lane.id,
+          detail: `binds role "${b.ref}", which is not declared in the role graph.`,
+        });
+        break;
+      case "contradictory":
+        contradictoryPerformer.push({
+          where: lane.id,
+          detail: `lane "${lane.name ?? lane.id}" declares BOTH <folio:role ref="${b.ref}"/> and variable="true". A lane that names a role has not got a varying performer; drop whichever is wrong.`,
+        });
+        break;
+      case "variable":
+        // A DECLARED answer, not an absence — bean `ug4r`. Counted so the
+        // `lane-binds-role` number means "nobody got round to it" and nothing
+        // else, and so a sidecar shows the declaration rather than silence.
+        variablePerformer.push({
+          where: lane.id,
+          detail: `lane "${lane.name ?? lane.id}" declares <folio:role variable="true"/> — its performer varies by design, so it binds no role and that is the answer rather than a gap.`,
+        });
+        break;
+      case "unbound":
+        unboundLane.push({
+          where: lane.id,
+          detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in skills/roles/roles.json, bind it with <folio:role ref="…"/>, or — if its performer genuinely varies — declare that with <folio:role variable="true"/>.`,
+        });
+        break;
     }
-    if (!role) {
-      unboundLane.push({
-        where: lane.id,
-        detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in skills/roles/roles.json, or bind it with <folio:role ref="…"/>.`,
-      });
-      continue;
-    }
-    laneRole.set(lane.id, role.id);
   }
 
   // Does the lane's role carry what its activities demand?
@@ -446,6 +476,13 @@ async function auditProcess(
     "role-ref-resolves": entry(danglingRoleRef, Boolean(graph)),
     "activity-in-lane": entry(noLane, m.lanes.length > 0),
     "lane-binds-role": entry(unboundLane, Boolean(graph) && m.lanes.length > 0),
+    // `n/a` when nothing declares a varying performer — which is also what
+    // makes the declaration VISIBLE in a sidecar: a diagram whose entry is
+    // `pass` rather than `n/a` has a lane that binds no role on purpose.
+    "variable-performer-declared-alone": entry(
+      contradictoryPerformer,
+      variablePerformer.length > 0 || contradictoryPerformer.length > 0,
+    ),
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
     "activity-fulfilment-kind": entry(wrongKind, Boolean(graph) && kindApplicable > 0),
@@ -922,7 +959,7 @@ function auditRequirements(
  *    layout moves, which it did on 2026-09-20.
  * 2. **A manifest AT a declared directory was invisible**, because the walk only
  *    looked inside subdirectories. `gen-skill-docs` already documents that two
- *    declared directories — `cat-bootstrap` and `cat-harness-src` — "hold their
+ *    declared directories — `bootstrap` and `cat-harness-src` — "hold their
  *    skills DIRECTLY rather than in package subdirectories". So a manifest for
  *    those could not be found however correctly it was written, which is why
  *    `confirm-harness` reported as listed by no package manifest while being
@@ -945,7 +982,7 @@ function manifestPackages(): { pkg: string; skill: string }[] {
     }
   };
   for (const d of kgDirectories(root)) {
-    // A manifest at the declared directory itself: the shape `cat-bootstrap` and
+    // A manifest at the declared directory itself: the shape `bootstrap` and
     // `cat-harness-src` use.
     read(join(d.absPath, "package-manifest.json"), d.id);
     if (!existsSync(d.absPath)) continue;
@@ -1008,8 +1045,8 @@ function manifestEntries(): { pkg: string; skill: string }[] {
  *
  * Reading them would be the defect. `instance-graph-isolation.test.ts` guards a
  * leak that was LIVE on 2026-09-19: a filesystem walk discovered
- * `cat-bootstrap/workflows/` from the repository root and put 88 references to a
- * cat-bootstrap process into folio-assistant's published graph. One instance's graph
+ * `bootstrap/workflows/` from the repository root and put 88 references to a
+ * bootstrap process into folio-assistant's published graph. One instance's graph
  * must not carry another's nodes, and this audit is right not to.
  *
  * What was wrong is that nothing said so. The silence was read as a blind spot on
@@ -1073,12 +1110,12 @@ function unreadNestedInstances(): KgFinding[] {
  * A finding that says a skill is "named by no activity" is true OF THE GRAPH IT
  * RANGED OVER and says nothing about any other. Worded absolutely it reads as a
  * fact about the repository, and on 2026-09-20 a session read it that way:
- * `confirm-harness` is named three times by `cat-bootstrap/workflows/`, which this
+ * `confirm-harness` is named three times by `bootstrap/workflows/`, which this
  * audit does not read, so the absolute wording looked like a blind spot. The
  * session "fixed" it by declaring that directory at the root and re-introduced a
  * defect `instance-graph-isolation.test.ts` had been written the day before to
  * prevent — one instance's graph carrying another's nodes, which had put 88
- * references to a cat-bootstrap process into folio-assistant's published graph.
+ * references to a bootstrap process into folio-assistant's published graph.
  *
  * The isolation is correct and the scoping is correct. **Only the sentence was
  * wrong**, and it cost a change a test had to stop. Bean `sa8y`.
@@ -1088,7 +1125,7 @@ function graphScope(): string {
   // knowledge-graph directories, which is exactly the set this audit walks.
   //
   // The DECLARED path string, not a computed relative one. Computing it against
-  // this script's root printed `../cat-bootstrap/skills` once the tree moved into
+  // this script's root printed `../bootstrap/skills` once the tree moved into
   // `cat-harness/`, which is accurate and reads like a bug — and it is the
   // declaration that a reader would go and edit. "Resolve, do not compose",
   // applied to a diagnostic rather than to a link.
@@ -1337,7 +1374,7 @@ function sidecarPath(r: KgQaReport): string {
   // live under several packages, so one directory per kind would collide two
   // packages' same-named skills into one sidecar. Processes have exactly that
   // shape the moment an instance declares more than one knowledge-graph
-  // directory — `cat-bootstrap/workflows/` and `crdm/workflows/` can each hold a
+  // directory — `bootstrap/workflows/` and `crdm/workflows/` can each hold a
   // `review.bpmn`, and a kind-keyed table sends both to one file, so one
   // silently overwrites the other's findings.
   //
@@ -1426,6 +1463,85 @@ if (check) {
   writeFileSync(manifestPath, manifestText);
 }
 
+/**
+ * A sidecar whose subject MOVED follows it, instead of dying in place.
+ *
+ * Bean `lps0` asked for this and #760 walked straight into it: moving
+ * `corpus-grep` from `src/skills/` to `skills/folio-core/` left its verdict
+ * stranded at the old path, where the sweep below correctly reported it as
+ * auditing a file that is not there. A verdict that has to be re-derived on
+ * every relocation is a verdict nobody keeps.
+ *
+ * ## Why this is not the deletion the sweep refuses
+ *
+ * The sweep's own rule — REPORTED, NEVER DELETED — exists because an orphan
+ * can mean the subject is temporarily UNDISCOVERED rather than gone, and
+ * deleting on that evidence destroys a verdict to hide a declaration gap.
+ * Nothing here deletes. A relocation PRESERVES the artefact and its history;
+ * it moves the file to where its subject now lives, and an orphan that does
+ * not match a moved subject is left exactly where it is, to be reported.
+ *
+ * ## The three conditions, and why each is required
+ *
+ * 1. `subjectExists === false` — CONFIRMED gone, never `undefined`. The third
+ *    state is "could not read the sidecar", and a sidecar whose identity could
+ *    not be read is precisely the one that must not be moved on a guess.
+ * 2. The identity is `kind` + `id`, not the path and not the basename. The
+ *    path is what changed; two packages can hold a same-named skill, so a
+ *    basename match would move one package's verdict onto another's subject.
+ * 3. Exactly ONE orphan and exactly ONE unwritten target per identity. Any
+ *    ambiguity is left alone and reported: a verdict moved onto the wrong
+ *    subject is worse than an orphan, because an orphan announces itself and
+ *    a misfiled verdict reads as healthy.
+ */
+interface Relocation {
+  from: string;
+  to: string;
+  identity: string;
+}
+
+function relocateSidecars(
+  root: string,
+  targets: ReadonlyMap<string, string>,
+): Relocation[] {
+  const orphans = sweepOrphans(root, new Set(targets.values()));
+  const byIdentity = new Map<string, OrphanSidecar[]>();
+  for (const o of orphans) {
+    // Condition 1 and 2: confirmed gone, and carrying an identity to match on.
+    if (o.subjectExists !== false || !o.kind || !o.id) continue;
+    const key = `${o.kind}:${o.id}`;
+    (byIdentity.get(key) ?? byIdentity.set(key, []).get(key)!).push(o);
+  }
+
+  const moved: Relocation[] = [];
+  for (const [key, rows] of byIdentity) {
+    const dest = targets.get(key);
+    // Condition 3: one orphan, one destination, and nothing already there.
+    if (rows.length !== 1 || dest === undefined) continue;
+    if (existsSync(dest)) continue;
+    const from = join(root, rows[0]!.sidecar);
+    if (!existsSync(from)) continue;
+    mkdirSync(join(dest, ".."), { recursive: true });
+    renameSync(from, dest);
+    moved.push({ from: rows[0]!.sidecar, to: relative(root, dest), identity: key });
+  }
+  return moved;
+}
+
+// Targets FIRST, so a relocation can run before anything is written: once a
+// fresh sidecar exists at the new path there is nothing left to move, and the
+// old one is an orphan forever.
+const targets = new Map<string, string>();
+for (const r of reports) {
+  if (r.subject.kind && r.subject.id) targets.set(`${r.subject.kind}:${r.subject.id}`, sidecarPath(r));
+}
+if (!check) {
+  const moved = relocateSidecars(root, targets);
+  for (const m of moved) {
+    console.log(`  → moved ${m.from}\n      to ${m.to}  (${m.identity} relocated)`);
+  }
+}
+
 const written = new Set<string>();
 for (const r of reports) {
   const p = sidecarPath(r);
@@ -1447,8 +1563,8 @@ for (const r of reports) {
 // structurally invisible: nothing regenerates it, nothing prunes it, and
 // `--check` compares it against nothing.
 //
-// Measured, bean `3jj9`: `cat-bootstrap/workflows/cat-bootstrap.kg-qa.json` sat in
-// the tree auditing `cat-bootstrap/workflows/cat-bootstrap.bpmn`, a path that does
+// Measured, bean `3jj9`: `bootstrap/workflows/bootstrap.kg-qa.json` sat in
+// the tree auditing `bootstrap/workflows/bootstrap.bpmn`, a path that does
 // not exist — the process had been renamed to `initialize-harness.bpmn`.
 // It reported `lane-binds-role: pass` over a file nobody had, while the live
 // diagram had no sidecar at all, and `kg:audit:check` exited 0 across both.
@@ -1457,7 +1573,7 @@ for (const r of reports) {
 //
 // REPORTED, NEVER DELETED. An orphan can also mean the subject is
 // temporarily unreachable — here the real cause is bean `pve3`, the root
-// declaring `cat-bootstrap/skills/` but not `cat-bootstrap/workflows/`, so the
+// declaring `bootstrap/skills/` but not `bootstrap/workflows/`, so the
 // process is simply not discovered from this root. Deleting on that
 // evidence would destroy a verdict to hide a declaration gap.
 // `deletion-requires-confirmation` — the agent reports, a person decides.

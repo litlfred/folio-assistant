@@ -34,7 +34,7 @@
  *
  * ## Bootstrap is the exception, and it is declared as one
  *
- * *"bootsterap rended in main as exception"* — cat-bootstrap renders before
+ * *"bootsterap rended in main as exception"* — bootstrap renders before
  * the graph is read at all, because it is what an agent reads when no harness
  * is installed and therefore cannot depend on one having rendered. It is the
  * same exemption `check:subgraph-coverage` already grants it from the
@@ -94,7 +94,7 @@ interface RenderStep extends OrderedStep {
    * This step is DECLARED but not yet performable, and why.
    *
    * A third outcome, and it exists because the first draft did not have it:
-   * the bootstrap step was written as `kg-export --root cat-bootstrap`, and
+   * the bootstrap step was written as `kg-export --root bootstrap`, and
    * `kg-export` has no `--root` flag. The argument would have been ignored and
    * the whole graph exported under bootstrap's name — a step reporting success
    * while doing something else entirely, which is the one failure a pipeline
@@ -121,9 +121,9 @@ export function pipeline(scratch: string): RenderStep[] {
     {
       id: "bootstrap",
       fatal: false,
-      label: "cat-bootstrap's own json/jsonld — renders before the graph is read",
+      label: "bootstrap's own json/jsonld — renders before the graph is read",
       pending:
-        "cat-bootstrap owes its own .json/.jsonld (bean `hfkl`, and the exemption in `check:subgraph-coverage` says so) and no exporter takes an instance root yet",
+        "bootstrap owes its own .json/.jsonld (bean `hfkl`, and the exemption in `check:subgraph-coverage` says so) and no exporter takes an instance root yet",
     },
 
     // ── Stage 1: current state, then the README derived from it ─────────

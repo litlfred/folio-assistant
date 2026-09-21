@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Deliver",
     "path": "methodologies/crdm/workflows/crdm-deliver.bpmn"
   },
-  "source_hash": "sha256:9606dbb60c6392c60e44f8dce1c9ec2a72d96a9636c24906a330300040e63e3e",
+  "source_hash": "sha256:b3519ddbc9e1d93d7ff3d404620fe5e065975ca5b8fd7288e8bb5f7100837b22",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

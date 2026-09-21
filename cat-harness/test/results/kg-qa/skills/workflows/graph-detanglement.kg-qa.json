@@ -5,7 +5,7 @@
     "id": "Process_GraphDetanglement",
     "path": "skills/workflows/graph-detanglement.bpmn"
   },
-  "source_hash": "sha256:9644f784288da66edbdff9d84b817d12045d0f654325be24f4301a4c4a621d0a",
+  "source_hash": "sha256:f59aa1ee18d3d92e76da6efc9e1858ae117cc544656b4cf6272a732eb0d33233",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 9,
     "fail": 0,
-    "n/a": 5,
+    "n/a": 6,
     "unknown": 0
   }
 }

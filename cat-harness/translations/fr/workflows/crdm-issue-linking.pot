@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-issue-linking\n"
-"POT-Creation-Date: 2026-09-20T12:20:30.395Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.415Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -19,12 +19,12 @@ msgstr ""
 msgid "Agent"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:32
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:33
 #. Diagram element documentation
 msgid "Ask — never create. Creating an issue without the BA's permission is the thing this step exists to prevent."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:30
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:31
 #. Diagram label
 msgid "Ask BA to create or link issue"
 msgstr ""
@@ -39,37 +39,42 @@ msgstr ""
 msgid "Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad."
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:29
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:30
 #. Diagram label
 msgid "Issue found?"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:36
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:37
 #. Diagram label
 msgid "Link to existing issue"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:42
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:43
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:24
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:25
 #. Diagram label
 msgid "Phase begins"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:39
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:40
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:25
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:26
 #. Diagram label
 msgid "Scan open issues for match"
 msgstr ""
 
-#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:43
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:16
+#. Diagram element documentation
+msgid "The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology."
+msgstr ""
+
+#: methodologies/crdm/workflows/crdm-issue-linking.bpmn:44
 #. Diagram label
 msgid "yes"
 msgstr ""

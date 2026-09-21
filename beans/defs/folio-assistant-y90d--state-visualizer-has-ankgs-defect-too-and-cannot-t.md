@@ -106,7 +106,7 @@ is called; it asks whether the `index.html` inside it carries the marker.
 
 Measured on the real corpus: the site root holds **19 directories** —
 `assets`, `guides`, `reference`, `api`, `fr`, `es`, `ru`, `_data`,
-`_includes`, `cat-bootstrap`, `cat-harness` and more. Asked for the worst case,
+`_includes`, `bootstrap`, `cat-harness` and more. Asked for the worst case,
 an EMPTY keep-set where nothing at all is wanted, the pruner selects **exactly
 the 6 pages this generator wrote** and none of the other 13. That assertion is
 a committed test, so it fails the moment the marker stops identifying them.

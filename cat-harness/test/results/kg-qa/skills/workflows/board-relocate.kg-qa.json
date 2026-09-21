@@ -5,7 +5,7 @@
     "id": "Process_BoardRelocate",
     "path": "skills/workflows/board-relocate.bpmn"
   },
-  "source_hash": "sha256:bbb642d25199fa287288b7dfecc2aea1c1acb19d412957bb0ffe3caa8a51cfb8",
+  "source_hash": "sha256:b34a26e1aff790658896854b77455efaae385eea1c256f56bd02dd54b3f1a803",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

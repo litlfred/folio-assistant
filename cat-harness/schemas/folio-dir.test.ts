@@ -11,7 +11,7 @@ import { folioDir } from "./cat-harness.js";
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 // The `folio` kind is registered by CORE as a load-time side effect. Without
 // this import `directoryForGraph` cannot read a declaration that names it —
@@ -33,7 +33,7 @@ function declaring(path: string): Record<string, unknown> {
   return {
     name: "probe",
     description: "a folio that says where its content lives",
-    directories: [{ id: "folio", path, dependents: "reproduce", graphs: ["folio"] }],
+    directories: [{ id: "folio", path, dependents: "reproduce", graphKinds: ["folio"] }],
   };
 }
 
@@ -68,14 +68,19 @@ describe("folioDir", () => {
     const root = repo({
       name: "probe",
       description: "declares something else entirely",
-      directories: [{ id: "beans", path: "beans/", dependents: "reproduce", graphs: ["beans"] }],
+      directories: [{ id: "beans", path: "beans/", dependents: "reproduce", graphKinds: ["beans"] }],
     });
     expect(folioDir(root)).toBe(join(root, "folio"));
   });
 
   test("a MALFORMED declaration throws rather than guessing", () => {
     const root = mkdtempSync(join(tmpdir(), "folio-dir-bad-"));
-    writeDeclaration(root, "{ not json at all", "broken");
+    // Named after the DIRECTORY, not "broken". An unparseable file has no
+    // `name` to agree with, so since 2026-09-21 it counts as this instance's
+    // broken declaration only when its stem matches the directory or a paired
+    // `<stem>.config.json` sits beside it — otherwise every malformed JSON
+    // file in the tree would be reported as a broken declaration.
+    writeDeclaration(root, "{ not json at all", basename(root));
     // The convention would be a plausible answer to a question that could not
     // be asked. A broken declaration is a fault, not a default.
     expect(() => folioDir(root)).toThrow();

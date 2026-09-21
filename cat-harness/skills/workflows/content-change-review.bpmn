@@ -14,6 +14,7 @@
   <bpmn:process id="Process_ContentChangeReview" name="Content Change and Review" isExecutable="false">
     <bpmn:laneSet id="LaneSet_ContentChangeReview">
       <bpmn:lane id="Lane_Author" name="Content Author">
+        <bpmn:documentation>Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Author</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DescribeChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewStaging</bpmn:flowNodeRef>
@@ -23,6 +24,7 @@
         <bpmn:flowNodeRef>End_Author</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Folio-Assistant Agent">
+        <bpmn:documentation>Owns the entire technical execution of the change end to end — scoping impact, branching, editing both narrative content and deterministic logic, assessing what else it touches, weighing how to absorb that, and pushing. It is also the single re-entry point for both the author's and the committee's feedback, which is why Task_Iterate has two incoming edges rather than the diagram forking a second revision path.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Agent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DetectScope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CreateBranch</bpmn:flowNodeRef>
@@ -35,6 +37,7 @@
         <bpmn:flowNodeRef>End_Agent</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Review Committee">
+        <bpmn:documentation>Compares staged against main and judges the impact assessment, and — unusually for this role elsewhere in this corpus — is where the accept decision itself is made: Task_Approve triggers the merge and the rebuild, so a rejection routes back to Task_Iterate in the agent's lane rather than to the author.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Reviewer</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CompareBeforeAfter</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewImpact</bpmn:flowNodeRef>
@@ -44,6 +47,7 @@
         <bpmn:flowNodeRef>End_Reviewer</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="CI/CD Pipeline">
+        <bpmn:documentation>Runs build, stage, comment and watch once per push, re-entering from Task_Iterate on every later revision rather than only the first. GW_Merged sits downstream of Task_Approve in the Reviewer's lane, so it is checking whether that approval actually resulted in a merge rather than deciding whether to approve one, and a "No" ends the pipeline quietly instead of looping back into review.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Pipeline</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_BuildStaging</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DeployStaging</bpmn:flowNodeRef>

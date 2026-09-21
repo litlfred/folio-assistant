@@ -3,7 +3,7 @@
  *
  * ## The defect this exists for
  *
- * `harness.json` declares `schemas/` with `graphs: ["schemas", "kg"]`.
+ * `harness.json` declares `schemas/` with `graphKinds: ["schemas", "kg"]`.
  * Measured on `814b693e`: the exported graph contained **zero** nodes of the
  * `schemas` kind — 11 node types, none of them a schema. A declaration a
  * consumer reads and finds nothing behind is the `dh4f` shape this repository

@@ -52,9 +52,9 @@ compete for it.
 
 - [x] `logger` role — `system`, `actedUpon`, no skills. The Logger is where the
       line goes, not its author, which is why `actor` is a required input.
-- [x] `cat-bootstrap/workflows/log-message.bpmn` — two lanes, `GW_Complete`, and an
+- [x] `bootstrap/workflows/log-message.bpmn` — two lanes, `GW_Complete`, and an
       `End_NotLogged` that is a real outcome.
-- [x] `cat-bootstrap/skills/log-message.md` — the six fields, optional vs required
+- [x] `bootstrap/skills/log-message.md` — the six fields, optional vs required
       calling, and why an incomplete line is not logged.
 - [x] One Tool: the discussion with the human actor, `invoke: manual`.
 - [x] `initialize-harness` calls it at both points where logging is a step.
@@ -68,9 +68,9 @@ independently rather than trusting the boxes:
 
 | item | measured |
 |---|---|
-| `logger` role | `cat-bootstrap/skills/roles/roles.json` — `actorKinds: ["system"]`, `skills: []`, `actedUpon` in its description |
-| the sub-process | `cat-bootstrap/workflows/log-message.bpmn` — `Lane_Actor`, `Lane_Logger`, `GW_Complete`, `End_NotLogged` |
-| the skill | `cat-bootstrap/skills/log-message.md` |
+| `logger` role | `bootstrap/skills/roles/roles.json` — `actorKinds: ["system"]`, `skills: []`, `actedUpon` in its description |
+| the sub-process | `bootstrap/workflows/log-message.bpmn` — `Lane_Actor`, `Lane_Logger`, `GW_Complete`, `End_NotLogged` |
+| the skill | `bootstrap/skills/log-message.md` |
 | one Tool, manual | `cat-harness/tools/index.ts:1093` — `invoke: { manual: true }`, `install: { none: true }`, five required fields + optional `body: Markdown`, `satisfies: ["log-message"]` |
 | called at both logging steps | `initialize-harness.bpmn` — `A_LogInstallStart` and `A_LogFailure`, both `callActivity` → `Process_LogMessage` |
 | the already-initialized failure mode | `GW_AlreadyInitialized`, with the three logged ways in documented |

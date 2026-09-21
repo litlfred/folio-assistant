@@ -5,7 +5,7 @@
     "id": "Process_ActivityLog",
     "path": "skills/workflows/activity-log.bpmn"
   },
-  "source_hash": "sha256:18bd81746970d4bf10999f450a258b1fff9fa0b866c02c4ee8f26b8da9aa4477",
+  "source_hash": "sha256:c429c5e8ef7ef0f7caa7a17180b47dab4d786d37e0b71ce5d7f26c0e6520c594",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -45,6 +45,10 @@
     },
     "lane-binds-role": {
       "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
@@ -96,7 +100,7 @@
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

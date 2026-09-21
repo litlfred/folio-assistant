@@ -26,7 +26,7 @@
  */
 
 import { existsSync } from "fs";
-import { resolve, relative } from "path";
+import { resolve, relative, join } from "path";
 import {
   hashBlockFiles,
   walkBlocks,
@@ -34,8 +34,8 @@ import {
   summariseFreshness,
 } from "./qa-utils";
 import {
-  QA_CRITERIA_BY_ID,
-  QA_CRITERIA_REGISTRY,
+  qaCriteriaByIdFor,
+  qaCriteriaFor,
   WATCHER_CRITERIA_BY_AXIS,
 } from "./qa-criteria-registry";
 import { findContentRepoRoot } from "./repo-root";
@@ -84,6 +84,13 @@ interface BlockReport {
 }
 
 function run(): void {
+  // The instance whose criteria this reads. Resolved here rather than at module
+  // scope, and BY ID through `qaCriteriaByIdFor` rather than the static index:
+  // since bean `btuv` the voice-overlay criteria are derived from the voices an
+  // instance ships, so a static lookup returns `undefined` for every one of them
+  // and this file would report four registered criteria as unknown.
+  const INSTANCE_ROOT = join(import.meta.dir, "..", "..");
+  const criteriaById = qaCriteriaByIdFor(INSTANCE_ROOT);
   const args = parseArgs(process.argv.slice(2));
   const rootAbs = resolve(args.root);
   if (!existsSync(rootAbs)) {
@@ -96,10 +103,10 @@ function run(): void {
   //   (default)           every registered criterion across all axes
   const wantCriteria: string[] =
     args.criteria && args.criteria.length > 0
-      ? args.criteria.filter((id) => QA_CRITERIA_BY_ID[id])
+      ? args.criteria.filter((id) => criteriaById[id])
       : args.axis && args.axis.length > 0
         ? args.axis.flatMap((a) => WATCHER_CRITERIA_BY_AXIS[a] ?? [])
-        : QA_CRITERIA_REGISTRY.map((c) => c.id);
+        : qaCriteriaFor(INSTANCE_ROOT).map((c) => c.id);
 
   const blocks: BlockReport[] = [];
   let totalMissing = 0;
@@ -142,7 +149,7 @@ function run(): void {
       continue;
     }
 
-    const freshSummary = summariseFreshness(report, current);
+    const freshSummary = summariseFreshness(report, current, undefined, criteriaById);
     const summaryById = Object.fromEntries(
       freshSummary.map((s) => [s.criterion, s]),
     );
@@ -151,7 +158,7 @@ function run(): void {
     const stale: string[] = [];
     const missing: string[] = [];
     for (const cid of wantCriteria) {
-      const def = QA_CRITERIA_BY_ID[cid];
+      const def = criteriaById[cid];
       if (def?.applies_to && !def.applies_to.includes(block.kind)) continue;
       const summary = summaryById[cid];
       if (!summary) missing.push(cid);

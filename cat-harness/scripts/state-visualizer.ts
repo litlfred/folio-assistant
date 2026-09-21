@@ -140,6 +140,7 @@ import {
   repoRootFor,
   siteDirFor,
   type CatHarnessDeclaration,
+  visualisationsOf,
 } from "../schemas/cat-harness.js";
 import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 // REQUIRED: `folio` is registered by core on import and this instance declares
@@ -350,14 +351,20 @@ export function declaredVisualiserFor(
 function stateGraphsOf(decl: CatHarnessDeclaration): StateGraph[] {
   const out: StateGraph[] = [];
   for (const d of decl.directories ?? []) {
-    const kinds = (d.graphs ?? []).filter((g) => STATE_KINDS.has(g) && isStateGraph(g));
+    const kinds = (d.graphKinds ?? []).filter((g) => STATE_KINDS.has(g) && isStateGraph(g));
     if (kinds.length === 0) continue;
     out.push({
       id: d.id,
       path: d.path,
       kinds,
       ...(projectionFor(d.id) === null
-        ? declaredVisualiserFor(d.id, d.coverage?.visualiser)
+        ? // THE FIRST declared visualisation, and the choice is deliberate: this
+          // page reports ONE state per directory, so it answers about the
+          // primary one. A directory declaring several is not misreported by
+          // that — `harness-tiles.ts` checks every ref and is where a broken
+          // second viewer surfaces. Passing the whole list here would need a
+          // state per visualisation, which is a different page.
+          declaredVisualiserFor(d.id, visualisationsOf(d.coverage, d.id)[0]?.ref)
         : { state: "live" as const }),
       // The declaration's own words, clipped to its first sentence. Restating
       // what a directory is for, here, would be a second description free to
@@ -844,7 +851,7 @@ const taken = all.filter((g) => RESERVED_IDS.has(g.id) || g.id.startsWith("_"));
 for (const g of taken) {
   console.error(
     `  ! declared directory \`${g.id}\` collides with a route this site already uses — ` +
-      `not rendered. Rename the directory's id in harness.json.`,
+      `not rendered. Rename the directory's id in the declaration.`,
   );
 }
 // REFUSED, not encoded — and the difference is the point.
@@ -862,7 +869,7 @@ const unportable = all.filter((g) => !taken.includes(g) && unportableSegment(g.i
 for (const g of unportable) {
   console.error(
     `  ! declared directory \`${g.id}\` cannot be a directory or a route on every platform ` +
-      `(${unportableSegment(g.id)}) — not rendered. Rename the directory's id in harness.json.`,
+      `(${unportableSegment(g.id)}) — not rendered. Rename the directory's id in the declaration.`,
   );
 }
 const graphs = all.filter((g) => !taken.includes(g) && !unportable.includes(g));

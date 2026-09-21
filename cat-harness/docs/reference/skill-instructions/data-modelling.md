@@ -80,7 +80,7 @@ recoverable from the diagram that executes it.
 ### 6. Declare it where a tool can read it
 
 A model in prose is a proposal. A model in the declaration is a model. In this
-repository that means a graph kind in `harness.json`, a Zod schema under the
+repository that means a graph kind in `<name>.json`, a Zod schema under the
 declared `schemas` directory, and a node kind that `kg-export` knows —
 `placement` is the skill that decides which.
 

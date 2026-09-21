@@ -5,7 +5,7 @@
     "id": "Process_CRDM_DataModel",
     "path": "methodologies/crdm/workflows/crdm-data-model.bpmn"
   },
-  "source_hash": "sha256:baae1466c71e5b8fe3bcd6c1f4b322b22f746a13b93edc299ce49353b1d16645",
+  "source_hash": "sha256:02ee1c5cf0f6622e927faa9daa20d47bb96702979c9023b828c6440fba6b2a9d",
   "criteria": {
     "raci-role-resolves": {
       "result": "pass",
@@ -45,6 +45,10 @@
     },
     "lane-binds-role": {
       "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
@@ -88,7 +92,7 @@
   "totals": {
     "pass": 9,
     "fail": 1,
-    "n/a": 4,
+    "n/a": 5,
     "unknown": 0
   }
 }

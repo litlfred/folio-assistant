@@ -35,7 +35,7 @@ text:
   folio as data. A literal naming one folio is the failure this layer exists
   to prevent.
 - **A directory is declared or it does not exist.** Add one to
-  [`cat-harness.config.json`](cat-harness.config.json) with its graph kinds in the same change;
+  [`cat-harness.json`](cat-harness.json) with its graph kinds in the same change;
   a declared-but-absent directory makes a consumer scan nothing and report a
   clean run. `folio-core/directory-conventions`.
 - **The discipline lives in the skill.** Changing how agents behave means
@@ -60,7 +60,7 @@ for, and pays a budget for it. Maintaining both is one job —
 
 ---
 
-*A declared asset of this instance ([`cat-harness.config.json`](cat-harness.config.json), role
+*A declared asset of this instance ([`cat-harness.json`](cat-harness.json), role
 `agent-instructions`). Authored here — it is not a copy of
-[`cat-bootstrap/AGENTS.md`](../cat-bootstrap/AGENTS.md); the repository root's
+[`bootstrap/AGENTS.md`](../bootstrap/AGENTS.md); the repository root's
 is. Issue #592.*

@@ -35,7 +35,7 @@ reader can re-run it rather than trust it.
 |---|---|---|
 | `cat-harness.config.json` at root | **`zkgs`**, and it is RULED | ruling recorded, blocked on #477 |
 | a slot on instantiation | **`nvbr`**, **`603s`**; seam built in `sticky-contribution.ts` | seam exists, navbar does not |
-| the initialization process | `cat-bootstrap/workflows/initialize-harness.bpmn` | **exists and is unreachable** — `7u3g` |
+| the initialization process | `bootstrap/workflows/initialize-harness.bpmn` | **exists and is unreachable** — `7u3g` |
 | `bootstrap.config.json` | nothing | **new**, and see the roast below |
 | Working/Dynamic vs static KG | `holds: content \| context \| state` | **already an axis**, under another name |
 
@@ -73,7 +73,7 @@ was made.
 
 ## 2. `bootstrap.config.json` is mostly `zkgs`'s convention, plus one real problem
 
-Bootstrap is **already an instance**: `cat-bootstrap/harness.json` declares
+Bootstrap is **already an instance**: `bootstrap/harness.json` declares
 `name: "bootstrap"`, two directories, two assets and a sticky. Under `zkgs`'s
 convention its root file is `bootstrap.config.json` **by derivation** — nothing
 new needs inventing, which is the consolidation this bean exists to record.
@@ -99,10 +99,10 @@ process-written — which contradicts what `.config` means everywhere else here.
 
 This is the one that decides sequencing, and it is measured, not argued.
 
-`cat-bootstrap/workflows/initialize-harness.bpmn` exists and is declared the single
+`bootstrap/workflows/initialize-harness.bpmn` exists and is declared the single
 entry point. It is also invisible to the engine — bean **`7u3g`**: `workflowDirs`
-composes `<kgdir>/workflows`, i.e. `cat-bootstrap/skills/workflows/`, which does not
-exist; the diagrams sit at `cat-bootstrap/workflows/`, a **sibling**. So
+composes `<kgdir>/workflows`, i.e. `bootstrap/skills/workflows/`, which does not
+exist; the diagrams sit at `bootstrap/workflows/`, a **sibling**. So
 `workflow_list` and `workflow_start` cannot see it, and `kg:audit` has never
 written a sidecar for it.
 
@@ -160,7 +160,7 @@ drift."*
 
 `schemas/sticky-contribution.ts` already inverts ownership exactly as asked —
 *"a layer owns what it can serve, and the layer above does not enumerate it"* —
-and `cat-bootstrap/harness.json` declares its own card. So *"instantiating gives you
+and `bootstrap/harness.json` declares its own card. So *"instantiating gives you
 a slot"* is **already true for stickies**.
 
 Two gaps, both measured:
@@ -190,7 +190,7 @@ Two gaps, both measured:
 ## Cross-references
 
 - **`zkgs`** — the ruling and the `<name>.config.json` convention; blocked on #477
-- **`7u3g`** — cat-bootstrap/workflows scanned by nothing. **Prerequisite.**
+- **`7u3g`** — bootstrap/workflows scanned by nothing. **Prerequisite.**
 - **`nvbr`**, **`603s`** — the LHS navbar
 - **`52dz`** — `folio_init` writes no workflows (measured there)
 - **`zzmr`** — parent epic, the KG's own structure
@@ -211,7 +211,7 @@ direction of "the thing you assume is already half-built". So the order was:
    consolidation. Had the roast been written first, it would have argued
    against a decision already made.
 2. **Read the artefact, not its name.** `bootstrap/` was assumed to be a
-   directory of skills. `find bootstrap -type f` showed `cat-bootstrap/harness.json`
+   directory of skills. `find bootstrap -type f` showed `bootstrap/harness.json`
    — bootstrap is *already an instance*, which is what makes
    `bootstrap.config.json` a derivation rather than an invention.
 3. **Count, do not characterise.** "Is the process documented?" became
@@ -262,7 +262,7 @@ diagrams from cat-harness's root is **correct behaviour**, and
 
 ### I implemented the scrapped fix before reading the scrap, and it failed the way the scrap says
 
-Declared `cat-bootstrap/workflows/` in `cat-harness/harness.json`; every measure I
+Declared `bootstrap/workflows/` in `cat-harness/harness.json`; every measure I
 chose said it worked — `workflowFiles` 58 → 61, the three diagrams visible,
 four roles bound, **0 dangling `bindsLane` edges**. Then
 `a second instance in the tree stays out of the first's graph` **failed**.
@@ -285,14 +285,14 @@ bootstrap.
 
 ## What DID survive, and it is small
 
-`cat-bootstrap/workflows/log-message.bpmn` had **no `BPMNDiagram` element at all** —
+`bootstrap/workflows/log-message.bpmn` had **no `BPMNDiagram` element at all** —
 zero shapes, zero edges. A BPMN file with no diagram interchange cannot be drawn
 by any tool, whoever scans it, so this is a defect of the file and not of the
 declaration. DI authored: pool, two lanes, six nodes, five edges with the yes/no
 labels.
 
 Verified to be independent of the reverted change: with the DI in place and
-`cat-bootstrap/workflows/` **not** declared, `instance-graph-isolation` passes 5/5
+`bootstrap/workflows/` **not** declared, `instance-graph-isolation` passes 5/5
 and `render:bpmn:check` passes — the root correctly does not want an SVG for a
 file it does not scan. **No SVG was committed**, for that reason.
 
@@ -334,7 +334,7 @@ moves. Measured constraints already known:
 * **`zkgs` blocks on #477**, which renames the instance to `cat-harness` — the
   filename derives from the declared `name`, so this lands after it.
 * Bootstrap's file becomes `bootstrap.config.json` by the same derivation. It
-  already declares itself in `cat-bootstrap/harness.json`, so this is a rename
+  already declares itself in `bootstrap/harness.json`, so this is a rename
   plus a merge, not new content.
 
 ### Still open under this ruling
@@ -354,7 +354,7 @@ question, with the migration cost measured first. The owner's words, verbatim:
 
 Option 1 was **REPLACE** — `<name>.config.json` becomes the single declaration
 at an instantiation root and `harness.json` goes. So §1 stands as ruled on
-2026-09-20, and the addition is the new part: **`cat-bootstrap/` and the
+2026-09-20, and the addition is the new part: **`bootstrap/` and the
 `folio-assistant-*` instances are in scope too.** One rule, no exemption.
 
 ### What that settles, and what it does not
@@ -398,7 +398,7 @@ makes the rename a day's work rather than a sweep of 121 files.
 
 - [ ] The 21 non-test literals are routed through `DECLARATION_FILENAME`
       FIRST, as a separable change that is correct under either filename
-- [ ] `cat-bootstrap/` carries its own config, and `hfkl` records that the
+- [ ] `bootstrap/` carries its own config, and `hfkl` records that the
       bootstrap exception is about a visualiser and not about this
 - [ ] The `folio-assistant-*` instances are migrated once `hso8` is answered
 - [ ] `AGENTS.md`, `zkgs`'s Done-when and `603s`'s recorded answer are
@@ -452,3 +452,70 @@ that, however it first arrived on disk.
 - [ ] `ensure-landing-sticky`'s write is documented AS a repair at its call
       site, so a later reader does not take it for maintenance and reclassify
       the file
+
+## §1 REVERSED, owner, 2026-09-21 — the OTHER option, `<name>.json` + `<name>.config.json`
+
+> "rename the stub need cat-harness.config.json and cat-harness/cat-harness.json,
+> same for folio-assistant (instance, declration)"
+> — and, when the conflict with the REPLACE ruling was put back to them, "1".
+
+**This bean asked the question and then recorded the wrong half as settled.**
+§1 offered two options and said the ruling *"does not decide this, because the
+question had not been asked when it was made"*. The 2026-09-20 ruling — `"1
+REPLACE"` — then answered it as MERGE, and `6n23`/#695 implemented that
+faithfully. The owner has now taken the option §1 itself described:
+
+> `<name>.json` + `<name>.config.json` **would at least pair them**.
+
+### Why the merge was worth reversing, in the terms §1 already used
+
+§1's own objection to `cat-harness.config.json` beside `harness.json` was that
+*"nothing in either name says which is which"*. The merge did not remove that;
+it **moved** it. After #695 the tree carried two different schemas, with two
+different readers, under one filename shape:
+
+    <root>/cat-harness.config.json             contentType, feedbackDir, skills
+                                               HarnessConfigSchema / readHarnessConfig
+    cat-harness/cat-harness.config.json        name, directories, stub, assets
+                                               CatHarnessDeclarationSchema / readDeclaration
+
+Told apart only by which directory they sat in. The split gives each its own
+name and the pair is legible without knowing where you are.
+
+### What made it cheap, and it was NOT this bean
+
+`#695` did the hard half. It replaced the fixed `DECLARATION_FILENAME` with a
+SUFFIX plus `findDeclarationFile`, which takes the file whose **filename stem
+equals its own declared `name`**. Moving the suffix was then one edit.
+
+That check is also what answered migration-plan I.8, whose objection had been
+the reason not to do this at all: *"a FIXED declaration filename is what lets a
+consumer open a repo it has never seen. A per-repo config name fails silently —
+a resolver deriving it from the DIRECTORY finds nothing when the repo is cloned
+elsewhere."* Nothing derives a filename from a directory. A declaration is
+SELF-IDENTIFYING, so a renamed clone still resolves, and `kg-export.test.ts`
+now asserts that property where it used to assert the fixed name.
+
+### The failure mode the change had, three times, in three places
+
+A bare `.json` suffix matches almost every file; `.config.json` matched almost
+none. Every defect this migration produced was that one shape:
+
+| where | what it claimed | cost |
+|---|---|---|
+| `content-types-base.ts` marker fallback | `dak.json` is a harness marker | a DAK repo reported as carrying a harness it has not got |
+| `check-undeclared-files.test.ts` | `tsconfig.json` is a declaration | JSONC comments threw a parse error |
+| `findDeclarationFile` broken-file path | a malformed `folio/landing.json` is a broken declaration | `readDeclaration` taken down by a landing sticky |
+
+**The suffix is not the discriminator; agreeing with your own `name` is.** Each
+was fixed by keying on `CONFIG_SUFFIX` or by going through
+`findDeclarationFile` — never by widening the guess.
+
+### Done
+
+12 declarations renamed; the ROOT's merged file split back into
+`folio-assistant.json` + `folio-assistant.config.json`; `CONFIG_SUFFIX` and
+`instanceDeclarationFilename` added so the two filenames have two spellers;
+`init-folio` and the test fixtures write two files again. 5172 unit tests,
+89 gates, 222 browser tests — all green.
+

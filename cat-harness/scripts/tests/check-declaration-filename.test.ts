@@ -35,7 +35,13 @@ import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { checkDeclarationFilename } from "../check-declaration-filename.ts";
+import {
+  checkDeclarationFilename,
+  classifyMarkdownLine,
+  classifyWorkflowLine,
+  markdownUses,
+  workflowUses,
+} from "../check-declaration-filename.ts";
 
 /**
  * A tree holding one source file at `<root>/<rel>`.
@@ -146,5 +152,174 @@ describe("a path to the declaration is built from the constant", () => {
     const empty = mkdtempSync(join(tmpdir(), "declfile-empty-"));
     expect(checkDeclarationFilename(empty).filesRead).toBe(0);
     // The runner exits non-zero on filesRead === 0 — see the module's main.
+  });
+});
+
+// ── The YAML half. It was one bucket until the workflow half of `jijc`. ─────
+//
+// These literals are DATA too — see this module's header. Each is a workflow
+// line the classifier reads, not a line this file executes.
+
+describe("a workflow line is classified, not merely counted", () => {
+  test("a step that READS the retired declaration fails", () => {
+    // Falsified by planting exactly this in `health-check.yml` before any of
+    // the classifier existed: the check printed "✓ no call site names the
+    // retired name" and exited 0.
+    expect(classifyWorkflowLine("        run: cat cat-harness/harness.json")).toBe("use");
+  });
+
+  test("a comment naming it is prose — a rename REWORDS these", () => {
+    expect(classifyWorkflowLine("      # the `stub` in harness.json")).toBe("prose");
+    expect(classifyWorkflowLine("# Declared in `harness.json` as the `health` graph.")).toBe("prose");
+  });
+
+  test("the Jekyll data file is its own class, and outranks prose", () => {
+    // Both a comment AND an exemption. The exemption is the part a rename
+    // needs to hear: `docs/_data/harness.json` must NOT be renamed.
+    expect(classifyWorkflowLine("          # and `docs/_data/harness.json` is a")).toBe("jekyll-data");
+    expect(classifyWorkflowLine("        run: cat cat-harness/docs/_data/harness.json")).toBe("jekyll-data");
+  });
+
+  test("a line not naming it at all classifies as null, not as clean", () => {
+    expect(classifyWorkflowLine("      - name: Checkout")).toBeNull();
+  });
+});
+
+describe("GUARD: `cat-harness.json` CONTAINS `harness.json`", () => {
+  test("the CURRENT declaration is not a reference to the retired one", () => {
+    // Load-bearing, and found by writing the fix rather than by foresight: the
+    // corrected `docs-site.yml` comment names `cat-harness/cat-harness.json`,
+    // and a bare indexOf counted the correction as the defect. Same collision
+    // class as `docs/_data`, one character further left.
+    expect(classifyWorkflowLine("      # the `stub` in cat-harness/cat-harness.json")).toBeNull();
+    expect(classifyWorkflowLine("        run: cat cat-harness/cat-harness.json")).toBeNull();
+  });
+
+  test("...and the boundary does not swallow the real thing", () => {
+    // The direction that matters: narrowing for the collision must not make
+    // the case the gate exists for invisible.
+    expect(classifyWorkflowLine("        run: cat cat-harness/harness.json")).toBe("use");
+    expect(classifyWorkflowLine("        run: cat harness.json")).toBe("use");
+  });
+
+  test("a second occurrence in an already-seen file is its own finding", () => {
+    // The old counter counted FILES, so a bypass added to a file already on
+    // the list did not move the number either.
+    const a = classifyWorkflowLine("        run: cat cat-harness/harness.json");
+    const b = classifyWorkflowLine("        run: cat folio-assistant/harness.json");
+    expect([a, b]).toEqual(["use", "use"]);
+  });
+});
+
+describe("the workflow scan reports unknown, never zero", () => {
+  test("a checkout with no .github/workflows gives null, and null is not clean", () => {
+    const empty = mkdtempSync(join(tmpdir(), "declfile-noyml-"));
+    mkdirSync(join(empty, "src"), { recursive: true });
+    writeFileSync(join(empty, "src", "a.ts"), "export const x = 1;\n");
+    const r = checkDeclarationFilename(empty);
+    expect(r.workflows).toBeNull();
+    // `workflowUses` must not turn unknown into an empty finding list that a
+    // caller reads as a pass; the runner exits 2 on null before it gets here.
+    expect(workflowUses(r)).toEqual([]);
+  });
+
+  test("this repository's own workflows carry no USE", () => {
+    const r = checkDeclarationFilename();
+    expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
+  });
+});
+
+/**
+ * The markdown half. Bean `vzur`, turned on once its backlog was cleared.
+ *
+ * Prose was exempt on the TypeScript side because "a rename REWORDS these",
+ * which is sound for a doc comment and not for a skill — a skill's whole job
+ * is telling a reader where to look, and a REVERSAL rewords nothing.
+ */
+describe("markdown lines are classified, not matched", () => {
+  const NO_RECORDS: string[] = [];
+  const md = (rel: string, line: string, para?: string) =>
+    classifyMarkdownLine(rel, line, NO_RECORDS, para ?? line);
+
+  test("a current-path claim in a skill FAILS", () => {
+    expect(md("skills/x.md", "declared in `harness.json` at the root")).toBe("use");
+  });
+
+  test("a line naming no declaration is not a finding at all", () => {
+    expect(md("skills/x.md", "nothing to see here")).toBeNull();
+  });
+
+  test("`docs/_data/harness.json` is Jekyll's and must NOT be renamed", () => {
+    expect(md("docs/x.md", "see `docs/_data/harness.json` for the nav")).toBe("jekyll-data");
+  });
+
+  test("a declared record directory is correct history", () => {
+    expect(classifyMarkdownLine("beans/defs/x.md", "we used `harness.json`", ["beans/"])).toBe("record");
+  });
+
+  test("a generated reference follows its source rather than failing", () => {
+    // The prefixes are DERIVED from each instance's `siteDirFor()`, so the
+    // test supplies one rather than assuming this repo's layout.
+    const gen = ["cat-harness/docs/reference/skill-instructions/"];
+    expect(
+      classifyMarkdownLine(
+        "cat-harness/docs/reference/skill-instructions/x.md",
+        "`harness.json`",
+        NO_RECORDS,
+        "`harness.json`",
+        gen,
+      ),
+    ).toBe("generated");
+  });
+
+  test("history is recognised by a CURRENT name in the paragraph, not by tense", () => {
+    const para = "It is `<name>.json` now.\nThat argument ran: the file stays `harness.json`.";
+    expect(md("skills/x.md", "That argument ran: the file stays `harness.json`.", para)).toBe("historical");
+  });
+
+  test("...and a paragraph naming ONLY the retired word cannot excuse itself", () => {
+    const para = "Open `harness.json`.\nIt lists the directories `harness.json` declares.";
+    expect(md("skills/x.md", "It lists the directories `harness.json` declares.", para)).toBe("use");
+  });
+
+  test("a concrete sibling declaration counts as the current name", () => {
+    const para = "`cat-harness/cat-harness.json` replaced `harness.json`.";
+    expect(md("skills/x.md", para, para)).toBe("historical");
+  });
+});
+
+/**
+ * `harness.jsonld` is not `harness.json`, and the bean that added the LEFT
+ * boundary named it in the same sentence as `cat-harness.json` before
+ * guarding only the side it had a failing example for. The markdown scanner
+ * found it on its first run.
+ */
+describe("the retired name is matched as a FILENAME, on both sides", () => {
+  const md = (line: string) => classifyMarkdownLine("skills/x.md", line, []);
+
+  test("a published rendering is not the retired declaration", () => {
+    expect(md("So `…/folio-assistant/harness.jsonld` is this instance's rendering")).toBeNull();
+  });
+
+  test("the CURRENT declaration is not the retired one either", () => {
+    expect(md("open `cat-harness/cat-harness.json` first")).toBeNull();
+  });
+
+  test("...but the retired name itself still matches, bounded either side", () => {
+    expect(md("open `harness.json` first")).toBe("use");
+    expect(md("open `cat-harness/harness.json` first")).toBe("use");
+  });
+});
+
+describe("the markdown corpus, on this repository", () => {
+  test("carries no STALE PATH", () => {
+    const r = checkDeclarationFilename();
+    expect(markdownUses(r).map((m) => `${m.file}:${m.line}`)).toEqual([]);
+  });
+
+  test("and was actually examined — an empty corpus is not a pass", () => {
+    const r = checkDeclarationFilename();
+    expect(r.markdown).not.toBeNull();
+    expect(r.markdown!.length).toBeGreaterThan(0);
   });
 });

@@ -164,7 +164,7 @@ every run by design.
 1. Clone the IG's `gh-pages` (shallow, single branch — a published IG is large;
    smart-trust's is 342,656 files).
 2. Run the ingest with a new `--id` and `--out`.
-3. Give the new directory a `harness.json` declaring one directory of kind
+3. Give the new directory a declaration declaring one directory of kind
    `fhir-artifact-index`, as `smart-trust/smart-trust.config.json` does. The
    declaration is `<name>.config.json` since #695 — resolve it with
    `declarationPathIn`, never by joining a filename.

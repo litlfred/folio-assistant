@@ -1,0 +1,223 @@
+/**
+ * A tile per declared visualisation — derived, never a second list.
+ *
+ * @module scripts/graph-tiles
+ *
+ * ## The owner's correction, which is the whole model
+ *
+ * The question put to them was whether each *graph* gets a create action. The
+ * answer rejected the framing:
+ *
+ * > no, its not a function of nodes, its a function of a harness watching a
+ * > directort in repo root/ … basially if harness declares visaluzers, those
+ * > should have tile. defaults to theme, but new can be changed. harness can
+ * > declare >= 1 visualiztion (which then has a title)
+ *
+ * and, earlier: *"those should open their exisiting visualzaiton"*.
+ *
+ * **So the tile set is not a new registry — it is the visualiser obligation
+ * made reachable.** `SubgraphCoverageSchema.visualiser` is where an instance
+ * already says what renders a directory, and `check:subgraph-coverage` already
+ * reports the ones that owe a visualiser and have none. A second list of
+ * "things that get tiles" would be free to disagree with the one that is
+ * already audited, and the disagreement would be invisible: a tile missing
+ * because nobody added it to the second list looks exactly like a graph nobody
+ * declared.
+ *
+ * Nothing here builds a viewer. A tile carries the declared ref and opens it.
+ *
+ * ## DECLARATION, not projection — and `flh4` is why that had to be decided
+ *
+ * `flh4` found `uploads` reported as *"nothing renders this"* while a
+ * visualiser was declared, the page existed, and it rendered live counts —
+ * because *"no projection at my path"* had been collapsed into *"nothing
+ * renders this"*. Two different facts.
+ *
+ * The same split decides what a tile derives from, and the corpus made it
+ * concrete (measured 2026-09-20, before `beans` and `todos` were declared):
+ *
+ * | | declared | live projection |
+ * |---|---|---|
+ * | `uploads`, `library` | yes | yes |
+ * | `beans`, `todos` | **no** | yes |
+ * | `fsh-guts`, `qa`, `health`, … | no | no |
+ *
+ * A tile derived from the PROJECTION appears for a graph nobody declared a
+ * visualiser for; derived from the DECLARATION it is missing for two graphs
+ * that visibly have one. Neither is a bug to code around — so the tile derives
+ * from the declaration, and **a live projection with no declaration is a
+ * FINDING** ({@link undeclaredProjections}), which closes the gap rather than
+ * papering over it.
+ */
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
+import {
+  type CatHarnessDeclaration,
+  type Visualisation,
+  showsOn,
+  visualisationsOf,
+} from "../schemas/cat-harness.js";
+
+/** Where a tile may appear. A visualisation that says nothing appears on both. */
+export type TileSurface = "navbar" | "board";
+
+/** One tile, ready for a template. */
+export interface GraphTile {
+  /** `<directory>/<n>` — stable, and unique when a directory declares several. */
+  id: string;
+  /** The directory this visualises. */
+  directory: string;
+  /** What the tile says. Falls back to the directory's id — never blank. */
+  title: string;
+  /** The declared page, repo-root relative, exactly as declared. */
+  ref: string;
+  /**
+   * Where the tile opens, as the PUBLISHED site serves it — or absent.
+   *
+   * **A declared path is not a published URL**, and this repository has
+   * already paid for the confusion once: `prc5`, where a tile's `<img>`
+   * carried `docs/assets/…` and 404'd for every reader, because the site build
+   * copies the site directory's CONTENTS to the mount and the declared prefix
+   * is exactly what a published URL does not carry.
+   *
+   * ABSENT when the declared page is not under the published site — an
+   * instance may declare a viewer that lives somewhere this site does not
+   * serve. `pb04` one layer down: a tile with no href is not a link, which is
+   * better than a link to nowhere.
+   */
+  href?: string;
+  /** Where it appears, resolved: absent on the declaration means both. */
+  surfaces: TileSurface[];
+  /**
+   * Whether it starts out of frame.
+   *
+   * The DECLARED default only. A reader's own hiding is theirs alone and is
+   * committed nowhere — the rule `reader-filter.ts` states for the other
+   * view-time control on this surface.
+   */
+  hidden: boolean;
+  /** The tile's theme: its own, then the directory's, then absent (the instance's). */
+  theme?: string;
+  /**
+   * The declared glyph NAME, passed through untouched — or absent.
+   *
+   * Nothing here validates it against the client's registry, and that is the
+   * design rather than an omission. The registry is in `docs-ui.js`, deployed
+   * with the site and authored apart from any folio's declaration; a generator
+   * that refused an unknown name would fail a build over a glyph, and one that
+   * silently dropped it would make a typo indistinguishable from a tile that
+   * declared nothing. The renderer falls back and the reader still gets a
+   * working tile. See `VisualisationSchema.icon`.
+   */
+  icon?: string;
+}
+
+/** The directory fields a tile is derived from — named rather than imported. */
+export type TiledDirectory = {
+  id: string;
+  coverage?: Parameters<typeof visualisationsOf>[0];
+  theme?: string;
+};
+
+/**
+ * Every tile an instance's declarations yield.
+ *
+ * Ordered by directory then by declaration order, which is the declaration's
+ * own order and therefore stable across regenerations — the property that lets
+ * this be a generated artefact rather than a snapshot.
+ */
+export function publishedHref(siteDirFromRepoRoot: string, ref: string): string | undefined {
+  const prefix = `${siteDirFromRepoRoot.replace(/\/$/, "")}/`;
+  if (!ref.startsWith(prefix)) return undefined;
+  const rest = ref.slice(prefix.length);
+  // `…/index.html` is the directory's own route. Served either way, but the
+  // directory form is what every other link on this site uses, and two
+  // spellings of one page is two entries in a reader's history.
+  return `/${rest.replace(/(^|\/)index\.html$/, "$1")}`;
+}
+
+export function graphTiles(
+  dirs: readonly TiledDirectory[],
+  /** The site directory, relative to the repository root. Omit for no hrefs. */
+  siteDirFromRepoRoot?: string,
+): GraphTile[] {
+  const tiles: GraphTile[] = [];
+  for (const d of [...dirs].sort((a, b) => a.id.localeCompare(b.id, "en"))) {
+    const vis = visualisationsOf(d.coverage, d.id);
+    vis.forEach((v: Visualisation & { title: string }, i) => {
+      tiles.push({
+        // The index is part of the id only where it has to be. A directory
+        // with one visualisation gets its own name, which is what a reader
+        // sees in a URL fragment and what a test addresses it by.
+        id: vis.length === 1 ? d.id : `${d.id}/${i + 1}`,
+        directory: d.id,
+        title: v.title,
+        ref: v.ref,
+        surfaces: (["navbar", "board"] as const).filter((s) => showsOn(v, s)),
+        ...(siteDirFromRepoRoot === undefined
+          ? {}
+          : (() => {
+              const href = publishedHref(siteDirFromRepoRoot, v.ref);
+              return href === undefined ? {} : { href };
+            })()),
+        hidden: v.hidden === true,
+        ...(v.icon === undefined ? {} : { icon: v.icon }),
+        ...(v.theme ?? d.theme ? { theme: v.theme ?? d.theme } : {}),
+      });
+    });
+  }
+  return tiles;
+}
+
+/** The tiles for one surface, in declaration order. */
+export function tilesOn(tiles: readonly GraphTile[], surface: TileSurface): GraphTile[] {
+  return tiles.filter((t) => t.surfaces.includes(surface));
+}
+
+/**
+ * Directories that visibly HAVE a viewer and declare none — `flh4`'s third state.
+ *
+ * Not "tiles we are missing": a finding, naming a declaration somebody has to
+ * write. Returning the ids rather than silently adding tiles for them is the
+ * whole point — a tile that appeared without a declaration would make the
+ * audit that reports the gap look wrong.
+ *
+ * `published` is asked of the caller rather than of the disk, so this is
+ * testable without a filesystem and so the definition of "has a viewer" stays
+ * the caller's. {@link publishedProjection} is the one this repository uses.
+ */
+export function undeclaredProjections(
+  dirs: readonly TiledDirectory[],
+  published: (id: string) => boolean,
+): string[] {
+  return dirs
+    .filter((d) => visualisationsOf(d.coverage, d.id).length === 0 && published(d.id))
+    .map((d) => d.id)
+    .sort((a, b) => a.localeCompare(b, "en"));
+}
+
+/** Does this site publish a page at the directory's own route? */
+export function publishedProjection(siteDir: string, id: string): boolean {
+  return existsSync(join(siteDir, id, "index.html"));
+}
+
+/**
+ * Findings for a whole instance, in the shape `harness-tiles.ts` already uses.
+ *
+ * Phrased as the repair rather than as the symptom: *"declare it"* is the
+ * action, and `coverage.visualiser` is where.
+ */
+export function tileFindings(
+  instance: string,
+  dirs: readonly TiledDirectory[],
+  published: (id: string) => boolean,
+): string[] {
+  return undeclaredProjections(dirs, published).map(
+    (id) =>
+      `${instance}/${id}: a viewer is published at /${id}/ and the directory declares no ` +
+      `visualiser, so it gets no tile. Declare it in \`coverage.visualiser\` and the tile follows.`,
+  );
+}
+
+export type { CatHarnessDeclaration };

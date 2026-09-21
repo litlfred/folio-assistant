@@ -15,6 +15,18 @@ has_children: true
 
 ## Overview
 
+> **The rules behind this page.** Architecture describes the shape; the Skills
+> govern the decisions. Adapters against profiles —
+> [`content-profiles`](reference/skill-instructions/content-profiles.html).
+> Where a new node belongs before you create it —
+> [`placement`](reference/skill-instructions/placement.html). The repository
+> layout and every graph kind —
+> [`directory-conventions`](reference/skill-instructions/directory-conventions.html).
+> Composing and verifying the MCP surface —
+> [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html) and
+> [`mcp-contract`](reference/skill-instructions/mcp-contract.html).
+> Where this page and a Skill disagree, the Skill wins.
+
 folio-assistant is an **MCP server** with a pluggable **content adapter** layer,
 a **skill** system, a typed **content-object model**, **RBAC**, and a deploy
 story. The content it operates on lives in a *separate* repository — the
@@ -55,9 +67,9 @@ into five composable folio-assistant instances. Child pages carry it:
 The last two look like they disagree — the minimum says a harness produces
 nothing a human looks at, and the instance page says an instance renders by
 default. They do not: the requirement is a **floor that rises**, with
-`cat-bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
+`bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
 instead, and `cat-harness` the layer where the rest begins to apply. See
-[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--cat-bootstrap-is-the-exception).
+[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 The rest of this page describes the architecture **as it is now**.
 

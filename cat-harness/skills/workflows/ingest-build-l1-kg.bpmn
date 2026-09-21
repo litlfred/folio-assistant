@@ -36,6 +36,7 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_BuildL1Kg_LaneSet">
       <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
+        <bpmn:documentation>Writes four records in a fixed order and touches the corpus graph in none of them — dublin-core as the record of truth, a manifest that references it, assets[] kept as a SIBLING of library: because that tree is regenerated and would drop anything written inside it, and finally the slug binding Task_Link depends on. Getting the order or the placement wrong here is invisible until the next sync silently drops it.</bpmn:documentation>
         <bpmn:flowNodeRef>StartEvent_Derived2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Dublin</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Manifest</bpmn:flowNodeRef>
@@ -43,6 +44,7 @@
         <bpmn:flowNodeRef>Task_Bind</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Corpus — L1 source knowledge graph">
+        <bpmn:documentation>The single moment the four records Lane_0 wrote become reachable by reference rather than just present on disk: Task_Link is what a knowledge-graph reference in a paper, an L2 or an L3 artefact actually resolves through, and until it runs, dublin-core.jsonld and its siblings are files in library/ that nothing in the graph points to yet.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_Link</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_KgBuilt</bpmn:flowNodeRef>
       </bpmn:lane>

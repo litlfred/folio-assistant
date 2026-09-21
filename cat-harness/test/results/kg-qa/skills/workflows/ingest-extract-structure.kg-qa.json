@@ -5,7 +5,7 @@
     "id": "Process_ExtractStructure",
     "path": "skills/workflows/ingest-extract-structure.bpmn"
   },
-  "source_hash": "sha256:6a9b734dc2f21a576c14a6ec810b306eaa0ccb1f34ea6950a6b99f7ea6c9d0e2",
+  "source_hash": "sha256:bf098843c9812d8358b2abd0725469c207700c2d4233e2036b7bc464d3f05be1",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

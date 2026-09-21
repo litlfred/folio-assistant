@@ -1,0 +1,65 @@
+{
+  "_comment": "CatBootstrap's three roles. Declared rather than left implicit in the diagram's lanes, which is where they lived until 2026-09-20 — a lane name is a string the audit cannot bind to anything, so `Bootstrapping agent` and `Person asking (judgement only)` appeared in the graph as roles nobody had defined. A role is the swimlane; an actor takes it on for the duration.",
+  "name": "bootstrap",
+  "roles": [
+    {
+      "id": "initiator",
+      "title": "Initiator",
+      "lanes": [
+        "Initiator"
+      ],
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "bootstrap-kg-navigation",
+        "confirm-harness",
+        "discussion",
+        "log-message",
+        "root-readme"
+      ],
+      "persona": "Knows nothing about this repository and cannot look anything up. Reads files, follows the processes bootstrap carries, and asks exactly one question when it must — `discussion` is how that asking is performed and what it must produce."
+    },
+    {
+      "id": "knowledge-graph-data-store",
+      "title": "Knowledge Graph Data Store",
+      "lanes": [
+        "Knowledge Graph Data Store"
+      ],
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "actedUpon": true
+    },
+    {
+      "id": "requestor",
+      "title": "Requestor",
+      "lanes": [
+        "Requestor"
+      ],
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [],
+      "judgementOnly": true
+    },
+    {
+      "id": "logger",
+      "title": "Logger",
+      "lanes": [
+        "Logger"
+      ],
+      "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "actedUpon": true
+    }
+  ],
+  "_lanes_comment": "`lanes` RESTORED 2026-09-21 on the owner's ruling of NEITHER (bean `pve3`). It was omitted as a workaround, and the asymmetry that forced it is now gone. The old note read: \"The ROOT instance declares `bootstrap/skills/` as one of its own kg directories, so it reads these roles — but it does NOT declare `bootstrap/workflows/`\", which made a `lanes` entry mint `bindsLane -> role/<Lane>` in folio-assistant's graph pointing at a lane node only bootstrap's own export mints. Measured rather than reasoned about: restoring `lanes` while that entry still existed produced FOUR dangling links (one per role — three were measured 2026-09-20, before `logger` existed) and `kg-export.test.ts` refused them. The declaration that caused it has been removed from `cat-harness/harness.json`, so bootstrap's roles are now read only by bootstrap's own graph, which carries the process those lanes live in and bound correctly all along. THE FIFTH LANE IS DELIBERATELY UNBOUND, AND THE DIAGRAM NOW SAYS SO ITSELF: `log-message.bpmn`'s `Actor` lane carries `<folio:role variable=\"true\"/>` (bean `ug4r`), so the fact is declared where a tool reads it rather than asserted only here. This note is the RATIONALE; the declaration is the contract. It was the other way round until 2026-09-21, and a fact that lives only in a comment is one `lane-binds-role` reports as a `major` defect for ever. No role claims it because the point of that diagram is that the actor VARIES — the `logger` role's own description says the skill belongs to whoever is DOING the thing being logged, and `log-message` takes `actor` as a required input precisely because the Logger cannot infer who acted. A role binding `Actor` would assert the opposite."
+}

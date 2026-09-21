@@ -5,7 +5,7 @@
     "id": "Process_SessionStateMachine",
     "path": "skills/workflows/session-state-machine.bpmn"
   },
-  "source_hash": "sha256:f16f094acd51ae7d9eb1becaea8cc00170a0db309cb759f192da3123685cf80f",
+  "source_hash": "sha256:d9eb075f7f84d575589696eed64d987f0ba0be1f6f6dce9d22d1a5f443393f2e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

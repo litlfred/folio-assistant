@@ -19,9 +19,28 @@ import {
   readModule,
 } from "../../content/pipeline/qa-checker-discovery.ts";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry.ts";
+import { resolveCriterionSource } from "../../content/pipeline/criterion-source.ts";
+import { loadContributions } from "../../schemas/harness-config.ts";
+import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions.ts";
 
-const block = await discoverBlockCheckers();
-const script = await discoverScriptCheckers();
+/**
+ * The dependency tree, loaded exactly as `qa-sweep` loads it.
+ *
+ * Not optional decoration: two criteria (`proof-compile-cost`,
+ * `proof-no-cost-regression`) declare `checker_contributed`, so their checkers
+ * come from `folio-assistant-sci` and are absent without this. A test that
+ * dropped it would still pass its shape checks while measuring a discovery run
+ * two criteria short.
+ */
+const REPO = new URL("../../..", import.meta.url).pathname;
+const CORE = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
+const registry = await loadContributions<FolioContribution, ContributionRegistry>(
+  REPO,
+  new ContributionRegistry(),
+);
+
+const block = await discoverBlockCheckers(registry);
+const script = await discoverScriptCheckers(registry);
 
 describe("checkerFunctionName", () => {
   test("kebab-case ids", () => {
@@ -85,12 +104,16 @@ describe("every automated criterion resolves, from the module the registry names
     // what `script_hash` is computed over, so a checker resolved from any
     // other module would have its verdicts invalidated by the wrong file's
     // changes — the defect that motivated discovery in the first place.
-    const { getCriterionSourceFile } = await import(
-      "../../content/pipeline/qa-criteria-registry.ts"
-    );
-    const root = new URL("../..", import.meta.url).pathname;
+    // Asked through `resolveCriterionSource`, which is the ONE answer the
+    // sweep itself uses. Re-deriving the path from the cascade here would be a
+    // second answer in the test, free to disagree with production — and it
+    // would resolve a contributed criterion to core's default, which is the
+    // exact never-invalidates trap.
     for (const [id, fn] of block.checkers) {
-      const mod = (await import(`${root}/${getCriterionSourceFile(id)}`)) as Record<string, unknown>;
+      const located = resolveCriterionSource(id, CORE, registry);
+      expect(located).not.toHaveProperty("reason");
+      const src = located as { root: string; sourceFile: string };
+      const mod = (await import(`${src.root}/${src.sourceFile}`)) as Record<string, unknown>;
       const found = Object.values(mod).some(
         (v) =>
           v === fn ||

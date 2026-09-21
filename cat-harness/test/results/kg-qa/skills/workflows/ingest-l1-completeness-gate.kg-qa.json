@@ -5,7 +5,7 @@
     "id": "Process_L1Gate",
     "path": "skills/workflows/ingest-l1-completeness-gate.bpmn"
   },
-  "source_hash": "sha256:ca8225709b4878fdfc9debebf364d0e9005978ee1f7e94314f6bdb1f5481ba0f",
+  "source_hash": "sha256:0dd9ca93924d3d20ef03d94fc558c86b7b025ae8185d1082e7b983e7322be5e4",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

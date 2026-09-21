@@ -35,6 +35,7 @@
 
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { instanceConfigFilename } from "../schemas/harness-config";
+import { instanceDeclarationFilename } from "../schemas/cat-harness";
 import { materialiseDeclaredDirectories } from "../schemas/harness-config";
 import {  } from "../schemas/cat-harness";
 import { relative, dirname, join, resolve } from "path";
@@ -151,24 +152,25 @@ function platformDir(assistant: string): string {
  * name would silently withdraw every convention the scaffold had before it.
  */
 /**
- * The scaffolded instance's ONE file — its declaration and its config.
+ * The scaffolded instance's DECLARATION — `<slug>.json`.
  *
- * These were two functions writing two files, `harness.json` and
- * `<slug>.config.json`. `harness.json` was excised on 2026-09-21 (the owner:
- * *"Excise harness.json.. only `<harness-stub>.config.json` makes instantiation
- * at root of repo"*), which made both of them target the same path — so the
- * config silently overwrote the declaration and a scaffolded folio came out
- * with no `directories` at all.
+ * TWO files again since 2026-09-21. The history is worth keeping because both
+ * transitions broke this function:
  *
- * Merging them is the fix AND the point: one instance, one file. A new folio
- * has no reason to learn a distinction the platform has just removed.
+ * 1. `harness.json` + `<slug>.config.json` — two files, two names.
+ * 2. Excised into one `<slug>.config.json`, at which point the two writers
+ *    targeted the SAME path and the config silently overwrote the
+ *    declaration; a scaffolded folio came out with no `directories` at all.
+ * 3. The owner split them again, giving each its own name, so the collision
+ *    that forced the merge cannot recur: `<slug>.json` declares, and
+ *    `<slug>.config.json` configures.
+ *
+ * `name` is what makes this file a declaration rather than a plain config, and
+ * the filename stem must equal it — `findDeclarationFile` checks exactly that.
  */
-function instanceConfig(o: InitFolioOptions, assistant: string): string {
+function instanceDeclaration(o: InitFolioOptions): string {
   return JSON.stringify(
     {
-      // The DECLARATION half. `name` is what makes this file a declaration
-      // rather than a plain config, and the filename stem must equal it —
-      // `findDeclarationFile` checks exactly that.
       name: o.slug,
       title: o.title,
       directories: [
@@ -179,12 +181,20 @@ function instanceConfig(o: InitFolioOptions, assistant: string): string {
           // read it from in a repository that does not exist yet.
           path: "folio/",
           dependents: "reproduce",
-          graphs: ["folio"],
+          graphKinds: ["folio"],
           description: `The content of ${o.title} — its document, chapters and blocks.`,
         },
       ],
+    },
+    null,
+    2,
+  ) + "\n";
+}
 
-      // The CONFIG half.
+/** The scaffolded instance's CONFIG — `<slug>.config.json`, beside its declaration. */
+function instanceConfig(o: InitFolioOptions, assistant: string): string {
+  return JSON.stringify(
+    {
       contentType: o.contentType,
       adapter: o.contentType,
       adapterModule: `./${platformDir(assistant)}/adapters/${o.contentType}/index.ts`,
@@ -613,6 +623,7 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   // The declaration comes FIRST, because it is what gives the next line's
   // filename a meaning. See `instanceConfig` above — ONE file now, its
   // declaration and its config, since `harness.json` was excised.
+  write(instanceDeclarationFilename(o.slug), instanceDeclaration(o));
   write(instanceConfigFilename(o.slug), instanceConfig(o, assistant));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));

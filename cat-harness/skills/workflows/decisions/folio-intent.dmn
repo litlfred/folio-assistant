@@ -14,7 +14,10 @@
                     mapped onto the five branches. "unstated" until they have
                     been asked. This is a fact about the conversation, not a
                     guess about the user.
-    isFolio         harness.config.json exists in the working directory.
+    isFolio         a `<name>.config.json` in the working directory DECLARES
+                    a `contentType`. Not its mere presence: that is the
+                    `harness` membership, and the two were one question only
+                    while the declaration was a separate file.
     repoHasContent  the working tree holds files that are neither VCS
                     bookkeeping nor folio scaffolding — i.e. somebody's
                     existing repository rather than a bare one.

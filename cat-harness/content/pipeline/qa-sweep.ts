@@ -120,13 +120,15 @@ import {
   type CriterionScriptHashes,
 } from "./qa-utils";
 import {
-  QA_CRITERIA_REGISTRY,
-  QA_CRITERIA_BY_ID,
+  qaCriteriaFor,
+  qaCriteriaByIdFor,
   WATCHER_CRITERIA_BY_AXIS,
-  getCriterionSourceFile,
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
 import { discoverBlockCheckers } from "./qa-checker-discovery";
+import { isCriterionSourceMiss, resolveCriterionSource } from "./criterion-source";
+import { loadContributions } from "../../schemas/harness-config";
+import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
 import { usesGraphHash } from "./uses-graph-hash";
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
 
@@ -230,7 +232,23 @@ async function run(): Promise<void> {
   // automated criterion declares the module its checker lives in, so an
   // adapter's checkers are reached because its criteria name them and not
   // because this file knows the adapter exists. See qa-checker-discovery.
-  const discovery = await discoverBlockCheckers();
+  //
+  // THE COMPOSITION ROOT. This process has a top-level `await run()`, so this
+  // is the outermost thing that runs before any checker is looked for — the
+  // place a dependency's contributions are loaded. It names no dependency: it
+  // walks the ones the folio DECLARES, so `folio-assistant-sci` supplying the
+  // elaboration-cost checkers costs this file no knowledge that sci exists.
+  //
+  // Which is the point. `getCriterionSourceFile` used to hold the string
+  // `content/pipeline/qa-checkers-cost.ts`, and `check:partition` counted no
+  // edge for it because a string is not an import — but after the repository
+  // split that file lives in another package and still has to be there. Bean
+  // `zlmp` measured five such runtime edges; this drains one of them.
+  const contributions = await loadContributions<FolioContribution, ContributionRegistry>(
+    REPO_ROOT,
+    new ContributionRegistry(),
+  );
+  const discovery = await discoverBlockCheckers(contributions);
   const checkers = discovery.checkers;
   const rootAbs = resolve(args.root);
   // Anchor for recorded block paths: the content repo that owns the
@@ -278,12 +296,22 @@ async function run(): Promise<void> {
   //   --axis NAME[,...] one or more watcher axes (one-voice, proof,
   //                     canonical, compute, detangler)
   //   (default)         every registered criterion across all axes
+  // Criteria BY ID, through the instance-aware index rather than the static
+  // one. Since bean `btuv` the voice-overlay criteria are derived from the
+  // voices an instance ships, and every lookup below would return `undefined`
+  // for them: the selection filter would drop `--only voice-overlay-milnor`,
+  // the per-block loop's `if (!def) continue` would leave them out of every
+  // sidecar, and — worst — the voice gate would see `{}` and a criterion naming
+  // no voice always runs, so a WHO criterion would sweep a folio that never
+  // adopted WHO style. Read once per run; the derivation is memoised anyway.
+  const criteriaById = qaCriteriaByIdFor(REPO_ROOT);
+
   const criteriaSelected: string[] =
     args.only && args.only.length > 0
-      ? args.only.filter((id) => QA_CRITERIA_BY_ID[id])
+      ? args.only.filter((id) => criteriaById[id])
       : args.axis && args.axis.length > 0
         ? args.axis.flatMap((a) => WATCHER_CRITERIA_BY_AXIS[a] ?? [])
-        : QA_CRITERIA_REGISTRY.map((c) => c.id);
+        : qaCriteriaFor(REPO_ROOT).map((c) => c.id);
 
   // VOICE GATE, applied ONCE here rather than per block, because the question is
   // a property of the folio and not of any block: which editorial registers did
@@ -303,7 +331,7 @@ async function run(): Promise<void> {
   // per block would be sidecar bloat carrying no information a reader of the
   // folio's own configuration does not already have.
   const voiceSkipped = criteriaSelected.filter((id) =>
-    voiceExcludesCriterion(QA_CRITERIA_BY_ID[id] ?? {}, activeVoiceIds),
+    voiceExcludesCriterion(criteriaById[id] ?? {}, activeVoiceIds),
   );
   const criteriaToRun: string[] = criteriaSelected.filter(
     (id) => !voiceSkipped.includes(id),
@@ -325,14 +353,21 @@ async function run(): Promise<void> {
   // script sidecar under `content/pipeline/script-sidecars/`.
   const scriptHashesByCriterion: Record<string, CriterionScriptHashes> = {};
   for (const id of criteriaToRun) {
-    const def = QA_CRITERIA_BY_ID[id];
+    const def = criteriaById[id];
     if (!def?.automated) continue;
+    // Same ONE answer discovery used. Hashing a contributed checker against
+    // this repo's root would read the wrong bytes — or none — and a
+    // `script_hash` that does not track its checker is a verdict that can
+    // never go stale, which is the defect `source_file` exists to prevent.
+    const located = resolveCriterionSource(id, REPO_ROOT, contributions);
+    if (isCriterionSourceMiss(located)) continue;
     scriptHashesByCriterion[id] = computeCriterionScriptHashes(
       id,
-      getCriterionSourceFile(id),
+      located.sourceFile,
       getCriterionExtraInputs(id),
-      REPO_ROOT,
-      QA_CRITERIA_BY_ID[id],
+      located.root,
+      criteriaById[id],
+      located.label,
     );
   }
   const engineVersion = `bun-${Bun.version}`;
@@ -443,7 +478,7 @@ async function run(): Promise<void> {
     };
 
     for (const criterionId of criteriaToRun) {
-      const def = QA_CRITERIA_BY_ID[criterionId];
+      const def = criteriaById[criterionId];
       if (!def) continue;
 
       // Applicability gate.

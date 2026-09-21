@@ -29,7 +29,7 @@ const ROOT = resolve(import.meta.dir, "..");
  *
  * `workflowFiles` returns absolute paths, so `file` below is already complete
  * and nothing joins it to a base. That is the point: a topical layout
- * (`cat-bootstrap/workflows/`, `crdm/workflows/`) is found without this script
+ * (`bootstrap/workflows/`, `crdm/workflows/`) is found without this script
  * knowing the layout exists.
  *
  * Output names are still the BASENAME, which is a latent collision if two

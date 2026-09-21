@@ -41,7 +41,7 @@
  * @module content/pipeline/source-ledger-merge
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDir, deferResolution} from "../../schemas/cat-harness.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -54,7 +54,11 @@ import type {
 } from "../../schemas/bib-verification";
 
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
-const LEDGER_PATH = join(folioDir(REPO_ROOT),  "bib-qa-verifications.json");
+const LEDGER_PATH = deferResolution(() => join(folioDir(REPO_ROOT),  "bib-qa-verifications.json"), {
+  moduleUrl: import.meta.url,
+  what: "LEDGER_PATH",
+  under: REPO_ROOT,
+});
 
 /** Model identifier recorded as the assessing agent. */
 const AGENT_MODEL = process.env.FOLIO_AGENT_MODEL ?? "unknown-agent";
@@ -148,7 +152,7 @@ function main(): void {
     process.exit(2);
   }
 
-  const ledger: SourceLedger = JSON.parse(readFileSync(LEDGER_PATH, "utf-8"));
+  const ledger: SourceLedger = JSON.parse(readFileSync(LEDGER_PATH(), "utf-8"));
   const byFile = new Map<string, LedgerEntry>();
   for (const e of ledger.entries) {
     if (e.source?.kind === "upload") byFile.set(e.source.file, e);
@@ -241,8 +245,8 @@ function main(): void {
   }
 
   if (write) {
-    writeFileSync(LEDGER_PATH, `${JSON.stringify(ledger, null, 2)}\n`);
-    console.log(`\nwrote ${LEDGER_PATH}`);
+    writeFileSync(LEDGER_PATH(), `${JSON.stringify(ledger, null, 2)}\n`);
+    console.log(`\nwrote ${LEDGER_PATH()}`);
   } else {
     console.log("\n(dry run — pass --write to persist)");
   }

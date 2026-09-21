@@ -5,7 +5,7 @@
     "id": "Process_CiHealth",
     "path": "skills/workflows/ci-health-watch.bpmn"
   },
-  "source_hash": "sha256:88e3eb9bcefa83e067cb2d1fea2e346f48cd454135b534c059f2273fdb4f0bb8",
+  "source_hash": "sha256:6e74bfe0c3da83987081cdc888260bae80f84a745d2a5e9ddb7f2a71ee4d1544",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "fail",
       "findings": [
@@ -84,7 +88,7 @@
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

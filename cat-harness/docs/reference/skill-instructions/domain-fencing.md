@@ -22,7 +22,7 @@ anyone else, or worse, fires wrongly.
 ## The mechanism already exists and works
 
 `folioOptionalAxes()` in `content/pipeline/qa-criteria-registry.ts`. A folio
-opts in through `harness.config.json`:
+opts in through `<name>.config.json`:
 
 ```json
 { "qaAxes": ["q-usage"] }
@@ -77,14 +77,48 @@ detangler bucket is built from the array, so leaving `DETANGLER_WATCHER_CRITERIA
 alone would have named a criterion the registry never registered — a watcher
 axis reporting on nothing and looking clean doing it, which is bean `dh4f`.
 
-**The mechanism could not be verified ON from inside this repository**, and
-finding out why was worth more than the fence. `folioOptionalAxes()` resolves
-its config through `findContentRepoRoot()`, which stops at the nearest declared
-folio directory — `cat-harness/folio/` — while this repository's
-`harness.config.json` sits one level up. So it reads no config at all here, and
-neither does `readDeclaredFolioProfile()`: measured, it returns
-`"undetermined (no harness.config.json)"` from the resolved root and
-`"document"` from the actual repository root.
+**The mechanism could not be verified ON from inside this repository** when
+this was written, and finding out why was worth more than the fence.
+`folioOptionalAxes()` resolves its config through `findContentRepoRoot()`,
+which stopped at the nearest declared folio directory — `cat-harness/folio/` —
+while the config sat one level up. So it read no config at all here, and
+neither did `readDeclaredFolioProfile()`: it returned `"undetermined (no
+<name>.config.json)"` from the resolved root and `"document"` from the actual
+repository root.
+
+> **Re-measured 2026-09-21, and the resolution half no longer reproduces.**
+> `findContentRepoRoot()` now returns `cat-harness/`, not `cat-harness/folio/`,
+> and `readDeclaredFolioProfile()` returns `document` from **both** roots —
+> `cat-harness.config.json` for the resolved one, `folio-assistant.config.json`
+> for the repository root. The declaration/config split gave `cat-harness` a
+> config of its own and the walk now finds one — **both config files sit at the
+> repository root**, named for their instance rather than placed inside it,
+> which is why looking in `cat-harness/` for one turns up nothing.
+>
+> **But the resolver is not what controls this criterion, and the consequence
+> below never occurred.** Measured on the same day under bean `zq3f`, which
+> opened to check exactly that and closed by falsifying its own premise:
+>
+> - **The fence is the mechanism, not the resolver.** Probed here,
+>   `folioOptionalAxes()` is `[]` and `inRegistry` is `false` — neither config
+>   declares `qaAxes`, so `detangler-archimedean-wall` is not registered at
+>   all. What stops it firing is the `archimedean-wall` opt-in this very
+>   section introduced. `folio-optional-axes.test.ts` pins both states and is
+>   the evidence to read first.
+> - **There were never any bad verdicts.** 122 `block-qa` sidecars and 113
+>   witnesses carry the criterion, and **every one records `"result": "n/a"`**
+>   — not one `critical`, not one finding. The paragraph below describes a
+>   harm that did not happen for this criterion; what the sidecars record is
+>   that it was evaluated and found not applicable.
+> - **"235" was a grep artefact.** `grep -rl` counts files CONTAINING a
+>   string, so it swept witnesses in with sidecars and counted a substring
+>   rather than a verdict — the same error shape as `cat-harness.json`
+>   containing `harness.json`, one directory over, and it reached a skill and
+>   a PR body before anything parsed it.
+>
+> Read the paragraph below as the reasoning that motivated the fence, not as a
+> live defect. Reading a fixed resolver as a fixed defect would have been one
+> error; reading it as *the* fix was the one actually made.
 
 The consequence is already committed in the tree. The config file's own comment
 says the third state *"runs every criterion, and the paper adapter's

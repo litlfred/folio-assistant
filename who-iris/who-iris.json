@@ -1,0 +1,90 @@
+{
+  "_comment": "The WHO IRIS catalogue instance, staged as a top-level directory ahead of becoming its own repository. Owner, 2026-09-20: 'there needs to be a new repo (staged here as a new top-level dir -> repo later) which is an instance of fa-core, and is for the who-iris cataloge and this is an example artefact (the style guide is part of the library itself)', and later 'in future who-iris iwll be own repo. will have specialized tools/themes.' The `library` entry landed with the git mv (bean frs5), in the same change, exactly as the previous version of this comment said it would: until then its ABSENCE was load-bearing, because `resolveLibraryRef` reported `no-library-graph` for a citation naming this instance -- a different and more useful answer than 'that section is missing'. Both of those are now real answers rather than one standing in for the other.",
+  "name": "who-iris",
+  "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference \u2014 1,057,223 files known, three materialized.",
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md \u2014 who-iris",
+      "description": "Cold start for work in this layer. The gap between twelve modelled nodes and a million upstream files is the POINT rather than a backlog, so it is never work to be done; every node declares its state with no default, because \"the author did not say\" and \"the author said they could not tell\" are different facts."
+    },
+    {
+      "id": "readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "who-iris",
+      "description": "What is here, what is only referenced, and how to tell."
+    }
+  ],
+  "directories": [
+    {
+      "id": "library",
+      "path": "library/",
+      "dependents": "reproduce",
+      "description": "The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assistant-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
+      "graphKinds": [
+        "library"
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      },
+      "instanceRoot": true,
+      "_comment_instanceRoot": "The themed replica is what /who-iris/ serves \u2014 the owner's ruling, 'who-iris themed at /who-iris/'. Without this the route goes to whichever kind sorts first, which is `docs`."
+    },
+    {
+      "id": "who-iris-catalogue",
+      "path": "catalogue/",
+      "dependents": "skip",
+      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today \u2014 9 referenced, 3 materialized, 0 unknown \u2014 against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
+      "graphKinds": [
+        "catalogue"
+      ]
+    },
+    {
+      "id": "who-iris-uploads",
+      "path": "uploads/",
+      "dependents": "reproduce",
+      "description": "The incoming queue \u2014 raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF \u2014 the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
+      "graphKinds": [
+        "uploads"
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "library-ingestion"
+      }
+    },
+    {
+      "id": "who-iris-skills",
+      "path": "skills/",
+      "dependents": "skip",
+      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "_comment": "Themes this instance DERIVED from sources it holds, bean j66n. `iris-web` is read off the compiled stylesheet DSpace served with the captured item page; `who-wpro-publication` is read off the style guide's own pages 6, 7, 12, 14 and 18. Declared rather than left implicit because an undeclared directory is the dh4f defect -- every declaration-driven consumer scans nothing and reports a clean run over it, which is exactly what `docs/` did with 241 files until 2026-09-20. These are NOT the platform's twelve themes: those are cat-harness's own furniture, and a palette read off a WHO style guide is subject matter, which the root AGENTS.md keeps out of the platform.",
+      "id": "who-iris-themes",
+      "path": "themes/",
+      "graphKinds": [
+        "themes"
+      ],
+      "_dependents_comment": "skip, not reproduce. This entry says where THIS instance's themes live; it is not a workspace every downstream folio needs. `uploads/` and `library/` are reproduce because a dependent folio ingests its OWN sources into its own copies. A folio with no themes of its own needs no themes/ directory, and reproduce would ship an empty one into every downstream instance -- which is the dh4f shape arriving by inheritance rather than by declaration.",
+      "dependents": "skip"
+    },
+    {
+      "_comment": "The RENDERABLE surface of this instance -- the ingested-IRIS replica pages, generated from catalogue/ by scripts/gen-iris-pages.ts and gated by `bun run iris:pages:check`. Declared because the owner's URL contract (2026-09-20) makes it addressable: `<baseURL>/<instantiated-harness>/<path_to_rendered_content>`, so these land at `<baseurl>/who-iris/community-list`. Undeclared, it would be the dh4f defect on the one directory a READER actually reaches -- exactly what cat-harness/docs/ was until 2026-09-20 with 241 files. `dependents` is skip for the same reason cat-harness's docs entry gives: these are pages THIS instance publishes about its own catalogue, and a dependent inherits pages rather than an empty directory to refill.",
+      "id": "who-iris-docs",
+      "path": "docs/",
+      "dependents": "skip",
+      "graphKinds": [
+        "docs"
+      ]
+    }
+  ]
+}

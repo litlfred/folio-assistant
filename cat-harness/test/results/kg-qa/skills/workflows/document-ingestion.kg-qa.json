@@ -5,7 +5,7 @@
     "id": "Process_Ingestion",
     "path": "skills/workflows/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:69e8d8fcd54651a37c956a5b127b08a0003efc5a7944d9dbb0c92e9a8ca0d26f",
+  "source_hash": "sha256:4d866b8c69b032cfe0a4f6189e1f7182e98a55bbe25174853744a9f95152d34e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 9,
     "fail": 0,
-    "n/a": 5,
+    "n/a": 6,
     "unknown": 0
   }
 }

@@ -18,6 +18,100 @@ Provide before/after URL pairs whenever rendered content has changed in a
 feature branch. This is part of every review or feedback session involving
 visual content.
 
+## Signature — one optional string in, a reviewable list out
+
+Stated formally because this skill is invoked by other processes and by a
+person typing `/staging-review`, and a contract that lives in prose is one each
+caller re-derives.
+
+### Input
+
+| | |
+|---|---|
+| **type** | string |
+| **cardinality** | `0,1` — optional, and at most one |
+| **meaning** | what the reader wants to look at, **in their own words** |
+| **absent** | the whole preview: every page this branch changed |
+
+Keep the wording **verbatim** wherever the output echoes it — the same rule
+[`goal-review`](goal-review.md) applies to a goal, and for the same reason: a
+request the agent paraphrased is a different request, and the reader cannot
+tell which one the list was built for.
+
+It **narrows**; it never adds. *"The navbar"* gets the pages carrying it, not a
+page that mentions it. **An ask matching nothing that changed is said, not
+answered with the whole preview** — a list that silently ignores its input is
+worse than an empty one, because the reader believes it was answered.
+
+### Output
+
+Markdown, in this order. Every part is required; an absent part is **stated**,
+not dropped.
+
+1. **Where to start** — one line, one URL: the one that best answers the input,
+   or the page with the most change behind it when there was none. A reader
+   opens one thing first whether or not you choose it for them.
+2. **The comparison table** below — before (main), after (staging), what to
+   review.
+3. **What could not be checked**, per the three states below.
+
+### The third column is the one with value
+
+`What changed` must be phrased as **something to look at**, never as a
+restatement of the filename. Build it by mapping changed files to published
+surfaces:
+
+| what changed | which page | what to say |
+|---|---|---|
+| a stylesheet or client script | every page that loads it | the affordance that changed, and **the gesture to make** |
+| a template or include | the pages that include it | where on the page to look |
+| generated content | the page it generates | **what it was generated from** — a stale generator and a correct one look identical on the page |
+| a schema, a test, a gate | **none** | say so, and point at the diff |
+
+**Where a change is only visible after an interaction — a control behind a
+disclosure, a mode a reader turns on — say WHICH interaction.** A reviewer who
+cannot find the thing reports it as missing. That failure is on the record: a
+contrast defect survived two days behind a tile nobody clicked (bean `rptk`),
+because the gate that swept the page never opened the view.
+
+### The third state, here as everywhere
+
+"Could not determine" is never rendered as clean — and a change with **no
+rendered surface** is not a failure, it is the useful answer.
+
+| case | report it as |
+|---|---|
+| not deployed yet | not deployed, with the timing from §"Say how long" — never a link to where it will be |
+| a changed page absent from the publish ref | **a finding** — the build dropped it, or it is not a page |
+| no rendered surface | reviewed in the diff, naming the files |
+
+The middle row is the most useful thing this skill can report, and composing
+its URL anyway would hide exactly that — §"Before you report a staging URL as
+broken".
+
+### The commit in the bot's comment is NOT your branch head
+
+Measured 2026-09-21, by getting it wrong in this skill's own first use. The
+comment named `3894c41`; the branch head was `037812c7`; I reported the preview
+as *"one commit behind"*. **It was current.** On a `pull_request` trigger the
+stage job builds `refs/pull/<n>/merge` — your head merged into the base — so
+the commit it names is an object that **never** equals your head and is not
+even in your clone. Comparing the two reports a stale preview on every PR,
+forever.
+
+Resolve it instead. The merge commit's **second parent** is the head it was
+built from:
+
+```sh
+git fetch origin "refs/pull/<n>/merge:refs/remotes/origin/pr-<n>-merge" -q
+git log --format="%h %p" -1 origin/pr-<n>-merge   # <merge> <base> <YOUR HEAD>
+```
+
+Stale means that second parent is not your head — nothing else does. This is
+the same fact `bun run gates` exists around: **CI tests the merge**, and so
+does the preview, so a branch behind its base is previewing a tree nobody will
+have.
+
 ## When to provide before/after URLs
 
 Provide before/after URLs in **every** interaction where:
@@ -77,7 +171,7 @@ When reporting changes to the user:
 https://<owner>.github.io/<repo>/<path>
 ```
 
-Read from `harness.config.json` → `readme.pagesBaseUrl`, or construct from
+Read from `<name>.config.json` → `readme.pagesBaseUrl`, or construct from
 the repo's GitHub Pages URL.
 
 ### Staging (after)

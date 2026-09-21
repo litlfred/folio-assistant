@@ -34,7 +34,19 @@
 
   function el(tag, attrs, text) {
     var node = document.createElement(tag);
-    if (attrs) Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      // AN ABSENT VALUE MEANS AN ABSENT ATTRIBUTE. `setAttribute(k, undefined)`
+      // writes the string "undefined", so `{ href: undefined }` produced
+      // `href="undefined"` — a relative link to a page called `undefined`,
+      // which is a link to somewhere wrong rather than no link at all.
+      //
+      // Two callers already relied on the intent: the language switcher passes
+      // `href: undefined` for a locale that is not available, and `safeHref`
+      // returns `undefined` for a URL a link may not carry. `pb04` in both
+      // cases — no link beats a link to nowhere.
+      if (attrs[k] === undefined || attrs[k] === null) return;
+      node.setAttribute(k, attrs[k]);
+    });
     if (text != null) node.textContent = text;
     return node;
   }
@@ -207,28 +219,30 @@
       var isRemembered = loc === remembered;
 
       // Available = clickable <a>. Unavailable = disabled <span>.
+      //
+      // No inline colours. Every pair is a token in `docs-ui.css` with its
+      // measured ratio beside it -- bean `rptk`, whose second half is this
+      // function: the unavailable tab was `#475569` at `opacity:0.5`, which
+      // composites to 1.39:1 on the tile panel, and the current tab was
+      // #ffffff on #3b82f6 at 3.67:1. The per-page bar was fixed first and
+      // this one kept the literals, because the gate never opened this view.
       var tab = el(isAvailable ? "a" : "span", {
-        href: isAvailable ? localePath(basePath, loc) : undefined,
+        href: isAvailable ? safeHref(localePath(basePath, loc)) : undefined,
         "data-locale": loc,
         title: isAvailable
           ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
           : LOCALE_NAMES[loc] + " \u2014 not yet translated",
-        style: "display:inline-block;padding:4px 8px;border-radius:4px;" +
-               "text-decoration:none;font-size:0.8rem;margin:0 1px;" +
-               "transition:background 0.15s;" +
-               (isCurrent
-                 ? "background:#3b82f6;color:#fff;font-weight:bold;"
-                 : isAvailable
-                   ? "color:#93c5fd;cursor:pointer;"
-                   : "color:#475569;cursor:default;opacity:0.5;") +
-               (isRemembered ? "box-shadow:inset 0 0 0 1px #93c5fd;" : "")
+        class: "fa-lang-tab" +
+               (isCurrent ? " is-current" : isAvailable ? "" : " is-unavailable") +
+               (isRemembered ? " is-remembered" : "")
       }, loc.toUpperCase());
 
+      // Hover is a CSS `:hover` rule now, for the same reason: a colour
+      // written by `style.background` is a literal nothing can measure,
+      // because it exists only while a pointer is over the tab.
       if (isAvailable && !isCurrent) {
         (function (locale, link) {
           link.addEventListener("click", function () { setGlobalLocale(locale); });
-          link.addEventListener("mouseenter", function () { link.style.background = "#334155"; });
-          link.addEventListener("mouseleave", function () { link.style.background = ""; });
         })(loc, tab);
       }
       bar.appendChild(tab);
@@ -283,7 +297,7 @@
       var isRemembered = loc === remembered;
 
       var tab = el(isAvailable ? "a" : "span", {
-        href: isAvailable ? localePath(basePath, loc) : undefined,
+        href: isAvailable ? safeHref(localePath(basePath, loc)) : undefined,
         title: isAvailable
           ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
           : LOCALE_NAMES[loc] + " \u2014 not yet translated",
@@ -683,7 +697,7 @@
     if (links.source && node.sourcePath) {
       wrap.appendChild(el("a", {
         class: "fa-discarded-source",
-        href: String(links.source).replace(/\/$/, "") + "/blob/main/" + node.sourcePath,
+        href: safeHref(String(links.source).replace(/\/$/, "") + "/blob/main/" + node.sourcePath),
       }, "View the source of this item"));
     }
     return wrap;
@@ -1085,6 +1099,61 @@
     '<path d="M13.8 12.3c1 0 1.2.5 1.2 1.2v.9c0 .7.3 1.1 1 1.1-.7 0-1 .4-1 1.1v.9c0 .7-.2 1.2-1.2 1.2" ' +
     'fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>' +
     "</svg>";
+
+  /* ── The glyph a tile wears, by declared NAME ────────────────────────
+   *
+   * Every graph tile wore NET_GLYPH — the graph-as-a-thing-to-browse net —
+   * because a tile had no way to say otherwise. `VisualisationSchema.icon`
+   * gives it one, and this is the registry that name resolves against.
+   *
+   * A NAME rather than markup, and the reason is not style. `tileLink` assigns
+   * its glyph with `innerHTML`, so a declaration carrying SVG would make
+   * `<instance>.json` an HTML injection site — and a declaration is INHERITED,
+   * reaching this instance from a dependency through `resolveSkillDirs`. The
+   * markup would not even have to be authored by somebody with commit access
+   * here. R17's rule, one surface along: allow-list, default-deny.
+   *
+   * `hasOwnProperty` and not `TILE_GLYPHS[name]`, because the name comes from
+   * a declaration: `"constructor"` and `"toString"` are inherited properties
+   * of every object literal, and a bare lookup would hand one of them to
+   * `innerHTML`.
+   *
+   * An unknown name falls back rather than failing. The registry ships with
+   * the site and the declaration is authored apart from it, so a folio may
+   * name a glyph a slightly older platform has not got; a tile that vanished
+   * over that would turn a cosmetic mismatch into a missing navigation entry.
+   * The fallback is exactly what every tile rendered before this existed.
+   */
+  /*
+   * TWO beans, not the four the owner's reference art has, and the count was
+   * MEASURED rather than chosen. `.fa-tile svg` is `1.25rem` — 20px — so 20px
+   * is the whole of this glyph's job. Five candidates were rendered at it:
+   * three outlined beans crowd until the hilums merge into one grey mass;
+   * three filled with an oval cut-out read as olives; a filled crescent
+   * collapses to a speck. At two beans the shapes and their hilums stay
+   * separate at 20px and the drawing still looks like the reference at 64.
+   *
+   * Which is the usual trade and worth naming: an icon is not a picture
+   * shrunk, and fidelity to the source art at a size nobody views it at is
+   * not fidelity to anything.
+   */
+  var BEANS_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">' +
+    '<g transform="translate(8.4,8.6) rotate(-32)">' +
+    '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
+    '<g transform="translate(15.6,15.4) rotate(26)">' +
+    '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
+    "</g></svg>";
+
+  var TILE_GLYPHS = { beans: BEANS_GLYPH };
+
+  function glyphFor(name) {
+    if (typeof name !== "string") return NET_GLYPH;
+    return Object.prototype.hasOwnProperty.call(TILE_GLYPHS, name)
+      ? TILE_GLYPHS[name]
+      : NET_GLYPH;
+  }
 
   // A magnifier: search. The owner asked for the search to leave the main
   // panel and become "a icon in navbar that expands" -- this is the icon, and
@@ -1503,12 +1572,6 @@
       return b;
     }
 
-    function tileLink(glyph, label, href, hint) {
-      var a = el("a", { class: "fa-tile", href: href, "aria-label": label + " — " + hint });
-      a.innerHTML = glyph;
-      a.appendChild(el("span", { class: "fa-tile-caption" }, label));
-      return a;
-    }
 
     // Search leads the grid. It is the one action here a reader reaches for
     // repeatedly, and it is the one that was taken off the main panel -- so
@@ -1559,6 +1622,11 @@
     }
     if (window.__faTodoBoard) addTodoTile(window.__faTodoBoard);
     else document.addEventListener("fa:todos-ready", function (e) { addTodoTile(e.detail); });
+
+    // The declared visualisations. `mountGraphTiles` is module-level so the
+    // board mounts the SAME tiles from the same array — Q11, one declaration
+    // and per-surface visibility.
+    mountGraphTiles("navbar", grid, readerShownTiles());
 
     var links = getSiteLinks();
     if (links.kg) {
@@ -1740,7 +1808,687 @@
     'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
-  var todoState = { items: [], floating: {}, processes: {}, themeArt: {} };
+  var todoState = { items: [], floating: {}, floatGeom: {}, processes: {}, themeArt: {} };
+
+  /* ═══ Semantic zoom and windows — TWO mechanisms, kept apart ═══════════
+   *
+   * |                   | trigger                                   | who       |
+   * |-------------------|-------------------------------------------|-----------|
+   * | **semantic zoom** | the card's RENDERED width crosses a number | automatic |
+   * | **open / close**  | opening a card, or `[x]`                   | a person  |
+   *
+   * The owner, 2026-09-20: *"start everyrting in avatar"*, `[x]` closes to the
+   * avatar, and on which mechanism wins —
+   *
+   *   open is like window, avatar/tiles project open panels onto window. sum
+   *   functionality, need to handle z-order.. selecting any part raises
+   *
+   * **An open card is a WINDOW, not a zoom state.** It is projected ON TO the
+   * board rather than being the card grown large, which is why the zoom code
+   * below never asks what is open and the window code never asks how wide
+   * anything is. A flag joining them would be the conflation made permanent —
+   * and it is also what makes "an open window survives a zoom-out" true by
+   * construction rather than by a special case.
+   *
+   * ## THE THRESHOLD IS DECLARED DATA, and its absence is a third state
+   *
+   * R2: *"the threshold SHALL be declared data, not a literal in the
+   * renderer."* `gen-docs-pages.ts` publishes the folio's
+   * `semantic-zoom.json` — and publishes NOTHING when the folio has not
+   * declared one. So `zoomState.zoom === null` means *could not determine*,
+   * and this file must never turn that into a number: with no declaration
+   * every card keeps its words, and the console says why once.
+   *
+   * ## This mirrors `schemas/window-stack.ts`, and that is a real cost
+   *
+   * The model is specified and unit-tested there; this is a browser script and
+   * cannot import it. Two implementations of one rule can drift, so the
+   * mitigation is named rather than hoped for: `test/board-windows.e2e.ts`
+   * mirrors `window-stack.test.ts` case for case, against the real file.
+   */
+  var zoomState = { zoom: null, asked: false };
+
+  /* ═══ Panel chrome — the kind declares, the platform fixes ════════════
+   *
+   * Owner: *"each content type controls its own avatar, visualtion/rendering.
+   * but assume they can open a full screen panel w/ fixed controls like [x] or
+   * [linksrc] or [edit] or what not depedning on conent."*
+   *
+   * CRDM Q7 settled the line: `[x]` is in the same place with the same
+   * behaviour on every panel, so a reader learns the frame once; everything
+   * else is the kind's to offer.
+   *
+   * THREE STATES, and collapsing any two loses a fact: not declared (this kind
+   * does not offer it), declared and servable (the control), declared and
+   * unservable (no control, AND a reason). The third is the one that gets
+   * lost, and `pb04` is the case already paid for — an `[edit]` the pipeline
+   * cannot perform 404s for exactly the reader who cannot edit, which reads as
+   * "this page is broken" rather than "you cannot do this".
+   *
+   * Mirrors `schemas/panel-chrome.ts`, which this file cannot import. Same
+   * cost, same mitigation as `window-stack.ts`: the e2e asserts the browser's
+   * answer against the model's, case for case.
+   */
+  var FIXED_CONTROLS = ["close"];
+  var PANEL_CONTROLS = {
+    close: { id: "close", label: "Close", needs: "none" },
+    view: { id: "view", label: "View source", needs: "source-read" },
+    edit: { id: "edit", label: "Edit", needs: "source-write" },
+    pin: { id: "pin", label: "Pin to the page", needs: "none" },
+    discard: { id: "discard", label: "Discard", needs: "none" },
+    move: { id: "move", label: "Move or resize", needs: "none" },
+    relocate: { id: "relocate", label: "Send to the trashcan", needs: "none" },
+  };
+  var KIND_CONTROLS = {
+    todo: ["view", "edit", "move", "pin", "discard", "relocate"],
+    bean: ["view"],
+  };
+
+  /** The frame first and always, then what the kind declared. Unknowns dropped. */
+  function controlsFor(kind) {
+    var declared = (KIND_CONTROLS[kind] || []).filter(function (id) {
+      return (
+        Object.prototype.hasOwnProperty.call(PANEL_CONTROLS, id) &&
+        FIXED_CONTROLS.indexOf(id) === -1
+      );
+    });
+    return FIXED_CONTROLS.concat(declared).map(function (id) { return PANEL_CONTROLS[id]; });
+  }
+
+  /**
+   * The badge for the CONTENT NODE a card is about, or null.
+   *
+   * R7: *a node rendered as its avatar carries the same badge, from the same
+   * query as R6.* One function, called once per card, whose answer both the
+   * avatar and the open window render — so the two surfaces cannot disagree
+   * for the same reason the badge and its panel cannot (`1rta`).
+   *
+   * `null` when the card is about no node: a board card with no `targetLabel`
+   * annotates nothing, and a badge of nothing is not a zero, it is absent.
+   */
+  function nodeBadge(todo) {
+    var label = todo.targetLabel;
+    if (!label) return null;
+    var count = 0;
+    for (var i = 0; i < todoState.items.length; i++) {
+      if (todoState.items[i].targetLabel === label) count++;
+    }
+    // R5's threshold, and the same split: the chip takes `showCount`, the
+    // accessible name takes the exact `count`.
+    return { count: count, showCount: count > 1, label: label };
+  }
+
+  /** One badge, rendered the same way wherever it rides. */
+  function badgeChip(badge, where) {
+    var chip = el("span", {
+      class: "fa-node-badge fa-node-badge--" + where,
+      "data-fa-notes": String(badge.count),
+      "aria-label":
+        badge.count + (badge.count === 1 ? " note" : " notes") + " on this section",
+    });
+    if (badge.showCount) {
+      chip.appendChild(el("span", { class: "fa-node-badge-count" }, String(badge.count)));
+    }
+    return chip;
+  }
+
+  /* ═══ The READER's filter, which commits nothing ══════════════════════
+   *
+   * Owner: *"be able to filter out by kind properties things on miror board"*.
+   *
+   * TWO FILTERS, AND THEY MUST NOT BECOME ONE FIELD. A board carries a
+   * DECLARED filter (`schemas/board.ts`) that says what the board IS, and it
+   * lives in `boards/<id>.json` where everyone opening that board gets it.
+   * This is the other one: a reader narrowing their own view, at view time.
+   * Conflating them would make one reader's temporary view edit the board
+   * everyone else opens — which is what happens the moment a filter control
+   * writes to the file the other filter lives in.
+   *
+   * So this writes NOTHING: no file, no `localStorage`, no event anybody
+   * persists. It is session state, like the window stack, and the absence is
+   * the design rather than an omission.
+   *
+   * Mirrors `schemas/reader-filter.ts`, which this file cannot import — same
+   * cost and same mitigation as its siblings: the e2e checks the browser's
+   * answer against the model's.
+   */
+  var readerFilter = { properties: {} };
+
+  /**
+   * Tiles this READER has flipped from their declared default.
+   *
+   * Q9: *declared default, reader may override.* The folio says which tiles
+   * start out of frame; this is the other half, and it is session state — no
+   * file, no `localStorage`, nothing anybody else opens. A reader's view of
+   * the navbar is not a change to the navbar, which is the same separation
+   * `reader-filter.ts` holds between a reader's filter and a board's.
+   */
+  var readerTileOverrides = [];
+  function readerShownTiles() { return readerTileOverrides; }
+
+  /**
+   * `1le7`'s tile, as a link. MODULE-LEVEL so both surfaces share one template.
+   *
+   * It was nested inside the action launcher until the board needed it too,
+   * and the bean is explicit about the alternative: *"the tile template is
+   * `1le7`'s, extended if it needs to be, never duplicated."* A second copy
+   * would be two tiles that look alike until one of them is changed.
+   */
+  function tileLink(glyph, label, href, hint) {
+    // Every tile's href goes through the same check as every other link on
+    // this page. A tile is the one place a declared value reaches an `href`
+    // with no composition in between, so it is the one most worth checking.
+    var a = el("a", {
+      class: "fa-tile",
+      href: safeHref(href),
+      "aria-label": label + " — " + hint,
+    });
+    a.innerHTML = glyph;
+    a.appendChild(el("span", { class: "fa-tile-caption" }, label));
+    return a;
+  }
+
+  /* ── Where a declared, site-root path is composed ────────────────────
+   *
+   * `graph-tiles.ts` stores a tile's href relative to the SITE ROOT — `/beans/`
+   * — which is right, and is what `harness.links[].path` stores as well. Every
+   * other consumer of such a path hands it to Liquid's `relative_url`, which
+   * prepends `site.baseurl`. A tile cannot: it is composed here, after Liquid
+   * has finished, from JSON on a `<meta>`.
+   *
+   * SO IT HAS TO BE DONE HERE, AND IT WAS NOT — issue #801. This site serves
+   * from `/folio-assistant`, so an unprefixed `/beans/` resolves against the
+   * ORIGIN and every one of the twelve tiles 404ed. The rule was already
+   * written down 800 lines above, on the action tiles: *"an absolute `/kg/`
+   * is a 404 rather than a wrong-looking link"*. Two tile families, one rule,
+   * and only one of them was following it.
+   *
+   * NOT applied inside `tileLink`, which both families share. The action tiles
+   * are handed `#fa-site-links` values that Liquid ALREADY composed, so
+   * prefixing there would double the base and break the family that works.
+   * The base belongs where the raw declared value enters, which is here.
+   *
+   * An ABSENT meta yields `""` and the href is returned unchanged. That is the
+   * previous behaviour, deliberately: a site with no baseurl is the common case
+   * (the e2e fixtures, a local `jekyll serve`), and it is indistinguishable
+   * from a declared empty one — `site.baseurl` renders as the empty string for
+   * both. There is nothing here to report as a finding.
+   */
+  function siteBaseurl() {
+    var meta = document.querySelector('meta[name="fa-baseurl"]');
+    var v = (meta && meta.getAttribute("content")) || "";
+    return v.replace(/\/+$/, "");
+  }
+
+  /**
+   * A site-root path, composed against this deploy's base.
+   *
+   * Only a path that starts with `/` is composed. Anything else is already
+   * relative to the page, or is not ours, and prefixing it would invent a URL.
+   * No guard against a base that is already present: a tile whose declared
+   * path genuinely begins with the base's spelling is a directory somebody
+   * named that way, and skipping it would be this bug with the sign flipped.
+   */
+  function withBase(href) {
+    if (typeof href !== "string" || href.charAt(0) !== "/") return href;
+    return siteBaseurl() + href;
+  }
+
+    /* ── The DECLARED visualisations, one tile each ──────────────────────
+   *
+   * Owner: *"if harness declares visaluzers, those should have tile"*, and
+   * *"those should open their exisiting visualzaiton"*.
+   *
+   * Read from `_data/harness.json`, which `graph-tiles.ts` derives from the
+   * `coverage.visualiser` obligation every instance already carries and
+   * `check:subgraph-coverage` already audits. **There is no second list**: a
+   * registry of "things that get tiles" would be free to disagree with the
+   * audited one, and a tile missing because nobody added it there would look
+   * exactly like a graph nobody declared.
+   *
+   * `1le7`'s `tileLink` — the template is not duplicated, and a tile with no
+   * published href is not rendered as a link to nowhere (`pb04`).
+   */
+  function mountGraphTiles(surface, into, hiddenIds) {
+    var meta = document.querySelector('meta[name="fa-tiles"]');
+    var raw = meta && meta.getAttribute("content");
+    if (!raw) return 0;
+    var tiles;
+    try { tiles = JSON.parse(raw); } catch (_e) { return 0; }
+    var shown = 0;
+    for (var i = 0; i < tiles.length; i++) {
+      var t = tiles[i];
+      if (!t.href) continue;                                   // pb04
+      if ((t.surfaces || []).indexOf(surface) === -1) continue;
+      // DECLARED default, then this READER's override. The reader's half is
+      // theirs alone and is committed nowhere — `reader-filter.ts`'s rule on
+      // another surface.
+      if (t.hidden && hiddenIds.indexOf(t.id) === -1) continue;
+      if (!t.hidden && hiddenIds.indexOf(t.id) !== -1) continue;
+      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href),
+                          "the declared visualisation of " + t.directory);
+      tile.setAttribute("data-fa-tile", t.id);
+      tile.setAttribute("data-fa-surface", surface);
+      if (t.theme) tile.setAttribute("data-fa-theme", t.theme);
+      into.appendChild(tile);
+      shown++;
+    }
+    return shown;
+  }
+
+
+  /* ═══ Which URL schemes may reach an `href` ══════════════════════════
+   *
+   * R17, the owner: *"skill tool hints for XSSrsiction"*. `schemas/safe-url.ts`
+   * carries the argument; this is its mirror, and the rule is one line long:
+   * **default-deny**. A blocklist has to enumerate every dangerous scheme and
+   * is wrong the day a browser ships a new one; an allow-list is wrong only
+   * about things it refuses, and a refusal is visible.
+   *
+   * TAB / LF / CR are removed EVERYWHERE before deciding, because the URL
+   * parser removes exactly those three before parsing — so `java<TAB>script:`
+   * is `javascript:` to the browser and a relative path to a naive test. That
+   * is the classic bypass and the TypeScript version shipped it for one
+   * commit.
+   *
+   * Same drift cost as every other mirror in this file, same mitigation: the
+   * e2e checks this answer against the model's, case for case.
+   */
+  var ALLOWED_URL_SCHEMES = ["http:", "https:", "mailto:", "tel:"];
+
+  function safeHref(url) {
+    if (url === undefined || url === null) return undefined;
+    var stripped = String(url).replace(/[\u0009\u000A\u000D]/g, "");
+    var trimmed = stripped.replace(/^[\u0000- ]+/, "").replace(/[\u0000- ]+$/, "");
+    if (trimmed === "") return undefined;
+    // `//host/path` is absolute and looks like a path — excluded deliberately.
+    if (trimmed.indexOf("//") === 0) return undefined;
+    if (/^[#?./]/.test(trimmed) || !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) return trimmed;
+    var scheme = trimmed.slice(0, trimmed.indexOf(":") + 1).toLowerCase();
+    return ALLOWED_URL_SCHEMES.indexOf(scheme) === -1 ? undefined : trimmed;
+  }
+
+  /** OR within a property's values, AND across properties — the board's logic. */
+  function readerShows(filter, todo) {
+    var props = filter.properties || {};
+    for (var name in props) {
+      if (!Object.prototype.hasOwnProperty.call(props, name)) continue;
+      var values = props[name];
+      if (!values || values.length === 0) continue;
+      // A node that cannot answer has not answered YES.
+      if (values.indexOf(todo[name]) === -1) return false;
+    }
+    return true;
+  }
+
+  /** Every value present in the corpus for one property, sorted. */
+  function propertyValues(items, name) {
+    var seen = {};
+    for (var i = 0; i < items.length; i++) {
+      var v = items[i][name];
+      if (v !== undefined && v !== null && v !== "") seen[v] = true;
+    }
+    return Object.keys(seen).sort();
+  }
+
+  /* ═══ Move and resize — keyboard FIRST, drag as the accelerator ═══════
+   *
+   * Owner: *"can resize open content, move around. drag and drop moving.."*
+   * and, on the floor every board control sits on, *"ALWAYS collapsable to
+   * linearly rendablee"*.
+   *
+   * **Drag is the accelerator, never the only way in.** This instance's
+   * declared interaction profile is low-dexterity — it is why the Pin control
+   * is a button rather than a drag — and a board whose only affordance is drag
+   * excludes its own owner. So the keyboard path is built first and the
+   * pointer path is added over it, rather than the other way round where the
+   * keyboard half is the thing that never gets finished.
+   *
+   * ## A MODE, because arrows already mean something
+   *
+   * Arrow keys scroll. A window that moved whenever a reader pressed one while
+   * reading it would have stolen the page's own navigation, so moving is a
+   * mode: the `move` control turns it on, the window says so, arrows move,
+   * `Shift`+arrows resize, and `Escape` or `Enter` leaves. The mode is
+   * announced rather than merely styled — a reader who cannot see the outline
+   * has to be told what their arrow keys now do.
+   *
+   * ## SESSION-ONLY, like the stack above it
+   *
+   * `schemas/board-positions.ts` is where a move becomes durable, and
+   * `moveBy` is the function that does it — for a tool or an agent, against
+   * the repository. A published page cannot write that file, and the lesson
+   * `db7g` settled applies unchanged: it is better to be a control over this
+   * reader's view and say so than to look like it changed the folio.
+   */
+  var MOVE_STEP = 16;
+  var RESIZE_STEP = 24;
+  var MIN_WINDOW = 160;
+
+  /** Turn the move mode on or off for one window, and say which it is. */
+  function setMoveMode(panel, on, live) {
+    panel.setAttribute("data-fa-moving", on ? "true" : "false");
+    if (live) {
+      live.textContent = on
+        ? "Move mode on. Arrow keys move this window; hold Shift to resize; Escape to finish."
+        : "Move mode off.";
+    }
+    if (on) panel.focus();
+  }
+
+  /** Current inline geometry, falling back to what the cascade laid out. */
+  function geometryOf(panel) {
+    var rect = panel.getBoundingClientRect();
+    var parent = panel.offsetParent ? panel.offsetParent.getBoundingClientRect() : { left: 0, top: 0 };
+    return {
+      left: parseFloat(panel.style.left) || rect.left - parent.left,
+      top: parseFloat(panel.style.top) || rect.top - parent.top,
+      width: parseFloat(panel.style.width) || rect.width,
+      height: parseFloat(panel.style.height) || rect.height,
+    };
+  }
+
+  function applyGeometry(panel, g) {
+    panel.style.left = g.left + "px";
+    panel.style.top = g.top + "px";
+    panel.style.width = g.width + "px";
+    panel.style.height = g.height + "px";
+  }
+
+  /**
+   * One arrow press in move mode.
+   *
+   * Returns true when it acted, so the caller knows whether to swallow the
+   * key. Swallowing unconditionally would eat a reader's scrolling the moment
+   * a window had focus and the mode did not.
+   */
+  function nudge(panel, key, shift) {
+    var g = geometryOf(panel);
+    var step = shift ? RESIZE_STEP : MOVE_STEP;
+    if (key === "ArrowLeft") { if (shift) g.width = Math.max(MIN_WINDOW, g.width - step); else g.left -= step; }
+    else if (key === "ArrowRight") { if (shift) g.width += step; else g.left += step; }
+    else if (key === "ArrowUp") { if (shift) g.height = Math.max(MIN_WINDOW, g.height - step); else g.top -= step; }
+    else if (key === "ArrowDown") { if (shift) g.height += step; else g.top += step; }
+    else return false;
+    // NEVER off the top-left. A window moved past the origin is a window a
+    // reader cannot reach the controls of, which is `l4zi` by another route.
+    g.left = Math.max(0, g.left);
+    g.top = Math.max(0, g.top);
+    applyGeometry(panel, g);
+    return true;
+  }
+
+  /**
+   * The whole move interaction, wired onto one panel. ONE implementation.
+   *
+   * Bean `ivfw` is the second surface that needs this — a sticky lifted onto
+   * the page, which until now had nowhere to go. The bean's own warning is
+   * against giving it a second one: *"the two must agree rather than ship two
+   * notions of position"*. So the board window and the floating sticky call
+   * this, and neither owns the behaviour.
+   *
+   * `panel` takes the keyboard path and the geometry; `handle` is the region a
+   * pointer may drag by, which is the title bar on a window and the head on a
+   * sticky. They differ because dragging a card by its BODY would fight text
+   * selection, and a reader who cannot select the text of a note cannot quote
+   * it.
+   */
+  function wireMove(panel, handle, live) {
+    // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
+    // go on scrolling the page, which is what a reader expects of them.
+    panel.addEventListener("keydown", function (e) {
+      if (panel.getAttribute("data-fa-moving") !== "true") return;
+      if (e.key === "Escape" || e.key === "Enter") {
+        e.preventDefault();
+        e.stopPropagation();
+        setMoveMode(panel, false, live);
+        return;
+      }
+      if (nudge(panel, e.key, e.shiftKey)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+
+    /* THE ACCELERATOR, over the top of the path above rather than instead of
+     * it. Everything it can do, the keyboard can already do. */
+    var from = null;
+    handle.addEventListener("mousedown", function (e) {
+      // Not on a control: a drag that started on `[x]` would fight the click
+      // that closes the panel.
+      if (e.target.closest("[data-fa-control]") || e.target.closest("button")) return;
+      from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
+      e.preventDefault();
+    });
+    document.addEventListener("mousemove", function (e) {
+      if (!from) return;
+      applyGeometry(panel, {
+        left: Math.max(0, from.g.left + (e.clientX - from.x)),
+        top: Math.max(0, from.g.top + (e.clientY - from.y)),
+        width: from.g.width,
+        height: from.g.height,
+      });
+    });
+    document.addEventListener("mouseup", function () { from = null; });
+  }
+
+  /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
+   *
+   * Owner: *"confrim arctions [fishbones] on open content puts in fsh guts"*,
+   * and CRDM Q5: **delete becomes MOVE**. `skills/workflows/board-relocate.bpmn`
+   * is the drawn process; this is its reader-facing half.
+   *
+   * ## THE CONFIRM IS THE REQUIREMENT, AND IT MUST NOT OVERSTATE EITHER WAY
+   *
+   * `deletion-requires-confirmation` names the failure: a dialog that says
+   * "remove?" when it means "unpublish everywhere". The same lie pointed the
+   * other way is just as bad, and it is the one THIS surface could tell — a
+   * published page cannot move a file in the repository, so a dialog
+   * promising "off the site, everywhere" would be describing something that
+   * did not happen.
+   *
+   * So the dialog says exactly two things: what this does (takes the card off
+   * THIS BROWSER's board, reversibly, from the trashcan tile), and what it
+   * does not (move the content out of the folio at all). Naming the second is
+   * not an apology; it is the difference between a reader thinking they
+   * cleared something for the team and knowing they did not.
+   *
+   * THE SCOPE IS THE OWNER'S, settled 2026-09-21 when `db7g` could not meet
+   * its own first line: **reader-local is the whole feature.** The fishbone is
+   * a control over one reader's view, and the durable relocation is not the
+   * board's — so this dialog describes a per-reader action rather than
+   * promising a repository change that is coming. `board-relocate.bpmn`'s
+   * `A_MoveContent` is the AGENT's path to fsh-guts and is not wired to this
+   * control; wiring them would re-open the question the owner just closed.
+   *
+   * ## ONE PATH, shared with `d1r6`
+   *
+   * The relocation itself is `discardTodo` — the same function, the same
+   * `localStorage` key, the same `fa:todos-discarded` event the trashcan
+   * counter already listens to. The bean asked for one path rather than a
+   * second answer, and a second store would have been two counts of one thing.
+   */
+  function relocateDialog(todo, onConfirm) {
+    var dialog = el("div", {
+      class: "fa-relocate",
+      role: "dialog",
+      "aria-modal": "true",
+      "aria-labelledby": "fa-relocate-title",
+      "aria-describedby": "fa-relocate-scope",
+    });
+    dialog.appendChild(el("h3", { class: "fa-relocate-title", id: "fa-relocate-title" },
+      "Send \u201C" + todo.summary + "\u201D to the trashcan?"));
+
+    var scope = el("div", { class: "fa-relocate-scope", id: "fa-relocate-scope" });
+    // WHAT WILL HAPPEN, in the words of what it actually does.
+    scope.appendChild(el("p", { class: "fa-relocate-does" },
+      "This takes the card off your board in this browser. It is saved here, not " +
+      "sent anywhere, and not removed for anyone else. You can put it back from " +
+      "the trashcan tile."));
+    // WHAT WILL NOT, which is the half a reader would otherwise assume.
+    scope.appendChild(el("p", { class: "fa-relocate-does-not" },
+      "It does not move the content out of the folio, and nothing on this page " +
+      "does: the fishbone is a control over YOUR view of the board. Moving content " +
+      "into fsh-guts is a change to the repository, made by whoever is editing it."));
+    dialog.appendChild(scope);
+
+    var row = el("div", { class: "fa-relocate-actions" });
+    var cancel = el("button", { type: "button", class: "fa-relocate-cancel" },
+      "Leave it where it is");
+    var confirm = el("button", { type: "button", class: "fa-relocate-confirm" },
+      "Send to the trashcan");
+    row.appendChild(cancel);
+    row.appendChild(confirm);
+    dialog.appendChild(row);
+
+    function close() {
+      if (dialog.parentNode) dialog.parentNode.removeChild(dialog);
+    }
+    cancel.addEventListener("click", function () { close(); });
+    confirm.addEventListener("click", function () { close(); onConfirm(); });
+    // ESCAPE IS THE CANCEL, never the confirm. A dialog whose dismissal
+    // performs the action is a dialog that did not ask.
+    dialog.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { e.stopPropagation(); close(); }
+    });
+    // Focus lands on the SAFE choice. The reader who hits Enter without
+    // reading has left the content where it is, which is the recoverable
+    // outcome of the two.
+    setTimeout(function () { cancel.focus(); }, 0);
+    return dialog;
+  }
+
+  /**
+   * One declared control, as a button the frame can place.
+   *
+   * The frame decides the SHAPE and the placement; `handlers` supplies the
+   * behaviour, which the board already owns. A kind declares WHICH controls it
+   * offers, never what they do — two panels whose `[x]` did different things
+   * would be two frames, and the whole point of a fixed chrome is that a
+   * reader learns it once.
+   *
+   * A control with no handler renders and does nothing rather than throwing.
+   * That is deliberate: it is the visible half of a wiring gap, and a panel
+   * that refused to build would hide which control was unwired.
+   */
+  /**
+   * What a frame control shows, where a glyph is clearer than the words.
+   *
+   * The accessible name is always the control's LABEL — a glyph alone is a
+   * guess, and `aria-label` is what a screen reader announces. `\u2A37` is the
+   * owner's `[fishbones]`.
+   */
+  var CONTROL_GLYPHS = { close: "\u00D7", relocate: "\u2A37", move: "\u271C" };
+
+  function controlButton(control, todo, handlers) {
+    if (control.id === "view" || control.id === "edit") {
+      return el("a", {
+        class: "fa-board-window-control fa-node-edit",
+        "data-fa-control": control.id,
+        href: safeHref(control.id === "view" ? todo.viewHref : todo.editHref),
+        "aria-label": control.label + " — " + todo.summary,
+      }, control.id === "view" ? "\u2398" : "\u270E");
+    }
+    var b = el("button", {
+      type: "button",
+      class: "fa-board-window-control",
+      "data-fa-control": control.id,
+      "aria-label": control.label + " — " + todo.summary,
+    }, CONTROL_GLYPHS[control.id] || control.label);
+    // The frame wires what the frame owns; everything else delegates to the
+    // behaviour the board already has. A kind declares WHICH controls it
+    // offers, never what they do — two panels whose `[x]` did different
+    // things would be two frames.
+    var act = handlers[control.id];
+    if (act) {
+      b.addEventListener("click", function (e) { e.stopPropagation(); act(todo, b); });
+    }
+    return b;
+  }
+
+  /** Split into what this node can serve and what it cannot, with reasons. */
+  function servableControls(controls, capabilities) {
+    var shown = [];
+    var hidden = [];
+    for (var i = 0; i < controls.length; i++) {
+      var c = controls[i];
+      if (c.needs === "none" || capabilities[c.needs] === true) shown.push(c);
+      else {
+        hidden.push({
+          control: c,
+          because: c.label + " needs " + c.needs + ", which this node does not have.",
+        });
+      }
+    }
+    return { shown: shown, hidden: hidden };
+  }
+  var windowStack = { open: [] };
+
+  function isWindowOpen(id) { return windowStack.open.indexOf(id) !== -1; }
+
+  /** Open at the top; opening an already-open card RAISES it, never duplicates. */
+  function openWindowFor(id) {
+    windowStack.open = windowStack.open.filter(function (o) { return o !== id; });
+    windowStack.open.push(id);
+  }
+
+  function closeWindowFor(id) {
+    windowStack.open = windowStack.open.filter(function (o) { return o !== id; });
+  }
+
+  /** Raising a card that is not open does NOT open it — selection is not opening. */
+  function raiseWindow(id) { if (isWindowOpen(id)) openWindowFor(id); }
+
+  /** One-based, bottom to top. `undefined` for a card that is not open. */
+  function zIndexFor(id) {
+    var at = windowStack.open.indexOf(id);
+    return at === -1 ? undefined : at + 1;
+  }
+
+  /**
+   * The declared threshold for a kind, with where it came from — or null.
+   *
+   * Returns the SOURCE alongside the number for the reason
+   * `schemas/semantic-zoom.ts` gives: an inherited value is still a fact
+   * somebody must be able to trace, and a reviewer looking at a card that
+   * flipped too early needs to tell a deliberate override from the folio's
+   * default landing somewhere it does not fit.
+   */
+  function zoomThresholdFor(kind) {
+    var z = zoomState.zoom;
+    if (!z) return null;
+    var o = z.byKind && z.byKind[kind];
+    if (o) return { belowPx: o.belowPx, source: "kind", because: o.because };
+    return { belowPx: z.belowPx, source: "folio" };
+  }
+
+  /** Strictly below, so the declared number is the last width that still shows words. */
+  function rendersAvatar(kind, widthPx) {
+    var t = zoomThresholdFor(kind);
+    if (!t) return false;
+    return widthPx < t.belowPx;
+  }
+
+  /** Fetch the folio's declaration. Absent is a real answer and stays null. */
+  function fetchZoom(done) {
+    var src = document.querySelector('meta[name="fa-zoom-src"]');
+    var url = src && src.getAttribute("content");
+    if (!url) return done();
+    fetch(url)
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (doc) {
+        if (doc && typeof doc.belowPx === "number") zoomState.zoom = doc;
+        done();
+      })
+      .catch(function (e) {
+        // Said once, and never replaced by a number. A board that guessed a
+        // threshold would put the literal R2 forbids one layer further from
+        // where anybody would look for it.
+        console.warn("docs-ui: no semantic-zoom declaration at " + url + " (" + e.message +
+                     "); cards keep their words at every width.");
+        done();
+      });
+  }
 
   /** The published index, or `null` when it could not be read. */
   function fetchTodoIndex(done) {
@@ -1970,6 +2718,43 @@
     return pic;
   }
 
+  /**
+   * One line of text, from prose that was never one line.
+   *
+   * Owner, 2026-09-21, on what a CLOSED sticky shows: *"just the condensend
+   * text"*, and then *"(strip whitesaplnce, newlines, bullets....)"*.
+   *
+   * ## Why this rather than an `aria-label`
+   *
+   * The first proposal was a visually-hidden name. The owner rejected it —
+   * *"that's new data to maintain"* — and the rejection is the better
+   * design: a hidden label is a SECOND string beside the visible one, and two
+   * strings for one fact is the defect `1rta` and `6lb8` §6 already name about
+   * a badge that can disagree with its own panel. The card's own text IS its
+   * name; a screen reader and a sighted reader get the same string because
+   * there is only one.
+   *
+   * ## What it strips, and what it deliberately does not
+   *
+   * Markdown list markers, blockquote carets, heading hashes and every run of
+   * whitespace — the structure that makes prose readable DOWN a card and
+   * unreadable ACROSS one. It does not truncate: cutting at a character count
+   * puts the elision in the model, where a stylesheet cannot undo it for a
+   * wider card. `text-overflow` is the renderer's job and stays there.
+   */
+  function condense(text) {
+    if (!text) return "";
+    return String(text)
+      // List markers and blockquote carets, at the start of any line only —
+      // a hyphen mid-sentence is a hyphen.
+      .replace(/^[ \t]*(?:[-*+\u2022]|\d+[.)]|>)+[ \t]*/gm, "")
+      // Heading hashes, same rule.
+      .replace(/^[ \t]*#{1,6}[ \t]*/gm, "")
+      // Every run of whitespace, newlines included, becomes one space.
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
     var attrs = {
@@ -2015,7 +2800,7 @@
       class: "fa-sticky-toggle",
       "aria-expanded": "false",
     });
-    toggle.appendChild(el("span", { class: "fa-sticky-summary" }, todo.summary));
+    toggle.appendChild(el("span", { class: "fa-sticky-summary" }, condense(todo.summary)));
     head.appendChild(toggle);
 
     var chips = el("div", { class: "fa-sticky-chips" });
@@ -2039,14 +2824,26 @@
         var rel = rels[r];
         var li = el("li", { class: "fa-sticky-rel" });
         li.appendChild(el("span", { class: "fa-sticky-rel-axis" }, rel.axis));
-        if (rel.href) {
-          li.appendChild(el("a", { class: "fa-sticky-rel-link", href: rel.href }, rel.label));
+        // `safeHref`, not a truthiness test: `TodoRelationSchema.href` is
+        // `z.string()`, so the schema permits a scheme this must refuse. A
+        // refused edge falls through to the dangling branch below, which
+        // already says why there is no link.
+        var relHref = safeHref(rel.href);
+        if (relHref) {
+          li.appendChild(el("a", { class: "fa-sticky-rel-link", href: relHref }, rel.label));
         } else {
           // Title says WHY there is no link, so a reader is not left guessing
           // whether the chip is broken or the target simply is not reachable.
+          // TWO REASONS THERE IS NO LINK, and they are different facts. The
+          // edge may have resolved to nothing — nobody built the target — or
+          // it may carry a scheme a link may not carry. Saying "nothing
+          // resolves this" about the second would be wrong, and wrong in the
+          // direction that hides a hostile value as a missing one.
           li.appendChild(el("span", {
             class: "fa-sticky-rel-dangling",
-            title: "No link: nothing on this site resolves " + rel.label,
+            title: rel.href
+              ? "No link: " + rel.label + " points at a scheme a link may not carry"
+              : "No link: nothing on this site resolves " + rel.label,
           }, rel.label));
         }
         relBox.appendChild(li);
@@ -2055,6 +2852,33 @@
     }
 
     var tools = el("div", { class: "fa-sticky-tools" });
+
+    /* THREE ON THE FACE, ONE THAT HOLDS THE REST — bean `qefk`, the owner:
+     * *"the todos controls are too clunky / take up too much real estate."*
+     * Asked how far to go and answered **"3+1"**.
+     *
+     * The split is by WHAT THE GESTURE DOES, not by how often it is used:
+     *
+     *   face      Pin, Discard, and Move once the card is floating
+     *             — the things you do to a card ON THE BOARD
+     *   behind    View, Edit — the things that LEAVE for the forge
+     *
+     * That keeps `pb04` intact. Its rule was that View and Edit are two acts
+     * and both must be present — *"a reader checking what a card says should
+     * not land in a text box, and one who wants to fix it should not have to
+     * find the button"*. Present is what it asked for; competing with a
+     * one-line summary is not. Both are still here, still keyboard-reachable,
+     * one keystroke further away.
+     *
+     * AND IT IS A `<details>`, not a scripted menu. The disclosure, the
+     * keyboard path, the Escape behaviour and the accessible name are the
+     * browser's; a hand-rolled popup would be four affordances to reimplement
+     * and four ways to get them wrong. It also degrades to "everything
+     * visible" with no JavaScript, which is `R4`'s floor rather than a
+     * convenience.
+     */
+    var sourceLinks = [];
+
     // VIEW *AND* EDIT — two controls, because they are two acts. Bean `pb04`,
     // the owner: *"rendeding shows edit src icon (and also need view icon)"*.
     // `/blob/` is reading and `/edit/` opens GitHub's editor: a reader
@@ -2069,21 +2893,23 @@
     // repository it 404s for exactly the reader who cannot edit, which reads
     // as "this page is broken" rather than "you cannot do this".
     if (todo.viewHref) {
-      tools.appendChild(el("a", {
+      sourceLinks.push(el("a", {
         class: "fa-node-edit fa-sticky-view",
-        href: todo.viewHref,
+        href: safeHref(todo.viewHref),
         title: "View this todo's source on GitHub",
         "aria-label": "View the source of " + todo.summary,
       }, "⎘ View"));
     }
     if (todo.editHref) {
-      tools.appendChild(el("a", {
+      sourceLinks.push(el("a", {
         class: "fa-node-edit fa-sticky-edit",
-        href: todo.editHref,
+        href: safeHref(todo.editHref),
         title: "Edit this todo's markdown on GitHub",
         "aria-label": "Edit " + todo.summary,
       }, "✎ Edit"));
     }
+
+
     // An INLINE sticky is already beside the content it is about, so Pin and
     // Close have nothing to do: pinning it would move it AWAY from the thing
     // it annotates, and closing it would hide a block-level annotation with no
@@ -2110,6 +2936,42 @@
       discard.innerHTML = CRUMPLED_GLYPH;
       discard.addEventListener("click", function () { onDiscard(todo); });
       tools.appendChild(discard);
+    }
+
+    /* THE ONE THAT HOLDS THE REST — appended LAST, so the face reads
+     * Pin, Discard, [Move], ⋯ and the drawer is where a row ends rather than
+     * where it starts.
+     *
+     * Built only when there is something to hold: a `⋯` opening an empty
+     * drawer is `pb04`'s failure in a new costume, an affordance that
+     * promises and delivers nothing. With no forge both links are absent and
+     * so is this.
+     *
+     * AND NOT ON AN INLINE STICKY. A compact card carries no Pin and no
+     * Discard, so collapsing its only two controls would leave a card whose
+     * entire chrome is a `⋯` — more clicks for less, which is the opposite
+     * of what `qefk` asked for. The drawer exists to make room for board
+     * gestures; where there are none it earns nothing.
+     */
+    if (sourceLinks.length) {
+      if (compact) {
+        for (var ci = 0; ci < sourceLinks.length; ci++) tools.appendChild(sourceLinks[ci]);
+      } else {
+        var more = el("details", { class: "fa-sticky-more" });
+        more.appendChild(el("summary", {
+          class: "fa-sticky-more-summary",
+          // NAMES THE CONTENTS, not the shape. "More" tells a screen-reader
+          // user nothing about whether it is worth opening; the subject and
+          // the count do.
+          "aria-label": "Source links for " + todo.summary + " — " +
+            sourceLinks.length + (sourceLinks.length === 1 ? " link" : " links"),
+          title: "View and edit the source",
+        }, "⋯"));
+        var drawer = el("div", { class: "fa-sticky-more-body" });
+        for (var di = 0; di < sourceLinks.length; di++) drawer.appendChild(sourceLinks[di]);
+        more.appendChild(drawer);
+        tools.appendChild(more);
+      }
     }
 
     head.appendChild(tools);
@@ -2200,7 +3062,78 @@
     head.appendChild(boardClose);
     board.appendChild(head);
 
+    /* THE READER'S FILTER, in the board's head and nowhere in any document.
+     *
+     * Two selects rather than a search box: the values come from the CORPUS
+     * (`propertyValues`), so a reader picks from what is actually there rather
+     * than guessing a spelling — and an option list built from the data cannot
+     * offer a filter that matches nothing. */
+    var filterRow = el("div", {
+      class: "fa-board-filter",
+      role: "group",
+      "aria-label": "Filter this view",
+    });
+    board.appendChild(filterRow);
+
+    /* THE OTHER SURFACE for the same declarations. Q11: declared once,
+     * per-surface visibility. This filters the same array the navbar reads, so
+     * a tile cannot be one thing in the sidebar and another here. */
+    /* AN EDGE DOCK, NOT A ROW IN FLOW — bean `v0jv`, the owner: *"folios have
+     * tiles do not go to the window. they are stacked around (bottom?) of
+     * folio, slid away, open to tiles to things like fsh-gts, todos, docs."*
+     *
+     * It was `display: flex; flex-wrap: wrap` appended after the sticky grid,
+     * so on the landing board it landed below every full-bleed card and read
+     * as absent. The DECLARATION side was already right and is untouched:
+     * `harness-tiles` — *"declared once, per-surface visibility, never two
+     * registries free to disagree about what a tile is"* — and the call below
+     * still filters the same array the navbar reads. Only the placement was
+     * wrong.
+     *
+     * FOLIO CHROME, NOT BOARD CONTENT, which is the distinction the bean
+     * records: *"the tiles must NOT be projected onto the glass — they are
+     * folio chrome, where a window is content."* So the dock is a SIBLING of
+     * the board's content, at its edge, and never a layer over it. Same arrow
+     * as `board-diagram-interchange`: chrome frames content, never the
+     * reverse.
+     *
+     * A `<details>` for the same reason the sticky drawer is one — the
+     * disclosure, the keyboard path, Escape and the expanded state are the
+     * browser's, and it degrades to everything-visible with no JavaScript,
+     * which is R4's floor rather than a convenience. */
+    var boardStrip = el("details", { class: "fa-board-strip", open: "" });
+    boardStrip.appendChild(el("summary", {
+      class: "fa-board-strip-summary",
+      // NAMES WHAT IS INSIDE. "Tiles" is the shape; a reader deciding whether
+      // to spend a keystroke needs the subject.
+      "aria-label": "Visualisations for this folio",
+      title: "Visualisations for this folio",
+    }, "\u25A6 Visualisations"));
+    var boardTiles = el("div", {
+      class: "fa-board-tiles",
+      role: "group",
+      "aria-label": "Visualisations",
+    });
+    boardStrip.appendChild(boardTiles);
+
     var grid = el("div", { class: "fa-sticky-grid" });
+    /* THE STRIP IS ALONG THE TOP, and OPEN by default — owner, 2026-09-21:
+     * *"lets have the square tiles lined up on the top of the
+     * folio-sicky-board-landingpanel whole slides up if user doesnt want."*
+     *
+     * It was a `<details>` dock at the BOTTOM, closed, which got two things
+     * wrong at once: the edge, and the default. Tiles a reader has to open
+     * before they can see what a folio offers are tiles that read as absent —
+     * which is the same complaint that opened `v0jv` about the in-flow row.
+     * So `open` is the initial state and sliding it UP is the reader's act,
+     * not the other way round.
+     *
+     * NOT A SUB-PANEL, which the owner ruled in the same breath: *"i dont
+     * want sub-panels of the folio, just one open (miro-like) board.
+     * everything lives on fa-sticky-board, fa-landing-board."* The strip is
+     * chrome ALONG the board rather than a panel within it — it carries no
+     * card, no content and no second surface. */
+    board.appendChild(boardStrip);
     board.appendChild(grid);
     // APPEND on the landing board, insert-first everywhere else. The harness
     // cards are the page's first statement -- what this repository is, and
@@ -2214,6 +3147,13 @@
     function dock(todo) {
       var f = todoState.floating[todo.id];
       if (f) {
+        // REMEMBER WHERE IT WAS, because dock DESTROYS the card and float
+        // CONSTRUCTS a new one — the same round-trip that drops a theme
+        // carried on the DOM node. A reader who moves a sticky, docks it and
+        // pins it again has not asked for it to jump back to the corner.
+        // Session-only and this-reader-only, like the window stack: a position
+        // a published page cannot write is not the folio's.
+        todoState.floatGeom[todo.id] = geometryOf(f);
         layer.removeChild(f);
         delete todoState.floating[todo.id];
       }
@@ -2241,11 +3181,81 @@
       heading.focus();
     }
 
+    /**
+     * Where a newly pinned sticky lands, and why it is computed rather than
+     * left to the cascade.
+     *
+     * The layer used to be a small `inset: auto 1rem 1rem auto` box that
+     * stacked its children in flow, which is exactly the defect the owner
+     * reported as *"you cant move around dispaly"*: the layer decided, and the
+     * sticky had no say. It is a full-viewport frame now, so each card carries
+     * its own geometry — and the default reproduces the old bottom-right pile,
+     * offset per card, so nothing MOVES until a reader moves it.
+     *
+     * `Math.max(0, …)` for the same reason `nudge` clamps: a card placed past
+     * the origin is a card whose controls cannot be reached.
+     */
+    function placeFloating(card, todo) {
+      var saved = todoState.floatGeom[todo.id];
+      if (saved) { applyGeometry(card, saved); return; }
+      var n = Object.keys(todoState.floating).length;
+      var w = Math.min(352, Math.max(240, window.innerWidth - 32));
+      var h = card.getBoundingClientRect().height || 120;
+      applyGeometry(card, {
+        left: Math.max(0, window.innerWidth - w - 16),
+        top: Math.max(0, window.innerHeight - h - 16 - n * 12),
+        width: w,
+        height: h,
+      });
+    }
+
     function float(todo) {
       if (todoState.floating[todo.id]) return;
       var card = buildSticky(todo, float, dock, discard);
       card.classList.add("fa-sticky-floating");
+      // Focusable so the move mode has somewhere to put focus and the arrow
+      // keys have a target. `-1`: it is reached BY the Move control, not by
+      // tabbing past every pinned note on the way to the page.
+      card.setAttribute("tabindex", "-1");
+
+      // The live region the move mode announces through. One per card, so a
+      // reader is told about the sticky they are in rather than the last one
+      // anybody touched — the same reason the board window has its own.
+      var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+      card.appendChild(live);
+
+      /* THE MOVE CONTROL. `move` is already declared for the `todo` kind in
+       * `panel-chrome.ts` and already mirrored in `KIND_CONTROLS` above — this
+       * surface simply never asked for it. Declared and unoffered is the gap
+       * `t4my`'s three states are about, and this closes it for the one card
+       * that had nowhere to go. */
+      var tools = card.querySelector(".fa-sticky-tools");
+      if (tools) {
+        var moveBtn = el("button", {
+          type: "button",
+          class: "fa-sticky-move",
+          "data-fa-control": "move",
+          // Words, not just the glyph: "✜" alone is a guess, and the mode it
+          // enters changes what the arrow keys do, which a reader must be told.
+          "aria-label": "Move " + todo.summary + " around the page",
+          "aria-pressed": "false",
+        }, CONTROL_GLYPHS.move);
+        moveBtn.addEventListener("click", function () {
+          var on = card.getAttribute("data-fa-moving") !== "true";
+          setMoveMode(card, on, live);
+          moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        // Before the drawer, after the other board gestures: Move is a board
+        // gesture and belongs on the face (`qefk`'s "3+1"). `firstChild` put
+        // it ahead of Pin, which reordered the row every time a card floated.
+        var drawerEl = tools.querySelector(".fa-sticky-more");
+        if (drawerEl) tools.insertBefore(moveBtn, drawerEl);
+        else tools.appendChild(moveBtn);
+      }
+
+      wireMove(card, card.querySelector(".fa-sticky-head") || card, live);
       layer.appendChild(card);
+      placeFloating(card, todo);
       todoState.floating[todo.id] = card;
 
       var slot = slots[todo.id];
@@ -2295,6 +3305,288 @@
     if (live.length === 0) {
       grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
     }
+
+    /* ── Applying the reader's filter ─────────────────────────────────────
+     *
+     * It hides SLOTS and touches nothing else: no note, no position, no
+     * stored preference. A filtered-out card keeps its place on the board and
+     * comes back the moment the filter is cleared, because nothing about it
+     * changed.
+     *
+     * `hidden` rather than a class, so the card leaves the accessibility tree
+     * too. A reader using a screen reader who filtered to "open" should not
+     * still be walked through the done ones.
+     */
+    function applyReaderFilter() {
+      var shown = 0;
+      for (var fi = 0; fi < rows.length; fi++) {
+        var t = rows[fi].todo;
+        var slot = slots[t.id];
+        if (!slot) continue;
+        var keep = readerShows(readerFilter, t);
+        if (keep) { slot.removeAttribute("hidden"); shown++; }
+        else slot.setAttribute("hidden", "hidden");
+      }
+      board.setAttribute("data-fa-filtered", String(shown));
+      var none = grid.querySelector(".fa-sticky-filtered-out");
+      if (shown === 0 && rows.length > 0 && !none) {
+        // A DETERMINED empty, and it says which: "nothing matches this filter"
+        // and "nothing outstanding" are opposite facts about the same blank
+        // grid, and a reader who cannot tell them apart will clear the wrong
+        // thing.
+        grid.appendChild(el("p", { class: "fa-sticky-filtered-out" },
+          "No card matches this filter. Clearing it brings them all back."));
+      } else if (shown > 0 && none) {
+        grid.removeChild(none);
+      }
+    }
+
+    // One select per property a todo carries. Built from the corpus, so a
+    // folio whose todos never set a priority simply gets no priority control.
+    ["status", "priority"].forEach(function (name) {
+      var values = propertyValues(live, name);
+      if (values.length < 2) return;   // nothing to choose between
+      var id = "fa-filter-" + name;
+      var label = el("label", { class: "fa-board-filter-label", for: id }, name);
+      var select = el("select", { class: "fa-board-filter-select", id: id });
+      select.appendChild(el("option", { value: "" }, "any " + name));
+      values.forEach(function (v) { select.appendChild(el("option", { value: v }, v)); });
+      select.addEventListener("change", function () {
+        if (select.value === "") delete readerFilter.properties[name];
+        else readerFilter.properties[name] = [select.value];
+        applyReaderFilter();
+      });
+      filterRow.appendChild(label);
+      filterRow.appendChild(select);
+    });
+    applyReaderFilter();
+
+    // THE SAME TILES, on the board — the other surface of one declaration.
+    // Mounted after the grid so the board's own content leads and the
+    // visualisations follow: the same argument the landing board uses for
+    // putting the harness cards before the todos.
+    mountGraphTiles("board", boardTiles, readerShownTiles());
+
+    /* ── Windows, projected ON TO the board ───────────────────────────────
+     *
+     * A separate layer, and that is the design rather than an implementation
+     * detail: an open card is not the card grown large, so it is not in the
+     * grid at all. The grid goes on doing semantic zoom — its slot becomes an
+     * avatar when the board shrinks — while the window it spawned stays
+     * exactly where it was. "An open window survives a zoom-out" is then true
+     * by construction, with nothing to special-case.
+     */
+    var windows = el("div", {
+      class: "fa-board-windows",
+      role: "group",
+      "aria-label": "Open cards",
+    });
+    board.appendChild(windows);
+    var windowEls = {};
+
+    function renderStack() {
+      for (var id in windowEls) {
+        if (!Object.prototype.hasOwnProperty.call(windowEls, id)) continue;
+        var z = zIndexFor(id);
+        // `undefined` rather than 0 for a closed card, so "bottom of the
+        // stack" and "not on it" cannot be confused — see `window-stack.ts`.
+        windowEls[id].style.zIndex = z === undefined ? "" : String(z);
+        windowEls[id].setAttribute("data-fa-z", z === undefined ? "" : String(z));
+      }
+    }
+
+    function closeCard(todo) {
+      closeWindowFor(todo.id);
+      var w = windowEls[todo.id];
+      if (w && w.parentNode) w.parentNode.removeChild(w);
+      delete windowEls[todo.id];
+      renderStack();
+      // Focus returns to the avatar that opened it. A close that leaves focus
+      // on <body> tells a reader who cannot see the page nothing at all, and
+      // the avatar IS the way back — `l4zi`.
+      var slot = slots[todo.id];
+      var opener = slot && slot.querySelector(".fa-sticky-avatar");
+      if (opener) opener.focus();
+      else heading.focus();
+    }
+
+    function openCard(todo) {
+      openWindowFor(todo.id);
+      var existing = windowEls[todo.id];
+      if (existing) { renderStack(); existing.focus(); return; }
+      var panel = el("div", {
+        class: "fa-board-window",
+        tabindex: "-1",
+        role: "group",
+        "aria-label": todo.summary,
+        "data-fa-window": todo.id,
+      });
+      var bar = el("div", { class: "fa-board-window-bar" });
+      bar.appendChild(el("span", { class: "fa-board-window-title" }, todo.summary));
+      // R7: THE SAME BADGE AS THE AVATAR, from the same query. Not a second
+      // count — `nodeBadge` is called once per card and both surfaces render
+      // what it returned, which is R6's rule carried onto a second surface.
+      var nb = nodeBadge(todo);
+      if (nb) bar.appendChild(badgeChip(nb, "window"));
+
+      /* THE CONTROLS. The frame first, then what the kind declared, then what
+       * this node can actually serve. A declared control the node cannot serve
+       * is HIDDEN and the reason is reported — never rendered as a button that
+       * would 404 for exactly the reader who cannot use it (`pb04`). */
+      var caps = { "source-read": !!todo.viewHref, "source-write": !!todo.editHref };
+      var split = servableControls(controlsFor("todo"), caps);
+      // The live region the move mode announces through. One per window, so a
+      // reader is told about the window they are in rather than the last one
+      // anybody touched.
+      var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+      panel.appendChild(live);
+
+      var handlers = {
+        close: function (t) { closeCard(t); },
+        move: function () {
+          setMoveMode(panel, panel.getAttribute("data-fa-moving") !== "true", live);
+        },
+        pin: function (t) { float(t); },
+        discard: function (t) { closeCard(t); discard(t); },
+        // THE FISHBONE. The only control that asks first, because it is the
+        // only one whose subject is the content rather than this reader's
+        // view of it.
+        relocate: function (t, button) {
+          var dialog = relocateDialog(t, function () {
+            closeCard(t);
+            // ONE PATH, shared with `d1r6`: the same function, the same key,
+            // the same event the trashcan counter already listens to.
+            discard(t);
+          });
+          (button.closest(".fa-board-window") || document.body).appendChild(dialog);
+        },
+      };
+      for (var ci = 0; ci < split.shown.length; ci++) {
+        bar.appendChild(controlButton(split.shown[ci], todo, handlers));
+      }
+      if (split.hidden.length) {
+        // Reported once per panel rather than swallowed: "this kind does not
+        // offer edit" and "this deployment cannot serve edit" are different
+        // facts, and only one of them is somebody's to fix.
+        panel.setAttribute(
+          "data-fa-hidden-controls",
+          split.hidden.map(function (h) { return h.control.id; }).join(" "),
+        );
+        for (var hi = 0; hi < split.hidden.length; hi++) {
+          console.info("docs-ui: " + todo.id + " — " + split.hidden[hi].because);
+        }
+      }
+      panel.appendChild(bar);
+      // The card's own rendering: the kind controls what its panel shows, the
+      // platform fixes the frame around it. `compact` because the window
+      // already carries the frame's `[x]` — a second Close inside it would be
+      // two controls for one act, and they would not agree about what they
+      // close. Which controls a kind may declare here is `t4my`'s.
+      panel.appendChild(buildSticky(todo, float, dock, discard, { compact: true }));
+      // SELECTING ANY PART RAISES — the owner's words, so the listener is on
+      // the panel rather than on its title bar. `mousedown` and not `click`,
+      // so the raise happens before a control inside the panel acts on it.
+      panel.addEventListener("mousedown", function () {
+        raiseWindow(todo.id);
+        renderStack();
+      });
+      panel.addEventListener("focusin", function () {
+        raiseWindow(todo.id);
+        renderStack();
+      });
+
+      // The keyboard path and the drag accelerator, both from `wireMove`.
+      // They were written inline here first; `ivfw` needed the same behaviour
+      // on a floating sticky, and two copies of a move interaction is two
+      // notions of position waiting to disagree.
+      wireMove(panel, bar, live);
+      windows.appendChild(panel);
+      windowEls[todo.id] = panel;
+      renderStack();
+      panel.focus();
+    }
+
+    /* ── Semantic zoom, which never asks what is open ─────────────────────
+     *
+     * Measured on the SLOT's rendered width, in CSS pixels after zoom, which
+     * is what `semantic-zoom.ts` says the declared number is about:
+     * legibility is a property of what reaches the reader's eye.
+     *
+     * With no declaration the threshold is `null` and every card keeps its
+     * words. That is the third state carried through rather than filled in.
+     */
+    function applyZoom() {
+      for (var id in slots) {
+        if (!Object.prototype.hasOwnProperty.call(slots, id)) continue;
+        var slot = slots[id];
+        var width = slot.getBoundingClientRect().width;
+        var avatar = rendersAvatar("todo", width);
+        slot.classList.toggle("fa-sticky-slot--avatar", avatar);
+        slot.setAttribute("data-fa-avatar", avatar ? "true" : "false");
+      }
+    }
+
+    if (typeof ResizeObserver === "function") {
+      var ro = new ResizeObserver(function () { applyZoom(); });
+      // EVERY SLOT, not the grid. The threshold is measured on the slot's own
+      // rendered width, and a grid can re-lay its tracks without its own box
+      // changing at all — `grid-template-columns` from `400px` to `180px` in a
+      // wider container is exactly that. Observing the grid meant the cards
+      // never flipped, which looked like the zoom not working and was the
+      // observer watching the wrong box.
+      for (var oid in slots) {
+        if (Object.prototype.hasOwnProperty.call(slots, oid)) ro.observe(slots[oid]);
+      }
+    } else {
+      // No ResizeObserver: the width is still read once and on resize, so the
+      // feature degrades to "correct at every layout change the window
+      // reports" rather than to "always words".
+      window.addEventListener("resize", applyZoom);
+    }
+
+    /* ── The avatar that opens the card ───────────────────────────────────
+     *
+     * Every slot gets one, at every width — the owner's *"start everyrting in
+     * avatar"*. It is what semantic zoom leaves behind when the board shrinks
+     * and it is the control that opens the window, so the two mechanisms meet
+     * at exactly one element and nowhere else.
+     *
+     * A BUTTON, because this instance's declared interaction profile is
+     * low-dexterity and every board action has to be keyboard-operable.
+     */
+    for (var si = 0; si < rows.length; si++) {
+      (function (todo) {
+        var slot = slots[todo.id];
+        if (!slot) return;
+        var open = el("button", {
+          type: "button",
+          class: "fa-avatar fa-sticky-avatar",
+          "data-fa-kind": "todo",
+          // WHICH card this avatar opens. The board stacks by BPMN subprocess
+          // depth, so DOM order is not the index order of anything a caller
+          // holds — an avatar addressed by position is addressed by a fact
+          // the board is free to change.
+          //
+          // `data-fa-opens`, NOT `data-fa-todo`: the linear floor already uses
+          // that name for a listing entry, and one attribute over two
+          // different objects means every `[data-fa-todo]` selector silently
+          // returns both. Caught by `linear-floor.e2e.ts` asserting its
+          // listing is not duplicated — which it was not; it had been joined
+          // by a control from another surface.
+          "data-fa-opens": todo.id,
+          "aria-label": "Open " + todo.summary,
+          title: todo.summary,
+        });
+        // R7: a node rendered as its avatar carries the same badge as its open
+        // window, from ONE query. `nodeBadge` is the query; both surfaces
+        // render its answer, so there is no second count to disagree.
+        var ab = nodeBadge(todo);
+        if (ab) open.appendChild(badgeChip(ab, "avatar"));
+        open.addEventListener("click", function () { openCard(todo); });
+        slot.insertBefore(open, slot.firstChild);
+      })(rows[si].todo);
+    }
+    applyZoom();
 
     /**
      * The way back, and on the landing board it has to be ON THE PAGE.
@@ -2372,36 +3664,84 @@
    * information; a single page-level number cannot say where to look.
    */
   function mountPageStickies(items, board) {
-    var byLabel = {};
+    /* ── The two relations, from ONE pass ─────────────────────────────────
+     *
+     * Mirrors `notesAt()` in `schemas/note-anchor.ts`, including the rule
+     * that decides the overlap: a note both attached here AND also-about
+     * here counts ONCE, as attached — the stronger relation wins, so a
+     * self-referential declaration cannot inflate a badge past the length of
+     * the list it labels.
+     *
+     * Two indexes rather than one because they are two relations, and
+     * building them together is what stops a caller computing the badge from
+     * one query and rendering the panel from another.
+     */
+    var attachedBy = {};
+    var alsoAboutBy = {};
     for (var i = 0; i < items.length; i++) {
       var t = items[i];
-      if (!t.targetLabel) continue;
-      (byLabel[t.targetLabel] = byLabel[t.targetLabel] || []).push(t);
+      if (t.targetLabel) {
+        (attachedBy[t.targetLabel] = attachedBy[t.targetLabel] || []).push(t);
+      }
+      var also = t.alsoAbout || [];
+      for (var ai = 0; ai < also.length; ai++) {
+        var lbl = also[ai] && also[ai].label;
+        // The overlap rule: already attached here, so not counted again.
+        if (!lbl || lbl === t.targetLabel) continue;
+        (alsoAboutBy[lbl] = alsoAboutBy[lbl] || []).push(t);
+      }
     }
 
     var heads = document.querySelectorAll("[data-fa-label]");
     var placed = 0;
     for (var h = 0; h < heads.length; h++) {
       var head = heads[h];
-      var mine = byLabel[head.getAttribute("data-fa-label")];
+      var label = head.getAttribute("data-fa-label");
+      var mine = attachedBy[label];
       if (!mine || mine.length === 0) continue;
 
       var host = el("div", { class: "fa-sticky-inline" });
-      var badge = el("button", {
-        type: "button",
-        class: "fa-sticky-badge",
-        "aria-expanded": "false",
-        "aria-label": mine.length + " todo(s) on this section",
-      });
-      badge.innerHTML = STICKY_GLYPH;
-      badge.appendChild(el("span", { class: "fa-sticky-badge-count" }, String(mine.length)));
 
+      /* ── The panel FIRST, then the badge from what it rendered ──────────
+       *
+       * R6: *the badge's count SHALL be the cardinality of the query the
+       * panel renders.* Stated as a requirement it is a property somebody
+       * has to keep true; built this way it is one the code cannot break,
+       * because the number is read off the panel's own children rather than
+       * recomputed from anything. **A badge that can disagree with its own
+       * panel is the defect to design out** — so there is no second count to
+       * go out of step.
+       */
       var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
       (function (list, mine) {
         for (var k = 0; k < mine.length; k++) {
           list.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
         }
       })(list, mine);
+      var shown = list.children.length;
+
+      var badge = el("button", {
+        type: "button",
+        class: "fa-sticky-badge",
+        "aria-expanded": "false",
+        // THE EXACT NUMBER, always — R5's threshold is a DENSITY decision
+        // about the visual, and a screen-reader user must not be told less
+        // than a sighted one. `note`/`notes` rather than "todo(s)": a reader
+        // hears the label, and "(s)" is a written convention.
+        "aria-label": shown + (shown === 1 ? " note" : " notes") + " on this section",
+        "data-fa-notes": String(shown),
+      });
+      badge.innerHTML = STICKY_GLYPH;
+      // R5, the owner: *"badge of # if > 1"*. One note gets the icon and no
+      // number — the icon already says there is something here.
+      if (shown > 1) {
+        badge.appendChild(el("span", { class: "fa-sticky-badge-count" }, String(shown)));
+      }
+      // The secondaries at this label, recorded and deliberately NOT added to
+      // the badge. Published so a test can prove they were present and still
+      // did not inflate it: an assertion over a page with no secondaries at
+      // all would pass for an implementation that counted them.
+      host.setAttribute("data-fa-also-about", String((alsoAboutBy[label] || []).length));
 
       (function (badge, list) {
         badge.addEventListener("click", function () {
@@ -2418,7 +3758,11 @@
       // panel already follows for the same reason.
       head.parentNode.insertBefore(host, head.nextSibling);
       host.parentNode.insertBefore(list, host.nextSibling);
-      placed += mine.length;
+      // `shown`, not `mine.length`: the same rule one level out. `placed`
+      // is reported as how many notes reached the page, and reading it off
+      // the intent rather than the result would let the two disagree exactly
+      // where the badge no longer can.
+      placed += shown;
     }
 
     // Reported, not silent. A todo carrying a `targetLabel` that matches no
@@ -2491,6 +3835,11 @@
 
   /** Fetch, then mount the board and hand the launcher a way to open it. */
   function mountTodoStickies() {
+    // The threshold FIRST, because the board applies it as it mounts. Its
+    // absence is a real answer and does not block anything: `fetchZoom` calls
+    // back either way, and a board with no declaration keeps every card's
+    // words rather than waiting for a number that is never coming.
+    fetchZoom(function () {
     fetchTodoIndex(function (items) {
       if (items === null) return;
       todoState.items = items;
@@ -2500,6 +3849,7 @@
       collapseFloor(items.length);
       window.__faTodoBoard = board;
       document.dispatchEvent(new CustomEvent("fa:todos-ready", { detail: board }));
+    });
     });
   }
 
@@ -3422,7 +4772,7 @@
     head.appendChild(el("span", { class: "fa-qa-counts" }, qaCountsLine(doc)));
 
     (doc.sidecars || []).forEach(function (p) {
-      var a = el("a", { class: "fa-qa-sidecar-link", href: REPO_BLOB + p, rel: "noopener" }, p);
+      var a = el("a", { class: "fa-qa-sidecar-link", href: safeHref(REPO_BLOB + p), rel: "noopener" }, p);
       head.appendChild(a);
     });
 

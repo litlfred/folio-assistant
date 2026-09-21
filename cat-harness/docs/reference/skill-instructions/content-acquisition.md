@@ -77,7 +77,7 @@ owner, 2026-09-20, pointed at
 Verified against GitHub the same day: **`/tree/main/uploads` → 404**, and
 **`/tree/main/cat-harness/uploads` → 200**.
 
-The cause is one segment. `harness.json` declares the queue as
+The cause is one segment. The declaration declares the queue as
 `{ id: "uploads", path: "uploads/" }` with no `scope`, and absent scope means
 **instance** — so the declared path resolves under `cat-harness/`, while a forge
 URL needs it relative to the **repository**. Pasting the declared path into

@@ -11,7 +11,7 @@ others; [its instance table](../README.md#harness-instances) is the index.
 
 ## What is in here
 
-The authoritative list is [`cat-harness.config.json`](cat-harness.config.json) — every directory this
+The authoritative list is [`cat-harness.json`](cat-harness.json) — every directory this
 instance declares, and the kind of graph each one holds. Read it rather than a
 list in this file: a list here would be a second answer, free to disagree with
 the first the day a directory moves. Four entries are worth naming because a
@@ -47,7 +47,7 @@ root, not from here.
 ---
 
 *`README.md` and [`AGENTS.md`](AGENTS.md) are declared assets of this instance
-([`cat-harness.config.json`](cat-harness.config.json), roles `instance-readme` and
+([`cat-harness.json`](cat-harness.json), roles `instance-readme` and
 `agent-instructions`). Until 2026-09-20 this instance declared the
 **repository's** two files as its own, so the file a reader opened first
 answered "what is this repository" and "what is this layer" at once, and

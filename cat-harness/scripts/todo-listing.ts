@@ -54,6 +54,7 @@
  * value without exception, including ones that "cannot" contain markup.
  */
 import type { TodoIndexItem } from "../schemas/todo-index.js";
+import { safeHref } from "../schemas/safe-url.js";
 
 /** How the caller turns a note's attachment into an href it can serve. */
 export interface TodoListingOptions {
@@ -116,7 +117,11 @@ function renderItem(item: TodoIndexItem, opts: TodoListingOptions): string {
     // — this one included — never splits `sec:<page>-<node>` to find out which
     // page a note is on. See `schemas/todo-index.ts`.
     const { page, node } = item.target;
-    const href = opts.pageHref?.(page, node);
+    // The caller's own composition, still checked: `gen-docs-pages.ts` passes a
+    // Liquid `relative_url` call, which `safeHref` reads as a relative
+    // reference and lets through — so the check costs the legitimate case
+    // nothing and refuses the one that matters.
+    const href = safeHref(opts.pageHref?.(page, node));
     const text = `${escapeHtml(page)} &rsaquo; ${escapeHtml(node)}`;
     lines.push(
       `        <dt>About</dt><dd>` +
@@ -144,13 +149,15 @@ function renderItem(item: TodoIndexItem, opts: TodoListingOptions): string {
   }
   lines.push(`      </div>`);
 
+  // EVERY href goes through `safeHref` — see `schemas/safe-url.ts`. Escaping
+  // closes tags and does nothing about a scheme, so an escaper here is the
+  // wrong tool that looks like the right one. A refused URL renders as text
+  // rather than as a link to nowhere (`pb04`).
   const links: string[] = [];
-  if (item.viewHref !== undefined) {
-    links.push(`<a href="${escapeHtml(item.viewHref)}">View source</a>`);
-  }
-  if (item.editHref !== undefined) {
-    links.push(`<a href="${escapeHtml(item.editHref)}">Edit</a>`);
-  }
+  const view = safeHref(item.viewHref);
+  if (view !== undefined) links.push(`<a href="${escapeHtml(view)}">View source</a>`);
+  const edit = safeHref(item.editHref);
+  if (edit !== undefined) links.push(`<a href="${escapeHtml(edit)}">Edit</a>`);
   if (links.length) {
     lines.push(`      <p class="fa-todo-listing-links">${links.join(" &middot; ")}</p>`);
   }
@@ -160,10 +167,13 @@ function renderItem(item: TodoIndexItem, opts: TodoListingOptions): string {
     for (const r of item.relations) {
       const text = `${escapeHtml(r.axis)}: ${escapeHtml(r.label)}`;
       // Same `pb04` rule as the attachment: an edge that resolved to nothing
-      // is shown as text, never as a link to nowhere.
+      // is shown as text, never as a link to nowhere — and now also an edge
+      // whose scheme is not one a link may carry. `TodoRelationSchema.href` is
+      // `z.string()`, so the schema permits what this refuses.
+      const href = safeHref(r.href);
       lines.push(
         `        <li>` +
-          (r.href === undefined ? text : `<a href="${escapeHtml(r.href)}">${text}</a>`) +
+          (href === undefined ? text : `<a href="${escapeHtml(href)}">${text}</a>`) +
           `</li>`,
       );
     }

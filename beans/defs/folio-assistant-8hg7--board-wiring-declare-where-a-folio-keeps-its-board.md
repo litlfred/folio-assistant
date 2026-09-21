@@ -59,7 +59,7 @@ gained avatars (the gate for that was already there), and both are in
 
 `scripts/gen-default-boards.ts` writes the board each instantiated harness
 above the floor owes, gated by `boards:default:check`. Two harnesses here:
-`cat-harness` and `folio-assistant`. **`cat-bootstrap` is excluded by its own
+`cat-harness` and `folio-assistant`. **`bootstrap` is excluded by its own
 declaration** — `isExemptFrom(decl, "visualiser")`, the same rule the navbar
 sorts by — not by its name.
 

@@ -61,11 +61,13 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_KgToPortal_LaneSet">
       <bpmn:lane id="Lane_Editorial" name="Editorial">
+        <bpmn:documentation>Two decisions, not one: E_Scope bounds what may leave the repository before the pipeline runs, and E_HumanEyes — reached only after S_Sign — approves what a reader will actually see, which merging to main does not. When GW_Budget rejects a package as over budget, narrowing scope here is the only way back in, so this lane is doing gatekeeping at both ends of the pipeline rather than once.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="editor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>E_Scope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>E_HumanEyes</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Deployment" name="Deployment owner">
+        <bpmn:documentation>Owns the numbers every other gate in the pipeline checks against: GW_Budget measures the package against D_Constraints' figures, not a feeling. When GW_Transport has no default branch to take, this lane is the one that records the gap as still open — at D_Undetermined — rather than letting the build pick a transport nobody decided on.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Graph</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>D_Constraints</bpmn:flowNodeRef>
@@ -74,6 +76,7 @@
         <bpmn:flowNodeRef>End_Blocked</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="Build pipeline">
+        <bpmn:documentation>Executes E_Scope's decision as bytes — cut, serialize, package — precisely enough that GW_Budget can weigh the actual package rather than guess from the graph's node count. Each step reports what it did rather than only succeeding, which is what lets an empty selection be told apart from one that never ran.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Select</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Serialize</bpmn:flowNodeRef>
@@ -82,14 +85,17 @@
         <bpmn:flowNodeRef>End_OverBudget</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Attestation" name="Attestation (GDHCN / WHO SMART Trust)">
+        <bpmn:documentation>Signs after A_Package and before E_HumanEyes, so what a human approves downstream is exactly what got signed — reordering the two would let a reviewer approve bytes the signature no longer covers. Whether that signature covers the whole package, each asset, or both composed is a deployment choice this lane executes rather than makes.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="attestation-service"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_Sign</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Target" name="Publish target">
+        <bpmn:documentation>The one lane whose action makes a URL live, which is exactly why a CDN in front of it is not drawn as a second lane — folding the cache in as a participant would make its URL look like the published one, and the canonical URL is this lane's promise to keep, not the cache's. Uploading and exposing stay two separate moments here rather than one, so a bad layout is still catchable before a reader can reach it.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="publish-target"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Distribute</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Portal" name="Portal (external consumer)">
+        <bpmn:documentation>The only lane outside this instance's control, so P_Verify checks against an external trust anchor — the GDHCN trustlist — rather than against anything the pipeline itself asserts. When that trustlist cannot be reached, this lane's answer is `unknown`, and GW_Verified routes it the same way as a mismatch: to the last good version, never to a guessed pass.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="external-registry"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>P_Verify</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Verified</bpmn:flowNodeRef>

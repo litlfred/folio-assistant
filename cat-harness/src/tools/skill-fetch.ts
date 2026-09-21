@@ -53,7 +53,8 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // Locally-served skill packages (no network fetch). Each maps a package name to
 // the directory holding its `<skill>.md` instruction bodies. The skill lists are
 // read from disk so they stay in sync with the files — no hardcoded names.
-//   - folio-assistant        : the agent skills under src/skills/
+//   - folio-core             : the core agent skills, including `corpus-grep`,
+//                              which sits beside the `.ts` implementing it
 //   - content-lifecycle      : plan → author → validate → review → test →
 //                              publish → feedback, the skills every BPMN
 //                              content process names
@@ -138,9 +139,17 @@ export function discoverLocalPackages(root: string): Record<string, string> {
   const held: string[] = [];
   for (const kgDir of resolveSkillDirs(root)) {
     // A kg directory may hold skills DIRECTLY as well as in subdirectories,
-    // and BOTH shapes are real here: `skills/` holds none directly and every
-    // package is a subdirectory, while `src/skills/` holds `corpus-grep.md`
-    // beside the `.ts` implementing it and has no subdirectory at all.
+    // and BOTH shapes are real: `skills/` holds none directly and every
+    // package is a subdirectory, while `bootstrap/skills/` and
+    // `who-iris/skills/` hold theirs at their root with no subdirectory.
+    //
+    // The worked example through the rest of this comment is `src/skills/`,
+    // which held `corpus-grep.md` beside the `.ts` implementing it. It is GONE
+    // as of #760 — `skills/folio-core/` already co-located eight such pairs,
+    // so the separate directory bought nothing and cost a name: this function
+    // called it `cat-harness` while the declaration gave that id to `skills/`.
+    // The history below is kept because the RULES it explains are unchanged
+    // and were paid for; only their subject moved.
     //
     // A directly-held set is the INSTANCE's own package, named after the
     // instance, because that is what it is — there is no subdirectory name to
@@ -151,17 +160,17 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // `readDeclaration(root)` gave the ROOT's name to every directly-held set
     // regardless of which instance contributed it, which is correct only while
     // exactly one such directory is ever discovered. The moment a second one
-    // is — `cat-bootstrap/skills/`, once `ownDirectories` resolved its declared
+    // is — `bootstrap/skills/`, once `ownDirectories` resolved its declared
     // repository scope — both are assigned the same key and the later wins.
-    // Not an error, not a collision report: cat-bootstrap's skills would have
+    // Not an error, not a collision report: bootstrap's skills would have
     // been found and then silently dropped, which is the same `dh4f` shape one
     // layer up from the one that hid them in the first place.
     //
     // `findInstanceRoot` walks to the nearest enclosing declaration, so the
     // name is a property of where the skills live rather than of who asked:
     // `src/skills/` → `cat-harness/harness.json` → `folio-assistant`,
-    // unchanged and measured; `cat-bootstrap/skills/` → `cat-bootstrap/harness.json`
-    // → `cat-bootstrap`. A directory under no declaration at all is skipped rather
+    // unchanged and measured; `bootstrap/skills/` → `bootstrap/harness.json`
+    // → `bootstrap`. A directory under no declaration at all is skipped rather
     // than guessed at.
     //
     // ...AND THE INSTANCE NAME IS TAKEN BY THE `skills` DIRECTORY ALONE.
@@ -178,9 +187,12 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // took the name. A directory basenamed `skills` IS the instance's own
     // package — there is no other name for it — so it takes the instance name;
     // any other directly-held directory takes its own basename, which is what
-    // a person calls it anyway. `src/skills/` stays `folio-assistant` and
-    // `cat-bootstrap/skills/` stays `cat-bootstrap`, both measured unchanged;
-    // `theming/` becomes `theming`.
+    // a person calls it anyway. `src/skills/` stayed `folio-assistant` and
+    // `bootstrap/skills/` stays `bootstrap`, both measured unchanged
+    // at the time; `theming/` becomes `theming`. Since #760 removed
+    // `src/skills/`, the live subjects of rule 1 are `bootstrap/skills/`,
+    // `kg-navigation/skills/`, `large-datasets/skills/` and
+    // `who-iris/skills/`.
     //
     // Two `skills`-named directly-held directories in ONE instance would still
     // collide. That is a narrower and more obviously wrong configuration than
@@ -206,7 +218,7 @@ export function discoverLocalPackages(root: string): Record<string, string> {
  *
  * 1. A directory basenamed **`skills`** is the instance's own package — there
  *    is no other name for it — so it takes the instance's name. `src/skills/`
- *    stays `folio-assistant`; `cat-bootstrap/skills/` stays `cat-bootstrap`.
+ *    stays `folio-assistant`; `bootstrap/skills/` stays `bootstrap`.
  * 2. Otherwise, if it is the instance's **only** directly-held directory, it
  *    takes the instance's name, because there is nothing to disambiguate it
  *    from and the instance's name is the better one.

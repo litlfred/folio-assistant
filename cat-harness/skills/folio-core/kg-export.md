@@ -175,7 +175,7 @@ self-describing graph and a graph with documentation.
 
 The schema half is `scripts/harness-schema-export.ts`: the declaration's JSON
 Schema, published at the URL its own `$id` names, so a consumer holding an
-`harness.json` it does not understand has somewhere to go. It is a third
+a declaration it does not understand has somewhere to go. It is a third
 rendering of `CatHarnessDeclarationSchema` beside the JSON-LD — **not a
 second authority**; the Zod is authoritative, per
 [`directory-conventions`](directory-conventions.md).
@@ -220,7 +220,7 @@ exist — a generated broken link is still a broken link, and a test now pins it
 
 ## Naming — artefacts take the repository's name, the config does not
 
-The **stub** (`harness.json` → `stub`, defaulting to `name`) is the
+The **stub** (`<name>.json` → `stub`, defaulting to `name`) is the
 filename stem of everything this instance publishes: `<stub>.jsonld`,
 `<stub>.schema.json`. One helper, `artefactStub()`, computes it, so the two
 exporters cannot disagree about what this instance is called.
@@ -229,14 +229,29 @@ smart-base does the same and derives its stub by stripping a prefix
 (`smart-base` → `base` → `https://smart.who.int/base`), so stub, directory and
 published path are one word.
 
-**The declaration file itself is deliberately NOT stub-named.** It stays
-`harness.json`, exactly as smart-base's config stays `dak.json`. A
-consumer bootstrapping into a repository it knows nothing about needs **one
-fixed filename to open first**; everything that config *describes* is free to
-be named, because by the time you fetch those you have read the config naming
-them. Renaming the config to match the repo buys consistency and costs
-discovery — the wrong trade, and the reason this is written down rather than
-left to look like an oversight.
+**The declaration file is named for the instance's `name`, not its `stub`.**
+It is `<name>.json` — so it is still not stub-named, but it is no longer a
+fixed word either, and the argument that used to stand here was reversed on
+2026-09-21.
+
+That argument ran: a consumer bootstrapping into a repository it knows nothing
+about needs **one fixed filename to open first**, so the declaration stays
+`harness.json` exactly as smart-base's config stays `dak.json`; renaming it
+per-repo buys consistency and costs discovery.
+
+**The discovery half was answered rather than traded away.**
+`findDeclarationFile()` scans a directory for a `*.json` carrying a `name`
+whose stem EQUALS that name, so a consumer still opens a declaration without
+being told its filename — it matches on the file agreeing with **itself**
+instead of on a word agreed in advance, and two such files in one directory
+**throw** rather than one being picked silently. What the old objection
+warned of was a resolver deriving the name from the DIRECTORY, which would
+find nothing in a repository cloned under a different name; that is precisely
+what this does not do.
+
+Everything the declaration *describes* remains free to be named, for the
+reason given before: by the time you fetch those you have read the
+declaration naming them.
 
 ## The edges are the reason to publish
 

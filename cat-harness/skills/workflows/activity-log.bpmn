@@ -49,6 +49,7 @@
 
     <bpmn:laneSet id="LaneSet_ActivityLog">
       <bpmn:lane id="Lane_Agent" name="Agent (this session)">
+        <bpmn:documentation>Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Task</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_LogStart</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_DoWork</bpmn:flowNodeRef>
@@ -68,6 +69,7 @@
            is the honest shape: a person chooses what to discard, a sweep
            runs a fixed program and chooses nothing. -->
       <bpmn:lane id="Lane_Operator" name="Log operator (human)">
+        <bpmn:documentation>The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Empty</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_EmptyScope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_EmptyOne</bpmn:flowNodeRef>

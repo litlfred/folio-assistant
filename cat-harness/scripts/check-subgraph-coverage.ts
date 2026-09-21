@@ -67,6 +67,7 @@ import {
   owesVisualiser,
   resolveCoveragePath,
   type CatHarnessDeclaration,
+  visualisationsOf,
 } from "../schemas/cat-harness.js";
 // `folio` is registered by CORE as a load-time side effect, and this module
 // reads declarations — without it `readDeclaration` throws `unknown graph kind
@@ -125,19 +126,19 @@ export interface InstanceCoverage {
  * A NAME rather than a path, because the exemption is about what bootstrap IS
  * — the floor that owns no renderer — not about where it happens to sit. An
  * instance that relocated would keep its exemption; a different instance that
- * moved into `cat-bootstrap/` would not inherit one.
+ * moved into `bootstrap/` would not inherit one.
  *
  * BOTH NAMES, and the old one is not dead weight. `bootstrap` was renamed to
- * `cat-bootstrap` on main while this branch was open, and the rename would
+ * `bootstrap` on main while this branch was open, and the rename would
  * have made this set match NOTHING — the owner's exemption silently stops
- * firing, cat-bootstrap is asked for a visualiser it is exempt from, and the
+ * firing, bootstrap is asked for a visualiser it is exempt from, and the
  * only symptom is one extra minor finding among fifty. Keeping the old name
  * costs nothing and means a half-finished rename in either direction does not
  * quietly revoke a ruling. The test below pins the set against the instances
  * discovery actually finds, so a name that matches nothing is a failure rather
  * than a silence.
  */
-export const VISUALISER_EXEMPT_INSTANCES = new Set(["cat-bootstrap", "bootstrap"]);
+export const VISUALISER_EXEMPT_INSTANCES = new Set(["bootstrap", "bootstrap"]);
 
 /**
  * Does this entry's declared target actually resolve?
@@ -300,7 +301,7 @@ export function ownDocsFinding(
 ): { severity: Severity; detail: string } | undefined {
   // An exemption is read from the DECLARATION, never from a name literal in
   // this file — the rule `isExemptFrom` exists for, and the one that stopped
-  // cat-bootstrap's visualiser exemption dying to a rename.
+  // bootstrap's visualiser exemption dying to a rename.
   if (decl !== undefined && isExemptFrom(decl, "own-docs")) return undefined;
   // `siteDirFor` rather than the string, and it is not merely to dodge the
   // literal: an instance's own documentation IS its site root. The first
@@ -413,7 +414,7 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
         // is the existence claim.
         const unmetObligation =
           criterion === "serialisations" ||
-          (criterion === "visualiser" && dir.graphs.some((g) => owesVisualiser(g)));
+          (criterion === "visualiser" && dir.graphKinds.some((g) => owesVisualiser(g)));
         findings.push({
           instance,
           directory: dir.id,
@@ -424,19 +425,33 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
               ? `no serialisations declared — every declared directory owes json, jsonld and ` +
                 `schema.json at its own URL, and this one is excused nothing`
               : unmetObligation
-                ? `no visualiser declared, and ${dir.graphs.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
+                ? `no visualiser declared, and ${dir.graphKinds.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
                   `an instance renders what it declares`
                 : `no ${criterion} declared — nobody has said what ${ASKS[criterion]}`,
         });
         continue;
       }
-      if (!targetExists(repoRoot, declared)) {
+      // A visualiser may now be SEVERAL — the owner's *"harness can declare >= 1
+      // visualiztion"*. Each ref is checked on its own, so a directory whose
+      // second visualisation is broken is reported for that one rather than
+      // for the whole declaration: "one of your two viewers is missing" and
+      // "your viewer is missing" are different repairs.
+      const refs =
+        criterion === "visualiser"
+          ? visualisationsOf(dir.coverage, dir.id).map((v) => v.ref)
+          : [declared as string];
+      const broken = refs.filter((r) => !targetExists(repoRoot, r));
+      if (broken.length > 0) {
         findings.push({
           instance,
           directory: dir.id,
           criterion,
           severity: "major",
-          detail: `declares ${criterion} "${declared}" and it does not resolve`,
+          detail:
+            broken.length === refs.length
+              ? `declares ${criterion} "${broken.join('", "')}" and it does not resolve`
+              : `declares ${refs.length} ${criterion}s and ${broken.length} do not resolve: ` +
+                `"${broken.join('", "')}"`,
         });
       }
     }
@@ -560,7 +575,7 @@ if (import.meta.main) {
   const repoRoot = repoRootFor(instanceRootFor(import.meta.dir));
   const rs = auditAll(repoRoot);
   if (rs.length === 0) {
-    console.error("No instance carries a harness.json. That is not a clean run — nothing was checked.");
+    console.error("No instance carries a declaration. That is not a clean run — nothing was checked.");
     process.exit(2);
   }
   console.log(process.argv.includes("--json") ? JSON.stringify(rs, null, 2) : formatReport(rs));

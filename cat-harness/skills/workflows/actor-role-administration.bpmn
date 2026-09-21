@@ -61,6 +61,7 @@
 
     <bpmn:laneSet id="LaneSet_ActorRoleAdministration">
       <bpmn:lane id="Lane_Administrator" name="Administrator">
+        <bpmn:documentation>All four administration verbs — add, assign, grant, retire — converge at Gateway_Changed onto the same CallActivity_CodeChangeReview, so no kind of substrate edit gets a lighter review path than another; and Gateway_AuditClean's 'no' branch (A13) loops back to this lane rather than ending the process, because whether a `major` finding holds the change is this lane's policy call, not something Task_RunKgAudit decides for it.</bpmn:documentation>
         <bpmn:extensionElements>
           <folio:role ref="administrator" />
         </bpmn:extensionElements>
@@ -76,6 +77,7 @@
         <bpmn:flowNodeRef>End_Administered</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Audit" name="Graph audit (system)">
+        <bpmn:documentation>Runs only after CallActivity_CodeChangeReview has already completed its own review, because the breakage this lane exists to catch — a join across role, lane, actor and skill — is invisible to a code reviewer reading the diff in isolation; ordinary code review clears the edit, and only this lane's whole-graph pass can tell whether it silently broke something three diagrams away.</bpmn:documentation>
         <!-- Bound explicitly. This lane runs a fixed program and decides
              nothing — `kg:audit` reports, and whether a `major` finding
              holds the change is the administrator's call one lane up. -->

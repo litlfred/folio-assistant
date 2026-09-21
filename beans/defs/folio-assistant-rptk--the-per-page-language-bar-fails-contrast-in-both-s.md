@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rptk
 title: The per-page language bar fails contrast in both schemes
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T01:28:38Z
-updated_at: 2026-09-19T05:43:14Z
+updated_at: 2026-09-21T16:47:29Z
 parent: folio-assistant-o3xy
 ---
 
@@ -42,3 +42,73 @@ GATE WIDENED. `.include(".side-bar")` is off the tiles' axe run in `tests/a11y.e
 Verified: `rm -rf _kg` then `bunx playwright test` 60/60; tsc, eslint, kg:audit:check, kg:schema:check, check:workflows all exit 0. `bun test` = 2023 pass / 1 fail, the failure being `scripts/tests/folio-root.test.ts` asserting the checkout basename is `folio-assistant` — a git-worktree artefact, pre-existing, untouched by this diff.
 
 Left for the human: whether the dark current-tab chip (bright blue, near-black text) reads right, and how the bar looks on a real just-the-docs page. Not marking this bean done — the PR is unmerged and unreviewed.
+
+
+*Issue link, recorded when the issue was opened.* **[#741](https://github.com/litlfred/folio-assistant/issues/741)** — opened 2026-09-21 because this bean had none, and a bean with no issue is a defect only the work plan can see.
+
+## Second half, measured and fixed 2026-09-21 — the bean named one function, the defect had two
+
+The fix recorded above covered `mountPageLanguageBar()`. **`buildLanguageBar()`,
+the sibling that renders the same six locale tabs inside the Language action
+tile, kept the inline literals and both failing pairs**, measured against the
+`.fa-tiles` panel it actually renders on (`#27262b`):
+
+| pair | value | ratio |
+|---|---|---|
+| not-yet-translated tab | `#475569` at `opacity:0.5`, compositing to `#373e4a` | **1.39:1** |
+| the current tab | `#ffffff` on `#3b82f6`, bold at 12.8px | **3.67:1** |
+| an available tab | `#93c5fd` on the panel | 8.33:1 — passed |
+| hover | `#93c5fd` on `#334155` | 5.74:1 — passed |
+
+**One literal, two numbers, and that is the argument for an opaque token in a
+sentence.** `#475569` at `opacity:0.5` is 1.34:1 on the per-page bar's old
+backdrop and 1.39:1 here, because the composite is a function of whatever is
+painted underneath. Neither number is a property of anything written in the
+source — which is why this bean's own original note named the wrong colour.
+
+### Why it survived the fix that was supposed to close it
+
+The tiles' axe run had its `.side-bar` scope removed *because* the per-page bar
+was fixed, and it then swept the whole page — in three states: the grid,
+Settings, and Search. **Not Language.** A page-wide axe pass measures what is
+on the page, and this bar is behind a tile nobody clicked. Three of four tiles
+checked is not the tiles checked.
+
+### What shipped
+
+- `.fa-lang-bar` carries seven tokens in `docs-ui.css`, each with its measured
+  ratio beside it, and `buildLanguageBar()` carries no colour at all. The JS
+  `mouseenter`/`mouseleave` pair that wrote `style.background` is a CSS
+  `a.fa-lang-tab:hover` rule — a colour that exists only while a pointer is
+  over a tab is a colour nothing can measure.
+- **ONE palette, and that is a measured claim rather than an omission.**
+  `.fa-tiles` paints `var(--sidebar-color, #27262b)`, just-the-docs defines no
+  such custom property, and nothing overrides it under
+  `:root[data-fa-scheme="light"]` — so this bar's backdrop is the same dark
+  panel in both schemes. A light block here would be six tokens that never
+  apply, which reads as coverage and is not.
+- `--fa-sidelang-bg` is **opaque** and painted by the bar in all three of its
+  contexts, so each ratio is a fact about the tokens rather than about whatever
+  sits behind them. It is set to the tiles panel's own colour, so inside the
+  tile the result is pixel-identical to the `background: transparent` it
+  replaces.
+- `test/a11y.e2e.ts` gained `["the language view", ["Language"]]`. Held the fix
+  out and re-ran it: **2 failed**, axe naming 1.39 three times and 3.67 once,
+  in both schemes. The gate is not vacuous.
+- `scripts/tests/inline-colour.test.ts` — the complement axe cannot be: a
+  source sweep requiring that no inline style in `docs-ui.js` carries a colour
+  or an `opacity`, over every branch no fixture reaches. It passes at **zero**
+  inline colour sites, so its non-vacuity case is synthetic — the four exact
+  shapes `buildLanguageBar()` carried this morning. Geometry writes (`left`,
+  `top`, `width`, `zIndex`) are deliberately not swept: a position is not a
+  colour and has no token to be, and a check that swept them is a check
+  somebody switches off.
+
+### One thing this does NOT close
+
+`anchorPanelInSidebar()` is defined and **never called** — the language bar
+only ever renders inside the tiles view now. So `.fa-lang-bar.fa-panel-in-sidebar`
+and its `:not()` fallback are unreachable CSS. They are left in place, with
+their colours moved onto the same tokens rather than left as unmeasured
+literals, because deleting a renderer's fallback is a separate decision with a
+separate owner. Recorded rather than swept.

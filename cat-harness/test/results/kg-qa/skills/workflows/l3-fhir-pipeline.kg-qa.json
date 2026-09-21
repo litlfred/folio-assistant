@@ -5,7 +5,7 @@
     "id": "Process_L3Fhir",
     "path": "skills/workflows/l3-fhir-pipeline.bpmn"
   },
-  "source_hash": "sha256:ab17ee54e17cbdff270f80b03d95c8a31830f1abd5d37ad3c9cf078c62b6d915",
+  "source_hash": "sha256:a1528b967ed583b16ab2aca9761b529fa9eb39c398f50cb95534efc667c0cae1",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
       "result": "pass",
       "findings": []
     },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-carries-activity-skill": {
       "result": "pass",
       "findings": []
@@ -67,7 +71,7 @@
   "totals": {
     "pass": 8,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 7,
     "unknown": 0
   }
 }

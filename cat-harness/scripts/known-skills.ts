@@ -15,7 +15,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
 
-import { resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
+import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
@@ -79,15 +79,15 @@ function holdsMarkdown(abs: string): boolean {
  * needs; a consumer that must NAME a root needs the declared id. `harness.json`
  * states the rule on its own `cat-harness` entry — *"ids are stable across a
  * relocation, paths are not"* — and `gen-skill-docs` is where it was paid for:
- * it keyed a category heading on the basename, that basename was `cat-bootstrap`
- * only while the root was `cat-bootstrap/`, and when #422 moved the skills to
- * `cat-bootstrap/skills/` the generator demanded a heading for a package called
+ * it keyed a category heading on the basename, that basename was `bootstrap`
+ * only while the root was `bootstrap/`, and when #422 moved the skills to
+ * `bootstrap/skills/` the generator demanded a heading for a package called
  * "skills".
  */
 export function kgDirectories(root: string): Array<{ id: string; path: string; absPath: string }> {
   try {
     return resolveDirectories([{ name: "(local)", root, own: true }])
-      // EXACTLY `cat-harness`, not merely including it.
+      // EXACTLY ONE knowledge-graph kind, not merely including one.
       //
       // `schemas/` declares `["schemas", "cat-harness"]` — a schema IS a
       // knowledge-graph node, which is why it carries the kind at all — but
@@ -101,7 +101,7 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
       // one kind can be scanned for it; one that holds several has to say
       // which file is which, and for `schemas/` that answer is `@graphNode`
       // on the `.ts`, not a guess about the `.md`.
-      .filter((d) => d.graphs.length === 1 && d.graphs[0] === "cat-harness")
+      .filter(isKgContentDirectory)
       .filter((d) => existsSync(d.absPath));
   } catch (err) {
     // NOT swallowed into an empty list, and the reason is measured.
@@ -134,7 +134,7 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
  *
  * Absolute paths. This is the answer to `join(root, "skills")` — the literal
  * `check:declared-paths` found in a dozen consumers, each of which a topical
- * layout (`cat-bootstrap/`, `crdm/`) breaks silently.
+ * layout (`bootstrap/`, `crdm/`) breaks silently.
  *
  * ## It is a LIST, and callers must not quietly take the first
  *
@@ -168,7 +168,7 @@ export function kgRoots(root: string): string[] {
  * ## judgement to make
  *
  * `kgRoots` resolves a DEPENDENCY's directories too, so it returns paths like
- * `../cat-bootstrap/render`. Walking them is forbidden by
+ * `../bootstrap/render`. Walking them is forbidden by
  * `instance-graph-isolation.test.ts`, which guards a live 2026-09-19 leak of
  * 88 references: one instance's graph must not carry another's nodes.
  * `unreadNestedInstances` states the same rule in its own finding text — *"do
@@ -177,7 +177,7 @@ export function kgRoots(root: string): string[] {
  * It would break this audit's own output as well. {@link sidecarPath}
  * composes `dirname(join(root, subject.path))` and mirrors it under
  * `test/results/kg-qa/`, so a `../` subject normalises to
- * `test/results/cat-bootstrap/render` — **outside the results tree
+ * `test/results/bootstrap/render` — **outside the results tree
  * altogether**, which is the escaping-path defect bean `chq5` fixed one store
  * over.
  *
@@ -250,9 +250,9 @@ export function isSkillMd(path: string): boolean {
   //
   // It has already cost something once. `schemas/` is excluded from the KG
   // scan partly because "its `.md` files are READMEs" — without that, the
-  // corpus read 150 skills where it holds 149. Now `cat-bootstrap/README.md` is
+  // corpus read 150 skills where it holds 149. Now `bootstrap/README.md` is
   // the entry point an agent with no context reads first, and declaring
-  // `cat-bootstrap/` as a knowledge graph would have admitted it as a skill named
+  // `bootstrap/` as a knowledge graph would have admitted it as a skill named
   // `README`, making `<folio:skill ref="README"/>` resolve and handing
   // `kg-audit` a sidecar asserting heading and brevity rules against a
   // README. Requiring every README to carry a `$schema` disclaimer instead
@@ -315,7 +315,7 @@ export function skillMdDirs(root: string): string[][] {
   // Every directory the instance DECLARES as holding a `cat-harness` graph —
   // not the literal `skills/`.
   //
-  // This is what lets a topical directory (`cat-bootstrap/`, `crdm/`, …) cost a
+  // This is what lets a topical directory (`bootstrap/`, `crdm/`, …) cost a
   // declaration line and no code change. The literal was the last thing
   // standing between the layout and the declaration that is supposed to
   // describe it: `harness.json` said where the knowledge graph lives and
@@ -327,18 +327,18 @@ export function skillMdDirs(root: string): string[][] {
     // RELATIVE TO `root`, computed from the absPath the resolver already
     // produced — not from `d.path`, which is relative to whatever root the
     // entry's SCOPE names. Those were the same directory until the move (bean
-    // `wggr`); afterwards `cat-bootstrap/skills/` is repository-scoped, so `d.path`
-    // said `cat-bootstrap/skills` while `root` was the instance, and every caller
-    // resolved `<instance>/cat-bootstrap/skills`. kg-export's `collectSkills`
+    // `wggr`); afterwards `bootstrap/skills/` is repository-scoped, so `d.path`
+    // said `bootstrap/skills` while `root` was the instance, and every caller
+    // resolved `<instance>/bootstrap/skills`. kg-export's `collectSkills`
     // skips a directory that is not there as "a package this instance does not
-    // carry", so cat-bootstrap's skills left the published graph IN SILENCE —
+    // carry", so bootstrap's skills left the published graph IN SILENCE —
     // `confirm-harness` became a dangling `hasSkill` and `kg-navigation` only
     // looked fine because a second copy exists under `skills/` (bean `v3se`).
     //
     // `relative()` may yield a `../` prefix, and that is correct here: it is a
     // COMPUTED path between two known roots, not a declared one. The
     // dot-prefix guard in `check-harness-dirs.ts` governs what a declaration
-    // may SAY, which is still `cat-bootstrap/skills/` with a scope beside it.
+    // may SAY, which is still `bootstrap/skills/` with a scope beside it.
     // SPLIT back into segments, preserving this function's contract: callers
     // index them (`p[0] === "skills"`, `p[1]` is the package name) as well as
     // joining them. Returning one joined string fixed the root and broke the
@@ -346,7 +346,7 @@ export function skillMdDirs(root: string): string[][] {
     // against the filesystem.
     const rel = (abs: string): string[] => relative(root, abs).split("/");
     // The directory itself, when it holds skills directly — the shape a
-    // topical directory has (`cat-bootstrap/getting-started.md`).
+    // topical directory has (`bootstrap/getting-started.md`).
     if (holdsMarkdown(d.absPath)) dirs.push(rel(d.absPath));
     // ...and its immediate subdirectories, which is how `skills/` is laid out
     // today: one package per subdirectory.
@@ -659,7 +659,7 @@ export function knownSkills(root: string): Set<string> {
  *
  * A `cat-harness` directory's `workflows/` subdirectory, plus the directory
  * itself when it holds diagrams directly. That covers today's
- * `skills/workflows/` and a topical `cat-bootstrap/workflows/` without either
+ * `skills/workflows/` and a topical `bootstrap/workflows/` without either
  * being written down.
  *
  * Returns ABSOLUTE paths, unlike {@link skillMdDirs}, because every caller
@@ -674,7 +674,19 @@ export function workflowDirs(root: string): string[] {
       out.push(d.absPath);
     }
   }
-  return out;
+  // DE-DUPLICATED, because the two branches above can name one directory.
+  //
+  // `skills/` reaches `skills/workflows/` by the CONVENTION in the first
+  // branch; since the 2026-09-21 split `skills/workflows/` is also declared in
+  // its own right, kind `workflows`, and reaches itself by the second. One
+  // directory, two routes, and every caller here walks what it is given — so
+  // the duplicate arrived in the export as 1,354 nodes sharing 677 `@id`s,
+  // which is the one thing a JSON-LD consumer may not be handed.
+  //
+  // Deduping HERE rather than in each caller: the ambiguity is created by this
+  // function's own two branches, and a caller cannot see that the path it was
+  // handed twice is the same directory found two ways.
+  return [...new Set(out)];
 }
 
 /**
@@ -694,5 +706,8 @@ export function workflowFiles(root: string): string[] {
     }
   };
   for (const d of workflowDirs(root)) walk(d);
-  return out.sort();
+  // Belt and braces on top of `workflowDirs`'s own dedupe: a caller may pass
+  // overlapping directories this function never chose, and the same file
+  // reached twice is a duplicate `@id` downstream either way.
+  return [...new Set(out)].sort();
 }

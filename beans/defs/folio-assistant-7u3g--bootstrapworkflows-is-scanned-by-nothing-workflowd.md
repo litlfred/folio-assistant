@@ -1,6 +1,6 @@
 ---
 # folio-assistant-7u3g
-title: cat-bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows
+title: bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows
 status: scrapped
 type: task
 priority: normal
@@ -18,19 +18,19 @@ that sample went looking for, which is the point of sampling.
 
 ## The gap
 
-`cat-bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it
+`bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it
 and the audit reads its skills. `workflowDirs` then composes
-`<kgdir>/workflows` — i.e. **`cat-bootstrap/skills/workflows/`**, which does not
-exist. The diagrams are at **`cat-bootstrap/workflows/`**, a SIBLING of
-`cat-bootstrap/skills/`, not a child.
+`<kgdir>/workflows` — i.e. **`bootstrap/skills/workflows/`**, which does not
+exist. The diagrams are at **`bootstrap/workflows/`**, a SIBLING of
+`bootstrap/skills/`, not a child.
 
 So `workflowFiles(root)` returns 49 diagrams and **none of the three in
-`cat-bootstrap/`**:
+`bootstrap/`**:
 
 ```
-cat-bootstrap/workflows/discussion.bpmn
-cat-bootstrap/workflows/initialize-harness.bpmn
-cat-bootstrap/workflows/log-message.bpmn
+bootstrap/workflows/discussion.bpmn
+bootstrap/workflows/initialize-harness.bpmn
+bootstrap/workflows/log-message.bpmn
 ```
 
 ## What is blind, measured
@@ -53,9 +53,9 @@ consequences:
 
 `skill-in-role-or-process` reports `confirm-harness`, `discussion` and
 `log-message` as *"no role carries it and no activity names it"*. **All three
-ARE named** by `<folio:skill ref>` in `cat-bootstrap/workflows/*.bpmn`. The
+ARE named** by `<folio:skill ref>` in `bootstrap/workflows/*.bpmn`. The
 criterion is right about what it read and wrong about the corpus — its own
-finding text even lists `bootstrap` at `cat-bootstrap/skills/` among the
+finding text even lists `bootstrap` at `bootstrap/skills/` among the
 directories it read, which is what makes the report so convincing.
 
 That is this repository's recurring defect in its purest form: **relied upon
@@ -64,7 +64,7 @@ unreachable; the truth is that three diagrams are.
 
 ## Two candidate fixes, and the choice is not obvious
 
-1. **Move** `cat-bootstrap/workflows/` to `cat-bootstrap/skills/workflows/`. Cheapest,
+1. **Move** `bootstrap/workflows/` to `bootstrap/skills/workflows/`. Cheapest,
    and makes bootstrap match every other kg directory. But `bootstrap/` is
    built to be lifted out whole (issue #223), and `workflows/` beside
    `skills/` may be deliberate about what that extraction contains.
@@ -209,7 +209,7 @@ folio-assistant's graph.
 
 ### I implemented the fix this bean proposed, and it re-introduced that leak
 
-Declared `cat-bootstrap/workflows/` at the root with `scope: "repository"`, built
+Declared `bootstrap/workflows/` at the root with `scope: "repository"`, built
 a `check:nested-declarations` guard, fixed a real `..`-escape in
 `kgQaSidecarPath`, updated CI and the partition, and regenerated. All of it
 verified as working: `workflowFiles` 49 → 53, all four bootstrap skills bound,
@@ -234,7 +234,7 @@ corpus is a reported number rather than something to deduce.
 
 **And the scoping worked; I ignored it.** The finding I quoted in full says:
 *"In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap`
-at `cat-bootstrap/skills/` …) — a nested instance may name it, and this audit
+at `bootstrap/skills/` …) — a nested instance may name it, and this audit
 does not read one."* I pasted that sentence into my own notes and still wrote
 a bean asserting a blind spot. The defect was not the wording; it was that I
 treated a disclaimer as boilerplate.
@@ -249,7 +249,7 @@ treated a disclaimer as boilerplate.
   while the isolation invariant holds. It becomes live the day a subject
   legitimately sits outside an instance, and is recorded here rather than
   fixed in the dark.
-- **`every-workflow-in-the-repo.md` names `cat-bootstrap/workflows/bootstrap.bpmn`,
+- **`every-workflow-in-the-repo.md` names `bootstrap/workflows/bootstrap.bpmn`,
   which does not exist** (the file is `initialize-harness.bpmn`). A genuine
   dangling reference, unrelated to any of the above. Carried to bean `rl3h`,
   where the other 46 live.

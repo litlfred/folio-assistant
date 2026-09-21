@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: activity-log\n"
-"POT-Creation-Date: 2026-09-19T11:52:32.777Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.424Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/activity-log.bpmn:150
+#: skills/workflows/activity-log.bpmn:152
 #. Diagram label
 msgid "A person asks to empty the log"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:84
+#: skills/workflows/activity-log.bpmn:86
 #. Diagram label
 msgid "A task begins"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:63
+#: skills/workflows/activity-log.bpmn:64
 #. Diagram label
 msgid "Activity log"
 msgstr ""
@@ -39,107 +39,117 @@ msgstr ""
 msgid "Agent activity log"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:190
+#: skills/workflows/activity-log.bpmn:192
 #. Diagram label
 msgid "all / periodic"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:120
+#: skills/workflows/activity-log.bpmn:52
+#. Diagram element documentation
+msgid "Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined."
+msgstr ""
+
+#: skills/workflows/activity-log.bpmn:122
 #. Diagram label
 msgid "Capture enabled?"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:166
+#: skills/workflows/activity-log.bpmn:168
 #. Diagram label
 msgid "Discard all entries, or a whole session"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:160
+#: skills/workflows/activity-log.bpmn:162
 #. Diagram label
 msgid "Discard one entry by id"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:94
+#: skills/workflows/activity-log.bpmn:96
 #. Diagram label
 msgid "Do the work"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:106
+#: skills/workflows/activity-log.bpmn:108
 #. Diagram label
 msgid "Log a message or an error"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:173
+#: skills/workflows/activity-log.bpmn:175
 #. Diagram label
 msgid "Log emptied"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:70
+#: skills/workflows/activity-log.bpmn:71
 #. Diagram label
 msgid "Log operator (human)"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:112
+#: skills/workflows/activity-log.bpmn:114
 #. Diagram label
 msgid "Log task-end"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:88
+#: skills/workflows/activity-log.bpmn:90
 #. Diagram label
 msgid "Log task-start"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:181
+#: skills/workflows/activity-log.bpmn:183
 #. Diagram label
 msgid "more work"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:185
+#: skills/workflows/activity-log.bpmn:187
 #. Diagram label
 msgid "off or unknown"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:184
+#: skills/workflows/activity-log.bpmn:186
 #. Diagram label
 msgid "on"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:189
+#: skills/workflows/activity-log.bpmn:191
 #. Diagram label
 msgid "one"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:154
+#: skills/workflows/activity-log.bpmn:156
 #. Diagram label
 msgid "One entry or all?"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:126
+#: skills/workflows/activity-log.bpmn:128
 #. Diagram label
 msgid "Persist the log to the data store"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:132
+#: skills/workflows/activity-log.bpmn:134
 #. Diagram label
 msgid "Report the capture state"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:77
+#: skills/workflows/activity-log.bpmn:79
 #. Diagram label
 msgid "Scheduled log sweep"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:182
+#: skills/workflows/activity-log.bpmn:184
 #. Diagram label
 msgid "task complete"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:138
+#: skills/workflows/activity-log.bpmn:140
 #. Diagram label
 msgid "Task logged"
 msgstr ""
 
-#: skills/workflows/activity-log.bpmn:145
+#: skills/workflows/activity-log.bpmn:72
+#. Diagram element documentation
+msgid "The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one."
+msgstr ""
+
+#: skills/workflows/activity-log.bpmn:147
 #. Diagram label
 msgid "The periodic sweep fires"
 msgstr ""

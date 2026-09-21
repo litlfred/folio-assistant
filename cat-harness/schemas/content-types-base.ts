@@ -77,7 +77,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { defaultContentTypes, type ContentTypeRegistry } from "./content-type";
-import { DECLARATION_SUFFIX, findDeclarationFile } from "./cat-harness";
+import { CONFIG_SUFFIX, findDeclarationFile } from "./cat-harness";
 import { instanceConfigFilename, instanceConfigFor } from "./harness-config";
 import { termIri } from "./namespaces";
 
@@ -157,8 +157,18 @@ function harnessMarkerFilename(repoRoot: string): string | undefined {
   }
   if (found !== undefined) return found;
   try {
+    // CONFIG_SUFFIX, not DECLARATION_SUFFIX. This fallback exists for the
+    // directory that plainly carries the marker while its declaration is
+    // broken or duplicated, and `.config.json` names a harness artefact and
+    // nothing else. The declaration suffix became a bare `.json` on
+    // 2026-09-21, at which point this matched `dak.json`, `package.json` and
+    // every other JSON file — so a DAK repository was reported as carrying a
+    // harness marker it does not have. `findDeclarationFile` above is safe
+    // under the same suffix because it additionally requires the stem to equal
+    // the declared `name`; a bare suffix filter has no such guard, which is
+    // exactly why it cannot use the bare suffix.
     return readdirSync(repoRoot)
-      .filter((e) => e.endsWith(DECLARATION_SUFFIX) && e.length > DECLARATION_SUFFIX.length)
+      .filter((e) => e.endsWith(CONFIG_SUFFIX) && e.length > CONFIG_SUFFIX.length)
       .sort()[0];
   } catch {
     return undefined;

@@ -184,7 +184,7 @@ describe("the printed-command reader — bean `b963`'s third class", () => {
   test("a runner verb before a path that resolves only under an instance is FOUND, with its fix", () => {
     const root = fixture(
       {
-        "cat-harness/cat-harness.config.json": '{"name":"cat-harness"}',
+        "cat-harness/cat-harness.json": '{"name":"cat-harness"}',
         "cat-harness/scripts/lean-audit.ts": "/** Usage: bun run scripts/lean-audit.ts */\n",
       },
       ["cat-harness/scripts"],
@@ -201,7 +201,7 @@ describe("the printed-command reader — bean `b963`'s third class", () => {
   test("a cross-reference with NO runner verb is not a finding", () => {
     const root = fixture(
       {
-        "cat-harness/cat-harness.config.json": '{"name":"cat-harness"}',
+        "cat-harness/cat-harness.json": '{"name":"cat-harness"}',
         "cat-harness/scripts/a.ts": "// see `scripts/known-skills.ts` for what decides\n",
         "cat-harness/scripts/known-skills.ts": "",
       },
@@ -213,7 +213,7 @@ describe("the printed-command reader — bean `b963`'s third class", () => {
   test("`node` is not a runner verb here — it is an ordinary word in this codebase", () => {
     const root = fixture(
       {
-        "cat-harness/cat-harness.config.json": '{"name":"cat-harness"}',
+        "cat-harness/cat-harness.json": '{"name":"cat-harness"}',
         "cat-harness/scripts/a.ts": "// a node resolves to its `.md`. A node with no path.\n",
       },
       ["cat-harness/scripts"],
@@ -225,7 +225,7 @@ describe("the printed-command reader — bean `b963`'s third class", () => {
 
   test("a path that resolves nowhere is a folio's — counted, never held", () => {
     const root = fixture(
-      { "cat-harness/cat-harness.config.json": '{"name":"cat-harness"}', "cat-harness/scripts/a.ts": "// bun run content/pipeline/x.ts\n" },
+      { "cat-harness/cat-harness.json": '{"name":"cat-harness"}', "cat-harness/scripts/a.ts": "// bun run content/pipeline/x.ts\n" },
       ["cat-harness/scripts"],
     );
     const r = checkCommandPaths(root);
@@ -234,7 +234,7 @@ describe("the printed-command reader — bean `b963`'s third class", () => {
   });
 
   test("instance roots are DISCOVERED, so a split cannot silently blind the check", () => {
-    const root = fixture({ "cat-harness/cat-harness.config.json": '{"name":"cat-harness"}', "other/other.config.json": '{"name":"other"}' }, ["cat-harness", "other"]);
+    const root = fixture({ "cat-harness/cat-harness.json": '{"name":"cat-harness"}', "other/other.json": '{"name":"other"}' }, ["cat-harness", "other"]);
     expect(instanceRoots(root)).toEqual(["cat-harness", "other"]);
   });
 });
@@ -248,7 +248,7 @@ describe("the owner's verdict on the 237 — fail on scripts/, count content/", 
    */
   const fixtureWith = (comment: string, target: string) =>
     fixture(
-      { "cat-harness/cat-harness.config.json": '{"name":"cat-harness"}', "cat-harness/scripts/a.ts": comment, [`cat-harness/${target}`]: "" },
+      { "cat-harness/cat-harness.json": '{"name":"cat-harness"}', "cat-harness/scripts/a.ts": comment, [`cat-harness/${target}`]: "" },
       ["cat-harness/scripts"],
     );
 
@@ -293,8 +293,8 @@ describe("the corpus is DISCOVERED, not listed", () => {
     // whose whole subject is hardcoded paths going stale.
     const root = fixture(
       {
-        "cat-harness/cat-harness.config.json": '{"name":"cat-harness"}',
-        "who-iris/who-iris.config.json": '{"name":"who-iris"}',
+        "cat-harness/cat-harness.json": '{"name":"cat-harness"}',
+        "who-iris/who-iris.json": '{"name":"who-iris"}',
         "who-iris/scripts/a.ts": "// bun run scripts/gen-iris-pages.ts\n",
         "who-iris/scripts/gen-iris-pages.ts": "",
       },

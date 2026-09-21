@@ -60,6 +60,51 @@ export const CATALOGUE_NODE_KINDS = ["container", "item"] as const;
 export type CatalogueNodeKind = (typeof CATALOGUE_NODE_KINDS)[number];
 
 /**
+ * A rectangle blanked out of a raster before its bytes were written.
+ *
+ * In the raster's OWN pixel coordinates, origin top-left, `x1`/`y1` exclusive
+ * — the same space `pixelWidth`/`pixelHeight` describe, so a reader needs no
+ * second frame of reference and no scale factor.
+ *
+ * ## `reason` is required, and that is the whole point
+ *
+ * A blanked rectangle and a publication that never had anything there are
+ * indistinguishable in the bytes, and they mean opposite things: one is a
+ * decision somebody took, the other is a fact about the document. This
+ * repository keeps paying for that shape — a withheld cover rendering
+ * identically to an absent one, a red workflow looking exactly like a green
+ * one — so the schema refuses a mask that does not say why it exists.
+ *
+ * It is NOT a redaction primitive for sensitive content. The bytes under a
+ * mask are simply overwritten with a flat colour and the source document is
+ * untouched, so anyone holding the source can see what was covered. It records
+ * *this rendering withheld that region*, nothing stronger.
+ */
+export const MaskedRegionSchema = z
+  .object({
+    x0: z.number().int().nonnegative(),
+    y0: z.number().int().nonnegative(),
+    /** Exclusive. */
+    x1: z.number().int().positive(),
+    /** Exclusive. */
+    y1: z.number().int().positive(),
+    /** Why this region is masked, in a person's words. Never generated. */
+    reason: z.string().min(1),
+  })
+  .strict()
+  .superRefine((r, ctx) => {
+    // An empty or inverted rectangle masks nothing while reading as a mask —
+    // the declaration would claim a withholding that did not happen.
+    if (r.x1 <= r.x0 || r.y1 <= r.y0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `a masked region must have positive area; got x ${r.x0}..${r.x1}, y ${r.y0}..${r.y1}`,
+      });
+    }
+  });
+export type MaskedRegion = z.infer<typeof MaskedRegionSchema>;
+
+/**
  * One file belonging to an item.
  *
  * DSpace groups these into BUNDLES ("Original bundle" in the measured record),
@@ -83,6 +128,20 @@ export const BitstreamSchema = z
      */
     pixelWidth: z.number().int().positive().optional(),
     pixelHeight: z.number().int().positive().optional(),
+    /**
+     * Regions blanked out of these bytes before they were written.
+     *
+     * Declared HERE rather than discovered by the renderer, for the reason the
+     * whole catalogue works this way: a generator that decided for itself what
+     * to blank would blank different things as its heuristics changed, and
+     * nothing in the repository would record that it had. The regions are an
+     * editorial decision about a specific publication, so they are data.
+     *
+     * Absent means nothing was masked. An empty array is not a way to say it —
+     * it reads as "a mask list somebody emptied", which is a different fact —
+     * so the schema takes the field away rather than leaving `[]` behind.
+     */
+    maskedRegions: z.array(MaskedRegionSchema).nonempty().optional(),
     /** Its own materialisation state. An item may be referenced while one of its bitstreams is materialised — which is exactly the worked example. */
     materialization: MaterializationSchema,
   })
@@ -97,6 +156,30 @@ export const BitstreamSchema = z
           "`pixelWidth` and `pixelHeight` come together: one alone cannot reserve a box, " +
           "and a consumer that reads it will pair it with a guess",
       });
+    }
+    // A mask is stated in the raster's own pixels, so it needs a raster to be
+    // stated in. Without dimensions the coordinates mean nothing checkable and
+    // a region could name pixels the file does not have.
+    if (b.maskedRegions && (b.pixelWidth === undefined || b.pixelHeight === undefined)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          "`maskedRegions` are in the raster's own pixel coordinates, so the bitstream must also " +
+          "declare `pixelWidth`/`pixelHeight` — otherwise the rectangle cannot be checked against anything",
+      });
+    }
+    // Out of bounds is the defect this catches: a region measured on one
+    // rendering and left behind when the width changed still LOOKS like a
+    // mask, and the part that fell outside is simply not covered any more.
+    for (const [i, r] of (b.maskedRegions ?? []).entries()) {
+      if (b.pixelWidth !== undefined && b.pixelHeight !== undefined && (r.x1 > b.pixelWidth || r.y1 > b.pixelHeight)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message:
+            `maskedRegions[${i}] runs to (${r.x1},${r.y1}), outside the declared ` +
+            `${b.pixelWidth}x${b.pixelHeight} raster — a mask measured against a different rendering`,
+        });
+      }
     }
   });
 export type Bitstream = z.infer<typeof BitstreamSchema>;

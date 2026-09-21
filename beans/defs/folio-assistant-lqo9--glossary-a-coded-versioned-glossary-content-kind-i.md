@@ -188,7 +188,7 @@ owed before slice 1, and this bean said it was.
 `rdfs:Class`/`rdf:Property` type, plus `prefLabel`, `definition`, `notation`
 and `inScheme`. Three `ConceptScheme` nodes are emitted, **derived from the
 terms actually present** rather than from the three layers that exist — a
-scheme with no members is `dh4f` in miniature, so a `--layer cat-bootstrap`
+scheme with no members is `dh4f` in miniature, so a `--layer bootstrap`
 slice carries exactly one. In `--exact` mode the document IS its layer's
 scheme and carries both types, rather than a node sharing its own `@id`.
 
@@ -252,7 +252,7 @@ one quarter of it. Recorded there.
 
 ## Done when
 
-- [x] The roast above is held and its answers recorded here (2026-09-20) — three of five questions settled by measurement; **two rulings outstanding**: where a term's IRI lives, and whether the existing paper glossary converges on the new kind
+- [x] The roast above is held and its answers recorded here (2026-09-20) — three of five questions settled by measurement. Of the two rulings then outstanding, **where a term's IRI lives is settled** (2026-09-21: the instance namespace, retirement in the first extracting slice); **whether the existing paper glossary converges on the new kind is still open**
 - [ ] `glossary` exists as a content kind in core with optional `notation` and scheme-level version fields, validated by schema — **named something other than `GlossaryEntry`**, which is taken twice
 - [ ] The docs/ rendering carries a defined-terms index built from KG assets, with extracted-vs-authored distinguished
 - [ ] Labels and definitions are extracted to `.pot` like BPMN labels and render per locale
@@ -289,3 +289,62 @@ schema, translatable) are unchanged by this and are still this bean's.
 
 **Not started.** Queued behind the who-iris ingestion work; the roast above still
 holds and still gates any build.
+
+## SLICE 2 — swimlane terms. Scoped 2026-09-21, prerequisites landed
+
+Issue #596 names the source in the owner's own words: *"a bpmn diagram
+swimlane has title/description"*. That input now exists and is gated —
+**157 of 157 task-containing lanes carry a `<bpmn:documentation>`** (bean
+`sqtq`, PR #782), with `check:lane-documentation` in the gate set so it stays
+that way.
+
+### The mapping is THREE predicates, not two
+
+Measuring before writing found that 156 of the 157 lanes already resolve to a
+role carrying a `description`. So a persona blurb per lane would have
+duplicated `roles.json` — twelve times over for the lane named `Agent`.
+
+| SKOS | source | answers |
+|---|---|---|
+| `prefLabel` | the lane's `name` | what is this called |
+| `definition` | the **role's** `description` | who is this persona, in every diagram |
+| `scopeNote` | the lane's `<bpmn:documentation>` | what is this lane accountable for **in this process** |
+
+The owner's *"name, documentation → glossary"* holds — both feed it, at
+different predicates. The lane text is SUPPOSED to differ per diagram; that is
+its content, not drift.
+
+### Owner's ruling, 2026-09-21: its own document
+
+`ns-export.ts` already unions TWO sources — the `termIri("Name")` scan and the
+registry-minted terms — with a test asserting the union is not redundant. So a
+third source was *structurally* fine, and that is why it was a question rather
+than a constraint.
+
+The objection is editorial: a persona like `Board renderer` is a `skos:Concept`
+but **not** an `rdfs:Class`, and folding personas in would make one document
+answer two different questions — "what can the code mint" and "what does this
+word mean to a reader" — falsifying its own docstring.
+
+So: **a separate glossary document, in the same instance namespace.** Ruling A
+is untouched; `conceptSchemeIri` and the layer model do not change. Cost,
+stated: a second generator and a second staleness check.
+
+### `laneBinding` is what makes the honest case expressible
+
+Bean `ug4r` (PR #800) gives five answers where there were two. A lane whose
+performer varies BY DESIGN emits a term with a `scopeNote` and **no**
+`definition` — which is true — instead of being indistinguishable from a lane
+nobody got round to binding. Without it the extractor would have had to guess,
+and a guessed definition-less term reads as a defect.
+
+### Retirement, per the earlier ruling
+
+A term whose defining lane is gone becomes `deprecated`, **reported and never
+deleted** — `deletion-requires-confirmation`, and the same reason a scrapped
+bean is not a deleted one: retirement and accident must not look alike.
+
+### Not started
+
+Implementation waits on `ug4r` merging, so PR #800 stays one reviewable
+subject. Nothing here is built.
