@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8h42
 title: 'LAYOUT: cat-harness/docs/cat-harness/index.md is the cat-harness instance''s home page nested inside folio-assistant''s site'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T14:07:39Z
-updated_at: 2026-09-21T19:16:03Z
+updated_at: 2026-09-21T19:39:26Z
 parent: folio-assistant-vuip
 ---
 
@@ -74,3 +74,75 @@ The move. Its first `Done when` is the owner's, and the measurement above
 changes what is being asked: not "should this page move one directory up", but
 "which of the two path rules owns `/cat-harness/` when the handler and the
 instance are the same one". Put to the owner with the options.
+
+
+## 2026-09-21 — settled: THE HANDLER WINS
+
+Owner, asked with the measurement above: *"harness handler wins."*
+
+### What moved
+
+`docs/cat-harness/index.md` → `docs/platform.md`, flat like every other
+authored page here (20 of them; only `index.md` carries a permalink). Title
+"The platform — actors, roles, processes, skills", because the old title
+`cat-harness` is a contested name (issue #760) and the page is about the
+model, not the directory.
+
+### What the move broke, and would have broken silently
+
+**`siteLinks` publishes the `kg` navbar tile as
+`{ path: "/<stub>/", target: "<stub>/index.html" }`** — so the authored page
+was also the KG viewer's landing, and moving it left that tile pointing at a
+404 for every reader.
+
+**Nothing local would have said so.** `verifySiteLinks` returns `unknown`
+rather than `dead` when the site is not built, which is correct — this
+repository is cloned far more often than it is built — and means the breakage
+surfaces only in production. `site-links.test.ts` passes on fixtures either
+way. Found by reading what pointed at the path, not by a check.
+
+### What filled it
+
+`scripts/gen-handler-index.ts` → `bun run handler:index`, writing
+`docs/cat-harness/published-graphs.md` with `permalink: /cat-harness/`.
+43 (instance, kind) pairs, 17 published, 22 kinds.
+
+Derived from `harnessTiles` — the SAME model the navbar reads — so the page
+and the navbar cannot disagree about what is published. Declaration-driven
+rather than filesystem-driven, so it is order-independent: it does not need
+the four viewer generators to have run first.
+
+A kind declared with nothing rendering it shows as **declared, not published**
+rather than being omitted. `dh4f`: a reader who cannot tell "nothing renders
+this" from "this does not exist" learns nothing from a gap.
+
+### The third `Done when` — the collision is GONE, not contained
+
+The generated page is `published-graphs.md`, **not a second `index.md`**. The
+route comes from the front-matter permalink, so the file may be called
+anything — and it had to be, because replacing the authored `index.md` with a
+generated one at the same path would have rebuilt the stem collision under its
+own repair. There is now one `index` stem in the site.
+
+The two doc comments that cite the old pair (`translation-block-qa.ts`,
+`gen-docs-pages.ts`) now say the pair is gone AND that the rule stands: it is
+about stems, not about those two files, and the next pair will not announce
+itself.
+
+### One small cost, stated rather than hidden
+
+Reachability now comes from a link on the Home page, because `nav_exclude`
+stays (bean `603s` owns the navbar structure). That link is one new
+translatable string: `docs/index.md` went 43 → 44, so five locales are one
+string further from complete until it is translated. The alternative was
+leaving the page unreachable, which is what the measurement above found.
+
+## All three `Done when` boxes
+
+- [x] the owner has settled whether `/cat-harness/` is the handler namespace —
+      it is
+- [x] permalinks, the generators and inbound links move with it; `readme:audit`
+      12/12 resolved, 0 dead
+- [x] the two-pages-one-stem collision is gone rather than contained
+
+98/98 gates.

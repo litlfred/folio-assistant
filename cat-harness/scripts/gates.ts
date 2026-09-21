@@ -282,6 +282,11 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "`voices:viz:check` is in the gate set; the site build runs the writer at deploy",
   },
   {
+    match: "run handler:index",
+    kind: "covered-by",
+    reason: "`handler:index:check` is in the gate set; the site build runs the writer at deploy",
+  },
+  {
     match: "run translation:index",
     kind: "covered-by",
     reason: "`translation:index:check` is in the gate set; the site build runs the writer",

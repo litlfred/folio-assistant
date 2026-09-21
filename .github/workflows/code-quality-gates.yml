@@ -859,6 +859,19 @@ jobs:
       - name: voices projection and viewer are current
         run: bun run voices:viz:check
 
+      # The handler namespace's own index. Gated on the same ground as the
+      # voices projection: it derives from the DECLARATIONS (which kinds each
+      # instance declares, and whether a `coverage.visualiser` names a
+      # published path), not from the whole repository — so a red means
+      # somebody changed a declaration and did not regenerate.
+      #
+      # It is also the one page a navbar tile points at: `siteLinks` publishes
+      # `kg` as `/<stub>/`, and `verifySiteLinks` reports `unknown` rather
+      # than `dead` on an unbuilt tree, so nothing else here would notice it
+      # going missing until production (bean `8h42`).
+      - name: handler namespace index is current
+        run: bun run handler:index:check
+
       # NOT GATED: the schema and library projections.
       #
       # `schema:viz:check` and `library:viz:check` exist and are worth running
