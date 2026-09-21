@@ -168,3 +168,5 @@ rest are the guards themselves, which must keep passing if the rule is widened.
       stated in the module header and in the report's own footer
 - [ ] `p5wm` and `yg29` are repaired **by their owners** — this bean does not
       edit them; baseline entries come out as they are
+
+*Issue link, recorded on creation.* **[#696](https://github.com/litlfred/folio-assistant/issues/696)**
