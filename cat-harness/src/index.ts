@@ -10,7 +10,7 @@
  * @module folio-assistant/index
  */
 
-import { resolve } from "path";
+import { basename, resolve } from "path";
 import { existsSync, readFileSync } from "fs";
 import { FolioServer } from "./server.js";
 import { resolveBuiltinAdapter } from "./builtin-adapters.js";
@@ -133,9 +133,14 @@ if (harnessConfigPath !== undefined && existsSync(harnessConfigPath)) {
     adapterModule = config.adapterModule;
     if (config.feedbackDir) feedbackDir = resolve(repoRoot, config.feedbackDir);
     if (config.viewer?.port) viewerPort = config.viewer.port;
-    log("init", `Loaded harness.config.json: adapter=${adapterType}`);
+    // NAME THE FILE ACTUALLY READ. `harnessConfigPath` is computed by
+    // `expectedInstanceConfigPath`, and the config is `<name>.config.json`
+    // since the 2026-09-21 split — so a hardcoded `harness.config.json` here
+    // told an operator to go and look at a file that does not exist. A log
+    // line is not prose a rename rewords; it is output somebody acts on.
+    log("init", `Loaded ${basename(harnessConfigPath)}: adapter=${adapterType}`);
   } catch (e) {
-    log("init", `Failed to read harness.config.json: ${e}`);
+    log("init", `Failed to read ${harnessConfigPath}: ${e}`);
   }
 }
 

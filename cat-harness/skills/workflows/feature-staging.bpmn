@@ -16,6 +16,7 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_FeatureStaging">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
+        <bpmn:documentation>Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_PR</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Build</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Deploy</bpmn:flowNodeRef>
@@ -39,6 +40,7 @@
         <bpmn:flowNodeRef>End_Refused</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Human" name="Human actor">
+        <bpmn:documentation>The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted.</bpmn:documentation>
         <bpmn:flowNodeRef>H_Confirm</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>

@@ -149,6 +149,10 @@ export const RULES: Rule[] = [
       // It builds an instance's KG the way `kg-export` (already harness,
       // below) does, one instance at a time (issue #720).
       "scripts/check-published-instance-exports.ts",
+      // HARNESS on the same argument: its subject is this repository's own
+      // workflows -- which generators each invokes -- and it reads no folio
+      // content at all (issue #777, bean `qgpo`).
+      "scripts/check-invocation-parity.ts",
       // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
       // entry was added to `RULES` while `RULES` was moving to this file,
       // so it arrives here rather than where it was written.
@@ -187,6 +191,12 @@ export const RULES: Rule[] = [
       // opens the files only to copy bytes, and never asks what a page says.
       "scripts/compose-docs.ts",             // docs layers -> one composed tree
       "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
+      // Whether a swimlane DEFINES itself — `name`, `<documentation>`, and
+      // both reaching the translation templates. Harness by subject for the
+      // same reason as its neighbour above: a lane is a ROLE boundary, which
+      // is a platform concept, and the diagrams it reads are the platform's
+      // own processes. A folio that draws none still inherits the rule.
+      "scripts/check-lane-documentation.ts", // a lane has a name AND a definition
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       // ...and the signals themselves, lifted out of it by bean `xfoh` so the
       // patterns could be checked against the skill prose they transcribe.
@@ -627,6 +637,7 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
       "scripts/check-ready-to-close.ts",

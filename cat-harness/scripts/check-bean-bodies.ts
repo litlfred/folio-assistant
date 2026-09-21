@@ -267,6 +267,39 @@ export interface BeanBodyReport {
   outstanding: BeanBodyProblem[];
   /** Baseline entries nothing matched — repaired, and the baseline can shrink. */
   stale: string[];
+  /**
+   * CLOSED beans carrying the shadow-checklist shape. Counted, never failed.
+   *
+   * Bean `sfhr` left it open *"whether the check should also scan closed
+   * beans"*, and the question sat undecided because nobody had the number.
+   * Measured 2026-09-21, and the shape of the answer is in the dates rather
+   * than the count:
+   *
+   * | | |
+   * |---|---|
+   * | closed beans with the shape | 30 (75 items), against 3 open |
+   * | **archived** beans with it | **0 of 219** — and archived beans are the OLD ones |
+   * | last updated 2026-09-20 | **21** |
+   * | last updated 2026-09-21 | 9 |
+   * | this check shipped (#589) | **2026-09-21** |
+   *
+   * So it is not sediment and not a trend. It is a ONE-DAY BURST on
+   * 2026-09-20 — the 54-merge window bean `vlhk` describes — and the gate
+   * shipped the day after, in response to it.
+   *
+   * **That is why closed beans are not scanned as a failure.** Every bean is
+   * open before it is closed, so the open-bean rule already prevents
+   * recurrence; extending it backwards would add 75 baseline entries, all
+   * belonging to other owners, for work already finished. A completed bean's
+   * unticked checklist misleads nobody about what to do next — its `status`
+   * says `completed` and dominates.
+   *
+   * It is COUNTED rather than dropped so *"is it recurring?"* stays answerable
+   * every run. A rising number here means the open-bean gate is being evaded;
+   * a flat one means the burst is history. A measurement that lives only in a
+   * bean is a printed verdict — gone, and unaskable later.
+   */
+  closedWithShadow: number;
 }
 
 /**
@@ -298,9 +331,29 @@ function lookup(all: BeanFile[], ref: string): BeanFile | undefined {
   return all.find((b) => b.id === ref) ?? all.find((b) => b.id.endsWith(`-${ref}`));
 }
 
+/**
+ * The closed-bean line: counted, never failed, and never silent.
+ *
+ * `sfhr` asked whether closed beans should be scanned. They are not — the
+ * reasoning is on {@link BeanBodyReport.closedWithShadow} — but "not scanned"
+ * and "none there" must not look alike from the report, which is the same
+ * three-state rule this repository applies to every other sweep.
+ */
+function closedNote(r: BeanBodyReport, out: string[]): void {
+  if (r.closedWithShadow === 0) return;
+  out.push(
+    `  ~ ${r.closedWithShadow} CLOSED bean(s) carry the shadow-checklist shape — counted, not failed.`,
+  );
+  out.push("    Measured 2026-09-21: a one-day burst on 09-20, the day before this check shipped;");
+  out.push("    0 of 219 ARCHIVED beans have it. Every bean is open before it is closed, so the");
+  out.push("    open-bean rule already prevents recurrence. A RISING number here means it does not.");
+}
+
 export function checkBeanBodies(root: string): BeanBodyReport {
   const all = readBeanFiles(root);
-  if (all === null) return { store: false, examined: 0, problems: [], outstanding: [], stale: [] };
+  if (all === null) {
+    return { store: false, examined: 0, problems: [], outstanding: [], stale: [], closedWithShadow: 0 };
+  }
   const open = all.filter((b) => !b.archived && OPEN_STATUSES.has(b.status));
   const found: BeanBodyProblem[] = [];
   const problems = found;
@@ -368,12 +421,17 @@ export function checkBeanBodies(root: string): BeanBodyReport {
     problems: found.filter((p) => !baseline.has(key(p))),
     outstanding: found.filter((p) => baseline.has(key(p))),
     stale: [...baseline].filter((k) => !matched.has(k)).sort(),
+    // Counted over the beans this check does NOT scan — see the field's docs.
+    closedWithShadow: all.filter(
+      (b) => !(!b.archived && OPEN_STATUSES.has(b.status)) && shadowedItems(b.body).length > 0,
+    ).length,
   };
 }
 
 function formatReport(r: BeanBodyReport): string {
   if (!r.store) return "Bean bodies\n  · no bean store — nothing to check";
   const out = [`Bean bodies (${r.examined} open, ${r.outstanding.length} baselined)`];
+  closedNote(r, out);
   if (r.problems.length === 0) {
     out.push("  ✓ no NEW defect — every open bean has a body, a one-line title, and no blocker on a closed bean");
   }
