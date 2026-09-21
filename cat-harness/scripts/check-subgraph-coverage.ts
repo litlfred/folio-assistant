@@ -67,6 +67,7 @@ import {
   owesVisualiser,
   resolveCoveragePath,
   type CatHarnessDeclaration,
+  visualisationsOf,
 } from "../schemas/cat-harness.js";
 // `folio` is registered by CORE as a load-time side effect, and this module
 // reads declarations — without it `readDeclaration` throws `unknown graph kind
@@ -430,13 +431,27 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
         });
         continue;
       }
-      if (!targetExists(repoRoot, declared)) {
+      // A visualiser may now be SEVERAL — the owner's *"harness can declare >= 1
+      // visualiztion"*. Each ref is checked on its own, so a directory whose
+      // second visualisation is broken is reported for that one rather than
+      // for the whole declaration: "one of your two viewers is missing" and
+      // "your viewer is missing" are different repairs.
+      const refs =
+        criterion === "visualiser"
+          ? visualisationsOf(dir.coverage, dir.id).map((v) => v.ref)
+          : [declared as string];
+      const broken = refs.filter((r) => !targetExists(repoRoot, r));
+      if (broken.length > 0) {
         findings.push({
           instance,
           directory: dir.id,
           criterion,
           severity: "major",
-          detail: `declares ${criterion} "${declared}" and it does not resolve`,
+          detail:
+            broken.length === refs.length
+              ? `declares ${criterion} "${broken.join('", "')}" and it does not resolve`
+              : `declares ${refs.length} ${criterion}s and ${broken.length} do not resolve: ` +
+                `"${broken.join('", "')}"`,
         });
       }
     }

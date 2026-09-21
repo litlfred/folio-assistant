@@ -1351,7 +1351,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
   // ── API: Import list (available imports) ────────────────────
   if (path === "/api/import/list") {
     try {
-      const uploadsDir = UPLOADS_DIR;
+      const uploadsDir = UPLOADS_DIR();
       const imports: Array<Record<string, unknown>> = [];
       if (existsSync(uploadsDir)) {
         const { readdirSync } = await import("fs");
@@ -2686,7 +2686,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
               return executeGraphTool(name, input, GRAPH_ROOTS)!;
 
             case "get_imports": {
-              const uploadsDir = UPLOADS_DIR;
+              const uploadsDir = UPLOADS_DIR();
               const imports: unknown[] = [];
               if (existsSync(uploadsDir)) {
                 const { readdirSync: rd } = await import("fs");
@@ -2943,7 +2943,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       if (!file) return Response.json({ error: "No file uploaded" }, { status: 400 });
 
       const id = paperId || file.name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
-      const uploadDir = join(UPLOADS_DIR, id);
+      const uploadDir = join(UPLOADS_DIR(), id);
       mkdirSync(uploadDir, { recursive: true });
 
       // Save the file
@@ -2993,7 +2993,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       const published = xml.match(/<published>(.*?)<\/published>/)?.[1] || "";
 
       const id = body.paperId || `arxiv-${arxivId.replace(/[/.]/g, "-")}`;
-      const uploadDir = join(UPLOADS_DIR, id);
+      const uploadDir = join(UPLOADS_DIR(), id);
       mkdirSync(uploadDir, { recursive: true });
 
       // Try to fetch LaTeX source
@@ -3065,7 +3065,7 @@ These become clickable buttons so users don't have to type. Make them specific t
   if (path === "/api/import/scan") {
     try {
       const body = await req.json() as { paperId: string };
-      const uploadDir = join(UPLOADS_DIR, body.paperId);
+      const uploadDir = join(UPLOADS_DIR(), body.paperId);
       const metaPath = join(uploadDir, "import-meta.json");
       if (!existsSync(metaPath)) {
         return Response.json({ error: `No import found: ${body.paperId}` }, { status: 404 });

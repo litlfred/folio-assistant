@@ -1,10 +1,10 @@
 {
-  "_name_comment": "THE NAME THE RELEASE ALREADY PUBLISHES UNDER. This said `@anthropic-ai/folio-assistant` until 2026-09-20 while `release-folio-assistant.yml` carried `sed -i 's/@anthropic-ai/@litlfred/' package.json` immediately before `npm publish`, alongside an `.npmrc` writing `@litlfred:registry=...`. So the published identity was `@litlfred/folio-assistant` and the DECLARED one was not — two answers to one question, with the declaration losing at build time. Bean `frq2`. The sed is gone: an identity is declared, never patched on the way out.",
+  "_name_comment": "THE NAME THE RELEASE ALREADY PUBLISHES UNDER. This said `@anthropic-ai/folio-assistant` until 2026-09-20 while `release-folio-assistant.yml` carried `sed -i 's/@anthropic-ai/@litlfred/' package.json` immediately before `npm publish`, alongside an `.npmrc` writing `@litlfred:registry=...`. So the published identity was `@litlfred/folio-assistant` and the DECLARED one was not \u2014 two answers to one question, with the declaration losing at build time. Bean `frq2`. The sed is gone: an identity is declared, never patched on the way out.",
   "name": "@litlfred/folio-assistant",
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "Content-agnostic assistant platform — MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
+  "description": "Content-agnostic assistant platform \u2014 MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
   "license": "Apache-2.0",
   "_repository_comment": "`litlfred/folio-assistant`, not `litlfred/qou` with `directory: folio-assistant`. That was the pre-split layout, where this package was a subdirectory of the folio; it has been its own repository since, and the stale value pointed a consumer at a repo that does not contain it. Same class as every other defect in bean `frq2`: a literal that travelled at the split with its text unchanged.",
   "repository": {
@@ -31,7 +31,7 @@
     "./tools/preferences": "./cat-harness/src/tools/preferences.ts",
     "./tools/preview": "./cat-harness/src/tools/preview.ts"
   },
-  "_files_comment": "MEASURED 2026-09-20 (bean `frq2`), by running the pack nobody had ever run: this list produced a tarball of FOUR files — package.json, LICENSE, README.md, harness.config.example.json — and NO CODE. Two entries had moved under `cat-harness/` at the split and two named files that do not exist anywhere in the repository, so `bun pm pack` silently dropped four of six. A `files` entry that does not resolve is not a warning; it is a smaller package.",
+  "_files_comment": "MEASURED 2026-09-20 (bean `frq2`), by running the pack nobody had ever run: this list produced a tarball of FOUR files \u2014 package.json, LICENSE, README.md, harness.config.example.json \u2014 and NO CODE. Two entries had moved under `cat-harness/` at the split and two named files that do not exist anywhere in the repository, so `bun pm pack` silently dropped four of six. A `files` entry that does not resolve is not a warning; it is a smaller package.",
   "files": [
     "cat-harness/src/",
     "cat-harness/ui/",
@@ -77,6 +77,7 @@
     "check:graph-kind-work": "bun run cat-harness/scripts/check-graph-kind-work.ts",
     "check:asset-roles": "bun run cat-harness/scripts/check-asset-roles.ts",
     "check:module-scope-resolution": "bun run cat-harness/scripts/check-module-scope-resolution.ts",
+    "check:published-instance-exports": "bun run cat-harness/scripts/check-published-instance-exports.ts",
     "check:published-refs": "bun run cat-harness/scripts/check-published-refs.ts",
     "check:subgraph-coverage": "bun run cat-harness/scripts/check-subgraph-coverage.ts",
     "check:declared-assets": "bun run cat-harness/scripts/check-declared-assets.ts",
@@ -84,6 +85,7 @@
     "check:escaped-markup": "bun run cat-harness/scripts/check-escaped-markup.ts",
     "check:fallback-roles": "bun run cat-harness/scripts/check-fallback-roles.ts",
     "check:harness-dirs": "bun run cat-harness/scripts/check-harness-dirs.ts",
+    "check:workflow-script-paths": "bun run cat-harness/scripts/check-workflow-script-paths.ts",
     "check:viewer-backticks": "bun run cat-harness/scripts/check-viewer-backticks.ts",
     "check:head-has-run": "bun run cat-harness/scripts/check-head-has-run.ts",
     "check:instance-config": "bun run cat-harness/scripts/check-instance-config.ts",
@@ -147,6 +149,7 @@
     "kg:audit:check": "bun run cat-harness/scripts/kg-audit.ts --check",
     "kg:audit:strict": "bun run cat-harness/scripts/kg-audit.ts --check --strict",
     "kg:detangle": "bun run detangle/scripts/kg-detangle.ts",
+    "kg:detangle:check": "bun run detangle/scripts/kg-detangle.ts --check",
     "kg:export": "bun run cat-harness/scripts/kg-export.ts",
     "kg:schema": "bun run cat-harness/scripts/harness-schema-export.ts",
     "kg:schema:check": "bun run cat-harness/scripts/harness-schema-export.ts --check",

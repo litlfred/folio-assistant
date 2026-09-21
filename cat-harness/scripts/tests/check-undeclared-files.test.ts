@@ -8,7 +8,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -20,7 +20,7 @@ import {
   undeclaredAtRoot,
 } from "../check-undeclared-files.js";
 import "../../schemas/folio-graph-kind.js";
-import { DECLARATION_SUFFIX, findDeclarationFile } from "../../schemas/cat-harness.js";
+import { findDeclarationFile } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repository with one instance, which declares a repository-scoped directory. */
@@ -237,15 +237,26 @@ describe("this repository, as it stands", () => {
     //
     // Over the real repository on purpose. A fixture would pin the collision I
     // already fixed; this pins the property for whatever is declared next.
+    // The ROOT's declaration is found the same way a subdirectory's is —
+    // `findDeclarationFile`, never a bare suffix filter. This scanned for
+    // `entry.name.endsWith(DECLARATION_SUFFIX)`, which was safe while that
+    // suffix was `.config.json` and became wrong the moment it turned into a
+    // bare `.json` on 2026-09-21: it then matched `tsconfig.json`, whose JSONC
+    // comments threw a parse error, and would have matched `package.json` next.
+    // The suffix is not the discriminator; agreeing with your own `name` is.
     const names = new Map<string, string[]>();
+    const rootDecl = findDeclarationFile(REPO);
+    if (rootDecl !== undefined) {
+      const name = (JSON.parse(readFileSync(join(REPO, rootDecl), "utf-8")) as { name?: string }).name;
+      if (name) names.set(name, [rootDecl]);
+    }
     for (const entry of readdirSync(REPO, { withFileTypes: true })) {
-      const sub = entry.isDirectory() ? findDeclarationFile(join(REPO, entry.name)) : undefined;
-      const rel = sub === undefined ? null : join(entry.name, sub);
-      for (const p of [rel, entry.name.endsWith(DECLARATION_SUFFIX) ? entry.name : null]) {
-        if (!p || !existsSync(join(REPO, p))) continue;
-        const name = (JSON.parse(readFileSync(join(REPO, p), "utf-8")) as { name?: string }).name;
-        if (name) names.set(name, [...(names.get(name) ?? []), p]);
-      }
+      if (!entry.isDirectory()) continue;
+      const sub = findDeclarationFile(join(REPO, entry.name));
+      if (sub === undefined) continue;
+      const rel = join(entry.name, sub);
+      const name = (JSON.parse(readFileSync(join(REPO, rel), "utf-8")) as { name?: string }).name;
+      if (name) names.set(name, [...(names.get(name) ?? []), rel]);
     }
     // The vacuity guard this repository asks for everywhere: a clean run over
     // zero declarations proves nothing, and there are at least three.

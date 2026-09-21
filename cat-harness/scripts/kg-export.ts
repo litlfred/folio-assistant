@@ -41,7 +41,7 @@
  * @module scripts/kg-export
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
-import { join, dirname, relative, resolve } from "node:path";
+import { join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
@@ -2101,6 +2101,14 @@ export function exportIdentity(opts: ExportOptions = {}): {
    * and a second copy of a default is a second chance to disagree with it.
    */
   instanceDir: string;
+  /**
+   * Is that instance one THIS repository publishes?
+   *
+   * Returned rather than recomputed because the caller's diagnostic turns on
+   * it, and a second path-boundary comparison is a second chance to write
+   * `startsWith` and call `/repo-other` a child of `/repo`.
+   */
+  publishedHere: boolean;
 } {
   const instance = opts.instanceRoot ?? ROOT;
   const decl = readDeclaration(instance);
@@ -2125,8 +2133,29 @@ export function exportIdentity(opts: ExportOptions = {}): {
   //
   // Fallback, never override: an instance that declares its own canonical URL
   // keeps it, because then the document really does belong somewhere else.
+  //
+  // AND ONLY FOR AN INSTANCE THIS REPOSITORY ACTUALLY PUBLISHES. The first
+  // version of this fallback (mine, #718) had no such condition, and that was
+  // wrong in the quiet direction: an instance root outside this checkout got
+  // THIS site's base, so exporting `/tmp/outside` minted
+  // `https://litlfred.github.io/folio-assistant/outside.jsonld` — a URL that
+  // will never resolve, claiming a document this repository does not publish,
+  // and reported as no problem at all. Measured, not reasoned: that is what
+  // the command printed before this line existed.
+  //
+  // `cat-bootstrap` inherits because it IS published here, by the deploy step
+  // one function away. `/tmp/outside` is not, so the honest answer there is
+  // the third state the next block already implements — a document-relative
+  // `@id` plus a reported problem — because a base for it would be a guess
+  // wearing the clothes of a fact. Same rule `makeIri` follows.
+  //
+  // A path-boundary comparison, never `startsWith`: `/repo-other` begins with
+  // `/repo` and is not inside it.
+  const repoRoot = resolve(repoRootFor(ROOT));
+  const here = resolve(instance);
+  const publishedHere = here === repoRoot || here.startsWith(repoRoot + sep);
   const ownCanonical = decl?.canonicalUrl ?? "";
-  const publisherCanonical = ownCanonical ? "" : (readDeclaration(ROOT)?.canonicalUrl ?? "");
+  const publisherCanonical = ownCanonical || !publishedHere ? "" : (readDeclaration(ROOT)?.canonicalUrl ?? "");
   const canonicalBase = (ownCanonical || publisherCanonical).replace(/\/+$/, "");
   const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
   // No base declared → a document-relative IRI. Deliberately NOT a fabricated
@@ -2144,12 +2173,21 @@ export function exportIdentity(opts: ExportOptions = {}): {
     canonicalIri,
     isPreview: canonicalIri !== undefined && docIri !== canonicalIri,
     instanceDir: instance,
+    publishedHere,
   };
 }
 
 export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   const problems: string[] = [];
-  const { stub, docIri, base, canonicalIri, isPreview, instanceDir: exportedInstance } = exportIdentity(opts);
+  const {
+    stub,
+    docIri,
+    base,
+    canonicalIri,
+    isPreview,
+    instanceDir: exportedInstance,
+    publishedHere: exportedInstancePublishedHere,
+  } = exportIdentity(opts);
 
   // Provenance of the SOURCE. Absent fields are absent, never placeholders:
   // a consumer must be able to tell "this export did not know" from "this
@@ -2177,10 +2215,24 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     // #695 — so the one reader it exists for was sent to a file that is not
     // there, while the real declaration sat one rename away. A diagnostic that
     // names a retired path is worse than a bare one: it reads as specific.
+    //
+    // AND IT SAYS WHICH OF THE TWO REASONS APPLIES. "none declared by the
+    // publishing instance" was true when the fallback was unconditional and
+    // became false the moment it gained a boundary: for an instance outside
+    // this checkout the host DOES declare a base, it simply does not extend
+    // there. A diagnostic that names the wrong reason sends its reader to add
+    // a `canonicalUrl` that is already present.
     const looked = declarationPathIn(exportedInstance);
+    const where = looked
+      ? relative(repoRootFor(ROOT), looked)
+      : `${relative(repoRootFor(ROOT), exportedInstance)} (no declaration found)`;
+    const why = exportedInstancePublishedHere
+      ? ", and none declared by the publishing instance"
+      : ", and it resolves outside this repository, so the publishing instance's base does not extend to it";
     problems.push(
-      `no canonicalUrl in ${looked ? relative(repoRootFor(ROOT), looked) : `${relative(repoRootFor(ROOT), exportedInstance)} (no declaration found)`}` +
-        ", and none declared by the publishing instance, and no --base-url given: " +
+      `no canonicalUrl in ${where}` +
+        why +
+        ", and no --base-url given: " +
         "@id values are document-relative and will not dereference",
     );
   }
@@ -2356,7 +2408,27 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // the published document and renders it — so removing them needs the viewer
   // pointed at the published result first, and a half-moved field would take
   // the viewer's panel with it.
-  const resultPath = writeQaResult(ROOT, "kg-export", buildQaResult({
+  // ── ONE SIDECAR PER SUBJECT, because the stem is the only thing keeping
+  //    two instances' findings apart ─────────────────────────────────────
+  //
+  // The stem was the constant `"kg-export"`, so EVERY instance's export wrote
+  // the same committed file and the last writer won. Measured 2026-09-21: one
+  // `--instance ./cat-bootstrap` run replaced this instance's committed result
+  // wholesale — `subject.id` flipped from `cat-harness.jsonld` to
+  // `cat-bootstrap.jsonld` and the findings with it, in a file whose whole
+  // purpose is saying what was found about WHICH graph.
+  //
+  // Invisible while one document was ever built, and it stayed invisible in CI
+  // because the deploy does not commit the sidecar. It surfaced the moment a
+  // gate ran the deploy's own commands from a checkout.
+  //
+  // Same rule the `kg-qa` tree already follows — a sidecar mirrors its
+  // subject's path "because flat would collide". The HOST keeps the bare stem
+  // so its committed path is unchanged; a foreign instance is qualified by its
+  // own stub.
+  const hostStub = artefactStub(readDeclaration(ROOT)!);
+  const qaStem = stub === hostStub ? "kg-export" : `kg-export.${stub}`;
+  const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
     subject: { kind: "graph", id: `${stub}.jsonld` },

@@ -853,9 +853,63 @@
   margin: 0;
 }
 
+/* ── The sidebar language bar (bean `rptk`, second half) ──────────────
+ *
+ * `buildLanguageBar()`'s six locale tabs, shown inside the Language action
+ * tile. This is the SIBLING of the per-page bar below, and it carried the same
+ * two failing pairs for two days longer, because `rptk` was read as being
+ * about `mountPageLanguageBar()` alone and the gate that would have said
+ * otherwise never opened this view.
+ *
+ * Measured 2026-09-21, from the inline literals in `docs-ui.js`, against the
+ * `.fa-tiles` panel this bar actually renders on (#27262b):
+ *
+ *   - a not-yet-translated tab: `color:#475569` with `opacity:0.5`, which
+ *     composites to #373e4a = **1.39:1** — three tabs in the gate's
+ *     fixture, five on a page with nothing translated. The SAME opacity trap
+ *     the per-page bar paid for — and the reason `opacity` on text is not a
+ *     dimming control, it is a contrast control nobody measured.
+ *   - the current tab: #ffffff on #3b82f6 = **3.67:1**, bold at 12.8px, which
+ *     is under SC 1.4.3's 18.66px large-text threshold, so 4.5:1 applies.
+ *
+ * The other two pairs passed (#93c5fd on the panel at 8.33:1, and the JS
+ * hover background at 5.74:1) and are restated as tokens anyway: a pair that
+ * passes by accident is one edit from a pair that does not.
+ *
+ * ONE LITERAL, TWO NUMBERS, and that is the argument for an opaque token in a
+ * sentence. `#475569` at `opacity:0.5` is 1.34:1 on the per-page bar's old
+ * backdrop and 1.39:1 here, because the composite is a function of whatever
+ * is painted underneath. Neither number is a property of anything written in
+ * the source, which is why the bean's own note named the wrong colour.
+ *
+ * ONE PALETTE, NOT TWO, and that is a measured claim rather than an omission.
+ * `.fa-tiles` paints `var(--sidebar-color, #27262b)`, just-the-docs defines no
+ * such custom property (see this file's header), and there is no light-scheme
+ * override for it — so this bar's backdrop is the same dark panel in both
+ * schemes. A `:root[data-fa-scheme="light"]` block here would be six tokens
+ * that never apply, which reads as coverage and is not.
+ *
+ * `--fa-sidelang-bg` is OPAQUE and is painted by the bar itself in every one
+ * of its three contexts, so each ratio below is a fact about these tokens
+ * rather than about whatever happens to sit behind them. It is set to the
+ * tiles panel's own colour, so inside the tile the result is pixel-identical
+ * to the `background: transparent` it replaces.
+ */
+.fa-lang-bar {
+  --fa-sidelang-bg: #27262b;
+  --fa-sidelang-fg: #e6e9ee;           /* 12.34:1 — any bar text              */
+  --fa-sidelang-link: #9ec5fe;         /*  8.49:1 — a locale you can switch to */
+  --fa-sidelang-muted: #9aa4b2;        /*  5.95:1 — not yet translated         */
+  --fa-sidelang-current-bg: #60a5fa;   /*  5.91:1 as a surface on the bar       */
+  --fa-sidelang-on-current: #0f172a;   /*  7.02:1 on --fa-sidelang-current-bg   */
+  --fa-sidelang-hover-bg: #35343b;     /*  6.96:1 for --fa-sidelang-link on it  */
+
+  background: var(--fa-sidelang-bg);
+  color: var(--fa-sidelang-fg);
+}
+
 /* The language bar keeps its own card look; only its POSITIONING changed. */
 .fa-lang-bar.fa-panel-in-sidebar {
-  background: var(--sidebar-color, #1e293b);
   border: 1px solid var(--border-color, #475569);
   border-radius: 6px;
   padding: 4px 6px;
@@ -876,13 +930,52 @@
   left: 0;
   top: 100%;
   margin-top: 4px;
-  background: #1e293b;
   border: 1px solid #475569;
   border-radius: 6px;
   padding: 4px 6px;
   z-index: 10000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
+}
+
+.fa-lang-tab {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  margin: 0 1px;
+  transition: background 0.15s;
+  color: var(--fa-sidelang-link);
+  cursor: pointer;
+}
+
+/* Not yet translated. Dimmer by its own measured token, NEVER by `opacity`:
+   opacity blends the text toward the bar and takes the ratio with it, which is
+   exactly how this tab reached 1.37:1. */
+.fa-lang-tab.is-unavailable {
+  color: var(--fa-sidelang-muted);
+  cursor: default;
+}
+
+.fa-lang-tab.is-current {
+  background: var(--fa-sidelang-current-bg);
+  color: var(--fa-sidelang-on-current);
+  font-weight: bold;
+}
+
+/* The locale this reader saved. A ring rather than a colour swap, so it cannot
+   move any of the text pairs above off their measured numbers. */
+.fa-lang-tab.is-remembered {
+  box-shadow: inset 0 0 0 1px var(--fa-sidelang-link);
+}
+
+/* Hover was a pair of JS listeners writing `style.background` — an inline
+   colour literal with extra steps, and one nothing could measure, since it
+   existed only while a pointer was over the tab. Only a real link hovers, so
+   the muted spans keep their background and their ratio. */
+a.fa-lang-tab:hover:not(.is-current) {
+  background: var(--fa-sidelang-hover-bg);
 }
 
 /* ── Per-page language bar (bean `rptk`) ─────────────────────────────────
@@ -1680,6 +1773,10 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   cursor: default;
 }
 
+/* Flush inside the tile: no padding, no border, no card of its own. The
+   background is NOT reset to `transparent` here any more — `--fa-sidelang-bg`
+   is this panel's own colour, so the bar paints the same pixels while giving
+   every ratio above a backdrop that is stated rather than inherited. */
 .fa-tiles-view .fa-lang-bar {
   display: flex;
   flex-wrap: wrap;
@@ -1687,7 +1784,6 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   position: static;
   padding: 0;
   border: 0;
-  background: transparent;
 }
 
 .fa-tiles-view .fa-a11y-panel {
@@ -2162,9 +2258,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-sticky-body p:last-child { margin-bottom: 0; }
 .fa-sticky-empty { opacity: 0.7; font-style: italic; }
 
-/* A pinned sticky. `position: fixed` so it stays put while the page scrolls —
- * which is the whole point of pinning one. */
-.fa-sticky-layer { position: fixed; inset: auto 1rem 1rem auto; z-index: 90; width: min(22rem, calc(100vw - 2rem)); }
+/* THE LAYER IS THE FRAME, NOT THE ARRANGEMENT — bean `ivfw`.
+ *
+ * It was `inset: auto 1rem 1rem auto` with a width: a small bottom-right box
+ * whose children stacked in flow. That is precisely the owner's report, *"you
+ * cant move around dispaly"* — the LAYER decided where a sticky sat and the
+ * sticky had no say, so there was nowhere for it to go.
+ *
+ * Now it is the whole viewport and each card carries its own geometry, placed
+ * by `placeFloating` so the default reproduces the old bottom-right pile and
+ * nothing moves until a reader moves it. `position: fixed` is unchanged and is
+ * still the point of pinning: it stays put while the page scrolls.
+ *
+ * `pointer-events: none` on the frame and `auto` on the cards, because a
+ * full-viewport layer that swallowed clicks would make the whole page
+ * unusable the moment one sticky was pinned. The frame is a coordinate space,
+ * not a surface. */
+.fa-sticky-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+}
 .fa-sticky-layer:empty { display: none; }
 
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
@@ -2181,9 +2296,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * override, and BOTH background and colour set together in each, because
  * setting only one is exactly how the mismatch happened. */
 .fa-sticky-floating {
-  margin-top: 0.6em;
+  position: absolute;
+  pointer-events: auto;
+  /* `border-box`, so a geometry read back after a write is the geometry that
+     was written. `content-box` makes the round-trip grow the card by its own
+     padding on every nudge — measured on the board window, 450 → 452. */
+  box-sizing: border-box;
+  overflow: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
+
+/* In the move mode the card says so, for a reader who can see it. The live
+   region says it for one who cannot — both, never either. */
+.fa-sticky-floating[data-fa-moving="true"] {
+  outline: 2px dashed var(--fa-sidelang-link, #9ec5fe);
+  outline-offset: 2px;
+}
+
+/* The head is the drag handle, so it says so — but only on a card that can
+   actually be dragged. A board sticky showing a move cursor it cannot honour
+   is a promise the surface does not keep. */
+.fa-sticky-floating .fa-sticky-head { cursor: move; }
+.fa-sticky-floating .fa-sticky-head button { cursor: pointer; }
 
 /* THE OPAQUE OVERRIDE IS FOR AN UNTHEMED STICKY, AND ONLY FOR ONE.
  *
@@ -3376,3 +3510,300 @@ a.fa-harness-tab__body:focus-visible {
  * with a rule a page can override. So the print case is handled in
  * `docs-ui.js`, on `beforeprint`, where it can be tested; a `@media print`
  * rule here would LOOK like it worked and quietly print nothing. */
+
+/* ═══ Semantic zoom and windows on the board ═══════════════════════════════
+ *
+ * Two mechanisms, styled in two blocks that share nothing, because they ARE
+ * two mechanisms: the slot's avatar treatment is driven by width, the window
+ * layer by what a person opened. See `board-windows` and the note in
+ * `docs-ui.js`.
+ */
+
+/* THE AVATAR IS ALWAYS THERE — "start everyrting in avatar". It is the control
+ * that opens the card AND what semantic zoom leaves behind when the board
+ * shrinks, which is why the two mechanisms meet at exactly one element. */
+.fa-sticky-avatar {
+  display: block;
+  /* Low-dexterity profile: a board action is never a small target. */
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  margin: 0 0 0.375rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.fa-sticky-avatar:hover,
+.fa-sticky-avatar:focus-visible {
+  border-color: var(--fa-rule, rgba(128, 128, 128, 0.5));
+}
+
+/* Below the declared threshold the slot shows its avatar and nothing else.
+ * `display: none` on the card rather than `visibility`, so the grid track
+ * collapses to the avatar instead of keeping the card's footprint. */
+.fa-sticky-slot--avatar > .fa-sticky,
+.fa-sticky-slot--avatar > .fa-sticky-process {
+  display: none;
+}
+
+.fa-sticky-slot--avatar {
+  /* The avatar is the whole slot now, so centre it in the track it kept. */
+  display: flex;
+  justify-content: center;
+}
+
+/* THE WINDOW LAYER. Projected onto the board, so it is positioned against the
+ * board rather than living in the grid — an open card is not the card grown
+ * large, and putting it back in the grid would make a zoom-out take it with
+ * the card. */
+.fa-board-windows {
+  position: absolute;
+  inset: 0;
+  /* The layer itself must not swallow clicks meant for the grid beneath it;
+   * only the panels in it are interactive. */
+  pointer-events: none;
+}
+
+.fa-board-windows:empty {
+  display: none;
+}
+
+.fa-board-window {
+  position: absolute;
+  /* BORDER-BOX, and it is load-bearing rather than tidy. The move code reads
+   * geometry from `getBoundingClientRect()` — which measures the border box —
+   * and writes it back as `width`/`height`. Under the default `content-box`
+   * those two are not the same number, so every first nudge silently grew the
+   * window by its border: 450 -> 452. Caught by the four-directions spec
+   * asserting that a move round-trip returns to where it started. */
+  box-sizing: border-box;
+  top: 2rem;
+  left: 2rem;
+  width: min(28rem, calc(100% - 4rem));
+  max-height: calc(100% - 4rem);
+  overflow: auto;
+  pointer-events: auto;
+  border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.5));
+  border-radius: 0.5rem;
+  background: var(--fa-surface, Canvas);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
+}
+
+/* Each window is offset from the one below it, so a stack of three reads as
+ * three rather than as one. Derived from `data-fa-z`, which is the stack's own
+ * one-based index — nothing here decides the order.
+ *
+ * THE VERTICAL STEP IS LARGER THAN THE TITLE BAR, deliberately: a lower
+ * window's bar stays visible under the one above it, so it can be selected —
+ * and selecting any part raises it, which is what makes its own `[x]`
+ * reachable again. A cascade tight enough to bury the bar would leave a
+ * covered window with no way to the front, which is `l4zi` with extra steps.
+ *
+ * Moving and resizing a window is `le8b`'s, not this unit's. Until it lands a
+ * deep stack does cover the grid beneath it, and that limit is real rather
+ * than hidden: the keyboard path is unaffected, because focus does not care
+ * what is painted on top. */
+.fa-board-window[data-fa-z="2"] { top: 5rem; left: 2.5rem; }
+.fa-board-window[data-fa-z="3"] { top: 8rem; left: 3rem; }
+.fa-board-window[data-fa-z="4"] { top: 11rem; left: 3.5rem; }
+
+.fa-board-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  border-bottom: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.35));
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.fa-board-window-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fa-board-window-control {
+  /* The frame's controls. `[x]` is the platform's and is always first; the
+   * rest are what the kind declared. A kind fills the panel and chooses which
+   * controls it offers; it does not get to remove the way out or move it. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Low-dexterity profile: a frame control is never a small target. */
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.4));
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  line-height: 1;
+  text-decoration: none;
+}
+
+/* THE NODE BADGE, on the avatar and on the open window — one query, two
+ * surfaces (R7). Sized so the chip reads at avatar scale without covering the
+ * mark it rides on. */
+.fa-node-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.25rem;
+  border-radius: 0.625rem;
+  background: var(--fa-rule, rgba(128, 128, 128, 0.35));
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-node-badge--avatar {
+  /* On the avatar it rides the corner rather than sitting beside it: the
+   * avatar IS the target, and a chip alongside would shrink it. */
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+}
+
+.fa-sticky-avatar {
+  position: relative;
+}
+
+/* The board is the window layer's containing block. Without this the panels
+ * would position against the viewport and a scrolled board would leave them
+ * behind. */
+.fa-sticky-board {
+  position: relative;
+}
+
+/* ═══ The fishbone's confirm ═══════════════════════════════════════════════
+ *
+ * `deletion-requires-confirmation` asks for what would go, so the dialog is
+ * sized for two paragraphs of prose rather than for a one-line "Are you
+ * sure?". The two paragraphs are the point: what this does, and what it does
+ * not — and the second is the half a reader would otherwise assume.
+ */
+.fa-relocate {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  overflow: auto;
+  background: var(--fa-surface, Canvas);
+}
+
+.fa-relocate-title {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.fa-relocate-scope p {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.fa-relocate-does-not {
+  /* Set apart, because a reader skimming for the button is exactly the reader
+   * this paragraph is for. */
+  padding-left: 0.625rem;
+  border-left: 0.1875rem solid var(--fa-rule, rgba(128, 128, 128, 0.5));
+  opacity: 0.9;
+}
+
+.fa-relocate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.fa-relocate-actions button {
+  /* Low-dexterity profile, and a confirm is the last place to economise on
+   * target size: a mis-hit here is the one that costs something. */
+  min-height: 2.75rem;
+  padding: 0 0.875rem;
+  border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.5));
+  border-radius: 0.375rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.fa-relocate-cancel {
+  /* The safe choice, and it is the one that carries the weight. Focus lands
+   * here, so a reader who hits Enter without reading has left the content
+   * where it is. */
+  font-weight: 600;
+}
+
+/* Move mode. Announced through a live region as well as outlined, because a
+ * reader who cannot see the outline still has to be told what their arrow keys
+ * now do. */
+.fa-board-window[data-fa-moving="true"] {
+  outline: 2px dashed var(--fa-tile-tone, currentColor);
+  outline-offset: 2px;
+}
+
+.fa-board-window-bar {
+  /* The drag accelerator's handle. The keyboard path does everything this
+   * does, so the cursor is a hint rather than the affordance. */
+  cursor: move;
+}
+
+/* The reader's filter. In the board's head, and in no document anywhere. */
+.fa-board-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  padding: 0 0.5rem 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.fa-board-filter:empty {
+  /* A folio whose todos never vary on a property gets no control for it, and
+   * an empty row would read as a control that failed to load. */
+  display: none;
+}
+
+.fa-board-filter-label {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+.fa-board-filter-select {
+  /* Low-dexterity profile: a select is a target like any other. */
+  min-height: 2.25rem;
+  padding: 0 0.375rem;
+  border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.45));
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+}
+
+.fa-sticky-filtered-out {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+/* The declared visualisations, on the board. The navbar's copies live in the
+ * action launcher's own grid and take its rules; this is the second surface of
+ * the same declaration, so it reuses `.fa-tile` rather than styling a new
+ * thing — the template is `1le7`'s and is not duplicated. */
+.fa-board-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.fa-board-tiles:empty {
+  display: none;
+}

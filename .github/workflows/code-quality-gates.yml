@@ -452,6 +452,15 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # The detangle measurements are PINNED, not graded. This fails on a STALE
+      # sidecar or an orphaned one — never on a number being "wrong", because
+      # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
+      # declared step"). Bean `sb6z`: the model was correct and unexercised, so
+      # a regression in it was invisible until somebody ran it by hand AND
+      # remembered last time's numbers.
+      - name: detangle measurements are current
+        run: bun run kg:detangle:check
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
@@ -650,6 +659,14 @@ jobs:
           bun run smart-trust:pages:check
           bun run check:actor-reach
           bun run check:harness-dirs
+          # Does a path-filtered workflow rebuild when the scripts it RUNS
+          # change? `docs-site.yml` named eight generators and ran 22, so a
+          # fix to `kg-export.ts` -- the script producing both graph documents
+          # the site serves -- merged to `main` and fired NO RUN. The outage
+          # `40fl` fixed and the silence after the fix were one defect seen
+          # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
+          # never a list here.
+          bun run check:workflow-script-paths
           # Can this repository be CHECKED OUT? Every other gate here asks
           # whether the content is right; this one asks whether the tree can be
           # created at all. Seven sidecars named `req:<slug>` made the clone
@@ -693,6 +710,15 @@ jobs:
           # every export below it — which is how bean `95s1` got an error
           # 3,186 lines from its cause that looked like a circular import.
           bun run check:module-scope-resolution
+          # Every foreign-instance export `docs-site.yml` actually runs, run
+          # the way it runs it — no `--base-url`, on the declaration's own
+          # authority. The deploy failed SEVEN consecutive times on `main`
+          # (2026-09-21) on one command this set did not contain, and six
+          # merges landed against the green it printed meanwhile. The
+          # invocations are read out of the deploy YAML rather than listed,
+          # so adding one there is covered here with no edit; finding none
+          # is exit 1, not a pass (issue #720, bean `u1iu`).
+          bun run check:published-instance-exports
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no

@@ -56,7 +56,14 @@ import { join } from "node:path";
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { flattenDependencies } from "./dependency-order.js";
-import { type CatHarnessDeclaration, findDeclarationFile, isExemptFrom, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import {
+  type CatHarnessDeclaration,
+  findDeclarationFile,
+  isExemptFrom,
+  readDeclaration,
+  siteDirFor,
+  visualisationsOf,
+} from "../schemas/cat-harness.js";
 // REQUIRED, for the side effect: `folio` is registered by core on import, and
 // this instance declares a folio graph. Without it `readDeclaration` throws on
 // a perfectly valid declaration — which is exactly how three inline evals in
@@ -303,11 +310,17 @@ function tileFor(
   // a different finding from "no viewer": one says nobody built it, the other
   // says the declaration is wrong.
   for (const d of dirs) {
-    const declared = d.coverage?.visualiser;
-    if (declared && !existsSync(join(siteDir, "..", "..", declared))) {
-      findings.push(
-        `${decl.name}/${d.id}: declares visualiser "${declared}", which does not resolve on disk.`,
-      );
+    // EVERY declared visualisation, not "the" one: a directory may now declare
+    // several — the owner's *"harness can declare >= 1 visualiztion (which
+    // then has a title)"* — and checking only the first would report a clean
+    // directory whose second viewer is missing.
+    for (const v of visualisationsOf(d.coverage, d.id)) {
+      if (!existsSync(join(siteDir, "..", "..", v.ref))) {
+        findings.push(
+          `${decl.name}/${d.id}: declares visualiser "${v.title}" at "${v.ref}", ` +
+            `which does not resolve on disk.`,
+        );
+      }
     }
   }
 
