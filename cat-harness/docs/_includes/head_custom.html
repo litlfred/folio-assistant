@@ -282,6 +282,27 @@
 <meta name="fa-zoom-src" content="{{ '/assets/semantic-zoom.json' | relative_url }}">
 
 <!--
+  THE DECLARED VISUALISATIONS, as tiles.
+
+  Owner, 2026-09-20: *"if harness declares visaluzers, those should have tile"*
+  — so the tile set is the `coverage.visualiser` obligation made reachable, not
+  a second registry. `graph-tiles.ts` derives it into `_data/harness.json`;
+  this hands it to `docs-ui.js` for BOTH surfaces, because a tile is declared
+  once and says where it shows.
+
+  INLINE rather than a second fetch, unlike the todo index above, and the two
+  are different for a reason worth stating: that index grows with the todo
+  corpus, while this one is bounded by the number of directories an instance
+  DECLARES — twelve here — and every page needs it before first paint or the
+  navbar would visibly grow tiles a moment after the reader arrives.
+
+  `jsonify` and not a hand-built string: a title carrying a quote would
+  otherwise close the attribute, and the quoting rule is Liquid's rather than
+  something this comment has to be right about.
+-->
+<meta name="fa-tiles" content="{{ site.data.harness.tiles | jsonify | escape }}">
+
+<!--
   The bean index — the AGENT work plan, published by the same generator beside
   the todo index above, for the same reason and read the same way. Separate
   files rather than one combined document because the two stores are separate

@@ -1503,12 +1503,6 @@
       return b;
     }
 
-    function tileLink(glyph, label, href, hint) {
-      var a = el("a", { class: "fa-tile", href: href, "aria-label": label + " — " + hint });
-      a.innerHTML = glyph;
-      a.appendChild(el("span", { class: "fa-tile-caption" }, label));
-      return a;
-    }
 
     // Search leads the grid. It is the one action here a reader reaches for
     // repeatedly, and it is the one that was taken off the main panel -- so
@@ -1559,6 +1553,11 @@
     }
     if (window.__faTodoBoard) addTodoTile(window.__faTodoBoard);
     else document.addEventListener("fa:todos-ready", function (e) { addTodoTile(e.detail); });
+
+    // The declared visualisations. `mountGraphTiles` is module-level so the
+    // board mounts the SAME tiles from the same array — Q11, one declaration
+    // and per-surface visibility.
+    mountGraphTiles("navbar", grid, readerShownTiles());
 
     var links = getSiteLinks();
     if (links.kg) {
@@ -1885,6 +1884,76 @@
    * answer against the model's.
    */
   var readerFilter = { properties: {} };
+
+  /**
+   * Tiles this READER has flipped from their declared default.
+   *
+   * Q9: *declared default, reader may override.* The folio says which tiles
+   * start out of frame; this is the other half, and it is session state — no
+   * file, no `localStorage`, nothing anybody else opens. A reader's view of
+   * the navbar is not a change to the navbar, which is the same separation
+   * `reader-filter.ts` holds between a reader's filter and a board's.
+   */
+  var readerTileOverrides = [];
+  function readerShownTiles() { return readerTileOverrides; }
+
+  /**
+   * `1le7`'s tile, as a link. MODULE-LEVEL so both surfaces share one template.
+   *
+   * It was nested inside the action launcher until the board needed it too,
+   * and the bean is explicit about the alternative: *"the tile template is
+   * `1le7`'s, extended if it needs to be, never duplicated."* A second copy
+   * would be two tiles that look alike until one of them is changed.
+   */
+  function tileLink(glyph, label, href, hint) {
+    var a = el("a", { class: "fa-tile", href: href, "aria-label": label + " — " + hint });
+    a.innerHTML = glyph;
+    a.appendChild(el("span", { class: "fa-tile-caption" }, label));
+    return a;
+  }
+
+    /* ── The DECLARED visualisations, one tile each ──────────────────────
+   *
+   * Owner: *"if harness declares visaluzers, those should have tile"*, and
+   * *"those should open their exisiting visualzaiton"*.
+   *
+   * Read from `_data/harness.json`, which `graph-tiles.ts` derives from the
+   * `coverage.visualiser` obligation every instance already carries and
+   * `check:subgraph-coverage` already audits. **There is no second list**: a
+   * registry of "things that get tiles" would be free to disagree with the
+   * audited one, and a tile missing because nobody added it there would look
+   * exactly like a graph nobody declared.
+   *
+   * `1le7`'s `tileLink` — the template is not duplicated, and a tile with no
+   * published href is not rendered as a link to nowhere (`pb04`).
+   */
+  function mountGraphTiles(surface, into, hiddenIds) {
+    var meta = document.querySelector('meta[name="fa-tiles"]');
+    var raw = meta && meta.getAttribute("content");
+    if (!raw) return 0;
+    var tiles;
+    try { tiles = JSON.parse(raw); } catch (_e) { return 0; }
+    var shown = 0;
+    for (var i = 0; i < tiles.length; i++) {
+      var t = tiles[i];
+      if (!t.href) continue;                                   // pb04
+      if ((t.surfaces || []).indexOf(surface) === -1) continue;
+      // DECLARED default, then this READER's override. The reader's half is
+      // theirs alone and is committed nowhere — `reader-filter.ts`'s rule on
+      // another surface.
+      if (t.hidden && hiddenIds.indexOf(t.id) === -1) continue;
+      if (!t.hidden && hiddenIds.indexOf(t.id) !== -1) continue;
+      var tile = tileLink(NET_GLYPH, t.title, t.href,
+                          "the declared visualisation of " + t.directory);
+      tile.setAttribute("data-fa-tile", t.id);
+      tile.setAttribute("data-fa-surface", surface);
+      if (t.theme) tile.setAttribute("data-fa-theme", t.theme);
+      into.appendChild(tile);
+      shown++;
+    }
+    return shown;
+  }
+
 
   /** OR within a property's values, AND across properties — the board's logic. */
   function readerShows(filter, todo) {
@@ -2685,8 +2754,18 @@
     });
     board.appendChild(filterRow);
 
+    /* THE OTHER SURFACE for the same declarations. Q11: declared once,
+     * per-surface visibility. This filters the same array the navbar reads, so
+     * a tile cannot be one thing in the sidebar and another here. */
+    var boardTiles = el("div", {
+      class: "fa-board-tiles",
+      role: "group",
+      "aria-label": "Visualisations",
+    });
+
     var grid = el("div", { class: "fa-sticky-grid" });
     board.appendChild(grid);
+    board.appendChild(boardTiles);
     // APPEND on the landing board, insert-first everywhere else. The harness
     // cards are the page's first statement -- what this repository is, and
     // which layers initiated -- and putting the todos above them would answer
@@ -2835,6 +2914,12 @@
       filterRow.appendChild(select);
     });
     applyReaderFilter();
+
+    // THE SAME TILES, on the board — the other surface of one declaration.
+    // Mounted after the grid so the board's own content leads and the
+    // visualisations follow: the same argument the landing board uses for
+    // putting the harness cards before the todos.
+    mountGraphTiles("board", boardTiles, readerShownTiles());
 
     /* ── Windows, projected ON TO the board ───────────────────────────────
      *

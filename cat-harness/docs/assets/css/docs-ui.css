@@ -3658,3 +3658,18 @@ a.fa-harness-tab__body:focus-visible {
   font-size: 0.8125rem;
   opacity: 0.8;
 }
+
+/* The declared visualisations, on the board. The navbar's copies live in the
+ * action launcher's own grid and take its rules; this is the second surface of
+ * the same declaration, so it reuses `.fa-tile` rather than styling a new
+ * thing — the template is `1le7`'s and is not duplicated. */
+.fa-board-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.fa-board-tiles:empty {
+  display: none;
+}
