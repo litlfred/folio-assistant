@@ -1240,6 +1240,23 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-qa-sev-minor { opacity: 0.7; }
 .fa-qa-locale { opacity: 0.85; }
 
+/* Which block a rolled-up criterion belongs to. Dimmer than the verdict chip
+   and free to wrap, because a block label is prose-length where a locale is two
+   characters -- `white-space: nowrap` on the shared chip rule would push a long
+   one off the row instead of letting the line break. */
+.fa-qa-block {
+  opacity: 0.7;
+  white-space: normal;
+  max-width: 22em;
+  overflow-wrap: anywhere;
+}
+
+/* The page-level QA row, before `mountTranslationBadges` lifts it into the
+   badge row under the title. It is a row of its own until then, so it carries
+   the same top margin the badge row has rather than sitting flush against the
+   heading -- and it must still look deliberate if that script never runs. */
+.fa-page-qa-badges { margin: 0.3em 0 0.6em; }
+
 .fa-qa-crit-body { padding: 0.2em 0 0.8em 1.45em; }
 
 .fa-qa-witness {

@@ -44,6 +44,7 @@ import {
 import {
   QA_FAMILY_LABEL,
   readWitnessDoc,
+  rollUpWitnessDocs,
   sidecarPaths,
   type QaFamily,
   type QaWitnessDoc,
@@ -482,6 +483,88 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
  * block has none, so a node with no label emits no attribute rather than a
  * guessed one.
  */
+/**
+ * The page-level `TR` badge — one panel for every translation verdict on the
+ * page, rolled up from its blocks' sidecars.
+ *
+ * ## The gap it fills
+ *
+ * The per-node `TR` icon is honest and almost always empty: a block gets a
+ * translation sidecar only when a PO actually carries its strings, and this
+ * site is 3% translated, so 114 of 115 of those icons are "not swept" spans
+ * with nothing under them. A reader of a translated page had no translation
+ * evidence to open anywhere on it. The page-level round-trip badge that once
+ * stood in that spot was deleted (bean `ktt2`) because it scored 36 strings
+ * against a 6-entry back-translation map and published every unmeasured one as
+ * drift — right to remove, and nothing replaced it. Issue #687, bean `r3ez`.
+ *
+ * ## It is the SAME control as every other badge, deliberately
+ *
+ * Same class, same `data-qa-*` contract, same `qa-index.json`, painted by the
+ * same `paintQaBadges` and opened by the same `qaToggle`. Nothing here is a
+ * second badge mechanism with its own states to drift — the only new fact is
+ * the subject, which is a page rather than a node, and `rollUpWitnessDocs`
+ * labels every criterion with the block it came from so the panel still says
+ * which one a failure belongs to.
+ *
+ * ## Two different absences, as elsewhere in this file
+ *
+ * No roll-up at all is `unswept`, server-rendered as a plain `<span>`: nothing
+ * to open, and a control that does nothing when pressed is worse than a mark.
+ * A roll-up that exists but whose index row cannot be read paints `unknown` in
+ * the browser. Only the second is "could not determine", and they are not the
+ * same answer.
+ *
+ * The badge rides a `fa-page-qa-badges` paragraph under the `h1`;
+ * `mountTranslationBadges` in `docs-ui.js` hoists it into the coverage/sweep
+ * row so the page carries one badge row rather than two.
+ */
+function pageQaIcons(page: WebPage): string {
+  const subjects = page.nodes
+    .filter((n) => n.block)
+    .map((n) => ({
+      path: join(pageDir(page), `${n.block}.md`),
+      label: blockLabel(page, n) ?? n.id,
+    }));
+  if (subjects.length === 0) return "";
+
+  const family: QaFamily = "translation";
+  const { tag, label } = QA_FAMILY_LABEL[family];
+  const slug = page.slug.replace(/\//g, "-");
+  const doc = rollUpWitnessDocs(family, subjects, REPO_ROOT, `${page.title} — translations`);
+
+  if (!doc) {
+    const title = `${label}: not swept — no block on this page carries a translation verdict`;
+    return (
+      `<span class="fa-qa-badges fa-page-qa-badges">` +
+      `<span class="fa-qa-badge fa-qa-unswept fa-qa-fam-${family}" ` +
+      `title="${title}" aria-label="${title}">` +
+      `<span class="fa-qa-tag">${tag}</span></span></span>`
+    );
+  }
+
+  const key = `page.${family}`;
+  const rel = join(slug, `${key}.json`);
+  const abs = join(QA_ASSET_DIR, rel);
+  mkdirSync(dirname(abs), { recursive: true });
+  emit(abs, JSON.stringify(doc) + "\n", "verdict");
+  emittedQa.add(abs);
+  qaIndex[key] = { state: doc.state, counts: doc.counts };
+
+  const title = `${label}: loading the verdict…`;
+  return (
+    `<span class="fa-qa-badges fa-page-qa-badges">` +
+    `<button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-${family}" ` +
+    `data-qa-family="${family}" data-qa-key="${key}" data-qa-label="${label}" ` +
+    `data-qa-noun="page" ` +
+    `data-qa-src="{{ '/assets/qa/${rel}' | relative_url }}" ` +
+    `data-qa-index="{{ '/assets/qa/${slug}/${QA_INDEX_FILE}' | relative_url }}" ` +
+    `aria-expanded="false" aria-busy="true" title="${title}" aria-label="${title}">` +
+    `<span class="fa-qa-tag">${tag}</span>` +
+    `<span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>`
+  );
+}
+
 function blockLabel(page: WebPage, node: WebPageNode): string | undefined {
   const slug = page.slug.replace(/\//g, "-");
   const file = join(REPO_ROOT, "content", "docs", slug, `${node.id}.ts`);
@@ -610,6 +693,14 @@ function renderPage(page: WebPage): string {
   lines.push(`# ${page.heading ?? page.title}`);
   lines.push("{: .no_toc }");
   lines.push("");
+  // The page-level QA row, under the title. `docs-ui.js` hoists it into the
+  // coverage/sweep badge row it builds in the same place, so the reader sees
+  // one row; it stands on its own if that script does not run.
+  const pageQa = pageQaIcons(page);
+  if (pageQa) {
+    lines.push(pageQa);
+    lines.push("");
+  }
   lines.push("<details open markdown=\"block\">");
   lines.push("  <summary>On this page</summary>");
   lines.push("  {: .text-delta }");

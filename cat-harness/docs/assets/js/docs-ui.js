@@ -3051,6 +3051,26 @@
       }
     }
 
+    // The page-level QA badges the generator emitted under the h1 join this
+    // row rather than standing as a second one. They are SERVER-rendered,
+    // because whether a page's blocks carry any translation verdict is
+    // structure — the same argument `gen-docs-pages.ts` makes for the per-node
+    // icons — and they are moved rather than rebuilt here so there is exactly
+    // one place that knows their markup.
+    var pageQa = document.querySelector(".fa-page-qa-badges");
+    if (pageQa) {
+      while (pageQa.firstChild) container.appendChild(pageQa.firstChild);
+      // The now-empty span, and the paragraph kramdown wrapped it in when that
+      // span was the whole line. Left behind, the paragraph keeps its margins
+      // and opens a gap under the title that looks like a rendering fault.
+      var host = pageQa.parentNode;
+      pageQa.parentNode.removeChild(pageQa);
+      if (host && host.tagName === "P" && host.textContent.trim() === "" &&
+          host.children.length === 0 && host.parentNode) {
+        host.parentNode.removeChild(host);
+      }
+    }
+
     // Place badges AFTER the h1, not inside it. Inside the h1 they were
     // invisible because kramdown's {: .fs-9 } makes the heading enormous
     // and the tiny badges got lost in it.
@@ -3229,6 +3249,13 @@
       QA_RESULT_LABEL[c.result] || c.result || "no verdict"));
     if (c.severity) {
       btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-sev-" + c.severity }, c.severity));
+    }
+    // On a page-level roll-up one panel carries verdicts about many blocks, so
+    // the row has to say WHICH — a `fail` with no subject is a page-wide alarm
+    // a reader cannot act on. Absent on a per-block panel, where the doc's own
+    // subject already says it.
+    if (c.block) {
+      btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-block" }, c.block));
     }
     if (c.locale) {
       btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-locale" }, c.locale));

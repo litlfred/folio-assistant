@@ -11,6 +11,8 @@ available_locales: ["en"]
 # Beans and todos
 {: .no_toc }
 
+<span class="fa-qa-badges fa-page-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no block on this page carries a translation verdict" aria-label="Translation QA: not swept — no block on this page carries a translation verdict"><span class="fa-qa-tag">TR</span></span></span>
+
 <details open markdown="block">
   <summary>On this page</summary>
   {: .text-delta }

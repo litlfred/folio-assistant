@@ -11,6 +11,8 @@ available_locales: ["en","fr"]
 # CRDM methodology
 {: .no_toc }
 
+<span class="fa-qa-badges fa-page-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="page.translation" data-qa-label="Translation QA" data-qa-noun="page" data-qa-src="{{ '/assets/qa/crdm-methodology/page.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/crdm-methodology/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+
 <details open markdown="block">
   <summary>On this page</summary>
   {: .text-delta }

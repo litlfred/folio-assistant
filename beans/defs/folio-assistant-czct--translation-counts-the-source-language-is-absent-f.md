@@ -1,11 +1,11 @@
 ---
 # folio-assistant-czct
 title: 'TRANSLATION COUNTS: the source language is absent from every numerator and denominator, and the two available_locales conventions disagree'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T10:44:38Z
-updated_at: 2026-09-21T10:44:45Z
+updated_at: 2026-09-21T11:04:51Z
 parent: folio-assistant-bzyu
 ---
 
