@@ -1,10 +1,11 @@
 ---
 # folio-assistant-1hkj
 title: 'MODULE-SCOPE FILESYSTEM WORK: importing any of 39 modules can throw, and the error names a symptom far from the cause'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-21T13:12:36Z
-updated_at: 2026-09-21T13:12:36Z
+updated_at: 2026-09-21T13:38:53Z
 parent: folio-assistant-vke6
 ---
 
@@ -47,13 +48,59 @@ A lazy accessor: `repoRoot()` memoised on first call, so the throw happens
 where the value is USED and names the caller. Mechanical per site, but 53 of
 them, and every one is a module that currently cannot fail to import.
 
+## RE-SCOPED ON STARTING: 39 was the wrong denominator, and the proposed fix was unsound
+
+Two measurements taken before converting anything changed this bean.
+
+**`findContentRepoRoot()` CANNOT THROW.** PR #695 made it catch `folioDir`
+failures while searching and end in a declared fallback. So 33 of the 53 sites
+carry no hazard at all — they cannot abort a module however malformed the
+declarations are. What remains is **20 files** calling `folioDir(...)` at
+module scope, which does throw.
+
+**THE LAZY ACCESSOR THIS BEAN PROPOSED WOULD HAVE BROKEN A CONTRACT.**
+`findContentRepoRoot` reads `process.cwd()`, and `checker-missing-evidence.test.ts`
+depends on the value being fixed at module load — it says so in its own words,
+and uses ABSOLUTE fixture paths *because* a test's `process.chdir` cannot move
+it. Resolving lazily would let a chdir change the answer; memoising on first
+use would be worse, making the value depend on which caller ran first. Six
+tests and two production modules call `process.chdir`, so neither variant is a
+refactor: both are behaviour changes.
+
+## What was done instead — the value stays, only the THROW moves
+
+`folioDirDeferred(root, import.meta.url)` resolves at load, under the cwd the
+module was loaded with, exactly as before. It captures any failure and raises
+it at FIRST USE, naming the module and carrying the original error as `cause`.
+
+Twenty declaration sites converted, ~79 references, plus two downstream
+consumers of the two `export const` cases. `adapters/document/paths.ts` keeps
+its `get.FOLIO_DIR()` getter untouched — that one was already lazy.
+
+**A codemod of mine hit an object KEY** (`FOLIO_DIR:` became `folioDirOf():`)
+and broke that file. Reverted and redone with key positions excluded and the
+one affected file held back for a hand pass, rather than patched over.
+
 ## Done when
 
-- [ ] Module scope does no filesystem resolution in these 39 modules
-- [ ] A throw names the call site that needed the value, not a binding
-      thousands of lines away
-- [ ] A gate keeps the pattern from coming back, or the absence of one is
-      argued
+- [x] Module scope does no filesystem resolution that can throw — zero
+      module-scope `folioDir` calls remain, across 958 files
+- [x] A throw names the module that could not resolve, and carries the
+      declaration's own error as `cause`
+- [x] A gate keeps the pattern from coming back — `check:module-scope-resolution`,
+      in `code-quality-gates.yml`, falsified by planting the old pattern
+      (exit 1 with it, 0 without)
+
+5 tests on the helper, including the precondition that the fixture root really
+does make `folioDir` throw — without it the other cases could pass over a root
+that never fails. `bun run gates --all` **91 of 91**, 222 browser tests.
+
+## Still true, and not taken
+
+33 sites still call `findContentRepoRoot()` at module scope. That is fine
+TODAY because the function cannot throw. It is worth knowing that the safety
+rests on that property rather than on the call site, so a change making it
+throw again would revive this whole class silently.
 
 ## Related, and NOT the same defect
 

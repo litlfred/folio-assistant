@@ -7,7 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { directoriesForGraph, directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
+import { directoriesForGraph, directoryForGraph, folioDirDeferred } from "../../schemas/cat-harness.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -26,7 +26,7 @@ import { directoriesForGraph, directoryForGraph, folioDir } from "../../schemas/
 export const REPO_ROOT = findContentRepoRoot();
 
 /** Content objects directory. */
-export const FOLIO_DIR = folioDir(REPO_ROOT);
+export const folioDirOf = folioDirDeferred(REPO_ROOT, import.meta.url);
 
 /**
  * Ingested documents directory — the `.jsonld` nodes and `sections/*.md` that

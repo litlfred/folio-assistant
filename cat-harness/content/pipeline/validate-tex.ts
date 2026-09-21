@@ -18,7 +18,7 @@
  * @module content/pipeline/validate-tex
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDirDeferred } from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync, writeFileSync } from "fs";
 import { join } from "path";
 import { Glob } from "bun";
@@ -452,7 +452,7 @@ function formatWarningsLog(report: ValidationReport): string {
 
 // Was `join(import.meta.dir, "..")` — `<platform>/content`, which holds only
 // `pipeline/`. The papers this validates live in the folio.
-const FOLIO_ROOT = folioDir(findContentRepoRoot());
+const folioDirOf = folioDirDeferred(findContentRepoRoot(), import.meta.url);
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
@@ -479,8 +479,8 @@ if (import.meta.main) {
     mdFiles = [singleFile];
   } else {
     const searchDir = paper
-      ? join(FOLIO_ROOT, paper)
-      : FOLIO_ROOT;
+      ? join(folioDirOf(), paper)
+      : folioDirOf();
 
     const glob = new Glob("**/*.md");
     for (const match of glob.scanSync({ cwd: searchDir })) {
@@ -515,7 +515,7 @@ if (import.meta.main) {
   // "No errors found." and exited 0 having read no files at all.
   if (report.snippetsFound === 0) {
     console.error(
-      `\nNo TeX snippets found under ${FOLIO_ROOT} — refusing to report success.\n` +
+      `\nNo TeX snippets found under ${folioDirOf()} — refusing to report success.\n` +
       "This validates a FOLIO's .md content; folio-assistant is the platform.\n" +
       "Run it from the content repo, or pass --paper.",
     );

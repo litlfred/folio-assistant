@@ -14,12 +14,12 @@ import { spawnSync } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { REPO_ROOT, FOLIO_DIR } from "../paths.js";
+import { REPO_ROOT, folioDirOf } from "../paths.js";
 
 /** Find all paper directories under folio/. */
 function discoverPapers(): string[] {
-  if (!existsSync(FOLIO_DIR)) return [];
-  return readdirSync(FOLIO_DIR, { withFileTypes: true })
+  if (!existsSync(folioDirOf())) return [];
+  return readdirSync(folioDirOf(), { withFileTypes: true })
     .filter(d => d.isDirectory() && !d.name.startsWith(".") &&
       d.name !== "schema" && d.name !== "pipeline" && d.name !== "node_modules")
     .map(d => d.name);
@@ -66,7 +66,7 @@ export function registerValidateTools(server: McpServer): void {
         }
 
         const paperName = paper || papers[0];
-        const paperDir = join(FOLIO_DIR, paperName);
+        const paperDir = join(folioDirOf(), paperName);
 
         if (!existsSync(paperDir)) {
           return {
@@ -88,10 +88,10 @@ export function registerValidateTools(server: McpServer): void {
             };
           }
           const result = spawnSync("bun", [
-            "run", join(FOLIO_DIR, "pipeline/validate.ts"),
+            "run", join(folioDirOf(), "pipeline/validate.ts"),
             chapterPath,
           ], {
-            cwd: FOLIO_DIR,
+            cwd: folioDirOf(),
             stdio: "pipe",
             timeout: 60_000,
           });
@@ -103,10 +103,10 @@ export function registerValidateTools(server: McpServer): void {
         } else {
           // Validate whole paper (paper manifest + all chapters)
           const result = spawnSync("bun", [
-            "run", join(FOLIO_DIR, "pipeline/validate.ts"),
+            "run", join(folioDirOf(), "pipeline/validate.ts"),
             paperDir,
           ], {
-            cwd: FOLIO_DIR,
+            cwd: folioDirOf(),
             stdio: "pipe",
             timeout: 120_000,
           });
@@ -154,7 +154,7 @@ export function registerValidateTools(server: McpServer): void {
           };
         }
 
-        const paperDir = join(FOLIO_DIR, paperName);
+        const paperDir = join(folioDirOf(), paperName);
         const docTs = join(paperDir, `${paperName}.ts`);
         const outDir = output_dir || join(REPO_ROOT, "chapters");
 
@@ -165,11 +165,11 @@ export function registerValidateTools(server: McpServer): void {
         }
 
         const result = spawnSync("bun", [
-          "run", join(FOLIO_DIR, "pipeline/build.ts"),
+          "run", join(folioDirOf(), "pipeline/build.ts"),
           docTs,
           "--out-dir", outDir,
         ], {
-          cwd: FOLIO_DIR,
+          cwd: folioDirOf(),
           stdio: "pipe",
           timeout: 120_000,
         });
@@ -208,7 +208,7 @@ export function registerValidateTools(server: McpServer): void {
         const lines: string[] = [];
 
         for (const p of papers) {
-          const paperDir = join(FOLIO_DIR, p);
+          const paperDir = join(folioDirOf(), p);
           lines.push(`# ${p}`);
 
           for (const chDir of findChapterDirs(paperDir)) {
