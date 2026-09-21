@@ -24,11 +24,12 @@
  * and a composer that did the first without the second would pass one of them.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { compose, docsLayers, treeDigest } from "../compose-docs.ts";
+import { compose, docsLayers, mergeConfig, treeDigest } from "../compose-docs.ts";
+import { parse as parseYaml } from "yaml";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -183,27 +184,87 @@ describe("an override is applied AND reported", () => {
   });
 });
 
-describe("a Jekyll config is refused rather than shadowed", () => {
-  test("the overlay's _config.yml does not replace the base's", () => {
-    // Shadowing it would replace every plugin, collection and theme setting
-    // while reading in the report as one added page. Two configs want MERGING
-    // and the owner has not said with what precedence, so this refuses.
-    const root = fixture({ "_config.yml": "title: BASE", "p.md": "x" }, { "_config.yml": "title: OVERLAY" });
+describe("a Jekyll config is MERGED, overlay keys winning", () => {
+  test("the overlay's keys win and the base's survive", () => {
+    // The owner's rule, 2026-09-21. Shadowing would have dropped `plugins`
+    // entirely while reading in the report as one added page.
+    const root = fixture(
+      { "_config.yml": "title: BASE\nplugins:\n  - jekyll-feed\n" },
+      { "_config.yml": "title: OVERLAY\n" },
+    );
     const r = compose(out(root), root);
-    expect(Bun.file(join(out(root), "_config.yml")).text()).resolves.toBe("title: BASE");
-    expect(r.refused.map((f) => f.path)).toEqual(["_config.yml"]);
+    const cfg = parseYaml(readFileSync(join(out(root), "_config.yml"), "utf-8"));
+    expect(cfg.title).toBe("OVERLAY");
+    expect(cfg.plugins).toEqual(["jekyll-feed"]);
     expect(r.overrides).toEqual([]);
+    expect(r.added).toEqual([]);
     rmSync(root, { recursive: true, force: true });
   });
 
-  test("...but a config only the BASE has is composed normally", () => {
-    // The refusal is about shadowing, not about the filename. Without this,
-    // a composer that simply dropped every `_config.yml` would pass above and
-    // publish a site with no configuration at all.
-    const root = fixture({ "_config.yml": "title: BASE" }, {});
+  test("...and the CHANGED KEYS are named, not counted", () => {
+    // `dh4f` again: "merged 1 file" leaves a reader unable to tell which
+    // settings the overlay moved, which is the whole question it raises.
+    const root = fixture(
+      { "_config.yml": "title: BASE\ncolor: red\n" },
+      { "_config.yml": "title: OVERLAY\n" },
+    );
     const r = compose(out(root), root);
-    expect(Bun.file(join(out(root), "_config.yml")).text()).resolves.toBe("title: BASE");
-    expect(r.refused).toEqual([]);
+    expect(r.merged).toEqual([
+      { path: "_config.yml", baseLayer: "docs", by: "root-docs", keys: ["title"] },
+    ]);
     rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a config only the BASE has passes through with its BYTES untouched", () => {
+    // The property the conditional merge exists for. A YAML round trip strips
+    // comments and may reorder keys, so merging unconditionally would rewrite
+    // the published config on a tree whose overlay carries none — and that is
+    // exactly the live publish path today.
+    const body = "# a comment the round trip would eat\ntitle: BASE\nplugins:\n  - jekyll-feed\n";
+    const root = fixture({ "_config.yml": body }, {});
+    const r = compose(out(root), root);
+    expect(readFileSync(join(out(root), "_config.yml"), "utf-8")).toBe(body);
+    expect(r.merged).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+});
+
+describe("the merge rule itself", () => {
+  test("objects merge RECURSIVELY — one token does not drop the theme", () => {
+    const { merged } = mergeConfig(
+      { theme: { color: "red", font: "serif" } },
+      { theme: { color: "blue" } },
+    );
+    expect(merged).toEqual({ theme: { color: "blue", font: "serif" } });
+  });
+
+  test("lists REPLACE rather than concatenate", () => {
+    // The clause worth a test of its own, because concatenation is the more
+    // common default. Concatenating leaves an overlay no way to REMOVE an
+    // inherited entry, which is the same reason the file overlay is last-wins.
+    const { merged } = mergeConfig({ nav: ["a", "b", "c"] }, { nav: ["a"] });
+    expect(merged).toEqual({ nav: ["a"] });
+  });
+
+  test("a nested change is reported by its DOTTED path", () => {
+    const { changed } = mergeConfig(
+      { theme: { color: "red", font: "serif" }, title: "x" },
+      { theme: { color: "blue" } },
+    );
+    expect(changed).toEqual(["theme.color"]);
+  });
+
+  test("an overlay may deliberately null a key out", () => {
+    // `null` is a value, not an absence. Treating it as "unset" would make a
+    // key impossible to clear from an overlay.
+    const { merged, changed } = mergeConfig({ analytics: "UA-1" }, { analytics: null });
+    expect(merged).toEqual({ analytics: null });
+    expect(changed).toEqual(["analytics"]);
+  });
+
+  test("a key only the base has is untouched", () => {
+    const { merged, changed } = mergeConfig({ a: 1, b: 2 }, { a: 9 });
+    expect(merged).toEqual({ a: 9, b: 2 });
+    expect(changed).toEqual(["a"]);
   });
 });
