@@ -779,14 +779,14 @@
     {
       "id": "folio-assistant-57n3",
       "title": "VIEWER BACKTICKS: strayBacktick cannot see past an interpolation, so its file list cannot be derived",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T11:09:08Z",
-      "updatedAt": "2026-09-21T11:09:08Z",
+      "updatedAt": "2026-09-21T11:51:33Z",
       "preview": "`check-viewer-backticks.ts` names its files in an array. The obvious fix is to\nderive them — every `.ts` whose source contains `return <backtick><!doctype\nhtml>` — and that finds twelve where the array names five.\n\n## Why it was NOT derived, measured 2026-09-21\n\nRunning `strayBacktick` over every candidate reports two findings on files\nthat COMPILE:\n\n    FINDING line 402   cat-harness/scripts/gen-",
       "file": "beans/defs/folio-assistant-57n3--viewer-backticks-straybacktick-cannot-see-past-an.md"
     },
