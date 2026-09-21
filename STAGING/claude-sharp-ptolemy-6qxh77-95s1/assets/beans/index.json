@@ -779,14 +779,14 @@
     {
       "id": "folio-assistant-57n3",
       "title": "VIEWER BACKTICKS: strayBacktick cannot see past an interpolation, so its file list cannot be derived",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T11:09:08Z",
-      "updatedAt": "2026-09-21T11:09:08Z",
+      "updatedAt": "2026-09-21T11:51:33Z",
       "preview": "`check-viewer-backticks.ts` names its files in an array. The obvious fix is to\nderive them — every `.ts` whose source contains `return <backtick><!doctype\nhtml>` — and that finds twelve where the array names five.\n\n## Why it was NOT derived, measured 2026-09-21\n\nRunning `strayBacktick` over every candidate reports two findings on files\nthat COMPILE:\n\n    FINDING line 402   cat-harness/scripts/gen-",
       "file": "beans/defs/folio-assistant-57n3--viewer-backticks-straybacktick-cannot-see-past-an.md"
     },
@@ -3701,6 +3701,20 @@
       "updatedAt": "2026-09-20T13:18:18Z",
       "preview": "Queued on the owner's ruling of 2026-09-20: root `harness.json` now, this\nschema work next. Their words for it: *\"directive for cat-harness to create if\n(as named in schema)\"*.\n\n## It was already found, and already declined — that is the point\n\n`cat-harness/harness.json`, on the `bootstrap` skills entry, states it exactly:\n\n> a `ContentDirectory` cannot say whether it is a LAYOUT dependents should",
       "file": "beans/defs/folio-assistant-qmjh--schema-a-contentdirectory-cannot-say-whether-it-is.md"
+    },
+    {
+      "id": "folio-assistant-qsf5",
+      "title": "FHIR IG ARTEFACT INDEX: a reusable index schema type, an ingest pipeline over published IG output, and smart-trust as the first subject",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:42:25Z",
+      "updatedAt": "2026-09-21T10:42:25Z",
+      "preview": "Ingest the artefact index of a published FHIR IG that exposes a DAK API, and represent it as a KG using the IG's own JSON / JSON-LD / JSON Schema surface.\n\nGeneralisable across many IGs — smart-trust is the first subject, not the deliverable.\n\nEvidence gathered 2026-09-21 from WorldHealthOrganization/smart-trust gh-pages (342,656 files, IG v1.8.0, FHIR 5.0.0):\n\n- THERE IS NO PUBLISHED INDEX *INSTA",
+      "file": "beans/defs/folio-assistant-qsf5--fhir-ig-artefact-index-a-reusable-index-schema-typ.md"
     },
     {
       "id": "folio-assistant-qttr",
