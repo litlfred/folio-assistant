@@ -106,18 +106,90 @@ again: a consumer reads the composed tree, sees one file, and cannot tell an
 override from the only copy. The build must be able to say, for any page,
 which layer supplied it. That is a requirement of this work, not a nicety.
 
+## SLICE 1, 2026-09-21 — a dependent materialises its own `docs/`
+
+One JSON word: `cat-harness/harness.json`'s `docs` entry goes
+`dependents: "skip"` → `"reproduce"`. Measured on a real dependent fixture
+rather than reasoned about:
+
+```
+before:  qa, uploads, library, voices, translation-sources, folio          (6)
+after:   qa, uploads, library, voices, translation-sources, folio, docs    (7)
+```
+
+`declaredBy=cat-harness`, `absPath` inside the dependent's own root.
+
+**The old rationale is kept, not deleted, and it was not wrong.** It argued
+`skip` on the grounds that a dependent should INHERIT THE PAGES rather than get
+an empty directory to refill. Under compose it gets both — the pages still
+reach it, and `reproduce` gives it the place to override one. This is the
+second half of that argument arriving.
+
+**The `dependents` doc's warning was checked, not waved past.** It says
+defaulting to `reproduce` ships junk: twelve inherited directories, four of
+them the platform's own, each empty with a committed keep marker. That warning
+is about a DEFAULT, and the test it turns on is the one the schema states — is
+this directory part of the SHAPE a folio has, or merely where THIS instance's
+content lives? Before the ruling `docs/` was the second; after it a folio is
+expected to author and override its own documentation, which makes it the
+first, the same answer `uploads/` and `library/` get. They are `reproduce` and
+also start empty.
+
+**Falsified by flipping the word back**: 2 tests red, and the message names
+what was there — `no "docs" among qa, uploads, library, voices,
+translation-sources, folio`. The test also asserts the CONTRAST (`schemas` and
+`tools` stay out), because asserting only that `docs` appears would pass just
+as well against a build that inherited everything — which is the junk itself,
+reading as success.
+
+## OPEN FOR THE OWNER — the ROOT is not settled, and two statements disagree
+
+Slice 1 deliberately does **not** give the repository root a `docs/`, because
+two of the owner's own statements from 2026-09-20 pull opposite ways and it is
+not this session's call which wins:
+
+| where | what it says |
+|---|---|
+| this bean | *"root should have docs/ installed by cat-harness"* — and the bean adds that the root's docs *"is not its own: cat-harness installs it"* |
+| root `harness.json` `_comment` | *"only uploads/ on this repo's root b/c acting as if it was intialized"* |
+
+They are reconcilable — "installed by cat-harness" means INHERITED rather than
+declared, so the root would still declare only `uploads/` — **but that reading
+requires a dependency edge that does not exist.** Measured: the root's
+declaration chain has **length 1**. It does not depend on `cat-harness`; there
+is a `cat-harness.config.json` AT the root, which is the pre-split layout, so
+the relation is "contains" rather than "depends on".
+
+So the root gets `docs/` only if one of these happens, and each is a different
+decision:
+
+1. **The root declares a dependency on `cat-harness`** — then it inherits
+   `docs/` like any other dependent, and "only uploads/ declared" stays literally
+   true. This is what the bean's words describe. It also changes what else the
+   root inherits, which is why it is not a one-line edit.
+2. **The root declares `docs` itself** — one line, works today, and
+   contradicts both "only uploads/" and "its docs/ is not its own".
+
+Recommendation: **(1)**, because it is what "installed by cat-harness" means and
+because (2) makes the root's declaration disagree with its own recorded reason.
+But (1)'s blast radius is the rest of what a dependency edge pulls in, and that
+wants measuring before it is proposed as a one-liner.
+
 ## Done when
 
 - [x] Copy, link or compose is chosen — **COMPOSE (overlay)**, owner, 2026-09-21
-- [ ] `docs` is declared so a dependent instance materialises its own
-- [ ] A newly initiated instance gets a `docs/` without being told to
+- [x] `docs` is declared so a dependent instance materialises its own —
+      **2026-09-21**, `dependents: "reproduce"`, measured 6 → 7 on a fixture
+- [x] A newly initiated instance gets a `docs/` without being told to —
+      same change; `init-folio` calls `materialiseDeclaredDirectories`
 - [ ] The site builds from the COMPOSED tree — root overlay over
       `cat-harness/docs/`, which stays where it is
 - [ ] The build can say WHICH LAYER supplied any given page, so an override
       is distinguishable from the only copy
-- [ ] A test asserts a dependent gets one, falsified by flipping the
-      declaration back — `wwi6`'s tests are the model, and they were
-      falsified before they were trusted
+- [x] A test asserts a dependent gets one, falsified by flipping the
+      declaration back — **done**: flipping the word back turns 2 red, and
+      the contrast (`schemas`/`tools` stay out) is asserted too
+- [ ] **THE ROOT** — blocked on the two owner statements above, not on work
 
 Related: `o7eq` (the URL space this completes), `wwi6` (the same mechanism for
 uploads/ and library/), `x4a6` (declaring `docs/` as the renderable graph),
