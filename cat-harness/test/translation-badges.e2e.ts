@@ -137,6 +137,17 @@ test.describe("the coverage badge counts the language the page is written in", (
     await expect(page.locator(coverage)).toContainText("2/6 languages");
   });
 
+  test("a complete page names the languages without repeating the set twice", async ({ page }) => {
+    // The partial wording carries an "of <every supported locale>" tail, which
+    // is what makes a partial count actionable — it names what is missing. At
+    // 6/6 nothing is missing and that tail read "ar, zh, en, fr, ru, es — of
+    // ar, zh, en, fr, ru, es".
+    await serve(page, { lang: "en", availableLocales: ["ar", "zh", "en", "fr", "ru", "es"] });
+    const title = await page.locator(coverage).getAttribute("title");
+    expect(title).toContain("every supported language");
+    expect(title).not.toContain("\u2014 of");
+  });
+
   test("a translated page stamped with all six reads 6/6, never 6/5", async ({ page }) => {
     // `docs/fr/index.md`, which rendered a numerator larger than its
     // denominator until the `- 1` came out.
