@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -1091,7 +1091,7 @@ possible.</p>
 layer is a property of its graph KIND; an asset’s is a property of its ROLE,
 in <code class="language-plaintext highlighter-rouge">ASSET_ROLES</code>, because an asset has no kind. A per-asset <code class="language-plaintext highlighter-rouge">layer</code> would be
 eleven instances answering one question, and <code class="language-plaintext highlighter-rouge">check:asset-roles</code> rejects it —
-asked of the raw <code class="language-plaintext highlighter-rouge">harness.json</code>, since <code class="language-plaintext highlighter-rouge">KgAssetSchema</code> strips an unknown key
+asked of the raw declaration, since <code class="language-plaintext highlighter-rouge">KgAssetSchema</code> strips an unknown key
 without a word.</p>
 
 <p><strong>Creation at INITIALISATION is not a process write.</strong> A <code class="language-plaintext highlighter-rouge">context</code> asset that

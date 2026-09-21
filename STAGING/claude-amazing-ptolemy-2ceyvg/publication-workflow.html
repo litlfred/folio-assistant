@@ -416,7 +416,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -816,7 +816,7 @@ itself; everything below says what the index structurally cannot.</p>
 
 <p><strong>Bootstrap’s diagrams are deliberately outside that index</strong>, and their absence
 is a fact rather than a gap. <code class="language-plaintext highlighter-rouge">cat-bootstrap/workflows/</code> is declared by
-<code class="language-plaintext highlighter-rouge">cat-bootstrap/harness.json</code> and <em>not</em> by the root, because declaring it there
+<code class="language-plaintext highlighter-rouge">cat-bootstrap/cat-bootstrap.json</code> and <em>not</em> by the root, because declaring it there
 re-carries bootstrap’s process into the root’s published graph — which <code class="language-plaintext highlighter-rouge">#432</code>
 removed on purpose and a test still guards. Bean <code class="language-plaintext highlighter-rouge">pve3</code> holds that choice:
 <strong>both halves of bootstrap, or neither.</strong> So the derived index covers what the
@@ -839,7 +839,7 @@ catch and could not, because it could not see the directory either (bean <code c
 
 <p>The rows are correct now. <strong>The diagrams are still invisible to the tooling</strong>,
 and deliberately so pending a decision: <code class="language-plaintext highlighter-rouge">bootstrap/workflows/</code> is declared by
-<code class="language-plaintext highlighter-rouge">bootstrap/harness.json</code> but not by the root, and declaring it there re-carries
+<code class="language-plaintext highlighter-rouge">cat-bootstrap/cat-bootstrap.json</code> but not by the root, and declaring it there re-carries
 bootstrap’s process into the root’s published graph — which <code class="language-plaintext highlighter-rouge">#432</code> removed on
 purpose and a test still guards. Bean <code class="language-plaintext highlighter-rouge">pve3</code> holds that choice: <strong>both halves of
 bootstrap, or neither.</strong></p>

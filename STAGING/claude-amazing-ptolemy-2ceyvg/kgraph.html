@@ -416,7 +416,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -1390,7 +1390,7 @@ quote</strong>: <code class="language-plaintext highlighter-rouge">bun run kg:ex
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">content</code></td>
-      <td>10</td>
+      <td>13</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">state</code></td>
@@ -1407,25 +1407,41 @@ quote</strong>: <code class="language-plaintext highlighter-rouge">bun run kg:ex
   </tbody>
 </table></div>
 
-<p>Twenty-eight kinds in total, of which exactly <strong>one</strong> — <code class="language-plaintext highlighter-rouge">docs</code> — is
+<p>Thirty-one kinds in total, of which exactly <strong>one</strong> — <code class="language-plaintext highlighter-rouge">docs</code> — is
 <code class="language-plaintext highlighter-rouge">renderable</code>. Renderability is what wires a graph to the site build, so the
 number being one is not an oversight: every other graph reaches a reader
 through a visualiser the Harness layer builds <em>over</em> it, never by being
 published directly.</p>
 
-<p><strong>One kind is doing the work of four subgraphs.</strong> <code class="language-plaintext highlighter-rouge">cat-harness</code> is declared by
-<strong>22</strong> directories across the checkout, and those directories hold Skills
-(<code class="language-plaintext highlighter-rouge">skills/</code>), Workflows (<code class="language-plaintext highlighter-rouge">skills/workflows/</code>), Scenarios (<code class="language-plaintext highlighter-rouge">skills/roles/</code>) and
-methodologies (<code class="language-plaintext highlighter-rouge">methodologies/crdm/</code>, <code class="language-plaintext highlighter-rouge">methodologies/raci/</code>) — four branches of
-the taxonomy above, indistinguishable to any consumer that filters on kind. A
-query for “the Workflows” cannot be written today; it can only be approximated
-by a path.</p>
+<p><strong>Three of those kinds were one until 2026-09-21.</strong> <code class="language-plaintext highlighter-rouge">cat-harness</code> was declared
+by 22 directories that between them held Skills, Workflows, Scenarios and
+methodologies — four branches of the taxonomy above, indistinguishable to any
+consumer filtering on kind. <em>“Give me the Workflows”</em> was not a query anybody
+could write; it could only be approximated by matching a path, which is the
+fragility the graph exists to remove. <code class="language-plaintext highlighter-rouge">skills</code>, <code class="language-plaintext highlighter-rouge">workflows</code> and <code class="language-plaintext highlighter-rouge">scenarios</code> are
+now their own kinds and the query works.</p>
 
-<p>That is the single largest gap between this page and the registry, and it is
-reported rather than fixed here because splitting a kind changes what every
-declaration in every dependent instance says.</p>
+<p><strong><code class="language-plaintext highlighter-rouge">cat-harness</code> survives and is not deprecated</strong>, which surprises people twice
+over. An alias cannot express a split — <code class="language-plaintext highlighter-rouge">GRAPH_KIND_ALIASES</code> maps one name to
+one name, and this would have to become three. And the kind had a fifth job the
+split does not name: on an entry declaring <code class="language-plaintext highlighter-rouge">["schemas", "cat-harness"]</code> it means
+<em>a schema IS a knowledge-graph node</em>, which is why the skill scanner tests for
+the kind <strong>exactly</strong> rather than for its presence. That job is still real, so
+the umbrella stays, now meaning harness knowledge-graph content whose directory
+holds more than one part of it — the eight mixed schema entries. A downstream
+declaration still saying <code class="language-plaintext highlighter-rouge">["cat-harness"]</code> keeps parsing and keeps being scanned
+for Skills; what it loses is the finer query, which it never had.</p>
 
-<p><strong>Two smaller ones</strong>, both already named above:</p>
+<p><strong>What the split cost, and where it nearly went wrong.</strong> Two directories that
+had been reached by <em>convention</em> stopped being reached the moment their parent
+changed kind: <code class="language-plaintext highlighter-rouge">skills/workflows/</code> and <code class="language-plaintext highlighter-rouge">methodologies/crdm/workflows/</code> both sat
+inside a <code class="language-plaintext highlighter-rouge">cat-harness</code> directory and were found by walking it. Each now declares
+<code class="language-plaintext highlighter-rouge">workflows</code> in its own right. The second was caught only because the generated
+process index reported it as an <strong>orphan</strong> rather than quietly indexing eight
+fewer diagrams — which is the whole argument for a generator that names what it
+pruned.</p>
+
+<p><strong>Two gaps remain</strong>, both already named above:</p>
 
 <ul>
   <li><strong>User Stories are not nodes.</strong> A Role’s <code class="language-plaintext highlighter-rouge">useCases</code> is an array of strings.</li>

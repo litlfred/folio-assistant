@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -900,7 +900,7 @@ Two answers to “what is a skill” is one answer too many.</p>
 
 <p>The owner wrote <code class="language-plaintext highlighter-rouge">&lt;path&gt;</code>; the URL carries the declared entry’s <strong><code class="language-plaintext highlighter-rouge">id</code></strong>.
 Deliberate, and the reasons are <code class="language-plaintext highlighter-rouge">state-visualizer</code>’s own: <code class="language-plaintext highlighter-rouge">id</code> is what
-<code class="language-plaintext highlighter-rouge">harness.json</code> declares and what an override matches on, so an id-derived URL
+the declaration declares and what an override matches on, so an id-derived URL
 <strong>survives the directory moving</strong>. It also stays one segment, which is what
 lets <code class="language-plaintext highlighter-rouge">orphanSubjectPages()</code> prune with an exact ownership test rather than a
 fourth pruner (bean <code class="language-plaintext highlighter-rouge">ankg</code> asks for no more of those). Each page <strong>states its

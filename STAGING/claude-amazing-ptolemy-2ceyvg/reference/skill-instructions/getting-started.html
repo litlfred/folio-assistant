@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -766,11 +766,11 @@ Decision table: <a href="../../skills/workflows/decisions/folio-intent.dmn"><cod
     
 
 <p>A folio’s home page opens with <strong>its</strong> description inside <strong>its</strong> backdrop, both
-declared in <code class="language-plaintext highlighter-rouge">harness.json</code> at the repository root. Nothing about any
+declared in the repository’s declaration. Nothing about any
 particular instance is written into the template, so a downstream folio does not
 inherit the platform’s grumpy cat.</p>
 
-<p><strong>Where the markdown node is:</strong> <code class="language-plaintext highlighter-rouge">description</code> in <code class="language-plaintext highlighter-rouge">harness.json</code>. It is
+<p><strong>Where the markdown node is:</strong> <code class="language-plaintext highlighter-rouge">description</code> in the declaration. It is
 markdown and it is rendered as-is. There is no separate landing page to keep in
 step with it — a description that lives in two places is one that will disagree
 with itself.</p>
@@ -913,7 +913,7 @@ through the dependency tree, attributing each membership to the instance
 that carried it. Bean <code class="language-plaintext highlighter-rouge">79t3</code>.</p>
 
   <p><strong><code class="language-plaintext highlighter-rouge">folio</code> and <code class="language-plaintext highlighter-rouge">harness</code> are different types, and the distinction is load-
-bearing here.</strong> <code class="language-plaintext highlighter-rouge">harness.json</code> says <em>this is an instance</em>; <code class="language-plaintext highlighter-rouge">harness.config.json</code>
+bearing here.</strong> The declaration says <em>this is an instance</em>; <code class="language-plaintext highlighter-rouge">harness.config.json</code>
 says <em>this authors folio content</em>. <code class="language-plaintext highlighter-rouge">cat-harness/</code> carries the first and not
 the second — it is a harness and is <strong>not</strong> a folio, which is the
 platform-not-content rule as a fact about two files. <code class="language-plaintext highlighter-rouge">isFolio</code> is exactly

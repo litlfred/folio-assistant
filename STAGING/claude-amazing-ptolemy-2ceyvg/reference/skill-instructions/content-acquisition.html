@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -858,7 +858,7 @@ owner, 2026-09-20, pointed at
 <p>Verified against GitHub the same day: <strong><code class="language-plaintext highlighter-rouge">/tree/main/uploads</code> → 404</strong>, and
 <strong><code class="language-plaintext highlighter-rouge">/tree/main/cat-harness/uploads</code> → 200</strong>.</p>
 
-<p>The cause is one segment. <code class="language-plaintext highlighter-rouge">harness.json</code> declares the queue as
+<p>The cause is one segment. The declaration declares the queue as
 <code class="language-plaintext highlighter-rouge">{ id: "uploads", path: "uploads/" }</code> with no <code class="language-plaintext highlighter-rouge">scope</code>, and absent scope means
 <strong>instance</strong> — so the declared path resolves under <code class="language-plaintext highlighter-rouge">cat-harness/</code>, while a forge
 URL needs it relative to the <strong>repository</strong>. Pasting the declared path into

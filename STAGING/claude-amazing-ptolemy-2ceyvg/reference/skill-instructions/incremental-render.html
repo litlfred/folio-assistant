@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -857,7 +857,7 @@ to use:</p>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">inputGraphs</code></td>
-      <td>graph <strong>kinds</strong> from <code class="language-plaintext highlighter-rouge">harness.json</code> — <code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">schemas</code>, …</td>
+      <td>graph <strong>kinds</strong> from the declaration — <code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">schemas</code>, …</td>
       <td>anything the declaration already locates</td>
     </tr>
   </tbody>
@@ -1106,7 +1106,7 @@ so use <code class="language-plaintext highlighter-rouge">--seed</code> only whe
   <li><code class="language-plaintext highlighter-rouge">scripts/render-selection.ts</code> — the selection, the manifest, and the hash.</li>
   <li><code class="language-plaintext highlighter-rouge">scripts/declared-dirs.ts</code> — the graph-kind resolver, and why it is a process.</li>
   <li><a href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — what a graph kind is
-and where <code class="language-plaintext highlighter-rouge">harness.json</code> declares it.</li>
+and where the declaration declares it.</li>
   <li><a href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a> — the same third-state discipline one level out.</li>
   <li>Bean <code class="language-plaintext highlighter-rouge">9c34</code>.</li>
 </ul>

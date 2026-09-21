@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -759,7 +759,7 @@ renders nothing a human looks at — it is the navbar <em>footer</em>, and the
 <a href="../../cat-harness/docs/architecture/harness-instances.md">harness-instances</a>
 page records the floor-that-rises rule: visualiser exempt at this layer,
 required at <code class="language-plaintext highlighter-rouge">cat-harness</code> and above. The exemption is declared in
-<code class="language-plaintext highlighter-rouge">cat-bootstrap/harness.json</code> under <code class="language-plaintext highlighter-rouge">renderExemption</code>, and it carries an <code class="language-plaintext highlighter-rouge">owes</code>
+<code class="language-plaintext highlighter-rouge">cat-bootstrap/cat-bootstrap.json</code> under <code class="language-plaintext highlighter-rouge">renderExemption</code>, and it carries an <code class="language-plaintext highlighter-rouge">owes</code>
 field naming this document. <strong>An exemption with no substitute is a hole</strong>; the
 <code class="language-plaintext highlighter-rouge">owes</code> field is what stops it being one.</p>
 <h2 id="the-generator">

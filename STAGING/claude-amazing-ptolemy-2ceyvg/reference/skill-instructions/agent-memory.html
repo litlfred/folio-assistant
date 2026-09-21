@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -1011,10 +1011,10 @@ answers — and if it answers neither, it is a memory entry.</p>
 and <code class="language-plaintext highlighter-rouge">bun run check:asset-roles</code> keeps the declaration single: a required role
 <code class="language-plaintext highlighter-rouge">ASSET_ROLES</code> does not govern, a role a running process would be allowed to
 write, or an asset restating <code class="language-plaintext highlighter-rouge">purpose</code>, <code class="language-plaintext highlighter-rouge">layer</code> or <code class="language-plaintext highlighter-rouge">delivery</code> on itself. That
-last one is asked of the RAW <code class="language-plaintext highlighter-rouge">harness.json</code> on purpose — <code class="language-plaintext highlighter-rouge">KgAssetSchema</code> is a
+last one is asked of the RAW declaration on purpose — <code class="language-plaintext highlighter-rouge">KgAssetSchema</code> is a
 non-strict <code class="language-plaintext highlighter-rouge">z.object</code> and drops an unknown key without a word, so after
 parsing the evidence is gone. It has happened: a <code class="language-plaintext highlighter-rouge">purpose</code> written into
-<code class="language-plaintext highlighter-rouge">cat-harness/harness.json</code> read as if it carried one and no consumer ever saw
+<code class="language-plaintext highlighter-rouge">cat-harness/cat-harness.json</code> read as if it carried one and no consumer ever saw
 it, which is worse than absent because absent is visible.
 Both are required of every instance: one with a README and no <code class="language-plaintext highlighter-rouge">AGENTS.md</code> is
 readable by a person and mute to an agent, and the reverse leaves a reader

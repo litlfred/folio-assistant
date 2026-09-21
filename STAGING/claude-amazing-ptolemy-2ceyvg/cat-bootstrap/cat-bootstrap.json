@@ -264,7 +264,7 @@
     "ProcessNode": 30,
     "Role": 9,
     "Skill": 7,
-    "GraphKind": 1
+    "GraphKind": 2
   },
   "problems": [],
   "omitted": [
@@ -298,7 +298,7 @@
       "name": "cat-bootstrap-render",
       "path": "render/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ],
       "description": "The skills for RENDERING this instance's own graph as `.jsonld`/`.json` — `cat-bootstrap-graph-emission` (what the document contains and the four properties it holds) and `cat-bootstrap-graph-publication` (where it lands, why its `@id` must equal that path, and why it is no longer committed). A SEPARATE id from `cat-harness`, which `skills/` already holds: overrides match on id, so reusing it would replace cat-bootstrap's skills with these. SEPARATE from `skills/` as a package too, because the two answer different questions — `skills/` is about READING a graph cold and about the initialization flow, this is about cat-bootstrap EMITTING its own. Until this directory existed the emission discipline lived in a code comment in `kg-export.ts` and a YAML comment in `docs-site.yml`, which is why it was rediscovered rather than read. Bean `hfkl`."
     },
@@ -308,7 +308,7 @@
       "name": "cat-harness",
       "path": "skills/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ]
     },
     {
@@ -317,7 +317,7 @@
       "name": "cat-harness-workflows",
       "path": "workflows/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/workflows"
       ],
       "description": "The cat-bootstrap PROCESSES — `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace cat-bootstrap's skills with its workflows."
     },
@@ -1320,12 +1320,20 @@
       "ambiguous": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
-      "name": "cat-harness",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#KGraph",
+      "name": "skills",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillGraph",
       "renderable": false,
-      "summary": "Skills, workflows, roles — the harness layer's own knowledge graph."
+      "summary": "Skill packages — the authored instruction bodies an Actor performs a Task from."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/workflows",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
+      "name": "workflows",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#WorkflowGraph",
+      "renderable": false,
+      "summary": "Executable BPMN processes and the DMN tables their gateways compute from."
     }
   ]
 }

@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -1010,7 +1010,7 @@ every run by design.</p>
   <li>Clone the IG’s <code class="language-plaintext highlighter-rouge">gh-pages</code> (shallow, single branch — a published IG is large;
 smart-trust’s is 342,656 files).</li>
   <li>Run the ingest with a new <code class="language-plaintext highlighter-rouge">--id</code> and <code class="language-plaintext highlighter-rouge">--out</code>.</li>
-  <li>Give the new directory a <code class="language-plaintext highlighter-rouge">harness.json</code> declaring one directory of kind
+  <li>Give the new directory a declaration declaring one directory of kind
 <code class="language-plaintext highlighter-rouge">fhir-artifact-index</code>, as <code class="language-plaintext highlighter-rouge">smart-trust/smart-trust.config.json</code> does. The
 declaration is <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> since #695 — resolve it with
 <code class="language-plaintext highlighter-rouge">declarationPathIn</code>, never by joining a filename.</li>

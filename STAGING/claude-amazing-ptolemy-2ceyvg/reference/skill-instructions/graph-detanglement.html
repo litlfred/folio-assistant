@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -826,7 +826,7 @@ advice about sequencing; each is a state the graph is in.</p>
     
 
 <p>The sub-graph is declared <strong>where it already sits</strong>. Still inside the
-repository, still connected, nothing moved. <code class="language-plaintext highlighter-rouge">harness.json</code> gains a directory
+repository, still connected, nothing moved. The declaration gains a directory
 entry with its <code class="language-plaintext highlighter-rouge">graphs[]</code> kinds; a sub-graph that owns its own layout gains a
 nested declaration (<code class="language-plaintext highlighter-rouge">beans/beans.json</code>, <code class="language-plaintext highlighter-rouge">todos/todos.json</code>) whose paths resolve
 against its own directory, <strong>so the whole graph relocates by moving one
@@ -834,7 +834,7 @@ folder</strong>.</p>
 
 <p>The worked example is in the tree and belongs to a repository that does not
 exist yet: <code class="language-plaintext highlighter-rouge">smart-kg/methodologies/grade.md</code>, declared at repository scope in
-<code class="language-plaintext highlighter-rouge">cat-harness/harness.json</code>, whose own entry says <em>“separated so the extraction
+<code class="language-plaintext highlighter-rouge">cat-harness/cat-harness.json</code>, whose own entry says <em>“separated so the extraction
 is literal — <code class="language-plaintext highlighter-rouge">smart-kg/</code> lifts out whole”</em>.</p>
 
 <p><strong>Declaring is cheap and extracting is expensive, which is the point.</strong> The
@@ -862,7 +862,7 @@ skill is about it.</p>
     
 
 <p>The sub-graph carries its own declaration, its own namespace, its own published
-artefact. <code class="language-plaintext highlighter-rouge">cat-bootstrap/</code> is the demonstrated case: its own <code class="language-plaintext highlighter-rouge">harness.json</code>, its
+artefact. <code class="language-plaintext highlighter-rouge">cat-bootstrap/</code> is the demonstrated case: its own declaration, its
 own <code class="language-plaintext highlighter-rouge">bs:</code> namespace, its own graph document.</p>
 <h3 id="4-extract">
   

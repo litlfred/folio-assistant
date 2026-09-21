@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -780,7 +780,7 @@ moment the layout moves.”</em> One of them had already moved.</p>
     
 
 <p><strong>Skills are content in a declared graph, not files in a directory you
-memorise.</strong> An instance says where its graph is, in <code class="language-plaintext highlighter-rouge">harness.json</code> at its
+memorise.</strong> An instance says where its graph is, in its declaration at its
 repository root. It may put it anywhere. In <em>this</em> instance the entry reads:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness"</span><span class="p">,</span><span class="w"> </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"skills/"</span><span class="p">,</span><span class="w"> </span><span class="nl">"graphs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"cat-harness"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
@@ -853,7 +853,7 @@ and each running process’s position beside its bean.</p>
 <p><strong>What <code class="language-plaintext highlighter-rouge">skill_list</code> serves is a registry, not the declaration.</strong> <code class="language-plaintext highlighter-rouge">LOCAL_PACKAGES</code>
 in <code class="language-plaintext highlighter-rouge">src/tools/skill-fetch.ts</code> maps seven package names to seven paths, resolved
 against the server’s own location. It is accurate today and it is a second
-answer to a question <code class="language-plaintext highlighter-rouge">harness.json</code> already answers — so a directory the
+answer to a question the declaration already answers — so a directory the
 instance declares and the registry omits is invisible to <code class="language-plaintext highlighter-rouge">skill_fetch</code>. That
 has bitten: <code class="language-plaintext highlighter-rouge">content-lifecycle</code> was absent from the table until 2026-09-18
 while <strong>52</strong> <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code> activities across the workflow diagrams named
@@ -881,7 +881,7 @@ of something else.</p>
 content, no server:</p>
 
 <ol>
-  <li>Read <code class="language-plaintext highlighter-rouge">harness.json</code> at the repository root.</li>
+  <li>Read the declaration at the repository root.</li>
   <li>Take every <code class="language-plaintext highlighter-rouge">directories[]</code> entry whose <code class="language-plaintext highlighter-rouge">graphs</code> includes <code class="language-plaintext highlighter-rouge">cat-harness</code>
 (accepting <code class="language-plaintext highlighter-rouge">kg</code> as the deprecated spelling).</li>
   <li>Read the <code class="language-plaintext highlighter-rouge">.md</code> files under each — one skill per file, the id being the

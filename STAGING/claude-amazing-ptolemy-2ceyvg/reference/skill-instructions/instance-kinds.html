@@ -419,7 +419,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -768,8 +768,8 @@ adds the wrong one:</p>
   <tbody>
     <tr>
       <td><strong>instance kind</strong></td>
-      <td>what a repository <em>is</em> — <code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">cat-bootstrap</code>, <code class="language-plaintext highlighter-rouge">who-iris</code>. It has a name, a prefix family, a <code class="language-plaintext highlighter-rouge">harness.json</code>, and files it inherits from whatever it was bootstrapped off</td>
-      <td>a <code class="language-plaintext highlighter-rouge">harness.json</code> at the instance root</td>
+      <td>what a repository <em>is</em> — <code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">cat-bootstrap</code>, <code class="language-plaintext highlighter-rouge">who-iris</code>. It has a name, a prefix family, a declaration, and files it inherits from whatever it was bootstrapped off</td>
+      <td>a the declaration at the instance root</td>
     </tr>
     <tr>
       <td><strong>graph kind</strong></td>
@@ -902,7 +902,7 @@ settled and the kind is premature.</li>
 
 <p><strong>Four of the eleven instances here carry no prefix at all</strong> — <code class="language-plaintext highlighter-rouge">agent-skills</code>,
 <code class="language-plaintext highlighter-rouge">detangle</code>, <code class="language-plaintext highlighter-rouge">kg-navigation</code>, <code class="language-plaintext highlighter-rouge">large-datasets</code> (measured 2026-09-21,
-<code class="language-plaintext highlighter-rouge">ls -d */harness.json</code>). That is the state of the corpus, not a backlog: an
+<code class="language-plaintext highlighter-rouge">findDeclarationFile</code> over each directory). That is the state of the corpus, not a backlog: an
 unprefixed name is undecided, not wrong, and this skill does not make it a
 finding. Do not sweep them into a family to make the table tidy; a rename is
 the one act with consequences that cannot be undone later (§”And the owner may

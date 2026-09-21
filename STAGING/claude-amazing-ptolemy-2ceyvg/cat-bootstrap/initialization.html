@@ -400,7 +400,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","schemas","todos","tools","translation-sources","uploads","voices","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js" defer></script>
@@ -766,7 +766,7 @@ the wrong one; read that instance’s copy instead.</p>
   <tbody>
     <tr>
       <td>that this repository is <strong>not yet</strong> an instance</td>
-      <td>no root <code class="language-plaintext highlighter-rouge">harness.json</code></td>
+      <td>no repository’s declaration</td>
     </tr>
     <tr>
       <td>the instance to become one <strong>of</strong></td>
@@ -774,7 +774,7 @@ the wrong one; read that instance’s copy instead.</p>
     </tr>
     <tr>
       <td>what that instance <strong>is</strong></td>
-      <td>its own <code class="language-plaintext highlighter-rouge">harness.json</code></td>
+      <td>its own declaration</td>
     </tr>
   </tbody>
 </table></div>
@@ -793,7 +793,7 @@ Go back to <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-bo
 <p>The order is the load-bearing part, not the individual steps.</p>
 
 <ol>
-  <li><strong>Write this repository’s <code class="language-plaintext highlighter-rouge">harness.json</code></strong> from what the upstream
+  <li><strong>Write this repository’s declaration</strong> from what the upstream
 declaration said — its <code class="language-plaintext highlighter-rouge">name</code>, and the directories and graph kinds it
 implies. Not before reading theirs: a declaration written first leaves a
 window in which this repository claims to be something it is not, and every
