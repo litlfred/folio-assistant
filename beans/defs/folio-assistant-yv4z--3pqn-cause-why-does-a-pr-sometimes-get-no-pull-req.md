@@ -379,11 +379,32 @@ Three controls, all simultaneous, and the third is the one that matters:
    #813 — which is what separates *"not computed for this PR"* from *"not
    computed yet"*, and no earlier observation here could make that cut.
 
+### STEP 3 — the same PR, resolved. A within-PR before/after
+
+The conflict was resolved at 22:22:09Z by merging `main` (17 commits) into the
+same branch. Nothing else changed: same PR number, same branch, same actor,
+same tooling.
+
+| | conflicted `b5fcc04b0` | resolved `d0db0633c` |
+|---|---|---|
+| `refs/pull/813/merge` | **absent for 433 s** | **present within 15 s** (`16ce1cd74`) |
+| `pull_request`-event runs | **zero for 8+ minutes** | **five, started 22:22:16Z — 7 s after the push** |
+
+So the whole chain is now measured on ONE pull request, with mergeability as
+the only variable, rather than assembled from occurrences a day apart.
+
+**Seven seconds.** Worth recording against #812's 2 m 43 s from the same hour:
+`pull_request` latency varies by more than twenty-fold under normal operation,
+which is exactly why elapsed time was never a usable discriminator — the flat
+timing series across the first six observations was reading a quantity with no
+signal in it. **The merge ref is the discriminator; the clock is not.**
+
 ### What this settles, and what it does not
 
 **Settled:** a PR that is unmergeable at creation carries **no**
 `refs/pull/N/merge`, and receives **no** `pull_request`-event run, while a
-`push`-event run on the identical sha completes normally. The mechanism
+`push`-event run on the identical sha completes normally — and **both return
+within seconds of the conflict being resolved, on the same PR**. The mechanism
 proposed in observation seven — `actions/checkout@v4` with no `ref:` resolves
 `refs/pull/N/merge` for a `pull_request` event, and a conflicted PR has no such
 commit — now has its missing link measured rather than inferred.
@@ -401,4 +422,3 @@ on the direction.
 observed.** It resolves `refs/heads/<branch>`, which exists regardless, so it
 worked six times for the reason this measurement gives — and that is exactly
 why it was unsafe on a conflicted PR: it tests a tree that will never exist.
-
