@@ -131,3 +131,5 @@ the rule was broken.
 - [ ] One answer to "what is this package called", or a stated reason for two
       — **not addressed here.** `gen-skill-docs` keys by declared id while
       `skill-fetch` keys by instance name or basename; that is a separate change
+
+*Issue link, recorded on creation.* **[#714](https://github.com/litlfred/folio-assistant/issues/714)**
