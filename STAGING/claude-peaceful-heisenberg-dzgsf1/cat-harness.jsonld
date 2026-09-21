@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T16:30:49.823Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8ccb64a35cbe7c5e519fc1933d7713524c90bb66",
-  "sourceCommitSha": "8ccb64a35cbe7c5e519fc1933d7713524c90bb66",
-  "sourceCommitAt": "2026-09-21T16:29:10Z",
+  "generatedAt": "2026-09-21T16:41:38.572Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4ea095e8870b929c4f478a936fe71f5f5780c7f8",
+  "sourceCommitSha": "4ea095e8870b929c4f478a936fe71f5f5780c7f8",
+  "sourceCommitAt": "2026-09-21T16:39:26Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -276,7 +276,7 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 85,
+    "Schema": 89,
     "GraphKind": 24,
     "Directory": 33,
     "Asset": 3
@@ -32951,6 +32951,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/note-anchor"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/panel-chrome",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "panel-chrome",
+      "title": "What a card's open panel offers — the kind declares, the platform fixes.",
+      "module": "schemas/panel-chrome.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/panel-chrome"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/precision-scalar",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "precision-scalar",
@@ -32976,6 +32985,15 @@
       "module": "schemas/qa-review.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/reader-filter",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "reader-filter",
+      "title": "The filter a READER applies to a board, which commits nothing.",
+      "module": "schemas/reader-filter.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/reader-filter"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/refactor-strategy",
@@ -33012,6 +33030,15 @@
       "module": "schemas/role-graph.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/role-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/safe-url",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "safe-url",
+      "title": "Which URL schemes may reach an `href`, and why the answer is a list.",
+      "module": "schemas/safe-url.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/script-qa",
@@ -33267,6 +33294,15 @@
       "module": "schemas/webpage.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/webpage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/window-stack",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "window-stack",
+      "title": "Which cards are OPEN on a board, and in what order they stack.",
+      "module": "schemas/window-stack.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/catalogue",
@@ -34966,8 +35002,8 @@
   ],
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "bc8e744f223d06cd18094a69981fcd5e367086d1",
+    "sha": "3648b5c4a267e2377dd348c51c0e04fcc8d43288",
     "pr": "738/merge",
-    "run": "35625907661"
+    "run": "35627066371"
   }
 }
