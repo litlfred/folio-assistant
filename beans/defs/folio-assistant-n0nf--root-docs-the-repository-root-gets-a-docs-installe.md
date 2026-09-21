@@ -170,10 +170,46 @@ decision:
 2. **The root declares `docs` itself** — one line, works today, and
    contradicts both "only uploads/" and "its docs/ is not its own".
 
-Recommendation: **(1)**, because it is what "installed by cat-harness" means and
-because (2) makes the root's declaration disagree with its own recorded reason.
-But (1)'s blast radius is the rest of what a dependency edge pulls in, and that
-wants measuring before it is proposed as a one-liner.
+### CORRECTION, same session — the blast radius was measured, and it reverses this
+
+**Option 1 was recommended before it was measured. Measured, it is the worse
+one.** A stand-in for the root — its real `harness.json` plus the dependency
+edge Option 1 would add — materialises:
+
+```
+root today (no edge) : beans, todos, uploads
+root under Option 1  : qa, uploads, library, voices, translation-sources, folio, docs
+
+WOULD GAIN: qa, library, voices, translation-sources, folio, docs
+  wanted   : docs
+  unwanted : qa, library, voices, translation-sources, folio
+```
+
+**Six gained, one wanted.** And two of the five unwanted are the ones
+`AGENTS.md` opens by forbidding — *"folio-assistant is the platform, not the
+content"* — so Option 1 would create `folio/` and `library/` at the platform
+root. That is precisely the junk the `dependents` field exists to prevent,
+arriving through the mechanism meant to be tidy.
+
+**Fixture limit, stated rather than glossed:** the stand-in loses `beans` and
+`todos` in that run, which is an artefact of a temp directory not being the
+real repository — those are repository-scoped and resolve against the actual
+root. It does not affect the six gained, which is what the comparison is about.
+
+**And the two statements were never actually in conflict.** *"only uploads/ on
+this repo's root b/c acting as if it was intialized"* describes what an
+INITIALIZED INSTANCE gets — and at the time it was written, that set was
+`uploads/`. The compose ruling adds `docs/` to that set, and slice 1 has now
+made `docs` a `reproduce` directory, which is the schema's own words for *part
+of the shape a folio has*. So the root should get `docs/` for exactly the
+reason it already gets `uploads/`: it is an initialized instance, and that is
+what one has.
+
+**Revised recommendation: Option 2** — the root declares `docs` itself, one
+line, alongside its `uploads` entry and for the same stated reason. Not a
+contradiction of the root's comment but the same rule over a set the ruling
+changed. Still the owner's to confirm, because it is their sentence being
+re-read.
 
 ## Done when
 
