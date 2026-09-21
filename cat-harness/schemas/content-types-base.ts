@@ -15,24 +15,38 @@
  *
  * ## They are NOT the same type, and this repository is the proof
  *
- * `harness.json` says *this is an instance*: a name, a stub, the directories
- * it holds. `harness.config.json` says *this authors folio content*: it
- * carries `contentType`, and `folio_init` writes it.
+ * `harness` says *this is an instance*: a name, a stub, the directories it
+ * holds. `folio` says *this authors folio content*: it carries `contentType`,
+ * and `folio_init` writes it.
  *
  * ```
- *                     harness.json   harness.config.json
- *   cat-harness/           yes              NO
- *   the repository root    yes              yes
+ *                        declared   contentType
+ *   cat-harness/            yes         NO
+ *   the repository root     yes         yes
  * ```
  *
  * So `cat-harness/` is a harness and is **not** a folio — which is exactly
  * right, and is the platform-not-content rule `AGENTS.md` opens with, showing
- * up as a measurable fact about two files rather than as a slogan.
+ * up as a measurable fact rather than as a slogan.
+ *
+ * ## ONE FILE now states both, so the DISCRIMINATOR MOVED INSIDE IT
+ *
+ * This table used to have `harness.json` and `harness.config.json` as its
+ * columns, and the two memberships were simply two files. `harness.json` was
+ * excised on 2026-09-21 — both are `<name>.config.json` — and for a few
+ * minutes that made **every declared instance a folio**, because one marker
+ * answered both questions.
+ *
+ * The distinction survived the merge by moving from the FILENAME into the
+ * CONTENT: `folioMarkerFilename` returns the file only when it declares a
+ * `contentType`, which is what this type's own summary always said it meant.
+ * A bare `{"name":"x"}` is an instance and not a folio, exactly as before.
  *
  * This is also what `isFolio` in `folio-intent.dmn` has always meant. That
  * input is documented as *"harness.config.json exists in the working
  * directory"* — so it was never "is this an instance", it is one membership of
- * the set, and `getting-started.md` now says so.
+ * the set, and `getting-started.md` now says so. The file it names has been
+ * renamed twice since; the question it asks has not changed.
  *
  * ## `dak` and `sushi` are NOT here, and the partition gate is why
  *
@@ -60,7 +74,8 @@
  * membership can never be asserted: something that looks like coverage and
  * detects nothing.
  */
-import { readdirSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { defaultContentTypes, type ContentTypeRegistry } from "./content-type";
 import { DECLARATION_SUFFIX, findDeclarationFile } from "./cat-harness";
 import { instanceConfigFilename, instanceConfigFor } from "./harness-config";
@@ -95,7 +110,28 @@ function folioMarkerFilename(repoRoot: string): string | undefined {
   } catch {
     return undefined;
   }
-  return inst === undefined ? undefined : instanceConfigFilename(inst.name);
+  if (inst === undefined) return undefined;
+  const file = instanceConfigFilename(inst.name);
+
+  // IT MUST ACTUALLY DECLARE A CONTENT TYPE, which this did not have to check
+  // while `harness.json` existed: the declaration and the config were two
+  // files, so the mere presence of `<name>.config.json` meant somebody had
+  // configured a folio. They are ONE file since 2026-09-21, and a bare
+  // `{"name":"x"}` is an instance that is not a folio — asserting both
+  // memberships off one marker made every declared instance a folio.
+  //
+  // This type's own summary is the rule: "it declares a content type". The
+  // `harness` marker still reports the file, so nothing is lost — the two
+  // memberships are simply no longer the same question.
+  try {
+    const raw = JSON.parse(readFileSync(join(repoRoot, file), "utf-8")) as { contentType?: unknown };
+    return typeof raw.contentType === "string" ? file : undefined;
+  } catch {
+    // Unreadable: `harness` reports the membership it can see. Claiming folio
+    // membership off a file nothing could parse would be inventing the one
+    // fact this marker exists to carry.
+    return undefined;
+  }
 }
 
 /**

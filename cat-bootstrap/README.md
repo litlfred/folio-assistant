@@ -33,7 +33,7 @@ Two more words, used by every sentence below rather than re-explained:
 
 | | |
 |---|---|
-| **Harness** | what a repository can be made into — `cat-bootstrap` itself, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Declared by a [`harness.json`](harness.json). |
+| **Harness** | what a repository can be made into — `cat-bootstrap` itself, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Declared by a [`cat-bootstrap.config.json`](cat-bootstrap.config.json). |
 | **Process** | a diagram with lanes, steps and branches. Each lane is a persona; you act in yours. |
 
 > **An Initiator has no harness, no server, no tools and no work plan.**
@@ -106,7 +106,7 @@ same place inside it:
 <name>/docs/cat-bootstrap/initialization.md
 ```
 
-`<name>` is the `name` in that harness's `harness.json`. It is the same path
+`<name>` is the `name` in that harness's `cat-bootstrap.config.json`. It is the same path
 for **every** harness, which is why you can be sent to one nobody has written
 yet: you do not need to know what `f-a-sci` or `smart-guidelines` *is*, only
 that it keeps its instructions where every harness does.
@@ -141,14 +141,14 @@ being. A `context` asset that does not exist yet has to come from somewhere.
 | **FR-2** | Exactly **one** process may be started; the others are callable only as sub-processes. |
 | **FR-3** | Only the Requestor may choose the harness. The Initiator may narrow candidates and may never break a tie. |
 | **FR-4** | Every harness keeps its initialization instructions at `<name>/docs/cat-bootstrap/initialization.md`, so an unknown harness is still reachable. |
-| **FR-5** | A repository whose root already carries a `harness.json` is **logged and ended**, never re-initialised. |
+| **FR-5** | A repository whose root already carries a `cat-bootstrap.config.json` is **logged and ended**, never re-initialised. |
 | **FR-6** | Anything that does not resolve is reported and stops the process; nothing is worked around. |
 | **FR-7** | This directory contains no executable code, so FR-1 cannot quietly stop being true. |
 | **FR-8** | A successful install leaves a root `README.md` naming the harness and the overall install status — created when absent, and **never** replacing one that exists. |
 
 ### FR-5, expanded — the likeliest failure
 
-**A repository whose root carries a `harness.json` has been initialized**,
+**A repository whose root carries a `cat-bootstrap.config.json` has been initialized**,
 usually because the work is done. That is logged and ended rather than redone.
 Re-initialising over an instance that has content, history and dependents is
 not undone by running anything again.
@@ -207,7 +207,7 @@ and it is not this file.
 |---|---|
 | [`README.md`](README.md) | **this page** — the user scenario, and the entry point |
 | [`AGENTS.md`](AGENTS.md) | the agent-generic pointer into this directory |
-| [`harness.json`](harness.json) | this instance's own declaration: which directories it holds and what kind of graph each is |
+| [`cat-bootstrap.config.json`](cat-bootstrap.config.json) | this instance's own declaration: which directories it holds and what kind of graph each is |
 | **workflows** | |
 | [`workflows/initialize-harness.bpmn`](workflows/initialize-harness.bpmn) | the **only** process you start |
 | [`workflows/discussion.bpmn`](workflows/discussion.bpmn) | asking the Requestor something only they can answer |

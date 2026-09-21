@@ -130,7 +130,14 @@ export function writeInstanceConfig(dir: string, body: string, name?: string): s
   try {
     const decl = JSON.parse(readFileSync(p, "utf-8")) as Record<string, unknown>;
     const cfg = JSON.parse(body) as Record<string, unknown>;
-    merged = JSON.stringify({ ...decl, ...cfg, name: (cfg.name as string) ?? decl.name });
+    // ONLY the two keys `declareInstance` contributes are carried over —
+    // never the whole previous file. Merging everything made a REWRITE
+    // impossible: `harness-config.test.ts` restores a fixture by writing its
+    // original body back, and a full merge kept the `dependencies` the test
+    // had just added, so a later assertion saw three dependencies where the
+    // fixture declares two. Keeping the declaration is what the merge is for;
+    // keeping the previous CONFIG is a different thing that nobody asked for.
+    merged = JSON.stringify({ name: decl.name, directories: decl.directories, ...cfg });
   } catch {
     merged = body;
   }
@@ -202,9 +209,12 @@ export function writeFixtureFile(root: string, rel: string, body: string): void 
     try {
       const existing = JSON.parse(readFileSync(abs, "utf-8")) as Record<string, unknown>;
       const incoming = JSON.parse(body) as Record<string, unknown>;
+      // Same rule as `writeInstanceConfig`: carry the DECLARATION across and
+      // let the body be the config in full, so a fixture can rewrite rather
+      // than only accumulate.
       writeFileSync(
         abs,
-        JSON.stringify({ ...existing, ...incoming, name: (incoming.name as string) ?? existing.name }),
+        JSON.stringify({ name: existing.name, directories: existing.directories, ...incoming }),
         "utf-8",
       );
       return;
