@@ -43,7 +43,13 @@ import { dirname, join, resolve } from "node:path";
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
 import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
-import { CLASS_GLOSSES, PROPERTY_GLOSSES, type TermGloss, type TermLayer } from "../schemas/vocabulary.js";
+import {
+  CLASS_GLOSSES,
+  PROPERTY_GLOSSES,
+  TERM_LAYERS,
+  type TermGloss,
+  type TermLayer,
+} from "../schemas/vocabulary.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const RDFS = "http://www.w3.org/2000/01/rdf-schema#";
@@ -216,7 +222,9 @@ export function buildVocabulary(
   const kinds = graphKindTerms();
   const doublyDefined = [...kinds.keys()].filter((t) => t in CLASS_GLOSSES || t in PROPERTY_GLOSSES).sort();
 
-  const ORDER: readonly TermLayer[] = ["bootstrap", "harness", "core"];
+  // The declared order, not a local one. `TERM_LAYERS` states that its order
+  // IS the direction rule, which is exactly what these index comparisons read.
+  const ORDER: readonly TermLayer[] = TERM_LAYERS;
   const cutoff = layer ? ORDER.indexOf(layer) : ORDER.length - 1;
   const inSlice = (g: TermGloss): boolean => {
     const i = ORDER.indexOf(g.layer ?? "harness");
@@ -350,14 +358,45 @@ export function buildVocabulary(
   return { doc, report: { defined: [...defined], undefinedTerms, doublyDefined } };
 }
 
+/**
+ * Why `--layer <value>` was refused, or `undefined` when it is a layer.
+ *
+ * ONE READ OF `TERM_LAYERS` DECIDES BOTH the verdict and the sentence, which
+ * is the whole point (#807). It was two literals — a predicate listing
+ * `cat-bootstrap` and a message already saying `bootstrap` — so a refusal
+ * printed the value it had just refused and read as an impossible state.
+ *
+ * Exported rather than left inline in the `import.meta.main` block because a
+ * branch inside that block cannot be reached by a test at all: the only way to
+ * exercise it was to spawn the script and read stderr, which is why nothing
+ * did, and why the drift sat there through a rename.
+ */
+export function layerArgError(value: string): string | undefined {
+  if ((TERM_LAYERS as readonly string[]).includes(value)) return undefined;
+  // Composed from the same tuple the check used. An Oxford-less "a, b or c",
+  // and still right if the tuple ever became one member.
+  //
+  // Phrased off `rest`, NOT off `TERM_LAYERS.length`: the tuple is `as const`,
+  // so its length is the literal `3` and `=== 1` is a comparison tsc can prove
+  // impossible — TS2367, which it duly raised. `slice` widens to an array, so
+  // this asks the question without asserting a falsehood about today's tuple.
+  const last = TERM_LAYERS[TERM_LAYERS.length - 1];
+  const rest = TERM_LAYERS.slice(0, -1);
+  const names = rest.length > 0 ? `${rest.join(", ")} or ${last}` : String(last);
+  return `--layer must be ${names} (got ${value})`;
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const check = argv.includes("--check");
   const layerIdx = argv.indexOf("--layer");
   const layer = layerIdx >= 0 ? (argv[layerIdx + 1] as TermLayer) : undefined;
-  if (layer !== undefined && !["bootstrap", "harness", "core"].includes(layer)) {
-    console.error(`--layer must be bootstrap, harness or core (got ${String(layer)})`);
-    process.exit(2);
+  if (layer !== undefined) {
+    const bad = layerArgError(String(layer));
+    if (bad !== undefined) {
+      console.error(bad);
+      process.exit(2);
+    }
   }
   const outIdx = argv.indexOf("--out");
   // `repoRootFor`: `_kg/` is a repository build output, not an instance one.
