@@ -3238,3 +3238,129 @@ a.fa-harness-tab__body:focus-visible {
  * with a rule a page can override. So the print case is handled in
  * `docs-ui.js`, on `beforeprint`, where it can be tested; a `@media print`
  * rule here would LOOK like it worked and quietly print nothing. */
+
+/* ═══ Semantic zoom and windows on the board ═══════════════════════════════
+ *
+ * Two mechanisms, styled in two blocks that share nothing, because they ARE
+ * two mechanisms: the slot's avatar treatment is driven by width, the window
+ * layer by what a person opened. See `board-windows` and the note in
+ * `docs-ui.js`.
+ */
+
+/* THE AVATAR IS ALWAYS THERE — "start everyrting in avatar". It is the control
+ * that opens the card AND what semantic zoom leaves behind when the board
+ * shrinks, which is why the two mechanisms meet at exactly one element. */
+.fa-sticky-avatar {
+  display: block;
+  /* Low-dexterity profile: a board action is never a small target. */
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  margin: 0 0 0.375rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.fa-sticky-avatar:hover,
+.fa-sticky-avatar:focus-visible {
+  border-color: var(--fa-rule, rgba(128, 128, 128, 0.5));
+}
+
+/* Below the declared threshold the slot shows its avatar and nothing else.
+ * `display: none` on the card rather than `visibility`, so the grid track
+ * collapses to the avatar instead of keeping the card's footprint. */
+.fa-sticky-slot--avatar > .fa-sticky,
+.fa-sticky-slot--avatar > .fa-sticky-process {
+  display: none;
+}
+
+.fa-sticky-slot--avatar {
+  /* The avatar is the whole slot now, so centre it in the track it kept. */
+  display: flex;
+  justify-content: center;
+}
+
+/* THE WINDOW LAYER. Projected onto the board, so it is positioned against the
+ * board rather than living in the grid — an open card is not the card grown
+ * large, and putting it back in the grid would make a zoom-out take it with
+ * the card. */
+.fa-board-windows {
+  position: absolute;
+  inset: 0;
+  /* The layer itself must not swallow clicks meant for the grid beneath it;
+   * only the panels in it are interactive. */
+  pointer-events: none;
+}
+
+.fa-board-windows:empty {
+  display: none;
+}
+
+.fa-board-window {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  width: min(28rem, calc(100% - 4rem));
+  max-height: calc(100% - 4rem);
+  overflow: auto;
+  pointer-events: auto;
+  border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.5));
+  border-radius: 0.5rem;
+  background: var(--fa-surface, Canvas);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
+}
+
+/* Each window is offset from the one below it, so a stack of three reads as
+ * three rather than as one. Derived from `data-fa-z`, which is the stack's own
+ * one-based index — nothing here decides the order.
+ *
+ * THE VERTICAL STEP IS LARGER THAN THE TITLE BAR, deliberately: a lower
+ * window's bar stays visible under the one above it, so it can be selected —
+ * and selecting any part raises it, which is what makes its own `[x]`
+ * reachable again. A cascade tight enough to bury the bar would leave a
+ * covered window with no way to the front, which is `l4zi` with extra steps.
+ *
+ * Moving and resizing a window is `le8b`'s, not this unit's. Until it lands a
+ * deep stack does cover the grid beneath it, and that limit is real rather
+ * than hidden: the keyboard path is unaffected, because focus does not care
+ * what is painted on top. */
+.fa-board-window[data-fa-z="2"] { top: 5rem; left: 2.5rem; }
+.fa-board-window[data-fa-z="3"] { top: 8rem; left: 3rem; }
+.fa-board-window[data-fa-z="4"] { top: 11rem; left: 3.5rem; }
+
+.fa-board-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  border-bottom: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.35));
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.fa-board-window-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fa-board-window-close {
+  /* The frame's control, fixed by the platform. A kind fills the panel; it
+   * does not get to remove the way out. */
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.4));
+  border-radius: 0.25rem;
+  background: transparent;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* The board is the window layer's containing block. Without this the panels
+ * would position against the viewport and a scrolled board would leave them
+ * behind. */
+.fa-sticky-board {
+  position: relative;
+}

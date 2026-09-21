@@ -37,6 +37,7 @@ import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { resolveTarget } from "../schemas/todo-index.js";
 import { renderTodoListing } from "./todo-listing.js";
+import { SEMANTIC_ZOOM_FILE, readSemanticZoom } from "../schemas/semantic-zoom.js";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
 import {
   QA_FAMILY_LABEL,
@@ -273,6 +274,20 @@ const TODO_ASSET = join(OUT_DIR, "assets", "todos", "index.json");
  * standing rule is that a generated directory is never hand-edited.
  */
 const TODO_LISTING_INCLUDE = join(OUT_DIR, "_includes", "generated", "todo-listing.html");
+
+/**
+ * The folio's semantic-zoom declaration, as the board reads it.
+ *
+ * Published rather than inlined because R2 is explicit — *"the threshold SHALL
+ * be declared data, not a literal in the renderer"* — and a number compiled
+ * into `docs-ui.js` would satisfy the letter of that and none of the point.
+ *
+ * **Emitted only when the folio declares one.** A folio with no
+ * `semantic-zoom.json` publishes NO file, `docs-ui.js` gets a 404, and it says
+ * it could not determine a threshold rather than choosing one. A default here
+ * would put the literal one layer further from where anybody looks for it.
+ */
+const ZOOM_ASSET = join(OUT_DIR, "assets", SEMANTIC_ZOOM_FILE);
 
 /**
  * The first line of every generated include.
@@ -1140,6 +1155,22 @@ function processHierarchy(): Record<string, string[]> {
         pageHref: (page, node) => `{{ '/${page}.html' | relative_url }}#${node}`,
       }),
     "data",
+  );
+
+  // THE THRESHOLDS, when this folio has declared any. `readSemanticZoom`
+  // returns `undefined` for a folio that has not, and that absence is carried
+  // through rather than filled in: nothing is written, and the board reports
+  // it could not determine one.
+  const zoom = readSemanticZoom(REPO_ROOT);
+  if (zoom !== undefined) {
+    mkdirSync(dirname(ZOOM_ASSET), { recursive: true });
+    emit(ZOOM_ASSET, JSON.stringify(zoom, null, 2) + "\n", "data");
+  }
+  console.log(
+    `  ${check ? "·" : "✓"} assets/${SEMANTIC_ZOOM_FILE} ` +
+      (zoom === undefined
+        ? "(not declared by this folio — nothing published, and the board says so)"
+        : `(default ${zoom.belowPx}px, ${Object.keys(zoom.byKind).length} kind override(s))`),
   );
   const themed = items.filter((i) => i.theme !== undefined).length;
   console.log(

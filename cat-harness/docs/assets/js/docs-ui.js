@@ -1695,6 +1695,111 @@
 
   var todoState = { items: [], floating: {}, processes: {}, themeArt: {} };
 
+  /* ═══ Semantic zoom and windows — TWO mechanisms, kept apart ═══════════
+   *
+   * |                   | trigger                                   | who       |
+   * |-------------------|-------------------------------------------|-----------|
+   * | **semantic zoom** | the card's RENDERED width crosses a number | automatic |
+   * | **open / close**  | opening a card, or `[x]`                   | a person  |
+   *
+   * The owner, 2026-09-20: *"start everyrting in avatar"*, `[x]` closes to the
+   * avatar, and on which mechanism wins —
+   *
+   *   open is like window, avatar/tiles project open panels onto window. sum
+   *   functionality, need to handle z-order.. selecting any part raises
+   *
+   * **An open card is a WINDOW, not a zoom state.** It is projected ON TO the
+   * board rather than being the card grown large, which is why the zoom code
+   * below never asks what is open and the window code never asks how wide
+   * anything is. A flag joining them would be the conflation made permanent —
+   * and it is also what makes "an open window survives a zoom-out" true by
+   * construction rather than by a special case.
+   *
+   * ## THE THRESHOLD IS DECLARED DATA, and its absence is a third state
+   *
+   * R2: *"the threshold SHALL be declared data, not a literal in the
+   * renderer."* `gen-docs-pages.ts` publishes the folio's
+   * `semantic-zoom.json` — and publishes NOTHING when the folio has not
+   * declared one. So `zoomState.zoom === null` means *could not determine*,
+   * and this file must never turn that into a number: with no declaration
+   * every card keeps its words, and the console says why once.
+   *
+   * ## This mirrors `schemas/window-stack.ts`, and that is a real cost
+   *
+   * The model is specified and unit-tested there; this is a browser script and
+   * cannot import it. Two implementations of one rule can drift, so the
+   * mitigation is named rather than hoped for: `test/board-windows.e2e.ts`
+   * mirrors `window-stack.test.ts` case for case, against the real file.
+   */
+  var zoomState = { zoom: null, asked: false };
+  var windowStack = { open: [] };
+
+  function isWindowOpen(id) { return windowStack.open.indexOf(id) !== -1; }
+
+  /** Open at the top; opening an already-open card RAISES it, never duplicates. */
+  function openWindowFor(id) {
+    windowStack.open = windowStack.open.filter(function (o) { return o !== id; });
+    windowStack.open.push(id);
+  }
+
+  function closeWindowFor(id) {
+    windowStack.open = windowStack.open.filter(function (o) { return o !== id; });
+  }
+
+  /** Raising a card that is not open does NOT open it — selection is not opening. */
+  function raiseWindow(id) { if (isWindowOpen(id)) openWindowFor(id); }
+
+  /** One-based, bottom to top. `undefined` for a card that is not open. */
+  function zIndexFor(id) {
+    var at = windowStack.open.indexOf(id);
+    return at === -1 ? undefined : at + 1;
+  }
+
+  /**
+   * The declared threshold for a kind, with where it came from — or null.
+   *
+   * Returns the SOURCE alongside the number for the reason
+   * `schemas/semantic-zoom.ts` gives: an inherited value is still a fact
+   * somebody must be able to trace, and a reviewer looking at a card that
+   * flipped too early needs to tell a deliberate override from the folio's
+   * default landing somewhere it does not fit.
+   */
+  function zoomThresholdFor(kind) {
+    var z = zoomState.zoom;
+    if (!z) return null;
+    var o = z.byKind && z.byKind[kind];
+    if (o) return { belowPx: o.belowPx, source: "kind", because: o.because };
+    return { belowPx: z.belowPx, source: "folio" };
+  }
+
+  /** Strictly below, so the declared number is the last width that still shows words. */
+  function rendersAvatar(kind, widthPx) {
+    var t = zoomThresholdFor(kind);
+    if (!t) return false;
+    return widthPx < t.belowPx;
+  }
+
+  /** Fetch the folio's declaration. Absent is a real answer and stays null. */
+  function fetchZoom(done) {
+    var src = document.querySelector('meta[name="fa-zoom-src"]');
+    var url = src && src.getAttribute("content");
+    if (!url) return done();
+    fetch(url)
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (doc) {
+        if (doc && typeof doc.belowPx === "number") zoomState.zoom = doc;
+        done();
+      })
+      .catch(function (e) {
+        // Said once, and never replaced by a number. A board that guessed a
+        // threshold would put the literal R2 forbids one layer further from
+        // where anybody would look for it.
+        console.warn("docs-ui: no semantic-zoom declaration at " + url + " (" + e.message +
+                     "); cards keep their words at every width.");
+        done();
+      });
+  }
+
   /** The published index, or `null` when it could not be read. */
   function fetchTodoIndex(done) {
     var src = document.querySelector('meta[name="fa-todo-src"]');
@@ -2249,6 +2354,161 @@
       grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
     }
 
+    /* ── Windows, projected ON TO the board ───────────────────────────────
+     *
+     * A separate layer, and that is the design rather than an implementation
+     * detail: an open card is not the card grown large, so it is not in the
+     * grid at all. The grid goes on doing semantic zoom — its slot becomes an
+     * avatar when the board shrinks — while the window it spawned stays
+     * exactly where it was. "An open window survives a zoom-out" is then true
+     * by construction, with nothing to special-case.
+     */
+    var windows = el("div", {
+      class: "fa-board-windows",
+      role: "group",
+      "aria-label": "Open cards",
+    });
+    board.appendChild(windows);
+    var windowEls = {};
+
+    function renderStack() {
+      for (var id in windowEls) {
+        if (!Object.prototype.hasOwnProperty.call(windowEls, id)) continue;
+        var z = zIndexFor(id);
+        // `undefined` rather than 0 for a closed card, so "bottom of the
+        // stack" and "not on it" cannot be confused — see `window-stack.ts`.
+        windowEls[id].style.zIndex = z === undefined ? "" : String(z);
+        windowEls[id].setAttribute("data-fa-z", z === undefined ? "" : String(z));
+      }
+    }
+
+    function closeCard(todo) {
+      closeWindowFor(todo.id);
+      var w = windowEls[todo.id];
+      if (w && w.parentNode) w.parentNode.removeChild(w);
+      delete windowEls[todo.id];
+      renderStack();
+      // Focus returns to the avatar that opened it. A close that leaves focus
+      // on <body> tells a reader who cannot see the page nothing at all, and
+      // the avatar IS the way back — `l4zi`.
+      var slot = slots[todo.id];
+      var opener = slot && slot.querySelector(".fa-sticky-avatar");
+      if (opener) opener.focus();
+      else heading.focus();
+    }
+
+    function openCard(todo) {
+      openWindowFor(todo.id);
+      var existing = windowEls[todo.id];
+      if (existing) { renderStack(); existing.focus(); return; }
+      var panel = el("div", {
+        class: "fa-board-window",
+        tabindex: "-1",
+        role: "group",
+        "aria-label": todo.summary,
+        "data-fa-window": todo.id,
+      });
+      var bar = el("div", { class: "fa-board-window-bar" });
+      bar.appendChild(el("span", { class: "fa-board-window-title" }, todo.summary));
+      var x = el("button", {
+        type: "button",
+        class: "fa-board-window-close",
+        "aria-label": "Close " + todo.summary + " back to its avatar",
+      }, "×");
+      x.addEventListener("click", function (e) {
+        e.stopPropagation();
+        closeCard(todo);
+      });
+      bar.appendChild(x);
+      panel.appendChild(bar);
+      // The card's own rendering: the kind controls what its panel shows, the
+      // platform fixes the frame around it. `compact` because the window
+      // already carries the frame's `[x]` — a second Close inside it would be
+      // two controls for one act, and they would not agree about what they
+      // close. Which controls a kind may declare here is `t4my`'s.
+      panel.appendChild(buildSticky(todo, float, dock, discard, { compact: true }));
+      // SELECTING ANY PART RAISES — the owner's words, so the listener is on
+      // the panel rather than on its title bar. `mousedown` and not `click`,
+      // so the raise happens before a control inside the panel acts on it.
+      panel.addEventListener("mousedown", function () {
+        raiseWindow(todo.id);
+        renderStack();
+      });
+      panel.addEventListener("focusin", function () {
+        raiseWindow(todo.id);
+        renderStack();
+      });
+      windows.appendChild(panel);
+      windowEls[todo.id] = panel;
+      renderStack();
+      panel.focus();
+    }
+
+    /* ── Semantic zoom, which never asks what is open ─────────────────────
+     *
+     * Measured on the SLOT's rendered width, in CSS pixels after zoom, which
+     * is what `semantic-zoom.ts` says the declared number is about:
+     * legibility is a property of what reaches the reader's eye.
+     *
+     * With no declaration the threshold is `null` and every card keeps its
+     * words. That is the third state carried through rather than filled in.
+     */
+    function applyZoom() {
+      for (var id in slots) {
+        if (!Object.prototype.hasOwnProperty.call(slots, id)) continue;
+        var slot = slots[id];
+        var width = slot.getBoundingClientRect().width;
+        var avatar = rendersAvatar("todo", width);
+        slot.classList.toggle("fa-sticky-slot--avatar", avatar);
+        slot.setAttribute("data-fa-avatar", avatar ? "true" : "false");
+      }
+    }
+
+    if (typeof ResizeObserver === "function") {
+      var ro = new ResizeObserver(function () { applyZoom(); });
+      // EVERY SLOT, not the grid. The threshold is measured on the slot's own
+      // rendered width, and a grid can re-lay its tracks without its own box
+      // changing at all — `grid-template-columns` from `400px` to `180px` in a
+      // wider container is exactly that. Observing the grid meant the cards
+      // never flipped, which looked like the zoom not working and was the
+      // observer watching the wrong box.
+      for (var oid in slots) {
+        if (Object.prototype.hasOwnProperty.call(slots, oid)) ro.observe(slots[oid]);
+      }
+    } else {
+      // No ResizeObserver: the width is still read once and on resize, so the
+      // feature degrades to "correct at every layout change the window
+      // reports" rather than to "always words".
+      window.addEventListener("resize", applyZoom);
+    }
+
+    /* ── The avatar that opens the card ───────────────────────────────────
+     *
+     * Every slot gets one, at every width — the owner's *"start everyrting in
+     * avatar"*. It is what semantic zoom leaves behind when the board shrinks
+     * and it is the control that opens the window, so the two mechanisms meet
+     * at exactly one element and nowhere else.
+     *
+     * A BUTTON, because this instance's declared interaction profile is
+     * low-dexterity and every board action has to be keyboard-operable.
+     */
+    for (var si = 0; si < rows.length; si++) {
+      (function (todo) {
+        var slot = slots[todo.id];
+        if (!slot) return;
+        var open = el("button", {
+          type: "button",
+          class: "fa-avatar fa-sticky-avatar",
+          "data-fa-kind": "todo",
+          "aria-label": "Open " + todo.summary,
+          title: todo.summary,
+        });
+        open.addEventListener("click", function () { openCard(todo); });
+        slot.insertBefore(open, slot.firstChild);
+      })(rows[si].todo);
+    }
+    applyZoom();
+
     /**
      * The way back, and on the landing board it has to be ON THE PAGE.
      *
@@ -2444,6 +2704,11 @@
 
   /** Fetch, then mount the board and hand the launcher a way to open it. */
   function mountTodoStickies() {
+    // The threshold FIRST, because the board applies it as it mounts. Its
+    // absence is a real answer and does not block anything: `fetchZoom` calls
+    // back either way, and a board with no declaration keeps every card's
+    // words rather than waiting for a number that is never coming.
+    fetchZoom(function () {
     fetchTodoIndex(function (items) {
       if (items === null) return;
       todoState.items = items;
@@ -2453,6 +2718,7 @@
       collapseFloor(items.length);
       window.__faTodoBoard = board;
       document.dispatchEvent(new CustomEvent("fa:todos-ready", { detail: board }));
+    });
     });
   }
 
