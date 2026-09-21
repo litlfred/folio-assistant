@@ -33,28 +33,27 @@ caller re-derives.
 | **meaning** | what the reader wants to look at, **in their own words** |
 | **absent** | the whole preview: every page this branch changed |
 
-Keep the wording **verbatim** wherever the output echoes it. A request
-paraphrased by the agent is a different request, and the reader cannot tell
-which one the list was built for — the same rule
-[`goal-review`](goal-review.md) applies to a goal.
+Keep the wording **verbatim** wherever the output echoes it — the same rule
+[`goal-review`](goal-review.md) applies to a goal, and for the same reason: a
+request the agent paraphrased is a different request, and the reader cannot
+tell which one the list was built for.
 
-The input **narrows**; it never adds. A reader who asks for "the navbar" gets
-the pages carrying it, not a page that merely mentions it. **If the ask matches
-nothing that changed, say so** rather than returning the whole preview as
-though it had been asked for — a list that silently ignores its input is worse
-than an empty one, because the reader believes it was answered.
+It **narrows**; it never adds. *"The navbar"* gets the pages carrying it, not a
+page that mentions it. **An ask matching nothing that changed is said, not
+answered with the whole preview** — a list that silently ignores its input is
+worse than an empty one, because the reader believes it was answered.
 
 ### Output
 
-Markdown, in this order. Every part is required; an absent part is stated, not
-dropped.
+Markdown, in this order. Every part is required; an absent part is **stated**,
+not dropped.
 
-1. **One line: where to start.** The single URL that best answers the input, or
-   the page with the most change behind it when there was no input. A reader
+1. **Where to start** — one line, one URL: the one that best answers the input,
+   or the page with the most change behind it when there was none. A reader
    opens one thing first whether or not you choose it for them.
-2. **The comparison table** below — before (main), after (staging), and **what
-   to review there**.
-3. **What could not be checked**, as the third state below.
+2. **The comparison table** below — before (main), after (staging), what to
+   review.
+3. **What could not be checked**, per the three states below.
 
 ### The third column is the one with value
 
@@ -77,18 +76,18 @@ because the gate that swept the page never opened the view.
 
 ### The third state, here as everywhere
 
-"Could not determine" is never rendered as clean, and a change with no rendered
-surface is **not** a failure — it is the useful answer.
+"Could not determine" is never rendered as clean — and a change with **no
+rendered surface** is not a failure, it is the useful answer.
 
 | case | report it as |
 |---|---|
-| the preview has not deployed yet | not deployed, with the timing below — never a link to where it will be |
-| a changed page is absent from the publish ref | **a finding**: the build dropped it, or it is not a page |
-| the change has no rendered surface | reviewed in the diff, and say which files |
+| not deployed yet | not deployed, with the timing from §"Say how long" — never a link to where it will be |
+| a changed page absent from the publish ref | **a finding** — the build dropped it, or it is not a page |
+| no rendered surface | reviewed in the diff, naming the files |
 
 The middle row is the most useful thing this skill can report, and composing
-its URL anyway would hide exactly that. See §"Before you report a staging URL
-as broken" — a URL is **looked up**, never composed.
+its URL anyway would hide exactly that — §"Before you report a staging URL as
+broken".
 
 ## When to provide before/after URLs
 

@@ -79,3 +79,30 @@ step in this workflow whose output is invisible until a gate reads the whole
 corpus. `todo-manager` already carries §"Check before you create" for the
 duplicate case; the parent case has the same cause — the CLI's one-argument
 form is the convenient one and it produces an incomplete node every time.
+
+
+## The second gate failure, and it is a trade rather than a bug
+
+`bun run gates` reported TWO failures on push 1, not one. The orphan above was
+the first; the second was `kg:audit:check`, on a **stale sidecar** for the
+skill this bean edits — `test/results/kg-qa/skills/folio-core/staging-review.kg-qa.json`.
+Refreshed with `bun run kg:audit`; the check now exits 0.
+
+**What the refreshed sidecar records is worth stating rather than burying.**
+`skill-is-brief` was ALREADY failing at 289 lines against a corpus p75 of 279,
+and this change takes it to **365**. So the addition widened an existing
+`major` finding by 76 lines. Not a new failure, and not one `kg:audit:check`
+gates on (it fails on `critical` or a stale sidecar; `kg:audit:strict` is what
+adds `major`) — but making an open finding worse is not the same as leaving it
+alone, and the sidecar is now the honest record of both numbers.
+
+I tried to trim it and saved ONE line, because what I cut was wording rather
+than content. Recorded that way instead of claiming a tightening: all four
+added subsections are the contract the owner asked for — the input, the output,
+what to review, and the third state — and none of them is restatement of what
+the file already carried. The length is the price of the contract being in the
+skill rather than in each caller.
+
+**If the owner would rather have brevity**, the cut is the justification prose
+around the tables, not the tables. That is a call about this repository's house
+style, not about this bean.
