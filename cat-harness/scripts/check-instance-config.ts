@@ -37,7 +37,7 @@
 import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { DECLARATION_FILENAME, readDeclaration } from "../schemas/cat-harness.js";
+import { findDeclarationFile, readDeclaration } from "../schemas/cat-harness.js";
 import { instanceConfigFilename, LEGACY_HARNESS_CONFIG } from "../schemas/harness-config.js";
 
 const CHECKOUT = resolve(import.meta.dir, "..", "..");
@@ -51,11 +51,11 @@ interface Finding {
 /** Instance roots: the checkout itself, and each immediate subdirectory that declares. */
 function instanceRoots(checkout: string): string[] {
   const out: string[] = [];
-  if (existsSync(join(checkout, DECLARATION_FILENAME))) out.push(checkout);
+  if (findDeclarationFile(checkout) !== undefined) out.push(checkout);
   for (const entry of readdirSync(checkout, { withFileTypes: true })) {
     if (!entry.isDirectory() || entry.name.startsWith(".") || entry.name === "node_modules") continue;
     const d = join(checkout, entry.name);
-    if (existsSync(join(d, DECLARATION_FILENAME))) out.push(d);
+    if (findDeclarationFile(d) !== undefined) out.push(d);
   }
   return out;
 }

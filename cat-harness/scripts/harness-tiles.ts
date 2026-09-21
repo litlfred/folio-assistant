@@ -56,13 +56,7 @@ import { join } from "node:path";
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { flattenDependencies } from "./dependency-order.js";
-import {
-  type CatHarnessDeclaration,
-  DECLARATION_FILENAME,
-  isExemptFrom,
-  readDeclaration,
-  siteDirFor,
-} from "../schemas/cat-harness.js";
+import { type CatHarnessDeclaration, findDeclarationFile, isExemptFrom, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 // REQUIRED, for the side effect: `folio` is registered by core on import, and
 // this instance declares a folio graph. Without it `readDeclaration` throws on
 // a perfectly valid declaration — which is exactly how three inline evals in
@@ -254,17 +248,17 @@ function folioRoot(repoRoot: string, name: string, atSiteRoot: boolean): string 
   // literal, and it was right to: an instance may publish from anywhere, and
   // this function would have quietly answered "no folio view" for one that
   // did.
-  if (!existsSync(join(dir, DECLARATION_FILENAME))) return undefined;
+  if (findDeclarationFile(dir) === undefined) return undefined;
   return existsSync(join(dir, siteDirFor(dir))) ? `/${name}/` : undefined;
 }
 
 /** Every `harness.json` in the tree: the repository root and one level down. */
 function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
   const out: string[] = [];
-  if (existsSync(join(repoRoot, DECLARATION_FILENAME))) out.push(repoRoot);
+  if (findDeclarationFile(repoRoot) !== undefined) out.push(repoRoot);
   for (const name of names) {
     const dir = join(repoRoot, name);
-    if (dir !== repoRoot && existsSync(join(dir, DECLARATION_FILENAME))) out.push(dir);
+    if (dir !== repoRoot && findDeclarationFile(dir) !== undefined) out.push(dir);
   }
   return out;
 }

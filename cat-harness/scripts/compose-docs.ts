@@ -108,7 +108,7 @@
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
-import { DECLARATION_FILENAME } from "../schemas/cat-harness.js";
+import { declarationPathIn } from "../schemas/cat-harness.js";
 
 import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 
@@ -144,7 +144,7 @@ interface DeclEntry {
  * and "the directory is empty" are different facts.
  */
 export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLayer[] } {
-  const decl = JSON.parse(readFileSync(join(repo, "cat-harness", DECLARATION_FILENAME), "utf-8")) as {
+  const decl = JSON.parse(readFileSync(declarationPathIn(join(repo, "cat-harness"))!, "utf-8")) as {
     directories?: DeclEntry[];
   };
   const found: DocsLayer[] = [];

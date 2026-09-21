@@ -60,16 +60,10 @@
  * with findings.
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import {
-  DECLARATION_FILENAME,
-  instanceRootFor,
-  readDeclaration,
-  repoRootFor,
-  rootForScope,
-} from "../schemas/cat-harness.js";
+import { findDeclarationFile, instanceRootFor, readDeclaration, repoRootFor, rootForScope } from "../schemas/cat-harness.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 // REQUIRED: an instance here declares a `folio` graph, whose kind is registered
 // by a load-time side effect in core.
@@ -218,11 +212,11 @@ export interface UndeclaredEntry {
 export function instanceConfigNames(repoRoot: string): Map<string, string> {
   const out = new Map<string, string>();
   const roots: string[] = [];
-  if (existsSync(join(repoRoot, DECLARATION_FILENAME))) roots.push(repoRoot);
+  if (findDeclarationFile(repoRoot) !== undefined) roots.push(repoRoot);
   for (const e of readdirSync(repoRoot, { withFileTypes: true })) {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
     const d = join(repoRoot, e.name);
-    if (existsSync(join(d, DECLARATION_FILENAME))) roots.push(d);
+    if (findDeclarationFile(d) !== undefined) roots.push(d);
   }
   for (const r of roots) {
     let name: string | undefined;
@@ -266,7 +260,7 @@ export function accountedRootPaths(repoRoot: string): Map<string, string> {
     // An instance declares itself. That is the contract everywhere else here,
     // and it means a new instance is accounted for the moment it exists rather
     // than when somebody remembers to add it to a list.
-    if (existsSync(join(repoRoot, entry.name, DECLARATION_FILENAME))) {
+    if (findDeclarationFile(join(repoRoot, entry.name)) !== undefined) {
       out.set(entry.name, "an instance: it declares itself");
       instances.push(entry.name);
     }
@@ -294,8 +288,8 @@ export function accountedRootPaths(repoRoot: string): Map<string, string> {
   // repository-scoped entry to the checkout's PARENT — outside the repository
   // entirely. A root instance declaring repository scope is a contradiction in
   // terms; it is not special-cased because nothing should write one.
-  if (existsSync(join(repoRoot, DECLARATION_FILENAME))) {
-    out.set(DECLARATION_FILENAME, "the repository's own declaration: it acts as an initialized instance");
+  if (findDeclarationFile(repoRoot) !== undefined) {
+    out.set(findDeclarationFile(repoRoot) ?? "", "the repository's own declaration: it acts as an initialized instance");
     const rootDecl = readDeclaration(repoRoot);
     for (const dir of rootDecl?.directories ?? []) {
       const top = dir.path.replace(/^\.\//, "").split("/")[0];

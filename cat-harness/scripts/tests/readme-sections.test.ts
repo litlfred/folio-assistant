@@ -21,14 +21,10 @@ import {
   type SectionContext,
 } from "../../content/pipeline/readme-sections";
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc";
-import {
-  AGENT_INSTRUCTIONS_ROLE,
-  assetRolePurpose,
-  INSTANCE_README_ROLE,
-  instanceRootsIn,
-} from "../../schemas/cat-harness.js";
-import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance } from "../../test/support/instance-fixture.js";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import { AGENT_INSTRUCTIONS_ROLE, assetRolePurpose, INSTANCE_README_ROLE, instanceRootsIn } from "../../schemas/cat-harness.js";
+import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance , writeFixtureFile} from "../../test/support/instance-fixture.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const dirs: string[] = [];
 
@@ -54,7 +50,7 @@ function folio(files: Record<string, string> = {}): string {
   for (const [rel, body] of Object.entries(files)) {
     const abs = join(root, rel);
     mkdirSync(join(abs, ".."), { recursive: true });
-    writeFileSync(abs, body);
+    writeFixtureFile(root, rel, body);
   }
   return root;
 }
@@ -288,10 +284,10 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
   // A property worth keeping must not depend on the corpus still being wrong.
   function repoWith(instances: Record<string, unknown>): string {
     const root = mkdtempSync(join(tmpdir(), "instances-"));
-    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "root" }));
+    writeDeclaration(root, JSON.stringify({ name: "root" }));
     for (const [name, decl] of Object.entries(instances)) {
       mkdirSync(join(root, name), { recursive: true });
-      writeFileSync(join(root, name, DECLARATION_FILENAME), JSON.stringify(decl));
+      writeDeclaration(join(root, name), JSON.stringify(decl));
     }
     return root;
   }

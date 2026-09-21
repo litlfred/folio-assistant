@@ -719,6 +719,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "prints the unaccounted paths with their sizes; `check:undeclared-files:check` is the gating form and is wired",
   },
   {
+    script: "ingest:ig:check",
+    kind: "covered-by",
+    reason:
+      "re-derives an IG's artefact index from its PUBLISHED OUTPUT, which this repository does not carry — smart-trust's `gh-pages` is 342,656 files, so no runner here can supply the subject. `check:artifact-index` is wired and covers the half that needs only the repository: that every committed index is a valid `folio-fhir-artifact-index/v1` document, with `count` agreeing with its array and no DAK overlay on an index declaring `dakApi: \"absent\"`. That is DELIBERATELY less than this check would catch — an index that validates can still be stale against an IG that has moved on — and the difference is stated rather than papered over. The script itself exits 2 (\"could not determine\") when the source is absent, never 0, so wiring it would redden CI over a missing clone rather than over a regression. Run it by hand, or from `/prepare-merge`, with the IG checkout as its argument",
+  },
+  {
     script: "health:check",
     kind: "covered-by",
     reason:

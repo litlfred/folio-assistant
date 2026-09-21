@@ -14,7 +14,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { repoRootFor } from "../../schemas/cat-harness.js";
-import { strayBacktick, VIEWER_SOURCES } from "../check-viewer-backticks.ts";
+import { strayBacktick, viewerSources } from "../check-viewer-backticks.ts";
 
 const ROOT = repoRootFor(join(import.meta.dir, "../.."));
 
@@ -64,11 +64,68 @@ describe("strayBacktick", () => {
   });
 });
 
-describe("the real corpus", () => {
-  test("every listed generator exists and holds a page template", () => {
+describe("an interpolation is CODE, not page text — bean `57n3`", () => {
+  const page = (body: string) => `function f() {\n  return \`<!doctype html>\n${body}\n</html>\`;\n}\n`;
+
+  test("a nested template inside ${…} does not end the page", () => {
+    // The two false findings this bean was opened for, in miniature. Both
+    // `gen-docs-auto.ts` and `dak-pdf.ts` compile and were reported as
+    // defects, because the old rule took the first unescaped backtick.
+    expect(strayBacktick(page('<title>${scope ? `x ${esc(s)}` : ""}</title>'))).toBeNull();
+  });
+
+  test("a brace inside a STRING inside ${…} does not close the interpolation", () => {
+    // `${who ? `…` : "}"}` — miscounting here would end the interpolation
+    // early and hand the rest of the page back to the backtick rule.
+    expect(strayBacktick(page('<p>${cond ? "}" : `y`}</p>'))).toBeNull();
+  });
+
+  test("nested braces inside ${…} are balanced", () => {
+    expect(strayBacktick(page("<p>${fn({ a: { b: 1 } })}</p>"))).toBeNull();
+  });
+
+  test("but a backtick OUTSIDE an interpolation still ends it — the trap", () => {
+    // What the gate is for. A backtick in a comment is ordinary page text to
+    // the parser, and ending the literal there is the defect.
+    const hit = strayBacktick(page("<!-- a `backtick` in a comment -->"));
+    expect(hit).not.toBeNull();
+    expect(hit!.text).toContain("backtick");
+  });
+
+  test("a template that never closes is not a finding", () => {
+    // Could-not-determine: the file is broken for some other reason, and
+    // pointing at a backtick would be a guess.
+    expect(strayBacktick("function f() { return `<!doctype html>\n<p>no close")).toBeNull();
+  });
+});
+
+describe("the file set is derived, not listed", () => {
+  const sources = viewerSources(ROOT);
+
+  test("it finds the generators, including the one outside cat-harness", () => {
+    // `who-iris/scripts/gen-iris-pages.ts` was added to the old array by hand
+    // on 2026-09-21, after the trap caught it for the third time in a session.
+    // Nothing names it now; the walk finds it.
+    expect(sources).toContain("who-iris/scripts/gen-iris-pages.ts");
+    expect(sources).toContain("cat-harness/scripts/gen-schema-viz.ts");
+    // And the two the old array could not include, because the old detector
+    // reported them falsely.
+    expect(sources).toContain("cat-harness/scripts/gen-docs-auto.ts");
+    expect(sources).toContain("cat-harness/scripts/dak-pdf.ts");
+  });
+
+  test("it excludes tests, and THIS file is why", () => {
+    // `check-viewer-backticks.test.ts` carries a planted stray as a fixture.
+    // Scanning it would fail the gate on its own evidence.
+    expect(sources.some((f) => f.endsWith(".test.ts"))).toBe(false);
+    expect(sources.some((f) => f.endsWith(".e2e.ts"))).toBe(false);
+  });
+
+  test("every derived source exists and holds a page template", () => {
     // Without this the gate could pass over a file that moved, which is the
     // vacuous-green failure the check itself guards against.
-    for (const rel of VIEWER_SOURCES) {
+    expect(sources.length).toBeGreaterThan(0);
+    for (const rel of sources) {
       const src = readFileSync(join(ROOT, rel), "utf-8");
       expect(/return\s+`<!doctype html>/i.test(src)).toBe(true);
       expect(strayBacktick(src)).toBeNull();

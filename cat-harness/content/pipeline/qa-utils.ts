@@ -14,7 +14,7 @@ import {
 } from "fs";
 import { join, resolve } from "path";
 import { execFileSync } from "child_process";
-import { DECLARATION_FILENAME, graphLayer, readDeclaration } from "../../schemas/cat-harness.js";
+import { findDeclarationFile, graphLayer, readDeclaration } from "../../schemas/cat-harness.js";
 import { portableSegment } from "../../schemas/portable-path";
 // The `folio` kind is registered by CORE as a load-time side effect. Without
 // it `graphLayer("folio")` is undefined and the folio directory would read as
@@ -1056,7 +1056,7 @@ export interface WalkBlocksOptions {
 function declaringRootFor(dir: string): string {
   let d = resolve(dir);
   for (;;) {
-    if (existsSync(join(d, DECLARATION_FILENAME)) || existsSync(join(d, ".git"))) return d;
+    if (findDeclarationFile(d) !== undefined || existsSync(join(d, ".git"))) return d;
     const parent = dirname(d);
     if (parent === d) return resolve(dir);
     d = parent;

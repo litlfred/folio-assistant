@@ -31,7 +31,7 @@ import {
   composeContributions,
   type DeclaredContribution,
 } from "./sticky-contribution.js";
-import { CatHarnessDeclarationSchema, DECLARATION_FILENAME, siteDirFor } from "./cat-harness.js";
+import { CatHarnessDeclarationSchema, siteDirFor, declarationPathIn } from "./cat-harness.js";
 import { THEMES } from "./themes.js";
 import { resolveThemeBackdrop } from "./theme.js";
 
@@ -43,7 +43,7 @@ const NOW = "2026-09-20T00:00:00.000Z";
 /** A declaration, read the way a consumer reads it. */
 function decl(rel: string) {
   return CatHarnessDeclarationSchema.parse(
-    JSON.parse(readFileSync(join(REPO, rel, DECLARATION_FILENAME), "utf8")),
+    JSON.parse(readFileSync(declarationPathIn(join(REPO, rel))!, "utf8")),
   );
 }
 
@@ -727,9 +727,9 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // shows edit src icon (and also need view icon)". `/blob/` reads and
     // `/edit/` opens the editor; a reader checking what a card says should not
     // land in a text box.
-    expect(sourceLinks(REPO, "bootstrap/harness.json", "main")).toEqual({
-      viewHref: `${REPO}/blob/main/bootstrap/harness.json`,
-      editHref: `${REPO}/edit/main/bootstrap/harness.json`,
+    expect(sourceLinks(REPO, "cat-bootstrap/cat-bootstrap.config.json", "main")).toEqual({
+      viewHref: `${REPO}/blob/main/cat-bootstrap/cat-bootstrap.config.json`,
+      editHref: `${REPO}/edit/main/cat-bootstrap/cat-bootstrap.config.json`,
     });
   });
 
@@ -738,22 +738,25 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // worse than no link: it invites a click, and on a private repository it
     // 404s for exactly the reader who cannot edit — which reads as "this page
     // is broken" rather than "you cannot do this".
-    expect(sourceLinks(undefined, "bootstrap/harness.json", "main")).toBeUndefined();
+    expect(sourceLinks(undefined, "cat-bootstrap/cat-bootstrap.config.json", "main")).toBeUndefined();
   });
 
   test("the path is the CONTRIBUTING instance's, not a default", () => {
     // The falsifier that matters. Three instances contribute today, so a
     // resolver that always answered `cat-harness/harness.json` would be
     // silently right one time in three.
-    const a = sourceLinks(REPO, "cat-harness/harness.json", "main")!;
-    const b = sourceLinks(REPO, "folio-assist-core/harness.json", "main")!;
+    const a = sourceLinks(REPO, "cat-harness/cat-harness.config.json", "main")!;
+    const b = sourceLinks(REPO, "folio-assistant-core/folio-assistant-core.config.json", "main")!;
     expect(a.editHref).not.toEqual(b.editHref);
-    expect(b.editHref).toContain("folio-assist-core/harness.json");
+    expect(b.editHref).toContain("folio-assistant-core/folio-assistant-core.config.json");
   });
 
   test("a branch other than main is honoured", () => {
-    expect(sourceLinks(REPO, DECLARATION_FILENAME, "claude/x")!.editHref).toBe(
-      `${REPO}/edit/claude/x/harness.json`,
+    // `declaredIn` is a repo-relative PATH STRING, not a directory to look in
+    // — `REPO` here is the remote URL. A codemod briefly passed this through
+    // `findDeclarationFile`, which asked the filesystem about a URL.
+    expect(sourceLinks(REPO, "cat-harness/cat-harness.config.json", "claude/x")!.editHref).toBe(
+      `${REPO}/edit/claude/x/cat-harness/cat-harness.config.json`,
     );
   });
 
@@ -761,8 +764,8 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // Declarations do not have spaces today, but the queue this repository
     // ingests from is full of them, and a URL that breaks at the first space
     // is a link that silently points somewhere else.
-    expect(sourceLinks(REPO, "some dir/harness.json", "main")!.viewHref).toBe(
-      `${REPO}/blob/main/some%20dir/harness.json`,
+    expect(sourceLinks(REPO, "some dir/some dir.config.json", "main")!.viewHref).toBe(
+      `${REPO}/blob/main/some%20dir/some%20dir.config.json`,
     );
   });
 });

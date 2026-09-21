@@ -19,7 +19,8 @@ import {
   formatReport,
   publishedGraphRefs,
 } from "../check-published-refs";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 describe("classifyRef", () => {
   it("accepts a version, with or without the tag's leading v", () => {
@@ -52,7 +53,7 @@ describe("classifyRef", () => {
 function instance(decl: unknown, config?: unknown): string {
   const root = mkdtempSync(join(tmpdir(), "pubrefs-"));
   mkdirSync(join(root, "inst"), { recursive: true });
-  writeFileSync(join(root, "inst", DECLARATION_FILENAME), JSON.stringify(decl));
+  writeDeclaration(join(root, "inst"), JSON.stringify(decl));
   if (config !== undefined) writeFileSync(join(root, "inst", "harness.config.json"), JSON.stringify(config));
   return root;
 }
@@ -89,7 +90,7 @@ describe("carrier 1 — instance dependencies", () => {
   it("an unreadable config is a finding, NOT an empty dependency set", () => {
     const root = mkdtempSync(join(tmpdir(), "pubrefs-bad-"));
     mkdirSync(join(root, "inst"), { recursive: true });
-    writeFileSync(join(root, "inst", DECLARATION_FILENAME), JSON.stringify({ name: "t" }));
+    writeDeclaration(join(root, "inst"), JSON.stringify({ name: "t" }));
     writeFileSync(join(root, "inst", "harness.config.json"), "{ not json");
     expect(dependencyRefs(root).findings).toHaveLength(1);
     rmSync(root, { recursive: true, force: true });

@@ -14,7 +14,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { declaredKinds, instancesIn, renderInstance } from "../check-instance-render.ts";
-import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor, declarationPathIn } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const made: string[] = [];
 afterEach(() => {
@@ -25,7 +26,7 @@ afterEach(() => {
 function instance(decl: unknown | null, files: Record<string, string> = {}): string {
   const root = mkdtempSync(join(tmpdir(), "render-"));
   made.push(root);
-  if (decl !== null) writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify(decl));
+  if (decl !== null) writeDeclaration(root, JSON.stringify(decl));
   for (const [rel, body] of Object.entries(files)) {
     mkdirSync(join(root, rel, ".."), { recursive: true });
     writeFileSync(join(root, rel), body);
@@ -48,7 +49,7 @@ describe("could not determine is a THIRD state, never a pass", () => {
   test("a declaration that will not parse is undetermined too", async () => {
     const root = mkdtempSync(join(tmpdir(), "render-bad-"));
     made.push(root);
-    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json");
+    writeDeclaration(root, "{ not json", "broken");
     const r = await renderInstance(root);
     expect(r.verdict).toBe("undetermined");
     expect(r.nodeCount).toBe(0);
@@ -94,7 +95,7 @@ describe("declared means TRANSITIVELY declared", () => {
         }),
       },
     );
-    const kinds = declaredKinds(root, JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf-8")));
+    const kinds = declaredKinds(root, JSON.parse(readFileSync(declarationPathIn(root)!, "utf-8")));
     expect([...kinds].sort()).toEqual(["bean-defs", "beans", "workflow-state"]);
   });
 
@@ -108,7 +109,7 @@ describe("declared means TRANSITIVELY declared", () => {
         }),
       },
     );
-    const kinds = declaredKinds(root, JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf-8")));
+    const kinds = declaredKinds(root, JSON.parse(readFileSync(declarationPathIn(root)!, "utf-8")));
     expect([...kinds]).toContain("bean-defs");
   });
 
@@ -119,7 +120,7 @@ describe("declared means TRANSITIVELY declared", () => {
       { name: "n", directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }] },
       { "beans/beans.json": "{ not json" },
     );
-    const kinds = declaredKinds(root, JSON.parse(readFileSync(join(root, DECLARATION_FILENAME), "utf-8")));
+    const kinds = declaredKinds(root, JSON.parse(readFileSync(declarationPathIn(root)!, "utf-8")));
     expect([...kinds]).toEqual(["beans"]);
   });
 });
@@ -162,6 +163,13 @@ describe("this repository's own instances", () => {
       "folio-assistant-sci",
       "kg-navigation",
       "large-datasets",
+      // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
+      // It fired as designed, which is what this list is for: `smart-trust/`
+      // declares a `harness.json` and is therefore an instance, sorting
+      // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
+      // that is correct — it declares no `harness.json`, so it is a directory
+      // rather than an instance.
+      "smart-trust",
       "who-iris",
       "who-style-guide",
     ]);

@@ -102,7 +102,7 @@
  */
 import { cpSync, existsSync, readFileSync, readdirSync, statSync } from "fs";
 import { join, resolve } from "path";
-import { DECLARATION_FILENAME } from "../schemas/cat-harness.js";
+import { declarationPathIn } from "../schemas/cat-harness.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -204,7 +204,8 @@ function mountable(): Mountable[] {
   const out: Mountable[] = [];
   for (const e of readdirSync(REPO, { withFileTypes: true })) {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
-    const decl = join(REPO, e.name, DECLARATION_FILENAME);
+    const decl = declarationPathIn(join(REPO, e.name));
+    if (decl === undefined) continue;
     if (!existsSync(decl)) continue;
     let d: { name?: string; directories?: { path?: string; graphs?: string[]; instanceRoot?: boolean }[] };
     try {
