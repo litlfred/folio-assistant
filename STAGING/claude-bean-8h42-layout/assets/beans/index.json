@@ -2011,6 +2011,20 @@
       "file": "beans/defs/folio-assistant-btuv--platform-boundary-qa-criteria-registryts-hand-writ.md"
     },
     {
+      "id": "folio-assistant-bu2q",
+      "title": "VISUALISER: voices/ — every voice defined, with the citation each rule carries",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:26:22Z",
+      "updatedAt": "2026-09-21T18:47:51Z",
+      "preview": "Owner, 2026-09-21: 'since cat-harness delcares voices/ dir it needs to add\nvisualier (followin SOPs on director visualizers in the docs.) shoulld show\nlist of voices defined.'\n\nOne correction to the premise, because it changes who owns the work rather\nthan whether it is owed: `cat-harness` no longer declares `voices/`. All four\nvoices moved to `<instance>/skills/voices/` earlier the same day (btuv",
+      "file": "beans/defs/folio-assistant-bu2q--visualiser-voices-every-voice-defined-with-the-cit.md"
+    },
+    {
       "id": "folio-assistant-bweb",
       "title": "MEMORY MOVE FALLOUT: sweep consumers after 07xs moved skills/memory/ to memory/",
       "status": "completed",
@@ -3491,6 +3505,20 @@
       "updatedAt": "2026-09-21T13:16:37Z",
       "preview": "Seen directly while verifying PR #691 against the real generated page: the badge row under a title renders a dark-brown 2/6 languages chip and a dark-green Swept 8/289 chip next to a correctly themed light TR chip, on a light page.\n\nfa-lang-coverage-badge and fa-sweep-badge are built in mountTranslationBadges with inline colour literals (#78350f, #14532d, #1e293b, #e2e8f0). Contrast WITHIN each ch",
       "file": "beans/defs/folio-assistant-n7vv--badge-palette-the-coverage-and-sweep-badges-are-in.md"
+    },
+    {
+      "id": "folio-assistant-n8br",
+      "title": "check:voice-skills — schemas/voice-skill.ts promises a gate that does not exist",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:26:34Z",
+      "updatedAt": "2026-09-21T18:36:28Z",
+      "preview": "`schemas/voice-skill.ts` says, in the module doc comment:\n\n> **No field serves two of those by restatement.** The instruction body must\n> not enumerate rules: a rule stated in prose beside the same rule stated as\n> data is one fact in two places, and the prose copy is the one carrying no\n> citation and no pattern. `check:voice-skills` enforces it.\n\n**There is no `check:voice-skills`.** Written 202",
+      "file": "beans/defs/folio-assistant-n8br--checkvoice-skills-schemasvoice-skillts-promises-a.md"
     },
     {
       "id": "folio-assistant-nba0",
