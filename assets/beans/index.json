@@ -4043,15 +4043,15 @@
     {
       "id": "folio-assistant-qefk",
       "title": "STICKY CHROME: four buttons per sticky and three rows of board furniture is more control than content",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:11:38Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
-      "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 3. Owner: \"the todos controls are too clunky / take up too much real estate.\"",
+      "updatedAt": "2026-09-21T19:32:23Z",
+      "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 3. Owner: \"the todos controls are too clunky / take up too much real estate.\"\n\n\n## Built 2026-09-21 — \"3+1\", split by what the gesture DOES\n\nAsked how far to cut and the owner answered **\"3+1\"** — not one of the offered\noptions, so the reading is recorded here rather than assumed away: three\ncontrols on the face, one affordance hold",
       "file": "beans/defs/folio-assistant-qefk--sticky-chrome-four-buttons-per-sticky-and-three-ro.md"
     },
     {
@@ -4577,14 +4577,14 @@
     {
       "id": "folio-assistant-tdu3",
       "title": "The module-scope gate covers folioDir only, and walks only cat-harness",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T15:35:46Z",
-      "updatedAt": "2026-09-21T16:40:00Z",
+      "updatedAt": "2026-09-21T16:56:00Z",
       "preview": "Carved out of `1hkj` (#719) after it merged, from three gaps found by running\nits gate rather than by reading it.\n\n## Three gaps, each measured\n\n**1. Only `folioDir` was on the list.** Measured on main against a directory\nholding `{ not json`:\n\n| `folioDir` | THREW |\n| `directoryForGraph` | THREW |\n| `directoriesForGraph` | THREW |\n| `findContentRepoRoot` | returned its declared fallback |\n\n`findC",
       "file": "beans/defs/folio-assistant-tdu3--the-module-scope-gate-covers-foliodir-only-and-wal.md"
     },
@@ -4947,14 +4947,14 @@
     {
       "id": "folio-assistant-vzur",
       "title": "The markdown backlog: 162 occurrences of the retired declaration filename in skills an agent reads",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:43:09Z",
-      "updatedAt": "2026-09-21T18:22:21Z",
+      "updatedAt": "2026-09-21T21:05:00Z",
       "preview": "Split out of `hrv2`, which was about a **wrong** filename. This is the\n**retired** one, and the owner scoped it out of that change deliberately.\n\n**Measured 2026-09-21 on `main`:** `harness.json` appears **162 times across 83\nmarkdown files**, excluding `beans/` (historical records, correct as written).\nAmong them the skills an agent reads to learn how this repository works —\n`directory-convention",
       "file": "beans/defs/folio-assistant-vzur--the-markdown-backlog-162-occurrences-of-the-retire.md"
     },
@@ -5645,6 +5645,20 @@
       "updatedAt": "2026-09-20T20:31:29Z",
       "preview": "## Measured 2026-09-20, by the criterion added in PR #593\n\n`check:subgraph-coverage` now asks about `agent-instructions` as well as\n`instance-readme`. **8 of 11 instances declare no `agent-instructions`\nasset** — readable by a person, mute to an agent. Run it for the list; it is\nnot copied here, because a count in prose is a claim and this one goes stale\nthe moment one is written.\n\nOne of the eigh",
       "file": "beans/defs/folio-assistant-zoif--agentsmd-for-the-8-instances-that-have-none-checks.md"
+    },
+    {
+      "id": "folio-assistant-zq3f",
+      "title": "The profile resolver was fixed by a side effect — and 235 sidecars still carry the old verdicts",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:20:00Z",
+      "updatedAt": "2026-09-21T19:20:00Z",
+      "preview": "Found 2026-09-21 while clearing `vzur`'s retired-filename backlog, and **not\nfixed there**: it is a question about QA verdicts, not about prose.\n\n[`domain-fencing`](../../cat-harness/skills/graph-management/domain-fencing.md)\nrecords a defect under §\"Two things the fencing turned up\". Re-measuring it to\nfix the filename in the quoted output showed the measurement itself had moved.\n\n## What changed",
+      "file": "beans/defs/folio-assistant-zq3f--the-profile-resolver-was-fixed-by-a-side-effect-235.md"
     },
     {
       "id": "folio-assistant-zq4z",

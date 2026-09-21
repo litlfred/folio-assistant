@@ -43,9 +43,13 @@ not decided does not compile.
 
 > ### `kg` was renamed to `cat-harness` (2026-09-19)
 >
-> Every other harness concept is named for the **layer that defines it** —
-> `harness.json`, the `CatHarness` declaration, the `cat-harness`
-> instance. `kg` named what the graph HOLDS instead, and was the odd one out.
+> Every other harness concept is named for the **layer that defines it** — the
+> `CatHarness` declaration, the `cat-harness` instance. `kg` named what the
+> graph HOLDS instead, and was the odd one out.
+>
+> The declaration FILE was a third example until the 2026-09-21 split made it
+> `<name>.json`. It is named for the **instance** now, so it argues nothing
+> here either way.
 >
 > **The old spelling still reads, and that is load-bearing rather than
 > politeness.** This document says overrides match on the entry's `id`, not
@@ -417,7 +421,7 @@ bean `dh4f` found in thirty pipeline scripts, where three were passing over a
 corpus they could not read.
 
 This repository's own declaration is the worked example, and **no count is
-given here on purpose**: the declaration is the list. That sentence said
+given here on purpose**: `<name>.json` is the list. That sentence said
 "declares `schemas/` and `skills/`" until 2026-09-20, by which point it
 declared **twenty-one** directories — a number in prose is a claim, and this
 one had been false for long enough that `AGENTS.md` carries its own flagged
@@ -451,7 +455,15 @@ word.
   `<stub>.schema.json`. Never a generic `kg.json`. Compute it with
   `artefactStub()`, never by re-deriving it, so two exporters cannot disagree
   about what this instance is called.
-- **The declaration file is `harness.json` and is NOT stub-named.**
+- **The declaration file is `<name>.json` — named for the instance's `name`,
+  NOT its stub.** It is the one file here not computed with `artefactStub()`:
+  `instanceDeclarationFilename()` spells it, and `instanceConfigFilename()`
+  spells the `<name>.config.json` beside it. `artefactStub()` is
+  `stub ?? name`, so the two coincide for every instance declaring no `stub`
+  — today all of them but `cat-harness`, whose `stub` equals its `name`
+  anyway. **A coincidence in the data is not the rule**: an instance
+  declaring a differing `stub` publishes `<stub>.jsonld` beside a
+  `<name>.json`, and composing either from the other resolves to nothing.
 - **The renderable site lives at `docs/<stub>/`.** Compute it with
   `siteDir(d)` or `siteDirFor(root)`, never by writing the path out.
 
@@ -466,7 +478,7 @@ and there cannot be one:
 |---|---|
 | `sushi-config.yaml` | SUSHI reads that exact name, and it is YAML |
 | `dak.json` | WHO's `smart-base` |
-| `<name>.json`, `<name>.config.json` | ours — the declaration is named after its own `name` field |
+| `<name>.json`, `<name>.config.json` | ours |
 | `beans.json`, `todos.json` | ours, and named after the graph KIND |
 
 Two of those are not ours to rename, so any rule claiming to cover the set
@@ -508,7 +520,7 @@ as its **source root** (`source: ./docs/<stub>`), leaving the site's internal
 layout untouched. Verified on `gh-pages` after the move.
 
 **It is not the `folio` graph-kind declaration.** `docs/` still does not appear
-in the declaration: measured 2026-09-19, adding it makes `harness:dirs`,
+in `<name>.json`: measured 2026-09-19, adding it makes `harness:dirs`,
 `kg:schema:check` and `docs:harness:check` throw `unknown graph kind "folio"`,
 because `folio` is contributed by **core** and those readers do not load its
 registration. Packaging is unblocked; the declaration waits. Bean `x4a6`.
