@@ -447,7 +447,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -456,11 +456,11 @@
           "path": "/cat-harness/library/folio-assistant-sci/"
         },
         {
-          "kind": "voices"
+          "kind": "voices",
+          "path": "/cat-harness/voices/folio-assistant-sci/"
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root.",
         "folio-assistant-sci: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -619,6 +619,8 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/cat-harness/voices/who-style-guide/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -633,17 +635,18 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
         {
-          "kind": "voices"
+          "kind": "voices",
+          "path": "/cat-harness/voices/who-style-guide/"
         }
       ],
       "findings": [
-        "who-style-guide: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
         "who-style-guide: no avatar declared for this instance — showing the generic mark.",
+        "who-style-guide: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/who-style-guide/) rather than the instance's own themed root.",
         "who-style-guide: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
     },

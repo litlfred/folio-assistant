@@ -828,6 +828,20 @@ jobs:
       - name: generated docs pages are current
         run: bun run cat-harness/scripts/gen-docs-pages.ts --check
 
+      # GATED, unlike the two projections below, and the difference is the
+      # INPUT SET — which is the standard those two are excused against.
+      #
+      # `schema:viz` and `library:viz` derive from the WHOLE repository, so any
+      # branch alive for more than a few minutes finds them stale against the
+      # merge ref and a red means "somebody else merged". The voices projection
+      # derives from the declared `voices` directories and the declarations
+      # naming them: four voices in two instances, changed when somebody edits
+      # a voice. A red here means a voice was added or a rule was edited and
+      # the page was not regenerated — an omission by the author of the diff,
+      # every time, which is exactly the test stated twenty lines above.
+      - name: voices projection and viewer are current
+        run: bun run voices:viz:check
+
       # NOT GATED: the schema and library projections.
       #
       # `schema:viz:check` and `library:viz:check` exist and are worth running

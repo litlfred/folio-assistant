@@ -462,6 +462,36 @@ export function voicesDirFor(instanceRoot: string): string | undefined {
 export const VOICES_DIR = "skills/voices";
 
 /**
+ * The pre-2026-09-21 layout, still probed.
+ *
+ * declared-path-literal: the layout a folio created before the move to
+ * `skills/` has on disk. It is named here rather than at the call site so
+ * "where voices used to live" is one fact with one home.
+ *
+ * Voices moved under `skills/` because a voice IS a skill (bean `btuv`). An
+ * instance that declares its directory is unaffected either way; this is for
+ * the one that declares nothing and has not migrated, and it is the same
+ * read-both/write-new asymmetry {@link voiceFilesIn} applies to the two FILE
+ * layouts one level down. An upgrade must not make a downstream folio's voices
+ * disappear silently — that is indistinguishable from having none.
+ */
+export const LEGACY_VOICES_DIR = "voices";
+
+/**
+ * Where to look when the instance declares nothing: the current layout, or the
+ * legacy one if that is what is actually on disk.
+ *
+ * Returns the CURRENT path when neither exists, so a caller reporting "absent"
+ * names the place a voice should go rather than the place it used to.
+ */
+function voicesFallbackDir(instanceRoot: string): string {
+  const now = resolve(instanceRoot, VOICES_DIR);
+  if (existsSync(now)) return now;
+  const legacy = resolve(instanceRoot, LEGACY_VOICES_DIR);
+  return existsSync(legacy) ? legacy : now;
+}
+
+/**
  * Every voice file under one voices directory, whichever layout it uses.
  *
  * TWO shapes are read, because the migration is a fact about a corpus rather
@@ -505,7 +535,7 @@ function voiceFilesIn(dir: string): { id: string; path: string }[] {
  * because the second is a legitimate state and the first is a defect.
  */
 export function loadVoices(instanceRoot: string): VoiceProfile[] {
-  const dir = voicesDirFor(instanceRoot) ?? resolve(instanceRoot, VOICES_DIR);
+  const dir = voicesDirFor(instanceRoot) ?? voicesFallbackDir(instanceRoot);
   if (!existsSync(dir)) return [];
   const out: VoiceProfile[] = [];
   for (const { id, path } of voiceFilesIn(dir)) {
