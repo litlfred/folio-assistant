@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T16:48:41.131Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8393723cffa3ce703fbdcfa359f4918a0cafeaae",
-  "sourceCommitSha": "8393723cffa3ce703fbdcfa359f4918a0cafeaae",
-  "sourceCommitAt": "2026-09-21T18:47:00+02:00",
+  "generatedAt": "2026-09-21T16:56:40.206Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d02569f052dcb628338f51df8bc2781c9e2b718c",
+  "sourceCommitSha": "d02569f052dcb628338f51df8bc2781c9e2b718c",
+  "sourceCommitAt": "2026-09-21T18:54:13+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -272,7 +272,7 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 89,
+    "Schema": 90,
     "GraphKind": 24,
     "Directory": 33,
     "Asset": 3
@@ -31338,6 +31338,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/detangle-sidecar",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "detangle-sidecar",
+      "title": "The durable record of a detangle measurement — what is pinned, and what is not.",
+      "module": "../detangle/schemas/detangle-sidecar.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/detangle-schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/detangle",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "detangle",
@@ -32873,8 +32881,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "8393723cffa3ce703fbdcfa359f4918a0cafeaae",
+    "sha": "d02569f052dcb628338f51df8bc2781c9e2b718c",
     "pr": "main",
-    "run": "35627807147"
+    "run": "35628569438"
   }
 }

@@ -976,6 +976,14 @@
       "isTest": false
     },
     {
+      "module": "detangle/schemas/detangle-sidecar.ts",
+      "instance": "detangle",
+      "name": "detangle-sidecar",
+      "graphNode": "schema",
+      "summary": "The durable record of a detangle measurement — what is pinned, and what is not.",
+      "isTest": false
+    },
+    {
       "module": "detangle/schemas/detangle.ts",
       "instance": "detangle",
       "name": "detangle",
@@ -28159,6 +28167,91 @@
           "type": "readonly string[]",
           "optional": false,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "detangle/schemas/detangle-sidecar.ts#DetangleSidecar",
+      "name": "DetangleSidecar",
+      "module": "detangle/schemas/detangle-sidecar.ts",
+      "kind": "interface",
+      "doc": "The pinned measurement for one candidate group.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "\"folio-detangle-sidecar/v1\"",
+          "optional": false,
+          "array": false,
+          "doc": "The schema tag, so the file declares what it is rather than being identified by shape."
+        },
+        {
+          "name": "group",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The group this measures — the same string `measure()` takes."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Node count."
+        },
+        {
+          "name": "internal",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges with both ends inside."
+        },
+        {
+          "name": "inbound",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges from outside in."
+        },
+        {
+          "name": "outbound",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges from inside out."
+        },
+        {
+          "name": "cohesion",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "`internal / (internal + inbound + outbound)`, rounded — see {@link COHESION_DP}."
+        },
+        {
+          "name": "enforcedBoundary",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Boundary edges whose direction is a FACT."
+        },
+        {
+          "name": "recordedBoundary",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Boundary edges whose direction is a FILING DECISION — symmetric coupling."
+        },
+        {
+          "name": "proseMentions",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Cross-group prose mentions. Neither a dependency nor a coupling."
         }
       ],
       "extendsNames": [],
