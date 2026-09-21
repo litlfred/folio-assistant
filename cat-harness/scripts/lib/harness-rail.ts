@@ -66,76 +66,66 @@ export interface RailOptions {
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-/** Launcher size, and the gutter it sits in. */
-export const RAIL_LAUNCHER_PX = 36;
-/**
- * Width while open. Overlays rather than reflowing.
- *
- * There is no collapsed width any more, and that is the change the owner asked
- * for on 2026-09-21: *"have it start hidden. it is attached to
- * screen/window/glass. it does not scroll. need easy way to close it. [x]"*
- *
- * The rail used to collapse to a glyph column — `RAIL_PAD_PX * 2 +
- * RAIL_GLYPH_PX` — and open on `:hover`. **Hidden removes hover as the
- * opener**, because there is nothing on screen to put a pointer on. So the
- * strip is gone, a launcher fixed to the glass opens it, and an `[x]` inside
- * closes it. `board-windows`' `l4zi`: an action whose inverse is not reachable
- * is not a toggle.
- *
- * `body` is no longer padded at all. The page gets its full width while the
- * rail is away, and the open rail overlays it — the same choice the rail
- * always made, and more visible now that closed means closed.
- */
-export const RAIL_OPEN_PX = 232;
-/** The glyph column inside an open row. */
-export const RAIL_GLYPH_PX = 20;
-/** Horizontal padding on a row. */
+/** Gutter either side of the glyph column. */
 export const RAIL_PAD_PX = 10;
+/** The glyph column itself. */
+export const RAIL_GLYPH_PX = 20;
+/**
+ * Width at rest — the icon strip at the far left.
+ *
+ * DERIVED from the glyph column and its two gutters, so the strip is exactly
+ * the icon and nothing else, and it is the same number the stylesheet pads
+ * `body` by: stated once so the two cannot disagree and leave the rail either
+ * overlapping the page or floating off it.
+ *
+ * **CLOSED IS NOT GONE, and that distinction cost a round.** Asked to "have it
+ * start hidden", I removed the strip entirely and put a launcher on the glass.
+ * The owner, looking at it: *"clicking it away completelt disappeared in
+ * who-iris. i expected the same behaviour as was in who-iris, that it slides
+ * to the far left, icon width thick."* So `hidden` meant CLOSED — slid left to
+ * the strip — not absent. The strip is the resting state and it is also the
+ * affordance: there is no separate launcher, because the rail is always on
+ * screen to be clicked.
+ */
+export const RAIL_COLLAPSED_PX = RAIL_PAD_PX * 2 + RAIL_GLYPH_PX;
+/** Width while open. Overlays rather than reflowing. */
+export const RAIL_OPEN_PX = 232;
 
 /**
  * The rail's stylesheet. Scoped to `.fa-rail` so a host page keeps its own.
  *
- * `:has()` on `.fa-rail` rather than a sibling combinator, because the
- * launcher and the close control sit at different depths inside it and a
- * combinator would pin the markup's shape into the selector.
+ * Three ways in, one way back:
+ *   - `:hover` opens it while the pointer is on it;
+ *   - `:focus-within` opens it for a keyboard;
+ *   - the `☰` checks a box and it STAYS open, which is what a touch device
+ *     needs, since a tablet has no hover at all;
+ *   - the `[x]` unchecks it and the rail slides back to the strip.
+ *
+ * No JavaScript, because these pages are copied verbatim from instances the
+ * harness does not control: injecting a nav into somebody else's document is
+ * one claim, injecting script into it is a larger one.
  */
 export function railCss(): string {
   return [
-    // The page keeps its full width. The rail overlays it when open.
-    `body{padding-left:0}`,
-    `.fa-rail{position:fixed;top:0;left:0;bottom:0;width:${RAIL_OPEN_PX}px;z-index:2147483000;`,
-    // HIDDEN TO THE KEYBOARD TOO. `transform` alone leaves every link
-    // focusable off-screen, so tabbing walks an invisible nav and the focus
-    // ring disappears past the window edge.
-    `transform:translateX(-100%);visibility:hidden;`,
+    // The page sits beside the strip. Opening OVERLAYS rather than reflowing:
+    // a rail that pushed the text right on hover would move every line the
+    // reader was looking at.
+    `body{padding-left:${RAIL_COLLAPSED_PX}px}`,
+    `.fa-rail{position:fixed;top:0;left:0;bottom:0;width:${RAIL_COLLAPSED_PX}px;z-index:2147483000;`,
     // Attached to the glass and fixed, so the page scrolls underneath. Its
     // CONTENTS scroll when they outgrow the window -- without this a long rail
     // has items nothing can reach and no scrollbar to say so.
     `overflow-y:auto;overflow-x:hidden;`,
-    `background:#1f2328;color:#e6edf3;transition:transform .16s ease,visibility .16s;`,
+    `background:#1f2328;color:#e6edf3;transition:width .14s ease;`,
     `font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}`,
-    `.fa-rail:has(.fa-rail-open:checked){transform:none;visibility:visible}`,
+    `.fa-rail:hover,.fa-rail:focus-within,.fa-rail:has(.fa-rail-open:checked){width:${RAIL_OPEN_PX}px}`,
     // The control is never seen; the two labels are the interface. Off-screen
     // rather than `display:none`, because a hidden control is not focusable
-    // and the keyboard would lose the rail entirely.
+    // and the keyboard would lose the toggle entirely.
     `.fa-rail-open{position:absolute;left:-9999px;width:1px;height:1px}`,
-    // THE LAUNCHER -- the only thing on screen while the rail is hidden, so it
-    // is the whole affordance. It sits OUTSIDE `.fa-rail`, because anything
-    // inside a hidden element is hidden with it.
-    `.fa-rail-launcher{position:fixed;top:10px;left:10px;z-index:2147483001;`,
-    `display:flex;align-items:center;justify-content:center;`,
-    `width:${RAIL_LAUNCHER_PX}px;height:${RAIL_LAUNCHER_PX}px;cursor:pointer;user-select:none;`,
-    `background:#1f2328;color:#e6edf3;border:1px solid #30363d;border-radius:6px;font-size:16px;line-height:1}`,
-    `body:has(.fa-rail-open:checked) .fa-rail-launcher{display:none}`,
-    // THE CLOSE CONTROL. `sticky` so it stays reachable after the inner scroll
-    // above has moved the rail.
-    `.fa-rail-close{position:sticky;top:0;float:right;display:flex;align-items:center;`,
-    `justify-content:center;width:28px;height:28px;margin:6px 6px 0 0;cursor:pointer;`,
-    `user-select:none;border-radius:4px;background:#1f2328;opacity:.75}`,
-    `.fa-rail-close:hover{opacity:1}`,
-    `.fa-rail-in{display:flex;flex-direction:column;min-height:100%}`,
+    `.fa-rail-in{width:${RAIL_OPEN_PX}px;display:flex;flex-direction:column;min-height:100%}`,
     `.fa-rail-top{display:flex;align-items:center;gap:8px;padding:10px ${RAIL_PAD_PX}px;`,
-    `border-bottom:1px solid #30363d;user-select:none}`,
+    `border-bottom:1px solid #30363d;cursor:pointer;user-select:none}`,
     `.fa-rail-glyph{flex:0 0 ${RAIL_GLYPH_PX}px;text-align:center;font-size:16px}`,
     `.fa-rail-name{font-weight:600}`,
     `.fa-rail a{display:flex;align-items:center;gap:8px;padding:8px ${RAIL_PAD_PX}px;`,
@@ -143,52 +133,55 @@ export function railCss(): string {
     `.fa-rail a:hover{background:#30363d}`,
     `.fa-rail a[aria-current="page"]{background:#30363d;font-weight:600}`,
     `.fa-rail-foot{margin-top:auto;border-top:1px solid #30363d;font-size:12px;opacity:.75}`,
-    // A nav that is not on screen prints nothing useful, and the launcher
-    // prints as a stray box.
-    `@media print{.fa-rail,.fa-rail-launcher,.fa-rail-close{display:none}body{padding-left:0}}`,
-    // The `sr-only` text that names each control. Not `display:none`: the
-    // whole point is that a screen reader reads it.
+    // THE CLOSE CONTROL. Only while pinned open -- an `[x]` in a 40px strip
+    // would be the only thing in it, and would read as a close button for the
+    // page rather than for the rail. `sticky` so it survives the inner scroll.
+    `.fa-rail-close{display:none}`,
+    `.fa-rail:has(.fa-rail-open:checked) .fa-rail-close{position:sticky;top:0;float:right;`,
+    `display:flex;align-items:center;justify-content:center;width:26px;height:26px;`,
+    `margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;`,
+    `background:#1f2328;opacity:.75}`,
+    `.fa-rail-close:hover{opacity:1}`,
+    // Every label is held invisible at rest and revealed by the same three
+    // mechanisms that widen the rail. Clipping alone is a geometry argument,
+    // and a host stylesheet can move where a label starts without touching
+    // these numbers. `opacity` rather than `display:none` -- a screen reader
+    // should still reach them, and this rail is the only harness navigation
+    // these pages have.
+    `.fa-rail-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}`,
+    `.fa-rail:hover .fa-rail-label,.fa-rail:focus-within .fa-rail-label,`,
+    `.fa-rail:has(.fa-rail-open:checked) .fa-rail-label{opacity:1}`,
+    `@media print{.fa-rail{display:none}body{padding-left:0}}`,
     `.fa-rail-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`,
   ].join("");
 }
 
-/**
- * The rail itself.
- *
- * `aria-label` rather than a heading element: this is injected into a document
- * that already has its own outline, and inserting an `h1`/`h2` would edit that
- * outline rather than sit beside it.
- */
 export function railHtml(o: RailOptions): string {
   const items = o.links
     .map(
       (l) =>
         `<a href="${esc(l.href)}"${l.current ? ' aria-current="page"' : ""}>` +
         `<span class="fa-rail-glyph" aria-hidden="true">${esc(l.icon)}</span>` +
-        `<span>${esc(l.label)}</span></a>`,
+        `<span class="fa-rail-label">${esc(l.label)}</span></a>`,
     )
     .join("");
   return (
-    // THE CONTROL AND THE LAUNCHER SIT OUTSIDE THE RAIL. Anything inside a
-    // hidden element is hidden with it, so a launcher in there could never be
-    // clicked. `<label for>` reaches a control anywhere in the document, so
-    // this `☰` and the `[x]` inside the rail drive ONE checkbox rather than
-    // two states free to disagree.
-    `<input type="checkbox" class="fa-rail-open" id="fa-rail-open">` +
-    `<label class="fa-rail-launcher" for="fa-rail-open" title="Show harness navigation">` +
-    `<span aria-hidden="true">&#9776;</span>` +
-    `<span class="fa-rail-sr">Show harness navigation</span></label>` +
     `<nav class="fa-rail" aria-label="folio-assistant">` +
-    `<label class="fa-rail-close" for="fa-rail-open" title="Hide harness navigation">` +
+    // Both labels drive ONE checkbox, so open and close cannot disagree. All
+    // three live inside the rail because the rail is always on screen -- the
+    // strip IS the launcher, which is the correction this markup carries.
+    `<input type="checkbox" class="fa-rail-open" id="fa-rail-open">` +
+    `<label class="fa-rail-close" for="fa-rail-open" title="Close the harness navigation">` +
     `<span aria-hidden="true">&times;</span>` +
-    `<span class="fa-rail-sr">Hide harness navigation</span></label>` +
+    `<span class="fa-rail-sr">Close the harness navigation</span></label>` +
     `<div class="fa-rail-in">` +
-    `<div class="fa-rail-top">` +
+    `<label class="fa-rail-top" for="fa-rail-open" title="Open the harness navigation">` +
     `<span class="fa-rail-glyph" aria-hidden="true">&#9776;</span>` +
-    `<span class="fa-rail-name">${esc(o.instance)}</span></div>` +
+    `<span class="fa-rail-name fa-rail-label">${esc(o.instance)}</span></label>` +
     items +
     `<a class="fa-rail-foot" href="${esc(o.toRoot)}/">` +
-    `<span class="fa-rail-glyph" aria-hidden="true">&#8962;</span><span>folio-assistant</span></a>` +
+    `<span class="fa-rail-glyph" aria-hidden="true">&#8962;</span>` +
+    `<span class="fa-rail-label">folio-assistant</span></a>` +
     `</div></nav>`
   );
 }

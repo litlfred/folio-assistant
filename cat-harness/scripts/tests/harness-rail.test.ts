@@ -7,7 +7,7 @@
  */
 import { describe, expect, it } from "bun:test";
 
-import { RAIL_OPEN_PX, injectRail, railCss, railHtml } from "../lib/harness-rail.js";
+import { RAIL_COLLAPSED_PX, RAIL_GLYPH_PX, RAIL_OPEN_PX, RAIL_PAD_PX, injectRail, railCss, railHtml } from "../lib/harness-rail.js";
 import { toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
 const opts = {
@@ -20,40 +20,57 @@ const opts = {
 };
 
 describe("the harness rail", () => {
-  it("starts HIDDEN, and hidden from the keyboard too", () => {
-    // Owner, 2026-09-21: "have it start hidden ... need easy way to close it.
-    // [x]". `transform` alone moves the rail off-screen and leaves every link
-    // focusable, so tabbing walks an invisible nav on somebody else's page.
+  it("RESTS as a strip — closed is not gone", () => {
+    // Owner, 2026-09-21: "clicking it away completelt disappeared in
+    // who-iris. i expected the same behaviour as was in who-iris, that it
+    // slides to the far left, icon width thick." The round before this one
+    // hid it outright and put a launcher on the glass; `hidden` meant CLOSED.
     const css = railCss();
-    expect(css).toContain("transform:translateX(-100%)");
-    expect(css).toContain("visibility:hidden");
-    expect(css).toContain(".fa-rail:has(.fa-rail-open:checked){transform:none;visibility:visible}");
+    expect(css).toContain(`width:${RAIL_COLLAPSED_PX}px`);
+    expect(css).toContain(`body{padding-left:${RAIL_COLLAPSED_PX}px}`);
+    expect(css).not.toContain("visibility:hidden");
+    expect(css).not.toContain("translateX(-100%)");
   });
 
-  it("does NOT open on hover any more — hidden has nothing to hover", () => {
-    // The mechanism changed, and leaving the hover rule in would mean a rail
-    // that opens when the pointer crosses a 1px sliver nobody can see.
-    expect(railCss()).not.toContain(".fa-rail:hover{");
-    expect(railCss()).not.toContain(".fa-rail:focus-within{");
+  it("is exactly the glyph column and its gutters", () => {
+    // Derived, so no label can bleed into the strip — the "hidden width too
+    // wide" report, where a sliver of a word per row read as a rail that had
+    // failed to collapse.
+    expect(RAIL_COLLAPSED_PX).toBe(RAIL_PAD_PX * 2 + RAIL_GLYPH_PX);
+    expect(railCss()).toContain(`flex:0 0 ${RAIL_GLYPH_PX}px`);
   });
 
-  it("declares an open width, and the page gets none of it while closed", () => {
-    expect(RAIL_OPEN_PX).toBeGreaterThan(0);
-    expect(railCss()).toContain(`width:${RAIL_OPEN_PX}px`);
-  });
-
-  it("gives the page its full width while away", () => {
-    // It overlays when open. A rail that reflowed the page would move every
-    // line the reader was looking at.
-    expect(railCss()).toContain("body{padding-left:0}");
+  it("opens on hover, on keyboard focus, and on the pinned checkbox", () => {
+    expect(railCss()).toContain(
+      `.fa-rail:hover,.fa-rail:focus-within,.fa-rail:has(.fa-rail-open:checked){width:${RAIL_OPEN_PX}px}`,
+    );
   });
 
   it("scrolls its CONTENTS, because the rail is fixed to the glass", () => {
-    // "it is attached to screen/window/glass. it does not scroll." The bar
-    // stays put; a rail taller than the window must still be reachable.
     const css = railCss();
     expect(css).toContain("position:fixed");
     expect(css).toContain("overflow-y:auto");
+  });
+
+  it("shows the [x] only while pinned — never alone in the strip", () => {
+    // An `[x]` as the only thing in a 40px strip reads as a close button for
+    // the page rather than for the rail.
+    const css = railCss();
+    expect(css).toContain(".fa-rail-close{display:none}");
+    expect(css).toContain(".fa-rail:has(.fa-rail-open:checked) .fa-rail-close");
+  });
+
+  it("holds EVERY label invisible at rest, not just clipped", () => {
+    // Clipping is a geometry argument and a host stylesheet can move where a
+    // label starts without touching these numbers. Bound to the MARKUP, so a
+    // label added later without the class fails here rather than bleeding.
+    const html = railHtml(opts);
+    const visible = [...html.matchAll(/<span(?![^>]*aria-hidden)[^>]*>/g)].map((m) => m[0]);
+    expect(visible.length).toBeGreaterThan(0);
+    for (const span of visible) {
+      expect(span).toMatch(/fa-rail-label|fa-rail-sr/);
+    }
+    expect(railCss()).toContain(".fa-rail-label{white-space:nowrap;opacity:0");
   });
 
   it("carries no script", () => {
@@ -78,19 +95,15 @@ describe("the harness rail", () => {
   describe("open and close are ONE toggle", () => {
     const html = railHtml(opts);
 
-    it("the launcher sits OUTSIDE the rail — the invariant this turns on", () => {
-      // Anything inside a hidden element is hidden with it. A launcher in
-      // there could never be clicked, on a page that renders perfectly.
+    it("all three parts sit inside the rail — the strip IS the launcher", () => {
+      // They were outside while the rail was hidden, which was right then and
+      // wrong now: the rail is always on screen, so there is nothing for a
+      // separate launcher to solve.
       const nav = html.indexOf('<nav class="fa-rail"');
-      expect(html.indexOf("fa-rail-launcher")).toBeLessThan(nav);
-      expect(html.indexOf('class="fa-rail-open"')).toBeLessThan(nav);
-    });
-
-    it("the close control sits INSIDE it, never on screen alone", () => {
-      // An `[x]` over the page with no rail behind it reads as a close button
-      // for the page.
-      const nav = html.indexOf('<nav class="fa-rail"');
-      expect(html.indexOf("fa-rail-close")).toBeGreaterThan(nav);
+      expect(nav).toBe(0);
+      for (const cls of ["fa-rail-open", "fa-rail-close", "fa-rail-top"]) {
+        expect({ cls, inside: html.indexOf(cls) > nav }).toEqual({ cls, inside: true });
+      }
     });
 
     it("both labels drive the same checkbox", () => {
@@ -99,21 +112,9 @@ describe("the harness rail", () => {
       expect([...html.matchAll(new RegExp(`for="${id}"`, "g"))]).toHaveLength(2);
     });
 
-    it("both controls have an accessible name", () => {
-      // `aria-hidden` on the glyph means the name has to come from somewhere,
-      // and a control announced as "checkbox" alone is not navigation.
-      for (const cls of ["fa-rail-launcher", "fa-rail-close"]) {
-        const label = new RegExp(`<label class="${cls}"[\\s\\S]*?</label>`).exec(html)?.[0] ?? "";
-        expect({ cls, named: label.includes("fa-rail-sr") }).toEqual({ cls, named: true });
-      }
-    });
-
-    it("the retired PIN is gone, not left inert", () => {
-      // It held open a rail that collapsed on hover. With hover gone it pins
-      // nothing, and a control that does nothing invites a click and then
-      // reads as broken.
-      expect(html).not.toContain("fa-rail-pin");
-      expect(railCss()).not.toContain("fa-rail-pin");
+    it("the close control has an accessible name", () => {
+      const label = /<label class="fa-rail-close"[\s\S]*?<\/label>/.exec(html)?.[0] ?? "";
+      expect(label).toContain("fa-rail-sr");
     });
   });
 
