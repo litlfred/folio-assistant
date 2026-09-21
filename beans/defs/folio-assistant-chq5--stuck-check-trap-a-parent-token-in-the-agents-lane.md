@@ -106,9 +106,9 @@ a build-time `Date.now()`.
       it is 2 of 2, so a check that cannot say it is useless here
 - [ ] `updatedAt` and last-step-taken are reported as two facts
 - [ ] Age is the client's arithmetic, never build-time
-- [ ] `source` is instance-relative in committed state; the absolute path in
+- [x] `source` is instance-relative in committed state; the absolute path in
       `crdm--issue-607-kg-to-cdn-portal` and its children is repaired, and
-      whatever wrote it stops doing so
+      whatever wrote it stops doing so — **done**, see §"FIXED 2026-09-21"
 
 ## Not in scope
 
@@ -159,12 +159,10 @@ Reverting `relativiseSource` from `saveInstance`: **3 of the 5 new tests fail**
 (already-relative, outside-repo) stay green, correctly: they assert behaviour
 the fix does not provide.
 
-## Done when
-- [x] `source` is instance-relative in committed state; the absolute path in
-      `crdm--issue-607-kg-to-cdn-portal` and its children is repaired, and
-      whatever wrote it stops doing so
-- [ ] Any stuck-state check recurses into `children` and reports the LIVE
-      position, with the lane that actually holds the token
-- [ ] Waiting-on-a-human is a first-class outcome, not a stall
-- [ ] `updatedAt` and last-step-taken are reported as two facts
-- [ ] Age is the client's arithmetic, never build-time
+### The checklist stays in ONE place
+
+This section originally ended with a second `## Done when` restating the list
+with this item ticked. `check:bean-bodies` failed it as a **shadow checklist**,
+and was right to: two lists disagreeing about the same item means the one a
+reader consults says not-done while another says done. The canonical list above
+is ticked instead, and there is no second copy.
