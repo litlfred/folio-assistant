@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:59:34Z
-updated_at: 2026-09-21T23:08:18Z
+updated_at: 2026-09-21T23:15:13Z
 parent: folio-assistant-p5wm
 ---
 
@@ -159,3 +159,54 @@ not the work.
 Not blocking on the answer. `catalogue` is the bean's next priority, is
 who-iris's largest graph, is the one that instance exists to show, and carries
 no such contradiction.
+
+
+
+---
+
+## OWNER, 2026-09-21: *"keep tools and skills separate!"*
+
+A design constraint on this bean and a defect found by applying it. Recorded
+because the instruction is general and this bean is where viewers get built:
+**`tools` and `skills` are two declared graph kinds and get two viewers, never
+one.** A combined "KG viewer" over the 24 would fold them together at exactly
+the layer a reader browses, which is the layer the distinction is for.
+
+**The conflation is already in the declaration.** `cat-harness.json`, entry
+`tools`:
+
+```json
+"coverage": { "docs": "cat-harness/docs/skills.md", "skill": "skills-and-tools" }
+```
+
+`cat-harness/docs/skills.md` is titled **"Skills & roles"**. Its headings are
+Skills, Roles, Capabilities & requirements — **there is no tools section**;
+"tool" appears 7 times, incidentally. So the tools graph has no documentation
+of its own and its `docs` coverage points at a page about something else.
+
+That is worse than an absent page, and for this repo's usual reason: absent is
+a legible gap, whereas a `docs` ref that resolves reports coverage. The
+existing check only asks whether the ref RESOLVES TO A FILE — it does — so
+nothing has ever flagged it. Same shape as `pb04` one level up: the link works
+and points at the wrong thing.
+
+**And that page is stale as well.** §"Agent/platform skills (`src/skills`)"
+documents a directory that does not exist — `src/skills/` was removed in #760,
+per root AGENTS.md. Verified: neither `src/skills` nor `cat-harness/src/skills`
+is present.
+
+### What this changes here
+
+- `tools` and `skills` get separate viewers, with separate `docs` coverage.
+- `tools` needs a page of its own; `skills.md` stays about skills and roles.
+- The 3 files under `cat-harness/tools/` (`index.ts`, `mcp.ts`, `sessions.ts`)
+  are the corpus for the tools viewer, and `defineTool` calls are its nodes.
+
+### Worth a check rather than a fix-and-forget
+
+A `coverage.docs` ref that resolves but documents a different subject is
+invisible to every check here. Whether that is checkable at all is a real
+question — "is this page about this graph" is not mechanically decidable — but
+the WEAKER form is: **a `docs` page shared by two entries whose graph kinds are
+disjoint** is at least suspicious, and that is computable. Not built in this
+round; recorded so it is not rediscovered.
