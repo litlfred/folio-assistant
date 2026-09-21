@@ -1,7 +1,7 @@
 ---
 # folio-assistant-hw9g
 title: 'MOUNTED PAGES HAVE NO LHS RAIL: a collapsed icon-width harness nav for every mounted instance, opening on hover or click'
-status: closed
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T18:40:00Z
