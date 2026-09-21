@@ -1,9 +1,12 @@
 {
-  "$schema": "folio-voice/v1",
+  "$schema": "folio-voice-skill/v1",
   "id": "who-editorial",
   "title": "WHO editorial style",
   "description": "The house editorial style of the World Health Organization: spelling, capitalization, eponym form, reference layout and non-discriminatory language, as set out in the WHO Editorial Style Manual. Derived rule by rule from the ingested manual; every rule cites the page it was read from.",
-  "provenance": "assertion",
+  "instructions": {
+    "file": "SKILL.md",
+    "summary": "Write and review in the WHO editorial style voice — 9 rules, each citing the publication it was read from."
+  },
   "sources": [
     {
       "title": "WHO Editorial Style Manual",
@@ -12,6 +15,8 @@
       "year": 1993
     }
   ],
+  "provenance": "assertion",
+  "overlaySeverity": "major",
   "rules": [
     {
       "id": "who-ed-ize-preferred",

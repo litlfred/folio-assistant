@@ -74,7 +74,6 @@
     "tools",
     "translation-sources",
     "uploads",
-    "voices",
     "waiver",
     "workflows"
   ],
@@ -442,23 +441,27 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
         {
           "kind": "library",
           "path": "/cat-harness/library/folio-assistant-sci/"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/folio-assistant-sci/"
         }
       ],
       "findings": [
@@ -623,6 +626,8 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/cat-harness/voices/who-style-guide/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -637,17 +642,18 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
         {
-          "kind": "voices"
+          "kind": "voices",
+          "path": "/cat-harness/voices/who-style-guide/"
         }
       ],
       "findings": [
-        "who-style-guide: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
         "who-style-guide: no avatar declared for this instance — showing the generic mark.",
+        "who-style-guide: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/who-style-guide/) rather than the instance's own themed root.",
         "who-style-guide: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
     },
@@ -757,17 +763,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -780,6 +786,10 @@
         {
           "kind": "schemas",
           "path": "/cat-harness/schemas/folio-assistant-core/"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/folio-assistant-core/"
         }
       ],
       "findings": [
@@ -810,12 +820,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 36
+          "value": 35
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 22
+          "value": 21
         },
         {
           "id": "views",
@@ -890,9 +900,6 @@
           "path": "/uploads/"
         },
         {
-          "kind": "voices"
-        },
-        {
           "kind": "waiver"
         },
         {
@@ -900,7 +907,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 14 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, scenarios, skills, tools, translation-sources, voices, waiver, workflows. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness: declares 13 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, scenarios, skills, tools, translation-sources, waiver, workflows. Declared and not rendered is a gap, not a dead link.",
         "cat-harness: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
       ]
     },

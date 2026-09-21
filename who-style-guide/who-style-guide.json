@@ -21,12 +21,17 @@
   "directories": [
     {
       "id": "voices",
-      "path": "voices/",
+      "path": "skills/voices/",
       "dependents": "reproduce",
-      "description": "Three `folio-voice/v1` profiles, one per WHO publication in the who-iris library. A voice is a set of editorial RULES, each carrying the quote it was read from and a citation naming `{ instance: 'who-iris', libraryId, sectionId }`. The instance is declared once per voice in `sources[]` and INHERITED by its rules rather than repeated on each — one fact in one place, since a voice pointing at one instance with a rule pointing at another is representable, meaningless, and nothing would catch it. `bun run check:voices` resolves every citation through the target instance's own declaration and keeps four failure kinds apart; `milnor` is NOT here, because it is read from a mathematics paper and belongs with the science layer (bean r1lz).",
+      "description": "Three `folio-voice-skill/v1` voice skills, one per WHO publication in the who-iris library, each a directory holding `voice.json` (the RULES, every one carrying the quote it was read from and a citation naming `{ instance: 'who-iris', libraryId, sectionId }`) and `SKILL.md` (how to USE them in authoring, review and QA). Under `skills/` because a voice IS a skill: it tells an actor what to do, it is bound to processes by name, and keeping its instructions anywhere else is what let the PLATFORM carry these rules as uncited prose (bean `btuv`). The instance is declared once per voice in `sources[]` and INHERITED by its rules rather than repeated on each. `bun run check:voices` resolves every citation through the target instance's own declaration.",
       "graphKinds": [
         "voices"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/voices/who-style-guide/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "voice-authoring-guidance"
+      }
     }
   ]
 }

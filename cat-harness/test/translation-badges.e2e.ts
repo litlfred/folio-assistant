@@ -455,7 +455,6 @@ test.describe("the translation badges are themed, not painted inline", () => {
         const r = await page.evaluate((fn) => {
           const e = document.querySelector(".fa-lang-coverage-badge") as HTMLElement;
           const c = getComputedStyle(e);
-          // eslint-disable-next-line no-eval
           return (eval(fn) as (a: string, b: string) => number)(c.color, c.backgroundColor);
         }, CONTRAST);
         expect(r).toBeGreaterThanOrEqual(4.5);
@@ -472,7 +471,6 @@ test.describe("the translation badges are themed, not painted inline", () => {
         const r = await page.evaluate((fn) => {
           const e = document.querySelector(".fa-lang-coverage-badge") as HTMLElement;
           const c = getComputedStyle(e);
-          // eslint-disable-next-line no-eval
           return (eval(fn) as (a: string, b: string) => number)(c.borderTopColor, c.backgroundColor);
         }, CONTRAST);
         expect(r).toBeGreaterThanOrEqual(3);

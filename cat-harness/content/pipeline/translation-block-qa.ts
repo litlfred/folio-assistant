@@ -425,6 +425,15 @@ function entry(
  * — measured: it did, and the sweep still wrote five false `fail` sidecars
  * until the shape test replaced it.
  *
+ * **That PARTICULAR pair no longer exists, and the rule is not weakened by
+ * it.** `docs/cat-harness/index.md` moved on 2026-09-21 (bean `8h42`): the
+ * authored page went to `docs/platform.md` and the generated page that took
+ * its route is `published-graphs.md`, carrying `permalink: /cat-harness/`, so
+ * there is one `index` stem in the site again. A reader checking the example
+ * will not find the file — which is why this says so, rather than leaving a
+ * defence that looks like it guards against nothing. Any two same-stem pages
+ * reproduce it, and the next pair will not be announced.
+ *
  * ## A PO with NO references is accepted, deliberately
  *
  * A hand-authored `glossary.po` carries no `#:` lines at all — `translation.ts`

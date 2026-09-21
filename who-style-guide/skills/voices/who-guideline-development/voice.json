@@ -1,9 +1,12 @@
 {
-  "$schema": "folio-voice/v1",
+  "$schema": "folio-voice-skill/v1",
   "id": "who-guideline-development",
   "title": "WHO guideline development",
   "description": "How a WHO recommendation is worded and what must travel with it: strength, certainty, justification, remarks and a link to the evidence. Derived from the WHO handbook for guideline development, 2nd edition. This voice governs the language of normative statements, not the process that produces them — the process is the handbook's subject and belongs in a workflow, not a style rule.",
-  "provenance": "assertion",
+  "instructions": {
+    "file": "SKILL.md",
+    "summary": "Write and review in the WHO guideline development voice — 8 rules, each citing the publication it was read from."
+  },
   "sources": [
     {
       "title": "WHO handbook for guideline development, 2nd ed.",
@@ -12,6 +15,8 @@
       "year": 2014
     }
   ],
+  "provenance": "assertion",
+  "overlaySeverity": "critical",
   "rules": [
     {
       "id": "who-gdl-strength-verbs",

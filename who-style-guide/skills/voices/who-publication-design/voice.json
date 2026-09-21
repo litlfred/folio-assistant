@@ -1,9 +1,12 @@
 {
-  "$schema": "folio-voice/v1",
+  "$schema": "folio-voice-skill/v1",
   "id": "who-publication-design",
   "title": "WHO publication design (Western Pacific Region)",
   "description": "The visual conventions around the prose rather than the prose itself: logo use, palette, typography, pagination and figure accessibility, as set out in the WHO Western Pacific Region publication and information products style guide. This is the one voice whose rules mostly do not touch a block's text, which is why it is a separate voice rather than more rules on who-editorial — a folio can want WHO's editorial register without WPRO's brand.",
-  "provenance": "assertion",
+  "instructions": {
+    "file": "SKILL.md",
+    "summary": "Write and review in the WHO publication design (Western Pacific Region) voice — 8 rules, each citing the publication it was read from."
+  },
   "sources": [
     {
       "title": "Publication and Information Products Style Guide",
@@ -12,6 +15,8 @@
       "year": 2020
     }
   ],
+  "provenance": "assertion",
+  "overlaySeverity": "major",
   "rules": [
     {
       "id": "who-des-figure-colour-accessibility",
