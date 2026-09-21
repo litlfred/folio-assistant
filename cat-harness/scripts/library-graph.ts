@@ -35,13 +35,24 @@
  * relation is CONTENT-VERIFIED rather than name-matched, which is stronger
  * than any of the three shapes `v1hw` proposed inventing. The badge follows,
  * counting documents and not plumbing (see {@link filesIn} on dotfiles):
- * `uploads/` **22 uningested of 22**, `cat-harness/uploads/` **0 of 4**.
+ * `uploads/` **26 uningested of 28**, `cat-harness/uploads/` **0 of 1**,
+ * `who-iris/uploads/` **1 of 4** — re-measured 2026-09-21, after bean `yl5w`
+ * moved the three WHO sources out of the harness queue and into the folio
+ * beside their own intake records.
  *
- * So the harness layer's own queue is fully drained and the repository root's
- * is untouched — which is a fact about this corpus that nobody could state
- * before, and the sharper reading of `v1hw`'s "those numbers cannot be
- * subtracted": they could not be subtracted, and they never needed to be.
- * The relation was on the manifest all along.
+ * **The relation survived the move, and that is the evidence it is real.** All
+ * six entries still report `upload=match` from a recomputed hash, across three
+ * queues now instead of two: a name-matched relation would have broken the
+ * moment the files changed directory, and this one did not notice. The one
+ * uningested file under `who-iris/uploads/` is the IRIS home capture, which is
+ * a page grab rather than a document — uningested is the correct answer for it
+ * rather than a backlog.
+ *
+ * So the harness layer's own queue is down to a single document and the
+ * repository root's is untouched — which is a fact about this corpus that
+ * nobody could state before, and the sharper reading of `v1hw`'s "those
+ * numbers cannot be subtracted": they could not be subtracted, and they never
+ * needed to be. The relation was on the manifest all along.
  *
  * What `v1hw` got right, and this keeps: the relation is only as good as the
  * manifest, so an entry with no `source_file` is **`unknown`** and never
