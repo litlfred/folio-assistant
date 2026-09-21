@@ -46,11 +46,16 @@ describe("invocations", () => {
   test("the real deploy workflow's set includes the foreign-instance export", () => {
     // The witness. A matcher proven only against fixtures is proven against
     // its author's idea of the file.
+    //
+    // `./bootstrap`, not `./cat-bootstrap`: #771 renamed the directory an hour
+    // after #790 added this assertion, and neither branch carried the other's
+    // change. Both were green on their own head and main went red on the
+    // merge -- which is this witness doing precisely its job. The fixtures
+    // above keep saying `cat-bootstrap` on purpose: they are synthetic YAML
+    // testing that the parser returns WHATEVER instance string it is given,
+    // so the name there is arbitrary and no directory has to exist for it.
+    // This line is the only one that reads the real file.
     const got = invocations(wf("docs-site.yml"));
-    // `./bootstrap` since 494bbbb6f9 ("Rename `cat-bootstrap` to `bootstrap`,
-    // everywhere"), which updated `docs-site.yml` and left this expectation
-    // behind — so the witness was asserting a path the deploy no longer uses.
-    // Read from the workflow to confirm, not substituted by pattern.
     expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
 });
