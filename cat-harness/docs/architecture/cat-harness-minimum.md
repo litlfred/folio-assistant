@@ -534,7 +534,7 @@ find-the-right-one problem that motivated it.
 ### No MCP in the harness — but the harness knows how to emit one
 
 **`agentic-harness` assumes no MCP server.** Everything it needs is files in
-declared directories, readable with a filesystem and `harness.json`
+declared directories, readable with a filesystem and the declaration
 alone. `ToolDefinition.invoke` carries `mcp` as **one optional arm** beside
 `shell` and `container`, and the harness relies on `shell`; a Tool whose only
 invocation is an MCP call is not usable by the harness that defines it.
