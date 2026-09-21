@@ -213,11 +213,12 @@
   "translationSource": "",
   "supportedLocales": ["ar","zh","en","fr","ru","es"],
   "availableLocales": null,
+  "translationQa":null,
   "sweep": {
     "run": true,
-    "sweptAt": "2026-09-18T13:35:56.610Z",
-    "totalPages": 154,
-    "pagesWithTranslations": 5,
+    "sweptAt": "2026-09-21T11:25:19.602Z",
+    "totalPages": 289,
+    "pagesWithTranslations": 8,
     "complete": true
   }
 }</script>
@@ -652,7 +653,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <summary class="fa-harness-tabs__heading">
     Dependencies <span class="fa-harness-tabs__count">10</span>
   </summary>
-  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-trust</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/library/agent-skills/"
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/smart-trust/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">smart-trust</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/library/agent-skills/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">agent-skills</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/schemas/cat-bootstrap-tools/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">cat-bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/library/folio-assistant-sci/"
@@ -942,6 +944,25 @@ avoidance</strong> — two of the six were plain fast-forwards.</p>
     <p>So before calling a branch ready, and <strong>before any merge</strong>:</p>
 
     <ol>
+      <li>
+        <p><strong>Read <code class="language-plaintext highlighter-rouge">mergeable_state</code> FIRST.</strong> If it is <code class="language-plaintext highlighter-rouge">dirty</code>, the PR conflicts with
+its base and that is very likely why nothing ran: this workflow is
+<code class="language-plaintext highlighter-rouge">on: pull_request:</code> with <code class="language-plaintext highlighter-rouge">actions/checkout@v4</code> and no <code class="language-plaintext highlighter-rouge">ref:</code>, so it checks
+out <code class="language-plaintext highlighter-rouge">refs/pull/N/merge</code> — the merge commit GitHub computes between head
+and base — and <strong>a conflicting PR has no such commit</strong>. Measured on
+PR #715, 2026-09-21: the conflicting commit reached <code class="language-plaintext highlighter-rouge">main</code> 27 minutes
+BEFORE the PR was opened, zero runs fired for that head, and CI fired
+immediately once the base was merged in and the conflict resolved. Bean
+<code class="language-plaintext highlighter-rouge">yv4z</code>, observation seven; stated there as a refinement of the surviving
+hypothesis rather than as a settled cause.</p>
+
+        <p><strong>When it is <code class="language-plaintext highlighter-rouge">dirty</code>, merge the base branch in — do NOT dispatch.</strong> This
+part does not depend on the cause being right: a <code class="language-plaintext highlighter-rouge">workflow_dispatch</code> run
+resolves <code class="language-plaintext highlighter-rouge">refs/heads/&lt;branch&gt;</code>, so it tests <strong>the branch, not the merge
+result</strong>. On a conflicted PR that is a green signal for a tree that will
+never exist, which is worse than the absence it replaced. The workaround
+in step 3 is for a MERGEABLE PR whose run never fired.</p>
+      </li>
       <li>Read the PR’s <code class="language-plaintext highlighter-rouge">head_sha</code>.</li>
       <li><code class="language-plaintext highlighter-rouge">mcp__github__actions_list</code> → <code class="language-plaintext highlighter-rouge">list_workflow_runs</code>, filtered by branch, and
 find a run whose <code class="language-plaintext highlighter-rouge">head_sha</code> matches.</li>
@@ -1200,7 +1221,8 @@ just not tied to the two moments named above.</p>
   <summary class="fa-harness-tabs__heading">
     Dependencies <span class="fa-harness-tabs__count">10</span>
   </summary>
-  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-trust</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/library/agent-skills/"
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/smart-trust/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">smart-trust</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/library/agent-skills/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">agent-skills</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/schemas/cat-bootstrap-tools/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">cat-bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/library/folio-assistant-sci/"
