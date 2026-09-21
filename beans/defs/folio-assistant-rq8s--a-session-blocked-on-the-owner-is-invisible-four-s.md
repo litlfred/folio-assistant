@@ -146,3 +146,75 @@ found any of these five — four of them never asked one.
       one is a **math** question and this session has no `qou` access)
 - [ ] The stale-snapshot lesson lands somewhere durable: this bean asserted a
       live-system reading as fact and it was false four hours later
+
+## Built, 2026-09-21 — and it is deliberately NOT a gate
+
+`bun run check:session-staleness <listing.json>` (or piped on stdin), rules in
+`src/sessions/staleness.ts`, 17 tests of which **5 go red when the rules are
+stubbed**.
+
+**It takes the listing as input and does not fetch it, and that is the finding
+rather than a shortcut.** Probed from inside a session container: no session
+credential in the environment, `api.anthropic.com/v1/sessions` → **401**,
+`claude.ai/api/code/sessions` → **403**. `list_sessions` is an MCP tool an
+AGENT holds, not an endpoint a script can call — the same wall that made
+`sibling-sessions.ts` infer sessions from commit trailers.
+
+So **this must never be wired into `code-quality-gates.yml`**. A gate whose
+input CI cannot obtain examines nothing and reports a clean run over
+everything: the `dh4f` defect, in the check written to stop a
+clean-run-over-nothing one level up. It belongs in the session-start sweep,
+run by an agent that can produce the listing.
+
+### Three classes, because two would have lied
+
+| class | rule | measured |
+|---|---|---|
+| waiting on a person | `REQUIRES_ACTION` past **72 h** | 1 — held a question for 113.6 h |
+| unread failure | `FAILED` + `unread` past **24 h** | 2 — at 359.9 h and 385.5 h |
+| **stopped, undeclared** | `BLOCKED` bucket, status NOT `REQUIRES_ACTION`, past 72 h | 1 — at 113.4 h |
+
+The third class is the one that makes this honest. A session whose coarse
+bucket says `BLOCKED` while its precise status says `IDLE` recorded no
+question and never declared that a person must act: **waiting and abandoned
+cannot be told apart from the listing**, so it is NAMED and never counted
+among the sessions waiting on somebody. Dropping it silently was the
+alternative, and it is the `dh4f` shape.
+
+A `FAILED` session somebody has already **read** is not reported at all —
+they know, and reporting it would make every historical failure permanent
+noise.
+
+### Thresholds carry a basis, not a number
+
+**72 h** is `BEAN_QUIET_HOURS` from `test/health/checks.ts`, set by bean
+`fgnw` for *"is anybody on this RIGHT NOW"* — a session waiting on a person
+asks the same question from the other side, so it takes the same calibration
+rather than one invented here, and a weekend cannot produce a finding on its
+own. **24 h** is deliberately shorter and is NOT a tighter version of the same
+judgement: a session waiting on a person may legitimately wait, while one that
+FAILED with unread output is not waiting on anything — the only question is
+whether anybody noticed.
+
+### Found by its own first run
+
+The argument parser excluded the first positional argument whenever `--repo`
+was absent (`repoAt` is `-1`, so `repoAt + 1` is `0`), fell through to reading
+stdin, and hung. Fixed, with the reason at the call site.
+
+## Done when
+
+- [x] A check reports sessions in `REQUIRES_ACTION` past an idle threshold,
+      and `FAILED` sessions carrying `unread`, with each threshold's **basis**
+      stated rather than a bare number
+- [x] The question in `task_summary` is printed with the finding
+- [x] **Could-not-determine is never rendered as clean** — an unreadable or
+      arrayless payload is `unknown` and exits non-zero, and a row with no
+      usable timestamp is skipped rather than read as fresh
+- [x] The five are surfaced to the owner, with links (2026-09-21)
+- [ ] The session-start sweep runs it, which needs the agent-side fetch wired
+      in — `session-start-coord-sweep.sh` calls scripts, and this one needs a
+      listing piped to it
+- [ ] The owner's four `qou` items are theirs: **this session works
+      folio-assistant only, on their instruction, and has no `qou` access**,
+      so no bean could be left there. Recorded here instead
