@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hrv2
 title: AGENTS.md names the wrong file for the health graph — and the wrong file FAMILY
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T16:51:13Z
-updated_at: 2026-09-21T17:45:00Z
+updated_at: 2026-09-21T17:43:43Z
 parent: folio-assistant-vke6
 ---
 
@@ -43,102 +43,89 @@ examines, reported clean because it was never read.
 
 ## Done when
 
-- [x] The sentence names `cat-harness/cat-harness.json` and the right family —
-      **and eight more like it**, see below.
-- [ ] A decision, recorded either way: does the declaration-filename check
+- [x] The sentence names `cat-harness/cat-harness.json` and the right family.
+- [x] A decision, recorded either way: does the declaration-filename check
       extend to markdown, or is prose deliberately out of scope? *"A rename
       REWORDS prose"* is the existing argument for out-of-scope — but this
       entry is not reworded prose, it is a wrong path a reader will follow.
-- [x] Sweep for the same confusion elsewhere in the docs before closing — done,
-      and it found **158**, not one.
+- [x] Sweep for the same confusion elsewhere in the docs before closing; one
+      instance found is not one instance existing.
 
 *Not started. Recorded by session_01AYHimvYMmf8h8e9fFN6dW5, which found it and
 did not pivot to it.*
 
 ---
 
-## Swept 2026-09-21 — the sentence was one of 158, and the cause is a reversal
+## Done 2026-09-21 — and the bean's own second Done-when asked the wrong question
 
-### The cause, traced rather than guessed
+Issue [#766](https://github.com/litlfred/folio-assistant/issues/766).
+`bun run gates` **93 of 93** (the set grew by two: the new gate and its
+CI-invocation registration).
 
-`c7b8f80e` (bean `6n23`, PR #695) substituted `harness.json` →
-`folio-assistant.config.json` across **15 markdown files**. That was *correct
-when it was made*: #695 had merged the declaration and the config into one file
-at the root.
+### The question this bean asked, and why it was aimed at the wrong check
 
-Then **#727 split them back apart** — `<name>.json` for the declaration,
-`<name>.config.json` for the config. Every one of those substitutions describes
-the declaration half, so **all of them became wrong at the same moment**, and
-nothing noticed, because markdown is a file class no check reads.
+> *does the declaration-filename check extend to markdown, or is prose
+> deliberately out of scope?*
 
-So this is not a typo. It is a reversal the prose did not follow, and the
-bean's own framing — *"one instance found is not one instance existing"* — was
-an understatement by two orders of magnitude.
+Neither answer would have caught this defect. `check:declaration-filename`
+hunts the **retired** name `harness.json`. `AGENTS.md` does not name the
+retired file — it names `folio-assistant.config.json`, a file that **exists**,
+that opens, and that declares no graph at all. **A wrong name is not a retired
+name**, and no extension of that gate, to markdown or anywhere, sees it.
 
-### The measurement
+Two questions were folded into one and are now separated: the retired-name
+markdown backlog is `vzur`, with the order stated (**clear the backlog, then
+turn a gate on** — not the reverse).
 
-983 markdown files read, excluding `beans/`, generated references and
-`docs-auto`:
+### What was built instead
 
-| kind | count |
-|---|---|
-| `harness.json` — retired, excised by #695 | 87 |
-| `harness.config.json` — retired earlier still | 63 |
-| `folio-assistant.config.json` where the DECLARATION is meant | 8 |
-| **total** | **158**, in 80 files |
+`check:declaration-claims` — prose pairing a declared graph id with a
+declaration file, verified against the declarations.
 
-Classified by whether the mention **names a current path** or **records
-history**, because this repository writes its own history in place and
-rewriting those would falsify the record:
+**The vocabulary is DERIVED, and that was the decision that mattered.** The
+first draft matched one sentence shape and found exactly **one** claim in the
+whole corpus: the broken one. A rule fitted to a single example generalises
+only as far as its phrasing, and the next such sentence will be worded
+differently — leaving a gate reporting a clean run over a corpus of zero.
+Anchoring instead on the graph ids the declarations actually declare took the
+corpus **1 → 6 on the same tree, and all six were wrong**.
 
-| | |
-|---|---|
-| names a current path | **113** |
-| record — `fsh-guts/proposals`, `fsh-guts/retired`, `memory/`, agent memory | 23 |
-| translated — pipeline-owned, not hand-edited | 4 |
-| historical — states a former name beside its replacement | 7 |
+### Four things the build got wrong, each caught by running it
 
-The heuristic for "historical" is crude (past-tense vocabulary on the same
-line), so 7 is a **lower bound** and some of the 113 will be history too. That
-is exactly why the fix below is not a substitution.
+1. **`readDeclaration` threw on this repository's own declaration** — the
+   `folio` graph kind is contributed by a dependency and must be registered
+   first. The check exited **2, "NOT a pass"**, which is the three-state
+   discipline working on its first run. A glob for `*.json` would have skipped
+   the file silently and reported a clean run over a corpus missing its largest
+   instance.
+2. **Declared paths are REPO-relative, not instance-relative.** A draft
+   prefixed each with its declaring instance and produced `cat-harness/beans/`
+   and `cat-harness/fsh-guts/`, neither of which exists — so nothing was
+   pruned and the whole bean store came back into the corpus.
+3. **Pruning by first path segment would have skipped `who-iris/` entirely.**
+   `library` is declared at `who-iris/library/`, `agent-skills/library/` and
+   `folio-assistant-sci/library/`. Three instances silently unexamined,
+   reported as clean — `dh4f` arriving through a convenience.
+4. **A false positive, found the moment the real defect was fixed.**
+   `AGENTS.md`'s actor/role table puts the `` `cat-harness` graph `` in the
+   **Skill** row and `skills/roles/roles.json` in the **Role** row. Flattened,
+   they paired. A table row is now its own block — the same shape as `k59d`'s
+   *"an arrow is not always a dependency"* guard, and six of the ten tests are
+   false-positive guards for that reason.
 
-### What was fixed here, and why only this
+One near-miss worth recording because it was one edit away: the filename
+pattern rejected anything containing `/`, so writing the clearer path form
+(`cat-harness/cat-harness.json`) would have made the claim **invisible** rather
+than verified. A silent pass, caused by the correction.
 
-The **8 config-for-declaration** mentions, in `AGENTS.md` (7) and `README.md`
-(1). Each was read in context and given its own replacement rather than
-sed-substituted — a second blanket substitution is what caused this. Plus
-`AGENTS.md`'s `harness.config.json` claim about what `folio_init` writes, which
-is in the same sentence family and measurably wrong: `init-folio.ts` calls
-`instanceDeclarationFilename` and `instanceConfigFilename`, writing
-`<slug>.json` **and** `<slug>.config.json`.
+### What is NOT fixed here
 
-The remaining **113** are left deliberately. They are ~70 files of live
-instructional prose — skills, guides, READMEs — and the worst-hit is
-`cat-harness/skills/folio-core/directory-conventions.md` at 8, which is the
-file `AGENTS.md` names as the source of truth for exactly this question. A
-70-file rewrite is a scope decision, and each line needs the current-path /
-history judgement that no regex makes reliably.
+`vzur` — 162 occurrences of the retired name across 83 markdown files, four of
+them baselined in `scripts/declaration-claims-baseline.json`. Removing a
+baseline entry is part of that work: a stale entry fails the gate, so the file
+shrinks rather than fossilises.
 
-### The second Done-when, answered with evidence
-
-> does the declaration-filename check extend to markdown, or is prose
-> deliberately out of scope? *"A rename REWORDS prose"* is the existing
-> argument for out-of-scope.
-
-**That argument does not survive this measurement.** It holds when a rename
-rewords prose — but #727 was a *reversal*, and a reversal does not reword
-anything: it silently inverts what the existing words mean. 113 live path
-claims went stale in one commit and nothing read them for ten days.
-
-So: markdown should be checked, and it must **classify** rather than match a
-string — the same three-way split `jijc` built for YAML in #747, since 23 of
-the 158 are records and 4 are pipeline-owned translations. Not built here,
-because a gate that fails on 113 findings reds the build on its first run; it
-needs either a baseline (the `bean-bodies-baseline.json` precedent) or the 113
-fixed first, and which comes first is the owner's call.
-
-## Still to do
-
-- [ ] The 113 current-path mentions of retired filenames, in ~70 files
-- [ ] `check:declaration-filename` extended to markdown, classifying rather
-      than matching — with a baseline, or after the 113
+`fsh-guts/`, `beans/` and every `library/` are excluded, **derived from the
+declarations** rather than listed: each is already declared as a place for
+retired or foreign material, and a document there naming a retired filename is
+correct history.
