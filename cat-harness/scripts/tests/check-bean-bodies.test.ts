@@ -61,6 +61,42 @@ describe("splitChecklist", () => {
   });
 });
 
+
+describe("splitChecklist — the separator that was missing", () => {
+  // Found by USING the check on the next task, not by re-reading it: bean
+  // `cvab` has both checklists and separates them with `---`, and the first
+  // version did not report it. Measured across the store: 61 beans end their
+  // canonical section with a rule, 141 with a heading. Reading only headings
+  // folded the later list back into the canonical one, so a ticked duplicate
+  // looked canonical and could never fire — blind to 61 beans while reporting
+  // a clean run over them.
+  test("a `---` rule ends the canonical section", () => {
+    // Long enough to clear SHADOW_MIN_WORDS — a short item is declined on
+    // purpose, and an earlier draft of this test failed for that reason.
+    const item = "a check reads every fenced command in the entry documents";
+    const b = `## Done when\n- [ ] ${item}\n\n---\n\n- [x] ${item}\n`;
+    const { canonical, later } = splitChecklist(b);
+    expect(canonical).toHaveLength(1);
+    expect(later).toHaveLength(1);
+    expect(shadowedItems(b)).toHaveLength(1);
+  });
+
+  test("whichever comes FIRST ends it — a rule before a heading", () => {
+    const b = "## Done when\n- [ ] one\n\n---\n\n- [x] two\n\n## Later\n- [x] three\n";
+    expect(splitChecklist(b).canonical).toHaveLength(1);
+  });
+
+  test("...and a heading before a rule", () => {
+    const b = "## Done when\n- [ ] one\n\n## Later\n- [x] two\n\n---\n";
+    expect(splitChecklist(b).canonical).toHaveLength(1);
+  });
+
+  test("a table's `|---|` is not a rule", () => {
+    const b = "## Done when\n- [ ] the canonical thing here\n\n| a | b |\n|---|---|\n| x | y |\n";
+    expect(splitChecklist(b).later).toEqual([]);
+  });
+});
+
 describe("overlap", () => {
   test("containment, not equality — the real copies were not verbatim", () => {
     // `fgnw`'s appended copy dropped a parenthetical; `9x17`'s paraphrased.

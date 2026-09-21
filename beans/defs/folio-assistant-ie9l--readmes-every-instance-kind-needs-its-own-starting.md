@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ie9l
 title: 'READMEs: every instance kind needs its own starting README, driven by the KG rather than listed — and the root README is cat-harness''s by accident'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T17:00:50Z
-updated_at: 2026-09-20T19:27:11Z
+updated_at: 2026-09-21T05:50:43Z
 parent: folio-assistant-zzmr
 ---
 
@@ -156,15 +156,36 @@ about.
 
 ## Done when
 
-- [ ] A QA check reports any instance with no starting README of its own
-- [ ] The root README points to the four things, by query rather than by list
+- [x] A QA check reports any instance with no starting README of its own —
+      `check:subgraph-coverage`, `readmeFinding` + `agentInstructionsFinding`
+      (PR #593). **0 of 11 instances are mute, from 8.**
+- [~] The root README points to the four things, by query rather than by list
+      — the INSTANCES table is generated from the declarations (PR #593); the
+      four POINTERS are not there. → bean `76sa`
 - [ ] Bootstrap's init creates a root README when absent, with install status
-- [ ] README is a declared asset present in the published json/jsonld —
-      role `agent-instructions`, layer `context`
-- [ ] Reached by every agent as a FILE rather than an injection, so no
-      truncation budget applies; the trigger is named and tested
+      → bean `7sfm`, **not started**
+- [~] README is a declared asset present in the published json/jsonld — it is
+      declared on all eleven and present in the `.jsonld`; `layer: context` is
+      not declared. → bean `7syd`
+- [~] Reached by every agent as a FILE rather than an injection — the rule is
+      in `agent-memory` and the purposes are in `ASSET_ROLE_PURPOSE`; it is
+      named but **not tested**. → bean `7syd`
 - [ ] Wherever this lands, it states that creation at INITIALISATION is not a
-      process write — otherwise ask 3 and ask 6 read as contradicting
+      process write → bean `7sfm`, **not written anywhere** (grepped
+      `skills/` and `docs/`, 2026-09-21)
+
+## Scored honestly on close, 2026-09-21
+
+**One box done, three partial, two untouched** — and the session working this
+had been reporting "two of six asks remain", which counted the ASKS list
+above rather than these boxes. The boxes are the contract; the asks are the
+prose. Scoring against the friendlier of two lists is how a handover loses
+work, so the remainder is carved into `7sfm`, `76sa` and `7syd` rather than
+absorbed by closing the issue.
+
+The core of this bean did land: every instance owns a README and an
+`AGENTS.md`, the root indexes them from a generated section, and a QA
+criterion keeps it true.
 
 ## `aazi` is this README's top section
 

@@ -609,6 +609,36 @@ const OPTION_ITEM = /^(?:[-*]|\d+\.)\s+\S/;
  * revisited later in the same file) counts the FIRST: the later ones are the
  * re-analysis, and its own record is what the later section is.
  */
+
+/**
+ * The five row labels `renderDecision` emits, in `schemas/decision-request.ts`.
+ *
+ * A decision put through the schema leaves this table behind; a hand-written
+ * `## Options` section does not. The distinction is load-bearing and was
+ * measured 2026-09-21 on bean `hajp`: the store held **10** beans with an
+ * `## Options` heading and **0** carrying this table — so the count that
+ * `hajp`'s gating condition names ("revisit at twelve records") was counting
+ * a population containing none of the thing the evidence was meant to be
+ * about. A threshold measuring the wrong set cannot be met meaningfully, and
+ * would have been read as met.
+ *
+ * Detected from the artefact rather than from a marker somebody has to
+ * remember to write, which is the same reason `check:bean-bodies` reads the
+ * body rather than trusting front matter.
+ */
+const RENDERED_DECISION_ROWS = [
+  /\|\s*\*\*What it does\*\*\s*\|/,
+  /\|\s*\*\*Pro\*\*\s*\|/,
+  /\|\s*\*\*Con\*\*\s*\|/,
+  /\|\s*\*\*Downstream\*\*\s*\|/,
+  /\|\s*\*\*Reversibility\*\*\s*\|/,
+];
+
+/** Does this bean carry a decision rendered through `renderDecision`? */
+export function hasRenderedDecision(text: string): boolean {
+  return RENDERED_DECISION_ROWS.every((r) => r.test(text));
+}
+
 export function countConsideredOptions(text: string): number | undefined {
   const lines = text.split("\n");
   const at = lines.findIndex((l) => OPTIONS_HEADING.test(l));
@@ -661,6 +691,7 @@ export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
       // appear inside front matter, so narrowing the input would only add a
       // parse step that can go wrong.
       consideredOptions: countConsideredOptions(text),
+      renderedDecision: hasRenderedDecision(text),
     });
   }
   // An empty store is not a clean one. A walk that found nothing is how a
