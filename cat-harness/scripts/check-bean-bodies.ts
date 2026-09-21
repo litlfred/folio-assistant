@@ -108,11 +108,37 @@ export function splitChecklist(body: string): { canonical: ChecklistItem[]; late
   const head = /^##+\s*Done when\s*$/im.exec(body);
   if (!head) return { canonical: [], later: [] };
   const rest = body.slice(head.index + head[0].length);
-  const next = /^##+\s+/m.exec(rest);
+  const at = sectionEnd(rest);
   return {
-    canonical: checklistItems(next ? rest.slice(0, next.index) : rest),
-    later: next ? checklistItems(rest.slice(next.index)) : [],
+    canonical: checklistItems(at === undefined ? rest : rest.slice(0, at)),
+    later: at === undefined ? [] : checklistItems(rest.slice(at)),
   };
+}
+
+/**
+ * Where the canonical section stops — a heading OR a horizontal rule.
+ *
+ * The rule was missing and it is the dominant separator: measured across the
+ * store, **61** beans close their `## Done when` with a `---` before any
+ * heading, against 141 that use a heading. Reading only headings folded a
+ * later checklist back INTO the canonical section, so a ticked duplicate
+ * looked canonical and could never fire — the check was blind to 61 beans
+ * while reporting a clean run over them, which is the `dh4f` shape aimed at
+ * this checker.
+ *
+ * Found by using the check on the next task rather than by re-reading it:
+ * bean `cvab` has both lists and separates them with `---`, and it was not
+ * among the six the first version reported.
+ *
+ * A table's `|---|` is not a rule and does not match; front matter's `---`
+ * is above the body this ever sees.
+ */
+function sectionEnd(rest: string): number | undefined {
+  const heading = /^##+\s+/m.exec(rest);
+  const rule = /^---+\s*$/m.exec(rest);
+  if (!heading) return rule?.index;
+  if (!rule) return heading.index;
+  return Math.min(heading.index, rule.index);
 }
 
 /** Checklist lines, with an indented continuation folded into its item. */
