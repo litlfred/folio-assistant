@@ -55,6 +55,68 @@ unassigned modules. The critical path is now `wggr` (invert the stub
 pattern for the workflow files, `skills/` and `schemas/`), then
 `b5f0` / `zkgs`, then `zmdo` (fork twice and prove an empty-repo bootstrap).
 
+## MEASURED, 2026-09-21 — where Goal 1 actually stands, and what blocks each box
+
+Nobody had measured this goal's boxes; they were being carried as intentions.
+Measured on `a11eeb39`:
+
+| box | state |
+|---|---|
+| a new empty repo can bootstrap an instance | **blocked** — `zmdo` says the forks must not start before both layers reach MVP, because a fork taken mid-partition inherits the unfinished classification |
+| each instantiation declares its config in one file at its own root | **not yet** — 12 instances declare `harness.json`; **one** has a `*.config.json`, and 11 have none |
+| the initiation steps are skilled, tooled and tested | **substantially satisfied** — see below; the first reading of this was wrong |
+
+### A wrong premise, checked and dropped rather than built on
+
+The 11-of-12 number looked at first like the `dh4f` shape — a config resolving
+from the wrong root. **It is not.** `resolveHarnessConfigPath` walks from the
+instance root **OUTWARD**, deliberately, and says so:
+
+> then each ancestor, because a checkout holding several instances tracks them
+> at its own root, **which is the whole point of naming the file after the
+> instance**.
+
+So `cat-harness.config.json` sitting at the CHECKOUT root is the designed
+placement for a multi-instance checkout, not a misplacement. And
+`expectedInstanceConfigPath` returns the found path when there is one and the
+instance-root location otherwise — which is the whole of the asymmetry that
+looked wrong.
+
+The 11 without a config are not misconfigured either: a config declares
+`contentType` and `dependencies`, and a sub-instance that has never been
+independently instantiated has neither to declare. **"Not yet" rather than
+"broken"**, and it resolves when the split does.
+
+### Box 3: all three parts exist, and my first answer was wrong
+
+I first recorded *"the governing skill is the open half"*. **That was wrong**,
+and the mistake is worth naming because it is the same one three other beans
+paid for tonight: I searched `skills/folio-core/` for a FILENAME matching
+`init|bootstrap` instead of reading what the skills DO.
+
+| part | what it is |
+|---|---|
+| a skill that governs them | **`getting-started.md`** — *"Use whenever a user asks to create, start, set up, or initialise a folio"* — with a BPMN process, `skills/workflows/getting-started.bpmn` |
+| a Tool node that performs them | **`folio_init`**, registered in `src/tools/folio-init.ts` |
+| a test | **`init-folio.test.ts`**, and `workflow-roles.test.ts` loads the BPMN |
+
+What is absent is any single assertion BINDING the three. Before calling that
+a gap I checked whether the model can even express it: **`folio:tool` does not
+exist in this repository's BPMN vocabulary.** An activity carries
+`<folio:skill ref>` and `<folio:bean op>` and nothing else, so "the process
+names the Tool that performs it" is not a link that has gone missing — it is a
+relation this repository does not model.
+
+Inventing `folio:tool` to close a box would be adding a vocabulary term on a
+test's say-so, which is the wrong direction. Recorded as a design question for
+whoever owns `bpmn-processes`, not taken here.
+
+### So there is no actionable slice here, and that is the finding
+
+Every box waits on the same thing `zmdo` names. Recording it so the next
+session reads a measurement instead of re-deriving one — and so "is Goal 1
+done?" has an answer with a named blocker rather than a shrug.
+
 ## Done when
 
 - [ ] A new, empty repository can say "bootstrap a litlfred/folio-assistant

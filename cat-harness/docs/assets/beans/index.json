@@ -2187,14 +2187,14 @@
     {
       "id": "folio-assistant-f76l",
       "title": "TODO INDEX: define folio-todo-index/v1 as published, and emit target{page,node,label}",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:46:04Z",
-      "updatedAt": "2026-09-20T21:46:04Z",
+      "updatedAt": "2026-09-21T05:31:45Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R3 + the Phase 4 §0 finding. Unit 2 of 10.\n\n**`folio-todo-index/v1` has no schema.** The string appears twice in the whole\nrepository: a literal in `gen-docs-pages.ts` and four e2e fixtures. No Zod type, no\npublished JSON Schema, no module — a consumer reading `\"$schema\":\n\"folio-todo-index/v1\"` and going looking finds nothing. And the",
       "file": "beans/defs/folio-assistant-f76l--todo-index-define-folio-todo-indexv1-as-published.md"
     },
@@ -2833,6 +2833,20 @@
       "file": "beans/defs/folio-assistant-kvsx--arrow-direction-94-of-kg-edges-point-where-the-aut.md"
     },
     {
+      "id": "folio-assistant-l4zi",
+      "title": "POST-IT PANEL: dismissing it has no inverse — no way to get the panel back",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T06:20:35Z",
+      "updatedAt": "2026-09-21T06:20:35Z",
+      "preview": "Owner, 2026-09-21, on the deployed preview:\n\n> clicking https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/\n> on postit display panel, hides it, no place to get it back. see sibling work\n> on defaul harness folio with tiles.\n\n## The defect\n\nClicking the todo/post-it display panel **dismisses it, and nothing brings it\nback**. A control that removes something ",
+      "file": "beans/defs/folio-assistant-l4zi--post-it-panel-dismissing-it-has-no-inverse-no-way.md"
+    },
+    {
       "id": "folio-assistant-lcwz",
       "title": "WORK-PLAN CHART: the epic bars are a picture, not a way in — 21 beans behind a bar with no route to them",
       "status": "completed",
@@ -3255,7 +3269,7 @@
     {
       "id": "folio-assistant-op30",
       "title": "DOCS OBLIGATION: an instance owes its own docs/, with a QA axis — 1 of 11 has one, and it is the instance with no README",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -4630,7 +4644,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:33:37Z",
-      "updatedAt": "2026-09-20T17:19:50Z",
+      "updatedAt": "2026-09-21T05:40:33Z",
       "preview": "Split out of `3pqn` on the owner's instruction, 2026-09-20. `3pqn` closed on\nits Done-when 2 and 3 — the **damage** is stopped, because\n[`prepare-merge`](../../cat-harness/skills/folio-core/prepare-merge.md)\n§Guardrails now says *\"NO CHECKS IS NOT GREEN\"* and gives the procedure. This\nbean carries the remaining **why**, at low priority, with the evidence\nattached so nobody re-derives it.\n\n## The o",
       "file": "beans/defs/folio-assistant-yv4z--3pqn-cause-why-does-a-pr-sometimes-get-no-pull-req.md"
     },

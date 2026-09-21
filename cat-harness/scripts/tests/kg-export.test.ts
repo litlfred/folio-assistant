@@ -28,7 +28,7 @@ import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
-import { readDeclaration, artefactStub } from "../../schemas/cat-harness.js";
+import { artefactStub, DECLARATION_FILENAME, readDeclaration } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
 
 /**
@@ -292,7 +292,7 @@ describe("kg export", () => {
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/${stub}.schema.json`);
 
     // The declaration is read from a fixed filename, whatever the stub is.
-    expect(existsSync(join(import.meta.dir, "../..", "harness.json"))).toBe(true);
+    expect(existsSync(join(import.meta.dir, "../..", DECLARATION_FILENAME))).toBe(true);
     expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
   });
 
@@ -594,7 +594,7 @@ describe("a Role comes from the registry as well as from a lane", () => {
  * `cat-harness/src/skills/` has the same basename, so both wanted
  * `package/skills`, and a `seen` set dropped whichever arrived second while
  * its skills went on emitting `inPackage -> package/skills`. The result was a
- * node with five members: cat-bootstrap's four skills plus `corpus-grep`, a
+ * node with five members: cat-bootstrap's skills plus `corpus-grep`, a
  * cat-harness skill from a directory with **no manifest at all**, published as
  * a member of a package it was never listed in.
  *
@@ -638,13 +638,19 @@ describe("a package's id is declared, not derived from its path", () => {
     expect(String(p!["path"])).toContain("cat-bootstrap/skills");
   });
 
-  test("its members are cat-bootstrap's four skills and nothing else", () => {
+  test("its members are cat-bootstrap's own skills and nothing else", () => {
+    // Listed rather than counted, because what the collision produced was a
+    // member from ANOTHER package — a count would have gone on passing while
+    // one name was swapped for another.
     const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap"))!;
     expect(membersOf(String(p["@id"])).sort()).toEqual([
       "skill/cat-bootstrap-kg-navigation",
       "skill/confirm-harness",
       "skill/discussion",
       "skill/log-message",
+      // The last step of `initialize-harness`: the root README, when there is
+      // none (bean `7sfm`).
+      "skill/root-readme",
     ]);
   });
 

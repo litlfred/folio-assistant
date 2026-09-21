@@ -15,7 +15,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { collectInstanceNodes } from "../kg-export.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const BOOT = join(repoRootFor(ROOT), "cat-bootstrap");
@@ -54,7 +54,7 @@ describe("discovery reads the declaration rather than the tree", () => {
     mkdirSync(join(root, "stray"), { recursive: true });
     writeFileSync(join(root, "stray", "x.bpmn"), "<x/>");
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "iso",
         directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
@@ -83,7 +83,7 @@ describe("discovery reads the declaration rather than the tree", () => {
     mkdirSync(join(root, "wf"), { recursive: true });
     writeFileSync(join(root, "wf", "x.bpmn"), "<x/>");
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "iso2",
         directories: [{ id: "cat-harness-wf", path: "wf/", dependents: "reproduce", graphs: ["cat-harness"] }],

@@ -6,10 +6,26 @@
  * ## Why CSVW, and why annotated rather than replaced
  *
  * Bean `ulqj`, decided by the owner: *"not new/custom thing"*. This graph
- * already speaks eight published vocabularies — doco, deo, cito, oa, prov,
- * skos, dcterms, fhir — and zero folio inventions. `folio-tabular-records/v1`
- * was the exception, and CSVW is a W3C Recommendation that is already JSON-LD,
+ * BINDS eight published vocabularies — doco, deo, cito, oa, prov, skos,
+ * dcterms, fhir — and zero folio inventions. `folio-tabular-records/v1` was
+ * the exception, and CSVW is a W3C Recommendation that is already JSON-LD,
  * which the rest of this graph already is.
+ *
+ * **It said "already speaks" until 2026-09-21, and that was false** — bean
+ * `fd6i`. Measured over the 1086 published `.jsonld` documents in this
+ * repository, three of the eight are emitted (`dcterms` 1551, `prov` 952,
+ * `cito` 2) and five are not. The decision the sentence records is untouched
+ * by that: reusing a published vocabulary rather than inventing one is a
+ * MODELLING choice, and it was made. What was not true was the claim about
+ * what this instance emits.
+ *
+ * The gap is not a defect either, and that is the third state `fd6i` asked
+ * for. This is the PLATFORM; the unemitted five describe what a FOLIO holds,
+ * and this instance holds none. Each now carries a recorded reason naming
+ * what would emit it, in `FORWARD_DECLARED` in
+ * `scripts/check-context-emission.ts`, and `check:context-emission` fails on
+ * any bound prefix that has neither an emission nor a reason. A forward
+ * declaration is fine; a silent one is what this sentence used to be.
  *
  * It models table → column → datatype and **nothing else**: no formulas, no
  * merged cells, no styling. The owner's "no full Excel complexity" is

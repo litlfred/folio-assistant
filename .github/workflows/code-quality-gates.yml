@@ -398,6 +398,22 @@ jobs:
       - name: workflow script paths
         run: bun run check:workflow-paths
 
+      # THE OTHER DIRECTION FROM `ovkk`, and the reason it needs a gate at all
+      # is that this direction is silent.
+      #
+      # `ovkk` was a term USED and not DECLARED: a JSON-LD processor drops it,
+      # so the data goes missing and somebody eventually notices — 34 names,
+      # 3583 occurrences. A prefix DECLARED and never used costs nothing at
+      # runtime. `skos:` sat bound in the published `@context` and emitted by
+      # zero nodes from the day it was written, while `tabular-csvw.ts` said
+      # in prose that this graph speaks it.
+      #
+      # It counts EMISSIONS over the published `.jsonld` documents, not
+      # `prefix:` literals in source — the two disagree, and measuring source
+      # reported `doco:` 1112 for a vocabulary no document here emits.
+      - name: every bound prefix is emitted, or declared forward with a reason
+        run: bun run check:context-emission
+
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:
       # a lane binding a role that is not declared, a role carrying a skill
@@ -581,6 +597,14 @@ jobs:
           # defect hid behind: PLATFORM meant the repo root in one test and
           # cat-harness/ in five siblings, in one directory.
           bun run check:anchor-names
+          # Bean `jijc`, under the owner's REPLACE ruling on `b5f0`:
+          # DECLARATION_FILENAME existed the whole time and 20 non-test call
+          # sites built the path from a literal instead, which is what turns
+          # the rename into a 121-file sweep. Prose, test fixtures, template
+          # construction and cross-instance sites are each CLASSIFIED and
+          # counted rather than failed -- and `docs/_data/harness.json` is a
+          # different file that must NOT be renamed.
+          bun run check:declaration-filename
           bun run check:bean-parents
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
@@ -612,6 +636,13 @@ jobs:
           bun run check:kind-validators
           bun run check:actor-reach
           bun run check:harness-dirs
+          # A backtick inside a viewer's page template closes the string
+          # and turns the rest of the page into TypeScript. The compiler
+          # already refuses it, so this is about the MESSAGE: it names a
+          # token on the offending line and never mentions backticks, and
+          # four separate sessions have lost a build to that. Four in-file
+          # warnings did not stop it.
+          bun run check:viewer-backticks
           # One config per instance: `<name>.config.json` at the
           # instantiation root. This repository instantiates more than
           # one harness, so a single `harness.config.json` at the repo
@@ -630,6 +661,12 @@ jobs:
           bun run check:subgraph-coverage
           bun run check:published-refs
           bun run check:graph-kind-work
+          # One place says what an asset ROLE is — purpose, layer and
+          # delivery. A per-asset restatement of any of the three is a
+          # second answer free to disagree, and `KgAssetSchema` strips it
+          # WITHOUT A WORD, so the declaration reads as if it carried one
+          # while no consumer ever saw it (bean `7syd`).
+          bun run check:asset-roles
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no

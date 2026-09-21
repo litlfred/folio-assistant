@@ -420,6 +420,9 @@ export const RULES: Rule[] = [
       // harness", and a page under `docs/` is exactly that.
       "scripts/schema-graph.ts",             // schemas/*.ts → declarations + edges
       "scripts/gen-schema-viz.ts",           // that graph → projection + viewer
+      // Guards the page template all four viewer generators build as one
+      // string literal; the generators are core, so its gate is too.
+      "scripts/check-viewer-backticks.ts",
       // Zod in `cat-bootstrap-tools` → JSON Schema in `cat-bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
@@ -557,6 +560,11 @@ export const RULES: Rule[] = [
       "scripts/check-agent-entry-links.ts",
       "scripts/check-command-paths.ts",
       "scripts/check-anchor-names.ts",
+      // Its subject is the harness's OWN declaration filename — which file
+      // names an instance — so it is harness by subject as well as by
+      // dependency: it imports `schemas/cat-harness.js` for the constant and
+      // nothing else, and a folio declares no instances. Bean `jijc`.
+      "scripts/check-declaration-filename.ts",
       // Who else is working THIS repository — a fact about the forge and this
       // checkout, not about any folio's material.
       "scripts/sibling-sessions.ts",
@@ -809,6 +817,7 @@ export const RULES: Rule[] = [
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
+      "scripts/check-asset-roles.ts",     // one place says what an asset ROLE is (bean `7syd`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
@@ -1013,6 +1022,18 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // Counts every prefix the CONTENT `@context` binds against the published
+      // `.jsonld` documents that emit it (bean `fd6i`). Core for the same
+      // reason `check-voices.ts` is: its subject is content. It reads
+      // `CONTENT_CONTEXT` from `schemas/jsonld.ts` — core by the `schemas/`
+      // prefix — and walks documents a FOLIO produces.
+      //
+      // Calling it harness would buy a wrong-direction edge for nothing, which
+      // is the mistake `check-context-emission`'s own sibling made earlier the
+      // same day: `ns-export.ts` IS harness, and importing SKOS_NS from
+      // `jsonld.ts` was refused. The difference is the subject, not the
+      // filename — a script is not automatically tooling-side.
+      "scripts/check-context-emission.ts",
       // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
       // exclusively on core data, and calling it harness bought two

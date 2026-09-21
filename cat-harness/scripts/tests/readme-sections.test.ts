@@ -23,11 +23,12 @@ import {
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc";
 import {
   AGENT_INSTRUCTIONS_ROLE,
-  ASSET_ROLE_PURPOSE,
+  assetRolePurpose,
   INSTANCE_README_ROLE,
   instanceRootsIn,
 } from "../../schemas/cat-harness.js";
 import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance } from "../../test/support/instance-fixture.js";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 const dirs: string[] = [];
 
@@ -287,10 +288,10 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
   // A property worth keeping must not depend on the corpus still being wrong.
   function repoWith(instances: Record<string, unknown>): string {
     const root = mkdtempSync(join(tmpdir(), "instances-"));
-    writeFileSync(join(root, "harness.json"), JSON.stringify({ name: "root" }));
+    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "root" }));
     for (const [name, decl] of Object.entries(instances)) {
       mkdirSync(join(root, name), { recursive: true });
-      writeFileSync(join(root, name, "harness.json"), JSON.stringify(decl));
+      writeFileSync(join(root, name, DECLARATION_FILENAME), JSON.stringify(decl));
     }
     return root;
   }
@@ -326,8 +327,8 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
   });
 
   it("carries each role's purpose from the one place it is declared", () => {
-    expect(out.markdown).toContain(ASSET_ROLE_PURPOSE[AGENT_INSTRUCTIONS_ROLE]!);
-    expect(out.markdown).toContain(ASSET_ROLE_PURPOSE[INSTANCE_README_ROLE]!);
+    expect(out.markdown).toContain(assetRolePurpose(AGENT_INSTRUCTIONS_ROLE)!);
+    expect(out.markdown).toContain(assetRolePurpose(INSTANCE_README_ROLE)!);
   });
 
   it("an unreadable tree is UNDETERMINED, not 'this repository has no instances'", () => {

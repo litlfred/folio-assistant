@@ -22,6 +22,7 @@ import {
   repoRootFor,
   type RenderExemption,
 } from "./cat-harness.js";
+import { DECLARATION_FILENAME } from "./cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
@@ -57,7 +58,7 @@ describe("this repository's actual declaration", () => {
     // repository that lost the declaration.
     const roots = ["cat-bootstrap", "cat-harness", "folio-assist-core", "."].map((r) => join(REPO, r));
     const claiming = roots
-      .filter((r) => existsSync(join(r, "harness.json")))
+      .filter((r) => existsSync(join(r, DECLARATION_FILENAME)))
       .map((r) => readDeclaration(r))
       .filter((d) => d?.renderExemption !== undefined);
     expect(claiming.length).toBe(1);

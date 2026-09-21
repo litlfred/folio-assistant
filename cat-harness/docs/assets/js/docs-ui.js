@@ -2249,12 +2249,52 @@
       grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
     }
 
+    /**
+     * The way back, and on the landing board it has to be ON THE PAGE.
+     *
+     * Bean `l4zi`, the owner 2026-09-21: *"clicking on postit display panel,
+     * hides it, no place to get it back."*
+     *
+     * Closing set `hidden` and stopped. On an OVERLAY page that is fine — the
+     * board was covering what you were reading, and the launcher's Todos tile
+     * re-opens it. On the LANDING board it is not: there the board is page
+     * content, so closing it removes a section of the page and leaves nothing
+     * where it was. A control two clicks deep inside a collapsed launcher is
+     * not "a place to get it back"; it is a place a reader has to already know
+     * about.
+     *
+     * So the inline board collapses to a button in its own position rather
+     * than vanishing. Same rule `d1r6` follows for a discarded sticky, which
+     * goes somewhere with a way back instead of being deleted: **an action
+     * whose inverse is not reachable is not a toggle.**
+     */
+    var reopen = null;
+    function reopenControl() {
+      if (reopen) return reopen;
+      reopen = el("button", {
+        type: "button",
+        class: "fa-sticky-board-reopen",
+        "aria-label": "Show the todo board — " + live.length + " outstanding",
+      }, "Todos (" + live.length + ")");
+      reopen.addEventListener("click", function () { setOpen(true); });
+      return reopen;
+    }
+
     function setOpen(isOpen) {
       if (isOpen) {
         board.removeAttribute("hidden");
+        if (reopen && reopen.parentNode) reopen.parentNode.removeChild(reopen);
         heading.focus();
       } else {
         board.setAttribute("hidden", "hidden");
+        if (landing) {
+          var b = reopenControl();
+          if (!b.parentNode && board.parentNode) board.parentNode.insertBefore(b, board);
+          // Focus follows the control that replaced the thing being closed.
+          // Left alone it lands on <body>, which tells a reader nothing and
+          // loses the keyboard position entirely.
+          b.focus();
+        }
       }
       return isOpen;
     }
