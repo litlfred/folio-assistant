@@ -373,15 +373,15 @@
     {
       "id": "folio-assistant-23bc",
       "title": "LIGHT MODE: .fa-qr-toggle and the .fa-tiles panel have no light-scheme tokens",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:11:38Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
-      "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 6. Owner: 'class=\"fa-qr-toggle fa-tiles-toggle\" does not respect light mode.' Same defect .fa-page-lang-bar records at docs-ui.css:1039.",
+      "updatedAt": "2026-09-21T19:10:08Z",
+      "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 6. Owner: 'class=\"fa-qr-toggle fa-tiles-toggle\" does not respect light mode.' Same defect .fa-page-lang-bar records at docs-ui.css:1039.\n\n\n## Measured 2026-09-21 — the toggle is innocent, and one literal is the defect\n\nThe report names `class=\"fa-qr-toggle fa-tiles-toggle\"`, and **that element is\nnot the problem**: it is `background",
       "file": "beans/defs/folio-assistant-23bc--light-mode-fa-qr-toggle-and-the-fa-tiles-panel-hav.md"
     },
     {
@@ -527,14 +527,14 @@
     {
       "id": "folio-assistant-3jhq",
       "title": "TWO PATHS FOR ONE BOOTSTRAP GRAPH: docs-site publishes cat-bootstrap.jsonld at the site root, feature-staging at cat-bootstrap/cat-bootstrap.jsonld",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T14:16:21Z",
-      "updatedAt": "2026-09-21T14:16:21Z",
+      "updatedAt": "2026-09-21T18:27:11Z",
       "preview": "Noticed while measuring issue #720, and deliberately kept out of that fix.\n\n## What was measured, 2026-09-21\n\n| workflow | command | published at |\n|---|---|---|\n| `docs-site.yml` | `kg-export.ts --instance ./cat-bootstrap` | `<base>/cat-bootstrap.jsonld` |\n| `feature-staging.yml` | `gen-cat-bootstrap-graph.ts --base-url \"$BASE\"` | `<base>/cat-bootstrap/cat-bootstrap.jsonld` |\n\nTwo DIFFERENT scrip",
       "file": "beans/defs/folio-assistant-3jhq--two-paths-for-one-bootstrap-graph-docs-site-publis.md"
     },
@@ -761,6 +761,20 @@
       "updatedAt": "2026-09-20T09:21:09Z",
       "preview": "Owner, 2026-09-20: '4 bean up. for now give requrements/constraings/issues/pros/cons/otpons here only for analysis/discussion./ not durable.'\n\nSo this bean is the TRACKING ITEM and deliberately not the analysis. The requirements, constraints, pros, cons and options were given in chat for discussion and are explicitly NOT to be written into the repository yet. Recording that instruction here matter",
       "file": "beans/defs/folio-assistant-4pm8--pagefind-evaluate-as-the-search-engine-for-the-lar.md"
+    },
+    {
+      "id": "folio-assistant-4v62",
+      "title": "QUOTATION GUARD SCOPE: a table cell is not a quotation, and the corpus is what says so",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T17:33:34Z",
+      "updatedAt": "2026-09-21T17:33:45Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/696 — this closes\n`k59d`'s one remaining agent-ownable Done-when:\n\n> The quotation guard covers a markdown table cell, or the guard's stated\n> scope says it does not and why — a workaround in one bean is not a fix\n\n## Measured before deciding, and the measurement went against my first instinct\n\n`insideQuotation` in `check-bean-bodies.ts` re",
+      "file": "beans/defs/folio-assistant-4v62--quotation-guard-scope-a-table-cell-is-not-a-quotat.md"
     },
     {
       "id": "folio-assistant-4wzf",
@@ -2109,6 +2123,20 @@
       "file": "beans/defs/folio-assistant-ce65--tool-nodes-exist-for-11-of-138-skills-audit-which.md"
     },
     {
+      "id": "folio-assistant-cekz",
+      "title": "DESIGN RECORD: file the folio board's R1-R17 into docs/architecture, per the owner's docs-filing ruling",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:38:14Z",
+      "updatedAt": "2026-09-21T18:46:28Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — CRDM\n`BA_ChooseKg`, the step after sign-off.\n\n## The owner's ruling, verbatim\n\n> this is a memory asset as part of design, so it goes into docs/. update\n> skills for documentation filing. fsh-guts can be thrown away/lost... this was\n> an asset as part of building a feature (or accessing data, or other skill\n> realtaed to manament/rend",
+      "file": "beans/defs/folio-assistant-cekz--design-record-file-the-folio-boards-r1-r17-into-do.md"
+    },
+    {
       "id": "folio-assistant-cflw",
       "title": "Generated artefacts collide: 218 sidecars rewritten by one auditor edit",
       "status": "in-progress",
@@ -2367,6 +2395,20 @@
       "updatedAt": "2026-09-20T17:13:19Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> in genreal when browsing a conformant KG, user can borwse, try to\n> materialise assets, instantate (and make use of tooling), copy assets into\n> their own folio to edit/comment-todos on, etc... bpmn process aroiund folio,\n> doc ignestion in cat-harness.  as skills., bean up\n\n## What this names: the VERBS of a conformant KG\n\nEvery visualiser bean so far has been abou",
       "file": "beans/defs/folio-assistant-dp1j--kg-affordances-browse-materialise-instantiate-copy.md"
+    },
+    {
+      "id": "folio-assistant-dyd3",
+      "title": "ONE GRAPH, TWO @ids: cat-bootstrap is published at two paths with 84 subjects under two identities",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:27:04Z",
+      "updatedAt": "2026-09-21T18:27:04Z",
+      "preview": "Split out of `3jhq` on the owner's ruling (\"fix staging only; bean the\nduplication\"), with the evidence already gathered.\n\n## Measured 2026-09-21, not assumed\n\n`docs-site.yml` publishes the cat-bootstrap graph **twice**:\n\n| path | written by | top-level fields |\n|---|---|---|\n| `<base>/cat-bootstrap.jsonld` | `kg-export --instance ./cat-bootstrap` | `generatedAt`, `sourceCommit*` |\n| `<base>/cat-b",
+      "file": "beans/defs/folio-assistant-dyd3--one-graph-two-ids-cat-bootstrap-is-published-at-tw.md"
     },
     {
       "id": "folio-assistant-dzl3",
@@ -2873,6 +2915,20 @@
       "file": "beans/defs/folio-assistant-huiu--dublin-core-a-ts-record-type-in-cat-harness-fully.md"
     },
     {
+      "id": "folio-assistant-hw9g",
+      "title": "MOUNTED PAGES HAVE NO LHS RAIL: a collapsed icon-width harness nav for every mounted instance, opening on hover or click",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:40:00Z",
+      "updatedAt": "2026-09-21T19:05:00Z",
+      "preview": "## What\n\nOwner, 2026-09-21, looking at the published `/who-iris/`:\n\n> *\"i see no LHS navbar. It still should be there in this harness, but it can\n> start collapsed (so only icon width wide), hovering/clicking on it will\n> open\"*\n\nand earlier, on the same subject:\n\n> *\"f-a navbar should still be on the left, with who-iris and then link to docs\n> on side in navbar\"*\n\n## Measured, not assumed\n\nOn the",
+      "file": "beans/defs/folio-assistant-hw9g--mounted-pages-have-no-lhs-rail-a-collapsed-icon-wi.md"
+    },
+    {
       "id": "folio-assistant-hylg",
       "title": "Workflow interpreter descends into call activities — subprocesses give increasing context",
       "status": "in-progress",
@@ -3113,6 +3169,20 @@
       "updatedAt": "2026-09-20T16:35:15Z",
       "preview": "Found while working `81t5` — and it is the defect `81t5` was standing on rather\nthan the one it describes.\n\n## The measurement\n\n**9 of the 44 checkable `invoke.shell` values named a path that does not exist.**\nEvery one was missing the `cat-harness/` prefix, stale since the instance moved\nunder that directory:\n\n| node | declared | actually at |\n|---|---|---|\n| `ingest-stdlib`, `ingest-extended` | ",
       "file": "beans/defs/folio-assistant-jqv4--tool-paths-9-of-44-invokeshell-values-named-a-comm.md"
+    },
+    {
+      "id": "folio-assistant-jut3",
+      "title": "SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:10:00Z",
+      "updatedAt": "2026-09-21T19:10:00Z",
+      "preview": "## The owner's words, verbatim\n\nParaphrase would lose the sequencing and the scope, both of which constrain the\ndesign:\n\n> i want the smart-* mockups not to mount the existing rendered .html but use\n> the IG Publisher+postporcessed json/jsonld +metadataindexing to reproduce the\n> generated html in the justthedoc pipeline.\n>\n> i want the input/page(s)/ content to be rendered viajustthedocs pipeline",
+      "file": "beans/defs/folio-assistant-jut3--smart-via-just-the-docs-stop-mounting-ig-publisher.md"
     },
     {
       "id": "folio-assistant-k59d",
@@ -3565,7 +3635,7 @@
     {
       "id": "folio-assistant-nrtx",
       "title": "COVERS: show the item covers with the WHO emblem masked, and make the mask survive re-rendering",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -3983,6 +4053,20 @@
       "updatedAt": "2026-09-21T17:31:42Z",
       "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 3. Owner: \"the todos controls are too clunky / take up too much real estate.\"",
       "file": "beans/defs/folio-assistant-qefk--sticky-chrome-four-buttons-per-sticky-and-three-ro.md"
+    },
+    {
+      "id": "folio-assistant-qgpo",
+      "title": "A workflow must publish every foreign document its own graph links into",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:27:04Z",
+      "updatedAt": "2026-09-21T18:27:04Z",
+      "preview": "Found while closing `3jhq`, and deliberately not attempted there.\n\n## The gap, stated precisely\n\n`check:published-instance-exports` (from `u1iu`/#725, widened in `3jhq`) checks\nthat every `kg-export --instance` invocation a workflow runs **succeeds**. It\ndoes not check that a workflow publishes everything its own graph **links\ninto**.\n\nSo the defect `3jhq` was opened for would not be caught by the",
+      "file": "beans/defs/folio-assistant-qgpo--a-workflow-must-publish-every-foreign-document-its.md"
     },
     {
       "id": "folio-assistant-qif9",
@@ -4863,14 +4947,14 @@
     {
       "id": "folio-assistant-vzur",
       "title": "The markdown backlog: 162 occurrences of the retired declaration filename in skills an agent reads",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:43:09Z",
-      "updatedAt": "2026-09-21T17:43:09Z",
+      "updatedAt": "2026-09-21T18:22:21Z",
       "preview": "Split out of `hrv2`, which was about a **wrong** filename. This is the\n**retired** one, and the owner scoped it out of that change deliberately.\n\n**Measured 2026-09-21 on `main`:** `harness.json` appears **162 times across 83\nmarkdown files**, excluding `beans/` (historical records, correct as written).\nAmong them the skills an agent reads to learn how this repository works —\n`directory-convention",
       "file": "beans/defs/folio-assistant-vzur--the-markdown-backlog-162-occurrences-of-the-retire.md"
     },
