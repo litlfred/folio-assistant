@@ -2309,6 +2309,63 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-sticky-body p:last-child { margin-bottom: 0; }
 .fa-sticky-empty { opacity: 0.7; font-style: italic; }
 
+/* ── The sticky's overflow drawer (bean `qefk`) ─────────────────────
+ *
+ * Owner: *"the todos controls are too clunky / take up too much real
+ * estate."* Four buttons sat on a card whose content is one line of summary,
+ * five once it floated. The answer chosen was **"3+1"** — board gestures on
+ * the face, the two that leave for the forge behind one affordance.
+ *
+ * A `<details>`, so the disclosure, the keyboard path, Escape and the
+ * expanded state are the browser's rather than four things to reimplement.
+ * The marker is removed because the summary IS the glyph; the accessible name
+ * is on the summary and names the contents rather than the shape. */
+.fa-sticky-more { position: relative; display: inline-block; }
+
+.fa-sticky-more-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 24px square: SC 2.5.8's floor, and this instance's declared interaction
+     profile is low-dexterity, so the floor is the point rather than the
+     minimum to argue down from. */
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0 0.35em;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 1;
+  list-style: none;
+}
+.fa-sticky-more-summary::-webkit-details-marker { display: none; }
+.fa-sticky-more-summary::marker { content: ""; }
+.fa-sticky-more-summary:hover { background: rgba(128, 128, 128, 0.18); }
+
+/* Opens OVER the card rather than pushing its body down: a drawer that
+   reflows the board moves every card below it, which is the thing a reader
+   was about to click. `z-index` above the card, not above the float layer. */
+.fa-sticky-more[open] .fa-sticky-more-body {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  min-width: max-content;
+  padding: 0.3em;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 5px;
+  /* OPAQUE, and for the reason the pinned sticky is: it sits over content.
+     Inherits the card's own surface so a themed sticky's drawer is themed
+     too — the `ivfw` round-trip lesson, applied before it could bite. */
+  background: var(--fa-sticky-surface, var(--sidebar-color, #27262b));
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+:root[data-fa-scheme="light"] .fa-sticky-more[open] .fa-sticky-more-body {
+  background: #ffffff;
+}
+
 /* THE LAYER IS THE FRAME, NOT THE ARRANGEMENT — bean `ivfw`.
  *
  * It was `inset: auto 1rem 1rem auto` with a width: a small bottom-right box
