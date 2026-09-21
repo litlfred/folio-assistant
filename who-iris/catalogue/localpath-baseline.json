@@ -1,0 +1,8 @@
+{
+  "_comment": "Bean yl5w, 2026-09-21. Three ORIGINAL-bundle bitstreams claim `state: \"materialized\"` with a `localPath` that names nothing. MEASURED, not inferred: each declares bytes from the IRIS record (2,136,157 / 3,293,424 / 2,810,648) while the only PDFs in the corresponding uploads/<slug>/iris-capture/ directories are 569,673, 229,365 and 201,099 bytes -- DSpace landing-page and full-item-record captures, an order of magnitude smaller. `who-pub-tps-931/intake.json` lists ONLY the `-info.pdf`, so the publication was never captured at all. The fix is therefore NOT to re-point localPath: the bytes are genuinely not here, and the state is what is wrong. That is a content correction with real weight, because each of these three also carries `fixity.sha256` and a gate reading `sourceLoss: permitted -- \"original bytes held locally with a recorded sha256\"`, which is a gate PERMITTED ON A FALSE BASIS. Rewriting another instance's gate verdicts and fixity digests is not a checker's to do on its own initiative (`deletion-requires-confirmation` applied to content), so they are listed here and repaired by their owner. Same rule as bean-bodies-baseline.json: a NEW dead localPath fails, the backlog is listed, and an entry that stops matching is reported as stale so this file shrinks rather than fossilises.",
+  "known": [
+    "item/18892cf3-5a4f-42a4-923c-a93f4a594dec bitstreams[0]",
+    "item/63e14c27-7448-41ec-be08-a96a25a47db6 bitstreams[0]",
+    "item/b08c6c19-315a-41a4-a9cb-8edabdbc6791 bitstreams[0]"
+  ]
+}
