@@ -1,11 +1,11 @@
 ---
 # folio-assistant-n1fn
 title: 'STAGING-REVIEW SIGNATURE: one optional string in, a list of URLs with what to review out'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T16:52:08Z
-updated_at: 2026-09-21T16:52:36Z
+updated_at: 2026-09-21T17:12:59Z
 parent: folio-assistant-ahvw
 ---
 
