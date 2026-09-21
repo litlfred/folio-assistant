@@ -1185,14 +1185,14 @@
     {
       "id": "folio-assistant-68au",
       "title": "Every graph tile in the navbar 404s — the href never gets the baseurl",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:47:15Z",
-      "updatedAt": "2026-09-21T20:52:36Z",
+      "updatedAt": "2026-09-21T22:58:51Z",
       "preview": "Issue #801. `graph-tiles.ts` stores a site-root-relative href (`/beans/`), which is right as data. `docs-ui.js`'s `tileLink` writes it into an anchor with no `site.baseurl`, so under `baseurl: /folio-assistant` every one of the 12 tiles resolves against the ORIGIN and 404s. The owner found it from the other end: looking for the beans board and landing on https://litlfred.github.io/beans/ — which i",
       "file": "beans/defs/folio-assistant-68au--every-graph-tile-in-the-navbar-404s-the-href-never.md"
     },
@@ -4533,14 +4533,14 @@
     {
       "id": "folio-assistant-q2wn",
       "title": "check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:20:00Z",
-      "updatedAt": "2026-09-21T22:20:00Z",
+      "updatedAt": "2026-09-21T23:05:00Z",
       "preview": "Found 2026-09-21 while measuring `x4a6`, and **not fixed there** because it is\nabout the partition checker rather than about graph kinds.\n\n`scripts/partition/engine.ts`:\n\n```ts\nconst IMPORT_RE = /(?:^|\\n)\\s*(?:import|export)[\\s\\S]{0,400}?from\\s*[\"']([^\"']+)[\"']|import\\s*\\(\\s*[\"']([^\"']+)[\"']\\s*\\)/g;\n```\n\nTwo alternatives: a statement containing `from`, and a dynamic `import()`.\n**Neither matches `",
       "file": "beans/defs/folio-assistant-q2wn--checkpartitions-import-regex-cannot-see-a-bare-si.md"
     },
@@ -4937,6 +4937,20 @@
       "updatedAt": "2026-09-21T10:34:27Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — the owner's *\"do all the skills and bpmn workflows\"*.\n\nNine implementation units above carry the code. This one carries the part that is\neasy to skip and is the reason the others will still make sense in a month: **every\nprocess here is BPMN, and the diagrams are executable.** A behaviour that exists\nonly in `docs-ui.js` is a behaviou",
       "file": "beans/defs/folio-assistant-sd8x--board-skills-bpmn-author-the-disciplines-as-skills.md"
+    },
+    {
+      "id": "folio-assistant-sddf",
+      "title": "check-head-has-run asserts 'the event was dropped' when it cannot know, and tells you to dispatch — which yv4z measured as unsafe",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T22:50:59Z",
+      "updatedAt": "2026-09-21T22:58:49Z",
+      "preview": "`check-head-has-run.ts` is a careful script with a careless ending. Its header\nspends forty lines establishing that a PR with zero checks is\n**indistinguishable** from one whose checks have not started, and that\ncould-not-ask must never be rendered as either answer. Then its `no-run` branch\nprints:\n\n> It IS pushed, so this is bean `3pqn`: **the event was dropped.**\n\n...and two sentences later, in ",
+      "file": "beans/defs/folio-assistant-sddf--check-head-has-run-asserts-the-event-was-dropped-w.md"
     },
     {
       "id": "folio-assistant-sfhr",
@@ -5671,6 +5685,20 @@
       "updatedAt": "2026-09-21T20:50:11Z",
       "preview": "Surfaced by moving milnor to folio-assistant-sci (bean btuv).\n\nEvery other rule in the milnor voice cites the Milnor paper — libraryId milnorlink, with a page. milnor-brevity-no-repeats instead cites kgRef content/pipeline/qa-criteria-registry.ts and quotes the criterion text out of the platform's registry.\n\nSo the rule is not derived from the publication the voice declares as its source. It is de",
       "file": "beans/defs/folio-assistant-w0hi--voice-rule-cites-platform-code-milnor-brevity-no-r.md"
+    },
+    {
+      "id": "folio-assistant-w4tq",
+      "title": "Adversarial pass over this session's own numeric claims — six re-run, one wrong when written",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T23:30:00Z",
+      "updatedAt": "2026-09-21T23:40:00Z",
+      "preview": "In the spirit of `osyc` — *\"an adversarial pass over what this session\nproduced and, more usefully, over what it CLAIMED\"* — but aimed at this\nsession rather than the navbar one, because that is where the context is.\n\n**The reason to aim it here:** this session made **four** substring-counting\nerrors in one sitting (`zq3f`'s 235, `k8rc`'s 344, `x4a6`'s \"57 readers\", and\nan \"85 importers\" that was ",
+      "file": "beans/defs/folio-assistant-w4tq--adversarial-pass-over-this-sessions-own-numeric-c.md"
     },
     {
       "id": "folio-assistant-w5bn",
