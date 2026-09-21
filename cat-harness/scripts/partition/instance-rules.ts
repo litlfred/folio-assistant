@@ -1009,6 +1009,18 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // Counts every prefix the CONTENT `@context` binds against the published
+      // `.jsonld` documents that emit it (bean `fd6i`). Core for the same
+      // reason `check-voices.ts` is: its subject is content. It reads
+      // `CONTENT_CONTEXT` from `schemas/jsonld.ts` — core by the `schemas/`
+      // prefix — and walks documents a FOLIO produces.
+      //
+      // Calling it harness would buy a wrong-direction edge for nothing, which
+      // is the mistake `check-context-emission`'s own sibling made earlier the
+      // same day: `ns-export.ts` IS harness, and importing SKOS_NS from
+      // `jsonld.ts` was refused. The difference is the subject, not the
+      // filename — a script is not automatically tooling-side.
+      "scripts/check-context-emission.ts",
       // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
       // exclusively on core data, and calling it harness bought two
