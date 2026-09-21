@@ -258,3 +258,25 @@ believes it.
 — wrong on the file family (`.config.json` is the folio config; the declaration
 is `<instance>/<instance>.json`) and on the instance (it is `cat-harness`).
 Queued as its own bean rather than pivoted to.
+
+## NOT closed 2026-09-21 — its own gate reports an open judgement on it
+
+Swept up by `fkjo` as an in-progress bean with all six boxes ticked, and
+re-derived rather than closed. `check:declaration-filename` is real, is wired
+at `code-quality-gates.yml:636`, and passes with *"no call site names the
+retired `harness.json`"*.
+
+But its own output carries:
+
+    test fixtures      11  (an open judgement on bean `jijc`, not a finding)
+
+while box 5 records the owner's ruling that *"the test fixtures are migrated,
+not pinned — 112 sites across 36 files"*. The gate and the box disagree about
+whether anything is left, and the gate is the side that re-derives itself
+every run.
+
+**Left open deliberately.** Either the 11 are the remainder of the 112 and the
+box was ticked early, or they are a residue the ruling permits and the gate's
+wording is stale. Both are one measurement away and neither is safe to assume
+— closing on the ticks is exactly what `fkjo` exists to stop.
+
