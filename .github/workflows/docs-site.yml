@@ -28,7 +28,27 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
-      - 'cat-harness/scripts/mount-instance-docs.ts'
+      # EVERY script under here, not the handful somebody remembered.
+      #
+      # This list was eight named scripts, each added with a comment arguing
+      # that a change to THAT generator changes the published page while
+      # touching nothing under `docs/`. The argument was right every time and
+      # the list still drifted: bean `tyyc` derived the set of scripts this
+      # workflow actually runs and found **11 of 22 uncovered**, among them
+      # `kg-export.ts`, which produces both graph documents the site serves,
+      # and `publish-gh-pages.sh`, which performs the deploy.
+      #
+      # It was measured, not guessed: `40fl` fixed a `kg-export` defect that
+      # had kept `docs-site` red for over two hours, merged it to `main`, and
+      # NO RUN FIRED. A fix to the publisher did not rebuild what it publishes.
+      #
+      # A wildcard over-triggers — a change to a script this workflow never
+      # runs now rebuilds the site. That is the cheap direction, and it is the
+      # same trade `incremental-render` states: over-declaring costs a needless
+      # run, under-declaring serves a stale page that looks fresh. `bun run
+      # check:workflow-script-paths` holds the line by DERIVING the invoked set
+      # rather than trusting this comment.
+      - 'cat-harness/scripts/**'
       # The BPMN/DMN sources moved OUT of docs/ into the `kg` graph, where the
       # roles and skills they reference live. The SVGs the site embeds are
       # still rendered from them at deploy time, so without this path a diagram
@@ -36,28 +56,27 @@ on:
       # stale render — exactly the "move the wiring with the script" failure.
       - 'cat-harness/skills/workflows/**'
       - 'cat-harness/schemas/**'
-      - 'cat-harness/scripts/gen-schema-docs.ts'
-      - 'cat-harness/scripts/gen-docs-pages.ts'
       # The schema viewer is generated, so a change to the generator or to the
       # reader behind it changes the published page while touching nothing
       # under `docs/` — without these paths the site would serve a stale one.
-      - 'cat-harness/scripts/gen-schema-viz.ts'
-      - 'cat-harness/scripts/schema-graph.ts'
       # Same reasoning for the library viewer, plus the corpus itself: an
       # entry added to `library/` or a file dropped in `uploads/` changes the
       # published counts while touching nothing under `docs/`.
-      - 'cat-harness/scripts/gen-library-viz.ts'
-      - 'cat-harness/scripts/library-graph.ts'
       - 'cat-harness/library/**'
       - 'cat-harness/uploads/**'
       - 'uploads/**'
       - 'cat-harness/content/docs/**'
-      - 'cat-harness/scripts/render-bpmn.ts'
       # The navbar's locale filter reads `docs/_data/translations.json`, built
       # by this module from the pages' own front matter. A change to how that
       # is derived changes the published navbar while touching nothing under
       # `docs/`, so without this path the site would not rebuild.
       - 'cat-harness/content/pipeline/translation-index.ts'
+      # The DECLARATION decides every `@id` the graph documents mint —
+      # `canonicalUrl` is read from it — so a change here changes the published
+      # bytes while touching no script. `cat-harness/schemas/**` above covers
+      # the schema, never the instance's own config.
+      - 'cat-harness/*.config.json'
+      - 'cat-bootstrap/*.config.json'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 

@@ -1,7 +1,7 @@
 ---
 # folio-assistant-40fl
 title: 'docs-site is red on main: a foreign instance''s export has no publication base, so kg-export exits 1'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T13:11:53Z
@@ -65,7 +65,8 @@ in here* — and it went unnoticed for two hours across four merges.
       rather than listing `cat-bootstrap`
 - [x] A test asserts `problems == []` for a foreign export
 - [x] Both falsified by planting the old behaviour
-- [ ] `docs-site` green on `main`
+- [x] `docs-site` green on `main` — **observed**, run dispatched against `2d20850562`;
+      `check:ci-health` went from *"8 consecutive failure(s)"* to `✓ green`
 
 ## Summary of Changes
 

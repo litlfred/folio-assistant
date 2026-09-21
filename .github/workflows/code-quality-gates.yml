@@ -649,6 +649,14 @@ jobs:
           bun run check:artifact-index
           bun run check:actor-reach
           bun run check:harness-dirs
+          # Does a path-filtered workflow rebuild when the scripts it RUNS
+          # change? `docs-site.yml` named eight generators and ran 22, so a
+          # fix to `kg-export.ts` -- the script producing both graph documents
+          # the site serves -- merged to `main` and fired NO RUN. The outage
+          # `40fl` fixed and the silence after the fix were one defect seen
+          # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
+          # never a list here.
+          bun run check:workflow-script-paths
           # Can this repository be CHECKED OUT? Every other gate here asks
           # whether the content is right; this one asks whether the tree can be
           # created at all. Seven sidecars named `req:<slug>` made the clone
