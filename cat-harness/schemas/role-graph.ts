@@ -723,6 +723,55 @@ export function roleForLane(
   return graph.roles.find((r) => r.lanes.includes(laneName));
 }
 
+/**
+ * What a lane's role binding ACTUALLY is — five answers, not two.
+ *
+ * `roleForLane` returns `RoleDef | undefined`, and `undefined` is overloaded:
+ * it means "matched nothing", which is the same value a typo produces and the
+ * same value a lane whose performer varies BY DESIGN produces. Bean `ug4r`:
+ * a consumer that cannot separate those either reports a correct modelling
+ * decision as a defect for ever, or suppresses real defects to avoid doing so.
+ *
+ * `roleForLane` is deliberately left alone — its two callers (`stakeholder-map`
+ * and the workflow `instance`) genuinely want "the role, or nothing", and a
+ * lane with a varying performer correctly has no role for them. This is for
+ * the consumer that has to JUDGE the binding rather than use it.
+ *
+ * Takes a structural lane rather than importing `LaneDef`, because that type
+ * lives in `src/workflow/` and this module is a schema: the dependency would
+ * run the wrong way.
+ */
+export type LaneBinding =
+  /** Resolves to a declared role. */
+  | { readonly kind: "bound"; readonly role: RoleDef }
+  /** Names a role the graph does not declare — a typo or a deleted role. */
+  | { readonly kind: "dangling"; readonly ref: string }
+  /** Declares `variable="true"`: no role, and that IS the answer. */
+  | { readonly kind: "variable" }
+  /** Declares both a `ref` and `variable` — it cannot be both. */
+  | { readonly kind: "contradictory"; readonly ref: string }
+  /** Nothing matched and nothing was declared. The finding. */
+  | { readonly kind: "unbound" };
+
+export function laneBinding(
+  graph: RoleGraph | undefined,
+  lane: { name?: string; roleRef?: string; performerVaries?: boolean },
+): LaneBinding {
+  // Checked FIRST, and before the graph is consulted at all: a lane that says
+  // two contradictory things is wrong whatever the graph happens to contain,
+  // and resolving one of them would make the other silently have no effect.
+  if (lane.performerVaries && lane.roleRef) {
+    return { kind: "contradictory", ref: lane.roleRef };
+  }
+  if (lane.performerVaries) return { kind: "variable" };
+  const role = graph ? roleForLane(graph, lane.name, lane.roleRef) : undefined;
+  if (role) return { kind: "bound", role };
+  // A dangling `ref` is reported as itself rather than as "unbound", because
+  // the fix differs: one is a typo to correct, the other a binding to add.
+  if (lane.roleRef) return { kind: "dangling", ref: lane.roleRef };
+  return { kind: "unbound" };
+}
+
 /** Every lane name any role binds — the denominator for a coverage report. */
 export function boundLaneNames(graph: RoleGraph): Set<string> {
   const s = new Set<string>();
