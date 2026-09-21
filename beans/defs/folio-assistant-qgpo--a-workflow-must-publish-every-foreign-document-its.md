@@ -50,3 +50,78 @@ This is the `blv9` class, and it has now been found **three** times by hand:
 - [ ] could-not-determine is a third state — an export that will not build is
       not "no dangling links"
 - [ ] falsified by deleting a publish step and watching it go red
+
+## ATTEMPTED 2026-09-21 — both obvious designs are wrong, with evidence
+
+No check shipped. The script was written, falsified, and **withdrawn**. What
+follows is why, so the next attempt does not re-derive it.
+
+### The bean's own plan is insufficient
+
+*"the paths written: the `--out` arguments in that workflow's own `run:` steps"*
+— measured false before anything was written. `ns/content/v1.jsonld` is
+published by a bare `cp` and never by `--out`. A check reading only `--out`
+reports a correctly-published document as dangling.
+
+### There already IS a check, and why it missed `3jhq`
+
+`kg-export.test.ts` asserts *"no absolute self-URL names a path the deploy does
+not write"* against `publishedPaths()` — a **hand-maintained literal set**.
+`cat-bootstrap.jsonld` was in it, so the test passed while `feature-staging.yml`
+wrote nothing there.
+
+**One workflow's behaviour was asserted on behalf of all of them.** That is the
+real gap, and it is narrower than this bean states.
+
+### Design A — parse the destinations. VACUOUS.
+
+Parsed `--out`, `cp` and `--out-dir`. Three defects, each found by falsifying
+rather than by the corpus, which passed throughout:
+
+| defect | evidence |
+|---|---|
+| `kg-export.ts` matched **inside comments** | `code-quality-gates.yml` publishes nothing; got 50 findings |
+| `--out-dir ./_site` read as "publishes everything beneath" | yields the EMPTY prefix, covering the whole site |
+| therefore every target matched trivially | **removing the staging export left the check GREEN** |
+
+That last row is the one that matters: falsified against the exact `3jhq`
+defect the check exists for, it did not fail. Green for the wrong reason from
+the first run.
+
+**A destination cannot be inferred from a flag**: `--out-dir` says WHERE a
+generator writes, not WHAT.
+
+### Design B — execute the site-writing lines. UNSAFE. Do not retry as written.
+
+Symlinked `_site` to a temp directory and ran each workflow's
+`bun run …/scripts/*.ts`, `cp` and `mkdir` lines so bash would resolve the
+variables three parsing attempts each got wrong.
+
+**It copied 7.8 GB of the root filesystem into the repository.**
+`lean_ci.yml:449` is
+
+    cp -r "$dir"/* _lean_docs/ 2>/dev/null || true
+
+and with `$dir` unset that is `cp -r /* _lean_docs/`. The `2>/dev/null || true`
+silenced it. Also left `_site` and `pages/` behind, none of them gitignored.
+
+So: a workflow line is written to run in a prepared CI job with its variables
+set, and lifting it out of that context makes an ordinary line destructive. Any
+future execute-based design must run in a **disposable sandbox**, never in the
+checkout, and must treat an unset variable as a refusal rather than a shell
+default.
+
+## What a correct attempt needs
+
+- [ ] the per-workflow question, since `publishedPaths()` answers it globally
+- [ ] a way to learn what a generator writes that neither infers from a flag
+      nor executes in the checkout — most likely asking the GENERATOR (it knows
+      its own outputs; `buildSkillIoContracts` already reports them)
+- [ ] falsification against `3jhq` specifically: remove the staging export and
+      the check MUST go red. Design A passed this and was still vacuous, so
+      this is necessary and not sufficient
+- [ ] `publishedPaths()` left alone — its literalness is argued and correct
+
+## Status
+
+Left `in-progress`. Nothing shipped; nothing to revert.
