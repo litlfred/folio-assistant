@@ -21,17 +21,17 @@ channel for exactly this, and a bean cannot be missed the way a comment on a
 Written in a bean NEITHER affected PR is editing, on purpose. Adding the note
 to `hfkl` or `7po1` would have put it inside the diff it is warning about.
 
-## 1. `scripts/gen-bootstrap-graph.ts` -> `scripts/gen-cat-bootstrap-graph.ts`
+## 1. `scripts/gen-bootstrap-graph.ts` -> `scripts/gen-bootstrap-graph.ts`
 
-Part of the `cat-bootstrap` rename (owner instruction, 2026-09-20; PR #550).
-The whole `bootstrap/` instance is now `cat-bootstrap/`, and the generator
+Part of the `bootstrap` rename (owner instruction, 2026-09-20; PR #550).
+The whole `bootstrap/` instance is now `bootstrap/`, and the generator
 followed it.
 
 **Affects PR #542** (`claude/wonderful-gauss-7frcrw`), which edits that file
 at its old path. Git's rename detection usually carries a modify across a
 rename, but it is worth knowing before the merge rather than during it.
 
-The package script moved with it: `bun run cat-bootstrap:graph`.
+The package script moved with it: `bun run bootstrap:graph`.
 
 **NOT renamed, and the distinction matters:** `scripts/pages-bootstrap.ts` and
 the `pages:bootstrap` script. That is the GitHub *Pages* bootstrap, a
@@ -110,7 +110,7 @@ Both moves verified on the tree rather than taken from the note above:
 
 ```
 gen-bootstrap-graph.ts        absent
-gen-cat-bootstrap-graph.ts    present
+gen-bootstrap-graph.ts    present
 partition/engine.ts           present
 partition/instance-rules.ts   present
 repo-partition.ts             present   (the CLI, re-exporting)

@@ -5,18 +5,18 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../cat-bootstrap/skills/discussion.md`](https://github.com/litlfred/folio-assistant/blob/main/../cat-bootstrap/skills/discussion.md) — do not edit here.
+> Generated from [`../bootstrap/skills/discussion.md`](https://github.com/litlfred/folio-assistant/blob/main/../bootstrap/skills/discussion.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../cat-bootstrap/skills/discussion.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../bootstrap/skills/discussion.md){: .fa-edit-source }
 
 {% raw %}
 # discussion — settling what an agent cannot read off disk
 
-An agent that has just read `cat-bootstrap/README.md` knows the shape of a
+An agent that has just read `bootstrap/README.md` knows the shape of a
 harness and nothing about **this** one. Two questions have no answer in any
 file it can reach:
 
-- **which harness** this repository should become — `cat-bootstrap` itself, or a
+- **which harness** this repository should become — `bootstrap` itself, or a
   derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`;
 - **which repositories** are involved — where the dependency is read from,
   where the new declaration is written to, and whether they are the same.
@@ -92,13 +92,13 @@ guess, and not an error. The process has an end for it.
 - `discussion.output.schema.json` — `harness`, `repositories[]`, `outcome`,
   `determinedBy`, `answeredBy`, and the `exchange` that produced it.
 
-Both sit beside this file, in `cat-bootstrap/skills/`, and are plain JSON Schema.
+Both sit beside this file, in `bootstrap/skills/`, and are plain JSON Schema.
 That is deliberate: an Initiator has no MCP server and no validator, so the
 contract has to be something it can **read**, not something it must call.
 
-## Why this is in cat-bootstrap at all
+## Why this is in bootstrap at all
 
-`cat-bootstrap/` is meant to be as small as it can be, so anything in it has to
+`bootstrap/` is meant to be as small as it can be, so anything in it has to
 earn its place against that.
 
 The owner's rule for the neighbouring case is worth stating exactly, because
@@ -106,7 +106,7 @@ half of it decides nothing and the whole of it decides everything:
 
 > logging is optional, **unless indicated on tasks**.
 
-`log-message` is in `cat-bootstrap/` for precisely that reason — the tasks in
+`log-message` is in `bootstrap/` for precisely that reason — the tasks in
 `initialize-harness` indicate it, and drawing the call is how a task says so.
 "Optional" is a property of the blanket feature, not of a step whose
 instructions require it.

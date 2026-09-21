@@ -118,6 +118,30 @@ describe("the structural half — what Zod cannot check", () => {
     }
   });
 
+  test("a voice that promises NO body is not reported as missing one", async () => {
+    // `voiceFilesIn` reads two layouts on purpose, so a bare `folio-voice/v1`
+    // profile may carry no instruction body at all — its guidance may be a
+    // separate skill it cites. This check asked every voice for a `SKILL.md`
+    // and called a legitimate shape CRITICAL: found on 2026-09-21 by
+    // relocating `technical-writer`, which is exactly that shape, and NOT by
+    // a test. Hence this one.
+    const { existsSync, readFileSync } = await import("node:fs");
+    const g = readVoicesGraph([REPO], REPO)!;
+    const bare = g.voices.filter((v) => {
+      const raw = JSON.parse(readFileSync(join(REPO, v.path, "voice.json"), "utf-8")) as {
+        $schema?: string;
+        instructions?: { file?: string };
+      };
+      return raw.$schema !== "folio-voice-skill/v1" && raw.instructions?.file === undefined;
+    });
+    // The corpus must actually CONTAIN one, or this asserts nothing.
+    expect(bare.length).toBeGreaterThan(0);
+    for (const v of bare) {
+      expect(existsSync(join(REPO, v.path, "SKILL.md"))).toBe(false);
+      expect(checkVoiceSkills(REPO).filter((f) => f.voice === v.id)).toEqual([]);
+    }
+  });
+
   test("the reader is told the repository root rather than deriving it wrongly", () => {
     // `repoRootFor` is `dirname` and takes an INSTANCE root, so a caller
     // starting from the repository root gets its PARENT and the reader finds

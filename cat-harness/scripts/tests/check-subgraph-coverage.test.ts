@@ -43,7 +43,7 @@ import { writeDeclaration } from "../../test/support/instance-fixture.js";
  */
 function instance(
   coverage: unknown,
-  opts: { name?: string; realTargets?: string[]; graphs?: string[] } = {},
+  opts: { name?: string; realTargets?: string[]; graphKinds?: string[] } = {},
 ): { root: string; cleanup: () => void } {
   const base = mkdtempSync(join(tmpdir(), "coverage-"));
   const root = join(base, opts.name ?? "inst");
@@ -60,7 +60,7 @@ function instance(
           id: "thing",
           path: "thing/",
           dependents: "reproduce",
-          graphs: opts.graphs ?? ["cat-harness"],
+          graphKinds: opts.graphKinds ?? ["cat-harness"],
           ...(coverage === undefined ? {} : { coverage }),
         },
       ],
@@ -224,13 +224,13 @@ describe("bootstrap's exemption is by layer, and is a second criterion not a hol
   });
 
   it("is keyed on the instance NAME, so a relocation keeps it", () => {
-    expect(VISUALISER_EXEMPT_INSTANCES.has("cat-bootstrap")).toBe(true);
+    expect(VISUALISER_EXEMPT_INSTANCES.has("bootstrap")).toBe(true);
     expect(VISUALISER_EXEMPT_INSTANCES.has("cat-harness")).toBe(false);
   });
 
   it("AT LEAST ONE exempt name matches a real instance — a rename must not revoke it", () => {
     // The failure this pins actually happened: `bootstrap` was renamed to
-    // `cat-bootstrap` on main while this branch was open. A set holding only
+    // `bootstrap` on main while this branch was open. A set holding only
     // the old name matches nothing, the owner's exemption silently stops
     // firing, and the only symptom is one extra minor finding among fifty.
     // Asserting against the instances discovery really finds turns that
@@ -251,7 +251,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
   it("a kind that OWES a visualiser and has none is MAJOR", () => {
     const { root, cleanup } = instance(
       { docs: "doc.md", skill: "some-skill" },
-      { realTargets: ["doc.md"], graphs: ["beans"] },
+      { realTargets: ["doc.md"], graphKinds: ["beans"] },
     );
     const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
     expect(viz).toHaveLength(1);
@@ -265,7 +265,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // unmet obligation would demand a second rendering of the same thing.
     const { root, cleanup } = instance(
       { docs: "doc.md", skill: "some-skill" },
-      { realTargets: ["doc.md"], graphs: ["docs"] },
+      { realTargets: ["doc.md"], graphKinds: ["docs"] },
     );
     const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
     expect(viz).toHaveLength(1);
@@ -285,7 +285,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     for (const kind of ["beans", "fsh-guts"]) {
       const { root, cleanup } = instance(
         { docs: "doc.md", skill: "some-skill" },
-        { realTargets: ["doc.md"], graphs: [kind] },
+        { realTargets: ["doc.md"], graphKinds: [kind] },
       );
       const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
       expect({ kind, severity: viz[0]?.severity }).toEqual({ kind, severity: "major" });
@@ -341,7 +341,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // would pass all four tests above.
     const { root, cleanup } = instance(
       { visualiser: "viz.html", docs: "doc.md", skill: "some-skill", serialisations: "thing.jsonld" },
-      { realTargets: ["viz.html", "doc.md", "thing.jsonld"], graphs: ["beans"] },
+      { realTargets: ["viz.html", "doc.md", "thing.jsonld"], graphKinds: ["beans"] },
     );
     expect(auditInstance(root).findings.filter((f) => f.criterion === "visualiser")).toHaveLength(0);
     cleanup();
@@ -369,7 +369,7 @@ describe("this repository", () => {
     const repo = resolve(import.meta.dir, "..", "..", "..");
     const rs = auditAll(repo);
     expect(rs.map((r) => r.instance)).toContain("cat-harness");
-    expect(rs.map((r) => r.instance)).toContain("cat-bootstrap");
+    expect(rs.map((r) => r.instance)).toContain("bootstrap");
     expect(rs.every((r) => r.verdict === "checked")).toBe(true);
   });
 });
@@ -494,12 +494,12 @@ describe("the own-docs axis — an instance owes documentation of its own", () =
 
   it("honours a declared exemption, and reads it from the DECLARATION", () => {
     // Never from an instance-name literal in the checker — the rule that kept
-    // cat-bootstrap's visualiser exemption alive through a rename.
+    // bootstrap's visualiser exemption alive through a rename.
     const exempt = {
       renderExemption: {
         of: ["own-docs" as const],
         reason: "the floor layer documents itself in its json/jsonld",
-        owes: "cat-bootstrap.jsonld",
+        owes: "bootstrap.jsonld",
       },
     };
     expect(ownDocsFinding(inst(), exempt)).toBeUndefined();
@@ -510,7 +510,7 @@ describe("the own-docs axis — an instance owes documentation of its own", () =
       renderExemption: {
         of: ["visualiser" as const],
         reason: "it is the navbar footer",
-        owes: "cat-bootstrap.jsonld",
+        owes: "bootstrap.jsonld",
       },
     };
     expect(ownDocsFinding(inst(), other)).toBeDefined();
@@ -577,7 +577,7 @@ describe("coverage.* resolves against the REPOSITORY root and nothing else — b
             id: "thing",
             path: "thing/",
             dependents: "reproduce",
-            graphs: ["cat-harness"],
+            graphKinds: ["cat-harness"],
             coverage: { visualiser: "viz.html" },
           },
         ],

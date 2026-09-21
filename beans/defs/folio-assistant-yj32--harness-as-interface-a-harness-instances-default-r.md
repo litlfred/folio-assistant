@@ -111,7 +111,7 @@ designing them separately is how they end up disagreeing:
   nowhere in the repository~~ **ANSWERED, and the second half was wrong.**
 
   The owner confirmed **Knowledge Graph Data Store**, and pointed at the
-  sibling that already carries it: `cat-bootstrap/skills/roles/roles.json`
+  sibling that already carries it: `bootstrap/skills/roles/roles.json`
   declares a role with exactly that id and title. So the term was in the
   repository all along — only the ACRONYM was absent, and I searched for the
   acronym. Searching for the abbreviation and concluding the concept is

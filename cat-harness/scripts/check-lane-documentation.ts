@@ -382,7 +382,7 @@ if (import.meta.main) {
             "because gettext wraps a long msgid across quoted lines and escapes every `\"` — a substring search " +
             "reported 13 correctly-extracted lanes as missing on 2026-09-21, and a false finding is worse than " +
             "no check. WHETHER A TEMPLATE ON DISK CARRIES IT is a different question, owned by " +
-            "`translate-bpmn --check`; for the three `cat-bootstrap/` diagrams that check does not scan, it is " +
+            "`translate-bpmn --check`; for the three `bootstrap/` diagrams that check does not scan, it is " +
             "bean `j28g` and awaits a ruling.",
           entries: r.unextracted,
         },

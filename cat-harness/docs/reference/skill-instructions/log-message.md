@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../cat-bootstrap/skills/log-message.md`](https://github.com/litlfred/folio-assistant/blob/main/../cat-bootstrap/skills/log-message.md) — do not edit here.
+> Generated from [`../bootstrap/skills/log-message.md`](https://github.com/litlfred/folio-assistant/blob/main/../bootstrap/skills/log-message.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../cat-bootstrap/skills/log-message.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../bootstrap/skills/log-message.md){: .fa-edit-source }
 
 {% raw %}
 # Logging what you are doing
@@ -20,7 +20,7 @@ about what did.
 
 The process is [`workflows/log-message.bpmn`](../workflows/log-message.bpmn).
 It is a **sub-process** — nobody starts there. A task in another process calls
-it, which is why cat-bootstrap still has one process you *start*.
+it, which is why bootstrap still has one process you *start*.
 
 ## The message
 
@@ -71,7 +71,7 @@ The same holds if the Logger is unreachable: say so, in the place you would have
 logged to, and carry on with the task. **Logging is not a gate.** A failure to
 log has never been a reason to abandon an install.
 
-## The one destination cat-bootstrap has
+## The one destination bootstrap has
 
 **The discussion with the human actor.** An Initiator has no log file, no
 service and no work plan — the only place it can put a line where a person will

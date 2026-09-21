@@ -26,7 +26,7 @@ function instance(): string {
   writeDeclaration(root, JSON.stringify({
       name: "t",
       stub: "t",
-      directories: [{ id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", description: "trashcan", graphs: ["fsh-guts"] }],
+      directories: [{ id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", description: "trashcan", graphKinds: ["fsh-guts"] }],
     }));
   return root;
 }

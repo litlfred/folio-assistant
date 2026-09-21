@@ -31,7 +31,7 @@ now the three goals existed only as chat text, so every review reclassified
   `zkgs` (the per-instance config filename), `wwi6` (uploads/ and library/ at
   initiation), `lv3j` (a BPMN precondition for initialize-harness)
 - **README** — `b963` fixed the cold-start path the entry documents named;
-  `cat-bootstrap/README.md` is the cold reader's entry point
+  `bootstrap/README.md` is the cold reader's entry point
 - **creation of directories** — `rday` (a declaration adds and overrides, it
   does not withdraw), `wwi6`
 - **active vs static content** — the `holds: content | context | state` axis,

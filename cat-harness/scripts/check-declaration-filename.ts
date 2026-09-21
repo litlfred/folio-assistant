@@ -5,7 +5,7 @@
  *
  * Bean `jijc`, under the owner's REPLACE ruling on `b5f0` (2026-09-21):
  * `<name>.config.json` becomes the single declaration at an instantiation
- * root and `harness.json` goes, with `cat-bootstrap/` and the
+ * root and `harness.json` goes, with `bootstrap/` and the
  * `folio-assistant-*` instances in scope.
  *
  * ## The defect this exists for

@@ -233,7 +233,7 @@ written by a process"* cannot mean *"never created"* without leaving every
 instance without one.
 
 That is not hypothetical. `initialize-harness.bpmn` ends with
-`A_WriteRootReadme`, whose skill (`cat-bootstrap/skills/root-readme.md`) writes
+`A_WriteRootReadme`, whose skill (`bootstrap/skills/root-readme.md`) writes
 the root `README.md` when there is none — an `instance-readme`, which is
 `context`. It **never replaces** one that exists: an existing README is
 authored content, and the link and install status go in a marker pair the

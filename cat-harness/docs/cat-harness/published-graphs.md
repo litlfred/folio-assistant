@@ -39,16 +39,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `cat-harness`
 
-0 of 7 published.
+0 of 4 published.
 {: .fa-hx-dim }
 
-- cat-bootstrap — *declared, not published*
 - folio-assistant (cat-harness) — *declared, not published*
 - detangle — *declared, not published*
 - folio-assistant-core — *declared, not published*
-- kg-navigation — *declared, not published*
 - large-datasets — *declared, not published*
-- who-iris — *declared, not published*
 
 ### `catalogue`
 
@@ -68,9 +65,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `fhir-artifact-index`
 
-0 of 1 published.
+0 of 2 published.
 {: .fa-hx-dim }
 
+- smart-immunizations — *declared, not published*
 - smart-trust — *declared, not published*
 
 ### `folio`
@@ -141,16 +139,35 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [folio-assistant (cat-harness)]({{ '/qa/' | relative_url }})
 - detangle — *declared, not published*
 
+### `scenarios`
+
+0 of 2 published.
+{: .fa-hx-dim }
+
+- bootstrap — *declared, not published*
+- folio-assistant (cat-harness) — *declared, not published*
+
 ### `schemas`
 
 5 of 5 published.
 {: .fa-hx-dim }
 
-- [cat-bootstrap-tools]({{ '/cat-harness/schemas/cat-bootstrap-tools/' | relative_url }})
+- [bootstrap-tools]({{ '/cat-harness/schemas/bootstrap-tools/' | relative_url }})
 - [folio-assistant (cat-harness)]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [detangle]({{ '/cat-harness/schemas/detangle/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})
+
+### `skills`
+
+0 of 5 published.
+{: .fa-hx-dim }
+
+- bootstrap — *declared, not published*
+- folio-assistant (cat-harness) — *declared, not published*
+- kg-navigation — *declared, not published*
+- large-datasets — *declared, not published*
+- who-iris — *declared, not published*
 
 ### `themes`
 
@@ -191,10 +208,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `voices`
 
-2 of 3 published.
+3 of 4 published.
 {: .fa-hx-dim }
 
 - agent-skills — *declared, not published*
+- [folio-assistant-core]({{ '/cat-harness/voices/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})
 - [who-style-guide]({{ '/cat-harness/voices/who-style-guide/' | relative_url }})
 
@@ -203,6 +221,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
+- folio-assistant (cat-harness) — *declared, not published*
+
+### `workflows`
+
+0 of 2 published.
+{: .fa-hx-dim }
+
+- bootstrap — *declared, not published*
 - folio-assistant (cat-harness) — *declared, not published*
 
 ---

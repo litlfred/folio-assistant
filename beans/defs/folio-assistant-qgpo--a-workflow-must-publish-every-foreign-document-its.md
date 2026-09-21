@@ -32,7 +32,7 @@ Both halves are already computable:
 
 - the link targets: build the export at that workflow's base and read the
   foreign `@id`s out of it — `3jhq` did exactly this by hand, and got
-  `$BASE/cat-bootstrap.jsonld#skill/discussion`
+  `$BASE/bootstrap.jsonld#skill/discussion`
 - the paths written: the `--out` arguments in that workflow's own `run:` steps,
   the same source `check:workflow-script-paths` (`tyyc`/#721) already parses
 

@@ -3,7 +3,7 @@
 **The content layer.** What a *folio* is — the content-object model, the block
 kinds, the adapters, and the `folio` graph kind itself.
 
-It sits between `cat-bootstrap/` (what an agent reads before anything is installed)
+It sits between `bootstrap/` (what an agent reads before anything is installed)
 and the science layer, and it is composed **on top of** the agentic harness: it
 may import from the harness, and the harness may never import from it. That
 direction is checked — `bun run check:partition:edges` reports any edge running

@@ -69,8 +69,8 @@ const drifted: string[] = [];
  * them and no entry in {@link SAME_BASENAME_DIFFERENT_DOCUMENT}.
  *
  * Bean `v3se`. This was a `↪` line in a list of 173 successes, and the
- * consequence was the one cat-bootstrap exists to prevent: `kg-navigation` existed
- * twice — cat-bootstrap's assuming NOTHING, folio-core's assuming the harness is
+ * consequence was the one bootstrap exists to prevent: `kg-navigation` existed
+ * twice — bootstrap's assuming NOTHING, folio-core's assuming the harness is
  * installed — and the generator kept folio-core's. CatBootstrap's README sends a
  * cold agent to read that name *before anything else is known*, so the reader
  * least able to notice was served the body written for a repository it was not
@@ -82,7 +82,7 @@ const drifted: string[] = [];
  * somebody has to make, not something a generator may settle by running order.
  *
  * Promoted to a hard failure while the count is ZERO (measured 2026-09-20,
- * after `3jj9` renamed cat-bootstrap's copy). That is this repository's rule for
+ * after `3jj9` renamed bootstrap's copy). That is this repository's rule for
  * every ratchet — an error only once the backlog is drained — and it is also
  * the only moment the promotion is free.
  */
@@ -119,7 +119,7 @@ function reportCollisions(): void {
     `\n  Resolve it deliberately rather than by running order — give the group a ` +
       `\`publishPrefix\`, or\n  declare the pair in SAME_BASENAME_DIFFERENT_DOCUMENT ` +
       `so both publish with a directional banner.\n  Bean \`v3se\`: the collision this ` +
-      `guards served a cold cat-bootstrap agent the body for a\n  repository it was not in.`,
+      `guards served a cold bootstrap agent the body for a\n  repository it was not in.`,
   );
   process.exit(1);
 }
@@ -260,7 +260,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // declared-but-absent directory is the `dh4f` defect.
   // Keyed on the DECLARATION'S id, not the directory basename: this root
   // holds its skills directly, so `discoverGroups` takes the
-  // `SKILLS_CATEGORIES[decl.id]` branch — the same one `cat-bootstrap` uses
+  // `SKILLS_CATEGORIES[decl.id]` branch — the same one `bootstrap` uses
   // below. Keyed on `crdm` it threw, naming the id it actually wanted.
   // `theming` is above, keyed by its package-subdirectory name. Two sessions
   // built that package independently on 2026-09-20 and this entry was the
@@ -275,13 +275,13 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "remote-stubs": "Declared but not implemented here (stubs)",
   // The entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
-  // directory's DECLARED ID — `cat-bootstrap`, not `cat-bootstrap/skills`.
+  // directory's DECLARED ID — `bootstrap`, not `bootstrap/skills`.
   //
   // #428 keyed them by repo-relative path, which works and has a short
   // half-life: the declaration says on its own entry that "ids are stable
   // across a relocation, paths are not", and this file had already paid for
-  // that twice in one day — the basename was `cat-bootstrap` only until #422 moved
-  // those skills to `cat-bootstrap/skills/`.
+  // that twice in one day — the basename was `bootstrap` only until #422 moved
+  // those skills to `bootstrap/skills/`.
   //
   // `cat-harness-src` was a third such entry, for `src/skills/`, and is gone
   // as of #760. That directory held ONE skill beside the `.ts` implementing
@@ -290,14 +290,14 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `cat-harness` while the declaration gave that id to `skills/`: one name,
   // two real directories. `corpus-grep` now sits in `folio-core` with its
   // siblings and needs no category of its own.
-  "cat-bootstrap": "CatBootstrap (read before anything else is known)",
+  "bootstrap": "CatBootstrap (read before anything else is known)",
   // CatBootstrap's SECOND declared directory, and the one that constitutes its
   // exemption rather than describing it: the layer is excused a visualiser and
   // owes its own `.jsonld`/`.json` instead, so the skills governing that
   // emission ARE the substitute. Its own heading, because a reader meeting
-  // "how cat-bootstrap emits its graph" under "read before anything else is
+  // "how bootstrap emits its graph" under "read before anything else is
   // known" would reasonably conclude they have to read it first. Bean `hfkl`.
-  "cat-bootstrap-render": "CatBootstrap rendering (cat-bootstrap/render)",
+  "bootstrap-render": "CatBootstrap rendering (bootstrap/render)",
   // Two top-level named subgraphs, staged ahead of the split (#223) and both
   // keyed by DECLARED ID for the reason the comment above gives: their paths
   // will change at the `cat-harness/` move and their ids will not.
@@ -356,17 +356,17 @@ function discoverGroups(): Group[] {
   const undeclared: string[] = [];
   // Every DECLARED knowledge-graph directory, not `skills/` alone: an instance
   // may put its graph anywhere, and this repository declares three —
-  // `skills/`, `cat-bootstrap/skills/` and `src/skills/` (beans `x3bd`, `osbo`).
+  // `skills/`, `bootstrap/skills/` and `src/skills/` (beans `x3bd`, `osbo`).
   //
   // A directory may hold skills DIRECTLY as well as in packages: `src/skills/`
   // holds `corpus-grep.md` beside the `.ts` implementing it, and
-  // `cat-bootstrap/skills/` holds both of cat-bootstrap's.
+  // `bootstrap/skills/` holds both of bootstrap's.
   //
   // THE TWO CASES ARE KEYED DIFFERENTLY, and that is the point. A package
   // NAMES ITSELF, so its basename is the key. A root does not — its basename
   // is an artefact of where the declaration happens to point — so the key is
   // its DECLARED ID. This file keyed a root by basename until #422 moved
-  // cat-bootstrap's skills one level down and the generator demanded a heading for
+  // bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
   for (const decl of kgDirectories(INSTANCE_ROOT)) {
@@ -511,8 +511,8 @@ function main(): void {
     if (!existsSync(group.dir)) continue;
     // `isSkillMd`, not a bare `.md` test — the FOURTH place in this repository
     // that predicate was spelled out by hand, and the second in this file.
-    // Without it `cat-bootstrap/README.md` was published as a skill instruction
-    // page titled "cat-bootstrap", complete with an "edit this page's source"
+    // Without it `bootstrap/README.md` was published as a skill instruction
+    // page titled "bootstrap", complete with an "edit this page's source"
     // link, for a file that is not a skill.
     const files = readdirSync(group.dir)
       .filter((f) => f.endsWith(".md") && isSkillMd(join(group.dir, f)))

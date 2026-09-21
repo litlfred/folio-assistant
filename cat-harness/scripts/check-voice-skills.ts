@@ -52,6 +52,12 @@
  * `instructions.file`. That the file RESOLVES is checkable and Zod cannot
  * check it, which is the same gap `check:declared-assets` fills one level up.
  *
+ * **A voice that promises NOTHING is not missing anything.** A bare
+ * `folio-voice/v1` profile may carry no instruction body at all — its guidance
+ * may be a separate skill it cites — and `voiceFilesIn` reads that layout
+ * deliberately. This check asked every voice for a `SKILL.md` until
+ * 2026-09-21, which made a legitimate shape CRITICAL.
+ *
  * Usage:
  *   bun run check:voice-skills
  */
@@ -196,6 +202,22 @@ export function checkVoiceSkills(repoRoot: string): VoiceSkillFinding[] {
       });
       continue;
     }
+    // A voice that PROMISES no body is not missing one.
+    //
+    // `voiceFilesIn` reads two layouts on purpose — a voice SKILL at
+    // `<id>/voice.json` beside its `SKILL.md`, and a bare `folio-voice/v1`
+    // profile — so that "a downstream folio is not broken by an upgrade it did
+    // not ask for". Demanding a `SKILL.md` from the second shape breaks
+    // exactly that, and it was not hypothetical: `technical-writer` is a bare
+    // profile whose instruction body is the separate `technical-documentation`
+    // skill it cites, and this check called it CRITICAL for not having a file
+    // it never claimed. Found by relocating it, not by a test — which is why
+    // the test now covers the shape.
+    //
+    // So the body is required when it is PROMISED (an `instructions.file`, or
+    // the skill schema, which the branch above already refuses without one)
+    // and never otherwise. Everything below this point needs a body to read.
+    if (instructions?.file === undefined && !declaresSkill) continue;
     const bodyPath = instructions?.file === undefined ? join(dir, "SKILL.md") : join(dir, instructions.file);
     if (!existsSync(bodyPath)) {
       findings.push({
