@@ -124,6 +124,33 @@ export interface CheckerDiscovery<T> {
   orphaned: Array<{ criterion: string; sourceFile: string }>;
 }
 
+/**
+ * A module the sweep tried to load: its namespace, or why it would not load.
+ *
+ * The failure is remembered rather than retried because **a second dynamic
+ * import of a module whose evaluation threw does not throw again**. Measured
+ * on Bun 1.3.11, in eight lines and with no import cycle anywhere:
+ *
+ * ```ts
+ * // boom.ts:  export const BEFORE = 1; const _ = explode(); export const AFTER = {};
+ * await import("./boom.ts");   // REJECTS: "top-level failure"
+ * const mod = await import("./boom.ts");   // RESOLVES
+ * Object.keys(mod);            // THROWS: Cannot access 'AFTER' before initialization
+ * ```
+ *
+ * The second import hands back the namespace of a module whose body aborted
+ * partway, so every binding after the throw is still in its temporal dead
+ * zone. Several criteria share one checker file, so discovery imported the
+ * same path once per criterion and hit exactly that: the first got an honest
+ * "module did not load", and the second took down the sweep.
+ *
+ * Caching the failure fixes it at the cause. Every criterion in a file that
+ * would not load now gets the same reason, which is also the more useful
+ * report — one broken checker module is one finding, not one finding and a
+ * crash.
+ */
+export type LoadedModule = Record<string, unknown> | { loadError: string };
+
 /** Absent `subject` means `"block"` — see the field's own documentation. */
 export function criterionSubject(def: QaCriterionDefinition): QaCriterionSubject {
   return def.subject ?? "block";
@@ -142,13 +169,42 @@ export function discoverScriptCheckers(): Promise<CheckerDiscovery<ScriptChecker
   return discoverFor<ScriptChecker>("script");
 }
 
+/**
+ * Import a checker module at most once, remembering a failure as a failure.
+ *
+ * Exported for {@link LoadedModule}'s test: the behaviour it guards against is
+ * a platform one, so it is pinned against a fixture that throws rather than
+ * against the corpus, which is green and therefore proves nothing here.
+ *
+ * The specifier is a VARIABLE — the target comes from the criterion — so this
+ * module names no checker file and depends on none.
+ */
+export async function loadCheckerModule(
+  abs: string,
+  cache: Map<string, LoadedModule>,
+): Promise<LoadedModule> {
+  const seen = cache.get(abs);
+  if (seen) return seen;
+  let mod: LoadedModule;
+  try {
+    mod = (await import(abs)) as Record<string, unknown>;
+  } catch (e) {
+    mod = { loadError: e instanceof Error ? e.message : String(e) };
+  }
+  cache.set(abs, mod);
+  return mod;
+}
+
 async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDiscovery<T>> {
   const checkers = new Map<string, T>();
   const unimplemented: UnimplementedCriterion[] = [];
   const orphaned: CheckerDiscovery<T>["orphaned"] = [];
-  const modules = new Map<string, Record<string, unknown>>();
+  const modules = new Map<string, LoadedModule>();
 
-  const load = (abs: string): Record<string, unknown> | undefined => modules.get(abs);
+  const load = (abs: string): Record<string, unknown> | undefined => {
+    const seen = modules.get(abs);
+    return seen && !("loadError" in seen) ? seen : undefined;
+  };
 
   for (const def of QA_CRITERIA_REGISTRY) {
     if (criterionSubject(def) !== subject) continue;
@@ -173,21 +229,14 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
       continue;
     }
 
-    let mod = modules.get(abs);
-    if (!mod) {
-      try {
-        // A VARIABLE specifier: the target comes from the criterion, so this
-        // module names no checker file and depends on none.
-        mod = (await import(abs)) as Record<string, unknown>;
-      } catch (e) {
-        unimplemented.push({
-          criterion: def.id,
-          sourceFile,
-          reason: `module did not load: ${e instanceof Error ? e.message : String(e)}`,
-        });
-        continue;
-      }
-      modules.set(abs, mod);
+    const mod = await loadCheckerModule(abs, modules);
+    if ("loadError" in mod) {
+      unimplemented.push({
+        criterion: def.id,
+        sourceFile,
+        reason: `module did not load: ${mod.loadError}`,
+      });
+      continue;
     }
 
     const found = findChecker<T>(mod, def.id);
@@ -208,23 +257,35 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
  * Every export of `mod` that can actually be read right now.
  *
  * `Object.values` is what this used to be, and it CRASHES THE WHOLE SWEEP when
- * any one export is a `const` still in its temporal dead zone — which happens
- * when the module is part of an import cycle and is being read while it is
- * mid-evaluation. Measured 2026-09-21: `qa-checkers-extended.ts`'s
- * `EXTENDED_AUTOMATED_CHECKERS`, reached through such a cycle, took down a
- * sweep that had nothing to do with it.
+ * any one export is a `const` still in its temporal dead zone — `Object.keys`
+ * throws too, which is why the guard is around the whole enumeration rather
+ * than around each read.
  *
- * Skipping an unreadable binding is right rather than merely convenient: a
- * value that cannot be read is not a dispatch table, and the alternative is
- * that one cycle anywhere in the corpus silently costs every criterion its
- * checker. The cycle itself is NOT fixed here and is not claimed to be — this
- * makes discovery survive it and say nothing false about it.
+ * **The cause was NOT an import cycle**, though this comment and the commit
+ * that added the guard (`fd57e83c`) both said so. Measured 2026-09-21 by
+ * reproducing the failure at that commit's parent and instrumenting it: there
+ * is no runtime import cycle in this repository, then or now. The half-
+ * evaluated module came from a second dynamic import of a module whose
+ * evaluation had already thrown — see {@link LoadedModule}, which fixes that
+ * at the cause. `qa-checkers-extended.ts` aborted at its top-level
+ * `findContentRepoRoot()` on an unparseable declaration, thousands of lines
+ * above where `EXTENDED_AUTOMATED_CHECKERS` is declared.
+ *
+ * Caching the failure is the repair; this is the second half, and it is NOT
+ * redundant. A module registry is keyed by path and shared by the whole
+ * process, so a module some OTHER caller already imported twice is already
+ * poisoned before discovery sees it: `loadCheckerModule` then caches a
+ * namespace, not a failure, and only this guard stands between that and a
+ * crashed sweep. Pinned by `checker-module-load-failure.test.ts`, which
+ * reaches `findChecker` with exactly such a namespace.
+ *
+ * Over the corpus as it stands the guard changes nothing — discovery yields
+ * the same 63 block and 10 script checkers with it removed. Do not read that
+ * as dead code, and do not go looking for the cycle; it is not there.
  */
 function moduleValues(mod: Record<string, unknown>): unknown[] {
-  // `Object.keys` ITSELF throws here, which is why the guard is around the
-  // whole thing rather than around each read: a module namespace in a cycle
-  // answers its ownKeys trap by evaluating, and one binding in its temporal
-  // dead zone rejects the enumeration outright.
+  // `Object.keys` ITSELF throws on such a namespace, so the guard has to be
+  // around the enumeration and not only around each read.
   let keys: string[];
   try {
     keys = Object.keys(mod);
@@ -242,8 +303,13 @@ function moduleValues(mod: Record<string, unknown>): unknown[] {
   return out;
 }
 
-/** A dispatch-table entry keyed by the id, else `check<PascalCaseId>`. */
-function findChecker<T>(mod: Record<string, unknown>, criterionId: string): T | undefined {
+/**
+ * A dispatch-table entry keyed by the id, else `check<PascalCaseId>`.
+ *
+ * Exported so the guard in {@link moduleValues} can be pinned against a
+ * poisoned namespace — see `checker-module-load-failure.test.ts`.
+ */
+export function findChecker<T>(mod: Record<string, unknown>, criterionId: string): T | undefined {
   for (const value of moduleValues(mod)) {
     if (value && typeof value === "object" && criterionId in (value as Record<string, unknown>)) {
       const entry = (value as Record<string, unknown>)[criterionId];
