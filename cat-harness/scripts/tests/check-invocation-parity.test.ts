@@ -47,7 +47,11 @@ describe("invocations", () => {
     // The witness. A matcher proven only against fixtures is proven against
     // its author's idea of the file.
     const got = invocations(wf("docs-site.yml"));
-    expect(got.some((i) => i.script === "kg-export" && i.instance === "./cat-bootstrap")).toBe(true);
+    // `./bootstrap` since #771 renamed the directory. THIS LITERAL IS THE
+    // WITNESS, so it tracks the real workflow and is not derived — but that
+    // also means a rename lands on it, and #771 landed three minutes after
+    // #790 added this test. Neither run saw the other, and `main` went red.
+    expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
 });
 
