@@ -719,6 +719,12 @@ export const RULES: Rule[] = [
       // tree's own filenames, which is a fact about the checkout and not about
       // any folio's material.
       "scripts/check-portable-paths.ts",
+      // The CI-wiring gate, and harness by the same argument one line up: it
+      // reads this repository's own `.github/workflows/` and grades whether a
+      // path-filtered workflow rebuilds when the scripts it runs change. That
+      // is a fact about the checkout's build wiring, not about any folio's
+      // material — it imports `repoRootFor` and nothing else.
+      "scripts/check-workflow-script-paths.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge
