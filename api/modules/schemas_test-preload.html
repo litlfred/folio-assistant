@@ -29,7 +29,7 @@ green by LUCK: some earlier file happened to import core first. Running that
 file alone reproduced CI exactly.</p>
 <p>Worse, it was not one file. Running each declaration-reading test file in
 isolation found <strong>five</strong> with the same latent dependency — <code>kg-node</code>,
-<code>cat-bootstrap-initialization-convention</code>, <code>qa-results</code>, <code>todos</code> and
+<code>bootstrap-initialization-convention</code>, <code>qa-results</code>, <code>todos</code> and
 <code>topology-conflicts</code>. CI had only caught the one its ordering broke first, so
 fixing that one would have left four to surface on the next shard.</p>
 <h2 id="why-a-preload-rather-than-an-import-in-each-test-file" class="tsd-anchor-link">Why a preload rather than an import in each test file<a href="#why-a-preload-rather-than-an-import-in-each-test-file" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>

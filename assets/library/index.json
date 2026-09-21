@@ -62,6 +62,80 @@
       "referencedBy": []
     },
     {
+      "id": "rfc2119-key-words-requirement-levels",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/rfc2119-key-words-requirement-levels",
+      "title": "rfc2119-key-words-requirement-levels",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "rfc2119-key-words-requirement-levels",
+      "sourceFile": "rfc2119-key-words-requirement-levels.pdf",
+      "sourceSha256": "3c11b6002f839b8f98c65d5c8eb8918413a0d215589f0131013d86c696bcf002",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 6,
+      "blocks": 6,
+      "images": 0,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 6,
+      "words": 786,
+      "chars": 5618,
+      "bytes": 16744,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "cat-harness",
+          "from": "cat-harness/voices/technical-writer.json",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "id": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "title": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "sourceFile": "rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "sourceSha256": "ce9339e636af66e53b4a79d3887afc273fa1f5f9d209204801e7786eec82c60e",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 8,
+      "blocks": 8,
+      "images": 0,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 8,
+      "words": 1067,
+      "chars": 7184,
+      "bytes": 22347,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "cat-harness",
+          "from": "cat-harness/voices/technical-writer.json",
+          "count": 2
+        }
+      ]
+    },
+    {
       "id": "milnorlink",
       "instance": "folio-assistant-sci",
       "dir": "folio-assistant-sci/library/milnorlink",
@@ -530,6 +604,30 @@
       "declaredFiles": 0
     },
     {
+      "file": "rfc2119-key-words-requirement-levels.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/rfc2119-key-words-requirement-levels.pdf",
+      "bytes": 116959,
+      "ext": "pdf",
+      "ingestedBy": "rfc2119-key-words-requirement-levels",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
+      "file": "rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "bytes": 122275,
+      "ext": "pdf",
+      "ingestedBy": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
       "file": "Skill authoring best practices - Claude Platform Docs.pdf",
       "kind": "file",
       "instance": "folio-assistant",
@@ -637,8 +735,8 @@
     {
       "instance": "folio-assistant",
       "dir": "uploads",
-      "total": 28,
-      "ingested": 2,
+      "total": 30,
+      "ingested": 4,
       "uningested": 26
     },
     {
@@ -650,7 +748,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 842,
+    "filesRead": 1437,
     "unreadable": []
   }
 }

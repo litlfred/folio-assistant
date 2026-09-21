@@ -17,7 +17,7 @@
 <div class="tsd-tag-graphNode">
 <h4 class="tsd-anchor-link" id="graph-node">Graph Node<a href="#graph-node" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>schema</p>
 <p>The owner's ask, 2026-09-20: <em>&quot;each intiator should create its own sticky.
-cat-bootstrap sticky will have link back to the source code + ghpaghes for boot
+bootstrap sticky will have link back to the source code + ghpaghes for boot
 strrap.&quot;</em></p>
 <h2 id="what-this-replaces-and-why-it-is-a-change-of-shape" class="tsd-anchor-link">What this replaces, and why it is a change of shape<a href="#what-this-replaces-and-why-it-is-a-change-of-shape" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p><code>landing-sticky.ts</code> shipped the board as a <strong>fixed set of three</strong>, returned by
@@ -39,8 +39,8 @@ motivates the whole change:</p>
 </thead>
 <tbody>
 <tr>
-<td>cat-bootstrap can contribute</td>
-<td><strong>no</strong> — <code>cat-bootstrap/</code> holds no TypeScript, and <code>cat-bootstrap/harness.json</code> declares an instance that <em>may not import from the layer composed on top of it</em></td>
+<td>bootstrap can contribute</td>
+<td><strong>no</strong> — <code>bootstrap/</code> holds no TypeScript, and <code>bootstrap/harness.json</code> declares an instance that <em>may not import from the layer composed on top of it</em></td>
 <td>yes</td>
 </tr>
 <tr>
@@ -86,14 +86,14 @@ only one with TypeScript to run. After the split each harness mints its own
 at the end of its own initiation, and <code>contributingRoots</code> already takes a
 LIST of roots rather than walking one, so that change is a caller change
 rather than a rewrite.</p>
-<p>Stated rather than left to be inferred, because &quot;cat-bootstrap's card is
+<p>Stated rather than left to be inferred, because &quot;bootstrap's card is
 written by cat-harness&quot; looks like a layering violation until you know it
 is a pre-split accommodation with a named end.</p>
 </li>
 <li>
 <p><strong>Every sticky links to ITS OWN harness's docs.</strong> Not to the composing
-instance's — cat-bootstrap's card points at <code>cat-bootstrap/README.md</code> on the forge,
-because this site is cat-harness's and cat-bootstrap has no site of its own
+instance's — bootstrap's card points at <code>bootstrap/README.md</code> on the forge,
+because this site is cat-harness's and bootstrap has no site of its own
 yet. A card that sent a reader to the wrong layer's documentation would be
 worse than one with no link, since it looks like it worked.</p>
 </li>

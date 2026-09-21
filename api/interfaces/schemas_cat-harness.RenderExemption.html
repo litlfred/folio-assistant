@@ -30,7 +30,7 @@ requirement <strong>starts</strong> at <code>cat-harness</code> rather than appl
 </thead>
 <tbody>
 <tr>
-<td><code>cat-bootstrap</code></td>
+<td><code>bootstrap</code></td>
 <td><strong>exempt</strong> — it is the navbar FOOTER</td>
 <td><strong>required</strong></td>
 </tr>
@@ -54,7 +54,7 @@ of them what it did not do.</p>
 <p>Because an exemption with no substitute is a hole, and a list of holes with
 no substitutes is a silence list — which is exactly what <code>2krx</code> says an
 opt-out must not become: <em>&quot;an opt-out needs a REASON per entry … or it
-becomes a silence list.&quot;</em> cat-bootstrap does not simply drop out of the
+becomes a silence list.&quot;</em> bootstrap does not simply drop out of the
 requirement; in the owner's words its <code>.json</code>/<code>.jsonld</code> <em>&quot;is its
 existence&quot;</em>, so it trades a criterion it could fail quietly for one it
 cannot. <code>owes</code> is where that trade is written down, and
@@ -70,7 +70,7 @@ reason this is not simply a boolean.</p>
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">RenderExemption</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#of">of</a><span class="tsd-signature-symbol">:</span> (<span class="tsd-signature-type">&quot;visualiser&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;workflow-visualiser&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;own-docs&quot;</span>)<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#owes">owes</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#reason">reason</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3de80dc327a840cd5021ed29a79550dd093168cf/cat-harness/schemas/cat-harness.ts#L2631">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2631</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/736685177df31d2e42709aee78ca87ba59523075/cat-harness/schemas/cat-harness.ts#L2727">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2727</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -91,7 +91,7 @@ reason this is not simply a boolean.</p>
 <div class="tsd-comment tsd-typography"><p>Which obligations are excused. Non-empty.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3de80dc327a840cd5021ed29a79550dd093168cf/cat-harness/schemas/cat-harness.ts#L2633">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2633</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/736685177df31d2e42709aee78ca87ba59523075/cat-harness/schemas/cat-harness.ts#L2729">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2729</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="owes"><span>owes</span><a href="#owes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">owes</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -100,14 +100,14 @@ reason this is not simply a boolean.</p>
 from a layer that simply never got round to rendering.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3de80dc327a840cd5021ed29a79550dd093168cf/cat-harness/schemas/cat-harness.ts#L2642">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2642</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/736685177df31d2e42709aee78ca87ba59523075/cat-harness/schemas/cat-harness.ts#L2738">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2738</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="reason"><span>reason</span><a href="#reason" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">reason</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Why this layer is the exception. Prose, and required.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3de80dc327a840cd5021ed29a79550dd093168cf/cat-harness/schemas/cat-harness.ts#L2635">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2635</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/736685177df31d2e42709aee78ca87ba59523075/cat-harness/schemas/cat-harness.ts#L2731">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2731</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

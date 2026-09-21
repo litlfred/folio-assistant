@@ -19,12 +19,12 @@
 <div class="tsd-comment tsd-typography"><p>The graph kinds an instance DECLARES — its own, not the universal registry's.</p>
 <p>Moved here from <code>scripts/check-instance-render.ts</code> (bean <code>3jj9</code>) so the two
 exporters can read one fact. <code>kg-export</code> needs it to stop emitting every
-kind any layer defines into every instance's graph: <code>cat-bootstrap</code> published
+kind any layer defines into every instance's graph: <code>bootstrap</code> published
 16 GraphKind nodes while declaring exactly one. The render check already
 imports <code>kg-export</code>, so importing back would have been a cycle — and a
 declaration's own contents belong beside the declaration reader anyway.</p>
 <p>Follows NESTED declarations, which is the part a plain read of
-<code>directories[].graphs</code> misses: <code>beans/beans.json</code> is what says <code>bean-defs</code>
+<code>directories[].graphKinds</code> misses: <code>beans/beans.json</code> is what says <code>bean-defs</code>
 and <code>workflow-state</code> exist, and an instance that owns them would otherwise
 be reported as not owning them.</p>
 </div>
@@ -36,7 +36,7 @@ be reported as not owning them.</p>
 <li><span><span class="tsd-kind-parameter">registry</span>: <a href="../classes/schemas_cat-harness.GraphKindRegistry.html" class="tsd-signature-type tsd-kind-class">GraphKindRegistry</a><span class="tsd-signature-symbol"> = defaultGraphKinds</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3de80dc327a840cd5021ed29a79550dd093168cf/cat-harness/schemas/cat-harness.ts#L5153">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:5153</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/736685177df31d2e42709aee78ca87ba59523075/cat-harness/schemas/cat-harness.ts#L5303">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:5303</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

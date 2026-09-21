@@ -11,11 +11,11 @@
 <li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
 <li><a href="" aria-current="page">CAT_BOOTSTRAP_INIT_DOC</a></li></ul>
 <h1>Variable CAT_BOOTSTRAP_INIT_DOC<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">CAT_BOOTSTRAP_INIT_DOC</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;cat-bootstrap/initialization.md&quot;</span></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">CAT_BOOTSTRAP_INIT_DOC</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;bootstrap/initialization.md&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Where an instance publishes the instructions for BOOTSTRAPPING INTO IT,
 relative to that instance's own docs root.</p>
 <h2 id="why-a-fixed-convention-rather-than-a-lookup" class="tsd-anchor-link">Why a fixed convention rather than a lookup<a href="#why-a-fixed-convention-rather-than-a-lookup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p>§5 of the cat-bootstrap proposal has the agent obtain exactly ONE reference —
+<p>§5 of the bootstrap proposal has the agent obtain exactly ONE reference —
 <code>litlfred/f-a-sci</code> — and read everything else from that instance's own
 declaration. That answers <em>which</em> instance. It does not answer <em>where in it</em>
 the initialization steps are, and without a fixed answer the agent needs
@@ -24,17 +24,17 @@ precisely what one reference was meant to remove.</p>
 <p>So every cat-harness instance, and every instance that depends on one,
 publishes them at the SAME place. CatBootstrap then needs no special case per
 target: <code>f-a-sci</code>, <code>smart-base</code> and a specialised harness nobody has written
-yet are all read the same way. That is what lets cat-bootstrap initialise into a
+yet are all read the same way. That is what lets bootstrap initialise into a
 <em>specialised</em> kind rather than only into the one it was written against.</p>
 <h2 id="composed-never-spelled" class="tsd-anchor-link">Composed, never spelled<a href="#composed-never-spelled" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p>Built from <a href="../functions/schemas_cat-harness.siteDir.html" class="tsd-kind-function">siteDir</a> rather than written as <code>docs/cat-bootstrap/...</code>,
+<p>Built from <a href="../functions/schemas_cat-harness.siteDir.html" class="tsd-kind-function">siteDir</a> rather than written as <code>docs/bootstrap/...</code>,
 because the stub pattern INVERTED on 2026-09-19 — <code>docs/&lt;stub&gt;</code> became
 <code>&lt;stub&gt;/docs</code> (bean <code>wggr</code>) — and every literal spelling of the old layout
 had to be found and changed. A convention composed from the one function
 that knows the site root survives the next relocation; a literal does not.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3de80dc327a840cd5021ed29a79550dd093168cf/cat-harness/schemas/cat-harness.ts#L3097">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:3097</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/736685177df31d2e42709aee78ca87ba59523075/cat-harness/schemas/cat-harness.ts#L3193">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:3193</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

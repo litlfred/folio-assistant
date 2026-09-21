@@ -11,18 +11,18 @@
 <li><a href="../modules/schemas_vocabulary.html">schemas/vocabulary</a></li>
 <li><a href="" aria-current="page">TermLayer</a></li></ul>
 <h1>Type Alias TermLayer</h1></div>
-<div class="tsd-signature"><span class="tsd-kind-type-alias">TermLayer</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;cat-bootstrap&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;harness&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;core&quot;</span></div>
+<div class="tsd-signature"><span class="tsd-kind-type-alias">TermLayer</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;bootstrap&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;harness&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;core&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Which layer owns a term — and therefore which instances must carry it.</p>
 <p>The owner, 2026-09-19: &quot;we shouldnt need voicegraph or librarygrph or
-previewgrapjh in cat-bootstrap!!&quot; Exactly right, and the flat vocabulary I first
-wrote had no way to say so. A cat-bootstrap instance reads a declaration, walks
+previewgrapjh in bootstrap!!&quot; Exactly right, and the flat vocabulary I first
+wrote had no way to say so. A bootstrap instance reads a declaration, walks
 a dependency tree and hands over; it has no opinion about editorial voices,
 an L1 library or a preview target, and a vocabulary that makes it define
-them has made cat-bootstrap carry the thing cat-bootstrap exists to defer.</p>
+them has made bootstrap carry the thing bootstrap exists to defer.</p>
 <p>Same three layers the repository split uses, so this does not invent a
 fourth axis:</p>
 <ul>
-<li><code>cat-bootstrap</code> — readable with nothing loaded: the declaration, its
+<li><code>bootstrap</code> — readable with nothing loaded: the declaration, its
 directories, and the actor/role/process/skill sentence the first BPMN
 needs. Nothing here may require the harness.</li>
 <li><code>harness</code> — the agentic machinery: tools, capabilities, requirements,
@@ -31,10 +31,10 @@ work plan, process detail.</li>
 uploads, todos, the folio itself.</li>
 </ul>
 <p>The direction rule holds here as everywhere: core may name a harness term,
-harness may name a cat-bootstrap term, and never the reverse.</p>
+harness may name a bootstrap term, and never the reverse.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3de80dc327a840cd5021ed29a79550dd093168cf/cat-harness/schemas/vocabulary.ts#L62">work/folio-assistant/folio-assistant/cat-harness/schemas/vocabulary.ts:62</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/736685177df31d2e42709aee78ca87ba59523075/cat-harness/schemas/vocabulary.ts#L62">work/folio-assistant/folio-assistant/cat-harness/schemas/vocabulary.ts:62</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
