@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T16:33:59.010Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/16e76664d0c8f2b6e59901c1140d35d3c3dc4108",
-  "sourceCommitSha": "16e76664d0c8f2b6e59901c1140d35d3c3dc4108",
-  "sourceCommitAt": "2026-09-21T16:28:39Z",
+  "generatedAt": "2026-09-21T16:51:52.156Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2176a18badc2282d058b94cce0b2fc5fe7899802",
+  "sourceCommitSha": "2176a18badc2282d058b94cce0b2fc5fe7899802",
+  "sourceCommitAt": "2026-09-21T16:50:10Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -276,7 +276,7 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 85,
+    "Schema": 89,
     "GraphKind": 24,
     "Directory": 33,
     "Asset": 3
@@ -3942,7 +3942,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "methodologies/crdm/crdm-detect.md",
-      "instructionLines": 126,
+      "instructionLines": 145,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -32951,6 +32951,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/note-anchor"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#schema/panel-chrome",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "panel-chrome",
+      "title": "What a card's open panel offers — the kind declares, the platform fixes.",
+      "module": "schemas/panel-chrome.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/panel-chrome"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#schema/precision-scalar",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "precision-scalar",
@@ -32976,6 +32985,15 @@
       "module": "schemas/qa-review.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#schema/reader-filter",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "reader-filter",
+      "title": "The filter a READER applies to a board, which commits nothing.",
+      "module": "schemas/reader-filter.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/reader-filter"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#schema/refactor-strategy",
@@ -33012,6 +33030,15 @@
       "module": "schemas/role-graph.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/role-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#schema/safe-url",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "safe-url",
+      "title": "Which URL schemes may reach an `href`, and why the answer is a list.",
+      "module": "schemas/safe-url.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#schema/script-qa",
@@ -33267,6 +33294,15 @@
       "module": "schemas/webpage.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/webpage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#schema/window-stack",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "window-stack",
+      "title": "Which cards are OPEN on a board, and in what order they stack.",
+      "module": "schemas/window-stack.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld#schema/catalogue",
@@ -34966,8 +35002,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-albattani-0byaig",
-    "sha": "996b4c0810da50c960b4cce0cb7fec93219b3582",
+    "sha": "385b4c6960ebaf9582a0f32ca67de36e6163f719",
     "pr": "739/merge",
-    "run": "35626245420"
+    "run": "35628148630"
   }
 }

@@ -302,8 +302,51 @@
                 "type": "object",
                 "properties": {
                   "visualiser": {
-                    "type": "string",
-                    "minLength": 1
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ref": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "title": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "surfaces": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "navbar",
+                                  "board"
+                                ]
+                              },
+                              "minItems": 1
+                            },
+                            "hidden": {
+                              "type": "boolean"
+                            },
+                            "theme": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "ref"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
+                      }
+                    ]
                   },
                   "docs": {
                     "type": "string",
@@ -581,8 +624,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/cat-harness.jsonld",
   "staging": {
     "branch": "claude/elegant-albattani-0byaig",
-    "sha": "996b4c0810da50c960b4cce0cb7fec93219b3582",
+    "sha": "385b4c6960ebaf9582a0f32ca67de36e6163f719",
     "pr": "739/merge",
-    "run": "35626245420"
+    "run": "35628148630"
   }
 }
