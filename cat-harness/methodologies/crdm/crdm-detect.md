@@ -70,6 +70,8 @@ Do not trigger CRDM for:
 - "What does this block kind mean?" — information request
 - "Review chapter 5" — content review within existing workflow
 - "Create a bean for …" — work-plan management
+- "Migration record: …" — a record of work already DONE, not a request for
+  work; the tense is the signal
 - Bug reports about existing features (unless they imply a redesign)
 
 ## On detection — what to do
