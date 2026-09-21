@@ -118,8 +118,15 @@ for (const n of nodes) {
 const census = materializationCensus(nodes);
 console.log(`\nwho-iris catalogue — ${nodes.length} node(s)\n`);
 for (const [k, v] of Object.entries(census)) console.log(`  ${k.padEnd(14)} ${v}`);
+// ITEMS and FILES, separately -- they were one number until 2026-09-20, when
+// the home page turned out to publish the item count the statistics page does
+// not. 273,559 items across 1,057,223 files is 3.86 files per item, so a
+// completeness fraction built from the wrong one is wrong by that factor, and
+// this line printed the file count under the word "files" while the field it
+// read was named for items.
 console.log(
-  `\n  Upstream: ${cat.totalItemsUpstream?.toLocaleString() ?? "unknown"} files, ` +
+  `\n  Upstream: ${cat.totalItemsUpstream?.toLocaleString() ?? "unknown"} items across ` +
+    `${cat.totalFilesUpstream?.toLocaleString() ?? "unknown"} files, ` +
     `${cat.totalBytesUpstream ? (cat.totalBytesUpstream / 1024 ** 3).toFixed(2) + " GiB" : "unknown"}.`,
 );
 console.log(`  The gap between ${census.materialized} and that is the point of a catalogue by reference.\n`);

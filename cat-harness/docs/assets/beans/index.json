@@ -33,6 +33,20 @@
       "file": "beans/defs/folio-assistant-04vl--the-narrative-review-queue-could-not-see-24-of-the.md"
     },
     {
+      "id": "folio-assistant-06e3",
+      "title": "docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T20:54:07Z",
+      "updatedAt": "2026-09-20T22:58:07Z",
+      "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD), in three messages.\n\n## 1. The handler\n\n> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`\n> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.\n> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could\n> clarify it lives at `cat-harness/docs-auto",
+      "file": "beans/defs/folio-assistant-06e3--docs-auto-a-handler-at-cat-harnessdocs-autoauto-do.md"
+    },
+    {
       "id": "folio-assistant-06kg",
       "title": "RETRY: retry-backoff.md is an owner rule with a TS implementation and FOUR shell loops nothing checks",
       "status": "in-progress",
@@ -1031,14 +1045,14 @@
     {
       "id": "folio-assistant-7iog",
       "title": "COMMAND PATHS ARE CHECKED AGAINST THE REPO, NOT THE RUN: three of four backoff calls in feature-staging resolved at check time and not at run time",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:55:16Z",
-      "updatedAt": "2026-09-20T21:55:16Z",
+      "updatedAt": "2026-09-20T22:45:13Z",
       "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while implementing #605's\n`merge=union` half, in the very loops that fix was going into.\n\n## The defect, measured\n\n`feature-staging.yml` has four retry loops. Each calls `backoff-sleep.ts` —\nthe ONE shared implementation bean `06kg` established. **Three of the four\nname a path that does not exist at run time:**\n\n| loop | job | `working-directory`",
       "file": "beans/defs/folio-assistant-7iog--command-paths-are-checked-against-the-repo-not-the.md"
     },
@@ -1309,6 +1323,20 @@
       "file": "beans/defs/folio-assistant-95ir--library-scanners-filter-out-a-declared-but-absent.md"
     },
     {
+      "id": "folio-assistant-9c34",
+      "title": "STAGING: incremental render — seed from main's render as cache, re-render only changed assets and their downstream indexes",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:11:39Z",
+      "updatedAt": "2026-09-20T21:12:03Z",
+      "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD):\n\n> new skill for staging rendernig.... dont rerender the whole thing... if main\n> render is not stale, copy that to staging render pipleine as cahche. trigger\n> rerender only on assets that have changed and downstream depndent index.\n\n## The shape\n\nThree steps, and the third is the one that is easy to get wrong.\n\n1. **Seed from main** — if main",
+      "file": "beans/defs/folio-assistant-9c34--staging-incremental-render-seed-from-mains-render.md"
+    },
+    {
       "id": "folio-assistant-9gyz",
       "title": "QA-review schemas: Finding, Decision and AuditNote are three entities, not one",
       "status": "in-progress",
@@ -1479,14 +1507,14 @@
     {
       "id": "folio-assistant-ankg",
       "title": "Subgraph viewer generators write but never prune — an orphan page answers to no declaration",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:02:36Z",
-      "updatedAt": "2026-09-20T21:02:36Z",
+      "updatedAt": "2026-09-20T22:49:45Z",
       "preview": "Found live during #603's merge of main, not hypothesised.\n\n## What happened\n\n#604 renamed `folio-assist-sci/` to `folio-assistant-sci/`. Subject slugs in\nthe schema and library viewers are derived from the entry's PATH, so\nregeneration correctly produced the new page:\n\n    /cat-harness/library/folio-assistant-sci/\n\nIt did NOT remove the page it replaced. `folio-assist-sci/index.html` survived\nas a",
       "file": "beans/defs/folio-assistant-ankg--subgraph-viewer-generators-write-but-never-prune-a.md"
     },
@@ -1557,7 +1585,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
       "updatedAt": "2026-09-20T21:55:00Z",
-      "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`AGENTS.md` line 3 (the cold-start line every agent runs first), lines 192 and 351, `README.md` lines 4 and 371, and `cat-harness/docs/guides/",
+      "preview": "## The register — the shapes have NAMES, not numbers\n\n*2026-09-20T23:1xZ, on the owner's instruction (\"2 resolve\").*\n\nThe ordinals collided: this bean numbered **shapes** in discovery order, while\n`7iog` called itself \"a fourth class beyond `b963`'s three\" — numbering\nsomething else entirely, the **readers** `check:command-paths` had at the\ntime. Two incompatible schemes, one word. And by the time",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
     {
@@ -2089,14 +2117,14 @@
     {
       "id": "folio-assistant-frq2",
       "title": "RELEASE PATH: release-please names config files that do not exist, and both release workflows document another repository's behaviour",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:46:25Z",
-      "updatedAt": "2026-09-20T20:46:25Z",
+      "updatedAt": "2026-09-20T22:49:46Z",
       "preview": "Found while establishing the ground for bean `dhvf` (instance versioning,\nissue #592). Not that bean's to fix, but a versioning scheme built on this\nrelease path would inherit all of it.\n\n## Measured 2026-09-20 on branch `claude/sharp-ptolemy-6qxh77`\n\n### 1. `release-please` is passed config files that are not in the repository\n\n`.github/workflows/release-please.yml` ends with:\n\n```yaml\nconfig-fil",
       "file": "beans/defs/folio-assistant-frq2--release-path-release-please-names-config-files-tha.md"
     },
@@ -2681,7 +2709,7 @@
     {
       "id": "folio-assistant-lcwz",
       "title": "WORK-PLAN CHART: the epic bars are a picture, not a way in — 21 beans behind a bar with no route to them",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-o3xy",
@@ -3173,14 +3201,14 @@
     {
       "id": "folio-assistant-pb4n",
       "title": "STAGING: the gh-pages retry handles a rejection but not a CONFLICT — the daily render log collides by construction",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:32:53Z",
-      "updatedAt": "2026-09-20T20:33:25Z",
+      "updatedAt": "2026-09-20T22:19:30Z",
       "preview": "Measured on PR #603, 2026-09-20, and the log is unambiguous:\n\n```\n! [rejected]        gh-pages -> gh-pages (fetch first)\npush rejected; rebasing onto origin/gh-pages and retrying\nCONFLICT (content): Merge conflict in _render-log/2026-09-20.jsonl\nerror: could not apply e415631... staging(claude-elegant-albattani-0byaig)\n```\n\n## The gap, stated precisely\n\n`feature-staging.yml` already carries the an",
       "file": "beans/defs/folio-assistant-pb4n--staging-the-gh-pages-retry-handles-a-rejection-but.md"
     },
@@ -3239,6 +3267,20 @@
       "updatedAt": "2026-09-20T04:03:21Z",
       "preview": "## Measured 2026-09-20\n\nThe root `harness.json` declares `bootstrap` → `cat-bootstrap/skills/`, so\nfolio-assistant's graph carries **bootstrap's skills and roles**. It does NOT\ndeclare `cat-bootstrap/workflows/`, so it does not carry **bootstrap's process** —\nthat isolation was deliberate (#432, where bootstrap's process was leaking into\nthe root graph 88 times).\n\nSo the root carries half of boots",
       "file": "beans/defs/folio-assistant-pve3--the-root-declares-half-of-bootstrap-its-skills-but.md"
+    },
+    {
+      "id": "folio-assistant-py74",
+      "title": "QA PROJECTION: six schemas, three incompatible verdict shapes — no honest roll-up exists yet",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T23:09:04Z",
+      "updatedAt": "2026-09-20T23:09:04Z",
+      "preview": "`<base>/qa/` says \"declared and nothing publishes a projection for it yet\" over **592 committed JSON files**. A reader was attempted 2026-09-20 and STOPPED at the measurement, deliberately.\n\n## What the graph actually holds\n\n| schema | files | where a verdict lives |\n|---|---|---|\n| `kg-qa/v1` | 316 | `criteria` as a DICT keyed by criterion id, plus `totals` |\n| `qa-witness/v1` | 134 | `state` (to",
+      "file": "beans/defs/folio-assistant-py74--qa-projection-six-schemas-three-incompatible-verdi.md"
     },
     {
       "id": "folio-assistant-q0tc",
@@ -4245,16 +4287,30 @@
     {
       "id": "folio-assistant-xies",
       "title": "PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T09:01:32Z",
-      "updatedAt": "2026-09-20T09:01:32Z",
+      "updatedAt": "2026-09-20T21:23:04Z",
       "preview": "Owner, 2026-09-20, naming the pipeline verbatim:\n\n> 'using ghpages as CDN is a tool choice, other tools possible like cloudflare, doucment that in process/BPMNS/skills, part of publication piepleine, internal publication mamgement: (chief) editor signoff -> merge to main -> huamn eyes review last check -> publish to CDN (requires EXTREME care in URL handling) and make accessible from CDN'\n\nFOUR GA",
       "file": "beans/defs/folio-assistant-xies--publish-to-cdn-editor-signoff-merge-human-eyes-cdn.md"
+    },
+    {
+      "id": "folio-assistant-xo3t",
+      "title": "STATE PAGES: a third of the registry descriptions render markdown backticks literally",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:53:52Z",
+      "updatedAt": "2026-09-20T22:53:52Z",
+      "preview": "`registry()` in `state-visualizer.ts` writes each graph's declared description through `esc()` only, so the markdown backticks in it reach the page as literal characters: \"what the daily sweep under \\`test/health/\\` wrote\".\n\nMeasured 2026-09-20 across both declarations: **12 of 34** declared descriptions carry a backtick in the first sentence — the part the registry shows — so this is a third of t",
+      "file": "beans/defs/folio-assistant-xo3t--state-pages-a-third-of-the-registry-descriptions-r.md"
     },
     {
       "id": "folio-assistant-xxku",
@@ -4297,6 +4353,20 @@
       "updatedAt": "2026-09-20T20:00:00Z",
       "preview": "Owner, 2026-09-19: *\"all simulators/ need to go into qou\"*.\n\nQueued, not started — raised mid-turn, and the standing instruction is to\nqueue rather than pivot.\n\n## The defect, measured on `main` at `b833d8f92`\n\n`simulators/` in this repository holds **11 HTML files, 456 KB**, and they are\nnot ambiguous about whose they are:\n\n    beta_decay_braid.html        knot_atom_diagrams.html\n    beta_decay_h",
       "file": "beans/defs/folio-assistant-y8as--simulators-is-qou-s-content-sitting-in-the-platfor.md"
+    },
+    {
+      "id": "folio-assistant-y90d",
+      "title": "state-visualizer has ankg's defect too, and cannot take ankg's fix — its dashboards carry no self-identifying marker and it publishes at the SITE ROOT",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:49:13Z",
+      "updatedAt": "2026-09-20T22:49:31Z",
+      "preview": "Found while fixing `ankg`, by checking the third generator rather than\nassuming it was covered.\n\n## It has the same defect\n\n`cat-harness/scripts/state-visualizer.ts` writes one dashboard per declared\nstate graph:\n\n```ts\nfor (const g of graphs) emit(join(SITE, g.id, \"index.html\"), dashboardPage(g, graphs));\n```\n\n`emit()` compares only the files it is about to write — the same structural\nblindness `",
+      "file": "beans/defs/folio-assistant-y90d--state-visualizer-has-ankgs-defect-too-and-cannot-t.md"
     },
     {
       "id": "folio-assistant-yean",
@@ -4353,6 +4423,20 @@
       "updatedAt": "2026-09-20T18:49:27Z",
       "preview": "MEASURED 2026-09-20, on `main` after #477 merged. Every `bitstreams[].materialization.localPath` in `who-iris/catalogue/nodes/` names a file that does not exist:\n\n| node | localPath | resolves to | state |\n|---|---|---|---|\n| `item/18892cf3-…` | `uploads/WPR-RDO-2020-003-eng.pdf` | `who-iris/uploads/WPR-RDO-2020-003-eng.pdf` | **MISSING** |\n| `item/local:9789241548960-eng` | `uploads/9789241548960",
       "file": "beans/defs/folio-assistant-yl5w--catalogue-localpath-is-an-unchecked-edge-and-all-t.md"
+    },
+    {
+      "id": "folio-assistant-yt7j",
+      "title": "SCHEMA: coverage.* is repo-root relative while a directory's path is instance-relative, and nothing says so",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:53:52Z",
+      "updatedAt": "2026-09-20T22:53:52Z",
+      "preview": "Found while building the `elsewhere` state (bean `flh4`, PR #619). A `ContentDirectory`'s `path` resolves against the INSTANCE root; its `coverage.visualiser` / `coverage.docs` resolve against the REPO root. Nothing in `SubgraphCoverageSchema` or `ContentDirectorySchema` says so.\n\nMeasured 2026-09-20 across `harness.json` and `cat-harness/harness.json`: of 27 coverage paths, **25 resolve only from",
+      "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-dire.md"
     },
     {
       "id": "folio-assistant-yv4z",

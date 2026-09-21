@@ -1,10 +1,11 @@
 ---
 # folio-assistant-etg1
 title: 'bootstrap-tools: bootstrap''s shapes become Zod WITHOUT bootstrap knowing zod at all'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-20T20:57:52Z
-updated_at: 2026-09-20T20:57:52Z
+updated_at: 2026-09-20T22:53:44Z
 parent: folio-assistant-vke6
 ---
 
@@ -84,3 +85,49 @@ inside `cat-bootstrap/`, the two .json files are just files, as today.
 2. Whether the generated .json carries a provenance header. It would not make
    bootstrap know zod, and it is what stops a hand-edit — but it is a line an
    Initiator reads and must not be confused by.
+
+## Summary of Changes
+
+`cat-bootstrap-tools/` exists as a sibling top-level instance, declaring a
+`schemas` graph, with `schemas/discussion.ts` as the authoritative Zod.
+`cat-harness/scripts/gen-bootstrap-schemas.ts` generates
+`cat-bootstrap/skills/discussion.*.schema.json` from it, `$id`s unchanged, and
+`bootstrap-tools:schemas:check` is in the gate set.
+
+**Bootstrap is untouched apart from the two generated files.** It carries no
+import, no dependency and no build step; read from inside `cat-bootstrap/`
+those files are exactly what they were.
+
+### The finding that shaped it
+
+`zodToJsonSchema` drops `.refine()` entirely — measured: no `allOf`, no
+`if`/`then`, no message. The output document's two conditionals
+(`assumed` requires `assumption`, `unsettled` requires `stillOpen`) would have
+vanished, so the published schema would have started ACCEPTING what it
+currently REJECTS, at an `$id` consumers follow. The generator re-applies them
+from `JSON_SCHEMA_CONDITIONALS`, and `discussion.test.ts` proves it with a
+corpus of documents that MUST fail — falsified by deleting `allOf`, which
+turns 5 tests red.
+
+A second, quieter change was caught and reverted: `z.object()` is strict, so
+the exporter added `additionalProperties: false` everywhere, TIGHTENING the
+contract. Stripped, and the question of whether to adopt it deliberately is
+bean `z634`.
+
+### Measured result
+
+    before: 113 modules, cat-bootstrap contributing 0
+    after:  115 modules, cat-bootstrap-tools contributing 11 declarations
+            and a relationship diagram at
+            /cat-harness/schemas/cat-bootstrap-tools/
+
+The shape was written as a literal `z.object({...})` rather than a shared
+shape constant on purpose: a bare object literal is `undetermined` to a
+syntactic reader (as `themePaletteShape` and `kgNodeLabelShape` are), and
+hiding the biggest shape behind a variable would have defeated the reason this
+instance exists.
+
+Also required a repository-scoped duplicate in `cat-harness/harness.json`,
+the same one `detangle`, `kg-navigation` and `large-datasets` carry: a
+directory declared only in an instance that is not a DEPENDENCY is invisible
+from this root.

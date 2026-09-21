@@ -12,8 +12,13 @@
       "findings": []
     },
     "consulted-skill-not-performed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "bean-blocking",
+          "detail": "\"bean-blocking\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `cat-harness` at `skills/`, `cat-bootstrap` at `cat-bootstrap/skills/`, `cat-bootstrap-render` at `cat-bootstrap/render/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`, `kg-navigation` at `kg-navigation/skills/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`) — a nested instance may name it, and this audit does not read one."
+        }
+      ]
     },
     "skill-in-role-or-process": {
       "result": "fail",
@@ -29,6 +34,10 @@
         {
           "where": "discussion",
           "detail": "no role carries \"discussion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `cat-bootstrap` at `cat-bootstrap/skills/`, `cat-bootstrap-render` at `cat-bootstrap/render/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`, `kg-navigation` at `kg-navigation/skills/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "docs-auto",
+          "detail": "no role carries \"docs-auto\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `cat-bootstrap` at `cat-bootstrap/skills/`, `cat-bootstrap-render` at `cat-bootstrap/render/`, `methodology-raci` at `methodologies/raci/`, `methodology-crdm` at `methodologies/crdm/`, `cat-harness-src` at `src/skills/`, `kg-navigation` at `kg-navigation/skills/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "fhir-client-operations",
@@ -112,6 +121,10 @@
           "detail": "nested instance \"agent-skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
+          "where": "cat-bootstrap-tools/harness.json",
+          "detail": "nested instance \"cat-bootstrap-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
           "where": "cat-bootstrap/harness.json",
           "detail": "nested instance \"cat-bootstrap\" declares its own graph, and this audit does not read it — 3 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
@@ -151,8 +164,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
+    "pass": 7,
+    "fail": 3,
     "n/a": 0,
     "unknown": 0
   }

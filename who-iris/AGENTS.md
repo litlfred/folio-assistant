@@ -6,11 +6,19 @@ both are about the difference between knowing of something and holding it.
 
 ## The gap is the point, not a shortfall
 
-Twelve nodes are modelled here; upstream has over a million files. **A
-catalogue by reference models the SHAPE of a corpus without holding it.** So
-"only twelve" is never a finding, a backlog, or a reason to bulk-import. An
-agent that treats the gap as work to be done is misreading what this instance
-is for.
+A dozen-odd nodes are modelled here; upstream reports **273,559 items** across
+**1,057,223 files**. **A catalogue by reference models the SHAPE of a corpus
+without holding it.** So "only a dozen" is never a finding, a backlog, or a
+reason to bulk-import. An agent that treats the gap as work to be done is
+misreading what this instance is for.
+
+**No exact count is given here on purpose.** This line said *"Twelve nodes"*
+and was wrong within a day of being written — a collection node landed and
+nothing made the sentence follow. `bun run check:catalogue` prints the census,
+and the catalogue is the answer; a count in prose is a claim rather than
+evidence. The two upstream figures above ARE exact because they are
+transcribed from IRIS's own pages and recorded in `catalogue/catalogue.json`
+with their basis, where a change to either is a change to a checked file.
 
 Before materialising anything, go through the gates in
 [`materialize-remote`](../folio-assistant-core/schemas/materialization.ts).

@@ -1,14 +1,15 @@
 {
-  "name": "@anthropic-ai/folio-assistant",
+  "_name_comment": "THE NAME THE RELEASE ALREADY PUBLISHES UNDER. This said `@anthropic-ai/folio-assistant` until 2026-09-20 while `release-folio-assistant.yml` carried `sed -i 's/@anthropic-ai/@litlfred/' package.json` immediately before `npm publish`, alongside an `.npmrc` writing `@litlfred:registry=...`. So the published identity was `@litlfred/folio-assistant` and the DECLARED one was not — two answers to one question, with the declaration losing at build time. Bean `frq2`. The sed is gone: an identity is declared, never patched on the way out.",
+  "name": "@litlfred/folio-assistant",
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "Content-agnostic assistant platform \u2014 MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
+  "description": "Content-agnostic assistant platform — MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
   "license": "Apache-2.0",
+  "_repository_comment": "`litlfred/folio-assistant`, not `litlfred/qou` with `directory: folio-assistant`. That was the pre-split layout, where this package was a subdirectory of the folio; it has been its own repository since, and the stale value pointed a consumer at a repo that does not contain it. Same class as every other defect in bean `frq2`: a literal that travelled at the split with its text unchanged.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/litlfred/qou.git",
-    "directory": "folio-assistant"
+    "url": "https://github.com/litlfred/folio-assistant.git"
   },
   "main": "cat-harness/src/index.ts",
   "exports": {
@@ -59,6 +60,8 @@
     "check:catalogue": "bun run who-iris/scripts/check-catalogue.ts",
     "iris:pages": "bun run who-iris/scripts/gen-iris-pages.ts",
     "iris:pages:check": "bun run who-iris/scripts/gen-iris-pages.ts --check",
+    "iris:covers": "bun run who-iris/scripts/gen-covers.ts",
+    "iris:covers:check": "bun run who-iris/scripts/gen-covers.ts --check",
     "check:ci-health": "bun run cat-harness/scripts/check-ci-health.ts",
     "check:ci-invocations": "bun run cat-harness/scripts/check-ci-invocations.ts",
     "check:command-paths": "bun run cat-harness/scripts/check-command-paths.ts",
@@ -106,6 +109,8 @@
     "deps:python": "bun run cat-harness/scripts/gen-python-deps.ts",
     "deps:python:check": "bun run cat-harness/scripts/gen-python-deps.ts --check",
     "docs:harness": "bun run cat-harness/scripts/sync-docs-harness.ts",
+    "docs:auto": "bun run cat-harness/scripts/gen-docs-auto.ts",
+    "docs:auto:check": "bun run cat-harness/scripts/gen-docs-auto.ts --check",
     "docs:harness:check": "bun run cat-harness/scripts/sync-docs-harness.ts --check",
     "eval:crdm-detect": "bun run cat-harness/scripts/eval-crdm-detect.ts",
     "external-schemas": "bun run cat-harness/scripts/external-schemas.ts",
@@ -165,6 +170,8 @@
     "schema:graph": "bun run cat-harness/scripts/schema-graph.ts",
     "schema:viz": "bun run cat-harness/scripts/gen-schema-viz.ts",
     "schema:viz:check": "bun run cat-harness/scripts/gen-schema-viz.ts --check",
+    "bootstrap-tools:schemas": "bun run cat-harness/scripts/gen-bootstrap-schemas.ts",
+    "bootstrap-tools:schemas:check": "bun run cat-harness/scripts/gen-bootstrap-schemas.ts --check",
     "serve:rendering": "bun run cat-harness/scripts/serve-rendering.ts",
     "site:links": "bun run cat-harness/scripts/site-links.ts",
     "stakeholder-map": "bun run cat-harness/scripts/stakeholder-map.ts",

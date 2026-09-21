@@ -92,6 +92,74 @@ reconciling the two finds nothing to explain the gap. They go in `omitted[]`
 with a pattern, a reason and a count — measured on the IRIS zip: 11 real
 entries, 12 shadows.
 
+## Derived renderings — the artefact we MADE, out of bytes we hold
+
+A cover thumbnail, an OCR text layer, a page raster, a converted figure: none
+of these came from the source. They were produced here, from something the
+source supplied, and **the catalogue records an artefact, not where it came
+from** — so a derived file with a plausible name and a `materialized` state is
+indistinguishable from one the publisher shipped.
+
+DSpace makes this concrete. It generates a `THUMBNAIL` bundle of its own, so
+"a THUMBNAIL bitstream on an IRIS item" reads, to anything downstream, as
+IRIS's thumbnail. The three WHO IRIS covers in this repository are **not**
+those: `iris.who.int` is egress-blocked here, nothing upstream was fetched, and
+each is page 1 of a PDF already held, rasterised by
+`cat-harness/scripts/pdf-cover.py`.
+
+Three rules, in the order they bite:
+
+1. **`of` names what it was DERIVED FROM, not what it is ABOUT.** The Handle
+   identifies the item; putting it on a cover we rendered asserts IRIS supplied
+   the image. `local:cat-harness/uploads/<file>.pdf#page=1` says the true thing
+   and resolves to the true thing.
+2. **The declaration is authored, and the tool refuses without it.**
+   `who-iris/scripts/gen-covers.ts` will not write bytes for a `THUMBNAIL`
+   whose `materialization.note` does not declare the derivation. Generating
+   that sentence would make the check circular — a tool cannot attest to its
+   own output.
+3. **`purpose: working`, never `archival`.** A rendering is regenerable from
+   bytes already held and answers no source-loss question;
+   `MaterializationSchema` already refuses a `working` copy that claims to
+   discharge `sourceLoss`, and this is the case that rule was written for.
+
+**Take the determined division, not the clever one.** `pdf-cover.py` renders
+page 1 and calls it the cover, for the same reason `pdf-pages.py` sections by
+page: page 1 is a determined answer and "the cover" is not. Measured across
+the three items, page 1 is the cover in all three and looks different in each
+— a portrait designed cover (2:3), a landscape one (0.705:1), and a scanned
+title page. A heuristic would have had to beat that on all three, with no way
+to say when it was unsure.
+
+**Record the geometry.** `Bitstream.pixelWidth`/`pixelHeight` exist so a
+listing reserves the box before the bytes arrive. Absent is *unmeasured*, not
+square: any default would be wrong about two of those three.
+
+**Check the claim where the check can actually run.** A gate that re-renders a
+derived artefact needs the backend that produced it — and the CI job that runs
+this repository's gates installs `ruff` and nothing else, which is stated on
+`ingest-stdlib`'s own Tool node and was walked into anyway: `iris:covers:check`
+threw `pymupdf is not installed` on every run and turned a branch red three
+times.
+
+The fix is not to install a backend in the gate job, and **not** to degrade to
+could-not-determine — that would report `unknown` on every CI run, which is a
+check nobody can read. Split the claim instead. Of the five things a node
+asserts about a derived image, four need no decoder at all:
+
+| claim | needs the backend? |
+|---|---|
+| the bytes exist | no |
+| their sha256 is the declared one | no |
+| their length is the declared one | no |
+| their pixel dimensions are the declared ones | **no** — a PNG's `IHDR` puts width and height at bytes 16..24, big-endian |
+| these bytes are what that source renders to | **yes** |
+
+So the gate keeps its teeth everywhere and gains the last row where the
+backend happens to be present — and it **says in its own output which of the
+two it ran**, because "3 covers verified" would read identically either way
+and the two are different assurances.
+
 ## Where the record lives
 
 Beside the container, in `uploads/`. **`uploads/` is a `state` graph** — a
@@ -107,3 +175,6 @@ file's `localPath`, which exists only once somebody asked for it.
   field is optional or not.
 - `schemas/materialization.ts` — `materializedAt`, the timestamp this one is
   most often confused with.
+- `cat-harness/scripts/pdf-cover.py` — the generic page raster, and
+  `who-iris/scripts/gen-covers.ts` the instance wiring that decides which
+  documents get one and checks every claim it makes about them.

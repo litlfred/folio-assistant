@@ -29,16 +29,33 @@ IRIS *does with them* is here.
 
 From IRIS's own storage report (By Location → Entire Site), read 2026-09-20:
 
-| | |
-|---|---|
-| files | **1,057,223** |
-| storage | **361.55 GB** |
-| top-level communities | **8** |
+| | | source |
+|---|---|---|
+| items | **273,559** | the home page's search placeholder |
+| files | **1,057,223** | the storage report |
+| storage | **361.55 GB** | the storage report |
+| top-level communities | **8** | the storage report |
 
-**That is a FILE count, not an item count.** An item carries several bitstreams
-(below), so the item count is smaller and IRIS does not publish it. Any
-denominator built from this **overstates**, which is the safe direction for a
-size gate and the wrong direction for a completeness claim.
+**These are two different denominators and they were one field until
+2026-09-20.** The storage report publishes files; `totalItemsUpstream` was fed
+the file count with a note saying so, because an item carries several
+bitstreams and IRIS — *on that page* — does not publish how many items there
+are. It publishes it on the **home page**, in the search box: *"Search through
+the repository's 273559 items"*. So the catalogue now carries both, and
+`totalFilesUpstream` exists in the schema for exactly this.
+
+**3.86 files per item**, which lands inside the 3–4× range this section
+predicted from the bundle structure before either number was known. The
+prediction is not the point; the point is that a *labelled* wrong denominator
+could be replaced the day the right one appeared, while a silently wrong one
+would still be in every fraction.
+
+The storage figure is **derived, not transcribed**: the report prints two
+decimals and no byte count, so `totalBytesUpstream` is `round(361.55 × 1024³)`
+and is good to about ±5 MiB. It is GiB rather than GB because that is the
+reading under which every per-community figure the same report prints —
+238.58, 19.72, 34.84, 26.14, 25.71 — reproduces **exactly**, and none of them
+does at 10⁹.
 
 ## Three identifier systems, and the one in our slugs is the weakest
 
@@ -121,8 +138,19 @@ this way rather than as advice.
 | **R5** | Carry `dc.subject.mesh` as a **controlled** value with its authority | it can be resolved and subsumed; a keyword cannot |
 | **R6** | Model bitstreams per **bundle**, with size and format on the bitstream | an item is not a file |
 | **R7** | Model containment as a list of **paths** | four levels deep, and multiple mappings are legal |
-| **R8** | Never infer metadata from the PDF when a record exists | see below |
+| **R8** | Never infer metadata from the PDF when a record exists | OCR off a title page catalogued the WHO Editorial Style Manual as *Abies* |
 | **R9** | Record what the source says even when it contradicts the file | `dc.description` says `30 p.`; the PDF has **33** |
+| **R10** | An item with no known collection carries `parents: []` — never a guessed one | held-and-unplaceable is a STATE; inventing containment is unfalsifiable |
+| **R11** | Key a node by **path** when its UUID is not in the capture | an invented UUID resolves to nothing while looking authoritative |
+| **R12** | Keep the **page captured** and the **identifier** apart | `/items/<uuid>/full` is what was fetched; the Handle is what the item IS |
+| **R13** | A `materialized` claim must name bytes that EXIST, and something must check it | see `yl5w`: three claims resolved to nothing and the gate said "clean" |
+| **R14** | Read a storage figure in the units that round-trip its own bytes | IRIS prints "GB" for what its byte counts make **GiB** — a 7% error |
+| **R15** | Never fall back to a parent URL when an item has no upstream URI | "no upstream URI recorded" is the answer; the front page is a lie that resolves |
+| **R16** | A partial transcription must SAY it is partial | a truncated abstract that does not declare itself cannot be told from a short one |
+| **R17** | Hold what you hold: model the bitstreams whose bytes are here | the handbook lists **8** upstream; this repository has **1** |
+| **R18** | Do not "correct" a record that looks wrong | the English-titled editorial manual really does carry an **Italian** ISBN |
+| **R19** | A derived figure must round-trip the figure it was derived from | the site total claimed to be `361.55 × 1024³` and rendered as **361.56** |
+| **R20** | An item count and a file count are different denominators | 273,559 against 1,057,223 — a fraction built from the wrong one is off by 3.86× |
 
 ### R8 has a worked failure, in this repository
 
@@ -136,17 +164,60 @@ one title (`Handbook forGuideline Development 2nd edition` from joined title
 lines, `GRC Handbook - second edition` from PDF docinfo, and the real one), with
 no authority among them. That is what an IRIS record settles.
 
-## Getting a record, and why there isn't one for two of three
+## Covers: an artefact we made, filed where IRIS files its own
+
+The replica's Recent Submissions strip shows a cover beside each item, because
+the real page does. **None of them came from IRIS.** Each is page 1 of a PDF
+this repository already holds, rasterised by
+`cat-harness/scripts/pdf-cover.py` and filed as a `THUMBNAIL`-bundle bitstream
+— which is the bundle name DSpace uses for the thumbnails **it** generates.
+That collision is the whole hazard: nothing downstream can tell the two apart
+from the bundle name, so the node has to say.
+
+`who-iris/scripts/gen-covers.ts` is the instance half. It renders only covers
+the **catalogue asks for** — a node declares the `THUMBNAIL` bitstream and
+this supplies the bytes, so adding one is a catalogue edit rather than a script
+quietly adding files to the repository. And it **refuses** to write bytes for a
+`THUMBNAIL` whose `materialization.note` does not declare the derivation:
+generating that sentence would make the check circular, since a tool cannot
+attest to its own output.
+
+`--check` re-renders and compares bytes, the recorded `sha256` and the recorded
+pixel dimensions. That is R13 discharged for the one case this script is
+responsible for — the rest of `yl5w` is still open.
+
+### The WHO emblem is on the covers, and that is not the chrome rule
+
+The site chrome carries no WHO mark, per the owner: *"leeav off WHO logo (as
+with all who-pages for now, not until published under WHO, just use colors)."*
+The **covers do** — the WPRO style guide's cover is the emblem over a blue
+field, and both HQ items carry it in print. That is content, not branding: the
+instruction is about not dressing *our* page as WHO's, and the same message
+that gave it also asked for the covers to be extracted. Reversible in one
+place — the `<img>` in `submission()` — without touching the catalogue that
+records them.
+
+## Getting a record — and the prediction this section made, which came true
 
 DSpace 7 exposes `/server/api/discover/search/objects`, paged and filterable by
 `dsoType`, `scope` and facets; communities are listed at `/community-list`.
 
-**None of that was exercised here.** `iris.who.int` is egress-blocked from this
-environment — `curl` returns `CONNECT tunnel failed, response 403`, the same
-block bean `r1lz` recorded on 2026-09-19. So the API shape above is read from
-DSpace's documentation and the site's own navigation, and two of the three items
-carry **derived** records marked as such. They are placeholders with honest
-provenance, to be replaced wholesale when IRIS is reachable — not records.
+**None of that has ever been exercised here.** `iris.who.int` is egress-blocked
+from this environment — `curl` returns `CONNECT tunnel failed, response 403`,
+the same block bean `r1lz` recorded on 2026-09-19. The API shape above is read
+from DSpace's documentation and the site's own navigation, not from a call.
+
+This section used to end by saying two of the three items carried **derived**
+records, *"placeholders with honest provenance, to be replaced wholesale when
+IRIS is reachable — not records."*
+
+**That is exactly what happened, by a route it did not anticipate.** IRIS is
+still unreachable. On 2026-09-20 the owner captured the two full item records
+by hand and uploaded them, and both derived records were replaced wholesale.
+The lesson is not that the prediction was lucky: it is that *marking a derived
+record as derived* is what made the replacement a clean swap instead of an
+archaeology exercise. Nothing had to be reconciled, because nothing downstream
+had been allowed to believe the placeholder.
 
 Enumeration cost, subsetting and the characterisation that decides whether IRIS
 may be cited at all are in
