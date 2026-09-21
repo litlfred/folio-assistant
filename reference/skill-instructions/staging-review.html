@@ -716,6 +716,199 @@
 <p>Provide before/after URL pairs whenever rendered content has changed in a
 feature branch. This is part of every review or feedback session involving
 visual content.</p>
+<h2 id="signature--one-optional-string-in-a-reviewable-list-out">
+  
+  
+    <a href="#signature--one-optional-string-in-a-reviewable-list-out" class="anchor-heading" aria-labelledby="signature--one-optional-string-in-a-reviewable-list-out"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Signature — one optional string in, a reviewable list out
+  
+  
+</h2>
+    
+
+<p>Stated formally because this skill is invoked by other processes and by a
+person typing <code class="language-plaintext highlighter-rouge">/staging-review</code>, and a contract that lives in prose is one each
+caller re-derives.</p>
+<h3 id="input">
+  
+  
+    <a href="#input" class="anchor-heading" aria-labelledby="input"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>type</strong></td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <td><strong>cardinality</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">0,1</code> — optional, and at most one</td>
+    </tr>
+    <tr>
+      <td><strong>meaning</strong></td>
+      <td>what the reader wants to look at, <strong>in their own words</strong></td>
+    </tr>
+    <tr>
+      <td><strong>absent</strong></td>
+      <td>the whole preview: every page this branch changed</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Keep the wording <strong>verbatim</strong> wherever the output echoes it — the same rule
+<a href="/folio-assistant/reference/skill-instructions/goal-review.html"><code class="language-plaintext highlighter-rouge">goal-review</code></a> applies to a goal, and for the same reason: a
+request the agent paraphrased is a different request, and the reader cannot
+tell which one the list was built for.</p>
+
+<p>It <strong>narrows</strong>; it never adds. <em>“The navbar”</em> gets the pages carrying it, not a
+page that mentions it. <strong>An ask matching nothing that changed is said, not
+answered with the whole preview</strong> — a list that silently ignores its input is
+worse than an empty one, because the reader believes it was answered.</p>
+<h3 id="output">
+  
+  
+    <a href="#output" class="anchor-heading" aria-labelledby="output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Output
+  
+  
+</h3>
+    
+
+<p>Markdown, in this order. Every part is required; an absent part is <strong>stated</strong>,
+not dropped.</p>
+
+<ol>
+  <li><strong>Where to start</strong> — one line, one URL: the one that best answers the input,
+or the page with the most change behind it when there was none. A reader
+opens one thing first whether or not you choose it for them.</li>
+  <li><strong>The comparison table</strong> below — before (main), after (staging), what to
+review.</li>
+  <li><strong>What could not be checked</strong>, per the three states below.</li>
+</ol>
+<h3 id="the-third-column-is-the-one-with-value">
+  
+  
+    <a href="#the-third-column-is-the-one-with-value" class="anchor-heading" aria-labelledby="the-third-column-is-the-one-with-value"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The third column is the one with value
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">What changed</code> must be phrased as <strong>something to look at</strong>, never as a
+restatement of the filename. Build it by mapping changed files to published
+surfaces:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>what changed</th>
+      <th>which page</th>
+      <th>what to say</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a stylesheet or client script</td>
+      <td>every page that loads it</td>
+      <td>the affordance that changed, and <strong>the gesture to make</strong></td>
+    </tr>
+    <tr>
+      <td>a template or include</td>
+      <td>the pages that include it</td>
+      <td>where on the page to look</td>
+    </tr>
+    <tr>
+      <td>generated content</td>
+      <td>the page it generates</td>
+      <td><strong>what it was generated from</strong> — a stale generator and a correct one look identical on the page</td>
+    </tr>
+    <tr>
+      <td>a schema, a test, a gate</td>
+      <td><strong>none</strong></td>
+      <td>say so, and point at the diff</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Where a change is only visible after an interaction — a control behind a
+disclosure, a mode a reader turns on — say WHICH interaction.</strong> A reviewer who
+cannot find the thing reports it as missing. That failure is on the record: a
+contrast defect survived two days behind a tile nobody clicked (bean <code class="language-plaintext highlighter-rouge">rptk</code>),
+because the gate that swept the page never opened the view.</p>
+<h3 id="the-third-state-here-as-everywhere">
+  
+  
+    <a href="#the-third-state-here-as-everywhere" class="anchor-heading" aria-labelledby="the-third-state-here-as-everywhere"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The third state, here as everywhere
+  
+  
+</h3>
+    
+
+<p>“Could not determine” is never rendered as clean — and a change with <strong>no
+rendered surface</strong> is not a failure, it is the useful answer.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>case</th>
+      <th>report it as</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>not deployed yet</td>
+      <td>not deployed, with the timing from §”Say how long” — never a link to where it will be</td>
+    </tr>
+    <tr>
+      <td>a changed page absent from the publish ref</td>
+      <td><strong>a finding</strong> — the build dropped it, or it is not a page</td>
+    </tr>
+    <tr>
+      <td>no rendered surface</td>
+      <td>reviewed in the diff, naming the files</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The middle row is the most useful thing this skill can report, and composing
+its URL anyway would hide exactly that — §”Before you report a staging URL as
+broken”.</p>
+<h3 id="the-commit-in-the-bots-comment-is-not-your-branch-head">
+  
+  
+    <a href="#the-commit-in-the-bots-comment-is-not-your-branch-head" class="anchor-heading" aria-labelledby="the-commit-in-the-bots-comment-is-not-your-branch-head"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The commit in the bot’s comment is NOT your branch head
+  
+  
+</h3>
+    
+
+<p>Measured 2026-09-21, by getting it wrong in this skill’s own first use. The
+comment named <code class="language-plaintext highlighter-rouge">3894c41</code>; the branch head was <code class="language-plaintext highlighter-rouge">037812c7</code>; I reported the preview
+as <em>“one commit behind”</em>. <strong>It was current.</strong> On a <code class="language-plaintext highlighter-rouge">pull_request</code> trigger the
+stage job builds <code class="language-plaintext highlighter-rouge">refs/pull/&lt;n&gt;/merge</code> — your head merged into the base — so
+the commit it names is an object that <strong>never</strong> equals your head and is not
+even in your clone. Comparing the two reports a stale preview on every PR,
+forever.</p>
+
+<p>Resolve it instead. The merge commit’s <strong>second parent</strong> is the head it was
+built from:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin <span class="s2">"refs/pull/&lt;n&gt;/merge:refs/remotes/origin/pr-&lt;n&gt;-merge"</span> <span class="nt">-q</span>
+git log <span class="nt">--format</span><span class="o">=</span><span class="s2">"%h %p"</span> <span class="nt">-1</span> origin/pr-&lt;n&gt;-merge   <span class="c"># &lt;merge&gt; &lt;base&gt; &lt;YOUR HEAD&gt;</span>
+</code></pre></div></div>
+
+<p>Stale means that second parent is not your head — nothing else does. This is
+the same fact <code class="language-plaintext highlighter-rouge">bun run gates</code> exists around: <strong>CI tests the merge</strong>, and so
+does the preview, so a branch behind its base is previewing a tree nobody will
+have.</p>
 <h2 id="when-to-provide-beforeafter-urls">
   
   
@@ -1312,7 +1505,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35628861502"><code>220233c</code></a> &middot; 2026-09-21T16:58:08Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35630564564"><code>6d6dfa6</code></a> &middot; 2026-09-21T17:13:45Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

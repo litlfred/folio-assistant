@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T16:58:49.403Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/220233c76e65101f345dea42d3a2d5b079044659",
-  "sourceCommitSha": "220233c76e65101f345dea42d3a2d5b079044659",
-  "sourceCommitAt": "2026-09-21T18:56:58+02:00",
+  "generatedAt": "2026-09-21T17:14:30.031Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6d6dfa6edc9de29c518c71c2c12079673a47517a",
+  "sourceCommitSha": "6d6dfa6edc9de29c518c71c2c12079673a47517a",
+  "sourceCommitAt": "2026-09-21T19:12:50+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -2258,12 +2258,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "staging-review",
       "title": "Staging review — before/after comparison",
-      "description": "Staging preview and before/after comparison for content review. Provides before (MAIN) and after (STAGING) URLs for rendered content so reviewers can visually compare changes. Used by CRDM feature development workflow and content authoring review sessions.",
+      "description": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (STAGING) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 289,
+      "instructionLines": 388,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -32881,8 +32881,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "220233c76e65101f345dea42d3a2d5b079044659",
+    "sha": "6d6dfa6edc9de29c518c71c2c12079673a47517a",
     "pr": "main",
-    "run": "35628861502"
+    "run": "35630564564"
   }
 }
