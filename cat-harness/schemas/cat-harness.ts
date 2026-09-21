@@ -633,7 +633,61 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // few hours on 2026-09-20 it held `memory` nodes, which are `context`
     // (beans `mhh9`, `07xs`).
     holds: "content",
-    summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
+    summary: "The harness layer's own knowledge graph, where a directory holds more than one of its parts.",
+  },
+  // ── THE THREE KINDS SPLIT OUT OF `cat-harness`, 2026-09-21 ─────────────
+  //
+  // One kind was declared by 22 directories and held FOUR branches of the
+  // taxonomy at once — Skills, Workflows, Scenarios and methodologies — so a
+  // consumer filtering on kind could not tell them apart. "Give me the
+  // Workflows" was not a query anybody could write; it could only be
+  // approximated by matching a path, which is exactly the fragility the graph
+  // exists to remove. Owner's decision, 2026-09-21, after the census was put
+  // to them.
+  //
+  // ## `cat-harness` SURVIVES, and is not deprecated
+  //
+  // An alias cannot express a split: `GRAPH_KIND_ALIASES` maps one name to one
+  // name, and `cat-harness` would have to become four. It also had a FIFTH job
+  // the split does not name — on a directory declaring `["schemas",
+  // "cat-harness"]` it means "a schema IS a knowledge-graph node", which is
+  // why `isKgOnlyDirectory` tests for the kind EXACTLY rather than for its
+  // presence. That job is still real, so the umbrella stays and now means what
+  // it always meant on those entries: harness knowledge-graph content whose
+  // directory holds more than one part of it.
+  //
+  // A downstream declaration still saying `["cat-harness"]` therefore keeps
+  // parsing. What it loses is the finer query, which is the thing it never had.
+  skills: {
+    type: termIri("SkillGraph"),
+    renderable: false,
+    // A Skill is a Capability with defined inputs and outputs — an authored
+    // instruction body. It states what can be done, never what was done.
+    holds: "content",
+    summary: "Skill packages — the authored instruction bodies an Actor performs a Task from.",
+  },
+  workflows: {
+    type: termIri("WorkflowGraph"),
+    renderable: false,
+    // The BPMN and DMN are the source of truth and are READ to run a process;
+    // where a running instance GOT TO is `workflow-state`, which is `state`.
+    // Two questions, two graphs — see the `workflow-state` skill for why one
+    // answer rather than two is the whole point.
+    holds: "content",
+    summary: "Executable BPMN processes and the DMN tables their gateways compute from.",
+  },
+  scenarios: {
+    type: termIri("ScenarioGraph"),
+    renderable: false,
+    // Actors, the Roles they take, and the User Stories those Roles serve.
+    //
+    // NAMED FOR WHAT IT WILL HOLD, and one third of that is not declared yet:
+    // a Role carries `useCases` as free-text strings, so a User Story cannot
+    // be pointed at or traced to the Workflow it justifies. Naming the kind
+    // now is what gives that gap somewhere to be fixed; calling it `roles`
+    // would have to be renamed the moment it was.
+    holds: "content",
+    summary: "Actors, the Roles they take on, and the User Stories those Roles serve.",
   },
   // ── Judgement methodologies, one sub-graph each ───────────────────────
   //
@@ -4305,9 +4359,39 @@ export function declaredAssets(
 export const KG_GRAPH_KIND = "cat-harness";
 
 /**
+ * The kinds whose directories hold SKILL BODIES, and may be scanned for them.
+ *
+ * `cat-harness` is here because a downstream declaration that has not migrated
+ * still spells a skill directory that way, and dropping it would make every
+ * unmigrated instance's skills unreachable rather than merely unclassified.
+ *
+ * `workflows` and `scenarios` are NOT here, and that is the split doing its
+ * job: `skills/workflows/` holds 51 `.bpmn` files and `skills/roles/` holds one
+ * `roles.json`, so neither ever contributed a skill body — they were scanned
+ * only because they sat inside a directory that did.
+ */
+export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_KIND];
+
+/**
+ * Every kind that IS harness knowledge-graph content — the umbrella and the
+ * three kinds split out of it.
+ *
+ * Distinct from {@link SKILL_BEARING_GRAPH_KINDS}, and the difference is the
+ * whole point of the split: a consumer asking "is this the KGraph?" wants all
+ * four, while one asking "may I scan this for skill bodies?" wants two. One
+ * list serving both questions is what made `cat-harness` ambiguous.
+ */
+export const KG_CONTENT_GRAPH_KINDS: readonly string[] = [
+  KG_GRAPH_KIND,
+  "skills",
+  "workflows",
+  "scenarios",
+];
+
+/**
  * Does this directory hold ONLY the knowledge graph?
  *
- * **Exactly `cat-harness`, not merely including it.** `schemas/` declares
+ * **Exactly one skill-bearing kind, not merely including one.** `schemas/` declares
  * `["schemas", "cat-harness"]` — a schema IS a knowledge-graph node, which is
  * why it carries the kind at all — but its `.md` files are READMEs and its
  * nodes are `.ts`. Measured 2026-09-19: including it added `schemas/README.md`
@@ -4320,7 +4404,31 @@ export const KG_GRAPH_KIND = "cat-harness";
  * scanned for it; one holding several has to say which file is which.
  */
 export function isKgOnlyDirectory(d: ContentDirectory): boolean {
-  return d.graphKinds.length === 1 && d.graphKinds[0] === KG_GRAPH_KIND;
+  return d.graphKinds.length === 1 && SKILL_BEARING_GRAPH_KINDS.includes(d.graphKinds[0]!);
+}
+
+/**
+ * Does this directory hold ONLY harness knowledge-graph content, of any of its
+ * kinds?
+ *
+ * **Wider than {@link isKgOnlyDirectory}, and the two must not be merged.**
+ * This one answers "is there a KGraph node in here at all" — which is what a
+ * consumer looking for roles, BPMN or requirements needs. The narrow one
+ * answers "may I read every `.md` in here as a Skill body", which is false for
+ * `workflows/` (51 `.bpmn`) and `scenarios/` (one `roles.json`).
+ *
+ * Before the 2026-09-21 split those directories declared `["cat-harness"]` and
+ * so satisfied BOTH questions by accident. Restoring their reachability is
+ * what this function is for: without it the split would have silently removed
+ * every `cat-bootstrap` process from the exported graph, which is precisely
+ * the `dh4f` shape — a consumer reporting a clean run over what it never
+ * visited.
+ *
+ * `schemas/` is excluded by the same `length === 1` test and for the same
+ * measured reason given on the narrow one.
+ */
+export function isKgContentDirectory(d: ContentDirectory): boolean {
+  return d.graphKinds.length === 1 && KG_CONTENT_GRAPH_KINDS.includes(d.graphKinds[0]!);
 }
 
 /**

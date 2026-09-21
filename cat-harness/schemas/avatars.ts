@@ -99,6 +99,32 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
   },
+  // ── The three kinds split out of `cat-harness`, 2026-09-21 ──────────────
+  //
+  // TONES NEAR THE PARENT'S 268 ON PURPOSE. These are the parts of one graph,
+  // and a reader scanning a legend should see them as a family rather than as
+  // three unrelated kinds that happen to sit together. Far enough apart to
+  // tell the three from each other; close enough that none reads as belonging
+  // somewhere else.
+  skills: {
+    // An open book. A Skill is an instruction body, and nothing else here is.
+    glyph: "M4 5h6a2 2 0 012 2v12a2 2 0 00-2-2H4zm16 0h-6a2 2 0 00-2 2v12a2 2 0 012-2h6z",
+    tone: 256,
+    reads: "an open book — the instruction an Actor performs a Task from",
+  },
+  workflows: {
+    // Two nodes and a gateway between them: the smallest honest BPMN.
+    glyph: "M4 12h4m4 0h4m4 0h.01M6 12a2 2 0 11-4 0 2 2 0 014 0zm14 0a2 2 0 11-4 0 2 2 0 014 0zM12 9l3 3-3 3-3-3z",
+    tone: 280,
+    reads: "two nodes either side of a diamond — a process and the decision in it",
+  },
+  scenarios: {
+    // Two figures. A Role is a part somebody plays, so the glyph is people
+    // rather than a document.
+    glyph: "M9 11a3 3 0 100-6 3 3 0 000 6zm0 0c-2.5 0-4 1.5-4 4v4h8v-4c0-2.5-1.5-4-4-4zm8-6a2.5 2.5 0 110 5M17 12c2 0 3 1.5 3 3v4h-3",
+    tone: 292,
+    reads: "two figures — the Actors and the Roles they take on",
+  },
   // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
   // and name both spelled in full, per the owner's ruling of 2026-09-20 and
   // as `folio-assistant-core/harness.json` records against itself.

@@ -47,7 +47,7 @@ import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
-import { BASE_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
@@ -1323,7 +1323,13 @@ async function collectProcesses(
   // named "a declared-but-ABSENT directory is reported" passed while its
   // fixture created the directory.
   for (const d of resolveDirectories([{ name: "(local)", root, own: true }])) {
-    if (!d.graphKinds.includes("cat-harness")) continue;
+    // All four spellings of "this is harness knowledge-graph content": the
+    // umbrella, plus the three kinds split out of it on 2026-09-21. Testing
+    // only the umbrella here would have quietly narrowed this sweep to the
+    // mixed `["schemas","cat-harness"]` entries the moment the split landed —
+    // a declared-but-absent skills directory would have stopped being
+    // reported, which is the `dh4f` shape this very loop exists to catch.
+    if (!d.graphKinds.some((k) => KG_CONTENT_GRAPH_KINDS.includes(k))) continue;
     if (!existsSync(d.absPath)) {
       problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
     }

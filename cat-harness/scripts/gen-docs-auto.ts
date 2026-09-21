@@ -209,7 +209,7 @@ export const TYPES: AutoDocType[] = [
   {
     id: "index/skills",
     title: "Skills",
-    graph: "cat-harness",
+    graph: "skills",
     extracts: "every skill markdown file, with the description it declares in its own front matter",
     collect(): AutoDocItem[] {
       // `skillMdDirs()`, NOT a recursive walk of the declared directories.
@@ -246,11 +246,19 @@ export const TYPES: AutoDocType[] = [
   {
     id: "index/processes",
     title: "Processes",
-    graph: "cat-harness",
+    graph: "workflows",
     extracts: "every BPMN process, with its own documentation, its lanes, and the skills its activities name",
     collect(): AutoDocItem[] {
       const items: AutoDocItem[] = [];
-      for (const d of declaredDirectories("cat-harness")) {
+      // BOTH the split kind and the umbrella it came out of. `workflows` is
+      // where an in-tree diagram lives after 2026-09-21; `cat-harness` is
+      // where a downstream instance's still is, and dropping it would make
+      // this index silently empty for them — which is worse than useless,
+      // because an empty index reads as "this instance has no processes".
+      const seen = new Set<string>();
+      for (const d of [...declaredDirectories("workflows"), ...declaredDirectories("cat-harness")]) {
+        if (seen.has(d.absPath)) continue;
+        seen.add(d.absPath);
         for (const f of walk(d.absPath, (n) => n.endsWith(".bpmn"))) {
           const xml = readFileSync(f, "utf-8");
           const name = /<bpmn:process[^>]*\sname="([^"]*)"/.exec(xml)?.[1];

@@ -67,13 +67,16 @@
     "memory",
     "methodology",
     "qa",
+    "scenarios",
     "schemas",
+    "skills",
     "todos",
     "tools",
     "translation-sources",
     "uploads",
     "voices",
-    "waiver"
+    "waiver",
+    "workflows"
   ],
   "links": [
     {
@@ -493,11 +496,11 @@
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "skills"
         }
       ],
       "findings": [
-        "kg-navigation: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
+        "kg-navigation: declares 1 graph(s) with no published viewer — skills. Declared and not rendered is a gap, not a dead link.",
         "kg-navigation: no avatar declared for this instance — showing the generic mark.",
         "kg-navigation: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
@@ -524,7 +527,7 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -539,10 +542,13 @@
         {
           "kind": "schemas",
           "path": "/cat-harness/schemas/large-datasets/"
+        },
+        {
+          "kind": "skills"
         }
       ],
       "findings": [
-        "large-datasets: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
+        "large-datasets: declares 2 graph(s) with no published viewer — cat-harness, skills. Declared and not rendered is a gap, not a dead link.",
         "large-datasets: no avatar declared for this instance — showing the generic mark.",
         "large-datasets: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/large-datasets/) rather than the instance's own themed root.",
         "large-datasets: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -580,9 +586,6 @@
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
-        },
-        {
           "kind": "catalogue"
         },
         {
@@ -593,6 +596,9 @@
           "path": "/cat-harness/library/who-iris/"
         },
         {
+          "kind": "skills"
+        },
+        {
           "kind": "themes"
         },
         {
@@ -600,7 +606,7 @@
         }
       ],
       "findings": [
-        "who-iris: declares 5 graph(s) with no published viewer — cat-harness, catalogue, docs, themes, uploads. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: declares 5 graph(s) with no published viewer — catalogue, docs, skills, themes, uploads. Declared and not rendered is a gap, not a dead link.",
         "who-iris: no avatar declared for this instance — showing the generic mark.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
@@ -803,12 +809,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 34
+          "value": 37
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 19
+          "value": 22
         },
         {
           "id": "views",
@@ -859,8 +865,14 @@
           "path": "/qa/"
         },
         {
+          "kind": "scenarios"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/cat-harness/"
+        },
+        {
+          "kind": "skills"
         },
         {
           "kind": "todos",
@@ -881,10 +893,13 @@
         },
         {
           "kind": "waiver"
+        },
+        {
+          "kind": "workflows"
         }
       ],
       "findings": [
-        "cat-harness: declares 11 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, tools, translation-sources, voices, waiver. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness: declares 14 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, scenarios, skills, tools, translation-sources, voices, waiver, workflows. Declared and not rendered is a gap, not a dead link.",
         "cat-harness: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
       ]
     },
@@ -909,7 +924,7 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
@@ -919,11 +934,14 @@
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "skills"
+        },
+        {
+          "kind": "workflows"
         }
       ],
       "findings": [
-        "cat-bootstrap: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link."
+        "cat-bootstrap: declares 2 graph(s) with no published viewer — skills, workflows. Declared and not rendered is a gap, not a dead link."
       ]
     }
   ]

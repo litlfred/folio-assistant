@@ -53,7 +53,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { findDeclarationFile, directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { findDeclarationFile, directoriesForGraph, repoRootFor, KG_CONTENT_GRAPH_KINDS } from "../schemas/cat-harness.js";
 
 // `folio` registers on import, and reading the whole declaration refuses an
 // unregistered kind. Same import, same reason, as `agent-memory.ts`.
@@ -635,7 +635,7 @@ export function corpus(repo: string): { file: string; corpus: Corpus }[] {
   for (const f of existsSync(join(repo, ".claude/skills")) ? walkMarkdown(join(repo, ".claude/skills")) : []) {
     out.push({ file: f.slice(repo.length + 1), corpus: "skill" });
   }
-  for (const graph of ["cat-harness", "methodology"]) {
+  for (const graph of [...KG_CONTENT_GRAPH_KINDS, "methodology"]) {
     for (const dir of directoriesForGraph(INSTANCE_ROOT, graph)) {
       if (!existsSync(dir)) continue;
       for (const f of walkMarkdown(dir)) out.push({ file: f.slice(repo.length + 1), corpus: "skill" });

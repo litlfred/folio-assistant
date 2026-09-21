@@ -15,7 +15,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
 
-import { resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
+import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
@@ -87,7 +87,7 @@ function holdsMarkdown(abs: string): boolean {
 export function kgDirectories(root: string): Array<{ id: string; path: string; absPath: string }> {
   try {
     return resolveDirectories([{ name: "(local)", root, own: true }])
-      // EXACTLY `cat-harness`, not merely including it.
+      // EXACTLY ONE knowledge-graph kind, not merely including one.
       //
       // `schemas/` declares `["schemas", "cat-harness"]` — a schema IS a
       // knowledge-graph node, which is why it carries the kind at all — but
@@ -101,7 +101,7 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
       // one kind can be scanned for it; one that holds several has to say
       // which file is which, and for `schemas/` that answer is `@graphNode`
       // on the `.ts`, not a guess about the `.md`.
-      .filter((d) => d.graphKinds.length === 1 && d.graphKinds[0] === "cat-harness")
+      .filter(isKgContentDirectory)
       .filter((d) => existsSync(d.absPath));
   } catch (err) {
     // NOT swallowed into an empty list, and the reason is measured.
@@ -674,7 +674,19 @@ export function workflowDirs(root: string): string[] {
       out.push(d.absPath);
     }
   }
-  return out;
+  // DE-DUPLICATED, because the two branches above can name one directory.
+  //
+  // `skills/` reaches `skills/workflows/` by the CONVENTION in the first
+  // branch; since the 2026-09-21 split `skills/workflows/` is also declared in
+  // its own right, kind `workflows`, and reaches itself by the second. One
+  // directory, two routes, and every caller here walks what it is given — so
+  // the duplicate arrived in the export as 1,354 nodes sharing 677 `@id`s,
+  // which is the one thing a JSON-LD consumer may not be handed.
+  //
+  // Deduping HERE rather than in each caller: the ambiguity is created by this
+  // function's own two branches, and a caller cannot see that the path it was
+  // handed twice is the same directory found two ways.
+  return [...new Set(out)];
 }
 
 /**
@@ -694,5 +706,8 @@ export function workflowFiles(root: string): string[] {
     }
   };
   for (const d of workflowDirs(root)) walk(d);
-  return out.sort();
+  // Belt and braces on top of `workflowDirs`'s own dedupe: a caller may pass
+  // overlapping directories this function never chose, and the same file
+  // reached twice is a duplicate `@id` downstream either way.
+  return [...new Set(out)].sort();
 }
