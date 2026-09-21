@@ -452,6 +452,15 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # The detangle measurements are PINNED, not graded. This fails on a STALE
+      # sidecar or an orphaned one — never on a number being "wrong", because
+      # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
+      # declared step"). Bean `sb6z`: the model was correct and unexercised, so
+      # a regression in it was invisible until somebody ran it by hand AND
+      # remembered last time's numbers.
+      - name: detangle measurements are current
+        run: bun run kg:detangle:check
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
