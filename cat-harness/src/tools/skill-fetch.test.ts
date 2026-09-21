@@ -20,7 +20,7 @@ function instance(pkgs: Record<string, string>, kgPath = "skills"): string {
   const root = mkdtempSync(join(tmpdir(), "pkgs-"));
   writeDeclaration(root, JSON.stringify({
       name: "t",
-      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphKinds: ["cat-harness"] }],
     }));
   for (const [name, body] of Object.entries(pkgs)) {
     mkdirSync(join(root, kgPath, name), { recursive: true });
@@ -161,27 +161,27 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // the earlier package is found and then silently dropped. No collision is
     // reported, nothing throws, and `skill_fetch` answers "package not found"
     // for a package discovery had in hand. `dh4f` one layer up from the scope
-    // defect that hid `cat-bootstrap/skills/` in the first place.
+    // defect that hid `bootstrap/skills/` in the first place.
     const repo = mkdtempSync(join(tmpdir(), "held-"));
 
     // The sibling, with its OWN declaration — this is what makes it nameable.
     mkdirSync(join(repo, "sibling", "skills"), { recursive: true });
     writeDeclaration(join(repo, "sibling"), JSON.stringify({
         name: "sibling",
-        directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     writeFileSync(join(repo, "sibling", "skills", "s.md"), SKILL);
 
     // The instance, declaring its own kg directory AND the sibling's, the
-    // second at repository scope — the `cat-bootstrap/skills/` shape.
+    // second at repository scope — the `bootstrap/skills/` shape.
     const inst = join(repo, "inst");
     mkdirSync(join(inst, "kg"), { recursive: true });
     writeFileSync(join(inst, "kg", "i.md"), SKILL);
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
         directories: [
-          { id: "sib", path: "sibling/skills", dependents: "reproduce", graphs: ["cat-harness"], scope: "repository" },
-          { id: "cat-harness", path: "kg", dependents: "reproduce", graphs: ["cat-harness"] },
+          { id: "sib", path: "sibling/skills", dependents: "reproduce", graphKinds: ["cat-harness"], scope: "repository" },
+          { id: "cat-harness", path: "kg", dependents: "reproduce", graphKinds: ["cat-harness"] },
         ],
       }));
 
@@ -216,7 +216,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
           id: `d${i}`,
           path,
           dependents: "reproduce",
-          graphs: ["cat-harness"],
+          graphKinds: ["cat-harness"],
         })),
       }));
 
@@ -246,7 +246,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
           id: `d${i}`,
           path,
           dependents: "reproduce",
-          graphs: ["cat-harness"],
+          graphKinds: ["cat-harness"],
         })),
       }));
     const found = discoverLocalPackages(inst);
@@ -264,7 +264,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     writeFileSync(join(inst, "kg", "s.md"), SKILL);
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
-        directories: [{ id: "cat-harness", path: "kg", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "kg", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     expect(Object.keys(discoverLocalPackages(inst))).toEqual(["inst"]);
     rmSync(repo, { recursive: true, force: true });
@@ -279,9 +279,9 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // The subject was `src/skills/` until #760 removed it. A title naming the
     // expected STRING goes stale on a move that is not a behaviour change; one
     // naming the RULE does not — which is why only the subject moved here.
-    // `cat-bootstrap/render/` is directly-held and not basenamed `skills`, so
+    // `bootstrap/render/` is directly-held and not basenamed `skills`, so
     // it reaches the same answer by rule 2 rather than rule 1: the sole
     // directly-held directory takes its instance's name.
-    expect(discoverLocalPackages(ROOT)["cat-bootstrap"]).toContain("cat-bootstrap/render");
+    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/render");
   });
 });

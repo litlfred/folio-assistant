@@ -1,0 +1,5 @@
+import { prose } from "../../../schemas/builders.ts";
+
+export default prose({
+  label: "sec:kgraph-where-the-rules-live",
+});

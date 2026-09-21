@@ -35,7 +35,7 @@
  * ## Discovery, not a list
  *
  * A hardcoded list of entry files would go stale exactly the way the links
- * did — `cat-bootstrap/AGENTS.md` exists today and was not obvious. So the files
+ * did — `bootstrap/AGENTS.md` exists today and was not obvious. So the files
  * are FOUND: the three agent-generic names, at the repository root and at any
  * instance root, skipping vendored and published trees.
  */
@@ -62,7 +62,7 @@ const SKIP = new Set(["node_modules", ".git", "_site", "dist", "build", ".lake",
 /**
  * Entry files at the repository root and one level down.
  *
- * One level, because an instance root is a direct child (`cat-bootstrap/`,
+ * One level, because an instance root is a direct child (`bootstrap/`,
  * `cat-harness/`). Deeper is a folio's own content, which is not this
  * repository's to gate.
  */

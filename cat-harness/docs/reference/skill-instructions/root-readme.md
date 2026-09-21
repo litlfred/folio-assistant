@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../cat-bootstrap/skills/root-readme.md`](https://github.com/litlfred/folio-assistant/blob/main/../cat-bootstrap/skills/root-readme.md) — do not edit here.
+> Generated from [`../bootstrap/skills/root-readme.md`](https://github.com/litlfred/folio-assistant/blob/main/../bootstrap/skills/root-readme.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../cat-bootstrap/skills/root-readme.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../bootstrap/skills/root-readme.md){: .fa-edit-source }
 
 {% raw %}
 # The root README, and the one fact it must carry

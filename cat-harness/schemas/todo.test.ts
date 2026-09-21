@@ -304,7 +304,7 @@ describe("a todo declares its theme rather than having one inferred (bean `5y4b`
   });
 
   test("an unknown theme PARSES — it is a rendering finding, not a parse error", () => {
-    // Deliberately an open string, like `GraphNodeDirectorySchema.graphs`.
+    // Deliberately an open string, like `GraphNodeDirectorySchema.graphKinds`.
     // Closing the enum would mean building it at module load and importing the
     // theme table into the CONTENT model, giving every consumer of a todo a
     // dependency on the palette.

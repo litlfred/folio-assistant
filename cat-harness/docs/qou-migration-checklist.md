@@ -1,5 +1,12 @@
 # qou migration checklist
 
+> A checklist, not a rule set. The work plan is
+> [`todo-manager`](reference/skill-instructions/todo-manager.html); what a
+> session tracks as against one process instance is
+> [`session-context`](reference/skill-instructions/session-context.html); the
+> conversion itself is
+> [`repo-conversion`](reference/skill-instructions/repo-conversion.html).
+
 Cross-repo TODO list for the **qou** side of the folio-assistant infrastructure
 migration (`miga`). Compiled from the handoff + the folio-assistant work landed in
 PR #14. Companion to `docs/folio-assistant-migration.md` (§6 has exact, copy-paste

@@ -24,7 +24,7 @@
       "path": "library/",
       "dependents": "reproduce",
       "description": "The ingested corpus — one `<bib-slug>/` per document, holding `sections/*.md` and `structure.json`. THREE PUBLISHERS AND TWO KINDS, and the distinction is load-bearing rather than bibliographic: the vendor documentation is ASSERTION (a publisher describing its own product, revisable without notice and in one case describing a product that no longer exists), while the arXiv papers are EVIDENCE (a measurement somebody else can repeat). A voice rule derived from the first is a convention; one derived from the second is a finding. Nothing in the schema can tell them apart, which is why each document's `structure.json` carries its publisher and why the voices state which kind they are reading.",
-      "graphs": [
+      "graphKinds": [
         "library"
       ],
       "coverage": {
@@ -38,7 +38,7 @@
       "path": "voices/",
       "dependents": "reproduce",
       "description": "`folio-voice/v1` profiles read out of `library/` above — a shared base plus one override per vendor, on the owner's ruling of 2026-09-20: 'for model specific sources, make those model specific voices.' Citations are INTERNAL to this instance (no `instance:` key), unlike who-style-guide's, because here the corpus and the reading live together. The rules are deliberately NOT formally constrained: owner, same day, 'preference leave unstructured schema, agentic review b/c of best practice drift, not formal' — published best practice is revised without notice, so a schema gate would pin whichever vintage was current when it was written and then report clean over the drift.",
-      "graphs": [
+      "graphKinds": [
         "voices"
       ]
     }

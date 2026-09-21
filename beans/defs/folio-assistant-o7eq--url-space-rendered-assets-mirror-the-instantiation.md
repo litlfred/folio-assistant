@@ -369,7 +369,7 @@ that"*. Checked, on today's main, with #584 merged:
 | `_site/fsh-guts.jsonld` | `docs-site.yml:301` | **not a defect** — the owner asked for it by name: *"jsonld accessible via `<base-url>/fsh-guts.jsonld`"*. A second document precisely so a crawler never arrives at it, with `UNPUBLISHED_GRAPH_KINDS` stripping it from every other graph |
 | `_site/folio-assistant.jsonld` | `docs-site.yml:279` | see below |
 | `_site/folio-assistant/index.html` | `docs-site.yml:281` | see below |
-| `_site/cat-bootstrap/cat-bootstrap.jsonld` | `docs-site.yml:362` | **conforms** — and it is this bean's own worked example |
+| `_site/bootstrap/bootstrap.jsonld` | `docs-site.yml:362` | **conforms** — and it is this bean's own worked example |
 
 ### The two that remain are not an instance's rendering at all
 
