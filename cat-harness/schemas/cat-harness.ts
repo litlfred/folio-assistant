@@ -641,6 +641,60 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
     declarationFile: "todos.json",
   },
+  // THE BOARD AND ITS LAYOUT, declared as TWO kinds, and the split is the
+  // whole design rather than a filing convenience.
+  //
+  // The owner, 2026-09-20: *"treat it like OMG specs and BPMN layout.
+  // relationship first, visualiztion alter."* BPMN separates the semantic
+  // model (`bpmn:process`) from **Diagram Interchange** — `BPMNDiagram`,
+  // `BPMNShape`, `BPMNEdge` — and the layout document points AT the semantic
+  // one, never the other way. So:
+  //
+  //   boards            what a board IS, and what it shows        content
+  //   board-positions   where each note was drawn on it           state
+  //
+  // A board is a DIAGRAM OF a folio, not a container of one: a folio is
+  // complete with no board, and deleting every board loses layout and no
+  // content. That is also why `board-positions` is `state` while `boards` is
+  // `content` — one is authored and the other is written by a running process
+  // as people move things, and `content-context-and-state-graphs` refuses a
+  // content node that carries state. It is the same reason a note may not
+  // hold `x` and `y`, which `schemas/board-positions.ts` asserts against the
+  // source of four schemas.
+  boards: {
+    type: termIri("BoardGraph"),
+    renderable: false,
+    holds: "content",
+    // NOT work. A board is a way of LOOKING at work, and `check:graph-kind-work`
+    // asks the question because the two are easy to conflate: `beans`, `todos`
+    // and `workflow-state` each record something somebody is partway through,
+    // and a board records none of it. Deleting every board loses no position
+    // in any process.
+    recordsWork: false,
+    skill: "todo-manager",
+    summary:
+      "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. " +
+      "A board is a diagram OF a folio: it declares what it shows, and a folio with " +
+      "no board is complete. Schema: `schemas/board.ts`.",
+  },
+  "board-positions": {
+    type: termIri("BoardPositionsGraph"),
+    renderable: false,
+    // Written by a running process every time somebody moves a note. It is
+    // Diagram Interchange: where things were drawn, not what is true.
+    holds: "state",
+    // NOT work either, and this is the sharper of the two. It IS `state` —
+    // written by a running process — which is exactly what makes the question
+    // worth asking: state that records a POSITION IN A PROCESS is work, and
+    // state that records a position ON A CANVAS is not. Losing this file loses
+    // where things were drawn and nothing about what is outstanding.
+    recordsWork: false,
+    skill: "todo-manager",
+    summary:
+      "Where each note sits on each board — `board-positions.json`, keyed by board " +
+      "then by note id, in board units. The layout layer, which points at notes and " +
+      "is never pointed back at. Schema: `schemas/board-positions.ts`.",
+  },
   "todo-items": {
     type: termIri("TodoItemsGraph"),
     renderable: false,
