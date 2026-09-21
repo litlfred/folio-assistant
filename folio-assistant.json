@@ -256,13 +256,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T06:43:03.993Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/083dcbac4368f87dacb25d3de5a5c0fe40b9a40e",
-  "sourceCommitSha": "083dcbac4368f87dacb25d3de5a5c0fe40b9a40e",
-  "sourceCommitAt": "2026-09-21T08:41:25+02:00",
+  "generatedAt": "2026-09-21T06:47:00.336Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6a1ce283cc0c06cdc7132186305b915e0f821021",
+  "sourceCommitSha": "6a1ce283cc0c06cdc7132186305b915e0f821021",
+  "sourceCommitAt": "2026-09-21T08:45:24+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 219,
+    "Skill": 220,
     "Actor": 27,
     "Capability": 28,
     "Role": 130,
@@ -2745,6 +2745,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/incremental-render",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "incremental-render",
+      "title": "Incremental render — the cache is easy, the cascade is the work",
+      "description": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/incremental-render.md",
+      "instructionLines": 210,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/one-voice-integration-watcher",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "one-voice-integration-watcher",
@@ -5040,6 +5056,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-contribution-offer",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/docs-auto",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/incremental-render",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-to-portal",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion",
@@ -32026,8 +32043,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "083dcbac4368f87dacb25d3de5a5c0fe40b9a40e",
+    "sha": "6a1ce283cc0c06cdc7132186305b915e0f821021",
     "pr": "main",
-    "run": "35569558660"
+    "run": "35569846738"
   }
 }
