@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-21T10:20:53Z
+updated_at: 2026-09-21T10:28:48Z
 parent: folio-assistant-0lmb
 ---
 
@@ -437,3 +437,19 @@ directory is whatever its DECLARATION names, so a check that only worked for
 one called `docs` would be reading the name instead of the declaration.
 
 Gates **83/83**.
+
+
+### The `gen-docs-pages.ts` ambiguity is closed — same session
+
+It now writes an HTML comment carrying the same phrase every other generator
+here uses, naming the manifest directory to edit instead of the output. An HTML
+comment because it must be invisible in the rendered page and present in the
+source a reader opens on the forge; the same phrase because that is what lets
+ONE reader recognise every generator rather than a list of spellings.
+
+**It changed the answer, which is the point.** Before, `check:docs-populated`
+credited cat-harness with `publication-workflow.md` — 8,199 words, and
+generated. After: 65 authored rather than 76, and the evidence page is
+`architecture/cat-harness-minimum.md`, 4,635 words, which somebody actually
+wrote. The check was passing the harness on documentation nobody authored, and
+neither the check nor anything else could have known.
