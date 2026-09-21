@@ -777,6 +777,20 @@
       "file": "beans/defs/folio-assistant-55ao--add-a-first-class-recommendation-block-kind-for-do.md"
     },
     {
+      "id": "folio-assistant-57n3",
+      "title": "VIEWER BACKTICKS: strayBacktick cannot see past an interpolation, so its file list cannot be derived",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T11:09:08Z",
+      "updatedAt": "2026-09-21T11:09:08Z",
+      "preview": "`check-viewer-backticks.ts` names its files in an array. The obvious fix is to\nderive them — every `.ts` whose source contains `return <backtick><!doctype\nhtml>` — and that finds twelve where the array names five.\n\n## Why it was NOT derived, measured 2026-09-21\n\nRunning `strayBacktick` over every candidate reports two findings on files\nthat COMPILE:\n\n    FINDING line 402   cat-harness/scripts/gen-",
+      "file": "beans/defs/folio-assistant-57n3--viewer-backticks-straybacktick-cannot-see-past-an.md"
+    },
+    {
       "id": "folio-assistant-5a3l",
       "title": "DEPLOYMENT: topologies and operating modes are two axes, not one list of modes",
       "status": "in-progress",
@@ -4899,6 +4913,20 @@
       "updatedAt": "2026-09-20T21:15:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`session-intent.md` (user-invocable, bound to `session-coordinator`) step 1 is \"Open `STATUS.md`\" and step 2 \"Open `docs/coordination/<goal>.m",
       "file": "beans/defs/folio-assistant-z9eb--session-intent-names-statusmd-and-docscoordination.md"
+    },
+    {
+      "id": "folio-assistant-zgba",
+      "title": "WHO-IRIS ROUTING: the KG renders library-side, the documentation docs-side, and the replica navbar stops carrying docs",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:51:32Z",
+      "updatedAt": "2026-09-21T11:02:32Z",
+      "preview": "Owner, 2026-09-21, two messages:\n\n> i want the proposal pages for who-iris moved to their docs/. the docs/ should\n> not be for the who-iris top navbar, instead, f-a navbar should still be on\n> the left, with who-iris and then link to docs on side in navbar. see other\n> beans/sibling work on LHS\n\nand, ruling out the question of where the replica lives:\n\n> the iris KG should be in who-iris/library (",
+      "file": "beans/defs/folio-assistant-zgba--who-iris-routing-the-kg-renders-library-side-the-d.md"
     },
     {
       "id": "folio-assistant-zkgs",

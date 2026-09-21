@@ -1876,6 +1876,29 @@ export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
   /**
+   * This directory is what answers at the instance's own route, `/<instance>/`.
+   *
+   * `mount-instance-docs.ts` publishes an instance's content twice: at
+   * `/<kind>/<instance>/` for every renderable kind it declares, and once at
+   * `/<instance>/` — the instance's themed root, per the owner's 2026-09-20
+   * ruling that *"`/docs/who-iris/` should be the cat-harness handler default
+   * for docs. who-iris themed at `/who-iris/`."*
+   *
+   * **Until this field existed, the second route went to whichever kind sorted
+   * first alphabetically** — and the comment doing the sorting said, in as many
+   * words, that the choice "is the instance's own business". It was not: it was
+   * the alphabet's. who-iris declaring both `docs` and `library` made that
+   * concrete, because `docs` sorts first and the themed root would have served
+   * the documentation, contradicting the ruling it was implementing.
+   *
+   * Optional, because an instance declaring ONE renderable kind has nothing to
+   * choose. With several and none marked, the mount reports the root as
+   * UNDETERMINED and keeps the deterministic order rather than silently
+   * picking — a site must serve something there, and a quiet pick is how the
+   * wrong page became the front door in the first place.
+   */
+  instanceRoot: z.boolean().optional(),
+  /**
    * Which theme this subgraph renders on.
    *
    * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies

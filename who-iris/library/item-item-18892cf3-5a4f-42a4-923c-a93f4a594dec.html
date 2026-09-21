@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>who-iris — documentation — ingested IRIS replica</title>
+<title>Publication and information products style guide — ingested IRIS replica</title>
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
 <style>
   :root {
@@ -300,44 +300,52 @@
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><span class="here">Documentation</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">Publication and information products style guide</span></div></div>
 
 <main class="wrap">
+<h1>Publication and information products style guide</h1>
+<p>Permanent URI for this item
+  <a href="https://iris.who.int/handle/10665/332098">https://iris.who.int/handle/10665/332098</a>
+  <span class="state materialized">materialized</span></p>
 
-<h1>who-iris &mdash; documentation</h1>
+<p class="note" style="margin-left:0">In: 7. Regional Office for the Western Pacific &rsaquo; Information products</p>
 
-<p class="lede">What this harness is, what ingesting it cost, and where the
-ingested copy is meant to end up. These pages are <em>about</em> the work; the
-catalogue itself, and the replica rendered from it, are served separately by
-the library handler.</p>
+<h2>Files</h2>
+<table class="items">
+<thead><tr><th>Name</th><th>Bundle</th><th>Size</th><th>State</th></tr></thead>
+<tbody>
+<tr>
+  <td><code>WPR-RDO-2020-003-eng.pdf</code></td>
+  <td>ORIGINAL</td>
+  <td>2.68 MB</td>
+  <td><span class="state materialized">materialized</span></td>
+</tr>
+<tr>
+  <td><code>wpr-rdo-2020-003-eng-cover.png</code></td>
+  <td>THUMBNAIL</td>
+  <td>0.01 MB</td>
+  <td><span class="state materialized">materialized</span></td>
+</tr>
+</tbody>
+</table>
 
-<div class="caveat">
-  <p><strong>This is not a copy of IRIS.</strong> who-iris models the WHO
-  Institutional Repository for Information Sharing <em>by reference</em>:
-  13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. Everything on these pages was transcribed from captures the
-  owner supplied &mdash; <code>iris.who.int</code> is not reachable from the
-  environment that renders them, so nothing here was fetched. The figures come
-  from the catalogue rather than from this sentence, which is why they are the
-  same ones the replica shows.</p>
-</div>
+<h3>Both links, as asked for</h3>
+<table class="items">
+<thead><tr><th>Where</th><th>Link</th></tr></thead>
+<tbody>
+<tr><td>Upstream, at WHO</td><td><a href="https://iris.who.int/handle/10665/332098">https://iris.who.int/handle/10665/332098</a></td></tr>
+<tr><td>Held here, in folio-assistant</td>
+    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via CDN</a></td></tr>
+<tr><td>In collection</td><td><a href="collection-collection-wpro-information-products.html">Information products</a><br><code>in 7. Regional Office for the Western Pacific</code></td></tr>
+<tr><td>Ingested text (L1)</td>
+    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections">who-iris/library/wpr-rdo-2020-003-eng/sections/</a></td></tr>
+<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download wpr-rdo-2020-003-eng.dc.json</a>
+      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">via CDN</a>
+      <br><code>qualified Dublin Core · 4.0 KB</code></td></tr>
+</tbody>
+</table>
 
-<h2>Pages</h2>
-<ul class="doclist">
-  <li>
-    <a href="ingestion-notes.html">What ingesting these documents cost</a>
-    <p>The requirements the ingestion produced, rendered from
-    <code>skills/iris-dspace.md</code> rather than restated &mdash; so the page
-    and the skill cannot drift. Includes what the captured DSpace records gave
-    that inference could not.</p>
-  </li>
-  <li>
-    <a href="kg-to-portal.html">From this catalogue to somebody else&rsquo;s portal</a>
-    <p>The general pattern this instance is a worked example of:
-    <em>select &rarr; serialize &rarr; package &rarr; sign &rarr; distribute
-    &rarr; verify</em>, with the trust anchors read off the WHO SMART Trust IG
-    and the transport left undetermined rather than guessed.</p>
-  </li>
-</ul>
+
 
 </main>
 
