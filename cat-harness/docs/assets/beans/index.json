@@ -973,6 +973,20 @@
       "file": "beans/defs/folio-assistant-6lb8--folio-board-a-resizable-miro-style-board-notes-tha.md"
     },
     {
+      "id": "folio-assistant-6n23",
+      "title": "EXCISE harness.json: the declaration folds into <name>.config.json, and only a root <stub>.config.json instantiates",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:10:21Z",
+      "updatedAt": "2026-09-21T11:13:02Z",
+      "preview": "Owner, 2026-09-21: *\"Excise harness.json.. only <harness-stub>.config.json makes instantiation at root of repo\"*.\n\nScope confirmed by the owner the same day: ALL TWELVE declarations fold (not just the root one), and an instance that is not instantiated here STILL GETS A CONFIG FILE — nothing loses its directories or assets.\n\n## Measured before starting (main, 519e8c01)\n\n| | harness.json | <instanc",
+      "file": "beans/defs/folio-assistant-6n23--excise-harnessjson-the-declaration-folds-into-name.md"
+    },
+    {
       "id": "folio-assistant-6pfo",
       "title": "Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph",
       "status": "in-progress",
@@ -1475,6 +1489,20 @@
       "updatedAt": "2026-09-20T16:30:17Z",
       "preview": "Found by review 2026-09-20, on this branch's own fan-out work (`a02m`).\n\n`check-tabular-stubs.ts:137`, `check-l1-complete.ts:756` and `:936` each end\ntheir directory resolution with a `.filter(existsSync)`. So a library the\ndeclaration names and the tree does not carry is not a finding — it is not\neven a line of output. The check then passes over the libraries that DO exist\nand reports a clean run",
       "file": "beans/defs/folio-assistant-95ir--library-scanners-filter-out-a-declared-but-absent.md"
+    },
+    {
+      "id": "folio-assistant-95s1",
+      "title": "IMPORT CYCLE: EXTENDED_AUTOMATED_CHECKERS is reachable in its temporal dead zone, and discovery only survives it",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T11:14:16Z",
+      "updatedAt": "2026-09-21T11:14:16Z",
+      "preview": "Found while excising `harness.json` (bean 6n23, PR #695), and NOT fixed there.\n\n`qa-checker-discovery.findChecker` enumerated a module namespace with\n`Object.values`. That throws outright — `Object.keys` too — when any export is\na `const` still in its temporal dead zone, which happens when the module is\npart of an import cycle and is read while mid-evaluation. Measured 2026-09-21:\n`qa-checkers-ext",
+      "file": "beans/defs/folio-assistant-95s1--import-cycle-extended-automated-checkers-is-reacha.md"
     },
     {
       "id": "folio-assistant-9c34",
@@ -2467,7 +2495,7 @@
     {
       "id": "folio-assistant-gn4l",
       "title": "kg-export is written for THIS instance's shape, not just hardcoded to its root",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -3045,14 +3073,14 @@
     {
       "id": "folio-assistant-lps0",
       "title": "KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:59:22Z",
-      "updatedAt": "2026-09-20T18:59:22Z",
+      "updatedAt": "2026-09-21T12:37:26Z",
       "preview": "`kg-audit.ts` walks a hardcoded `KG_ROOT = join(root, \"skills\")` when it\ncollects skill subjects (`skillFiles()`, line ~578). **Every skill outside\n`skills/` is therefore unaudited** — not reported as unknown, not reported at\nall. It is the `dh4f` shape in the tool whose job is finding that shape.\n\n## Measured, 2026-09-20\n\nThe instance declares several `cat-harness` directories that hold skills\nDI",
       "file": "beans/defs/folio-assistant-lps0--kg-audit-skillfiles-walks-a-hardcoded-skills-so-ev.md"
     },
@@ -3579,7 +3607,7 @@
     {
       "id": "folio-assistant-pve3",
       "title": "The root declares HALF of bootstrap — its skills but not its process",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",

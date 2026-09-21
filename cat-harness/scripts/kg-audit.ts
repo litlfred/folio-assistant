@@ -42,7 +42,7 @@
  */
 
 import { createHash } from "node:crypto";
-import { kgDirectories, workflowDirs, workflowFiles } from "./known-skills.js";
+import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -566,7 +566,16 @@ function isPartOfASkill(path: string): boolean {
 function skillFiles(): string[] {
   const out: string[] = [];
   const walk = (dir: string): void => {
-    for (const e of readdirSync(dir, { withFileTypes: true })) {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      // A declared-but-absent directory is `dh4f`: scanning nothing and
+      // reporting a clean run over it. Skipped here and surfaced by
+      // `check:harness-dirs`, which is the check that owns that question.
+      return;
+    }
+    for (const e of entries) {
       const p = join(dir, e.name);
       if (e.isDirectory()) {
         if (e.name !== KG_QA_DIRNAME) walk(p);
@@ -575,8 +584,12 @@ function skillFiles(): string[] {
       }
     }
   };
-  walk(KG_ROOT);
-  return out.sort();
+  for (const r of ownKgRoots(root)) walk(r);
+  // Deduplicated: two declared roots may nest, and a skill found twice would
+  // be audited twice into one sidecar path — the second verdict silently
+  // overwriting the first, which is the collision `sidecarPath` exists to
+  // avoid one level down.
+  return [...new Set(out)].sort();
 }
 
 /**
