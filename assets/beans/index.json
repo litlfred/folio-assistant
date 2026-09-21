@@ -2285,14 +2285,14 @@
     {
       "id": "folio-assistant-en68",
       "title": "Colons in kg-qa sidecar filenames make the repo unclonable on Windows",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T10:08:48Z",
-      "updatedAt": "2026-09-21T10:08:48Z",
+      "updatedAt": "2026-09-21T13:45:00Z",
       "preview": "## What\n\n`git clone` of this repository **fails on Windows** — not at fetch, at\ncheckout. Seven KG QA sidecars are named `req:<slug>.kg-qa.json`, and NTFS\nreserves `:` inside a path component for alternate data streams, so Git\nrefuses to create the file.\n\nGit aborts the **entire** checkout on the first invalid path, so this is not\nseven missing files. It is no working tree at all, for everybody on",
       "file": "beans/defs/folio-assistant-en68--colons-in-kg-qa-sidecar-filenames-make-the-repo-un.md"
     },
@@ -3903,14 +3903,14 @@
     {
       "id": "folio-assistant-r8br",
       "title": "BLOCKER: pdf-images classifies browser-print nav icons as figures, so 7 documents cannot be promoted",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:36:29Z",
-      "updatedAt": "2026-09-20T16:36:52Z",
+      "updatedAt": "2026-09-21T14:02:42Z",
       "preview": "Seven of the nine agent-skill documents are staged and cannot be promoted.\nThey fail exactly one requirement — `image-descriptions` — and the images in\nquestion are not figures.\n\n## Measured 2026-09-20\n\n`Agent Skills — Google Antigravity Docs`, a **four-page** browser print:\n\n- **104 images, all classified `figure`**\n- page 1 alone carries 26\n- coverage of the first three: **0.000183, 0.000183, 0.",
       "file": "beans/defs/folio-assistant-r8br--blocker-pdf-images-classifies-browser-print-nav-ic.md"
     },

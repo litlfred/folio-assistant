@@ -11,11 +11,14 @@
 <li><a href="../modules/document-image.html">document-image</a></li>
 <li><a href="" aria-current="page">IMAGE_ROLES</a></li></ul>
 <h1>Variable IMAGE_ROLES<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">IMAGE_ROLES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><br/>    <span class="tsd-signature-type">&quot;page-scan&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;figure&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;logo&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;decorative&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;undetermined&quot;</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">IMAGE_ROLES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><br/>    <span class="tsd-signature-type">&quot;page-scan&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;figure&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;chrome&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;logo&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;decorative&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;undetermined&quot;</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>What an image IS, as distinct from what it depicts.</p>
 <ul>
 <li><code>page-scan</code> — the rendered page. Describing it produces &quot;a scanned page&quot;.</li>
 <li><code>figure</code> — content of the document: a chart, a table, a diagram.</li>
+<li><code>chrome</code> — interface furniture placed by the CAPTURE rather than present in
+the document: a navigation icon, a copy button, a search glyph, a cookie
+control. Not content, and not describable — see <a href="document-image.CaptureBasisSchema.html" class="tsd-kind-variable">CaptureBasisSchema</a>.</li>
 <li><code>logo</code> — an organisational or publisher mark. Furniture, not content.</li>
 <li><code>decorative</code> — a photograph or ornament carrying no information the prose
 does not. Describable for accessibility, but not a figure of the document.</li>
@@ -57,7 +60,7 @@ measurement of the placed rectangle can tell a WHO emblem from a chart —
 only looking can, which is why <a href="document-image.InspectionBasisSchema.html" class="tsd-kind-variable">InspectionBasisSchema</a> exists.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4b5a6b9f3e5306eef8dc8ea8be5d5bd19c5ed115/cat-harness/schemas/document-image.ts#L70">work/folio-assistant/folio-assistant/cat-harness/schemas/document-image.ts:70</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/32495bf769fe9966ca5e127b528237a279d3f1f0/cat-harness/schemas/document-image.ts#L73">work/folio-assistant/folio-assistant/cat-harness/schemas/document-image.ts:73</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

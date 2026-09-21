@@ -9601,6 +9601,77 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/document-image.ts#CaptureBasis",
+      "name": "CaptureBasis",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#CaptureBasisSchema",
+      "name": "CaptureBasisSchema",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "zod-object",
+      "doc": "A role computed from the CAPTURE the document came out of, plus geometry.",
+      "fields": [
+        {
+          "name": "method",
+          "type": "z.literal(\"capture\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "producer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The PDF's `Producer`, verbatim. The evidence, not a derived flag."
+        },
+        {
+          "name": "creator",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The PDF's `Creator`, verbatim — the browser user-agent for a print."
+        },
+        {
+          "name": "coverage",
+          "type": "z.number().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "Placed area over page area, as for geometry."
+        },
+        {
+          "name": "imagesOnPage",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "How many images share this page."
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page it sits on, 1-based as a reader counts."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/document-image.ts#DocumentImage",
       "name": "DocumentImage",
       "module": "cat-harness/schemas/document-image.ts",
