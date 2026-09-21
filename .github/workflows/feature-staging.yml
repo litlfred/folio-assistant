@@ -35,12 +35,15 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
-      - 'cat-harness/scripts/mount-instance-docs.ts'
+      # EVERY script, for the reason bean `tyyc` measured on `docs-site.yml`:
+      # a named list of generators drifts, and the drift is invisible because
+      # a preview that was never built looks exactly like one nobody opened.
+      # 14 of the 28 scripts this workflow runs were uncovered, `kg-export.ts`
+      # and `publish-gh-pages.sh` among them.
+      - 'cat-harness/scripts/**'
       - 'cat-harness/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
-      - 'cat-harness/scripts/gen-schema-docs.ts'
-      - 'cat-harness/scripts/gen-docs-pages.ts'
       # The state-dashboard generator and the bean reader behind it.
       #
       # Their OUTPUT is committed under `cat-harness/docs/`, which the first
@@ -49,9 +52,8 @@ on:
       # case: a commit that edits the generator and forgets to regenerate
       # touches no `docs/` path, gets no preview, and the reviewer sees a green
       # PR with nothing to look at. `state:visualizer:check` then fails in the
-      # gates — this makes the preview available while that is diagnosed.
-      - 'cat-harness/scripts/state-visualizer.ts'
-      - 'cat-harness/scripts/beans.ts'
+      # gates — the wildcard makes the preview available while that is
+      # diagnosed.
       - '.github/workflows/feature-staging.yml'
   pull_request_target:
     types: [closed]
