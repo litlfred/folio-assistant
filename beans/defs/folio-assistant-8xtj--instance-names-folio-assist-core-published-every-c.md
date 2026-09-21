@@ -71,16 +71,81 @@ And one more, which `o7eq` raises: **cat-harness's `stub` is
 while cat-harness publishes its graph at `<base>/folio-assistant.jsonld` from
 the stub, so the two vocabularies now meet in one path space.
 
+## THE GATE THE EVIDENCE ASKED FOR, 2026-09-21 — and it had to be relational
+
+This bean's evidence section ends: *"a gate asserting the card id against a
+literal would have turned this into a red build instead of a near-miss. Worth
+considering as part of this bean."*
+
+**Considered, and a literal would NOT have worked.** `landing-sticky.test.ts`
+already named `"folio-assist-core"` in **four** places when the sweep ran, and
+`bun test` still stayed at 0 fail — because the sweep renamed the test's
+literals too. A `sed` over a repository moves an assertion written as a copy of
+its subject exactly as readily as the subject. That is the general hazard, not
+a lapse in that file, and it is why "assert the literal" is the wrong repair.
+
+**What shipped asserts a RELATION**: which declared sticky ids differ from
+their own instance directory. Collapsing the divergence makes that set EMPTY;
+introducing another makes it larger. Neither is satisfiable by renaming both
+sides, because "they differ" is not a string any sed matches.
+
+Measured across every declaration before pinning it:
+
+| instance | sticky id | |
+|---|---|---|
+| `cat-bootstrap` | `cat-bootstrap` | same |
+| `cat-harness` | `cat-harness` | same |
+| `folio-assistant-core` | `folio-assist-core` | **differs** |
+
+So divergence is the exception here, which is why the assertion is an **exact
+set** rather than a count — a count of one still passes if the divergence moves
+to a different instance, and that is a different repository from this one. A
+third test pins the matching set for the same reason, and a fourth asserts the
+declarations were actually read, since a set computed from no files is empty
+and agrees with nothing (`6tkl`).
+
+**Falsified by replaying the real sweep** — `sed folio-assist-core →
+folio-assistant-core` over the declaration AND the test file, which is what
+happened on 2026-09-20:
+
+```
+bun test rc=1 — 2 fail
+  EXACTLY the known divergence, named — collapsing it turns this red
+    - [ "folio-assistant-core" ]
+    + []
+```
+
+## Two Done-when boxes re-measured, and one is already satisfied
+
+- **`folio-assist-sci` → `folio-assistant-sci`**: the directory **already
+  carries the long form** and its declared `name` matches. The ruling was made
+  and applied on 2026-09-20; this bean's box was never ticked. Of the 6
+  remaining live references to the short form, **all 6 are legitimate**: four
+  are prose DOCUMENTING the rename — the sentences this bean warns a sweep
+  turns into "X became X" — and two are synthetic fixture strings in
+  `viewer-orphans.test.ts`, not paths.
+- **"a check reports a declared instance directory whose name no consumer
+  resolves"**: measured first, and it would be **vacuous today**. All twelve
+  declared instances have external references, the smallest being
+  `cat-bootstrap-tools` at 20. Building it now would be a ratchet with no
+  finding and no way to show it works on this corpus; the relational guard
+  above is the same defect's real guard and does have a reproduction.
+
 ## Done when
 
 - [x] The namespace documents are published where their terms name them
 - [x] A ratchet stops that drifting again
-- [ ] The owner rules on `folio-assist-sci` → `folio-assistant-sci`
+- [x] The owner rules on `folio-assist-sci` → `folio-assistant-sci` — **ruled
+      and applied 2026-09-20**; directory and declared name both carry the long
+      form, and the 6 remaining short-form references are all legitimate
 - [ ] The owner rules on the root-name / cat-harness-stub collision
 - [ ] The prose references that describe the CURRENT instance are corrected,
       leaving beans, the landing card id, and generated files alone
-- [ ] A check reports a declared instance directory whose name no consumer
-      resolves, so a dead instance name cannot sit in a live path again
+- [x] A gate stops a published card id moving with its directory — the
+      relational guard above, falsified by replaying the real sweep
+- [ ] ~~A check reports a declared instance directory whose name no consumer
+      resolves~~ — measured VACUOUS: all 12 declared instances have external
+      references. Left open in case a later split creates one
 
 ## Evidence for "a sweep would be WRONG" — a sweep was run, and reverted
 

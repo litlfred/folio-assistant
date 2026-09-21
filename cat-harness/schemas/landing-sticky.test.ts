@@ -66,6 +66,69 @@ function contributionsOf(rel: string): DeclaredContribution[] {
 // one harness talking about itself. They are now one card each for three
 // harnesses, and these fixtures name them that way so a reader of the tests
 // sees the structure rather than a list of historical ids.
+/**
+ * A PUBLISHED CARD ID DOES NOT MOVE WITH ITS DIRECTORY — bean `8xtj`.
+ *
+ * The comment below `CORE` states this rule. It was stated and not asserted,
+ * and on 2026-09-20 a session swept `folio-assist-core` → `folio-assistant-core`
+ * across 103 files, renaming the published card id along with the directory.
+ * **`bun test` stayed at 0 fail**, `tsc` and `eslint` were clean, and sixteen
+ * check scripts were green. It surfaced only because the reverting session
+ * compared `docs/_data/stickies.json` against `main` by hand.
+ *
+ * ## Why the literal assertions below did not catch it, and this does
+ *
+ * `landing-sticky.test.ts` already names `"folio-assist-core"` in four places.
+ * They did not fire because **the sweep renamed them too** — a `sed` over the
+ * repository moves a test's literal exactly as readily as the value it guards,
+ * so an assertion written as a copy of its subject is satisfied by any edit
+ * that changes both. That is the general hazard, not a lapse in this file.
+ *
+ * So this asserts a RELATION instead: which declared sticky ids differ from
+ * their own instance directory. A sweep collapsing the divergence makes the
+ * differing set EMPTY, and a sweep introducing a new one makes it larger.
+ * Neither can be satisfied by renaming both sides, because "they differ" is
+ * not a string any sed matches.
+ *
+ * ## It is pinned to one pair on purpose
+ *
+ * Measured across every declaration: `cat-bootstrap` and `cat-harness` have
+ * `sticky.id === directory`, and `folio-assistant-core` is the ONE that
+ * differs. So divergence is the exception rather than the rule here, which is
+ * why the assertion is an exact set rather than a count — a count of one would
+ * still pass if the divergence moved to a different instance, and that is a
+ * different repository from this one.
+ */
+describe("a published card id does not move with its directory", () => {
+  /** Every (instance directory, declared sticky id) pair, from the real files. */
+  const pairs = ["cat-bootstrap", "cat-harness", "folio-assistant-core"].flatMap((rel) =>
+    (decl(rel).stickies ?? []).map((s) => ({ dir: rel, id: s.id })),
+  );
+
+  test("the declarations are actually being read — not an empty sweep", () => {
+    // `6tkl`: every assertion below is about a SET, and a set computed from no
+    // files is empty and agrees with nothing. This is what stops that reading
+    // as a pass.
+    expect(pairs.length).toBeGreaterThanOrEqual(3);
+  });
+
+  test("EXACTLY the known divergence, named — collapsing it turns this red", () => {
+    const diverging = pairs.filter((p) => p.id !== p.dir).map((p) => p.dir).sort();
+    // `folio-assistant-core/` is the directory since the owner's ruling of
+    // 2026-09-20; its card id stays `folio-assist-core` because a card id is a
+    // published identifier on the landing page and the directory is only where
+    // the files sit. This line is the one place they differ.
+    expect(diverging).toEqual(["folio-assistant-core"]);
+  });
+
+  test("...and every other instance's card id DOES match, which is the contrast", () => {
+    // Without this, the assertion above would also pass on a repository where
+    // every id had drifted from its directory and only one happened to match.
+    const matching = pairs.filter((p) => p.id === p.dir).map((p) => p.dir).sort();
+    expect(matching).toEqual(["cat-bootstrap", "cat-harness"]);
+  });
+});
+
 const CAT = contributionsOf("cat-harness");
 // The DIRECTORY, which is `folio-assistant-core/` since the owner's ruling of
 // 2026-09-20 ("use folio-assistant-core/"). The sticky's own id below is

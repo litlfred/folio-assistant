@@ -211,6 +211,31 @@ contradiction of the root's comment but the same rule over a set the ruling
 changed. Still the owner's to confirm, because it is their sentence being
 re-read.
 
+### CORRECTION — slice 2 is NOT independent of the root ruling
+
+PR #643 said the site-build composition "is independent and I can take it
+next". **Checked, and it is not.** Measured on the tree as it stands:
+
+| instance | declares a `docs` graph | how it reaches the site |
+|---|---|---|
+| `cat-harness` | yes (`docs/`, `reproduce`) | it IS the site root — Jekyll's `source:` |
+| `who-iris` | yes (`who-iris-docs`) | MOUNTED at a subpath by `mount-instance-docs` |
+| **the root** | **no** | — |
+
+The compose-vs-mount rule that looked missing turns out to be already answered:
+`mount-instance-docs --built <instance>` names the one whose docs Jekyll built,
+and skips it because *"it is the root of the site"*. Everything else mounts.
+So composing at the site root means exactly **the root's `docs/` over the
+built instance's**, and there is no third case to invent.
+
+**But the root declares no `docs` graph**, so a composer built today would have
+an EMPTY overlay input and stay that way until Option 2 is ruled. That is a
+mechanism with no input — the orphan shape this repository has paid for before
+(`resolveSkillDirs` "sat with no caller"), and building it would look like
+progress while changing nothing that happens.
+
+So slice 2 waits on the same one-line ruling. Nothing else does.
+
 ## Done when
 
 - [x] Copy, link or compose is chosen — **COMPOSE (overlay)**, owner, 2026-09-21
