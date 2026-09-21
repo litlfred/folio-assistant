@@ -819,6 +819,20 @@
       "file": "beans/defs/folio-assistant-5tul--crdm-data-modelling-phase-guidance-skill-plus-the.md"
     },
     {
+      "id": "folio-assistant-5wrg",
+      "title": "A11Y GATE: the six state dashboards are audited by nothing — measured clean today, untested tomorrow",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:51:28Z",
+      "updatedAt": "2026-09-21T10:54:04Z",
+      "preview": "Found 2026-09-21 by asking a question rather than assuming the answer: *does the\naccessibility gate cover the state dashboards?*\n\n## Measured, both halves\n\n**The gate audits ONE page.** `cat-harness/test/a11y.e2e.ts` runs axe over\n`PAGE = \"/_kg/folio-assistant/index.html\"` — the KG viewer — plus an i18n\nfixture and two sticky fixtures it builds itself. Grepping for a `goto` at any\nof `qa/`, `beans",
+      "file": "beans/defs/folio-assistant-5wrg--a11y-gate-the-six-state-dashboards-are-audited-b.md"
+    },
+    {
       "id": "folio-assistant-5xfr",
       "title": "qou's pin bump must rename folio.config.json AND add qaAxes in the same commit, or it silently loses both",
       "status": "todo",
