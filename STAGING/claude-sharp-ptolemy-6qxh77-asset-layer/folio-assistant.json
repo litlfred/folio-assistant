@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T06:57:18.422Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0080ebaab9ce9d30587a08c23a1a0c8cd961ea22",
-  "sourceCommitSha": "0080ebaab9ce9d30587a08c23a1a0c8cd961ea22",
-  "sourceCommitAt": "2026-09-21T06:55:24Z",
+  "generatedAt": "2026-09-21T07:15:22.019Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4872b378011b338c7b493f31972baa350afcdc0a",
+  "sourceCommitSha": "4872b378011b338c7b493f31972baa350afcdc0a",
+  "sourceCommitAt": "2026-09-21T07:04:37Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 219,
+    "Skill": 220,
     "Actor": 27,
     "Capability": 28,
     "Role": 130,
@@ -2844,7 +2844,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-asset-layer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/content-context-and-state-graphs.md",
-      "instructionLines": 244,
+      "instructionLines": 257,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3764,6 +3764,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-asset-layer/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-simplifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-asset-layer/folio-assistant.jsonld#skill/root-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "root-readme",
+      "title": "The root README, and the one fact it must carry",
+      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. The last thing initialize-harness does before it ends installed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-asset-layer/folio-assistant.jsonld#package/cat-bootstrap"
+      ],
+      "instructionsPath": "../cat-bootstrap/skills/root-readme.md",
+      "instructionLines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-asset-layer/folio-assistant.jsonld#directory/cat-bootstrap",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/root-readme"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77-asset-layer/folio-assistant.jsonld#skill/discussion",
@@ -34092,8 +34109,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-ptolemy-6qxh77-asset-layer",
-    "sha": "9a6df13867961736ec750e533847a9c038f9a595",
+    "sha": "e01eb8e324c2b15782e8362642206295d799b763",
     "pr": "666/merge",
-    "run": "35570553176"
+    "run": "35571972284"
   }
 }
