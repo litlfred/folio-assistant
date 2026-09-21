@@ -4955,6 +4955,20 @@
       "file": "beans/defs/folio-assistant-ulqj--decide-the-data-model-for-csv-and-spreadsheets-ado.md"
     },
     {
+      "id": "folio-assistant-ur84",
+      "title": "STAGING BANNER: a prose comment naming <body> absorbed the injection on 323 of 670 pages",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:40:00Z",
+      "updatedAt": "2026-09-21T21:40:00Z",
+      "preview": "Owner, 2026-09-21, with two screenshots of the same preview: *\"staging banner\ngone from f-a\"* — present on `who-iris/`, absent on the folio-assistant\nlanding page beside it.\n\n## The defect\n\n`injectInto` used `html.replace(/<body([^>]*)>/i, …)` — **non-global**, so one\nsubstitution, spent on the first match anywhere in the file including inside\nan HTML comment.\n\n`docs/_includes/head_custom.html` is",
+      "file": "beans/defs/folio-assistant-ur84--staging-banner-a-prose-comment-naming-body-absorbe.md"
+    },
+    {
       "id": "folio-assistant-uwka",
       "title": "PAGE: Managing Agent Context — overlays, and the several ways contextual information is generated",
       "status": "completed",
