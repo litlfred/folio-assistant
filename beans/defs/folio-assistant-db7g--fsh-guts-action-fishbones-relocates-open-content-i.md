@@ -1,11 +1,11 @@
 ---
 # folio-assistant-db7g
 title: 'FSH-GUTS ACTION: [fishbones] relocates open content into fsh-guts, behind a confirm that names the scope'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T21:46:57Z
-updated_at: 2026-09-21T12:48:42Z
+updated_at: 2026-09-21T14:02:43Z
 parent: folio-assistant-6lb8
 ---
 
@@ -32,8 +32,8 @@ the failure that rule exists to stop.
 
 ## Done when
 
-- [~] `[fishbones]` on an open window relocates the content — SEE BELOW. The reader-facing
-      half is built; the durable repo move is not a published page's to make.
+- [x] `[fishbones]` on an open window takes the content off THIS READER's board —
+      the requirement as the owner narrowed it, 2026-09-21. See "The scope, settled".
 - [x] a confirm dialog that names the scope — and names what it does NOT do, which is the
       half this surface could otherwise lie about
 - [x] one relocation path shared with `d1r6`'s sticky discard, not a second one
@@ -60,7 +60,25 @@ Escape cancels and never confirms — a dialog whose dismissal performs the acti
 a dialog that did not ask. Focus lands on the safe choice, so a reader who hits
 Enter without reading has left the content where it is.
 
-## The first Done-when line could not be met, and here is why
+## The scope, settled 2026-09-21 — reader-local is the whole feature
+
+Put to the owner with four options once the first Done-when line turned out to be
+unmeetable. **Chosen: reader-local is the whole feature.** The fishbone is a
+control over one reader's view of the board, the durable relocation is out of
+scope for the board entirely, and the first line above is rewritten to match
+rather than left ticked against something that did not happen.
+
+Two consequences recorded so the next reader does not re-open this:
+
+- **The dialog describes a per-reader action** and no longer says "an agent or a
+  tool does that against the repository" — that sentence promised a mechanism
+  nobody is building, which is its own kind of overstatement.
+- **`board-relocate.bpmn`'s `A_MoveContent` is the AGENT's path to fsh-guts and
+  is not wired to this control.** The diagram is still right about what an agent
+  does under `t0i3`; wiring it to the board's fishbone would re-open the question
+  the owner just closed.
+
+## Why the original line could not be met
 
 **A published static page cannot move a file in the repository.** `d1r6`'s discard
 has always been browser-local `localStorage`, and the existing UI says so in as many
@@ -69,11 +87,10 @@ discarded for anyone else."* The fsh-guts tile already lists the repo's real
 `fsh-guts/` nodes SEPARATELY, with a comment explaining that listing them together
 unlabelled *"would tell a reader they had cleared something for the team"*.
 
-So the durable half — *"off the site, everywhere"* — needs an agent or a tool acting
-against the repository, which is what `board-relocate.bpmn` already draws: its
-`A_MoveContent` is in the renderer/platform lane, not the reader's. The reader-facing
-half is built and the gap is NAMED IN THE DIALOG rather than papered over. Put to the
-owner as a question rather than decided here.
+So the durable half — *"off the site, everywhere"* — was never this surface's to
+perform, and the owner's answer makes that the requirement rather than a shortfall.
+The gap is still NAMED IN THE DIALOG, because a reader has no other way to know
+which of the two things just happened.
 
 ## The drift guard earned its keep
 

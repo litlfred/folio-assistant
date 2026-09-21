@@ -165,8 +165,11 @@ test.describe("the dialog names the scope, in both directions", () => {
     await panel.locator('[data-fa-control="relocate"]').click();
     const not = page.locator(".fa-relocate-does-not");
     await expect(not).toContainText("does not move the content out of the folio");
-    await expect(not).toContainText("MOVED into fsh-guts rather than deleted");
-    await expect(not).toContainText("published page cannot make it");
+    // The scope the owner settled: reader-local is the whole feature, so the
+    // dialog describes a per-reader action rather than promising a repository
+    // change that is coming.
+    await expect(not).toContainText("control over YOUR view of the board");
+    await expect(not).toContainText("made by whoever is editing it");
   });
 
   test("the subject is NAMED — not 'this item'", async ({ page }) => {

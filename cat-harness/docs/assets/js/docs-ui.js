@@ -1833,10 +1833,17 @@
    *
    * So the dialog says exactly two things: what this does (takes the card off
    * THIS BROWSER's board, reversibly, from the trashcan tile), and what it
-   * does not (the durable move out of the rendered folio, which an agent or a
-   * tool performs against the repository). Naming the second is not an
-   * apology; it is the difference between a reader thinking they cleared
-   * something for the team and knowing they did not.
+   * does not (move the content out of the folio at all). Naming the second is
+   * not an apology; it is the difference between a reader thinking they
+   * cleared something for the team and knowing they did not.
+   *
+   * THE SCOPE IS THE OWNER'S, settled 2026-09-21 when `db7g` could not meet
+   * its own first line: **reader-local is the whole feature.** The fishbone is
+   * a control over one reader's view, and the durable relocation is not the
+   * board's — so this dialog describes a per-reader action rather than
+   * promising a repository change that is coming. `board-relocate.bpmn`'s
+   * `A_MoveContent` is the AGENT's path to fsh-guts and is not wired to this
+   * control; wiring them would re-open the question the owner just closed.
    *
    * ## ONE PATH, shared with `d1r6`
    *
@@ -1864,10 +1871,9 @@
       "the trashcan tile."));
     // WHAT WILL NOT, which is the half a reader would otherwise assume.
     scope.appendChild(el("p", { class: "fa-relocate-does-not" },
-      "It does not move the content out of the folio. That is a change to the " +
-      "repository \u2014 the content is MOVED into fsh-guts rather than deleted, so " +
-      "every reference to it still resolves \u2014 and a published page cannot make " +
-      "it. An agent or a tool does that against the repository."));
+      "It does not move the content out of the folio, and nothing on this page " +
+      "does: the fishbone is a control over YOUR view of the board. Moving content " +
+      "into fsh-guts is a change to the repository, made by whoever is editing it."));
     dialog.appendChild(scope);
 
     var row = el("div", { class: "fa-relocate-actions" });
