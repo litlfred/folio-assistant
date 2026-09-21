@@ -1,10 +1,11 @@
 ---
 # folio-assistant-k59d
 title: 'MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-21T06:30:00Z
-updated_at: 2026-09-21T06:30:00Z
+updated_at: 2026-09-21T11:03:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -52,19 +53,6 @@ were sent to read.
 *"The blocker is VOID — `fsch` was scrapped"* in its own body. Nothing
 propagated that to `p5wm`, which still routes through it.
 
-## Done when
-
-- [ ] A check reports an open bean whose body names a **`completed` or
-      `scrapped`** bean in a critical-path chain (`a → b → c`) or a numbered
-      path, not only in a `blocked on \`id\`` sentence — measured against the
-      whole store first, with the false-positive classes named and closed the
-      way `sfhr` named its three
-- [ ] The rule distinguishes *"this waits on `x`"* from *"this unblocks `x`"*,
-      or records that it cannot and reports the class as **could not
-      determine** rather than as clean
-- [ ] `p5wm` and `yg29` are repaired **by their owners** — this bean does not
-      edit them
-
 ## The detector flagged THIS bean while it was being written, and that is a finding
 
 First run after the body above was written:
@@ -88,3 +76,95 @@ cell, which is both correct English and what the guard reads.
 
 - [ ] The quotation guard covers a markdown table cell, or the guard's stated
       scope says it does not and why — a workaround in one bean is not a fix
+
+## Built, 2026-09-21 — `bun run check:stale-paths`
+
+Premise re-measured on current `main` before starting, because several beans
+closed that morning: **it still holds.** `p5wm` routes through `2krx`, `5y4b`
+and `pb04`, all `completed`; `yg29`'s numbered "Shortest path" names `z7ev` and
+`jbx2`, both `completed`.
+
+Checked first that no sibling was on it — no open PR, no remote branch, bean
+`todo` on main. That check exists because the same session duplicated `yl5w`
+earlier the same morning.
+
+### Two rules, and the ratio that made them narrow
+
+The first draft over the whole store found **three, of which two were wrong.**
+Both are now guards with tests.
+
+| rule | shape |
+|---|---|
+| **chain** | an id that is an OPERAND of an arrow (`→` or `->`) |
+| **numbered step** | a numbered item under a heading naming a path/order/sequence |
+
+**An arrow is not always a dependency.** `x3bd` says *"README is 97 → 66
+lines"* in a paragraph mentioning `lv3j` hundreds of characters away. A step is
+now a segment between arrows that is **only ids**, optionally with a route's own
+punctuation — `` (`6lb8` ‖ `ivfw` + `5y4b`) `` is the shape `p5wm` uses for
+parallel work. Anything with prose in it is a sentence containing an arrow.
+
+**A bean describing another bean's stale path is not stale.** This bean quotes
+`p5wm`'s chain as evidence and the first draft reported it as `k59d`'s own
+defect — the shape `check-bean-bodies` closed with a quotation guard, and the
+shape that flagged `jijc` hours earlier. A **table row is attributed by its
+first cell**, which is the robust signal: a quoted chain often sits inside ONE
+code span, leaving the backticks unpaired so the subject reads as a step.
+
+### My doc comment overclaimed, and the test caught it
+
+The first implementation took *"the first id after the arrow"* while the
+comment beside it said *"adjacent to an arrow"*. Those differ: it accepted
+`97 -> 66 lines, and bean `2krx` carries the reason`, where the id is a whole
+clause away. **Its own guard test went red**, and the rule was rewritten to
+match what the comment claimed rather than the comment softened to match the
+code.
+
+### Two gates of this repository's own caught the first draft
+
+**`check:declared-paths`** refused `join(root, "beans", "defs")` — a literal
+where the declaration should be read. Replaced with `readBeanFiles` from the
+shared `bean-store-read.ts`, which resolves the directory from the declaration
+and handles `defs/archive/` besides. The rule was right and my file was wrong.
+
+**And that fix introduced a silent clean run**, which is the failure this
+repository names most often. `readBeanFiles` returns a FULL id
+(`folio-assistant-p5wm`) while a bean body cites the four-character suffix
+(`` `p5wm` ``). Every lookup missed, `stalePaths` returned nothing, and the
+check printed **"no NEW stale path"** over a store it had read perfectly — and
+would have kept printing it forever. Caught only because the baseline then
+reported all three of its entries as *no longer matching*, which is the
+property that exists so a baseline cannot quietly become empty. The index now
+holds both id forms.
+
+### Baselined, not repaired
+
+`p5wm` and `yg29` are GOAL milestones owned by other sessions, and a milestone
+is a statement of what its owner believes the goal needs next. Rewriting
+somebody else's belief is not a checker's to do. `stale-paths-baseline.json`,
+same shape and reasons as `bean-bodies-baseline.json` — a NEW stale path fails,
+the backlog lists every run, and an entry that stops matching is reported as
+**stale** so the file shrinks. Keyed `<bean>:<rule>` rather than by line,
+because the line is the thing that gets edited.
+
+### Verification
+
+Falsified in all three directions against the real store: a planted fourth path
+**failed** (exit 1); an unmatched baseline entry **reported stale**; restored,
+**exit 0**. 14 tests, **2 of which go red when both guards are stubbed** — the
+rest are the guards themselves, which must keep passing if the rule is widened.
+`bun run gates` with the check wired in.
+
+## Done when
+
+- [x] A check reports an open bean whose body names a `completed` or `scrapped`
+      bean in a critical-path chain or a numbered path, not only in a
+      `blocked on \`id\`` sentence — measured against the whole store first,
+      with the false-positive classes named and closed
+- [x] The rule distinguishes what it can from what it cannot: a chain position
+      is directional by construction, so *"waits on"* vs *"unblocks"* does not
+      arise for it. Nothing looser is implemented, and prose that merely
+      mentions a closed bean is **not examined and not counted as clean** —
+      stated in the module header and in the report's own footer
+- [ ] `p5wm` and `yg29` are repaired **by their owners** — this bean does not
+      edit them; baseline entries come out as they are
