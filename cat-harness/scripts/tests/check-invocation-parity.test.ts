@@ -46,8 +46,15 @@ describe("invocations", () => {
   test("the real deploy workflow's set includes the foreign-instance export", () => {
     // The witness. A matcher proven only against fixtures is proven against
     // its author's idea of the file.
+    //
+    // `./bootstrap`, not `./cat-bootstrap`: the rename in `494bbbb6f9` swept
+    // the WORKFLOW and left this assertion behind, which is the one place in
+    // this file that reads the real file rather than a fixture — so it is the
+    // one place a rename could break, and it did. The fixtures below keep the
+    // old spelling on purpose: they are self-consistent strings about the
+    // MATCHER, and rewriting them would be churn that proves nothing.
     const got = invocations(wf("docs-site.yml"));
-    expect(got.some((i) => i.script === "kg-export" && i.instance === "./cat-bootstrap")).toBe(true);
+    expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
 });
 
