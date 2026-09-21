@@ -1,7 +1,7 @@
 ---
 # folio-assistant-dhvf
 title: 'DEPENDENCY VERSIONS: instance deps float on a git branch, and nothing declares a version — SUSHI/FHIR vs semver options'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T20:03:30Z
@@ -168,3 +168,49 @@ none of them this bean's to fix:
 The proposal's own first ask is the narrowest one: a `check:published-refs`
 gate failing a SHA, a branch name or `current` in a published artefact. It can
 be written against today's data, before `id`, `version` or `publishable` exist.
+
+
+## The last open box closed, 2026-09-21 — and the gate has one live finding
+
+Three of the four remaining boxes were already done and unticked; verified
+each against the tree rather than the prose:
+
+| | |
+|---|---|
+| `check:published-refs` | registered in `package.json`, and **run by `code-quality-gates.yml:662`** — not merely present |
+| `directory-conventions` | §"Pinning a reference — a SHA may stage, only a version may publish", with the two-tier table |
+| the SUSHI claim | **still wrong** — the one thing left |
+
+### The correction
+
+`harness-config.ts:14` said the dependency model *"is the same methodology as
+FHIR/SUSHI dependencies"*, unqualified. It is the same for the **walk** and
+not for the **pin**: SUSHI names `packageId: version` against a registry,
+while `FolioAssistantDependencySchema` names a git `ref` that DEFAULTS TO THE
+DEFAULT BRANCH. Now says which half is true, names the `xom7` shape it creates
+— a dependency that is a different dependency on Tuesday with nothing
+noticing — and points at the skill section and the gate rather than restating
+either.
+
+### The gate reports one finding, and it is worth a second opinion
+
+```
+✗ . → agent-instructions (litlfred/folio-assistant/cat-bootstrap/AGENTS.md)
+  unpinned — no ref at all — `current` by omission
+```
+
+**Left alone, deliberately.** The source is `{instance:
+"litlfred/folio-assistant", path: "cat-bootstrap/AGENTS.md"}` — the SAME
+repository. Source and descendant are committed together and move atomically,
+so there is no floating window between them in the sense the gate exists to
+catch.
+
+It is not obviously a false positive either: the asset's own description says
+the point of `source` is that *"is this still what it was copied from" is a
+question that can be ASKED*, and without a ref you can ask whether it matches
+HEAD, not whether it matches what was copied.
+
+So the question is whether a SAME-REPO provenance source needs a ref, and of
+which tier — a judgement belonging to whoever wrote the gate, not to be
+settled by inventing a ref to silence it. The gate is advisory and reports it
+as 0 major, which is the correct handling of a finding nobody has ruled on.
