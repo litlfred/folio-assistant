@@ -364,25 +364,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790029215">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790030664">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790029215">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790030664">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790029215">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790030664">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790029215">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790030664">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -399,7 +399,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790029215" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790030664" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -752,6 +752,7 @@
       <li><a href="#the-folio-is-a-convention-not-a-page--r24-to-r29" id="markdown-toc-the-folio-is-a-convention-not-a-page--r24-to-r29">The folio is a <strong>convention</strong>, not a page — R24 to R29</a></li>
       <li><a href="#an-asset-has-three-states-not-two--r30" id="markdown-toc-an-asset-has-three-states-not-two--r30">An asset has <strong>three</strong> states, not two — R30</a></li>
       <li><a href="#a-stickys-face--r31-and-r32" id="markdown-toc-a-stickys-face--r31-and-r32">A sticky’s face — R31 and R32</a></li>
+      <li><a href="#r19s-second-clause--reported-open-then-settled-the-same-day" id="markdown-toc-r19s-second-clause--reported-open-then-settled-the-same-day">R19’s second clause — reported open, then settled the same day</a></li>
       <li><a href="#still-open-from-this-round" id="markdown-toc-still-open-from-this-round">Still open from this round</a></li>
     </ol>
   </li>
@@ -1163,7 +1164,7 @@ ever saw it.</p>
     </tr>
     <tr>
       <td><strong>R19</strong></td>
-      <td>the board’s tiles SHALL be the <strong>same square tiles</strong> as the LHS navbar’s expanding menu, <em>or</em> a theme/avatar where that is the better fit</td>
+      <td>the board’s tiles SHALL be the <strong>same square tiles</strong> as the LHS navbar’s expanding menu, <em>or</em> a theme/avatar where that is the better fit — <strong>which is which is R19b, settled below</strong></td>
       <td><em>“i meant to use same SQUARE TILES taht are in the expanding menu of LHS navbar OR use theme/avatars as appraopriate”</em></td>
     </tr>
     <tr>
@@ -1373,6 +1374,126 @@ requester uses.</p>
 the card until its condensed text is unreadable; R32 without <em>“small”</em> leaves
 the dead space R18 was about. Either alone satisfies half the round and looks
 like it satisfied all of it, which is why both are asserted.</p>
+<h3 id="r19s-second-clause--reported-open-then-settled-the-same-day">
+  
+  
+    <a href="#r19s-second-clause--reported-open-then-settled-the-same-day" class="anchor-heading" aria-labelledby="r19s-second-clause--reported-open-then-settled-the-same-day"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R19’s second clause — reported open, then settled the same day
+  
+  
+</h3>
+    
+
+<p><strong>It was recorded here as undefined</strong>, and deliberately: <em>“OR use theme/avatars
+as appropriate”</em> named a choice that nothing in the corpus said how to make,
+and a rule invented to close the gap reads exactly like a rule that was agreed.</p>
+
+<p><strong>The owner settled it on 2026-09-21</strong>, choosing declaration ownership from
+four options put to them:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>the rule</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>R19b</strong></td>
+      <td>a thing renders as a <strong>tile</strong> iff the <strong>harness</strong> declares it; as an <strong>avatar</strong> iff the <strong>folio</strong> holds it (a note, a document, a materialised asset under <code class="language-plaintext highlighter-rouge">folio/</code>). A <strong>theme</strong> is how either one looks, never a third kind</td>
+    </tr>
+    <tr>
+      <td><strong>R19c</strong></td>
+      <td>a tile is one of <strong>two kinds</strong>. A <strong>functional</strong> tile (a directory or sub-graph) is the visual interface to a <strong>skill</strong>, implemented by a <strong>tool</strong> chosen from potentially several — so it names the skill, never the tool. A <strong>content</strong> tile stands for a set of <strong>schema instances</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>R19c is the owner’s correction to R19b, the same day</strong>, and it is recorded
+as its own requirement rather than folded in because R19b is still true and
+still insufficient:</p>
+
+<blockquote>
+  <p>content tiles = todos are schema instances. different from dir/sub-graph
+tiles = functional (they infact visual interfaces to skills implemented by
+some (potential choice of) tools)</p>
+</blockquote>
+
+<p><em>Who declared it</em> answers <strong>tile or avatar</strong> and stops. It does not say what a
+tile <strong>is</strong>, and the two kinds bind to different things, resolve different
+things when opened, and mean opposite things when empty:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><strong>functional</strong></th>
+      <th><strong>content</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>bound to</td>
+      <td>a <strong>skill</strong></td>
+      <td>a <strong>schema</strong></td>
+    </tr>
+    <tr>
+      <td>resolved on open</td>
+      <td>a <strong>tool</strong> implementing it</td>
+      <td>the <strong>instances</strong></td>
+    </tr>
+    <tr>
+      <td>empty means</td>
+      <td>a <strong>gap to report</strong> — a skill nothing implements is unreachable</td>
+      <td>a <strong>real state</strong> — “nothing outstanding” is not “broken”</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>The operative half is “names the skill, never the tool.”</strong>
+<code class="language-plaintext highlighter-rouge">schemas/tool-types.ts</code> exists to make tools interchangeable — <em>“Two tools
+satisfying one skill — <code class="language-plaintext highlighter-rouge">beans-cli</code> and <code class="language-plaintext highlighter-rouge">beans-manual</code> — must declare the same
+input type, or ‘these are interchangeable’ is an assertion nothing can
+verify”</em> — so a tile bound to a tool breaks the moment the other tool is
+chosen. The choice is the point.</p>
+
+<p><strong>This is a shape the corpus already had</strong>, which is the argument for it:
+<code class="language-plaintext highlighter-rouge">VisualiserDeclarationSchema</code> takes <em>“one path, or several visualisations”</em>, so
+a sub-graph may be rendered more than one way exactly as a skill may be
+implemented more than one way. R19c names the two latitudes as the same
+latitude.</p>
+
+<p><strong>The empty asymmetry was already half-written too.</strong> <code class="language-plaintext highlighter-rouge">head_custom.html</code>
+records the content side — <em>“a board that opens empty is indistinguishable
+from a person with nothing outstanding, and those are opposite facts”</em> — while
+<code class="language-plaintext highlighter-rouge">pb04</code> covers the functional side: an affordance that promises and delivers
+nothing.</p>
+
+<p><strong>The provenance is kept rather than tidied away</strong>, the same as R15/R16: this
+is a rule recovered by argument and then ratified, not one written down at the
+time, and a reader re-checking the board should know which it is.</p>
+
+<p><strong>Two candidate rules were falsified by R30 before the choice was put.</strong> R30
+places <em>“avatars of materialized assets (including materialized KG like
+bootstrap, cat-harness)”</em> on the glass — so a <strong>whole knowledge graph renders
+as an avatar</strong>. That kills <em>“many behind it → tile”</em> outright, and it kills
+<em>“opens a viewer over a set → tile”</em> too, since opening that avatar does open
+a viewer over a set. Declaration ownership survives because a materialised
+asset is in the reader’s <code class="language-plaintext highlighter-rouge">folio/</code> <strong>however big it is</strong>.</p>
+
+<p><strong>It is recognition rather than invention</strong>, which is the reason to prefer it:
+<code class="language-plaintext highlighter-rouge">harness-tiles</code> already carried <em>“a tile is the harness’s, not the node’s”</em>,
+and the owner’s own 2026-09-20 line — <em>“if harness declares visaluzers, those
+should have tile. defaults to theme, but new can be changed”</em> — already said
+both halves. The gap was that nobody had read them as an answer to this
+question.</p>
+
+<p>The rule lives in
+<a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/harness-tiles.html"><code class="language-plaintext highlighter-rouge">harness-tiles</code></a>,
+with a pointer from <code class="language-plaintext highlighter-rouge">board-windows</code>. There is no check, and that is stated in
+the skill rather than left as an omission: nothing classifies a folio item
+yet, so a gate would be a declared property whose check cannot answer its own
+claim — R17’s lesson, one round later.</p>
 <h3 id="still-open-from-this-round">
   
   
@@ -1382,17 +1503,11 @@ like it satisfied all of it, which is why both are asserted.</p>
 </h3>
     
 
-<p><strong>R19’s second clause has no rule yet.</strong> <em>“OR use theme/avatars as
-appropriate”</em> names a choice — when is a thing a tile, and when is it a
-theme or an avatar? — and nothing here says how to make it. It is recorded as
-open rather than resolved, because a rule invented to close the gap would read
-exactly like a rule that was agreed. Tracked on
-<a href="https://github.com/litlfred/folio-assistant/issues/796">issue #796</a>.</p>
-
 <p><strong>Whether the library view distinguishes materialised from not-materialised</strong>
-is the other half R30 leaves unsaid: the three states are the <em>asset’s</em>, and
-nothing yet states whether a reader browsing a library can see which of its
-items they already hold.</p><hr />
+is the half R30 leaves unsaid: the three states are the <em>asset’s</em>, and nothing
+yet states whether a reader browsing a library can see which of its items they
+already hold. Tracked on
+<a href="https://github.com/litlfred/folio-assistant/issues/796">issue #796</a>.</p><hr />
 <h2 id="what-the-set-produced">
   
   
@@ -1653,7 +1768,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35662037647"><code>8f679f8</code></a> &middot; 2026-09-21T22:20:08Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35664122521"><code>d2718fc</code></a> &middot; 2026-09-21T22:44:18Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
