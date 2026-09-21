@@ -995,7 +995,7 @@ instead of a repository-wide yes/no that no reader of a skill can see.</p>
 <p><strong><code class="language-plaintext highlighter-rouge">agentic-harness</code> must work with no MCP server running.</strong> Everything it needs
 is files in directories the instance declares: skills in the <code class="language-plaintext highlighter-rouge">kg</code> graph, Tool
 nodes beside them, the work plan in the <code class="language-plaintext highlighter-rouge">beans</code> graph. An agent with nothing but
-a filesystem and the declaration can read all of it.</p>
+a filesystem and <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> can read all of it.</p>
 
 <p>MCP is <strong>acknowledged as a future transport, not assumed as the present one.</strong>
 Where a downstream instance runs a server, <code class="language-plaintext highlighter-rouge">skill_list</code> / <code class="language-plaintext highlighter-rouge">skill_fetch</code> /
@@ -1019,7 +1019,7 @@ sovereign-compute and air-gapped operation are reachable later without a second
 design — an instance with no server loses a transport, not a capability.</p>
 
 <p>So when this skill says “reach a Tool through the graph”, the floor is: read
-the declaration, find the <code class="language-plaintext highlighter-rouge">kg</code> entry, open the directory. Anything richer
+<code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, find the <code class="language-plaintext highlighter-rouge">kg</code> entry, open the directory. Anything richer
 is an optimisation an instance may offer.</p>
 <h2 id="github-is-a-tool-node-not-a-layer">
   

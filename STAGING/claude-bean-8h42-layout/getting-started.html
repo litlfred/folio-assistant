@@ -1218,7 +1218,7 @@ script and the table cannot drift.</p>
     
 
 <p>Your site’s home page opens with your instance’s <strong>own</strong> description, drawn
-inside your <strong>own</strong> backdrop. Both come from one file — the declaration at
+inside your <strong>own</strong> backdrop. Both come from one file — <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> at
 the repository root — and nothing about the platform’s grumpy cat is written
 into the template. Change the file; the page follows.</p>
 <h3 id="the-markdown-node-you-edit">
@@ -1230,7 +1230,8 @@ into the template. Change the file; the page follows.</p>
 </h3>
     
 
-<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// harness.json</span><span class="w">
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// &lt;name&gt;.json -- the DECLARATION. Every key below is one of its top-level</span><span class="w">
+</span><span class="c1">// fields, which is what settles this label: it is not the folio config.</span><span class="w">
 </span><span class="p">{</span><span class="w">
   </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Folio"</span><span class="p">,</span><span class="w">              </span><span class="c1">// the left sidebar's heading</span><span class="w">
   </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One line.</span><span class="se">\n</span><span class="s2">Another line."</span><span class="p">,</span><span class="w">   </span><span class="c1">// ← the landing markdown</span><span class="w">

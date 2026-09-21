@@ -814,9 +814,13 @@ not decided does not compile.</p>
 </h3>
     
 
-  <p>Every other harness concept is named for the <strong>layer that defines it</strong> —
-<code class="language-plaintext highlighter-rouge">harness.json</code>, the <code class="language-plaintext highlighter-rouge">CatHarness</code> declaration, the <code class="language-plaintext highlighter-rouge">cat-harness</code>
-instance. <code class="language-plaintext highlighter-rouge">kg</code> named what the graph HOLDS instead, and was the odd one out.</p>
+  <p>Every other harness concept is named for the <strong>layer that defines it</strong> — the
+<code class="language-plaintext highlighter-rouge">CatHarness</code> declaration, the <code class="language-plaintext highlighter-rouge">cat-harness</code> instance. <code class="language-plaintext highlighter-rouge">kg</code> named what the
+graph HOLDS instead, and was the odd one out.</p>
+
+  <p>The declaration FILE was a third example until the 2026-09-21 split made it
+<code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>. It is named for the <strong>instance</strong> now, so it argues nothing
+here either way.</p>
 
   <p><strong>The old spelling still reads, and that is load-bearing rather than
 politeness.</strong> This document says overrides match on the entry’s <code class="language-plaintext highlighter-rouge">id</code>, not
@@ -1419,7 +1423,7 @@ bean <code class="language-plaintext highlighter-rouge">dh4f</code> found in thi
 corpus they could not read.</p>
 
 <p>This repository’s own declaration is the worked example, and <strong>no count is
-given here on purpose</strong>: the declaration is the list. That sentence said
+given here on purpose</strong>: <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> is the list. That sentence said
 “declares <code class="language-plaintext highlighter-rouge">schemas/</code> and <code class="language-plaintext highlighter-rouge">skills/</code>” until 2026-09-20, by which point it
 declared <strong>twenty-one</strong> directories — a number in prose is a claim, and this
 one had been false for long enough that <code class="language-plaintext highlighter-rouge">AGENTS.md</code> carries its own flagged
@@ -1477,7 +1481,15 @@ word.</p>
 <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.schema.json</code>. Never a generic <code class="language-plaintext highlighter-rouge">kg.json</code>. Compute it with
 <code class="language-plaintext highlighter-rouge">artefactStub()</code>, never by re-deriving it, so two exporters cannot disagree
 about what this instance is called.</li>
-  <li><strong>The declaration file is <code class="language-plaintext highlighter-rouge">harness.json</code> and is NOT stub-named.</strong></li>
+  <li><strong>The declaration file is <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> — named for the instance’s <code class="language-plaintext highlighter-rouge">name</code>,
+NOT its stub.</strong> It is the one file here not computed with <code class="language-plaintext highlighter-rouge">artefactStub()</code>:
+<code class="language-plaintext highlighter-rouge">instanceDeclarationFilename()</code> spells it, and <code class="language-plaintext highlighter-rouge">instanceConfigFilename()</code>
+spells the <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> beside it. <code class="language-plaintext highlighter-rouge">artefactStub()</code> is
+<code class="language-plaintext highlighter-rouge">stub ?? name</code>, so the two coincide for every instance declaring no <code class="language-plaintext highlighter-rouge">stub</code>
+— today all of them but <code class="language-plaintext highlighter-rouge">cat-harness</code>, whose <code class="language-plaintext highlighter-rouge">stub</code> equals its <code class="language-plaintext highlighter-rouge">name</code>
+anyway. <strong>A coincidence in the data is not the rule</strong>: an instance
+declaring a differing <code class="language-plaintext highlighter-rouge">stub</code> publishes <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code> beside a
+<code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, and composing either from the other resolves to nothing.</li>
   <li><strong>The renderable site lives at <code class="language-plaintext highlighter-rouge">docs/&lt;stub&gt;/</code>.</strong> Compute it with
 <code class="language-plaintext highlighter-rouge">siteDir(d)</code> or <code class="language-plaintext highlighter-rouge">siteDirFor(root)</code>, never by writing the path out.</li>
 </ul>
@@ -1513,7 +1525,7 @@ and there cannot be one:</p>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code></td>
-      <td>ours — the declaration is named after its own <code class="language-plaintext highlighter-rouge">name</code> field</td>
+      <td>ours</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">beans.json</code>, <code class="language-plaintext highlighter-rouge">todos.json</code></td>
@@ -1567,7 +1579,7 @@ as its <strong>source root</strong> (<code class="language-plaintext highlighter
 layout untouched. Verified on <code class="language-plaintext highlighter-rouge">gh-pages</code> after the move.</p>
 
 <p><strong>It is not the <code class="language-plaintext highlighter-rouge">folio</code> graph-kind declaration.</strong> <code class="language-plaintext highlighter-rouge">docs/</code> still does not appear
-in the declaration: measured 2026-09-19, adding it makes <code class="language-plaintext highlighter-rouge">harness:dirs</code>,
+in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>: measured 2026-09-19, adding it makes <code class="language-plaintext highlighter-rouge">harness:dirs</code>,
 <code class="language-plaintext highlighter-rouge">kg:schema:check</code> and <code class="language-plaintext highlighter-rouge">docs:harness:check</code> throw <code class="language-plaintext highlighter-rouge">unknown graph kind "folio"</code>,
 because <code class="language-plaintext highlighter-rouge">folio</code> is contributed by <strong>core</strong> and those readers do not load its
 registration. Packaging is unblocked; the declaration waits. Bean <code class="language-plaintext highlighter-rouge">x4a6</code>.</p>

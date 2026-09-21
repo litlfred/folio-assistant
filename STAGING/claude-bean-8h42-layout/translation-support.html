@@ -798,7 +798,7 @@ toward it.</p>
     </ol>
   </li>
   <li><a href="#configuration" id="markdown-toc-configuration">Configuration</a>    <ol>
-      <li><a href="#harnessconfigjson-additions" id="markdown-toc-harnessconfigjson-additions"><code class="language-plaintext highlighter-rouge">harness.config.json</code> additions</a></li>
+      <li><a href="#nameconfigjson-additions" id="markdown-toc-nameconfigjson-additions"><code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> additions</a></li>
     </ol>
   </li>
   <li><a href="#viewer-language-switcher" id="markdown-toc-viewer-language-switcher">Viewer language switcher</a>    <ol>
@@ -997,7 +997,7 @@ resolves PO files by convention:</p>
   <li><strong>Block-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;block-stem&gt;.po</code></li>
   <li><strong>Chapter-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;chapter-slug&gt;.po</code></li>
   <li><strong>Folio-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/global.po</code></li>
-  <li><strong>Dependency walk:</strong> walk <code class="language-plaintext highlighter-rouge">harness.config.json</code> dependencies depth-first,
+  <li><strong>Dependency walk:</strong> walk <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> dependencies depth-first,
 looking for matching PO files in each dependency’s <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/</code></li>
 </ol>
 
@@ -1565,7 +1565,7 @@ dependencies but upstream from them.</p>
 </h3>
     
 
-<p>In <code class="language-plaintext highlighter-rouge">harness.config.json</code>:</p>
+<p>In <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code>:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -1613,10 +1613,10 @@ are visible to the root folio but do not override the root’s own translations.
   
 </h2>
     
-<h3 id="harnessconfigjson-additions">
+<h3 id="nameconfigjson-additions">
   
   
-    <a href="#harnessconfigjson-additions" class="anchor-heading" aria-labelledby="harnessconfigjson-additions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">harness.config.json</code> additions
+    <a href="#nameconfigjson-additions" class="anchor-heading" aria-labelledby="nameconfigjson-additions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> additions
   
   
 </h3>
@@ -2150,7 +2150,7 @@ code, labels) uniformly.</p><hr />
     <tr>
       <td>3. Config support</td>
       <td>—</td>
-      <td>Add <code class="language-plaintext highlighter-rouge">translation</code> section to <code class="language-plaintext highlighter-rouge">harness.config.json</code></td>
+      <td>Add <code class="language-plaintext highlighter-rouge">translation</code> section to <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code></td>
       <td>Todo</td>
     </tr>
     <tr>

@@ -840,7 +840,7 @@ separate <code class="language-plaintext highlighter-rouge">status.json</code> o
   <li><strong>Block-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;block-stem&gt;.po</code></li>
   <li><strong>Chapter-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/&lt;chapter-slug&gt;.po</code></li>
   <li><strong>Folio-level:</strong> <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/global.po</code></li>
-  <li><strong>Dependency walk:</strong> walk <code class="language-plaintext highlighter-rouge">harness.config.json</code> dependencies depth-first</li>
+  <li><strong>Dependency walk:</strong> walk <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> dependencies depth-first</li>
 </ol>
 
 <p>When <code class="language-plaintext highlighter-rouge">poSources</code> is declared, only the listed files are consulted (no
@@ -1581,7 +1581,7 @@ reader, whatever locale they chose, which is the bug this section records.</p>
 </h2>
     
 
-<p>The default <code class="language-plaintext highlighter-rouge">supportedLocales</code> in <code class="language-plaintext highlighter-rouge">harness.config.json</code>:</p>
+<p>The default <code class="language-plaintext highlighter-rouge">supportedLocales</code> in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code>:</p>
 
 <div class="table-wrapper"><table>
   <thead>
