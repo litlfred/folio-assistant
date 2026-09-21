@@ -19,11 +19,13 @@ import {
   CRITERIA,
   VISUALISER_EXEMPT_INSTANCES,
   readmeFinding,
+  ownDocsFinding,
 } from "../check-subgraph-coverage";
 import {
   DECLARATION_FILENAME,
   owesVisualiser,
   GraphKindRegistry,
+  siteDirFor,
 } from "../../schemas/cat-harness";
 
 /** A throwaway instance whose one directory carries `coverage`. */
@@ -441,3 +443,101 @@ describe("every instance needs a starting README OF ITS OWN (bean `ie9l`)", () =
     expect(mute.sort()).toEqual([]);
   });
 });
+
+describe("the own-docs axis — an instance owes documentation of its own", () => {
+  // Bean `op30`. `<instance>/docs/` is the instance's SOURCE documentation. A
+  // handler's rendering of a subject — `<base>/cat-harness/docs/<subject>/` —
+  // is documentation ABOUT that subject, and an axis that conflated the two
+  // would pass a repository where half the documentation is missing.
+
+  /**
+   * A REAL instance root — with a declaration, so `siteDirFor` resolves.
+   *
+   * A bare temp directory is not a weaker fixture, it is a different case:
+   * `siteDirFor` throws on one, which is the UNKNOWN state rather than the
+   * missing-docs state. Both are exercised, separately and on purpose.
+   */
+  function inst(opts: { docs?: boolean } = {}): string {
+    const root = mkdtempSync(join(tmpdir(), "op30-"));
+    writeFileSync(
+      join(root, DECLARATION_FILENAME),
+      JSON.stringify({ name: "probe", directories: [] }),
+    );
+    // `siteDirFor`, not the literal — the same rule the code under test
+    // follows, and the guard that fires on the string does not exempt tests.
+    if (opts.docs) mkdirSync(join(root, siteDirFor(root)), { recursive: true });
+    return root;
+  }
+
+  it("reports an instance with no docs/ of its own", () => {
+    const f = ownDocsFinding(inst(), {});
+    expect(f?.severity).toBe("minor");
+    expect(f?.detail).toContain("no `docs/` of its own");
+  });
+
+  it("says nothing about an instance that has one", () => {
+    expect(ownDocsFinding(inst({ docs: true }), {})).toBeUndefined();
+  });
+
+  it("is MINOR, never major — it fires on most of the corpus on the day it lands", () => {
+    // The severity is the staging. A check that fires on ten of twelve
+    // subjects as a defect is one people learn to skim, and then the real
+    // finding beside it goes unread too.
+    expect(ownDocsFinding(inst(), {})?.severity).toBe("minor");
+  });
+
+  it("honours a declared exemption, and reads it from the DECLARATION", () => {
+    // Never from an instance-name literal in the checker — the rule that kept
+    // cat-bootstrap's visualiser exemption alive through a rename.
+    const exempt = {
+      renderExemption: {
+        of: ["own-docs" as const],
+        reason: "the floor layer documents itself in its json/jsonld",
+        owes: "cat-bootstrap.jsonld",
+      },
+    };
+    expect(ownDocsFinding(inst(), exempt)).toBeUndefined();
+  });
+
+  it("an exemption from a DIFFERENT obligation does not excuse this one", () => {
+    const other = {
+      renderExemption: {
+        of: ["visualiser" as const],
+        reason: "it is the navbar footer",
+        owes: "cat-bootstrap.jsonld",
+      },
+    };
+    expect(ownDocsFinding(inst(), other)).toBeDefined();
+  });
+
+  it("an instance with no declaration ARGUMENT is still asked the question", () => {
+    // `undefined` is not an exemption. An instance that declares nothing has
+    // not been excused; it has said nothing.
+    expect(ownDocsFinding(inst(), undefined)).toBeDefined();
+    expect(ownDocsFinding(inst({ docs: true }), undefined)).toBeUndefined();
+  });
+
+  it("an UNRESOLVABLE site root is reported as unknown, never as satisfied", () => {
+    // The third state, and the one the first draft got wrong: it returned
+    // `undefined` on the throw, which reads as "has documentation". A bare
+    // directory has no declaration, so `siteDirFor` cannot answer — and
+    // "cannot answer" is not "yes".
+    const bare = mkdtempSync(join(tmpdir(), "op30-bare-"));
+    const f = ownDocsFinding(bare, {});
+    expect(f).toBeDefined();
+    expect(f?.detail).toContain("UNKNOWN");
+    expect(f?.detail).not.toContain("has no `docs/` of its own");
+  });
+
+  it("is reported as its own line, separate from the README axis", () => {
+    // They were argued for as separate because the satisfying sets were
+    // disjoint. Measured 2026-09-21 they are not — every instance declares a
+    // README, so docs is a strict subset. They stay separate for the reason
+    // that survives: "can a reader enter" and "is there anything to read once
+    // inside" are different questions.
+    const report = formatReport(auditAll(resolve(".")));
+    expect(report).toContain("no `docs/` OF THEIR OWN");
+    expect(report).toContain("advisory, not gated");
+  });
+});
+
