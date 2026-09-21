@@ -3901,6 +3901,62 @@ a.fa-harness-tab__body:focus-visible {
   opacity: 0.8;
 }
 
+/* ── The folio's tile dock (bean `v0jv`) ───────────────────────────
+ *
+ * Owner: *"folios have tiles do not go to the window. they are stacked around
+ * (bottom?) of folio, slid away."*
+ *
+ * `.fa-board-tiles` was a `flex-wrap` row appended after the sticky grid, IN
+ * FLOW — so on the landing board it landed below every full-bleed card and
+ * read as absent. The declared visualisations, invisible. The declaration side
+ * was always right (`harness-tiles`: one registry, per-surface visibility) and
+ * is untouched; this is placement only.
+ *
+ * STICKS TO THE BOARD'S BOTTOM EDGE, NOT THE VIEWPORT'S. `sticky` rather than
+ * `fixed`, and the difference is the whole design: the dock belongs to the
+ * FOLIO, so it travels with the board and disappears when the board does. A
+ * viewport-fixed bar would be chrome for the page, which is a different
+ * object, and would follow a reader onto content that has no tiles at all.
+ *
+ * NOT ON THE GLASS, which the bean states outright: *"the tiles must NOT be
+ * projected onto the glass — they are folio chrome, where a window is
+ * content."* `z-index` here is below `.fa-sticky-layer`'s 90 for exactly that
+ * reason — an open window is content and passes over its own frame. */
+.fa-board-dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  /* Opaque: board content scrolls under it. */
+  background: var(--sidebar-color, #27262b);
+}
+:root[data-fa-scheme="light"] .fa-board-dock {
+  background: #e8eaed;
+  border-top-color: #767d88;           /* 3.44:1 as a boundary, SC 1.4.11 */
+  color: #1f2933;                      /* 12.24:1 */
+}
+
+/* Closed it is one row; open it is the tiles. The marker is dropped because
+   the summary carries its own glyph and an accessible name that says what is
+   inside rather than what shape it is. */
+.fa-board-dock-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  /* SC 2.5.8's 24px floor, and this instance's interaction profile is
+     low-dexterity, so the floor is the point rather than a minimum to argue
+     down from. */
+  min-height: 24px;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  list-style: none;
+}
+.fa-board-dock-summary::-webkit-details-marker { display: none; }
+.fa-board-dock-summary::marker { content: ""; }
+.fa-board-dock-summary:hover { background: rgba(128, 128, 128, 0.16); }
+
 /* The declared visualisations, on the board. The navbar's copies live in the
  * action launcher's own grid and take its rules; this is the second surface of
  * the same declaration, so it reuses `.fa-tile` rather than styling a new
@@ -3911,6 +3967,12 @@ a.fa-harness-tab__body:focus-visible {
   gap: 0.5rem;
   padding: 0.5rem;
 }
+
+/* An EMPTY dock is no dock. A `▦ Visualisations` row that opens on nothing is
+   the `pb04` failure again — an affordance that promises and delivers nothing
+   — and `:has()` lets the container answer for its contents rather than the
+   mount having to tell it. */
+.fa-board-dock:not(:has(.fa-tile)) { display: none; }
 
 .fa-board-tiles:empty {
   display: none;

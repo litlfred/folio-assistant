@@ -254,3 +254,90 @@ test.describe("the tile template is `1le7`'s, not a second one", () => {
     for (const l of labels) expect(l).toContain("the declared visualisation of");
   });
 });
+
+/* ── `v0jv` — the tiles dock at the folio's edge ──────────────────
+ *
+ * Owner: *"folios have tiles do not go to the window. they are stacked around
+ * (bottom?) of folio, slid away, open to tiles to things like fsh-gts, todos,
+ * docs, etc."*
+ *
+ * `.fa-board-tiles` was a `flex-wrap` row appended after the sticky grid, IN
+ * FLOW — so on the landing board it landed below every full-bleed card and
+ * read as absent. Only the PLACEMENT was wrong: `harness-tiles` already fixes
+ * the declaration side (*"declared once, per-surface visibility, never two
+ * registries"*), and the first spec below is what keeps this change honest
+ * about that.
+ */
+test.describe("the folio's tile dock", () => {
+  test("the dock holds the BOARD surface's tiles — still one registry", async ({ page }) => {
+    // THE ONE THAT MATTERS. A placement change must not become a registry
+    // change, and that failure ships by looking fine. Every board-surface
+    // tile must be inside the dock, and the dock must hold nothing else.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const inDock = await page
+      .locator('.fa-board-tiles [data-fa-tile]')
+      .evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.faTile).sort());
+    const onBoard = (await tilesOnPage(page, "board")).map((t) => t.id).sort();
+    expect(onBoard.length).toBeGreaterThan(0);
+    expect(inDock).toEqual(onBoard);
+  });
+
+  test("it is the BOARD's edge, not the viewport's", async ({ page }) => {
+    // `sticky`, never `fixed`. The dock belongs to the FOLIO: it travels with
+    // the board and goes when the board goes. A viewport-fixed bar is chrome
+    // for the page — a different object — and would follow a reader onto
+    // content that has no tiles at all.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const pos = await page
+      .locator(".fa-board-dock")
+      .evaluate((el) => getComputedStyle(el).position);
+    expect(pos).toBe("sticky");
+  });
+
+  test("it opens and closes from the keyboard alone", async ({ page }) => {
+    // No `page.mouse` below. The declared interaction profile is
+    // low-dexterity, and a slide-away whose only way in is a pointer excludes
+    // the person who asked for it. `l4zi`: the inverse must be reachable too.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const dock = page.locator(".fa-board-dock");
+    const summary = dock.locator("summary");
+    await expect(summary).toHaveAttribute("aria-label", /Visualisations/);
+
+    await summary.press("Enter");
+    await expect(dock).toHaveAttribute("open", "");
+    await summary.press("Enter");
+    await expect(dock).not.toHaveAttribute("open", "");
+  });
+
+  test("opening it does not move the board's own content", async ({ page }) => {
+    // A dock that reflows the grid moves the card a reader was about to
+    // click. Written because it is the failure mode a bottom dock invites,
+    // and measured rather than assumed from `position: sticky`.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const grid = page.locator(".fa-sticky-grid");
+    const before = await grid.boundingBox();
+    await page.locator(".fa-board-dock summary").press("Enter");
+    const after = await grid.boundingBox();
+    expect(after?.y).toBe(before?.y);
+    expect(after?.height).toBe(before?.height);
+  });
+
+  test("an open window passes OVER the dock — chrome is not content", async ({ page }) => {
+    // The bean states it outright: "the tiles must NOT be projected onto the
+    // glass — they are folio chrome, where a window is content." So the float
+    // layer stacks above the dock, and this holds that line.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const dockZ = await page
+      .locator(".fa-board-dock")
+      .evaluate((el) => Number(getComputedStyle(el).zIndex));
+    const layerZ = await page
+      .locator(".fa-sticky-layer")
+      .evaluate((el) => Number(getComputedStyle(el).zIndex));
+    expect(layerZ).toBeGreaterThan(dockZ);
+  });
+});

@@ -2940,15 +2940,47 @@
     /* THE OTHER SURFACE for the same declarations. Q11: declared once,
      * per-surface visibility. This filters the same array the navbar reads, so
      * a tile cannot be one thing in the sidebar and another here. */
+    /* AN EDGE DOCK, NOT A ROW IN FLOW — bean `v0jv`, the owner: *"folios have
+     * tiles do not go to the window. they are stacked around (bottom?) of
+     * folio, slid away, open to tiles to things like fsh-gts, todos, docs."*
+     *
+     * It was `display: flex; flex-wrap: wrap` appended after the sticky grid,
+     * so on the landing board it landed below every full-bleed card and read
+     * as absent. The DECLARATION side was already right and is untouched:
+     * `harness-tiles` — *"declared once, per-surface visibility, never two
+     * registries free to disagree about what a tile is"* — and the call below
+     * still filters the same array the navbar reads. Only the placement was
+     * wrong.
+     *
+     * FOLIO CHROME, NOT BOARD CONTENT, which is the distinction the bean
+     * records: *"the tiles must NOT be projected onto the glass — they are
+     * folio chrome, where a window is content."* So the dock is a SIBLING of
+     * the board's content, at its edge, and never a layer over it. Same arrow
+     * as `board-diagram-interchange`: chrome frames content, never the
+     * reverse.
+     *
+     * A `<details>` for the same reason the sticky drawer is one — the
+     * disclosure, the keyboard path, Escape and the expanded state are the
+     * browser's, and it degrades to everything-visible with no JavaScript,
+     * which is R4's floor rather than a convenience. */
+    var boardDock = el("details", { class: "fa-board-dock" });
+    boardDock.appendChild(el("summary", {
+      class: "fa-board-dock-summary",
+      // NAMES WHAT IS INSIDE. "Tiles" is the shape; a reader deciding whether
+      // to spend a keystroke needs the subject.
+      "aria-label": "Visualisations for this folio",
+      title: "Visualisations for this folio",
+    }, "\u25A6 Visualisations"));
     var boardTiles = el("div", {
       class: "fa-board-tiles",
       role: "group",
       "aria-label": "Visualisations",
     });
+    boardDock.appendChild(boardTiles);
 
     var grid = el("div", { class: "fa-sticky-grid" });
     board.appendChild(grid);
-    board.appendChild(boardTiles);
+    board.appendChild(boardDock);
     // APPEND on the landing board, insert-first everywhere else. The harness
     // cards are the page's first statement -- what this repository is, and
     // which layers initiated -- and putting the todos above them would answer
