@@ -2585,36 +2585,84 @@
    * information; a single page-level number cannot say where to look.
    */
   function mountPageStickies(items, board) {
-    var byLabel = {};
+    /* ── The two relations, from ONE pass ─────────────────────────────────
+     *
+     * Mirrors `notesAt()` in `schemas/note-anchor.ts`, including the rule
+     * that decides the overlap: a note both attached here AND also-about
+     * here counts ONCE, as attached — the stronger relation wins, so a
+     * self-referential declaration cannot inflate a badge past the length of
+     * the list it labels.
+     *
+     * Two indexes rather than one because they are two relations, and
+     * building them together is what stops a caller computing the badge from
+     * one query and rendering the panel from another.
+     */
+    var attachedBy = {};
+    var alsoAboutBy = {};
     for (var i = 0; i < items.length; i++) {
       var t = items[i];
-      if (!t.targetLabel) continue;
-      (byLabel[t.targetLabel] = byLabel[t.targetLabel] || []).push(t);
+      if (t.targetLabel) {
+        (attachedBy[t.targetLabel] = attachedBy[t.targetLabel] || []).push(t);
+      }
+      var also = t.alsoAbout || [];
+      for (var ai = 0; ai < also.length; ai++) {
+        var lbl = also[ai] && also[ai].label;
+        // The overlap rule: already attached here, so not counted again.
+        if (!lbl || lbl === t.targetLabel) continue;
+        (alsoAboutBy[lbl] = alsoAboutBy[lbl] || []).push(t);
+      }
     }
 
     var heads = document.querySelectorAll("[data-fa-label]");
     var placed = 0;
     for (var h = 0; h < heads.length; h++) {
       var head = heads[h];
-      var mine = byLabel[head.getAttribute("data-fa-label")];
+      var label = head.getAttribute("data-fa-label");
+      var mine = attachedBy[label];
       if (!mine || mine.length === 0) continue;
 
       var host = el("div", { class: "fa-sticky-inline" });
-      var badge = el("button", {
-        type: "button",
-        class: "fa-sticky-badge",
-        "aria-expanded": "false",
-        "aria-label": mine.length + " todo(s) on this section",
-      });
-      badge.innerHTML = STICKY_GLYPH;
-      badge.appendChild(el("span", { class: "fa-sticky-badge-count" }, String(mine.length)));
 
+      /* ── The panel FIRST, then the badge from what it rendered ──────────
+       *
+       * R6: *the badge's count SHALL be the cardinality of the query the
+       * panel renders.* Stated as a requirement it is a property somebody
+       * has to keep true; built this way it is one the code cannot break,
+       * because the number is read off the panel's own children rather than
+       * recomputed from anything. **A badge that can disagree with its own
+       * panel is the defect to design out** — so there is no second count to
+       * go out of step.
+       */
       var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
       (function (list, mine) {
         for (var k = 0; k < mine.length; k++) {
           list.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
         }
       })(list, mine);
+      var shown = list.children.length;
+
+      var badge = el("button", {
+        type: "button",
+        class: "fa-sticky-badge",
+        "aria-expanded": "false",
+        // THE EXACT NUMBER, always — R5's threshold is a DENSITY decision
+        // about the visual, and a screen-reader user must not be told less
+        // than a sighted one. `note`/`notes` rather than "todo(s)": a reader
+        // hears the label, and "(s)" is a written convention.
+        "aria-label": shown + (shown === 1 ? " note" : " notes") + " on this section",
+        "data-fa-notes": String(shown),
+      });
+      badge.innerHTML = STICKY_GLYPH;
+      // R5, the owner: *"badge of # if > 1"*. One note gets the icon and no
+      // number — the icon already says there is something here.
+      if (shown > 1) {
+        badge.appendChild(el("span", { class: "fa-sticky-badge-count" }, String(shown)));
+      }
+      // The secondaries at this label, recorded and deliberately NOT added to
+      // the badge. Published so a test can prove they were present and still
+      // did not inflate it: an assertion over a page with no secondaries at
+      // all would pass for an implementation that counted them.
+      host.setAttribute("data-fa-also-about", String((alsoAboutBy[label] || []).length));
 
       (function (badge, list) {
         badge.addEventListener("click", function () {
@@ -2631,7 +2679,11 @@
       // panel already follows for the same reason.
       head.parentNode.insertBefore(host, head.nextSibling);
       host.parentNode.insertBefore(list, host.nextSibling);
-      placed += mine.length;
+      // `shown`, not `mine.length`: the same rule one level out. `placed`
+      // is reported as how many notes reached the page, and reading it off
+      // the intent rather than the result would let the two disagree exactly
+      // where the badge no longer can.
+      placed += shown;
     }
 
     // Reported, not silent. A todo carrying a `targetLabel` that matches no

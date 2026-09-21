@@ -693,14 +693,20 @@ test.describe("todos attached to a block", () => {
     });
   });
 
-  test("a badge appears beside each block that has them, carrying its count", async ({ page }) => {
+  test("a badge appears beside each block that has them, and shows a count only above one", async ({ page }) => {
+    // R5, the owner: *"badge of # if > 1"*. Updated for bean `1rta` — this
+    // asserted a rendered "1" on the single-note block, which is exactly the
+    // behaviour the requirement removes.
     await page.goto(PAGE_URL);
     const badges = page.locator(".fa-sticky-badge");
     await expect(badges).toHaveCount(2);
     await expect(badges.nth(0).locator(".fa-sticky-badge-count")).toHaveText("2");
-    await expect(badges.nth(1).locator(".fa-sticky-badge-count")).toHaveText("1");
-    // The count is in the accessible name too, not only the glyph.
-    await expect(badges.nth(0)).toHaveAttribute("aria-label", "2 todo(s) on this section");
+    await expect(badges.nth(1).locator(".fa-sticky-badge-count")).toHaveCount(0);
+    // THE EXACT NUMBER IS IN THE ACCESSIBLE NAME IN BOTH CASES. The threshold
+    // is a density decision about the visual; a screen-reader user must not be
+    // told less than a sighted one, so the single-note badge still says "1".
+    await expect(badges.nth(0)).toHaveAttribute("aria-label", "2 notes on this section");
+    await expect(badges.nth(1)).toHaveAttribute("aria-label", "1 note on this section");
   });
 
   test("a block with no todos gets no badge", async ({ page }) => {
