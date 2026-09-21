@@ -50,12 +50,14 @@ import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
 import {
+  directoryForGraph,
   publishedAssetPath,
   readDeclaration,
   siteDirFor,
   sourceLinks,
   repoRootFor,
 } from "../schemas/cat-harness.ts";
+import { readQaGraph } from "../content/pipeline/qa-graph-index.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -1171,6 +1173,57 @@ function processHierarchy(): Record<string, string[]> {
       "verdict",
     );
     console.log(`  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s))`);
+  }
+}
+
+/**
+ * The `qa` graph, projected as one panel per family — bean `py74`, issue #635.
+ *
+ * `<base>/qa/` said *"declared and nothing publishes a projection for it yet"*
+ * over the largest generated graph here. `state-visualizer.ts` flips a graph
+ * from `declared` to `live` the moment `assets/<id>/index.json` exists, so
+ * this file is the whole of what was missing — no generator, schema or route
+ * change.
+ *
+ * **The directory comes from the DECLARATION, not from a literal.** `qa` is
+ * declared once, at `test/results/`, and `directoryForGraph` throws rather
+ * than picking silently if that ever stops being true — the `wggr` failure,
+ * where resolving `cat-harness` to the first of several matches wrote 37
+ * sidecars against the wrong subjects on a run that exited 0. The neighbouring
+ * `QA_ASSET_DIR` above still composes its path by hand; it is not changed here
+ * because it names a SUBDIRECTORY of the graph (`witnesses/`) that no
+ * declaration distinguishes, which is a different question and another bean's.
+ *
+ * Existence-gated, like the bean index and for the same reason: every QA
+ * sweep rewrites this graph, so the projection moves whenever anybody runs
+ * one. A content gate would go red on a projection that is fresh on the branch
+ * and fresh on main and stale only against their union — bean `d2kp`.
+ */
+{
+  const qaDir = directoryForGraph(REPO_ROOT, "qa");
+  if (qaDir === undefined) {
+    // Declared nowhere is a real answer and not this generator's to fix. Said
+    // out loud rather than skipped silently, because a missing projection and
+    // an undeclared graph look identical from the published site.
+    console.log(`  · assets/qa/index.json — no directory declares the \`qa\` graph`);
+  } else {
+    const ix = readQaGraph(qaDir);
+    const out = join(OUT_DIR, "assets", "qa", "index.json");
+    mkdirSync(dirname(out), { recursive: true });
+    emit(
+      out,
+      JSON.stringify(ix, null, 2) + "\n",
+      "verdict",
+    );
+    const fams = ix.families.map((f) => `${f.schema} ${f.files}`).join(", ");
+    console.log(
+      `  ${check ? "·" : "✓"} assets/qa/index.json (${ix.files} document(s), ` +
+        `${ix.families.length} famil${ix.families.length === 1 ? "y" : "ies"}: ${fams}` +
+        // Both third states are printed EVERY run, including at zero. A count
+        // that appears only when non-zero cannot be told from one nobody
+        // measured.
+        `; ${ix.unclassified} unclassified, ${ix.unreadable} unreadable)`,
+    );
   }
 }
 

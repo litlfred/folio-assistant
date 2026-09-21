@@ -78,13 +78,13 @@
   "links": [
     {
       "id": "kg",
-      "path": "/folio-assistant/",
-      "target": "folio-assistant/index.html"
+      "path": "/cat-harness/",
+      "target": "cat-harness/index.html"
     },
     {
       "id": "jsonld",
-      "path": "/folio-assistant.jsonld",
-      "target": "folio-assistant.jsonld"
+      "path": "/cat-harness.jsonld",
+      "target": "cat-harness.jsonld"
     },
     {
       "id": "source",
@@ -493,9 +493,9 @@
         "cat-harness"
       ],
       "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "tone": 212,
+      "reads": "a leaf of paper with lines — the folio itself",
+      "genericAvatar": false,
       "instantiated": false,
       "href": "/cat-harness/schemas/folio-assistant-core/",
       "hrefKind": "viewer",
@@ -530,7 +530,6 @@
       ],
       "findings": [
         "folio-assistant-core: declares 2 graph(s) with no published viewer — cat-harness, folio. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-core: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ]
     },

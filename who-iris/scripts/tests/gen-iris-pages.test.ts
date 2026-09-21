@@ -24,6 +24,23 @@ import { OWNED, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js"
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
 const DOCS = join(INSTANCE, "docs");
+/**
+ * The replica is LIBRARY-side since the owner's ruling of 2026-09-21 — the KG
+ * and its rendering are served by `cat-harness/library`, the documentation by
+ * `cat-harness/docs`. So a test that wants a replica page reads `library/`,
+ * and `read()` routes by what the page IS rather than by where it used to be.
+ */
+const LIB = join(INSTANCE, "library");
+// `index.html` exists on BOTH sides — the replica's home and the docs
+// landing. Every test here that names it means the REPLICA's, so it is not in
+// this set; the docs landing is read explicitly by the one test about it.
+const DOC_PAGES = new Set(["ingestion-notes.html", "kg-to-portal.html"]);
+const sideOf = (page: string): string => (DOC_PAGES.has(page) ? DOCS : LIB);
+/** Every rendered page, both sides, as `read()` would resolve them. */
+const allHtml = (): string[] => [
+  ...readdirSync(LIB).filter((f) => f.endsWith(".html")),
+  ...readdirSync(DOCS).filter((f) => f.endsWith(".html")),
+];
 
 /** Every node id in the catalogue, sorted the way the generator sorts them. */
 function sortedIds(): string[] {
@@ -35,7 +52,7 @@ function sortedIds(): string[] {
 
 /** The item slugs a page links to, in the order it first links to each. */
 function itemOrderIn(page: string): string[] {
-  const html = readFileSync(join(DOCS, page), "utf-8");
+  const html = readFileSync(join(sideOf(page), page), "utf-8");
   const seen: string[] = [];
   for (const m of html.matchAll(/item-(item-[a-z0-9-]+)\.html/g)) {
     if (!seen.includes(m[1]!)) seen.push(m[1]!);
@@ -93,7 +110,7 @@ describe("the generator owns its filenames, and prunes only those", () => {
     // two of them serving a record the catalogue no longer describes, and
     // `--check` was blind because it only inspected what it was about to
     // write. This fails if that recurs.
-    const html = readdirSync(DOCS).filter((f) => f.endsWith(".html"));
+    const html = allHtml();
     expect(html.length).toBeGreaterThan(3);
     const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
     const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
@@ -103,7 +120,7 @@ describe("the generator owns its filenames, and prunes only those", () => {
   });
 
   it("OWNED matches what the generator emits", () => {
-    for (const f of readdirSync(DOCS).filter((f) => f.endsWith(".html"))) {
+    for (const f of allHtml()) {
       expect(OWNED.test(f)).toBe(true);
     }
   });
@@ -150,7 +167,8 @@ describe("ingestion-notes is a projection of the skill, not a copy of it", () =>
 });
 
 describe("the IRIS home replica", () => {
-  const home = readFileSync(join(DOCS, "index.html"), "utf-8");
+  // The REPLICA's home, which is library-side now.
+  const home = readFileSync(join(LIB, "index.html"), "utf-8");
 
   it("carries no WHO emblem and no photograph", () => {
     // The instruction this page exists under: a replica carrying the real mark

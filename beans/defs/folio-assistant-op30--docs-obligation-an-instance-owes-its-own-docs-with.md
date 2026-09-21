@@ -176,3 +176,49 @@ reason the finding is advisory.
 All three items satisfied, so this closes — on the EVIDENCE that the
 declaration now reads `reproduce`, not on anyone's authorship of it.
 
+
+## RULED 2026-09-21 — two axes, and the reason is NOT the one this bean gave
+
+The owner:
+
+> Keep them as two axes.
+
+Recorded here because **the argument this bean rests on has expired**, and a
+ruling upheld for a dead reason is one the next agent will overturn.
+
+### This bean's argument, and why it no longer holds
+
+> the two obligations are currently satisfied by disjoint sets, which is the
+> sharpest argument that they are two axes rather than one
+
+True at 20:23 on 2026-09-20. Re-measured 2026-09-21:
+
+| | then | now |
+|---|---|---|
+| instances with a README | 10 of 11 | **12 of 12 — zero findings** |
+| instances with their own `docs/` | 1 of 11 | **3 of 12** |
+
+The sets are now **strictly nested**, not disjoint. Every instance with a
+`docs/` also has a README, so on this bean's own reasoning the axes should
+have collapsed.
+
+### The reason that survives
+
+**A merged axis cannot report a solved obligation and an open one at the same
+time.** Fire-on-either hides the README's 12-of-12 behind nine failures that
+are all one kind; fire-on-both reports zero and the nine missing directories
+disappear. The three-state discipline this repository keeps returning to is
+the same rule one level up: unlike answers must not be merged into one verdict.
+
+And the rendered side already says so. `cat-harness:instances` puts **two
+entries per instance** in the root README *"because two readers arrive"* — the
+owner's own instruction on #592, an agent entry (`AGENTS.md`, memories) and a
+human one (README, docs). A collapsed check would disagree with the table it
+was asked to build.
+
+### What was NOT chosen
+
+Gating `own-docs` now. It would fire on 9 of 12 instances immediately, and
+this bean's own rule is that a check firing on nearly every one of its subjects
+is a check that is wrong. It stays advisory, printed with a `·` rather than a
+`✗`, and the count is meant to fall before it is held to.
