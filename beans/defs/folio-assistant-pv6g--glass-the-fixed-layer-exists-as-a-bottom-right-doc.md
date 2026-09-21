@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-21T17:28:39Z
-updated_at: 2026-09-21T17:28:39Z
+updated_at: 2026-09-21T17:31:42Z
+parent: folio-assistant-6lb8
 ---
 
 Owner, 2026-09-21: "stickies can detach from the panel and placed on the 'display window/glass' and dont scroll when the folio/document/page scrolls. when closed tehy returned to their home display panel."

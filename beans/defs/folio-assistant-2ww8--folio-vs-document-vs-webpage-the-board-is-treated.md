@@ -5,7 +5,8 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-09-21T17:28:40Z
-updated_at: 2026-09-21T17:28:40Z
+updated_at: 2026-09-21T17:31:42Z
+parent: folio-assistant-6lb8
 ---
 
 Owner, 2026-09-21: "let's start with a folio (like miro board, whiteboard, large deskspace) where we represent content. has avataars. start closed ... now... when we get to webpage or document, this is not folio/whiboard, it is a diffent object. there we are adding a sticky tile (minimized/slid awawy to start). if not placed on a document somewhere, they in slide down panel at top with [stikcy] icon to open or so"

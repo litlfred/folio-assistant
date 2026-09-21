@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-21T17:28:40Z
-updated_at: 2026-09-21T17:28:40Z
+updated_at: 2026-09-21T17:31:42Z
+parent: folio-assistant-yj32
 ---
 
 Owner, 2026-09-21: "Boostrap should be clicable. even though it doesnt render itself, cat-bootrap does take over (double ccheck) render responsibles of bootrstraps json(ld) and documentation (bootrsap does not have docs/ b/c that a cat-harness concept)" and "i dont know why the dependecioes are gerey-ed out."

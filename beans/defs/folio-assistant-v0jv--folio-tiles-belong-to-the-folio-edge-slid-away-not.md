@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-21T17:28:40Z
-updated_at: 2026-09-21T17:28:40Z
+updated_at: 2026-09-21T17:31:42Z
+parent: folio-assistant-6lb8
 ---
 
 Owner, 2026-09-21: "folios have tiles do not go to the window. they are stacked around (bottom?, again read exsiting docs/siblings/beans) of folio, slid away, open to tiles to things like fsh-gts, todos, docs, etc."

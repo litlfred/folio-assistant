@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-21T17:11:37Z
-updated_at: 2026-09-21T17:11:37Z
+updated_at: 2026-09-21T17:31:42Z
+parent: folio-assistant-6lb8
 ---
 
 Tracked as https://github.com/litlfred/folio-assistant/issues/756 items 1, 2 and 4.

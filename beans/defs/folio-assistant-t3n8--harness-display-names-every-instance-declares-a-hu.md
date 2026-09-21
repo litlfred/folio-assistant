@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-21T17:28:40Z
-updated_at: 2026-09-21T17:28:40Z
+updated_at: 2026-09-21T17:31:42Z
+parent: folio-assistant-yj32
 ---
 
 Owner, 2026-09-21: "harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)"

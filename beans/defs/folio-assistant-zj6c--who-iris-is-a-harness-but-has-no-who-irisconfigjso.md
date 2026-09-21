@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-21T17:28:40Z
-updated_at: 2026-09-21T17:28:40Z
+updated_at: 2026-09-21T17:31:42Z
+parent: folio-assistant-yj32
 ---
 
 Owner, 2026-09-21: "who-iris is supposed to be a harness becuase it serves up a new landing page (the iris home page), and has its own docs. it should have who-iris.config.json"
