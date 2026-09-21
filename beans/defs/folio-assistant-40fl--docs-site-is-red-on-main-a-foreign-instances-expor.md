@@ -67,6 +67,31 @@ in here* — and it went unnoticed for two hours across four merges.
 - [x] Both falsified by planting the old behaviour
 - [ ] `docs-site` green on `main`
 
+## Summary of Changes
+
+Merged as `2d20850562` (PR #718) on the owner's instruction.
+
+`exportIdentity` now falls back to the **publishing** instance's `canonicalUrl`
+when the exported instance declares none — a fallback, never an override, so an
+instance that declares its own keeps it. It also returns `instanceDir`, so the
+caller naming the consulted declaration does not repeat the `?? ROOT` default.
+
+The diagnostic named `harness.json`, a filename #695 excised. It now resolves
+and names the file it actually read.
+
+Two tests, both falsified by planting the old behaviour (45 pass / 2 fail):
+
+- an absolute `@id` for **every** declared instance, derived over
+  `instanceRootsIn` rather than listing `cat-bootstrap`, and refusing an empty
+  instance list rather than passing vacuously;
+- `problems == []` for a foreign export — the assertion that was missing, and
+  the reason `publishedPaths()` stayed green for two hours while the site was
+  down.
+
+Verified on the merged tree (main was 6 commits ahead, including #709):
+`gates` 87/87, the docs-site export sequence run verbatim under `set -e` exits
+0 with both `@id`s absolute.
+
 ## Not this bean
 
 Whether `cat-bootstrap` should declare a `canonicalUrl` of its own. It should
