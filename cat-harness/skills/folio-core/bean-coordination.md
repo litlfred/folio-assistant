@@ -347,6 +347,32 @@ all eight lookups by id, and its listing showed only the asking session. So
 both of this skill's central instructions — claim before you work, and watch
 the open PRs — assume a visibility that did not exist, and nothing said so.
 
+### RE-MEASURED 2026-09-21: the listing works now, the messaging still does not
+
+The paragraph above was half stale within a day, which is why it is corrected
+here rather than rewritten — a measurement carries its date, and the shape of
+the change is the finding.
+
+`list_sessions` returned **eleven** running sessions on this repository, each
+with its id, title, branch and a live task summary ("merging main (58 commits
+behind); resolving conflicts in config, graphs schema"). That is a great deal
+more than "only the asking session", and it is enough to see WHO overlaps you
+and HOW before you write anything.
+
+What still does not work is reaching them. `ListAgents` answers *"no other
+Claude session is running on this machine"* — every sibling is its own cloud
+container — and `SendMessage` to a session id is refused outright. So:
+
+| | 2026-09-20 | 2026-09-21 |
+|---|---|---|
+| listing siblings | only self | **eleven, with branch and task** |
+| looking one up by id | not found | (not retried) |
+| messaging one | — | **refused, not reachable** |
+
+**The durable conclusion below is unchanged**, and the re-measurement is why
+it is worth trusting: seeing a sibling is not the same as reaching one, and
+what you commit is still the only thing that arrives.
+
 > **A session is an ephemeral container, and nothing about it survives the
 > container except what it committed. The `Claude-Session:` trailer on a commit
 > is therefore the ONLY durable session identity this repository has, and a
