@@ -328,7 +328,19 @@ export const LEGACY_HARNESS_CONFIG = "harness.config.json";
 export function instanceConfigFor(dir: string): { root: string; name: string } | undefined {
   const root = findInstanceRoot(dir);
   if (root === undefined) return undefined;
-  const name = readDeclaration(root)?.name;
+  let name: string | undefined;
+  try {
+    name = readDeclaration(root)?.name;
+  } catch {
+    // UNREADABLE is the same third state as UNDECLARED for this question, and
+    // it only became reachable here when `harness.json` was excised: the
+    // declaration and the config used to be two files, so a malformed config
+    // could not make `readDeclaration` throw. They are one file now, and a
+    // caller asking "which instance owns this directory" cannot answer from a
+    // file that will not parse. `readDeclaration` still throws for the callers
+    // that need the declaration itself — this one needs a name.
+    return undefined;
+  }
   return name === undefined ? undefined : { root, name };
 }
 

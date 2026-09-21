@@ -3,8 +3,10 @@
 title: 'EXCISE harness.json: the declaration folds into <name>.config.json, and only a root <stub>.config.json instantiates'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-21T10:10:21Z
-updated_at: 2026-09-21T10:10:21Z
+updated_at: 2026-09-21T10:43:24Z
+parent: folio-assistant-vke6
 ---
 
 Owner, 2026-09-21: *"Excise harness.json.. only <harness-stub>.config.json makes instantiation at root of repo"*.

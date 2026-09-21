@@ -155,17 +155,23 @@ export function writeInstanceConfig(dir: string, body: string, name?: string): s
  */
 export function writeDeclaration(dir: string, body: unknown, name?: string): string {
   const text = typeof body === "string" ? body : JSON.stringify(body);
-  let stem = name;
-  if (stem === undefined) {
+  // THE BODY'S NAME WINS, and `name` is only the fallback. The filename stem
+  // must equal the declared name or discovery will not see the file — so a
+  // body saying `{"name":"x"}` lands at `x.config.json` even when the caller
+  // passed a stem, and the caller's stem is for bodies that HAVE no name:
+  // deliberately malformed ones, and `{}`.
+  let stem: string | undefined;
+  {
     try {
       const parsed = JSON.parse(text) as { name?: unknown };
       if (typeof parsed.name === "string" && parsed.name.length > 0) stem = parsed.name;
     } catch {
-      // fall through to the throw below — a nameless unparseable body has no
-      // filename this helper could invent, and inventing one would put the
-      // fixture where nothing looks for it.
+      // fall through — a nameless unparseable body has no filename this helper
+      // could read, so the caller's stem is used, and the throw below fires
+      // when there is not one either.
     }
   }
+  stem = stem ?? name;
   if (stem === undefined) {
     throw new Error(
       "writeDeclaration: the body declares no `name` and none was supplied, so there is " +
@@ -175,4 +181,37 @@ export function writeDeclaration(dir: string, body: unknown, name?: string): str
   const path = join(dir, instanceConfigFilename(stem));
   writeFileSync(path, text, "utf-8");
   return path;
+}
+
+
+/**
+ * Write one fixture file, MERGING when it is the instance's declaration.
+ *
+ * A fixture that hands a helper `{ "<name>.config.json": "{…}" }` used to be
+ * writing a file the declaration did not occupy — `harness.json` was a
+ * separate path. It is the same path now, so a plain write clobbers the
+ * declaration and the fixture silently loses its `directories`. Merging is
+ * what one file per instance means; the body wins on every key it sets.
+ *
+ * Any other path is written verbatim, which is what a fixture map is for.
+ */
+export function writeFixtureFile(root: string, rel: string, body: string): void {
+  const abs = join(root, rel);
+  const decl = findDeclarationFile(root);
+  if (decl !== undefined && rel === decl) {
+    try {
+      const existing = JSON.parse(readFileSync(abs, "utf-8")) as Record<string, unknown>;
+      const incoming = JSON.parse(body) as Record<string, unknown>;
+      writeFileSync(
+        abs,
+        JSON.stringify({ ...existing, ...incoming, name: (incoming.name as string) ?? existing.name }),
+        "utf-8",
+      );
+      return;
+    } catch {
+      // Unparseable on either side: write it through, because several fixtures
+      // pass a malformed body on purpose.
+    }
+  }
+  writeFileSync(abs, body, "utf-8");
 }

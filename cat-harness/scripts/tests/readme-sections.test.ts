@@ -22,7 +22,7 @@ import {
 } from "../../content/pipeline/readme-sections";
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc";
 import { AGENT_INSTRUCTIONS_ROLE, assetRolePurpose, INSTANCE_README_ROLE, instanceRootsIn } from "../../schemas/cat-harness.js";
-import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance } from "../../test/support/instance-fixture.js";
+import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance , writeFixtureFile} from "../../test/support/instance-fixture.js";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
@@ -50,7 +50,7 @@ function folio(files: Record<string, string> = {}): string {
   for (const [rel, body] of Object.entries(files)) {
     const abs = join(root, rel);
     mkdirSync(join(abs, ".."), { recursive: true });
-    writeFileSync(abs, body);
+    writeFixtureFile(root, rel, body);
   }
   return root;
 }

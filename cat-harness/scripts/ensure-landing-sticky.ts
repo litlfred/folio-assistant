@@ -83,7 +83,6 @@ import {
   composeContributions,
   type DeclaredContribution,
 } from "../schemas/sticky-contribution.js";
-import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 /** The graph kind, and the conventional directory an instance keeps it in. */
 export const FOLIO_GRAPH_KIND = "folio";
@@ -540,7 +539,11 @@ export function ensureLandingSticky(
   };
   if (opts.check) return report;
 
-  if (!already) writeDeclaration(root, insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY));
+  // Written back to the file it was READ from — never composed. Production
+  // code must not reach for the test-support writer, which names the file from
+  // the body; here the declaration already exists and keeping its path is the
+  // whole point.
+  if (!already) writeFileSync(declarationPathIn(root)!, insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY));
   mkdirSync(absDir, { recursive: true });
   for (const p of planned) if (p.currentText !== p.wantedText) writeFileSync(p.abs, p.wantedText);
   for (const f of prunable) unlinkSync(join(absDir, f));

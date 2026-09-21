@@ -148,7 +148,10 @@ describe("one table, and the keys an asset may not restate", () => {
   test("a stray key on an asset is reported, with the instance and the asset", () => {
     const root = mkdtempSync(join(tmpdir(), "asset-roles-"));
     writeDeclaration(root, JSON.stringify({
-        id: "probe",
+        // `name`, not `id`: the filename stem must equal the declared name or
+        // discovery does not see the file at all. Under `harness.json` this
+        // fixture worked with neither, because the path was a constant.
+        name: "probe",
         directories: [],
         assets: [
           { id: "readme", src: "README.md", role: INSTANCE_README_ROLE, layer: "state" },

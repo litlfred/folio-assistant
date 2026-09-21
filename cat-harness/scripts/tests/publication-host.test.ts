@@ -22,11 +22,15 @@ import { writeDeclaration } from "../../test/support/instance-fixture.js";
 const ROOT = resolve(import.meta.dir, "../..");
 const temps: string[] = [];
 
-/** An instance root whose `harness.json` is exactly `body`. */
+/** An instance root whose declaration is exactly `body`. */
 function instance(body: string): string {
   const dir = mkdtempSync(join(tmpdir(), "publication-host-"));
   temps.push(dir);
-  writeDeclaration(dir, body);
+  // The stem is supplied because several callers pass a body that is
+  // deliberately malformed or nameless: there is no name to read out of it,
+  // and the filename has to come from somewhere. `publicationHost` reads the
+  // file discovery finds, so any stem does — what is under test is the body.
+  writeDeclaration(dir, body, "probe");
   return dir;
 }
 
