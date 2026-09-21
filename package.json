@@ -47,6 +47,8 @@
     "beans:fallback": "bun run cat-harness/scripts/beans-fallback.ts",
     "cat-bootstrap:graph": "bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts",
     "check-deps": "bun run cat-harness/src/index.ts --check-deps",
+    "smart-trust:pages": "bun run smart-trust/scripts/gen-smart-trust-pages.ts",
+    "smart-trust:pages:check": "bun run smart-trust/scripts/gen-smart-trust-pages.ts --check",
     "check:artifact-index": "bun run cat-harness/scripts/check-artifact-index.ts",
     "check:actor-reach": "bun run cat-harness/scripts/check-actor-reach.ts",
     "check:agent-entry-links": "bun run cat-harness/scripts/check-agent-entry-links.ts",
