@@ -22,6 +22,7 @@ import { repoRootFor } from "../../schemas/cat-harness.js";
 import { describe, expect, it } from "bun:test";
 
 import { HealthReportSchema, healthVerdict } from "../../schemas/health-report.ts";
+import { hasRenderedDecision } from "./probes.ts";
 import {
   BEAN_OPEN_LIMIT,
   BEAN_RESOLVED_INLINE_LIMIT,
@@ -526,6 +527,40 @@ describe("repository-size", () => {
     }));
     expect(r.state).toBe("unknown");
     expect(r.measurements).toHaveLength(0);
+  });
+});
+
+describe("bean-rendered-decision-records", () => {
+  // Bean `hajp`, 2026-09-21. `bean-decision-records` counts beans with an
+  // `## Options` heading; the gating condition it was read against wanted
+  // decisions put THROUGH `DecisionRequestSchema`. Measured on the live store:
+  // 10 of the first, 0 of the second. A threshold over the wrong population
+  // cannot be met meaningfully and would have been read as met.
+  it("an `## Options` heading is NOT a rendered decision", () => {
+    expect(hasRenderedDecision("## Options\n\n1. **A** — do a thing\n2. **B** — do another")).toBe(false);
+  });
+
+  it("all five rows are required — four is not a rendered decision", () => {
+    const four = [
+      "| **What it does** | x |",
+      "| **Pro** | x |",
+      "| **Con** | x |",
+      "| **Downstream** | x |",
+    ].join("\n");
+    expect(hasRenderedDecision(four)).toBe(false);
+  });
+
+  it("the table `renderDecision` emits is recognised", () => {
+    const table = [
+      "| | **a** *(recommended)* | b |",
+      "|---|---|---|",
+      "| **What it does** | x | y |",
+      "| **Pro** | x | y |",
+      "| **Con** | x | y |",
+      "| **Downstream** | x | y |",
+      "| **Reversibility** | x | y |",
+    ].join("\n");
+    expect(hasRenderedDecision(table)).toBe(true);
   });
 });
 
