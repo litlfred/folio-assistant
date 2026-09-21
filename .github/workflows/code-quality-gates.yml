@@ -291,6 +291,15 @@ jobs:
       # the TypeScript job above already runs. Removing a check whose
       # coverage lives elsewhere is fine; removing one and saying so is what
       # stops the next reader reinstating it.
+      #
+      # ONE QUALIFICATION, added by bean `dyd3`: `buildCatBootstrapDocument()`
+      # is no longer what the site publishes at that URL —
+      # `kg-export --instance ./bootstrap` is, and the two documents differ on
+      # 74 of their 88 nodes. Those assertions are properties of a builder
+      # that publishes nothing. `kg-export.test.ts` is where the published
+      # document's are, and the two guards in `bootstrap-graph.test.ts` that
+      # DO reach the site are the ones about publication: the path the `@id`
+      # names, and exactly one publisher per workflow.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two

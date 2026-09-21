@@ -522,6 +522,18 @@ export function buildContext(): Record<string, unknown> {
     // where the truncation check used to be, which is worse than leaving it
     // undeclared, because undeclared at least loses the whole thing visibly.
     counts: { "@id": termIri("counts"), "@type": "@json" },
+    // `omitted` — the instance-bound collectors that were NOT run, present
+    // only on a foreign instance's document. A plain list of collector names,
+    // so a declared container is enough; there is no open key set as there is
+    // for `counts`.
+    //
+    // It is a root field carrying real data, and `dyd3` is why it is here: it
+    // came over from `gen-bootstrap-graph.ts` when that generator's publish
+    // step was retired, because it was the one thing that document had which
+    // this one did not. Adding it WITHOUT this line made `undeclaredRootTerms`
+    // fatal on the first run — which is the guard working, and the reason the
+    // field is not silently dropped by a JSON-LD processor instead.
+    omitted: { "@id": termIri("omitted"), "@container": "@set" },
     //
     // `problems`, `undeclaredTerms`, `undeclaredSchemaModules` and
     // `danglingLinks` were declared here and are NOT any more — the document
@@ -674,6 +686,20 @@ interface Export {
   "@type": string | string[];
   /** On a preview: the canonical document this one is an alternate of. */
   canonicalDocument?: string;
+  /**
+   * Instance-bound collectors that were NOT run, for a foreign instance.
+   *
+   * Carried so a reader can tell *"this instance has no tools"* from *"tools
+   * were never looked for"* — the `dh4f` defect, a clean run reported over a
+   * corpus the tool could not read. It came here from
+   * `gen-bootstrap-graph.ts` when `dyd3` retired that generator's publish
+   * step: the field was the one thing that document had which this one did
+   * not, so dropping the generator without it would have lost the guard.
+   *
+   * Absent for the host instance, where every collector runs and "omitted" is
+   * not a question.
+   */
+  omitted?: readonly string[];
   repository: string;
   generatedAt: string;
   /**
@@ -2110,6 +2136,18 @@ export function exportIdentity(opts: ExportOptions = {}): {
    * doing it is two chances to disagree about what the base is.
    */
   base: string;
+  /**
+   * The document's path under the publication base — and under `_site/`,
+   * which is the same thing because `_site/` is served at the base.
+   *
+   * Returned rather than recomposed from `stub`, for the reason `base` is:
+   * `<stub>.jsonld` is right for the host instance and WRONG for a foreign
+   * one, which sits at `<stub>/<stub>.jsonld` (bean `dyd3`). A caller that
+   * rebuilds it from the stub gets the host's answer for every instance, and
+   * the QA sidecar did exactly that — naming its findings' subject as a
+   * document at a path nothing writes.
+   */
+  docPath: string;
   /** The canonical document's IRI, when one is declared. */
   canonicalIri?: string;
   /** True when this export is published somewhere other than canonical. */
@@ -2123,6 +2161,8 @@ export function exportIdentity(opts: ExportOptions = {}): {
    * and a second copy of a default is a second chance to disagree with it.
    */
   instanceDir: string;
+  /** Is this an instance other than the one the exporter lives in? */
+  foreignInstance: boolean;
   /**
    * Is that instance one THIS repository publishes?
    *
@@ -2133,6 +2173,10 @@ export function exportIdentity(opts: ExportOptions = {}): {
   publishedHere: boolean;
 } {
   const instance = opts.instanceRoot ?? ROOT;
+  // Foreign = an instance other than the one this exporter lives in. The same
+  // test `buildExport` uses to pick the generic collectors, so the identity
+  // and the content cannot disagree about which instance this is.
+  const foreignInstance = opts.instanceRoot !== undefined && resolve(opts.instanceRoot) !== resolve(ROOT);
   const decl = readDeclaration(instance);
   // `package.json` is the REPOSITORY's and is the fallback stub for an
   // instance that declares nothing, so it is read from the repo root rather
@@ -2186,16 +2230,32 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // to be here was written out in seven places, five of them minting an `$id`.
   // An empty base still yields a document-RELATIVE IRI, deliberately — see
   // `makeIri`'s note on links that look dereferenceable.
-  const docIri = renderingPath(base, `${stub}.jsonld`);
-  const canonicalIri = canonicalBase ? renderingPath(canonicalBase, `${stub}.jsonld`) : undefined;
+  // ── WHERE A FOREIGN INSTANCE'S DOCUMENT LIVES — `<base>/<stub>/<stub>.jsonld`
+  //
+  // The owner's URL-space rule (bean `x0hj`): the base IS one instance's
+  // rendering, and **everything else is
+  // `<baseurl>/<instantiated harness>/<path to rendered content>`** — with
+  // `<baseurl>/bootstrap/bootstrap.jsonld` named as the worked example.
+  //
+  // So the host publishes at the root and a foreign instance publishes under
+  // its own segment. This was `<base>/<stub>.jsonld` for both until `dyd3`,
+  // which is how bootstrap's graph came to exist at TWO paths under TWO
+  // `@id`s — 88 subjects with two identities no consumer would ever merge.
+  // Measured 2026-09-21: the site-root path had the 2 links and violated the
+  // rule; the `bootstrap/` path conformed and had none.
+  const docPath = foreignInstance ? `${stub}/${stub}.jsonld` : `${stub}.jsonld`;
+  const docIri = renderingPath(base, docPath);
+  const canonicalIri = canonicalBase ? renderingPath(canonicalBase, docPath) : undefined;
   return {
     stub,
     docIri,
     base,
+    docPath,
     canonicalIri,
     isPreview: canonicalIri !== undefined && docIri !== canonicalIri,
     instanceDir: instance,
     publishedHere,
+    foreignInstance,
   };
 }
 
@@ -2343,6 +2403,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     "@type": isPreview ? [`${PROV}Entity`, termIri("PreviewGraph")] : `${PROV}Entity`,
     ...(isPreview && canonicalIri !== undefined ? { canonicalDocument: canonicalIri } : {}),
     repository: stub,
+    ...(instanceOnly ? { omitted: instanceOnly.omitted } : {}),
     generatedAt: new Date().toISOString(),
     ...commitFields,
     counts,
@@ -2368,7 +2429,7 @@ if (import.meta.main) {
   // document the root's own graph LINKS TO, and a link that names a document
   // nothing publishes is a 404 with a `@id` in front of it.
   const instanceRoot = arg("--instance");
-  const { stub } = exportIdentity({ baseUrl, instanceRoot });
+  const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
   // is what tells a fetcher to treat it as one.
@@ -2453,7 +2514,11 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
-    subject: { kind: "graph", id: `${stub}.jsonld` },
+    // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
+    // `<stub>/<stub>.jsonld` (bean `dyd3`), so composing it here named a
+    // document nothing writes — in the file whose whole purpose is saying
+    // what was found about WHICH graph.
+    subject: { kind: "graph", id: docPath },
     families: {
       undeclaredTerms: {
         summary:
