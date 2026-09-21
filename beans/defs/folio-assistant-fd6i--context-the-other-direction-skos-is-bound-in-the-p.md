@@ -123,17 +123,105 @@ is now true would be the same unearned claim in the other direction. The
 honest positions are: emit `deo:`/`oa:`/`fhir:`, or correct the sentence to
 name what is actually spoken.
 
+## SHIPPED, 2026-09-21 — and MY OWN MEASUREMENT WAS WRONG, in the interesting way
+
+`check:context-emission` is a gate. But the number this bean carried, and the
+one I put in PR #637 this morning, were **measuring the wrong corpus**.
+
+### Source occurrences are not emissions, and the two disagree completely
+
+The earlier table scanned `.ts` source for `prefix:` literals. Re-measured
+against the **1086 published `.jsonld` documents** — the things a consumer
+actually dereferences:
+
+| prefix | source hits (the old number) | EMITTED by a document |
+|---|---|---|
+| `doco` | **1112** | **0** |
+| `dcterms` | 5 | **1551** |
+| `prov` | 2 | **952** |
+| `cito` | 2 | 2 |
+| `skos` | 10 | **0** |
+| `deo`, `oa`, `fhir` | 0 | 0 |
+| `fac` | — | **0** |
+
+**`doco` inverted completely and `dcterms` by a factor of 300.** The 1112 are
+`BLOCK_KIND_TO_DOCO_TYPE`'s entries in `jsonld.ts`, a mapping table that fires
+only when a BLOCK is exported — and this instance is the platform, so no block
+is ever exported here. Meanwhile `dcterms` is spoken through the term alias
+`title`, which a prefix scan cannot see at all.
+
+So it is **seven** bound-and-unemitted prefixes, not three, and one of them is
+`fac` — folio-assistant-core's own namespace. And `skos:`, which `lqo9` slice 1
+was written to fix, is **still zero in this context**: those 135 concepts went
+into the NAMESPACE document, which carries its own context. That is a real
+correction to what #637 claimed.
+
+**A vocabulary is spoken when a document says it, never when a mapping table
+mentions it.** The check counts documents.
+
+### Two ways a prefix is spoken, and missing either invents a finding
+
+1. a literal CURIE — `"@type": "doco:Section"`;
+2. a **term alias** — `title` → `dcterms:title`, so a node carrying `title`
+   emits `dcterms:` with no `dcterms:` anywhere in the file.
+
+A scan for the prefix alone sees only the first and reports `dcterms` as dead
+while 1551 nodes speak it. That is why the old number was not merely imprecise
+but backwards.
+
+### The third state this bean asked for
+
+*"A deliberate forward declaration carries a declared reason, not a silence."*
+`FORWARD_DECLARED` holds one per unemitted prefix, each naming **what would
+emit it** — so "is this still deliberate?" has an answer rather than needing
+archaeology. A prefix with neither an emission nor a reason fails the gate.
+A reason under 40 characters fails a test: a one-word reason is a silence with
+extra steps.
+
+A forward declaration that **starts** emitting is reported as stale, because
+otherwise a later silence hides behind a reason that already came true.
+
+### Falsified six ways
+
+| mutation | tests red |
+|---|---|
+| stop counting term aliases | 2 |
+| stop counting literal CURIEs | 3 |
+| treat an absolute IRI as a CURIE | 1 |
+| make the walk shallow | 2 |
+| silence the no-reason finding | 1 |
+| stop reporting a stale forward declaration | 1 |
+
+**An empty corpus is a finding, not a clean run.** With no documents every
+count is zero, and since each unemitted prefix now has a reason, the check
+would report *all clear* over nothing. That is `6tkl` in its most dangerous
+form, and it is asserted directly.
+
+### The sentence is corrected rather than deleted
+
+`tabular-csvw.ts` now says the graph **BINDS** eight vocabularies, and records
+that it said *"already speaks"* until today and that this was false. The
+decision it exists to record — reuse rather than invent — is untouched and was
+always true; what was false was the claim about emission.
+
 ## Done when
 
-- [ ] Every prefix bound in the published `@context` is counted against the nodes
-      that emit it, in the same place `ovkk`'s direction is reported
-- [ ] A deliberate forward declaration carries a **declared reason**, not a
-      silence
-- [ ] `tabular-csvw.ts:10`'s eight-vocabulary sentence is true, or corrected —
-      **still false**: `deo:`, `oa:` and `fhir:` each emit 0, measured above
+- [x] Every prefix bound in the published `@context` is counted against the nodes
+      that emit it — `check:context-emission`, a gate. NOT in `kg-export`'s
+      manifest as this bean assumed: that reports over the KG graph and its own
+      context, while the eight-vocabulary claim is about the CONTENT context,
+      whose corpus is the published `.jsonld` documents
+- [x] A deliberate forward declaration carries a **declared reason**, not a
+      silence — `FORWARD_DECLARED`, reason required and length-checked
+- [x] `tabular-csvw.ts`'s eight-vocabulary sentence is true, or corrected —
+      **corrected**: it now says BINDS rather than speaks, and records that it
+      was false. Seven unemitted, not three; the earlier count measured source
+      rather than documents
 - [x] `skos:` is either emitted (via `lqo9`) or removed from both contexts —
-      **emitted**, 2026-09-20: 135 `skos:Concept` nodes in 3 `skos:ConceptScheme`s
-      from `ns-export.ts`, falsified by five mutations
+      **emitted in ONE of the two**, and the distinction was missed on 2026-09-20.
+      135 `skos:Concept` nodes are in the NAMESPACE document, which carries its
+      own context. In the CONTENT context it is still 0, and now carries a
+      recorded reason instead of a silence
 
 Related: `ovkk` (the other direction, in-progress, PR #330), `lqo9` (the glossary
 roast that surfaced this), `zzmr` (KG structure and publication), `ulqj`/`eief`

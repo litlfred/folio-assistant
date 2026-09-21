@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9c34
 title: 'STAGING: incremental render — seed from main''s render as cache, re-render only changed assets and their downstream indexes'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T21:11:39Z
-updated_at: 2026-09-20T21:12:03Z
+updated_at: 2026-09-21T05:42:19Z
 parent: folio-assistant-1xhc
 ---
 
@@ -59,3 +59,67 @@ skill. Two different dependency edges, neither visible from the file mtimes.
 
 Queued. Relatives: `lx2s` (feature-branch staging under gh-pages, resolved),
 `35kc` (staging parity), `oisv` (a build that produces nothing).
+
+
+---
+
+## Summary of Changes — 2026-09-21 (session_014HGPQoUnzXGqSspA8x6YyD)
+
+**Built.** `cat-harness/scripts/render-selection.ts` is the selection core:
+`hashInputs` (content + path, codepoint-sorted, never mtime), `selectSteps`
+(two-pass fixed-point cascade over `needs`), `buildManifest` / `readManifest`
+(any read failure → `undefined` → full render). `render-pipeline.ts` gained
+`inputs`, `inputGraphs`, `alwaysRun`, `--seed`, `--write-manifest`, a `=` mark
+for a cached step and a corrected run count. The skill is
+`cat-harness/skills/folio-core/incremental-render.md`. 30 tests in
+`cat-harness/scripts/tests/render-selection.test.ts`.
+
+**A step declares graph KINDS, not paths.** `check:declared-paths` rejected the
+first draft's nine literals and was right — a second answer to *where do the
+skills live* goes stale on the next move, and the render then hashes a path
+that is not there and reports the step unchanged. `inputGraphs` names a kind
+from `harness.json`; `cat-harness/scripts/declared-dirs.ts` resolves it.
+
+**It is a subprocess because the boundary is real.** `readDeclaration`
+validates *every* kind in the declaration, and this repository declares a
+`folio` directory whose kind is core's — so the harness layer cannot resolve
+any kind in-process without importing core, which `check:partition` rejects.
+The first fix degraded honestly but was **inert** (0 cached, no reason given);
+the second spawns `declared-dirs.ts` and reports `resolveFailure` in the build
+output, so a degraded full render is never silent.
+
+## Done when — against the measurements
+
+- [x] a staging build that changes nothing renders nothing and says so —
+  0.9 s, `2 ran, 0 failed, 0 skipped, 8 served from the seed`
+- [x] the edges are **declared**, not inferred from timestamps — projection and
+  index are both expressible, and `needs` carries the downstream half
+- [x] a stale seed is DETECTED rather than trusted — a step absent from the
+  manifest re-renders; an unparseable or wrongly-tagged manifest is treated as
+  absent rather than partially believed
+- [x] could-not-determine ⇒ **full re-render**, never a partial one presented
+  as complete — four step-level states and three build-level ones, including
+  graph kinds that could not be resolved
+- [x] measured, on this repository, 2026-09-21:
+
+  | build | wall | steps |
+  |---|---|---|
+  | full, writing a seed | 3.9 s | 10 ran |
+  | seeded, nothing changed | 0.9 s | 2 ran, 8 served |
+  | seeded, one bean touched | 1.1 s | 4 ran, 6 served |
+  | seeded, one skill file touched | 3.8 s | 10 ran, 0 served |
+
+  The last row is the **cost of declaring a graph rather than a file list**,
+  measured rather than asserted: a skill edit moves the `cat-harness` graph,
+  `kg-current` reads that graph, and everything needs its way back to it. Over-
+  declaring costs needless runs; under-declaring ships stale pages that look
+  fresh. The safe direction was taken deliberately and is written on the skill.
+
+**Not built, and deliberately:** seeding from the *published* render. The
+manifest and the selection are here; copying a previous build's OUTPUT into
+place before the run is a deployment step and belongs with
+`feature-staging.yml`.
+
+Verified: `bun test` 4698 pass / 0 fail; `bun run gates` 77/77 with a
+`python3` stubbed to lack pymupdf, so the gate job's environment is what was
+tested rather than this container's.

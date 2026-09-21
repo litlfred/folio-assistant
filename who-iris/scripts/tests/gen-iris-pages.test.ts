@@ -161,23 +161,26 @@ describe("the IRIS home replica", () => {
     expect(home.toLowerCase()).not.toContain("emblem.svg");
   });
 
-  it("shows a cover for every item whose cover is committed", () => {
+  it("withholds every committed cover from display", () => {
+    // Owner, 2026-09-21, asked whether the emblem printed on a WHO
+    // publication is content or branding: *"logo and other branding"*. So the
+    // covers are rendered and recorded but not shown, and this asserts the
+    // display half only -- the catalogue half is the next test, and they must
+    // be able to disagree or neither is evidence of anything.
     const covers = readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png"));
     expect(covers.length).toBeGreaterThan(0);
-    for (const c of covers) expect(home).toContain(`assets/covers/${c}`);
+    for (const c of covers) expect(home).not.toContain(`assets/covers/${c}`);
+    expect(home).not.toMatch(/<img[^>]*>/);
   });
 
-  it("reserves each cover's box rather than guessing it", () => {
-    // Every <img> carries width AND height, from the bitstream's declared
-    // pixel dimensions. A missing height is a reflow when the bytes arrive,
-    // and the three covers have three different aspects so no default works.
-    const imgs = [...home.matchAll(/<img[^>]*>/g)].map((m) => m[0]);
-    expect(imgs.length).toBeGreaterThan(0);
-    for (const tag of imgs) {
-      expect(tag).toMatch(/width="\d+"/);
-      expect(tag).toMatch(/height="\d+"/);
-      expect(tag).toMatch(/alt="[^"]+"/);
-    }
+  it("says WITHHELD where a cover exists, and NO COVER where none does", () => {
+    // Two different facts, and a placeholder that conflates them tells a
+    // reader nothing: "we chose not to show it" and "the catalogue has none"
+    // look identical in a layout. R15's rule, applied to an image.
+    const covers = readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png"));
+    const withheld = [...home.matchAll(/>cover<br>withheld</g)].length;
+    expect(withheld).toBe(covers.length);
+    expect(home).toContain("this replica is not published under WHO");
   });
 
   it("states the upstream item count it was given, not a remembered one", () => {
