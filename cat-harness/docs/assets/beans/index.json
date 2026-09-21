@@ -1029,6 +1029,22 @@
       "file": "beans/defs/folio-assistant-6n23--excise-harnessjson-the-declaration-folds-into-name.md"
     },
     {
+      "id": "folio-assistant-6o1z",
+      "title": "crdm-detect corpus: #187 and #199 are the same artefact, labelled opposite",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [
+        "folio-assistant-vjbl"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:40:00Z",
+      "updatedAt": "2026-09-21T16:40:00Z",
+      "preview": "**A specific, checkable contradiction in the eval corpus — not a judgement call\nabout intent.** `vjbl` already names #187 as a hard case *\"turning on intent\nrather than wording\"*. Measured while working `9gtc`, it is sharper than that:\n\n| issue | label | what it is |\n|---|---|---|\n| [#187](https://github.com/litlfred/folio-assistant/issues/187) | `isFeature: false` — *\"a documentation deliverable ",
+      "file": "beans/defs/folio-assistant-6o1z--crdm-detect-corpus-187-and-199-are-the-same-artefa.md"
+    },
+    {
       "id": "folio-assistant-6pfo",
       "title": "Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph",
       "status": "in-progress",
@@ -4036,7 +4052,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T01:28:38Z",
-      "updatedAt": "2026-09-19T05:43:14Z",
+      "updatedAt": "2026-09-21T16:33:15Z",
       "preview": "_2026-09-19T01:28:54Z_ — Measured 2026-09-19 by axe-core over the action-tile harness in tests/a11y.e2e.ts, while building 1le7. NOT caused by that change -- found because the new gate looked at a page the old one never did.\n\n`mountPageLanguageBar()` in docs/assets/js/docs-ui.js renders an always-visible row of six locale tabs into `.main-content`. Its colours are INLINE STYLES on each tab, writte",
       "file": "beans/defs/folio-assistant-rptk--the-per-page-language-bar-fails-contrast-in-both-s.md"
     },
@@ -4127,14 +4143,14 @@
     {
       "id": "folio-assistant-sb6z",
       "title": "NOTHING RUNS kg-detangle: the arrow-direction model is correct and unexercised",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T09:00:01Z",
-      "updatedAt": "2026-09-21T09:00:01Z",
+      "updatedAt": "2026-09-21T16:20:36Z",
       "preview": "FOUND 2026-09-21 while re-measuring `kvsx`.\n\n`detangle/scripts/kg-detangle.ts` computes the arrow-direction model `kvsx`\nspecifies — `enforced` / `recorded` / `prose` authority per extractor, `role`\nread off enforced boundary edges alone, `undetermined` as a real verdict. The\nmodel is correct and, as of today, **nothing executes it**: no npm script\nbefore this change, no entry in `gates.ts`, no wo",
       "file": "beans/defs/folio-assistant-sb6z--nothing-runs-kg-detangle-the-arrow-direction-model.md"
     },
@@ -4323,14 +4339,14 @@
     {
       "id": "folio-assistant-tdu3",
       "title": "The module-scope gate covers folioDir only, and walks only cat-harness",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T15:35:46Z",
-      "updatedAt": "2026-09-21T16:40:00Z",
+      "updatedAt": "2026-09-21T16:56:00Z",
       "preview": "Carved out of `1hkj` (#719) after it merged, from three gaps found by running\nits gate rather than by reading it.\n\n## Three gaps, each measured\n\n**1. Only `folioDir` was on the list.** Measured on main against a directory\nholding `{ not json`:\n\n| `folioDir` | THREW |\n| `directoryForGraph` | THREW |\n| `directoriesForGraph` | THREW |\n| `findContentRepoRoot` | returned its declared fallback |\n\n`findC",
       "file": "beans/defs/folio-assistant-tdu3--the-module-scope-gate-covers-foliodir-only-and-wal.md"
     },
@@ -4367,14 +4383,14 @@
     {
       "id": "folio-assistant-u1iu",
       "title": "DOCS SITE RED 7 RUNS: the foreign-instance export takes its base from the instance, and cat-bootstrap declares none",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T14:03:27Z",
-      "updatedAt": "2026-09-21T14:03:27Z",
+      "updatedAt": "2026-09-21T16:42:02Z",
       "preview": "Issue #720. Session: https://claude.ai/code/session_0136QLqnczLRAvFcqQKT588A\n\n## Measured before starting, 2026-09-21\n\n| | |\n|---|---|\n| Docs site on `main` | green at run 352 (#699, 11:49), **red 353–359** |\n| break arrived with | **#688** (12:01) — NOT the harness.json excision (#695, 12:19), which merged into an already-red workflow |\n| failing command | `kg-export.ts --instance ./cat-bootstrap",
       "file": "beans/defs/folio-assistant-u1iu--docs-site-red-7-runs-the-foreign-instance-export-t.md"
     },
@@ -4570,7 +4586,9 @@
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
-      "blockedBy": [],
+      "blockedBy": [
+        "folio-assistant-6o1z"
+      ],
       "createdAt": "2026-09-18T15:07:07Z",
       "updatedAt": "2026-09-18T15:07:53Z",
       "preview": "The `crdm-detect` eval's ground truth is **one annotator's, unblinded** — the\nsame agent wrote the labels and the scorer. That is the first thing to fix\nbefore quoting 71% / 63% as a property of the skill rather than of this corpus.\n\nEach label in `scripts/eval/crdm-detect-corpus.json` carries a one-line reason,\nso a second annotator can disagree with a specific claim rather than the whole\nset. Th",
@@ -4941,6 +4959,20 @@
       "updatedAt": "2026-09-20T17:16:01Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> note, one other source of todos, it is a tool for todos/ in directory, also\n> github issues is a set of toods.   add beans to skill to read an issue as a\n> bean to track.  skill (request from user permission) to create an issue to\n> link untracked beans.   QA report ... is bean in an issue for CRDM, feature\n> request type process or content authoritng beans where hu",
       "file": "beans/defs/folio-assistant-xeer--issues-are-a-third-todo-source-a-queryable-bean-is.md"
+    },
+    {
+      "id": "folio-assistant-xeg6",
+      "title": "ARXIV SUB-THRESHOLD IMAGES: 2602.12670v4 is blocked on image-descriptions, and a coverage bound would misclassify 3 of its 7",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:24:49Z",
+      "updatedAt": "2026-09-21T16:24:49Z",
+      "preview": "Split out of bean `r8br` / issue #722 on 2026-09-21, which deliberately left\nits promotion box unticked because of this document.\n\n`2602.12670v4` is one of the seven staged documents blocked on\n`image-descriptions`. It is **not** a browser print, so the capture rung\n`r8br` added does not reach it and was never going to.\n\n## Measured 2026-09-21\n\n| | |\n|---|---|\n| producer / creator | `pikepdf 8.15.",
+      "file": "beans/defs/folio-assistant-xeg6--arxiv-sub-threshold-images-260212670v4-is-blocked.md"
     },
     {
       "id": "folio-assistant-xffc",
@@ -5364,6 +5396,12 @@
     }
   ],
   "findings": [
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-6o1z",
+      "blocks": "folio-assistant-vjbl",
+      "detail": "blocks `folio-assistant-vjbl` and states no expiry, so the block cannot be told from abandoned work"
+    },
     {
       "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",
