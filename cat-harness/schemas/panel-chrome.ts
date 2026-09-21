@@ -107,6 +107,16 @@ export const PANEL_CONTROLS: Readonly<Record<string, PanelControl>> = {
       "takes the card off this reader's board. Reversible by construction — it goes " +
       "somewhere with a way back rather than being deleted (`d1r6`).",
   },
+  move: {
+    id: "move",
+    label: "Move or resize",
+    needs: "none",
+    because:
+      "the owner's *\"can resize open content, move around\"*. A BUTTON that enters a " +
+      "keyboard mode, not a drag handle: this instance's declared interaction profile " +
+      "is low-dexterity, and a board whose only affordance is drag excludes its own " +
+      "owner. Drag is the accelerator over the top.",
+  },
   relocate: {
     id: "relocate",
     label: "Send to the trashcan",
@@ -137,7 +147,7 @@ export const FIXED_CONTROLS: readonly string[] = ["close"];
  * state an empty list would make silence look like an oversight.
  */
 export const KIND_CONTROLS: Readonly<Record<string, readonly string[]>> = {
-  todo: ["view", "edit", "pin", "discard", "relocate"],
+  todo: ["view", "edit", "move", "pin", "discard", "relocate"],
   bean: ["view"],
 };
 

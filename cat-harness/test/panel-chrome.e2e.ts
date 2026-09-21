@@ -156,7 +156,7 @@ test.describe("declared and unservable is a THIRD state, not absence", () => {
     // never offered it, which is the collapse this whole file is about.
     await page.goto(URL_PAGE);
     const panel = await openCard(page, "bare");
-    expect(await controlsOn(panel)).toEqual(["close", "pin", "discard", "relocate"]);
+    expect(await controlsOn(panel)).toEqual(["close", "move", "pin", "discard", "relocate"]);
     await expect(panel).toHaveAttribute("data-fa-hidden-controls", "view edit");
   });
 
@@ -165,7 +165,7 @@ test.describe("declared and unservable is a THIRD state, not absence", () => {
     // which is why the gate is per node rather than per deployment.
     await page.goto(URL_PAGE);
     const panel = await openCard(page, "readonly");
-    expect(await controlsOn(panel)).toEqual(["close", "view", "pin", "discard", "relocate"]);
+    expect(await controlsOn(panel)).toEqual(["close", "view", "move", "pin", "discard", "relocate"]);
     await expect(panel).toHaveAttribute("data-fa-hidden-controls", "edit");
   });
 
@@ -176,6 +176,7 @@ test.describe("declared and unservable is a THIRD state, not absence", () => {
       "close",
       "view",
       "edit",
+      "move",
       "pin",
       "discard",
       "relocate",

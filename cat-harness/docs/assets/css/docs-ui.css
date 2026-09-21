@@ -3437,6 +3437,13 @@ a.fa-harness-tab__body:focus-visible {
 
 .fa-board-window {
   position: absolute;
+  /* BORDER-BOX, and it is load-bearing rather than tidy. The move code reads
+   * geometry from `getBoundingClientRect()` — which measures the border box —
+   * and writes it back as `width`/`height`. Under the default `content-box`
+   * those two are not the same number, so every first nudge silently grew the
+   * window by its border: 450 -> 452. Caught by the four-directions spec
+   * asserting that a move round-trip returns to where it started. */
+  box-sizing: border-box;
   top: 2rem;
   left: 2rem;
   width: min(28rem, calc(100% - 4rem));
@@ -3599,4 +3606,55 @@ a.fa-harness-tab__body:focus-visible {
    * here, so a reader who hits Enter without reading has left the content
    * where it is. */
   font-weight: 600;
+}
+
+/* Move mode. Announced through a live region as well as outlined, because a
+ * reader who cannot see the outline still has to be told what their arrow keys
+ * now do. */
+.fa-board-window[data-fa-moving="true"] {
+  outline: 2px dashed var(--fa-tile-tone, currentColor);
+  outline-offset: 2px;
+}
+
+.fa-board-window-bar {
+  /* The drag accelerator's handle. The keyboard path does everything this
+   * does, so the cursor is a hint rather than the affordance. */
+  cursor: move;
+}
+
+/* The reader's filter. In the board's head, and in no document anywhere. */
+.fa-board-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  padding: 0 0.5rem 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.fa-board-filter:empty {
+  /* A folio whose todos never vary on a property gets no control for it, and
+   * an empty row would read as a control that failed to load. */
+  display: none;
+}
+
+.fa-board-filter-label {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+.fa-board-filter-select {
+  /* Low-dexterity profile: a select is a target like any other. */
+  min-height: 2.25rem;
+  padding: 0 0.375rem;
+  border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.45));
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+}
+
+.fa-sticky-filtered-out {
+  font-size: 0.8125rem;
+  opacity: 0.8;
 }
