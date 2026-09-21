@@ -1,11 +1,11 @@
 ---
 # folio-assistant-k8rc
 title: 'The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T20:25:00Z
-updated_at: 2026-09-21T20:25:00Z
+updated_at: 2026-09-21T21:12:29Z
 parent: folio-assistant-vke6
 ---
 
