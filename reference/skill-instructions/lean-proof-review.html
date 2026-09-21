@@ -277,6 +277,45 @@
 <meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 
 <!--
+  THE SEMANTIC-ZOOM DECLARATION — when the card stops rendering its words and
+  becomes its avatar.
+
+  R2 of issue #602: *"The threshold SHALL be declared data, not a literal in
+  the renderer."* `gen-docs-pages.ts` publishes the folio's own
+  `semantic-zoom.json`, and publishes NOTHING when the folio has not declared
+  one. So this `<meta>` may point at a 404, and that is a real state rather
+  than a defect: `docs-ui.js` reports it could not determine a threshold and
+  leaves every card's words in place. A default in either file would be the
+  literal R2 forbids, one layer further from where anybody looks for it.
+
+  The pointer is emitted UNCONDITIONALLY because Liquid cannot see whether the
+  generator wrote the file, and a conditional that guessed would make "this
+  folio declares no threshold" and "the build did not run" the same page.
+-->
+<meta name="fa-zoom-src" content="/folio-assistant/assets/semantic-zoom.json">
+
+<!--
+  THE DECLARED VISUALISATIONS, as tiles.
+
+  Owner, 2026-09-20: *"if harness declares visaluzers, those should have tile"*
+  — so the tile set is the `coverage.visualiser` obligation made reachable, not
+  a second registry. `graph-tiles.ts` derives it into `_data/harness.json`;
+  this hands it to `docs-ui.js` for BOTH surfaces, because a tile is declared
+  once and says where it shows.
+
+  INLINE rather than a second fetch, unlike the todo index above, and the two
+  are different for a reason worth stating: that index grows with the todo
+  corpus, while this one is bounded by the number of directories an instance
+  DECLARES — twelve here — and every page needs it before first paint or the
+  navbar would visibly grow tiles a moment after the reader arrives.
+
+  `jsonify` and not a hand-built string: a title carrying a quote would
+  otherwise close the attribute, and the quoting rule is Liquid's rather than
+  something this comment has to be right about.
+-->
+<meta name="fa-tiles" content="[{&quot;id&quot;:&quot;agent-skills-library&quot;,&quot;directory&quot;:&quot;agent-skills-library&quot;,&quot;title&quot;:&quot;agent-skills-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/agent-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/agent-skills/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;beans&quot;,&quot;ref&quot;:&quot;cat-harness/docs/beans/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/beans/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;cat-bootstrap-tools-schemas&quot;,&quot;directory&quot;:&quot;cat-bootstrap-tools-schemas&quot;,&quot;title&quot;:&quot;cat-bootstrap-tools-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/cat-bootstrap-tools/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/cat-bootstrap-tools/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;detangle-schemas&quot;,&quot;directory&quot;:&quot;detangle-schemas&quot;,&quot;title&quot;:&quot;detangle-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/detangle/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/detangle/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assist-core-schemas&quot;,&quot;directory&quot;:&quot;folio-assist-core-schemas&quot;,&quot;title&quot;:&quot;folio-assist-core-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-sci-library&quot;,&quot;directory&quot;:&quot;folio-assistant-sci-library&quot;,&quot;title&quot;:&quot;folio-assistant-sci-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/folio-assistant-sci/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;large-datasets-schemas&quot;,&quot;directory&quot;:&quot;large-datasets-schemas&quot;,&quot;title&quot;:&quot;large-datasets-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/large-datasets/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/large-datasets/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;library&quot;,&quot;directory&quot;:&quot;library&quot;,&quot;title&quot;:&quot;library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/cat-harness/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;schemas&quot;,&quot;directory&quot;:&quot;schemas&quot;,&quot;title&quot;:&quot;schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/cat-harness/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/todos/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;uploads&quot;,&quot;directory&quot;:&quot;uploads&quot;,&quot;title&quot;:&quot;uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/cat-harness/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;who-iris-library&quot;,&quot;directory&quot;:&quot;who-iris-library&quot;,&quot;title&quot;:&quot;who-iris-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/who-iris/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;],&quot;href&quot;:&quot;/cat-harness/library/who-iris/&quot;,&quot;hidden&quot;:false}]">
+
+<!--
   The bean index — the AGENT work plan, published by the same generator beside
   the todo index above, for the same reason and read the same way. Separate
   files rather than one combined document because the two stores are separate
@@ -1254,7 +1293,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35625329242"><code>f2cffb6</code></a> &middot; 2026-09-21T16:24:40Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35626202835"><code>46e866f</code></a> &middot; 2026-09-21T16:32:52Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

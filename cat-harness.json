@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T16:25:23.797Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f2cffb611b462d4ccb91d86301f1b4dd7e341ba1",
-  "sourceCommitSha": "f2cffb611b462d4ccb91d86301f1b4dd7e341ba1",
-  "sourceCommitAt": "2026-09-21T18:23:47+02:00",
+  "generatedAt": "2026-09-21T16:33:32.578Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/46e866f52063039832028d531e91e69334c34fff",
+  "sourceCommitSha": "46e866f52063039832028d531e91e69334c34fff",
+  "sourceCommitAt": "2026-09-21T18:31:58+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -272,7 +272,7 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 85,
+    "Schema": 89,
     "GraphKind": 24,
     "Directory": 33,
     "Asset": 3
@@ -30950,6 +30950,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/panel-chrome",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "panel-chrome",
+      "title": "What a card's open panel offers — the kind declares, the platform fixes.",
+      "module": "schemas/panel-chrome.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/precision-scalar",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "precision-scalar",
@@ -30971,6 +30979,14 @@
       "name": "qa-review",
       "title": "QA review — findings, decisions, and the audit notes that justify them.",
       "module": "schemas/qa-review.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/reader-filter",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "reader-filter",
+      "title": "The filter a READER applies to a board, which commits nothing.",
+      "module": "schemas/reader-filter.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -31003,6 +31019,14 @@
       "name": "role-graph",
       "title": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
       "module": "schemas/role-graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "safe-url",
+      "title": "Which URL schemes may reach an `href`, and why the answer is a list.",
+      "module": "schemas/safe-url.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -31231,6 +31255,14 @@
       "name": "webpage",
       "title": "`webpage` — a published documentation page, modelled as a graph node that",
       "module": "schemas/webpage.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "window-stack",
+      "title": "Which cards are OPEN on a board, and in what order they stack.",
+      "module": "schemas/window-stack.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -32841,8 +32873,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f2cffb611b462d4ccb91d86301f1b4dd7e341ba1",
+    "sha": "46e866f52063039832028d531e91e69334c34fff",
     "pr": "main",
-    "run": "35625329242"
+    "run": "35626202835"
   }
 }

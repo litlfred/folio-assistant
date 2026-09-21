@@ -509,6 +509,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/panel-chrome.test.ts",
+      "instance": "cat-harness",
+      "name": "panel-chrome.test",
+      "graphNode": "undeclared",
+      "summary": "The kind declares its controls; the platform fixes the chrome.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "instance": "cat-harness",
+      "name": "panel-chrome",
+      "graphNode": "schema",
+      "summary": "What a card's open panel offers — the kind declares, the platform fixes.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/portable-path.test.ts",
       "instance": "cat-harness",
       "name": "portable-path.test",
@@ -558,6 +574,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/reader-filter.test.ts",
+      "instance": "cat-harness",
+      "name": "reader-filter.test",
+      "graphNode": "undeclared",
+      "summary": "A reader's filter narrows their view and commits nothing.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/reader-filter.ts",
+      "instance": "cat-harness",
+      "name": "reader-filter",
+      "graphNode": "schema",
+      "summary": "The filter a READER applies to a board, which commits nothing.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/refactor-strategy.ts",
       "instance": "cat-harness",
       "name": "refactor-strategy",
@@ -603,6 +635,22 @@
       "name": "role-graph",
       "graphNode": "schema",
       "summary": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/safe-url.test.ts",
+      "instance": "cat-harness",
+      "name": "safe-url.test",
+      "graphNode": "undeclared",
+      "summary": "Default-deny on URL schemes, and the evasions it has to survive.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/safe-url.ts",
+      "instance": "cat-harness",
+      "name": "safe-url",
+      "graphNode": "schema",
+      "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
       "isTest": false
     },
     {
@@ -909,6 +957,22 @@
       "name": "webpage",
       "graphNode": "schema",
       "summary": "`webpage` — a published documentation page, modelled as a graph node that",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/window-stack.test.ts",
+      "instance": "cat-harness",
+      "name": "window-stack.test",
+      "graphNode": "undeclared",
+      "summary": "The window stack, and the zoom it must stay separate from.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/window-stack.ts",
+      "instance": "cat-harness",
+      "name": "window-stack",
+      "graphNode": "schema",
+      "summary": "Which cards are OPEN on a board, and in what order they stack.",
       "isTest": false
     },
     {
@@ -6116,11 +6180,10 @@
       "name": "SubgraphCoverageSchema",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "zod-object",
-      "doc": "What makes a declared subgraph REACHABLE — and the reasons it may not need",
       "fields": [
         {
           "name": "visualiser",
-          "type": "z.string().min(1).optional()",
+          "type": "VisualiserDeclarationSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The page that renders this subgraph, **relative to the REPOSITORY root**"
@@ -6155,7 +6218,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#VisualiserDeclarationSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -6305,6 +6370,98 @@
         "NETWORK_REACHES",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#Visualisation",
+      "name": "Visualisation",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#VisualisationSchema",
+      "name": "VisualisationSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "doc": "ONE visualisation of a subgraph — where it is rendered, and what to call it.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a tile calls it. Absent falls back to the directory's id."
+        },
+        {
+          "name": "surfaces",
+          "type": "z.array(z.enum([\"navbar\", \"board\"])).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Where its tile appears. Absent means BOTH."
+        },
+        {
+          "name": "hidden",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whether this tile starts out of frame. Absent means shown."
+        },
+        {
+          "name": "theme",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The tile's theme. Absent means the directory's, then the instance's."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#VisualiserDeclaration",
+      "name": "VisualiserDeclaration",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#VisualiserDeclarationSchema",
+      "name": "VisualiserDeclarationSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-union",
+      "doc": "What `coverage.visualiser` accepts: one path, or several visualisations.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -15148,6 +15305,128 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/panel-chrome.ts#Capabilities",
+      "name": "Capabilities",
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "kind": "interface",
+      "doc": "What this environment can do for this node.",
+      "fields": [
+        {
+          "name": "source-read",
+          "type": "boolean",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source-write",
+          "type": "boolean",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/panel-chrome.ts#ControlCapability",
+      "name": "ControlCapability",
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "kind": "type-alias",
+      "doc": "What a control needs the environment to be able to do.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "none",
+        "source-read",
+        "source-write"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/panel-chrome.ts#ControlFinding",
+      "name": "ControlFinding",
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "kind": "interface",
+      "doc": "A declaration that names something that does not exist.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "control",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "because",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/panel-chrome.ts#PanelControl",
+      "name": "PanelControl",
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "kind": "interface",
+      "doc": "One control a panel may carry.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The accessible name. Words, because a glyph alone is a guess."
+        },
+        {
+          "name": "needs",
+          "type": "ControlCapability",
+          "optional": false,
+          "array": false,
+          "doc": "What the environment must be able to do for this to work."
+        },
+        {
+          "name": "because",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Why this control exists, for whoever is deciding whether to keep it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/panel-chrome.ts#ControlCapability"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/portable-path.ts#UnportableReason",
       "name": "UnportableReason",
       "module": "cat-harness/schemas/portable-path.ts",
@@ -16181,6 +16460,101 @@
           "type": "string",
           "optional": false,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/reader-filter.test.ts#Node",
+      "name": "Node",
+      "module": "cat-harness/schemas/reader-filter.test.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "page",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "node",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "properties",
+          "type": "Record<string, string>",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/reader-filter.ts#FilterableNode",
+      "name": "FilterableNode",
+      "module": "cat-harness/schemas/reader-filter.ts",
+      "kind": "interface",
+      "doc": "What a reader's filter matches on — a board node plus its own properties.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "properties",
+          "type": "Readonly<Record<string, string>>",
+          "optional": true,
+          "array": false,
+          "doc": "The node's own properties, e.g. `{ status: \"open\", priority: \"high\" }`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/reader-filter.ts#ReaderFilter",
+      "name": "ReaderFilter",
+      "module": "cat-harness/schemas/reader-filter.ts",
+      "kind": "interface",
+      "doc": "What a reader is narrowing by. Absent axes do not filter.",
+      "fields": [
+        {
+          "name": "kinds",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "Kinds to keep. OR within the list."
+        },
+        {
+          "name": "properties",
+          "type": "Readonly<Record<string, readonly string[]>>",
+          "optional": true,
+          "array": false,
+          "doc": "Kind properties to keep, keyed by property name — the owner's *\"filter out"
         }
       ],
       "extendsNames": [],
@@ -17288,6 +17662,33 @@
           "optional": false,
           "array": false,
           "doc": "Depth in the `inherits` walk; 0 is the role itself."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/safe-url.ts#UrlRefusal",
+      "name": "UrlRefusal",
+      "module": "cat-harness/schemas/safe-url.ts",
+      "kind": "interface",
+      "doc": "Why a URL was refused — for a caller that wants to report rather than drop.",
+      "fields": [
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "because",
+          "type": "string",
+          "optional": false,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -27747,6 +28148,27 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/window-stack.ts#WindowStack",
+      "name": "WindowStack",
+      "module": "cat-harness/schemas/window-stack.ts",
+      "kind": "type-alias",
+      "doc": "The open cards, bottom of the stack first. A card appears at most once.",
+      "fields": [
+        {
+          "name": "open",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "detangle/schemas/detangle.ts#BoundaryRole",
       "name": "BoundaryRole",
       "module": "detangle/schemas/detangle.ts",
@@ -31121,6 +31543,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#VisualiserDeclarationSchema",
+      "via": "visualiser",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/cat-harness.ts#Topology",
       "to": "cat-harness/schemas/cat-harness.ts#Forge",
       "via": "forge",
@@ -32574,6 +33004,14 @@
       "via": "anchor",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/panel-chrome.ts#PanelControl",
+      "to": "cat-harness/schemas/panel-chrome.ts#ControlCapability",
+      "via": "needs",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
