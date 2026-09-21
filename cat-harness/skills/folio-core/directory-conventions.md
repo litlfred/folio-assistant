@@ -94,7 +94,7 @@ decides it.
 | `tools` | **harness** | Tool definitions, themselves nodes in the KG | no |
 | `cat-harness` | **harness** | the harness layer's own knowledge graph, where a directory holds MORE THAN ONE of its parts — in practice the `["schemas", "cat-harness"]` entries, where it means "a schema IS a knowledge-graph node". Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. **Not itself deprecated** by the 2026-09-21 split: an alias maps one name to one name, and this would have to become three. A downstream declaration still saying `["cat-harness"]` keeps parsing and keeps being scanned for skills; what it loses is the finer query, which it never had. | no |
 | `skills` | **harness**, and any layer | Skill packages — the authored instruction bodies an Actor performs a Task from. A Skill is a **Capability with defined inputs and outputs**, stated generically so it is portable across forges, binaries and machines. Split out of `cat-harness` on 2026-09-21. | no |
-| `workflows` | **harness**, and any layer | Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth rather than illustrations of one. **Where a running instance GOT TO is not here** — that is `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. Split out of `cat-harness` on 2026-09-21. | no |
+| `processes` | **harness**, and any layer | Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth rather than illustrations of one. **Where a running instance GOT TO is not here** — that is `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. Split out of `cat-harness` on 2026-09-21. | no |
 | `scenarios` | **harness**, and any layer | Actors, the Roles they take on, and the User Stories those Roles serve. Named for what it WILL hold: a Role's `useCases` are free-text strings today, so a User Story cannot be pointed at or traced to the Workflow it justifies — naming the kind now is what gives that gap somewhere to be fixed. Split out of `cat-harness` on 2026-09-21. | no |
 | `schemas` | **harness** | schema definitions, self-declared in the smart-base manner | no |
 | `methodology` | **harness**, and any layer | judgement methodologies, one sub-graph each — a NAMED, EXTERNAL way of reaching a judgement, adopted whole. `kepner-tregoe` for a decision, `madr` for its record, `dmn` for the computable case, `grade` for certainty of evidence. They are **parallel rather than composable**: which applies is contextual, and blending them gives a house method that cites nobody. A separate kind from `cat-harness` for three properties a skill lacks — extractable (adopted work lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from `skill-is-brief`, since a faithful rendering of an external standard must not be truncated to a house limit. Any layer may declare one: the harness carries the domain-neutral methods, `smart-kg` carries GRADE. Governed by [`methodology-adoption`](methodology-adoption.md). | no |
@@ -577,8 +577,8 @@ skills/                         ← this instance's `kg`
   <pkg>/package-manifest.json   which skills a package publishes
 ```
 
-and the processes those roles act in — `skills/workflows/*.bpmn` and
-`skills/workflows/decisions/*.dmn` — are reached **through the skill that
+and the processes those roles act in — `processes/*.bpmn` and
+`processes/decisions/*.dmn` — are reached **through the skill that
 describes them**, not as standalone artefacts. A BPMN activity names the skill
 that implements it (`<folio:skill ref>`); a lane names the role that performs it
 (`<folio:role ref>`, or an exact lane-name match in `roles.json`); a role carries

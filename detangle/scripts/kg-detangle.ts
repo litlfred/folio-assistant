@@ -55,7 +55,7 @@ const SCAN: Array<{ path: string; groupDepth: number }> = [
   { path: "folio-assistant-core/schemas", groupDepth: 2 },
   { path: "kg-navigation/skills", groupDepth: 2 },
   { path: "bootstrap/skills", groupDepth: 2 },
-  { path: "bootstrap/workflows", groupDepth: 2 },
+  { path: "bootstrap/processes", groupDepth: 2 },
   { path: "detangle/schemas", groupDepth: 2 },
 ];
 
@@ -164,7 +164,7 @@ function link(from: string, toId: string | undefined, ref: string, via: string) 
  * `upstream-version-adoption` — are ALSO the basenames of diagrams sitting in
  * the same directory, so every one of them resolved to the .bpmn referring to
  * it rather than to the skill body. That produced 31 phantom internal edges in
- * `skills/workflows` and was the whole of its reported cohesion of 0.09.
+ * `processes` and was the whole of its reported cohesion of 0.09.
  *
  * A skill ref names a SKILL. Restricting the candidate set by extension is what
  * makes the name collision harmless instead of silently self-referential.

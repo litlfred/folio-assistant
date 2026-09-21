@@ -14,7 +14,7 @@ Found 2026-09-20 while moving CRDM into its own subgraph (bean `g43o`):
 `check:declared-paths` exists to prevent.
 
 - `scripts/tests/log-writer.test.ts` composed
-  `../../skills/workflows/crdm-requirements.bpmn`. Worse than a plain
+  `../../processes/crdm-requirements.bpmn`. Worse than a plain
   break: it went ENOENT and the test reported *"the process does not
   declare folio:log"* — a false finding about the CORPUS rather than
   about itself.

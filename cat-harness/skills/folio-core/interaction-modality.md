@@ -6,7 +6,7 @@ user_invocable: true
 
 # /interaction-modality — ask in a form the person can answer
 
-Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn),
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn),
 `Task_DetectModality` and `Task_AskIntent`.
 Preferences: `interaction/interaction.json` (committed, read at session start).
 

@@ -20,11 +20,11 @@ Owner, 2026-09-20, one question: 'are arrows in wrong direction somewhere?' Yes.
 
 **470 of 498 cross-group edges -- 94% -- are RECORDED, not ENFORCED.**
 
-THE DISTINCTION. An ENFORCED edge has a direction that is a FACT: reverse an `import` and the build breaks; reverse `calledElement` and the engine cannot find the process. A RECORDED edge has a direction that is a STORAGE CHOICE. `<folio:skill ref="S">` is written ON THE DIAGRAM, so the arrow runs diagram -> skill. Had the repository instead put `workflows: [...]` in each skill's front matter, the identical coupling would be stored the other way round and `skills/workflows` would measure as a SINK.
+THE DISTINCTION. An ENFORCED edge has a direction that is a FACT: reverse an `import` and the build breaks; reverse `calledElement` and the engine cannot find the process. A RECORDED edge has a direction that is a STORAGE CHOICE. `<folio:skill ref="S">` is written ON THE DIAGRAM, so the arrow runs diagram -> skill. Had the repository instead put `workflows: [...]` in each skill's front matter, the identical coupling would be stored the other way round and `processes` would measure as a SINK.
 
 SO THE SOURCE/SINK VERDICTS ARE ARTEFACTS OF FILE LAYOUT for the two groups this whole discussion has been about:
-- `skills/workflows` -- 0 in, 334 out, role `source`. All 334 are `bpmn-skill`.
-- `skills/roles` -- 0 in, 122 out, role `source`. All 122 are `json-skill`, and `roles.json` is a REGISTRY. An index pointing at 122 things is not a heavy dependent; it is an index. The things it registers do not depend on it, and it does not USE them in any functional sense.
+- `processes` -- 0 in, 334 out, role `source`. All 334 are `bpmn-skill`.
+- `scenarios` -- 0 in, 122 out, role `source`. All 122 are `json-skill`, and `roles.json` is a REGISTRY. An index pointing at 122 things is not a heavy dependent; it is an index. The things it registers do not depend on it, and it does not USE them in any functional sense.
 
 WHAT BREAKS EACH WAY is the test that settles whether a coupling is really directional. Delete a skill and `roles.json` has a dangling ref. Delete `roles.json` and every skill still works but no lane can reach one. BOTH break. The coupling is SYMMETRIC and merely written down once, on one side.
 
@@ -55,7 +55,7 @@ nothing and reads as "unbuilt".
 | every extractor declares enforced or recorded | **done, and extended** | `EdgeAuthority` is THREE states — `enforced \| recorded \| prose` — and `AUTHORITY` declares **8** extractors, not the 4 this bean lists. `bpmn-call`, `bpmn-import`, `bpmn-decision` were added as `enforced`. |
 | role computed from ENFORCED edges, or REFUSES | **done** | `DetangleMetrics.enforcedBoundary`, documented *"`role` is read off these ALONE"*. `undetermined` is a real value in the report. |
 | recorded edges reported as SYMMETRIC COUPLING with a count | **done** | `recordedBoundary`, documented in exactly those words, and the verdict clause prints *"all N boundary edges are RECORDED … `${m.inbound}` in / `${m.outbound}` out describes the filing, not the coupling."* |
-| the workflows and roles verdicts re-stated | **done** | Both now read `undetermined`. `skills/workflows` 0 in / 387 out, `skills/roles` 0 in / 222 out — the counts this bean called source-shaped, no longer reported as `source`. |
+| the workflows and roles verdicts re-stated | **done** | Both now read `undetermined`. `processes` 0 in / 387 out, `scenarios` 0 in / 222 out — the counts this bean called source-shaped, no longer reported as `source`. |
 
 `detangle/` is also in `tsconfig.json` now, so the TS2322 its own comment
 records as uncaught is caught today. That gap closed too.
@@ -110,7 +110,7 @@ predates that code and names four extractors that are not identifiers anywhere
 in `cat-harness/`, which is why searching there reads as unbuilt. All four
 "Done when" bullets were already satisfied, two beyond what was asked:
 `EdgeAuthority` is three states over eight extractors, not two over four, and
-`skills/workflows` / `skills/roles` both read `undetermined` rather than
+`processes` / `scenarios` both read `undetermined` rather than
 `source` — the exact re-statement demanded.
 
 **What was actually wrong, and is fixed:** `AUTHORITY[via] ?? "recorded"`, a

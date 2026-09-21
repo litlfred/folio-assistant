@@ -143,4 +143,4 @@ writes with.
 The layout layer and why a note carries no coordinates:
 [`board-diagram-interchange`](board-diagram-interchange.md). Relocating content
 out of a folio is `deletion-requires-confirmation`, applied by
-`skills/workflows/board-relocate.bpmn` rather than restated here.
+`processes/board-relocate.bpmn` rather than restated here.

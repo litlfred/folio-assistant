@@ -16,7 +16,7 @@
  * profile is valid against its base, whether a CQL library compiles, whether
  * a DMN table is complete over its inputs. Those need the real validators
  * (`fhir-validation`, SUSHI, a DMN engine) and belong to the L3 pipeline in
- * `skills/workflows/l3-fhir-pipeline.bpmn`, not to a grep.
+ * `processes/l3-fhir-pipeline.bpmn`, not to a grep.
  *
  * Reimplementing them here would produce a second, weaker verdict that
  * disagrees with the authoritative one — the argument §2c of the ingestion
@@ -71,7 +71,7 @@ import { DAK_LABEL_PREFIXES, type DakBlockKind } from "../../schemas/block-kinds
  * An earlier version required a `.dmn` for `decision-table` and
  * `scheduling-logic`, on the strength of this repo's own `dmn-authoring` skill
  * and the "Decision logic · DMN tables" activity in
- * `skills/workflows/l2-dak-authoring.bpmn`. Measured against real content there
+ * `processes/l2-dak-authoring.bpmn`. Measured against real content there
  * are **zero `.dmn` files across all three repositories** — WHO authors
  * decision-support logic as a spreadsheet
  * (`input/decision-logic/IMMZ DAK_decision-support logic.xlsx`). The

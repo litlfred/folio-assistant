@@ -268,7 +268,7 @@ export const VoiceApplicabilitySchema = z
      */
     processes: z.array(z.string().min(1)).min(1).optional(),
     /**
-     * Declared role ids from `skills/roles/roles.json` — the SWIMLANE, which
+     * Declared role ids from `scenarios/roles.json` — the SWIMLANE, which
      * `AGENTS.md` names as what a role is. "Nothing *is* a reviewer";
      * somebody acts as one inside a process, and a voice bound to a lane
      * applies for exactly that duration.

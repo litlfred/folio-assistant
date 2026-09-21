@@ -53,7 +53,7 @@ in prose, in an issue; there are seventy, and now something reads them.
 
 - `folio:judgement` parsed into `ProcessNode.judgementReason`, validated at
   load.
-- `skills/workflows/session-state-machine.bpmn` — strict shape, both gateways
+- `processes/session-state-machine.bpmn` — strict shape, both gateways
   declared judgement, ADVISORY policy. **No `folio:bean` anywhere**: the
   machine records that an actor claimed a bean, it does not claim one, because
   a claim announces rather than reserves and a machine claiming on an actor's

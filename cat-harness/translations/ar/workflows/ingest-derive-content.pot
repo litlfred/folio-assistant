@@ -14,102 +14,102 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/ingest-derive-content.bpmn:127
+#: processes/ingest-derive-content.bpmn:127
 #. Diagram element documentation
 msgid "A generated description is a claim by someone. Record whether a human or an agent wrote it, and for an agent the model version. An uncited narrative is indistinguishable from a transcription of the source."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:113
+#: processes/ingest-derive-content.bpmn:113
 #. Diagram label
 msgid "All kinds done"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:63
+#: processes/ingest-derive-content.bpmn:63
 #. Diagram label
 msgid "Archive → greppable contents manifest"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:52
+#: processes/ingest-derive-content.bpmn:52
 #. Diagram label
 msgid "Assets in hand"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:121
+#: processes/ingest-derive-content.bpmn:121
 #. Diagram label
 msgid "Cite the author of every narrative"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:131
+#: processes/ingest-derive-content.bpmn:131
 #. Diagram label
 msgid "Derived"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:73
+#: processes/ingest-derive-content.bpmn:73
 #. Diagram label
 msgid "File info, sizes, hashes, timestamps, mimetype"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:25
+#: processes/ingest-derive-content.bpmn:25
 #. Diagram element documentation
 msgid "folio-assistant — Ingestion subprocess — derive content from the assets. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:38
+#: processes/ingest-derive-content.bpmn:38
 #. Diagram label
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:22
+#: processes/ingest-derive-content.bpmn:22
 #. Diagram label
 msgid "Ingestion subprocess — derive content from the assets"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:83
+#: processes/ingest-derive-content.bpmn:83
 #. Diagram label
 msgid "Narrative description per image, localized"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:99
+#: processes/ingest-derive-content.bpmn:99
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:89
+#: processes/ingest-derive-content.bpmn:89
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:109
+#: processes/ingest-derive-content.bpmn:109
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:79
+#: processes/ingest-derive-content.bpmn:79
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:69
+#: processes/ingest-derive-content.bpmn:69
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:55
+#: processes/ingest-derive-content.bpmn:55
 #. Diagram label
 msgid "Per asset kind"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:103
+#: processes/ingest-derive-content.bpmn:103
 #. Diagram label
 msgid "Sheet names, headers, shape, narrative"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:39
+#: processes/ingest-derive-content.bpmn:39
 #. Diagram element documentation
 msgid "The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:93
+#: processes/ingest-derive-content.bpmn:93
 #. Diagram label
 msgid "Transcribe and translate audio"
 msgstr ""

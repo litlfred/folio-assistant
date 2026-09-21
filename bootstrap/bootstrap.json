@@ -62,20 +62,20 @@
     },
     {
       "id": "bootstrap-roles",
-      "path": "skills/roles/",
+      "path": "scenarios/",
       "dependents": "reproduce",
-      "description": "CatBootstrap's three Roles \u2014 Initiator, Knowledge Graph Data Store, and the person asking. Declared as `scenarios` on 2026-09-21, matching `cat-harness/skills/roles/`: before the split this inherited `skills` from the directory above it, so a consumer asking for the Scenarios got skill bodies and a consumer asking for Skills got a role registry. A lane name is a string the audit cannot bind to anything, which is why these Roles were declared at all rather than left implicit in the diagrams' lanes.",
+      "description": "CatBootstrap's three Roles \u2014 Initiator, Knowledge Graph Data Store, and the person asking. Declared as `scenarios` on 2026-09-21, matching `cat-harness/scenarios/`: before the split this inherited `skills` from the directory above it, so a consumer asking for the Scenarios got skill bodies and a consumer asking for Skills got a role registry. A lane name is a string the audit cannot bind to anything, which is why these Roles were declared at all rather than left implicit in the diagrams' lanes.",
       "graphKinds": [
         "scenarios"
       ]
     },
     {
-      "id": "bootstrap-workflows",
-      "path": "workflows/",
+      "id": "bootstrap-processes",
+      "path": "processes/",
       "dependents": "skip",
       "description": "The bootstrap PROCESSES \u2014 `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one \u2014 reusing it would replace bootstrap's skills with its workflows.",
       "graphKinds": [
-        "workflows"
+        "processes"
       ]
     },
     {

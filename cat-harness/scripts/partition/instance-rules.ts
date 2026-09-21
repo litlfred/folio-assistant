@@ -136,7 +136,7 @@ export const RULES: Rule[] = [
       "scripts/check-ci-health.ts",          // workflow state on the default branch
       "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
       "scripts/bpmn-render.ts",              // BPMN → SVG
-      "scripts/render-bpmn.ts",              // BPMN → SVG (the skills/workflows one)
+      "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
       "scripts/validate-skills.ts",          // skill package manifests

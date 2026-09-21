@@ -1,7 +1,7 @@
 /**
  * Read a `.bpmn` file into a graph the interpreter can walk.
  *
- * The workflow diagrams under `skills/workflows/` are already the normative
+ * The workflow diagrams under `processes/` are already the normative
  * picture of how a change reaches the corpus, and every activity already names
  * the skill that implements it (`<folio:skill ref="…"/>`) and whether it
  * touches the work plan (`<folio:bean/>`). Until now nothing read them at

@@ -671,7 +671,7 @@ describe("a Role comes from the registry as well as from a lane", () => {
   });
 
   test("every role the registry declares is a node", () => {
-    const declared = readRoleGraph(join(import.meta.dir, "../../skills"))!.roles;
+    const declared = readRoleGraph(join(import.meta.dir, "../../scenarios"))!.roles;
     expect(declared.length).toBeGreaterThan(20);
     const byName = new Set(registry.map((r) => r.name));
     expect(declared.filter((d) => !byName.has(d.id)).map((d) => d.id)).toEqual([]);

@@ -18,16 +18,16 @@ prerequisite.
 ## 1 · Persona — who you are
 
 > **DAK L2, generic persona.** Declared in
-> [`skills/roles/roles.json`](skills/roles/roles.json); a persona here is a
+> [`scenarios/roles.json`](scenarios/roles.json); a persona here is a
 > **role**, and a role is a **BPMN swimlane**. You do not *are* a role — you
 > **act as** one, for the duration of a lane.
 
 | persona | id | who it is |
 |---|---|---|
-| **Initiator** | [`initiator`](skills/roles/roles.json) | **you**: the agent asked to initialize a harness, knowing only what this page gives you. |
-| **Requestor** | [`requestor`](skills/roles/roles.json) | the person who wants one initialized. The only one who can say *which*. |
-| **Knowledge Graph Data Store** | [`knowledge-graph-data-store`](skills/roles/roles.json) | a git repository — where a harness is read from and a new one written to. Reached through the git CLI, or a forge's API. |
-| **Logger** | [`logger`](skills/roles/roles.json) | where an actor says what it is doing. Records; decides nothing. Here it is the discussion you are already in. |
+| **Initiator** | [`initiator`](scenarios/roles.json) | **you**: the agent asked to initialize a harness, knowing only what this page gives you. |
+| **Requestor** | [`requestor`](scenarios/roles.json) | the person who wants one initialized. The only one who can say *which*. |
+| **Knowledge Graph Data Store** | [`knowledge-graph-data-store`](scenarios/roles.json) | a git repository — where a harness is read from and a new one written to. Reached through the git CLI, or a forge's API. |
+| **Logger** | [`logger`](scenarios/roles.json) | where an actor says what it is doing. Records; decides nothing. Here it is the discussion you are already in. |
 
 Two more words, used by every sentence below rather than re-explained:
 
@@ -47,7 +47,7 @@ Two more words, used by every sentence below rather than re-explained:
 
 ## 2 · The user story
 
-> **As an** [Initiator](skills/roles/roles.json),
+> **As an** [Initiator](scenarios/roles.json),
 > **I want to** turn a repository I know nothing about into a **named harness**,
 > **so that** every artefact written into it afterwards inherits the right
 > upstream — because that is the one thing that cannot be fixed later.
@@ -62,7 +62,7 @@ logged. Both are outcomes. Neither is a reason to improvise.
 ## 3 · User scenario — the narrative walkthrough
 
 > **DAK L2, user scenario.** The business process that realises it is
-> [`workflows/initialize-harness.bpmn`](workflows/initialize-harness.bpmn).
+> [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn).
 
 **1. You arrive knowing nothing.** You can open a file, and that is all you are
 assumed to be able to do. How to open things here, and nothing more, is
@@ -70,7 +70,7 @@ assumed to be able to do. How to open things here, and nothing more, is
 
 **2. You start the one process there is.**
 
-> Open [`workflows/initialize-harness.bpmn`](workflows/initialize-harness.bpmn)
+> Open [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn)
 > and begin at its start event.
 
 **It is the only process you START, and that is deliberate** — you cannot begin
@@ -82,7 +82,7 @@ locations; the Requestor returns **at most one**. You may narrow the list. You
 may **not** break a tie. The skill is
 [`skills/confirm-harness.md`](skills/confirm-harness.md); the conversation it
 happens in is the process
-[`workflows/discussion.bpmn`](workflows/discussion.bpmn), whose skill is
+[`processes/discussion.bpmn`](processes/discussion.bpmn), whose skill is
 [`skills/discussion.md`](skills/discussion.md) and whose two ends are declared
 as data:
 [`discussion.input.schema.json`](skills/discussion.input.schema.json) —
@@ -93,7 +93,7 @@ and who answered. **The task is finished when a document conforming to the
 output schema exists**, not when a pleasant exchange has occurred.
 
 **4. You say what you are doing, where saying so is required.**
-[`workflows/log-message.bpmn`](workflows/log-message.bpmn) is **not** an
+[`processes/log-message.bpmn`](processes/log-message.bpmn) is **not** an
 alternative start. It is an independent sub-process: something a step *calls*,
 never somewhere you begin. You may call it from any step;
 `initialize-harness` calls it at two steps where it is required. Its skill is
@@ -172,10 +172,10 @@ a home in the harness data model, and the mapping is one-to-one:
 
 | DAK (SMART) | bootstrap / harness | where it is declared |
 |---|---|---|
-| Generic **persona** | **Role** — a BPMN swimlane an actor acts in | [`skills/roles/roles.json`](skills/roles/roles.json) → [`role-graph.ts`](../cat-harness/schemas/role-graph.ts) |
+| Generic **persona** | **Role** — a BPMN swimlane an actor acts in | [`scenarios/roles.json`](scenarios/roles.json) → [`role-graph.ts`](../cat-harness/schemas/role-graph.ts) |
 | **Actor** | **Actor** — a concrete participant, persisting across processes | [`role-graph.ts`](../cat-harness/schemas/role-graph.ts) |
 | **User scenario** | *this page* — the narrative an Initiator reads | [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `UserScenarioBlock` |
-| **Business process** | the BPMN diagrams, lanes bound to roles | [`workflows/`](workflows) → [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `BusinessProcessBlock` |
+| **Business process** | the BPMN diagrams, lanes bound to roles | [`processes/`](processes) → [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `BusinessProcessBlock` |
 | **Functional requirement** | §4 above | [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `FunctionalRequirementBlock` |
 | **Core data element** | the fields of a harness declaration | [`cat-harness.ts`](../cat-harness/schemas/cat-harness.ts) |
 | L1 → L2 → L3 traceability | `realises` on every DAK block | [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `DakBlockBase.realises` |
@@ -209,9 +209,9 @@ and it is not this file.
 | [`AGENTS.md`](AGENTS.md) | the agent-generic pointer into this directory |
 | [`bootstrap.json`](bootstrap.json) | this instance's own declaration: which directories it holds and what kind of graph each is |
 | **workflows** | |
-| [`workflows/initialize-harness.bpmn`](workflows/initialize-harness.bpmn) | the **only** process you start |
-| [`workflows/discussion.bpmn`](workflows/discussion.bpmn) | asking the Requestor something only they can answer |
-| [`workflows/log-message.bpmn`](workflows/log-message.bpmn) | saying what you are doing; a sub-process, never a start |
+| [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | the **only** process you start |
+| [`processes/discussion.bpmn`](processes/discussion.bpmn) | asking the Requestor something only they can answer |
+| [`processes/log-message.bpmn`](processes/log-message.bpmn) | saying what you are doing; a sub-process, never a start |
 | **skills** | |
 | [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | how to open anything here, assuming nothing |
 | [`skills/confirm-harness.md`](skills/confirm-harness.md) | asking *which* harness |
@@ -220,7 +220,7 @@ and it is not this file.
 | [`skills/root-readme.md`](skills/root-readme.md) | writing the root README when there is none — the link, the install status, and why this write is not the one the `context` layer forbids |
 | [`skills/discussion.input.schema.json`](skills/discussion.input.schema.json) | the occasion for asking, as data |
 | [`skills/discussion.output.schema.json`](skills/discussion.output.schema.json) | the answer, as data — **the artefact that finishes the task** |
-| [`skills/roles/roles.json`](skills/roles/roles.json) | the four personas of §1 |
+| [`scenarios/roles.json`](scenarios/roles.json) | the four personas of §1 |
 | [`skills/package-manifest.json`](skills/package-manifest.json) | the skills package declaration |
 | **render** | |
 | [`render/bootstrap-graph-emission.md`](render/bootstrap-graph-emission.md) | emitting this instance's own graph |
@@ -240,7 +240,7 @@ exemption's substitute, which is why they are reachable from here.
 [skill](../cat-harness/schemas/skill-package.ts) ·
 [role](../cat-harness/schemas/role-graph.ts) ·
 [DAK blocks](../cat-harness/schemas/dak-blocks.ts) ·
-[process](../cat-harness/skills/workflows) ·
+[process](../cat-harness/processes) ·
 [tool](../cat-harness/schemas/tool.ts).
 Why bootstrapping is built this way:
 [the proposal](../fsh-guts/proposals/bootstrap.md).

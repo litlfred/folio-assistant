@@ -97,7 +97,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Feature-branch staging](feature-staging.html) | `feature-staging` | — |  |
 | [Flushable containers](flushable-containers.html) | `flushable-containers` | — | **A flushable container is a named store whose whole point is that it keeps |
 | [`fsh-guts/`](fsh-guts.html) | `fsh-guts` | — | **Delete means relocate.** Nothing in this repository is removed with `rm` |
-| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn). |
+| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn). |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Capability: `review` · Package: `folio-core` |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
@@ -111,7 +111,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
-| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn), |
+| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn), |
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
 | [Offering the knowledge graph](kg-contribution-offer.html) | `kg-contribution-offer` | — | Owner, 2026-09-20: *"update CRDM process that when a user is done with |
 | [KG export](kg-export.html) | `kg-export` | — | **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph |
@@ -143,7 +143,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [A folio's README](readme-sections.html) | `readme-sections` | — | Two tools divide the file between them, and **between them no link in a folio |
 | [Render logging](render-logging.html) | `render-logging` | — | Owner, 2026-09-20: *"a specialised Logger skill for the gh-pages rendering |
 | [Render order](render-order.html) | `render-order` | — | Two things live here, and they are deliberately one skill: **the general |
-| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn), |
+| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn), |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |

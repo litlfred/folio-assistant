@@ -11,7 +11,7 @@
  *
  * `remote-skill-is-servable` is `major`, so it fails `bun run kg:audit`
  * (`Worst severity: major`), it is recorded as `fail` in the committed sidecar
- * `test/results/kg-qa/skills/roles/kg.kg-qa.json`, and it fails
+ * `test/results/kg-qa/scenarios/kg.kg-qa.json`, and it fails
  * `bun run kg:audit:strict`. It does NOT fail `kg:audit:check`, which gates CI
  * and fires on `critical` only.
  *

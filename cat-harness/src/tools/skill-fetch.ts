@@ -77,7 +77,7 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // `content-validate`, `content-review`, `content-publish`, `content-plan`,
 // `content-test`, `content-feedback`, `content-retire` — are named by **52**
 // `<folio:skill ref>` activities across the twenty diagrams in
-// `skills/workflows/`. So `workflow_next` handed an agent `content-validate`,
+// `processes/`. So `workflow_next` handed an agent `content-validate`,
 // the agent called `skill_fetch`, and got "package not found". Every step of
 // every content-lifecycle process. `kg:audit`'s `skill-servable` criterion
 // exists to keep that closed.

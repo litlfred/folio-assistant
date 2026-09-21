@@ -262,9 +262,9 @@ function skillFilesOnDisk(): string[] {
     .sort();
 }
 
-/** The processes actually drawn in `bootstrap/workflows/`, by their BPMN id. */
+/** The processes actually drawn in `bootstrap/processes/`, by their BPMN id. */
 function diagramsOnDisk(): string[] {
-  const dir = join(CAT_BOOTSTRAP, "workflows");
+  const dir = join(CAT_BOOTSTRAP, "processes");
   return readdirSync(dir)
     .filter((f) => f.endsWith(".bpmn"))
     .map((f) => /<bpmn:process id="([^"]+)"/.exec(readFileSync(join(dir, f), "utf-8"))?.[1] ?? f)

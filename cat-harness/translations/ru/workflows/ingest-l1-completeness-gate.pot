@@ -14,92 +14,92 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:86
+#: processes/ingest-l1-completeness-gate.bpmn:86
 #. Diagram element documentation
 msgid "A machine can detect that two readings differ. Which one is right is a human call."
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:80
+#: processes/ingest-l1-completeness-gate.bpmn:80
 #. Diagram label
 msgid "Adjudicate the flagged passage"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:108
+#: processes/ingest-l1-completeness-gate.bpmn:108
 #. Diagram label
 msgid "clean"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:106
+#: processes/ingest-l1-completeness-gate.bpmn:106
 #. Diagram label
 msgid "drift"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:74
+#: processes/ingest-l1-completeness-gate.bpmn:74
 #. Diagram label
 msgid "Drift or bad terminology?"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:25
+#: processes/ingest-l1-completeness-gate.bpmn:25
 #. Diagram element documentation
 msgid "folio-assistant — Ingestion subprocess — the L1 completeness gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:38
+#: processes/ingest-l1-completeness-gate.bpmn:38
 #. Diagram label
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:22
+#: processes/ingest-l1-completeness-gate.bpmn:22
 #. Diagram label
 msgid "Ingestion subprocess — the L1 completeness gate"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:55
+#: processes/ingest-l1-completeness-gate.bpmn:55
 #. Diagram label
 msgid "Is every derived artefact present?"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:52
+#: processes/ingest-l1-completeness-gate.bpmn:52
 #. Diagram label
 msgid "L1 graph built"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:61
+#: processes/ingest-l1-completeness-gate.bpmn:61
 #. Diagram element documentation
 msgid "L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational."
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:70
+#: processes/ingest-l1-completeness-gate.bpmn:70
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see."
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:90
+#: processes/ingest-l1-completeness-gate.bpmn:90
 #. Diagram label
 msgid "Record the L1 completeness verdict"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:47
+#: processes/ingest-l1-completeness-gate.bpmn:47
 #. Diagram label
 msgid "Reviewer (SME or editor)"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:65
+#: processes/ingest-l1-completeness-gate.bpmn:65
 #. Diagram label
 msgid "Round-trip translation QA"
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:39
+#: processes/ingest-l1-completeness-gate.bpmn:39
 #. Diagram element documentation
 msgid "Runs both QA checks unattended and hands off exactly where the role's persona says it must: Gateway_Drift's 'drift' branch leaves this lane the moment a passage needs a judgement about which of two readings is right, rather than guessing — but Task_Verdict, which records the outcome either way, stays in this lane, so Lane_1 adjudicates a single passage while this lane still owns the completeness verdict as a whole."
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:48
+#: processes/ingest-l1-completeness-gate.bpmn:48
 #. Diagram element documentation
 msgid "The only human involvement anywhere in this subprocess: Lane_0 runs both checks and records the verdict unattended, so this lane exists solely for the single case machine QA cannot resolve on its own — a flagged passage where round-trip translation produced two different readings and somebody has to say which is right."
 msgstr ""
 
-#: skills/workflows/ingest-l1-completeness-gate.bpmn:100
+#: processes/ingest-l1-completeness-gate.bpmn:100
 #. Diagram label
 msgid "Verdict recorded"
 msgstr ""

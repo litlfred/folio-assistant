@@ -83,7 +83,7 @@ Binding `Actor` to a role. That is the wrong fix and the file says why.
 - [ ] the glossary extractor can tell "no definition, by design" from "no
       definition, nobody wrote one"
 - [ ] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
-      `bootstrap/skills/roles/roles.json` points at it rather than being
+      `bootstrap/scenarios/roles.json` points at it rather than being
       the only record
 
 ## Investigated 2026-09-21 — the fix is aimed at the right layer, and the shape is settled

@@ -23,7 +23,7 @@ translation, both referenced from `manifest.jsonld`, both carrying the
 provenance stamp (`folio-assistant-iqim`), and both subject to the round-trip
 QA (`folio-assistant-ktt2`).
 
-Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Audio`.
+Diagram: `processes/ingest-derive-content.bpmn`, `Task_Audio`.
 
 _2026-09-19T16:20Z_ — **Blocked on `folio-assistant-68dt`** (declare Python
 dependencies and install them in CI).

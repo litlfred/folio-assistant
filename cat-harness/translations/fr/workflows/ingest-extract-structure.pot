@@ -14,87 +14,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/ingest-extract-structure.bpmn:67
+#: processes/ingest-extract-structure.bpmn:67
 #. Diagram element documentation
 msgid "A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier."
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:50
+#: processes/ingest-extract-structure.bpmn:50
 #. Diagram label
 msgid "Binary in hand"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:93
+#: processes/ingest-extract-structure.bpmn:93
 #. Diagram element documentation
 msgid "candidates.json holds extracted theorems and definitions. Proposals only -- never adjudicated verdicts."
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:76
+#: processes/ingest-extract-structure.bpmn:76
 #. Diagram element documentation
 msgid "Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief."
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:53
+#: processes/ingest-extract-structure.bpmn:53
 #. Diagram label
 msgid "Embedded text layer?"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:92
+#: processes/ingest-extract-structure.bpmn:92
 #. Diagram label
 msgid "Extract claim candidates"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:59
+#: processes/ingest-extract-structure.bpmn:59
 #. Diagram label
 msgid "Extract the text layer"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:25
+#: processes/ingest-extract-structure.bpmn:25
 #. Diagram element documentation
 msgid "folio-assistant — Ingestion subprocess — extract structure. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:38
+#: processes/ingest-extract-structure.bpmn:38
 #. Diagram label
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:22
+#: processes/ingest-extract-structure.bpmn:22
 #. Diagram label
 msgid "Ingestion subprocess — extract structure"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:105
+#: processes/ingest-extract-structure.bpmn:105
 #. Diagram label
 msgid "no — scanned"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:66
+#: processes/ingest-extract-structure.bpmn:66
 #. Diagram label
 msgid "OCR to ocr/page-*.txt"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:74
+#: processes/ingest-extract-structure.bpmn:74
 #. Diagram label
 msgid "Split into sections/*.md with doc_brief front-matter"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:100
+#: processes/ingest-extract-structure.bpmn:100
 #. Diagram label
 msgid "Structured"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:39
+#: processes/ingest-extract-structure.bpmn:39
 #. Diagram element documentation
 msgid "Two provenance paths converge on the same Task_Sections output — an embedded text layer extracted directly, or OCR that leaves the fuller text in ocr/ with only a stub in sections/ — and which branch this lane took is invisible downstream except to a grep that knows to check the fourth tier. Task_Candidates is the last step and it stays a proposal: theorems and definitions extracted here are never adjudicated verdicts, so nothing downstream may treat this lane's output as settled."
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:84
+#: processes/ingest-extract-structure.bpmn:84
 #. Diagram label
 msgid "Write structure.json (TOC, page ranges, metadata)"
 msgstr ""
 
-#: skills/workflows/ingest-extract-structure.bpmn:104
+#: processes/ingest-extract-structure.bpmn:104
 #. Diagram label
 msgid "yes"
 msgstr ""

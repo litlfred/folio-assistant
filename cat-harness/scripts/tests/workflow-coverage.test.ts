@@ -85,7 +85,7 @@ describe("autoTriggered — does it fire without somebody asking?", () => {
 
 describe("the survey's three states", () => {
   /**
-   * A scratch repo with a workflows directory and a `skills/workflows/` graph.
+   * A scratch repo with a workflows directory and a `processes/` graph.
    *
    * Every call below passes the root TWICE — as the repository root and as the
    * instance root — because in this checkout they differ: `.github/workflows/`
@@ -98,8 +98,8 @@ describe("the survey's three states", () => {
     const root = mkdtempSync(join(tmpdir(), "wfcov-"));
     mkdirSync(join(root, ".github", "workflows"), { recursive: true });
     for (const [n, b] of Object.entries(workflows)) writeFileSync(join(root, ".github/workflows", n), b);
-    mkdirSync(join(root, "skills", "workflows"), { recursive: true });
-    for (const [n, b] of Object.entries(diagrams)) writeFileSync(join(root, "skills/workflows", n), b);
+    mkdirSync(join(root, "processes"), { recursive: true });
+    for (const [n, b] of Object.entries(diagrams)) writeFileSync(join(root, "processes", n), b);
     return root;
   }
   const declares = (w: string): string =>
@@ -156,7 +156,7 @@ describe("the survey's three states", () => {
     );
     const { rows, dangling } = surveyWorkflows(root, root);
     expect(dangling).toEqual([
-      { diagram: "skills/workflows/a.bpmn", workflow: ".github/workflows/gone.yml" },
+      { diagram: "processes/a.bpmn", workflow: ".github/workflows/gone.yml" },
     ]);
     // And it does NOT accidentally count as coverage for the real workflow.
     expect(rows[0]!.coverage).toBe("uncovered");
@@ -300,8 +300,8 @@ describe("drift — the diagram still matches the workflow it documents", () => 
       const root = mkdtempSync(join(tmpdir(), "wfdrift-"));
       mkdirSync(join(root, ".github", "workflows"), { recursive: true });
       writeFileSync(join(root, ".github/workflows/a.yml"), workflow);
-      mkdirSync(join(root, "skills", "workflows"), { recursive: true });
-      writeFileSync(join(root, "skills/workflows/a.bpmn"), diagram);
+      mkdirSync(join(root, "processes"), { recursive: true });
+      writeFileSync(join(root, "processes/a.bpmn"), diagram);
       return root;
     }
     const diagram = (body: string): string =>
@@ -323,7 +323,7 @@ describe("drift — the diagram still matches the workflow it documents", () => 
 
     test("an UNCOVERED workflow has no drift result — there is nothing to compare", () => {
       const root = repo(twoJobs, "");
-      writeFileSync(join(root, "skills/workflows/a.bpmn"), "<bpmn:definitions/>");
+      writeFileSync(join(root, "processes/a.bpmn"), "<bpmn:definitions/>");
       expect(surveyWorkflows(root, root).rows[0]!.jobs).toBeUndefined();
     });
 

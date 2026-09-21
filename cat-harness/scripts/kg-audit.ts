@@ -117,7 +117,7 @@ function readsProse(r: { actedUpon?: boolean; actorKinds: string[] }): boolean {
 }
 
 const root = resolve(import.meta.dir, "..");
-const WORKFLOW_DIR = join(root, "skills", "workflows");
+const WORKFLOW_DIR = join(root, "processes");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
@@ -294,7 +294,7 @@ async function auditProcess(
     if (!role) {
       unboundLane.push({
         where: lane.id,
-        detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in skills/roles/roles.json, or bind it with <folio:role ref="…"/>.`,
+        detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in scenarios/roles.json, or bind it with <folio:role ref="…"/>.`,
       });
       continue;
     }
@@ -473,7 +473,7 @@ async function auditProcess(
       "raci-single-accountable",
       "raci-accountable-not-consulted",
     ]) {
-      criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at skills/roles/roles.json." }] };
+      criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at scenarios/roles.json." }] };
     }
   }
   return report("process", m.id, rel, hash, criteria);
@@ -513,7 +513,7 @@ async function auditDecisions(
     for (const id of ids) {
       const ref = `${f}#${id}`;
       if (!referenced.has(ref)) {
-        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in skills/workflows/. Either wire it with <folio:decision ref="decisions/${ref}"/> or delete it.` });
+        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in processes/. Either wire it with <folio:decision ref="decisions/${ref}"/> or delete it.` });
         continue;
       }
       try {
@@ -1008,7 +1008,7 @@ function manifestEntries(): { pkg: string; skill: string }[] {
  *
  * Reading them would be the defect. `instance-graph-isolation.test.ts` guards a
  * leak that was LIVE on 2026-09-19: a filesystem walk discovered
- * `bootstrap/workflows/` from the repository root and put 88 references to a
+ * `bootstrap/processes/` from the repository root and put 88 references to a
  * bootstrap process into folio-assistant's published graph. One instance's graph
  * must not carry another's nodes, and this audit is right not to.
  *
@@ -1073,7 +1073,7 @@ function unreadNestedInstances(): KgFinding[] {
  * A finding that says a skill is "named by no activity" is true OF THE GRAPH IT
  * RANGED OVER and says nothing about any other. Worded absolutely it reads as a
  * fact about the repository, and on 2026-09-20 a session read it that way:
- * `confirm-harness` is named three times by `bootstrap/workflows/`, which this
+ * `confirm-harness` is named three times by `bootstrap/processes/`, which this
  * audit does not read, so the absolute wording looked like a blind spot. The
  * session "fixed" it by declaring that directory at the root and re-introduced a
  * defect `instance-graph-isolation.test.ts` had been written the day before to
@@ -1337,7 +1337,7 @@ function sidecarPath(r: KgQaReport): string {
   // live under several packages, so one directory per kind would collide two
   // packages' same-named skills into one sidecar. Processes have exactly that
   // shape the moment an instance declares more than one knowledge-graph
-  // directory — `bootstrap/workflows/` and `crdm/workflows/` can each hold a
+  // directory — `bootstrap/processes/` and `crdm/workflows/` can each hold a
   // `review.bpmn`, and a kind-keyed table sends both to one file, so one
   // silently overwrites the other's findings.
   //
@@ -1376,7 +1376,10 @@ const actors = readActors(ACTOR_DIR);
 let graph: RoleGraph | undefined;
 let graphError: string | undefined;
 try {
-  graph = readRoleGraph(KG_ROOT);
+  // `scenarios/`, not `KG_ROOT` — the role graph moved out of the skills tree
+  // on 2026-09-21 and is a declared directory of its own now. `KG_ROOT` is
+  // still the skills root, which is what every other use of it here wants.
+  graph = readRoleGraph(join(root, "scenarios")) ?? readRoleGraph(KG_ROOT);
 } catch (e) {
   graphError = e instanceof Error ? e.message : String(e);
 }
@@ -1526,8 +1529,8 @@ for (const r of reports) {
 // structurally invisible: nothing regenerates it, nothing prunes it, and
 // `--check` compares it against nothing.
 //
-// Measured, bean `3jj9`: `bootstrap/workflows/bootstrap.kg-qa.json` sat in
-// the tree auditing `bootstrap/workflows/bootstrap.bpmn`, a path that does
+// Measured, bean `3jj9`: `bootstrap/processes/bootstrap.kg-qa.json` sat in
+// the tree auditing `bootstrap/processes/bootstrap.bpmn`, a path that does
 // not exist — the process had been renamed to `initialize-harness.bpmn`.
 // It reported `lane-binds-role: pass` over a file nobody had, while the live
 // diagram had no sidecar at all, and `kg:audit:check` exited 0 across both.
@@ -1536,7 +1539,7 @@ for (const r of reports) {
 //
 // REPORTED, NEVER DELETED. An orphan can also mean the subject is
 // temporarily unreachable — here the real cause is bean `pve3`, the root
-// declaring `bootstrap/skills/` but not `bootstrap/workflows/`, so the
+// declaring `bootstrap/skills/` but not `bootstrap/processes/`, so the
 // process is simply not discovered from this root. Deleting on that
 // evidence would destroy a verdict to hide a declaration gap.
 // `deletion-requires-confirmation` — the agent reports, a person decides.

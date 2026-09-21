@@ -401,7 +401,7 @@ export interface BlockBase {
   title?: string;
   /**
    * Who this block is written FOR — Role ids from the instance's KG
-   * (`skills/roles/roles.json`, {@link RoleGraph}).
+   * (`scenarios/roles.json`, {@link RoleGraph}).
    *
    * Narrative content has an intended reader, and prose that does not know
    * who it is addressing drifts: it explains what that reader already knows

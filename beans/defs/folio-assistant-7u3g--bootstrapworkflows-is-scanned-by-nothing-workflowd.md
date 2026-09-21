@@ -20,7 +20,7 @@ that sample went looking for, which is the point of sampling.
 
 `bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it
 and the audit reads its skills. `workflowDirs` then composes
-`<kgdir>/workflows` — i.e. **`bootstrap/skills/workflows/`**, which does not
+`<kgdir>/workflows` — i.e. **`bootstrap/processes/`**, which does not
 exist. The diagrams are at **`bootstrap/workflows/`**, a SIBLING of
 `bootstrap/skills/`, not a child.
 
@@ -64,7 +64,7 @@ unreachable; the truth is that three diagrams are.
 
 ## Two candidate fixes, and the choice is not obvious
 
-1. **Move** `bootstrap/workflows/` to `bootstrap/skills/workflows/`. Cheapest,
+1. **Move** `bootstrap/workflows/` to `bootstrap/processes/`. Cheapest,
    and makes bootstrap match every other kg directory. But `bootstrap/` is
    built to be lifted out whole (issue #223), and `workflows/` beside
    `skills/` may be deliberate about what that extraction contains.
@@ -101,7 +101,7 @@ are a tooling blind spot wearing the same costume.
 This bean says `workflowDirs` composes `<kgdir>/workflows` and stops. It does
 compose that — and it also has a FALLBACK, *"the directory itself when it holds
 diagrams directly"*, whose own doc says it exists *"to cover today's
-`skills/workflows/` and a topical `bootstrap/workflows/` without either being
+`processes/` and a topical `bootstrap/workflows/` without either being
 written down."* The author's intent was already right.
 
 The real cause is one level up: **`bootstrap/harness.json` declares BOTH of its

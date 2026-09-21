@@ -277,7 +277,7 @@ different question from `declared`, and the two gaps it reports rather than
 hides.
 
 The processes are executable diagrams, not prose: `board-open-close.bpmn`,
-`board-relocate.bpmn` and `board-place-note.bpmn` under `skills/workflows/`,
+`board-relocate.bpmn` and `board-place-note.bpmn` under `processes/`,
 indexed with the rest on the [publication-workflow
 page](cat-harness/docs/publication-workflow.md). **Count the directory rather
 than quoting a number from this paragraph** — `bpmn-processes` says why.
@@ -340,10 +340,10 @@ One sentence, and every word in it is a distinct declared object:
 | object | what it is | declared in |
 |---|---|---|
 | **Actor** | a concrete participant — human, agentic or mechanical. Persists across processes. | `.claude/skills/actors/*.json` |
-| **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries skills. | `skills/roles/roles.json` |
+| **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries skills. | `scenarios/roles.json` |
 | **Skill** | the instruction body the actor needs to perform the task. | the `cat-harness` graph — here, `skills/` |
 | **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |
-| **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `skills/workflows/` |
+| **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `processes/` |
 
 **Nothing *is* a reviewer.** Somebody **acts as** reviewer inside a process for
 the duration of a lane, and the same actor is a different role in another
@@ -429,7 +429,7 @@ the full six-phase process is in
 [`methodologies/crdm/crdm-requirements-workflow.md`](cat-harness/methodologies/crdm/crdm-requirements-workflow.md).
 
 **The CRDM process is executable — do not hand-roll a phase tracker.**
-`methodologies/crdm/workflows/crdm-requirements.bpmn` loads like every other diagram here,
+`methodologies/crdm/processes/crdm-requirements.bpmn` loads like every other diagram here,
 so `workflow_start` / `workflow_next` / `workflow_complete` run it, and
 `workflow_complete` refuses a step that is not enabled. Every activity in the
 agent's lane carries `<folio:skill ref>`, so `workflow_next` returns the skill
@@ -577,7 +577,7 @@ to spend the words: **do not start the topic.**
   LeanDojo) — where each earns a place and how it wires into existing skills:
   [issue #198](https://github.com/litlfred/folio-assistant/issues/198).
 - **Every process here is BPMN, and the diagrams are executable.** The `.bpmn`
-  files under `skills/workflows/` are the source of truth, indexed by
+  files under `processes/` are the source of truth, indexed by
   [`folio-assistant/docs/publication-workflow.md`](cat-harness/docs/publication-workflow.md) — the normative
   picture of the HCI validation gate, the draft-review-publish path and the
   work-plan lane. `folio-assistant/docs/assets/img/workflows/*.svg` is

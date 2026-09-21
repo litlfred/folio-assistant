@@ -54,7 +54,7 @@ on:
       # still rendered from them at deploy time, so without this path a diagram
       # edit would not rebuild the site and the published page would serve a
       # stale render — exactly the "move the wiring with the script" failure.
-      - 'cat-harness/skills/workflows/**'
+      - 'cat-harness/processes/**'
       - 'cat-harness/schemas/**'
       # The schema viewer is generated, so a change to the generator or to the
       # reader behind it changes the published page while touching nothing
@@ -168,7 +168,7 @@ jobs:
       - name: Regenerate the translation index
         run: bun run translation:index
 
-      # The BPMN sources under skills/workflows/ are the source of truth; the SVGs
+      # The BPMN sources under processes/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless
       # Chromium, so the published site can never show a stale diagram.
       - name: Render BPMN workflow diagrams

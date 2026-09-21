@@ -39,7 +39,7 @@ string literal in `repo-partition.ts`'s classification table.
 ## Why this is a distinct defect and not just dead code
 
 **`Task_RoundTripQA` is a live `serviceTask` on the critical path** of
-`skills/workflows/translation-workflow.bpmn`:
+`processes/translation-workflow.bpmn`:
 
 ```
 Task_PoInject → Task_RoundTripQA → Gateway_Drift

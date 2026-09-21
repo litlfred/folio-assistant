@@ -325,7 +325,7 @@
       ],
       "createdAt": "2026-09-16T06:43:50Z",
       "updatedAt": "2026-09-20T04:16:04Z",
-      "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `skills/workflows/ingest-",
+      "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `processes/ingest-derive-",
       "file": "beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md"
     },
     {
@@ -411,6 +411,20 @@
       "updatedAt": "2026-09-21T17:31:42Z",
       "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 8. cat-harness/cat-harness.json has name cat-harness and title folio-assistant; disambiguate() in scripts/harness-tiles.ts:462 is correct, the declaration is not.\n\n\n\n## Reasons for Scrapping\n\nSuperseded by `t3n8` before any work started. This bean proposed fixing ONE\ntitle -- cat-harness declaring `folio-assistant` -- and the owner ",
       "file": "beans/defs/folio-assistant-28jx--cat-harness-declares-title-folio-assistant-so-the.md"
+    },
+    {
+      "id": "folio-assistant-2b5s",
+      "title": "MOUNT COPIES A DIRECTORY WHOLESALE: /who-iris/ publishes 1,367 corpus files as pages, and /library/who-iris/ publishes all 1,378 a second time",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:00:52Z",
+      "updatedAt": "2026-09-21T20:00:52Z",
+      "preview": "## What\n\n`mount-instance-docs.ts` mounts a directory when it carries an `index.html`\n**at its own root**, and then copies **everything beneath it**. For\n`who-iris/library/` that is 1,378 files, of which 11 are pages:\n\n| | count | what |\n|---|---|---|\n| pages | 11 | 7 `.html` (index, community-list, 2 collections, 3 items), 3 cover `.png`, `image-verdicts.json` |\n| L1 corpus | 1,367 | 813 `.jsonld`",
+      "file": "beans/defs/folio-assistant-2b5s--mount-copies-a-directory-wholesale-who-iris-publis.md"
     },
     {
       "id": "folio-assistant-2krx",
@@ -507,7 +521,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-19T15:56:22Z",
       "updatedAt": "2026-09-20T14:26:05Z",
-      "preview": "Found while auditing for `folio-assistant-haya`; recorded there in\n[SDLC process audit §4](../../fsh-guts/proposals/sdlc-process-audit.md).\n\n## The measurement\n\n`skills/workflows/` holds 33 `.bpmn` files. 17 carry a\n`<folio:policy enforcement=\"…\">`; **16 do not.**\n\n    grep -L 'folio:policy' skills/workflows/*.bpmn | wc -l   # 16\n\n`src/workflow/process-model.ts:502` reads\n\n    const enforcement = ",
+      "preview": "Found while auditing for `folio-assistant-haya`; recorded there in\n[SDLC process audit §4](../../fsh-guts/proposals/sdlc-process-audit.md).\n\n## The measurement\n\n`processes/` holds 33 `.bpmn` files. 17 carry a\n`<folio:policy enforcement=\"…\">`; **16 do not.**\n\n    grep -L 'folio:policy' processes/*.bpmn | wc -l   # 16\n\n`src/workflow/process-model.ts:502` reads\n\n    const enforcement = declared === \"",
       "file": "beans/defs/folio-assistant-30hn--bpmn-16-of-33-processes-are-strict-by-omission-not.md"
     },
     {
@@ -1293,7 +1307,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T15:25:27Z",
       "updatedAt": "2026-09-20T15:25:27Z",
-      "preview": "Owner, 2026-09-20: *\"liscence check task (subprocess) is part of document/asset\ningestion pipeline\"*.\n\nQueued rather than started, per the standing instruction to queue new topics in\nparallel and not pivot.\n\n## The gap is real, and the shape already fits\n\nMeasured 2026-09-20 against `origin/main` at `dc78e7ccf`:\n\n    cat-harness/skills/workflows/document-ingestion.bpmn\n      \"Document ingestion — ",
+      "preview": "Owner, 2026-09-20: *\"liscence check task (subprocess) is part of document/asset\ningestion pipeline\"*.\n\nQueued rather than started, per the standing instruction to queue new topics in\nparallel and not pivot.\n\n## The gap is real, and the shape already fits\n\nMeasured 2026-09-20 against `origin/main` at `dc78e7ccf`:\n\n    cat-harness/processes/document-ingestion.bpmn\n      \"Document ingestion — uploads",
       "file": "beans/defs/folio-assistant-7bg9--ingestion-a-licence-check-subprocess-and-the-marke.md"
     },
     {
@@ -1405,7 +1419,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T14:47:57Z",
       "updatedAt": "2026-09-20T15:26:13Z",
-      "preview": "Found 2026-09-20 while sampling the unbound skills for bean `y1w9`. Not what\nthat sample went looking for, which is the point of sampling.\n\n## The gap\n\n`bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it\nand the audit reads its skills. `workflowDirs` then composes\n`<kgdir>/workflows` — i.e. **`bootstrap/skills/workflows/`**, which does not\nexist. The diagrams are at **`b",
+      "preview": "Found 2026-09-20 while sampling the unbound skills for bean `y1w9`. Not what\nthat sample went looking for, which is the point of sampling.\n\n## The gap\n\n`bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it\nand the audit reads its skills. `workflowDirs` then composes\n`<kgdir>/workflows` — i.e. **`bootstrap/processes/`**, which does not\nexist. The diagrams are at **`bootstra",
       "file": "beans/defs/folio-assistant-7u3g--bootstrapworkflows-is-scanned-by-nothing-workflowd.md"
     },
     {
@@ -1447,7 +1461,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T06:52:21Z",
       "updatedAt": "2026-09-20T13:16:18Z",
-      "preview": "Owner, 2026-09-20: *\"make sure all workflows documented as bpmn\"*. Queued rather than started — raised mid-turn while bean `6pfo`'s staging-record wiring was in flight, and the standing instruction is to queue rather than pivot.\n\n## What this is NOT\n\nThere are already ten BPMN beans, and none of them is this one. `skills/workflows/*.bpmn` documents **agent processes** — how an agent decides what t",
+      "preview": "Owner, 2026-09-20: *\"make sure all workflows documented as bpmn\"*. Queued rather than started — raised mid-turn while bean `6pfo`'s staging-record wiring was in flight, and the standing instruction is to queue rather than pivot.\n\n## What this is NOT\n\nThere are already ten BPMN beans, and none of them is this one. `processes/*.bpmn` documents **agent processes** — how an agent decides what to do, t",
       "file": "beans/defs/folio-assistant-7yvd--every-github-actions-workflow-should-be-documented.md"
     },
     {
@@ -1615,7 +1629,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T06:57:38Z",
       "updatedAt": "2026-09-20T06:57:38Z",
-      "preview": "Owner, 2026-09-20: *\"update CRDM process that when a user is done with requirements on some workflow ask if/how to add into knowledge graph(s), give options. (document this in bpmn and add as a specialized user/agent interaction skill)\"*\n\nQueued rather than started — raised mid-turn while the render logger was in flight, and the standing instruction is to queue rather than pivot.\n\n## The gap\n\n`ski",
+      "preview": "Owner, 2026-09-20: *\"update CRDM process that when a user is done with requirements on some workflow ask if/how to add into knowledge graph(s), give options. (document this in bpmn and add as a specialized user/agent interaction skill)\"*\n\nQueued rather than started — raised mid-turn while the render logger was in flight, and the standing instruction is to queue rather than pivot.\n\n## The gap\n\n`pro",
       "file": "beans/defs/folio-assistant-8x9b--crdm-has-no-step-that-asks-how-finished-requiremen.md"
     },
     {
@@ -1643,7 +1657,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-18T15:07:07Z",
       "updatedAt": "2026-09-19T00:41:33Z",
-      "preview": "The \"next\" recorded on bean `t8g3`. Re-render BPMN diagrams so translated\nlabels appear, handling text overflow.\n\n**Now unblocked.** Its own input list was partly broken: `schemas/translation-tools.ts`\nlisted `skills/workflows/publication-workflow.bpmn` in the `dak` entry's\n`bpmnDiagrams`, and **that file has never existed** — `docs/publication-workflow.md`\nis a PAGE embedding three diagrams. An u",
+      "preview": "The \"next\" recorded on bean `t8g3`. Re-render BPMN diagrams so translated\nlabels appear, handling text overflow.\n\n**Now unblocked.** Its own input list was partly broken: `schemas/translation-tools.ts`\nlisted `processes/publication-workflow.bpmn` in the `dak` entry's\n`bpmnDiagrams`, and **that file has never existed** — `docs/publication-workflow.md`\nis a PAGE embedding three diagrams. An unresolv",
       "file": "beans/defs/folio-assistant-8xx6--bpmn-re-render-for-translated-labels.md"
     },
     {
@@ -2421,7 +2435,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T12:08:49Z",
       "updatedAt": "2026-09-20T13:28:04Z",
-      "preview": "Found 2026-09-20 while moving CRDM into its own subgraph (bean `g43o`):\n**two tests broke on hardcoded paths**, which is precisely the defect\n`check:declared-paths` exists to prevent.\n\n- `scripts/tests/log-writer.test.ts` composed\n  `../../skills/workflows/crdm-requirements.bpmn`. Worse than a plain\n  break: it went ENOENT and the test reported *\"the process does not\n  declare folio:log\"* — a fals",
+      "preview": "Found 2026-09-20 while moving CRDM into its own subgraph (bean `g43o`):\n**two tests broke on hardcoded paths**, which is precisely the defect\n`check:declared-paths` exists to prevent.\n\n- `scripts/tests/log-writer.test.ts` composed\n  `../../processes/crdm-requirements.bpmn`. Worse than a plain\n  break: it went ENOENT and the test reported *\"the process does not\n  declare folio:log\"* — a false findi",
       "file": "beans/defs/folio-assistant-dhol--checkdeclared-paths-skips-testts-implicated-three.md"
     },
     {
@@ -2973,14 +2987,14 @@
     {
       "id": "folio-assistant-hw9g",
       "title": "MOUNTED PAGES HAVE NO LHS RAIL: a collapsed icon-width harness nav for every mounted instance, opening on hover or click",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T18:40:00Z",
-      "updatedAt": "2026-09-21T21:10:00Z",
+      "updatedAt": "2026-09-21T20:02:00Z",
       "preview": "## What\n\nOwner, 2026-09-21, looking at the published `/who-iris/`:\n\n> *\"i see no LHS navbar. It still should be there in this harness, but it can\n> start collapsed (so only icon width wide), hovering/clicking on it will\n> open\"*\n\nand earlier, on the same subject:\n\n> *\"f-a navbar should still be on the left, with who-iris and then link to docs\n> on side in navbar\"*\n\n## Measured, not assumed\n\nOn the",
       "file": "beans/defs/folio-assistant-hw9g--mounted-pages-have-no-lhs-rail-a-collapsed-icon-wi.md"
     },
@@ -3453,14 +3467,14 @@
     {
       "id": "folio-assistant-lps0",
       "title": "KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:59:22Z",
-      "updatedAt": "2026-09-21T12:37:26Z",
+      "updatedAt": "2026-09-21T20:17:11Z",
       "preview": "`kg-audit.ts` walks a hardcoded `KG_ROOT = join(root, \"skills\")` when it\ncollects skill subjects (`skillFiles()`, line ~578). **Every skill outside\n`skills/` is therefore unaudited** — not reported as unknown, not reported at\nall. It is the `dh4f` shape in the tool whose job is finding that shape.\n\n## Measured, 2026-09-20\n\nThe instance declares several `cat-harness` directories that hold skills\nDI",
       "file": "beans/defs/folio-assistant-lps0--kg-audit-skillfiles-walks-a-hardcoded-skills-so-ev.md"
     },
@@ -4169,14 +4183,14 @@
     {
       "id": "folio-assistant-qgpo",
       "title": "A workflow must publish every foreign document its own graph links into",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T18:27:04Z",
-      "updatedAt": "2026-09-21T18:27:04Z",
+      "updatedAt": "2026-09-21T20:44:25Z",
       "preview": "Found while closing `3jhq`, and deliberately not attempted there.\n\n## The gap, stated precisely\n\n`check:published-instance-exports` (from `u1iu`/#725, widened in `3jhq`) checks\nthat every `kg-export --instance` invocation a workflow runs **succeeds**. It\ndoes not check that a workflow publishes everything its own graph **links\ninto**.\n\nSo the defect `3jhq` was opened for would not be caught by the",
       "file": "beans/defs/folio-assistant-qgpo--a-workflow-must-publish-every-foreign-document-its.md"
     },
@@ -4445,7 +4459,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T14:56:52Z",
       "updatedAt": "2026-09-20T14:57:07Z",
-      "preview": "Split out of `0d99` when that one was fixed, and **measured, not assumed** —\n`grep -rho 'targetNamespace=\"[^\"]*\"'` over `skills/workflows/`, 2026-09-20:\n\n| targetNamespace | diagrams |\n|---|---|\n| `https://litlfred.github.io/folio-assistant/workflows` | 30 |\n| `https://folio-assistant.dev/workflows` | 4 |\n| `http://folio-assistant.dev/bpmn/<diagram-name>` | 8 |\n\nThree shapes, two of them on a doma",
+      "preview": "Split out of `0d99` when that one was fixed, and **measured, not assumed** —\n`grep -rho 'targetNamespace=\"[^\"]*\"'` over `processes/`, 2026-09-20:\n\n| targetNamespace | diagrams |\n|---|---|\n| `https://litlfred.github.io/folio-assistant/workflows` | 30 |\n| `https://folio-assistant.dev/workflows` | 4 |\n| `http://folio-assistant.dev/bpmn/<diagram-name>` | 8 |\n\nThree shapes, two of them on a domain this",
       "file": "beans/defs/folio-assistant-rtrg--bpmn-targetnamespace-drifted-three-ways-across-the.md"
     },
     {
@@ -4685,6 +4699,20 @@
       "updatedAt": "2026-09-21T12:44:47Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R10 + R7. Unit 6 of 10.\n\nThe owner: *\"each content type controls its own avatar, visualtion/rendering. but\nassume they can open a full screen panel w/ fixed controls like [x] or [linksrc] or\n[edit] or what not depedning on conent.\"*\n\n**CRDM Q7, answered: the kind declares its controls; the platform fixes the chrome.**\n`[x]` is always ",
       "file": "beans/defs/folio-assistant-t4my--panel-chrome-the-kind-declares-its-controls-the-pl.md"
+    },
+    {
+      "id": "folio-assistant-t6s7",
+      "title": "A bean whose FENCE is mangled is skipped by every check, and a declared-but-absent store reports clean",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:41:44Z",
+      "updatedAt": "2026-09-21T20:48:56Z",
+      "preview": "`t7ao` closed the LOUD case: a bean whose YAML does not parse takes the whole\nstore down, and 92 gates passed over it. This is the QUIET case, and it\nsurvived that fix because the new gate inherits the blind spot from the reader\nit is built on.\n\n`readBeanFiles` in `cat-harness/scripts/bean-store-read.ts` collapses two\ndifferent answers into \"nothing here\", and every one of its four consumers\ninher",
+      "file": "beans/defs/folio-assistant-t6s7--a-bean-whose-fence-is-mangled-is-skipped-by-every.md"
     },
     {
       "id": "folio-assistant-t7ao",

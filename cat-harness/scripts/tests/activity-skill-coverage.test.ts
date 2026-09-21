@@ -51,11 +51,11 @@ import { loadProcessModel, isActivity } from "../../src/workflow/process-model.j
 import { readRoleGraph, roleForLane } from "../../schemas/role-graph.js";
 
 const root = resolve(import.meta.dir, "../..");
-const WORKFLOW_DIR = join(root, "skills", "workflows");
+const WORKFLOW_DIR = join(root, "processes");
 
 describe("every activity names a skill or declares why it has none", () => {
   test("the corpus is non-empty — otherwise this proves nothing", () => {
-    // Without this, renaming `skills/workflows/` turns the assertion below
+    // Without this, renaming `processes/` turns the assertion below
     // into a vacuous pass over an empty list, which is the defect being
     // guarded against wearing a green tick.
     const files = readdirSync(WORKFLOW_DIR).filter((f) => f.endsWith(".bpmn"));
@@ -67,7 +67,7 @@ describe("every activity names a skill or declares why it has none", () => {
     // declared. Asserted rather than defaulted: with no graph, every lane looks
     // unexempt and this test would fail for the wrong reason — or, had the
     // exemptions been written the other way round, pass over everything.
-    const graph = readRoleGraph(join(root, "skills"));
+    const graph = readRoleGraph(join(root, "scenarios"));
     expect(graph, "no role graph — the lane exemptions cannot be resolved").toBeDefined();
     const bare: string[] = [];
 

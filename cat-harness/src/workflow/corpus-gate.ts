@@ -49,7 +49,7 @@ export const COMMIT_ACTIVITY = "Task_Commit";
  * write the editor did not authorise IN THAT process. A discovered "whatever
  * process happens to be there" would be a different and much weaker check.
  *
- * What was wrong was looking for it at a fixed `skills/workflows/` — an
+ * What was wrong was looking for it at a fixed `processes/` — an
  * instance that declares its knowledge graph elsewhere has the diagram and
  * the gate cannot find it, so the gate throws rather than gating. The name is
  * the base case; the LOCATION comes from the declaration.
@@ -101,7 +101,7 @@ export type LabelForPath = (tsPath: string) => string | undefined;
 export interface CorpusGateOptions {
   /** Files changed in this commit, repo-relative. */
   files: string[];
-  /** Where the folio's `skills/workflows/` lives — the platform checkout. */
+  /** Where the folio's `processes/` lives — the platform checkout. */
   platformRoot: string;
   /**
    * Resolve a changed `.ts` path to the block label it declares.

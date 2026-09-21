@@ -124,8 +124,8 @@ export const KG_QA_RESULTS_DIR = join("test", "results", "kg-qa");
  * ## A subject OUTSIDE the instance keeps its own segment, not `..`
  *
  * A repository-scoped directory can sit above the instance root — this
- * repository declares `bootstrap/skills/` and `bootstrap/workflows/` that way,
- * from `cat-harness/`. `relative` then answers `../bootstrap/workflows`, and
+ * repository declares `bootstrap/skills/` and `bootstrap/processes/` that way,
+ * from `cat-harness/`. `relative` then answers `../bootstrap/processes`, and
  * joining that CLIMBS BACK OUT: the sidecars landed in
  * `test/results/bootstrap/`, a sibling of `kg-qa/` rather than a subtree of
  * it. Measured 2026-09-20 on bean `7u3g`, the moment those diagrams became

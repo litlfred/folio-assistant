@@ -97,7 +97,7 @@ and cannot act.
   three-valued `capture`, `resolveCapture` and `shouldPersist`
 - `log` role in `roles.json`: `actorKinds: ["system"]`, `actedUpon: true`
 - `skills/folio-core/activity-log.md`
-- `skills/workflows/activity-log.bpmn` + rendered SVG, indexed in
+- `processes/activity-log.bpmn` + rendered SVG, indexed in
   `every-workflow-in-the-repo.md`
 - `.gitignore` ignores `fsh-guts/logs/` and NOT the rest of the trashcan
 - 20 tests
@@ -143,7 +143,7 @@ and redone.
 
 Owner: *"it should be wired into cat-harness KG"*.
 
-**Measured: `skills/roles/roles.json` was never a source of Role nodes.** 65 of
+**Measured: `scenarios/roles.json` was never a source of Role nodes.** 65 of
 66 carried `sourceKind: "bpmn-lane"`, so what a role IS — its actor kinds, its
 skills, whether it is `actedUpon` — was absent from the published graph
 entirely. `collectDeclaredRoles()` now emits the registry view **joined to**
