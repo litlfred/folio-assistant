@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/skills/bpmn-authoring/output.schema.json",
+  "title": "BPMN Authoring Output",
+  "description": "Output schema for BPMN 2.0 business process authoring.",
+  "type": "object",
+  "required": [
+    "bpmnFile"
+  ],
+  "properties": {
+    "bpmnFile": {
+      "type": "string",
+      "description": "Path to the generated/updated BPMN file."
+    },
+    "diagramFile": {
+      "type": "string",
+      "description": "Path to the rendered diagram (SVG/PNG)."
+    },
+    "taskCount": {
+      "type": "integer"
+    },
+    "gatewayCount": {
+      "type": "integer"
+    },
+    "participantCount": {
+      "type": "integer"
+    }
+  },
+  "staging": {
+    "branch": "claude/peaceful-heisenberg-dzgsf1",
+    "sha": "5eb51a26e3c39fd59fcff2a8bc1295e7cc91ace6",
+    "pr": "738/merge",
+    "run": "35625585054"
+  }
+}
