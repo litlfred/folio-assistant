@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T12:54:39.844Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fdb5097f4e1e90b84455a1c6d2de85c3467b8c2e",
-  "sourceCommitSha": "fdb5097f4e1e90b84455a1c6d2de85c3467b8c2e",
-  "sourceCommitAt": "2026-09-21T12:52:22Z",
+  "generatedAt": "2026-09-21T13:14:45.709Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/619fbe70d7fbdd31db104b1ea4da1c2a2075e01d",
+  "sourceCommitSha": "619fbe70d7fbdd31db104b1ea4da1c2a2075e01d",
+  "sourceCommitAt": "2026-09-21T13:12:19Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 220,
+    "Skill": 221,
     "Actor": 28,
     "Capability": 28,
     "Role": 131,
@@ -276,7 +276,7 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 84,
+    "Schema": 85,
     "GraphKind": 24,
     "Directory": 33,
     "Asset": 3
@@ -405,6 +405,22 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/l3-fhir-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#skill/ig-artifact-ingestion",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "ig-artifact-ingestion",
+      "title": "ig-artifact-ingestion",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#package/authoring-who-smart-guidelines"
+      ],
+      "instructionsPath": "skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
+      "instructionLines": 177,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-artifact-ingestion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#skill/content-author",
@@ -1769,7 +1785,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 732,
+      "instructionLines": 733,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2929,7 +2945,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/goal-review.md",
-      "instructionLines": 207,
+      "instructionLines": 236,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5108,6 +5124,7 @@
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#skill/fhir-validation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#skill/ig-artifact-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#skill/l2-dak-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#skill/l3-fhir-authoring",
@@ -33288,6 +33305,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "fhir-artifact-index",
+      "title": "The artefact index of a published FHIR Implementation Guide.",
+      "module": "../folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/folio-assist-core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/library-ref",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "library-ref",
@@ -34940,8 +34966,8 @@
   ],
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "60da75599a5341af04c5d111948851ea7ebf5a58",
+    "sha": "61c139ed04789a0692d5019413ec5bc914029cbd",
     "pr": "709/merge",
-    "run": "35602132167"
+    "run": "35604113085"
   }
 }
