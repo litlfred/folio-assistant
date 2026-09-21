@@ -1,10 +1,11 @@
 ---
 # folio-assistant-dyd3
 title: 'ONE GRAPH, TWO @ids: bootstrap is published at two paths with 84 subjects under two identities'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-21T18:27:04Z
-updated_at: 2026-09-21T18:27:04Z
+updated_at: 2026-09-21T21:14:46Z
 parent: folio-assistant-vke6
 ---
 
