@@ -575,26 +575,20 @@ jobs:
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
-          # THE BOOTSTRAP GRAPH, with `--base-url` so the staged copy names
-          # ITSELF rather than the live document. `gen-bootstrap-graph.ts` took
-          # no such flag until this change — it minted `@id` from the canonical
-          # URL whatever tree it wrote into, so a staged copy would have
-          # asserted it lives on the live site. That is worse than the 404 it
-          # replaces: a reader following the `@id` lands on a different document
-          # that looks correct.
-          bun run cat-harness/scripts/gen-bootstrap-graph.ts --base-url "$BASE" --out "./_site/bootstrap/bootstrap.jsonld"
-          cp "./_site/bootstrap/bootstrap.jsonld" "./_site/bootstrap/bootstrap.json"
-
-          # AND THE SITE-ROOT EXPORT, which this workflow did not write at all
-          # until now — the omission `3jhq` was opened to measure.
+          # THE BOOTSTRAP GRAPH — ONE publisher, at the path its `@id` names.
           #
-          # It is a SEPARATE document from the one above, at a separate path,
-          # and the staged site needs it because THIS INSTANCE'S OWN GRAPH
-          # LINKS INTO IT. `skillHome` mints a foreign skill against the
+          # `--base-url` so the staged copy names ITSELF rather than the live
+          # document: a staged copy minting the canonical `@id` would claim to
+          # BE the live document, which is worse than a 404, because a reader
+          # following it lands somewhere that looks right.
+          #
+          # This workflow did not write this document at all until `3jhq` — the
+          # omission that bean was opened to measure. THIS INSTANCE'S OWN GRAPH
+          # LINKS INTO IT: `skillHome` mints a foreign skill against the
           # exporting document's base, so a graph staged at `$BASE` carries
           #
-          #   $BASE/bootstrap.jsonld#skill/discussion
-          #   $BASE/bootstrap.jsonld#skill/log-message
+          #   $BASE/bootstrap/bootstrap.jsonld#skill/discussion
+          #   $BASE/bootstrap/bootstrap.jsonld#skill/log-message
           #
           # — measured by building the export with a staged `--base-url` and
           # reading the link targets out of it, not inferred. Without this
@@ -602,17 +596,23 @@ jobs:
           # link-shaped value that does not resolve, on the artefact whose
           # purpose is being resolved.
           #
-          # `--base-url` for the same reason the line above takes one: a staged
-          # copy that minted the canonical `@id` would claim to be the live
-          # document, which is worse than the 404 — a reader following it lands
-          # somewhere that looks right.
+          # `gen-bootstrap-graph.ts` published a SECOND bootstrap graph here,
+          # at `bootstrap/bootstrap.jsonld` — bean `dyd3`. Measured 2026-09-21:
+          # 88 nodes each, 85 of them doc-relative, so 85 subjects existed
+          # under two identities that no consumer will ever merge; only the 3
+          # absolute namespace IRIs were shared.
           #
-          # NOT a fix for the two documents holding the SAME 85 subjects under
-          # two `@id`s. That is real, separate, and left to its own bean rather
-          # than settled by a workflow edit.
+          # Collapsing the PATHS alone would not have settled it. With both at
+          # one URL the documents still disagree — 74 of the 88 nodes differ in
+          # content, and the top level differs on six fields — so the site would
+          # publish whichever step ran last. One publisher is the fix; the other
+          # stays as a generator and a test subject.
+          #
+          # The surviving export moved to `<stub>/<stub>.jsonld`, which is where
+          # that instance's other rendered documents (`ns.jsonld`) already sit.
           BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
-          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}.jsonld"
-          cp "./_site/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}.json"
+          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
+          cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.

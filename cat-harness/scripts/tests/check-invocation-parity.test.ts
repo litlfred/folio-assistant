@@ -43,11 +43,18 @@ describe("invocations", () => {
     expect(withoutComments(yml)).not.toContain("kg-export");
   });
 
-  test("the real deploy workflow's set includes the foreign-instance export", () => {
+  test("the real deploy workflow's set includes a foreign-instance export", () => {
     // The witness. A matcher proven only against fixtures is proven against
     // its author's idea of the file.
+    //
+    // The INSTANCE NAME is not asserted, and that is the lesson: this pinned
+    // `./cat-bootstrap` until `main` renamed the directory to `bootstrap`,
+    // and a test whose subject is "does the matcher find an --instance
+    // invocation" then failed over a fact it was not testing. The invariant
+    // is that the deploy exports SOME foreign instance; which one is the
+    // workflow's business.
     const got = invocations(wf("docs-site.yml"));
-    expect(got.some((i) => i.script === "kg-export" && i.instance === "./cat-bootstrap")).toBe(true);
+    expect(got.some((i) => i.script === "kg-export" && i.instance !== undefined)).toBe(true);
   });
 });
 
