@@ -157,8 +157,8 @@ export function discoverScriptCheckers(
  * A module the sweep tried to load: its namespace, or why it would not load.
  *
  * The failure is remembered rather than retried, and that is not an
- * optimisation — **a second dynamic import of a module whose evaluation threw
- * does not throw again.** Measured on Bun 1.3.11, in eight lines and with no
+ * optimisation. On **Bun 1.3.11** a second dynamic import of a module whose
+ * evaluation threw **does not throw again** — measured in eight lines, with no
  * import cycle anywhere:
  *
  * ```ts
@@ -169,7 +169,16 @@ export function discoverScriptCheckers(
  * ```
  *
  * The single-import case rejects correctly, which is why one import proves
- * nothing. Several criteria share one checker file, so discovery imported the
+ * nothing.
+ *
+ * **That quirk is a runtime's, not a contract**, and saying otherwise cost a
+ * red CI: a test pinned it and went red under `bun-version: latest` while
+ * passing locally on 1.3.11, which does not re-reject. The caching does not
+ * depend on which way it goes. What holds on every runtime is that **a module
+ * that threw is never re-evaluated**, so asking again can only return the same
+ * error or something worse — never a better answer. Caching keeps the cause
+ * either way, and on a runtime that hands back the half-built namespace it is
+ * also what stops `readModule` ever seeing one. Several criteria share one checker file, so discovery imported the
  * same path once per criterion and hit exactly that: the first got the real
  * error, and every one after it got the half-built namespace that
  * {@link readModule} exists to survive.
