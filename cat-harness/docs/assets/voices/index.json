@@ -201,16 +201,16 @@
         {
           "id": "milnor-brevity-no-repeats",
           "title": "No content repeated within the block — and the resolve discipline is stricter",
-          "description": "The companion to the eight hallmarks. A repeat may be deleted ONLY where the two occurrences are semantically identical. Where the content differs you may not delete, and you never delete maths — a diagram, an equation or a derivation. Where de-duplication would lose distinct content, keep it, or split the block if that aids explication.",
+          "description": "Milnor does not restate: where a result is needed again he names it and points at it. The cited sentence is the sharpest instance — the assertion about meridian and parallel pairs could have been proved by reproducing the proof of Theorem 1 with the new pairs substituted in, and instead the reader is sent back through the existing proof. The paper does this throughout, invoking numbered results by number (\"by Lemma 7\", \"It follows from Lemma 4\", \"hence by Theorem 5\") rather than re-deriving them.\n\nSo: no content is repeated within a block. THE RESOLVE DISCIPLINE BELOW IS THIS PROJECT'S, NOT MILNOR'S, and is stated here rather than in the citation because it is about editing rather than about the paper — a repeat may be deleted ONLY where the two occurrences are semantically identical. Where the content differs you may not delete, and you never delete maths: a diagram, an equation or a derivation. Where de-duplication would lose distinct content, keep it, or split the block if that aids explication.",
           "category": "structure",
           "severity": "major",
           "patterns": 0,
           "terminology": 0,
           "judgementOnly": true,
-          "citation": "kg-node",
-          "cites": "content/pipeline/qa-criteria-registry.ts",
-          "citesInstance": "cat-harness",
-          "quote": "Companion to expo-milnor-clarity: no content is repeated / duplicated within the block. Resolve discipline is STRICTER than clarity — a repeat may be deleted ONLY when the two occurrences are semantically identical (content unchanged); if the content DIFFERS you may NOT delete, and never delete math content (diagram / equation / derivation)."
+          "citation": "library",
+          "cites": "milnorlink#page-181",
+          "pages": "181",
+          "quote": "The proof is easily given: it is only necessary to check this assertion through each stage of the proof of Theorem 1."
         }
       ]
     },
@@ -625,8 +625,8 @@
   "totals": {
     "voices": 4,
     "rules": 37,
-    "citingLibrary": 36,
-    "citingKgNode": 1,
+    "citingLibrary": 37,
+    "citingKgNode": 0,
     "mechanical": 9
   }
 }
