@@ -1,5 +1,5 @@
 {
-  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane \u2014 a persona an actor takes on because of the lane it is acting in \u2014 and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. `lanes` lists the EXACT lane names this role binds across skills/workflows/*.bpmn. It is a list because the corpus spells one position several ways \u2014 sixty distinct lane strings for roughly two dozen positions, measured 2026-09-18 \u2014 and declaring the synonyms resolves the existing diagrams without editing twenty BPMN files. A NEW diagram should bind explicitly with <folio:role ref=\"...\"/> on the lane and need not add a name here. `bun run kg:audit` reports any lane no role binds, any role no lane uses, and any activity whose skill its lane's role does not carry.",
+  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. `lanes` lists the EXACT lane names this role binds across skills/workflows/*.bpmn. It is a list because the corpus spells one position several ways — sixty distinct lane strings for roughly two dozen positions, measured 2026-09-18 — and declaring the synonyms resolves the existing diagrams without editing twenty BPMN files. A NEW diagram should bind explicitly with <folio:role ref=\"...\"/> on the lane and need not add a name here. `bun run kg:audit` reports any lane no role binds, any role no lane uses, and any activity whose skill its lane's role does not carry.",
   "name": "folio-assistant",
   "roles": [
     {
@@ -91,7 +91,7 @@
     {
       "id": "reviewer",
       "title": "Reviewer / SME",
-      "description": "Reads a change and judges it. Cannot accept it \u2014 that is the editor's lane \u2014 and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
+      "description": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
       "actorKinds": [
         "person",
         "agent"
@@ -101,7 +101,7 @@
         "Reviewer / subject-matter expert",
         "Reviewer (SME or editor)",
         "Review team and SMEs",
-        "Review team (content \u00b7 QC \u00b7 technical officer)",
+        "Review team (content · QC · technical officer)",
         "Review Committee",
         "Subject-Matter Expert / Reviewer",
         "Non-mechanical validation (review agent or SME)"
@@ -131,7 +131,7 @@
     {
       "id": "narrative-reviewer",
       "title": "Narrative reviewer",
-      "description": "Judges PROSE \u2014 register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
+      "description": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
       "actorKinds": [
         "person"
       ],
@@ -147,7 +147,7 @@
         "voice-editorial-review",
         "voice-overlay-review"
       ],
-      "persona": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks \u2014 so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding.",
+      "persona": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks — so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding.",
       "voice": "Quote the prose, then name what is wrong with it. A voice finding that does not show the sentence it is about is an opinion, and the author is entitled to disagree with it on those terms.",
       "useCases": [
         "Judge whether a block's register matches the folio's declared voice",
@@ -158,7 +158,7 @@
     {
       "id": "code-reviewer",
       "title": "Code reviewer",
-      "description": "Judges the knowledge graph's CODE nodes \u2014 Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound \u2014 does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs \u2014 which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
+      "description": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
       "actorKinds": [
         "person",
         "agent"
@@ -174,7 +174,7 @@
         "skills-and-tools",
         "test-engineer"
       ],
-      "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing \u2014 which no test catches, because nothing ran.",
+      "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran.",
       "voice": "Name the reference that does not resolve, and where it points. 'This looks wrong' is not reviewable; 'this declares X, and X is declared nowhere' is.",
       "useCases": [
         "Check that a Tool's declared inputs match what it is actually served as",
@@ -197,10 +197,11 @@
         "reviewer"
       ],
       "skills": [
+        "content-publish",
         "quality-control",
-        "content-publish"
+        "untainted-verification"
       ],
-      "persona": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site \u2014 and cares whether it is correct there, not whether the manifest was valid.",
+      "persona": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid.",
       "voice": "Concrete and artefact-anchored. Name the page, the build, the URL. A claim about source is not evidence about output.",
       "useCases": [
         "Confirm the published artefact matches what was approved",
@@ -234,7 +235,7 @@
     {
       "id": "administrator",
       "title": "Administrator",
-      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to \u2014 which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
       "actorKinds": [
         "person"
       ],
@@ -290,7 +291,7 @@
       ],
       "lanes": [
         "Publication manager",
-        "Publication manager \u2014 deploy and seed",
+        "Publication manager — deploy and seed",
         "Human signer"
       ],
       "skills": [
@@ -300,7 +301,7 @@
         "decision-audit",
         "qa-report-signing"
       ],
-      "persona": "Owns the release. Cares about what is authorised, what is built and what is public \u2014 and about the gap between them.",
+      "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them.",
       "voice": "Release-shaped: what ships, what is held, what authorised it. Dates and refs, not adjectives.",
       "useCases": [
         "Confirm everything in a release was authorised",
@@ -340,7 +341,7 @@
     {
       "id": "terminologist",
       "title": "Terminologist",
-      "description": "Owns coded concepts and value sets \u2014 the vocabulary a DAK is expressed in.",
+      "description": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
       "actorKinds": [
         "person"
       ],
@@ -393,7 +394,7 @@
       "skills": [
         "translation-manager"
       ],
-      "persona": "Runs the translation cycle without necessarily speaking the target languages. Tracks what is extracted, sent, returned and signed off \u2014 and what has gone stale since.",
+      "persona": "Runs the translation cycle without necessarily speaking the target languages. Tracks what is extracted, sent, returned and signed off — and what has gone stale since.",
       "voice": "Pipeline-shaped: state per locale, what moved, what is waiting. Never imply a translation is current when its source changed.",
       "useCases": [
         "See translation state per locale at a glance",
@@ -519,7 +520,7 @@
         "workflow-state"
       ],
       "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code.",
-      "voice": "Imperative and checkable. Give the rule, the reason it exists, and what a violation looks like \u2014 a rule with no failure mode gets reasoned around.",
+      "voice": "Imperative and checkable. Give the rule, the reason it exists, and what a violation looks like — a rule with no failure mode gets reasoned around.",
       "useCases": [
         "Find the governing skill for the task in front of it",
         "Tell a convention from a preference",
@@ -628,8 +629,8 @@
         "system"
       ],
       "lanes": [
-        "Build pipeline \u2014 validate \u00b7 render \u00b7 publish",
-        "Build pipeline \u2014 SUSHI \u00b7 validator \u00b7 IG Publisher",
+        "Build pipeline — validate · render · publish",
+        "Build pipeline — SUSHI · validator · IG Publisher",
         "Corpus + build pipeline (system)",
         "Incremental build (system)",
         "CI/CD Pipeline",
@@ -661,7 +662,7 @@
     {
       "id": "board-renderer",
       "title": "Board renderer",
-      "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane \u2014 it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
+      "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
       "actorKinds": [
         "system"
       ],
@@ -695,13 +696,13 @@
     {
       "id": "publish-target",
       "title": "Publish target",
-      "description": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on \u2014 never assumed live.",
+      "description": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
       "actorKinds": [
         "system"
       ],
       "actedUpon": true,
       "lanes": [
-        "Publish \u2014 GitHub Pages"
+        "Publish — GitHub Pages"
       ],
       "skills": [
         "getting-started"
@@ -740,7 +741,7 @@
     {
       "id": "attestation-service",
       "title": "Attestation service",
-      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out \u2014 which is why the signing process carries a second, human lane rather than a retry.",
+      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
       "actorKinds": [
         "system"
       ],
@@ -760,8 +761,8 @@
       ],
       "actedUpon": true,
       "lanes": [
-        "Work plan \u2014 beans (shared by humans and agents)",
-        "Work plan \u2014 beans (shared)",
+        "Work plan — beans (shared by humans and agents)",
+        "Work plan — beans (shared)",
         "Work plan (beans)"
       ],
       "skills": [
@@ -778,7 +779,7 @@
       ],
       "actedUpon": true,
       "lanes": [
-        "Corpus \u2014 L1 source knowledge graph",
+        "Corpus — L1 source knowledge graph",
         "Corpus (versioned store)"
       ],
       "skills": [
@@ -802,7 +803,7 @@
     {
       "id": "log",
       "title": "Activity log",
-      "description": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor \u2014 one entry, all of them, or on a periodic sweep \u2014 and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
+      "description": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
       "actorKinds": [
         "system"
       ],
@@ -817,7 +818,7 @@
     {
       "id": "session-record",
       "title": "Session record",
-      "description": "A session's context \u2014 who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here \u2014 unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
+      "description": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
       "actorKinds": [
         "system"
       ],
@@ -865,7 +866,7 @@
     {
       "id": "docs-authoring-agent",
       "title": "Docs authoring agent",
-      "description": "The authoring agent producing what a person reads ABOUT the instance \u2014 generated references, the glossary, sticky notes, theme art and deployment documentation.",
+      "description": "The authoring agent producing what a person reads ABOUT the instance — generated references, the glossary, sticky notes, theme art and deployment documentation.",
       "actorKinds": [
         "agent"
       ],
@@ -892,7 +893,7 @@
     {
       "id": "platform-authoring-agent",
       "title": "Platform authoring agent",
-      "description": "The authoring agent working on how this instance PUBLISHES itself \u2014 the MCP projection, its contract, and the rendering endpoints.",
+      "description": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
       "actorKinds": [
         "agent"
       ],
@@ -978,7 +979,7 @@
     {
       "id": "lean-authoring-agent",
       "title": "Lean authoring agent",
-      "description": "Writes and repairs the Lean 4 formalization \u2014 translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
+      "description": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
       "actorKinds": [
         "agent"
       ],
@@ -1010,7 +1011,7 @@
     {
       "id": "proof-review-agent",
       "title": "Proof review agent",
-      "description": "Reviews proofs \u2014 narrative and formal \u2014 for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
+      "description": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
       "actorKinds": [
         "agent"
       ],

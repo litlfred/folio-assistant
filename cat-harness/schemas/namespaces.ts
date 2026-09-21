@@ -47,7 +47,7 @@
  * it would churn every consumer to no effect: the IRI is what is published,
  * and that does not change.
  */
-import { termLayer } from "./vocabulary";
+import { type TermLayer, termLayer } from "./vocabulary";
 
 /**
  * The namespace that WAS — kept only so the vocabulary document can name the
@@ -132,12 +132,12 @@ export const NS_PREFIXES = {
 } as const;
 
 /** The namespace a layer's terms hang off. */
-export function namespaceForLayer(layer: "bootstrap" | "harness" | "core"): string {
+export function namespaceForLayer(layer: TermLayer): string {
   return layer === "bootstrap" ? CAT_BOOTSTRAP_NS : layer === "core" ? CORE_NS : CAT_HARNESS_NS;
 }
 
 /** The prefix a layer's terms are written with. */
-export function prefixForLayer(layer: "bootstrap" | "harness" | "core"): "bs" | "cat" | "fac" {
+export function prefixForLayer(layer: TermLayer): "bs" | "cat" | "fac" {
   return layer === "bootstrap" ? "bs" : layer === "core" ? "fac" : "cat";
 }
 

@@ -35,27 +35,35 @@
   link, because it invites a click and then reads as "this site is broken".
 {%- endcomment -%}
 {%- comment -%}
-  THE PIN, which keeps the sidebar open once it is opened.
+  THE SIDEBAR'S OWN OPEN/CLOSE, and all three parts live HERE because the
+  sidebar is always on screen.
 
-  The sidebar collapses to an icon strip and opens on `:hover` and
-  `:focus-within` (see `docs-ui.css`, "The sidebar starts CLOSED"). Neither
-  reaches a TABLET: it is above the 50rem breakpoint, so it gets the collapsed
-  desktop nav, and it has no hover at all -- `:focus-within` would only fire
-  after a tap had already landed on a link the reader could not see.
+  The round before this one hid the sidebar completely and put a launcher on
+  the glass, in `footer_custom.html`, outside it. The owner: "clicking it away
+  completelt disappeared in who-iris. i expected the same behaviour as was in
+  who-iris, that it slides to the far left, icon width thick." Closed is NOT
+  gone -- so the strip came back, and with it the reason the launcher had to be
+  outside disappeared. It is back in the sidebar, and `footer_custom.html` is
+  clean again.
 
-  So: a checkbox, and `:has()` on the sidebar. No JavaScript, for the same
-  reason the rail carries none, and keyboard-operable because it is a real
-  control rather than a styled div.
+  `nav_footer_custom.html` is just-the-docs' own extension point INSIDE
+  `.side-bar` (`components/sidebar.html` includes title, then nav, then this),
+  which is the same seam the harness tabs use and the reason the v0.12.0 pin
+  stays cheap. Overriding `sidebar.html` to move one checkbox to the top would
+  fork a theme file for a placement.
 
-  It lives in THIS include because `nav_footer_custom.html` is just-the-docs'
-  own extension point inside `.side-bar` -- the same seam the harness tabs use,
-  and the reason the v0.12.0 pin stays cheap. Overriding `sidebar.html` to put
-  the control at the top would fork a theme file to move one checkbox.
+  ONE CHECKBOX, TWO LABELS, so open and close cannot disagree -- and read with
+  `:has()`, which is why neither has to sit in any particular place. No
+  JavaScript; a real checkbox is focusable and announces its own state.
 {%- endcomment -%}
-<input type="checkbox" class="fa-nav-pin" id="fa-nav-pin">
-<label class="fa-nav-pin-toggle" for="fa-nav-pin">
-  <span class="fa-nav-pin-glyph" aria-hidden="true">&#9776;</span>
-  <span class="fa-nav-pin-text">Keep navigation open</span>
+<input type="checkbox" class="fa-nav-open" id="fa-nav-open">
+<label class="fa-nav-close" for="fa-nav-open" title="Close navigation">
+  <span aria-hidden="true">&times;</span>
+  <span class="fa-sr-only">Close navigation</span>
+</label>
+<label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open">
+  <span class="fa-nav-glyph" aria-hidden="true">&#9776;</span>
+  <span class="fa-nav-text">Keep navigation open</span>
 </label>
 
 {%- assign tiles = site.data.harness.harnesses -%}
