@@ -125,3 +125,64 @@ default.
 ## Status
 
 Left `in-progress`. Nothing shipped; nothing to revert.
+
+## RESOLVED — owner chose A, invocation parity, 2026-09-21
+
+Options were tabled with the measurements behind each; the owner chose **A**.
+
+`check:invocation-parity` asks a smaller question than this bean states, and
+says so in its own header: **does the preview invoke what the deploy invokes?**
+Symmetry, not resolution.
+
+### Why A rather than the bean's own invariant
+
+The two designs that tried the full invariant both failed, and the failures are
+recorded above. A needs neither of their mechanisms — no destination parsing,
+no execution — and it **catches the defect Design A stayed green on**:
+
+    A. remove staging's `--instance ./cat-bootstrap`  →  exit 1, names
+       `kg-export --instance ./cat-bootstrap`
+    B. drop a whole generator from the preview        →  exit 1, names it
+
+Design A passed every test it had and still went green on falsification A.
+That is the difference, and it is the reason this one is shippable.
+
+### Deploy and preview are DERIVED, never named
+
+The deploy is the workflow whose graph export passes **no `--base-url`** — it
+publishes at the declared `canonicalUrl`; a preview passes one so the staged
+copy names itself. Neither workflow is written into the check, so a third site
+workflow is classified the moment it exists. `discoverability-docs.yml` and
+`publish.yml` touch `_site` and invoke no generator, so they publish something
+else and owe nothing here.
+
+### The hand-maintained part, and what guards it
+
+`EXEMPT` — **2** entries, each with its reason:
+
+| generator | why a preview need not run it |
+|---|---|
+| `fsh-guts-export` | the trashcan: the export strips `fsh-guts` from every graph it publishes, so no link target depends on it |
+| `restore-staging` | restores the previews a deploy would overwrite; a preview has none |
+
+A list is the part most likely to rot, so **a stale entry is itself a finding**:
+an exemption naming a generator the deploy no longer runs excuses nothing and
+hides the next difference. A clean run prints the exemptions with their
+reasons, so the list is visible on every green run rather than only on failure
+— an allow-list nobody sees is one nobody prunes. `tdu3` established that
+discipline one gate over.
+
+### What this deliberately does NOT check
+
+That the documents resolve. **Both workflows dropping a generator together
+passes.** The full invariant needs the generators to declare their outputs;
+only 1 of 5 does today (`buildSkillIoContracts`, covering 47 of the 50 link
+targets), and the other four expose nothing. That is option B, and it is left
+un-filed rather than half-specified — the owner chose A knowing this.
+
+## Summary of Changes
+
+`cat-harness/scripts/check-invocation-parity.ts`, registered as
+`check:invocation-parity` in the gate set and classified `harness` in
+`instance-rules.ts`. 14 tests. Falsified twice, each against the defect it
+exists for. `bun run gates` 96 of 96.
