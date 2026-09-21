@@ -57,7 +57,7 @@ function declaredIndexes(): string[] {
     // convention moves — which is exactly what this scan must not do.
     const decl = declarationPathIn(join(ROOT, entry));
     if (decl === undefined) continue;
-    let parsed: { directories?: Array<{ path?: string; graphs?: string[] }> };
+    let parsed: { directories?: Array<{ path?: string; graphKinds?: string[] }> };
     try {
       parsed = JSON.parse(readFileSync(decl, "utf8"));
     } catch {
@@ -66,7 +66,7 @@ function declaredIndexes(): string[] {
       continue;
     }
     for (const d of parsed.directories ?? []) {
-      if (!d.graphs?.includes("fhir-artifact-index") || !d.path) continue;
+      if (!d.graphKinds?.includes("fhir-artifact-index") || !d.path) continue;
       out.push(join(ROOT, entry, d.path, "index.json"));
     }
   }

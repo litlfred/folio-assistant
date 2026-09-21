@@ -49,9 +49,9 @@ describe("the exclusion predicates", () => {
     // `graphs` is an array and `schemas/` already holds two. An "every kind
     // is excluded" test would publish a directory holding both `kg` and
     // `fsh-guts`, naming the trashcan's path on the way past.
-    expect(isPublishedDirectory({ graphs: ["fsh-guts"] })).toBe(false);
-    expect(isPublishedDirectory({ graphs: ["cat-harness", "fsh-guts"] })).toBe(false);
-    expect(isPublishedDirectory({ graphs: ["schemas", "cat-harness"] })).toBe(true);
+    expect(isPublishedDirectory({ graphKinds: ["fsh-guts"] })).toBe(false);
+    expect(isPublishedDirectory({ graphKinds: ["cat-harness", "fsh-guts"] })).toBe(false);
+    expect(isPublishedDirectory({ graphKinds: ["schemas", "cat-harness"] })).toBe(true);
     // No declared graph is not a reason to drop it.
     expect(isPublishedDirectory({})).toBe(true);
   });

@@ -567,7 +567,7 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
+          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
@@ -576,14 +576,14 @@ jobs:
           done
 
           # THE BOOTSTRAP GRAPH, with `--base-url` so the staged copy names
-          # ITSELF rather than the live document. `gen-cat-bootstrap-graph.ts` took
+          # ITSELF rather than the live document. `gen-bootstrap-graph.ts` took
           # no such flag until this change — it minted `@id` from the canonical
           # URL whatever tree it wrote into, so a staged copy would have
           # asserted it lives on the live site. That is worse than the 404 it
           # replaces: a reader following the `@id` lands on a different document
           # that looks correct.
-          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --base-url "$BASE" --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
-          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
+          bun run cat-harness/scripts/gen-bootstrap-graph.ts --base-url "$BASE" --out "./_site/bootstrap/bootstrap.jsonld"
+          cp "./_site/bootstrap/bootstrap.jsonld" "./_site/bootstrap/bootstrap.json"
 
           # AND THE SITE-ROOT EXPORT, which this workflow did not write at all
           # until now — the omission `3jhq` was opened to measure.
@@ -593,8 +593,8 @@ jobs:
           # LINKS INTO IT. `skillHome` mints a foreign skill against the
           # exporting document's base, so a graph staged at `$BASE` carries
           #
-          #   $BASE/cat-bootstrap.jsonld#skill/discussion
-          #   $BASE/cat-bootstrap.jsonld#skill/log-message
+          #   $BASE/bootstrap.jsonld#skill/discussion
+          #   $BASE/bootstrap.jsonld#skill/log-message
           #
           # — measured by building the export with a staged `--base-url` and
           # reading the link targets out of it, not inferred. Without this
@@ -610,8 +610,8 @@ jobs:
           # NOT a fix for the two documents holding the SAME 85 subjects under
           # two `@id`s. That is real, separate, and left to its own bean rather
           # than settled by a workflow edit.
-          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-bootstrap)
-          bun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}.jsonld"
+          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
+          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}.jsonld"
           cp "./_site/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}.json"
         shell: bash
 

@@ -50,8 +50,8 @@ function fixture(): { root: string } {
       name: "probe",
       description: "one content directory and one retired one",
       directories: [
-        { id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] },
-        { id: "fsh-guts", path: "fsh-guts/", dependents: "skip", graphs: ["fsh-guts"] },
+        { id: "folio", path: "folio/", dependents: "reproduce", graphKinds: ["folio"] },
+        { id: "fsh-guts", path: "fsh-guts/", dependents: "skip", graphKinds: ["fsh-guts"] },
       ],
     }));
   for (const d of ["folio", "fsh-guts"]) {
@@ -93,7 +93,7 @@ describe("a sweep walks content and skips what is declared retired", () => {
     writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "an entry with no graphs",
-        directories: [{ id: "odd", path: "odd/", dependents: "skip", graphs: [] }],
+        directories: [{ id: "odd", path: "odd/", dependents: "skip", graphKinds: [] }],
       }));
     mkdirSync(join(root, "odd"), { recursive: true });
     writeFileSync(join(root, "odd", "probe.ts"), MANIFEST);
@@ -126,7 +126,7 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "names a kind nothing registers",
-        directories: [{ id: "x", path: "x/", dependents: "skip", graphs: ["totally-made-up"] }],
+        directories: [{ id: "x", path: "x/", dependents: "skip", graphKinds: ["totally-made-up"] }],
       }));
     expect(() => readDeclaration(root)).toThrow(/unknown graph kind/);
   });
@@ -139,7 +139,7 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "names a kind nothing registers",
-        directories: [{ id: "x", path: "x/", dependents: "skip", graphs: ["totally-made-up"] }],
+        directories: [{ id: "x", path: "x/", dependents: "skip", graphKinds: ["totally-made-up"] }],
       }));
     mkdirSync(join(root, "x"), { recursive: true });
     writeFileSync(join(root, "x", "probe.ts"), MANIFEST);

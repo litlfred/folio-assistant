@@ -79,9 +79,23 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   doco: "document STRUCTURE — a paper's chapters, sections and figures, via BLOCK_KIND_TO_DOCO_TYPE. This instance is the platform and holds no folio, so no block is exported here. A folio emits it on its first `gen-block-jsonld` run.",
   deo: "discourse ELEMENTS — `deo:Introduction`, `deo:Conclusion` and the rest, on a paper's rhetorical blocks. Bound with `doco` as its companion vocabulary and waiting on the same thing: a folio with blocks.",
   oa: "Web Annotation — the shape a todo, a review note or a translation comment takes when it is published as an annotation on a block. `bzyu` and the todo-review workflow are where it lands.",
-  fhir: "WHO SMART Guideline folios only. `jsonld.ts` records the rule it is bound under — a DAK block is NOT typed `fhir:ValueSet`, because that would assert a manifest is a FHIR resource. It is emitted by an IG folio's export, never by the platform.",
   csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype, and `csvwOnly()` emits CSVW-NATIVE KEYS that resolve through this context rather than `csvw:`-prefixed values — so this prefix may be spoken by alias already, and the count below says only that no literal CURIE carries it.",
   skos: "the glossary — `lqo9` slice 1 shipped 135 `skos:Concept` nodes, but into the NAMESPACE document (`ns-export.ts`), which carries its own context rather than this one. A folio's glossary blocks are what emit it HERE.",
+  // NO `fhir` ENTRY, and its removal is the check doing its job.
+  //
+  // It was forward-declared on the reason "emitted by an IG folio's export,
+  // never by the platform" — true when written, and false since this
+  // repository took in two FHIR artefact indexes (`smart-trust`,
+  // `smart-immunizations`). The check reported `fhir is declared forward but
+  // emits 1570 — remove its FORWARD_DECLARED entry` as a warning, and the
+  // warning was right: a forward declaration is a promise about the FUTURE,
+  // so one whose future has arrived is no longer a reason, it is a stale
+  // excuse sitting in front of a fact.
+  //
+  // That is the direction this file exists to catch in BOTH senses. A bound
+  // prefix nothing emits is a claim the graph does not keep; a forward
+  // declaration for a prefix that now emits is the same defect running the
+  // other way, and it is the quieter one, because nothing breaks.
   fac: "folio-assistant-core's own namespace. Core's terms describe CONTENT objects, and this instance holds none — the same reason `doco` and `deo` are here, one layer in.",
 };
 

@@ -174,14 +174,14 @@ describe("tools", () => {
     // apart; `isSkillMd` does, by their `$schema:` line. Under the old scan a
     // Tool could have satisfied a memory entry and passed.
     expect(s.has("the-complement")).toBe(false);
-    // Missed 2 real ones: `cat-bootstrap/skills/` holds skills DIRECTLY rather
+    // Missed 2 real ones: `bootstrap/skills/` holds skills DIRECTLY rather
     // than in packages, and a scan of a root's subdirectories never looks at
     // the root. Both read as dangling, which is how this was found.
     //
     // THOSE TWO NO LONGER BELONG TO THIS INSTANCE, and the assertion is
     // inverted rather than deleted — bean `pve3`, the owner's ruling of
     // 2026-09-21 ("neither"). `cat-harness/harness.json` no longer declares
-    // `cat-bootstrap/skills/`, so cat-bootstrap's skills are published through
+    // `bootstrap/skills/`, so bootstrap's skills are published through
     // its OWN graph and this instance does not overlay them. Deleting the
     // lines would lose the regression they were written for; flipping them
     // keeps it, because the failure mode being guarded is a SCAN that
@@ -191,7 +191,7 @@ describe("tools", () => {
     // And they are still REACHABLE, which is what makes the removal a
     // relocation rather than a loss. `check-tools`' `satisfiableSkills` reads
     // every declared instance for exactly this reason.
-    expect(canonicalKnownSkills(join(INSTANCE, "../cat-bootstrap")).has("log-message")).toBe(true);
+    expect(canonicalKnownSkills(join(INSTANCE, "../bootstrap")).has("log-message")).toBe(true);
   });
 
   test("io IRIs follow the publication base, not the declaration", async () => {

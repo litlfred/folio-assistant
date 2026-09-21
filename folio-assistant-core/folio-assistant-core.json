@@ -21,7 +21,7 @@
   "_stickies_comment": "ONE card, because the owner's ruling is one card per harness: \"not all stickies should be cat harness they should be outputs (as if) each init harness ran ... each own intiaization sticky note to show sucess\". This layer takes the knowledge-graph overview, which was cat-harness's third card — content is this layer's subject, so the card that explains the sub-graphs belongs to it rather than to the platform that operates on them.",
   "stickies": [
     {
-      "_comment": "THEME: `library`, its own, per \"each harness hould have its own unique theme (by convention)\". The librarian reads: this layer is about what content IS and how it is organised. It is not cat-harness's hoodie and not cat-bootstrap's cowboy. SCOPE is stated in the body rather than left to the reader, per \"also some guidance what is its scope\".",
+      "_comment": "THEME: `library`, its own, per \"each harness hould have its own unique theme (by convention)\". The librarian reads: this layer is about what content IS and how it is organised. It is not cat-harness's hoodie and not bootstrap's cowboy. SCOPE is stated in the body rather than left to the reader, per \"also some guidance what is its scope\".",
       "id": "folio-assist-core",
       "order": 20,
       "theme": "library",
@@ -76,7 +76,7 @@
       "path": "schemas/",
       "dependents": "skip",
       "description": "The content layer's own schema nodes. Three today, and they are one chain: `dublin-core` is what a source system SAYS about an item, `catalogue` is the shape of the collection that item sits in, and `materialization` is whether any of its bytes are actually here. The third is the load-bearing one — see its module doc for why bootstrap fetching a harness and who-iris fetching three items out of 361.55 GB are the same process with two names.",
-      "graphs": [
+      "graphKinds": [
         "schemas",
         "cat-harness"
       ],
@@ -91,7 +91,7 @@
       "path": "folios/",
       "dependents": "reproduce",
       "description": "What an AUTHOR creates using the graph -- a note, a visualization, a paper. Owner, 2026-09-20: 'folios/ would be a note, visualization, paper etc that user/author is creating referencing the KG... folios in f-a-core as it is about KG management workflows built on cat-harness document rendering justthedocs simple rendering.' It declares the EXISTING `folio` kind rather than a new one: `folio` is already 'authored content, rendered to a website', registered by core because only core can render it, and a second kind for the same thing would be two spellings of one concept. The contrast is with `docs` in cat-harness, whose subject is the harness itself. Worked example of the distinction: the who-iris catalogue goes in `library/` or is referenced remotely; a note ABOUT it is a folio; the page explaining how ingestion works is docs.",
-      "graphs": [
+      "graphKinds": [
         "folio"
       ]
     }

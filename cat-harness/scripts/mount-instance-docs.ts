@@ -252,14 +252,14 @@ export function toRootFor(route: string, fileUnder: string): string {
 export function publishedDocsPrefix(repo: string, built: string): string | undefined {
   const decl = declarationPathIn(join(repo, built));
   if (decl === undefined || !existsSync(decl)) return undefined;
-  let d: { directories?: { path?: string; graphs?: string[]; scope?: string }[] };
+  let d: { directories?: { path?: string; graphKinds?: string[]; scope?: string }[] };
   try {
     d = JSON.parse(readFileSync(decl, "utf-8"));
   } catch {
     return undefined;
   }
   const entry = (d.directories ?? []).find(
-    (x) => x.path && x.scope !== "repository" && (x.graphs ?? []).includes("docs"),
+    (x) => x.path && x.scope !== "repository" && (x.graphKinds ?? []).includes("docs"),
   );
   return entry === undefined ? undefined : join(built, entry.path!);
 }
@@ -417,7 +417,7 @@ function mountable(): Mountable[] {
       directories?: {
         id?: string;
         path?: string;
-        graphs?: string[];
+        graphKinds?: string[];
         instanceRoot?: boolean;
         composed?: boolean;
         coverage?: Parameters<typeof visualisationsOf>[0];
@@ -452,7 +452,7 @@ function mountable(): Mountable[] {
       // rather than re-derived later: the declaration is the only place that
       // knows, and a second answer is free to disagree with it.
       const visualiser = visualisationsOf(entry.coverage, entry.id ?? entry.path)[0]?.ref;
-      for (const kind of entry.graphs ?? []) {
+      for (const kind of entry.graphKinds ?? []) {
         out.push({
           name: d.name ?? e.name,
           kind,

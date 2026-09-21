@@ -36,7 +36,7 @@ const REPO = join(import.meta.dir, "../../..");
 /** The workflows that publish per-layer namespace documents. */
 const WORKFLOWS = [".github/workflows/docs-site.yml", ".github/workflows/feature-staging.yml"] as const;
 
-type Layer = "cat-bootstrap" | "harness" | "core";
+type Layer = "bootstrap" | "harness" | "core";
 
 /**
  * The `layer:directory` pairs a workflow publishes namespace documents for.
@@ -97,7 +97,7 @@ describe("a layer's namespace document is published where its terms say it is", 
     // dropped from the loop — its document then does not exist at all, which
     // is worse than existing at the wrong path.
     const published = new Set(pairsIn(WORKFLOWS[0]).map((p) => p.layer));
-    for (const layer of ["cat-bootstrap", "harness", "core"] as const) {
+    for (const layer of ["bootstrap", "harness", "core"] as const) {
       expect({ layer, published: published.has(layer) }).toEqual({ layer, published: true });
     }
   });

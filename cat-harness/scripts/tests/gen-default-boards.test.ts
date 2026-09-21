@@ -27,7 +27,7 @@ const REPO = resolve(ROOT, "..");
  * assertions change whenever a sibling session adds a directory, and an
  * assertion that drifts with the tree is not an assertion.
  */
-const names = () => ["agent-skills", "cat-bootstrap", "cat-harness", "detangle", "who-iris"];
+const names = () => ["agent-skills", "bootstrap", "cat-harness", "detangle", "who-iris"];
 
 describe("who owes a board", () => {
   test("the real checkout: the instantiated harnesses, minus the floor", () => {
@@ -39,15 +39,15 @@ describe("who owes a board", () => {
     expect(owed).toEqual(["cat-harness", "folio-assistant", "who-iris"]);
   });
 
-  test("cat-bootstrap is excluded BY ITS DECLARATION, not by its name", () => {
+  test("bootstrap is excluded BY ITS DECLARATION, not by its name", () => {
     // Its own `renderExemption` says why: it produces nothing a human browses,
     // so it has nothing to put on a board. A checker naming one instance
     // states a rule true only for the instance somebody remembered (`hfkl`).
-    const boot = readDeclaration(join(REPO, "cat-bootstrap"))!;
+    const boot = readDeclaration(join(REPO, "bootstrap"))!;
     expect(isExemptFrom(boot, "visualiser")).toBe(true);
-    expect(harnessesOwedABoard(REPO, names())).not.toContain("cat-bootstrap");
+    expect(harnessesOwedABoard(REPO, names())).not.toContain("bootstrap");
     // ...and it IS instantiated, so exclusion cannot be coming from that.
-    expect(existsSync(join(REPO, instanceConfigFilename("cat-bootstrap")))).toBe(true);
+    expect(existsSync(join(REPO, instanceConfigFilename("bootstrap")))).toBe(true);
   });
 
   test("a DEPENDENCY is excluded too — instantiated is a different fact", () => {

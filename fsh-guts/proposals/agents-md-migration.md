@@ -6,7 +6,7 @@ movedOn: 2026-09-19
 movedFrom: "docs/folio-assistant/proposals/agents-md-migration.md"
 issue: 223
 summary: >-
-  Survey of which AGENTS.md sections are cat-bootstrap, pointers, or migration debt.
+  Survey of which AGENTS.md sections are bootstrap, pointers, or migration debt.
 ---
 
 # Migrating `AGENTS.md` into skills — the classification
@@ -18,7 +18,7 @@ a stated plan rather than judged after the fact.
 
 `AGENTS.md` classifies itself, in its own banner:
 
-> `AGENTS.md` is a cat-bootstrap pointer, not the source of truth. … **Sections
+> `AGENTS.md` is a bootstrap pointer, not the source of truth. … **Sections
 > below that still carry substantive rules rather than pointers are migration
 > debt, not precedent. Adding to them widens it.**
 
@@ -66,7 +66,7 @@ owns it; a skill has to be written. Nothing here is asserted from a filename.
 | 8 | CI health — a red workflow looks like a green one | 50 | **DEBT** | **none found** — the `ci-health-watcher` subagent owns the subject, but an agent is not a skill |
 | 9 | Actors, roles and skills — a role is a swimlane | 152 | **DEBT** | `role-model` — *verified*; the audit half may want its own |
 | 10 | Subagents with persistent memory | 140 | **DEBT** | **none found** — the largest orphan in the file |
-| 11 | At session start | 67 | **CAT_BOOTSTRAP + DEBT** | the `beans`-cat-bootstrap half is cat-bootstrap; the sweep's contents belong with `session-intent`/`coordinate` |
+| 11 | At session start | 67 | **CAT_BOOTSTRAP + DEBT** | the `beans`-bootstrap half is bootstrap; the sweep's contents belong with `session-intent`/`coordinate` |
 | 12 | Agentic harness — interaction model | 8 | **POINTER** | — keep, and it is the model for the rest |
 | 13 | Feature requests and CRDM | 35 | **POINTER** | `crdm-detect`, `crdm-requirements-workflow` — *verified* |
 | 14 | Say which process you are in — every turn | 22 | **DEBT** | `process-state` — *verified* |
@@ -171,13 +171,13 @@ already follow and exactly what this proposal argues for `AGENTS.md` itself.
 5. ✅ `check:agents-xref:strict` is in CI.
 6. ✅ Sections 2, 11 and 19 — the three the first pass left partly debt.
    **§2** got the skill it had none for, `content-profiles`. **§11** kept the
-   cat-bootstrap half (getting `beans` in hand is what an agent needs before it can
+   bootstrap half (getting `beans` in hand is what an agent needs before it can
    ask for anything) and moved the sweep's contents to `todo-manager`. **§19**
    was mostly pointers already; its one substantive bullet, the `uses[]` /
    `interprets` editorial relation, went to `uses-editorial-review`.
 
 **Done: 1,289 lines → 566.** Every one of the 19 sections is still present, as
-a pointer or as genuine cat-bootstrap; none was deleted.
+a pointer or as genuine bootstrap; none was deleted.
 
 **Step 1 comes first and already has.** Every later step is a move, and a move
 without the check is a move whose damage cannot be told from the 16 findings

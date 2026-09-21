@@ -16,7 +16,7 @@ describes.
 ## What happened
 
 157 task-containing lanes, and exactly one resolves to no role: `Actor`, in
-`cat-bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s
+`bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s
 §"Adding a role", worked out the `actorKinds` and the `skills`, and was about
 to add it when the end of the file said:
 
@@ -83,7 +83,7 @@ Binding `Actor` to a role. That is the wrong fix and the file says why.
 - [ ] the glossary extractor can tell "no definition, by design" from "no
       definition, nobody wrote one"
 - [ ] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
-      `cat-bootstrap/skills/roles/roles.json` points at it rather than being
+      `bootstrap/skills/roles/roles.json` points at it rather than being
       the only record
 
 ## Investigated 2026-09-21 — the fix is aimed at the right layer, and the shape is settled
