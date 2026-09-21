@@ -75,3 +75,18 @@ origin/main:<path>` would have settled it in one command. Recorded rather than
 quietly deleted, because the failure mode — grepping a stale base and
 publishing the absence as a finding — is the same class as the `b963`
 mis-citations it was accusing.
+
+
+## Unblocked — 2026-09-21
+
+[#642](https://github.com/litlfred/folio-assistant/pull/642) merged as
+`05dfdbef`, so `prunableDashboards` is on main and all four selectors are now
+in one tree. The reason this bean was reported rather than done — editing
+another session's in-flight file — no longer holds.
+
+One question still goes to the owner before the work starts, and it is the
+expensive half rather than a detail: **is `OWNED`'s flat-file case in scope?**
+Folding the other three together is a parameterisation. Folding `OWNED` in
+means generalising the unit from *directory holding an `index.html`* to
+*artefact this generator emits*, which changes the shape of the selector for
+every caller, not just for `who-iris`.
