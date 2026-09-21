@@ -1423,14 +1423,14 @@
     {
       "id": "folio-assistant-9c34",
       "title": "STAGING: incremental render — seed from main's render as cache, re-render only changed assets and their downstream indexes",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:11:39Z",
-      "updatedAt": "2026-09-20T21:12:03Z",
+      "updatedAt": "2026-09-21T05:42:19Z",
       "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD):\n\n> new skill for staging rendernig.... dont rerender the whole thing... if main\n> render is not stale, copy that to staging render pipleine as cahche. trigger\n> rerender only on assets that have changed and downstream depndent index.\n\n## The shape\n\nThree steps, and the third is the one that is easy to get wrong.\n\n1. **Seed from main** — if main",
       "file": "beans/defs/folio-assistant-9c34--staging-incremental-render-seed-from-mains-render.md"
     },
@@ -3255,7 +3255,7 @@
     {
       "id": "folio-assistant-op30",
       "title": "DOCS OBLIGATION: an instance owes its own docs/, with a QA axis — 1 of 11 has one, and it is the instance with no README",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -4546,7 +4546,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T22:49:13Z",
-      "updatedAt": "2026-09-20T22:49:31Z",
+      "updatedAt": "2026-09-21T05:59:34Z",
       "preview": "Found while fixing `ankg`, by checking the third generator rather than\nassuming it was covered.\n\n## It has the same defect\n\n`cat-harness/scripts/state-visualizer.ts` writes one dashboard per declared\nstate graph:\n\n```ts\nfor (const g of graphs) emit(join(SITE, g.id, \"index.html\"), dashboardPage(g, graphs));\n```\n\n`emit()` compares only the files it is about to write — the same structural\nblindness `",
       "file": "beans/defs/folio-assistant-y90d--state-visualizer-has-ankgs-defect-too-and-cannot-t.md"
     },
