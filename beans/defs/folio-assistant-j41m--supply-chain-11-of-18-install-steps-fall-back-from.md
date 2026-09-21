@@ -1,7 +1,7 @@
 ---
 # folio-assistant-j41m
 title: 'SUPPLY CHAIN: 11 of 18 install steps fall back from --frozen-lockfile to an unpinned resolve, and there is no audit or dependabot'
-status: todo
+status: in-progress
 type: task
 priority: high
 parent: folio-assistant-3x2n

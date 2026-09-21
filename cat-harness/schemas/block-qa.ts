@@ -53,6 +53,28 @@ export interface QaReviewer {
   /** Optional version pin (script revision, model id). */
   version?: string;
   /**
+   * The declared ACTOR this reviewer was acting as — an id in
+   * `.claude/skills/actors/`.
+   *
+   * Separate from {@link id} because the two answer different questions and
+   * measurably do not share a vocabulary. `id` says *what ran* — a script
+   * path, a subagent's name. `actor` says *on whose authority*, which is what
+   * decides whether the `qa-reporting` permission was held.
+   *
+   * **Measured 2026-09-21: 0 of 5,896 reviewer entries in this corpus resolve
+   * to a declared actor.** Every `id` is a script path
+   * (`content/pipeline/qa-checkers-voice.ts`) or an ad-hoc agent name
+   * (`roundtrip-adjudicator (subagent)`); every actor id is a persona
+   * (`ci-pipeline`, `qc-reviewer`). So the permission that governs emitting a
+   * QA report could not be evaluated for a single verdict — not because it was
+   * denied, but because nothing connected the two sides.
+   *
+   * Optional, and absent is the **third state**: not "permitted" and not
+   * "forbidden" but *unresolved*, which `check:qa-reviewer-permission` counts
+   * separately and never reports as clean.
+   */
+  actor?: string;
+  /**
    * 12-char SHA-256 prefix of the script's source-file content at
    * the time this entry was written. Populated for `kind: "script"`.
    * On freshness check, current file hash is compared against this;

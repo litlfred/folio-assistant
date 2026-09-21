@@ -1,7 +1,7 @@
 ---
 # folio-assistant-zakj
 title: 'SECRETS: no leaked-token or credential scanning exists at all, in a repo that publishes a site and an npm package'
-status: todo
+status: in-progress
 type: task
 priority: high
 parent: folio-assistant-3x2n
