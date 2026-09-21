@@ -634,10 +634,15 @@ to spend the words: **do not start the topic.**
   consumer scans nothing and reports a clean run over it. This repo is
   pre-split, and **`folio-assistant.config.json` is the list — not this sentence.** It said
   "declares `schemas/` and `skills/` only" until 2026-09-20, by which point
-  neither half was true: there are many more entries, and `src/skills/` is a
-  SECOND knowledge-graph directory holding a skill beside the `.ts` that
-  implements it. No count is given here on purpose, because a count in prose is
-  the same failure one turn later. Schema:
+  neither half was true: there are many more entries. The example given here
+  was `src/skills/`, a SECOND knowledge-graph directory holding a skill beside
+  the `.ts` implementing it — **and it is gone as of #760**, because
+  `skills/folio-core/` already co-located eight such pairs and the separate
+  directory bought nothing while costing a name: `discoverLocalPackages` called
+  it `cat-harness` while the declaration gave that id to `skills/`. So the
+  sentence above outlived two different facts in two days, which is exactly why
+  it says the declaration is the list. No count is given here on purpose,
+  because a count in prose is the same failure one turn later. Schema:
   `schemas/cat-harness.ts`; conventions:
   [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
