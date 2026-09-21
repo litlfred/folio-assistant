@@ -95,7 +95,7 @@
                 aria-label="{{ t.reads }}"></span>
         {%- endif -%}
         <span class="fa-harness-tile__text">
-          <span class="fa-harness-tile__title">{{ t.title }}</span>
+          <span class="fa-harness-tile__title">{{ t.label | default: t.title }}</span>
           <span class="fa-harness-tile__stats">
           {%- for s in t.stats -%}
             <span class="fa-harness-tile__stat" data-fa-stat="{{ s.id }}">
@@ -153,7 +153,7 @@
                 aria-label="{{ t.reads }}"></span>
         {%- endif -%}
         <span class="fa-harness-tile__text">
-          <span class="fa-harness-tile__title">{{ t.title }}</span>
+          <span class="fa-harness-tile__title">{{ t.label | default: t.title }}</span>
           <span class="fa-harness-tile__stats">
           {%- for s in t.stats -%}
             <span class="fa-harness-tile__stat" data-fa-stat="{{ s.id }}">
