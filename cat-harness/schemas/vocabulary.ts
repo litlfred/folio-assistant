@@ -425,6 +425,12 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
 
   // ── Reporting ────────────────────────────────────────────────────────
   counts: { gloss: "How many nodes of each type the export produced." },
+  omitted: {
+    gloss:
+      "Instance-bound collectors that were NOT run, on a foreign instance's " +
+      "document — so a reader can tell 'this instance has no tools' from " +
+      "'tools were never looked for'.",
+  },
   detection: { gloss: "How a value was arrived at, where it was inferred rather than declared." },
   ambiguous: { gloss: "That more than one answer matched, and none was chosen." },
 };

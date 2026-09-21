@@ -327,6 +327,146 @@ test.describe("the tile template is `1le7`'s, not a second one", () => {
   });
 });
 
+/* ── `v0jv`, corrected by #796 — the tile strip along the folio's top ──
+ *
+ * `v0jv` opened on placement: *"folios have tiles do not go to the window.
+ * they are stacked around (bottom?) of folio, slid away."* The parenthesis
+ * was the owner's own uncertainty, and 2026-09-21 settled it the other way:
+ * *"lets have the square tiles lined up on the top of the
+ * folio-sicky-board-landingpanel whole slides up if user doesnt want."*
+ *
+ * TWO THINGS CHANGED AND BOTH ARE ASSERTED BELOW — the edge (top, not
+ * bottom) and the DEFAULT STATE (open, not closed). The second is the one
+ * that would ship silently: tiles a reader must open before they can see
+ * what a folio offers read as absent, which is the complaint that opened
+ * `v0jv` about the in-flow row in the first place. Sliding the strip up is
+ * the reader's act; it is not the starting position.
+ *
+ * `.fa-board-tiles` was a `flex-wrap` row appended after the sticky grid, IN
+ * FLOW — so on the landing board it landed below every full-bleed card. Only
+ * the PLACEMENT was ever wrong: `harness-tiles` already fixes the
+ * declaration side (*"declared once, per-surface visibility, never two
+ * registries"*), and the first spec below is what keeps this change honest
+ * about that.
+ */
+test.describe("the folio's tile strip", () => {
+  test("the strip holds the BOARD surface's tiles — still one registry", async ({ page }) => {
+    // THE ONE THAT MATTERS. A placement change must not become a registry
+    // change, and that failure ships by looking fine. Every board-surface
+    // tile must be inside the strip, and the strip must hold nothing else.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const inStrip = await page
+      .locator(".fa-board-tiles [data-fa-tile]")
+      .evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.faTile).sort());
+    const onBoard = (await tilesOnPage(page, "board")).map((t) => t.id).sort();
+    expect(onBoard.length).toBeGreaterThan(0);
+    expect(inStrip).toEqual(onBoard);
+  });
+
+  test("it is the BOARD's edge, not the viewport's", async ({ page }) => {
+    // `sticky`, never `fixed`. The strip belongs to the FOLIO: it travels
+    // with the board and goes when the board goes. A viewport-fixed bar is
+    // chrome for the page — a different object — and would follow a reader
+    // onto content that has no tiles at all.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const pos = await page
+      .locator(".fa-board-strip")
+      .evaluate((el) => getComputedStyle(el).position);
+    expect(pos).toBe("sticky");
+  });
+
+  test("it is the TOP edge, and it precedes every card", async ({ page }) => {
+    // Two facts, because either alone passes while the strip is in the wrong
+    // place: `top: 0` on an element appended last still sticks to the top of
+    // whatever is left below it, and DOM order alone says nothing about which
+    // edge it clings to. Both, or the strip is only incidentally at the top.
+    //
+    // NOT "the board's first child", which is the assertion this nearly was
+    // and which would have been wrong: the board's head (its title) and its
+    // filter row precede the strip, and they should. *"On the top"* means
+    // above the CARDS — the tiles announce what the folio offers before a
+    // reader meets its contents. Putting them above the board's own title
+    // would answer "what can I open" before "what is this".
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const strip = page.locator(".fa-board-strip").first();
+    await expect(strip).toHaveCSS("top", "0px");
+    const grid = page.locator(".fa-sticky-grid").first();
+    const before = await strip.evaluate(
+      (el, sel) => {
+        const g = el.parentElement?.querySelector(sel as string);
+        // `DOCUMENT_POSITION_FOLLOWING` — the grid comes after the strip.
+        return !!g && (el.compareDocumentPosition(g) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+      },
+      ".fa-sticky-grid",
+    );
+    expect(before).toBe(true);
+    const stripBox = await strip.boundingBox();
+    const gridBox = await grid.boundingBox();
+    expect(stripBox!.y).toBeLessThan(gridBox!.y);
+  });
+
+  test("it starts OPEN — a reader never has to ask what a folio offers", async ({ page }) => {
+    // The correction to `v0jv`, asserted rather than left to the markup.
+    // Closed-by-default is what made the old in-flow row read as absent, and
+    // it is the state a refactor would silently restore.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    await expect(page.locator(".fa-board-strip").first()).toHaveAttribute("open", "");
+  });
+
+  test("it opens and closes from the keyboard alone", async ({ page }) => {
+    // No `page.mouse` below. The declared interaction profile is
+    // low-dexterity, and a slide-away whose only way in is a pointer excludes
+    // the person who asked for it. `l4zi`: the inverse must be reachable too,
+    // which is why this closes and then reopens rather than stopping at the
+    // first transition.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const strip = page.locator(".fa-board-strip").first();
+    const summary = strip.locator("summary");
+    await expect(summary).toHaveAttribute("aria-label", /Visualisations/);
+
+    await summary.press("Enter");
+    await expect(strip).not.toHaveAttribute("open", "");
+    await summary.press("Enter");
+    await expect(strip).toHaveAttribute("open", "");
+  });
+
+  test("the tiles are SQUARE", async ({ page }) => {
+    // *"i meant to use same SQUARE TILES taht are in the expanding menu of
+    // LHS navbar."* The template was already shared with the launcher; what
+    // was not square was the tile itself, a flex item of flexible width in a
+    // wrap row. Measured from the box, not from the declaration, because
+    // `aspect-ratio` loses to a `min-height` that outgrows it — which is the
+    // bug this would have shipped.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const tile = page.locator(".fa-board-tiles .fa-tile").first();
+    const box = await tile.boundingBox();
+    expect(box).not.toBeNull();
+    expect(Math.abs(box!.width - box!.height)).toBeLessThanOrEqual(1);
+  });
+
+  test("an open window passes OVER the strip — chrome is not content", async ({ page }) => {
+    // The bean states it outright: "the tiles must NOT be projected onto the
+    // glass — they are folio chrome, where a window is content." So the float
+    // layer stacks above the strip, and this holds that line.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const stripZ = await page
+      .locator(".fa-board-strip")
+      .first()
+      .evaluate((el) => Number(getComputedStyle(el).zIndex));
+    const layerZ = await page
+      .locator(".fa-sticky-layer")
+      .evaluate((el) => Number(getComputedStyle(el).zIndex));
+    expect(layerZ).toBeGreaterThan(stripZ);
+  });
+});
+
 test.describe("the glyph a tile wears is DECLARED, by name", () => {
   test("a declared icon renders a different glyph from the generic one", async ({ page }) => {
     // Asserted as a DIFFERENCE, not against the bean's path data. A test
