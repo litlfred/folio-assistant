@@ -80,3 +80,23 @@ the populated one were one key, and the stub won."*
 `instanceRoots` is keyed on the declared NAME. Two spellings is not two
 labels for one thing — it is two instances as far as every declaration-driven
 consumer is concerned, which is how the stub won last time.
+
+---
+
+*2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5 — **this blocker now gates more
+than it did, and `cjtm` may already answer it.***
+
+The owner ruled REPLACE on `b5f0` (one `<name>.config.json` per instantiation
+root) and widened it to the `folio-assistant-*` instances. **The filename
+derives from the declared `name`**, so those two cannot be migrated until this
+bean is answered — `folio-assist-core` on main against `folio-assistant-core`
+on disk and on the branch. One spelling, two files, two instances to every
+declaration-driven reader.
+
+Worth checking before asking again: `cjtm` records a ruling — *"cat- prefix
+does not extend to folio-assistant-\*"* — and states it settled this live merge
+conflict, naming `folio-assistant-core`. If that is the answer, this bean is
+blocked on nothing and says so; if it is not, the two beans disagree and that
+is the thing to put to the owner.
+
+**Not edited here** — a sibling's bean.
