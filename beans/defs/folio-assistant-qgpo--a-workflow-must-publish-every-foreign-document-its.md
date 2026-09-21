@@ -1,11 +1,11 @@
 ---
 # folio-assistant-qgpo
 title: A workflow must publish every foreign document its own graph links into
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T18:27:04Z
-updated_at: 2026-09-21T19:22:32Z
+updated_at: 2026-09-21T20:44:25Z
 parent: folio-assistant-vke6
 ---
 
@@ -44,12 +44,12 @@ This is the `blv9` class, and it has now been found **three** times by hand:
 
 ## Done when
 
-- [ ] the link targets a workflow's export would mint are derived, not listed
-- [ ] each is matched against the paths that workflow writes
-- [ ] a target nothing writes is a finding that NAMES the workflow and the link
-- [ ] could-not-determine is a third state — an export that will not build is
+- [B] the link targets a workflow's export would mint are derived, not listed
+- [B] each is matched against the paths that workflow writes
+- [B] a target nothing writes is a finding that NAMES the workflow and the link
+- [B] could-not-determine is a third state — an export that will not build is
       not "no dangling links"
-- [ ] falsified by deleting a publish step and watching it go red
+- [x] falsified by deleting a publish step and watching it go red
 
 ## ATTEMPTED 2026-09-21 — both obvious designs are wrong, with evidence
 
@@ -113,14 +113,14 @@ default.
 
 ## What a correct attempt needs
 
-- [ ] the per-workflow question, since `publishedPaths()` answers it globally
-- [ ] a way to learn what a generator writes that neither infers from a flag
+- [x] the per-workflow question, since `publishedPaths()` answers it globally
+- [B] a way to learn what a generator writes that neither infers from a flag
       nor executes in the checkout — most likely asking the GENERATOR (it knows
       its own outputs; `buildSkillIoContracts` already reports them)
-- [ ] falsification against `3jhq` specifically: remove the staging export and
+- [x] falsification against `3jhq` specifically: remove the staging export and
       the check MUST go red. Design A passed this and was still vacuous, so
       this is necessary and not sufficient
-- [ ] `publishedPaths()` left alone — its literalness is argued and correct
+- [x] `publishedPaths()` left alone — its literalness is argued and correct
 
 ## Status
 
@@ -186,3 +186,21 @@ un-filed rather than half-specified — the owner chose A knowing this.
 `check:invocation-parity` in the gate set and classified `harness` in
 `instance-rules.ts`. 14 tests. Falsified twice, each against the defect it
 exists for. `bun run gates` 96 of 96.
+
+## The five `- [B]` items are OPTION B, not pending work
+
+They specify the full invariant — every link target matched against what the
+workflow writes. The owner chose **A**, which is narrower by design, so those
+lines describe **the option that was not taken** rather than something left
+undone. Marked `[B]` instead of ticked or deleted: ticking would claim work
+that did not happen, and deleting would lose the specification, which is the
+most valuable thing two failed attempts produced.
+
+What B still needs, should anyone return to it: four of the five site
+generators expose nothing about their outputs. `buildSkillIoContracts` is the
+one that does, and it already covers **47 of the 50** link targets — so B is
+smaller than it looks, and its remaining cost is four exports plus a composer.
+
+The four ticked items are the ones A genuinely satisfies: it is per-workflow,
+it leaves `publishedPaths()` alone, and it was falsified both by deleting a
+publish step and against `3jhq` specifically.
