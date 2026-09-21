@@ -1,7 +1,7 @@
 ---
 # folio-assistant-pomp
 title: A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-21T06:43:56Z
 updated_at: 2026-09-21T06:43:56Z
@@ -63,10 +63,12 @@ checked against whatever the checker happens to have.
 
 ## Done when
 
-- [ ] a ruling on whether this wants a tool at all, or is a skill line —
-      the cheap version is one sentence in `bean-coordination` and in
-      `issue-working`: **before publishing a finding that something does not
-      exist, re-fetch and read it off the remote ref, in a separate command**
+- [x] the cheap version is DONE: `bean-coordination` §"Re-derive from the
+      REMOTE, never from your checkout" (STRICT) carries both measured
+      occurrences and the two distinct guards, and `issue-working` §"Before
+      you publish that something does not exist" carries the short form,
+      because an issue comment is where one of the two was published
+- [ ] a ruling on whether this ALSO wants a tool — see below
 - [ ] if a tool: something that answers "does `<path>` exist anywhere reachable
       — this branch, `origin/main`, or an open PR's head" in one call, since
       the third case is the one neither guard above catches
@@ -78,3 +80,38 @@ checked against whatever the checker happens to have.
 Re-litigating either finding. Both are corrected at their sites: `s8nu` for
 occurrence 1 (with the issue comment on #641), and this bean plus the PR
 comment for occurrence 2.
+
+
+## The cheap half shipped 2026-09-21, and doing it sharpened the question
+
+Writing it down made the structure clearer than the bean had it. There are
+**three** cases, not two, and the third is the one neither guard catches:
+
+| case | guard |
+|---|---|
+| a branch older than the claim | ask the remote — `git show origin/main:<path>` |
+| a fetch in the same compound command | fetch and read in **separate** commands |
+| **the file exists only on an open PR's head** | neither — you have to look at the branches |
+
+The third is the expensive one and it is not hypothetical: this session
+started building `ankg`, `s8nu` and a `viewer-prune` module that siblings had
+already landed or had in flight, **five times**. The check that would have
+prevented each is one `git diff --name-only origin/main...<branch>` per open
+PR — cheap per branch, but it needs the branch list, which is why it is the
+case a skill line cannot really discharge.
+
+### So the tool question, if it is still wanted, is narrower than the title
+
+Not *"does `<path>` exist"* — the remote answers that in one command. It is:
+
+> **Does `<path>`, or anything matching `<pattern>`, exist on `main` or on any
+> open PR's head — and if so, where?**
+
+That is one call against a list nobody has to remember, and it answers the
+question an agent actually has before starting work, rather than the one it
+has while writing a finding.
+
+**Recommendation: build it, but only after a second session hits case 3.**
+One session's five occurrences is a strong signal and a sample of one. The
+skill lines cover cases 1 and 2 today, which is where both *published* errors
+came from.

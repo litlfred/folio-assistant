@@ -11,8 +11,25 @@
  * When loading skills and content, the folio-assistant agent starts with
  * the root folio and walks the dependency tree depth-first, in the order
  * dependencies are listed, overlaying content and skills on top. This
- * is the same methodology as FHIR/SUSHI dependencies — declared
- * upstream, walked deterministically, later overlays earlier.
+ * is the same methodology as FHIR/SUSHI dependencies **for the WALK** —
+ * declared upstream, walked deterministically, later overlays earlier.
+ *
+ * **It is NOT the same for the PIN, and the unqualified claim was wrong**
+ * (bean `dhvf`). SUSHI names a dependency as `packageId: version` and
+ * resolves it against a registry; {@link FolioAssistantDependencySchema}
+ * names a git `ref` that DEFAULTS TO THE DEFAULT BRANCH. A dependency pinned
+ * to a branch is a different dependency on Tuesday and nothing notices —
+ * the `xom7` shape, a thing that changes under you with nothing in the
+ * repository saying so.
+ *
+ * The owner ruled 2026-09-20: *"sha is for staging, regernecing in published
+ * SEMVER"*, with alignment to FHIR/SUSHI a hard constraint because some
+ * instances ARE consumed from outside this monorepo. So the two tiers differ
+ * and the rule lives where declarations are governed —
+ * [`directory-conventions`](../skills/folio-core/directory-conventions.md)
+ * §"Pinning a reference — a SHA may stage, only a version may publish" —
+ * with `bun run check:published-refs` as its mechanical half. The full scheme
+ * is `fsh-guts/proposals/instance-versioning.md`.
  *
  * ## What gets resolved across dependencies
  *

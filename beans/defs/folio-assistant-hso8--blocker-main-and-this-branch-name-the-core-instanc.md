@@ -1,9 +1,9 @@
 ---
 # folio-assistant-hso8
 title: 'BLOCKER: main and this branch name the core instance differently — folio-assist-core vs folio-assistant-core'
-status: todo
+status: completed
 type: task
-priority: high
+priority: normal
 created_at: 2026-09-20T16:36:01Z
 updated_at: 2026-09-20T16:36:22Z
 parent: folio-assistant-vke6
@@ -134,3 +134,71 @@ the close stays theirs.
 What is left on this bean, if anything, is the residue its owner can see and I
 cannot: whether any *reader* still keys on the short spelling. `8xtj` tracks
 that residue and says a sweep must not touch it blindly.
+
+---
+
+*2026-09-21, session_017MEZnJxx7WeekiNCabx4hx — **reached the same verdict
+independently, from the other end.** The section above works forward from the
+declarations and `cjtm`'s ruling; the one below works backward from #477
+having merged. Two sessions, two routes, one answer — kept side by side
+rather than deduplicated, because agreement reached twice by different
+evidence is worth more than either half.*
+
+
+## RESOLVED — and it was resolved on 2026-09-20, not today
+
+Re-measured 2026-09-21 rather than re-diagnosed, because a stale `!BLOCKER`
+at the top of GOAL 1 draws a session in to solve something already settled.
+
+### The premise is gone
+
+This bean's first line is *"merging **main** into PR #477 is blocked on
+this."* **[#477](https://github.com/litlfred/folio-assistant/pull/477) merged
+at 2026-09-20T18:18:43Z** — 1,937 files, 65 commits. There is nothing left to
+block.
+
+### The owner's ruling is what landed
+
+| | today on `main` |
+|---|---|
+| `folio-assistant-core/` | **exists** |
+| `folio-assist-core/` | **does not exist** |
+
+So the long name won, which is what the owner said twice (*"use
+folio-assistant-core/"*). This bean's worry — *"the minority spelling is the
+one with the explicit instruction behind it, and the majority spelling is the
+one the trunk is actually built on"* — resolved in favour of the instruction,
+and #477's own body records the collision being fixed rather than merged into.
+
+### The 115 remaining references are deliberate, not debris
+
+The short name still appears in 115 files, which looks alarming and is not.
+Categorised rather than swept:
+
+- **Prose documenting the rename** — the sentences bean `8xtj` warns a sweep
+  turns into *"X became X"*.
+- **The landing card id**, which is `folio-assist-core` **on purpose**:
+  a card id is a PUBLISHED IDENTIFIER and does not move with a directory.
+  `folio-assistant-core/harness.json` says so in its own `_comment`,
+  `landing-sticky.test.ts:135` says so, and `8xtj` records the cost of
+  assuming the two are one string — a session swept every spelling at once,
+  renamed the card by accident, and had to put it back.
+
+**No `harness.json` declares the dead name as a directory**, and no path
+reference resolves to nothing. Checked, because that is the only version of
+this that would still be a defect.
+
+### What is genuinely still open, and it is not a blocker
+
+The second done-when asks whether the `cat-` prefix extends to the core
+instance. Today `cat-harness` and `cat-bootstrap` carry it and
+`folio-assistant-core` does not. That is a naming question with nothing
+waiting on it, so it belongs in whatever bean owns the prefix convention
+rather than in a blocker. **Not swept, not assumed either way** — the last
+thing this instance needs is a third rename of a published IRI in two days.
+
+## Done when
+
+- [x] The owner names the core instance, ONCE — done 2026-09-20, and
+      `folio-assistant-core/` is what is on `main`
+- [x] Whichever loses is renamed — done in #477, which merged

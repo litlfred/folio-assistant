@@ -131,3 +131,71 @@ that.
 Remaining for the author: confirm that "neither" is the intent, which makes
 `v3se` fall out for free and moves bootstrap's skills out of folio-assistant's
 published docs.
+
+
+## STILL LIVE, and the bean names the wrong file — corrected 2026-09-21
+
+Attempted the third done-when (*restore `lanes` if the answer allows it*) on
+the belief that the asymmetry had gone. **It has not.** The attempt was
+reverted, and both halves of that are worth recording.
+
+### The measurement that misled me, and why
+
+This bean says *"the root `harness.json` declares bootstrap →
+`cat-bootstrap/skills/`"*. I read the ROOT's `harness.json`, found **no**
+`cat-bootstrap` directory in it — only an `assets` entry naming
+`cat-bootstrap/AGENTS.md` as the `source` this checkout's own AGENTS.md
+descends from — and concluded the asymmetry was gone and the root now carried
+neither half.
+
+**The declaration is in `cat-harness/harness.json`, not the root's:**
+
+```
+id= cat-bootstrap          path= cat-bootstrap/skills/   scope= repository
+id= cat-bootstrap-render   path= cat-bootstrap/render/   scope= repository
+```
+
+`scope: "repository"` resolves against the REPOSITORY root rather than the
+declaring instance, so the entry lands in folio-assistant's graph while living
+in cat-harness's file. `cat-bootstrap/workflows/` has no such entry. The
+asymmetry is exactly as this bean describes it; only the file is wrong.
+
+**Corrected in the text above?** No — left as written, with this section as
+the correction, because the original sentence is what a reader will grep for.
+
+### The falsification, which is the useful half
+
+Restoring `lanes` on all four roles produced **four** dangling `bindsLane`
+edges in the root graph, one per role:
+
+```
+role/initiator                  bindsLane  role/Initiator
+role/knowledge-graph-data-store bindsLane  role/Knowledge%20Graph%20Data%20Store
+role/requestor                  bindsLane  role/Requestor
+role/logger                     bindsLane  role/Logger
+```
+
+caught by `kg-export.test.ts` §*"internal links resolve, bar the known data
+defects"*, which pins `danglingLinks.length <= 4` **and** that every dangling
+edge is `declaresSkill` or `providesCapability`. Reverted; back to **0**.
+
+Four rather than the three measured 2026-09-20 because this bean's note
+predates `logger`, so a restoration today is worse than it was.
+
+### A fifth lane exists and is deliberately unbound
+
+`log-message.bpmn` has a lane named `Actor` that no role claims, and it should
+stay that way: the point of that diagram is that the actor VARIES. The
+`logger` role's own description says the skill belongs to whoever is DOING the
+thing being logged, and `log-message` takes `actor` as a required input
+precisely because the Logger cannot infer who acted. A role binding `Actor`
+would assert the opposite. Worth stating so the next reader does not "fix" it.
+
+### The decision is unchanged and is still the owner's
+
+**Both halves, or neither.** Nothing an agent should pick: both re-carries a
+process the root does not own into its published graph and undoes #432's
+isolation; neither stops bootstrap's skills appearing in folio-assistant's
+docs. What is now known is where the one-line change goes — the
+`cat-bootstrap` entry in `cat-harness/harness.json`, plus a sibling entry for
+`cat-bootstrap/workflows/` if the answer is *both*.
