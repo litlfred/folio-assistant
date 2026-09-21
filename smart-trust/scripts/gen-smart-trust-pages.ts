@@ -110,75 +110,35 @@ function pageName(a: FhirArtifact): string {
  */
 const INLINE_LIMIT = 100;
 
+/**
+ * The ONLY styling these pages carry, and it is deliberately tiny.
+ *
+ * The first version shipped ~100 lines: body font, colours, a `--col` wrap
+ * width, a full dark-mode variable set, table borders, link colours. Every one
+ * of those duplicated or FOUGHT just-the-docs, which already supplies
+ * typography, tables, links, the colour scheme and its dark mode. A page that
+ * re-declares `body { ... }` inside a themed site is a standalone document
+ * wearing front matter — which is exactly what the owner asked to stop:
+ * *"i want the input/page(s)/ content to be rendered viajustthedocs
+ * pipeline."*
+ *
+ * What is left is what the theme has no opinion about: the two
+ * materialization tags, which carry MEANING in their colour (held vs
+ * referenced) and would otherwise be two words a reader must hold in their
+ * head, and the census grid.
+ *
+ * `currentColor` and the theme's own `--*` custom properties are used wherever
+ * possible so these follow the reader's scheme instead of pinning a palette.
+ */
 const CSS = `
-:root {
-  --ink: #17242e; --muted: #5c6b77; --edge: #d5dde3; --surface: #ffffff;
-  --wash: #f6f9fb; --accent: #0a6e8c; --accent-deep: #08516a;
-  --held: #0d6e5e; --ref: #6b5b95; --col: 1180px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --ink: #e8eef2; --muted: #9fb0bc; --edge: #2c3a45; --surface: #111a20;
-    --wash: #16212a; --accent: #57b6d4; --accent-deep: #8ed2e8;
-    --held: #5fc7ae; --ref: #b3a3dd;
-  }
-}
-:root[data-theme="dark"] {
-  --ink: #e8eef2; --muted: #9fb0bc; --edge: #2c3a45; --surface: #111a20;
-  --wash: #16212a; --accent: #57b6d4; --accent-deep: #8ed2e8;
-  --held: #5fc7ae; --ref: #b3a3dd;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0; background: var(--surface); color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans", sans-serif;
-  font-size: 16px; line-height: 1.55;
-}
-.wrap { max-width: var(--col); margin: 0 auto; padding: 0 16px; }
-a { color: var(--accent); }
-a:hover, a:focus { text-decoration: underline; }
-code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; }
-header.top { background: var(--accent-deep); color: #fff; padding: 22px 0; }
-header.top .wrap { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; justify-content: space-between; }
-header.top h1 { margin: 0; font-size: 1.35rem; letter-spacing: .01em; }
-header.top a { color: #dff1f8; }
-.sub { color: #cfe6f0; font-size: .92rem; }
-.banner {
-  background: var(--wash); border-bottom: 1px solid var(--edge);
-  padding: 12px 0; font-size: .92rem; color: var(--muted);
-}
-main { padding: 24px 0 64px; }
-h2 { font-size: 1.12rem; margin: 30px 0 10px; }
-h3 { font-size: 1rem; margin: 22px 0 8px; }
-p { margin: 8px 0; }
-.lede { font-size: 1.02rem; max-width: 72ch; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0 6px; }
-.stat { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 14px; background: var(--wash); }
-.stat b { display: block; font-size: 1.5rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
-.stat span { color: var(--muted); font-size: .84rem; }
-table { border-collapse: collapse; width: 100%; margin: 10px 0 4px; font-size: .93rem; }
-th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--edge); vertical-align: top; }
-th { color: var(--muted); font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
-tbody tr:hover { background: var(--wash); }
-.tag { display: inline-block; font-size: .74rem; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
-.tag.held { color: var(--held); }
-.tag.ref { color: var(--ref); }
-.reps a { margin-right: 8px; white-space: nowrap; }
-details { border: 1px solid var(--edge); border-radius: 8px; margin: 12px 0; background: var(--surface); }
-details > summary {
-  cursor: pointer; padding: 11px 14px; font-weight: 600;
-  display: flex; justify-content: space-between; gap: 12px; align-items: baseline;
-}
-details > summary .n { color: var(--muted); font-weight: 400; font-variant-numeric: tabular-nums; }
-details[open] > summary { border-bottom: 1px solid var(--edge); }
-.inner { padding: 0 14px 10px; overflow-x: auto; }
-.prov { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 14px; background: var(--wash); }
-.prov dt { font-weight: 600; font-size: .86rem; margin-top: 8px; }
-.prov dd { margin: 2px 0 0; color: var(--muted); }
-footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86rem; padding: 18px 0 40px; }
-.back { display: inline-block; margin-bottom: 8px; }
-@media (max-width: 640px) { header.top h1 { font-size: 1.1rem; } .wrap { padding: 0 16px; } }
+.st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
+  font-weight:600;white-space:nowrap;border:1px solid currentColor}
+.st-held{color:#0d6e5e}
+.st-ref{color:#6b5b95}
+.st-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
+.st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
+.st-stat b{display:block;font-size:1.25rem;line-height:1.2}
+.st-stat span{font-size:.75rem;opacity:.75}
 `;
 
 /**
@@ -226,12 +186,11 @@ function shell(title: string, description: string, body: string, depth = 0): str
     "---",
     "",
   ].join("\n");
-  // The stylesheet rides INSIDE the page rather than in a `<head>` this file
-  // no longer owns. just-the-docs supplies the chrome; these classes (`lede`,
-  // `mono`, `back`, the census tables) are the BODY's own and it still needs
-  // them. Dropping it was the first draft, and it would have quietly unstyled
-  // every table on 20 pages while lint reported only an unused variable.
-  return `${fm}<style>${CSS}</style>\n${body}\n`;
+  // The remaining styling rides inside the page rather than in a `<head>` this
+  // file no longer owns. It is now the handful of rules just-the-docs has no
+  // opinion about; everything the theme already provides was removed rather
+  // than overridden.
+  return `${fm}<style>${CSS}</style>\n\n${body.trim()}\n`;
 }
 
 /**
@@ -251,7 +210,12 @@ function repLinks(a: FhirArtifact): string {
     const r: Representation | undefined = a.published[k];
     if (r) out.push(`<a href="${esc(r.url)}">${k}</a>`);
   }
-  return out.length ? out.join("") : `<span class="mono">&mdash;</span>`;
+  // Separated by a middot. The old stylesheet gave `.reps` a flex gap; with
+  // that gone the four links rendered as one word -- `jsonxmlttlhtml` -- which
+  // reads as a broken link rather than as four working ones. A separator in
+  // the MARKUP survives the stylesheet being deleted, which is the whole point
+  // of having deleted it.
+  return out.length ? out.join(" · ") : "—";
 }
 
 function indexPage(ix: FhirArtifactIndex): string {
@@ -263,143 +227,104 @@ function indexPage(ix: FhirArtifactIndex): string {
     a === undefined ? 1 : b === undefined ? -1 : a.localeCompare(b),
   );
 
-  const stats = `
-<div class="grid">
-  <div class="stat"><b>${ix.count}</b><span>artefacts indexed</span></div>
-  <div class="stat"><b>${census.referenced}</b><span>referenced &mdash; bytes upstream</span></div>
-  <div class="stat"><b>${census.materialized}</b><span>materialized here</span></div>
-  <div class="stat"><b>${ix.version ?? "&mdash;"}</b><span>IG version</span></div>
-  <div class="stat"><b>${(ix.fhirVersion ?? []).join(", ") || "&mdash;"}</b><span>FHIR version</span></div>
-</div>`;
-
-  const prov = `
-<h2>Where this came from</h2>
-<p class="lede">No FHIR IG publishes an artefact-index document. What looks like one &mdash;
-<code>ValueSets.schema.json</code> at the published root &mdash; is a JSON <em>Schema</em> describing the
-shape of an enumeration response, carrying an <code>example</code> that happens to hold the list.
-So this index was <strong>reconstructed</strong>, and every part of it records which published file it came out of.</p>
-<div class="prov"><dl>
-${Object.entries(ix.provenance)
-  .map(
-    ([k, v]) =>
-      `<dt>${esc(k)}</dt><dd class="mono">${esc(Array.isArray(v) ? v.join(", ") : String(v))}</dd>`,
-  )
-  .join("\n")}
-<dt>source</dt><dd class="mono">${esc(ix.source.kind)} &mdash; ${esc(ix.source.of)} (read ${esc(ix.source.readAt)})</dd>
-<dt>canonical base</dt><dd class="mono">${esc(ix.canonicalBase ?? "not established")}</dd>
-</dl></div>`;
-
-  const dakSection = `
-<h2>DAK API surface</h2>
-<p class="lede">The IG publishes a DAK API for ${dak.schema} of its artefacts. The four sidecars are
-issued independently &mdash; every ValueSet gets all four, the logical models get two &mdash; which is why they are
-counted separately rather than as one &ldquo;has DAK&rdquo; tally.</p>
-<div class="grid">
-  <div class="stat"><b>${dak.schema}</b><span>JSON Schema</span></div>
-  <div class="stat"><b>${dak.displays}</b><span>displays</span></div>
-  <div class="stat"><b>${dak.openapi}</b><span>OpenAPI</span></div>
-  <div class="stat"><b>${dak.jsonld}</b><span>JSON-LD</span></div>
-  <div class="stat"><b>${(ix.contexts ?? []).length}</b><span>JSON-LD contexts</span></div>
-</div>
-${
-  (ix.contexts ?? []).length
-    ? `<table><thead><tr><th>Context</th><th>Published at</th></tr></thead><tbody>
-${(ix.contexts ?? [])
-  .map((c) => `<tr><td class="mono">${esc(c.id)}</td><td><a href="${esc(c.representation.url)}">${esc(c.representation.url)}</a></td></tr>`)
-  .join("\n")}
-</tbody></table>`
-    : ""
-}`;
-
-  // Resolved from provenance + the source base, never composed from a guess:
-  // `provenance.artifactsHtml` names the file the categories were read out of,
-  // and `source.of` is where that file is published.
-  const upstreamArtifacts = ix.provenance.artifactsHtml
-    ? `${ix.source.of.replace(/\/$/, "")}/${ix.provenance.artifactsHtml}`
-    : undefined;
+  const stat = (v: string | number, label: string) =>
+    `<div class="st-stat"><b>${esc(String(v))}</b><span>${label}</span></div>`;
 
   const sections = ordered
-    .map(([cat, list]) => {
-      const label = cat ?? "Not listed on the IG's artefact page";
+    .map(([label, list]) => {
+      const name = label ?? "Other";
       if (list.length > INLINE_LIMIT) {
-        const byType = new Map<string, number>();
-        for (const a of list) byType.set(a.resourceType, (byType.get(a.resourceType) ?? 0) + 1);
-        const withDak = list.filter((a) => a.dak).length;
-        const types = [...byType.entries()]
-          .sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0]))
-          .map(([t, n]) => `<tr><td>${esc(t)}</td><td style="text-align:right">${n}</td></tr>`)
-          .join("\n");
-        return `<details>
-  <summary><span>${esc(label)}</span><span class="n">${list.length}</span></summary>
-  <div class="inner">
-  <p class="lede">These ${list.length} are <strong>summarised rather than listed</strong>: over
-  ${INLINE_LIMIT} in one category, and ${
-    withDak === 0
-      ? "none of them carries a DAK API sidecar, so none has an artefact page here to link to"
-      : `${withDak} of them carry a DAK API sidecar &mdash; those appear under their own categories above`
-  }. They are instance data of the trust network rather than definitional artefacts.</p>
-  <table>
-    <thead><tr><th>Resource type</th><th style="text-align:right">Count</th></tr></thead>
-    <tbody>
-${types}
-    </tbody>
-  </table>
-  <p>Read them upstream, where the IG documents them in full:${
-    upstreamArtifacts
-      ? `\n  <a href="${esc(upstreamArtifacts)}">${esc(upstreamArtifacts)}</a>.`
-      : " the IG published no artefact page, so there is nowhere to link."
-  }
-  Every one is also in this instance's <code>fhir-artifact-index/index.json</code>, with its canonical
-  URL and published representations &mdash; that file is the index, this page is only a reading of it.</p>
-  </div>
-</details>`;
+        // Too many to inline; say so and say where they are, rather than
+        // rendering a table nobody can read or silently dropping them.
+        return [
+          `<details>`,
+          `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
+          ``,
+          `${list.length} artefacts, too many to list here. None carries a DAK API sidecar,`,
+          `so none has an artefact page; they are reachable from the IG's own`,
+          `\`artifacts.html\`.`,
+          ``,
+          `</details>`,
+        ].join("\n");
       }
-      const rows = [...list]
-        .sort((a, b) => a.key.localeCompare(b.key))
-        .map((a) => {
-          const name = a.title ?? a.name ?? a.id;
-          const linked = a.dak
-            ? `<a href="./artifact/${esc(pageName(a))}.html">${esc(name)}</a>`
-            : esc(name);
-          const state =
-            a.materialization.state === "materialized"
-              ? `<span class="tag held">materialized</span>`
-              : `<span class="tag ref">referenced</span>`;
-          return `<tr>
-  <td>${linked}<br><span class="mono" style="color:var(--muted)">${esc(a.key)}</span></td>
-  <td class="mono">${a.canonical ? esc(a.canonical) : "<span style='color:var(--muted)'>no canonical URL</span>"}</td>
-  <td class="reps">${repLinks(a)}</td>
-  <td>${state}</td>
-</tr>`;
-        })
-        .join("\n");
-      return `<details>
-  <summary><span>${esc(label)}</span><span class="n">${list.length}</span></summary>
-  <div class="inner">
-  <table>
-    <thead><tr><th>Artefact</th><th>Canonical URL</th><th>Published as</th><th>Bytes</th></tr></thead>
-    <tbody>
-${rows}
-    </tbody>
-  </table>
-  </div>
-</details>`;
+      const rows = list.map((a) => {
+        const nm = a.title ?? a.name ?? a.id;
+        // `.html`, not a trailing slash. This site sets no `permalink`, so
+        // Jekyll's default emits `artifact/Name.html` -- a directory-style
+        // link would 404 on every one of the 19 artefact pages, and it would
+        // 404 only once BUILT, which no check on the source could see.
+        const linked = a.dak ? `[${mdCell(nm)}](./artifact/${pageName(a)}.html)` : mdCell(nm);
+        const canonical = a.canonical ? `\`${mdCell(a.canonical)}\`` : "*no canonical URL*";
+        return `| ${linked}<br>\`${mdCell(a.key)}\` | ${canonical} | ${mdCell(repLinks(a))} | ${stateTag(a)} |`;
+      });
+      return [
+        `<details>`,
+        `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
+        ``,
+        `| Artefact | Canonical URL | Published as | Bytes |`,
+        `|---|---|---|---|`,
+        ...rows,
+        ``,
+        `</details>`,
+      ].join("\n");
     })
-    .join("\n");
+    .join("\n\n");
 
-  const body = `
-<p class="lede">The artefact index of the WHO SMART Trust Implementation Guide, rebuilt from what the IG
-publishes. Most of it is catalogued <strong>by reference</strong>: the index records where each artefact
-lives and holds none of its bytes. A <span class="tag ref">referenced</span> row is not a broken one &mdash;
-it means upstream, not here.</p>
-${stats}
-${prov}
-${dakSection}
-<h2>Every artefact, by category</h2>
-<p class="lede">Grouped as the IG's own <code>artifacts.html</code> groups them. An artefact with a DAK API
-sidecar links through to its own page; the rest link out to the published representations.</p>
-${sections}
-`;
+  const provRows = [
+    ...Object.entries(ix.provenance).map(
+      ([k, v]) => `| ${mdCell(k)} | \`${mdCell(Array.isArray(v) ? v.join(", ") : String(v))}\` |`,
+    ),
+    `| source | \`${mdCell(ix.source.kind)}\` — \`${mdCell(ix.source.of)}\` (read ${mdCell(ix.source.readAt)}) |`,
+    `| canonical base | \`${mdCell(ix.canonicalBase ?? "not established")}\` |`,
+  ];
+
+  const body = [
+    `The artefact index of the WHO SMART Trust Implementation Guide, rebuilt from what the IG`,
+    `publishes. Most of it is catalogued **by reference**: the index records where each artefact`,
+    `lives and holds none of its bytes. A ${stateTag({ materialization: { state: "referenced" } } as FhirArtifact)} row`,
+    `is not a broken one — it means upstream, not here.`,
+    ``,
+    `<div class="st-grid">`,
+    stat(ix.count, "artefacts indexed"),
+    stat(census.referenced, "referenced — bytes upstream"),
+    stat(census.materialized, "materialized here"),
+    stat(ix.version ?? "—", "IG version"),
+    stat((ix.fhirVersion ?? []).join(", ") || "—", "FHIR version"),
+    `</div>`,
+    ``,
+    `## Where this came from`,
+    ``,
+    `No FHIR IG publishes an artefact-index document. What looks like one —`,
+    `\`ValueSets.schema.json\` at the published root — is a JSON *Schema* describing the shape of an`,
+    `enumeration response, carrying an \`example\` that happens to hold the list. So this index was`,
+    `**reconstructed**, and every part of it records which published file it came out of.`,
+    ``,
+    `| | |`,
+    `|---|---|`,
+    ...provRows,
+    ``,
+    `## DAK API surface`,
+    ``,
+    `The IG publishes a DAK API for ${dak.schema} of its artefacts. The four sidecars are issued`,
+    `independently — every ValueSet gets all four, the logical models get two — which is why they`,
+    `are counted separately rather than as one "has DAK" tally.`,
+    ``,
+    `<div class="st-grid">`,
+    stat(dak.schema, "JSON Schema"),
+    stat(dak.displays, "displays"),
+    stat(dak.openapi, "OpenAPI"),
+    stat(dak.jsonld, "JSON-LD"),
+    `</div>`,
+    ``,
+    `## Every artefact, by category`,
+    ``,
+    `Grouped as the IG's own \`artifacts.html\` groups them. An artefact with a DAK API sidecar links`,
+    `through to its own page; the rest link out to the published representations.`,
+    ``,
+    sections,
+    ``,
+  ].join("\n");
+
   return shell(
     "WHO SMART Trust — artefact index",
     `All ${ix.count} artefacts of the WHO SMART Trust IG ${ix.version ?? ""}, reconstructed from its published output.`,
@@ -407,57 +332,89 @@ ${sections}
   );
 }
 
+/**
+ * One artefact, as MARKDOWN.
+ *
+ * Headings are `##`, prose is prose, and the two fact tables are markdown
+ * tables — so the theme's typography, its dark mode, its anchor links and its
+ * table styling all apply, and the page is searchable by just-the-docs'
+ * own index rather than being an opaque blob of HTML it copied through.
+ *
+ * `mdCell` is not fussiness: a markdown table row is delimited by `|`, so a
+ * canonical URL or a description containing one silently splits the row into
+ * an extra column. Escaping it is the difference between a table and a
+ * corrupted one, and the corruption looks like a rendering bug rather than
+ * like data.
+ */
+function mdCell(v: string): string {
+  return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
+}
+
+/** The materialization state, as the one span whose COLOUR carries meaning. */
+function stateTag(a: FhirArtifact): string {
+  return a.materialization.state === "materialized"
+    ? `<span class="st-tag st-held">materialized</span>`
+    : `<span class="st-tag st-ref">referenced</span>`;
+}
+
 function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const name = a.title ?? a.name ?? a.id;
-  const dakRows = (["schema", "displays", "openapi", "jsonld"] as const)
-    .map((k) => {
-      const r = a.dak?.[k];
-      const label = { schema: "JSON Schema", displays: "Displays", openapi: "OpenAPI", jsonld: "JSON-LD" }[k];
-      if (!r) return `<tr><td>${label}</td><td colspan="2" style="color:var(--muted)">not published for this artefact</td></tr>`;
-      return `<tr>
-  <td>${label}</td>
-  <td><a href="${esc(r.url)}">${esc(r.url)}</a></td>
-  <td class="mono">${r.localPath ? esc(r.localPath) : "<span style='color:var(--muted)'>by reference</span>"}</td>
-</tr>`;
-    })
-    .join("\n");
 
-  const counts: string[] = [];
-  if (a.dak?.codeCount !== undefined) counts.push(`<div class="stat"><b>${a.dak.codeCount}</b><span>codes</span></div>`);
-  if (a.dak?.propertyCount !== undefined) counts.push(`<div class="stat"><b>${a.dak.propertyCount}</b><span>properties</span></div>`);
+  const dakRows = (["schema", "displays", "openapi", "jsonld"] as const).map((k) => {
+    const r = a.dak?.[k];
+    const label = { schema: "JSON Schema", displays: "Displays", openapi: "OpenAPI", jsonld: "JSON-LD" }[k];
+    if (!r) return `| ${label} | *not published for this artefact* | |`;
+    const held = r.localPath ? `\`${mdCell(r.localPath)}\`` : "*by reference*";
+    return `| ${label} | <${mdCell(r.url)}> | ${held} |`;
+  });
 
-  const body = `
-<a class="back" href="../index.html">&larr; all ${ix.count} artefacts</a>
-<h2 style="margin-top:6px">${esc(name)}</h2>
-<p class="mono" style="color:var(--muted)">${esc(a.key)}</p>
-${a.description ? `<p class="lede">${esc(a.description)}</p>` : ""}
-<div class="grid">
-  <div class="stat"><b>${esc(a.resourceType)}</b><span>resource type</span></div>
-  <div class="stat"><b>${esc(a.version ?? "&mdash;")}</b><span>version</span></div>
-  <div class="stat"><b>${esc(a.category ?? "&mdash;")}</b><span>category</span></div>
-  ${counts.join("\n  ")}
-</div>
+  const stats = [
+    `<div class="st-stat"><b>${esc(a.resourceType)}</b><span>resource type</span></div>`,
+    `<div class="st-stat"><b>${esc(a.version ?? "—")}</b><span>version</span></div>`,
+    `<div class="st-stat"><b>${esc(a.category ?? "—")}</b><span>category</span></div>`,
+    ...(a.dak?.codeCount !== undefined
+      ? [`<div class="st-stat"><b>${a.dak.codeCount}</b><span>codes</span></div>`]
+      : []),
+    ...(a.dak?.propertyCount !== undefined
+      ? [`<div class="st-stat"><b>${a.dak.propertyCount}</b><span>properties</span></div>`]
+      : []),
+  ].join("");
 
-<h3>Identity and bytes are different questions</h3>
-<table><tbody>
-<tr><td style="width:12rem">Canonical URL</td><td class="mono">${a.canonical ? esc(a.canonical) : "<span style='color:var(--muted)'>none &mdash; examples and instances have no canonical URL</span>"}</td></tr>
-<tr><td>Published</td><td class="reps">${repLinks(a)}</td></tr>
-<tr><td>Materialization</td><td>${
-    a.materialization.state === "materialized"
-      ? `<span class="tag held">materialized</span> &mdash; ${esc(a.materialization.purpose ?? "")} copy, regenerable by re-running the ingest`
-      : `<span class="tag ref">referenced</span> &mdash; upstream, not held here`
-  }</td></tr>
-</tbody></table>
+  const body = [
+    // `../` from `artifact/Name.html` is the mount root, which the server
+    // resolves to its `index.html`.
+    `[← all ${ix.count} artefacts](../)`,
+    ``,
+    `## ${name}`,
+    ``,
+    `\`${a.key}\``,
+    ``,
+    ...(a.description ? [a.description, ``] : []),
+    `<div class="st-grid">${stats}</div>`,
+    ``,
+    `## Identity and bytes are different questions`,
+    ``,
+    `| | |`,
+    `|---|---|`,
+    `| Canonical URL | ${a.canonical ? `\`${mdCell(a.canonical)}\`` : "*none — examples and instances have no canonical URL*"} |`,
+    `| Published | ${mdCell(repLinks(a))} |`,
+    `| Materialization | ${stateTag(a)} — ${
+      a.materialization.state === "materialized"
+        ? `${mdCell(a.materialization.purpose ?? "")} copy, regenerable by re-running the ingest`
+        : "upstream, not held here"
+    } |`,
+    ``,
+    `## DAK API`,
+    ``,
+    `The four sidecars are published independently, so an absent one is a fact about the`,
+    `IG rather than a gap in this index.`,
+    ``,
+    `| Sidecar | Published at | Held locally |`,
+    `|---|---|---|`,
+    ...dakRows,
+    ``,
+  ].join("\n");
 
-<h3>DAK API</h3>
-<p class="lede">The four sidecars are published independently, so an absent one is a fact about the IG
-rather than a gap in this index.</p>
-<table>
-<thead><tr><th>Sidecar</th><th>Published at</th><th>Held locally</th></tr></thead>
-<tbody>
-${dakRows}
-</tbody></table>
-`;
   return shell(
     `${name} — WHO SMART Trust artefact`,
     `${a.key} in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars.`,
