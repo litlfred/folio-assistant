@@ -68,7 +68,7 @@ work_plan_prime                                 # the work plan — see §6
 ```
 
 No MCP server attached? The same graph is on disk, and reading it is three
-steps rather than a remembered path: open `harness.json` at the repository
+steps rather than a remembered path: open `<name>.json` at the repository
 root, take each `directories[]` entry whose `graphs` includes `cat-harness`,
 and read the `.md` files under it.
 
@@ -181,7 +181,7 @@ can actually affect.
 registered only when the folio opts in:
 
 ```json
-// harness.config.json
+// <name>.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

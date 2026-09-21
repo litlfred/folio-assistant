@@ -30,7 +30,7 @@ needs no second list free to disagree with it.
 > only the instiatiated harnesses (not all dependent ones) in teh folio… so
 > repo root has `<harness>.config.json`
 
-`harness.json` says what an instance **declares**. `<name>.config.json` at the
+`<name>.json` says what an instance **declares**. `<name>.config.json` at the
 instantiation root says the instance is instantiated **here**. The navbar could
 not be derived from the declarations alone, and a directory listing is not the
 question a reader is asking.

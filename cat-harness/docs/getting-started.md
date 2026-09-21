@@ -59,7 +59,7 @@ rather than asking:
 
 | fact | how it is obtained |
 |---|---|
-| `isFolio` | is there a `harness.config.json` in this directory? |
+| `isFolio` | is there a `<name>.config.json` in this directory? |
 | `repoHasContent` | does the working tree hold files that are somebody's project, as opposed to being bare? |
 | `statedIntent` | what you actually **said** — one of the five, or `unstated` |
 
@@ -217,7 +217,7 @@ bun run pages:cat-bootstrap            # derive the address, report, no probe
 bun run pages:cat-bootstrap -- --wait  # probe until the site answers (bounded)
 ```
 
-It derives the address from `harness.config.json` or the `origin` remote, finds
+It derives the address from `<name>.config.json` or the `origin` remote, finds
 publish workflows by what they *do* rather than what they are named, and reports
 one of three things:
 
@@ -240,14 +240,14 @@ script and the table cannot drift.
 ## 8. Make the landing page yours
 
 Your site's home page opens with your instance's **own** description, drawn
-inside your **own** backdrop. Both come from one file — `harness.json` at
+inside your **own** backdrop. Both come from one file — `<name>.json` at
 the repository root — and nothing about the platform's grumpy cat is written
 into the template. Change the file; the page follows.
 
 ### The markdown node you edit
 
 ```jsonc
-// harness.json
+// <name>.json
 {
   "title": "My Folio",              // the left sidebar's heading
   "description": "One line.\nAnother line.",   // ← the landing markdown

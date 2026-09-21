@@ -15,7 +15,7 @@ got here — nothing at its root says so.
 That gap is the reason this step exists. A person landing on the checkout reads
 `README.md` first. So does an agent that arrives before it has found any
 declaration, which is every agent at cold start. Until this runs, the fact that
-the repository has a harness lives in `harness.json` and in a log, and neither
+the repository has a harness lives in `<name>.json` and in a log, and neither
 is where anybody looks first.
 
 ## Writing it is not the write the layer rule forbids

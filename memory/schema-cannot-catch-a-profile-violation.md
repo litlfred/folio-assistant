@@ -12,7 +12,7 @@ agents:
 `content/pipeline/profile-check.ts` runs on every `content_validate` and
 catches what **Zod structurally cannot**: a `theorem` is a valid `theorem`
 whatever folio it sits in, and `constraints.ts` cannot read
-`harness.config.json`.
+`<name>.config.json`.
 
 Two rules: kind-within-profile, and (document only) **no `lean` field and no
 `.lean` sibling** — because `remark`, `example`, `algorithm` and `simulator`

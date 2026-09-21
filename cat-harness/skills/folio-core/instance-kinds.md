@@ -93,7 +93,9 @@ A prefix names the **layer** or the **owner** an instance belongs to.
 
 **Four of the eleven instances here carry no prefix at all** — `agent-skills`,
 `detangle`, `kg-navigation`, `large-datasets` (measured 2026-09-21,
-`ls -d */harness.json`). That is the state of the corpus, not a backlog: an
+`for d in */; do ls "$d${d%/}.json"; done` — a declaration is named for its
+instance, so there is no one glob for them). That is the state of the corpus,
+not a backlog: an
 unprefixed name is undecided, not wrong, and this skill does not make it a
 finding. Do not sweep them into a family to make the table tidy; a rename is
 the one act with consequences that cannot be undone later (§"And the owner may

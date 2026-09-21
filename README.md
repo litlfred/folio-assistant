@@ -248,7 +248,7 @@ content/my-guidance-note/            the document
 content/schema/                      builder shim — the one place the platform path is written
 uploads/                             source PDFs, for offline citation verification
 library/                             ingested source documents (read-only reference)
-harness.config.json                    selects the adapter
+<name>.config.json                   selects the adapter
 AGENTS.md                            agent guidance, tailored to your content type
 CLAUDE.md · GEMINI.md                thin stubs pointing at AGENTS.md
 .mcp.json                            wires folio-assistant as an MCP server
@@ -297,7 +297,7 @@ in a repo you are not sure about.
 
 Choose `document` unless the folio will actually carry formal mathematics —
 `paper` adds two large toolchains. Switching later is a one-line change to
-`harness.config.json`; going from `paper` to `document` additionally means
+`<name>.config.json`; going from `paper` to `document` additionally means
 removing the math blocks, which `content_profile_check` lists for you.
 
 ➡️ Full walk-throughs:

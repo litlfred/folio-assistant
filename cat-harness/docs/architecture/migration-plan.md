@@ -44,7 +44,7 @@ means discovering in Phase II that the target shape is unreachable.
 
 **Decision (2026-09-18, maintainer): load-time registration.**
 
-A dependency names a module in its `harness.config.json`:
+A dependency names a module in its `<name>.config.json`:
 
 ```jsonc
 { "contributes": "./contributions.ts" }
@@ -147,7 +147,7 @@ section per node in the folio instance.
 
 The rename is mechanical and wide — **2,408 literal `content/` occurrences
 across 429 files**. The schema is not mechanical and is the part that matters:
-today `harness.config.json` has a single `contentType` and a single adapter, so
+today `<name>.config.json` has a single `contentType` and a single adapter, so
 "a folio" and "a content instance" are the same object. Making a folio a
 container of zero-or-more instances is a model change that touches
 `adapterForKind`, the profile check, the render path and the viewer.
@@ -159,7 +159,7 @@ model; a settled model does not land cleanly on a corpus mid-rename.
 
 Everything here happens **inside** `litlfred/folio-assistant`. Nothing is
 extracted. The output is a repo whose directory structure is the future state,
-so Phase II can be `git filter-repo` plus a `harness.config.json` rather than
+so Phase II can be `git filter-repo` plus a `<name>.config.json` rather than
 archaeology.
 
 | # | work | gate |
@@ -182,11 +182,20 @@ construction: `agentic-harness.jsonld` and `folio-assist-core.jsonld` cannot
 assert the same node IRI, because the document IRI is part of every node's.
 
 The corollary is the rule the skill states and a test enforces: **artefacts are
-stub-named, the declaration file is not.** `harness.json` keeps that name
-in every repo, so a consumer can open a repository it has never seen without
-first knowing what it is called. Renaming it per-repo fails silently — a
-resolver computing the filename from the directory finds nothing when a repo is
-cloned under a different name, and reports "no config" rather than an error.
+stub-named, the declaration file is not.** The first half still holds; the
+second was re-decided on 2026-09-21, and the declaration is now `<name>.json`
+— named for the instance's `name` rather than its `stub`, which is what keeps
+it out of the stub-named set.
+
+The concern recorded here was **discovery**, and it was real: a consumer must
+be able to open a repository it has never seen without first knowing what it
+is called. It was answered rather than dropped. The failure this paragraph
+warned of — *a resolver computing the filename from the directory finds
+nothing when a repo is cloned under a different name, and reports "no config"
+rather than an error* — is the failure `findDeclarationFile()` is built to
+avoid: it never computes the name from the directory, but scans for a `*.json`
+whose stem equals the `name` **inside** it, and throws when a directory holds
+two rather than picking one.
 See [`directory-conventions`](../../skills/folio-core/directory-conventions.md)
 §Naming and [`kg-export`](../../skills/folio-core/kg-export.md).
 
