@@ -5515,6 +5515,13 @@
           "doc": "This directory is what answers at the instance's own route, `/<instance>/`."
         },
         {
+          "name": "composed",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the"
+        },
+        {
           "name": "theme",
           "type": "z.string().min(1).optional()",
           "optional": true,
