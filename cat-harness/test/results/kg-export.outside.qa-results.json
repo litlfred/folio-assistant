@@ -1,0 +1,37 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/kg-export.ts",
+    "script_hash": "c88d684ce169"
+  },
+  "subject": {
+    "kind": "graph",
+    "id": "outside.jsonld"
+  },
+  "updated_at": "2026-09-21T17:27:20.460Z",
+  "families": {
+    "danglingLinks": {
+      "summary": "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
+      "count": 0,
+      "entries": []
+    },
+    "problems": {
+      "summary": "Sources that could not be read. Never empty-by-omission.",
+      "count": 1,
+      "entries": [
+        "no canonicalUrl in ../../../tmp/outside-rYmI/outside.json, and it resolves outside this repository, so the publishing instance's base does not extend to it, and no --base-url given: @id values are document-relative and will not dereference"
+      ]
+    },
+    "undeclaredSchemaModules": {
+      "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
+      "count": 0,
+      "entries": []
+    },
+    "undeclaredTerms": {
+      "summary": "Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 1
+}
