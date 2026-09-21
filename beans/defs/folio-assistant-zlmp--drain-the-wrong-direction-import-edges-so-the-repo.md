@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-20T18:31:16Z
+updated_at: 2026-09-21T16:55:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -307,3 +307,131 @@ check the four fixes actually landed (rather than the edges being hidden by a
 re-classification under #477's new instances) and then close it.
 
 _Recorded by session_017PqeiS4JYySSWGAYLedmus._
+
+## VERIFIED 2026-09-21 — the zero is real, and the cut is still not free
+
+The entry above asked whoever owns this bean to check that the four fixes
+actually landed *"rather than the edges being hidden by a re-classification
+under #477's new instances"*, and then close it. Both halves done.
+
+### Re-measured
+
+`bun run check:partition` on `main` at `6ab8f037`: **785 modules, 1756 internal
+edges, 0 wrong-direction, 0 unassigned, 0 unresolved.** The tree has grown by
+106 modules and 222 edges since the `4cdd77d7d8` reading above, so this is not
+that measurement repeated.
+
+### The four, one at a time
+
+Checked with the tool's own module map (`analyse().modules`, instance-relative
+keys) rather than by re-running the summary — the summary is the number under
+test, so reading the answer off it would be circular.
+
+| # | edge | what changed | verdict |
+|---|---|---|---|
+| 1 | `schemas/harness-config.ts` → `schemas/contributions.ts` | the **import is gone**; `harness-config.ts` now imports only `zod`, `node:fs`, `node:path`, `./content-type`, `./cat-harness` and a side-effect `./folio-graph-kind` | drained at the dependency |
+| 2 | `schemas/index.ts` → `schemas/dak-blocks.ts` | `export * from "./dak-blocks.js"` is **still there**; `dak-blocks` is now `core (triage)`, not `base` | **reclassified** — and legitimately |
+| 3 | `scripts/check-workflow-refs.ts` → `schemas/translation-tools.ts` | the `await import()` is **still there**; `translation-tools` is now `harness (rule)`, so both endpoints are harness | **reclassified** — and legitimately |
+| 4 | `src/types.ts` → `schemas/types.ts` | the import is **gone**, replaced by `TodoRef` / `MacroDef` — structural subsets, neither a copy nor an import (bean `jcmx`) | drained at the dependency |
+
+Two of the four went by reclassification, which is exactly what this bean asked
+to be ruled out. Both survive the check, because the question is not *whether*
+a module was reclassified but whether the reclassification carries evidence:
+
+- **`dak-blocks` → core** cites the core's own declaration: `schemas/block-kinds.ts`
+  (core) declares `CONTENT_ADAPTERS = ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so
+  the module defining those schemas cannot live in another repository from the
+  union that names them. *"The classification was wrong, not the import."* What
+  stays `smart-base` is the L2/L3 **authoring skills**. This was one of the two
+  options this bean itself named for edge 2.
+- **`translation-tools` → harness** cites the owner's cut of 2026-09-19 —
+  *"f-a-core has high level processes only, no tooling"* — and is **measured
+  against the alternative**: assigning the seven unassigned modules alone took
+  wrong-direction edges 5 → 15; this ordering gives 4 and 0 unassigned.
+
+`src/types.ts` deserves one note, because this bean recorded its edge as *"the
+FIX for a drifted `FeedbackItem`; the answer is to move the type down, not
+delete the import"* — and the import was in fact deleted. It did **not** go back
+to the copy. The file now declares `TodoRef` and `MacroDef`, which name only
+what a harness signature needs and are satisfied structurally by the richer core
+types; the drift incident is kept in a comment because the hazard is permanent,
+and generics were tried first and dropped on a measurement (nothing in the repo
+reads a field off `.todos` or `.macros` through these shapes).
+
+### The re-analysis this bean's "Done when" also asks for
+
+**`check:partition` counts BUILD-TIME edges. A variable specifier is
+deliberately not an edge** — `repo-partition` counts `import("./literal")` and
+not `import(variable)`, and `qa-checker-discovery`, `render-discovery`,
+`route-groups` and the tool groups all use that on purpose. The reasoning is
+sound (*"the edge disappears exactly when the target stops being hardcoded"*),
+but for a repository **split** it has a consequence the zero does not show: the
+target still has to exist at runtime, and after the cut it exists **in another
+package**.
+
+Measured, by resolving each declaration and asking the partition tool for the
+target's layer:
+
+| resolver | layer | target | target layer | scope |
+|---|---|---|---|---|
+| `content/pipeline/qa-checker-discovery.ts` | core | `qa-checkers-cost.ts` | **sci** | 2 criteria |
+| `content/pipeline/qa-checker-discovery.ts` | core | `qa-checkers-dak.ts` | **base** | 5 criteria |
+| `content/pipeline/render-discovery.ts` | core | `render-latex.ts` | **sci** | the paper render target |
+| `src/server.ts` route groups | harness | `src/routes/{feedback,glossary,relevance}.ts` | **core** | 3 routes |
+| `src/server.ts` tool groups | harness | `src/tools/translation.ts` | **core** | 1 group |
+
+The other 7 checker modules are core, same layer as their resolver, and
+`render-markdown.ts` is core — so this is 5 declarations, not a systemic leak.
+
+**This is the same blocker this bean already states, now with a number.** The
+three clusters it named — `AUTOMATED_CHECKERS[id] ?? DAK_AUTOMATED_CHECKERS[id]`,
+`renderChapter`/`validateLatexAst`, and the MCP server wiring — did not go away;
+they became variable-specifier lookups, which is a real improvement (the
+build-time dependency is gone and the target is now declared data) and is not
+the same as the dependency being gone. The A/B/C decision recorded above is
+still what stands between this zero and a safe cut.
+
+**One thing the route and tool declarations already do that the others do not**:
+they carry an explicit `layer:` field per entry, so a reader can see from the
+declaration which mounts cross the line. `QaCriterionDefinition.source_file` and
+the render-target declarations carry no such field, which is why the table above
+had to be computed rather than read. Making that symmetric would let the cut be
+*planned* from the declarations instead of rediscovered — proposed, not done,
+because it is part of the same owner decision.
+
+### Status
+
+The **build-time gate this bean exists for is clear**: 0 wrong-direction, 0
+unassigned, `bun run gates` 85 of 85. `wggr` / `b5f0` / `zmdo` are not waiting
+on it. Left `in-progress` rather than completed for one reason: the "Done when"
+also asks whether the cut can be made, and the honest answer is *not yet* — five
+declared runtime edges cross layers, and who registers a built-in adapter's
+contributions (A / B / C above) is still the owner's open call.
+
+### The A/B/C decision is settled — `rfev`
+
+Owner, 2026-09-21: **C now, B as the destination.** Built-ins self-register at
+the outermost layer, and each converts to a real `contributes` dependency one
+at a time rather than on a flag day. Carried into `folio-assistant-rfev`, which
+also records the first thing that had to be fixed before any registration was
+possible: a contributed QA checker had no source file, so it could not be
+freshness-hashed, and every one would have arrived with verdicts that can never
+go stale.
+
+### One of the five runtime edges is drained, and one entry above is stale
+
+`rfev`'s vertical slice moved `qa-checkers-cost.ts` into `folio-assistant-sci`,
+which now contributes its two checkers through the repository's first
+dependency edge. `qa-checker-discovery` resolves **no sci path** any more: a
+contributed checker arrives as a function, so the contributor imported its own
+module and core names nothing. Four of the five remain.
+
+**Stale entry, corrected:** the table above records `build.ts` as *core*
+calling `renderChapter` in sci. `build.ts` is classified **sci** today, and so
+are all four importers of `render-latex.ts`. That changes what draining the
+renderer edge costs — moving `render-latex.ts` alone would trade one runtime
+edge for four cross-instance imports, the same trap this bean records twice.
+The sci cluster is 39 modules and moves as a unit, under `zmdo` / `wggr`.
+
+`qa-checkers-dak.ts` is blocked on something simpler: there is no `smart-base`
+instance in this checkout at all.
