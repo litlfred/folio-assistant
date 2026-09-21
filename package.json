@@ -213,6 +213,8 @@
     "tools:coverage": "bun run cat-harness/scripts/tool-coverage.ts",
     "translate-bpmn": "bun run cat-harness/scripts/translate-bpmn.ts",
     "translate-bpmn:check": "bun run cat-harness/scripts/translate-bpmn.ts --check",
+    "translate-bpmn:bootstrap": "bun run cat-harness/scripts/translate-bpmn.ts --instance ./bootstrap",
+    "translate-bpmn:bootstrap:check": "bun run cat-harness/scripts/translate-bpmn.ts --instance ./bootstrap --check",
     "translate-kg-viewer": "bun run cat-harness/scripts/translate-kg-viewer.ts",
     "translate-kg-viewer:check": "bun run cat-harness/scripts/translate-kg-viewer.ts --check",
     "translation:block-qa": "bun run cat-harness/content/pipeline/translation-block-qa.ts",

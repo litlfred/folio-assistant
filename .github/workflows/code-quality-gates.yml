@@ -603,6 +603,15 @@ jobs:
           # stub that has outlived its tool must fail rather than linger.
           bun run check:tabular-stubs
           bun run translate-bpmn:check
+          # bootstrap/ is a NESTED instance, so the run above does not scan its
+          # three diagrams and must not -- widening that scan re-introduces the
+          # leak `instance-graph-isolation.test.ts` exists to stop (`7u3g`).
+          # Its templates therefore need their own run, pointed at the instance
+          # that owns them. Bean `j28g`: they previously sat under
+          # cat-harness/translations/ where nothing refreshed them, and
+          # log-message.pot was measured missing the lane documentation added
+          # to its own diagram the same day.
+          bun run translate-bpmn:bootstrap:check
           bun run landing:sticky:check
           bun run landing:data:check
           bun run check:agents-xref
