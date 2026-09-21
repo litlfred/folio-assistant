@@ -47,6 +47,9 @@ const QA_SRC_URL = "/assets/qa/harness/page.translation.json";
 interface Meta {
   lang: string;
   translationStatus?: string;
+  /** The page this one translates. `docs-ui.js` shows it in the unverified
+   *  notice's drawer, so the notice specs need to be able to set it. */
+  translationSource?: string;
   translationQa?: { key: string; src: string; index: string } | null;
   availableLocales?: string[];
   supportedLocales?: string[];
@@ -491,5 +494,72 @@ test.describe("the translation badges are themed, not painted inline", () => {
       });
     };
     expect(await read("light")).not.toBe(await read("dark"));
+  });
+});
+
+/* ── The unverified notice is ONE LINE that opens ─────────────────────────
+ *
+ * Owner, 2026-09-21, on a translated page: *"should be a slim one line
+ * '⚠️ Unverified translation — …' which then can open to the full
+ * trnslation QA report."*
+ *
+ * It was a four-line block above the page title, on every translated page,
+ * permanently. Nothing guarded its shape, which is why it could grow to four
+ * lines without anyone noticing — so these tests assert the SHAPE, not just
+ * that the words are present. `textContent` is DOM order regardless of CSS,
+ * so a collapsed drawer answers every text assertion; geometry and the
+ * `open` attribute are what separate the two arrangements.
+ */
+test.describe("the unverified-translation notice", () => {
+  test("is a collapsed disclosure, not a block", async ({ page }) => {
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
+    const notice = page.locator(".fa-translation-warning");
+    await expect(notice).toHaveCount(1);
+    await expect(notice).not.toHaveAttribute("open", "");
+
+    // ONE LINE. The old block ran to four, and a height assertion is the only
+    // thing that catches it growing back — the words are the same either way.
+    const box = await notice.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.height).toBeLessThan(64);
+  });
+
+  test("the detail is hidden until opened, then reachable", async ({ page }) => {
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
+    const notice = page.locator(".fa-translation-warning");
+    const body = notice.locator(".fa-translation-warning__body");
+
+    await expect(body).toBeHidden();
+    await notice.locator("summary").click();
+    await expect(body).toBeVisible();
+    await expect(body).toContainText("index.md");
+    await expect(body).toContainText("translation_signoff");
+  });
+
+  test("opens from the keyboard, and closing is reachable — `l4zi`", async ({ page }) => {
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
+    const notice = page.locator(".fa-translation-warning");
+    const summary = notice.locator("summary");
+
+    await summary.press("Enter");
+    await expect(notice).toHaveAttribute("open", "");
+    await summary.press("Enter");
+    await expect(notice).not.toHaveAttribute("open", "");
+  });
+
+  test("offers the QA report only when there IS one", async ({ page }) => {
+    // `pb04`: a control that opens nothing is worse than no control. The
+    // button is drawn from `translationQa.src`, so a page with no projection
+    // gets the notice and no dead button.
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationQa: null });
+    await expect(page.locator(".fa-translation-warning")).toHaveCount(1);
+    await expect(page.locator(".fa-translation-warning__report")).toHaveCount(0);
+  });
+
+  test("and a verified page gets no notice at all", async ({ page }) => {
+    // The control that makes the rest mean something: every assertion above
+    // would pass over a notice injected onto every page.
+    await serve(page, { lang: "fr", translationStatus: "verified" });
+    await expect(page.locator(".fa-translation-warning")).toHaveCount(0);
   });
 });
