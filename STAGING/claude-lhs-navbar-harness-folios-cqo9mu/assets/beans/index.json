@@ -42,7 +42,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:54:07Z",
-      "updatedAt": "2026-09-20T22:58:07Z",
+      "updatedAt": "2026-09-21T10:28:48Z",
       "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD), in three messages.\n\n## 1. The handler\n\n> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`\n> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.\n> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could\n> clarify it lives at `cat-harness/docs-auto",
       "file": "beans/defs/folio-assistant-06e3--docs-auto-a-handler-at-cat-harnessdocs-autoauto-do.md"
     },
@@ -819,6 +819,20 @@
       "file": "beans/defs/folio-assistant-5tul--crdm-data-modelling-phase-guidance-skill-plus-the.md"
     },
     {
+      "id": "folio-assistant-5wrg",
+      "title": "A11Y GATE: the six state dashboards are audited by nothing — measured clean today, untested tomorrow",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:51:28Z",
+      "updatedAt": "2026-09-21T10:54:04Z",
+      "preview": "Found 2026-09-21 by asking a question rather than assuming the answer: *does the\naccessibility gate cover the state dashboards?*\n\n## Measured, both halves\n\n**The gate audits ONE page.** `cat-harness/test/a11y.e2e.ts` runs axe over\n`PAGE = \"/_kg/folio-assistant/index.html\"` — the KG viewer — plus an i18n\nfixture and two sticky fixtures it builds itself. Grepping for a `goto` at any\nof `qa/`, `beans",
+      "file": "beans/defs/folio-assistant-5wrg--a11y-gate-the-six-state-dashboards-are-audited-b.md"
+    },
+    {
       "id": "folio-assistant-5xfr",
       "title": "qou's pin bump must rename folio.config.json AND add qaAxes in the same commit, or it silently loses both",
       "status": "todo",
@@ -1367,7 +1381,7 @@
     {
       "id": "folio-assistant-8ka1",
       "title": "COORDINATION: two files moved under sibling PRs' feet — gen-bootstrap-graph.ts and repo-partition.ts",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -1535,14 +1549,14 @@
     {
       "id": "folio-assistant-a6kl",
       "title": "L1 GATE WAS A NO-OP IN CI: check:l1-complete ran from the repo root and found no declaration",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "critical",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T10:20:54Z",
-      "updatedAt": "2026-09-21T07:28:59Z",
+      "updatedAt": "2026-09-21T10:10:00Z",
       "preview": "FOUND 2026-09-20 while excising `directoryForGraph`, and it predates that work.\n\n`.github/workflows/code-quality-gates.yml` runs `bun run check:l1-complete` and `-- --check` from the REPOSITORY ROOT. The script resolved its corpus with `checkAll(resolve(\".\"))` -- the CWD. The repository root carries no `harness.json`: the declaration is one level down, in `cat-harness/`. So `directoryForGraph(repo",
       "file": "beans/defs/folio-assistant-a6kl--l1-gate-was-a-no-op-in-ci-checkl1-complete-ran-fro.md"
     },
@@ -1941,7 +1955,7 @@
     {
       "id": "folio-assistant-cjtm",
       "title": "SKILL: creating a new instance KIND — naming, prefixes, and repointing cat-bootstrap/README.md",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -1952,7 +1966,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:45:37Z",
-      "updatedAt": "2026-09-21T07:36:35Z",
+      "updatedAt": "2026-09-21T07:54:06Z",
       "preview": "Owner, 2026-09-20, across several messages while PR #477 was merging. Every\nline below is theirs; the grouping is mine.\n\n## The prefix families\n\n> cat- prefix does not extend to folio-assistant-*\n\n> also who- prefixs, and litlfred- prefix\n\nSo a prefix names the LAYER or the OWNER an instance belongs to, and the\nfamilies in this repository today are:\n\n| prefix | what it marks | instances here |\n|--",
       "file": "beans/defs/folio-assistant-cjtm--skill-creating-a-new-instance-kind-naming-prefixes.md"
     },
@@ -2117,7 +2131,7 @@
     {
       "id": "folio-assistant-dhvf",
       "title": "DEPENDENCY VERSIONS: instance deps float on a git branch, and nothing declares a version — SUSHI/FHIR vs semver options",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -2565,9 +2579,9 @@
     {
       "id": "folio-assistant-hso8",
       "title": "BLOCKER: main and this branch name the core instance differently — folio-assist-core vs folio-assistant-core",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "high",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
@@ -2733,7 +2747,7 @@
     {
       "id": "folio-assistant-jbx2",
       "title": "VISUALISER: library/ — the L1 corpus as something you can look at",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -2742,7 +2756,7 @@
         "folio-assistant-cjtm"
       ],
       "createdAt": "2026-09-20T14:01:05Z",
-      "updatedAt": "2026-09-20T18:50:45Z",
+      "updatedAt": "2026-09-21T07:54:15Z",
       "preview": "Owner, 2026-09-20: *\"we also need library/ harness visualation\"*, and\n*\"bean up to do: library/ visualaiont. the fsh-gts/ has visualion beaned up\nalready/in-progress.\"*\n\n## Why this one first among the missing viewers\n\n`library/` is L1 — every knowledge-graph reference to a source resolves THROUGH\nit, never to a loose path or a bare URL. So it is the subgraph whose contents\nmost consumers depend o",
       "file": "beans/defs/folio-assistant-jbx2--visualiser-library-the-l1-corpus-as-something-you.md"
     },
@@ -2905,14 +2919,14 @@
     {
       "id": "folio-assistant-kvsx",
       "title": "ARROW DIRECTION: 94% of KG edges point where the AUTHOR PUT THE POINTER, not where the dependency runs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "critical",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:27:47Z",
-      "updatedAt": "2026-09-21T08:54:25Z",
+      "updatedAt": "2026-09-21T10:10:00Z",
       "preview": "Owner, 2026-09-20, one question: 'are arrows in wrong direction somewhere?' Yes. Measured the same hour. Parent is the epic because a bug may not hang off a task; the topic bean is `j79e` (detangle).\n\n| extractor | cross-group edges | direction is |\n|---|---|---|\n| `bpmn-skill` | 340 | RECORDED |\n| `json-skill` | 125 | RECORDED |\n| `ts-import` | 28 | ENFORCED |\n| `md-link` | 5 | RECORDED |\n\n**470 ",
       "file": "beans/defs/folio-assistant-kvsx--arrow-direction-94-of-kg-edges-point-where-the-aut.md"
     },
@@ -3045,7 +3059,7 @@
     {
       "id": "folio-assistant-lv3j",
       "title": "BPMN has no precondition element, and initialize-harness needs one",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -3171,14 +3185,14 @@
     {
       "id": "folio-assistant-n0nf",
       "title": "ROOT DOCS: the repository root gets a docs/ installed by cat-harness, the way a dependent gets uploads/ and library/",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:01:17Z",
-      "updatedAt": "2026-09-21T05:18:07Z",
+      "updatedAt": "2026-09-21T10:10:00Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus):\n\n> root should have docs/ installed by cat-harness.\n\nThis settles the last open question on `o7eq` — whether the ROOT instance\ngets its own segment. It does not need one, because its `docs/` is not its\nown: cat-harness installs it, the same way a dependent folio gets its\n`uploads/` and `library/`.\n\n## Measured, 2026-09-20 on main at `e7f0b4d6a1",
       "file": "beans/defs/folio-assistant-n0nf--root-docs-the-repository-root-gets-a-docs-installe.md"
     },
@@ -3395,14 +3409,14 @@
     {
       "id": "folio-assistant-owt6",
       "title": "NAVBAR DIVIDERS: harness tiles read as a dashboard; they should read as the tabbed dividers of one giant folio",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T10:50:42Z",
-      "updatedAt": "2026-09-21T10:50:42Z",
+      "updatedAt": "2026-09-21T11:12:46Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — owner feedback, 2026-09-21, on the deployed staging preview, with a screenshot of the sidebar and a reference photo of a ring-bound notebook with coloured index dividers.\n\n> those are too much like a dashboard, i want them to be more like diverders. as\n> if you are opening a giant tabbed folio, but the tabs are oriented hoizontally.\n\n",
       "file": "beans/defs/folio-assistant-owt6--navbar-dividers-harness-tiles-read-as-a-dashboard.md"
     },
@@ -3495,7 +3509,7 @@
     {
       "id": "folio-assistant-pomp",
       "title": "A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-vke6",
@@ -3551,14 +3565,14 @@
     {
       "id": "folio-assistant-py74",
       "title": "QA PROJECTION: six schemas, three incompatible verdict shapes — no honest roll-up exists yet",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T23:09:04Z",
-      "updatedAt": "2026-09-20T23:09:04Z",
+      "updatedAt": "2026-09-21T10:30:54Z",
       "preview": "`<base>/qa/` says \"declared and nothing publishes a projection for it yet\" over **592 committed JSON files**. A reader was attempted 2026-09-20 and STOPPED at the measurement, deliberately.\n\n## What the graph actually holds\n\n| schema | files | where a verdict lives |\n|---|---|---|\n| `kg-qa/v1` | 316 | `criteria` as a DICT keyed by criterion id, plus `totals` |\n| `qa-witness/v1` | 134 | `state` (to",
       "file": "beans/defs/folio-assistant-py74--qa-projection-six-schemas-three-incompatible-verdi.md"
     },
@@ -3777,14 +3791,14 @@
     {
       "id": "folio-assistant-rq8s",
       "title": "A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:04Z",
-      "updatedAt": "2026-09-21T06:30:04Z",
+      "updatedAt": "2026-09-21T10:29:09Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
@@ -4481,14 +4495,14 @@
     {
       "id": "folio-assistant-x0hj",
       "title": "PUBLICATION LAYOUT: <baseurl>/ is the root docs pipeline, <baseurl>/<instantiated harness>/<path> is everything else",
-      "status": "todo",
+      "status": "scrapped",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:26:35Z",
-      "updatedAt": "2026-09-20T18:26:35Z",
+      "updatedAt": "2026-09-21T10:40:17Z",
       "preview": "Owner, 2026-09-20, verbatim — the layout is specific enough that a paraphrase\nwould lose which segment comes from where:\n\n| rendered assets should be available at toplevel like <baseULR>/ for main jsut\n| the docs pipleline, or <baseurl>/<page> where is registered rendered page from\n| a harness that was instantiated and enbaled (by default enabled) realtivg to\n| their url, so <baseurl>cat-harness/d",
       "file": "beans/defs/folio-assistant-x0hj--publication-layout-baseurl-is-the-root-docs-pipeli.md"
     },
@@ -4791,14 +4805,14 @@
     {
       "id": "folio-assistant-yl5w",
       "title": "CATALOGUE: localPath is an unchecked edge, and all three point at nothing",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:49:27Z",
-      "updatedAt": "2026-09-20T18:49:27Z",
+      "updatedAt": "2026-09-21T07:38:38Z",
       "preview": "MEASURED 2026-09-20, on `main` after #477 merged. Every `bitstreams[].materialization.localPath` in `who-iris/catalogue/nodes/` names a file that does not exist:\n\n| node | localPath | resolves to | state |\n|---|---|---|---|\n| `item/18892cf3-…` | `uploads/WPR-RDO-2020-003-eng.pdf` | `who-iris/uploads/WPR-RDO-2020-003-eng.pdf` | **MISSING** |\n| `item/local:9789241548960-eng` | `uploads/9789241548960",
       "file": "beans/defs/folio-assistant-yl5w--catalogue-localpath-is-an-unchecked-edge-and-all-t.md"
     },
@@ -4815,6 +4829,20 @@
       "updatedAt": "2026-09-20T22:53:52Z",
       "preview": "Found while building the `elsewhere` state (bean `flh4`, PR #619). A `ContentDirectory`'s `path` resolves against the INSTANCE root; its `coverage.visualiser` / `coverage.docs` resolve against the REPO root. Nothing in `SubgraphCoverageSchema` or `ContentDirectorySchema` says so.\n\nMeasured 2026-09-20 across `harness.json` and `cat-harness/harness.json`: of 27 coverage paths, **25 resolve only from",
       "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-dire.md"
+    },
+    {
+      "id": "folio-assistant-yt7j",
+      "title": "",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:13:34Z",
+      "updatedAt": "2026-09-21T10:13:34Z",
+      "preview": "## RULED 2026-09-21 — repository-root relative, and one exported resolver\n\nThe owner, choosing from four options with their costs:\n\n> One exported resolver, no schema change.\n\nSo `coverage.visualiser` and `coverage.docs` resolve against the **repository\nroot**, full stop, and `resolveCoveragePath(repoRoot, coveragePath)` in\n`schemas/cat-harness.ts` is that ruling as code rather than as prose. No n",
+      "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-direc.md"
     },
     {
       "id": "folio-assistant-yv4z",
@@ -5016,24 +5044,6 @@
   "findings": [
     {
       "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-cjtm",
-      "blocks": "folio-assistant-jbx2",
-      "detail": "blocks `folio-assistant-jbx2` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-cjtm",
-      "blocks": "folio-assistant-v1hw",
-      "detail": "blocks `folio-assistant-v1hw` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-cjtm",
-      "blocks": "folio-assistant-x4a6",
-      "detail": "blocks `folio-assistant-x4a6` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",
       "blocks": "folio-assistant-p67i",
       "detail": "blocks `folio-assistant-p67i` and states no expiry, so the block cannot be told from abandoned work"
@@ -5055,6 +5065,18 @@
       "bean": "folio-assistant-04vl",
       "blocks": "folio-assistant-d5f1",
       "detail": "is completed but still blocks `folio-assistant-d5f1`, which is in-progress"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-cjtm",
+      "blocks": "folio-assistant-v1hw",
+      "detail": "is completed but still blocks `folio-assistant-v1hw`, which is todo"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-cjtm",
+      "blocks": "folio-assistant-x4a6",
+      "detail": "is completed but still blocks `folio-assistant-x4a6`, which is todo"
     }
   ]
 }
