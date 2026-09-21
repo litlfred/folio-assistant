@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>who-iris — ingested IRIS replica</title>
+<title>who-iris — documentation — ingested IRIS replica</title>
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
 <style>
   :root {
@@ -325,97 +325,68 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div>
 </div></header>
 
+<!--
+  THE DOCUMENTATION IS NOT IN THIS NAVBAR, and that is the owner's ruling of
+  2026-09-21: *"the docs/ should not be for the who-iris top navbar, instead,
+  f-a navbar should still be on the left, with who-iris and then link to docs
+  on side in navbar."*
+
+  This strip is the REPLICA's chrome -- it exists to look like the IRIS site,
+  and the IRIS site has no page about how this repository ingested it. The
+  ingestion notes and the portal proposal are reached from the folio-assistant
+  navbar on the left, through who-iris's own tile in harness-tiles.ts, which
+  is where a reader looking for documentation about this harness is standing.
+  Putting them here also meant linking across two mount points once the split
+  landed, which is a relative path that breaks the first time either route
+  moves.
+
+  (No backticks in this comment: it sits inside the page template literal, and
+  one here closes the string and turns the rest of the file into TypeScript,
+  failing at a line far from the mistake.)
+-->
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
-  <a href="ingestion-notes.html">Ingestion notes</a>
-  <a href="kg-to-portal.html">KG &rarr; portal</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><span class="here">Home</span></div></div>
+<div class="crumbs"><div class="wrap"><span class="here">Documentation</span></div></div>
 
 <main class="wrap">
 
-<section class="hero">
-  <div class="hero-in">
-    <h1>IRIS</h1>
-    <p>The primary objective of the Institutional Repository for Information Sharing
-    (IRIS) is to provide free digital access to the scientific and technical
-    publications of the World Health Organization (WHO), including contributions from
-    its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS
-    encompasses the mandates established by the Organization&rsquo;s Governing Bodies in
-    collaboration with its Member States.</p>
-  </div>
-  <p class="hero-note">Replica. No WHO emblem, no photograph &mdash; colour only,
-  from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p>
-</section>
+<h1>who-iris &mdash; documentation</h1>
 
-<div class="searchbar">
-  <input type="text" disabled
-    placeholder="Search through the repository&rsquo;s 273559 items"
-    aria-label="Search (disabled in this replica)">
-  <button type="button" disabled>Search</button>
-</div>
-<p class="searchnote">Disabled. <strong>273,559</strong> items across <strong>1,057,223</strong> files is what IRIS reports; this catalogue holds <strong>3</strong> of them by
-reference and <strong>3</strong> by value. There is no index behind the box,
-and a box that returned nothing quietly would be worse than one that says so.</p>
-
-<h2>Recent Submissions</h2>
-<p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
-IRIS&rsquo;s own list sorts on. Where a record carries several accessions the latest is
-used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.</p>
-
-<div class="subs">
-<article class="sub">
-  <div class="sub-cover"><span class="nocover" title="A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.">cover<br>withheld</span></div>
-  <div class="sub-body">
-    <a class="sub-title" href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a>
-    <p class="sub-by">World Health Organization. Regional Office for the Western Pacific (WPR/RDO/2020/003, Publication Date: 2020-05-12)</p>
-    <p class="sub-abs">This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also available. For more information on WPRO publications guidelines, please contact wpropuballstaff@who.int</p>
-    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/cat-harness/uploads/WPR-RDO-2020-003-eng.pdf">via CDN</a> &middot; <code>2.68 MB</code></p>
-  </div>
-</article>
-<article class="sub">
-  <div class="sub-cover"><span class="nocover" title="A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.">cover<br>withheld</span></div>
-  <div class="sub-body">
-    <a class="sub-title" href="item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html">WHO handbook for guideline development</a>
-    <p class="sub-by">World Health Organization (Publication Date: 2014-12-18)</p>
-    <p class="sub-abs">This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet WHO standards.</p>
-    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/9789241548960_eng.pdf">9789241548960_eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/cat-harness/uploads/9789241548960_eng.pdf">via CDN</a> &middot; <code>2.04 MB</code></p>
-  </div>
-</article>
-<article class="sub">
-  <div class="sub-cover"><span class="nocover" title="A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.">cover<br>withheld</span></div>
-  <div class="sub-body">
-    <a class="sub-title" href="item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html">WHO editorial style manual</a>
-    <p class="sub-by">World Health Organization. Technical Publications Unit (WHO/PUB/TPS/93.1, Publication Date: 1993-12-31)</p>
-    <p class="sub-abs none">No <code>dc.description.abstract</code> in the captured record.</p>
-    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WHO_PUB_TPS_93.1.pdf">WHO_PUB_TPS_93.1.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/cat-harness/uploads/WHO_PUB_TPS_93.1.pdf">via CDN</a> &middot; <code>3.14 MB</code></p>
-  </div>
-</article>
-</div>
-
-<h2>Browse</h2>
-<ul class="kids" style="margin-left:0">
-  <li><a href="community-list.html">List of Communities</a> &mdash; the replica of
-      <code>iris.who.int/community-list</code>, with every node&rsquo;s materialisation state
-      (8 communities, 2 collections)</li>
-  <li><a href="ingestion-notes.html">Ingestion notes</a> &mdash; what ingesting these
-      documents cost, generated from the skill that records it</li>
-  <li><a href="collection-collection-hq-publications.html">Publications</a> &mdash; collection</li>
-  <li><a href="collection-collection-wpro-information-products.html">Information products</a> &mdash; collection</li>
-</ul>
+<p class="lede">What this harness is, what ingesting it cost, and where the
+ingested copy is meant to end up. These pages are <em>about</em> the work; the
+catalogue itself, and the replica rendered from it, are served separately by
+the library handler.</p>
 
 <div class="caveat">
-  <p><strong>This is the front door, not the library visualiser.</strong> The
-  full <code>library/</code> visualiser is bean <code>jbx2</code> and is being
-  built separately. This page mocks the IRIS home page and links onward rather
-  than becoming a second answer to the same question.</p>
-  <p>Addressing follows the owner&rsquo;s rule &mdash;
-  <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> &mdash; so an instance that
-  instantiates a directory gets a visualiser mounted under that directory&rsquo;s
-  kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
+  <p><strong>This is not a copy of IRIS.</strong> who-iris models the WHO
+  Institutional Repository for Information Sharing <em>by reference</em>:
+  13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. Everything on these pages was transcribed from captures the
+  owner supplied &mdash; <code>iris.who.int</code> is not reachable from the
+  environment that renders them, so nothing here was fetched. The figures come
+  from the catalogue rather than from this sentence, which is why they are the
+  same ones the replica shows.</p>
 </div>
+
+<h2>Pages</h2>
+<ul class="doclist">
+  <li>
+    <a href="ingestion-notes.html">What ingesting these documents cost</a>
+    <p>The requirements the ingestion produced, rendered from
+    <code>skills/iris-dspace.md</code> rather than restated &mdash; so the page
+    and the skill cannot drift. Includes what the captured DSpace records gave
+    that inference could not.</p>
+  </li>
+  <li>
+    <a href="kg-to-portal.html">From this catalogue to somebody else&rsquo;s portal</a>
+    <p>The general pattern this instance is a worked example of:
+    <em>select &rarr; serialize &rarr; package &rarr; sign &rarr; distribute
+    &rarr; verify</em>, with the trust anchors read off the WHO SMART Trust IG
+    and the transport left undetermined rather than guessed.</p>
+  </li>
+</ul>
 
 </main>
 
