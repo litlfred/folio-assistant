@@ -1365,6 +1365,20 @@
       "file": "beans/defs/folio-assistant-8ka1--coordination-two-files-moved-under-sibling-prs-fee.md"
     },
     {
+      "id": "folio-assistant-8nzu",
+      "title": "GOAL-REVIEW PROVENANCE GOES STALE: two axis claims measurably false one day later, and following them would have missed the sweep's headline",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T06:25:55Z",
+      "updatedAt": "2026-09-21T06:26:13Z",
+      "preview": "Found 2026-09-21 by running `goal-review` itself (session_01AYHimvYMmf8h8e9fFN6dW5),\none day after the skill was authored from bean `mgta` / issue #578.\n\n## Measured\n\nThe skill keeps its authoring session's numbers \"as provenance for the rules\"\nand says so. Two of them have since become **guidance a reader follows**, and\nboth are now false:\n\n| the skill says | measured 2026-09-21 |\n|---|---|\n| §Ax",
+      "file": "beans/defs/folio-assistant-8nzu--goal-review-provenance-goes-stale-two-axis-claims.md"
+    },
+    {
       "id": "folio-assistant-8x9b",
       "title": "CRDM has no step that asks how finished requirements enter the knowledge graph",
       "status": "completed",
@@ -2763,6 +2777,20 @@
       "file": "beans/defs/folio-assistant-jh2j--tool-713-task-render-latex-pdf-rendering-16-files.md"
     },
     {
+      "id": "folio-assistant-jijc",
+      "title": "DECLARATION_FILENAME exists and 21 non-test call sites bypass it, so the REPLACE ruling is a 121-file sweep instead of one constant",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T07:14:08Z",
+      "updatedAt": "2026-09-21T07:14:08Z",
+      "preview": "Opened 2026-09-21 by session_01AYHimvYMmf8h8e9fFN6dW5, as the separable half of\nthe owner's REPLACE ruling on `b5f0` — the half that is **correct under either\nfilename**, so it cannot be wasted by a later change of mind and needs no\nfurther decision.\n\n## Measured before starting, 2026-09-21\n\n| | |\n|---|---|\n| declarations on disk | 12 (a 13th, `cat-harness/docs/_data/harness.json`, is generated Je",
+      "file": "beans/defs/folio-assistant-jijc--declaration-filename-exists-and-21-non-test-call-s.md"
+    },
+    {
       "id": "folio-assistant-jqv4",
       "title": "TOOL PATHS: 9 of 44 invoke.shell values named a command that does not run",
       "status": "completed",
@@ -2775,6 +2803,20 @@
       "updatedAt": "2026-09-20T16:35:15Z",
       "preview": "Found while working `81t5` — and it is the defect `81t5` was standing on rather\nthan the one it describes.\n\n## The measurement\n\n**9 of the 44 checkable `invoke.shell` values named a path that does not exist.**\nEvery one was missing the `cat-harness/` prefix, stale since the instance moved\nunder that directory:\n\n| node | declared | actually at |\n|---|---|---|\n| `ingest-stdlib`, `ingest-extended` | ",
       "file": "beans/defs/folio-assistant-jqv4--tool-paths-9-of-44-invokeshell-values-named-a-comm.md"
+    },
+    {
+      "id": "folio-assistant-k59d",
+      "title": "MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T06:30:00Z",
+      "updatedAt": "2026-09-21T06:30:00Z",
+      "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5), independently by **two**\ndelegated agents reading two different milestones. An instruction gap.\n\n## Measured\n\n| milestone | what its own body advertises | what the store says |\n|---|---|---|\n| `p5wm` (GOAL 2) | critical path `b5f0 → 603s → hfkl → 2krx → (6lb8 ‖ ivfw + 5y4b) → pb",
+      "file": "beans/defs/folio-assistant-k59d--milestone-critical-paths-go-stale-p5wm-and-yg29-bo.md"
     },
     {
       "id": "folio-assistant-km90",
@@ -3248,7 +3290,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T19:00:00Z",
+      "updatedAt": "2026-09-21T06:14:42Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n54 proposals merged in the window; 2 issues changed (both newly opened). `issue-marks/` tracks two issues (#203, #223). Issue #558 (\"Sticky pi",
       "file": "beans/defs/folio-assistant-oh78--issue-discipline-assumes-every-change-has-an-issue.md"
     },
@@ -3675,6 +3717,20 @@
       "updatedAt": "2026-09-19T05:43:14Z",
       "preview": "_2026-09-19T01:28:54Z_ — Measured 2026-09-19 by axe-core over the action-tile harness in tests/a11y.e2e.ts, while building 1le7. NOT caused by that change -- found because the new gate looked at a page the old one never did.\n\n`mountPageLanguageBar()` in docs/assets/js/docs-ui.js renders an always-visible row of six locale tabs into `.main-content`. Its colours are INLINE STYLES on each tab, writte",
       "file": "beans/defs/folio-assistant-rptk--the-per-page-language-bar-fails-contrast-in-both-s.md"
+    },
+    {
+      "id": "folio-assistant-rq8s",
+      "title": "A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T06:30:04Z",
+      "updatedAt": "2026-09-21T06:30:04Z",
+      "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
+      "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
     {
       "id": "folio-assistant-rtrg",
