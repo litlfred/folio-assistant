@@ -2,12 +2,19 @@
 /**
  * A name that claims an anchor must land on it.
  *
- * Bean `b963`, fourth class. The defect: `const PLATFORM = resolve(
+ * Bean `b963`, the `re-rooted-ascent` shape. The defect: `const PLATFORM = resolve(
  * import.meta.dir, "../..")` in `init-folio.test.ts` was the repository root
  * while the tests lived at `scripts/tests/`, and silently became the
  * `cat-harness/` directory when they moved. **The suite went on passing** — by
  * modelling a layout that no longer existed, and so asserting that the
  * scaffolder should keep emitting the pre-split paths.
+ *
+ * The shapes are NAMED rather than numbered, in `b963`'s register. The
+ * ordinals collided: `b963` numbered shapes in discovery order while `7iog`
+ * numbered the readers `check:command-paths` had, and both were counts in
+ * prose. `7iog`'s shape is `execution-context` — a PEER rather than a later
+ * instalment, because every `b963` shape is *the literal is stale* and that
+ * one is *the literal is fine and the frame is wrong*.
  *
  * ## This check does NOT catch that defect, and says so
  *
