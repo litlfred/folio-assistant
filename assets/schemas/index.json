@@ -774,6 +774,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/todo-index.ts",
+      "instance": "cat-harness",
+      "name": "todo-index",
+      "graphNode": "schema",
+      "summary": "The published todo index — `folio-todo-index/v1`, described at last.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/todo.test.ts",
       "instance": "cat-harness",
       "name": "todo.test",
@@ -21812,6 +21820,290 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/todo-index.ts#TodoIndex",
+      "name": "TodoIndex",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoIndexItem",
+      "name": "TodoIndexItem",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "name": "TodoIndexItemSchema",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "zod-object",
+      "doc": "One todo, as published.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "comment",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "priority",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "origin",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "createdAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "targetLabel",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The composite label. KEPT — see the module docs."
+        },
+        {
+          "name": "target",
+          "type": "TodoTargetSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The same attachment, in parts. ABSENT when the note is attached to"
+        },
+        {
+          "name": "theme",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "tags",
+          "type": "NoteTagsSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "relations",
+          "type": "z.array(TodoRelationSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "viewHref",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Present together or not at all — both come from one `sourceLinks` call."
+        },
+        {
+          "name": "editHref",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
+        "cat-harness/schemas/todo-index.ts#TodoRelationSchema",
+        "cat-harness/schemas/todo-index.ts#TodoTargetSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoIndexSchema",
+      "name": "TodoIndexSchema",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "zod-object",
+      "doc": "The document.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TODO_INDEX_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repoWeb",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The forge address, resolved rather than composed — `gen-docs-pages`' `REPO_WEB`."
+        },
+        {
+          "name": "items",
+          "type": "z.array(TodoIndexItemSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "processes",
+          "type": "z.record(z.string().min(1), z.array(z.string().min(1)))",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "themeArt",
+          "type": "z.record(z.string().min(1), z.record(z.string().min(1), z.string().min(1)))",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TODO_INDEX_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoRelation",
+      "name": "TodoRelation",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoRelationSchema",
+      "name": "TodoRelationSchema",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "zod-object",
+      "doc": "One edge, already resolved — what a sticky renders as a chip.",
+      "fields": [
+        {
+          "name": "axis",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "href",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoTarget",
+      "name": "TodoTarget",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoTargetSchema",
+      "name": "TodoTargetSchema",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "zod-object",
+      "doc": "Where a note is attached, in PARTS — the R3 field.",
+      "fields": [
+        {
+          "name": "page",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page slug the block is on."
+        },
+        {
+          "name": "node",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The block's id within that page."
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The block's declared, page-qualified label — the same value as `targetLabel`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/todo.ts#KgIndex",
       "name": "KgIndex",
       "module": "cat-harness/schemas/todo.ts",
@@ -32428,6 +32720,38 @@
       "from": "cat-harness/schemas/todo-graph.ts#TodoGraphSchema",
       "to": "cat-harness/schemas/todo-graph.ts#TodoGraphNodeSchema",
       "via": "directories",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "to": "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
+      "via": "tags",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "to": "cat-harness/schemas/todo-index.ts#TodoRelationSchema",
+      "via": "relations",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "to": "cat-harness/schemas/todo-index.ts#TodoTargetSchema",
+      "via": "target",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexSchema",
+      "to": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "via": "items",
       "kind": "field",
       "optional": false,
       "array": true

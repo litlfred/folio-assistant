@@ -256,10 +256,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T07:45:35.080Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/519e8c01d2b8a3037ed26f96b3fd84dea19da189",
-  "sourceCommitSha": "519e8c01d2b8a3037ed26f96b3fd84dea19da189",
-  "sourceCommitAt": "2026-09-21T09:44:01+02:00",
+  "generatedAt": "2026-09-21T07:51:01.489Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a1439da3cc8781a8608e07db520e7f620a06d4a5",
+  "sourceCommitSha": "a1439da3cc8781a8608e07db520e7f620a06d4a5",
+  "sourceCommitAt": "2026-09-21T09:49:22+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -272,7 +272,7 @@
     "SequenceFlow": 714,
     "ProcessNode": 680,
     "Tool": 69,
-    "Schema": 83,
+    "Schema": 84,
     "GraphKind": 22,
     "Directory": 34,
     "Asset": 3
@@ -30329,6 +30329,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/todo-index",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "todo-index",
+      "title": "The published todo index — `folio-todo-index/v1`, described at last.",
+      "module": "schemas/todo-index.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/todo",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "todo",
@@ -32059,8 +32067,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "519e8c01d2b8a3037ed26f96b3fd84dea19da189",
+    "sha": "a1439da3cc8781a8608e07db520e7f620a06d4a5",
     "pr": "main",
-    "run": "35574356096"
+    "run": "35574784848"
   }
 }
