@@ -882,12 +882,22 @@
  * is painted underneath. Neither number is a property of anything written in
  * the source, which is why the bean's own note named the wrong colour.
  *
- * ONE PALETTE, NOT TWO, and that is a measured claim rather than an omission.
- * `.fa-tiles` paints `var(--sidebar-color, #27262b)`, just-the-docs defines no
- * such custom property (see this file's header), and there is no light-scheme
- * override for it — so this bar's backdrop is the same dark panel in both
- * schemes. A `:root[data-fa-scheme="light"]` block here would be six tokens
- * that never apply, which reads as coverage and is not.
+ * TWO PALETTES NOW — AND THE FIRST VERSION OF THIS PARAGRAPH WAS WRONG WITHIN
+ * A DAY. It read: *"ONE PALETTE, NOT TWO, and that is a measured claim rather
+ * than an omission. `.fa-tiles` paints `var(--sidebar-color, #27262b)` … and
+ * there is no light-scheme override for it, so this bar's backdrop is the same
+ * dark panel in both schemes. A light block here would be six tokens that
+ * never apply, which reads as coverage and is not."*
+ *
+ * The measurement was right; the CONCLUSION was contingent on a defect. Bean
+ * `23bc` gave `.fa-tiles` the light override it had always been missing, and
+ * the moment that landed every ratio below became a number about a backdrop
+ * this bar no longer sits on in light mode.
+ *
+ * **A claim justified by another rule's absence has that rule's lifetime, not
+ * its own.** That is worth more than the six tokens, and it is why this
+ * paragraph REPLACES the old one rather than being appended under it — a
+ * superseded claim left in place is one the next reader may act on.
  *
  * `--fa-sidelang-bg` is OPAQUE and is painted by the bar itself in every one
  * of its three contexts, so each ratio below is a fact about these tokens
@@ -936,6 +946,20 @@
   z-index: 10000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
+}
+
+/* LIGHT scheme, against `.fa-tiles`'s `#e8eaed`. The same six values the
+   per-page bar uses, and that is not a coincidence — its light backdrop is the
+   same colour, so deriving a different set would be two answers to one
+   question. Re-measured rather than copied on faith. */
+:root[data-fa-scheme="light"] .fa-lang-bar {
+  --fa-sidelang-bg: #e8eaed;
+  --fa-sidelang-fg: #1f2933;           /* 12.24:1 */
+  --fa-sidelang-link: #1d4ed8;         /*  5.56:1 */
+  --fa-sidelang-muted: #5a6472;        /*  4.98:1 */
+  --fa-sidelang-current-bg: #1d4ed8;   /*  5.56:1 as a surface on the bar */
+  --fa-sidelang-on-current: #ffffff;   /*  6.70:1 on --fa-sidelang-current-bg */
+  --fa-sidelang-hover-bg: #d6dae0;     /*  4.78:1 for --fa-sidelang-link on it */
 }
 
 .fa-lang-tab {
@@ -1649,6 +1673,33 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   background: var(--sidebar-color, #27262b);
 }
 
+/* LIGHT MODE — bean `23bc`. Owner: *"class=\"fa-qr-toggle fa-tiles-toggle\"
+ * does not respect light mode."*
+ *
+ * THE TOGGLE WAS NEVER THE DEFECT. It is `background: transparent;
+ * color: inherit`, so it follows the sidebar in either scheme. The defect is
+ * the one literal above — `var(--sidebar-color, #27262b)` with no light
+ * override, so the panel stayed dark on a light page. Everything inside it,
+ * `.fa-tile` and `.fa-tiles-back`, is transparent-and-inherit, so one value
+ * fixes the panel and its contents together.
+ *
+ * THE INCOHERENCE WAS ALREADY IN THIS FILE, which is why the report is right
+ * even though the element it names is innocent: `.fa-tiles .fa-search-holder`
+ * has carried a light override since it was written, painting a WHITE field
+ * onto a permanently dark panel. Somebody light-themed the contents of
+ * something that never went light.
+ *
+ * AND THE a11y GATE CANNOT SEE IT. `test/a11y.e2e.ts` drives this harness in
+ * both schemes and passed throughout, because a dark panel with light text
+ * PASSES contrast. This is scheme incoherence, not a WCAG failure — so the
+ * gate's silence was never evidence either way, and the spec added with this
+ * change asks the question axe structurally cannot. */
+:root[data-fa-scheme="light"] .fa-tiles {
+  background: #e8eaed;
+  border-color: #767d88;               /* 3.44:1 as a boundary, SC 1.4.11 */
+  color: #1f2933;                      /* 12.24:1 — every tile caption    */
+}
+
 .fa-tiles[data-open="true"] { display: block; }
 
 /* Two columns inside the sidebar's 16.5rem, which puts a tile at roughly
@@ -2257,6 +2308,63 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-sticky-body p { margin: 0 0 0.6em; white-space: pre-wrap; }
 .fa-sticky-body p:last-child { margin-bottom: 0; }
 .fa-sticky-empty { opacity: 0.7; font-style: italic; }
+
+/* ── The sticky's overflow drawer (bean `qefk`) ─────────────────────
+ *
+ * Owner: *"the todos controls are too clunky / take up too much real
+ * estate."* Four buttons sat on a card whose content is one line of summary,
+ * five once it floated. The answer chosen was **"3+1"** — board gestures on
+ * the face, the two that leave for the forge behind one affordance.
+ *
+ * A `<details>`, so the disclosure, the keyboard path, Escape and the
+ * expanded state are the browser's rather than four things to reimplement.
+ * The marker is removed because the summary IS the glyph; the accessible name
+ * is on the summary and names the contents rather than the shape. */
+.fa-sticky-more { position: relative; display: inline-block; }
+
+.fa-sticky-more-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 24px square: SC 2.5.8's floor, and this instance's declared interaction
+     profile is low-dexterity, so the floor is the point rather than the
+     minimum to argue down from. */
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0 0.35em;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 1;
+  list-style: none;
+}
+.fa-sticky-more-summary::-webkit-details-marker { display: none; }
+.fa-sticky-more-summary::marker { content: ""; }
+.fa-sticky-more-summary:hover { background: rgba(128, 128, 128, 0.18); }
+
+/* Opens OVER the card rather than pushing its body down: a drawer that
+   reflows the board moves every card below it, which is the thing a reader
+   was about to click. `z-index` above the card, not above the float layer. */
+.fa-sticky-more[open] .fa-sticky-more-body {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  min-width: max-content;
+  padding: 0.3em;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 5px;
+  /* OPAQUE, and for the reason the pinned sticky is: it sits over content.
+     Inherits the card's own surface so a themed sticky's drawer is themed
+     too — the `ivfw` round-trip lesson, applied before it could bite. */
+  background: var(--fa-sticky-surface, var(--sidebar-color, #27262b));
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+:root[data-fa-scheme="light"] .fa-sticky-more[open] .fa-sticky-more-body {
+  background: #ffffff;
+}
 
 /* THE LAYER IS THE FRAME, NOT THE ARRANGEMENT — bean `ivfw`.
  *
