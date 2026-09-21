@@ -1,7 +1,7 @@
 ---
 # folio-assistant-vz24
 title: 'kg-export''s publication-base fallback has no boundary: an instance outside the repo gets this site''s base'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T16:46:00Z
@@ -74,6 +74,10 @@ is already present. It now states which of the two reasons applies.
 `publishedHere` computed once in `exportIdentity` and returned, so the caller's
 diagnostic does not repeat the comparison — a second path-boundary check is a
 second chance to write `startsWith`.
+
+Merged as `220233c76e` (PR #746) and **verified on `main` after the merge**, not
+only on the branch: the boundary is at `kg-export.ts:2156` and the `/tmp`
+instance exits 1.
 
 Verified: outside instance → document-relative `@id`, problem reported, exit 1;
 `cat-bootstrap` → `<base>/cat-bootstrap.jsonld`, exit 0; root unchanged.
