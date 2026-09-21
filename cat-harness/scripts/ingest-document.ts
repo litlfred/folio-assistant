@@ -141,7 +141,7 @@ export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
   const declared = directoriesForGraph(root, "library");
   if (declared.length === 0) {
     throw new Error(
-      "this instance declares no `library` graph in harness.json — " +
+      "this instance declares no `library` graph in its `<name>.json` — " +
         "ingesting into a guessed directory would file the document where nothing scans it",
     );
   }

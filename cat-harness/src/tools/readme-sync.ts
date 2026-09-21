@@ -45,7 +45,7 @@ export function registerReadmeSyncTools(server: McpServer): void {
         .enum(["blob", "pages", "raw"])
         .optional()
         .describe(
-          "Override harness.config.json's `readme.linkStyle`. 'blob' " +
+          "Override `<name>.config.json`'s `readme.linkStyle`. 'blob' " +
             "(github.com/<owner>/<repo>/blob/<ref>/<path>) is the only one that " +
             "resolves for a PRIVATE repository — GitHub Pages needs a public site, " +
             "and raw.githubusercontent.com 404s without a token.",

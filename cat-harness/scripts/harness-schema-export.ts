@@ -96,7 +96,7 @@ export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<s
     ...(base ? { $id: renderingPath(base, `${stub}.schema.json`) } : {}),
     title: "CatHarness declaration",
     description:
-      "The root declaration every instance carries as `harness.json`: what it is called, " +
+      "The root declaration every instance carries as `<name>.json`: what it is called, " +
       "where it publishes, and which directories it scans for which kind of graph. " +
       "Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
     ...(base ? { $comment: `Instance graph: ${renderingPath(base, `${stub}.jsonld`)}` } : {}),

@@ -108,7 +108,7 @@ export const UI_STRINGS: readonly UiString[] = [
     en: "Subgraph",
     comment:
       "Heading of the SECOND filter column, added 2026-09-20. The values are declared-directory ids " +
-      "from the instance's own harness.json (cat-harness, bootstrap, schemas, …) and come from the " +
+      "from the instance's own declaration (cat-harness, bootstrap, schemas, …) and come from the " +
       "graph, so like the kinds they are NOT translated — a reader types them into a query, and a " +
       "translated id resolves to nothing.",
   },

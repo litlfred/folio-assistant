@@ -102,7 +102,7 @@ export function uploadUrl(root: string, branch = "main"): UploadTarget {
       ok: false,
       reason: `${decl.name} declares no \`${UPLOADS_GRAPH_KIND}\` graph`,
       remedy:
-        "declare one in harness.json, or acquire the resource through another channel — see the content-acquisition skill",
+        "declare one in the instance's <name>.json, or acquire the resource through another channel — see the content-acquisition skill",
     };
   }
   if (!existsSync(resolve(repoRootFor(root), rel))) {

@@ -59,7 +59,7 @@ export function registerFolioInitTools(server: McpServer): void {
     "folio_init",
     "Scaffold a new folio (content repository) that uses folio-assistant: " +
     "folio/, uploads/, library/, the document + chapter + first block " +
-    "manifests, harness.config.json, the builder shim, AGENTS.md with CLAUDE.md " +
+    "manifests, <slug>.json and <slug>.config.json, the builder shim, AGENTS.md with CLAUDE.md " +
     "and GEMINI.md stubs, .mcp.json, and the beans work plan. Run this in an " +
     "empty repo before authoring anything. Pass content_type 'paper' for a " +
     "folio with Lean-backed mathematics, 'document' for prose (policy " +
@@ -122,7 +122,7 @@ export function registerFolioInitTools(server: McpServer): void {
               `folio_init scaffolds a new one and will not modify what is here. If you ` +
               `meant to add a document to this folio, add a directory under folio/ and ` +
               `a manifest named after it; if you meant to re-scaffold, pass force (it ` +
-              `overwrites AGENTS.md, harness.config.json and the starter block). ` +
+              `overwrites AGENTS.md, <slug>.json, <slug>.config.json and the starter block). ` +
               `Pass dry_run to see exactly what would change.`,
           }],
         };

@@ -1798,7 +1798,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       };
     });
   } catch (e) {
-    problems.push(`unparseable harness.json: ${e instanceof Error ? e.message : String(e)}`);
+    problems.push(`unparseable declaration: ${e instanceof Error ? e.message : String(e)}`);
     return [];
   }
 }

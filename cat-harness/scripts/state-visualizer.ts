@@ -851,7 +851,7 @@ const taken = all.filter((g) => RESERVED_IDS.has(g.id) || g.id.startsWith("_"));
 for (const g of taken) {
   console.error(
     `  ! declared directory \`${g.id}\` collides with a route this site already uses — ` +
-      `not rendered. Rename the directory's id in harness.json.`,
+      `not rendered. Rename the directory's id in the declaration.`,
   );
 }
 // REFUSED, not encoded — and the difference is the point.
@@ -869,7 +869,7 @@ const unportable = all.filter((g) => !taken.includes(g) && unportableSegment(g.i
 for (const g of unportable) {
   console.error(
     `  ! declared directory \`${g.id}\` cannot be a directory or a route on every platform ` +
-      `(${unportableSegment(g.id)}) — not rendered. Rename the directory's id in harness.json.`,
+      `(${unportableSegment(g.id)}) — not rendered. Rename the directory's id in the declaration.`,
   );
 }
 const graphs = all.filter((g) => !taken.includes(g) && !unportable.includes(g));

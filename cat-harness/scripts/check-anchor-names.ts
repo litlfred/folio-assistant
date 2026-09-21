@@ -208,7 +208,7 @@ export function checkAnchorNames(repo: string = repoRootFor(INSTANCE_ROOT)): Anc
             lands: to,
             detail:
               `\`${name}\` claims an instance root and lands on \`${to}\`` +
-              `${isRepo ? ", which is the REPOSITORY root — rename it to `REPO_ROOT`" : ", which carries no harness.json"}.`,
+              `${isRepo ? ", which is the REPOSITORY root — rename it to `REPO_ROOT`" : ", which carries no declaration"}.`,
           });
         }
       }

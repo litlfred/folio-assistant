@@ -413,6 +413,20 @@
       "file": "beans/defs/folio-assistant-28jx--cat-harness-declares-title-folio-assistant-so-the.md"
     },
     {
+      "id": "folio-assistant-2b5s",
+      "title": "MOUNT COPIES A DIRECTORY WHOLESALE: /who-iris/ publishes 1,367 corpus files as pages, and /library/who-iris/ publishes all 1,378 a second time",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:00:52Z",
+      "updatedAt": "2026-09-21T20:00:52Z",
+      "preview": "## What\n\n`mount-instance-docs.ts` mounts a directory when it carries an `index.html`\n**at its own root**, and then copies **everything beneath it**. For\n`who-iris/library/` that is 1,378 files, of which 11 are pages:\n\n| | count | what |\n|---|---|---|\n| pages | 11 | 7 `.html` (index, community-list, 2 collections, 3 items), 3 cover `.png`, `image-verdicts.json` |\n| L1 corpus | 1,367 | 813 `.jsonld`",
+      "file": "beans/defs/folio-assistant-2b5s--mount-copies-a-directory-wholesale-who-iris-publis.md"
+    },
+    {
       "id": "folio-assistant-2krx",
       "title": "QA AXIS: a declared subgraph with no visualiser and no documentation entry is unreachable — and no skill means no tools",
       "status": "completed",
@@ -2973,14 +2987,14 @@
     {
       "id": "folio-assistant-hw9g",
       "title": "MOUNTED PAGES HAVE NO LHS RAIL: a collapsed icon-width harness nav for every mounted instance, opening on hover or click",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T18:40:00Z",
-      "updatedAt": "2026-09-21T21:10:00Z",
+      "updatedAt": "2026-09-21T20:02:00Z",
       "preview": "## What\n\nOwner, 2026-09-21, looking at the published `/who-iris/`:\n\n> *\"i see no LHS navbar. It still should be there in this harness, but it can\n> start collapsed (so only icon width wide), hovering/clicking on it will\n> open\"*\n\nand earlier, on the same subject:\n\n> *\"f-a navbar should still be on the left, with who-iris and then link to docs\n> on side in navbar\"*\n\n## Measured, not assumed\n\nOn the",
       "file": "beans/defs/folio-assistant-hw9g--mounted-pages-have-no-lhs-rail-a-collapsed-icon-wi.md"
     },
@@ -3271,14 +3285,14 @@
     {
       "id": "folio-assistant-k8rc",
       "title": "The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:25:00Z",
-      "updatedAt": "2026-09-21T20:25:00Z",
+      "updatedAt": "2026-09-21T21:40:00Z",
       "preview": "The markdown half of this is done (`vzur`, #769). This is the `.ts` half, and\nit is **not** simply the same sweep one file type over — the exemption that\ncovers it is sound for most of the corpus and wrong for a subset.\n\n**Measured 2026-09-21 on `main` @ `83cc04b`:** 344 mentions of `harness.json`\nor `harness.config.json` in `.ts` files under `cat-harness/`, excluding\n`RETIRED_DECLARATION`'s own d",
       "file": "beans/defs/folio-assistant-k8rc--the-typescript-prose-backlog-344-and-two-of-them.md"
     },
@@ -4169,14 +4183,14 @@
     {
       "id": "folio-assistant-qgpo",
       "title": "A workflow must publish every foreign document its own graph links into",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T18:27:04Z",
-      "updatedAt": "2026-09-21T18:27:04Z",
+      "updatedAt": "2026-09-21T20:44:25Z",
       "preview": "Found while closing `3jhq`, and deliberately not attempted there.\n\n## The gap, stated precisely\n\n`check:published-instance-exports` (from `u1iu`/#725, widened in `3jhq`) checks\nthat every `kg-export --instance` invocation a workflow runs **succeeds**. It\ndoes not check that a workflow publishes everything its own graph **links\ninto**.\n\nSo the defect `3jhq` was opened for would not be caught by the",
       "file": "beans/defs/folio-assistant-qgpo--a-workflow-must-publish-every-foreign-document-its.md"
     },

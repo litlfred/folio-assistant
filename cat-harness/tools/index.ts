@@ -113,7 +113,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["discussion"],
       selection: {
         when:
-          "A fact is needed that no file in reach holds — which harness, or which repositories. Narrow the candidates from context first; a repository already carrying `cat-harness/harness.json` is not a blank slate, and a question the agent could have answered itself wastes the one it is entitled to.",
+          "A fact is needed that no file in reach holds — which harness, or which repositories. Narrow the candidates from context first; a repository already carrying `cat-harness/cat-harness.json` is not a blank slate, and a question the agent could have answered itself wastes the one it is entitled to.",
         limits:
           "It cannot manufacture an answer. A participant may decline, and that is `outcome: unsettled` with what is still open — not an error and not a default. An agent that reaches for a documented default because nobody replied has produced a guess.",
         cost: "One round trip through a person's attention, which is the most expensive input in the system and the reason the skill's rule is to ask once.",
@@ -1348,7 +1348,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "cat-harness-schema",
       title: "Instance declaration schema",
       description:
-        "The zod definition of `harness.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+        "The zod definition of `<name>.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
       install: { none: true },
       invoke: { shell: "bun run kg:schema" },
       io: {

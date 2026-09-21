@@ -211,7 +211,7 @@ export function registerValidateTools(server: McpServer): void {
   server.tool(
     "content_profile_check",
     "Check every block against the content profile the folio declares in " +
-    "harness.config.json. A `document` folio must hold no block whose assertion " +
+    "<name>.config.json. A `document` folio must hold no block whose assertion " +
     "is a formal mathematical claim, and no `lean` field or `.lean` sibling " +
     "anywhere. Run standalone to check the whole folio; content_validate runs " +
     "it per document.",
