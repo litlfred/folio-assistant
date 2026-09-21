@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ke0o
 title: 'VOICE + SKILL: a Technical Documentation voice written as an SDO writes, with RFC 2119 requirement levels'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-21T16:21:34Z
-updated_at: 2026-09-21T16:21:34Z
+updated_at: 2026-09-21T19:50:29Z
 parent: folio-assistant-2upx
 ---
 
