@@ -230,3 +230,66 @@ against a file it never opened.
 is the `dh4f` shape inside a falsification: a check that examined nothing,
 announcing a result. Re-run against the real declaration, the rule held in both
 directions.
+
+
+---
+
+## The package-naming box, measured 2026-09-21 (issue #736)
+
+`## Done when` asks for *"one answer to 'what is this package called', or a
+stated reason for two"*. Here is the measurement that box needs. **Not ticked**
+— see the collision at the end, which no stated reason covers.
+
+Two systems name the same objects:
+
+- `discoverLocalPackages` in `src/tools/skill-fetch.ts` — three rules, stated
+  on `nameDirectlyHeld`: a directory basenamed `skills` takes the INSTANCE's
+  name; a sole directly-held directory takes the instance's name; otherwise it
+  takes its own BASENAME.
+- `kgDirectories` in `scripts/known-skills.ts` — the DECLARATION's id, which
+  `gen-skill-docs.ts` then keys on ("ids are stable across a relocation, paths
+  are not").
+
+Over the 8 declared kg directories, matched on each record's authoritative
+`absPath` (every one exists):
+
+| directory | `skill-fetch` | `kgDirectories` | |
+|---|---|---|---|
+| `cat-bootstrap/render` | `cat-bootstrap` | `cat-bootstrap-render` | diverge |
+| `cat-harness/methodologies/raci` | `raci` | `methodology-raci` | diverge |
+| `cat-harness/methodologies/crdm` | `crdm` | `methodology-crdm` | diverge |
+| `cat-harness/src/skills` | `cat-harness` | `cat-harness-src` | diverge |
+| `large-datasets/skills` | `large-datasets` | `large-datasets-skills` | diverge |
+| `who-iris/skills` | `who-iris` | `who-iris-skills` | diverge |
+| `kg-navigation/skills` | `kg-navigation` | `kg-navigation` | **agree** |
+| `cat-harness/skills` | (expanded) | `cat-harness` | unmatched |
+
+**6 diverge, 1 agrees, 1 unmatched.**
+
+### The reason for two IS stateable
+
+They answer different questions at different granularities. `kgDirectories`
+asks *"which directories are declared, and what is each one's stable id"*;
+`discoverLocalPackages` asks *"which skill packages can be SERVED, and what
+does a caller ask for"* — which is why `skills/` appears once in the first and
+as eleven sub-packages in the second. That difference is legitimate and should
+not be collapsed.
+
+### But one thing no reason covers
+
+**The name `cat-harness` denotes two different real directories:**
+
+```
+  "cat-harness"  skill-fetch    -> cat-harness/src/skills
+                 kgDirectories  -> cat-harness/skills
+```
+
+Both exist, both hold skills, and they are not the same place. That is not two
+names for one thing — it is **one name for two things**, which no granularity
+argument defends, and it is the same shape as the `1hvo` collision that
+silently dropped three packages: there, four directories resolved to one name
+and the last assignment won.
+
+Not repaired here: this bean's owner decides whether `skill-fetch` adopts
+declaration ids, `kgDirectories` adopts the three rules, or the two stay
+separate with the collision renamed. The measurement is what was missing.
