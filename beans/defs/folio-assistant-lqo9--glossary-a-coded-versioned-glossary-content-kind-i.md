@@ -1,13 +1,13 @@
 ---
 # folio-assistant-lqo9
 title: 'GLOSSARY: a coded, versioned glossary content kind in core, a defined-terms index in docs/ from every KG asset, translatable — roast first'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 tags:
     - roast
 created_at: 2026-09-20T18:03:45Z
-updated_at: 2026-09-20T18:03:45Z
+updated_at: 2026-09-20T23:04:43Z
 parent: folio-assistant-0lmb
 ---
 
@@ -143,6 +143,88 @@ Two remain genuinely open and are the owner's to rule on:
    is what retires the false claim. The `docs/` index is second and reads it.
 4. `defines[]`'s measured-zero coverage is the honest baseline for the coverage
    axis, and is reported rather than gated.
+
+## SLICE 1 SHIPPED, 2026-09-20 — and the roast had missed a THIRD mechanism
+
+The roast enumerated two glossary mechanisms and warned that `GlossaryEntry` was
+taken twice. **There is a third, and it is the one that mattered**:
+`schemas/vocabulary.ts`, 421 lines, `CLASS_GLOSSES` + `PROPERTY_GLOSSES` —
+**110 authored terms**, each a `TermGloss` with a one-sentence definition and a
+layer. `scripts/ns-export.ts` already emits one node per term with an `@id`, a
+type, a label and a definition, and `ns:check` already gates it.
+
+That is a glossary. The roast's own instruction — *"check what it already does
+before adding a second mechanism"* — was followed for `build-glossary.ts` and
+not for this, which is the failure mode the instruction exists to catch, one
+level over.
+
+**It changes the slice, and for the better.** `TermGloss` maps onto SKOS almost
+term for term:
+
+| `TermGloss` | SKOS |
+|---|---|
+| the key (`FshGutsNode`) | `skos:prefLabel` |
+| `gloss` | `skos:definition` |
+| `layer` | which `skos:ConceptScheme` it is `skos:inScheme` of |
+| the prefixed name (`cat:FshGutsNode`) | `skos:notation` — **the owner's "coded", already present** |
+
+So slice 1 is not a new schema with zero content. It is **135 real concepts in
+3 concept schemes**, no new authoring burden, and `notation` answers the coded
+requirement with a value that is structurally unique rather than one somebody
+has to remember to type.
+
+### The ruling turned out not to be load-bearing here
+
+`lqo9` listed *"where does a term's IRI live"* as blocking. Sourcing slice 1
+from `vocabulary.ts` **dissolves it**: those terms already live in the instance
+namespaces (`bs:`, `cat:`, `fac:`), so the recommendation — instance namespace —
+is the status quo rather than a choice being made. The ruling still matters for
+terms extracted from BPMN lanes and DMN decisions, which is slice 2. It is not
+owed before slice 1, and this bean said it was.
+
+### What shipped
+
+`ns-export.ts` only. Each term node gains `skos:Concept` alongside its
+`rdfs:Class`/`rdf:Property` type, plus `prefLabel`, `definition`, `notation`
+and `inScheme`. Three `ConceptScheme` nodes are emitted, **derived from the
+terms actually present** rather than from the three layers that exist — a
+scheme with no members is `dh4f` in miniature, so a `--layer cat-bootstrap`
+slice carries exactly one. In `--exact` mode the document IS its layer's
+scheme and carries both types, rather than a node sharing its own `@id`.
+
+**The punning is named rather than hidden.** A term is both a thing the graph
+has instances OF and a unit of meaning a reader looks UP. Two types on one node
+is sound in RDFS and OWL-Full and is what published vocabularies do; it is
+**not** sound under an OWL-DL reasoner. Nothing here runs one. The line to
+revisit is marked in the source, with the usual repair named.
+
+**The RDFS facts are untouched.** `prefLabel`/`definition` restate
+`label`/`comment` rather than replacing them — `skos:prefLabel` is a declared
+sub-property of `rdfs:label`, so the two agreeing is the spec's expectation —
+and a test asserts they cannot drift.
+
+### Falsified by mutation, five ways
+
+| mutation | tests red |
+|---|---|
+| drop `skos:Concept` from `@type` | 7 of 10 |
+| drop `inScheme` | 4 |
+| stop emitting scheme nodes | 3 |
+| let `prefLabel` drift from `label` | 1 |
+| make `notation` non-unique | 1 |
+
+Every count is checked against **zero before anything else**, because a suite
+asserting "every concept has a definition" passes perfectly over a document
+with no concepts — which is precisely the state `fd6i` measured and this change
+exists to make impossible. That is `6tkl`, already introduced once this evening
+by a change whose own tests were meant to guard it.
+
+### Not done, and named
+
+`fd6i` is **widened, not closed**: re-measuring all eight bound vocabularies
+rather than the five it had showed `deo:`, `oa:` and `fhir:` each emit **0**.
+The eight-vocabulary sentence in `tabular-csvw.ts` is still false; this repairs
+one quarter of it. Recorded there.
 
 ## Standards — what fits a knowledge graph, and what does not
 

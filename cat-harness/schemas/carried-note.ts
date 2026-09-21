@@ -59,7 +59,7 @@
 
 import { z } from "zod";
 
-import { NoteAnchorSchema } from "./note-anchor.js";
+import { AlsoAboutSchema, NoteAnchorSchema } from "./note-anchor.js";
 
 /**
  * A task, addressed as the pair it actually is.
@@ -257,6 +257,20 @@ export const CarriedNoteSchema = z.object({
    * block-attached note as unattached.
    */
   anchor: NoteAnchorSchema.optional(),
+  /**
+   * Content nodes this note is ALSO about, without being attached to them.
+   *
+   * The owner's CRDM Q1 ruling: **one primary + declared secondaries.** The
+   * anchor above stays the single attachment — the panel and the badge are
+   * built from it alone — and these are the edges a board draws as lines.
+   * `note-anchor.ts` carries why, and `notesAt` is the one reader that
+   * returns both relations from one pass so they cannot drift apart.
+   *
+   * Optional rather than defaulted: an absent list and an empty one mean the
+   * same thing, and `alsoAboutLabels` is what collapses them, so nothing
+   * written before this field existed gains a key it never had.
+   */
+  alsoAbout: AlsoAboutSchema.optional(),
   /** The knowledge-graph edges — see {@link NoteTagsSchema}. */
   tags: NoteTagsSchema.default(EMPTY_NOTE_TAGS),
 });

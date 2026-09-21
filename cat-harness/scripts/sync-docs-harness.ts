@@ -26,16 +26,26 @@
  * the same file is at `/assets/…` once published. The conversion happens here,
  * once, rather than in the Liquid template where it would be invisible.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
 import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
+import { harnessTiles } from "./harness-tiles.js";
 import { siteLinks } from "./site-links.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
+/**
+ * The repository root — where sibling INSTANCES live.
+ *
+ * `ROOT` is this instance (`cat-harness/`), which owns the published site.
+ * Every other initiated harness is a directory beside it, so the tile scan
+ * starts one level up. The two are different places and the previous version
+ * of this file needed only the first.
+ */
+const REPO_ROOT = resolve(ROOT, "..");
 const OUT = join(ROOT, siteDirFor(ROOT), "_data/harness.json");
 const check = process.argv.includes("--check");
 
@@ -159,6 +169,29 @@ const payload = {
   // and `cat-harness`.
   declaredKinds: [...new Set((decl.directories ?? []).flatMap((d) => d.graphs ?? []))].sort(),
   links: siteLinks(decl, repoUrl),
+  // ONE FAT TILE PER INITIATED HARNESS, for the left sidebar.
+  //
+  // Owner, 2026-09-20: *"I still want to see for every initiated harness a
+  // themed fat navbar tile, boot strap at bottom, that user can click on. And
+  // basic stats/info via icon + bafges. Use existing harness vaiyalizaiin(s)."*
+  //
+  // It rides THIS file rather than arriving as a second generator, for the
+  // reason this file exists at all: Jekyll reads data only from `_data/`, and
+  // a second generated file there would want a second staleness gate free to
+  // disagree with `docs:harness:check`. One file, one gate, one answer to
+  // "what does the site know about this repository's instances".
+  //
+  // The directory list is read HERE and passed in, so `harness-tiles.ts` takes
+  // its candidates from an argument and can be tested against a fixture
+  // without a filesystem walk.
+  harnesses: harnessTiles(
+    REPO_ROOT,
+    ROOT,
+    readdirSync(REPO_ROOT, { withFileTypes: true })
+      .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
+      .map((d) => d.name)
+      .sort(),
+  ),
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;
 const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";

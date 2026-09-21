@@ -49,6 +49,20 @@ const ROOT = resolve(import.meta.dir, "..");
 const RDFS = "http://www.w3.org/2000/01/rdf-schema#";
 const RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 const OWL = "http://www.w3.org/2002/07/owl#";
+// DECLARED HERE RATHER THAN IMPORTED, and the duplicate is CHECKED.
+//
+// `schemas/jsonld.ts` also declares these two, but it is `folio-assist-core`
+// and this module is `agentic-harness` — core depends on the harness, so the
+// import would be a wrong-direction edge and `check:partition` refuses it.
+// That is the rule working: the constant a harness module needs must not be
+// reached for across a boundary just because it happens to exist there.
+//
+// So they sit beside RDFS/RDF/OWL above, which are local for the same reason,
+// and `ns-export-skos.test.ts` asserts each equals its `jsonld.ts` twin — a
+// test may cross the boundary where source may not. An unavoidable duplicate
+// is fine; an UNCHECKED one is the drift this repository keeps paying for.
+const SKOS = "http://www.w3.org/2004/02/skos/core#";
+const DCTERMS = "http://purl.org/dc/terms/";
 
 /** The namespace with its trailing `#` removed — the DOCUMENT, not the stem. */
 export function vocabularyIri(): string {
@@ -67,6 +81,24 @@ export function vocabularyIri(): string {
   // union is a convenience for a person reading the whole vocabulary at once,
   // so it can sit anywhere that resolves.
   return `${LEGACY_FOLIO_NS.replace(/ns#$/, "")}ns/vocabulary.jsonld`;
+}
+
+/**
+ * The `skos:ConceptScheme` a layer's terms belong to — and it is the layer's
+ * OWN namespace document, not a fourth IRI invented to hold them.
+ *
+ * `--layer <l> --exact` already publishes exactly that layer's terms under
+ * exactly that IRI, which is the definition of a concept scheme: a set of
+ * concepts with a boundary somebody is willing to state. Minting a separate
+ * `…#scheme` would be a second name for a set that already has one, and it
+ * would not dereference — the defect `blv9` records and the whole reason this
+ * module exists.
+ *
+ * So in `--exact` mode the document node IS the scheme and gains the type
+ * rather than a duplicate `@id` appearing in its own `@graph`.
+ */
+function conceptSchemeIri(layer: TermLayer): string {
+  return namespaceForLayer(layer).replace(/#$/, "");
 }
 
 /**
@@ -196,13 +228,35 @@ export function buildVocabulary(
   const emit = (name: string, kind: "class" | "property", g: TermGloss): void => {
     if (!inSlice(g)) return;
     defined.add(name);
+    const l = g.layer ?? "harness";
     nodes.push({
-      "@id": `${prefixForLayer(g.layer ?? "harness")}:${name}`,
-      "@type": kind === "class" ? "rdfs:Class" : "rdf:Property",
+      "@id": `${prefixForLayer(l)}:${name}`,
+      // TWO types on purpose, and the tension is named rather than hidden.
+      //
+      // A term here is both a thing the graph has instances OF (`rdfs:Class`)
+      // and a unit of meaning a reader looks UP (`skos:Concept`). That is
+      // punning, sound in RDFS and OWL-Full and what published vocabularies do,
+      // but NOT sound under an OWL-DL reasoner. Nothing here runs one; if
+      // something ever does, this is the line to revisit — splitting the
+      // concept onto its own node linked by `foaf:focus` is the usual repair.
+      "@type": [kind === "class" ? "rdfs:Class" : "rdf:Property", "skos:Concept"],
       label: name,
       comment: g.gloss,
+      // The SKOS half. `prefLabel`/`definition` restate `label`/`comment`
+      // rather than replacing them, because a consumer arriving by either
+      // vocabulary must find the term — and `skos:prefLabel` is a declared
+      // sub-property of `rdfs:label`, so the two agreeing is the spec's own
+      // expectation rather than a duplication this file invented.
+      prefLabel: name,
+      definition: g.gloss,
+      // THE CODE the owner asked for, and it is not a new field to author:
+      // the prefixed name IS the notation, unique across the vocabulary
+      // because the prefix carries the layer. A `notation` somebody has to
+      // type is a `notation` that goes missing; this one cannot.
+      notation: `${prefixForLayer(l)}:${name}`,
+      inScheme: conceptSchemeIri(l),
       isDefinedBy: vocabularyIri(),
-      layer: g.layer ?? "harness",
+      layer: l,
       ...(g.seeAlso ? { seeAlso: new URL(g.seeAlso, `${vocabularyIri().replace(/\/ns$/, "/")}`).href } : {}),
     });
   };
@@ -210,6 +264,27 @@ export function buildVocabulary(
   for (const [name, g] of Object.entries(CLASS_GLOSSES)) emit(name, "class", g);
   for (const [name, g] of [...kinds].sort(([a], [b]) => a.localeCompare(b))) emit(name, "class", g);
   for (const [name, g] of Object.entries(PROPERTY_GLOSSES)) emit(name, "property", g);
+
+  // The schemes, derived from what was ACTUALLY emitted rather than from the
+  // three layers that exist. A scheme with no concepts is `dh4f` in miniature:
+  // a consumer follows `inScheme`, finds an empty set, and reports a clean
+  // run over nothing. `--layer cat-bootstrap` legitimately emits one scheme.
+  const docIri = exact && layer ? conceptSchemeIri(layer) : vocabularyIri();
+  const schemeLayers = [...new Set(nodes.map((n) => n.layer as TermLayer))].sort(
+    (a, b) => ORDER.indexOf(a) - ORDER.indexOf(b),
+  );
+  const schemeNodes = schemeLayers
+    // In `--exact` mode the DOCUMENT is the scheme, so it gains the type below
+    // instead of appearing a second time inside its own `@graph`.
+    .filter((l) => conceptSchemeIri(l) !== docIri)
+    .map((l) => ({
+      "@id": conceptSchemeIri(l),
+      "@type": "skos:ConceptScheme",
+      prefLabel: `folio-assistant ${l} vocabulary`,
+      title: `folio-assistant ${l} vocabulary`,
+      definition: `Every class and property the ${l} layer mints, one concept each.`,
+    }));
+  nodes.push(...schemeNodes);
 
   // Only a FULL build can say a term is undefined. A bootstrap slice omits
   // core terms ON PURPOSE, and reporting those as missing would turn the
@@ -242,14 +317,24 @@ export function buildVocabulary(
       rdf: RDF,
       rdfs: RDFS,
       owl: OWL,
+      skos: SKOS,
+      dcterms: DCTERMS,
       ...NS_PREFIXES,
       label: "rdfs:label",
       comment: "rdfs:comment",
       isDefinedBy: { "@id": "rdfs:isDefinedBy", "@type": "@id" },
       seeAlso: { "@id": "rdfs:seeAlso", "@type": "@id" },
+      prefLabel: "skos:prefLabel",
+      definition: "skos:definition",
+      notation: "skos:notation",
+      title: "dcterms:title",
+      inScheme: { "@id": "skos:inScheme", "@type": "@id" },
     },
-    "@id": exact && layer ? namespaceForLayer(layer).replace(/#$/, "") : vocabularyIri(),
-    "@type": "owl:Ontology",
+    "@id": docIri,
+    // In `--exact` mode this document IS the layer's concept scheme (see
+    // `conceptSchemeIri`), so it carries both types rather than pointing at a
+    // scheme node that would share its `@id`.
+    "@type": exact && layer ? ["owl:Ontology", "skos:ConceptScheme"] : "owl:Ontology",
     label: !layer
       ? "folio-assistant vocabulary"
       : exact

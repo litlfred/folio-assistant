@@ -1,10 +1,11 @@
 ---
 # folio-assistant-603s
 title: 'LANDING: the LHS navbar is one themed section per instance, scanned from the root, rendered in dependency order'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T12:32:20Z
-updated_at: 2026-09-20T12:32:20Z
+updated_at: 2026-09-20T22:56:24Z
 parent: folio-assistant-yj32
 ---
 
@@ -185,3 +186,65 @@ collapsed-vs-open, and the local/remote tab — and the three open questions
 (which file marks an instance, what a "display subgraph" is, where
 `.fa-landing-board` fits). This slice deliberately does not guess at any of
 them.
+
+
+---
+
+## Slice 1 SHIPPED, 2026-09-20 — the tiles exist and are clickable
+
+Owner, re-asserting the ask in narrower terms:
+
+> I still want to see for every initiated harness a themed fat navbar tile,
+> boot strap at bottom, that user can click on. And basic stats/info via icon +
+> bafges. Use existing harness vaiyalizaiin(s).
+
+**What landed**
+
+- `cat-harness/scripts/harness-tiles.ts` — one tile per initiated harness,
+  discovered by scanning the repository root for `harness.json` (this bean's
+  question 1, answered: `harness.json` is what names an instance).
+- Wired into `scripts/sync-docs-harness.ts`, so it rides the existing
+  `docs:harness:check` staleness gate rather than arriving as a second
+  generated file with a second gate free to disagree with the first.
+- `docs/_includes/nav_footer_custom.html` — just-the-docs' own seam INSIDE the
+  sidebar, so no theme override to re-read on every version bump.
+- `docs/assets/css/docs-ui.css` — the fat tile, themed from the avatar's
+  declared hue.
+- 17 tests.
+
+**Measured on this repository: 11 instances, cat-bootstrap last.**
+
+**Three decisions worth keeping**
+
+1. **"Bootstrap at bottom" is read from the DECLARATION, not from a name.**
+   `cat-bootstrap/harness.json` carries a `renderExemption` whose reason says
+   it in those words — *"cat-bootstrap IS the navbar footer"* — so the ordering
+   is `isExemptFrom(decl, "visualiser")`. It falls out correctly rather than by
+   coincidence: an instance exempt from owing a visualiser is exactly an
+   instance whose tile has nothing to open.
+2. **A link is declaration-driven and presence-checked.** The declaration says
+   what a tile may claim to show; the disk says whether each is a link or a
+   gap. A declared graph with no page is REPORTED, never linked (`pb04`: a dead
+   link invites a click and then reads as "this site is broken"), and a page
+   published under a kind the instance does not declare is reported too — the
+   other half of `flh4`'s third state. Exactly one of those exists here today:
+   `/cat-harness/library/folio-assistant/`.
+3. **Themed by the avatar's declared hue**, not a new palette. A per-instance
+   colour vocabulary beside `theme.ts` is the drift that file exists to have
+   ended.
+
+**One finding the feature immediately surfaced: 9 of 11 instances have no
+avatar of their own** and take the generic question mark. That is `4kj4`'s
+territory and is now visible rather than theoretical.
+
+## What is still THIS bean, after the slice
+
+- [ ] **Dependency ordering.** This slice sorts by name with the declared
+      footer last; the ask says *"do their rendering (in depdendcy ordering)"*.
+      `harness.config.json` carries dependencies and is a different file from
+      `harness.json` — the ordering wants it read.
+- [ ] **Collapsed = info, opened = docs navigation.** A tile is one target
+      today; the ask has two states.
+- [ ] **The display panel** showing an instance's named display subgraphs.
+- [ ] **A tab for materialised local subgraphs and declared remote graphs**,
+      and opening content indicating local or remote.

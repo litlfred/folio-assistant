@@ -84,9 +84,117 @@ function insideQuotation(line: string, at: number): boolean {
   return quotes % 2 === 1;
 }
 
+
+/**
+ * A bean's canonical checklist, and every checklist item written BELOW it.
+ *
+ * The `## Done when` section is the bean's answer to "what is left". A
+ * checklist item further down is NOT automatically wrong — recording a new
+ * open item in a dated entry is this store's ordinary idiom, and 57 of 323
+ * beans do it. What is wrong is a later item that **restates a canonical one
+ * and ticks it while the canonical stays unticked**.
+ *
+ * That is the `bbbl` defect in the bean's own words: *"the ticks were
+ * appended as a SECOND copy of the checklist at the foot of the file, so the
+ * canonical `## Done when` still read 0 of 2 and any reader or tool
+ * consulting it saw an untouched bean."*
+ */
+export interface ChecklistItem {
+  done: boolean;
+  text: string;
+}
+
+export function splitChecklist(body: string): { canonical: ChecklistItem[]; later: ChecklistItem[] } {
+  const head = /^##+\s*Done when\s*$/im.exec(body);
+  if (!head) return { canonical: [], later: [] };
+  const rest = body.slice(head.index + head[0].length);
+  const next = /^##+\s+/m.exec(rest);
+  return {
+    canonical: checklistItems(next ? rest.slice(0, next.index) : rest),
+    later: next ? checklistItems(rest.slice(next.index)) : [],
+  };
+}
+
+/** Checklist lines, with an indented continuation folded into its item. */
+export function checklistItems(block: string): ChecklistItem[] {
+  const out: ChecklistItem[] = [];
+  let cur: ChecklistItem | undefined;
+  for (const line of block.split("\n")) {
+    const m = /^\s*[-*]\s*\[([ xX])\]\s*(.*)$/.exec(line);
+    if (m) {
+      if (cur) out.push(cur);
+      cur = { done: m[1]!.toLowerCase() === "x", text: m[2]! };
+    } else if (cur && /^\s{4,}\S/.test(line)) {
+      cur.text += ` ${line.trim()}`;
+    } else if (cur) {
+      out.push(cur);
+      cur = undefined;
+    }
+  }
+  if (cur) out.push(cur);
+  return out;
+}
+
+/** Words, with markdown emphasis and punctuation removed. */
+export function words(text: string): string[] {
+  return text
+    .toLowerCase()
+    .replace(/[`*_[\]()]/g, " ")
+    .replace(/[^a-z0-9 /:.-]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+/**
+ * How much of the shorter item the two share.
+ *
+ * Containment rather than equality, because the real cases are not verbatim:
+ * `fgnw`'s appended copy dropped a parenthetical and `9x17`'s paraphrased
+ * ("schema validation as its operation" for "schema validation and profile
+ * check as DISTINCT operations"). Both are plainly the same item restated,
+ * and an equality test would have called them different and passed.
+ */
+export function overlap(a: string[], b: string[]): number {
+  const A = new Set(a);
+  const B = new Set(b);
+  if (A.size === 0 || B.size === 0) return 0;
+  let shared = 0;
+  for (const w of A) if (B.has(w)) shared++;
+  return shared / Math.min(A.size, B.size);
+}
+
+/** Below this, two items are different items. Measured — see the module header. */
+export const SHADOW_OVERLAP = 0.75;
+
+/** Shorter than this, an item is too generic for overlap to mean anything. */
+export const SHADOW_MIN_WORDS = 6;
+
+/** Every later item that ticks a canonical item the canonical section still shows open. */
+export function shadowedItems(body: string): { later: string; canonical: string }[] {
+  const { canonical, later } = splitChecklist(body);
+  const out: { later: string; canonical: string }[] = [];
+  for (const l of later) {
+    // An UNTICKED later item is a new open item, which is the legitimate idiom.
+    if (!l.done) continue;
+    const lw = words(l.text);
+    if (lw.length < SHADOW_MIN_WORDS) continue;
+    for (const c of canonical) {
+      // A canonical item already ticked means the note AGREES with it.
+      if (c.done) continue;
+      const cw = words(c.text);
+      if (cw.length < SHADOW_MIN_WORDS) continue;
+      if (overlap(lw, cw) >= SHADOW_OVERLAP) {
+        out.push({ later: l.text, canonical: c.text });
+        break;
+      }
+    }
+  }
+  return out;
+}
+
 export interface BeanBodyProblem {
   id: string;
-  kind: "empty-body" | "folded-title" | "dead-blocker";
+  kind: "empty-body" | "folded-title" | "dead-blocker" | "shadow-checklist";
   detail: string;
 }
 
@@ -150,6 +258,16 @@ export function checkBeanBodies(root: string): BeanBodyReport {
         id: b.id,
         kind: "folded-title",
         detail: "`title:` is a YAML block scalar, so it continues into the body and takes whatever followed it (this is how `52dz` lost three Done-when boxes)",
+      });
+    }
+    for (const sh of shadowedItems(b.body)) {
+      problems.push({
+        id: b.id,
+        kind: "shadow-checklist",
+        detail:
+          `a checklist item below \`## Done when\` is ticked — "${sh.later.slice(0, 60)}" — ` +
+          `while the canonical item it restates is still open: "${sh.canonical.slice(0, 60)}". ` +
+          `The section a reader and every tool consult says this is not done`,
       });
     }
     for (const line of b.body.split("\n")) {
