@@ -213,15 +213,17 @@ disagrees with the graph kind it renders is a second name for one thing.
 
 ## Done when
 
-- [ ] The option is chosen by the owner and recorded here.
-- [ ] `schemas/` has a visualiser reachable at a declared, instance-keyed path,
-      built from the authoritative `.ts`.
-- [ ] A `--check` gate fails on a stale rendering, so this does not become the
-      fourth unwired generator.
-- [ ] The skills asked for exist or are explicitly deferred with a reason:
-      schema-management, and whatever question 2 resolves to.
-- [ ] `assistant-schema.puml` is either the validation target, regenerated, or
-      retired with the owner's say-so — not left orphaned.
+*Revised 2026-09-20 further down this bean, and promoted here 2026-09-21 under
+bean `sfhr`. The verdicts are the author's and unchanged; what moved is which
+list a reader finds first. The original wording is kept below the revision.*
+
+- [x] The option is chosen by the owner and recorded here (C + D-as-a-view + widen A)
+- [x] `schemas/` has a visualiser at a declared, instance-keyed path, built from
+      the authoritative `.ts`
+- [x] A `--check` gate fails on a stale rendering — falsified both directions
+- [x] The schema-management skill exists
+- [ ] The ingestion skill — deferred to `slw1` with the reason recorded there
+- [ ] `assistant-schema.puml` is retired or made the validation target — owner's call
 
 ---
 
@@ -378,7 +380,10 @@ projection and kept on the reader. Generalised in the skill as:
   good validation target for the generated diagram, which is a cheaper use for
   it than deletion.
 
-## Done when — revised
+## Done when — the revision, now PROMOTED above
+
+*Kept so the wording it replaced stays readable. The canonical section carries
+these same verdicts, so the two agree rather than contradict.*
 
 - [x] The option is chosen by the owner and recorded here (C + D-as-a-view + widen A)
 - [x] `schemas/` has a visualiser at a declared, instance-keyed path, built from the authoritative `.ts`

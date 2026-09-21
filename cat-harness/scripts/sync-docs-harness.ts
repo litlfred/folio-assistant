@@ -30,7 +30,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, relative, resolve } from "node:path";
 
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
-import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import { instanceDeclarationFilename, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { graphTiles } from "./graph-tiles.js";
 import { harnessTiles } from "./harness-tiles.js";
@@ -160,7 +160,9 @@ if (!repoUrl && existsSync(OUT)) {
 }
 
 const payload = {
-  _generated: "scripts/sync-docs-harness.ts — do not hand-edit; edit harness.json",
+  // The SOURCE is the declaration, not `_data/harness.json` -- which is
+  // Jekyll's own file, keeps that name, and is what this writes.
+  _generated: `scripts/sync-docs-harness.ts — do not hand-edit; edit ${instanceDeclarationFilename(decl.name)}`,
   name: decl.name,
   title: decl.title ?? decl.name,
   description: decl.description ?? "",

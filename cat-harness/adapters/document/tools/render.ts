@@ -68,7 +68,7 @@ export function registerLatexRenderTools(server: McpServer): void {
       upload_drive: z.boolean().default(false)
         .describe("Push the rendered PDF to Google Drive (requires Drive MCP configured)"),
       drive_folder: z.string().optional()
-        .describe("Override Drive destination folder (default: from harness.config.json googleDrive.folderPath)"),
+        .describe("Override Drive destination folder (default: from <name>.config.json googleDrive.folderPath)"),
     },
     async ({ scope, target, engine, clean, print_mode, upload_drive, drive_folder }) => {
       // Check deps

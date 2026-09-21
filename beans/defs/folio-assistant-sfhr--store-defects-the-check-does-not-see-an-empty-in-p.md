@@ -1,13 +1,13 @@
 ---
 # folio-assistant-sfhr
 title: 'STORE DEFECTS the check does not see: an empty in-progress body, a title that ate its Done-when, a blocker on a scrapped bean'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-21T19:22:36Z
+updated_at: 2026-09-21T21:34:26Z
 parent: folio-assistant-ahvw
 ---
 
@@ -178,3 +178,33 @@ plus a `folded-title` (`52dz`) and an `empty-body` (`70c7`). All baselined, all
 other owners'.
 
 `bun run gates` — 93 of 93.
+
+---
+
+## 2026-09-21 — the last item, and the baseline shrank 11 → 8
+
+The owner authorised repairing the three that remained. `ivfw` and `jbx2` had
+already been done by their owners; `b963` was repaired when this bean shipped.
+
+**Each was a different shape of the same defect, and none was carelessness:**
+
+| bean | what was actually there |
+|---|---|
+| `0hi8` | a **deliberate status report** with reasoning — two items verified, the third argued open on the merits. The canonical list simply never caught up |
+| `81t5` | **THREE** checklists. The last declared itself *"REPLACES both lists above"* — so the authoritative list was the one nobody consults |
+| `xgd8` | a revision sitting **160 lines below** the list every reader and tool reads |
+
+In every case the author's verdicts are unchanged. **What moved is which list a
+reader finds first** — which is the whole of what this bean is about.
+
+`0hi8`'s second item stays open on purpose, and its reasoning is worth keeping:
+a generic static server fails `compound-extension-wins` because every OS table
+resolves `.schema.json` to `application/json`, and declaring Caddy would
+*"assert conformance nobody measured"*.
+
+### The baseline shrank rather than fossilised
+
+The check reported all three entries **stale** and kept failing until they were
+removed: 11 → 8. That is the shrink rule doing its job, not a tidy-up.
+
+`sfhr` is complete.

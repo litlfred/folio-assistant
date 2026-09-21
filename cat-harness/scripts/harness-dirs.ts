@@ -33,7 +33,7 @@ if (results.length === 0) {
   // unmigrated instance falls back to today's conventions — and must not be
   // rendered as "all directories present".
   console.log(
-    "harness dirs: this instance declares no directories (no harness.json, " +
+    "harness dirs: this instance declares no directories (no <name>.json, " +
       "or it declares none). Nothing to materialise; not the same as nothing missing.",
   );
   process.exit(0);
