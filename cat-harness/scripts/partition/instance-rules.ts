@@ -215,6 +215,19 @@ export const RULES: Rule[] = [
       // about any folio's subject matter — a folio could not make it answer
       // differently, only add a row.
       "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
+      // Beside its sibling, and HARNESS rather than core — the opposite
+      // classification to `gen-default-boards.ts`, for the reason that entry
+      // records: what settles it is what a module is ABOUT. That one produces
+      // folio content (a board); this one reads instance DECLARATIONS and
+      // answers a question about the machinery — which directories an instance
+      // says it renders. Its only import is `schemas/cat-harness.ts`, which is
+      // harness, so the direction is flat rather than upward.
+      //
+      // Classified core first, on the reasoning that a tile is something a
+      // reader sees. `check:partition` answered with a wrong-direction edge
+      // from `sync-docs-harness.ts`, which is harness and calls it — the
+      // import was right and the classification was wrong.
+      "scripts/graph-tiles.ts",              // every declared visualisation → its tile
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
       // Same question, same answer: it projects the PLATFORM's own term
       // vocabulary — every class and property hanging off `FOLIO_NS` — and
@@ -713,6 +726,12 @@ export const RULES: Rule[] = [
       // tree's own filenames, which is a fact about the checkout and not about
       // any folio's material.
       "scripts/check-portable-paths.ts",
+      // The CI-wiring gate, and harness by the same argument one line up: it
+      // reads this repository's own `.github/workflows/` and grades whether a
+      // path-filtered workflow rebuilds when the scripts it runs change. That
+      // is a fact about the checkout's build wiring, not about any folio's
+      // material — it imports `repoRootFor` and nothing else.
+      "scripts/check-workflow-script-paths.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge
