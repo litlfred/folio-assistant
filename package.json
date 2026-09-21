@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "Content-agnostic assistant platform \u2014 MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
+  "description": "Content-agnostic assistant platform — MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -165,6 +165,8 @@
     "schema:graph": "bun run cat-harness/scripts/schema-graph.ts",
     "schema:viz": "bun run cat-harness/scripts/gen-schema-viz.ts",
     "schema:viz:check": "bun run cat-harness/scripts/gen-schema-viz.ts --check",
+    "bootstrap-tools:schemas": "bun run cat-harness/scripts/gen-bootstrap-schemas.ts",
+    "bootstrap-tools:schemas:check": "bun run cat-harness/scripts/gen-bootstrap-schemas.ts --check",
     "serve:rendering": "bun run cat-harness/scripts/serve-rendering.ts",
     "site:links": "bun run cat-harness/scripts/site-links.ts",
     "stakeholder-map": "bun run cat-harness/scripts/stakeholder-map.ts",
