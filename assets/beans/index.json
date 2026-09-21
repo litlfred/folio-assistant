@@ -4563,14 +4563,14 @@
     {
       "id": "folio-assistant-t7ao",
       "title": "One bean with unparseable front matter takes down the whole store, and 92 gates passed over it",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T18:54:30Z",
-      "updatedAt": "2026-09-21T18:54:49Z",
+      "updatedAt": "2026-09-21T20:20:13Z",
       "preview": "Found 2026-09-21, by breaking it. Not a hypothetical: the bad bean was mine,\nit was committed, and the full gate set passed over it.\n\n## What happened\n\n`224e0beac8` committed `beans/defs/folio-assistant-sqtq--*.md` whose line 8\nwas a literal `\\1` — an unsubstituted sed backreference where `updated_at:`\nbelonged. `bun run gates --all` was run on that tree: **92 gates, all green.**\nIt was pushed as ",
       "file": "beans/defs/folio-assistant-t7ao--one-bean-with-unparseable-front-matter-takes-down.md"
     },
