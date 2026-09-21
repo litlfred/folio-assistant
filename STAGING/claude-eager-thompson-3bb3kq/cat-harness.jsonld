@@ -251,6 +251,10 @@
     "counts": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#counts",
       "@type": "@json"
+    },
+    "omitted": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#omitted",
+      "@container": "@set"
     }
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld",
@@ -260,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T22:26:13.932Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1e6db993c91921bb41cd7fa26288bba4f574cea4",
-  "sourceCommitSha": "1e6db993c91921bb41cd7fa26288bba4f574cea4",
-  "sourceCommitAt": "2026-09-21T22:24:22Z",
+  "generatedAt": "2026-09-21T22:31:51.476Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a052de685970dd6485a7985d02bac4ccab95f889",
+  "sourceCommitSha": "a052de685970dd6485a7985d02bac4ccab95f889",
+  "sourceCommitAt": "2026-09-21T22:27:02Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 223,
@@ -276,9 +280,9 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 90,
-    "GraphKind": 27,
-    "Directory": 35,
+    "Schema": 91,
+    "GraphKind": 26,
+    "Directory": 34,
     "Asset": 3
   },
   "@graph": [
@@ -1769,7 +1773,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/voice-authoring-guidance.md",
-      "instructionLines": 81,
+      "instructionLines": 92,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1870,7 +1874,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/harness-tiles.md",
-      "instructionLines": 107,
+      "instructionLines": 134,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2056,7 +2060,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 511,
+      "instructionLines": 537,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2475,7 +2479,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/board-windows.md",
-      "instructionLines": 147,
+      "instructionLines": 204,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3098,7 +3102,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/coordinate.md",
-      "instructionLines": 271,
+      "instructionLines": 340,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3944,7 +3948,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/bootstrap-render"
       ],
       "instructionsPath": "../bootstrap/render/bootstrap-graph-publication.md",
-      "instructionLines": 103,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -28810,7 +28814,7 @@
       },
       "requirements": {},
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/discuss"
     },
@@ -30916,7 +30920,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/log-message"
     },
@@ -33296,6 +33300,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocabulary"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#schema/voice-skill",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "voice-skill",
+      "title": "A VOICE SKILL — a voice as a first-class member of the knowledge graph.",
+      "module": "schemas/voice-skill.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/voice-skill"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#schema/voices",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "voices",
@@ -33590,14 +33603,6 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LibraryGraph",
       "renderable": false,
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/voices",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "voices",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#VoiceGraph",
-      "renderable": false,
-      "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/todo-feedback",
@@ -34902,18 +34907,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-library"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#directory/voices",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "voices",
-      "path": "voices/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/voices"
-      ],
-      "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#directory/voices",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/voices"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#directory/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "translation-sources",
@@ -35087,8 +35080,8 @@
   ],
   "staging": {
     "branch": "claude/eager-thompson-3bb3kq",
-    "sha": "9b8ee7d91842838176024f4325648a9d7e711d47",
+    "sha": "17d614e14842cac8b93f54fe725d3d76dc6dafbd",
     "pr": "812/merge",
-    "run": "35662510581"
+    "run": "35662985128"
   }
 }

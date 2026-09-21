@@ -251,19 +251,29 @@
     "counts": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#counts",
       "@type": "@json"
+    },
+    "omitted": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#omitted",
+      "@container": "@set"
     }
   },
-  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld",
   "@type": [
     "http://www.w3.org/ns/prov#Entity",
     "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#PreviewGraph"
   ],
-  "canonicalDocument": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld",
+  "canonicalDocument": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld",
   "repository": "bootstrap",
-  "generatedAt": "2026-09-21T22:26:14.441Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1e6db993c91921bb41cd7fa26288bba4f574cea4",
-  "sourceCommitSha": "1e6db993c91921bb41cd7fa26288bba4f574cea4",
-  "sourceCommitAt": "2026-09-21T22:24:22Z",
+  "omitted": [
+    "registry",
+    "packages",
+    "schemas",
+    "tools"
+  ],
+  "generatedAt": "2026-09-21T22:31:51.968Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a052de685970dd6485a7985d02bac4ccab95f889",
+  "sourceCommitSha": "a052de685970dd6485a7985d02bac4ccab95f889",
+  "sourceCommitAt": "2026-09-21T22:27:02Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -277,7 +287,7 @@
   },
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/root-readme",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/root-readme",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "root-readme",
       "title": "The root README, and the one fact it must carry",
@@ -287,11 +297,11 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/root-readme"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/root-readme"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/discussion",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/discussion",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "discussion",
       "title": "discussion — settling what an agent cannot read off disk",
@@ -300,11 +310,11 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/discussion"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/bootstrap-kg-navigation",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "bootstrap-kg-navigation",
       "title": "Reading a knowledge graph before you have anything",
@@ -314,11 +324,11 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/confirm-harness",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/confirm-harness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "confirm-harness",
       "title": "Which harness, and where",
@@ -328,11 +338,11 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/confirm-harness"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/log-message",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/log-message",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "log-message",
       "title": "Logging what you are doing",
@@ -342,11 +352,11 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/log-message"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/bootstrap-graph-emission",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "bootstrap-graph-emission",
       "title": "Emitting bootstrap's own graph",
@@ -356,1001 +366,1001 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-render",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/bootstrap-graph-emission"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-render",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/bootstrap-graph-publication",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "bootstrap-graph-publication",
       "title": "Publishing bootstrap's graph",
       "description": "Where bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more. The failure this skill exists to stop is `blv9` — a self-describing artefact whose own `@id` dereferenced to nothing, for months, while the generator worked perfectly.",
       "instructionsPath": "render/bootstrap-graph-publication.md",
-      "instructionLines": 103,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-render",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/bootstrap-graph-publication"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-render",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Initialize a harness",
       "enforcement": "strict",
       "sourcePath": "workflows/initialize-harness.bpmn",
       "startNode": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
       ],
       "nodeCount": 15,
       "flowCount": 16,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "none",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "one",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "already an instance",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "not yet",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "no",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Initiator",
       "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/Initiator"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Requestor",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Requestor",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Requestor",
       "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/Requestor"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Knowledge Graph Data Store",
       "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Asked to initialize a harness",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "List the harnesses this could be",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/confirm-harness"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "List the locations this could install to",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/confirm-harness"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Confirm WHICH harness, and where",
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Requestor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Requestor",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/confirm-harness"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "One harness?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Read what each location already is",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Already initialized?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Read the harness's declaration and instructions",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Log the start of the install",
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Instructions there?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Follow them, at each location",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Write the root README, if it is not there",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/root-readme"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/root-readme"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Log the failure",
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Harness installed",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Failed",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Determine the harness and repositories",
       "enforcement": "strict",
       "sourcePath": "workflows/discussion.bpmn",
       "startNode": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
       ],
       "nodeCount": 9,
       "flowCount": 9,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "not yet — ask once more",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "declined",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "A fact is needed that no file holds",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Narrow the candidates from context",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Put the question, with its candidates named",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Answer, or decline",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Requestor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Requestor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/A_Answer"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Does the answer settle it?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/G_Settled"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Record the determination",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Record what is still open",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Harness and repositories determined",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/End_Settled"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Still open, and said so",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Log a message",
       "enforcement": "strict",
       "sourcePath": "workflows/log-message.bpmn",
       "startNode": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
       ],
       "nodeCount": 6,
       "flowCount": 5,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "no",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Actor",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Actor",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Actor",
       "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/Actor"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Actor"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Logger",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Logger",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Logger",
       "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/Logger"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Logger"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "An actor has something to record",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Actor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Actor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Compose the message",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Actor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Actor",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "All five present?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Actor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Actor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Record it where a person can read it",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Logger",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Logger",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/node/A_Record"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Recorded",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Actor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Actor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Not recorded — say so",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Actor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Actor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills",
@@ -1377,7 +1387,7 @@
       "summary": "Actors, the Roles they take on, and the User Stories those Roles serve."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/initiator",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/initiator",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "initiator",
       "title": "Initiator",
@@ -1387,19 +1397,19 @@
         "agent"
       ],
       "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/bootstrap-kg-navigation",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/confirm-harness",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/discussion",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/log-message",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#skill/root-readme"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/confirm-harness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/discussion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/log-message",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#skill/root-readme"
       ],
       "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Initiator"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Initiator"
       ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/initiator"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/initiator"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/knowledge-graph-data-store",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "knowledge-graph-data-store",
       "title": "Knowledge Graph Data Store",
@@ -1411,12 +1421,12 @@
       "actedUpon": true,
       "hasSkill": [],
       "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
       ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/knowledge-graph-data-store"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/requestor",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/requestor",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "requestor",
       "title": "Requestor",
@@ -1428,12 +1438,12 @@
       "judgementOnly": true,
       "hasSkill": [],
       "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Requestor"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Requestor"
       ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/requestor"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/requestor"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/logger",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/logger",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "logger",
       "title": "Logger",
@@ -1445,23 +1455,23 @@
       "actedUpon": true,
       "hasSkill": [],
       "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#role/Logger"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#role/Logger"
       ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#role/logger"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/logger"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/cat-harness",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/cat-harness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "cat-harness",
       "path": "skills/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#directory/cat-harness"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/cat-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-roles",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-roles",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "bootstrap-roles",
       "path": "skills/roles/",
@@ -1469,11 +1479,11 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios"
       ],
       "description": "CatBootstrap's three Roles — Initiator, Knowledge Graph Data Store, and the person asking. Declared as `scenarios` on 2026-09-21, matching `cat-harness/skills/roles/`: before the split this inherited `skills` from the directory above it, so a consumer asking for the Scenarios got skill bodies and a consumer asking for Skills got a role registry. A lane name is a string the audit cannot bind to anything, which is why these Roles were declared at all rather than left implicit in the diagrams' lanes.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-roles",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#directory/bootstrap-roles"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-roles",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-roles"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "bootstrap-workflows",
       "path": "workflows/",
@@ -1481,11 +1491,11 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/workflows"
       ],
       "description": "The bootstrap PROCESSES — `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace bootstrap's skills with its workflows.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#directory/bootstrap-workflows"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-render",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-render",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "bootstrap-render",
       "path": "render/",
@@ -1493,34 +1503,34 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ],
       "description": "The skills for RENDERING this instance's own graph as `.jsonld`/`.json` — `bootstrap-graph-emission` (what the document contains and the four properties it holds) and `bootstrap-graph-publication` (where it lands, why its `@id` must equal that path, and why it is no longer committed). A SEPARATE id from `cat-harness`, which `skills/` already holds: overrides match on id, so reusing it would replace bootstrap's skills with these. SEPARATE from `skills/` as a package too, because the two answer different questions — `skills/` is about READING a graph cold and about the initialization flow, this is about bootstrap EMITTING its own. Until this directory existed the emission discipline lived in a code comment in `kg-export.ts` and a YAML comment in `docs-site.yml`, which is why it was rediscovered rather than read. Bean `hfkl`.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#directory/bootstrap-render",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#directory/bootstrap-render"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#directory/bootstrap-render",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-render"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#asset/agent-instructions",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
       "path": "AGENTS.md",
       "assetRole": "agent-instructions",
       "title": "AGENTS.md — bootstrap",
       "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no beans. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#asset/agent-instructions"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/agent-instructions"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap.jsonld#asset/readme",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/bootstrap/bootstrap.jsonld#asset/readme",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "readme",
       "path": "README.md",
       "assetRole": "instance-readme",
       "title": "bootstrap",
       "description": "The flow, with every term linked to the schema that defines it. Self-documenting on GitHub: a person landing on the directory reads the thing itself rather than a pointer to a site.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#asset/readme"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/readme"
     }
   ],
   "staging": {
     "branch": "claude/eager-thompson-3bb3kq",
-    "sha": "9b8ee7d91842838176024f4325648a9d7e711d47",
+    "sha": "17d614e14842cac8b93f54fe725d3d76dc6dafbd",
     "pr": "812/merge",
-    "run": "35662510581"
+    "run": "35662985128"
   }
 }
