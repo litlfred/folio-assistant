@@ -68,3 +68,22 @@ agree with labels it had been told the shape of.
 *Recorded without claiming the bean — the work is untouched and remains
 available. What changed is that the trap is now written down instead of being
 walked into again.*
+
+---
+
+## 2026-09-21 — one hard case is sharper than "turns on intent": `6o1z`
+
+The list above names #187 as turning on intent. Measured while working `9gtc`,
+it is not a judgement call at all: **#187 and #199 are the same artefact —
+the ask for a change-register write-up, and the write-up — and they carry
+opposite labels.** Either both are feature work or neither is.
+
+That is `6o1z`, opened unclaimed because the same session found it and cannot
+decide it. It is a narrower and more checkable question than this bean, and
+resolving it does not require re-annotating all 27: it requires deciding two
+labels *together*.
+
+It also inherits this bean's own defect. Reading `6o1z` gives away two labels,
+so the pool of agents who may annotate this corpus shrinks every time somebody
+writes down what they found. That is worth saying out loud rather than
+discovering a third time.
