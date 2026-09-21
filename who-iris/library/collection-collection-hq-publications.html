@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Publication and information products style guide — ingested IRIS replica</title>
+<title>Publications — ingested IRIS replica</title>
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
 <style>
   :root {
@@ -276,59 +276,67 @@
   <div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div>
 </div></header>
 
+<!--
+  THE DOCUMENTATION IS NOT IN THIS NAVBAR, and that is the owner's ruling of
+  2026-09-21: *"the docs/ should not be for the who-iris top navbar, instead,
+  f-a navbar should still be on the left, with who-iris and then link to docs
+  on side in navbar."*
+
+  This strip is the REPLICA's chrome -- it exists to look like the IRIS site,
+  and the IRIS site has no page about how this repository ingested it. The
+  ingestion notes and the portal proposal are reached from the folio-assistant
+  navbar on the left, through who-iris's own tile in harness-tiles.ts, which
+  is where a reader looking for documentation about this harness is standing.
+  Putting them here also meant linking across two mount points once the split
+  landed, which is a relative path that breaks the first time either route
+  moves.
+
+  (No backticks in this comment: it sits inside the page template literal, and
+  one here closes the string and turns the rest of the file into TypeScript,
+  failing at a line far from the mistake.)
+-->
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
-  <a href="ingestion-notes.html">Ingestion notes</a>
-  <a href="kg-to-portal.html">KG &rarr; portal</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">Publication and information products style guide</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">Publications</span></div></div>
 
 <main class="wrap">
-<h1>Publication and information products style guide</h1>
-<p>Permanent URI for this item
-  <a href="https://iris.who.int/handle/10665/332098">https://iris.who.int/handle/10665/332098</a>
-  <span class="state materialized">materialized</span></p>
+<h1>Publications</h1>
+<p>Permanent URI for this collection
+  <a href="https://iris.who.int/communities/5bff2c18-6c2b-4658-9087-93811d2399c0">https://iris.who.int/communities/5bff2c18-6c2b-4658-9087-93811d2399c0</a>
+  <span class="state referenced">referenced</span></p>
 
-<p class="note" style="margin-left:0">In: 7. Regional Office for the Western Pacific &rsaquo; Information products</p>
+<div class="caveat"><p><strong>How this node was established.</strong> Established by TWO independent statements in the source, 2026-09-20. The breadcrumb on both captured full item records reads 'Home &gt; 1. Headquarters &gt; Publications', and the handbook's record additionally carries an explicit 'Collections: Publications' block. One reading of one page would have been weaker evidence than this is. THE COLLECTION'S OWN UUID IS NOT IN EITHER CAPTURE -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its PATH exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a UUID to fill the slot produces an identifier that resolves to nothing while looking authoritative. The collection's item count is likewise UNKNOWN; neither capture states one, and it is not interpolated.</p></div>
 
-<h2>Files</h2>
+<h2>Items in this Collection</h2>
+<p>Now showing 1 – 2 of 2 <em>modelled</em>. The upstream
+collection is larger; this catalogue holds what was materialised, and says so per row.</p>
+
 <table class="items">
-<thead><tr><th>Name</th><th>Bundle</th><th>Size</th><th>State</th></tr></thead>
+<thead><tr><th>Item</th><th>State</th><th>Upstream</th><th>Held copy</th><th>Metadata record</th></tr></thead>
 <tbody>
 <tr>
-  <td><code>WPR-RDO-2020-003-eng.pdf</code></td>
-  <td>ORIGINAL</td>
-  <td>2.68 MB</td>
+  <td><a href="item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html">WHO handbook for guideline development</a><br><code>9789241548960-eng</code></td>
   <td><span class="state materialized">materialized</span></td>
+  <td class="dl"><a href="https://iris.who.int/handle/10665/145714">IRIS source &rarr;</a><br><a href="item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html">Local replica &rarr;</a></td>
+  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">Download 9789241548960_eng.pdf</a><br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">via CDN</a><br><code>2.04 MB</code></td>
+  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Download 9789241548960-eng.dc.json</a>
+      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/9789241548960-eng.dc.json">via CDN</a>
+      <br><code>qualified Dublin Core · 6.7 KB</code></td>
 </tr>
 <tr>
-  <td><code>wpr-rdo-2020-003-eng-cover.png</code></td>
-  <td>THUMBNAIL</td>
-  <td>0.01 MB</td>
+  <td><a href="item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html">WHO editorial style manual</a><br><code>who-pub-tps-931</code></td>
   <td><span class="state materialized">materialized</span></td>
+  <td class="dl"><a href="https://iris.who.int/handle/10665/36842">IRIS source &rarr;</a><br><a href="item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html">Local replica &rarr;</a></td>
+  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf">Download WHO_PUB_TPS_93.1.pdf</a><br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf">via CDN</a><br><code>3.14 MB</code></td>
+  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/who-pub-tps-931.dc.json">Download who-pub-tps-931.dc.json</a>
+      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/who-pub-tps-931.dc.json">via CDN</a>
+      <br><code>qualified Dublin Core · 4.8 KB</code></td>
 </tr>
 </tbody>
 </table>
-
-<h3>Both links, as asked for</h3>
-<table class="items">
-<thead><tr><th>Where</th><th>Link</th></tr></thead>
-<tbody>
-<tr><td>Upstream, at WHO</td><td><a href="https://iris.who.int/handle/10665/332098">https://iris.who.int/handle/10665/332098</a></td></tr>
-<tr><td>Held here, in folio-assistant</td>
-    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via CDN</a></td></tr>
-<tr><td>In collection</td><td><a href="collection-collection-wpro-information-products.html">Information products</a><br><code>in 7. Regional Office for the Western Pacific</code></td></tr>
-<tr><td>Ingested text (L1)</td>
-    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections">who-iris/library/wpr-rdo-2020-003-eng/sections/</a></td></tr>
-<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download wpr-rdo-2020-003-eng.dc.json</a>
-      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">via CDN</a>
-      <br><code>qualified Dublin Core · 4.0 KB</code></td></tr>
-</tbody>
-</table>
-
-
 
 </main>
 
