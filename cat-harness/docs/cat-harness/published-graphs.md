@@ -157,9 +157,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-5 of 5 published.
+5 of 6 published.
 {: .fa-hx-dim }
 
+- bootstrap — *declared, not published*
 - [bootstrap-tools]({{ '/cat-harness/schemas/bootstrap-tools/' | relative_url }})
 - [folio-assistant (cat-harness)]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [detangle]({{ '/cat-harness/schemas/detangle/' | relative_url }})

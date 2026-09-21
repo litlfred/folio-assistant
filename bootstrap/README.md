@@ -85,9 +85,9 @@ happens in is the process
 [`processes/discussion.bpmn`](processes/discussion.bpmn), whose skill is
 [`skills/discussion.md`](skills/discussion.md) and whose two ends are declared
 as data:
-[`discussion.input.schema.json`](skills/discussion.input.schema.json) —
+[`discussion.input.schema.json`](schemas/discussion.input.schema.json) —
 what you already know and which unknown is still open — and
-[`discussion.output.schema.json`](skills/discussion.output.schema.json) —
+[`discussion.output.schema.json`](schemas/discussion.output.schema.json) —
 the harness, the repositories as read-from / written-to pairs, `determinedBy`,
 and who answered. **The task is finished when a document conforming to the
 output schema exists**, not when a pleasant exchange has occurred.
@@ -218,8 +218,8 @@ and it is not this file.
 | [`skills/discussion.md`](skills/discussion.md) | running the discussion process |
 | [`skills/log-message.md`](skills/log-message.md) | running the log-message process |
 | [`skills/root-readme.md`](skills/root-readme.md) | writing the root README when there is none — the link, the install status, and why this write is not the one the `context` layer forbids |
-| [`skills/discussion.input.schema.json`](skills/discussion.input.schema.json) | the occasion for asking, as data |
-| [`skills/discussion.output.schema.json`](skills/discussion.output.schema.json) | the answer, as data — **the artefact that finishes the task** |
+| [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | the occasion for asking, as data |
+| [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | the answer, as data — **the artefact that finishes the task** |
 | [`scenarios/roles.json`](scenarios/roles.json) | the four personas of §1 |
 | [`skills/package-manifest.json`](skills/package-manifest.json) | the skills package declaration |
 | **render** | |
