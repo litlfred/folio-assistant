@@ -821,7 +821,7 @@ change. Ask for the graph; do not navigate to the path.</p>
 <blockquote>
   <p><strong><code class="language-plaintext highlighter-rouge">kg</code> is the old name for the kind and still reads.</strong> It was renamed to
 <code class="language-plaintext highlighter-rouge">cat-harness</code> on 2026-09-19 so the kind is named for the layer that defines
-it, like <code class="language-plaintext highlighter-rouge">harness.json</code> and <code class="language-plaintext highlighter-rouge">CatHarness</code> itself. <code class="language-plaintext highlighter-rouge">GRAPH_KIND_ALIASES</code> in
+it, like <code class="language-plaintext highlighter-rouge">CatHarness</code> itself. <code class="language-plaintext highlighter-rouge">GRAPH_KIND_ALIASES</code> in
 <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> maps <code class="language-plaintext highlighter-rouge">kg</code> → <code class="language-plaintext highlighter-rouge">cat-harness</code>, so a declaration or a
 query using <code class="language-plaintext highlighter-rouge">kg</code> resolves and is marked deprecated. <strong>Do not read <code class="language-plaintext highlighter-rouge">kg</code> as a
 directory <code class="language-plaintext highlighter-rouge">id</code></strong> — in this instance the id is <code class="language-plaintext highlighter-rouge">cat-harness</code>, and text that
@@ -853,7 +853,7 @@ and each running process’s position beside its bean.</p>
 <p><strong>What <code class="language-plaintext highlighter-rouge">skill_list</code> serves is a registry, not the declaration.</strong> <code class="language-plaintext highlighter-rouge">LOCAL_PACKAGES</code>
 in <code class="language-plaintext highlighter-rouge">src/tools/skill-fetch.ts</code> maps seven package names to seven paths, resolved
 against the server’s own location. It is accurate today and it is a second
-answer to a question the declaration already answers — so a directory the
+answer to a question <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> already answers — so a directory the
 instance declares and the registry omits is invisible to <code class="language-plaintext highlighter-rouge">skill_fetch</code>. That
 has bitten: <code class="language-plaintext highlighter-rouge">content-lifecycle</code> was absent from the table until 2026-09-18
 while <strong>52</strong> <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code> activities across the workflow diagrams named
@@ -881,7 +881,7 @@ of something else.</p>
 content, no server:</p>
 
 <ol>
-  <li>Read the declaration at the repository root.</li>
+  <li>Read <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> at the repository root.</li>
   <li>Take every <code class="language-plaintext highlighter-rouge">directories[]</code> entry whose <code class="language-plaintext highlighter-rouge">graphs</code> includes <code class="language-plaintext highlighter-rouge">cat-harness</code>
 (accepting <code class="language-plaintext highlighter-rouge">kg</code> as the deprecated spelling).</li>
   <li>Read the <code class="language-plaintext highlighter-rouge">.md</code> files under each — one skill per file, the id being the

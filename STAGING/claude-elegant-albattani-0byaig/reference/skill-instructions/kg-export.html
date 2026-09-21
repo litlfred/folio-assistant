@@ -1070,7 +1070,7 @@ exist — a generated broken link is still a broken link, and a test now pins it
 </h2>
     
 
-<p>The <strong>stub</strong> (the declaration → <code class="language-plaintext highlighter-rouge">stub</code>, defaulting to <code class="language-plaintext highlighter-rouge">name</code>) is the
+<p>The <strong>stub</strong> (<code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> → <code class="language-plaintext highlighter-rouge">stub</code>, defaulting to <code class="language-plaintext highlighter-rouge">name</code>) is the
 filename stem of everything this instance publishes: <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code>,
 <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.schema.json</code>. One helper, <code class="language-plaintext highlighter-rouge">artefactStub()</code>, computes it, so the two
 exporters cannot disagree about what this instance is called.</p>
@@ -1079,14 +1079,29 @@ exporters cannot disagree about what this instance is called.</p>
 (<code class="language-plaintext highlighter-rouge">smart-base</code> → <code class="language-plaintext highlighter-rouge">base</code> → <code class="language-plaintext highlighter-rouge">https://smart.who.int/base</code>), so stub, directory and
 published path are one word.</p>
 
-<p><strong>The declaration file itself is deliberately NOT stub-named.</strong> It stays
-<code class="language-plaintext highlighter-rouge">harness.json</code>, exactly as smart-base’s config stays <code class="language-plaintext highlighter-rouge">dak.json</code>. A
-consumer bootstrapping into a repository it knows nothing about needs <strong>one
-fixed filename to open first</strong>; everything that config <em>describes</em> is free to
-be named, because by the time you fetch those you have read the config naming
-them. Renaming the config to match the repo buys consistency and costs
-discovery — the wrong trade, and the reason this is written down rather than
-left to look like an oversight.</p>
+<p><strong>The declaration file is named for the instance’s <code class="language-plaintext highlighter-rouge">name</code>, not its <code class="language-plaintext highlighter-rouge">stub</code>.</strong>
+It is <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> — so it is still not stub-named, but it is no longer a
+fixed word either, and the argument that used to stand here was reversed on
+2026-09-21.</p>
+
+<p>That argument ran: a consumer bootstrapping into a repository it knows nothing
+about needs <strong>one fixed filename to open first</strong>, so the declaration stays
+<code class="language-plaintext highlighter-rouge">harness.json</code> exactly as smart-base’s config stays <code class="language-plaintext highlighter-rouge">dak.json</code>; renaming it
+per-repo buys consistency and costs discovery.</p>
+
+<p><strong>The discovery half was answered rather than traded away.</strong>
+<code class="language-plaintext highlighter-rouge">findDeclarationFile()</code> scans a directory for a <code class="language-plaintext highlighter-rouge">*.json</code> carrying a <code class="language-plaintext highlighter-rouge">name</code>
+whose stem EQUALS that name, so a consumer still opens a declaration without
+being told its filename — it matches on the file agreeing with <strong>itself</strong>
+instead of on a word agreed in advance, and two such files in one directory
+<strong>throw</strong> rather than one being picked silently. What the old objection
+warned of was a resolver deriving the name from the DIRECTORY, which would
+find nothing in a repository cloned under a different name; that is precisely
+what this does not do.</p>
+
+<p>Everything the declaration <em>describes</em> remains free to be named, for the
+reason given before: by the time you fetch those you have read the
+declaration naming them.</p>
 <h2 id="the-edges-are-the-reason-to-publish">
   
   

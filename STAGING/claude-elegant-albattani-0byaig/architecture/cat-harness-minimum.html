@@ -1890,7 +1890,7 @@ find-the-right-one problem that motivated it.</p>
     
 
 <p><strong><code class="language-plaintext highlighter-rouge">agentic-harness</code> assumes no MCP server.</strong> Everything it needs is files in
-declared directories, readable with a filesystem and the declaration
+declared directories, readable with a filesystem and <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>
 alone. <code class="language-plaintext highlighter-rouge">ToolDefinition.invoke</code> carries <code class="language-plaintext highlighter-rouge">mcp</code> as <strong>one optional arm</strong> beside
 <code class="language-plaintext highlighter-rouge">shell</code> and <code class="language-plaintext highlighter-rouge">container</code>, and the harness relies on <code class="language-plaintext highlighter-rouge">shell</code>; a Tool whose only
 invocation is an MCP call is not usable by the harness that defines it.</p>
