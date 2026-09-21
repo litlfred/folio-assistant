@@ -92,7 +92,7 @@ comments up is the same defect wearing a different hat.
 
 1. **Identify the requester** — who is asking?
 2. **Identify stakeholders** — who else is affected? Check:
-   - `harness.config.json` roles across active folios
+   - `<name>.config.json` roles across active folios
    - GitHub CODEOWNERS
    - Recent activity on related issues
 3. **Gather source material** — the request may come from:
@@ -231,8 +231,48 @@ defined to the agent and is new to everybody else.
 1. **Post sign-off summary** on the issue — what was agreed, what was deferred
 2. **Create beans** for each implementation unit:
    - Follow the check-before-create protocol (see `todo-manager.md`)
-   - Reference the parent issue in each bean
    - Scope to a single PR-sized unit
+   - Reference the parent issue in each bean
+3. **Offer the knowledge-graph destinations** for the agreed set — `A_OfferKg`,
+   `BA_ChooseKg`, `A_RecordKg` in `crdm-signoff.bpmn`. **This step is not
+   optional and its default creates nothing.** See below.
+
+### The agreed set is an ASSET, and Phase 5 is where it gets a home
+
+Owner, 2026-09-21, on a run where this step had been reached and the offer left
+`docs/` out of it:
+
+> this is a memory asset as part of design, so it goes into docs/ […] if it is
+> realated to some harness/feature/tool that detailed infromation/design/
+> planning/etc go into that harness' docs/
+
+**Requirements are produced while BUILDING, and they are not the thing built.**
+Without this step they end as an issue and a conversation — which is how the
+output of the process that exists to produce durable requirements becomes the
+one thing the knowledge graph never learns.
+
+Three rules, and the first is the one a run skips:
+
+- **Ask; never pick silently.** The destinations are DERIVED from the owning
+  instance's declared graphs at the time of asking, `none` is a listed answer,
+  and if nobody answers **nothing is created** and *"asked, answered none"* is
+  recorded. `kg-contribution-offer` carries the option set and the question
+  that identifies a design-memory asset.
+- **It goes in the OWNING instance's `docs/`** — a `cat-harness` feature's
+  reasoning in `cat-harness/docs/`, a folio's subject matter not in the
+  platform at all. `placement` decides where inside it: `architecture/` for why
+  it is shaped this way, `guides/` for how a person does something with it,
+  `reference/` for generated material that is never hand-edited.
+- **Not `fsh-guts`.** That is the declared non-rendered trashcan and its
+  content may be thrown away or lost. A design record's whole value is that it
+  survives the conversation that produced it.
+
+**What separates the record from the skills the same phase produces:** a skill
+carries what a competent practitioner needs *in order to do* the task;
+everything past that line — background, options not taken, how to reach a data
+source, an API's full surface when the task touches three calls — is
+documentation. Both directions fail silently, so state which one you are
+writing before you write it.
 
 ## Phase 6 — Iterative development
 
@@ -259,7 +299,11 @@ For each bean:
 6. **Iterate on PR feedback** — code review is on the PR; visual review
    uses the staging preview URLs
 7. **Ask user for explicit confirmation before merging to main**
-8. **Update documentation** — content/docs/ pages, workflow BPMNs
+8. **Update documentation** — the OWNING instance's `docs/` pages and the
+   workflow BPMNs. If Phase 5's offer chose a `docs/` destination, this is
+   where that page is written and kept true; if the implementation diverged
+   from what was agreed, the divergence is recorded there rather than
+   smoothed.
 9. **Staging cleanup** — **a merged PR's preview goes away on its own**
    (owner, 2026-09-20): the merge is the confirmation, since the main site
    now shows the same thing. Everything else is retained by default. While a

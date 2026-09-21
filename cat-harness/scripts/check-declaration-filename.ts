@@ -82,6 +82,9 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
+import { instanceRootsIn, siteDirFor } from "../schemas/cat-harness.js";
+import { historicalPrefixes } from "../src/docs/declaration-claims.js";
+
 /**
  * The RETIRED declaration filename.
  *
@@ -152,7 +155,24 @@ export interface DeclarationFilenameReport {
    * so somebody can decide it, and a count alone cannot be acted on.
    */
   crossInstance: Bypass[];
+  /**
+   * Markdown lines naming the retired declaration, CLASSIFIED — bean `vzur`.
+   *
+   * `null` means the corpus could not be read, rendered as unknown and never
+   * as zero. A `use` in here fails the check.
+   */
+  markdown: MarkdownRef[] | null;
 }
+
+/** One markdown line naming the retired declaration, with what it IS. */
+export interface MarkdownRef {
+  file: string;
+  line: number;
+  text: string;
+  klass: MarkdownClass;
+}
+
+export type MarkdownClass = "record" | "generated" | "historical" | "jekyll-data" | "use";
 
 /**
  * Is this the whole value of a quoted string literal?
@@ -240,6 +260,144 @@ export function classifyWorkflowLine(line: string): "prose" | "jekyll-data" | "u
 }
 
 /**
+ * What a MARKDOWN line naming the retired declaration actually is.
+ *
+ * Bean `vzur`, turned on once its backlog was cleared and not before — a gate
+ * red on arrival teaches nobody anything, and the order was settled in that
+ * bean: clear the backlog, then turn the gate on.
+ *
+ * Markdown needed the same treatment as `.yml` and for a sharper reason.
+ * Prose was exempt on the TypeScript side because *"a rename REWORDS these"*,
+ * which is sound for a doc comment beside the code it describes. **It is not
+ * sound for a skill**, whose whole job is telling a reader where to look: a
+ * reversal does not reword anything, it silently inverts what the existing
+ * words mean, and 113 live path claims went stale in one commit with nothing
+ * reading them for ten days.
+ *
+ * - `jekyll-data` — `docs/_data/harness.json` is JEKYLL's data file, shares a
+ *   basename, and **must not be renamed**. Checked FIRST, as on the YAML side.
+ * - `record` — the file sits under a directory DECLARED as a place for
+ *   retired or foreign material (`fsh-guts/`, `beans/`, any `library/`).
+ *   Correct history, written where history belongs. Derived from the
+ *   declarations via {@link historicalPrefixes}, never listed here: a
+ *   hand-written second list is the duplicated-fact defect.
+ * - `generated` — under a generated reference directory. It FOLLOWS its
+ *   source, so failing on it would demand a hand-edit of a file the repo
+ *   forbids hand-editing.
+ * - `historical` — the passage states a former name **beside** its
+ *   replacement. The test is a current declaration filename in the enclosing
+ *   PARAGRAPH, not a past-tense word: vocabulary is a guess, a neighbouring
+ *   correct filename is evidence.
+ *
+ *   **The paragraph rather than the line, and that was measured.** The first
+ *   version tested the line alone and reported `kg-export.md`'s retirement
+ *   note as a stale path — a passage that opens *"That argument ran:"* and
+ *   whose previous sentence names `<name>.json`. History is a property of the
+ *   passage; a line-local test makes correctly-written history the one thing
+ *   the gate cannot recognise, which would push authors to delete the record
+ *   rather than mark it.
+ * - `use` — anything else. **Fails.** A markdown file cannot import the
+ *   constant, so this is a reader sent to a file that does not exist.
+ *
+ * Returns `null` when the line does not name the retired declaration at all.
+ */
+export function classifyMarkdownLine(
+  rel: string,
+  line: string,
+  records: string[],
+  paragraph = line,
+  generated: string[] = [],
+): MarkdownClass | null {
+  if (boundedIndexOf(line, RETIRED_DECLARATION) === -1) return null;
+  if (line.includes("_data")) return "jekyll-data";
+  if (records.some((r) => rel.startsWith(r))) return "record";
+  if (generated.some((g) => rel.startsWith(g))) return "generated";
+  return namesACurrentDeclaration(paragraph) ? "historical" : "use";
+}
+
+/**
+ * Prefixes holding GENERATED reference markdown, composed rather than typed.
+ *
+ * Each instance's site root comes from `siteDirFor()` — the declaration — and
+ * the two reference trees hang off it, exactly as `gen-skill-docs.ts` and
+ * `gen-schema-docs.ts` compose their own output. Writing the paths out here
+ * would be a third copy of a fact the declaration already carries, and
+ * `check:declared-paths` says so.
+ */
+function generatedPrefixes(repoRoot: string): string[] {
+  const out = new Set<string>();
+  for (const instance of instanceRootsIn(repoRoot)) {
+    let site: string;
+    try {
+      site = siteDirFor(instance);
+    } catch {
+      continue; // an instance whose site root cannot be resolved is not pruned
+    }
+    const base = relative(repoRoot, join(instance, site)).split("\\").join("/");
+    for (const leaf of ["skill-instructions", "skills"]) {
+      out.add(`${base}/reference/${leaf}/`);
+    }
+  }
+  return [...out].sort();
+}
+
+/**
+ * Does this text name a declaration that EXISTS, by either spelling?
+ *
+ * `<name>.json` — the placeholder a generic skill has to write — or a
+ * concrete `<instance>/<instance>.json`. The retired word itself never
+ * counts, which is what keeps a paragraph from excusing itself.
+ */
+function namesACurrentDeclaration(text: string): boolean {
+  if (/`<[A-Za-z0-9._-]+>\.(config\.)?json`/.test(text)) return true;
+  for (const m of text.matchAll(/`([A-Za-z0-9-]+\/)?([A-Za-z0-9-]+)\.json`/g)) {
+    if (m[2] !== "harness") return true;
+  }
+  return false;
+}
+
+/** The blank-line-delimited block containing `i`. */
+function paragraphAt(lines: string[], i: number): string {
+  let a = i;
+  let b = i;
+  while (a > 0 && lines[a - 1]!.trim() !== "") a--;
+  while (b < lines.length - 1 && lines[b + 1]!.trim() !== "") b++;
+  return lines.slice(a, b + 1).join("\n");
+}
+
+/**
+ * Every markdown line naming the retired declaration, classified.
+ *
+ * Throws rather than returning `[]` when the corpus cannot be read — the
+ * `dh4f` shape, and the caller turns it into `? COULD NOT DETERMINE`.
+ */
+function scanMarkdown(root: string): MarkdownRef[] {
+  const records = historicalPrefixes(root);
+  const generated = generatedPrefixes(root);
+  const out: MarkdownRef[] = [];
+  const skip = new Set([".git", "node_modules"]);
+  const walkMd = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (skip.has(e.name)) continue;
+      const abs = join(dir, e.name);
+      if (e.isDirectory()) {
+        walkMd(abs);
+        continue;
+      }
+      if (!e.name.endsWith(".md")) continue;
+      const rel = relative(root, abs).split("\\").join("/");
+      const lines = readFileSync(abs, "utf8").split("\n");
+      for (const [i, line] of lines.entries()) {
+        const klass = classifyMarkdownLine(rel, line, records, paragraphAt(lines, i), generated);
+        if (klass) out.push({ file: rel, line: i + 1, text: line.trim(), klass });
+      }
+    }
+  };
+  walkMd(root);
+  return out;
+}
+
+/**
  * Where the retired name starts, as a FILENAME rather than as a substring.
  *
  * The YAML side's answer to the TypeScript side's whole-value rule, and it is
@@ -253,8 +411,21 @@ export function classifyWorkflowLine(line: string): "prose" | "jekyll-data" | "u
  * correction as the defect. The same collision class as `docs/_data`, which
  * this file already had a rule for, one character further left.
  *
- * A match must not be preceded by a filename character. `/harness.json` and
- * `` `harness.json` `` match; `cat-harness.json` and `x.harness.json` do not.
+ * A match must be bounded on BOTH sides by a non-filename character.
+ * `/harness.json` and `` `harness.json` `` match; `cat-harness.json`,
+ * `x.harness.json` and **`harness.jsonld`** do not.
+ *
+ * **The right boundary was missing until 2026-09-21 and the omission was
+ * already written down.** The bean that added the left check named
+ * `harness.jsonld` in the same sentence as `cat-harness.json`, then guarded
+ * only the side it had a failing example for. The markdown scanner (`vzur`)
+ * found it on its first run: `serving-renderings.md` names this instance's
+ * published rendering, and a left-bounded match read `/harness.jsonld` as a
+ * reference to the retired declaration.
+ *
+ * A prefix test is not a filename test in either direction, and one half of
+ * the rule is the half that fails silently — it produces a FINDING rather
+ * than a miss, so it looks like the check working.
  */
 function boundedIndexOf(line: string, name: string): number {
   let from = 0;
@@ -262,7 +433,8 @@ function boundedIndexOf(line: string, name: string): number {
     const at = line.indexOf(name, from);
     if (at === -1) return -1;
     const before = at === 0 ? "" : line[at - 1]!;
-    if (!/[A-Za-z0-9._-]/.test(before)) return at;
+    const after = line[at + name.length] ?? "";
+    if (!/[A-Za-z0-9._-]/.test(before) && !/[A-Za-z0-9-]/.test(after)) return at;
     from = at + 1;
   }
 }
@@ -355,6 +527,13 @@ export function checkDeclarationFilename(root = REPO_ROOT): DeclarationFilenameR
         return null; // could not determine — never rendered as zero
       }
     })(),
+    markdown: (() => {
+      try {
+        return scanMarkdown(root);
+      } catch {
+        return null; // could not determine — never rendered as zero
+      }
+    })(),
   };
 }
 
@@ -367,6 +546,13 @@ export function checkDeclarationFilename(root = REPO_ROOT): DeclarationFilenameR
  */
 export function workflowUses(r: DeclarationFilenameReport): WorkflowRef[] {
   return (r.workflows ?? []).filter((w) => w.klass === "use");
+}
+
+/**
+ * The markdown lines that FAIL — same contract, same reason, as above.
+ */
+export function markdownUses(r: DeclarationFilenameReport): MarkdownRef[] {
+  return (r.markdown ?? []).filter((m) => m.klass === "use");
 }
 
 function formatReport(r: DeclarationFilenameReport): string {
@@ -424,6 +610,27 @@ function formatReport(r: DeclarationFilenameReport): string {
     out.push(`    workflow jekyll    ${by("jekyll-data").length}  (\`docs/_data/harness.json\` — must NOT be renamed)`);
     for (const w of by("prose")) out.push(`      · ${w.file}:${w.line}`);
   }
+
+  if (r.markdown === null) {
+    out.push("    markdown lines     ? COULD NOT DETERMINE — not zero");
+  } else {
+    const md = (k: MarkdownClass) => r.markdown!.filter((m) => m.klass === k);
+    const bad = md("use");
+    out.push(
+      `    markdown           ${md("record").length} record, ${md("generated").length} generated, ` +
+        `${md("historical").length} historical, ${md("jekyll-data").length} jekyll` +
+        (bad.length ? `, ${bad.length} STALE PATH` : ""),
+    );
+    for (const m of bad) {
+      out.push(`      ✗ ${m.file}:${m.line}`);
+      out.push(`          ${m.text.slice(0, 96)}`);
+    }
+    if (bad.length) {
+      out.push("      A markdown file cannot import the constant, so this is not a bypass —");
+      out.push("      it is a reader sent to a file that does not exist. Name the current");
+      out.push("      declaration: `<name>.json`, or the concrete `<instance>/<instance>.json`.");
+    }
+  }
   return out.join("\n");
 }
 
@@ -439,6 +646,13 @@ if (import.meta.main) {
   console.log(process.argv.includes("--json") ? JSON.stringify(report, null, 2) : formatReport(report));
   // `workflows === null` is UNKNOWN, not clean: exit 2, the same code the
   // catch above uses, so a directory that cannot be read never reads as a pass.
-  if (report.workflows === null) process.exit(2);
-  process.exit(report.bypasses.length || workflowUses(report).length || report.filesRead === 0 ? 1 : 0);
+  if (report.workflows === null || report.markdown === null) process.exit(2);
+  process.exit(
+    report.bypasses.length ||
+      workflowUses(report).length ||
+      markdownUses(report).length ||
+      report.filesRead === 0
+      ? 1
+      : 0,
+  );
 }

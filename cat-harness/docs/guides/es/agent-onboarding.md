@@ -162,7 +162,7 @@ realmente puedan afectar.
 registra únicamente cuando el folio opta por él:
 
 ```json
-// harness.config.json
+// <name>.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

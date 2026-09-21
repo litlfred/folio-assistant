@@ -116,8 +116,17 @@ function formatReport(r: ClaimReport): string {
     out.push("    result means the prose stopped pairing them, not that it agrees.");
     return out.join("\n");
   }
+  const generic = r.claims.filter((c) => c.placeholder).length;
   if (bad.length === 0) {
     out.push(`  ✓ ${r.claims.length} claim(s), no NEW contradiction`);
+  }
+  if (generic > 0) {
+    // Reported, never graded. A pattern cannot disagree with a declaration,
+    // but it must stay VISIBLE: these were invisible until 2026-09-21, so
+    // generalising a sentence silently removed it from the corpus and the
+    // tick above did not move.
+    out.push(`    ${generic} of them name a pattern (\`<name>.json\`) — correct by construction.`);
+    out.push(`    ${r.claims.length - generic} name a concrete file and were checked against the declarations.`);
   }
   for (const c of bad) {
     out.push(`  ✗ ${c.file}`);

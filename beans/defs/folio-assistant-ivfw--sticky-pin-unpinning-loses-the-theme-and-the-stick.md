@@ -210,5 +210,13 @@ looked at the card.
 
 ### Still not done here
 
-`5y4b` remains the other half of "keeps its theme" — the generator emitting a
-theme and the art behind it. Unchanged by this.
+**Nothing, and the line that stood here was already stale when I wrote it.**
+It said *"`5y4b` remains the other half of 'keeps its theme'"*. Checked rather
+than inherited from the earlier entry above: `5y4b` is **`completed`**, landed
+with art, measured scrims and screenshots. What it records as still open is
+`tfo1`'s crop gap, which is `tfo1`'s.
+
+That is `k59d`'s defect at leaf level, committed by the agent closing the bean
+— a cross-reference copied forward from an entry written a day earlier. The
+cost is exactly what `bean-blocking` names: the next agent reads a dependency
+that is not there.
