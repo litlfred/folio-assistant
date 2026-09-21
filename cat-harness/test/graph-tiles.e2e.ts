@@ -40,17 +40,26 @@ const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
 /** Declarations, and the tiles they must yield — one source for both. */
 const DIRS: TiledDirectory[] = [
-  { id: "beans", coverage: { visualiser: "cat-harness/docs/beans/index.html" } },
+  // Icons are declared on EXISTING entries rather than new ones: the id set is
+  // asserted exactly a few tests down, and a fixture that grows to cover a new
+  // field would quietly rewrite what "exactly the declarations that say
+  // navbar" means.
+  { id: "beans", coverage: { visualiser: [{ ref: "cat-harness/docs/beans/index.html", icon: "beans" }] } },
   {
     id: "library",
     coverage: {
       visualiser: [
-        { ref: "cat-harness/docs/library/shelf.html", title: "Shelf" },
+        // An icon the client's registry has not got: the fallback case, which
+        // is a folio declaring against a newer platform than the one rendering.
+        { ref: "cat-harness/docs/library/shelf.html", title: "Shelf", icon: "no-such-glyph" },
         { ref: "cat-harness/docs/library/map.html", title: "Map", surfaces: ["board"] },
       ],
     },
   },
-  { id: "navbar-only", coverage: { visualiser: [{ ref: "cat-harness/docs/n.html", surfaces: ["navbar"] }] } },
+  // An INHERITED property of every object literal. A registry read as
+  // `TILE_GLYPHS[name]` would return `Object`'s constructor here and hand a
+  // function to `innerHTML`; this pins the `hasOwnProperty` guard.
+  { id: "navbar-only", coverage: { visualiser: [{ ref: "cat-harness/docs/n.html", surfaces: ["navbar"], icon: "constructor" }] } },
   { id: "starts-hidden", coverage: { visualiser: [{ ref: "cat-harness/docs/h.html", hidden: true }] } },
   // Declares nothing: it must get no tile, however much a viewer exists.
   { id: "undeclared" },
@@ -60,8 +69,26 @@ const DIRS: TiledDirectory[] = [
 
 const TILES = graphTiles(DIRS, "cat-harness/docs");
 
+/**
+ * The base this fixture is served under — NON-EMPTY on purpose.
+ *
+ * It was absent until issue #801, and the absence is what let the defect ship:
+ * a tile's declared href is site-root-relative (`/beans/`), the code emitted it
+ * raw, and under a fixture served at the origin root "composed against the
+ * base" and "not composed at all" are the same string. The assertion below
+ * restated `publishedHref` and passed BECAUSE nothing happened — the shape
+ * PR #776 paid for in `toRootFor`, where a test that restates the expression
+ * guards nothing at the call site.
+ *
+ * So the fixture now carries what the real deploy carries. `/folio-assistant`
+ * rather than a placeholder, because that is this site's own base and a reader
+ * comparing the test with the 404 in the issue should see the same string.
+ */
+const BASE = "/folio-assistant";
+
 const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="fa-todo-src" content="/assets/todos/index.json">
+<meta name="fa-baseurl" content="${BASE}">
 <meta name="fa-tiles" content='${JSON.stringify(TILES).replace(/'/g, "&#39;")}'>
 <style>${CSS}</style></head><body>
 <div class="side-bar"><div class="site-header"><a class="site-title">Site</a></div><nav class="site-nav"></nav></div>
@@ -109,6 +136,7 @@ async function tilesOnPage(page: import("@playwright/test").Page, surface: strin
       id: (e as HTMLElement).dataset.faTile,
       title: e.querySelector(".fa-tile-caption")?.textContent,
       href: e.getAttribute("href"),
+      glyph: e.querySelector("svg")?.outerHTML,
     })),
   );
 }
@@ -166,9 +194,53 @@ test.describe("each tile opens the EXISTING visualisation — asserted by reuse"
     await ready(page);
     for (const t of await tilesOnPage(page, "navbar")) {
       const declared = TILES.find((x) => x.id === t.id)!;
-      expect(t.href, `${t.id} opens its declared visualisation`).toBe(declared.href);
+      // Two facts, and keeping them apart is the point. The DATA is the
+      // published route of the declared ref and carries no base -- that is
+      // what `graph-tiles.ts` stores and what an override resolves against.
+      // The HREF is that path composed against this deploy, which is what a
+      // browser follows. Asserting the second equals the first is the bug.
       expect(declared.href).toBe(publishedHref("cat-harness/docs", declared.ref));
+      expect(t.href, `${t.id} opens its declared visualisation`).toBe(BASE + declared.href);
     }
+  });
+
+  test("an href is composed against the base, not left at the origin", async ({ page }) => {
+    // #801 stated as the thing the reader experienced: the beans tile pointed
+    // at `litlfred.github.io/beans/`, which is a different site. Asserted by
+    // RESOLVING it the way a browser does rather than by matching the string,
+    // so a half-fix that produced `/folio-assistant//beans/` still fails.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const beans = (await tilesOnPage(page, "navbar")).find((t) => t.id === "beans")!;
+    expect(beans.href).toBe("/folio-assistant/beans/");
+    expect(new URL(beans.href!, URL_PAGE).pathname).toBe("/folio-assistant/beans/");
+  });
+
+  test("with no base declared the path is unchanged", async ({ page }) => {
+    // The documented fallback, and the common case: the e2e fixtures and a
+    // local `jekyll serve` have no base. A site that declares an empty one and
+    // a site that declares none render identically through Liquid, so there is
+    // nothing here to tell apart and nothing to report.
+    await page.route("http://nobase.test/**", (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/page.html")) {
+        return route.fulfill({
+          contentType: "text/html",
+          body: PAGE.replace(`<meta name="fa-baseurl" content="${BASE}">`, ""),
+        });
+      }
+      if (url.endsWith("/assets/todos/index.json")) {
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({ $schema: "folio-todo-index/v1", items: ITEMS }),
+        });
+      }
+      return route.fulfill({ status: 404, body: "not found" });
+    });
+    await page.goto("http://nobase.test/page.html");
+    await ready(page);
+    const beans = (await tilesOnPage(page, "navbar")).find((t) => t.id === "beans")!;
+    expect(beans.href).toBe("/beans/");
   });
 
   test("the title is the declared one, and falls back to the directory's id", async ({ page }) => {
@@ -392,5 +464,57 @@ test.describe("the folio's tile strip", () => {
       .locator(".fa-sticky-layer")
       .evaluate((el) => Number(getComputedStyle(el).zIndex));
     expect(layerZ).toBeGreaterThan(stripZ);
+  });
+});
+
+test.describe("the glyph a tile wears is DECLARED, by name", () => {
+  test("a declared icon renders a different glyph from the generic one", async ({ page }) => {
+    // Asserted as a DIFFERENCE, not against the bean's path data. A test
+    // carrying the artwork would fail on every redraw while proving only that
+    // the string was copied twice; what has to hold is that the declaration
+    // reached the renderer and changed what it drew.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const byId = Object.fromEntries((await tilesOnPage(page, "navbar")).map((t) => [t.id, t.glyph]));
+    expect(byId["beans"]).toBeTruthy();
+    expect(byId["beans"]).not.toBe(byId["library/1"]);
+  });
+
+  test("an unknown icon name falls back to the glyph every tile had before", async ({ page }) => {
+    // `library/1` declares `no-such-glyph`; `library/2` declares nothing. The
+    // two must be identical, which is what "falls back" has to mean — a folio
+    // naming a glyph its platform has not got still gets a working tile.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const nav = Object.fromEntries((await tilesOnPage(page, "navbar")).map((t) => [t.id, t.glyph]));
+    const board = Object.fromEntries((await tilesOnPage(page, "board")).map((t) => [t.id, t.glyph]));
+    expect(nav["library/1"]).toBeTruthy();
+    expect(nav["library/1"]).toBe(board["library/2"]);
+  });
+
+  test("an INHERITED property name is not a glyph", async ({ page }) => {
+    // `navbar-only` declares `constructor`. A bare `TILE_GLYPHS[name]` lookup
+    // returns `Object`'s constructor for it, and `innerHTML = <function>`
+    // writes its SOURCE into the page. Asserted both ways: the tile renders
+    // the fallback, and the word `function` appears nowhere in it.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const nav = Object.fromEntries((await tilesOnPage(page, "navbar")).map((t) => [t.id, t.glyph]));
+    expect(nav["navbar-only"]).toBe(nav["library/1"]);
+    const html = await page.locator('[data-fa-tile="navbar-only"]').innerHTML();
+    expect(html).not.toContain("function");
+  });
+
+  test("a tile's glyph is the same on both surfaces", async ({ page }) => {
+    // One declaration, two surfaces — the same rule Q11 states for visibility.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const nav = await tilesOnPage(page, "navbar");
+    const board = await tilesOnPage(page, "board");
+    const onBoth = nav.filter((n) => board.some((b) => b.id === n.id));
+    expect(onBoth.length).toBeGreaterThan(0);
+    for (const n of onBoth) {
+      expect(board.find((b) => b.id === n.id)!.glyph).toBe(n.glyph);
+    }
   });
 });

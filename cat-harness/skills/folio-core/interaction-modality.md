@@ -115,6 +115,16 @@ If answering needs them to open an issue, a file, a diff or a scrollback, the
 question is not ready. A link is where somebody goes for *more*; it is never
 where the terms are defined.
 
+**And when a link IS the right thing — a rendered page the reader has to see
+for themselves — it points at the page, not at the site it is on.** Owner,
+2026-09-21, after three turns of being handed a staging root while being asked
+about one page on it: *"next time give appropraite link
+…/STAGING/<branch>/who-iris/"*. Linking the root hands the reader a route the
+agent already knew, and hands it to somebody who types with difficulty. Full
+rule, with the failure it also hides:
+[`continual-progress`](continual-progress.md) §"Link the PAGE, never the site
+root".
+
 Six parts, in order:
 
 1. **What is being decided**, in plain words — stated as what will *differ*

@@ -99,6 +99,18 @@ export interface GraphTile {
   hidden: boolean;
   /** The tile's theme: its own, then the directory's, then absent (the instance's). */
   theme?: string;
+  /**
+   * The declared glyph NAME, passed through untouched — or absent.
+   *
+   * Nothing here validates it against the client's registry, and that is the
+   * design rather than an omission. The registry is in `docs-ui.js`, deployed
+   * with the site and authored apart from any folio's declaration; a generator
+   * that refused an unknown name would fail a build over a glyph, and one that
+   * silently dropped it would make a typo indistinguishable from a tile that
+   * declared nothing. The renderer falls back and the reader still gets a
+   * working tile. See `VisualisationSchema.icon`.
+   */
+  icon?: string;
 }
 
 /** The directory fields a tile is derived from — named rather than imported. */
@@ -150,6 +162,7 @@ export function graphTiles(
               return href === undefined ? {} : { href };
             })()),
         hidden: v.hidden === true,
+        ...(v.icon === undefined ? {} : { icon: v.icon }),
         ...(v.theme ?? d.theme ? { theme: v.theme ?? d.theme } : {}),
       });
     });

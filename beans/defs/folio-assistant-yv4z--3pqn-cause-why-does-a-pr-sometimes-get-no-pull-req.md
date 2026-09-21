@@ -336,3 +336,89 @@ time rather than inferred.
 repository, which is a change to the forge rather than to the tree, and this
 bean is `low` with its owner's *"no work scheduled"* standing. Left as the one
 step that settles it.
+
+
+---
+
+## STEP 2, MEASURED — 2026-09-21, PR #813
+
+The one unmeasured link in this bean's own decisive test. Run deliberately,
+because it can only be taken on a PR that is **open and conflicted at the same
+moment**, and the merge ref is reaped on close — so none of the eight past
+occurrences could supply it.
+
+### The instrument
+
+Branched from `36aa14dd2` (main before #806) and appended a different block to
+the same end-of-file region #806 had appended to, in **this file**. `merge-tree`
+exit 1, one real content conflict. A bean markdown file, so nothing built or
+broke while the conflict stood. PR #813 opened 22:10:04Z, `mergeable_state:
+dirty` confirmed by the API.
+
+### The readings
+
+| | |
+|---|---|
+| `refs/pull/813/head` | **present** immediately |
+| `refs/pull/813/merge` | **NEVER APPEARED** — polled every 20 s for **433 s** |
+| `pull_request`-event runs on `b5fcc04b0` | **zero**, throughout |
+| push-event run on the same sha | `JSON-LD generated-file drift`, started 22:09:54Z, **success** |
+
+### Why the absence is a measurement and not a wait
+
+Three controls, all simultaneous, and the third is the one that matters:
+
+1. **A measured normal latency.** PR #812 — another session, branched from the
+   same `36aa14dd2`, `mergeable_state: clean` — was created 21:57:32Z and its
+   `pull_request` runs started 22:00:15Z. **2 m 43 s.** #813 was given more
+   than three times that.
+2. **Twelve open mergeable PRs held merge refs** at the instant #813 did not.
+3. **PRs created DURING the polling window got theirs.** #815 and #817 did not
+   exist at the 22:10 census and were present at 22:17. So the forge was
+   minting merge refs throughout the seven minutes it declined to mint one for
+   #813 — which is what separates *"not computed for this PR"* from *"not
+   computed yet"*, and no earlier observation here could make that cut.
+
+### STEP 3 — the same PR, resolved. A within-PR before/after
+
+The conflict was resolved at 22:22:09Z by merging `main` (17 commits) into the
+same branch. Nothing else changed: same PR number, same branch, same actor,
+same tooling.
+
+| | conflicted `b5fcc04b0` | resolved `d0db0633c` |
+|---|---|---|
+| `refs/pull/813/merge` | **absent for 433 s** | **present within 15 s** (`16ce1cd74`) |
+| `pull_request`-event runs | **zero for 8+ minutes** | **five, started 22:22:16Z — 7 s after the push** |
+
+So the whole chain is now measured on ONE pull request, with mergeability as
+the only variable, rather than assembled from occurrences a day apart.
+
+**Seven seconds.** Worth recording against #812's 2 m 43 s from the same hour:
+`pull_request` latency varies by more than twenty-fold under normal operation,
+which is exactly why elapsed time was never a usable discriminator — the flat
+timing series across the first six observations was reading a quantity with no
+signal in it. **The merge ref is the discriminator; the clock is not.**
+
+### What this settles, and what it does not
+
+**Settled:** a PR that is unmergeable at creation carries **no**
+`refs/pull/N/merge`, and receives **no** `pull_request`-event run, while a
+`push`-event run on the identical sha completes normally — and **both return
+within seconds of the conflict being resolved, on the same PR**. The mechanism
+proposed in observation seven — `actions/checkout@v4` with no `ref:` resolves
+`refs/pull/N/merge` for a `pull_request` event, and a conflicted PR has no such
+commit — now has its missing link measured rather than inferred.
+
+**Not settled:** *which* of the two is cause and which is consequence. GitHub
+may decline to compute the merge commit and therefore skip the event, or skip
+the event for its own reasons and never compute the commit. Both are consistent
+with every reading here. The bean does not need that resolved: its Done-when
+asks for the cause to be established **or** recorded as not determinable, and
+what an operator needs — `mergeable_state` first, never a dispatch on a
+conflicted PR — is already in `prepare-merge` §Guardrails and does not depend
+on the direction.
+
+**The `workflow_dispatch` workaround is now explained rather than merely
+observed.** It resolves `refs/heads/<branch>`, which exists regardless, so it
+worked six times for the reason this measurement gives — and that is exactly
+why it was unsafe on a conflicted PR: it tests a tree that will never exist.

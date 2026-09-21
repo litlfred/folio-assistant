@@ -75,6 +75,45 @@ note that the layout was machine-accepted but not confirmed legible. The
 author's reply was *"jsut merge so i can help assess"*. The hold made assessment
 harder, not safer, and cost a round-trip to someone who types with difficulty.
 
+### Link the PAGE, never the site root
+
+**When you ask somebody to look at a rendered artefact, link the artefact.**
+Not the site it is on, not the preview's front door — the exact URL of the
+thing you changed.
+
+Owner, 2026-09-21, after a session that had pointed three times at
+`…/STAGING/<branch>/` while asking about the navbar on the IRIS replica:
+
+> *"next time give appropraite link
+> https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/who-iris/"*
+
+The root is not a shortcut, it is a handoff of the last step. It makes the
+reader reconstruct a route the agent already knew, and it does it to the person
+this repository's interaction profile exists for — one who types with
+difficulty. Every extra click is a cost the agent chose not to pay and passed
+on.
+
+It also hides a real failure mode. An agent that links the root has not checked
+that its page is reachable at all: `/who-iris/` 404ed for an hour in that same
+session, under a root that loaded perfectly.
+
+So:
+
+- **One link per thing to look at.** Two changed pages is two links, each
+  labelled with what to look for on it — not one root and a sentence of
+  navigation.
+- **Deep-link past the index.** If the change is on
+  `/docs/who-iris/kg-to-portal.html`, that is the URL, not `/docs/who-iris/`.
+- **Compose it from the preview's own base**, which the staging comment
+  states. Never from memory: a branch slug is exactly the kind of string that
+  is almost right.
+- **The root is the right link for precisely one thing** — a change to the
+  landing page itself.
+
+This is the same rule as the invariant above, one step further on. A human
+cannot assess a rendered artefact from a description of it; they also cannot
+assess it from a link to somewhere near it.
+
 ### What to do with the thing you could not verify
 
 **Say it in the body, and merge anyway.** `## Not verified` is a real section
