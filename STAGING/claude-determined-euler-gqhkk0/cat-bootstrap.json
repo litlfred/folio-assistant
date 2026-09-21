@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld",
   "repository": "cat-bootstrap",
-  "generatedAt": "2026-09-21T20:39:48.282Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/760c4f999216e548b25e665d06c44791f2a6bdb2",
-  "sourceCommitSha": "760c4f999216e548b25e665d06c44791f2a6bdb2",
-  "sourceCommitAt": "2026-09-21T20:37:32Z",
+  "generatedAt": "2026-09-21T20:50:21.810Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d5a975415bb93bdda7cbd5962c97cc0603eaee6d",
+  "sourceCommitSha": "d5a975415bb93bdda7cbd5962c97cc0603eaee6d",
+  "sourceCommitAt": "2026-09-21T20:47:53Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -770,6 +770,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#role/Initiator",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#skill/root-readme"
       ],
@@ -1308,7 +1309,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#skill/cat-bootstrap-kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#skill/confirm-harness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#skill/discussion",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#skill/log-message",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#skill/root-readme"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-bootstrap.jsonld#role/Initiator"
@@ -1422,8 +1424,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "56ab128ef97130e91a46325013abbf12a2bb1558",
+    "sha": "5de589113bb82219608aae708811d21924fd6d64",
     "pr": "787/merge",
-    "run": "35652309111"
+    "run": "35653341069"
   }
 }

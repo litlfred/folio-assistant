@@ -3041,6 +3041,20 @@
       "file": "beans/defs/folio-assistant-j1r2--audio-and-visual-assets-carry-translatable-text-tr.md"
     },
     {
+      "id": "folio-assistant-j28g",
+      "title": "TRANSLATIONS: 20 .pot files in cat-harness/translations/ are for diagrams cat-harness does not own, and --check reports them clean",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:53:45Z",
+      "updatedAt": "2026-09-21T18:54:08Z",
+      "preview": "Found 2026-09-21 while checking that the new swimlane `<bpmn:documentation>`\n(bean `sqtq`) would actually reach a translator. It does — for 58 diagrams.\nFor three of them it cannot, and nothing says so.\n\n## The finding\n\n`cat-harness/translations/<locale>/workflows/` holds **62** `.pot` files per\nlocale. `translate-bpmn --check` reports on **58**:\n\n```\nChecking 58 diagram(s) against: ar, es, fr, ru",
+      "file": "beans/defs/folio-assistant-j28g--translations-20-pot-files-in-cat-harnesstranslatio.md"
+    },
+    {
       "id": "folio-assistant-j2w4",
       "title": "gates reads ONE workflow; CI runs five",
       "status": "completed",
@@ -4463,6 +4477,20 @@
       "file": "beans/defs/folio-assistant-sopq--mine-the-who-ig-starter-kit-sops-for-dak-qa-criter.md"
     },
     {
+      "id": "folio-assistant-sqtq",
+      "title": "SWIMLANES HAVE NO DEFINITION: 157 task-containing lanes carry a name and no documentation",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:32:14Z",
+      "updatedAt": "2026-09-21T19:17:41Z",
+      "preview": "Owner, 2026-09-21, ruling on the #596 glossary: *\"QA sidecar validation than\ndocumentaion is absent on any of containing swimlines of a task. bean up too\nfix. dispatch agent. name,documentation --> glossary.\"*\n\n## The finding that produced this\n\nIssue #596 names a BPMN swimlane as a glossary source — *\"a bpmn diagram\nswimlane has title/description\"*. **It has a title. It has no description.**\n\n| a",
+      "file": "beans/defs/folio-assistant-sqtq--swimlanes-have-no-definition-157-task-containing-l.md"
+    },
+    {
       "id": "folio-assistant-supn",
       "title": "HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendation from initialisation state, and health badges",
       "status": "todo",
@@ -4545,6 +4573,20 @@
       "updatedAt": "2026-09-21T12:44:47Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R10 + R7. Unit 6 of 10.\n\nThe owner: *\"each content type controls its own avatar, visualtion/rendering. but\nassume they can open a full screen panel w/ fixed controls like [x] or [linksrc] or\n[edit] or what not depedning on conent.\"*\n\n**CRDM Q7, answered: the kind declares its controls; the platform fixes the chrome.**\n`[x]` is always ",
       "file": "beans/defs/folio-assistant-t4my--panel-chrome-the-kind-declares-its-controls-the-pl.md"
+    },
+    {
+      "id": "folio-assistant-t7ao",
+      "title": "One bean with unparseable front matter takes down the whole store, and 92 gates passed over it",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:54:30Z",
+      "updatedAt": "2026-09-21T20:20:13Z",
+      "preview": "Found 2026-09-21, by breaking it. Not a hypothetical: the bad bean was mine,\nit was committed, and the full gate set passed over it.\n\n## What happened\n\n`224e0beac8` committed `beans/defs/folio-assistant-sqtq--*.md` whose line 8\nwas a literal `\\1` — an unsubstituted sed backreference where `updated_at:`\nbelonged. `bun run gates --all` was run on that tree: **92 gates, all green.**\nIt was pushed as ",
+      "file": "beans/defs/folio-assistant-t7ao--one-bean-with-unparseable-front-matter-takes-down.md"
     },
     {
       "id": "folio-assistant-t8g3",
@@ -4687,6 +4729,20 @@
       "updatedAt": "2026-09-20T13:56:16Z",
       "preview": "Found 2026-09-20 by being caught out by it, on bean `7yvd`.\n\n## What happened\n\n`bun test` was red locally for a known, unrelated reason — the stale\ngitignored `scripts/__pycache__` of bean `koth`. Six new BPMN diagrams then\nintroduced a SECOND failure in the same gate\n(`every activity names a skill or declares why it has none`, 17 activities).\n\n`bun run gates` reported:\n\n```\n✗ 2 of 55 failed:\n  · ",
       "file": "beans/defs/folio-assistant-ucb9--bun-run-gates-says-which-gate-failed-never-which-t.md"
+    },
+    {
+      "id": "folio-assistant-ug4r",
+      "title": "A lane deliberately bound to NO role is indistinguishable from one nobody got round to",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:17:46Z",
+      "updatedAt": "2026-09-21T19:18:11Z",
+      "preview": "Found 2026-09-21 working bean `sqtq`, by nearly making the mistake it\ndescribes.\n\n## What happened\n\n157 task-containing lanes, and exactly one resolves to no role: `Actor`, in\n`cat-bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s\n§\"Adding a role\", worked out the `actorKinds` and the `skills`, and was about\nto add it when the end of the file said:\n\n> THE FIFTH LANE IS DELIBERATEL",
+      "file": "beans/defs/folio-assistant-ug4r--a-lane-deliberately-bound-to-no-role-is-indistingu.md"
     },
     {
       "id": "folio-assistant-ugid",
