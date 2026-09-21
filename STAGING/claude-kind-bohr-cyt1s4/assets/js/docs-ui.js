@@ -1346,57 +1346,168 @@
     panel.appendChild(view);
     mountPanelInSidebarColumn(host, panel);
 
-    /* ── The search field, adopted out of the main panel ────────────────── */
-
-    /*
-     * The owner: "move the search to a icon in navbar that expands.... keep
-     * main display panel uncluttered." just-the-docs renders its search at
-     * the top of `.main-header`, which is exactly the clutter named.
+    /* ── The search field: in the top navbar, slidable to the corner ─────
      *
-     * ## Moved, never rebuilt
+     * Owner, 2026-09-21: *"also i want the search restored back to the top
+     * display navbar, with option to slide out to the UR corner as an icon."*
+     *
+     * ## THIS REVERSES THE 2026-09-19 DECISION, and the old one is recorded
+     *
+     * The previous version of this block adopted the theme's search OUT of
+     * the main panel and into a Settings tile, on the owner's *"move the
+     * search to a icon in navbar that expands.... keep main display panel
+     * uncluttered."* The tile comment below went further and REFUSED a
+     * header magnifier outright, citing an answer of "search is two" given on
+     * 2026-09-19 when the trade was put to the owner.
+     *
+     * That refusal is now void, superseded by the line above. It is rewritten
+     * rather than deleted, because an agent finding a comment that forbids
+     * what the code does concludes the code is the mistake.
+     *
+     * What survives is the REASON behind the old answer — the main panel
+     * should not be cluttered — and the slide-out is how both hold at once:
+     * the field is in the navbar where it is reached, and a reader who wants
+     * the space back sends it to the corner as an icon.
+     *
+     * ## Moved, never rebuilt — UNCHANGED, and still the load-bearing part
      *
      * The theme's own script binds to the input it rendered. A search box
-     * reconstructed here would look identical and do nothing -- the failure
-     * mode this file's header calls out, a feature that quietly does nothing.
-     * So the theme's `.search` container is MOVED, with its input, its label
-     * and its results list intact, and every handler moves with it because
-     * handlers belong to elements and not to positions.
+     * reconstructed here would look identical and do nothing. So the theme's
+     * `.search` container is MOVED, with its input, its label and its results
+     * list intact, and every handler moves with it because handlers belong to
+     * elements and not to positions.
      *
-     * ## It must never leave the document
+     * ## It must never leave the document — ALSO UNCHANGED
      *
      * just-the-docs looks its input up by id when it initialises, and
-     * `getElementById` does not find a detached node. Parking the container
-     * in a variable until the view is first opened would therefore kill
-     * search outright on any page where the theme initialises second.
-     *
-     * So it is moved at MOUNT time into a holder that is already inside the
-     * panel -- in the document, hidden by CSS -- and shuttled between that
-     * holder and the open view. `display: none` on an ancestor keeps a node
-     * in the tree; removing it from the tree does not.
+     * `getElementById` does not find a detached node. So the holder lives
+     * inside `searchHome`, which is in the document from mount, and the two
+     * states move `searchHome` between CSS classes rather than moving the
+     * input out of the tree. Sliding to the corner is a class change and a
+     * `hidden` on nothing — the node never leaves.
      *
      * ## Absent is a real state
      *
      * `search_enabled: false`, or a theme that renamed the container, means
-     * there is nothing to adopt. The tile is then NOT DRAWN and the warning
-     * says what was looked for -- rather than a Search tile that opens onto
-     * an empty panel.
+     * there is nothing to adopt. Nothing is mounted, no corner icon is drawn,
+     * and the warning says what was looked for.
      */
-    var searchHolder = null;
-    var adopted = firstMatch(SEARCH_SELECTORS);
-    if (adopted) {
-      searchHolder = el("div", { class: "fa-search-holder", hidden: "hidden" });
-      searchHolder.appendChild(adopted);
-      panel.appendChild(searchHolder);
-    } else {
-      console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
-                   "); the Search tile was not mounted and the theme's search, if any, " +
-                   "was left where it was.");
+    var SEARCH_PLACE_KEY = "fa-search-place";
+
+    /** "navbar" (default) or "corner". Anything unrecognised is the default —
+     *  a stored value from an older build must not leave search nowhere. */
+    function storedSearchPlace() {
+      try {
+        return window.localStorage.getItem(SEARCH_PLACE_KEY) === "corner" ? "corner" : "navbar";
+      } catch (_e) { return "navbar"; }
     }
 
-    /** Put the search back in its always-in-document holder. */
+    var searchHolder = null;
+    var searchHome = null;
+    var adopted = firstMatch(SEARCH_SELECTORS);
+    if (adopted) {
+      searchHolder = el("div", { class: "fa-search-holder" });
+      searchHolder.appendChild(adopted);
+
+      searchHome = el("div", { class: "fa-search-home", "data-place": "navbar", "data-open": "true" });
+
+      /* The corner's collapsed face. Only ever visible in the corner state,
+       * where the field itself is hidden — so it is the ONE control that can
+       * bring search back, which is `l4zi`'s rule: an action whose inverse is
+       * not reachable is not a toggle, it is a delete. */
+      var cornerIcon = el("button", {
+        type: "button",
+        class: "fa-search-peek",
+        "aria-label": "Open search",
+        "aria-expanded": "false",
+      });
+      cornerIcon.innerHTML = SEARCH_GLYPH;
+
+      /* The slide control, beside the field. Chevron, not an ✕: closing search
+       * is not dismissing it, and an ✕ promises removal. */
+      var slide = el("button", { type: "button", class: "fa-search-slide" });
+
+      function paintSearchPlace(place) {
+        var corner = place === "corner";
+        searchHome.setAttribute("data-place", place);
+        // In the navbar the field is always shown. In the corner it starts
+        // collapsed behind the icon — that IS the point of sending it there.
+        searchHome.setAttribute("data-open", corner ? "false" : "true");
+        cornerIcon.setAttribute("aria-expanded", "false");
+        slide.setAttribute("aria-label",
+          corner ? "Dock search back into the navbar" : "Slide search out to the corner");
+        slide.setAttribute("title", slide.getAttribute("aria-label"));
+        slide.textContent = corner ? "⌄" : "⌃";
+      }
+
+      slide.addEventListener("click", function () {
+        var next = searchHome.getAttribute("data-place") === "corner" ? "navbar" : "corner";
+        try { window.localStorage.setItem(SEARCH_PLACE_KEY, next); } catch (_e) { /* private mode */ }
+        paintSearchPlace(next);
+        // Focus follows the control that replaced the thing that moved, or a
+        // keyboard reader is left on a node that is now display:none.
+        if (next === "corner") cornerIcon.focus();
+        else { var i = searchHolder.querySelector("input"); if (i) i.focus(); }
+      });
+
+      cornerIcon.addEventListener("click", function () { revealSearch(); });
+
+      searchHome.appendChild(cornerIcon);
+      searchHome.appendChild(searchHolder);
+      searchHome.appendChild(slide);
+
+      /* WHERE THE NAVBAR IS. `.main-header` is where just-the-docs renders
+       * search itself, so putting it back there is putting it back. The
+       * fallbacks exist because a theme that renamed the container may also
+       * have renamed the header, and search in the wrong place beats search
+       * nowhere. */
+      var navbar = firstMatch([".main-header", "#main-header", ".main-content-wrap"]);
+      if (navbar) navbar.insertBefore(searchHome, navbar.firstChild);
+      else {
+        var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
+        if (mainEl && mainEl.parentNode) mainEl.parentNode.insertBefore(searchHome, mainEl);
+        else document.body.appendChild(searchHome);
+      }
+
+      paintSearchPlace(storedSearchPlace());
+    } else {
+      console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
+                   "); search was not mounted in the navbar and no corner icon was drawn.");
+    }
+
+    /**
+     * Show search wherever it currently lives, and put the cursor in it.
+     *
+     * The one entry point for "I want to search": the corner icon presses it,
+     * and so does the Search tile. Neither MOVES the field, because two
+     * places search can be is two places a reader has to look for it.
+     */
+    function revealSearch() {
+      if (!searchHome) return;
+      searchHome.setAttribute("data-open", "true");
+      if (searchHome.getAttribute("data-place") === "corner") {
+        var peek = searchHome.querySelector(".fa-search-peek");
+        if (peek) peek.setAttribute("aria-expanded", "true");
+      }
+      var input = searchHolder && searchHolder.querySelector("input");
+      if (input) input.focus();
+    }
+
+    /**
+     * Formerly: return the search field to its always-in-document holder.
+     *
+     * The field no longer travels into the tiles panel, so in the normal case
+     * there is nothing to undo. It is KEPT as a safeguard rather than deleted
+     * because `showGrid` wipes the view with `innerHTML = ""`, and that
+     * DETACHES whatever is inside — if any future view ever borrows the
+     * holder again, the wipe would silently kill search, which is the exact
+     * failure the long comment above exists about. A no-op guard is cheap;
+     * rediscovering that bug is not.
+     */
     function parkSearch() {
-      if (searchHolder && searchHolder.parentNode !== panel) panel.appendChild(searchHolder);
-      if (searchHolder) searchHolder.setAttribute("hidden", "hidden");
+      if (searchHolder && searchHome && searchHolder.parentNode !== searchHome) {
+        searchHome.insertBefore(searchHolder, searchHome.lastChild);
+      }
     }
 
     /* ── The views ─────────────────────────────────────────────────────── */
@@ -1598,14 +1709,10 @@
       head.appendChild(back);
       head.appendChild(heading);
       view.appendChild(head);
-      if (key === "search") {
-        // A move, not a copy: the holder travels into the view with the
-        // theme's own input inside it, and travels back on the way out.
-        view.appendChild(searchHolder);
-        searchHolder.removeAttribute("hidden");
-      } else {
-        view.appendChild(views[key]);
-      }
+      // No `search` branch any more: search lives in the navbar and the tile
+      // REVEALS it there rather than dragging it into the sidebar. A field
+      // that moves to wherever you summoned it from is a field with no home.
+      view.appendChild(views[key]);
       view.removeAttribute("hidden");
 
       if (key === "qr") renderQr();
@@ -1617,11 +1724,7 @@
       // so a screen reader is still told what it landed on -- the heading is
       // reachable by Shift+Tab, one key away, rather than in the way of the
       // thing the tile exists for.
-      var input = key === "search" && searchHolder
-        ? searchHolder.querySelector("input")
-        : null;
-      if (input) input.focus();
-      else heading.focus();
+      heading.focus();
     }
 
     /* ── The grid ──────────────────────────────────────────────────────── */
@@ -1635,20 +1738,42 @@
     }
 
 
-    // Search leads the grid. It is the one action here a reader reaches for
-    // repeatedly, and it is the one that was taken off the main panel -- so
-    // it gets the first cell rather than being buried behind the others.
-    //
-    // TWO PRESSES IS THE ANSWER, NOT A COMPROMISE. Reaching search costs
-    // launcher-then-tile, and the obvious "improvement" is a second, dedicated
-    // magnifier in the header row: one press instead of two. Do not make it.
-    // That row is capped at 3.75rem and shares its width with the site title,
-    // and a single launcher exists precisely because the navbar was getting
-    // crowded (bean `1le7`). Put to the repo owner on 2026-09-19 with both
-    // costs stated; the answer was "search is two". It is ~20 lines here and
-    // the CSS already exists, which is exactly why this comment is here: the
-    // change is cheap enough to look like a tidy-up.
-    if (searchHolder) grid.appendChild(tileButton(SEARCH_GLYPH, "Search", "search"));
+    /* Search leads the grid, and the tile now REVEALS rather than moves.
+     *
+     * ## The comment that stood here refused what now ships
+     *
+     * It read, in part: *"the obvious 'improvement' is a second, dedicated
+     * magnifier in the header row: one press instead of two. Do not make
+     * it."* — citing the row's 3.75rem cap, bean `1le7`, and an answer of
+     * "search is two" given by the owner on 2026-09-19.
+     *
+     * The owner reversed it on 2026-09-21: *"i want the search restored back
+     * to the top display navbar, with option to slide out to the UR corner as
+     * an icon."* Quoted rather than deleted, because the next agent to read a
+     * prohibition the code plainly violates will assume the CODE is wrong and
+     * revert working behaviour to satisfy a dead instruction.
+     *
+     * ## And the reversal did not cost the row
+     *
+     * Worth noting, because it is why the old objection does not simply
+     * reapply in a new form: search did NOT come back as a fourth icon in the
+     * capped sidebar header. It went to the MAIN DISPLAY navbar, which is
+     * where just-the-docs renders it and which has the width. The sidebar row
+     * is the mark, the scheme bulb, the globe and the launcher — three icons
+     * beside the title, which is what `1le7` costed.
+     *
+     * ## Why this is an action and not a view
+     *
+     * The tile used to drag the live field into the sidebar panel. With
+     * search visible in the navbar that is strictly worse: the same field
+     * would be in two places depending on how you got to it, and a reader who
+     * closed the panel would find search had moved. So the tile calls
+     * `revealSearch`, which un-collapses the field where it lives and focuses
+     * it. One search box, one home, two ways to reach it.
+     */
+    if (searchHolder) {
+      grid.appendChild(tileAction(SEARCH_GLYPH, "Search", revealSearch));
+    }
     grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
     grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
     // The encoder is a separate vendor script. Without it the OTHER tiles must

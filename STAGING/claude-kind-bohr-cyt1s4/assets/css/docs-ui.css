@@ -1911,7 +1911,14 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    accessible-name assertion guards it instead.
 
    So: clipped to a pixel rather than removed. Invisible, still named. */
-.fa-tiles .search-label {
+/* SCOPED TO BOTH CONTAINERS since 2026-09-21. The field moved to the navbar
+   (`.fa-search-home`) and this rule stayed pinned to `.fa-tiles`, so the
+   magnifier came back at full size over the input — caught by the e2e
+   assertion on the label's box, which is exactly what that assertion is for.
+   Widened rather than duplicated: two copies of an accessibility rule is two
+   places for one of them to be reverted. */
+.fa-tiles .search-label,
+.fa-search-home .search-label {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -4047,3 +4054,213 @@ a.fa-harness-tab__body:focus-visible {
 .fa-scheme-mini[aria-pressed="true"] {
   background: rgba(128, 128, 128, 0.22);
 }
+
+/* ── Search: in the top display navbar, slidable to the corner ────────────
+ *
+ * Owner, 2026-09-21: *"also i want the search restored back to the top
+ * display navbar, with option to slide out to the UR corner as an icon."*
+ *
+ * TWO STATES ON ONE NODE, switched by `data-place`, because the field must
+ * never leave the document — just-the-docs finds its input by id and
+ * `getElementById` does not see a detached node. So "sliding out" is a class
+ * change on the wrapper, never a move of the input. `docs-ui.js` carries the
+ * long form of why.
+ *
+ *   data-place="navbar"  in flow at the top of the main header (the default,
+ *                        and where the theme itself renders search)
+ *   data-place="corner"  fixed to the upper right, collapsed behind an icon
+ *                        until `data-open="true"`
+ *
+ * The choice is remembered per reader in `localStorage`, so it is a setting
+ * rather than a gesture repeated every page.
+ */
+/* ## The navbar state INHERITS the page's ink; only the corner names its own
+ *
+ * The first version of this block gave `.fa-search-home` a per-scheme
+ * foreground the way `.fa-tiles` has one, and axe caught it immediately:
+ * `#e6e9ee on #ffffff, 1.21:1`. The mistake is worth naming because it looks
+ * like the FIX for `23bc` rather than a new instance of it.
+ *
+ * `.fa-tiles` paints its own opaque panel, so it knows what its text sits on
+ * and must state a matching colour. The navbar search does NOT paint a
+ * background — it sits in page content — so whatever colour it names is a
+ * guess about a surface it does not own, and the guess is wrong in one
+ * scheme by construction. Inheriting is not laziness here; it is the only
+ * answer that cannot be wrong, because the page's own text colour is already
+ * correct against the page's own background.
+ *
+ * The BORDER cannot inherit — it needs a value — so it takes one that clears
+ * 3:1 on every background it can land on rather than one per scheme:
+ *
+ *   #737d8c   on #ffffff 4.17:1   on #27262b 3.60:1   on #f5f6fa 3.86:1
+ *
+ * The corner card is the opposite case and keeps the per-scheme pair below:
+ * it IS opaque, it does own its background, and it must.
+ */
+.fa-search-home {
+  --fa-search-border: #737d8c;
+
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: inherit;
+}
+
+/* NAVBAR — the default. The field takes the width it is given and the slide
+   control sits after it, so the control does not move as the page resizes. */
+.fa-search-home[data-place="navbar"] {
+  width: 100%;
+  margin: 0 0 0.75rem;
+}
+
+.fa-search-home[data-place="navbar"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
+.fa-search-home[data-place="navbar"] .fa-search-peek { display: none; }
+
+/* CORNER — fixed, upper right.
+ *
+ * `z-index: 95` puts it over page content and over the pinned-sticky layer
+ * (`.fa-sticky-layer`, 90), which is deliberate: a reader who pressed the
+ * search icon wants the field, not a note that happens to overlap it. It
+ * stays BELOW anything modal, of which there is currently nothing. */
+.fa-search-home[data-place="corner"] {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 95;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 6px;
+  /* Opaque: it sits over body text, so unlike the navbar state it DOES own
+     its background and therefore must name a foreground to match it. Dark by
+     default, re-measured light below — #e6e9ee on #27262b is 12.34:1 and
+     #1f2933 on #ffffff is 14.76:1. */
+  background: #27262b;
+  color: #e6e9ee;
+}
+
+:root[data-fa-scheme="light"] .fa-search-home[data-place="corner"] {
+  background: #ffffff;
+  color: #1f2933;
+}
+
+/* Collapsed is the corner's ARRIVAL state — sending search to the corner and
+   leaving the field open would not have freed the space that was the point. */
+.fa-search-home[data-place="corner"][data-open="false"] .fa-search-holder { display: none; }
+.fa-search-home[data-place="corner"][data-open="true"] .fa-search-holder { width: min(18rem, 60vw); }
+
+/* The two controls. Sized like the header mini-icons (1.75rem) rather than
+   to the text, because this instance's interaction profile is low-dexterity
+   and both are targets a reader hits with a pointer. */
+.fa-search-peek,
+.fa-search-slide {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 0.85rem;
+}
+
+.fa-search-peek svg { width: 1rem; height: 1rem; fill: currentColor; }
+
+.fa-search-peek:hover,
+.fa-search-peek:focus-visible,
+.fa-search-slide:hover,
+.fa-search-slide:focus-visible {
+  border-color: var(--link-color, #7253ed);
+  outline: none;
+}
+
+/* Never left to the user agent: the corner card's fill differs per scheme and
+   the default ring is invisible on one of them. */
+.fa-search-peek:focus-visible,
+.fa-search-slide:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
+/* On a phone the corner card would cover most of the header, so the corner
+   state collapses to just its icon and the field opens full-width beneath.
+   The state is still honoured — it is not silently forced back to the navbar,
+   which would lose a choice the reader made on another device. */
+@media (max-width: 50rem) {
+  .fa-search-home[data-place="corner"][data-open="true"] {
+    left: 0.75rem;
+    right: 0.75rem;
+  }
+  .fa-search-home[data-place="corner"][data-open="true"] .fa-search-holder {
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+/* The field's own size in the navbar.
+ *
+ * The theme's input is 21px tall unstyled, and the tiles panel used to give
+ * it a height that the navbar does not. 21px is UNDER the 24px SC 2.5.8
+ * target floor, and this instance's declared interaction profile is
+ * low-dexterity, where "technically under the bar" is a reader who misses.
+ * Caught by the e2e box assertion after the field moved — the check existed,
+ * it was the styling that did not follow.
+ *
+ * 2.25rem (36px) rather than 24: that is what the panel already gave it, so
+ * the field is not quietly smaller in its new home than in its old one. The
+ * test holds the legal 24 so this comfort can be spent deliberately rather
+ * than by accident. */
+.fa-search-home .search-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 2.25rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: transparent;
+  /* Inherits — the page's in the navbar, the card's in the corner. One
+     declaration, correct in both, for the reason at the top of this block. */
+  color: inherit;
+  font-size: 0.85rem;
+}
+
+.fa-search-home .search-input:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 1px;
+}
+
+/* Results drop below the field rather than floating, same rule the panel
+   already follows, and the corner card needs it more: fixed-positioned, it
+   would otherwise render its hits off the bottom of the viewport. */
+.fa-search-home .search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 16rem;
+  margin-top: 0.25rem;
+  overflow-y: auto;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  /* Opaque like the corner card, and for the same reason: hits render over
+     body text. `Canvas` was rejected here for the reason the pinned-sticky
+     rule records — it is a SYSTEM colour that follows the OS scheme while the
+     text follows the page's, so the two disagree the moment a reader sets the
+     page against their system. */
+  background: #27262b;
+  color: #e6e9ee;
+}
+
+:root[data-fa-scheme="light"] .fa-search-home .search-results {
+  background: #ffffff;
+  color: #1f2933;
+}
+
+.fa-search-home .search { position: relative; }
