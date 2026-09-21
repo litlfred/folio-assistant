@@ -9,7 +9,7 @@
  */
 
 import { resolve } from "path";
-import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
+import { directoryForGraph, folioDir, folioDirDeferred } from "../../schemas/cat-harness.js";
 
 // Default: assume folio-assistant/adapters/paper/ is inside the repo
 let _repoRoot = resolve(import.meta.dir, "../../..");
@@ -54,7 +54,13 @@ export const get = {
 // tools should import `get` above.
 
 export const REPO_ROOT = _repoRoot;
-export const FOLIO_DIR = folioDir(_repoRoot);
+// DEFERRED, unlike its neighbours: `folioDir` throws on a malformed
+// declaration, and a throw here aborts this module's evaluation — leaving
+// every export below unbound and producing an error far from its cause (bean
+// `95s1`). The value is still resolved at import time, like the rest; only the
+// failure waits for a caller. `get.FOLIO_DIR()` above was already lazy and is
+// untouched.
+export const folioDirOf = folioDirDeferred(_repoRoot, import.meta.url);
 export const CHAPTERS_DIR = resolve(_repoRoot, "chapters");
 export const MAIN_TEX = resolve(_repoRoot, "main.tex");
 export const LEAN_DIR = _repoRoot;

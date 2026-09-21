@@ -72,7 +72,7 @@ import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
 
-import { LOCALE_RTL } from "../../schemas/translation.ts";
+import { LOCALE_RTL, UN_LOCALES } from "../../schemas/translation.ts";
 import { isTranslatable } from "../../schemas/translation-tools.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
@@ -248,6 +248,65 @@ function harnessConfig(instanceRoot: string): Record<string, unknown> {
 export function sourceLocale(instanceRoot: string): string {
   const t = harnessConfig(instanceRoot).translation as { defaultLocale?: string } | undefined;
   return t?.defaultLocale ?? "en";
+}
+
+/**
+ * Every locale this instance claims to support, INCLUDING the source language.
+ *
+ * `harness.config.json`'s `translation.supportedLocales`, defaulting to the six
+ * UN languages — the same default `TranslationConfigSchema` declares, read from
+ * the same constant rather than restated here.
+ *
+ * **The source locale is a member and that is the whole point.** Every count in
+ * this pipeline used to be taken against the TARGET locales, so an English page
+ * on a six-language site reported `0/5` — a denominator that silently excluded
+ * the one language the page was certainly available in, and a numerator that
+ * could never reach it because `availableLocales` resolves PO files and there is
+ * no `translations/en/`. A reader was told a fully-authored page existed in none
+ * of the languages. Issue #687, bean `czct`.
+ */
+export function supportedLocales(instanceRoot: string): string[] {
+  const t = harnessConfig(instanceRoot).translation as
+    | { supportedLocales?: unknown }
+    | undefined;
+  const declared = t?.supportedLocales;
+  if (Array.isArray(declared) && declared.every((l) => typeof l === "string" && l.length > 0)) {
+    return declared as string[];
+  }
+  return [...UN_LOCALES];
+}
+
+/**
+ * The locales a translation is PRODUCED into — supported, minus the source.
+ *
+ * Distinct from {@link supportedLocales} and the two are not interchangeable:
+ * this one answers "which `translations/<locale>/` directories can exist" and
+ * is what a sweep iterates to look for PO files. It is never a denominator.
+ * A count of how many languages a reader can read the page in is taken against
+ * `supportedLocales`, because the source language is one of them.
+ */
+export function targetLocales(instanceRoot: string): string[] {
+  const src = sourceLocale(instanceRoot);
+  return supportedLocales(instanceRoot).filter((l) => l !== src);
+}
+
+/**
+ * The locales a page is actually available in, source language included.
+ *
+ * `poLocales` is what {@link availableLocales} in `po-resolve.ts` returns — the
+ * target locales holding a `.po` for this page — and the source locale is added
+ * because the page exists in it by construction. Ordered by
+ * {@link supportedLocales} so the badge and the language bar read in one order
+ * across every page, and filtered by it so a stray `translations/<x>/` does not
+ * inflate a count taken against a set that does not contain it.
+ */
+export function localesAvailableFor(
+  instanceRoot: string,
+  poLocales: readonly string[],
+): string[] {
+  const src = sourceLocale(instanceRoot);
+  const have = new Set<string>([src, ...poLocales]);
+  return supportedLocales(instanceRoot).filter((l) => have.has(l));
 }
 
 /** The instance's content type, which decides which formats are translatable. */

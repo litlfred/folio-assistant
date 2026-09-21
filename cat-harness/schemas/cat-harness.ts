@@ -4731,6 +4731,56 @@ export function folioDir(root: string): string {
 }
 
 /**
+ * {@link folioDir} resolved AT LOAD, but whose FAILURE is raised AT USE.
+ *
+ * ## Why both halves matter, and why neither can move
+ *
+ * Twenty modules open with `const FOLIO_DIR = folioDir(REPO_ROOT)`. That
+ * throws on a malformed declaration, and a throw at module scope **aborts
+ * evaluation** — so every export below the failing line is left unbound, and
+ * `await import()` can hand back the half-built namespace rather than
+ * re-throwing. Bean `95s1` spent an afternoon on the result: an error 3,186
+ * lines from its cause, resembling a circular import closely enough that the
+ * bean was opened as one.
+ *
+ * **Resolution stays at load, and that is not inertia.** `findContentRepoRoot`
+ * reads `process.cwd()`, so moving resolution to first use would let a
+ * `process.chdir` change the answer. `checker-missing-evidence.test.ts` says
+ * so in its own words — it uses ABSOLUTE fixture paths *because*
+ * `qa-checkers-extended` captures the root at module load, so a test's chdir
+ * changes nothing. Memoising on first use would be worse still: whichever
+ * caller ran first would win, making the value test-order dependent.
+ *
+ * So only the THROW moves. The value is computed now, under the cwd the module
+ * was loaded with; the error waits until somebody asks for it, and arrives
+ * naming the module that could not resolve.
+ *
+ * ## What the caller sees
+ *
+ * A function rather than a string, which is the whole cost of this: use sites
+ * call it. In exchange the failure reaches them with a cause attached instead
+ * of surfacing as an unrelated binding's dead zone three thousand lines away.
+ */
+export function folioDirDeferred(root: string, moduleUrl: string): () => string {
+  let value: string | undefined;
+  let failure: unknown;
+  try {
+    value = folioDir(root);
+  } catch (e) {
+    failure = e;
+  }
+  return () => {
+    if (value !== undefined) return value;
+    throw new Error(
+      `${moduleUrl} could not resolve its folio directory when it loaded, and this is the ` +
+        `first use of that value. The declaration under ${resolve(root)} is what failed: ` +
+        `${failure instanceof Error ? failure.message : String(failure)}`,
+      { cause: failure },
+    );
+  };
+}
+
+/**
  * The directory a graph has AT THIS INSTANCE'S OWN ROOT — repository-scoped
  * entries pointing at sibling instances excluded.
  *
