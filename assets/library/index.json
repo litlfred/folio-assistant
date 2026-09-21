@@ -28,7 +28,8 @@
       "chars": 29016,
       "bytes": 59920,
       "upload": "match",
-      "uploadInstance": "folio-assistant"
+      "uploadInstance": "folio-assistant",
+      "referencedBy": []
     },
     {
       "id": "arxiv-2608.08453v1",
@@ -57,7 +58,8 @@
       "chars": 48165,
       "bytes": 96846,
       "upload": "match",
-      "uploadInstance": "folio-assistant"
+      "uploadInstance": "folio-assistant",
+      "referencedBy": []
     },
     {
       "id": "milnorlink",
@@ -86,7 +88,15 @@
       "chars": 47832,
       "bytes": 91364,
       "upload": "match",
-      "uploadInstance": "cat-harness"
+      "uploadInstance": "cat-harness",
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "cat-harness",
+          "from": "cat-harness/voices/milnor.json",
+          "count": 12
+        }
+      ]
     },
     {
       "id": "9789241548960-eng",
@@ -115,7 +125,21 @@
       "chars": 367906,
       "bytes": 1103090,
       "upload": "match",
-      "uploadInstance": "cat-harness"
+      "uploadInstance": "who-iris",
+      "referencedBy": [
+        {
+          "kind": "catalogue",
+          "instance": "who-iris",
+          "from": "who-iris/catalogue/nodes/item-9789241548960-eng.json",
+          "count": 1
+        },
+        {
+          "kind": "voices",
+          "instance": "who-style-guide",
+          "from": "who-style-guide/voices/who-guideline-development.json",
+          "count": 9
+        }
+      ]
     },
     {
       "id": "who-pub-tps-931",
@@ -144,7 +168,21 @@
       "chars": 175821,
       "bytes": 557526,
       "upload": "match",
-      "uploadInstance": "cat-harness"
+      "uploadInstance": "who-iris",
+      "referencedBy": [
+        {
+          "kind": "catalogue",
+          "instance": "who-iris",
+          "from": "who-iris/catalogue/nodes/item-who-pub-tps-931.json",
+          "count": 1
+        },
+        {
+          "kind": "voices",
+          "instance": "who-style-guide",
+          "from": "who-style-guide/voices/who-editorial.json",
+          "count": 10
+        }
+      ]
     },
     {
       "id": "wpr-rdo-2020-003-eng",
@@ -173,22 +211,24 @@
       "chars": 20063,
       "bytes": 5331169,
       "upload": "match",
-      "uploadInstance": "cat-harness"
+      "uploadInstance": "who-iris",
+      "referencedBy": [
+        {
+          "kind": "catalogue",
+          "instance": "who-iris",
+          "from": "who-iris/catalogue/nodes/item-wpr-rdo-2020-003-eng.json",
+          "count": 1
+        },
+        {
+          "kind": "voices",
+          "instance": "who-style-guide",
+          "from": "who-style-guide/voices/who-publication-design.json",
+          "count": 9
+        }
+      ]
     }
   ],
   "uploads": [
-    {
-      "file": "9789241548960_eng.pdf",
-      "kind": "file",
-      "instance": "cat-harness",
-      "path": "cat-harness/uploads/9789241548960_eng.pdf",
-      "bytes": 2136157,
-      "ext": "pdf",
-      "ingestedBy": "9789241548960-eng",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
     {
       "file": "milnorlink.pdf",
       "kind": "file",
@@ -197,30 +237,6 @@
       "bytes": 1419996,
       "ext": "pdf",
       "ingestedBy": "milnorlink",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
-    {
-      "file": "WHO_PUB_TPS_93.1.pdf",
-      "kind": "file",
-      "instance": "cat-harness",
-      "path": "cat-harness/uploads/WHO_PUB_TPS_93.1.pdf",
-      "bytes": 3293424,
-      "ext": "pdf",
-      "ingestedBy": "who-pub-tps-931",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
-    {
-      "file": "WPR-RDO-2020-003-eng.pdf",
-      "kind": "file",
-      "instance": "cat-harness",
-      "path": "cat-harness/uploads/WPR-RDO-2020-003-eng.pdf",
-      "bytes": 2810648,
-      "ext": "pdf",
-      "ingestedBy": "wpr-rdo-2020-003-eng",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -566,12 +582,12 @@
       "kind": "intake",
       "instance": "who-iris",
       "path": "who-iris/uploads/9789241548960-eng",
-      "bytes": 570847,
+      "bytes": 2707774,
       "ext": "",
       "ingestedBy": "9789241548960-eng",
       "docId": "9789241548960-eng",
       "title": "WHO handbook for guideline development",
-      "declaredFiles": 1
+      "declaredFiles": 2
     },
     {
       "file": "iris-home",
@@ -590,32 +606,32 @@
       "kind": "intake",
       "instance": "who-iris",
       "path": "who-iris/uploads/who-pub-tps-931",
-      "bytes": 230563,
+      "bytes": 3524834,
       "ext": "",
       "ingestedBy": "who-pub-tps-931",
       "docId": "who-pub-tps-931",
       "title": "WHO editorial style manual",
-      "declaredFiles": 1
+      "declaredFiles": 2
     },
     {
       "file": "wpr-rdo-2020-003-eng",
       "kind": "intake",
       "instance": "who-iris",
       "path": "who-iris/uploads/wpr-rdo-2020-003-eng",
-      "bytes": 1783964,
+      "bytes": 4595507,
       "ext": "",
       "ingestedBy": "wpr-rdo-2020-003-eng",
       "docId": "wpr-rdo-2020-003-eng",
       "title": "Publication and information products style guide",
-      "declaredFiles": 4
+      "declaredFiles": 5
     }
   ],
   "queues": [
     {
       "instance": "cat-harness",
       "dir": "cat-harness/uploads",
-      "total": 4,
-      "ingested": 4,
+      "total": 1,
+      "ingested": 1,
       "uningested": 0
     },
     {
@@ -632,5 +648,9 @@
       "ingested": 3,
       "uningested": 1
     }
-  ]
+  ],
+  "refScan": {
+    "filesRead": 737,
+    "unreadable": []
+  }
 }
