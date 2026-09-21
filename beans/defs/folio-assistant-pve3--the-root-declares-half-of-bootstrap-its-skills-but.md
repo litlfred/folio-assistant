@@ -1,7 +1,7 @@
 ---
 # folio-assistant-pve3
 title: The root declares HALF of bootstrap — its skills but not its process
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:02:49Z
@@ -282,3 +282,29 @@ design at the end of implementing a one-word answer.
 Four of five consumers are done and green in the patch. The fifth turns the
 build red, and the fix for it is a design decision rather than a mechanical
 one. A red branch carrying a correct ruling is worse than a recorded one.
+
+
+## LANDED 2026-09-21 — "neither", in full
+
+The owner ruled **neither**, then ruled **yes** on the blocker
+(*"make kg-export multi-instance"*). Both are in.
+
+`cat-harness/harness.json` no longer declares `cat-bootstrap/skills/`.
+`lanes` is restored on all four cat-bootstrap roles — the workaround this bean
+existed to retire. `v3se`'s collision source is gone: `cat-bootstrap-kg-navigation`
+no longer appears in the root graph beside `skills/folio-core/kg-navigation`.
+
+**The blocker turned out to be `gn4l`'s last open box**, and this ruling made
+it compulsory rather than optional. See that bean for the multi-instance
+export, the 2079-vs-85 hazard, and the three defects found building it.
+
+**The corpus witness that had to move.** Three tests guarded `packageIdFor`'s
+rule — an id comes from the manifest's `name`, never the directory basename —
+by asserting it of `#package/cat-bootstrap`, which this ruling removes from
+the graph. Retargeted to `cat-bootstrap-render` (directory `render`, manifest
+`cat-bootstrap-render`), a live witness with the same shape, rather than
+deleted. **A test that asserts a rule through one named example dies with that
+example**; where `packageIdFor` can be called directly against a root, prefer
+that.
+
+`bun run gates --all` — 87 gates, 200 e2e.
