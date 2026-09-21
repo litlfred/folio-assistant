@@ -169,9 +169,13 @@
      reflows. */
   .sub-cover { flex: 0 0 104px; }
   .sub-cover img { width: 104px; height: auto; display: block; border: 1px solid var(--iris-edge); }
+  /* Centred by FLEX, not by a line-height equal to the height: the withheld
+     placeholder is two lines, and a 140px line-height would put the first of
+     them below the box. */
   .sub-cover .nocover {
-    display: block; width: 104px; height: 140px; border: 1px dashed var(--iris-edge);
-    color: var(--iris-muted); font-size: 0.78rem; text-align: center; line-height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    width: 104px; height: 140px; border: 1px dashed var(--iris-edge);
+    color: var(--iris-muted); font-size: 0.78rem; text-align: center; line-height: 1.3;
   }
   .sub-body { flex: 1; min-width: 0; }
   .sub-title { font-size: 1.02rem; line-height: 1.35; text-decoration: underline; }
@@ -304,7 +308,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <strong>INGESTED COPY — not WHO, and not live.</strong>
   This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
   from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
-  <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted.
+  <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the
+  rendered covers are withheld from display for the same reason — they carry the
+  emblem printed on the publications.
 </div></div>
 
 <header class="mast"><div class="wrap">
@@ -316,7 +322,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <span class="sub">Institutional Repository<br>for Information Sharing</span>
     </span>
   </div>
-  <div class="nologo">Logo omitted — replica, not published under WHO</div>
+  <div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div>
 </div></header>
 
 <nav class="main"><div class="wrap">

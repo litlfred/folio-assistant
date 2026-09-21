@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-21T06:48:43.109Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/16b793c847aff7ded6672555c854d87247e2238d",
-  "sourceCommitSha": "16b793c847aff7ded6672555c854d87247e2238d",
-  "sourceCommitAt": "2026-09-21T06:47:00Z",
+  "generatedAt": "2026-09-21T07:28:00.663Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/764ae5233e9b486e0aa2e99b2a964a3a83be755b",
+  "sourceCommitSha": "764ae5233e9b486e0aa2e99b2a964a3a83be755b",
+  "sourceCommitAt": "2026-09-21T07:26:22Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 219,
+    "Skill": 220,
     "Actor": 27,
     "Capability": 28,
     "Role": 130,
@@ -2903,6 +2903,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-viewer"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/incremental-render",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "incremental-render",
+      "title": "Incremental render — the cache is easy, the cascade is the work",
+      "description": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/incremental-render.md",
+      "instructionLines": 210,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/incremental-render"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/one-voice-integration-watcher",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "one-voice-integration-watcher",
@@ -5337,6 +5354,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/kg-contribution-offer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/docs-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/incremental-render",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/kg-to-portal",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/library-ingestion",
@@ -34092,8 +34110,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-albattani-0byaig",
-    "sha": "f1cc0869751a68a33f4049b603ea16d1510c2cac",
+    "sha": "045e7e87a11645ad35dac2e08de52e65e7dadfcc",
     "pr": "647/merge",
-    "run": "35569967516"
+    "run": "35572971344"
   }
 }

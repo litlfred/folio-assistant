@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(4)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(95)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(4) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(95) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(4) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(95) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(95) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>/continual-progress | folio-assistant</title>
+<title>Incremental render | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="/continual-progress" />
+<meta property="og:title" content="Incremental render" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="/continual-progress" />
+<meta property="twitter:title" content="Incremental render" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -855,7 +855,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>/continual-progress</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Incremental render</span></li>
   </ol>
 </nav>
 
@@ -864,287 +864,374 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/continual-progress.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/continual-progress.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/incremental-render.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/incremental-render.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/continual-progress.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/incremental-render.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="continual-progress--trackable-always-prd-continually-committed-work">
+<h1 id="incremental-render--the-cache-is-easy-the-cascade-is-the-work">
   
   
-    <a href="#continual-progress--trackable-always-prd-continually-committed-work" class="anchor-heading" aria-labelledby="continual-progress--trackable-always-prd-continually-committed-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /continual-progress — trackable, always-PR’d, continually-committed work
+    <a href="#incremental-render--the-cache-is-easy-the-cascade-is-the-work" class="anchor-heading" aria-labelledby="incremental-render--the-cache-is-easy-the-cascade-is-the-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Incremental render — the cache is easy, the cascade is the work
   
   
 </h1>
     
 
-<p>Sibling agents and the author can only coordinate with work they can
-<em>see</em>. This skill makes every in-flight task <strong>trackable in real time</strong>:
-the PR is open from the first commit, progress lands as a stream of
-small pushed commits, and the PR body carries a live status checklist.
-It is the visibility complement to <a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">/coordinate</code></a> (which
-triages <em>across</em> PRs); this one governs how <em>your own</em> PR stays legible
-while you work.</p>
-<h2 id="the-four-invariants">
+<p>Owner, 2026-09-20, bean <code class="language-plaintext highlighter-rouge">9c34</code>:</p>
+
+<blockquote>
+  <p><em>“new skill for staging rendernig…. dont rerender the whole thing… if
+main render is not stale, copy that to staging render pipleine as cahche.
+trigger rerender only on assets that have changed and downstream depndent
+index.”</em></p>
+</blockquote>
+
+<p>Three steps. <strong>Only the third is hard</strong>, and it is the one that fails quietly:</p>
+
+<ol>
+  <li><strong>Seed</strong> — start from a previous render rather than from nothing.</li>
+  <li><strong>Re-render what changed</strong> — the steps whose inputs moved.</li>
+  <li><strong>Re-render what DEPENDS on them</strong> — and this is the whole bean.</li>
+</ol>
+<h2 id="why-step-3-is-the-bean">
   
   
-    <a href="#the-four-invariants" class="anchor-heading" aria-labelledby="the-four-invariants"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four invariants
+    <a href="#why-step-3-is-the-bean" class="anchor-heading" aria-labelledby="why-step-3-is-the-bean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why step 3 is the bean
   
   
 </h2>
     
 
-<ol>
-  <li>
-    <p><strong>Always have an open PR (from commit #1).</strong> Branch, make the first
-(even stub) commit, push, open the PR — <em>before</em> further work. The PR
-is the durable, visible artifact; the chat session is ephemeral. Never
-accumulate work on a local branch with no PR. <strong>Never ask permission to
-open one</strong> — branch, commit, push and PR are all pre-authorised.</p>
-  </li>
-  <li>
-    <p><strong>Commit + push small, coherent increments — continuously.</strong> Each
-logically distinct change is its own commit (a single fix, a single
-module, a single unit of work). Push after each commit (or every 2–3 if
-moving fast). A watcher should be able to <code class="language-plaintext highlighter-rouge">git log</code> your branch and
-see a legible, bisectable trail — not one giant drop. Target: no more
-than ~20–30 min of work between pushes on a long task.</p>
-  </li>
-  <li>
-    <p><strong>Keep a live status checklist in the PR body.</strong> Maintain a
-<code class="language-plaintext highlighter-rouge">- [ ] / - [x]</code> checklist of the task’s sub-parts in the PR
-description (or a pinned top comment), updated as each increment
-lands. A sibling or the author should be able to read the PR body and
-know exactly what is <strong>done / in-flight / remaining</strong> — without
-reading the diff or asking in chat.</p>
-  </li>
-  <li>
-    <p><strong>Post brief intent — on your PR and overlapping siblings.</strong> One short
-intent line on PR-open (“doing X on <code class="language-plaintext highlighter-rouge">&lt;files&gt;</code>; will touch <code class="language-plaintext highlighter-rouge">&lt;scope&gt;</code>”);
-a one-line comment on any sibling whose scope overlaps (“starting
-<code class="language-plaintext highlighter-rouge">&lt;theme&gt;</code> on <code class="language-plaintext highlighter-rouge">&lt;files&gt;</code>; flag conflicts”). Don’t <em>stream</em> comments —
-update the checklist (invariant 3) for routine progress; comment only
-for genuine coordination (overlap, a blocker, a handoff-relevant
-finding). Defer to <a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">/coordinate</code></a> for the full
-cross-PR triage protocol.</p>
-  </li>
-</ol>
-<h2 id="the-fifth-invariant-and-the-one-agents-get-wrong">
+<p>A page that was not re-rendered <strong>looks exactly like a page that was.</strong> There
+is no visible difference between a correct cache hit and a stale one, so an
+incremental render that gets the dependency graph wrong ships wrong pages and
+reports a clean build. That is the <code class="language-plaintext highlighter-rouge">xom7</code> shape — <em>a red workflow looks exactly
+like a green one from in here</em> — moved into the render.</p>
+
+<p>Everything below follows from taking that seriously.</p>
+<h2 id="the-two-edges-one-mechanism">
   
   
-    <a href="#the-fifth-invariant-and-the-one-agents-get-wrong" class="anchor-heading" aria-labelledby="the-fifth-invariant-and-the-one-agents-get-wrong"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The fifth invariant, and the one agents get wrong
+    <a href="#the-two-edges-one-mechanism" class="anchor-heading" aria-labelledby="the-two-edges-one-mechanism"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two edges, one mechanism
   
   
 </h2>
     
 
-<ol>
-  <li><strong>Do not hold a green change proposal back waiting for someone to look at
-it.</strong> This is the rule that gets inverted in the name of care, and inverting
-it is not caution — it is a blocked reviewer.</li>
-</ol>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>edge</th>
+      <th>example</th>
+      <th>one change means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>projection</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ingestion-notes.html</code> ← <code class="language-plaintext highlighter-rouge">iris-dspace.md</code></td>
+      <td>one source file → one page</td>
+    </tr>
+    <tr>
+      <td><strong>index</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">community-list.html</code> ← every catalogue node</td>
+      <td>one <strong>member</strong> → the whole index</td>
+    </tr>
+  </tbody>
+</table></div>
 
-<p>An agent that has just built something it cannot fully verify — a rendered page,
-a diagram, a UI — reaches for the responsible-sounding move: leave it open,
-attach a preview, ask the human to confirm first. That feels safer. It is worse,
-for a reason worth internalising:</p>
+<p>The index edge is the one people forget: <strong>an index is derived from a SET, so
+it goes stale when a member changes even though the index file itself did
+not.</strong></p>
+
+<p>They differ in what a reader should expect and <strong>not</strong> in what the runner must
+do — if any declared input changed, the step re-runs, and the step’s own
+<code class="language-plaintext highlighter-rouge">--check</code> decides which outputs actually differ. So one declaration expresses
+both, and the distinction lives in what a human reads there.</p>
+
+<p><strong>The downstream half needs no new mechanism.</strong> <code class="language-plaintext highlighter-rouge">needs</code> already orders the
+pipeline, and a step whose dependency re-ran must re-run too. One edge, two
+uses.</p>
+<h2 id="a-step-declares-graph-kinds-not-paths">
+  
+  
+    <a href="#a-step-declares-graph-kinds-not-paths" class="anchor-heading" aria-labelledby="a-step-declares-graph-kinds-not-paths"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A step declares GRAPH KINDS, not paths
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">RenderStep</code> carries two ways to say what it reads, and the second is the one
+to use:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>what it names</th>
+      <th>when</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">inputs</code></td>
+      <td>repository-relative files or directories</td>
+      <td>a path that is not a declared graph — a config file, a script’s own fixtures</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">inputGraphs</code></td>
+      <td>graph <strong>kinds</strong> from <code class="language-plaintext highlighter-rouge">harness.json</code> — <code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">schemas</code>, …</td>
+      <td>anything the declaration already locates</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The first draft used <code class="language-plaintext highlighter-rouge">inputs</code> throughout and <code class="language-plaintext highlighter-rouge">check:declared-paths</code> rejected
+nine literals. <strong>It was right.</strong> A second answer to <em>where do the skills live</em>
+goes stale the moment a directory moves, and the failure is silent in the
+worst direction: the render goes on hashing a path that is not there, finds
+nothing, and reports the step unchanged. Under-declaration does not look like
+under-declaration.</p>
+<h3 id="the-subprocess-and-why-there-is-one">
+  
+  
+    <a href="#the-subprocess-and-why-there-is-one" class="anchor-heading" aria-labelledby="the-subprocess-and-why-there-is-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The subprocess, and why there is one
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">render-pipeline.ts</code> is in the <strong>harness</strong> layer. Resolving a graph kind means
+<code class="language-plaintext highlighter-rouge">readDeclaration</code>, which validates <strong>every</strong> kind in the declaration — and this
+repository declares a <code class="language-plaintext highlighter-rouge">folio</code> directory whose kind is registered by <strong>core</strong>,
+on the argument (written on <code class="language-plaintext highlighter-rouge">schemas/folio-graph-kind.ts</code>) that a layer which
+cannot render must not own the renderable kind. So the harness layer cannot
+resolve <em>any</em> kind in-process without importing core, which <code class="language-plaintext highlighter-rouge">check:partition</code>
+rejects.</p>
+
+<p>The three options were: spell the paths as literals (rejected, and rightly);
+import core (rejected, and rightly); or <strong>ask across the boundary the way the
+pipeline already asks every renderer it runs</strong> — by spawning one.
+<code class="language-plaintext highlighter-rouge">cat-harness/scripts/declared-dirs.ts</code> is that third option: core-layer, one
+line of JSON on stdout, <code class="language-plaintext highlighter-rouge">{graph: [dirs]}</code>.</p>
+
+<p><strong>A failure prints nothing to stdout and exits non-zero</strong>, so the caller cannot
+read <em>could not resolve</em> as <em>declares nothing</em> — the distinction this whole
+skill turns on. The pipeline reports it:</p>
 
 <blockquote>
-  <p><strong>A human cannot assess a rendered artefact from a description of it, and a
-preview pasted into chat is a strictly worse proxy than the deployed thing.</strong></p>
+  <p><code class="language-plaintext highlighter-rouge">Graph kinds could not be resolved here, so every step that declared only
+graphs re-rendered: &lt;reason&gt;</code></p>
 </blockquote>
 
-<p>Holding the merge does not transfer the verification to them — it <em>withholds the
-only form in which they could do it</em>, and asks them to adjudicate from a
-screenshot.</p>
-
-<p>Measured, 2026-09-16. A documentation change with five generated diagrams was
-green, unreviewed and unmerged, held back with three SVGs attached in chat and a
-note that the layout was machine-accepted but not confirmed legible. The
-author’s reply was <em>“jsut merge so i can help assess”</em>. The hold made assessment
-harder, not safer, and cost a round-trip to someone who types with difficulty.</p>
-<h3 id="what-to-do-with-the-thing-you-could-not-verify">
+<p>and every graph-declared step becomes undeclared, which always re-renders. Safe
+direction, <strong>said out loud</strong>. An earlier version of this was correct and
+silent — it degraded to a full render without a word, so the feature was inert
+(0 steps cached) and nothing in the output said why.</p>
+<h3 id="the-cost-a-graph-is-coarser-than-a-file-list">
   
   
-    <a href="#what-to-do-with-the-thing-you-could-not-verify" class="anchor-heading" aria-labelledby="what-to-do-with-the-thing-you-could-not-verify"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What to do with the thing you could not verify
+    <a href="#the-cost-a-graph-is-coarser-than-a-file-list" class="anchor-heading" aria-labelledby="the-cost-a-graph-is-coarser-than-a-file-list"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The cost: a graph is coarser than a file list
   
   
 </h3>
     
 
-<p><strong>Say it in the body, and merge anyway.</strong> <code class="language-plaintext highlighter-rouge">## Not verified</code> is a real section
-and an honest one; an unmerged proposal is not a substitute for it.
-Reversibility is what makes this safe — a docs or content change is one revert
-away, and the cost of reverting is far below the cost of a human blocked on a
-decision they have no artefact for.</p>
-<h3 id="a-pipe-discards-the-exit-code--so-a-piped-run-cannot-verify-anything">
+<p><code class="language-plaintext highlighter-rouge">kg-current</code> declares the whole <code class="language-plaintext highlighter-rouge">cat-harness</code> graph, so <strong>editing one skill
+re-renders all ten steps</strong> — where a literal file list would have re-rendered
+four. That is a real loss and it is the right trade: over-declaring costs
+needless runs, under-declaring ships stale pages that look fresh. A finer
+declaration is available whenever a step’s reads can be expressed without
+spelling a declared path.</p>
+<h2 id="hash-content-never-mtime">
   
   
-    <a href="#a-pipe-discards-the-exit-code--so-a-piped-run-cannot-verify-anything" class="anchor-heading" aria-labelledby="a-pipe-discards-the-exit-code--so-a-piped-run-cannot-verify-anything"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A pipe discards the exit code — so a piped run cannot verify anything
+    <a href="#hash-content-never-mtime" class="anchor-heading" aria-labelledby="hash-content-never-mtime"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Hash content, never mtime
   
   
-</h3>
+</h2>
     
 
-<p><strong><code class="language-plaintext highlighter-rouge">cmd | tail</code> makes <code class="language-plaintext highlighter-rouge">$?</code> the status of <code class="language-plaintext highlighter-rouge">tail</code>.</strong> Every claim that a command
-PASSED must come from a run without a pipe, or from <code class="language-plaintext highlighter-rouge">${PIPESTATUS[0]}</code>.</p>
+<p><code class="language-plaintext highlighter-rouge">mtime</code> is the obvious shortcut and it is wrong twice: a fresh checkout
+rewrites every mtime, so CI would re-render everything; and a file touched but
+unchanged re-renders for nothing. Hash the <strong>content</strong>, and hash the <strong>path
+alongside it</strong> — moving a file is a change, and an index keyed on filenames
+notices.</p>
 
-<p>This is mechanical rather than a matter of care, and it is written down because
-care did not prevent it. Twice in one session, 2026-09-20:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">gen-site-jsonld --check</code> on a genuinely stale tree. <code class="language-plaintext highlighter-rouge">… | tail -8; echo $?</code>
-printed <strong>0</strong>. Caught within the minute — and the commit message that fixed
-it said “worth checking rather than assuming”.</li>
-  <li><code class="language-plaintext highlighter-rouge">site:links</code> from the repository root, two hours later. Read the message,
-never checked <code class="language-plaintext highlighter-rouge">$?</code>, and <strong>opened a bean</strong> asserting a defect that does not
-exist: the script exits 2 and always has. Scrapped as <code class="language-plaintext highlighter-rouge">ipth</code>.</li>
-</ul>
-
-<p>The second is the expensive shape. A command whose output <em>sounds</em> like a
-failure, run through a pipe, reads as a silent pass — and a silent pass is
-precisely what this repository treats as worse than a loud failure. The first
-cost a minute; the second cost a bean, a wrong diagnosis, and very nearly a
-“fix” to working code.</p>
-
-<p><strong>So: when the question is “did this pass”, run it bare.</strong> When you want both
-the output and the verdict, run it twice or capture the status first. Reading a
-verdict off prose you piped is the same error as quoting a count from prose.</p>
-<h3 id="a-template-is-not-a-page--verify-the-build-not-the-source-of-it">
+<p>Sort before hashing, <strong>by codepoint</strong>. <code class="language-plaintext highlighter-rouge">readdirSync</code> order is not stable across
+machines, and <code class="language-plaintext highlighter-rouge">localeCompare</code> is ICU-dependent — a seed written on one machine
+would mismatch on another for no reason anybody could see. <code class="language-plaintext highlighter-rouge">byCodepoint</code> in
+<code class="language-plaintext highlighter-rouge">render-selection.ts</code> is the comparator, and it exists because the first draft
+used <code class="language-plaintext highlighter-rouge">localeCompare</code>.</p>
+<h2 id="could-not-determine-always-re-renders">
   
   
-    <a href="#a-template-is-not-a-page--verify-the-build-not-the-source-of-it" class="anchor-heading" aria-labelledby="a-template-is-not-a-page--verify-the-build-not-the-source-of-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A template is not a page — verify the BUILD, not the source of it
+    <a href="#could-not-determine-always-re-renders" class="anchor-heading" aria-labelledby="could-not-determine-always-re-renders"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Could-not-determine always re-renders
   
   
-</h3>
+</h2>
     
 
-<p>The invariant above says a <strong>human</strong> cannot assess a rendered artefact from a
-description of it. This is its twin, and it is the one an agent breaks:</p>
+<p>Four states send a step to the “run it” pile, and <strong>none of them is an error</strong>:</p>
 
-<blockquote>
-  <p><strong>An agent cannot assess a rendered artefact from the template that generates
-it.</strong> A correct template and a correct page are different claims, and only the
-second is what a reader loads.</p>
-</blockquote>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>state</th>
+      <th>why it runs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inputs changed</td>
+      <td>the obvious one</td>
+    </tr>
+    <tr>
+      <td>something it <code class="language-plaintext highlighter-rouge">needs</code> re-ran</td>
+      <td>the cascade</td>
+    </tr>
+    <tr>
+      <td>the seed’s manifest does not mention it</td>
+      <td>absent is not fresh — it may never have run</td>
+    </tr>
+    <tr>
+      <td><strong>it declares no inputs</strong></td>
+      <td>it has not said what it reads, so nothing can be concluded</td>
+    </tr>
+  </tbody>
+</table></div>
 
-<p>Measured, 2026-09-20, and it is worth the detail because every safeguard fired
-green. <code class="language-plaintext highlighter-rouge">docs/_includes/landing.html</code> builds a sticky’s <code class="language-plaintext highlighter-rouge">&lt;article&gt;</code> opening tag
-across many lines. One Liquid <code class="language-plaintext highlighter-rouge">{% endif -%}</code> right-stripped the newline before
-the next attribute, so the tag emitted as</p>
+<p>And three at the build level: <strong>no manifest at all</strong> is a full render; a
+manifest that is unparseable or carries the wrong schema tag is treated as
+absent; and <strong>graph kinds that could not be resolved</strong> turn every
+graph-declared step into the fourth row above. <strong>A corrupt manifest is never
+partially believed</strong> — half a cache is worse than none, because the half that
+is wrong is invisible.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>…--fa-text-scale:0.74;"aria-labelledby="fa-sticky-cat-harness-summary"
+<p>This is the repository’s standing rule applied to rendering: <em>could-not-check
+is never green.</em> Here it costs a re-render, which is the cheap direction.</p>
+<h2 id="under-declaring-is-the-dangerous-direction">
+  
+  
+    <a href="#under-declaring-is-the-dangerous-direction" class="anchor-heading" aria-labelledby="under-declaring-is-the-dangerous-direction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Under-declaring is the dangerous direction
+  
+  
+</h2>
+    
+
+<p>A step whose real input is not listed keeps a stale output <strong>and looks exactly
+like one that re-rendered</strong>. A step that over-declares costs one needless run.
+So when unsure, list it.</p>
+
+<p><code class="language-plaintext highlighter-rouge">bun run render:order</code> names every step that declares no inputs, because those
+are the ceiling on how incremental a build can be — and a step that always
+re-renders should be a decision (<code class="language-plaintext highlighter-rouge">alwaysRun</code>, with a reason) rather than an
+omission nobody noticed.</p>
+<h2 id="measured-on-this-repository">
+  
+  
+    <a href="#measured-on-this-repository" class="anchor-heading" aria-labelledby="measured-on-this-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measured, on this repository
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">bun run render</code> over ten steps, 2026-09-21, after the move to <code class="language-plaintext highlighter-rouge">inputGraphs</code>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>build</th>
+      <th>wall</th>
+      <th>steps</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>full, writing a seed</td>
+      <td><strong>3.9 s</strong></td>
+      <td>10 ran</td>
+    </tr>
+    <tr>
+      <td>seeded, nothing changed</td>
+      <td><strong>0.9 s</strong></td>
+      <td>2 ran, <strong>8 served from the seed</strong></td>
+    </tr>
+    <tr>
+      <td>seeded, one bean touched</td>
+      <td><strong>1.1 s</strong></td>
+      <td>4 ran, 6 served</td>
+    </tr>
+    <tr>
+      <td>seeded, one skill file touched</td>
+      <td><strong>3.8 s</strong></td>
+      <td>10 ran, <strong>0 served</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The last row is the coarseness above, measured rather than asserted: a skill
+edit moves the <code class="language-plaintext highlighter-rouge">cat-harness</code> graph, <code class="language-plaintext highlighter-rouge">kg-current</code> reads that graph, and
+everything <code class="language-plaintext highlighter-rouge">needs</code> its way back to <code class="language-plaintext highlighter-rouge">kg-current</code>. The bean row is what a
+narrower graph buys — <code class="language-plaintext highlighter-rouge">beans</code> reaches only <code class="language-plaintext highlighter-rouge">docs-pages</code> and <code class="language-plaintext highlighter-rouge">state-dashboards</code>.</p>
+
+<p>The two that always run are <code class="language-plaintext highlighter-rouge">bootstrap</code> (pending — nothing to cache yet) and
+<code class="language-plaintext highlighter-rouge">kg-dynamic</code> (<code class="language-plaintext highlighter-rouge">alwaysRun</code>: it exports the graph <em>after</em> stage 2 has
+contributed, so its input is that output rather than a source file).</p>
+
+<p><strong>Report the cached steps as cached, never as a pass.</strong> In this pipeline a
+“skip” already means <em>its input never rendered</em>, which is a much worse fact —
+so a served-from-seed step gets its own mark (<code class="language-plaintext highlighter-rouge">=</code>). And the counts must add
+up: the first draft reported <em>“10 ran … 8 served from the seed”</em>,
+double-counting eight of them, because the runner records a step as having run
+whenever the callback returned no error and a cached step returns no error by
+doing nothing. A build report that sums to more than its own steps is one
+nobody trusts the rest of.</p>
+<h2 id="usage">
+  
+  
+    <a href="#usage" class="anchor-heading" aria-labelledby="usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h2>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run render                                   <span class="c"># full</span>
+bun run render:order                             <span class="c"># order + which steps are cacheable</span>
+bun run render <span class="nt">--write-manifest</span> &lt;path&gt;           <span class="c"># full, and record the inputs</span>
+bun run render <span class="nt">--seed</span> &lt;path&gt;                     <span class="c"># incremental against that record</span>
+bun run render <span class="nt">--seed</span> &lt;old&gt; <span class="nt">--write-manifest</span> &lt;new&gt;
 </code></pre></div></div>
-
-<p>Two attributes with no separator is an unparseable tag. <code class="language-plaintext highlighter-rouge">index.md</code> is
-<strong>markdown</strong>, so Kramdown stopped recognising the block as HTML and escaped all
-of it. The published landing page — the live site and every staging preview —
-carried <code class="language-plaintext highlighter-rouge">&amp;lt;article class="fa-sticky …"</code> as <strong>visible words</strong>, with
-<code class="language-plaintext highlighter-rouge">&amp;lt;/article&amp;gt;</code> to match: 3 escaped, 0 real. Every <code class="language-plaintext highlighter-rouge">.fa-landing-sticky--fixed</code>
-rule was dead, which was the whole feature.</p>
-
-<p>What passed over it: 3517 unit tests, <code class="language-plaintext highlighter-rouge">eslint</code>, <code class="language-plaintext highlighter-rouge">tsc</code>, twelve gates, the e2e
-suite <strong>and</strong> the accessibility suite. Not one of them was wrong. Every one reads
-a <strong>source</strong>, and the source was valid HTML — the defect exists only in the
-output of the markdown converter. The agent had rendered and screenshotted the
-template through a scratch harness and called the round verified.</p>
-
-<p>So the rule is mechanical, not a matter of diligence:</p>
-
-<ul>
-  <li><strong>When the artefact is a built page, the evidence is the built page.</strong> Build
-the site and read the output. Reading the template proves the template.</li>
-  <li><strong>A screenshot of a scratch render is not a screenshot of the build.</strong> If the
-real build cannot run locally (here the <code class="language-plaintext highlighter-rouge">just-the-docs</code> remote theme 403s
-through the agent proxy), stub the <em>theme</em> and build anyway — a pass-through
-<code class="language-plaintext highlighter-rouge">_layouts/default.html</code> is enough to see what Kramdown did. Stub the part that
-cannot run; never substitute the part under test.</li>
-  <li><strong>State which one you looked at.</strong> “Rendered and checked” is ambiguous between
-the two, and the ambiguity is where this hid.</li>
-</ul>
-
-<p>The general form of the gap now has a check — <code class="language-plaintext highlighter-rouge">check:escaped-markup</code>, run in
-<code class="language-plaintext highlighter-rouge">docs-site.yml</code> against the assembled <code class="language-plaintext highlighter-rouge">_site/</code>, because that is the only place
-the answer exists. But a check written after the fact does not retire the rule:
-the next defect of this shape will be in whatever the build does that no source
-gate can see.</p>
-<h3 id="the-exceptions-and-none-of-them-is-i-am-unsure">
+<h2 id="not-built">
   
   
-    <a href="#the-exceptions-and-none-of-them-is-i-am-unsure" class="anchor-heading" aria-labelledby="the-exceptions-and-none-of-them-is-i-am-unsure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The exceptions, and none of them is “I am unsure”
+    <a href="#not-built" class="anchor-heading" aria-labelledby="not-built"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Not built
   
   
-</h3>
+</h2>
     
 
-<ul>
-  <li><strong>Never merge red.</strong> A failing or unrun required check is a real blocker.</li>
-  <li><strong>Never merge over an unresolved review thread</strong> you have not answered.</li>
-  <li><strong>Where the repository requires explicit merge permission, that wins</strong>, and
-nothing here relaxes it by a word. Some folios require an explicit “merge it”
-from the author for <em>every</em> merge to the default branch. There the rule reads:
-get it green, get it mergeable, <strong>say once that it is ready</strong>, then stop — do
-not re-ask on a timer, and <strong>do not let “not merged yet” become a reason to
-stop pushing.</strong></li>
-</ul>
-<h2 id="why--the-failure-modes-this-prevents">
+<p><strong>Seeding from the published render.</strong> The manifest and the selection are
+here; copying a previous build’s OUTPUT into place before the run is a
+deployment step and belongs with <code class="language-plaintext highlighter-rouge">feature-staging.yml</code>. Until it exists, a
+seeded run skips steps whose inputs are unchanged but has nothing to serve —
+so use <code class="language-plaintext highlighter-rouge">--seed</code> only where the previous output is already in place.</p>
+<h2 id="related">
   
   
-    <a href="#why--the-failure-modes-this-prevents" class="anchor-heading" aria-labelledby="why--the-failure-modes-this-prevents"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why — the failure modes this prevents
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
   
   
 </h2>
     
 
 <ul>
-  <li><strong>Stepped-on work.</strong> A branch that hoards uncommitted work collides
-with siblings the moment it lands. Continual push surfaces intent from
-minute 1 so siblings triage <em>around</em> it.</li>
-  <li><strong>Lost work on session reclaim.</strong> Cloud sessions are ephemeral; an
-uncommitted change vanishes when the container is reclaimed. Push it.</li>
-  <li><strong>Opaque progress.</strong> “What’s the status?” should be answerable from the
-PR body, not a chat scrollback. The checklist is the source of truth.</li>
-  <li><strong>Un-takeoverable tasks.</strong> If you go idle/blocked, a sibling can pick up
-a continually-committed, checklist-annotated PR; they cannot pick up an
-opaque local branch.</li>
-</ul>
-<h2 id="checklist-run-this-as-you-work">
-  
-  
-    <a href="#checklist-run-this-as-you-work" class="anchor-heading" aria-labelledby="checklist-run-this-as-you-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist (run this as you work)
-  
-  
-</h2>
-    
-
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />PR open? If not: branch → stub commit → push → open it <strong>now</strong>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Anything uncommitted older than ~20–30 min? Commit + push it.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Does the PR-body status checklist reflect the current state?</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Any sibling whose files I just started touching un-notified? One
-    intent line (not a stream).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Blocked or going idle? Update the checklist + a one-line
-    “blocked on X / handoff-ready” note so a sibling can continue.</li>
-</ul>
-<h2 id="relationship-to-other-skills">
-  
-  
-    <a href="#relationship-to-other-skills" class="anchor-heading" aria-labelledby="relationship-to-other-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Relationship to other skills
-  
-  
-</h2>
-    
-
-<ul>
-  <li><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">/coordinate</code></a> — cross-PR triage (scope map, sibling
-intent, cherry-picks, ledger). <code class="language-plaintext highlighter-rouge">continual-progress</code> keeps <em>your</em> PR
-legible so <code class="language-plaintext highlighter-rouge">/coordinate</code> (yours or a sibling’s) has something to triage.</li>
-  <li><strong>A folio’s own <code class="language-plaintext highlighter-rouge">AGENTS.md</code></strong> may carry these rules for that repository, and
-a stricter merge gate — <code class="language-plaintext highlighter-rouge">litlfred/qou</code> §”Branch + PR workflow” is the worked
-case. This skill is the platform-side statement; where a folio is stricter,
-the folio wins.</li>
-  <li><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">/todo-manager</code></a> — the session work-plan; the
-PR-body status checklist (invariant 3) is its externally-visible
-projection, so a watcher needs no access to the session’s bean queue.</li>
+  <li><code class="language-plaintext highlighter-rouge">scripts/render-selection.ts</code> — the selection, the manifest, and the hash.</li>
+  <li><code class="language-plaintext highlighter-rouge">scripts/declared-dirs.ts</code> — the graph-kind resolver, and why it is a process.</li>
+  <li><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — what a graph kind is
+and where <code class="language-plaintext highlighter-rouge">harness.json</code> declares it.</li>
+  <li><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a> — the same third-state discipline one level out.</li>
+  <li>Bean <code class="language-plaintext highlighter-rouge">9c34</code>.</li>
 </ul>
 
           
