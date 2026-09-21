@@ -88,13 +88,19 @@ report-and-never-act shape the other health checks take.
 
 ## Done when
 
-- [ ] `bun run health`'s `bean-store` check reports an in-progress bean whose
-      every Done-when box is ticked, as a finding naming the bean
-- [ ] The third state is kept: a bean with NO checkboxes is *no criteria
+- [x] `bun run health`'s `bean-store` check reports an in-progress bean whose
+      every Done-when box is ticked, as a finding naming the bean —
+      `bean-self-declared-done`, `minor`, with an action that says RE-DERIVE
+      and never "close it"
+- [x] The third state is kept: a bean with NO checkboxes is *no criteria
       recorded*, never folded into the pass — it is the case the sweep cannot
-      judge, not a clean one
-- [ ] Falsified by planting: ticking the last open box on an in-progress bean
-      makes the check report it, and unticking it stops
+      judge, not a clean one. TWO such states, both counted and neither
+      reported: `bean-claimed-criteria-absent` (26 of 96) and
+      `bean-claimed-criteria-unreadable` (15 of 96). The denominator
+      `bean-claimed-with-criteria` is on the record too, so a detector that
+      stops matching reads as *saw nothing* rather than as a green tick
+- [x] Falsified by planting: ticking the last open box on an in-progress bean
+      (`06e3`) took the finding count 3 → 4; restoring it took it back to 3
 - [x] The six listed above are each re-derived against `main` and closed or
       left open with the reason recorded on the bean — done 2026-09-21:
       `tyyc`, `7iog`, `8nzu`, `5a3l` closed; `jijc` and `z4mq` left open with
@@ -105,3 +111,34 @@ report-and-never-act shape the other health checks take.
 Do not close any of the five on the strength of its boxes. `tyyc` was closed
 because `check:workflow-script-paths` was re-run and its registration in
 `code-quality-gates.yml` re-read — not because it said it was done.
+
+## Built 2026-09-21 — and the parse is the whole design
+
+`doneWhenState` in `test/health/probes.ts`, four states, with the rule that
+makes it worth having: **`unreadable` outranks `all-ticked`.**
+
+The crude body-wide `[x]` sweep that opened this bean reported **6**;
+section-scoped parsing reports **4**. The difference is `z4mq`, and it is the
+one that was not finished at all — it carries two matching headings, its real
+criteria as `•` bullets under the first and a three-box *sub-checklist of one
+item* under `## Done when — item 3`. Neither a body-wide count nor a
+section-scoped count separates it. What does is that one of its sections
+states criteria in a form this cannot read, and a bean with any unreadable
+criterion is not a bean whose criteria are all met.
+
+Measured first, because it decided the design: **25 distinct spellings** of the
+heading across 457 beans (`### Done when`, `— revised`, `— REPLACES the list
+above`, `— status`). All 25 begin with the two words, so the prefix is matched
+and **the qualifier is deliberately not parsed** — reading "REPLACES" as an
+instruction about which list counts would make a health check adjudicate
+supersession, which is a judgement about intent rather than a fact about a file.
+
+A sibling `##` ends the section, which is load-bearing: many beans carry a
+`## Do not` list written as dashes whose items are never ticked, and leaking
+those in would make every such bean permanently `open`.
+
+**It earned its place on the first run.** Of the three it reported, `68au` was
+PR #803's bean — merged twenty minutes earlier, still claimed. Re-derived
+against `main` and closed. `jijc` and `06kg` remain reported and are for
+whoever re-derives them.
+

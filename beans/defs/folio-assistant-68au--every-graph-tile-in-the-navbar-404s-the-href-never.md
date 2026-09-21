@@ -1,11 +1,11 @@
 ---
 # folio-assistant-68au
 title: Every graph tile in the navbar 404s — the href never gets the baseurl
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T20:47:15Z
-updated_at: 2026-09-21T20:52:36Z
+updated_at: 2026-09-21T23:03:58Z
 parent: folio-assistant-o3xy
 ---
 
@@ -38,3 +38,21 @@ Two commits on `claude/zealous-turing-v49ph5`, PR #803.
 `f99b1735` — the glyph. Declared by name, default-deny registry, fallback on unknown. TWO beans rather than the reference's four: five candidates were rendered at 20px and only two-outlined kept its shapes and hilums separate there. An icon is not a picture shrunk.
 
 Stays `in-progress` until the PR merges — closure is on evidence, not on authorship.
+
+## Closed 2026-09-21 — re-derived on `main`, not read off its ticks
+
+Surfaced by the `bean-self-declared-done` check on its **first real run**
+(bean `fkjo`): `in-progress` with all four Done-when boxes ticked. Per that
+check's own action text, re-derived rather than closed on the ticks — each
+criterion checked against `main` at `170bae8d9d`, the squash of #803:
+
+- **hrefs composed against the baseurl** — `withBase(t.href)` at
+  `docs-ui.js:2068`, inside `mountGraphTiles` and not in the shared `tileLink`.
+- **the baseurl reaches the client explicitly** —
+  `<meta name="fa-baseurl" content="{{ site.baseurl }}">` at
+  `head_custom.html:326`, its own meta rather than read off the optional
+  translation block.
+- **the e2e runs under a non-empty base** — `graph-tiles.e2e.ts:87` sets
+  `BASE = "/folio-assistant"` and line 203 asserts `BASE + declared.href`; line
+  229 keeps the absent-meta case. 25 tests.
+- **gates green** — 100/100 on the merged tree.
