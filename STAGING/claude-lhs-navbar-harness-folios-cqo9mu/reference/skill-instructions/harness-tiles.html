@@ -895,6 +895,35 @@ behind a rule, and the remedy is one line in a declaration.</li>
 <p>Tiles render in the navbar <strong>and</strong> on the board: one declaration, per-surface
 visibility, never two registries free to disagree about what a tile is.</p>
 
+<p><strong>On the board they are a strip along the TOP, and it starts OPEN.</strong> Both
+halves are rules rather than defaults to tune:</p>
+
+<ul>
+  <li><strong>The top, not the bottom, and not in flow.</strong> In flow the strip lands below
+the cards, and on a board of full-bleed art it reads as absent — which is the
+failure this placement exists to fix, not a cosmetic one.</li>
+  <li><strong>Open, because closed reads as absent too.</strong> Tiles a reader must open before
+they can see what a folio offers have the same effect as tiles that are not
+there. Sliding the strip up is the reader’s act; it is never the starting
+position.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">sticky</code>, never <code class="language-plaintext highlighter-rouge">fixed</code>.</strong> The strip belongs to the FOLIO: it travels with
+the board and goes when the board goes. A viewport-fixed bar is chrome for
+the <em>page</em>, a different object, and would follow a reader onto content with
+no tiles at all.</li>
+  <li><strong>Chrome along the board, not a panel within it.</strong> It carries no card, no
+content and no second surface. An open window passes <strong>over</strong> it, because
+chrome frames content and never the reverse.</li>
+  <li><strong>An empty strip does not render.</strong> A row that opens on nothing is <code class="language-plaintext highlighter-rouge">pb04</code>’s
+failure — an affordance that promises and delivers nothing.</li>
+</ul>
+
+<p><strong>A board tile is SQUARE, and it is the launcher’s tile.</strong> Same template, same
+declaration; what differs is the surface’s geometry. Square is a measured
+property rather than a declared one — assert the box, not the stylesheet.
+<code class="language-plaintext highlighter-rouge">aspect-ratio</code> gives a height only while the content fits inside it, and a flex
+line’s default <code class="language-plaintext highlighter-rouge">align-items: stretch</code> un-squares every tile on a row the moment
+one caption wraps. Both failures are invisible in a screenshot.</p>
+
 <p>They are <strong>collapsible</strong>, with the count on the summary so a collapsed list
 still says how much is behind it. That is not polish — a fixed-height sidebar
 with a dozen fat tiles pushes the page nav off the top, which is a navigation

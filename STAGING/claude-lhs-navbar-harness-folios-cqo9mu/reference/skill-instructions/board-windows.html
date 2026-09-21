@@ -949,6 +949,96 @@ the case this rule exists to catch, because the board built that DOM. The
 assertion has to be on bytes the server sent — in this instance, a browser
 context with <code class="language-plaintext highlighter-rouge">javaScriptEnabled: false</code> over the same renderer the generator
 writes with.</p>
+<h2 id="the-folio-belongs-to-the-harness-not-to-the-library">
+  
+  
+    <a href="#the-folio-belongs-to-the-harness-not-to-the-library" class="anchor-heading" aria-labelledby="the-folio-belongs-to-the-harness-not-to-the-library"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The folio belongs to the HARNESS, not to the library
+  
+  
+</h2>
+    
+
+<p>A <strong>content library</strong> is something a reader browses — <code class="language-plaintext highlighter-rouge">who-iris</code>, the <code class="language-plaintext highlighter-rouge">smart-*</code>
+instances, any folio published as a site. A <strong>folio</strong> is the reader’s own
+surface: their notes, the assets they have materialised, the documents they
+created or linked. The library is the place; the folio is what they carry into
+it.</p>
+
+<p>So the folio visualisation is <code class="language-plaintext highlighter-rouge">cat-harness</code>’s, <strong>available by convention on
+any harness</strong>, and a library never implements its own. A library may implement
+its own landing page and may have its own harness — <code class="language-plaintext highlighter-rouge">who-iris</code> does — and
+neither of those is licence to build a second folio.</p>
+
+<p><strong>Consistency is the requirement, not quality.</strong> Two harnesses that each build
+a good folio have failed this: a reader moving between libraries must find the
+same surface, because the point of carrying a folio is that it does not change
+underneath them. The test is not <em>“is this folio good”</em> but <em>“is this the same
+folio”</em>.</p>
+
+<p>One consequence worth stating, because it is the one a library author trips
+over: a note or a todo MAY reference nodes in <strong>another</strong> KG library. The
+folio is not scoped to the library it is currently pulled down over, so a
+reference that leaves the library is ordinary rather than exceptional, and a
+renderer that assumes local resolution will break on the reader’s own data.</p>
+<h2 id="an-asset-has-three-states-not-two">
+  
+  
+    <a href="#an-asset-has-three-states-not-two" class="anchor-heading" aria-labelledby="an-asset-has-three-states-not-two"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An asset has THREE states, not two
+  
+  
+</h2>
+    
+
+<p>Pulling the folio down gives a <strong>glass</strong> — a surface over whatever is being
+browsed, carrying sticky notes and the avatars of materialised assets,
+including materialised KG like <code class="language-plaintext highlighter-rouge">cat-bootstrap</code> or <code class="language-plaintext highlighter-rouge">cat-harness</code> themselves.</p>
+
+<p>A thing on that glass can be closed. <strong>What closing does is the rule:</strong></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>state</th>
+      <th>where the asset is</th>
+      <th>how it got there</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>in the library</strong></td>
+      <td>not the reader’s at all</td>
+      <td>the default</td>
+    </tr>
+    <tr>
+      <td><strong>in the folio, not displayed</strong></td>
+      <td>materialised under <code class="language-plaintext highlighter-rouge">folio/</code>, off the glass</td>
+      <td>the reader closed it, <em>“back in library”</em></td>
+    </tr>
+    <tr>
+      <td><strong>on the glass</strong></td>
+      <td>displayed in the pulled-down folio</td>
+      <td>the reader pulled it out of the library</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Closing returns an asset to the middle state and NEVER to the first.</strong> The
+asset stays in <code class="language-plaintext highlighter-rouge">folio/</code>; only its display goes. Putting it back on the glass is
+a separate act performed <strong>from the library</strong> — <em>“need to go back to the
+library and pull it out to folio display window”</em> — not from the glass it just
+left.</p>
+
+<p><strong>Why three rather than two, which is the whole point.</strong> A two-state model —
+in the folio, or not — makes <em>closing a sticky</em> and <em>un-materialising an asset</em>
+the same gesture. A reader tidying their glass would then silently discard
+work, and would have no way to tell that they had. The middle state is what
+makes closing cheap enough to do freely.</p>
+
+<p>This is <code class="language-plaintext highlighter-rouge">l4zi</code> one level out, and the shape is easy to miss because no single
+screen looks wrong: the inverse of <strong>close</strong> must be reachable, and here it is
+reachable from a <strong>different surface</strong> than the one that closed it. When you
+implement close, the thing to check is that the library offers the way back —
+not that the glass does.</p>
 <h2 id="not-this-skill">
   
   
