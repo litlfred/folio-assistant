@@ -219,28 +219,30 @@
       var isRemembered = loc === remembered;
 
       // Available = clickable <a>. Unavailable = disabled <span>.
+      //
+      // No inline colours. Every pair is a token in `docs-ui.css` with its
+      // measured ratio beside it -- bean `rptk`, whose second half is this
+      // function: the unavailable tab was `#475569` at `opacity:0.5`, which
+      // composites to 1.39:1 on the tile panel, and the current tab was
+      // #ffffff on #3b82f6 at 3.67:1. The per-page bar was fixed first and
+      // this one kept the literals, because the gate never opened this view.
       var tab = el(isAvailable ? "a" : "span", {
         href: isAvailable ? safeHref(localePath(basePath, loc)) : undefined,
         "data-locale": loc,
         title: isAvailable
           ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
           : LOCALE_NAMES[loc] + " \u2014 not yet translated",
-        style: "display:inline-block;padding:4px 8px;border-radius:4px;" +
-               "text-decoration:none;font-size:0.8rem;margin:0 1px;" +
-               "transition:background 0.15s;" +
-               (isCurrent
-                 ? "background:#3b82f6;color:#fff;font-weight:bold;"
-                 : isAvailable
-                   ? "color:#93c5fd;cursor:pointer;"
-                   : "color:#475569;cursor:default;opacity:0.5;") +
-               (isRemembered ? "box-shadow:inset 0 0 0 1px #93c5fd;" : "")
+        class: "fa-lang-tab" +
+               (isCurrent ? " is-current" : isAvailable ? "" : " is-unavailable") +
+               (isRemembered ? " is-remembered" : "")
       }, loc.toUpperCase());
 
+      // Hover is a CSS `:hover` rule now, for the same reason: a colour
+      // written by `style.background` is a literal nothing can measure,
+      // because it exists only while a pointer is over the tab.
       if (isAvailable && !isCurrent) {
         (function (locale, link) {
           link.addEventListener("click", function () { setGlobalLocale(locale); });
-          link.addEventListener("mouseenter", function () { link.style.background = "#334155"; });
-          link.addEventListener("mouseleave", function () { link.style.background = ""; });
         })(loc, tab);
       }
       bar.appendChild(tab);
