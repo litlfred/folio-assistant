@@ -1913,6 +1913,96 @@ export const GraphNodeDirectorySchema = z.object({
  * no reason is a silence list, and the next person cannot tell a considered
  * waiver from a shrug. So the value is the reason, and the axis prints it.
  */
+/**
+ * ONE visualisation of a subgraph — where it is rendered, and what to call it.
+ *
+ * The owner, 2026-09-20, correcting the framing of the question put to them:
+ *
+ * > its not a function of nodes, its a function of a harness watching a
+ * > directort in repo root/ … if harness declares visaluzers, those should
+ * > have tile. defaults to theme, but new can be changed. harness can declare
+ * > >= 1 visualiztion (which then has a title)
+ *
+ * So a directory may be rendered more than once — a library as a shelf and as
+ * a map are two visualisations of one graph — and each needs a name, because a
+ * tile that says only "library" cannot say which of the two it opens.
+ *
+ * ## Every field but `ref` is optional, and that is the inheritance rule
+ *
+ * A visualisation that states only where it is rendered is **complete rather
+ * than invalid** — the same rule `semantic-zoom.ts` encodes and for the same
+ * reason. `title` falls back to the directory's id, `surfaces` to both, `theme`
+ * to the directory's, `hidden` to false. Requiring any of them would make every
+ * existing declaration in this repository invalid on the commit that added the
+ * field, which is the cost `dependents` already charged once.
+ */
+export const VisualisationSchema = z.object({
+  /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
+  ref: z.string().min(1),
+  /** What a tile calls it. Absent falls back to the directory's id. */
+  title: z.string().min(1).optional(),
+  /**
+   * Where its tile appears. Absent means BOTH.
+   *
+   * Q11, 2026-09-20: *one declaration, per-surface visibility.* A tile is
+   * declared once and says where it shows — never two registries free to
+   * disagree about what a tile is.
+   */
+  surfaces: z.array(z.enum(["navbar", "board"])).nonempty().optional(),
+  /**
+   * Whether this tile starts out of frame. Absent means shown.
+   *
+   * Q9: *declared default, reader may override.* The folio says which tiles
+   * start hidden; a reader's own hiding is theirs alone and is committed
+   * nowhere — which is `reader-filter.ts`'s rule on another surface.
+   */
+  hidden: z.boolean().optional(),
+  /** The tile's theme. Absent means the directory's, then the instance's. */
+  theme: z.string().min(1).optional(),
+});
+export type Visualisation = z.infer<typeof VisualisationSchema>;
+
+/**
+ * What `coverage.visualiser` accepts: one path, or several visualisations.
+ *
+ * **A bare string still parses**, and that is the whole shape of this change.
+ * 27 declared paths in this repository are bare strings today; a widening that
+ * cost each of them an edit would be a required-field change wearing an
+ * optional one's clothes, and every concurrent branch would pay for it.
+ */
+export const VisualiserDeclarationSchema = z.union([
+  z.string().min(1),
+  z.array(VisualisationSchema).nonempty(),
+]);
+export type VisualiserDeclaration = z.infer<typeof VisualiserDeclarationSchema>;
+
+/**
+ * Every visualisation a directory declares, normalised.
+ *
+ * The ONE place a bare string becomes a list, so no consumer has to know that
+ * the field has two shapes — which is this repository's standing rule: *a
+ * downstream consumer must never have to string-manipulate, re-derive, or
+ * assume a rule in order to use what we publish.*
+ *
+ * `[]` for a directory that declares none. That is a real answer and a
+ * different one from "declares a visualiser that does not resolve", which is
+ * `flh4`'s distinction and is checked elsewhere.
+ */
+export function visualisationsOf(
+  coverage: SubgraphCoverage | undefined,
+  directoryId: string,
+): Array<Visualisation & { title: string }> {
+  const v = coverage?.visualiser;
+  if (v === undefined) return [];
+  const list: Visualisation[] = typeof v === "string" ? [{ ref: v }] : v;
+  return list.map((entry) => ({ ...entry, title: entry.title ?? directoryId }));
+}
+
+/** Does this visualisation's tile appear on this surface? Absent means both. */
+export function showsOn(v: Visualisation, surface: "navbar" | "board"): boolean {
+  return v.surfaces === undefined || v.surfaces.includes(surface);
+}
+
 export const SubgraphCoverageSchema = z.object({
   /**
    * The page that renders this subgraph, **relative to the REPOSITORY root**
@@ -1937,7 +2027,7 @@ export const SubgraphCoverageSchema = z.object({
    * 27 declared paths resolve against it today, so this comment records the
    * behaviour rather than changing it.
    */
-  visualiser: z.string().min(1).optional(),
+  visualiser: VisualiserDeclarationSchema.optional(),
   /** The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}. */
   docs: z.string().min(1).optional(),
   /** The skill that governs it, by NAME rather than by path, so no base applies. */
