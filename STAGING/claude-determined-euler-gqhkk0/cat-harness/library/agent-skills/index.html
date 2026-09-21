@@ -203,8 +203,11 @@ var COLS = [
   { k:"words",    t:"words",    n:true, f:function(e){ return e.words.toLocaleString(); } },
   { k:"bytes",    t:"size",     n:true, f:function(e){ return kb(e.bytes); } },
   { k:"refCount", t:"referenced by", n:true, f:function(e){ var s=refState(e);
-      var files = (e.referencedBy||[]).map(function(r){ return r.from + " (" + r.count + ")"; }).join("
-");
+      // The join separator is written with a DOUBLED backslash on purpose:
+      // this page is a template literal, so a single one is eaten by
+      // TypeScript and emitted as a real line break inside the browser's
+      // string — which does not parse, and took the whole viewer down.
+      var files = (e.referencedBy||[]).map(function(r){ return r.from + " (" + r.count + ")"; }).join("\n");
       return '<span class="pill '+s.cls+'"'+(files?' title="'+esc(files)+'"':"")+">"+esc(s.label)+"</span>"; } },
   { k:"upload",   t:"source",   n:false, f:function(e){ var s=uploadState(e);
       return '<span class="pill '+s.cls+'">'+esc(s.label)+"</span>"+(e.sourceFile?'<br><span class="slug" style="font-size:.72rem;color:var(--muted)">'+esc(e.sourceFile)+"</span>":""); } }
@@ -317,8 +320,7 @@ fetch(DATA_HREF).then(function(r){
       "</b> json file(s) scanned for references" +
       (none ? ', <b>'+none+"</b> entr(ies) referenced by nothing" : "") +
       (G.refScan.unreadable.length
-        ? ' <span class="pill warn" title="'+esc(G.refScan.unreadable.join("
-"))+'">'+
+        ? ' <span class="pill warn" title="'+esc(G.refScan.unreadable.join("\n"))+'">'+
           G.refScan.unreadable.length+" unreadable — the zeros are provisional</span>"
         : "") + "</span>";
   }
