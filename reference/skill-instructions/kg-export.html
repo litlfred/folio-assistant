@@ -951,7 +951,7 @@ self-describing graph and a graph with documentation.</p>
 
 <p>The schema half is <code class="language-plaintext highlighter-rouge">scripts/harness-schema-export.ts</code>: the declaration’s JSON
 Schema, published at the URL its own <code class="language-plaintext highlighter-rouge">$id</code> names, so a consumer holding an
-<code class="language-plaintext highlighter-rouge">harness.json</code> it does not understand has somewhere to go. It is a third
+a declaration it does not understand has somewhere to go. It is a third
 rendering of <code class="language-plaintext highlighter-rouge">CatHarnessDeclarationSchema</code> beside the JSON-LD — <strong>not a
 second authority</strong>; the Zod is authoritative, per
 <a href="/folio-assistant/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.</p>
@@ -1025,7 +1025,7 @@ exist — a generated broken link is still a broken link, and a test now pins it
 </h2>
     
 
-<p>The <strong>stub</strong> (<code class="language-plaintext highlighter-rouge">harness.json</code> → <code class="language-plaintext highlighter-rouge">stub</code>, defaulting to <code class="language-plaintext highlighter-rouge">name</code>) is the
+<p>The <strong>stub</strong> (the declaration → <code class="language-plaintext highlighter-rouge">stub</code>, defaulting to <code class="language-plaintext highlighter-rouge">name</code>) is the
 filename stem of everything this instance publishes: <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code>,
 <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.schema.json</code>. One helper, <code class="language-plaintext highlighter-rouge">artefactStub()</code>, computes it, so the two
 exporters cannot disagree about what this instance is called.</p>
@@ -1360,7 +1360,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35637929280"><code>24570e7</code></a> &middot; 2026-09-21T18:24:16Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35639905306"><code>41a02b3</code></a> &middot; 2026-09-21T18:42:24Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

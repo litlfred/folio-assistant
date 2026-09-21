@@ -721,11 +721,11 @@ Decision table: <a href="../../skills/workflows/decisions/folio-intent.dmn"><cod
     
 
 <p>A folio’s home page opens with <strong>its</strong> description inside <strong>its</strong> backdrop, both
-declared in <code class="language-plaintext highlighter-rouge">harness.json</code> at the repository root. Nothing about any
+declared in the repository’s declaration. Nothing about any
 particular instance is written into the template, so a downstream folio does not
 inherit the platform’s grumpy cat.</p>
 
-<p><strong>Where the markdown node is:</strong> <code class="language-plaintext highlighter-rouge">description</code> in <code class="language-plaintext highlighter-rouge">harness.json</code>. It is
+<p><strong>Where the markdown node is:</strong> <code class="language-plaintext highlighter-rouge">description</code> in the declaration. It is
 markdown and it is rendered as-is. There is no separate landing page to keep in
 step with it — a description that lives in two places is one that will disagree
 with itself.</p>
@@ -868,7 +868,7 @@ through the dependency tree, attributing each membership to the instance
 that carried it. Bean <code class="language-plaintext highlighter-rouge">79t3</code>.</p>
 
   <p><strong><code class="language-plaintext highlighter-rouge">folio</code> and <code class="language-plaintext highlighter-rouge">harness</code> are different types, and the distinction is load-
-bearing here.</strong> <code class="language-plaintext highlighter-rouge">harness.json</code> says <em>this is an instance</em>; <code class="language-plaintext highlighter-rouge">harness.config.json</code>
+bearing here.</strong> The declaration says <em>this is an instance</em>; <code class="language-plaintext highlighter-rouge">harness.config.json</code>
 says <em>this authors folio content</em>. <code class="language-plaintext highlighter-rouge">cat-harness/</code> carries the first and not
 the second — it is a harness and is <strong>not</strong> a folio, which is the
 platform-not-content rule as a fact about two files. <code class="language-plaintext highlighter-rouge">isFolio</code> is exactly
@@ -1258,7 +1258,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35637929280"><code>24570e7</code></a> &middot; 2026-09-21T18:24:16Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35639905306"><code>41a02b3</code></a> &middot; 2026-09-21T18:42:24Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

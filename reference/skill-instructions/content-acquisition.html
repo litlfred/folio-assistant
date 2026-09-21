@@ -813,7 +813,7 @@ owner, 2026-09-20, pointed at
 <p>Verified against GitHub the same day: <strong><code class="language-plaintext highlighter-rouge">/tree/main/uploads</code> → 404</strong>, and
 <strong><code class="language-plaintext highlighter-rouge">/tree/main/cat-harness/uploads</code> → 200</strong>.</p>
 
-<p>The cause is one segment. <code class="language-plaintext highlighter-rouge">harness.json</code> declares the queue as
+<p>The cause is one segment. The declaration declares the queue as
 <code class="language-plaintext highlighter-rouge">{ id: "uploads", path: "uploads/" }</code> with no <code class="language-plaintext highlighter-rouge">scope</code>, and absent scope means
 <strong>instance</strong> — so the declared path resolves under <code class="language-plaintext highlighter-rouge">cat-harness/</code>, while a forge
 URL needs it relative to the <strong>repository</strong>. Pasting the declared path into
@@ -1043,7 +1043,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35637929280"><code>24570e7</code></a> &middot; 2026-09-21T18:24:16Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35639905306"><code>41a02b3</code></a> &middot; 2026-09-21T18:42:24Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

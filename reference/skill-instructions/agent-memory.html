@@ -966,10 +966,10 @@ answers — and if it answers neither, it is a memory entry.</p>
 and <code class="language-plaintext highlighter-rouge">bun run check:asset-roles</code> keeps the declaration single: a required role
 <code class="language-plaintext highlighter-rouge">ASSET_ROLES</code> does not govern, a role a running process would be allowed to
 write, or an asset restating <code class="language-plaintext highlighter-rouge">purpose</code>, <code class="language-plaintext highlighter-rouge">layer</code> or <code class="language-plaintext highlighter-rouge">delivery</code> on itself. That
-last one is asked of the RAW <code class="language-plaintext highlighter-rouge">harness.json</code> on purpose — <code class="language-plaintext highlighter-rouge">KgAssetSchema</code> is a
+last one is asked of the RAW declaration on purpose — <code class="language-plaintext highlighter-rouge">KgAssetSchema</code> is a
 non-strict <code class="language-plaintext highlighter-rouge">z.object</code> and drops an unknown key without a word, so after
 parsing the evidence is gone. It has happened: a <code class="language-plaintext highlighter-rouge">purpose</code> written into
-<code class="language-plaintext highlighter-rouge">cat-harness/harness.json</code> read as if it carried one and no consumer ever saw
+<code class="language-plaintext highlighter-rouge">cat-harness/cat-harness.json</code> read as if it carried one and no consumer ever saw
 it, which is worse than absent because absent is visible.
 Both are required of every instance: one with a README and no <code class="language-plaintext highlighter-rouge">AGENTS.md</code> is
 readable by a person and mute to an agent, and the reverse leaves a reader
@@ -1165,7 +1165,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35637929280"><code>24570e7</code></a> &middot; 2026-09-21T18:24:16Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35639905306"><code>41a02b3</code></a> &middot; 2026-09-21T18:42:24Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

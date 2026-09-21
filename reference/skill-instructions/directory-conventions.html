@@ -709,7 +709,7 @@
 </h1>
     
 
-<p>Every instance carries an <strong><code class="language-plaintext highlighter-rouge">harness.json</code></strong> at its repository root. It declares the directories the instance scans for content,
+<p>Every instance carries a <strong>declaration</strong> at its repository root — a <code class="language-plaintext highlighter-rouge">*.json</code> whose <code class="language-plaintext highlighter-rouge">name</code> field equals its own filename stem, found with <code class="language-plaintext highlighter-rouge">findDeclarationFile</code> and never composed from a path. It declares the directories the instance scans for content,
 and what <strong>kind of graph</strong> each one holds.</p>
 
 <p>Schema and resolution: <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>.</p>
@@ -1235,7 +1235,7 @@ a person looks for first were the two hardest to find.</p>
     
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>agentic-harness/          folio-assistant-core/
-  harness.json        harness.json
+  cat-harness.json    folio-assistant-core.json
   tools/     → tools        folio/     → folio
   kg/        → kg           (inherits tools/, kg/, schemas/)
   schemas/   → schemas
@@ -1350,7 +1350,7 @@ was still unparseable. Verify the merged tree, never the merge.</li>
     
 
 <ul>
-  <li><strong>No <code class="language-plaintext highlighter-rouge">harness.json</code></strong> → <code class="language-plaintext highlighter-rouge">readDeclaration</code> returns <code class="language-plaintext highlighter-rouge">undefined</code>. An
+  <li><strong>No declaration</strong> → <code class="language-plaintext highlighter-rouge">readDeclaration</code> returns <code class="language-plaintext highlighter-rouge">undefined</code>. An
 instance not yet migrated is ordinary, and callers fall back to today’s
 conventions. Not an error.</li>
   <li><strong>Present but unreadable</strong> → <strong>throws.</strong> A declaration nobody can parse
@@ -1373,7 +1373,7 @@ bean <code class="language-plaintext highlighter-rouge">dh4f</code> found in thi
 corpus they could not read.</p>
 
 <p>This repository’s own declaration is the worked example, and <strong>no count is
-given here on purpose</strong>: <code class="language-plaintext highlighter-rouge">harness.json</code> is the list. That sentence said
+given here on purpose</strong>: the declaration is the list. That sentence said
 “declares <code class="language-plaintext highlighter-rouge">schemas/</code> and <code class="language-plaintext highlighter-rouge">skills/</code>” until 2026-09-20, by which point it
 declared <strong>twenty-one</strong> directories — a number in prose is a claim, and this
 one had been false for long enough that <code class="language-plaintext highlighter-rouge">AGENTS.md</code> carries its own flagged
@@ -1466,8 +1466,8 @@ and there cannot be one:</p>
       <td>WHO’s <code class="language-plaintext highlighter-rouge">smart-base</code></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">harness.json</code>, <code class="language-plaintext highlighter-rouge">harness.config.json</code></td>
-      <td>ours</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code></td>
+      <td>ours — the declaration is named after its own <code class="language-plaintext highlighter-rouge">name</code> field</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">beans.json</code>, <code class="language-plaintext highlighter-rouge">todos.json</code></td>
@@ -1521,7 +1521,7 @@ as its <strong>source root</strong> (<code class="language-plaintext highlighter
 layout untouched. Verified on <code class="language-plaintext highlighter-rouge">gh-pages</code> after the move.</p>
 
 <p><strong>It is not the <code class="language-plaintext highlighter-rouge">folio</code> graph-kind declaration.</strong> <code class="language-plaintext highlighter-rouge">docs/</code> still does not appear
-in <code class="language-plaintext highlighter-rouge">harness.json</code>: measured 2026-09-19, adding it makes <code class="language-plaintext highlighter-rouge">harness:dirs</code>,
+in the declaration: measured 2026-09-19, adding it makes <code class="language-plaintext highlighter-rouge">harness:dirs</code>,
 <code class="language-plaintext highlighter-rouge">kg:schema:check</code> and <code class="language-plaintext highlighter-rouge">docs:harness:check</code> throw <code class="language-plaintext highlighter-rouge">unknown graph kind "folio"</code>,
 because <code class="language-plaintext highlighter-rouge">folio</code> is contributed by <strong>core</strong> and those readers do not load its
 registration. Packaging is unblocked; the declaration waits. Bean <code class="language-plaintext highlighter-rouge">x4a6</code>.</p>
@@ -2021,7 +2021,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35637929280"><code>24570e7</code></a> &middot; 2026-09-21T18:24:16Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35639905306"><code>41a02b3</code></a> &middot; 2026-09-21T18:42:24Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

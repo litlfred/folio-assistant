@@ -771,7 +771,7 @@ itself; everything below says what the index structurally cannot.</p>
 
 <p><strong>Bootstrap’s diagrams are deliberately outside that index</strong>, and their absence
 is a fact rather than a gap. <code class="language-plaintext highlighter-rouge">cat-bootstrap/workflows/</code> is declared by
-<code class="language-plaintext highlighter-rouge">cat-bootstrap/harness.json</code> and <em>not</em> by the root, because declaring it there
+<code class="language-plaintext highlighter-rouge">cat-bootstrap/cat-bootstrap.json</code> and <em>not</em> by the root, because declaring it there
 re-carries bootstrap’s process into the root’s published graph — which <code class="language-plaintext highlighter-rouge">#432</code>
 removed on purpose and a test still guards. Bean <code class="language-plaintext highlighter-rouge">pve3</code> holds that choice:
 <strong>both halves of bootstrap, or neither.</strong> So the derived index covers what the
@@ -794,7 +794,7 @@ catch and could not, because it could not see the directory either (bean <code c
 
 <p>The rows are correct now. <strong>The diagrams are still invisible to the tooling</strong>,
 and deliberately so pending a decision: <code class="language-plaintext highlighter-rouge">bootstrap/workflows/</code> is declared by
-<code class="language-plaintext highlighter-rouge">bootstrap/harness.json</code> but not by the root, and declaring it there re-carries
+<code class="language-plaintext highlighter-rouge">cat-bootstrap/cat-bootstrap.json</code> but not by the root, and declaring it there re-carries
 bootstrap’s process into the root’s published graph — which <code class="language-plaintext highlighter-rouge">#432</code> removed on
 purpose and a test still guards. Bean <code class="language-plaintext highlighter-rouge">pve3</code> holds that choice: <strong>both halves of
 bootstrap, or neither.</strong></p>
@@ -2264,7 +2264,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35637929280"><code>24570e7</code></a> &middot; 2026-09-21T18:24:16Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35639905306"><code>41a02b3</code></a> &middot; 2026-09-21T18:42:24Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
