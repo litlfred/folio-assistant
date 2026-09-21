@@ -3111,6 +3111,20 @@
       "file": "beans/defs/folio-assistant-j28g--translations-20-pot-files-in-cat-harnesstranslatio.md"
     },
     {
+      "id": "folio-assistant-j2if",
+      "title": "FOLIO VISUALISATION (R18-R32): square strip on top, condensed cornerless geometry, and an asset's THREE states",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:40:00Z",
+      "updatedAt": "2026-09-21T21:40:00Z",
+      "preview": "Owner, 2026-09-21, in one message plus three follow-ups. The verbatim text and\nthe full R18-R32 table are in the design record\n(`cat-harness/docs/architecture/folio-board-requirements.md`, \"Round three\");\nthis bean carries only what is to be built and what would falsify it.\n\n## Why this is a round and not an amendment\n\nTwo of these requirements **reverse work that had not yet merged**. `v0jv`\nbuil",
+      "file": "beans/defs/folio-assistant-j2if--folio-visualisation-r18-r32-square-strip-on-top-co.md"
+    },
+    {
       "id": "folio-assistant-j2w4",
       "title": "gates reads ONE workflow; CI runs five",
       "status": "completed",
@@ -3939,6 +3953,20 @@
       "updatedAt": "2026-09-21T11:12:46Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — owner feedback, 2026-09-21, on the deployed staging preview, with a screenshot of the sidebar and a reference photo of a ring-bound notebook with coloured index dividers.\n\n> those are too much like a dashboard, i want them to be more like diverders. as\n> if you are opening a giant tabbed folio, but the tabs are oriented hoizontally.\n\n",
       "file": "beans/defs/folio-assistant-owt6--navbar-dividers-harness-tiles-read-as-a-dashboard.md"
+    },
+    {
+      "id": "folio-assistant-oz5w",
+      "title": "STAGING CLEANUP vs BRANCH REUSE: merging PR N deletes the preview PR N+1 just published",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:12:17Z",
+      "updatedAt": "2026-09-21T20:12:17Z",
+      "preview": "Reported by the owner, 2026-09-21, as a bare fact: the staging URL **404s**.\nIt was not propagation.\n\n## Measured on `gh-pages`, not inferred\n\nThis branch's preview has been **deleted four times today**, each time by the\n`cleanup` job firing when one of this session's own PRs merged:\n\n```\ncf39207d  staging(cleanup): remove STAGING/claude-lhs-…  (PR #786 closed)\n05f5cfae  staging(cleanup): remove S",
+      "file": "beans/defs/folio-assistant-oz5w--staging-cleanup-vs-branch-reuse-merging-pr-n-delet.md"
     },
     {
       "id": "folio-assistant-p5wm",
@@ -4941,6 +4969,20 @@
       "file": "beans/defs/folio-assistant-ulqj--decide-the-data-model-for-csv-and-spreadsheets-ado.md"
     },
     {
+      "id": "folio-assistant-ur84",
+      "title": "STAGING BANNER: a prose comment naming <body> absorbed the injection on 323 of 670 pages",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:40:00Z",
+      "updatedAt": "2026-09-21T21:40:00Z",
+      "preview": "Owner, 2026-09-21, with two screenshots of the same preview: *\"staging banner\ngone from f-a\"* — present on `who-iris/`, absent on the folio-assistant\nlanding page beside it.\n\n## The defect\n\n`injectInto` used `html.replace(/<body([^>]*)>/i, …)` — **non-global**, so one\nsubstitution, spent on the first match anywhere in the file including inside\nan HTML comment.\n\n`docs/_includes/head_custom.html` is",
+      "file": "beans/defs/folio-assistant-ur84--staging-banner-a-prose-comment-naming-body-absorbe.md"
+    },
+    {
       "id": "folio-assistant-uwka",
       "title": "PAGE: Managing Agent Context — overlays, and the several ways contextual information is generated",
       "status": "completed",
@@ -4971,14 +5013,14 @@
     {
       "id": "folio-assistant-v0jv",
       "title": "FOLIO TILES belong to the folio edge, slid away — not in the board flow and not only in the sidebar",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:28:40Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
+      "updatedAt": "2026-09-21T20:07:25Z",
       "preview": "Owner, 2026-09-21: \"folios have tiles do not go to the window. they are stacked around (bottom?, again read exsiting docs/siblings/beans) of folio, slid away, open to tiles to things like fsh-gts, todos, docs, etc.\"\n\nCORPUS CHECK. harness-tiles already states the rule this refines: 'Tiles render in the navbar AND on the board: one declaration, per-surface visibility, never two registries.' So the ",
       "file": "beans/defs/folio-assistant-v0jv--folio-tiles-belong-to-the-folio-edge-slid-away-not.md"
     },

@@ -339,25 +339,47 @@
   "nothing discarded" and "could not read the document" are opposite facts.
 -->
 <meta name="fa-fsh-guts-src" content="/folio-assistant/fsh-guts.json">
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
+<!--
+  ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
+  failure, not a performance one.
+
+  These five are served from stable paths with no hash in the name, so a
+  browser that has the page cached keeps the old CSS and JS until its
+  `max-age` runs out. On the live site that is invisible. On a STAGING
+  preview it is the whole point of the deployment: the reviewer opens the URL
+  they opened an hour ago, gets yesterday's stylesheet, and reports "i dont
+  see changes" — which is indistinguishable from a deploy that never
+  happened, and sends the next hour after the wrong cause. Measured
+  2026-09-21 on this branch: every byte of the change was verified present in
+  the publish ref while the page rendered the previous build.
+
+  `site.time` is the BUILD's timestamp, so the query changes exactly when the
+  bytes might have, and never between two readers of the same build. A
+  content hash would be tighter and needs a pipeline step; this needs none
+  and closes the case that costs review time.
+
+  NOT a cache-busting strategy for third-party assets, and not applied to
+  them: those are versioned in their own URLs already.
+-->
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790028752">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790028752">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790028752">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790028752">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -374,7 +396,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790028752" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1271,7 +1293,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35659479949"><code>36aa14d</code></a> &middot; 2026-09-21T21:51:27Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35661375639"><code>6f64ba1</code></a> &middot; 2026-09-21T22:12:29Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

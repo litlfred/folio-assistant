@@ -342,25 +342,47 @@
   "nothing discarded" and "could not read the document" are opposite facts.
 -->
 <meta name="fa-fsh-guts-src" content="/folio-assistant/fsh-guts.json">
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
+<!--
+  ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
+  failure, not a performance one.
+
+  These five are served from stable paths with no hash in the name, so a
+  browser that has the page cached keeps the old CSS and JS until its
+  `max-age` runs out. On the live site that is invisible. On a STAGING
+  preview it is the whole point of the deployment: the reviewer opens the URL
+  they opened an hour ago, gets yesterday's stylesheet, and reports "i dont
+  see changes" — which is indistinguishable from a deploy that never
+  happened, and sends the next hour after the wrong cause. Measured
+  2026-09-21 on this branch: every byte of the change was verified present in
+  the publish ref while the page rendered the previous build.
+
+  `site.time` is the BUILD's timestamp, so the query changes exactly when the
+  bytes might have, and never between two readers of the same build. A
+  content hash would be tighter and needs a pipeline step; this needs none
+  and closes the case that costs review time.
+
+  NOT a cache-busting strategy for third-party assets, and not applied to
+  them: those are versioned in their own URLs already.
+-->
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790028752">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790028752">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790028752">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790028752">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -377,7 +399,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790028752" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -910,6 +932,96 @@ the case this rule exists to catch, because the board built that DOM. The
 assertion has to be on bytes the server sent — in this instance, a browser
 context with <code class="language-plaintext highlighter-rouge">javaScriptEnabled: false</code> over the same renderer the generator
 writes with.</p>
+<h2 id="the-folio-belongs-to-the-harness-not-to-the-library">
+  
+  
+    <a href="#the-folio-belongs-to-the-harness-not-to-the-library" class="anchor-heading" aria-labelledby="the-folio-belongs-to-the-harness-not-to-the-library"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The folio belongs to the HARNESS, not to the library
+  
+  
+</h2>
+    
+
+<p>A <strong>content library</strong> is something a reader browses — <code class="language-plaintext highlighter-rouge">who-iris</code>, the <code class="language-plaintext highlighter-rouge">smart-*</code>
+instances, any folio published as a site. A <strong>folio</strong> is the reader’s own
+surface: their notes, the assets they have materialised, the documents they
+created or linked. The library is the place; the folio is what they carry into
+it.</p>
+
+<p>So the folio visualisation is <code class="language-plaintext highlighter-rouge">cat-harness</code>’s, <strong>available by convention on
+any harness</strong>, and a library never implements its own. A library may implement
+its own landing page and may have its own harness — <code class="language-plaintext highlighter-rouge">who-iris</code> does — and
+neither of those is licence to build a second folio.</p>
+
+<p><strong>Consistency is the requirement, not quality.</strong> Two harnesses that each build
+a good folio have failed this: a reader moving between libraries must find the
+same surface, because the point of carrying a folio is that it does not change
+underneath them. The test is not <em>“is this folio good”</em> but <em>“is this the same
+folio”</em>.</p>
+
+<p>One consequence worth stating, because it is the one a library author trips
+over: a note or a todo MAY reference nodes in <strong>another</strong> KG library. The
+folio is not scoped to the library it is currently pulled down over, so a
+reference that leaves the library is ordinary rather than exceptional, and a
+renderer that assumes local resolution will break on the reader’s own data.</p>
+<h2 id="an-asset-has-three-states-not-two">
+  
+  
+    <a href="#an-asset-has-three-states-not-two" class="anchor-heading" aria-labelledby="an-asset-has-three-states-not-two"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An asset has THREE states, not two
+  
+  
+</h2>
+    
+
+<p>Pulling the folio down gives a <strong>glass</strong> — a surface over whatever is being
+browsed, carrying sticky notes and the avatars of materialised assets,
+including materialised KG like <code class="language-plaintext highlighter-rouge">cat-bootstrap</code> or <code class="language-plaintext highlighter-rouge">cat-harness</code> themselves.</p>
+
+<p>A thing on that glass can be closed. <strong>What closing does is the rule:</strong></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>state</th>
+      <th>where the asset is</th>
+      <th>how it got there</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>in the library</strong></td>
+      <td>not the reader’s at all</td>
+      <td>the default</td>
+    </tr>
+    <tr>
+      <td><strong>in the folio, not displayed</strong></td>
+      <td>materialised under <code class="language-plaintext highlighter-rouge">folio/</code>, off the glass</td>
+      <td>the reader closed it, <em>“back in library”</em></td>
+    </tr>
+    <tr>
+      <td><strong>on the glass</strong></td>
+      <td>displayed in the pulled-down folio</td>
+      <td>the reader pulled it out of the library</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Closing returns an asset to the middle state and NEVER to the first.</strong> The
+asset stays in <code class="language-plaintext highlighter-rouge">folio/</code>; only its display goes. Putting it back on the glass is
+a separate act performed <strong>from the library</strong> — <em>“need to go back to the
+library and pull it out to folio display window”</em> — not from the glass it just
+left.</p>
+
+<p><strong>Why three rather than two, which is the whole point.</strong> A two-state model —
+in the folio, or not — makes <em>closing a sticky</em> and <em>un-materialising an asset</em>
+the same gesture. A reader tidying their glass would then silently discard
+work, and would have no way to tell that they had. The middle state is what
+makes closing cheap enough to do freely.</p>
+
+<p>This is <code class="language-plaintext highlighter-rouge">l4zi</code> one level out, and the shape is easy to miss because no single
+screen looks wrong: the inverse of <strong>close</strong> must be reachable, and here it is
+reachable from a <strong>different surface</strong> than the one that closed it. When you
+implement close, the thing to check is that the library offers the way back —
+not that the glass does.</p>
 <h2 id="not-this-skill">
   
   
@@ -1114,7 +1226,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35659479949"><code>36aa14d</code></a> &middot; 2026-09-21T21:51:27Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35661375639"><code>6f64ba1</code></a> &middot; 2026-09-21T22:12:29Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
