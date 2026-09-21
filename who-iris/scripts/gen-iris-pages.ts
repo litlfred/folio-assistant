@@ -106,12 +106,15 @@ export const OWNED = /^(index|community-list|ingestion-notes|kg-to-portal|collec
 /**
  * Where a committed file is actually served from.
  *
- * Bean `yl5w`: every `localPath` in the catalogue points at
- * `who-iris/uploads/…`, and all three are MISSING — the bytes are in
- * `cat-harness/uploads/`, because #477 moved `library/` and left `uploads/`
- * behind. The owner asked for *"links to working assets"*, so these pages link
- * to where the bytes ARE and the page says so in the open, rather than
- * emitting a dead link that matches a claim.
+ * The owner asked for *"links to working assets"*, so a link here is built
+ * from a path that RESOLVED rather than from one the catalogue claims. Until
+ * 2026-09-21 those were different things — bean `yl5w`: every ORIGINAL
+ * `localPath` named `who-iris/uploads/…` while the bytes sat in
+ * `cat-harness/uploads/`, and `lib/bytes.ts` carried a fallback so the links
+ * worked anyway. The sources have since moved into the folio and the fallback
+ * is gone, so the two now agree; the rule stays, because a generator that
+ * emits a link from an unverified claim is one relocation away from shipping
+ * dead links again.
  */
 const RAW = "https://raw.githubusercontent.com/litlfred/folio-assistant/main";
 
@@ -1343,13 +1346,16 @@ ${rows}
   </tbody>
 </table>
 
-<h2>Still open</h2>
-<p>Bean <code>yl5w</code>: every <code>localPath</code> in the catalogue points at
-<code>who-iris/uploads/</code> and all three are missing — the bytes are under
-<code>cat-harness/uploads/</code>, and <code>check:catalogue</code> does not check
-<code>localPath</code> at all. These pages link to where the bytes <em>are</em> rather
-than to where the claim says they are, and say so rather than emitting a dead link
-that matches the claim. That is a workaround, not a fix.</p>
+<h2>Settled 2026-09-21 — bean <code>yl5w</code></h2>
+<p>Every ORIGINAL <code>localPath</code> in this catalogue named
+<code>who-iris/uploads/</code> while the bytes sat in <code>cat-harness/uploads/</code>,
+and <code>check:catalogue</code> did not look at <code>localPath</code> at all — so
+three <code>materialized</code> claims resolved to nothing while the gate printed
+<em>clean</em>. The three sources now sit beside their own intake records at
+<code>who-iris/uploads/&lt;slug&gt;/</code>, the page generator's fallback is deleted,
+and <code>check:catalogue</code> verifies every <code>localPath</code> — with
+<em>could not determine</em> as its own answer, because an unreadable file is not a
+missing one.</p>
 
 <p><code>iris.who.int</code> is egress-blocked from the environment that generates this
 page, so nothing here was fetched from IRIS. Every record was transcribed from a capture

@@ -325,6 +325,39 @@ function esc(s: string): string {
 const BLOB = "https://github.com/litlfred/folio-assistant/blob/main";
 
 /**
+ * The chrome every page here shares.
+ *
+ * Extracted when the LEVEL pages were added (bean `06e3`): two renderers with
+ * two copies of one stylesheet is two answers to what this looks like, and the
+ * copy that is not edited is the one a reader meets first.
+ */
+const PAGE_CSS = `<style>
+  :root { color-scheme: light dark; --ink: #1b2733; --muted: #5b6b7a; --edge: #c3ccd6; --paper: #fff; --accent: #0a5c7a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e6edf3; --muted: #9fb0c0; --edge: #3a4652; --paper: #0f1720; --accent: #6fc4e4; }
+  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
+  a { color: var(--accent); }
+  h1 { font-size: 1.7rem; margin: 0 0 .3rem; }
+  .lede { color: var(--muted); margin: 0 0 1.4rem; }
+  .note { border-left: 4px solid var(--edge); padding: .7rem 1rem; margin: 1.4rem 0; font-size: .93rem; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
+  th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
+  td:first-child { width: 26rem; }
+  /* A repo-relative path is long and has no spaces, so it breaks mid-word
+     unless the breakpoints are named. Slashes are where a reader expects it. */
+  .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
+  .none { color: var(--muted); font-style: italic; }
+  .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
+  .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
+  ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+</style>`;
+
+/**
  * One index page.
  *
  * `scope` carries the declared directory's id, and it is emitted as the same
@@ -367,31 +400,7 @@ export function autoDocPage(
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(type.title)}${scope ? ` — ${esc(scope)}` : ""} · docs-auto</title>
-<style>
-  :root { color-scheme: light dark; --ink: #1b2733; --muted: #5b6b7a; --edge: #c3ccd6; --paper: #fff; --accent: #0a5c7a; }
-  @media (prefers-color-scheme: dark) {
-    :root { --ink: #e6edf3; --muted: #9fb0c0; --edge: #3a4652; --paper: #0f1720; --accent: #6fc4e4; }
-  }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .wrap { max-width: 68rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
-  a { color: var(--accent); }
-  h1 { font-size: 1.7rem; margin: 0 0 .3rem; }
-  .lede { color: var(--muted); margin: 0 0 1.4rem; }
-  .note { border-left: 4px solid var(--edge); padding: .7rem 1rem; margin: 1.4rem 0; font-size: .93rem; color: var(--muted); }
-  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
-  th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
-  th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
-  td:first-child { width: 26rem; }
-  /* A repo-relative path is long and has no spaces, so it breaks mid-word
-     unless the breakpoints are named. Slashes are where a reader expects it. */
-  .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
-  .none { color: var(--muted); font-style: italic; }
-  .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
-  .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
-  ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
-  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
-  .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
-</style>
+${PAGE_CSS}
 </head>
 <body>
 <div class="wrap">
@@ -426,6 +435,84 @@ var SCOPE = "${scope}";
 `;
 }
 
+/** One built type, as a LEVEL page needs to describe it. */
+export interface LevelChild {
+  /** The path segment, which is also the directory name. */
+  seg: string;
+  /** A type's own title, or the segment when the child is another level. */
+  title: string;
+  /** What the type extracts, or how many types sit under this level. */
+  detail: string;
+  /** Items indexed, where the child is a type. */
+  count?: number;
+}
+
+/**
+ * The index for a LEVEL — a directory that holds types rather than items.
+ *
+ * **Bean `06e3`, and it is the same defect `§4(a)` fixed one level up.**
+ * `viewerPlacement` gives a type like `index/skills` a nested page directory,
+ * so `docs-auto/` and `docs-auto/index/` came into existence as directories
+ * with nothing in them. A route that reads like a section and answers nothing
+ * is `dh4f` in navigation form — and the authored landing page had to name
+ * `docs-auto` WITHOUT a link because of it.
+ *
+ * The children are derived from the built types, never listed: a type added to
+ * `TYPES` appears here the moment it is built, and a level with nothing under
+ * it does not get a page at all rather than getting an empty one. An empty
+ * list and a complete list look identical, which is the whole reason the
+ * absent-rather-than-stubbed rule is on `TYPES` already.
+ *
+ * It carries the same `var SCOPE` line as every other page here, so ownership
+ * is read off the file by the one pruner rather than assumed from the path.
+ */
+export function levelPage(prefix: string, children: readonly LevelChild[]): string {
+  const here = prefix === "" ? "docs-auto" : prefix;
+  const rows = children
+    .map(
+      (c) =>
+        `<li><a href="${esc(c.seg)}/">${esc(c.title)}</a>` +
+        (c.count === undefined ? "" : ` <span class="n">${c.count}</span>`) +
+        `<div class="f">${esc(c.detail)}</div></li>`,
+    )
+    .join("\n");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(here)} · docs-auto</title>
+${PAGE_CSS}
+</head>
+<body>
+<div class="wrap">
+<h1>docs-auto${prefix ? ` <span class="p">${esc(prefix)}</span>` : ""}</h1>
+<p class="lede">Derived documentation over a declared sub-graph. Each entry below is
+generated from the repository on every build, so it is what the tree actually holds
+rather than what anybody remembered.</p>
+
+<div class="note">
+  <strong>These are indexes, not the documentation.</strong> They say what exists and what
+  each artefact declares about itself. What a thing is <em>for</em>, when you would reach for
+  it, and what it is not, is authored beside them and reuses these entries rather than
+  restating them — see the <code>docs-auto</code> skill.
+</div>
+
+<ul class="subs">
+${rows || '<li class="none">Nothing is built under this level.</li>'}
+</ul>
+</div>
+<script>
+/* The level this page indexes. Read by orphanSubjectPages() to establish
+   ownership before pruning — the same line every other page here emits. */
+var SCOPE = "${esc(prefix === "" ? "docs-auto" : prefix.split("/").pop()!)}";
+</script>
+</body>
+</html>
+`;
+}
+
 let stale = 0;
 function emit(path: string, content: string): void {
   if (check) {
@@ -446,6 +533,9 @@ if (import.meta.main) {
     process.exit(0);
   }
   const site = join(ROOT, siteDirFor(ROOT));
+
+  /** Items indexed per BUILT type — what the level pages below count. */
+  const built = new Map<string, number>();
 
   for (const type of TYPES) {
     const dirs = declaredDirectories(type.graph);
@@ -494,8 +584,49 @@ if (import.meta.main) {
       console.log(`  ✗ pruned ${dir}`);
     }
 
+    built.set(type.id, items.length);
     if (!check) {
       console.log(`  ✓ ${type.id}: ${items.length} item(s) across ${populated.length} sub-graph(s)`);
+    }
+  }
+
+  // ── The LEVEL pages — bean `06e3`, the same defect §4(a) fixed one up ──
+  //
+  // A type id may carry a slash (`index/skills`), so `viewerPlacement` nests
+  // its page directory and the levels above it came into existence holding
+  // nothing. Each one now gets an index derived from the types actually BUILT,
+  // so a type added to `TYPES` appears here the day it builds and a level with
+  // nothing under it gets no page rather than an empty one.
+  {
+    const levels = new Map<string, LevelChild[]>();
+    for (const id of built.keys()) {
+      const segs = id.split("/");
+      for (let i = 0; i < segs.length; i++) {
+        const prefix = segs.slice(0, i).join("/");
+        const seg = segs[i]!;
+        const childId = segs.slice(0, i + 1).join("/");
+        const kids = levels.get(prefix) ?? levels.set(prefix, []).get(prefix)!;
+        if (kids.some((k) => k.seg === seg)) continue;
+        const type = TYPES.find((t) => t.id === childId);
+        kids.push(
+          type
+            ? { seg, title: type.title, detail: type.extracts, count: built.get(childId) }
+            : {
+                seg,
+                title: seg,
+                // Counted, not named: the types under a level are listed on
+                // the level's own page, and repeating them here would be the
+                // restatement the note on every page forbids.
+                detail: `${[...built.keys()].filter((k) => k.startsWith(`${childId}/`)).length} type(s) below`,
+              },
+        );
+      }
+    }
+    for (const [prefix, kids] of levels) {
+      kids.sort((a, b) => a.seg.localeCompare(b.seg, "en"));
+      const at = viewerPlacement(site, `${handler}/docs-auto${prefix ? `/${prefix}` : ""}`, "docs-auto");
+      emit(join(at.pageDir, "index.html"), levelPage(prefix, kids));
+      if (!check) console.log(`  ✓ level ${prefix || "docs-auto"}: ${kids.length} child(ren)`);
     }
   }
 
