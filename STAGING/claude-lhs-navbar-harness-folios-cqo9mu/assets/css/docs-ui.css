@@ -3346,16 +3346,51 @@ a.fa-harness-tab__body:focus-visible {
   white-space: nowrap;
 }
 
-.fa-board-window-close {
-  /* The frame's control, fixed by the platform. A kind fills the panel; it
-   * does not get to remove the way out. */
+.fa-board-window-control {
+  /* The frame's controls. `[x]` is the platform's and is always first; the
+   * rest are what the kind declared. A kind fills the panel and chooses which
+   * controls it offers; it does not get to remove the way out or move it. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Low-dexterity profile: a frame control is never a small target. */
   min-width: 2.25rem;
   min-height: 2.25rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.4));
   border-radius: 0.25rem;
   background: transparent;
+  color: inherit;
   cursor: pointer;
   line-height: 1;
+  text-decoration: none;
+}
+
+/* THE NODE BADGE, on the avatar and on the open window — one query, two
+ * surfaces (R7). Sized so the chip reads at avatar scale without covering the
+ * mark it rides on. */
+.fa-node-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.25rem;
+  border-radius: 0.625rem;
+  background: var(--fa-rule, rgba(128, 128, 128, 0.35));
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-node-badge--avatar {
+  /* On the avatar it rides the corner rather than sitting beside it: the
+   * avatar IS the target, and a chip alongside would shrink it. */
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+}
+
+.fa-sticky-avatar {
+  position: relative;
 }
 
 /* The board is the window layer's containing block. Without this the panels
