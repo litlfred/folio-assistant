@@ -130,7 +130,7 @@ glossary as a **label with no definition** — which is the state this whole
 bean exists to end. They need a role binding, an alias on an existing role,
 or a new role; that is a judgement about the role model, not something an
 agent writing documentation should decide. Note that `Initiator` and
-`Requestor` are both in `cat-bootstrap/`, a nested instance, so the answer
+`Requestor` are both in `bootstrap/`, a nested instance, so the answer
 may be that bootstrap declares its own.
 
 ### What the agents were actually told
@@ -162,7 +162,7 @@ Two corrections, in the order they were found, because the second is the
 interesting one.
 
 **First**, the resolver read `cat-harness/skills/roles/roles.json` alone.
-`cat-bootstrap/skills/roles/roles.json` declares four roles of its own —
+`bootstrap/skills/roles/roles.json` declares four roles of its own —
 `initiator`, `requestor`, `logger`, `knowledge-graph-data-store` — each with
 a description and a matching `lanes[]`. Six of the seven were already bound.
 Resolving against both, over all 157 lanes read from the diagrams: **27 by

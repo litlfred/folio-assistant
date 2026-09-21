@@ -34,6 +34,30 @@
   A tab with nowhere to go is NOT a link. `pb04`: a dead link is worse than no
   link, because it invites a click and then reads as "this site is broken".
 {%- endcomment -%}
+{%- comment -%}
+  THE PIN, which keeps the sidebar open once it is opened.
+
+  The sidebar collapses to an icon strip and opens on `:hover` and
+  `:focus-within` (see `docs-ui.css`, "The sidebar starts CLOSED"). Neither
+  reaches a TABLET: it is above the 50rem breakpoint, so it gets the collapsed
+  desktop nav, and it has no hover at all -- `:focus-within` would only fire
+  after a tap had already landed on a link the reader could not see.
+
+  So: a checkbox, and `:has()` on the sidebar. No JavaScript, for the same
+  reason the rail carries none, and keyboard-operable because it is a real
+  control rather than a styled div.
+
+  It lives in THIS include because `nav_footer_custom.html` is just-the-docs'
+  own extension point inside `.side-bar` -- the same seam the harness tabs use,
+  and the reason the v0.12.0 pin stays cheap. Overriding `sidebar.html` to put
+  the control at the top would fork a theme file to move one checkbox.
+{%- endcomment -%}
+<input type="checkbox" class="fa-nav-pin" id="fa-nav-pin">
+<label class="fa-nav-pin-toggle" for="fa-nav-pin">
+  <span class="fa-nav-pin-glyph" aria-hidden="true">&#9776;</span>
+  <span class="fa-nav-pin-text">Keep navigation open</span>
+</label>
+
 {%- assign tiles = site.data.harness.harnesses -%}
 {%- assign instantiated = tiles | where: "instantiated", true -%}
 {%- assign dependencies = tiles | where: "instantiated", false -%}

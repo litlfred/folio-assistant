@@ -277,7 +277,7 @@ describe("probeTodos", () => {
       // empty store — the `dh4f` shape.
       "todos/todos.json": JSON.stringify({
         name: "fixture",
-        directories: [{ id: "elsewhere", path: "elsewhere", graphs: ["todo-items"] }],
+        directories: [{ id: "elsewhere", path: "elsewhere", graphKinds: ["todo-items"] }],
       }),
       "todos/elsewhere/one.md": "---\n$schema: folio-todo/v1\nid: one\nstatus: open\ncreatedAt: 2026-01-01\n---\nbody\n",
       "todos/items/decoy.md": "---\nid: decoy\nstatus: open\n---\n",

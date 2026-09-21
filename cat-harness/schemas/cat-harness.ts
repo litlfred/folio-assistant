@@ -619,7 +619,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   //
   // `kg` remains readable as a deprecated alias — see GRAPH_KIND_ALIASES.
   "cat-harness": {
-    type: termIri("KnowledgeGraph"),
+    // `KGraph` since 2026-09-21, on the owner's naming: Knowledge Graph is
+    // KGraph throughout. This is the EMITTED IRI, so the rename moves the
+    // identity a downstream declaration resolves through — `kg` and
+    // `cat-harness` are two spellings of this one term, and the IRI is what
+    // tells them apart from a third. The namespace is unchanged
+    // (`…/cat-harness/ns#`); only the local name moves.
+    type: termIri("KGraph"),
     renderable: false,
     // Skills, workflows, roles, requirements — the authored instruction bodies
     // and the diagrams they are named from. See the note on `holds`:
@@ -627,7 +633,61 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // few hours on 2026-09-20 it held `memory` nodes, which are `context`
     // (beans `mhh9`, `07xs`).
     holds: "content",
-    summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
+    summary: "The harness layer's own knowledge graph, where a directory holds more than one of its parts.",
+  },
+  // ── THE THREE KINDS SPLIT OUT OF `cat-harness`, 2026-09-21 ─────────────
+  //
+  // One kind was declared by 22 directories and held FOUR branches of the
+  // taxonomy at once — Skills, Workflows, Scenarios and methodologies — so a
+  // consumer filtering on kind could not tell them apart. "Give me the
+  // Workflows" was not a query anybody could write; it could only be
+  // approximated by matching a path, which is exactly the fragility the graph
+  // exists to remove. Owner's decision, 2026-09-21, after the census was put
+  // to them.
+  //
+  // ## `cat-harness` SURVIVES, and is not deprecated
+  //
+  // An alias cannot express a split: `GRAPH_KIND_ALIASES` maps one name to one
+  // name, and `cat-harness` would have to become four. It also had a FIFTH job
+  // the split does not name — on a directory declaring `["schemas",
+  // "cat-harness"]` it means "a schema IS a knowledge-graph node", which is
+  // why `isKgOnlyDirectory` tests for the kind EXACTLY rather than for its
+  // presence. That job is still real, so the umbrella stays and now means what
+  // it always meant on those entries: harness knowledge-graph content whose
+  // directory holds more than one part of it.
+  //
+  // A downstream declaration still saying `["cat-harness"]` therefore keeps
+  // parsing. What it loses is the finer query, which is the thing it never had.
+  skills: {
+    type: termIri("SkillGraph"),
+    renderable: false,
+    // A Skill is a Capability with defined inputs and outputs — an authored
+    // instruction body. It states what can be done, never what was done.
+    holds: "content",
+    summary: "Skill packages — the authored instruction bodies an Actor performs a Task from.",
+  },
+  workflows: {
+    type: termIri("WorkflowGraph"),
+    renderable: false,
+    // The BPMN and DMN are the source of truth and are READ to run a process;
+    // where a running instance GOT TO is `workflow-state`, which is `state`.
+    // Two questions, two graphs — see the `workflow-state` skill for why one
+    // answer rather than two is the whole point.
+    holds: "content",
+    summary: "Executable BPMN processes and the DMN tables their gateways compute from.",
+  },
+  scenarios: {
+    type: termIri("ScenarioGraph"),
+    renderable: false,
+    // Actors, the Roles they take, and the User Stories those Roles serve.
+    //
+    // NAMED FOR WHAT IT WILL HOLD, and one third of that is not declared yet:
+    // a Role carries `useCases` as free-text strings, so a User Story cannot
+    // be pointed at or traced to the Workflow it justifies. Naming the kind
+    // now is what gives that gap somewhere to be fixed; calling it `roles`
+    // would have to be renamed the moment it was.
+    holds: "content",
+    summary: "Actors, the Roles they take on, and the User Stories those Roles serve.",
   },
   // ── Judgement methodologies, one sub-graph each ───────────────────────
   //
@@ -1623,7 +1683,7 @@ export interface GraphNodeDirectory extends KgNodeLabels {
    * `graph: "kg"` here and `kinds: ["bean-defs"]` there, two spellings of one
    * concept.
    */
-  graphs: GraphKind[];
+  graphKinds: GraphKind[];
 }
 
 /**
@@ -1771,12 +1831,12 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * declare, so a new layer adds its card by declaring one rather than by
    * editing a constant in the layer above. See
    * {@link StickyContribution} for why this is a declaration rather than a
-   * code registry — cat-bootstrap holds no TypeScript and may not import the
+   * code registry — bootstrap holds no TypeScript and may not import the
    * layer composed on top of it, so a registry is a seam it cannot reach.
    *
    * Optional, and absent means **this layer contributes none** rather than
    * "unmigrated". That is the honest reading and the useful one: a bare
-   * cat-bootstrap instance with no cat is the owner's ruling, and a default here
+   * bootstrap instance with no cat is the owner's ruling, and a default here
    * would hand one back.
    */
   stickies?: StickyContribution[];
@@ -1867,7 +1927,29 @@ export type DependentMaterialisation = z.infer<typeof DependentMaterialisationSc
  * one, so the shape is still declared once — which is the property
  * `bean-graph.ts` and `todo-graph.ts` were reusing it for.
  */
-export const GraphNodeDirectorySchema = z.object({
+/**
+ * Accept the pre-2026-09-21 spelling `graphs` where `graphKinds` is absent.
+ *
+ * An in-tree declaration is migrated by the same commit that renames the
+ * field; a DOWNSTREAM one is not, and `readDeclaration` throws on a
+ * present-but-unreadable declaration rather than falling back. Without this an
+ * unmigrated folio would stop resolving its own directories — the breakage
+ * `GRAPH_KIND_ALIASES` exists to prevent one layer down, for exactly the same
+ * kind of rename.
+ *
+ * Deliberately NOT a merge: if a declaration carries both, `graphKinds` wins
+ * and the legacy key is ignored, because two spellings that disagree is the
+ * one case where guessing which is current would be worse than either answer.
+ */
+function acceptLegacyGraphsKey(v: unknown): unknown {
+  if (typeof v !== "object" || v === null) return v;
+  const o = v as Record<string, unknown>;
+  if (o.graphKinds !== undefined || o.graphs === undefined) return v;
+  const { graphs, ...rest } = o;
+  return { ...rest, graphKinds: graphs };
+}
+
+const GraphNodeDirectoryShape = z.object({
   id: z.string().min(1),
   path: z.string().min(1),
   ...scopeShape,
@@ -1875,9 +1957,20 @@ export const GraphNodeDirectorySchema = z.object({
   // A closed enum would have to be built at module load, which is before core
   // has registered `folio` — so the enum would reject the one kind the whole
   // rendering pipeline depends on.
-  graphs: z.array(z.string().min(1)).min(1),
+  //
+  // NAMED `graphKinds` SINCE 2026-09-21, AND THE OLD NAME WAS THE CONFLATION.
+  // The field lists KINDS, never graphs: `{ path: "voices/", graphKinds: ["voices"] }`
+  // says the graph here is OF KIND `voices`, but read literally it asserts the
+  // directory IS the voices graph — and `cat-harness` is declared by 22
+  // directories, so twenty-two of them each claimed to be the one cat-harness
+  // graph. That is why `GraphKind` read as redundant beside it: the type was
+  // honest and the data was not.
+  graphKinds: z.array(z.string().min(1)).min(1),
   ...kgNodeLabelShape,
 });
+
+/** The directory schema callers use — legacy `graphs` accepted, `graphKinds` canonical. */
+export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, GraphNodeDirectoryShape);
 
 /**
  * What makes a declared subgraph REACHABLE — and the reasons it may not need
@@ -2040,7 +2133,7 @@ export const SubgraphCoverageSchema = z.object({
    * schema.json like `<base-url>/beans.jsonld`"*.
    *
    * **This is the one obligation with no by-kind exemption, and `hfkl` is why.**
-   * `cat-bootstrap` is excused a visualiser — *"it is exception to
+   * `bootstrap` is excused a visualiser — *"it is exception to
    * harness/layer not having visualtion/workflow visualizer. but it must have
    * its json/jsonld… that is its existence."* The thing it is excused INTO is
    * this. So a directory may be exempt from being LOOKED at and is never
@@ -2077,7 +2170,7 @@ export const SubgraphCoverageSchema = z.object({
 });
 export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 
-export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
+const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
   /**
@@ -2173,6 +2266,9 @@ export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
   theme: z.string().min(1).optional(),
 });
 
+/** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
+export const ContentDirectorySchema = z.preprocess(acceptLegacyGraphsKey, ContentDirectoryShape);
+
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
 // omission. A first draft of PR #351 added one, required on a
 // `translated-content` directory and refused elsewhere. It worked and it was
@@ -2223,7 +2319,7 @@ export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
  *
  * `folio` — the one renderable kind — is registered by CORE, not the harness,
  * and the harness cannot default a directory to a kind it does not know. Any
- * topical directory (`cat-bootstrap/`, `crdm/`, …) is declared, one line each: the
+ * topical directory (`bootstrap/`, `crdm/`, …) is declared, one line each: the
  * platform cannot guess names it has never met, and guessing would re-create
  * the `dh4f` shape for every name it guessed wrong.
  */
@@ -2246,14 +2342,14 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // the rule "every entry carries one" free of an exception nobody would
   // remember — and if either ever loses that scope, the classification it
   // already has is the right one.
-  { id: "tools", path: "tools/", dependents: "skip", graphs: ["tools"] },
-  { id: "schemas", path: "schemas/", dependents: "skip", graphs: ["schemas", "cat-harness"] },
-  { id: "cat-harness", path: "skills/", dependents: "skip", graphs: ["cat-harness"] },
-  { id: "beans", path: "beans/", dependents: "reproduce", graphs: ["beans"] },
-  { id: "todos", path: "todos/", dependents: "reproduce", graphs: ["todos"] },
-  { id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] },
-  { id: "library", path: "library/", dependents: "reproduce", graphs: ["library"] },
-  { id: "voices", path: "voices/", dependents: "reproduce", graphs: ["voices"] },
+  { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
+  { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
+  { id: "cat-harness", path: "skills/", dependents: "skip", graphKinds: ["cat-harness"] },
+  { id: "beans", path: "beans/", dependents: "reproduce", graphKinds: ["beans"] },
+  { id: "todos", path: "todos/", dependents: "reproduce", graphKinds: ["todos"] },
+  { id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
+  { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+  { id: "voices", path: "voices/", dependents: "reproduce", graphKinds: ["voices"] },
 ];
 
 /**
@@ -2531,14 +2627,14 @@ export interface RemoteGraph extends KgNodeLabels {
   /** Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates. */
   url: string;
   /** Which parts of the knowledge graph live there. */
-  graphs: GraphKind[];
+  graphKinds: GraphKind[];
 }
 
 export const RemoteGraphSchema = z
   .object({
     id: z.string().min(1),
     url: z.string().url(),
-    graphs: z.array(z.string().min(1)).min(1),
+    graphKinds: z.array(z.string().min(1)).min(1),
     ...kgNodeLabelShape,
   })
   // STRICT, and that is the point rather than tidiness: without it a stray
@@ -2598,7 +2694,7 @@ export type RenderObligation = (typeof RENDER_OBLIGATIONS)[number];
  *
  * | layer | visualiser | its own `.json` / `.jsonld` |
  * |---|---|---|
- * | `cat-bootstrap` | **exempt** — it is the navbar FOOTER | **required** |
+ * | `bootstrap` | **exempt** — it is the navbar FOOTER | **required** |
  * | `cat-harness` | required | required |
  * | everything above | required | required |
  *
@@ -2612,7 +2708,7 @@ export type RenderObligation = (typeof RENDER_OBLIGATIONS)[number];
  * Because an exemption with no substitute is a hole, and a list of holes with
  * no substitutes is a silence list — which is exactly what `2krx` says an
  * opt-out must not become: *"an opt-out needs a REASON per entry … or it
- * becomes a silence list."* cat-bootstrap does not simply drop out of the
+ * becomes a silence list."* bootstrap does not simply drop out of the
  * requirement; in the owner's words its `.json`/`.jsonld` *"is its
  * existence"*, so it trades a criterion it could fail quietly for one it
  * cannot. `owes` is where that trade is written down, and
@@ -2671,7 +2767,7 @@ export function isExemptFrom(
  * {@link RenderExemption} gives: the shape being guarded is a stack, and a
  * second claimant cannot be seen from the first one's file.
  *
- * **At most one, not exactly one.** A repository that vendors no cat-bootstrap
+ * **At most one, not exactly one.** A repository that vendors no bootstrap
  * has nothing to exempt, and failing it for that would be asking it to declare
  * something to stay green — which is how a declaration stops meaning anything.
  */
@@ -2739,7 +2835,7 @@ export const CatHarnessDeclarationSchema = z.object({
    *
    * ## Why this is declared rather than computed
    *
-   * The layering was real before it was written down — `cat-bootstrap`'s
+   * The layering was real before it was written down — `bootstrap`'s
    * `renderExemption` already argues from it (*"a floor that RISES … it starts
    * at cat-harness, which is obliged because it supplies the layers above with
    * `folio/`"*) — but it lived only in prose, so every consumer that needed the
@@ -2860,7 +2956,7 @@ export function siteDir(_d: Pick<CatHarnessDeclaration, "name" | "stub">): strin
  * The repository root holds what belongs to the REPOSITORY rather than to any
  * instance in it: the CI configuration that builds it, the package manifest
  * and lockfile that install it, `.gitignore`, and the stores that are never
- * overlaid — `beans/`, `todos/`, `fsh-guts/`, `cat-bootstrap/`. That set is closed
+ * overlaid — `beans/`, `todos/`, `fsh-guts/`, `bootstrap/`. That set is closed
  * by a test rather than by this comment; a repository holding two instances
  * has one of each of those and two of everything else, which is the property
  * that decides membership.
@@ -2998,7 +3094,7 @@ export function findInstanceRoot(start: string): string | undefined {
  * `wggr`).
  *
  * **Two gates were each carrying their own literal `["cat-harness",
- * "cat-bootstrap"]` instead** (`check-declared-assets`, `check-instance-render`),
+ * "bootstrap"]` instead** (`check-declared-assets`, `check-instance-render`),
  * and by 2026-09-20 there were FOUR instances: those two, `folio-assist-core`,
  * and the repository root. So both gates reported clean runs over sets that
  * excluded half the subject — `dh4f` again, in the two checks whose whole job
@@ -3073,7 +3169,7 @@ export function instanceRootFor(start: string): string {
  *
  * ## Why a fixed convention rather than a lookup
  *
- * §5 of the cat-bootstrap proposal has the agent obtain exactly ONE reference —
+ * §5 of the bootstrap proposal has the agent obtain exactly ONE reference —
  * `litlfred/f-a-sci` — and read everything else from that instance's own
  * declaration. That answers *which* instance. It does not answer *where in it*
  * the initialization steps are, and without a fixed answer the agent needs
@@ -3083,22 +3179,22 @@ export function instanceRootFor(start: string): string {
  * So every cat-harness instance, and every instance that depends on one,
  * publishes them at the SAME place. CatBootstrap then needs no special case per
  * target: `f-a-sci`, `smart-base` and a specialised harness nobody has written
- * yet are all read the same way. That is what lets cat-bootstrap initialise into a
+ * yet are all read the same way. That is what lets bootstrap initialise into a
  * *specialised* kind rather than only into the one it was written against.
  *
  * ## Composed, never spelled
  *
- * Built from {@link siteDir} rather than written as `docs/cat-bootstrap/...`,
+ * Built from {@link siteDir} rather than written as `docs/bootstrap/...`,
  * because the stub pattern INVERTED on 2026-09-19 — `docs/<stub>` became
  * `<stub>/docs` (bean `wggr`) — and every literal spelling of the old layout
  * had to be found and changed. A convention composed from the one function
  * that knows the site root survives the next relocation; a literal does not.
  */
-export const CAT_BOOTSTRAP_INIT_DOC = "cat-bootstrap/initialization.md";
+export const CAT_BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
 
 /**
  * The path to an instance's initialization instructions, relative to that
- * INSTANCE's root — `docs/cat-bootstrap/initialization.md`.
+ * INSTANCE's root — `docs/bootstrap/initialization.md`.
  *
  * THE one answer, so the README that tells an agent where to look and the
  * check that verifies the file is there cannot disagree about the spelling.
@@ -3111,7 +3207,7 @@ export const CAT_BOOTSTRAP_INIT_DOC = "cat-bootstrap/initialization.md";
  * directory of its own and the stub level inside it would repeat the name.
  *
  * So the suffix is IDENTICAL for every instance, which is a stronger version
- * of the property cat-bootstrap relies on than "differs only by site root".
+ * of the property bootstrap relies on than "differs only by site root".
  *
  * ## The open half, stated rather than papered over
  *
@@ -3125,7 +3221,7 @@ export const CAT_BOOTSTRAP_INIT_DOC = "cat-bootstrap/initialization.md";
  * Resolving it by scanning the top level for a `harness.json` is the
  * declaration-driven answer and is what {@link findInstanceRoot} already does
  * in the other direction, but it is NOT implemented and is not assumed here.
- * Recorded on bean `wggr`; until then cat-bootstrap can compose this suffix and
+ * Recorded on bean `wggr`; until then bootstrap can compose this suffix and
  * still needs told which directory to hang it off.
  */
 export function initializationDoc(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
@@ -3245,7 +3341,7 @@ export function publishedAssetPath(root: string, src: string): string {
  * "this page is broken" rather than "you cannot do this".
  *
  * `declaredIn` is repo-relative and comes from the SUBJECT itself, so a card
- * contributed by `cat-bootstrap` links to `cat-bootstrap/harness.json` rather
+ * contributed by `bootstrap` links to `bootstrap/harness.json` rather
  * than to whichever declaration happened to be read first — and a todo links
  * to its own file.
  *
@@ -3381,7 +3477,7 @@ export function isPublishedGraphKind(name: string): boolean {
  *
  * ## Bootstrap is exempt by INSTANCE, not by kind
  *
- * `hfkl` carries the owner's ruling that `cat-bootstrap` has no visualiser
+ * `hfkl` carries the owner's ruling that `bootstrap` has no visualiser
  * *"but it must have its json/jsonld... that is its existence"*. That
  * exemption lives in the checker as `VISUALISER_EXEMPT_INSTANCES`, keyed on
  * the instance name, so every other instance declaring the same kind keeps
@@ -3460,8 +3556,8 @@ export function isPublishedSchemaModule(modulePath: string): boolean {
  * part of the graph, so an "all" test would publish a directory that holds
  * both `kg` and `fsh-guts`, naming the trashcan's path in the process.
  */
-export function isPublishedDirectory(d: { graphs?: readonly string[] }): boolean {
-  return (d.graphs ?? []).every(isPublishedGraphKind);
+export function isPublishedDirectory(d: { graphKinds?: readonly string[] }): boolean {
+  return (d.graphKinds ?? []).every(isPublishedGraphKind);
 }
 
 /**
@@ -3639,7 +3735,7 @@ export function readDeclaration(
   // vocabulary is open: the set of valid kinds is whatever has been registered
   // by the time the declaration is read, not what existed at module load.
   for (const dir of parsed.data.directories) {
-    for (const g of dir.graphs) {
+    for (const g of dir.graphKinds) {
       if (!registry.has(g)) {
         throw new Error(
           `${p}: directory "${dir.id}" declares unknown graph kind "${g}". ` +
@@ -3705,13 +3801,13 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
       // type stays a string, several become a list. A type the registry does
       // not know is DROPPED rather than guessed — recovering the wrong kind is
       // worse than recovering none, because the reader has no way to tell.
-      if (e.graphs === undefined && e["@type"] !== undefined) {
+      if (e.graphKinds === undefined && e["@type"] !== undefined) {
         const types = Array.isArray(e["@type"]) ? e["@type"] : [e["@type"]];
         const kinds = types
           .filter((t): t is string => typeof t === "string")
           .map((t) => registry.forType(t))
           .filter((k): k is string => k !== undefined);
-        if (kinds.length > 0) e.graphs = kinds;
+        if (kinds.length > 0) e.graphKinds = kinds;
       }
       delete e["@type"];
       if (typeof e["@id"] === "string" && e.id === undefined) e.id = (e["@id"] as string).replace(/^#/, "");
@@ -4024,7 +4120,7 @@ export interface AssetRoleDef {
  * entitled to a file that answers only theirs.
  *
  * Absent from this map means the role is one this layer does not govern —
- * `cat-bootstrap-initialization` is cat-bootstrap's, and a purpose invented
+ * `bootstrap-initialization` is bootstrap's, and a purpose invented
  * for it here would be the platform speaking for a layer it does not own.
  */
 export const ASSET_ROLES: Readonly<Record<string, AssetRoleDef>> = {
@@ -4195,7 +4291,7 @@ export function workPlanGraphsIn(
     }
     if (decl === undefined) continue;
     const kinds = [
-      ...new Set((decl.directories ?? []).flatMap((d) => d.graphs ?? [])),
+      ...new Set((decl.directories ?? []).flatMap((d) => d.graphKinds ?? [])),
     ].filter((k) => registry.get(k)?.recordsWork === true);
     if (kinds.length > 0) plan.push({ instance: decl.name ?? root, kinds: kinds.sort() });
   }
@@ -4295,9 +4391,39 @@ export function declaredAssets(
 export const KG_GRAPH_KIND = "cat-harness";
 
 /**
+ * The kinds whose directories hold SKILL BODIES, and may be scanned for them.
+ *
+ * `cat-harness` is here because a downstream declaration that has not migrated
+ * still spells a skill directory that way, and dropping it would make every
+ * unmigrated instance's skills unreachable rather than merely unclassified.
+ *
+ * `workflows` and `scenarios` are NOT here, and that is the split doing its
+ * job: `skills/workflows/` holds 51 `.bpmn` files and `skills/roles/` holds one
+ * `roles.json`, so neither ever contributed a skill body — they were scanned
+ * only because they sat inside a directory that did.
+ */
+export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_KIND];
+
+/**
+ * Every kind that IS harness knowledge-graph content — the umbrella and the
+ * three kinds split out of it.
+ *
+ * Distinct from {@link SKILL_BEARING_GRAPH_KINDS}, and the difference is the
+ * whole point of the split: a consumer asking "is this the KGraph?" wants all
+ * four, while one asking "may I scan this for skill bodies?" wants two. One
+ * list serving both questions is what made `cat-harness` ambiguous.
+ */
+export const KG_CONTENT_GRAPH_KINDS: readonly string[] = [
+  KG_GRAPH_KIND,
+  "skills",
+  "workflows",
+  "scenarios",
+];
+
+/**
  * Does this directory hold ONLY the knowledge graph?
  *
- * **Exactly `cat-harness`, not merely including it.** `schemas/` declares
+ * **Exactly one skill-bearing kind, not merely including one.** `schemas/` declares
  * `["schemas", "cat-harness"]` — a schema IS a knowledge-graph node, which is
  * why it carries the kind at all — but its `.md` files are READMEs and its
  * nodes are `.ts`. Measured 2026-09-19: including it added `schemas/README.md`
@@ -4310,7 +4436,31 @@ export const KG_GRAPH_KIND = "cat-harness";
  * scanned for it; one holding several has to say which file is which.
  */
 export function isKgOnlyDirectory(d: ContentDirectory): boolean {
-  return d.graphs.length === 1 && d.graphs[0] === KG_GRAPH_KIND;
+  return d.graphKinds.length === 1 && SKILL_BEARING_GRAPH_KINDS.includes(d.graphKinds[0]!);
+}
+
+/**
+ * Does this directory hold ONLY harness knowledge-graph content, of any of its
+ * kinds?
+ *
+ * **Wider than {@link isKgOnlyDirectory}, and the two must not be merged.**
+ * This one answers "is there a KGraph node in here at all" — which is what a
+ * consumer looking for roles, BPMN or requirements needs. The narrow one
+ * answers "may I read every `.md` in here as a Skill body", which is false for
+ * `workflows/` (51 `.bpmn`) and `scenarios/` (one `roles.json`).
+ *
+ * Before the 2026-09-21 split those directories declared `["cat-harness"]` and
+ * so satisfied BOTH questions by accident. Restoring their reachability is
+ * what this function is for: without it the split would have silently removed
+ * every `bootstrap` process from the exported graph, which is precisely
+ * the `dh4f` shape — a consumer reporting a clean run over what it never
+ * visited.
+ *
+ * `schemas/` is excluded by the same `length === 1` test and for the same
+ * measured reason given on the narrow one.
+ */
+export function isKgContentDirectory(d: ContentDirectory): boolean {
+  return d.graphKinds.length === 1 && KG_CONTENT_GRAPH_KINDS.includes(d.graphKinds[0]!);
 }
 
 /**
@@ -4412,13 +4562,13 @@ export function ownDirectories(
       // here") false from the day this was written.
       //
       // The consequence was silent and it was `dh4f`. `cat-harness/harness.json`
-      // declares `cat-bootstrap/skills/` at `scope: "repository"`; resolving it
-      // against the INSTANCE gave `cat-harness/cat-bootstrap/skills`, which is not
+      // declares `bootstrap/skills/` at `scope: "repository"`; resolving it
+      // against the INSTANCE gave `cat-harness/bootstrap/skills`, which is not
       // there, and `resolveSkillDirs` drops a directory that does not exist.
-      // So `skill_fetch` answered "package not found" for every cat-bootstrap
+      // So `skill_fetch` answered "package not found" for every bootstrap
       // skill while the declaration naming them was correct and present, and
       // nothing reported a problem: a clean pass over an empty set. Eight
-      // entries here carry `scope: "repository"`; `cat-bootstrap` is the one that
+      // entries here carry `scope: "repository"`; `bootstrap` is the one that
       // was harmed, because it is the only kg-only one among them.
       absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
       own: link.own === true,
@@ -4650,7 +4800,7 @@ export function renderableDirectories(
 ): ResolvedDirectory[] {
   // Renderable if ANY declared graph is: a directory holding a folio plus
   // something else still renders.
-  return dirs.filter((d) => d.graphs.some((g) => isRenderable(g, registry)));
+  return dirs.filter((d) => d.graphKinds.some((g) => isRenderable(g, registry)));
 }
 
 /**
@@ -4684,7 +4834,7 @@ export function renderableDirectories(
  * ## Ambiguity REFUSES rather than picking, and that is the point
  *
  * A graph declared by two directories is legal — `cat-harness` is declared by
- * four (`schemas/`, `skills/`, `cat-bootstrap/skills/`, `src/skills/`) and
+ * four (`schemas/`, `skills/`, `bootstrap/skills/`, `src/skills/`) and
  * `methodology` by two. This used to return the FIRST of them, under a comment
  * saying it was "the accessor for the single-home case". That precondition was
  * stated and enforced by nothing, which is this repository's own rule broken
@@ -4751,7 +4901,7 @@ function matchingDirectories(
   registry: GraphKindRegistry,
 ): ResolvedDirectory[] {
   return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
-    d.graphs.includes(graph as GraphKind),
+    d.graphKinds.includes(graph as GraphKind),
   );
 }
 
@@ -5029,7 +5179,7 @@ export function instanceDirectoryForGraph(
  */
 export interface DeclaredGraph extends KgNodeLabels {
   id: string;
-  graphs: GraphKind[];
+  graphKinds: GraphKind[];
   declaredBy: string;
   /** Set iff the graph is HERE. */
   absPath?: string;
@@ -5108,7 +5258,7 @@ export function toJsonLd(
         }
       : {}),
     directories: decl.directories.map((d) => {
-      const types = d.graphs.map((g) => registry.get(g)?.type ?? termIri("UnknownGraph"));
+      const types = d.graphKinds.map((g) => registry.get(g)?.type ?? termIri("UnknownGraph"));
       return {
         "@id": `#${d.id}`,
         // One type stays a string, several become a list — JSON-LD permits
@@ -5140,13 +5290,13 @@ export function toJsonLd(
  *
  * Moved here from `scripts/check-instance-render.ts` (bean `3jj9`) so the two
  * exporters can read one fact. `kg-export` needs it to stop emitting every
- * kind any layer defines into every instance's graph: `cat-bootstrap` published
+ * kind any layer defines into every instance's graph: `bootstrap` published
  * 16 GraphKind nodes while declaring exactly one. The render check already
  * imports `kg-export`, so importing back would have been a cycle — and a
  * declaration's own contents belong beside the declaration reader anyway.
  *
  * Follows NESTED declarations, which is the part a plain read of
- * `directories[].graphs` misses: `beans/beans.json` is what says `bean-defs`
+ * `directories[].graphKinds` misses: `beans/beans.json` is what says `bean-defs`
  * and `workflow-state` exist, and an instance that owns them would otherwise
  * be reported as not owning them.
  */
@@ -5157,7 +5307,7 @@ export function declaredKinds(
 ): Set<string> {
   const kinds = new Set<string>();
   for (const d of decl.directories ?? []) {
-    for (const g of d.graphs ?? []) kinds.add(g);
+    for (const g of d.graphKinds ?? []) kinds.add(g);
     // The nested declaration, if the directory carries one — how `beans/` says
     // what its inner nodes are without `harness.json` restating them.
     //
@@ -5175,7 +5325,7 @@ export function declaredKinds(
     // whose kind declares no filename is unmigrated, not broken, and an
     // instance that never relocates behaves exactly as before.
     const dirName = basename(d.path.replace(/\/+$/, ""));
-    const declared = (d.graphs ?? [])
+    const declared = (d.graphKinds ?? [])
       .map((g) => registry.get(g)?.declarationFile)
       .filter((f): f is string => typeof f === "string");
     for (const candidate of [...declared, `${dirName}.json`, "graph.json"]) {
@@ -5183,10 +5333,10 @@ export function declaredKinds(
       if (!existsSync(p)) continue;
       try {
         const nested = JSON.parse(readFileSync(p, "utf-8")) as {
-          directories?: Array<{ graphs?: string[]; kinds?: string[] }>;
+          directories?: Array<{ graphKinds?: string[]; kinds?: string[] }>;
         };
         for (const nd of nested.directories ?? []) {
-          for (const g of [...(nd.graphs ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
+          for (const g of [...(nd.graphKinds ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
         }
       } catch {
         // A nested file that will not parse is not this check's finding to

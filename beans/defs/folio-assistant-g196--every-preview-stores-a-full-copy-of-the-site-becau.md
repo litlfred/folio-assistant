@@ -105,7 +105,7 @@ having; it is not worth buying with identity. This was the owner's correction to
 `xxku`'s first proposal and it is the constraint on this bean.
 
 Also already safe: `@context` prefixes are absolute and slug-free
-(`https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#`), so the vocabulary
+(`https://litlfred.github.io/folio-assistant/bootstrap/ns#`), so the vocabulary
 namespace was never at risk.
 
 ## Not doing without the owner deciding

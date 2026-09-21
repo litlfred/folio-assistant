@@ -257,8 +257,8 @@ Three statements, and only the second answers the question that was asked:
 
 It is not a loose phrase. `scope: "repository"` means a declared path resolves
 against the REPOSITORY root rather than the declaring instance's
-(`cat-harness.ts:2347`), and `cat-bootstrap` already declares
-`cat-bootstrap/skills/` that way. So *"a `docs/` dir in repo root managed by
+(`cat-harness.ts:2347`), and `bootstrap` already declares
+`bootstrap/skills/` that way. So *"a `docs/` dir in repo root managed by
 cat-harness"* reads directly as: **cat-harness declares it, repository-scoped.**
 
 ### But it CANNOT be the existing `docs` entry, and that is measured

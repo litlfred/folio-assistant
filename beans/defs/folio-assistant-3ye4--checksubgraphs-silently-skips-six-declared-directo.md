@@ -78,7 +78,7 @@ left the count at zero would have attributed nothing and looked identical
 from outside. The earlier "0 dangling" was a statement about six directories
 the sweep never read.
 
-The 26 split as 19 `fsh-guts`, 6 `beans`, 1 `cat-bootstrap`.
+The 26 split as 19 `fsh-guts`, 6 `beans`, 1 `bootstrap`.
 
 ### `fsh-guts` is now exempt BY DECLARATION
 
@@ -96,7 +96,7 @@ readable rather than inferred.
 
 Every target existed. Six in `beans/` were pre-split (`../../skills/…` from
 `beans/defs/`, which resolves to `beans/skills/`) or wrong-depth from
-`beans/defs/archive/`; one in `cat-bootstrap` wanted `../AGENTS.md` and asked
+`beans/defs/archive/`; one in `bootstrap` wanted `../AGENTS.md` and asked
 for `AGENTS.md`. All repointed, each target asserted to exist before writing.
 
 ### The trap the bean named in advance, checked

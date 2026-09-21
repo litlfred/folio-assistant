@@ -69,7 +69,7 @@ const DECL = `{
       "id": "schemas",
       "path": "schemas/",
       "dependents": "skip",
-      "graphs": [
+      "graphKinds": [
         "schemas",
         "cat-harness"
       ]
@@ -263,14 +263,32 @@ describe("a malformed sticky is repaired, not fatal", () => {
     expect(readFileSync(path, "utf8")).toContain('"name": "a-folio"');
   });
 
+  /** A declaration carrying a folio entry at `path`, spelled with `key`. */
+  function withFolioAt(path: string, key: "graphKinds" | "graphs"): string {
+    return DECL.replace(
+      '"directories": [',
+      `"directories": [\n    {\n      "id": "content",\n      "path": "${path}",\n      "dependents": "reproduce",\n      "${key}": [\n        "folio"\n      ]\n    },`,
+    );
+  }
+
   test("a declaration that already declares a folio elsewhere is respected", () => {
     // Matched on the GRAPH KIND, not on id or path: an instance may keep its
     // folio anywhere and call the entry what it likes.
-    const custom = DECL.replace(
-      '"directories": [',
-      '"directories": [\n    {\n      "id": "content",\n      "path": "authored/",\n      "dependents": "reproduce",\n      "graphs": [\n        "folio"\n      ]\n    },',
-    );
-    const root = instance(custom);
+    const root = instance(withFolioAt("authored/", "graphKinds"));
+    mkdirSync(join(root, "authored"), { recursive: true });
+    const report = ensureLandingSticky(root, "2026-09-20T00:00:00Z");
+    expect(report.declaredFolio).toBe("already");
+    expect(report.folioDir).toBe("authored/");
+  });
+
+  test("...including one still spelling the field the pre-2026-09-21 way", () => {
+    // NOT a duplicate of the test above, and the difference is the whole point:
+    // this module SPLICES TEXT, so it parses the declaration itself and
+    // `ContentDirectorySchema`'s legacy-key preprocess never runs. Were the
+    // alias not restated in `kindsOf`, a downstream folio spelling the field
+    // `graphs` would read as declaring no folio — and `ensureLandingSticky`
+    // would splice a SECOND folio entry into a declaration that has one.
+    const root = instance(withFolioAt("authored/", "graphs"));
     mkdirSync(join(root, "authored"), { recursive: true });
     const report = ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     expect(report.declaredFolio).toBe("already");
@@ -279,7 +297,7 @@ describe("a malformed sticky is repaired, not fatal", () => {
 });
 
 describe("a nested instance contributes its own stickies", () => {
-  /** An instance declaring a directory that is itself an instance — cat-bootstrap's shape. */
+  /** An instance declaring a directory that is itself an instance — bootstrap's shape. */
   function nested(): string {
     const root = mkdtempSync(join(tmpdir(), "landing-nested-"));
     writeDeclaration(root, JSON.stringify(
@@ -292,9 +310,9 @@ describe("a nested instance contributes its own stickies", () => {
           // Mirrors the live shape rather than a convenient one: the declared
           // entry is the nested instance's GRAPH directory, one level inside it,
           // so `harness.json` is not in the directory named here. That is what
-          // `cat-bootstrap/skills/` looks like, and a composer that looked for a
+          // `bootstrap/skills/` looks like, and a composer that looked for a
           // declaration inside the declared directory would find nothing.
-          directories: [{ id: "inner", path: "inner/skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
+          directories: [{ id: "inner", path: "inner/skills/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
         },
         null,
         2,
@@ -317,7 +335,7 @@ describe("a nested instance contributes its own stickies", () => {
   }
 
   test("the nested instance is DISCOVERED, not named by the outer one", () => {
-    // Hardcoding `cat-bootstrap/` in the composer would put the layer list back in
+    // Hardcoding `bootstrap/` in the composer would put the layer list back in
     // the layer above — the ownership inversion this change undoes — and would go
     // stale the moment the split happens. What marks an instance is that it
     // declares itself.
@@ -331,7 +349,7 @@ describe("a nested instance contributes its own stickies", () => {
     // stickies would collide with themselves.
     const root = mkdtempSync(join(tmpdir(), "landing-plain-"));
     writeDeclaration(root, JSON.stringify(
-        { name: "only", directories: [{ id: "s", path: "sub/", dependents: "reproduce", graphs: ["cat-harness"] }] },
+        { name: "only", directories: [{ id: "s", path: "sub/", dependents: "reproduce", graphKinds: ["cat-harness"] }] },
         null,
         2,
       ));
@@ -377,7 +395,7 @@ describe("a nested instance contributes its own stickies", () => {
 
   test("an instance contributing NO stickies gets an empty board, not a default one", () => {
     // Absent means "this layer contributes none" rather than "unmigrated". A
-    // default here would hand a cat back to a bare cat-bootstrap.
+    // default here would hand a cat back to a bare bootstrap.
     const root = mkdtempSync(join(tmpdir(), "landing-none-"));
     writeDeclaration(root, JSON.stringify({ name: "quiet", description: "no cards", directories: [] }, null, 2));
     expect(declaredContributions(root)).toEqual([]);

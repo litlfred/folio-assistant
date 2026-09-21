@@ -28,7 +28,7 @@ function instance(name: string, kgPath: string): string {
   mkdirSync(join(root, kgPath), { recursive: true });
   writeDeclaration(root, JSON.stringify({
       name,
-      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphKinds: ["cat-harness"] }],
     }));
   return root;
 }
@@ -97,7 +97,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
     roots.push(root);
     writeDeclaration(root, JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "nope", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "nope", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     expect(resolveSkillDirs(root)).toEqual([]);
   });
@@ -134,7 +134,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
     mkdirSync(join(root, "schemas"), { recursive: true });
     writeDeclaration(root, JSON.stringify({
         name: "mixed",
-        directories: [{ id: "schemas", path: "schemas", dependents: "reproduce", graphs: ["schemas", "cat-harness"] }],
+        directories: [{ id: "schemas", path: "schemas", dependents: "reproduce", graphKinds: ["schemas", "cat-harness"] }],
       }));
     expect(resolveSkillDirs(root)).toEqual([]);
   });
@@ -143,7 +143,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
 describe("a REPOSITORY-scoped directory resolves against the repository", () => {
   /**
    * An instance nested one level inside a checkout, declaring a kg directory
-   * that lives BESIDE it rather than inside it — the `cat-bootstrap/skills/` shape,
+   * that lives BESIDE it rather than inside it — the `bootstrap/skills/` shape,
    * as a fixture, because the real tree has exactly one instance of it and an
    * assertion against the real tree would pin today's layout rather than the
    * rule.
@@ -156,7 +156,7 @@ describe("a REPOSITORY-scoped directory resolves against the repository", () => 
     mkdirSync(inst, { recursive: true });
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
-        directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"], ...(scope ? { scope } : {}) }],
+        directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphKinds: ["cat-harness"], ...(scope ? { scope } : {}) }],
       }));
     return { repo, inst };
   }
@@ -168,7 +168,7 @@ describe("a REPOSITORY-scoped directory resolves against the repository", () => 
     // that is not there. Nothing threw: `resolveSkillDirs` existence-filters,
     // so the graph was dropped and the run reported clean over it. That is
     // `dh4f`, and in the real tree it is why `skill_fetch` answered "package
-    // not found" for every skill in `cat-bootstrap/skills/` while the declaration
+    // not found" for every skill in `bootstrap/skills/` while the declaration
     // naming them was present and correct.
     const { repo, inst } = nested("sibling", "repository");
     const dirs = ownDirectories({ name: "inst", root: inst, own: true });

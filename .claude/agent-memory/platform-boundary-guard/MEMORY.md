@@ -87,10 +87,10 @@ A full replace does NOT preserve it: `CARRIED_PREFIXES` in
 as the previews. Add a prefix there, never a third code path. Skill:
 [`folio-core/render-logging.md`](../cat-harness/skills/folio-core/render-logging.md).
 
-## STABLE — top level = cat-bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
+## STABLE — top level = bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
 
 Owner, 2026-09-20: the top level is *"the contents of repos"* except
-`cat-bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
+`bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
 of cat-harness. keep it here (like beans and todos/) as this instance's own
 working memory."*
 
@@ -102,7 +102,7 @@ consequence.
 
 **Tooling and store separate.** All three kinds are introduced by cat-harness;
 the stores stay top-level. So "beans is a cat-harness concept" and "`beans/` is
-not inside `cat-harness/`" are both true. `cat-bootstrap/` introduces none — it is
+not inside `cat-harness/`" are both true. `bootstrap/` introduces none — it is
 read before any harness resolves. `scope: "repository"` means exactly these four.
 
 ## STABLE — there is no `recommendation` block kind

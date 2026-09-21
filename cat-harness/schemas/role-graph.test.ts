@@ -94,7 +94,7 @@ describe("readRoleGraph", () => {
     //
     // It is not hypothetical. `role-model.md` said to write a `summary` —
     // not a field, since `title`/`description` are the two labels every kg
-    // node carries — and PR #453 gave all three cat-bootstrap roles one.
+    // node carries — and PR #453 gave all three bootstrap roles one.
     const root = withKg({
       name: "t",
       roles: [{ ...ROLE_A, summary: "a field that does not exist" }],
@@ -107,7 +107,7 @@ describe("readRoleGraph", () => {
     // What makes `.strict()` affordable: there is a spelling for a key MEANT
     // not to be read. The convention is established rather than invented for
     // this test — `_comment` in this graph, `_comment`/`_title` in
-    // harness.json, `_lanes_comment` in cat-bootstrap's graph.
+    // harness.json, `_lanes_comment` in bootstrap's graph.
     const root = withKg({
       _comment: "why this graph exists",
       _lanes_comment: "why no lanes",

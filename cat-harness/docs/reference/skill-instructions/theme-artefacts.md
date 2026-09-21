@@ -71,7 +71,7 @@ Measured off a 5–10% grid overlay of each card, as fractions `x y w h`:
 |---|---|
 | `landing-card` (grumpy-cat) | 0.00 0.46 0.50 0.50 |
 | `landing-library-card` | 0.14 0.40 0.42 0.42 |
-| `landing-cat-bootstrap-card` | 0.27 0.615 0.24 0.24 |
+| `landing-bootstrap-card` | 0.27 0.615 0.24 0.24 |
 | `landing-operations-card` | 0.17 0.475 0.27 0.27 |
 | `landing-engineer-card` | 0.00 0.40 0.46 0.46 |
 | `landing-analyst-card` | 0.05 0.48 0.36 0.36 |

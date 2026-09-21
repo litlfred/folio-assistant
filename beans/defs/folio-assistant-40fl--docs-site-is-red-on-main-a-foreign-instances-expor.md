@@ -16,7 +16,7 @@ parent: folio-assistant-vke6
 `kg-export` multi-instance and added a second export step:
 
 ```
-bun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out "./_site/cat-bootstrap.jsonld"
+bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "./_site/bootstrap.jsonld"
 ```
 
 That step exits 1:
@@ -30,12 +30,12 @@ That step exits 1:
 ## Why
 
 `exportIdentity` reads `canonicalUrl` off **the instance being exported**.
-`cat-bootstrap` declares none, *deliberately* — its own declaration says at
+`bootstrap` declares none, *deliberately* — its own declaration says at
 length that it has no site, and that "this instance's canonicalUrl is
-cat-harness's site, not cat-bootstrap's".
+cat-harness's site, not bootstrap's".
 
 But its graph **is** published, into this site, at
-`<base>/cat-bootstrap.jsonld`, by the very step that was failing. So
+`<base>/bootstrap.jsonld`, by the very step that was failing. So
 *"the exported instance declares no base"* was never the same question as
 *"this document has no base"*.
 
@@ -46,7 +46,7 @@ instances this parameter exists for". It was not applied to `canonicalUrl`.
 
 ## The test that stayed green through the outage
 
-`publishedPaths()` in `kg-export.test.ts` lists `cat-bootstrap.jsonld` as a
+`publishedPaths()` in `kg-export.test.ts` lists `bootstrap.jsonld` as a
 path the deploy writes, with a comment saying that if the step goes, "this line
 makes it a test failure rather than a 404 nobody sees". It did not fire: **a
 path the workflow names is not a step that succeeds.** Nothing asserted
@@ -62,7 +62,7 @@ in here* — and it went unnoticed for two hours across four merges.
 - [x] The diagnostic names the file it actually read, not the excised
       `harness.json`
 - [x] A test asserts an absolute `@id` for **every** declared instance, derived
-      rather than listing `cat-bootstrap`
+      rather than listing `bootstrap`
 - [x] A test asserts `problems == []` for a foreign export
 - [x] Both falsified by planting the old behaviour
 - [x] `docs-site` green on `main` — **observed**, run dispatched against `2d20850562`;
@@ -83,7 +83,7 @@ and names the file it actually read.
 Two tests, both falsified by planting the old behaviour (45 pass / 2 fail):
 
 - an absolute `@id` for **every** declared instance, derived over
-  `instanceRootsIn` rather than listing `cat-bootstrap`, and refusing an empty
+  `instanceRootsIn` rather than listing `bootstrap`, and refusing an empty
   instance list rather than passing vacuously;
 - `problems == []` for a foreign export — the assertion that was missing, and
   the reason `publishedPaths()` stayed green for two hours while the site was
@@ -95,6 +95,6 @@ Verified on the merged tree (main was 6 commits ahead, including #709):
 
 ## Not this bean
 
-Whether `cat-bootstrap` should declare a `canonicalUrl` of its own. It should
+Whether `bootstrap` should declare a `canonicalUrl` of its own. It should
 not — it has no site — and the fallback is what makes that stay true without
 breaking the publish.

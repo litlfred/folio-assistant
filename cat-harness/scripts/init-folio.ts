@@ -181,7 +181,7 @@ function instanceDeclaration(o: InitFolioOptions): string {
           // read it from in a repository that does not exist yet.
           path: "folio/",
           dependents: "reproduce",
-          graphs: ["folio"],
+          graphKinds: ["folio"],
           description: `The content of ${o.title} — its document, chapters and blocks.`,
         },
       ],

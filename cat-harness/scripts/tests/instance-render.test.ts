@@ -84,13 +84,13 @@ describe("declared means TRANSITIVELY declared", () => {
     // Measured before this was written: that mistake gives cat-harness five
     // undeclared kinds where the true figure is one.
     const root = instance(
-      { name: "n", directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }] },
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }] },
       {
         "beans/beans.json": JSON.stringify({
           name: "beans",
           directories: [
-            { id: "defs", path: "defs", graphs: ["bean-defs"] },
-            { id: "workflows", path: "workflows", graphs: ["workflow-state"] },
+            { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
+            { id: "workflows", path: "workflows", graphKinds: ["workflow-state"] },
           ],
         }),
       },
@@ -101,7 +101,7 @@ describe("declared means TRANSITIVELY declared", () => {
 
   test("`kinds` is read as well as `graphs` — the bean graph uses both spellings", () => {
     const root = instance(
-      { name: "n", directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }] },
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }] },
       {
         "beans/beans.json": JSON.stringify({
           name: "beans",
@@ -117,7 +117,7 @@ describe("declared means TRANSITIVELY declared", () => {
     // Understating `declared` would invent a finding. That file's problem is
     // `check:harness-dirs`'s to report, and it does so loudly.
     const root = instance(
-      { name: "n", directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }] },
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }] },
       { "beans/beans.json": "{ not json" },
     );
     const kinds = declaredKinds(root, JSON.parse(readFileSync(declarationPathIn(root)!, "utf-8")));
@@ -151,8 +151,8 @@ describe("this repository's own instances", () => {
     expect(found).toEqual([
       "folio-assistant",
       "agent-skills",
-      "cat-bootstrap",
-      "cat-bootstrap-tools",
+      "bootstrap",
+      "bootstrap-tools",
       "cat-harness",
       "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
@@ -169,6 +169,12 @@ describe("this repository's own instances", () => {
       // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
       // that is correct — it declares no `harness.json`, so it is a directory
       // rather than an instance.
+      // Added 2026-09-21 with the second ingested IG (bean qrnz). PROVISIONAL:
+      // the owner has since ruled that a per-IG harness should not exist at all
+      // (bean nsbb), so this entry and `smart-trust` below are both expected to
+      // collapse into a `smart-base` instance. It is listed because it EXISTS
+      // today, which is the only thing this assertion is about.
+      "smart-immunizations",
       "smart-trust",
       "who-iris",
       "who-style-guide",

@@ -26,7 +26,7 @@ describe("publishedInstances", () => {
     // fixtures is a regex proven against its own author's idea of the file.
     const found = publishedInstances(readFileSync(wf("docs-site.yml"), "utf-8"), "docs-site.yml");
     expect(found.length).toBeGreaterThan(0);
-    expect(found.map((i) => i.instance)).toContain("./cat-bootstrap");
+    expect(found.map((i) => i.instance)).toContain("./bootstrap");
   });
 
   test("finds it in the STAGING workflow too — the file `3jhq` showed was missed", () => {
@@ -35,10 +35,10 @@ describe("publishedInstances", () => {
     // Asserted against the real file: a staged preview that stops publishing
     // it should fail here rather than 404 for a reviewer.
     const found = publishedInstances(readFileSync(wf("feature-staging.yml"), "utf-8"), "feature-staging.yml");
-    expect(found.map((i) => i.instance)).toContain("./cat-bootstrap");
+    expect(found.map((i) => i.instance)).toContain("./bootstrap");
     // ...and it is the one that passes a base, which the report must not
     // present as the same evidence as a base-less run.
-    expect(found.find((i) => i.instance === "./cat-bootstrap")?.standInBase).toBe(true);
+    expect(found.find((i) => i.instance === "./bootstrap")?.standInBase).toBe(true);
   });
 
   test("reads every invocation, in the order the workflow runs them", () => {
@@ -67,10 +67,10 @@ describe("publishedInstances", () => {
   });
 
   test("a DIFFERENT script taking --instance is not this export", () => {
-    // `gen-cat-bootstrap-graph.ts` is a real neighbour in both workflows.
+    // `gen-bootstrap-graph.ts` is a real neighbour in both workflows.
     // Running it here would report failures that say nothing about the
     // published graph, which is how a gate earns the habit of being ignored.
-    expect(publishedInstances("bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --instance ./cat-bootstrap", "w.yml")).toEqual([]);
+    expect(publishedInstances("bun run cat-harness/scripts/gen-bootstrap-graph.ts --instance ./bootstrap", "w.yml")).toEqual([]);
   });
 
   test("this instance's own export carries no --instance and is not counted", () => {
@@ -101,8 +101,8 @@ describe("formatReport", () => {
     // A sweep blind on one file has not cleared the others, and the report
     // must not let a row of ticks read as coverage.
     const out = formatReport({
-      invocations: [inv("docs-site.yml", "./cat-bootstrap")],
-      results: [{ ...inv("docs-site.yml", "./cat-bootstrap"), ok: true, nodes: 85 }],
+      invocations: [inv("docs-site.yml", "./bootstrap")],
+      results: [{ ...inv("docs-site.yml", "./bootstrap"), ok: true, nodes: 85 }],
       unreadable: "feature-staging.yml: EACCES",
       workflowsRead: 38,
     });
@@ -113,22 +113,22 @@ describe("formatReport", () => {
 
   test("each row names its workflow, so two files' results cannot be confused", () => {
     const out = formatReport({
-      invocations: [inv("docs-site.yml", "./cat-bootstrap"), inv("feature-staging.yml", "./cat-bootstrap", true)],
+      invocations: [inv("docs-site.yml", "./bootstrap"), inv("feature-staging.yml", "./bootstrap", true)],
       results: [
-        { ...inv("docs-site.yml", "./cat-bootstrap"), ok: true, nodes: 85 },
-        { ...inv("feature-staging.yml", "./cat-bootstrap", true), ok: true, nodes: 85 },
+        { ...inv("docs-site.yml", "./bootstrap"), ok: true, nodes: 85 },
+        { ...inv("feature-staging.yml", "./bootstrap", true), ok: true, nodes: 85 },
       ],
       workflowsRead: 39,
     });
-    expect(out).toContain("docs-site.yml: ./cat-bootstrap");
-    expect(out).toContain("feature-staging.yml: ./cat-bootstrap");
+    expect(out).toContain("docs-site.yml: ./bootstrap");
+    expect(out).toContain("feature-staging.yml: ./bootstrap");
     expect(out).toContain("2 workflow(s)");
   });
 
   test("a stood-in base is disclosed, never presented as the workflow's own run", () => {
     const out = formatReport({
-      invocations: [inv("feature-staging.yml", "./cat-bootstrap", true)],
-      results: [{ ...inv("feature-staging.yml", "./cat-bootstrap", true), ok: true, nodes: 85 }],
+      invocations: [inv("feature-staging.yml", "./bootstrap", true)],
+      results: [{ ...inv("feature-staging.yml", "./bootstrap", true), ok: true, nodes: 85 }],
       workflowsRead: 39,
     });
     expect(out).toContain("stood in");
@@ -139,8 +139,8 @@ describe("formatReport", () => {
     // invocation pointed at a nonexistent instance exited 0 and this gate
     // printed a tick over an empty graph.
     const out = formatReport({
-      invocations: [inv("docs-site.yml", "./cat-bootstrap")],
-      results: [{ ...inv("docs-site.yml", "./cat-bootstrap"), ok: true, nodes: 85 }],
+      invocations: [inv("docs-site.yml", "./bootstrap")],
+      results: [{ ...inv("docs-site.yml", "./bootstrap"), ok: true, nodes: 85 }],
       workflowsRead: 39,
     });
     expect(out).toContain("85 node(s)");
@@ -148,11 +148,11 @@ describe("formatReport", () => {
 
   test("a failure names the workflow, the instance, and what the export reported", () => {
     const out = formatReport({
-      invocations: [inv("docs-site.yml", "./cat-bootstrap")],
-      results: [{ ...inv("docs-site.yml", "./cat-bootstrap"), ok: false, detail: "✗ no canonicalUrl in x" }],
+      invocations: [inv("docs-site.yml", "./bootstrap")],
+      results: [{ ...inv("docs-site.yml", "./bootstrap"), ok: false, detail: "✗ no canonicalUrl in x" }],
       workflowsRead: 39,
     });
-    expect(out).toContain("✗ docs-site.yml: ./cat-bootstrap");
+    expect(out).toContain("✗ docs-site.yml: ./bootstrap");
     expect(out).toContain("no canonicalUrl in x");
   });
 

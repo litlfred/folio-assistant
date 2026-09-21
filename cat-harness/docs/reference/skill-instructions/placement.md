@@ -220,7 +220,7 @@ writes all three for a new folio.
 - **Never put guidance in a stub.** It reaches one tool's agents and nobody
   else, and the other two stubs are then quietly wrong.
 - **And prefer not to put it in `AGENTS.md` either.** That file's own banner
-  says it: it is a cat-bootstrap pointer, and *the discipline lives in the skills
+  says it: it is a bootstrap pointer, and *the discipline lives in the skills
   graph*. A rule that exists only in `AGENTS.md` is not in the generated
   reference, not in the published skill docs, and not found by an agent that
   went looking for the skill first. The turn-report discipline lived there

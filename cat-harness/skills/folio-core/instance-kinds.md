@@ -18,7 +18,7 @@ adds the wrong one:
 
 | | what it is | where it is declared |
 |---|---|---|
-| **instance kind** | what a repository *is* — `cat-harness`, `cat-bootstrap`, `who-iris`. It has a name, a prefix family, a `<name>.json`, and files it inherits from whatever it was bootstrapped off | a `<name>.json` at the instance root |
+| **instance kind** | what a repository *is* — `cat-harness`, `bootstrap`, `who-iris`. It has a name, a prefix family, a `<name>.json`, and files it inherits from whatever it was bootstrapped off | a `<name>.json` at the instance root |
 | **graph kind** | what a declared DIRECTORY holds — `tools`, `docs`, `beans`, `library`. A value in the graph-kind registry, with `renderable`, `holds` and a summary | `defaultGraphKinds` in `schemas/cat-harness.ts`, or a registration from a layer that owns it |
 
 An instance kind gets a **name**. A graph kind gets a **declaration**. This
@@ -86,7 +86,7 @@ A prefix names the **layer** or the **owner** an instance belongs to.
 
 | prefix | what it marks | instances here |
 |---|---|---|
-| `cat-` | the agentic-harness layer | `cat-harness`, `cat-bootstrap`, `cat-bootstrap-tools` |
+| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap`, `bootstrap-tools` |
 | `folio-assistant-` | the content/core layer | `folio-assistant-core`, `folio-assistant-sci` |
 | `who-` | WHO material | `who-iris`, `who-style-guide` |
 | `litlfred-` | the owner's own | — none yet |
@@ -120,7 +120,7 @@ it is neither, by the owner's decision.
 > has never been raised — a name that does not match the table is a decision
 > until somebody says otherwise, and renaming an instance changes what every
 > artefact written into it inherits, which is the one thing that cannot be
-> fixed later (`cat-bootstrap/README.md`, §2).
+> fixed later (`bootstrap/README.md`, §2).
 
 A skill that presented the convention as mandatory would have renamed `qou`.
 A default with a documented override is a different thing from a rule, and the
@@ -218,7 +218,7 @@ A new instance kind is bootstrapped from an existing one, and it arrives
 carrying that instance's files. Some of them are **yours**, and nothing
 currently tells a new owner which.
 
-### `cat-bootstrap/README.md` is the first one
+### `bootstrap/README.md` is the first one
 
 It is the page an Initiator reads before it knows anything — *"you have been
 pointed at a repository, you know nothing about it"* — and it is written for

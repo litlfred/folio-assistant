@@ -44,7 +44,7 @@ a better fix is worse than no fix, and that is what mine did.
 `here === repoRoot || here.startsWith(repoRoot + sep)` — never bare
 `startsWith`, which calls `/repo-other` a child of `/repo`.
 
-`cat-bootstrap` inherits because this repository **publishes** it, by the
+`bootstrap` inherits because this repository **publishes** it, by the
 deploy step one function away. `/tmp/outside` is not published here, so the
 honest answer is the third state that already existed: a document-relative
 `@id` plus a reported problem. A base for it would be a guess wearing the
@@ -63,7 +63,7 @@ is already present. It now states which of the two reasons applies.
 - [x] The fallback applies only to an instance this repository publishes
 - [x] Path-boundary comparison, not a prefix
 - [x] An outside instance keeps the third state and reports a problem
-- [x] `cat-bootstrap` and the root still resolve unchanged
+- [x] `bootstrap` and the root still resolve unchanged
 - [x] The diagnostic names the reason that actually applies
 - [x] Three tests, each falsified against the defect it exists for — the
       unconditional fallback fails the outside test; a bare `startsWith` fails
@@ -80,9 +80,9 @@ only on the branch: the boundary is at `kg-export.ts:2156` and the `/tmp`
 instance exits 1.
 
 Verified: outside instance → document-relative `@id`, problem reported, exit 1;
-`cat-bootstrap` → `<base>/cat-bootstrap.jsonld`, exit 0; root unchanged.
+`bootstrap` → `<base>/bootstrap.jsonld`, exit 0; root unchanged.
 `gates` 91 of 91. Both QA sidecars checked by **subject**, not by diff size —
 `kg-export.qa-results.json` names `cat-harness.jsonld` and
-`kg-export.cat-bootstrap.qa-results.json` names `cat-bootstrap.jsonld`. That
+`kg-export.bootstrap.qa-results.json` names `bootstrap.jsonld`. That
 check is here because last time I read only the diff of this file, saw
 `script_hash` and `updated_at`, and called a real defect timestamp noise.

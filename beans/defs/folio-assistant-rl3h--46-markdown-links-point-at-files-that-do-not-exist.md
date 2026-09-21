@@ -61,7 +61,7 @@ it means checking each target against the history, which is the work.
 ## One more, found 2026-09-20 and not counted above
 
 `cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
-names **`cat-bootstrap/workflows/bootstrap.bpmn`** in its table. That file does
+names **`bootstrap/workflows/bootstrap.bpmn`** in its table. That file does
 not exist; the process is `initialize-harness.bpmn`, and `discussion.bpmn`
 and `log-message.bpmn` sit beside it unnamed.
 
@@ -71,7 +71,7 @@ does not resolve — reached by a different route, which is worth noting when
 someone extends the sweep: **the count is of links, not of references.**
 
 Fixing it is three table rows and no declaration. **Do not "fix" it by
-declaring `cat-bootstrap/workflows/` at the root** — that re-introduces the 88-
+declaring `bootstrap/workflows/` at the root** — that re-introduces the 88-
 reference graph leak `instance-graph-isolation.test.ts` guards, which is bean
 `7u3g`, scrapped for exactly that.
 
@@ -164,7 +164,7 @@ The last seven were found only after bean `3ye4` fixed attribution: this
 sweep had been reporting **0** while six declared directories went unread, so
 "drained to zero" was true of what it looked at and not of the corpus.
 
-Those seven — six in `beans/`, one in `cat-bootstrap/` — were all **wrong
+Those seven — six in `beans/`, one in `bootstrap/` — were all **wrong
 paths, not dead references**; every target existed and each was repointed
 with the target asserted first.
 

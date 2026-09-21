@@ -185,7 +185,7 @@ const payload = {
   // de-duplicated, because a directory may hold several graphs and two
   // directories may hold the same one — `schemas/` declares both `schemas`
   // and `cat-harness`.
-  declaredKinds: [...new Set((decl.directories ?? []).flatMap((d) => d.graphs ?? []))].sort(),
+  declaredKinds: [...new Set((decl.directories ?? []).flatMap((d) => d.graphKinds ?? []))].sort(),
   links: siteLinks(decl, repoUrl),
   // ONE FAT TILE PER INITIATED HARNESS, for the left sidebar.
   //

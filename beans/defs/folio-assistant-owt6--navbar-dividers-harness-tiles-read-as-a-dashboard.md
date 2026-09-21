@@ -55,7 +55,7 @@ viewer sub-list. The STAGGER is what makes it a stack rather than four coloured
 bars — each tab is inset a little further from the right than the one above,
 capped at five steps, and `--fa-tab-i` comes from the GENERATED order so the
 offsetting presents a fact rather than inventing one. The floor carries a
-dashed edge, which is `cat-bootstrap`'s own declared render exemption being
+dashed edge, which is `bootstrap`'s own declared render exemption being
 styled rather than asserted.
 
 **`harness_details.html` is where the data went.** One anchored section per

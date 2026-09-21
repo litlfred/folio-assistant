@@ -9,7 +9,7 @@
  * them manufactures the finding rather than clearing it*. This is the
  * visualiser; `docs/architecture/theming.md` is the entry.
  *
- * cat-bootstrap's `renderExemption` was the alternative and is the wrong shape
+ * bootstrap's `renderExemption` was the alternative and is the wrong shape
  * here. That exemption is a FLOOR THAT RISES — the bottom layer produces
  * nothing a human browses, so it trades a visualiser for its own graph.
  * Theming is the opposite case: it produces nothing BUT things a human looks

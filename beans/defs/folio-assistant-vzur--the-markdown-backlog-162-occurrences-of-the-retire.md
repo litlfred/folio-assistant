@@ -16,7 +16,7 @@ Split out of `hrv2`, which was about a **wrong** filename. This is the
 markdown files**, excluding `beans/` (historical records, correct as written).
 Among them the skills an agent reads to learn how this repository works —
 `directory-conventions.md`, `instance-kinds.md`, `kg-export.md`,
-`agent-memory.md`, `skills-and-tools.md`, `cat-bootstrap/AGENTS.md`.
+`agent-memory.md`, `skills-and-tools.md`, `bootstrap/AGENTS.md`.
 
 ## Why it is not a find-and-replace
 

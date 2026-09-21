@@ -1,5 +1,5 @@
 {
-  "_comment": "THE REPOSITORY ROOT's DECLARATION — what this instance IS and which directories it holds. SPLIT back out of `folio-assistant.config.json` on 2026-09-21, when the owner reversed `b5f0` §1's REPLACE ruling and took its other option: `<name>.json` for the declaration, `<name>.config.json` for the config, so the pair is legible from the filenames alone. Before the split both files ended `.config.json` and were told apart only by which directory they sat in and whether they carried a `name` — two schemas, two readers, one filename shape, which is the confusion `b5f0` §1 named when it recorded the option. Read by `readDeclaration` against `CatHarnessDeclarationSchema`; its sibling `folio-assistant.config.json` is read by `readHarnessConfig` and carries `contentType`. The root is the one instance where these were merged, because its instance directory IS the repository root — every other instance already had them in different directories.",
+  "_comment": "THE REPOSITORY ROOT's DECLARATION \u2014 what this instance IS and which directories it holds. SPLIT back out of `folio-assistant.config.json` on 2026-09-21, when the owner reversed `b5f0` \u00a71's REPLACE ruling and took its other option: `<name>.json` for the declaration, `<name>.config.json` for the config, so the pair is legible from the filenames alone. Before the split both files ended `.config.json` and were told apart only by which directory they sat in and whether they carried a `name` \u2014 two schemas, two readers, one filename shape, which is the confusion `b5f0` \u00a71 named when it recorded the option. Read by `readDeclaration` against `CatHarnessDeclarationSchema`; its sibling `folio-assistant.config.json` is read by `readHarnessConfig` and carries `contentType`. The root is the one instance where these were merged, because its instance directory IS the repository root \u2014 every other instance already had them in different directories.",
   "name": "folio-assistant",
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\". `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against. Bean t3n8.",
   "title": "Folio Assistant",
@@ -9,8 +9,8 @@
       "id": "uploads",
       "path": "uploads/",
       "dependents": "reproduce",
-      "description": "The incoming queue of the document-ingestion pipeline for THIS checkout — raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.",
-      "graphs": [
+      "description": "The incoming queue of the document-ingestion pipeline for THIS checkout \u2014 raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.",
+      "graphKinds": [
         "uploads"
       ],
       "coverage": {
@@ -20,17 +20,17 @@
       }
     }
   ],
-  "_assets_comment": "THE REPOSITORY'S OWN TWO FILES, declared here as of 2026-09-20 (issue #592). Before that the root instance declared NO assets at all, and `cat-harness` declared both of these with `scope: \"repository\"` — so the file an agent reads first was simultaneously \"what this repository is\" and \"what the cat-harness layer is\", and no instance owned it. `check:subgraph-coverage` reported nothing, because the asset DID resolve; it resolved to the wrong file's job, which is a distinction that check could not make until this split gave it two files to tell apart. The owner settled the fork on 2026-09-20: split them, so every instance owns exactly one README and one AGENTS.md, the root's being the INDEX over the others.",
+  "_assets_comment": "THE REPOSITORY'S OWN TWO FILES, declared here as of 2026-09-20 (issue #592). Before that the root instance declared NO assets at all, and `cat-harness` declared both of these with `scope: \"repository\"` \u2014 so the file an agent reads first was simultaneously \"what this repository is\" and \"what the cat-harness layer is\", and no instance owned it. `check:subgraph-coverage` reported nothing, because the asset DID resolve; it resolved to the wrong file's job, which is a distinction that check could not make until this split gave it two files to tell apart. The owner settled the fork on 2026-09-20: split them, so every instance owns exactly one README and one AGENTS.md, the root's being the INDEX over the others.",
   "assets": [
     {
       "id": "agent-instructions",
       "src": "AGENTS.md",
       "role": "agent-instructions",
-      "title": "AGENTS.md — folio-assistant",
-      "description": "The file every cold agent reads first, and the rules that bind in EVERY layer of this checkout. A layer's own AGENTS.md augments it and never restates it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer. This provenance sits here rather than on cat-harness's because THIS is the file cat-bootstrap copies at initialisation; cat-harness's own is authored in place and carries no source.",
+      "title": "AGENTS.md \u2014 folio-assistant",
+      "description": "The file every cold agent reads first, and the rules that bind in EVERY layer of this checkout. A layer's own AGENTS.md augments it and never restates it. `source` names the bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED \u2014 'it was copied at init' is not an answer. This provenance sits here rather than on cat-harness's because THIS is the file bootstrap copies at initialisation; cat-harness's own is authored in place and carries no source.",
       "source": {
         "instance": "litlfred/folio-assistant",
-        "path": "cat-bootstrap/AGENTS.md"
+        "path": "bootstrap/AGENTS.md"
       }
     },
     {

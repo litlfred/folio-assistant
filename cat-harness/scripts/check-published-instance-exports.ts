@@ -8,7 +8,7 @@
  * `docs-site.yml` failed on `main` for over two hours on 2026-09-21 and the
  * fast gate set was green through every one of those runs; several merges
  * landed against that green. The break was a single command —
- * `kg-export.ts --instance ./cat-bootstrap` — that no gate ran, because the
+ * `kg-export.ts --instance ./bootstrap` — that no gate ran, because the
  * gate set ran `kg-export` only for THIS instance. The export defect itself
  * is fixed (bean `40fl`); this gate is the part that was missing, and it is
  * the reason the outage was findable only from the forge.
@@ -29,7 +29,7 @@
  * **Every workflow, not a named pair.** The first version of this gate read
  * `docs-site.yml` alone, and `3jhq` measured what that missed:
  * `feature-staging.yml` published no site-root export at all, so a staged
- * cat-harness graph carried `$BASE/cat-bootstrap.jsonld#skill/discussion`
+ * cat-harness graph carried `$BASE/bootstrap.jsonld#skill/discussion`
  * pointing at a document that build never wrote — two dangling links on every
  * preview, invisible to a gate looking one file over. Naming the second file
  * would have fixed today and left the third to be discovered the same way.

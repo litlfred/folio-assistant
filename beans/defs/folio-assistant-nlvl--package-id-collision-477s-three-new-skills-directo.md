@@ -24,9 +24,9 @@ holding one skill and **no `package-manifest.json`**:
 | `cat-harness/src/skills` | 1 | none |
 
 A package id falls back to the directory basename when no manifest names it,
-so all four mint the id `skills` and collide. `cat-bootstrap/skills` is the
+so all four mint the id `skills` and collide. `bootstrap/skills` is the
 counter-example that shows the intended shape: it declares
-`"name": "cat-bootstrap"` and does not collide.
+`"name": "bootstrap"` and does not collide.
 
 ## Why it is invisible on main today, and what changes
 
@@ -63,7 +63,7 @@ is minted"*.
 ## Options
 
 1. **Name the three after their instance** (`kg-navigation`, `large-datasets`,
-   `who-iris`), following `cat-bootstrap`'s precedent, and leave
+   `who-iris`), following `bootstrap`'s precedent, and leave
    `cat-harness/src/skills` as the sole `skills` claimant. Smallest change,
    resolves the collision, does not touch the open question.
 2. Name all four, deciding `src/skills` at the same time.
@@ -125,7 +125,7 @@ experiment.
 ## OWNER: **"nlvl - yes"**, 2026-09-20 — option 1 applied
 
 Three manifests written, each naming its package after its instance, following
-`cat-bootstrap/skills`'s precedent:
+`bootstrap/skills`'s precedent:
 
 | file | `name` | skills |
 |---|---|---|

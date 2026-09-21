@@ -19,7 +19,7 @@ Owner, on `ie9l`:
 > whwn cat-harness boostrap init takes over it creates README.md if it does
 > not exist and add link and overall harness install statue.
 
-**Neither box was started.** Nothing in `cat-bootstrap`'s initialisation
+**Neither box was started.** Nothing in `bootstrap`'s initialisation
 writes a root README, and the rule below is written nowhere — grepped
 `skills/` and `docs/` on 2026-09-21, no match.
 
@@ -37,7 +37,7 @@ defect. Splitting them is how the statement never gets written.
 
 ## Done when
 
-[x] `cat-bootstrap`'s initialisation creates a root `README.md` when absent —
+[x] `bootstrap`'s initialisation creates a root `README.md` when absent —
     `A_WriteRootReadme`, the last step of `initialize-harness.bpmn` before
     `End_Installed`, naming the new `root-readme` skill
 [x] It carries the link and the overall harness install status — two things and
@@ -49,7 +49,7 @@ defect. Splitting them is how the statement never gets written.
 
 ## How it was done, and the one thing that was not obvious
 
-**There is no code to change.** cat-bootstrap contains no executable code by
+**There is no code to change.** bootstrap contains no executable code by
 design (its own FR-7), so "initialisation creates a README" is a BPMN activity
 plus the skill it names, not a `write()` call. `init-folio.ts` already writes a
 folio README, and mistaking that for this bean would have satisfied the box in
@@ -63,7 +63,7 @@ overwriting it to state a fact that belongs in a generated region is an
 unrecoverable trade. The link and status go in a marker pair `readme_sync`
 owns from then on.
 
-Also updated: `cat-bootstrap/README.md` gains step 6 and FR-8,
+Also updated: `bootstrap/README.md` gains step 6 and FR-8,
 `package-manifest.json` registers the skill, and `AGENTS.md` stops counting
 the skills (it said "two"; the manifest is the list).
 

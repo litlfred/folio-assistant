@@ -4,7 +4,7 @@
  *
  * Owner, 2026-09-19: *"each content type should have an avatar in and out of
  * trash. dark and light mode"*, and then: *"all kinds need an avatary.
- * cat-bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
+ * bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
  *
  * ## The glyph is a MASK, not an image or an inline `<svg>`
  *
@@ -64,7 +64,7 @@ export interface Avatar {
 export const AVATARS: Readonly<Record<string, Avatar>> = {
   // ── The layer identities the owner named ───────────────────────────
   //
-  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*.
+  // Owner: *"bootstrap has avatar, so does cat-harness, folio-asst"*.
   //
   // THIS TABLE SERVES TWO KEY SPACES, and the entries below are the second
   // one. `kind-fan` and `gen-avatars-css` key by GRAPH KIND; `harness-tiles`
@@ -77,9 +77,9 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // assert.
   //
   // THE COMMENT HERE WAS STALE AND COST THE INSTANCE ITS FACE. It read: *"the
-  // split (#223) has not happened, so `cat-bootstrap` and `folio-assist-core`
+  // split (#223) has not happened, so `bootstrap` and `folio-assist-core`
   // exist as layers in the namespace and as nothing in `harness.json`"*. Both
-  // halves were false by 2026-09-21 — `cat-bootstrap/harness.json` and
+  // halves were false by 2026-09-21 — `bootstrap/harness.json` and
   // `folio-assistant-core/harness.json` both exist and both declare a `name`
   // — and the second is not even the name that was adopted. Measured on
   // 2026-09-21: `avatarFor("folio-assistant-core")` returned GENERIC, the
@@ -87,7 +87,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // of paper below sat in the table under a spelling nothing carries. A key
   // nobody can reach is worse than a missing one: the coverage check counted
   // it as declared. Bean `hso8`, whose rename this completes.
-  "cat-bootstrap": {
+  "bootstrap": {
     // A seed with a shoot: the graph an agent reads before it knows anything.
     glyph: "M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z",
     tone: 96,
@@ -98,6 +98,32 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 9V6l3 2h10l3-2v3m0 0v9H4V9zM8 13h.01M16 13h.01M10 17h4",
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
+  },
+  // ── The three kinds split out of `cat-harness`, 2026-09-21 ──────────────
+  //
+  // TONES NEAR THE PARENT'S 268 ON PURPOSE. These are the parts of one graph,
+  // and a reader scanning a legend should see them as a family rather than as
+  // three unrelated kinds that happen to sit together. Far enough apart to
+  // tell the three from each other; close enough that none reads as belonging
+  // somewhere else.
+  skills: {
+    // An open book. A Skill is an instruction body, and nothing else here is.
+    glyph: "M4 5h6a2 2 0 012 2v12a2 2 0 00-2-2H4zm16 0h-6a2 2 0 00-2 2v12a2 2 0 012-2h6z",
+    tone: 256,
+    reads: "an open book — the instruction an Actor performs a Task from",
+  },
+  workflows: {
+    // Two nodes and a gateway between them: the smallest honest BPMN.
+    glyph: "M4 12h4m4 0h4m4 0h.01M6 12a2 2 0 11-4 0 2 2 0 014 0zm14 0a2 2 0 11-4 0 2 2 0 014 0zM12 9l3 3-3 3-3-3z",
+    tone: 280,
+    reads: "two nodes either side of a diamond — a process and the decision in it",
+  },
+  scenarios: {
+    // Two figures. A Role is a part somebody plays, so the glyph is people
+    // rather than a document.
+    glyph: "M9 11a3 3 0 100-6 3 3 0 000 6zm0 0c-2.5 0-4 1.5-4 4v4h8v-4c0-2.5-1.5-4-4-4zm8-6a2.5 2.5 0 110 5M17 12c2 0 3 1.5 3 3v4h-3",
+    tone: 292,
+    reads: "two figures — the Actors and the Roles they take on",
   },
   // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
   // and name both spelled in full, per the owner's ruling of 2026-09-20 and

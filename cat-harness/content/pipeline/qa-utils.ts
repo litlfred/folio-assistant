@@ -1123,7 +1123,7 @@ export function* walkBlocks(
   if (!opts.includeNonContent) {
     try {
       for (const e of readDeclaration(declaringRootFor(rootDir))?.directories ?? []) {
-        const layers = (e.graphs ?? []).map((g) => graphLayer(g));
+        const layers = (e.graphKinds ?? []).map((g) => graphLayer(g));
         // Skip only when the entry DECLARES graphs and none of them is
         // content. An entry declaring none says nothing about being retired,
         // so it stays walked — silence is not evidence.

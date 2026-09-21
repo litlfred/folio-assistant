@@ -26,7 +26,7 @@ would lose which segment comes from where:
 2. **Everything else is `<baseurl>/<instantiated harness>/<path to rendered
    content>`.** The segment is the INSTANCE, and the path beneath it is that
    instance's own rendering — so `<baseurl>/cat-harness/docs`, and
-   `<baseurl>/cat-bootstrap/cat-bootstrap.jsonld`, which the owner names as the
+   `<baseurl>/bootstrap/bootstrap.jsonld`, which the owner names as the
    worked example.
 3. **Registered, instantiated and ENABLED, enabled by default.** A harness gets
    its URL segment by being instantiated, which is the same act that gets it a
@@ -52,7 +52,7 @@ useful state: there is a precedent to follow rather than a design to invent.
 | published at | belongs to | matches the rule? |
 |---|---|---|
 | `_site/` (Jekyll) | the root docs pipeline | **yes** — statement 1 |
-| `_site/cat-bootstrap/cat-bootstrap.jsonld` + `.json` | cat-bootstrap | **yes** — the owner's own example |
+| `_site/bootstrap/bootstrap.jsonld` + `.json` | bootstrap | **yes** — the owner's own example |
 | `_site/<DIR>/ns.jsonld` for all three layers | each layer | **yes** |
 | `_site/<STUB>.jsonld` + `.json`, STUB = `folio-assistant` | **cat-harness** | **no** — at the root, and named `folio-assistant` rather than `cat-harness` |
 | `_site/<STUB>/index.html` — the KG viewer | **cat-harness** | **prefixed, but by the wrong name**: `<baseurl>/folio-assistant/`, not `<baseurl>/cat-harness/` |
@@ -76,13 +76,13 @@ Every `@id` in a published graph is minted against `canonicalUrl`. Moving
 repository publishes, so it is a redirect question as well as a path question.
 
 **The failure to design against is `blv9`**, which is exactly this shape: the
-build published `cat-bootstrap/ns.jsonld` while the graph's `@id` named
-`cat-bootstrap/cat-bootstrap.jsonld`, so the artefact whose entire purpose is
+build published `bootstrap/ns.jsonld` while the graph's `@id` named
+`bootstrap/bootstrap.jsonld`, so the artefact whose entire purpose is
 being dereferenced resolved to nothing — for months, with the generator working
 perfectly. A layout change that moves a file without moving what names it
 reproduces that bug at scale.
 
-`cat-harness/scripts/tests/cat-bootstrap-graph.test.ts` already carries the
+`cat-harness/scripts/tests/bootstrap-graph.test.ts` already carries the
 guard shape worth copying: it asserts the `@id` against the **workflow's
 `--out` path**, because a build that runs the generator and writes it elsewhere
 leaves the link dead just as surely as one that never runs it.
@@ -107,7 +107,7 @@ leaves the link dead just as surely as one that never runs it.
 - [ ] `enabled` is declared, defaulted true, and a disabled instance publishes
       nothing — tested in BOTH directions
 - [ ] No `@id` moves without the thing that names it moving with it, gated the
-      way `cat-bootstrap-graph.test.ts` gates its one
+      way `bootstrap-graph.test.ts` gates its one
 
 ---
 

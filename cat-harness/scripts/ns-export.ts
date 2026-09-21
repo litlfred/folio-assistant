@@ -76,7 +76,7 @@ export function vocabularyIri(): string {
   // day it deployed.
   //
   // Nothing is lost by moving: no term hangs off this document. Every term
-  // lives in its layer's namespace (`cat-bootstrap/ns`, `cat-harness/ns`,
+  // lives in its layer's namespace (`bootstrap/ns`, `cat-harness/ns`,
   // `folio-assistant-core/ns`), each of which IS a file and dereferences. The
   // union is a convenience for a person reading the whole vocabulary at once,
   // so it can sit anywhere that resolves.
@@ -157,8 +157,8 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
  * is the one thing the direction rule forbids.
  */
 const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
-  "cat-harness": "cat-bootstrap",
-  schemas: "cat-bootstrap",
+  "cat-harness": "bootstrap",
+  schemas: "bootstrap",
   // Everything the owner named as NOT bootstrap, plus the rest of the folio's
   // own furniture: "we shouldnt need voicegraph or librarygrph or
   // previewgrapjh in bootstrap!!"
@@ -216,7 +216,7 @@ export function buildVocabulary(
   const kinds = graphKindTerms();
   const doublyDefined = [...kinds.keys()].filter((t) => t in CLASS_GLOSSES || t in PROPERTY_GLOSSES).sort();
 
-  const ORDER: readonly TermLayer[] = ["cat-bootstrap", "harness", "core"];
+  const ORDER: readonly TermLayer[] = ["bootstrap", "harness", "core"];
   const cutoff = layer ? ORDER.indexOf(layer) : ORDER.length - 1;
   const inSlice = (g: TermGloss): boolean => {
     const i = ORDER.indexOf(g.layer ?? "harness");
@@ -268,7 +268,7 @@ export function buildVocabulary(
   // The schemes, derived from what was ACTUALLY emitted rather than from the
   // three layers that exist. A scheme with no concepts is `dh4f` in miniature:
   // a consumer follows `inScheme`, finds an empty set, and reports a clean
-  // run over nothing. `--layer cat-bootstrap` legitimately emits one scheme.
+  // run over nothing. `--layer bootstrap` legitimately emits one scheme.
   const docIri = exact && layer ? conceptSchemeIri(layer) : vocabularyIri();
   const schemeLayers = [...new Set(nodes.map((n) => n.layer as TermLayer))].sort(
     (a, b) => ORDER.indexOf(a) - ORDER.indexOf(b),
@@ -355,7 +355,7 @@ if (import.meta.main) {
   const check = argv.includes("--check");
   const layerIdx = argv.indexOf("--layer");
   const layer = layerIdx >= 0 ? (argv[layerIdx + 1] as TermLayer) : undefined;
-  if (layer !== undefined && !["cat-bootstrap", "harness", "core"].includes(layer)) {
+  if (layer !== undefined && !["bootstrap", "harness", "core"].includes(layer)) {
     console.error(`--layer must be bootstrap, harness or core (got ${String(layer)})`);
     process.exit(2);
   }

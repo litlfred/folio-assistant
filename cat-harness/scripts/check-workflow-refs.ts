@@ -46,17 +46,17 @@ const strict = process.argv.includes("--strict");
  *
  * Root-only until 2026-09-19, and the comment below is the argument for the
  * change: *"a dangling `<folio:skill ref>` in a diagram this checker never
- * opens is a broken reference reported as clean."* `cat-bootstrap/` is a separate
+ * opens is a broken reference reported as clean."* `bootstrap/` is a separate
  * instance with its own declaration and its own two skills, so
- * `cat-bootstrap/workflows/cat-bootstrap.bpmn` was in exactly that state from the day
+ * `bootstrap/workflows/bootstrap.bpmn` was in exactly that state from the day
  * it was written — unchecked, and reported clean by a checker scoped to
  * somebody else's graph.
  *
  * Each instance's refs resolve against ITS OWN skills, never the union: a
- * cat-bootstrap diagram naming a harness skill is a real dangling ref, because
- * cat-bootstrap runs before the harness exists.
+ * bootstrap diagram naming a harness skill is a real dangling ref, because
+ * bootstrap runs before the harness exists.
  */
-const INSTANCES = [INSTANCE_ROOT, join(INSTANCE_ROOT, "cat-bootstrap")];
+const INSTANCES = [INSTANCE_ROOT, join(INSTANCE_ROOT, "bootstrap")];
 
 const dangling: Dangling[] = [];
 const coverage: Coverage[] = [];
@@ -217,7 +217,7 @@ if (existsSync(INDEX_DIR)) {
     .join("\n");
   // The page names diagrams by BASENAME (`crdm-close.bpmn`), so that is what
   // is matched — but only where the basename is unambiguous. Under a topical
-  // layout `cat-bootstrap/workflows/review.bpmn` and `crdm/workflows/review.bpmn`
+  // layout `bootstrap/workflows/review.bpmn` and `crdm/workflows/review.bpmn`
   // share one, and a single mention of `review.bpmn` indexes NEITHER: a
   // reader who follows it reaches one diagram and cannot tell which. Such a
   // diagram must be named by its repo-relative path to count.

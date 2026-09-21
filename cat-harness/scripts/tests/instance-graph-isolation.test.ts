@@ -4,8 +4,8 @@
  * @module scripts/tests/instance-graph-isolation.test
  *
  * The defect these guard was LIVE on `main` on 2026-09-19, not hypothetical:
- * `findBpmnDirs` walked the filesystem, so `cat-bootstrap/workflows/cat-bootstrap.bpmn`
- * was discovered from the repository root as well as from cat-bootstrap, and
+ * `findBpmnDirs` walked the filesystem, so `bootstrap/workflows/bootstrap.bpmn`
+ * was discovered from the repository root as well as from bootstrap, and
  * `_kg/folio-assistant.jsonld` carried **88** references to `Process_InitializeHarness`.
  * CatBootstrap's process was published as part of folio-assistant's graph.
  */
@@ -19,18 +19,18 @@ import { repoRootFor } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
-const BOOT = join(repoRootFor(ROOT), "cat-bootstrap");
+const BOOT = join(repoRootFor(ROOT), "bootstrap");
 const DOC = "https://example.org/x.jsonld";
 
 const ids = (nodes: Array<Record<string, unknown>>): string[] => nodes.map((n) => String(n["@id"]));
 
 describe("a second instance in the tree stays out of the first's graph", () => {
-  test("the root instance's nodes include none of cat-bootstrap's process", async () => {
+  test("the root instance's nodes include none of bootstrap's process", async () => {
     const { nodes } = await collectInstanceNodes(ROOT, DOC, "", []);
     expect(ids(nodes).filter((i) => i.includes("Process_InitializeHarness"))).toEqual([]);
   });
 
-  test("and cat-bootstrap's own graph DOES carry it", async () => {
+  test("and bootstrap's own graph DOES carry it", async () => {
     // Isolation that achieved itself by losing the node would be worse than
     // the leak: the process would simply be gone.
     const { nodes } = await collectInstanceNodes(BOOT, DOC, "", []);
@@ -56,7 +56,7 @@ describe("discovery reads the declaration rather than the tree", () => {
     writeFileSync(join(root, "stray", "x.bpmn"), "<x/>");
     writeDeclaration(root, JSON.stringify({
         name: "iso",
-        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     const { nodes, notes } = await collectInstanceNodes(root, DOC, "", problems);
@@ -82,7 +82,7 @@ describe("discovery reads the declaration rather than the tree", () => {
     writeFileSync(join(root, "wf", "x.bpmn"), "<x/>");
     writeDeclaration(root, JSON.stringify({
         name: "iso2",
-        directories: [{ id: "cat-harness-wf", path: "wf/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness-wf", path: "wf/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, "", problems);

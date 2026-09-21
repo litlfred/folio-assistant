@@ -407,8 +407,8 @@ export const RoleDefSchema = z.object({
   // It is not hypothetical. `role-model.md` §"Adding a role" said to write a
   // `summary` — not a field: `title`/`description` are the two labels every
   // kg node carries. PR #453 followed the instruction, and all three
-  // cat-bootstrap roles carried a `summary` that reached nothing. Measured
-  // 2026-09-20: 0 of 33 root roles, 3 of 3 cat-bootstrap roles. The instruction
+  // bootstrap roles carried a `summary` that reached nothing. Measured
+  // 2026-09-20: 0 of 33 root roles, 3 of 3 bootstrap roles. The instruction
   // was corrected in #452; this is what stops the next one.
   //
   // `_`-prefixed documentation keys stay legal — see `withoutComments`. A
@@ -439,7 +439,7 @@ export const RoleGraphSchema = z.object({
  * Strip `_`-prefixed documentation keys, at the graph level and on each role.
  *
  * This instance writes rationale into the JSON it declares — `_comment` here,
- * `_comment`/`_title` in `harness.json`, `_lanes_comment` in cat-bootstrap's
+ * `_comment`/`_title` in `harness.json`, `_lanes_comment` in bootstrap's
  * graph — so the convention is established rather than invented here. It is
  * what makes {@link RoleDefSchema}'s `.strict()` affordable: an unknown key
  * can be an error precisely because there is a spelling for a key that is

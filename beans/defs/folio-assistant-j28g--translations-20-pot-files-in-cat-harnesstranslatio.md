@@ -31,7 +31,7 @@ never re-extracted and never compared:
 
 | stem | why cat-harness will not extract it |
 |---|---|
-| `discussion` | `cat-bootstrap/workflows/` — a NESTED INSTANCE's diagram |
+| `discussion` | `bootstrap/workflows/` — a NESTED INSTANCE's diagram |
 | `initialize-harness` | same |
 | `log-message` | same |
 | `bootstrap` | **the diagram does not exist anywhere.** Renamed to `initialize-harness.bpmn` in `7d57e2d279` |
@@ -44,7 +44,7 @@ Four stems × five locales = **20 files**, 2608–8695 bytes each, all dated
 Bean `7u3g` is `scrapped` for exactly that mistake, twice in one day: the
 root instance does not read a nested instance's graph **by design**, and
 `instance-graph-isolation.test.ts` fails when somebody declares
-`cat-bootstrap/workflows/` at the root. `translate-bpmn` seeing 58 is
+`bootstrap/workflows/` at the root. `translate-bpmn` seeing 58 is
 CORRECT.
 
 The defect is the other direction — `fd6i`, declared-never-used. The
@@ -55,7 +55,7 @@ bootstrap's lanes change. The fourth describes nothing at all.
 ## Two things to settle, and they are different questions
 
 1. **Does bootstrap translate itself?** It declares no `translations/`
-   directory. If it should, these three belong under `cat-bootstrap/`, moved
+   directory. If it should, these three belong under `bootstrap/`, moved
    rather than deleted — a translator may already hold a `.po` keyed to them.
    If it should not, they are relics.
 2. **Should `--check` ask the reverse direction?** It asks "does every

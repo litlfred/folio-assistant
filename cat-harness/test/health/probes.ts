@@ -560,9 +560,9 @@ function declaredDir(
   repoRoot: string,
   root: string,
   file: string,
-  read: (raw: unknown) => { directories: { path: string; graphs: string[] }[] },
-  pick: (g: { directories: { path: string; graphs: string[] }[] }) => { path: string } | undefined,
-  fallback: { directories: { path: string; graphs: string[] }[] },
+  read: (raw: unknown) => { directories: { path: string; graphKinds: string[] }[] },
+  pick: (g: { directories: { path: string; graphKinds: string[] }[] }) => { path: string } | undefined,
+  fallback: { directories: { path: string; graphKinds: string[] }[] },
 ): { dir: string } | { reason: string } {
   const graphPath = join(repoRoot, root, file);
   let graph = fallback;

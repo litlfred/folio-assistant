@@ -43,7 +43,7 @@ const typesOf = (n: Node | Doc): string[] => {
   const t = (n as Node)["@type"];
   return Array.isArray(t) ? (t as string[]) : typeof t === "string" ? [t] : [];
 };
-const build = (layer?: "cat-bootstrap" | "harness" | "core", exact = false): Doc =>
+const build = (layer?: "bootstrap" | "harness" | "core", exact = false): Doc =>
   buildVocabulary(undefined, layer, exact).doc as Doc;
 
 const conceptsOf = (d: Doc): Node[] =>
@@ -104,7 +104,7 @@ describe("the folio vocabulary emits SKOS", () => {
   test("every `inScheme` resolves to a scheme IN THIS DOCUMENT", () => {
     // A dangling `inScheme` is a link-shaped value that does not resolve —
     // bean `blv9`, and the reason `ns-export.ts` exists at all.
-    for (const layer of [undefined, "cat-bootstrap", "harness", "core"] as const) {
+    for (const layer of [undefined, "bootstrap", "harness", "core"] as const) {
       const doc = build(layer);
       const concepts = conceptsOf(doc);
       expect(concepts.length).toBeGreaterThan(0);
@@ -119,10 +119,10 @@ describe("the folio vocabulary emits SKOS", () => {
     // `dh4f`: a declared-but-empty set whose consumer scans nothing and calls
     // it clean. The bootstrap slice is the discriminating case — it must carry
     // exactly ONE scheme, not the three layers that happen to exist.
-    const boot = build("cat-bootstrap");
+    const boot = build("bootstrap");
     expect(schemesOf(boot)).toHaveLength(1);
 
-    for (const layer of [undefined, "cat-bootstrap", "harness", "core"] as const) {
+    for (const layer of [undefined, "bootstrap", "harness", "core"] as const) {
       const doc = build(layer);
       const members = new Set(conceptsOf(doc).map((c) => String(c.inScheme)));
       const empty = schemesOf(doc)
@@ -133,12 +133,12 @@ describe("the folio vocabulary emits SKOS", () => {
   });
 
   test("the scheme set GROWS with the slice — derived, not hardcoded", () => {
-    const counts = (["cat-bootstrap", "harness", "core"] as const).map((l) => schemesOf(build(l)).length);
+    const counts = (["bootstrap", "harness", "core"] as const).map((l) => schemesOf(build(l)).length);
     expect(counts).toEqual([1, 2, 3]);
   });
 
   test("in --exact mode the DOCUMENT is the scheme, with no duplicate @id", () => {
-    for (const layer of ["cat-bootstrap", "harness", "core"] as const) {
+    for (const layer of ["bootstrap", "harness", "core"] as const) {
       const doc = build(layer, true);
       expect(typesOf(doc)).toContain("skos:ConceptScheme");
       // ...and it does not also appear inside its own `@graph`.

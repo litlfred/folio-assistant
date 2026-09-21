@@ -126,7 +126,7 @@ describe("the state machine refuses records that mean nothing", () => {
 function repo(entries: Record<string, unknown>): string {
   const root = mkdtempSync(join(tmpdir(), "narr-"));
   made.push(root);
-  writeDeclaration(root, JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }));
+  writeDeclaration(root, JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphKinds: ["library"] }] }));
   for (const [slug, narrative] of Object.entries(entries)) {
     mkdirSync(join(root, "library", slug), { recursive: true });
     writeFileSync(
@@ -348,7 +348,7 @@ describe("deciding writes the file, and validates before it does", () => {
 function imagesRepo(): string {
   const root = mkdtempSync(join(tmpdir(), "narr-img-"));
   made.push(root);
-  writeDeclaration(root, JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }));
+  writeDeclaration(root, JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphKinds: ["library"] }] }));
   mkdirSync(join(root, "library", "x"), { recursive: true });
   writeFileSync(
     join(root, "library", "x", "images.json"),

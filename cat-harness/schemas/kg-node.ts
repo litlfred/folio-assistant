@@ -291,7 +291,7 @@ export const KgImageSchema = z
  * Where a declared asset was copied from, for the staleness question.
  *
  * **A copy with no source ref cannot be checked, and is believed anyway.** The
- * cat-bootstrap proposal states it for the cache and it is no different here:
+ * bootstrap proposal states it for the cache and it is no different here:
  * *"'It was copied at init' is not an answer. The cheapest honest version
  * records the source ref and compares against it, reporting could not
  * determine when the upstream is unreachable."*

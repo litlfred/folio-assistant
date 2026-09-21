@@ -47,7 +47,7 @@ be switched off within a day.
 
 ## Discovery, not a list
 
-Four entry files found, not three — `cat-bootstrap/AGENTS.md` was not obvious, and
+Four entry files found, not three — `bootstrap/AGENTS.md` was not obvious, and
 a hardcoded list would go stale exactly the way the links did. Zero files found
 is exit 2, because a green run over nothing is not coverage.
 

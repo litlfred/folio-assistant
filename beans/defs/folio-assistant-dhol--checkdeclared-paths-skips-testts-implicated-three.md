@@ -36,7 +36,7 @@ Candidates, none verified:
    fixture names nothing in this repository and must not be resolved
    against the declaration.
 2. **Assertions about the layout itself.** A test pinning that
-   `cat-bootstrap/skills/` is declared has to name it.
+   `bootstrap/skills/` is declared has to name it.
 3. **Volume.** The check refuses a literal unless it is marked with a
    reason; if tests carry hundreds, turning it on is a large annotation
    pass before it is a fix.

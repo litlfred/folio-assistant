@@ -51,10 +51,10 @@ The anchor half is **built and merged**, and it was built for this consumer:
 - `scripts/init-folio.ts` (+ the `folio_init` MCP tool) is the empty-folio
   scaffolder, registered among the **generic** tools precisely because it runs
   before a folio has a content type.
-- `cat-bootstrap/workflows/initialize-harness.bpmn` — six activities, the last being
+- `bootstrap/workflows/initialize-harness.bpmn` — six activities, the last being
   `A_Install` ("Follow them, at…") into `End_Installed`. **"As last thing"
   lands here**, or as a fifth step in
-  `folio-assistant/docs/cat-bootstrap/initialization.md`, which today has four.
+  `folio-assistant/docs/bootstrap/initialization.md`, which today has four.
 
 ## The gap the ask exposes, and it is not where I expected
 
@@ -70,7 +70,7 @@ work is **`Theme` gains a backdrop**, not the note body gaining an image.
 
 ## The boundary this ask runs into
 
-`AGENTS.md` and `folio-assistant/docs/cat-bootstrap/initialization.md` both state
+`AGENTS.md` and `folio-assistant/docs/bootstrap/initialization.md` both state
 that **folio-assistant is the platform, not the content**, and that a folio
 lives in a *separate* repository. `initialization.md` step 2 is stronger still:
 *"Create the directories the declaration names, and **only** those."*
@@ -123,12 +123,12 @@ _2026-09-20_ — OWNER RULING on the "empty folio" question, verbatim: **"cat-ha
 
 This is a LAYER statement, the same shape `iurf` established and the owner accepted there ("only comes in cat-harness, not bootstrap" = a layer, not a directory). Two halves:
 
-1. **Who creates `folio/`** — cat-harness initiation, which bootstrap *calls*. Bootstrap hands off; it does not itself create a folio. So the new step belongs in `folio-assistant/docs/cat-bootstrap/initialization.md` (today four steps, becoming five) and in the cat-harness side of the process, NOT in `cat-bootstrap/workflows/initialize-harness.bpmn` whose last activity `A_Install` is precisely the hand-off.
+1. **Who creates `folio/`** — cat-harness initiation, which bootstrap *calls*. Bootstrap hands off; it does not itself create a folio. So the new step belongs in `folio-assistant/docs/bootstrap/initialization.md` (today four steps, becoming five) and in the cat-harness side of the process, NOT in `bootstrap/workflows/initialize-harness.bpmn` whose last activity `A_Install` is precisely the hand-off.
 2. **Where the grumpy cat lives** — the cat-harness layer. A bare bootstrap instance gets NO cat and no sticky.
 
 MEASURED, and it changes what "moved" means: **there is no grumpy cat in `bootstrap/` today.** `grep -rin "grumpy\|cat-mark\|landing" bootstrap/` returns ONE hit and it is a false positive — the word "landing" in a prose sentence about a person landing on a directory. The artwork is declared in the ROOT `harness.json` `images[]` and rendered by `folio-assistant/docs/_includes/landing.html`. So this half of the ruling is a **constraint on the new work** (do not put the cat into bootstrap when you build this) rather than a relocation of anything that exists. Recording that explicitly so the next agent does not go hunting for a file to move and conclude the ruling was already satisfied by accident.
 
-A SUSPICION I HAD AND DISPROVED, recorded because it looks like a boundary violation and is not: `cat-bootstrap/harness.json` declares `"graphs": ["cat-harness"]` and a directory id `cat-harness`, which reads as bootstrap naming the layer composed on top of it — something its own `_comment` forbids ("nothing here may import from it"). It is fine. `cat-harness` IS the generic graph-kind name: `schemas/cat-harness.ts:1555` sets `KG_GRAPH_KIND = "cat-harness"` and `GRAPH_KIND_ALIASES` keeps `kg` readable as a deprecated alias. The kind was RENAMED; bootstrap is using the current vocabulary, not reaching upward.
+A SUSPICION I HAD AND DISPROVED, recorded because it looks like a boundary violation and is not: `bootstrap/harness.json` declares `"graphs": ["cat-harness"]` and a directory id `cat-harness`, which reads as bootstrap naming the layer composed on top of it — something its own `_comment` forbids ("nothing here may import from it"). It is fine. `cat-harness` IS the generic graph-kind name: `schemas/cat-harness.ts:1555` sets `KG_GRAPH_KIND = "cat-harness"` and `GRAPH_KIND_ALIASES` keeps `kg` readable as a deprecated alias. The kind was RENAMED; bootstrap is using the current vocabulary, not reaching upward.
 
 ## What creating `folio/` actually means — measured 2026-09-20
 

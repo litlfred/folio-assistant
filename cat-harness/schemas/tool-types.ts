@@ -368,7 +368,7 @@ export const ReadmeSectionSchema = z
  * fails `tsc`, rather than producing a Tool contract that quietly refuses a
  * value the script accepts.
  */
-const NAMESPACE_LAYERS = ["cat-bootstrap", "harness", "core"] as const satisfies readonly TermLayer[];
+const NAMESPACE_LAYERS = ["bootstrap", "harness", "core"] as const satisfies readonly TermLayer[];
 
 /** Fails to compile if `TermLayer` gains a member this tuple does not list. */
 type NamespaceLayerCovers = Exclude<TermLayer, (typeof NAMESPACE_LAYERS)[number]> extends never
@@ -408,7 +408,7 @@ export const LakeCacheActionSchema = z
 
 export const NamespaceLayerSchema = z
   .enum(NAMESPACE_LAYERS)
-  .describe("A namespace layer: cat-bootstrap resolves before anything else, then harness, then core.");
+  .describe("A namespace layer: bootstrap resolves before anything else, then harness, then core.");
 
 /** The granularity a translation sign-off covers. */
 export const TranslationLevelSchema = z

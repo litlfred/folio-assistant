@@ -463,7 +463,7 @@ Three different problems:
    exist and these sit outside them. Mixed: mostly performed, with real
    reference material among them. **This is what remains on `y1w9`.**
 3. **`bootstrap` (3) — a tooling blind spot, not a corpus fact.** All three
-   ARE named by activities in `cat-bootstrap/workflows/*.bpmn`; `workflowDirs`
+   ARE named by activities in `bootstrap/workflows/*.bpmn`; `workflowDirs`
    composes `<kgdir>/workflows` and bootstrap's diagrams are a SIBLING of its
    skills, so nothing scans them. **Bean `7u3g`.**
 

@@ -12,6 +12,13 @@ nav_order: 2
 
 ---
 
+> Installing is the easy half. What to run **before you push** is
+> [`platform-gates`](reference/skill-instructions/platform-gates.html) —
+> `bun test` passing is not the gates passing, and the list is derived from the
+> CI workflow rather than written down. If you are laying folio-assistant over
+> a repository that already exists, read
+> [`repo-conversion`](reference/skill-instructions/repo-conversion.html) first.
+
 ## Prerequisites
 
 folio-assistant runs on [Bun](https://bun.sh) and connects to an LLM agent over

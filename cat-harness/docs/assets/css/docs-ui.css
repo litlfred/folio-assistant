@@ -534,6 +534,132 @@
   .side-bar + .main { margin-left: 16.5rem; }
 }
 
+/* ── The sidebar starts CLOSED, on every page of this site ─────────────── */
+
+/* Owner, 2026-09-21: "i want navbar to be collasable and start closed
+ * everywhere, not just who-iris."
+ *
+ * The mounted instance pages got this first (`harness-rail.ts`, bean `hw9g`),
+ * because they get no Jekyll layout and had no harness navigation at all. That
+ * left ONE SITE WITH TWO NAVBARS BEHAVING DIFFERENTLY -- the rail collapsed to
+ * an icon, the theme's sidebar always open -- which is the inconsistency this
+ * removes. Same three mechanisms, same no-JavaScript rule, same reason for
+ * each.
+ *
+ * IT OVERLAYS WHEN OPEN, it does not reflow the page. A sidebar that pushed
+ * the text column right on hover would make every line jump under the pointer
+ * on the way to a link, which is worse than briefly covering the left margin.
+ * `.main`'s margin therefore stays at the COLLAPSED width.
+ *
+ * The children keep their open width and are CLIPPED. Letting them inherit
+ * 3.5rem instead would wrap every nav label to roughly one character per line,
+ * and the reflow back on hover is visible as a full re-layout of the nav.
+ *
+ * `align-items: flex-start` is not cosmetic and is easy to miss: the theme
+ * sets `align-items: flex-end` on this flex column, so with a narrow parent
+ * and wide children the clip would show the RIGHT-HAND END of every label
+ * rather than its start.
+ *
+ * Scoped to 50rem and up on purpose -- below it the theme is not `fixed` and
+ * has its own hamburger, and applying this there breaks the phone layout.
+ *
+ * MEASURED LIMIT: this was written against the selectors recorded above, which
+ * an earlier session read off the BUILT stylesheet. The rendered result was
+ * not checked, because litlfred.github.io is refused at this environment's
+ * proxy. If the collapsed strip clips the site mark, `--fa-nav-collapsed` is
+ * the one value to move. */
+:root {
+  /* DERIVED, not picked: the theme's own 1rem gutter on `.site-title`, plus
+     `.fa-site-mark` at 2rem, plus a matching right gutter. So the collapsed
+     strip is exactly the mark and its padding, and nothing of a label can sit
+     inside it. The rail's own constant is 40px against a 20px glyph -- a
+     different number for the same rule, because the two carry different marks
+     and a reader never sees both at once. */
+  --fa-nav-collapsed: 3.5rem;
+  /* The theme's width at mq(md); redefined below where the theme widens it. */
+  --fa-nav-open: 15.5rem;
+}
+
+@media (min-width: 66.5rem) {
+  :root { --fa-nav-open: 16.5rem; }
+}
+
+@media (min-width: 50rem) {
+  .side-bar {
+    width: var(--fa-nav-collapsed);
+    overflow: hidden;
+    align-items: flex-start;
+  }
+
+  .side-bar > * { width: var(--fa-nav-open); }
+
+  .side-bar:hover,
+  .side-bar:focus-within,
+  .side-bar:has(.fa-nav-pin:checked) {
+    width: var(--fa-nav-open);
+    /* Above `.main`, which is positioned and later in tree order. Without this
+       the sidebar opens BEHIND the page content and reads as a rendering bug
+       rather than as a nav. */
+    z-index: 100;
+  }
+
+  .side-bar + .main { margin-left: var(--fa-nav-collapsed); }
+
+  /* Every label is held invisible while collapsed rather than merely clipped.
+     The width arithmetic above is a geometry argument, and a longer title or
+     an inherited `letter-spacing` moves where a label starts without touching
+     any of these values. `opacity`, not `display:none` -- the labels stay in
+     the accessibility tree. */
+  .side-bar .fa-site-title,
+  .side-bar .site-nav,
+  .side-bar .fa-harness-tabs {
+    opacity: 0;
+    transition: opacity .12s ease;
+  }
+  .side-bar:hover .fa-site-title,
+  .side-bar:hover .site-nav,
+  .side-bar:hover .fa-harness-tabs,
+  .side-bar:focus-within .fa-site-title,
+  .side-bar:focus-within .site-nav,
+  .side-bar:focus-within .fa-harness-tabs,
+  .side-bar:has(.fa-nav-pin:checked) .fa-site-title,
+  .side-bar:has(.fa-nav-pin:checked) .site-nav,
+  .side-bar:has(.fa-nav-pin:checked) .fa-harness-tabs {
+    opacity: 1;
+  }
+
+  /* The pin. A POINTER IS NOT THE ONLY INPUT: `:hover` does nothing on a
+     tablet, which is above this breakpoint, and `:focus-within` there only
+     fires once a tap has already landed on a link the reader could not see.
+     The pin is the affordance that makes the nav reachable by touch. */
+  .fa-nav-pin { position: absolute; opacity: 0; pointer-events: none; }
+  .fa-nav-pin-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0 0.4rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+  .fa-nav-pin-toggle .fa-nav-pin-glyph { flex: none; width: 2rem; text-align: center; }
+  .fa-nav-pin-toggle .fa-nav-pin-text { white-space: nowrap; opacity: 0; transition: opacity .12s ease; }
+  .side-bar:hover .fa-nav-pin-text,
+  .side-bar:focus-within .fa-nav-pin-text,
+  .side-bar:has(.fa-nav-pin:checked) .fa-nav-pin-text { opacity: 1; }
+}
+
+@media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
+  .side-bar { transition: width .14s ease; }
+}
+
+/* Printing a collapsed nav prints a grey stripe down the page. */
+@media print {
+  .side-bar { display: none; }
+  .side-bar + .main { margin-left: 0; }
+}
+
 /* ── Edit-the-source affordance ────────────────────────────────────────── */
 
 /* 130 of the site's 155 pages are GENERATED and say "do not edit here". That
@@ -3458,7 +3584,7 @@ a.fa-harness-tab__body:focus-visible {
 
 .fa-harness-tab--floor .fa-harness-tab__body {
   /* The floor of the stack, and it says so: a dashed edge reads as "nothing
-   * below this". Its POSITION is generated — `cat-bootstrap`'s own declared
+   * below this". Its POSITION is generated — `bootstrap`'s own declared
    * render exemption — so this styles the fact rather than asserting it. */
   border-left-style: dashed;
 }

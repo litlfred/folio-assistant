@@ -37,7 +37,7 @@ export PATH="$ELAN_HOME/bin:$PATH"
 #    toolchain install AND the orphan-branch cache fetch (step 6) — so
 #    every such session fell into the 30-60 min from-source Mathlib
 #    rebuild. Since elan.lean-lang.org / release.lean-lang.org are
-#    firewalled here, cat-bootstrap elan from its GitHub release asset (the
+#    firewalled here, bootstrap elan from its GitHub release asset (the
 #    same host policy that already lets us fetch the toolchain zip below).
 #    `--default-toolchain none` installs elan WITHOUT touching the
 #    firewalled release host; the pinned toolchain is linked in step 2.
@@ -61,7 +61,7 @@ if ! command -v elan >/dev/null 2>&1; then
   fi
   rm -rf "$_elan_tmp"
   if ! command -v elan >/dev/null 2>&1; then
-    echo "setup-lean-toolchain: elan cat-bootstrap failed (network?) — skipping; Lean unavailable this session" >&2
+    echo "setup-lean-toolchain: elan bootstrap failed (network?) — skipping; Lean unavailable this session" >&2
     exit 0
   fi
   echo "setup-lean-toolchain: elan bootstrapped ($(elan --version 2>/dev/null || echo elan))" >&2

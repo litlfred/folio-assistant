@@ -1,0 +1,35 @@
+import { webpage } from "../../../schemas/webpage.ts";
+
+export default webpage({
+  slug: "managing-agent-context",
+  title: "Managing agent context",
+  navOrder: 9,
+  nodes: [
+    { id: "overview", block: "overview" },
+    {
+      id: "three-things-one-word",
+      title: "Three things that share the word overlay",
+      block: "three-things-one-word",
+    },
+    {
+      id: "what-a-context-overlay-is",
+      title: "What a Context Overlay is",
+      block: "what-a-context-overlay-is",
+    },
+    {
+      id: "the-context-layer",
+      title: "What the Context layer holds",
+      block: "the-context-layer",
+    },
+    {
+      id: "why-repeatable",
+      title: "Why overlaying makes a test repeatable",
+      block: "why-repeatable",
+    },
+    {
+      id: "where-the-rules-live",
+      title: "Where the rules live",
+      block: "where-the-rules-live",
+    },
+  ],
+});

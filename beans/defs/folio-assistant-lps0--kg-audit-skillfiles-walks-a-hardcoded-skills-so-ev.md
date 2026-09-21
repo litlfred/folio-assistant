@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lps0
 title: 'KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-20T18:59:22Z
-updated_at: 2026-09-21T12:37:26Z
+updated_at: 2026-09-21T20:17:11Z
 parent: folio-assistant-zzmr
 ---
 
@@ -26,7 +26,7 @@ DIRECTLY, and none of their skills is audited:
 | `methodologies/raci/` | its own | **0** |
 | `src/skills/` | `corpus-grep` and siblings | **0** |
 | `theming/` (new, bean `1hvo`) | 6 | **0** |
-| `cat-bootstrap/skills/`, `cat-bootstrap/render/` | 6 | **0** (a different instance; see below) |
+| `bootstrap/skills/`, `bootstrap/render/` | 6 | **0** (a different instance; see below) |
 
 `methodologies/crdm/workflows/` DOES have sidecars, so the gap is specific to
 the SKILL walk rather than to the directory being unreachable — the process
@@ -68,7 +68,7 @@ read what it finds, then decide which findings are real.
 drifted apart in two days. This is a third reader of the same literal.
 
 And the naming mismatch is a fourth: `gen-skill-docs` keys a directly-held
-package by its DECLARED ID (`cat-harness-src`, `cat-bootstrap-render`) while
+package by its DECLARED ID (`cat-harness-src`, `bootstrap-render`) while
 `skill-fetch` keys it by the instance name or the basename (`folio-assistant`,
 `render`). Both are defensible; having both is the problem.
 
@@ -78,8 +78,8 @@ package by its DECLARED ID (`cat-harness-src`, `cat-bootstrap-render`) while
 - [x] Falsified in both directions: a skill in a topical directory IS audited,
       and removing that directory's declaration makes it stop being
 - [x] The findings the widened walk surfaces are triaged, not blanket-suppressed
-- [ ] A relocated skill's sidecar MOVES with it, rather than dying in place
-- [ ] One answer to "what is this package called", or a stated reason for two
+- [x] A relocated skill's sidecar MOVES with it, rather than dying in place
+- [x] One answer to "what is this package called", or a stated reason for two
 
 ---
 
@@ -120,14 +120,14 @@ crdm-requirements-workflow   skill-is-brief   293 lines; p75 of the corpus is 27
 
 ### Another instance's roots are excluded, and that was not my call to make
 
-`kgRoots` resolves a DEPENDENCY's directories, so it returns `../cat-bootstrap/render`
+`kgRoots` resolves a DEPENDENCY's directories, so it returns `../bootstrap/render`
 and three more. Walking them is forbidden by `instance-graph-isolation.test.ts`,
 guarding a live 2026-09-19 leak of 88 references, and `unreadNestedInstances`'
 own finding text says *"do NOT declare its directories here"*.
 
 It would also break this audit's output: `sidecarPath` mirrors
 `dirname(join(root, subject.path))` under `test/results/kg-qa/`, so a `../`
-subject normalises to `test/results/cat-bootstrap/render` — **outside the
+subject normalises to `test/results/bootstrap/render` — **outside the
 results tree**, the escaping-path defect `chq5` fixed one store over. Simulated
 both cases before writing anything.
 
@@ -205,7 +205,7 @@ Main's record says 5 new sidecars; the withdrawn branch measured 6. Resolved on
 merging, and the answer is why `ownKgRoots` is the right function:
 
 **`kgDirectories` reaches OUTSIDE the instance.** The withdrawn walk used it and
-wrote five sidecars under an `_external/` mirror — `cat-bootstrap/render/`,
+wrote five sidecars under an `_external/` mirror — `bootstrap/render/`,
 `kg-navigation/`, `large-datasets/`, `who-iris/` — auditing **other instances'
 skills into this instance's tree**. `ownKgRoots` stays inside, which is what
 "own" is for: a nested instance's skills belong to that instance's own audit,
@@ -255,7 +255,7 @@ Over the 8 declared kg directories, matched on each record's authoritative
 
 | directory | `skill-fetch` | `kgDirectories` | |
 |---|---|---|---|
-| `cat-bootstrap/render` | `cat-bootstrap` | `cat-bootstrap-render` | diverge |
+| `bootstrap/render` | `bootstrap` | `bootstrap-render` | diverge |
 | `cat-harness/methodologies/raci` | `raci` | `methodology-raci` | diverge |
 | `cat-harness/methodologies/crdm` | `crdm` | `methodology-crdm` | diverge |
 | `cat-harness/src/skills` | `cat-harness` | `cat-harness-src` | diverge |
@@ -293,3 +293,60 @@ and the last assignment won.
 Not repaired here: this bean's owner decides whether `skill-fetch` adopts
 declaration ids, `kgDirectories` adopts the three rules, or the two stay
 separate with the collision renamed. The measurement is what was missing.
+
+
+---
+
+## Summary of Changes — closed 2026-09-21 via #760 / PR #762
+
+Both remaining boxes are answered. Each by merged evidence, not by assertion.
+
+### "A relocated skill's sidecar MOVES with it, rather than dying in place"
+
+`relocateSidecars` in `scripts/kg-audit.ts`, merged in `7dc7e9148`. It runs
+BEFORE the write loop -- once a fresh sidecar exists at the new path there is
+nothing left to move -- and matches on `kind` + `id`, now carried on
+`OrphanSidecar`, because the PATH is what changes in a move.
+
+It is not the deletion the orphan sweep refuses. That rule exists because an
+orphan can mean a subject is temporarily UNDISCOVERED rather than gone (bean
+`pve3`), and "deleting on that evidence would destroy a verdict to hide a
+declaration gap". Nothing here deletes; an orphan matching no moved subject is
+left exactly where it is, to be reported.
+
+Three conditions stop it, and FIVE of its eight tests are those refusals:
+confirmed-gone only (never the `undefined` third state), identity rather than
+basename (two packages can hold a same-named skill), and no ambiguity. A
+verdict misfiled against a subject it never audited reads as healthy, while an
+orphan announces itself.
+
+Verified end to end by reproducing the failure on the real corpus and watching
+the move happen.
+
+### "One answer to 'what is this package called', or a stated reason for two"
+
+**The reason for two is stated, and the one thing no reason covered is gone.**
+
+The measurement recorded above stands: over the 8 declared kg directories,
+6 diverge, 1 agrees, 1 is unmatched -- and that is legitimate, because the two
+systems answer different questions at different granularities.
+`kgDirectories` asks which directories are declared and what each one's stable
+id is; `discoverLocalPackages` asks which packages can be SERVED and what a
+caller asks for, which is why `skills/` is one entry in the first and sixteen
+sub-packages in the second. Collapsing that would lose information.
+
+What no granularity argument defended was the COLLISION: `cat-harness`
+denoting two different real directories. #762 dissolved it by folding
+`src/skills/` into `skills/folio-core/`, and a test now pins it shut --
+`discoverLocalPackages(ROOT)["cat-harness"]` must be `undefined`.
+
+So: two names for one thing, with the reason written down; never again one
+name for two things, with a test to keep it that way.
+
+### Left for somebody else, deliberately
+
+A finding that fell out of the fold and is recorded on #760 rather than acted
+on: removing `src/skills/` removed the LAST manifest-less package in this
+corpus, so `kg-export`'s basename-fallback rule now has no subject. Its test
+reports that it is unexercised rather than passing silently over an empty set.
+The rule is still correct; nothing here exercises it.

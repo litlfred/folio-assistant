@@ -71,7 +71,7 @@ export function declaredGraphs(repoRoot: string): GraphSources {
     if (file === undefined) continue;
     const decl = readDeclaration(instance);
     for (const entry of decl?.directories ?? []) {
-      for (const graph of entry.graphs ?? []) {
+      for (const graph of entry.graphKinds ?? []) {
         (out.get(graph) ?? out.set(graph, new Set()).get(graph)!).add(join(instance, file));
       }
     }
@@ -228,7 +228,7 @@ export function historicalPrefixes(repoRoot: string): string[] {
   const out = new Set<string>();
   for (const instance of instanceRootsIn(repoRoot)) {
     for (const entry of readDeclaration(instance)?.directories ?? []) {
-      if (!(entry.graphs ?? []).some((g) => historical.has(g))) continue;
+      if (!(entry.graphKinds ?? []).some((g) => historical.has(g))) continue;
       const path = entry.path.replace(/^\.\//, "").replace(/\/?$/, "/");
       // REPO-relative, not instance-relative — measured, after a draft that
       // prefixed each path with its declaring instance produced

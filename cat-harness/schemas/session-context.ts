@@ -21,7 +21,7 @@
  *
  * Every other field here can be derived by looking at the repository. WHO is
  * acting cannot: the machine keeping the session cannot infer it, the same way
- * the Logger cannot infer who wrote a log line (`cat-bootstrap/skills/log-message.md`).
+ * the Logger cannot infer who wrote a log line (`bootstrap/skills/log-message.md`).
  * A session record that cannot name its actor records that something is
  * happening and nothing about who is answerable for it — which is precisely the
  * question a sibling session needs answered before it touches the same bean.

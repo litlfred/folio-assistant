@@ -89,8 +89,8 @@ which half was missing, in a way worth recording because the shape recurs.
 `sourceLinks` in `schemas/landing-sticky.ts` already returned `{viewHref,
 editHref}`, already resolved `/blob/` and `/edit/` separately, already gated on
 `detectRepoUrl` returning a github.com `origin`, and already used the
-sticky's own `declaredIn` so a cat-bootstrap card links to
-`cat-bootstrap/harness.json`. `gen-landing-data.ts` called it and SPREAD the
+sticky's own `declaredIn` so a bootstrap card links to
+`bootstrap/harness.json`. `gen-landing-data.ts` called it and SPREAD the
 result, so an absent link is an absent key rather than `null`.
 
 `docs/_data/stickies.json` has carried both URLs, correct, for some time. **The

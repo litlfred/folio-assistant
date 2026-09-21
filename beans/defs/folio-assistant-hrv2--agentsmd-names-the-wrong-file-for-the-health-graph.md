@@ -32,7 +32,7 @@ dependencies, skills. `AGENTS.md` names the second while describing the first.
 ## Why this is worth a bean rather than a one-line edit
 
 The same sentence is the one a newcomer reads to find out where anything is
-declared, and `AGENTS.md`'s own banner says the file is *"a cat-bootstrap
+declared, and `AGENTS.md`'s own banner says the file is *"a bootstrap
 pointer, not the source of truth"* whose stale entries are **migration debt**.
 So the fix is not only the sentence: it is whether anything CHECKS it.
 `check:declaration-filename` covers `.ts` and, since `jijc`'s workflow half,

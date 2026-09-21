@@ -334,13 +334,13 @@ describe("kg export", () => {
 
   test("EVERY declared instance exports at an absolute IRI — the base is the SITE's, not the instance's", () => {
     // Bean `40fl`. `exportIdentity` read `canonicalUrl` off the instance being
-    // EXPORTED. `cat-bootstrap` declares none deliberately — it has no site of
+    // EXPORTED. `bootstrap` declares none deliberately — it has no site of
     // its own — so the moment `docs-site.yml` started publishing its graph
     // (2026-09-21, 11:31) the export minted a document-relative `@id`, pushed
     // that onto `problems`, and exited 1. Every push to `main` for the next
     // two hours failed to publish the site.
     //
-    // DERIVED over the declared instances rather than listing cat-bootstrap:
+    // DERIVED over the declared instances rather than listing bootstrap:
     // the defect is not about that instance, it is about any instance whose
     // graph this site publishes, and the next one to be added would have
     // reproduced it against a literal list that still read green.
@@ -369,13 +369,13 @@ describe("kg export", () => {
     // `<this site>/outside.jsonld` — a URL that will never resolve, claiming a
     // document this repository does not publish, and reported as no problem.
     //
-    // `cat-bootstrap` inherits because this repository PUBLISHES it. A path in
+    // `bootstrap` inherits because this repository PUBLISHES it. A path in
     // /tmp is not published here, so the honest answer is the third state.
     // That distinction is the whole of `publicationBase`; #725 wrote it, then
     // dropped it on merge because my fallback had already hidden the symptom.
     const outside = mkdtempSync(join(tmpdir(), "kg-export-outside-"));
     try {
-      writeFileSync(join(outside, "outside.json"), JSON.stringify({ name: "outside", graphs: [] }));
+      writeFileSync(join(outside, "outside.json"), JSON.stringify({ name: "outside", graphKinds: [] }));
       const id = exportIdentity({ instanceRoot: outside });
       expect(id.publishedHere).toBe(false);
       // Document-relative, NOT a fabricated absolute one.
@@ -402,26 +402,26 @@ describe("kg export", () => {
     // The other side of the boundary, and the case `40fl` exists for. Asserted
     // here as well as through `buildExport` below, because a narrowing is
     // exactly the change that silently takes the good case with it.
-    const boot = join(repoRootFor(join(import.meta.dir, "../..")), "cat-bootstrap");
+    const boot = join(repoRootFor(join(import.meta.dir, "../..")), "bootstrap");
     const id = exportIdentity({ instanceRoot: boot });
     expect(id.publishedHere).toBe(true);
-    expect(id.docIri).toBe(`${BASE}/cat-bootstrap.jsonld`);
+    expect(id.docIri).toBe(`${BASE}/bootstrap.jsonld`);
   });
 
   test("a foreign instance's export reports no unread source — the publish step exits 0", async () => {
     // The companion to the above, one level up: `publishedPaths()` already
-    // asserted that `cat-bootstrap.jsonld` is a path the deploy WRITES, and
+    // asserted that `bootstrap.jsonld` is a path the deploy WRITES, and
     // that assertion stayed green throughout the outage — because a path the
     // workflow names is not a step that succeeds. `problems` is what the exit
     // code is computed from, so this is the assertion that was missing.
-    const boot = join(repoRootFor(join(import.meta.dir, "../..")), "cat-bootstrap");
+    const boot = join(repoRootFor(join(import.meta.dir, "../..")), "bootstrap");
     const ex = await buildExport({ instanceRoot: boot });
     expect(ex.problems).toEqual([]);
     // `BASE` is THIS instance's declared canonicalUrl, which is the whole
     // point: the foreign document is published at the publishing site's base,
     // under its own stub. Spelling the URL as a literal here would pass even
     // if the fallback started reading some other instance's declaration.
-    expect(ex["@id"]).toBe(`${BASE}/cat-bootstrap.jsonld`);
+    expect(ex["@id"]).toBe(`${BASE}/bootstrap.jsonld`);
   });
 
   test("no canonicalUrl and no base → no absolute IRI, and it says so", () => {
@@ -566,13 +566,13 @@ describe("every self-URL the export publishes resolves to something published", 
       `${stub}.jsonld`,
       `${stub}.json`,
       `${stub}.schema.json`,
-      // cat-bootstrap's own graph, published by the same step because THIS
+      // bootstrap's own graph, published by the same step because THIS
       // graph links into it — `pve3`'s "neither" ruling made a Tool here
       // satisfy a skill published there. Listed as a literal like everything
       // else in this set: if the deploy step goes, this line makes it a test
       // failure rather than a 404 nobody sees.
-      "cat-bootstrap.jsonld",
-      "cat-bootstrap.json",
+      "bootstrap.jsonld",
+      "bootstrap.json",
       "tool.schema.json",
       "tool-types.schema.json",
       `${stub}/`,
@@ -603,7 +603,7 @@ describe("every self-URL the export publishes resolves to something published", 
     // new stems, and a stem nothing serves is the defect this whole check
     // exists for — so each is published and each is listed here, where
     // deleting an entry fails rather than 404s.
-    for (const dir of ["cat-bootstrap", "cat-harness", "folio-assistant-core"]) {
+    for (const dir of ["bootstrap", "cat-harness", "folio-assistant-core"]) {
       out.add(`${dir}/ns`);
       out.add(`${dir}/ns.jsonld`);
       out.add(`${dir}/ns.json`);
@@ -722,14 +722,14 @@ describe("a Role comes from the registry as well as from a lane", () => {
  *
  * The id was `dir.split("/").pop()` — the directory basename. Eleven of the
  * twelve packages hid that, because their directory is named after the
- * package. The twelfth was `cat-bootstrap/skills/`, whose manifest declares
- * `"name": "cat-bootstrap"` and whose node was `package/skills`, **named
+ * package. The twelfth was `bootstrap/skills/`, whose manifest declares
+ * `"name": "bootstrap"` and whose node was `package/skills`, **named
  * `skills`**.
  *
  * `cat-harness/src/skills/` has the same basename, so both wanted
  * `package/skills`, and a `seen` set dropped whichever arrived second while
  * its skills went on emitting `inPackage -> package/skills`. The result was a
- * node with five members: cat-bootstrap's skills plus `corpus-grep`, a
+ * node with five members: bootstrap's skills plus `corpus-grep`, a
  * cat-harness skill from a directory with **no manifest at all**, published as
  * a member of a package it was never listed in.
  *
@@ -741,7 +741,7 @@ describe("a Role comes from the registry as well as from a lane", () => {
  * These assert the OUTCOME (the two packages are distinct and carry the right
  * members) and the MECHANISM (the id tracks the declared name). An outcome
  * test alone would go on passing if the resolver silently reverted to
- * basenames, because `cat-bootstrap/skills` and `src/skills` are the only pair
+ * basenames, because `bootstrap/skills` and `src/skills` are the only pair
  * in this corpus that collide — and the day somebody renames one, the outcome
  * test would pass over a corpus with nothing left to detect.
  */
@@ -762,33 +762,33 @@ describe("a package's id is declared, not derived from its path", () => {
     expect(ids.length).toBe(new Set(ids).size);
   });
 
-  // WITNESS RETARGETED 2026-09-21, from `cat-bootstrap` to
-  // `cat-bootstrap-render`, and the reason is worth more than the change.
+  // WITNESS RETARGETED 2026-09-21, from `bootstrap` to
+  // `bootstrap-render`, and the reason is worth more than the change.
   //
   // These three guarded `packageIdFor`'s rule — an id comes from the
   // manifest's `name`, never from the directory basename — by asserting it of
   // the one package in the corpus that exercised it. The owner's `pve3`
-  // ruling ("neither") removed `cat-bootstrap/skills/` from this instance's
+  // ruling ("neither") removed `bootstrap/skills/` from this instance's
   // declared directories, so that package is no longer in this graph and the
   // witness went with it.
   //
   // Deleting them would have deleted a live contamination guard along with
-  // the witness. `cat-bootstrap/render/` is still declared here and has the
-  // same shape — basename `render`, manifest `cat-bootstrap-render` — so the
+  // the witness. `bootstrap/render/` is still declared here and has the
+  // same shape — basename `render`, manifest `bootstrap-render` — so the
   // RULE is still witnessed against the real corpus rather than a fixture.
   //
   // The lesson, since this is the second time a corpus witness has been lost
   // to a declaration change: a test that asserts a RULE through one named
   // example dies with that example. Where `packageIdFor` can be called
   // directly against a root, prefer that.
-  test("`cat-bootstrap-render` is named by its manifest, not by its directory", () => {
-    // Its directory is `cat-bootstrap/render/`, basename `render`. The
-    // manifest says `cat-bootstrap-render`. Exactly the case the basename rule
+  test("`bootstrap-render` is named by its manifest, not by its directory", () => {
+    // Its directory is `bootstrap/render/`, basename `render`. The
+    // manifest says `bootstrap-render`. Exactly the case the basename rule
     // got wrong.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap-render"));
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"));
     expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
-    expect(p!["name"]).toBe("cat-bootstrap-render");
-    expect(String(p!["path"])).toContain("cat-bootstrap/render");
+    expect(p!["name"]).toBe("bootstrap-render");
+    expect(String(p!["path"])).toContain("bootstrap/render");
     // And the basename is NOT what it is called — the assertion the rule is
     // actually about, which naming the package alone does not make.
     expect(p!["name"]).not.toBe("render");
@@ -798,10 +798,10 @@ describe("a package's id is declared, not derived from its path", () => {
     // Listed rather than counted, because what the collision produced was a
     // member from ANOTHER package — a count would have gone on passing while
     // one name was swapped for another.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap-render"))!;
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"))!;
     expect(membersOf(String(p["@id"])).sort()).toEqual([
-      "skill/cat-bootstrap-graph-emission",
-      "skill/cat-bootstrap-graph-publication",
+      "skill/bootstrap-graph-emission",
+      "skill/bootstrap-graph-publication",
     ]);
   });
 
@@ -810,8 +810,8 @@ describe("a package's id is declared, not derived from its path", () => {
     // that every other signal called healthy. `corpus-grep` lived in
     // `src/skills/`, which declared no package at all; since #760 it lives in
     // `skills/folio-core/` and is listed in that package's manifest. Either
-    // way it is not cat-bootstrap's, which is what this pins.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/cat-bootstrap-render"))!;
+    // way it is not bootstrap's, which is what this pins.
+    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"))!;
     expect(membersOf(String(p["@id"]))).not.toContain("skill/corpus-grep");
   });
 
@@ -846,7 +846,7 @@ describe("a package's id is declared, not derived from its path", () => {
   test("every package with a manifest is named what that manifest says", () => {
     // The mechanism, over the whole corpus rather than the one case above.
     // Without this the resolver could revert to basenames and only
-    // cat-bootstrap would notice.
+    // bootstrap would notice.
     for (const p of packages()) {
       if (p["hasManifest"] !== true) continue;
       const id = String(p["@id"]).split("#package/")[1];
@@ -857,17 +857,17 @@ describe("a package's id is declared, not derived from its path", () => {
 
 describe("exporting ANOTHER instance's graph", () => {
   // `gn4l` separated the generic collectors from the instance-bound ones in
-  // 2026-09-19 and proved `collectInstanceNodes` against cat-bootstrap. What
+  // 2026-09-19 and proved `collectInstanceNodes` against bootstrap. What
   // it did not do is let a DOCUMENT be built for another instance, and the
   // owner's `pve3` ruling ("neither") made that necessary: this graph now
-  // links into cat-bootstrap's, so cat-bootstrap's has to exist.
-  const BOOT = join(import.meta.dir, "../../../cat-bootstrap");
+  // links into bootstrap's, so bootstrap's has to exist.
+  const BOOT = join(import.meta.dir, "../../../bootstrap");
   const BASE = "https://example.invalid/fa";
 
   test("it takes the OTHER instance's identity", async () => {
     const { buildExport } = await import("../kg-export.js");
     const e = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
-    expect(e["@id"]).toBe(`${BASE}/cat-bootstrap.jsonld`);
+    expect(e["@id"]).toBe(`${BASE}/bootstrap.jsonld`);
   });
 
   test("and the other instance's CONTENT — not this one's under that name", async () => {
@@ -876,7 +876,7 @@ describe("exporting ANOTHER instance's graph", () => {
     // while leaving the collector list alone produces a document that is
     // wrong about whose it is, under a name a consumer trusts.
     //
-    // Measured by removing the branch: cat-bootstrap's document came back
+    // Measured by removing the branch: bootstrap's document came back
     // with 2079 nodes — this instance's 222 skills and 55 processes — instead
     // of 85. A size comparison is the check, because every other signal
     // (`@id`, stub, published path) was correct in that run.
@@ -886,16 +886,16 @@ describe("exporting ANOTHER instance's graph", () => {
     const n = (e: { "@graph": unknown[] }) => e["@graph"].length;
     expect(n(theirs)).toBeGreaterThan(0);
     expect(n(theirs)).toBeLessThan(n(mine) / 4);
-    // And named, not merely smaller: a skill cat-bootstrap has and this
+    // And named, not merely smaller: a skill bootstrap has and this
     // instance does not.
     const ids = new Set((theirs["@graph"] as Array<{ "@id": string }>).map((x) => x["@id"]));
-    expect(ids.has(`${BASE}/cat-bootstrap.jsonld#skill/discussion`)).toBe(true);
+    expect(ids.has(`${BASE}/bootstrap.jsonld#skill/discussion`)).toBe(true);
   });
 
   test("it emits no link to a collector it did not run", async () => {
     // `collectSkills` puts `inPackage` on every skill; `collectPackages` is
     // instance-bound and omitted. Left alone that was SEVEN dangling links in
-    // cat-bootstrap's export, every skill pointing at a package node the
+    // bootstrap's export, every skill pointing at a package node the
     // document cannot contain.
     const { buildExport } = await import("../kg-export.js");
     const e = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
@@ -904,7 +904,7 @@ describe("exporting ANOTHER instance's graph", () => {
   });
 
   test("a Tool satisfying a sibling's skill links into the SIBLING's document", async () => {
-    // The edge `pve3` created: the skills live in cat-bootstrap so an
+    // The edge `pve3` created: the skills live in bootstrap so an
     // Initiator can read them with nothing installed, the Tool nodes live here
     // because a Tool is cat-harness's vocabulary (`gn4l`).
     const { buildExport } = await import("../kg-export.js");
@@ -917,7 +917,7 @@ describe("exporting ANOTHER instance's graph", () => {
     const tool = (e["@graph"] as Array<Record<string, unknown>>).find(
       (n) => n["@id"] === `${e["@id"]}#tool/discuss`,
     )!;
-    expect(tool.satisfies).toEqual([`${BASE}/cat-bootstrap.jsonld#skill/discussion`]);
+    expect(tool.satisfies).toEqual([`${BASE}/bootstrap.jsonld#skill/discussion`]);
   });
 
   test("a skill THIS instance also declares stays here", async () => {
@@ -931,7 +931,7 @@ describe("exporting ANOTHER instance's graph", () => {
       for (const s of (n.satisfies ?? []) as string[]) {
         if (s.startsWith(`${own}#`)) continue;
         // The only legitimate foreign home in this corpus.
-        expect(s.startsWith(`${BASE}/cat-bootstrap.jsonld#`)).toBe(true);
+        expect(s.startsWith(`${BASE}/bootstrap.jsonld#`)).toBe(true);
       }
     }
   });

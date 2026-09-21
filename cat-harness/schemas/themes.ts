@@ -140,7 +140,7 @@ const RAW = [
   {
     $schema: THEME_SCHEMA_TAG,
     kind: "sticky",
-    id: "cat-bootstrap",
+    id: "bootstrap",
     name: "CatBootstrap",
     description: "Desert sand and sienna \u2014 the frontier at the start of the trail.",
     palette: {
@@ -162,7 +162,7 @@ const RAW = [
     // would fall back to the default grumpy cloud, whose geometry is a
     // different composition's and would put the text across the @.
     backdrop: {
-      imageRole: "landing-cat-bootstrap",
+      imageRole: "landing-bootstrap",
       // Measured the same way as its siblings: `ink` over this scrim laid on
       // PURE BLACK, the darkest art any instance could declare, is 9.25:1 \u2014
       // clear of the AAA 7:1 floor. 14.37:1 on pure white.

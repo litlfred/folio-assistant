@@ -29,7 +29,7 @@ source-tree stub that Jekyll does not carry into the site. Anyone composing
 the URL from the source path gets a 404 and concludes the page is missing.
 
 **And a source path moves under you.** The worked example below was
-`docs/folio-assistant/proposals/cat-bootstrap.md`; the stub pattern inverted it to
+`docs/folio-assistant/proposals/bootstrap.md`; the stub pattern inverted it to
 `folio-assistant/docs/proposals/` (bean `wggr`), and then proposals were
 relocated out of the site entirely to `fsh-guts/proposals/`, which is kept and
 addressable but **deliberately unpublished** — so that page has no URL at all
@@ -171,6 +171,6 @@ verify it rendered*, on the strength of two `curl` calls that returned `000`
 because the proxy had refused the tunnel — and I had built the URL from
 `docs/folio-assistant/proposals/` rather than resolving it. One
 `git ls-tree -r FETCH_HEAD | grep proposal` showed the page present at
-`proposals/cat-bootstrap.html`. Both halves of the error — a composed URL and a
+`proposals/bootstrap.html`. Both halves of the error — a composed URL and a
 fetch mistaken for evidence — are what this skill exists to prevent.
 {% endraw %}

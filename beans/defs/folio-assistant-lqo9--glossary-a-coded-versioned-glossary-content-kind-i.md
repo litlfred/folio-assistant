@@ -188,7 +188,7 @@ owed before slice 1, and this bean said it was.
 `rdfs:Class`/`rdf:Property` type, plus `prefLabel`, `definition`, `notation`
 and `inScheme`. Three `ConceptScheme` nodes are emitted, **derived from the
 terms actually present** rather than from the three layers that exist — a
-scheme with no members is `dh4f` in miniature, so a `--layer cat-bootstrap`
+scheme with no members is `dh4f` in miniature, so a `--layer bootstrap`
 slice carries exactly one. In `--exact` mode the document IS its layer's
 scheme and carries both types, rather than a node sharing its own `@id`.
 

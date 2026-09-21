@@ -195,12 +195,12 @@ either.
 ### The gate reports one finding, and it is worth a second opinion
 
 ```
-✗ . → agent-instructions (litlfred/folio-assistant/cat-bootstrap/AGENTS.md)
+✗ . → agent-instructions (litlfred/folio-assistant/bootstrap/AGENTS.md)
   unpinned — no ref at all — `current` by omission
 ```
 
 **Left alone, deliberately.** The source is `{instance:
-"litlfred/folio-assistant", path: "cat-bootstrap/AGENTS.md"}` — the SAME
+"litlfred/folio-assistant", path: "bootstrap/AGENTS.md"}` — the SAME
 repository. Source and descendant are committed together and move atomically,
 so there is no floating window between them in the sense the gate exists to
 catch.
