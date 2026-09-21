@@ -47,9 +47,24 @@
  * ## What it does NOT catch, stated because a checker that hides its blind
  * spots is worse than none
  *
- * **Non-TypeScript readers.** The `.yml` workflow files that name the filename
- * cannot import a constant; they are reported by count so a rename knows they
- * exist, and this check has no opinion on how they should be fixed.
+ * **Non-TypeScript readers used to be a blind spot and are not one now.** A
+ * `.yml` cannot import a constant, so the TypeScript rule does not transfer —
+ * but "cannot import a constant" was doing double duty as "cannot be wrong",
+ * and those are different claims. The YAML side had ONE bucket, *does the file
+ * contain the string*, against the TypeScript side's careful four, and the
+ * asymmetry hid two things at once:
+ *
+ *   - `run: cat cat-harness/harness.json` — a step that reads a file which no
+ *     longer exists — was reported under `✓ no call site names the retired
+ *     name`, exit 0. **Measured by planting exactly that line**, before any of
+ *     this was written.
+ *   - the count was per FILE, so a second occurrence in an already-counted
+ *     file did not move the number either.
+ *
+ * {@link classifyWorkflowLine} gives it the same three-way split the
+ * TypeScript side has, and a `use` now FAILS. `prose` is reworded by a rename,
+ * exactly as on the TypeScript side; `jekyll-data` must never be renamed at
+ * all, which is the one thing a bare count most needed to say and could not.
  *
  * **Call sites outside the instance that owns the constant.** Measured: two,
  * both in `folio-assistant-core/schemas/library-ref.ts`, and
@@ -110,12 +125,27 @@ export interface Bypass {
   kind: "literal" | "template";
 }
 
+/** One workflow line naming the retired declaration, with what it is. */
+export interface WorkflowRef {
+  file: string;
+  line: number;
+  text: string;
+  klass: "prose" | "jekyll-data" | "use";
+}
+
 export interface DeclarationFilenameReport {
   filesRead: number;
   /** Non-test call sites building the path from a literal. These FAIL. */
   bypasses: Bypass[];
   /** Counted, never failed — see the module header for each reason. */
-  counted: { tests: number; prose: number; nonTypescript: number };
+  counted: { tests: number; prose: number };
+  /**
+   * Workflow lines naming the retired declaration, CLASSIFIED — not a count.
+   *
+   * `null` means the directory could not be read, which the report renders as
+   * unknown and never as zero. A `use` in here fails the check.
+   */
+  workflows: WorkflowRef[] | null;
   /**
    * Bypasses outside {@link OWNING_INSTANCE}. Counted with their locations
    * rather than as a bare number: a boundary question needs the sites named
@@ -185,19 +215,79 @@ function walk(dir: string, out: string[]): void {
   }
 }
 
-function countNonTypescript(): number {
-  const out: string[] = [];
-  const yml = join(REPO_ROOT, ".github", "workflows");
-  try {
-    for (const e of readdirSync(yml, { withFileTypes: true })) {
-      if (!e.isFile()) continue;
-      if (!e.name.endsWith(".yml") && !e.name.endsWith(".yaml")) continue;
-      if (readFileSync(join(yml, e.name), "utf8").includes(RETIRED_DECLARATION)) out.push(e.name);
-    }
-  } catch {
-    return -1; // could not determine — reported as unknown, never as zero
+/**
+ * What a workflow line naming the retired declaration actually is.
+ *
+ * - `jekyll-data` — `docs/_data/harness.json` is JEKYLL's data file. It merely
+ *   shares a basename and **must not be renamed**. Checked FIRST, because a
+ *   comment naming it is both a comment and an exemption, and the exemption is
+ *   the part a rename needs to hear.
+ * - `prose` — the name inside a `#` comment. A rename REWORDS these. Same
+ *   reasoning, and the same words, as the TypeScript side's prose class.
+ * - `use` — anything else: a step, an argument, a path. **Fails.** A `.yml`
+ *   cannot import the constant, so this cannot be fixed the way a call site
+ *   is; it is a broken reference to a file that does not exist, which is
+ *   worse than a bypass rather than better.
+ *
+ * Returns `null` when the line does not name the retired declaration at all.
+ */
+export function classifyWorkflowLine(line: string): "prose" | "jekyll-data" | "use" | null {
+  const at = boundedIndexOf(line, RETIRED_DECLARATION);
+  if (at === -1) return null;
+  if (line.includes("_data")) return "jekyll-data";
+  const hash = line.indexOf("#");
+  return hash !== -1 && hash < at ? "prose" : "use";
+}
+
+/**
+ * Where the retired name starts, as a FILENAME rather than as a substring.
+ *
+ * The YAML side's answer to the TypeScript side's whole-value rule, and it is
+ * load-bearing rather than defensive: **`cat-harness.json` contains
+ * `harness.json`.** A bare `indexOf` reports the CURRENT declaration of the
+ * instance that owns this gate as a reference to the retired one.
+ *
+ * That is not hypothetical. It was found by writing the fix for
+ * `docs-site.yml` — the corrected comment names
+ * `cat-harness/cat-harness.json`, and the naive classifier counted the
+ * correction as the defect. The same collision class as `docs/_data`, which
+ * this file already had a rule for, one character further left.
+ *
+ * A match must not be preceded by a filename character. `/harness.json` and
+ * `` `harness.json` `` match; `cat-harness.json` and `x.harness.json` do not.
+ */
+function boundedIndexOf(line: string, name: string): number {
+  let from = 0;
+  for (;;) {
+    const at = line.indexOf(name, from);
+    if (at === -1) return -1;
+    const before = at === 0 ? "" : line[at - 1]!;
+    if (!/[A-Za-z0-9._-]/.test(before)) return at;
+    from = at + 1;
   }
-  return out.length;
+}
+
+/**
+ * Every workflow line naming the retired declaration, classified.
+ *
+ * Throws rather than returning `[]` when the directory cannot be read: an
+ * empty list from an unreadable directory is the `dh4f` shape, and the caller
+ * turns the throw into the report's `? COULD NOT DETERMINE` rather than into
+ * a zero.
+ */
+function scanWorkflows(root: string): WorkflowRef[] {
+  const out: WorkflowRef[] = [];
+  const yml = join(root, ".github", "workflows");
+  for (const e of readdirSync(yml, { withFileTypes: true })) {
+    if (!e.isFile()) continue;
+    if (!e.name.endsWith(".yml") && !e.name.endsWith(".yaml")) continue;
+    const lines = readFileSync(join(yml, e.name), "utf8").split("\n");
+    for (const [i, line] of lines.entries()) {
+      const klass = classifyWorkflowLine(line);
+      if (klass) out.push({ file: `.github/workflows/${e.name}`, line: i + 1, text: line.trim(), klass });
+    }
+  }
+  return out;
 }
 
 export function checkDeclarationFilename(root = REPO_ROOT): DeclarationFilenameReport {
@@ -257,8 +347,26 @@ export function checkDeclarationFilename(root = REPO_ROOT): DeclarationFilenameR
     filesRead: files.length,
     bypasses,
     crossInstance,
-    counted: { tests, prose, nonTypescript: countNonTypescript() },
+    counted: { tests, prose },
+    workflows: (() => {
+      try {
+        return scanWorkflows(root);
+      } catch {
+        return null; // could not determine — never rendered as zero
+      }
+    })(),
   };
+}
+
+/**
+ * The workflow lines that FAIL.
+ *
+ * A helper rather than a filter at each call site, because the exit code and
+ * the report must agree about what a failure is — and they are written in two
+ * places that a later edit could move apart.
+ */
+export function workflowUses(r: DeclarationFilenameReport): WorkflowRef[] {
+  return (r.workflows ?? []).filter((w) => w.klass === "use");
 }
 
 function formatReport(r: DeclarationFilenameReport): string {
@@ -290,16 +398,32 @@ function formatReport(r: DeclarationFilenameReport): string {
     out.push("      the split (`vke6`), not for this check — see the module header.");
   }
 
+  const uses = workflowUses(r);
+  if (uses.length > 0) {
+    out.push("");
+    out.push(`  ✗ ${uses.length} workflow line(s) USE the retired declaration — a path to a file that is gone:`);
+    for (const w of uses) {
+      out.push(`      ${w.file}:${w.line}`);
+      out.push(`        ${w.text}`);
+    }
+    out.push("      A `.yml` cannot import the constant, so this is not fixed the way a call");
+    out.push("      site is: name the instance's own `<name>.config.json`, or drop the step.");
+  }
+
   const c = r.counted;
   out.push("");
   out.push("  Counted, not failed — each for a reason in the module header:");
   out.push(`    test fixtures      ${c.tests}  (an open judgement on bean \`jijc\`, not a finding)`);
   out.push(`    prose occurrences  ${c.prose}  (a rename REWORDS these)`);
-  out.push(
-    c.nonTypescript < 0
-      ? "    workflow files     ? COULD NOT DETERMINE — not zero"
-      : `    workflow files     ${c.nonTypescript}  (cannot import a constant; listed so a rename knows)`,
-  );
+
+  if (r.workflows === null) {
+    out.push("    workflow lines     ? COULD NOT DETERMINE — not zero");
+  } else {
+    const by = (k: WorkflowRef["klass"]) => r.workflows!.filter((w) => w.klass === k);
+    out.push(`    workflow prose     ${by("prose").length}  (a rename REWORDS these — listed below)`);
+    out.push(`    workflow jekyll    ${by("jekyll-data").length}  (\`docs/_data/harness.json\` — must NOT be renamed)`);
+    for (const w of by("prose")) out.push(`      · ${w.file}:${w.line}`);
+  }
   return out.join("\n");
 }
 
@@ -313,5 +437,8 @@ if (import.meta.main) {
     process.exit(2);
   }
   console.log(process.argv.includes("--json") ? JSON.stringify(report, null, 2) : formatReport(report));
-  process.exit(report.bypasses.length || report.filesRead === 0 ? 1 : 0);
+  // `workflows === null` is UNKNOWN, not clean: exit 2, the same code the
+  // catch above uses, so a directory that cannot be read never reads as a pass.
+  if (report.workflows === null) process.exit(2);
+  process.exit(report.bypasses.length || workflowUses(report).length || report.filesRead === 0 ? 1 : 0);
 }

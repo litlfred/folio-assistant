@@ -35,7 +35,7 @@ import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { checkDeclarationFilename } from "../check-declaration-filename.ts";
+import { checkDeclarationFilename, classifyWorkflowLine, workflowUses } from "../check-declaration-filename.ts";
 
 /**
  * A tree holding one source file at `<root>/<rel>`.
@@ -146,5 +146,79 @@ describe("a path to the declaration is built from the constant", () => {
     const empty = mkdtempSync(join(tmpdir(), "declfile-empty-"));
     expect(checkDeclarationFilename(empty).filesRead).toBe(0);
     // The runner exits non-zero on filesRead === 0 — see the module's main.
+  });
+});
+
+// ── The YAML half. It was one bucket until the workflow half of `jijc`. ─────
+//
+// These literals are DATA too — see this module's header. Each is a workflow
+// line the classifier reads, not a line this file executes.
+
+describe("a workflow line is classified, not merely counted", () => {
+  test("a step that READS the retired declaration fails", () => {
+    // Falsified by planting exactly this in `health-check.yml` before any of
+    // the classifier existed: the check printed "✓ no call site names the
+    // retired name" and exited 0.
+    expect(classifyWorkflowLine("        run: cat cat-harness/harness.json")).toBe("use");
+  });
+
+  test("a comment naming it is prose — a rename REWORDS these", () => {
+    expect(classifyWorkflowLine("      # the `stub` in harness.json")).toBe("prose");
+    expect(classifyWorkflowLine("# Declared in `harness.json` as the `health` graph.")).toBe("prose");
+  });
+
+  test("the Jekyll data file is its own class, and outranks prose", () => {
+    // Both a comment AND an exemption. The exemption is the part a rename
+    // needs to hear: `docs/_data/harness.json` must NOT be renamed.
+    expect(classifyWorkflowLine("          # and `docs/_data/harness.json` is a")).toBe("jekyll-data");
+    expect(classifyWorkflowLine("        run: cat cat-harness/docs/_data/harness.json")).toBe("jekyll-data");
+  });
+
+  test("a line not naming it at all classifies as null, not as clean", () => {
+    expect(classifyWorkflowLine("      - name: Checkout")).toBeNull();
+  });
+});
+
+describe("GUARD: `cat-harness.json` CONTAINS `harness.json`", () => {
+  test("the CURRENT declaration is not a reference to the retired one", () => {
+    // Load-bearing, and found by writing the fix rather than by foresight: the
+    // corrected `docs-site.yml` comment names `cat-harness/cat-harness.json`,
+    // and a bare indexOf counted the correction as the defect. Same collision
+    // class as `docs/_data`, one character further left.
+    expect(classifyWorkflowLine("      # the `stub` in cat-harness/cat-harness.json")).toBeNull();
+    expect(classifyWorkflowLine("        run: cat cat-harness/cat-harness.json")).toBeNull();
+  });
+
+  test("...and the boundary does not swallow the real thing", () => {
+    // The direction that matters: narrowing for the collision must not make
+    // the case the gate exists for invisible.
+    expect(classifyWorkflowLine("        run: cat cat-harness/harness.json")).toBe("use");
+    expect(classifyWorkflowLine("        run: cat harness.json")).toBe("use");
+  });
+
+  test("a second occurrence in an already-seen file is its own finding", () => {
+    // The old counter counted FILES, so a bypass added to a file already on
+    // the list did not move the number either.
+    const a = classifyWorkflowLine("        run: cat cat-harness/harness.json");
+    const b = classifyWorkflowLine("        run: cat folio-assistant/harness.json");
+    expect([a, b]).toEqual(["use", "use"]);
+  });
+});
+
+describe("the workflow scan reports unknown, never zero", () => {
+  test("a checkout with no .github/workflows gives null, and null is not clean", () => {
+    const empty = mkdtempSync(join(tmpdir(), "declfile-noyml-"));
+    mkdirSync(join(empty, "src"), { recursive: true });
+    writeFileSync(join(empty, "src", "a.ts"), "export const x = 1;\n");
+    const r = checkDeclarationFilename(empty);
+    expect(r.workflows).toBeNull();
+    // `workflowUses` must not turn unknown into an empty finding list that a
+    // caller reads as a pass; the runner exits 2 on null before it gets here.
+    expect(workflowUses(r)).toEqual([]);
+  });
+
+  test("this repository's own workflows carry no USE", () => {
+    const r = checkDeclarationFilename();
+    expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
   });
 });
