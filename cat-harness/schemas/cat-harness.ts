@@ -80,8 +80,158 @@ import {
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
 
-/** Root-relative filename carrying an instance's declaration. */
-export const DECLARATION_FILENAME = "harness.json";
+/**
+ * The suffix every instance declaration carries — `<name>.config.json`.
+ *
+ * ## `harness.json` is gone, and this replaced it
+ *
+ * The owner, 2026-09-21: *"Excise harness.json.. only
+ * `<harness-stub>.config.json` makes instantiation at root of repo"*.
+ *
+ * There used to be TWO files with no overlap in content: `harness.json` held
+ * the DECLARATION (`name`, `directories`, `assets`, `needs`, `stickies`) and
+ * `<name>.config.json` held the CONFIG (`contentType`, `adapter`,
+ * `dependencies`, `translation`). One instance, two files, and a reader had to
+ * know which question each answered. They are one file now.
+ *
+ * ## A fixed filename cannot be discovered, and that was the point
+ *
+ * `harness.json` was a CONSTANT, so discovery asked `existsSync(dir +
+ * "/harness.json")` and the declared `name` inside was free to be anything.
+ * Under `<name>.config.json` the FILENAME CARRIES THE NAME, so the two cannot
+ * disagree — and {@link findDeclarationFile} checks exactly that rather than
+ * trusting either half.
+ *
+ * ## What tells a declaration from a plain config
+ *
+ * **A `name` field.** Both live at the repository root, and both end
+ * `.config.json`, so the discriminator has to be inside. A file carrying
+ * `name` declares an instance; one without it configures the checkout it sits
+ * in. `cat-harness.config.json` at the root is the second kind, which is why
+ * it is left where it is: it is an INSTANTIATION marker, which is the half of
+ * the owner's sentence that stays.
+ */
+export const DECLARATION_SUFFIX = ".config.json";
+
+/**
+ * The declaration filename for an instance of this name.
+ *
+ * Defined HERE and re-exported by `schemas/harness-config.ts`, which is where
+ * it used to live — that module imports this one, so the dependency only runs
+ * one way and the alternative was two functions spelling one filename. One
+ * speller, or the config and the declaration drift apart at the first rename.
+ */
+export function instanceConfigFilename(name: string): string {
+  return `${name}${DECLARATION_SUFFIX}`;
+}
+
+/**
+ * The declaration file in this directory, or `undefined` if there is none.
+ *
+ * Scans for `*.config.json` and returns the one that both carries a `name` and
+ * whose filename stem EQUALS that name. A file failing either half is not a
+ * declaration: no `name` means it is a plain config, and a mismatched stem is
+ * the rename-half-done case `check:instance-config` already reports.
+ *
+ * **Several declarations in one directory THROWS.** Picking one silently is
+ * the `dh4f` shape — a consumer reads a declaration, gets an answer, and
+ * reports a clean run over the instance it did not see. There is no correct
+ * choice to make here, so the caller is told rather than guessed at.
+ */
+export function findDeclarationFile(dir: string): string | undefined {
+  let entries: string[];
+  try {
+    entries = readdirSync(dir);
+  } catch {
+    // Unreadable directory is "could not look", and a caller asking "is there
+    // a declaration here" gets `undefined` either way. The distinction is not
+    // lost: every caller that needs it re-reads and throws.
+    return undefined;
+  }
+  const found: string[] = [];
+  const broken: string[] = [];
+  for (const entry of entries) {
+    if (!entry.endsWith(DECLARATION_SUFFIX)) continue;
+    const stem = entry.slice(0, -DECLARATION_SUFFIX.length);
+    if (stem.length === 0) continue;
+    let raw: unknown;
+    try {
+      raw = JSON.parse(readFileSync(join(dir, entry), "utf-8"));
+    } catch {
+      // UNPARSEABLE IS NOT ABSENT. Skipping it here would make "this instance
+      // declared something and it is broken" indistinguishable from "there is
+      // nothing here" — the `xom7` failure, where a sweep that could not look
+      // reports a clean run. It cannot be matched on `name` (there is no
+      // parse), so it is collected separately and `readDeclaration` throws on
+      // it rather than returning `undefined`.
+      broken.push(entry);
+      continue;
+    }
+    if ((raw as { name?: unknown })?.name === stem) found.push(entry);
+  }
+  // A VALID declaration wins over a broken sibling: a directory may hold an
+  // unrelated `*.config.json` that is merely malformed, and that must not stop
+  // the instance being read.
+  //
+  // With NOTHING valid, the broken one is returned rather than thrown on, and
+  // that is the whole third-state design. DISCOVERY MUST BE TOTAL —
+  // `instanceRootsIn` asks "which directories are instances" and a throw there
+  // takes out every caller, including the ones written to REPORT an unreadable
+  // declaration (`workPlanGraphsIn`, `isActiveKg`). Returning it reproduces
+  // the old semantics exactly: `harness.json` present made the directory an
+  // instance, and `readDeclaration` threw when it came to parse it. Present
+  // and unreadable stays distinguishable from absent, which is the property;
+  // where the error is raised is not.
+  if (found.length === 0 && broken.length > 0) return broken.sort()[0];
+  if (found.length > 1) {
+    throw new Error(
+      `${resolve(dir)} carries ${found.length} declarations (${found.sort().join(", ")}). ` +
+        "A directory is one instance; picking one silently would hide the others.",
+    );
+  }
+  return found[0];
+}
+
+/**
+ * The full path to this directory's declaration, or `undefined` if there is
+ * none.
+ *
+ * The replacement for `join(dir, DECLARATION_FILENAME)`, which every reader
+ * used to compose. It cannot be composed any more — the filename carries the
+ * instance's name, so the only way to know it is to look.
+ */
+export function declarationPathIn(dir: string): string | undefined {
+  const f = findDeclarationFile(dir);
+  return f === undefined ? undefined : join(dir, f);
+}
+
+/**
+ * `*.config.json` files in this directory that will not parse.
+ *
+ * Separate from {@link findDeclarationFile} because the two answer different
+ * questions: that one says which file IS the declaration, this one says what
+ * could not be read at all. A caller reporting instance health needs both, and
+ * folding them would make a broken sibling look like a missing instance.
+ */
+export function unparseableConfigsIn(dir: string): string[] {
+  let entries: string[];
+  try {
+    entries = readdirSync(dir);
+  } catch {
+    return [];
+  }
+  return entries
+    .filter((e) => e.endsWith(DECLARATION_SUFFIX) && e.length > DECLARATION_SUFFIX.length)
+    .filter((e) => {
+      try {
+        JSON.parse(readFileSync(join(dir, e), "utf-8"));
+        return false;
+      } catch {
+        return true;
+      }
+    })
+    .sort();
+}
 
 // ── Graph kinds ─────────────────────────────────────────────────
 
@@ -2618,7 +2768,7 @@ export function rootForScope(instanceRoot: string, scope?: DeclarationScope): st
 
 /**
  * The instance directory a module inside it belongs to — the nearest enclosing
- * directory carrying a {@link DECLARATION_FILENAME}.
+ * directory carrying a declaration — see {@link findDeclarationFile}.
  *
  * ## Why a walk rather than `process.cwd()`
  *
@@ -2647,7 +2797,7 @@ export function rootForScope(instanceRoot: string, scope?: DeclarationScope): st
 export function findInstanceRoot(start: string): string | undefined {
   let dir = resolve(start);
   for (;;) {
-    if (existsSync(join(dir, DECLARATION_FILENAME))) return dir;
+    if (findDeclarationFile(dir) !== undefined) return dir;
     const up = resolve(dir, "..");
     if (up === dir) return undefined;
     dir = up;
@@ -2686,7 +2836,7 @@ export function findInstanceRoot(start: string): string | undefined {
 export function instanceRootsIn(repoRoot: string): string[] {
   const root = resolve(repoRoot);
   const out: string[] = [];
-  if (existsSync(join(root, DECLARATION_FILENAME))) out.push(root);
+  if (findDeclarationFile(root) !== undefined) out.push(root);
 
   let entries: Dirent[];
   try {
@@ -2701,7 +2851,7 @@ export function instanceRootsIn(repoRoot: string): string[] {
   const subs = entries
     .filter((e) => e.isDirectory() && !e.name.startsWith("."))
     .map((e) => join(root, e.name))
-    .filter((p) => existsSync(join(p, DECLARATION_FILENAME)))
+    .filter((p) => findDeclarationFile(p) !== undefined)
     .sort();
 
   return out.concat(subs);
@@ -2712,7 +2862,7 @@ export function instanceRootFor(start: string): string {
   const root = findInstanceRoot(start);
   if (root === undefined) {
     throw new Error(
-      `no ${DECLARATION_FILENAME} in ${resolve(start)} or any parent — ` +
+      `no \`<name>${DECLARATION_SUFFIX}\` in ${resolve(start)} or any parent — ` +
         `cannot determine which instance this belongs to`,
     );
   }
@@ -2800,7 +2950,11 @@ export function initializationDoc(d: Pick<CatHarnessDeclaration, "name" | "stub"
 }
 
 export function siteDirFor(root: string): string {
-  const p = join(root, DECLARATION_FILENAME);
+  const file = findDeclarationFile(root);
+  // Named as a DIRECTORY when there is none: under `<name>.config.json` there
+  // is no single filename to report as missing, and "no declaration in <dir>"
+  // is the fact anyway.
+  const p = file === undefined ? resolve(root) : join(root, file);
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(p, "utf-8"));
@@ -2836,7 +2990,11 @@ export function siteDirFor(root: string): string {
  * is never rendered as an answer.
  */
 export function artefactStubFor(root: string): string {
-  const p = join(root, DECLARATION_FILENAME);
+  // Named as a DIRECTORY when there is no declaration, the same way
+  // `siteDirFor` is: under `<name>.config.json` there is no single filename to
+  // report as missing, and "no declaration in <dir>" is the fact anyway.
+  const file = findDeclarationFile(root);
+  const p = file === undefined ? resolve(root) : join(root, file);
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(p, "utf-8"));
@@ -3137,8 +3295,9 @@ export function isPublishedDirectory(d: { graphs?: readonly string[] }): boolean
  * unrelated directory declares a graph kind this layer has not registered.
  */
 export function publicationHost(root: string): PublicationHost | undefined {
-  const p = join(root, DECLARATION_FILENAME);
-  if (!existsSync(p)) return undefined;
+  const file = findDeclarationFile(root);
+  if (file === undefined) return undefined;
+  const p = join(root, file);
   try {
     const raw = JSON.parse(readFileSync(p, "utf-8")) as { publication?: { host?: unknown } };
     const host = raw.publication?.host;
@@ -3248,8 +3407,9 @@ export function readDeclaration(
   instanceRoot: string,
   registry: GraphKindRegistry = defaultGraphKinds,
 ): CatHarnessDeclaration | undefined {
-  const p = join(instanceRoot, DECLARATION_FILENAME);
-  if (!existsSync(p)) return undefined;
+  const file = findDeclarationFile(instanceRoot);
+  if (file === undefined) return undefined;
+  const p = join(instanceRoot, file);
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(p, "utf-8"));
@@ -3761,8 +3921,9 @@ export function processMayWriteAsset(role: string): boolean | undefined {
 export function strayAssetRoleKeys(
   root: string,
 ): Array<{ root: string; asset: string; key: string }> {
-  const p = join(root, DECLARATION_FILENAME);
-  if (!existsSync(p)) return [];
+  const file = findDeclarationFile(root);
+  if (file === undefined) return [];
+  const p = join(root, file);
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(p, "utf8"));

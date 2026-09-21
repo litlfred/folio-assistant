@@ -165,7 +165,9 @@ every run by design.
    smart-trust's is 342,656 files).
 2. Run the ingest with a new `--id` and `--out`.
 3. Give the new directory a `harness.json` declaring one directory of kind
-   `fhir-artifact-index`, as `smart-trust/harness.json` does.
+   `fhir-artifact-index`, as `smart-trust/smart-trust.config.json` does. The
+   declaration is `<name>.config.json` since #695 — resolve it with
+   `declarationPathIn`, never by joining a filename.
 4. Add its `ingest:ig:check` invocation to the gate set, so the index cannot go
    stale silently.
 

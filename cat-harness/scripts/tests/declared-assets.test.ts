@@ -11,14 +11,15 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { AGENT_INSTRUCTIONS_ROLE, DECLARATION_FILENAME, declaredAssets, repoRootFor } from "../../schemas/cat-harness.js";
+import { AGENT_INSTRUCTIONS_ROLE, declaredAssets, repoRootFor } from "../../schemas/cat-harness.js";
 import { auditInstance, isCheckable, markdownLinks } from "../check-declared-assets.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
 function instance(assets: unknown[], files: Record<string, string> = {}): string {
   const root = mkdtempSync(join(tmpdir(), "assets-"));
-  writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "t", assets }));
+  writeDeclaration(root, JSON.stringify({ name: "t", assets }));
   for (const [rel, body] of Object.entries(files)) {
     mkdirSync(join(root, rel, ".."), { recursive: true });
     writeFileSync(join(root, rel), body);

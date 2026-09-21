@@ -14,34 +14,8 @@ import { registerFolioGraphKind } from "./folio-graph-kind";
 import { THEMES } from "./themes";
 import { BEAN_GRAPH_FILE } from "./bean-graph";
 import { TODO_GRAPH_FILE } from "./todo-graph";
-import {
-  defaultGraphKinds,
-  GraphKindRegistry,
-  graphLayer,
-  isContentGraph,
-  isContextGraph,
-  isStateGraph,
-  processMayWrite,
-  graphKindsOfLayer,
-  BASE_GRAPH_KINDS,
-  GraphKindConflictError,
-  DECLARATION_FILENAME,
-  isRenderable,
-  readDeclaration,
-  keepMarker,
-  materialiseDirectories,
-  renderableDirectories,
-  DEFAULT_DIRECTORIES,
-  declaredKinds,
-  directoryForGraph,
-  directoriesForGraph,
-  resolveDirectories,
-  resolveGraphKind,
-  ContentDirectorySchema,
-  instanceRootsIn,
-  toJsonLd,
-  type ResolvedDirectory,
-} from "./cat-harness";
+import { defaultGraphKinds, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, instanceRootsIn, toJsonLd, type ResolvedDirectory } from "./cat-harness";
+import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -54,37 +28,25 @@ const BROKEN = join(TMP, "broken");
 
 beforeAll(() => {
   mkdirSync(HARNESS, { recursive: true });
-  writeFileSync(
-    join(HARNESS, DECLARATION_FILENAME),
-    JSON.stringify({
+  writeDeclaration(HARNESS, JSON.stringify({
       name: "agentic-harness",
       directories: [
         { id: "tools", path: "tools/", dependents: "reproduce", graphs: ["tools"] },
         { id: "kg", path: "kg/", dependents: "reproduce", graphs: ["kg"] },
         { id: "schemas", path: "schemas/", dependents: "reproduce", graphs: ["schemas"] },
       ],
-    }),
-    "utf-8",
-  );
+    }));
 
   // core declares ONLY folio/ — the other three are inherited.
   mkdirSync(CORE, { recursive: true });
-  writeFileSync(
-    join(CORE, DECLARATION_FILENAME),
-    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }),
-    "utf-8",
-  );
+  writeDeclaration(CORE, JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }));
 
   // An instance that moves its knowledge graph somewhere else.
   mkdirSync(RELOCATED, { recursive: true });
-  writeFileSync(
-    join(RELOCATED, DECLARATION_FILENAME),
-    JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", dependents: "reproduce", graphs: ["kg"] }] }),
-    "utf-8",
-  );
+  writeDeclaration(RELOCATED, JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", dependents: "reproduce", graphs: ["kg"] }] }));
 
   mkdirSync(BROKEN, { recursive: true });
-  writeFileSync(join(BROKEN, DECLARATION_FILENAME), "{ not json", "utf-8");
+  writeDeclaration(BROKEN, "{ not json", "broken");
 });
 
 afterAll(() => rmSync(TMP, { recursive: true, force: true }));
@@ -117,18 +79,14 @@ describe("reading a declaration", () => {
     // declaration. Nothing was wrong with either side.
     const bad = join(TMP, "missing-dependents");
     mkdirSync(bad, { recursive: true });
-    writeFileSync(
-      join(bad, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(bad, JSON.stringify({
         name: "x",
         directories: [
           { id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] },
           { id: "methodology-raci", path: "methodologies/raci/", graphs: ["cat-harness"] },
           { id: "methodology-crdm", path: "methodologies/crdm/", graphs: ["cat-harness"] },
         ],
-      }),
-      "utf-8",
-    );
+      }));
     let err: unknown;
     try {
       readDeclaration(bad);
@@ -154,11 +112,7 @@ describe("reading a declaration", () => {
   it("rejects an unknown graph kind rather than accepting it", () => {
     const bad = join(TMP, "bad-kind");
     mkdirSync(bad, { recursive: true });
-    writeFileSync(
-      join(bad, DECLARATION_FILENAME),
-      JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", dependents: "reproduce", graphs: ["wishful"] }] }),
-      "utf-8",
-    );
+    writeDeclaration(bad, JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", dependents: "reproduce", graphs: ["wishful"] }] }));
     // The message must name the offending kind AND what is known, so the
     // author can see whether they typo'd or forgot to register a dependency's
     // contribution — those need different fixes.
@@ -176,7 +130,7 @@ describe("reading a declaration", () => {
   it("accepts the JSON-LD projection as input, not just the authored form", () => {
     const ld = join(TMP, "ld");
     mkdirSync(ld, { recursive: true });
-    writeFileSync(join(ld, DECLARATION_FILENAME), JSON.stringify(toJsonLd(readDeclaration(HARNESS)!)), "utf-8");
+    writeDeclaration(ld, JSON.stringify(toJsonLd(readDeclaration(HARNESS)!)));
     const back = readDeclaration(ld)!;
     // The fixture declares `id: "kg"` with `graphs: ["kg"]`, the pre-rename
     // spelling.
@@ -683,11 +637,7 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
     // instance's `harness.json` looked like before the rename.
     const old = join(TMP, "old-vocabulary");
     mkdirSync(join(old, "skills"), { recursive: true });
-    writeFileSync(
-      join(old, DECLARATION_FILENAME),
-      JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", dependents: "reproduce", graphs: ["kg"] }] }),
-      "utf-8",
-    );
+    writeDeclaration(old, JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", dependents: "reproduce", graphs: ["kg"] }] }));
     const d = readDeclaration(old);
     expect(d).toBeDefined();
     expect(d!.directories[0]!.graphs).toEqual(["kg"]);
@@ -708,7 +658,7 @@ describe("default directories — inherit the convention, declare only the devia
     mkdirSync(join(inst, "skills"), { recursive: true });
     mkdirSync(join(inst, "beans"), { recursive: true });
     mkdirSync(join(inst, "tools"), { recursive: true });
-    writeFileSync(join(inst, DECLARATION_FILENAME), JSON.stringify({ name: "minimal" }), "utf-8");
+    writeDeclaration(inst, JSON.stringify({ name: "minimal" }));
 
     const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
     expect(d.map((x) => x.id).sort()).toEqual(["beans", "cat-harness", "tools"]);
@@ -737,14 +687,10 @@ describe("default directories — inherit the convention, declare only the devia
     const moved = join(TMP, "defaults-override");
     mkdirSync(join(moved, "graph", "knowledge"), { recursive: true });
     mkdirSync(join(moved, "tools"), { recursive: true });
-    writeFileSync(
-      join(moved, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(moved, JSON.stringify({
         name: "relocated",
         directories: [{ id: "cat-harness", path: "graph/knowledge/", dependents: "reproduce", graphs: ["cat-harness"] }],
-      }),
-      "utf-8",
-    );
+      }));
     const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
     expect(d.find((x) => x.id === "cat-harness")!.path).toBe("graph/knowledge/");
     expect(d.find((x) => x.id === "cat-harness")!.declaredBy).toBe("relocated");
@@ -843,16 +789,13 @@ describe("directoryForGraph refuses an ambiguous kind rather than picking one", 
     const root = mkdtempSync(join(tmpdir(), "amb-"));
     mkdirSync(join(root, "a"), { recursive: true });
     mkdirSync(join(root, "b"), { recursive: true });
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "amb",
         directories: [
           { id: "first", path: "a/", dependents: "reproduce", graphs: ["schemas", "cat-harness"] },
           { id: "second", path: "b/", dependents: "reproduce", graphs: ["cat-harness"] },
         ],
-      }),
-    );
+      }));
     return root;
   }
 
@@ -950,13 +893,10 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
         directories: [{ id: "defs", path: "defs", dependents: "reproduce", graphs: ["bean-defs"] }],
       }),
     );
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "n",
         directories: [{ id: "beans", path: `${dirPath}/`, dependents: "reproduce", graphs: ["beans"] }],
-      }),
-    );
+      }));
     return root;
   }
 
@@ -994,10 +934,7 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
         join(root, "qa", "qa.json"),
         JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", dependents: "reproduce", graphs: ["health"] }] }),
       );
-      writeFileSync(
-        join(root, DECLARATION_FILENAME),
-        JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", dependents: "reproduce", graphs: ["qa"] }] }),
-      );
+      writeDeclaration(root, JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", dependents: "reproduce", graphs: ["qa"] }] }));
       const decl = readDeclaration(root)!;
       expect([...declaredKinds(root, decl)].sort()).toEqual(["health", "qa"]);
     } finally {
@@ -1026,10 +963,10 @@ describe("instanceRootsIn — discovered, never listed", () => {
   it("finds the root itself and every declaring subdirectory, root first", () => {
     const base = mkdtempSync(join(tmpdir(), "roots-"));
     const decl = JSON.stringify({ name: "x", directories: [] });
-    writeFileSync(join(base, DECLARATION_FILENAME), decl);
+    writeDeclaration(base, decl);
     for (const d of ["beta", "alpha"]) {
       mkdirSync(join(base, d), { recursive: true });
-      writeFileSync(join(base, d, DECLARATION_FILENAME), decl);
+      writeDeclaration(join(base, d), decl);
     }
     // declares nothing — present, but not an instance
     mkdirSync(join(base, "plain"), { recursive: true });
@@ -1045,10 +982,7 @@ describe("instanceRootsIn — discovered, never listed", () => {
   it("omits the root when the root does not declare", () => {
     const base = mkdtempSync(join(tmpdir(), "roots-"));
     mkdirSync(join(base, "only"), { recursive: true });
-    writeFileSync(
-      join(base, "only", DECLARATION_FILENAME),
-      JSON.stringify({ name: "only", directories: [] }),
-    );
+    writeDeclaration(join(base, "only"), JSON.stringify({ name: "only", directories: [] }));
     expect(instanceRootsIn(base)).toEqual([join(resolve(base), "only")]);
     rmSync(base, { recursive: true, force: true });
   });
@@ -1056,10 +990,7 @@ describe("instanceRootsIn — discovered, never listed", () => {
   it("skips dot-prefixed directories, like every other path guard here", () => {
     const base = mkdtempSync(join(tmpdir(), "roots-"));
     mkdirSync(join(base, ".hidden"), { recursive: true });
-    writeFileSync(
-      join(base, ".hidden", DECLARATION_FILENAME),
-      JSON.stringify({ name: "hidden", directories: [] }),
-    );
+    writeDeclaration(join(base, ".hidden"), JSON.stringify({ name: "hidden", directories: [] }));
     expect(instanceRootsIn(base)).toEqual([]);
     rmSync(base, { recursive: true, force: true });
   });
@@ -1067,10 +998,7 @@ describe("instanceRootsIn — discovered, never listed", () => {
   it("does not descend — a declaration two levels down is not an instance here", () => {
     const base = mkdtempSync(join(tmpdir(), "roots-"));
     mkdirSync(join(base, "outer", "inner"), { recursive: true });
-    writeFileSync(
-      join(base, "outer", "inner", DECLARATION_FILENAME),
-      JSON.stringify({ name: "inner", directories: [] }),
-    );
+    writeDeclaration(join(base, "outer", "inner"), JSON.stringify({ name: "inner", directories: [] }));
     expect(instanceRootsIn(base)).toEqual([]);
     rmSync(base, { recursive: true, force: true });
   });

@@ -23,7 +23,7 @@ representation, with the DAK API's JSON Schema / JSON-LD sidecars attached as
 an overlay where WHO publishes them.
 
 `fhir-artifact-index/dak/` — the materialised DAK surface. It sits inside the
-declared graph directory rather than beside it, so one `harness.json` entry
+declared graph directory rather than beside it, so one declaration entry
 covers both the index and the bytes it points at.
 
 **Catalogued by reference, with a materialised core.** 655 of the 674 artefacts

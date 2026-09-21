@@ -14,16 +14,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import {
-  RENDER_OBLIGATIONS,
-  isExemptFrom,
-  readDeclaration,
-  renderExemptionProblems,
-  repoRootFor,
-  type RenderExemption,
-} from "./cat-harness.js";
-import { DECLARATION_FILENAME } from "./cat-harness.js";
-
+import { RENDER_OBLIGATIONS, isExemptFrom, readDeclaration, renderExemptionProblems, repoRootFor, type RenderExemption, findDeclarationFile } from "./cat-harness.js";
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
 const CAT_BOOTSTRAP = join(REPO, "cat-bootstrap");
@@ -58,7 +49,7 @@ describe("this repository's actual declaration", () => {
     // repository that lost the declaration.
     const roots = ["cat-bootstrap", "cat-harness", "folio-assist-core", "."].map((r) => join(REPO, r));
     const claiming = roots
-      .filter((r) => existsSync(join(r, DECLARATION_FILENAME)))
+      .filter((r) => findDeclarationFile(r) !== undefined)
       .map((r) => readDeclaration(r))
       .filter((d) => d?.renderExemption !== undefined);
     expect(claiming.length).toBe(1);

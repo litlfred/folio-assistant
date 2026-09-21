@@ -20,8 +20,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 
-import { DECLARATION_FILENAME, DEFAULT_DIRECTORIES } from "../../schemas/cat-harness.js";
-import { instanceConfigFilename } from "../../schemas/harness-config.js";
+import { DEFAULT_DIRECTORIES, findDeclarationFile, instanceConfigFilename } from "../../schemas/cat-harness.js";
 
 /**
  * The fallback name, used only where a fixture has no directory of its own.
@@ -53,18 +52,14 @@ export function configNameFor(dir: string): string {
  * was about its name, which is the kind of helper that makes a suite lie.
  */
 export function declareInstance(dir: string, name?: string): string {
-  const decl = join(dir, DECLARATION_FILENAME);
-  if (existsSync(decl)) {
-    try {
-      const existing = (JSON.parse(readFileSync(decl, "utf-8")) as { name?: unknown }).name;
-      if (typeof existing === "string" && existing.length > 0) return existing;
-    } catch {
-      // unparseable: fall through and write one, so the fixture is usable
-    }
+  const found = findDeclarationFile(dir);
+  if (found !== undefined) {
+    const existing = (JSON.parse(readFileSync(join(dir, found), "utf-8")) as { name?: unknown }).name;
+    if (typeof existing === "string" && existing.length > 0) return existing;
   }
   const chosen = name ?? basename(dir);
   writeFileSync(
-    decl,
+    join(dir, instanceConfigFilename(chosen)),
     JSON.stringify({ name: chosen, directories: conventionalDirectories(dir) }),
     "utf-8",
   );
@@ -107,12 +102,126 @@ export function instanceConfigPathIn(dir: string, name: string = basename(dir)):
 
 /**
  * Declare `dir` and write its config in one call — the shape the fixtures
- * actually wanted. `body` is written verbatim, so a test asserting on an
- * UNPARSEABLE config can still pass `"{ not json"`.
+ * actually wanted.
+ *
+ * ## It MERGES, because the declaration and the config are one file now
+ *
+ * It used to `declareInstance` and then write `body` to a second path. Since
+ * `harness.json` was excised (2026-09-21) both are `<name>.config.json`, so
+ * the second write CLOBBERED the declaration it had just made — the fixture
+ * ended up with a config and no `directories`, and dozens of tests failed
+ * somewhere far from the cause. The same collision hit `init-folio.ts` for the
+ * same reason and was fixed the same way.
+ *
+ * Merging is not a workaround for the collision; it is what one file per
+ * instance MEANS. `body` wins on any key it sets, so a test pinning a
+ * `contentType` still pins it.
+ *
+ * An UNPARSEABLE `body` is written verbatim and the declaration is discarded,
+ * because several tests pass `"{ not json"` on purpose to exercise the
+ * unreadable path. There is nothing to merge into a string that is not JSON,
+ * and quietly keeping the declaration would make that fixture readable — which
+ * is the opposite of what it was written to test.
  */
 export function writeInstanceConfig(dir: string, body: string, name?: string): string {
   const declared = declareInstance(dir, name);
   const p = instanceConfigPathIn(dir, declared);
-  writeFileSync(p, body, "utf-8");
+  let merged: string;
+  try {
+    const decl = JSON.parse(readFileSync(p, "utf-8")) as Record<string, unknown>;
+    const cfg = JSON.parse(body) as Record<string, unknown>;
+    // ONLY the two keys `declareInstance` contributes are carried over —
+    // never the whole previous file. Merging everything made a REWRITE
+    // impossible: `harness-config.test.ts` restores a fixture by writing its
+    // original body back, and a full merge kept the `dependencies` the test
+    // had just added, so a later assertion saw three dependencies where the
+    // fixture declares two. Keeping the declaration is what the merge is for;
+    // keeping the previous CONFIG is a different thing that nobody asked for.
+    merged = JSON.stringify({ name: decl.name, directories: decl.directories, ...cfg });
+  } catch {
+    merged = body;
+  }
+  writeFileSync(p, merged, "utf-8");
   return p;
+}
+
+
+/**
+ * Write a declaration into `dir`, naming the file after the declared name.
+ *
+ * The helper exists because `<name>.config.json` made the filename a FUNCTION
+ * of the content. Under `harness.json` a fixture could write any body to one
+ * fixed path; now a body declaring `{"name": "mine"}` must land at
+ * `mine.config.json` or discovery will not see it — and a test whose fixture
+ * is invisible passes for the wrong reason.
+ *
+ * `body` may be an object or a JSON string. `name` is required only when the
+ * body is deliberately unparseable, which several tests write on purpose to
+ * exercise the unreadable-is-not-absent path: there is no name to read, so the
+ * caller supplies the stem.
+ */
+export function writeDeclaration(dir: string, body: unknown, name?: string): string {
+  const text = typeof body === "string" ? body : JSON.stringify(body);
+  // THE BODY'S NAME WINS, and `name` is only the fallback. The filename stem
+  // must equal the declared name or discovery will not see the file — so a
+  // body saying `{"name":"x"}` lands at `x.config.json` even when the caller
+  // passed a stem, and the caller's stem is for bodies that HAVE no name:
+  // deliberately malformed ones, and `{}`.
+  let stem: string | undefined;
+  {
+    try {
+      const parsed = JSON.parse(text) as { name?: unknown };
+      if (typeof parsed.name === "string" && parsed.name.length > 0) stem = parsed.name;
+    } catch {
+      // fall through — a nameless unparseable body has no filename this helper
+      // could read, so the caller's stem is used, and the throw below fires
+      // when there is not one either.
+    }
+  }
+  stem = stem ?? name;
+  if (stem === undefined) {
+    throw new Error(
+      "writeDeclaration: the body declares no `name` and none was supplied, so there is " +
+        "no filename for it. Pass `name` explicitly when writing a deliberately broken declaration.",
+    );
+  }
+  const path = join(dir, instanceConfigFilename(stem));
+  writeFileSync(path, text, "utf-8");
+  return path;
+}
+
+
+/**
+ * Write one fixture file, MERGING when it is the instance's declaration.
+ *
+ * A fixture that hands a helper `{ "<name>.config.json": "{…}" }` used to be
+ * writing a file the declaration did not occupy — `harness.json` was a
+ * separate path. It is the same path now, so a plain write clobbers the
+ * declaration and the fixture silently loses its `directories`. Merging is
+ * what one file per instance means; the body wins on every key it sets.
+ *
+ * Any other path is written verbatim, which is what a fixture map is for.
+ */
+export function writeFixtureFile(root: string, rel: string, body: string): void {
+  const abs = join(root, rel);
+  const decl = findDeclarationFile(root);
+  if (decl !== undefined && rel === decl) {
+    try {
+      const existing = JSON.parse(readFileSync(abs, "utf-8")) as Record<string, unknown>;
+      const incoming = JSON.parse(body) as Record<string, unknown>;
+      // Same rule as `writeInstanceConfig`: carry the DECLARATION across and
+      // let the body be the config in full, so a fixture can rewrite rather
+      // than only accumulate.
+      writeFileSync(
+        abs,
+        JSON.stringify({ name: existing.name, directories: existing.directories, ...incoming }),
+        "utf-8",
+      );
+      return;
+    } catch {
+      // Unparseable on either side: write it through, because several fixtures
+      // pass a malformed body on purpose.
+    }
+  }
+  writeFileSync(abs, body, "utf-8");
 }

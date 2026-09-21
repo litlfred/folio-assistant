@@ -7,7 +7,7 @@
  *
  * @module schemas/folio-dir.test
  */
-import { DECLARATION_FILENAME, folioDir } from "./cat-harness.js";
+import { folioDir } from "./cat-harness.js";
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -18,12 +18,13 @@ import { join } from "node:path";
 // which is the fragility `ot9a` recorded, and which `folioDir` now refuses to
 // paper over.
 import "./folio-graph-kind.js";
+import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 /** A repository root with an optional declaration. */
 function repo(declaration?: Record<string, unknown>): string {
   const root = mkdtempSync(join(tmpdir(), "folio-dir-"));
   if (declaration) {
-    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify(declaration, null, 2));
+    writeDeclaration(root, JSON.stringify(declaration, null, 2));
   }
   return root;
 }
@@ -74,7 +75,7 @@ describe("folioDir", () => {
 
   test("a MALFORMED declaration throws rather than guessing", () => {
     const root = mkdtempSync(join(tmpdir(), "folio-dir-bad-"));
-    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json at all");
+    writeDeclaration(root, "{ not json at all", "broken");
     // The convention would be a plausible answer to a question that could not
     // be asked. A broken declaration is a fault, not a default.
     expect(() => folioDir(root)).toThrow();

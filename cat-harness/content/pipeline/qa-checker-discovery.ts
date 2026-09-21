@@ -204,9 +204,47 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
   return { checkers, unimplemented, orphaned };
 }
 
+/**
+ * Every export of `mod` that can actually be read right now.
+ *
+ * `Object.values` is what this used to be, and it CRASHES THE WHOLE SWEEP when
+ * any one export is a `const` still in its temporal dead zone — which happens
+ * when the module is part of an import cycle and is being read while it is
+ * mid-evaluation. Measured 2026-09-21: `qa-checkers-extended.ts`'s
+ * `EXTENDED_AUTOMATED_CHECKERS`, reached through such a cycle, took down a
+ * sweep that had nothing to do with it.
+ *
+ * Skipping an unreadable binding is right rather than merely convenient: a
+ * value that cannot be read is not a dispatch table, and the alternative is
+ * that one cycle anywhere in the corpus silently costs every criterion its
+ * checker. The cycle itself is NOT fixed here and is not claimed to be — this
+ * makes discovery survive it and say nothing false about it.
+ */
+function moduleValues(mod: Record<string, unknown>): unknown[] {
+  // `Object.keys` ITSELF throws here, which is why the guard is around the
+  // whole thing rather than around each read: a module namespace in a cycle
+  // answers its ownKeys trap by evaluating, and one binding in its temporal
+  // dead zone rejects the enumeration outright.
+  let keys: string[];
+  try {
+    keys = Object.keys(mod);
+  } catch {
+    return [];
+  }
+  const out: unknown[] = [];
+  for (const key of keys) {
+    try {
+      out.push(mod[key]);
+    } catch {
+      // In its temporal dead zone — see above.
+    }
+  }
+  return out;
+}
+
 /** A dispatch-table entry keyed by the id, else `check<PascalCaseId>`. */
 function findChecker<T>(mod: Record<string, unknown>, criterionId: string): T | undefined {
-  for (const value of Object.values(mod)) {
+  for (const value of moduleValues(mod)) {
     if (value && typeof value === "object" && criterionId in (value as Record<string, unknown>)) {
       const entry = (value as Record<string, unknown>)[criterionId];
       if (typeof entry === "function") return entry as T;

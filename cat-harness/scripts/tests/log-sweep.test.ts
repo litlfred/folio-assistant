@@ -17,19 +17,17 @@ import { join } from "node:path";
 import { logDirs } from "../../schemas/log-entry.ts";
 import { writeLogEntry } from "../../src/logging/log-writer.ts";
 import { describeSweep, emptyLog, type LogSelector } from "../../src/logging/log-sweep.ts";
-import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 function instance(): string {
   const root = mkdtempSync(join(tmpdir(), "log-sweep-"));
   mkdirSync(join(repoRootFor(root), "fsh-guts"), { recursive: true });
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({
+  writeDeclaration(root, JSON.stringify({
       name: "t",
       stub: "t",
       directories: [{ id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", description: "trashcan", graphs: ["fsh-guts"] }],
-    }),
-  );
+    }));
   return root;
 }
 
@@ -196,7 +194,7 @@ describe("what it did NOT do is reported, not inferred", () => {
 
   test("an instance with no declared trashcan says so rather than reporting a clean sweep", () => {
     const root = mkdtempSync(join(tmpdir(), "log-sweep-none-"));
-    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "t", stub: "t", directories: [] }));
+    writeDeclaration(root, JSON.stringify({ name: "t", stub: "t", directories: [] }));
     const r = emptyLog(root, { all: true });
     expect(r.directories).toEqual([]);
     expect(describeSweep({ all: true }, r)).toContain("nothing to sweep");

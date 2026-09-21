@@ -54,7 +54,7 @@ not, do not.
 ## Harness instances
 
 This repository holds several **instances**, each declaring its own
-`harness.json`. Every one has two entry points on purpose: a **README** saying
+`folio-assistant.config.json`. Every one has two entry points on purpose: a **README** saying
 what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments
 the first rather than restating it.
 

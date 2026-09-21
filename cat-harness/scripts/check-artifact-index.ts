@@ -35,7 +35,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { FhirArtifactIndexSchema, materializationCensus } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
-import { DECLARATION_FILENAME, repoRootFor } from "../schemas/cat-harness.js";
+import { declarationPathIn, repoRootFor } from "../schemas/cat-harness.js";
 
 const ROOT = repoRootFor(join(import.meta.dir, ".."));
 
@@ -50,13 +50,18 @@ const ROOT = repoRootFor(join(import.meta.dir, ".."));
 function declaredIndexes(): string[] {
   const out: string[] = [];
   for (const entry of readdirSync(ROOT).sort()) {
-    const decl = join(ROOT, entry, DECLARATION_FILENAME);
-    if (!existsSync(decl) || !statSync(join(ROOT, entry)).isDirectory()) continue;
+    if (!statSync(join(ROOT, entry)).isDirectory()) continue;
+    // RESOLVED, never composed: since #695 an instance declares itself in
+    // `<name>.config.json`, so there is no single filename to join. Composing
+    // one is how a reader stops seeing every instance the moment the
+    // convention moves — which is exactly what this scan must not do.
+    const decl = declarationPathIn(join(ROOT, entry));
+    if (decl === undefined) continue;
     let parsed: { directories?: Array<{ path?: string; graphs?: string[] }> };
     try {
       parsed = JSON.parse(readFileSync(decl, "utf8"));
     } catch {
-      console.error(`✗ ${entry}/${DECLARATION_FILENAME} is not readable JSON — that is a failure, not a skip`);
+      console.error(`✗ ${decl.slice(ROOT.length + 1)} is not readable JSON — that is a failure, not a skip`);
       process.exitCode = 1;
       continue;
     }

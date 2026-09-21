@@ -17,7 +17,8 @@ import { join, resolve } from "node:path";
 import { readFshGutsNode } from "../../schemas/fsh-guts.ts";
 import { buildFshGutsExport, fshGutsDirs } from "../fsh-guts-export.ts";
 import { buildExport } from "../kg-export.js";
-import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -36,9 +37,7 @@ function instance(declare = true): string {
   const root = join(repo, "inst");
   mkdirSync(root, { recursive: true });
   mkdirSync(join(repo, "fsh-guts"), { recursive: true });
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({
+  writeDeclaration(root, JSON.stringify({
       name: "t",
       stub: "t",
       canonicalUrl: "https://example.invalid/t",
@@ -53,8 +52,7 @@ function instance(declare = true): string {
             },
           ]
         : [],
-    }),
-  );
+    }));
   return root;
 }
 
