@@ -124,6 +124,22 @@ example below.
 | *"voices should be associated to appropriate home semantically/by judgement"* | `schemas/voice-skill.ts`, replacing the ownership rule | question 3: it **contradicted** a standing mechanical rule (the instance that *derived* a voice owns it), which the corpus had already falsified twice. Additive filing would have left two answers |
 | *"harness handler wins."* | `gen-handler-index.ts`'s module doc and bean `8h42` — **and nowhere else, which was the defect** | question 2: it settles a collision between the TWO PATH RULES, so it belongs in [`schema-management`](schema-management.md) §"Where a viewer publishes" beside them. It was filed as a fact about one generator instead. Found by writing this section, and fixed in the same change |
 
+A fourth, made **after** this section existed and the first to be governed by
+it rather than reconstructed: asked to settle a voice's `provenance`, the owner
+refused the recommended option and gave the reason —
+
+> voices may be comprised of many composite voices w/ unclear attribution.
+> attrinution by rule makes no sense in a collaborative/synethsizing process.
+
+The *decision* was one field left alone. The **reason** is a durable claim
+about what a voice is, and it is what stops the next agent proposing the same
+refactor from the same corpus measurement. It went into
+`schemas/voices.ts`'s `VOICE_PROVENANCE` gloss, quoted and dated, in that turn.
+
+**A refusal is a ruling.** An answer that declines your recommendation carries
+at least as much rule as one that accepts it — usually more, because it tells
+you something about the domain your analysis did not have.
+
 The third row is the honest one. It is not a counter-example showing where the
 rule stops — it is this rule catching, on its first application, a case the
 agent that wrote it had got wrong four hours earlier. A rule whose first use
