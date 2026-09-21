@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T15:16:07.313Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/af0547a15a58ecbe832310d9d8c4ee9b7ee548f1",
-  "sourceCommitSha": "af0547a15a58ecbe832310d9d8c4ee9b7ee548f1",
-  "sourceCommitAt": "2026-09-21T15:14:26Z",
+  "generatedAt": "2026-09-21T16:29:17.695Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/58de28b77debc72a75c167e7ae5daddb6c74c48f",
+  "sourceCommitSha": "58de28b77debc72a75c167e7ae5daddb6c74c48f",
+  "sourceCommitAt": "2026-09-21T16:27:35Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -276,7 +276,7 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 88,
+    "Schema": 89,
     "GraphKind": 24,
     "Directory": 33,
     "Asset": 3
@@ -2758,7 +2758,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 228,
+      "instructionLines": 246,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3942,7 +3942,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "methodologies/crdm/crdm-detect.md",
-      "instructionLines": 124,
+      "instructionLines": 126,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -33032,6 +33032,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/role-graph"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld#schema/safe-url",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "safe-url",
+      "title": "Which URL schemes may reach an `href`, and why the answer is a list.",
+      "module": "schemas/safe-url.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness.jsonld#schema/script-qa",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "script-qa",
@@ -34993,8 +35002,8 @@
   ],
   "staging": {
     "branch": "claude/lhs-navbar-harness-folios-cqo9mu",
-    "sha": "2e3836c0f033132ee8dd19686bad6cb86995180c",
+    "sha": "0b2b22dce98685c5925442990e640d84ef75411d",
     "pr": "702/merge",
-    "run": "35617590912"
+    "run": "35625744083"
   }
 }

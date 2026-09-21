@@ -34,7 +34,19 @@
 
   function el(tag, attrs, text) {
     var node = document.createElement(tag);
-    if (attrs) Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      // AN ABSENT VALUE MEANS AN ABSENT ATTRIBUTE. `setAttribute(k, undefined)`
+      // writes the string "undefined", so `{ href: undefined }` produced
+      // `href="undefined"` — a relative link to a page called `undefined`,
+      // which is a link to somewhere wrong rather than no link at all.
+      //
+      // Two callers already relied on the intent: the language switcher passes
+      // `href: undefined` for a locale that is not available, and `safeHref`
+      // returns `undefined` for a URL a link may not carry. `pb04` in both
+      // cases — no link beats a link to nowhere.
+      if (attrs[k] === undefined || attrs[k] === null) return;
+      node.setAttribute(k, attrs[k]);
+    });
     if (text != null) node.textContent = text;
     return node;
   }
@@ -208,7 +220,7 @@
 
       // Available = clickable <a>. Unavailable = disabled <span>.
       var tab = el(isAvailable ? "a" : "span", {
-        href: isAvailable ? localePath(basePath, loc) : undefined,
+        href: isAvailable ? safeHref(localePath(basePath, loc)) : undefined,
         "data-locale": loc,
         title: isAvailable
           ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
@@ -283,7 +295,7 @@
       var isRemembered = loc === remembered;
 
       var tab = el(isAvailable ? "a" : "span", {
-        href: isAvailable ? localePath(basePath, loc) : undefined,
+        href: isAvailable ? safeHref(localePath(basePath, loc)) : undefined,
         title: isAvailable
           ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
           : LOCALE_NAMES[loc] + " \u2014 not yet translated",
@@ -683,7 +695,7 @@
     if (links.source && node.sourcePath) {
       wrap.appendChild(el("a", {
         class: "fa-discarded-source",
-        href: String(links.source).replace(/\/$/, "") + "/blob/main/" + node.sourcePath,
+        href: safeHref(String(links.source).replace(/\/$/, "") + "/blob/main/" + node.sourcePath),
       }, "View the source of this item"));
     }
     return wrap;
@@ -1906,7 +1918,14 @@
    * would be two tiles that look alike until one of them is changed.
    */
   function tileLink(glyph, label, href, hint) {
-    var a = el("a", { class: "fa-tile", href: href, "aria-label": label + " — " + hint });
+    // Every tile's href goes through the same check as every other link on
+    // this page. A tile is the one place a declared value reaches an `href`
+    // with no composition in between, so it is the one most worth checking.
+    var a = el("a", {
+      class: "fa-tile",
+      href: safeHref(href),
+      "aria-label": label + " — " + hint,
+    });
     a.innerHTML = glyph;
     a.appendChild(el("span", { class: "fa-tile-caption" }, label));
     return a;
@@ -1954,6 +1973,37 @@
     return shown;
   }
 
+
+  /* ═══ Which URL schemes may reach an `href` ══════════════════════════
+   *
+   * R17, the owner: *"skill tool hints for XSSrsiction"*. `schemas/safe-url.ts`
+   * carries the argument; this is its mirror, and the rule is one line long:
+   * **default-deny**. A blocklist has to enumerate every dangerous scheme and
+   * is wrong the day a browser ships a new one; an allow-list is wrong only
+   * about things it refuses, and a refusal is visible.
+   *
+   * TAB / LF / CR are removed EVERYWHERE before deciding, because the URL
+   * parser removes exactly those three before parsing — so `java<TAB>script:`
+   * is `javascript:` to the browser and a relative path to a naive test. That
+   * is the classic bypass and the TypeScript version shipped it for one
+   * commit.
+   *
+   * Same drift cost as every other mirror in this file, same mitigation: the
+   * e2e checks this answer against the model's, case for case.
+   */
+  var ALLOWED_URL_SCHEMES = ["http:", "https:", "mailto:", "tel:"];
+
+  function safeHref(url) {
+    if (url === undefined || url === null) return undefined;
+    var stripped = String(url).replace(/[\u0009\u000A\u000D]/g, "");
+    var trimmed = stripped.replace(/^[\u0000- ]+/, "").replace(/[\u0000- ]+$/, "");
+    if (trimmed === "") return undefined;
+    // `//host/path` is absolute and looks like a path — excluded deliberately.
+    if (trimmed.indexOf("//") === 0) return undefined;
+    if (/^[#?./]/.test(trimmed) || !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) return trimmed;
+    var scheme = trimmed.slice(0, trimmed.indexOf(":") + 1).toLowerCase();
+    return ALLOWED_URL_SCHEMES.indexOf(scheme) === -1 ? undefined : trimmed;
+  }
 
   /** OR within a property's values, AND across properties — the board's logic. */
   function readerShows(filter, todo) {
@@ -2178,7 +2228,7 @@
       return el("a", {
         class: "fa-board-window-control fa-node-edit",
         "data-fa-control": control.id,
-        href: control.id === "view" ? todo.viewHref : todo.editHref,
+        href: safeHref(control.id === "view" ? todo.viewHref : todo.editHref),
         "aria-label": control.label + " — " + todo.summary,
       }, control.id === "view" ? "\u2398" : "\u270E");
     }
@@ -2580,14 +2630,26 @@
         var rel = rels[r];
         var li = el("li", { class: "fa-sticky-rel" });
         li.appendChild(el("span", { class: "fa-sticky-rel-axis" }, rel.axis));
-        if (rel.href) {
-          li.appendChild(el("a", { class: "fa-sticky-rel-link", href: rel.href }, rel.label));
+        // `safeHref`, not a truthiness test: `TodoRelationSchema.href` is
+        // `z.string()`, so the schema permits a scheme this must refuse. A
+        // refused edge falls through to the dangling branch below, which
+        // already says why there is no link.
+        var relHref = safeHref(rel.href);
+        if (relHref) {
+          li.appendChild(el("a", { class: "fa-sticky-rel-link", href: relHref }, rel.label));
         } else {
           // Title says WHY there is no link, so a reader is not left guessing
           // whether the chip is broken or the target simply is not reachable.
+          // TWO REASONS THERE IS NO LINK, and they are different facts. The
+          // edge may have resolved to nothing — nobody built the target — or
+          // it may carry a scheme a link may not carry. Saying "nothing
+          // resolves this" about the second would be wrong, and wrong in the
+          // direction that hides a hostile value as a missing one.
           li.appendChild(el("span", {
             class: "fa-sticky-rel-dangling",
-            title: "No link: nothing on this site resolves " + rel.label,
+            title: rel.href
+              ? "No link: " + rel.label + " points at a scheme a link may not carry"
+              : "No link: nothing on this site resolves " + rel.label,
           }, rel.label));
         }
         relBox.appendChild(li);
@@ -2612,7 +2674,7 @@
     if (todo.viewHref) {
       tools.appendChild(el("a", {
         class: "fa-node-edit fa-sticky-view",
-        href: todo.viewHref,
+        href: safeHref(todo.viewHref),
         title: "View this todo's source on GitHub",
         "aria-label": "View the source of " + todo.summary,
       }, "⎘ View"));
@@ -2620,7 +2682,7 @@
     if (todo.editHref) {
       tools.appendChild(el("a", {
         class: "fa-node-edit fa-sticky-edit",
-        href: todo.editHref,
+        href: safeHref(todo.editHref),
         title: "Edit this todo's markdown on GitHub",
         "aria-label": "Edit " + todo.summary,
       }, "✎ Edit"));
@@ -4360,7 +4422,7 @@
     head.appendChild(el("span", { class: "fa-qa-counts" }, qaCountsLine(doc)));
 
     (doc.sidecars || []).forEach(function (p) {
-      var a = el("a", { class: "fa-qa-sidecar-link", href: REPO_BLOB + p, rel: "noopener" }, p);
+      var a = el("a", { class: "fa-qa-sidecar-link", href: safeHref(REPO_BLOB + p), rel: "noopener" }, p);
       head.appendChild(a);
     });
 
