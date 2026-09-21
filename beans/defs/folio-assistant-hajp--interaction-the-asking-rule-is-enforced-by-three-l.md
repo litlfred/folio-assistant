@@ -236,3 +236,75 @@ depends on being remembered is not enforced.*
 
 **Owner's ruling, 2026-09-21: option C** — make `renderDecision` required at the
 moment of asking so records accrue, and keep the twelve-record revisit.
+
+## Options — the gating revisit, 2026-09-21
+
+**Chosen: C.** The owner, 2026-09-21: *"C — require renderDecision, then
+revisit"*.
+
+Rendered through `renderDecision` from a validated `DecisionRequest`, which is
+the point of recording it here: the bean's own trigger now measures
+`renderDecision` adoption, and a decision ABOUT that trigger that was
+hand-written would be the same defect it exists to catch. The source object is
+in the session; what follows is its output, unedited.
+
+Whether `hajp`'s deferral keeps waiting on a count that will arrive on its own, and what changes at the moment an agent asks a multi-option question. Nothing about the hook's blocking behaviour differs between these — the owner settled that on 2026-09-20 and none of them reopens it.
+
+- **`hajp`** — the bean holding the asking rule's three enforcement layers; its last open box is a revisit trigger
+- **`renderDecision`** — `cat-harness/schemas/decision-request.ts` — turns one validated object into both the prose comparison and the offered choices, so the two cannot drift
+- **`bean-decision-records`** — health metric counting beans with a considered-options section. Read 10 on 2026-09-21, up from 7 on 09-20
+- **`bean-rendered-decision-records`** — health metric counting beans whose decision went through `renderDecision`. Read 1 — `hajp` itself
+- **`ask-well.sh`** — the PreToolUse hook on AskUserQuestion; the one enforced moment in the loop. It taught §4.1's six parts and never named `renderDecision`
+
+| | **C — require renderDecision, then revisit** *(recommended)* | A — fix the trigger's wording, keep deferring | B — drop the condition, decide gating now | Record it and move on |
+|---|---|---|---|---|
+| **What it does** | Names `renderDecision` in `ask-well.sh` at the moment of asking, and re-points the trigger at `bean-rendered-decision-records`. Keeps the twelve-record revisit. | Re-points the trigger at the strict metric and changes nothing else. | Abandons the twelve-record trigger and settles blocking-or-not on present grounds. | Leaves the trigger as written; the measurement stays on the bean. |
+| **Pro** | Treats the measured cause. Adoption is zero rather than slow — 1 record in a day and a half, and five multi-option questions asked the same day by an agent that had just read the bean — so nothing accrues because nothing at the asking moment requests it. | Honest and the cheapest of the three; the original reasoning stands untouched. | Ends a deferral whose condition is not being met, and forces the real question. | No new mechanism, and the numbers are durable whichever way it is settled later. |
+| **Con** | A fourth enforcement layer before the decision it is meant to inform, and it still cannot tell a good record from a perfunctory one. | At 1 record in a day and a half the threshold may never arrive, so the deferral becomes indefinite and the window `hajp` opened to close stays open. | Decides without the evidence that was the entire point of waiting. `hajp` recorded the risk: a blocking hook that misfires removes the escape hatch, leaving the agent unable even to report that the gate is broken. | The trigger keeps counting the wrong metric, so it fires on schedule and delivers none of the evidence it was set to buy — a deferral that expires without answering anything. |
+| **Downstream** | The trigger starts measuring what the deferral was actually waiting for, so twelve becomes evidence about `renderDecision` rather than about ordinary `## Options` sections. | The same question returns, with the same numbers, at an unpredictable date. | If it lands on blocking, a bad validator can strand the person with no way to say so. | Twelve arrives on ordinary practice and the gating question is reopened with nothing new. |
+| **Reversibility** | Trivial. Two text edits — a paragraph in a shell heredoc and a metric name in a checkbox. | Trivial — one metric name. | Easy to revert and painful while wrong — the failure mode removes the channel you would use to report it. | Nothing to revert. |
+
+**Recommendation: C — require renderDecision, then revisit** — The measurement says the deferral is not stalled on time but on nothing requesting the mechanism, and waiting longer under the same conditions produces the same number. It is also `hajp`'s own thesis — a rule that depends on being remembered is not enforced — applied to `hajp`'s own remedy.
+
+**If you say nothing:** Record the measurement on the bean, change no code, and leave the trigger naming a metric that will reach twelve without answering the question.
+
+3 other decisions are waiting; I will put each properly when it is next.
+
+How should the deferral be resolved?
+
+---
+
+## The metric counts BEANS, not decisions — found by exercising it
+
+Writing the record above was meant to move
+`bean-rendered-decision-records` from 1 to 2, as `renderDecision`'s first use
+by an author other than the one who wrote it. **It did not move.** This bean
+now carries TWO rendered decisions and the metric still reads **1**, because
+`hasRenderedDecision` is a per-bean boolean and `checks.ts` counts
+`beans.filter((b) => b.renderedDecision === true)`.
+
+So the trigger — *"twelve RENDERED decision records"* — actually requires
+**twelve different beans**. A bean that makes five decisions contributes one.
+
+### Why that is not a nit
+
+It is the same defect this bean was corrected for an hour ago, one level in.
+The trigger was re-pointed from `bean-decision-records` to
+`bean-rendered-decision-records` so it would measure what the deferral waits
+for. It now measures the right KIND of thing and the wrong UNIT — and the
+error runs the same direction, under-counting adoption rather than over-.
+
+If `renderDecision` becomes house style, decisions will cluster on the beans
+that already have one, and the metric will lag real adoption by however much
+clustering there is. Twelve could be met late, or not at all, while the
+mechanism is in daily use.
+
+### Not fixed here, and the reason is not caution
+
+Changing the metric to count decisions rather than beans changes what **12**
+means — the threshold was set against a bean count, and moving the unit without
+moving the number is a silent re-calibration. That is a decision, and this bean
+already carries two.
+
+**Recorded for the revisit**, which is the moment it matters: whoever reads the
+trigger then needs to know it is counting beans.
