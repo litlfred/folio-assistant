@@ -1016,7 +1016,7 @@ was drawn” and “broken in the commit under review” indistinguishable.</p>
   </thead>
   <tbody>
     <tr>
-      <td>docs-auto</td>
+      <td><a href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/docs-auto/">docs-auto</a></td>
       <td>derived indexes over a sub-graph — <a href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/docs-auto/index/processes/">processes</a> and <a href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness/docs-auto/index/skills/">skills</a></td>
       <td><code class="language-plaintext highlighter-rouge">gen-docs-auto.ts</code></td>
     </tr>
@@ -1034,13 +1034,11 @@ was drawn” and “broken in the commit under review” indistinguishable.</p>
 </table></div>
 
 <!--
-  `docs-auto` is named here without a link ON PURPOSE, and it is a FINDING
-  rather than a style choice: `/cat-harness/docs-auto/` and
-  `/cat-harness/docs-auto/index/` have no index page, so linking either would
-  land the reader on a bare directory — exactly the defect this page exists to
-  fix one level up. The two leaves that DO exist are linked instead. Recorded
-  on bean `06e3`; when `gen-docs-auto.ts` writes a parent index at each level,
-  this row gets its link and this comment goes.
+  `docs-auto` was named here WITHOUT a link for one commit, because
+  `/cat-harness/docs-auto/` and `/cat-harness/docs-auto/index/` had no index
+  page — the same defect this page fixes one level up, found by checking the
+  links rather than assuming they resolved. `gen-docs-auto.ts` now writes a
+  level index at every level above a built type, so the link is back.
 -->
 
 <p>Each is regenerated from the tree it describes, so a stale one is a build
