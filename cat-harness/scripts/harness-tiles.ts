@@ -51,7 +51,7 @@
  * `GENERIC`, which is reported as a finding rather than rendered as a blank.
  */
 import { existsSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
@@ -137,8 +137,16 @@ export type HarnessTile = {
    * has one, else its first viewer, else absent and the tile is not a link.
    */
   href?: string;
-  /** Whether {@link href} is the instance's own folio view or a fallback viewer. */
-  hrefKind?: "folio" | "viewer";
+  /**
+   * What {@link href} points AT, which is three different kinds of thing:
+   *
+   * - `folio`   — the instance's own themed root
+   * - `viewer`  — a kind handler's view of one of its graphs
+   * - `handled` — a page ANOTHER instance publishes about it, named by its
+   *               own `renderExemption.reachableAt`. Only a render-exempt
+   *               instance can have this, and it is the last resort.
+   */
+  hrefKind?: "folio" | "viewer" | "handled";
   stats: HarnessStat[];
   visualisations: HarnessVisualisation[];
   /**
@@ -378,11 +386,70 @@ function tileFor(
     );
   }
   const firstViewer = visualisations.find((v) => v.path)?.path;
-  const href = folio ?? firstViewer;
+
+  /* THE THIRD TARGET, for an instance that renders nothing of its own.
+   *
+   * bootstrap is instantiated, correctly has no viewer (it declares a
+   * `renderExemption` — the owner, 2026-09-20: *"it is exception to
+   * harness/layer not having visualtion/workflow visualizer"*), and therefore
+   * had no href at all. `nav_footer_custom.html` rendered its tab as a greyed
+   * `<span>`, and the owner read that as broken: *"Boostrap should be
+   * clicable."*
+   *
+   * Nothing was wrong with the declaration OR with `pb04`'s rule that a tab
+   * with nowhere to go is not a link. What was missing is that the exemption
+   * said "I do not render myself" without saying "so go here instead".
+   * `reachableAt` is that second half, and it is DECLARED for the same reason
+   * the exemption itself is — a checker naming one instance states a rule
+   * true only for the instance somebody remembered (`hfkl`).
+   *
+   * THE FILE IS CHECKED, not composed. A declared path that does not resolve
+   * is `flh4`'s defect and a DIFFERENT finding from "nothing is published":
+   * one says the declaration is wrong, the other says nobody built it. Both
+   * leave the tab unlinked, which is correct either way.
+   */
+  let handled: string | undefined;
+  const reachable = decl.renderExemption?.reachableAt;
+  if (folio === undefined && firstViewer === undefined && reachable !== undefined) {
+    // The handler's site directory, repo-relative — `siteDir` arrives
+    // absolute, and `reachableAt` is declared relative to the repo root, so
+    // one of them has to be rebased onto the other. Derived from the value
+    // `harnessTiles` already computed rather than re-resolved here, so the
+    // two cannot disagree about where the site is.
+    const prefix = `${relative(repoRoot, siteDir)}/`;
+    const onDisk = join(repoRoot, reachable);
+    if (!existsSync(onDisk)) {
+      findings.push(
+        `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
+          `not a file. The tab stays unlinked — a declared path that does not resolve is a ` +
+          `wrong declaration, which is a different problem from nothing being published.`,
+      );
+    } else if (!reachable.startsWith(prefix)) {
+      findings.push(
+        `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
+          `outside the site-owning harness's site directory (${prefix}), so it is not published ` +
+          `and cannot be linked to.`,
+      );
+    } else {
+      // `.md` is published as `.html` by Jekyll; anything else is served as
+      // it sits. Deriving the extension rather than assuming one keeps this
+      // honest if an exemption ever points at an already-built page.
+      const rest = reachable.slice(prefix.length);
+      handled = `/${rest.replace(/\.md$/, ".html")}`;
+    }
+  }
+
+  const href = folio ?? firstViewer ?? handled;
   if (folio === undefined && firstViewer !== undefined) {
     findings.push(
       `${decl.name}: has no docs/ of its own, so the tile opens a kind handler's viewer ` +
         `(${firstViewer}) rather than the instance's own themed root.`,
+    );
+  }
+  if (handled !== undefined) {
+    findings.push(
+      `${decl.name}: renders nothing of its own (render-exempt), so its tab opens the page ` +
+        `another instance publishes about it (${handled}), declared as \`reachableAt\`.`,
     );
   }
 
@@ -400,7 +467,17 @@ function tileFor(
     reads: avatar.reads,
     genericAvatar: !own,
     instantiated: existsSync(join(repoRoot, instanceConfigFilename(decl.name))),
-    ...(href === undefined ? {} : { href, hrefKind: folio === undefined ? ("viewer" as const) : ("folio" as const) }),
+    ...(href === undefined
+      ? {}
+      : {
+          href,
+          hrefKind:
+            folio !== undefined
+              ? ("folio" as const)
+              : firstViewer !== undefined
+                ? ("viewer" as const)
+                : ("handled" as const),
+        }),
     stats: [
       { id: "directories", label: "declared directories", value: dirs.length },
       { id: "kinds", label: "declared graph kinds", value: kinds.length },

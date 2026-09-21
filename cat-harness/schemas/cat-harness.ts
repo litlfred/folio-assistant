@@ -2736,12 +2736,45 @@ export interface RenderExemption {
    * from a layer that simply never got round to rendering.
    */
   owes: string;
+  /**
+   * Where the instance IS reachable, since it renders nothing of its own.
+   *
+   * Repository-relative, under the site-owning harness's site directory —
+   * the same shape `coverage.visualiser` and `coverage.docs` use.
+   *
+   * ## Why an exemption needs this at all
+   *
+   * `owes` says what the layer carries instead; it does not say where a
+   * READER goes. Those came apart on the navbar: bootstrap is instantiated
+   * and correctly has no viewer, so `harness-tiles` found no href and
+   * `nav_footer_custom.html` rendered its tab as a greyed `<span>`. The
+   * owner, 2026-09-21: *"Boostrap should be clicable. even though it doesnt
+   * render itself, cat-bootrap does take over ... render responsibles of
+   * bootrstraps json(ld) and documentation."*
+   *
+   * So the exemption said "I do not render myself" without saying "so go
+   * here instead", and `pb04`'s rule — a tab with nowhere to go is not a
+   * link — correctly produced a dead tab from a correct declaration. This
+   * field is the missing half.
+   *
+   * ## Optional, and absent is a real state
+   *
+   * An exempt instance with nothing published about it anywhere has no
+   * honest target, and a link invented for it would 404. Absent leaves the
+   * tab unlinked, which is what it should be in that case.
+   *
+   * Consumers MUST check the file exists before linking — a declared path
+   * that does not resolve is `flh4`'s defect, and it is a different finding
+   * from "nothing is published".
+   */
+  reachableAt?: string;
 }
 
 export const RenderExemptionSchema = z.object({
   of: z.array(z.enum(RENDER_OBLIGATIONS)).min(1),
   reason: z.string().min(1),
   owes: z.string().min(1),
+  reachableAt: z.string().min(1).optional(),
 });
 
 /**
