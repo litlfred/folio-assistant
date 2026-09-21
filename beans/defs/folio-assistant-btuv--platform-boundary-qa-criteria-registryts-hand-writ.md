@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-21T16:26:49Z
-updated_at: 2026-09-21T17:46:13Z
+updated_at: 2026-09-21T17:57:07Z
 parent: folio-assistant-vuip
 ---
 
@@ -99,3 +99,14 @@ specific math paper (deprecated 5-tuple notation, omega for fibre functor, a
 `CLAUDE.md section 7c` base-ring convention) and point at
 `.claude/skills/local/one-voice-audit.md`. Untouched. That is the remaining
 `## Done when` line, so this bean stays open.
+
+
+Issue: https://github.com/litlfred/folio-assistant/issues/772
+PR (draft): https://github.com/litlfred/folio-assistant/pull/773 — branch
+`claude/bean-8h42-layout`, pushed as `798e6aca`, 95/95 gates on a branch merged
+up to current `main`.
+
+One correction to the consumer list above, after merging main: `criterion-source.ts`
+is new from main and also reads the static index, and also needs no change —
+both its production callers reach it only for a criterion that is `automated`
+or carries a checker, and every voice-overlay criterion is neither.
