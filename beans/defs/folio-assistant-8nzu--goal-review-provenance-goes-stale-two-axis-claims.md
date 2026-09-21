@@ -97,3 +97,5 @@ question for *who is here now*.
 `ab3n` carries the correction and is **left `completed`** — its work is done
 and correct; only a sentence about the world aged, and closing or reopening a
 sibling's bean is not this session's to do.
+
+*Issue link, recorded on creation.* **[#703](https://github.com/litlfred/folio-assistant/issues/703)**
