@@ -333,7 +333,15 @@ export function visualiserHref(visualiser: string, docsPrefix: string): string |
  *   root.
  */
 function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
-  const data = join(REPO, built, "docs", "_data", "harness.json");
+  // The site root is READ, never composed. `join(REPO, built, "docs", ...)`
+  // was the first version and `check:declared-paths` refused it -- rightly,
+  // and pointedly, because `publishedDocsPrefix` exists a few lines up in this
+  // same file and was written this session for exactly this. A literal
+  // `"docs"` is a second answer to "where does this instance publish", free to
+  // disagree with the declaration the moment the directory moves.
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return undefined;
+  const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return undefined;
   let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string } | null }[] };
   try {
