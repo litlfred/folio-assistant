@@ -31,13 +31,13 @@
  */
 
 import { existsSync } from "fs";
-import { resolve, relative, dirname } from "path";
+import { resolve, relative, dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { spawnSync } from "child_process";
 import { walkBlocks, loadQaReport, saveQaReport } from "./qa-utils";
 import {
-  QA_CRITERIA_BY_ID,
-  QA_CRITERIA_REGISTRY,
+  qaCriteriaByIdFor,
+  qaCriteriaFor,
   WATCHER_CRITERIA_BY_AXIS,
 } from "./qa-criteria-registry";
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
@@ -113,13 +113,19 @@ function parseArgs(argv: string[]): Args {
 }
 
 function resolveCriteria(args: Args): string[] {
+  const instanceRoot = join(import.meta.dir, "..", "..");
   if (args.all) {
-    return QA_CRITERIA_REGISTRY.map((c) => c.id);
+    return qaCriteriaFor(instanceRoot).map((c) => c.id);
   }
+  // By id through the instance-aware index: the voice-overlay criteria are
+  // derived from the voices an instance ships (bean `btuv`), so the static
+  // index does not carry them and naming one on the command line would be
+  // rejected as unknown.
+  const criteriaById = qaCriteriaByIdFor(instanceRoot);
   const set = new Set<string>();
   if (args.criteria) {
     for (const id of args.criteria) {
-      if (QA_CRITERIA_BY_ID[id]) set.add(id);
+      if (criteriaById[id]) set.add(id);
       else console.error(`integration-audit: unknown criterion '${id}'`);
     }
   }

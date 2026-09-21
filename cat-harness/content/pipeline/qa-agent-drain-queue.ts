@@ -22,7 +22,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join} from "node:path";
 import { walkBlocks, hashFile, loadQaReport } from "./qa-utils";
-import { QA_CRITERIA_REGISTRY } from "./qa-criteria-registry";
+import { qaCriteriaFor } from "./qa-criteria-registry";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
 import { paperArg } from "./cli-args";
@@ -62,8 +62,18 @@ const outIdx = process.argv.indexOf("--out");
 const out =
   outIdx >= 0 ? process.argv[outIdx + 1] : "build/qa-agent-drain-queue.json";
 
-// Agent-only criteria = registry entries with automated === false.
-const AGENT_CRITS = QA_CRITERIA_REGISTRY.filter((c) => !c.automated);
+// Agent-only criteria = every criterion with automated === false, INCLUDING
+// the voice overlays derived from the shipped voices. It read
+// `QA_CRITERIA_REGISTRY` alone until the overlays stopped being hand-written
+// (bean `btuv`), and every one of them is `automated: false` — so the static
+// array alone would have dropped four adjudications out of this queue without
+// changing a line here or failing anything.
+//
+// At module scope, which is where this file already does its filesystem work
+// (`process.chdir` above): it is a script that runs top to bottom, not a module
+// whose exports something else depends on, so `1hkj`'s "a malformed
+// declaration must not strand an export" does not bite.
+const AGENT_CRITS = qaCriteriaFor(join(import.meta.dir, "..", "..")).filter((c) => !c.automated);
 
 interface Row {
   block: string;

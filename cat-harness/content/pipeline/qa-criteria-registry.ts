@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "fs";
 import { findContentRepoRoot } from "./repo-root";
+import { voiceCriteriaFor } from "./voice-criteria.ts";
 /**
  * Registry of QA criteria the per-block sweep recognises.
  *
@@ -2153,69 +2154,21 @@ const EXPO_NARRATIVE_KINDS = [
 // judgement. Declaring a checker that can only ever confirm a handful of regexes
 // would misreport what the criterion covers.
 const VOICE_OVERLAYS: QaCriterionDefinition[] = [
-  {
-    id: "voice-overlay-who-editorial",
-    domain: "voice",
-    description:
-      "Block conforms to the WHO editorial style (voices/who-editorial.json, 9 rules " +
-      "derived from the WHO Editorial Style Manual, 1993): -ize rather than -ise; an " +
-      "eponym without the Saxon genitive; the manual's two capitalization lists " +
-      "(Member State and the Organization up, headquarters and primary health care " +
-      "down); all authors to three and et al. from four; journal names written out in " +
-      "full; and the non-discriminatory pairs, whose general rules are to delete " +
-      "redundant possessive pronouns, rephrase, use the first person plural and use " +
-      "neutral job titles. Open the cited page before upholding a finding.",
-    default_severity: "major",
-    voices: ["who-editorial"],
-    depends_on: ["md"],
-    automated: false,
-  },
-  {
-    id: "voice-overlay-who-guideline-development",
-    domain: "voice",
-    description:
-      "Normative statements conform to the WHO handbook for guideline development, 2nd ed " +
-      "(voices/who-guideline-development.json, 8 rules): \"should\" for strong and " +
-      "\"suggest\" for conditional; NEVER the ambiguous \"not recommended\"; active " +
-      "voice, worded consistently across the whole guideline; outcomes kept out of the " +
-      "statement; PICO shape; certainty stated as high/moderate/low/very low; and each " +
-      "recommendation carrying its justification, its remarks and a link to the evidence.",
-    default_severity: "critical",
-    voices: ["who-guideline-development"],
-    depends_on: ["md"],
-    automated: false,
-  },
-  {
-    id: "voice-overlay-who-publication-design",
-    domain: "voice",
-    description:
-      "Presentation conforms to the WHO Western Pacific Region publication style guide " +
-      "(voices/who-publication-design.json, 8 rules): never red with green or blue with " +
-      "yellow in a figure; 10pt inside figures and tables; Roman front matter and Arabic " +
-      "body; the logo placed and never redrawn, with 1cm clear space and a 3cm floor; the " +
-      "regional blue as given; one of the four typefaces; and photographs credited.",
-    default_severity: "major",
-    voices: ["who-publication-design"],
-    depends_on: ["md"],
-    automated: false,
-  },
-  {
-    id: "voice-overlay-milnor",
-    domain: "voice",
-    description:
-      "Block reads in the register measured from Milnor's \"Link Groups\" (1954) — " +
-      "voices/milnor.json, 12 rules. Complements expo-milnor-clarity rather than " +
-      "duplicating it: that criterion is the strict 16/16 gate on the eight hallmarks, " +
-      "this one is the three findings the measurement produced that the hallmarks do not " +
-      "cover. \"Clearly\" before a routine verification is proof economy and must not be " +
-      "failed (14 uses in the exemplar); \"I\" is correct in an acknowledgement and " +
-      "nowhere else (1 use against 20 of \"we\"); and median sentence length runs to 17 " +
-      "words.",
-    default_severity: "minor",
-    voices: ["milnor"],
-    depends_on: ["md"],
-    automated: false,
-  },
+  // ── The voice-overlay criteria are DERIVED, not written here ────────────
+  //
+  // Four entries stood at this point, one per voice, each restating that
+  // voice's rules in prose — three of them describing files in ANOTHER
+  // instance, and every one of them restating rules WITHOUT the citation the
+  // voice itself carries. The platform held an uncited copy of rules the
+  // owning instance holds cited, in the subsystem whose whole argument is that
+  // a voice is auditable rather than asserted. Bean `btuv`.
+  //
+  // `voice-criteria.ts` derives them from the voices instead, so a voice
+  // shipping in any instance gets its criterion with no edit here. They are
+  // NOT spliced into this array: deriving reads the filesystem, and this is a
+  // module-scope const — the work `1hkj` deferred and `check:module-scope-
+  // resolution` gates. Use `qaCriteriaFor(root)` below, which is lazy.
+
 ];
 
 const EXPO: QaCriterionDefinition[] = [
@@ -2691,4 +2644,33 @@ export function getCriterionExtraInputs(criterionId: string): string[] {
   const def = QA_CRITERIA_BY_ID[criterionId];
   if (def?.extra_inputs) return def.extra_inputs;
   return CRITERION_EXTRA_INPUTS[criterionId] ?? [];
+}
+
+// ── The whole set: written + derived ──────────────────────────────────────
+
+/**
+ * Every criterion that applies to an instance — the static ones above plus the
+ * voice overlays derived from whatever voices the repository ships.
+ *
+ * **Callers should prefer this over {@link QA_CRITERIA_REGISTRY}.** That array
+ * is the criteria a reader can see by opening this file; it is no longer the
+ * whole set, and a consumer that iterates it alone silently skips every voice.
+ *
+ * It is a FUNCTION rather than a second const because deriving reads the
+ * filesystem, and module-scope filesystem work is what bean `1hkj` deferred and
+ * `check:module-scope-resolution` gates: a malformed declaration must not be
+ * able to abort this module and strand `QA_CRITERIA_REGISTRY` itself. The
+ * derivation memoises per root, so the cost is one read per process.
+ */
+export function qaCriteriaFor(instanceRoot: string): QaCriterionDefinition[] {
+  return [...QA_CRITERIA_REGISTRY, ...voiceCriteriaFor(instanceRoot)];
+}
+
+/** {@link qaCriteriaFor}, indexed by id. */
+export function qaCriteriaByIdFor(
+  instanceRoot: string,
+): Record<string, QaCriterionDefinition> {
+  const out: Record<string, QaCriterionDefinition> = { ...QA_CRITERIA_BY_ID };
+  for (const c of voiceCriteriaFor(instanceRoot)) out[c.id] = c;
+  return out;
 }
