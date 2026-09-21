@@ -748,6 +748,12 @@ jobs:
           # so adding one there is covered here with no edit; finding none
           # is exit 1, not a pass (issue #720, bean `u1iu`).
           bun run check:published-instance-exports
+          # A preview must run the generators the deploy runs, with the same
+          # instance arguments. `3jhq` was exactly this: staging ran the
+          # exporter but not for the foreign instance, so two links 404ed on
+          # every preview. Deploy and preview are DERIVED (the deploy passes no
+          # `--base-url`), so neither is named in the check (bean `qgpo`).
+          bun run check:invocation-parity
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no
