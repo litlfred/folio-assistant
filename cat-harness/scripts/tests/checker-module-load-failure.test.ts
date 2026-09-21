@@ -19,8 +19,8 @@ import { describe, test, expect } from "bun:test";
 import { join } from "path";
 
 import {
-  findChecker,
   loadCheckerModule,
+  readModule,
   type LoadedModule,
 } from "../../content/pipeline/qa-checker-discovery.ts";
 
@@ -74,14 +74,15 @@ describe("loadCheckerModule", () => {
   });
 });
 
-describe("findChecker over a poisoned namespace", () => {
-  test("it reports no checker instead of crashing the sweep", async () => {
+describe("the poisoned namespace the cache exists to avoid", () => {
+  test("readModule declines to read it, so nothing downstream guesses", async () => {
     // Reachable exactly as the sweep reaches it: some earlier caller in this
     // process has already imported the broken module twice, so `import()`
-    // resolves and the namespace cannot be enumerated.
+    // resolves and the namespace cannot be enumerated. `readModule` is what
+    // keeps that a third state; the cache above is what keeps discovery from
+    // reaching it in the first place, and the two are not the same fix.
     const stale = (await import(FIXTURE)) as Record<string, unknown>;
     expect(() => Object.keys(stale)).toThrow(/before initialization/);
-
-    expect(findChecker(stale, "proof-no-bare-sorries")).toBeUndefined();
+    expect(readModule(stale)).toBeUndefined();
   });
 });

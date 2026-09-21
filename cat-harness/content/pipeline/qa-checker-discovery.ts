@@ -124,33 +124,6 @@ export interface CheckerDiscovery<T> {
   orphaned: Array<{ criterion: string; sourceFile: string }>;
 }
 
-/**
- * A module the sweep tried to load: its namespace, or why it would not load.
- *
- * The failure is remembered rather than retried because **a second dynamic
- * import of a module whose evaluation threw does not throw again**. Measured
- * on Bun 1.3.11, in eight lines and with no import cycle anywhere:
- *
- * ```ts
- * // boom.ts:  export const BEFORE = 1; const _ = explode(); export const AFTER = {};
- * await import("./boom.ts");   // REJECTS: "top-level failure"
- * const mod = await import("./boom.ts");   // RESOLVES
- * Object.keys(mod);            // THROWS: Cannot access 'AFTER' before initialization
- * ```
- *
- * The second import hands back the namespace of a module whose body aborted
- * partway, so every binding after the throw is still in its temporal dead
- * zone. Several criteria share one checker file, so discovery imported the
- * same path once per criterion and hit exactly that: the first got an honest
- * "module did not load", and the second took down the sweep.
- *
- * Caching the failure fixes it at the cause. Every criterion in a file that
- * would not load now gets the same reason, which is also the more useful
- * report — one broken checker module is one finding, not one finding and a
- * crash.
- */
-export type LoadedModule = Record<string, unknown> | { loadError: string };
-
 /** Absent `subject` means `"block"` — see the field's own documentation. */
 export function criterionSubject(def: QaCriterionDefinition): QaCriterionSubject {
   return def.subject ?? "block";
@@ -170,11 +143,40 @@ export function discoverScriptCheckers(): Promise<CheckerDiscovery<ScriptChecker
 }
 
 /**
+ * A module the sweep tried to load: its namespace, or why it would not load.
+ *
+ * The failure is remembered rather than retried, and that is not an
+ * optimisation — **a second dynamic import of a module whose evaluation threw
+ * does not throw again.** Measured on Bun 1.3.11, in eight lines and with no
+ * import cycle anywhere:
+ *
+ * ```ts
+ * // boom.ts:  export const BEFORE = 1; const _ = explode(); export const AFTER = {};
+ * await import("./boom.ts");             // REJECTS: "top-level failure"
+ * const mod = await import("./boom.ts"); // RESOLVES
+ * Object.keys(mod);                      // THROWS: Cannot access 'AFTER' before initialization
+ * ```
+ *
+ * The single-import case rejects correctly, which is why one import proves
+ * nothing. Several criteria share one checker file, so discovery imported the
+ * same path once per criterion and hit exactly that: the first got the real
+ * error, and every one after it got the half-built namespace that
+ * {@link readModule} exists to survive.
+ *
+ * Caching keeps the CAUSE. Without it the first criterion reports
+ * `cold-chain-guidance.config.json is not valid JSON` and its siblings report
+ * "module did not finish evaluating" — the symptom {@link readModule}
+ * correctly declines to guess past. One broken checker module should be one
+ * finding, stated once, in the words of the thing that actually failed.
+ */
+export type LoadedModule = Record<string, unknown> | { loadError: string };
+
+/**
  * Import a checker module at most once, remembering a failure as a failure.
  *
- * Exported for {@link LoadedModule}'s test: the behaviour it guards against is
- * a platform one, so it is pinned against a fixture that throws rather than
- * against the corpus, which is green and therefore proves nothing here.
+ * Exported for its test: the behaviour it guards against is the platform's, so
+ * it is pinned against a fixture that throws rather than against the corpus,
+ * which is green and therefore proves nothing here.
  *
  * The specifier is a VARIABLE — the target comes from the criterion — so this
  * module names no checker file and depends on none.
@@ -216,7 +218,8 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
       // criterion nobody automates would make every sweep pay for a report,
       // and the automated criteria sharing that file load it anyway.
       const seen = load(abs);
-      if (seen && findChecker<T>(seen, def.id)) orphaned.push({ criterion: def.id, sourceFile });
+      const seenRead = seen && readModule(seen);
+      if (seenRead && findChecker<T>(seenRead, def.id)) orphaned.push({ criterion: def.id, sourceFile });
       continue;
     }
 
@@ -239,7 +242,26 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
       continue;
     }
 
-    const found = findChecker<T>(mod, def.id);
+    // READ BEFORE ASKING. A namespace that cannot be enumerated belongs to a
+    // module that threw while evaluating, and saying it "exports neither" a
+    // checker would be a determined answer about a file nobody could read.
+    // `await import()` above does not always re-throw for such a module — it
+    // can hand back the half-built namespace — so this is the only place the
+    // distinction can still be made.
+    const read = readModule(mod);
+    if (read === undefined) {
+      unimplemented.push({
+        criterion: def.id,
+        sourceFile,
+        reason:
+          "module did not finish evaluating — its exports were never bound, so nothing here " +
+          "can say whether it implements this criterion. The real error is at that module's " +
+          "own top level; this is the symptom.",
+      });
+      continue;
+    }
+
+    const found = findChecker<T>(read, def.id);
     if (found) checkers.set(def.id, found);
     else {
       unimplemented.push({
@@ -254,68 +276,86 @@ async function discoverFor<T>(subject: QaCriterionSubject): Promise<CheckerDisco
 }
 
 /**
- * Every export of `mod` that can actually be read right now.
+ * A module namespace read safely, or `undefined` when it CANNOT BE READ AT
+ * ALL — which means the module threw while evaluating.
  *
- * `Object.values` is what this used to be, and it CRASHES THE WHOLE SWEEP when
- * any one export is a `const` still in its temporal dead zone — `Object.keys`
- * throws too, which is why the guard is around the whole enumeration rather
- * than around each read.
+ * ## What actually happens, corrected 2026-09-21
  *
- * **The cause was NOT an import cycle**, though this comment and the commit
- * that added the guard (`fd57e83c`) both said so. Measured 2026-09-21 by
- * reproducing the failure at that commit's parent and instrumenting it: there
- * is no runtime import cycle in this repository, then or now. The half-
- * evaluated module came from a second dynamic import of a module whose
- * evaluation had already thrown — see {@link LoadedModule}, which fixes that
- * at the cause. `qa-checkers-extended.ts` aborted at its top-level
- * `findContentRepoRoot()` on an unparseable declaration, thousands of lines
- * above where `EXTENDED_AUTOMATED_CHECKERS` is declared.
+ * This was introduced (PR #695) with the diagnosis *"the module is part of an
+ * import cycle and is being read while it is mid-evaluation"*. **That was
+ * wrong, and measuring said so**: the import graph has 950 modules and exactly
+ * two strongly-connected components, and neither contains
+ * `qa-checkers-extended.ts`. There is no cycle.
  *
- * Caching the failure is the repair; this is the second half, and it is NOT
- * redundant. A module registry is keyed by path and shared by the whole
- * process, so a module some OTHER caller already imported twice is already
- * poisoned before discovery sees it: `loadCheckerModule` then caches a
- * namespace, not a failure, and only this guard stands between that and a
- * crashed sweep. Pinned by `checker-module-load-failure.test.ts`, which
- * reaches `findChecker` with exactly such a namespace.
+ * The real mechanism is a **module-scope side effect that throws**.
+ * `qa-checkers-extended.ts` opens with `const REPO_ROOT =
+ * findContentRepoRoot()`, and that resolved through a declaration which would
+ * not parse. Evaluation aborted at line 49, so `EXTENDED_AUTOMATED_CHECKERS`
+ * three thousand lines below was never bound — and a later `await import()`
+ * handed back the half-built namespace rather than re-throwing. Reading any
+ * binding on it, or even enumerating its keys, then raises "Cannot access X
+ * before initialization", naming a symptom three thousand lines from the
+ * cause.
  *
- * Over the corpus as it stands the guard changes nothing — discovery yields
- * the same 63 block and 10 script checkers with it removed. Do not read that
- * as dead code, and do not go looking for the cycle; it is not there.
+ * `findContentRepoRoot` no longer throws there (same PR), but the shape
+ * remains reachable: a dozen pipeline modules do filesystem work at module
+ * scope, and any of them can fail the same way.
+ *
+ * ## Why the namespace is read through here at all
+ *
+ * `Object.keys` ITSELF throws on such a namespace — the ownKeys trap
+ * evaluates — so the guard has to wrap the enumeration rather than each read.
+ *
+ * **And the failure has to keep its own name.** The first version returned an
+ * empty list, which made `discoverFor` report *"exports neither a dispatch-
+ * table entry nor check<Id>()"* — a DETERMINED, FALSE statement about a module
+ * nobody could read. Returning `undefined` is what lets the caller say "did
+ * not load" instead, which is the difference between a third state and a
+ * wrong answer.
  */
-function moduleValues(mod: Record<string, unknown>): unknown[] {
-  // `Object.keys` ITSELF throws on such a namespace, so the guard has to be
-  // around the enumeration and not only around each read.
+export interface ModuleRead {
+  /** Readable exports, in enumeration order. */
+  values: unknown[];
+  /** One export by name, `undefined` if it is unreadable or absent. */
+  byName(name: string): unknown;
+}
+
+export function readModule(mod: Record<string, unknown>): ModuleRead | undefined {
   let keys: string[];
   try {
     keys = Object.keys(mod);
   } catch {
-    return [];
+    return undefined; // the module never finished evaluating
   }
-  const out: unknown[] = [];
+  const values: unknown[] = [];
   for (const key of keys) {
     try {
-      out.push(mod[key]);
+      values.push(mod[key]);
     } catch {
-      // In its temporal dead zone — see above.
+      // One binding unreadable while the rest are fine: skip it. A value that
+      // cannot be read is not a dispatch table.
     }
   }
-  return out;
+  return {
+    values,
+    byName(name) {
+      try {
+        return mod[name];
+      } catch {
+        return undefined;
+      }
+    },
+  };
 }
 
-/**
- * A dispatch-table entry keyed by the id, else `check<PascalCaseId>`.
- *
- * Exported so the guard in {@link moduleValues} can be pinned against a
- * poisoned namespace — see `checker-module-load-failure.test.ts`.
- */
-export function findChecker<T>(mod: Record<string, unknown>, criterionId: string): T | undefined {
-  for (const value of moduleValues(mod)) {
+/** A dispatch-table entry keyed by the id, else `check<PascalCaseId>`. */
+function findChecker<T>(read: ModuleRead, criterionId: string): T | undefined {
+  for (const value of read.values) {
     if (value && typeof value === "object" && criterionId in (value as Record<string, unknown>)) {
       const entry = (value as Record<string, unknown>)[criterionId];
       if (typeof entry === "function") return entry as T;
     }
   }
-  const named = mod[checkerFunctionName(criterionId)];
+  const named = read.byName(checkerFunctionName(criterionId));
   return typeof named === "function" ? (named as T) : undefined;
 }

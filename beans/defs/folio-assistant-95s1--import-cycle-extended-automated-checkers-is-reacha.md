@@ -3,8 +3,9 @@
 title: 'IMPORT CYCLE: EXTENDED_AUTOMATED_CHECKERS is reachable in its temporal dead zone, and discovery only survives it'
 status: completed
 type: task
+priority: normal
 created_at: 2026-09-21T11:14:16Z
-updated_at: 2026-09-21T13:20:00Z
+updated_at: 2026-09-21T15:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -32,59 +33,129 @@ that cannot be read is not a dispatch table, and the alternative is one cycle
 anywhere costing every criterion its checker. But it is a GUARD, not a repair:
 the cycle is still there and will surface somewhere else.
 
-(Original "Done when" removed — it is restated and answered at the end, and two
-copies of the acceptance criteria are two places for them to disagree.)
+## THERE IS NO CYCLE. This bean's own diagnosis was wrong.
+
+Measured 2026-09-21, before changing anything: the TypeScript import graph
+under `cat-harness/` has **950 modules and exactly two strongly-connected
+components** — `schemas/constraints.ts` ⇄ `schemas/types.ts`, and
+`content/pipeline/_folio-chapter-profiles.qou.ts` ⇄
+`content/pipeline/qa-checkers-q-usage.ts`. **Neither contains
+`qa-checkers-extended.ts`**, and nothing reaches back into it.
+
+`qa-checkers-extended.ts` does import `qa-checkers-q-usage.ts`, so it touches
+the second component — but touching a cycle is not being in one, and the
+binding that went into its dead zone is its OWN.
+
+## What actually happened — a module-scope side effect that threw
+
+`qa-checkers-extended.ts` opens with, at line 49:
+
+    const REPO_ROOT = findContentRepoRoot();
+
+That resolved through a declaration which would not parse, so `folioDir` threw
+and **evaluation aborted at line 49**. `EXTENDED_AUTOMATED_CHECKERS` is
+declared at line 3235, so it was never bound — and a later `await import()`
+handed back the half-built namespace instead of re-throwing. Enumerating it
+then raised *"Cannot access 'EXTENDED_AUTOMATED_CHECKERS' before
+initialization"*, **naming a symptom three thousand lines from the cause.**
+
+Confirmed in both directions rather than argued: reverting PR #695's
+`repo-root.ts` fix brings the error straight back, and restoring it makes the
+reproducer pass **with the guard removed entirely**.
+
+So the throw source is already gone. The shape is not: a dozen pipeline modules
+do filesystem work at module scope (`const REPO_ROOT = findContentRepoRoot()`
+appears in 12 files), and any of them can fail the same way.
+
+## The guard was masking, which is what this bean actually fixes
+
+Re-examined per the third box, and it was **not** still guarding something
+real in the form it had. `moduleValues` returned an empty list on failure, so
+`discoverFor` went on to report:
+
+    exports neither a dispatch-table entry "<id>" nor check<Id>()
+
+A **determined and false** statement about a module nobody could read — the
+third-state rule broken by the guard written to uphold it, in the same PR.
+
+`readModule` now returns `undefined` for a namespace that cannot be enumerated
+at all, and `discoverFor` reports *"module did not finish evaluating — its
+exports were never bound"*, pointing at the module's own top level. A single
+unreadable binding beside good ones stays narrow: it skips that one export
+rather than condemning the module, or one bad export would hide every checker
+next to it. The named-export fallback got the same guard — it read a binding
+directly and threw.
+
+## Done when
+
+- [x] The cycle is identified — **there is none**, and the measurement that
+      says so is above. The real mechanism is a module-scope side effect.
+- [x] It is broken, or declared acceptable with the reason — not applicable:
+      the throw source was already fixed in #695. The remaining exposure (12
+      modules doing filesystem work at import time) is recorded here rather
+      than swept, because changing it is a repo-wide pattern change and
+      nothing is currently failing on it.
+- [x] The guard in `findChecker` is re-examined — it was masking, and now
+      reports the failure under its own name. Four tests pin the distinction,
+      and the regression was planted to confirm they fail on the old
+      behaviour rather than passing vacuously.
+
+## Follow-up worth its own bean, not taken here
+
+**Filesystem work at module scope.** `const REPO_ROOT = findContentRepoRoot()`
+in 12 pipeline modules means importing any of them can throw, and a module
+that throws while evaluating produces exactly the confusing symptom above. A
+lazy accessor would remove the class. Not done here because it is a pattern
+change across a dozen files with no current failure driving it, and this bean
+is about the reporting defect.
 
 ---
 
-## Resolved 2026-09-21 — **there is no import cycle**, and never was
+## A second session worked this independently — what it adds, and one correction
 
-The title of this bean is wrong, and so were the commit message that opened it
-(`fd57e83c`) and the comment it left in `findChecker`. Recorded here rather
-than quietly corrected, because a comment asserting a *measured* cause that
-does not exist sends the next agent hunting something that is not there — it
-sent this one.
+Session `017MEZnJxx7WeekiNCabx4hx` reached the same conclusion from the other
+end, unaware of PR #707 until merging main. Recorded here rather than dropped,
+because the two measurements disagree on a number and the disagreement is
+instructive.
 
-### What was measured
+### The two cycle counts are both right, over different graphs
 
-| question | method | answer |
+| | graph | result |
 |---|---|---|
-| is there a runtime import cycle today? | static detector over every `.ts` in the repo, runtime edges only (`import … from`, `export … from`, side-effect `import "x"`, dynamic `import("./lit")`); type-only specifiers and type-only clauses erased | **no** — 0 cycles over 1108 resolved edges |
-| …were 1108 edges all of them? | audited the drop: an edge whose target is not a scanned file is an edge **not looked at** | 5 dropped, each explained — a `.qou` data path, a template-literal specifier, and three from `fsh-guts/scripts/generate-docs.ts`, deliberately retired (bean `3w0i`) |
-| was there one at `fd57e83c`, where the crash was seen? | same detector against a worktree at that commit | **no** — 0 |
-| was the detector capable of finding one? | falsified both ways: planted `a↔b` value cycles, `export…from` cycles and side-effect cycles are all caught; type-only cycles correctly ignored | yes |
-| is `qa-checkers-extended` in a cycle with `qa-sweep`? | shortest-path search in both directions, dynamic imports included | **no path either way** |
+| PR #707 | every import edge, `import type` included | **2** strongly-connected components |
+| this session | RUNTIME edges only — type-only specifiers and type-only clauses erased | **0** cycles, over 1108 resolved edges |
 
-### What actually happened
+Neither needs retracting, and checking which is which took one look at the two
+components #707 names:
 
-Reproduced at `fd57e83c^` and instrumented, in the one test that fails there —
-`profile-scoping.test.ts` › *"a folio whose config cannot be read keeps its
-coverage"*, which spawns `qa-sweep` as a subprocess over a folio with an
-unparseable config:
+- `schemas/constraints.ts` → `schemas/types.ts` is `import type { Block }`.
+- `_folio-chapter-profiles.qou.ts` → `qa-checkers-q-usage.ts` is
+  `import type { QRegime }`.
 
-```
-[imp] START    voice-title-scholarly   .../qa-checkers-extended.ts
-[eval] extended START n=1
-[eval] before findContentRepoRoot
-[imp] REJECTED voice-title-scholarly   ... is not valid JSON: JSON Parse error
-[imp] START    proof-no-bare-sorries   .../qa-checkers-extended.ts
-[imp] RESOLVED proof-no-bare-sorries   .../qa-checkers-extended.ts
-[probe] Object.keys THREW ... Cannot access 'EXTENDED_AUTOMATED_CHECKERS' before initialization
-```
+Both are **erased at runtime**, so each pair is one-directional once the types
+are gone. The type-level cycles are real and TypeScript resolves them; the
+runtime module graph has none. Same conclusion about
+`qa-checkers-extended.ts` from both, by different routes.
 
-1. `qa-checkers-extended.ts` aborts at its **top-level** `findContentRepoRoot()`
-   (line 49) — thousands of lines above where `EXTENDED_AUTOMATED_CHECKERS` is
-   declared (3235). The first `import()` **rejects**, and discovery reports it
-   honestly.
-2. Discovery did not remember the failure, and several criteria share that
-   file, so the next criterion imported the same path again.
-3. **The second import RESOLVES** — Bun serves the namespace of the
-   half-evaluated module instead of re-raising the stored evaluation error. The
-   module body is *not* re-run (`n=1` never becomes `n=2`).
-4. `Object.keys` over that namespace throws for every binding below the abort.
+### A defect in the runtime measurement, found by comparing
 
-Minimal reproduction, no cycle anywhere, Bun 1.3.11 — and the single import
-case behaves correctly, which is why one import proves nothing:
+The zero was very nearly a vacuous one. The second session's resolver treats a
+specifier with an unknown extension as already-resolved, so
+`import … from "./_folio-chapter-profiles.qou"` never tried
+`_folio-chapter-profiles.qou.ts` and the edge was **dropped** — then dismissed
+in the drop audit as "a `.qou` data path", which it is not: it is a module, and
+that is the very edge #707's second component runs through. The conclusion
+survives only because the reverse edge is type-only. **Had it been a value
+import, a real cycle would have been reported as zero** — the exact failure the
+drop audit exists to catch, passed over by a wrong guess about one entry in it.
+
+### What this session adds — the failure is cached
+
+`readModule` makes a half-built namespace a third state instead of a false
+"exports neither". Orthogonal to it, `loadCheckerModule` stops discovery
+reaching that namespace at all: **a second dynamic import of a module whose
+evaluation threw does not throw again** — it resolves with the half-built
+namespace. Eight lines, Bun 1.3.11, no cycle:
 
 ```ts
 // boom.ts:  export const BEFORE = 1; const _ = explode(); export const AFTER = {};
@@ -93,39 +164,17 @@ const mod = await import("./boom.ts"); // RESOLVES
 Object.keys(mod);                      // THROWS: Cannot access 'AFTER' before initialization
 ```
 
-`fd57e83c` fixed it by accident: softening `findContentRepoRoot` removed the
-top-level throw, so nothing half-evaluates any more. The `findChecker` guard it
-added in the same commit was attributed to a cycle it had not looked for.
+The single-import case rejects correctly, which is why one import proves
+nothing — and is why this was missed until the fixture imported twice.
 
-### What was done
+Caching the failure keeps the **cause**. Without it the first criterion reports
+`cold-chain-guidance.config.json is not valid JSON` and every sibling criterion
+sharing that file reports "module did not finish evaluating" — the symptom
+`readModule` rightly declines to guess past. One broken checker module is one
+finding, stated once, in the words of the thing that actually failed.
 
-- `loadCheckerModule` caches the **failure**, so a checker file that will not
-  load is imported once and reported once per criterion that names it. That is
-  the repair, at the cause.
-- The `moduleValues` guard **stays, and is not redundant**: a module registry is
-  keyed by path and shared by the whole process, so a module some other caller
-  already imported twice is poisoned before discovery ever sees it. Then the
-  cache holds a namespace, not a failure, and only the guard stands between
-  that and a crashed sweep.
-- Both halves are pinned by `checker-module-load-failure.test.ts` and were
-  falsified independently — removing either one fails exactly its own test and
-  no other. The corpus is green and therefore proves neither, which is why the
-  test runs against a fixture that throws.
-- The comments in `qa-checker-discovery.ts` now say the real cause, and say in
-  place that the cycle is not there.
-
-### Not done, deliberately
-
-The cycle detector is **not** shipped as a gate. It found nothing, twice, over
-two tree states; a gate against a defect this repository has never had is a
-gate whose green says nothing. The script is in the session scratchpad and the
-method is written down above, which is what a future suspicion actually needs.
-
-## Done when
-
-- [x] The cycle is identified — **it does not exist**; the real cause is a
-      second dynamic import of a module whose evaluation threw
-- [x] It is broken, or declared acceptable with the reason written down — the
-      cause is repaired by caching the load failure
-- [x] The guard in `findChecker` is re-examined — it stays, for a reason that
-      is now stated correctly and pinned by a test
+Pinned by `checker-module-load-failure.test.ts` against a fixture that throws,
+with two fixture files rather than one: a module registry is keyed by path, so
+once any test in the process has imported the broken fixture twice, every later
+`import()` of it resolves with the stale namespace and a cache test sharing it
+would be testing the registry instead.

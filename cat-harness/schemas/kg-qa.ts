@@ -55,6 +55,8 @@ import { join, relative, resolve } from "node:path";
 
 import { z } from "zod";
 
+import { portableSegment } from "./portable-path";
+
 /** Marker value carried by every sidecar written by `scripts/kg-audit.ts`. */
 export const KG_QA_SCHEMA = "kg-qa/v1";
 
@@ -140,6 +142,18 @@ export const KG_QA_RESULTS_DIR = join("test", "results", "kg-qa");
  * sweep walks. `..` is dropped rather than encoded, because the segment that
  * matters for collisions is the path below the escape.
  *
+ * ## The stem is a COMPOSED name, so it is encoded
+ *
+ * For a subject that carries no path the stem is its **id**, and an id never
+ * had to be a legal filename. Requirement ids are `req:<slug>`, so this
+ * function composed seven paths containing a colon — which NTFS reserves, so
+ * `git clone` fetched every object and then refused to check out, aborting on
+ * the first one. Measured 2026-09-21, from a user's terminal.
+ *
+ * {@link portableSegment} encodes it reversibly rather than substituting,
+ * because substitution would collide — the one guarantee this whole tree
+ * exists to provide. See `schemas/portable-path.ts`.
+ *
  * @param repoRoot   absolute instance root
  * @param subjectDir absolute directory the subject itself lives in
  * @param stem       the subject's filename without extension, or its id
@@ -151,11 +165,20 @@ export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: stri
   const rel = relative(repoRoot, subjectDir);
   const inside = rel.split(/[\\/]/).filter((seg) => seg !== "" && seg !== "..");
   const escaped = rel.startsWith("..");
+  // The STEM is encoded; the directory segments are not. They mirror a path
+  // that is already on disk, so encoding them would make the mirror stop
+  // matching the subject it mirrors — and a subject directory that is itself
+  // unportable is a defect in that path, which `check:portable-paths` reports
+  // at its source rather than papering over here.
+  //
+  // The stem has no such guarantee: it is a filename this function COMPOSES,
+  // from an id that never had to be a legal filename. `req:agent-workflow` is
+  // what made this repository unclonable on Windows — see `portable-path.ts`.
   return join(
     repoRoot,
     KG_QA_RESULTS_DIR,
     ...(escaped ? ["_external", ...inside] : inside),
-    `${stem}.kg-qa.json`,
+    `${portableSegment(stem)}.kg-qa.json`,
   );
 }
 
