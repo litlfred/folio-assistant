@@ -220,6 +220,8 @@
     "translation:drift:check": "bun run cat-harness/content/pipeline/translation-drift.ts",
     "translation:index": "bun run cat-harness/content/pipeline/translation-index.ts",
     "translation:index:check": "bun run cat-harness/content/pipeline/translation-index.ts --check",
+    "translation:status": "bun run cat-harness/scripts/gen-translation-status.ts",
+    "translation:status:check": "bun run cat-harness/scripts/gen-translation-status.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {

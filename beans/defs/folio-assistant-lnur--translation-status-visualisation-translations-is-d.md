@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lnur
 title: 'TRANSLATION STATUS VISUALISATION: translations/ is declared but owes a visualiser and a published projection'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-21T21:02:57Z
-updated_at: 2026-09-21T21:02:57Z
+updated_at: 2026-09-21T23:07:59Z
 parent: folio-assistant-bzyu
 ---
 
@@ -58,7 +58,40 @@ count beside the sweep's is the defect this repository names most often.
 
 ## Done when
 
-- [ ] `translation-sources` declares a `visualiser`, and `kg:audit` stops listing it as owing one
-- [ ] a published projection exists and the tile opens it
-- [ ] the page states coverage per locale and verification state, every number derived rather than written down
-- [ ] could-not-determine is a rendered THIRD state, never folded into zero
+- [x] `translation-sources` declares a `visualiser`, and `kg:audit` stops listing it as owing one
+- [x] a published projection exists and the tile opens it
+- [x] the page states coverage per locale and verification state, every number derived rather than written down
+- [x] could-not-determine is a rendered THIRD state, never folded into zero
+
+## Summary of Changes
+
+`scripts/gen-translation-status.ts` measures the `.pot`/`.po` corpus under the
+declared `translation-sources` directory and writes two artefacts:
+`docs/assets/translation-status/index.json` (`folio-translation-status/v1`) and
+`docs/translation-status/index.html`, rendered server-side with no JavaScript
+for the reason `state-visualizer` gives for its own table. `translation:status`
+regenerates, `translation:status:check` fails on a stale copy and is registered
+in `code-quality-gates.yml` — `d2kp`, a page carrying numbers nobody
+regenerated lies by aging.
+
+`cat-harness.json` now declares `coverage.visualiser` on `translation-sources`,
+so `kg:audit` no longer lists it as owing a viewer and `harness-tiles`
+composes the tile from that one declaration rather than a second registry.
+
+Four things the parse gets right, each with its own fixture in
+`scripts/tests/gen-translation-status.test.ts`, because every failure mode here
+produces a plausible number rather than an error: the header entry
+(`msgid ""`) is metadata and not a string; `#, fuzzy` is counted APART from
+translated, since fuzzy entries are exactly the ones a reviewer must look at;
+plurals live in `msgstr[n]`, and a parser that knows only `msgstr` marks every
+plural entry undone; and emptiness cannot be judged from the keyword's own
+line, because a wrapped value has `msgstr ""` with its content beneath.
+
+`share(n, d)` returns `null` on a zero denominator and the page renders that as
+a third state rather than as `0%` — "none of 40" is a measurement, "none of 0"
+is not. An unreadable catalogue is NAMED rather than folded into zero, for the
+same reason.
+
+Measured at first run: 5 locales, 19 catalogues of 318 templates, 392 of 685
+strings translated. Those numbers are here as provenance for this turn; the
+page derives its own on every run and none of them is written down.
