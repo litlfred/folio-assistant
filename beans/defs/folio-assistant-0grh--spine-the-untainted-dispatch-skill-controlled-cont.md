@@ -1,7 +1,7 @@
 ---
 # folio-assistant-0grh
 title: 'SPINE: the untainted-dispatch skill — controlled context extracted from the KG, parameterized prompt, producer never writes the verdict'
-status: todo
+status: in-progress
 type: task
 priority: high
 parent: folio-assistant-3x2n
@@ -47,12 +47,42 @@ session, so record `model` **with** `modelSource` or not at all. Absent both,
 
 ## Done when
 
-- [ ] A skill in the `kg` graph states the discipline with no domain vocabulary
-- [ ] Context resolution is parameterized over (subject node, criterion) and
-      reads the graph — falsified by a subject whose context cannot be resolved
-      returning **could not determine**, never an empty context that reads as
-      "nothing to check"
-- [ ] `TOOLS_USED` is recorded, not assumed
-- [ ] Both dispatched agents are written as witnesses, adjudicator first
+- [x] A skill in the `kg` graph states the discipline with no domain vocabulary
+      — `skills/folio-core/untainted-verification.md`, bound to the
+      `qc-reviewer` role (the one that holds `qa-reporting`). Measured:
+      `skill-in-role-or-process` went 16 -> 15, so it is bound rather than
+      merely written
+- [x] Context resolution is parameterized over (subject, criterion) and reads
+      the DECLARATION rather than a hand-composed brief — `UntaintedDispatch`
+      on `QaCriterionDefinition`, checked by `untaintedPartitionDefects` for
+      four defects: undeclared, overlap, unpartitioned, phantom
+- [x] `TOOLS_USED` is recorded, not assumed — `UntaintedParty.tools_used`,
+      carried in `metrics` beside `model_source`
+- [x] Both dispatched parties are written as witnesses, adjudicator first
 - [ ] At least two unrelated domains are expressed against it, so the
-      genericity is demonstrated rather than asserted
+      genericity is demonstrated rather than asserted — `3vc6` (translation)
+      and `8rwa` (evidence review) are the two, neither started
+
+## The owner's ruling, 2026-09-21 — option 1
+
+*"could not dispatch"* is recordable by the producer as an `n/a` witness with a
+**required** reason, and that satisfies the gate. Implemented as
+`couldNotDispatchEntry`, which throws on an empty reason, and made
+distinguishable from every other `n/a` by `metrics.dispatch: "unavailable"`.
+
+`isVerified()` is false for it. That predicate is a named function rather than
+an inline check for exactly one reason: state 2 records `n/a`, and a consumer
+reading `n/a` as "nothing to see" turns the honest gap back into the silent one
+the whole mechanism exists to end.
+
+## Falsified before it was trusted
+
+Restoring each defect turns the guard red and the fix turns it green:
+
+| break | result |
+|---|---|
+| `isCouldNotDispatch` always false | 15 pass, **1 fail** |
+| the overlap rule disabled in `untaintedPartitionDefects` | 15 pass, **1 fail** |
+| restored | **16 pass, 0 fail** |
+
+`bun run gates` — 96 of 96.
