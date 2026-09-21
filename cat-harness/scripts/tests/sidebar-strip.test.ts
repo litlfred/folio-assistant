@@ -156,3 +156,54 @@ describe("the controls live inside the sidebar now", () => {
     }
   });
 });
+
+describe("figures keep a white plate, with and without JavaScript", () => {
+  /**
+   * Owner, 2026-09-21: *"all drawings/figures need white backgroun in dark
+   * mode"*, with a screenshot of a Mermaid graph whose NODES were legible and
+   * whose EDGES were not — thin grey connectors on a near-black page.
+   *
+   * The white card is applied two ways on purpose: by `mountFigures()`, which
+   * also supplies the scroll container and zoom controls, and declaratively
+   * here. The JS path measures before it wraps and skips anything under 240px
+   * in both axes — a guard a diagram can fail transiently, before layout
+   * settles. The CSS path cannot be lost to a timing window.
+   */
+  /**
+   * COMMENTS STRIPPED, for the second time in this file and for the same
+   * reason: the prose here explains why a blanket `img[src$=".svg"]` rule is
+   * wrong, so a test that greps for that selector finds it in the explanation.
+   * A stylesheet that documents what it avoids defeats any raw-text match.
+   */
+  const figures = css
+    .slice(css.indexOf(".fa-figure-scope {"), css.indexOf("Full-bleed."))
+    .replace(/\/\*[\s\S]*?\*\//g, "");
+
+  it("states the same white in both paths", () => {
+    expect(figures).toContain("background: #fff !important"); // the JS-applied class
+    expect(figures).toContain("background: #fff;"); // the declarative fallback
+  });
+
+  it("the fallback reaches the class this theme actually emits", () => {
+    // It was `.mermaid` once — Mermaid's own conventional class, which
+    // just-the-docs never sets. `closest` returned null every time and the
+    // card was never attached. `.language-mermaid` is what the theme emits.
+    expect(figures).toContain(".main-content .language-mermaid");
+  });
+
+  it("does NOT blanket every inline SVG — CSS cannot measure", () => {
+    // A rule on `img[src$=".svg"]` would put a white plate behind every icon,
+    // which is exactly what the JS path's 240px guard exists to prevent. CSS
+    // has no size test, so it must not attempt that judgement at all.
+    expect(figures).not.toMatch(/img\[src\$=/);
+    expect(figures).not.toMatch(/^\s*svg\s*\{/m);
+  });
+
+  it("is white in BOTH schemes, not only under a dark-mode query", () => {
+    // The settled rule: a schematic is a figure and figures are printed on
+    // white, whatever the page is doing. Dark mode is where the failure is
+    // visible, not where the rule changes. A `prefers-color-scheme` guard here
+    // would also miss this site, which sets its scheme explicitly.
+    expect(figures).not.toContain("prefers-color-scheme");
+  });
+});
