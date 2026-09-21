@@ -329,3 +329,73 @@ describe("a dependent instance inherits the ingestion directories", () => {
     expect(up.path).not.toBe(lib.path);
   });
 });
+
+/**
+ * A dependent instance materialises its own `docs/` — bean `n0nf`, issue #638.
+ *
+ * ## Why this is a test and not a line in the declaration
+ *
+ * `docs` was `dependents: "skip"`, and the argument for that was GOOD: a
+ * dependent should **inherit the pages** rather than get an empty directory to
+ * refill. The owner's compose ruling (2026-09-21) does not overturn it — under
+ * an overlay a dependent gets both, the pages *and* somewhere to override one —
+ * so the flip to `reproduce` is the second half of that argument arriving, not
+ * a reversal of it.
+ *
+ * Which is exactly why it needs a test. **Flipping one JSON word back is a
+ * plausible-looking edit**, the old rationale still reads persuasively in the
+ * same entry, and nothing else in the repository would fail: a downstream folio
+ * would simply have nowhere declared to document itself, silently. That is the
+ * shape `wwi6` guards for `uploads/` and `library/`, and this is the same guard
+ * pointed at `docs`.
+ *
+ * ## It asserts the CONTRAST, not just the presence
+ *
+ * `schemas` and `tools` are the platform's own and must stay unmaterialised.
+ * Asserting only that `docs` appears would pass just as well against a build
+ * that inherited everything — which is the junk the `dependents` field exists
+ * to prevent, and would read as success.
+ */
+describe("a dependent instance materialises its own docs/", () => {
+  const DOWN = mkdtempSync(join(tmpdir(), "docsdependent-"));
+
+  beforeAll(() => {
+    mkdirSync(DOWN, { recursive: true });
+    writeInstanceConfig(
+      DOWN,
+      JSON.stringify({
+        contentType: "document",
+        dependencies: {
+          folioAssistant: [{ name: "folio-assistant", path: join(import.meta.dir, "..") }],
+        },
+      }),
+    );
+  });
+
+  it("materialises docs/ in the DEPENDENT's own root, attributed to cat-harness", () => {
+    const made = materialiseDeclaredDirectories(DOWN, { dryRun: true });
+    const docs = made.find((d) => d.id === "docs");
+    expect(docs, `no "docs" among ${made.map((d) => d.id).join(", ")}`).toBeDefined();
+    // Its OWN root — an instance inherits the CONVENTION, not a licence to
+    // write into the dependency's checkout.
+    expect(docs!.absPath.startsWith(DOWN)).toBe(true);
+    expect(docs!.declaredBy).toBe("cat-harness");
+  });
+
+  it("...and NOT the platform's own directories, which is the contrast", () => {
+    // Without this, a build that inherited all twelve would pass the test
+    // above. `schemas/` and `tools/` are where the PLATFORM's content lives,
+    // not part of the shape a folio has.
+    const ids = materialiseDeclaredDirectories(DOWN, { dryRun: true }).map((d) => d.id);
+    expect(ids).toContain("docs");
+    for (const own of ["schemas", "tools"]) expect(ids).not.toContain(own);
+  });
+
+  it("the work plan is still NOT inherited — repository-scoped, and unaffected", () => {
+    // Guards the blast radius of the flip: changing one entry's `dependents`
+    // must not move anything keyed on `scope`.
+    const ids = materialiseDeclaredDirectories(DOWN, { dryRun: true }).map((d) => d.id);
+    expect(ids).not.toContain("beans");
+    expect(ids).not.toContain("todos");
+  });
+});
