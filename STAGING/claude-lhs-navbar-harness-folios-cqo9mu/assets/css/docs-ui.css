@@ -3084,3 +3084,125 @@ a.fa-harness-tile__body:focus-visible {
 .fa-sticky-board-reopen:focus-visible {
   border-color: currentColor;
 }
+
+/* ═══ The linear floor — `_includes/generated/todo-listing.html` ═══════════
+ *
+ * The tile listing is the artefact and the board is the overlay, so this is
+ * styled to be READ: a printable, translatable, screen-readable list that is
+ * correct with no JavaScript at all. Nothing here hides it — `docs-ui.js`
+ * moves it inside a `<details>` once the board is available, and a collapsed
+ * disclosure is reachable while `display: none` is not.
+ */
+.fa-todo-listing {
+  margin: 2rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.35));
+}
+
+.fa-todo-listing-heading {
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+}
+
+.fa-todo-listing-lead,
+.fa-todo-listing-none {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+  margin: 0 0 1rem;
+}
+
+.fa-todo-listing-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  /* A TILE listing, in the owner's words — "on stndard folio just simple tile
+   * based listing". `auto-fill` rather than a fixed count so one note is not
+   * stretched across a desktop column and four are not slivers on a phone. */
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.fa-todo-listing-item {
+  border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.35));
+  border-radius: 0.375rem;
+  padding: 0.75rem 0.875rem;
+  /* No fixed height. A sticky on the board is a fixed shape because it is laid
+   * out spatially; a listing tile is read top to bottom, and clipping prose to
+   * keep a grid tidy is how the board's own overflow defect started. */
+}
+
+.fa-todo-listing-summary {
+  font-size: 0.9375rem;
+  margin: 0 0 0.5rem;
+}
+
+.fa-todo-listing-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  margin: 0 0 0.5rem;
+}
+
+.fa-todo-listing-meta dt {
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.fa-todo-listing-meta dd {
+  margin: 0;
+}
+
+.fa-todo-listing-unresolved {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.fa-todo-listing-body {
+  font-size: 0.8125rem;
+}
+
+.fa-todo-listing-body p {
+  margin: 0 0 0.5rem;
+}
+
+.fa-todo-listing-empty {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.fa-todo-listing-links,
+.fa-todo-listing-relations {
+  font-size: 0.75rem;
+  margin: 0.5rem 0 0;
+}
+
+.fa-todo-listing-relations {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+}
+
+.fa-todo-listing-details > .fa-todo-listing {
+  /* Inside the disclosure the rule above would draw a second line under the
+   * summary. The listing keeps its spacing and loses the border only. */
+  border-top: 0;
+  margin-top: 0.5rem;
+  padding-top: 0;
+}
+
+.fa-todo-listing-toggle {
+  cursor: pointer;
+  font-size: 0.8125rem;
+  padding: 0.25rem 0;
+}
+
+/* A printed page has no board, so the floor is the only listing there is — but
+ * a CLOSED `<details>` is not revealed by any stylesheet in Chromium, which
+ * hides its contents with `content-visibility` on an internal slot rather than
+ * with a rule a page can override. So the print case is handled in
+ * `docs-ui.js`, on `beforeprint`, where it can be tested; a `@media print`
+ * rule here would LOOK like it worked and quietly print nothing. */
