@@ -219,13 +219,28 @@ function voiceIdsIn(dir: string): string[] {
 /**
  * Read every declared `voices` directory reachable from these roots.
  *
+ * Each entry of `roots` is an INSTANCE root. Pass `repoRootIn` when you are
+ * starting from the repository root instead — see the note inside.
+ *
  * Returns `null` when no root declares one — not an empty graph. An instance
  * with no voices simply has none, and a consumer rendering the two alike
  * reports a clean run over something it never opened. The same three-state
  * discipline `readLibraryGraph` follows.
  */
-export function readVoicesGraph(roots: string[]): VoicesGraph | null {
-  const repoRoot = repoRootFor(roots[0] ?? ".");
+export function readVoicesGraph(roots: string[], repoRootIn?: string): VoicesGraph | null {
+  // `repoRootFor` is `dirname` and is documented as taking an INSTANCE root, so
+  // deriving it from `roots[0]` is right only when that root IS one. A caller
+  // passing the repository root gets its PARENT, finds no instance beneath it,
+  // and this reader returns `null` — "no voices are declared" for a repository
+  // that declares three. Measured while writing `check-voice-skills.ts`, which
+  // did exactly that: `repoRootFor("/…/folio-assistant")` is `/home/user`.
+  //
+  // So a caller that already knows the repository root SAYS SO, rather than
+  // this function guessing between two readings of the same argument. That is
+  // the rule `resolveCoveragePath` states one level up: resolving against
+  // whichever root happens to work is worse than picking wrong, because the
+  // wrong pick is visible and the lucky one is not.
+  const repoRoot = repoRootIn ?? repoRootFor(roots[0] ?? ".");
   // Every instance in the repository, not only the roots passed in: a voice is
   // owned by whoever DERIVED it, and the platform derives none — so a reader
   // that asked only its own root would find nothing and report it as an

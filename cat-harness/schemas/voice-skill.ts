@@ -26,7 +26,14 @@
  * **No field serves two of those by restatement.** The instruction body must
  * not enumerate rules: a rule stated in prose beside the same rule stated as
  * data is one fact in two places, and the prose copy is the one carrying no
- * citation and no pattern. `check:voice-skills` enforces it.
+ * citation and no pattern. `scripts/check-voice-skills.ts` enforces it, on
+ * four signals — a rule's id, its title, its citation's quote, and both sides
+ * of a terminology pair.
+ *
+ * That sentence named a gate that **did not exist** from the day this file was
+ * written until 2026-09-21 (bean `n8br`), and four `SKILL.md` files repeated
+ * the claim. It is named by PATH here rather than by npm script for that
+ * reason: a path is something a reader can open and find absent.
  *
  * @module schemas/voice-skill
  * @graphNode schema

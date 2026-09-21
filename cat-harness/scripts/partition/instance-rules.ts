@@ -1076,6 +1076,11 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // Its other half: the rules are cited, AND the instruction body beside
+      // them does not restate them uncited (bean `n8br`). Core for the same
+      // reason — its subject is a voice, which is content an instance derived,
+      // and it reads `schemas/voices.ts`.
+      "scripts/check-voice-skills.ts",
       // Counts every prefix the CONTENT `@context` binds against the published
       // `.jsonld` documents that emit it (bean `fd6i`). Core for the same
       // reason `check-voices.ts` is: its subject is content. It reads
