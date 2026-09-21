@@ -360,25 +360,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790027667">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790028221">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790027667">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790028221">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790027667">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790028221">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790027667">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790028221">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -395,7 +395,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790027667" defer></script>
+<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790028221" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1479,10 +1479,10 @@ copy of the same rot.</p>
 declares nothing it does not have. A <code class="language-plaintext highlighter-rouge">library</code> entry appears in <code class="language-plaintext highlighter-rouge">who-iris</code>’s
 declaration only when the corpus moves there, because a declared-but-absent
 directory makes every consumer scan nothing and report a clean run over it.</p>
-<h2 id="naming--one-fixed-config-stub-named-artefacts-strict">
+<h2 id="naming--a-self-identifying-declaration-stub-named-artefacts-strict">
   
   
-    <a href="#naming--one-fixed-config-stub-named-artefacts-strict" class="anchor-heading" aria-labelledby="naming--one-fixed-config-stub-named-artefacts-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming — one fixed config, stub-named artefacts (STRICT)
+    <a href="#naming--a-self-identifying-declaration-stub-named-artefacts-strict" class="anchor-heading" aria-labelledby="naming--a-self-identifying-declaration-stub-named-artefacts-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming — a self-identifying declaration, stub-named artefacts (STRICT)
   
   
 </h2>
@@ -1584,14 +1584,26 @@ would be false on arrival. <strong>So the type declares its filename, and the
 convention is that rule rather than a spelling.</strong> What a new type copies is
 <em>say what your marker is called</em>, not a pattern to imitate.</p>
 
-<p>The two alternatives were considered and rejected on measurement:
-<code class="language-plaintext highlighter-rouge">&lt;slug&gt;.config.json</code> everywhere would rename what WHO owns; bare <code class="language-plaintext highlighter-rouge">&lt;slug&gt;.json</code>
-collides with <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.json</code>, which is already the published KG-as-JSON alias,
-and would make the declaration un-findable — <code class="language-plaintext highlighter-rouge">findInstanceRoot</code> walks up
-testing one fixed filename per level, and no declaration in this tree carries a
-<code class="language-plaintext highlighter-rouge">$schema</code> to glob for, while <code class="language-plaintext highlighter-rouge">{name, directories}</code> is the shared shape of the
-root declaration, <code class="language-plaintext highlighter-rouge">beans.json</code> and <code class="language-plaintext highlighter-rouge">todos.json</code> alike, so duck-typing returns
-<code class="language-plaintext highlighter-rouge">beans/</code> as an instance root <strong>silently</strong>.</p>
+<p>The two alternatives were considered and rejected on measurement, <strong>and the
+second rejection was later reversed</strong> — recorded rather than rewritten, because
+the objection was real and what answered it is the interesting part.</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;slug&gt;.config.json</code> everywhere would rename what WHO owns. That still holds.</p>
+
+<p>Bare <code class="language-plaintext highlighter-rouge">&lt;slug&gt;.json</code> was rejected as <strong>un-findable</strong>: <code class="language-plaintext highlighter-rouge">findInstanceRoot</code> walked up
+testing one fixed filename per level, no declaration carried a <code class="language-plaintext highlighter-rouge">$schema</code> to glob
+for, and <code class="language-plaintext highlighter-rouge">{name, directories}</code> is the shared shape of the root declaration,
+<code class="language-plaintext highlighter-rouge">beans.json</code> and <code class="language-plaintext highlighter-rouge">todos.json</code> alike — so duck-typing would return <code class="language-plaintext highlighter-rouge">beans/</code> as an
+instance root <strong>silently</strong>.</p>
+
+<p><strong>Both halves were answered by making the file identify itself.</strong>
+<code class="language-plaintext highlighter-rouge">findDeclarationFile</code> admits a <code class="language-plaintext highlighter-rouge">*.json</code> only when its <code class="language-plaintext highlighter-rouge">name</code> field EQUALS its
+own filename stem, and <code class="language-plaintext highlighter-rouge">findInstanceRoot</code> now calls it rather than testing a
+word agreed in advance. Discovery survives, because a consumer matches on the
+file agreeing with itself. And the duck-typing worry closes on the same rule:
+<code class="language-plaintext highlighter-rouge">beans/beans.json</code> declares <code class="language-plaintext highlighter-rouge">"name": "folio-assistant"</code> against the stem
+<code class="language-plaintext highlighter-rouge">beans</code>, so it does not match and <code class="language-plaintext highlighter-rouge">beans/</code> is not an instance root — refused by
+what the file says it is, not by a path exception.</p>
 
 <p><strong>At the graph-kind level this is <code class="language-plaintext highlighter-rouge">GraphKindDef.declarationFile</code></strong>, and it is
 already load-bearing rather than decorative. <code class="language-plaintext highlighter-rouge">declaredKinds</code> computed a nested
