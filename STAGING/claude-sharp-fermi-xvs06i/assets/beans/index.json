@@ -4409,14 +4409,14 @@
     {
       "id": "folio-assistant-sqtq",
       "title": "SWIMLANES HAVE NO DEFINITION: 157 task-containing lanes carry a name and no documentation",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T18:32:14Z",
-      "updatedAt": "2026-09-21T18:53:07Z",
+      "updatedAt": "2026-09-21T19:17:41Z",
       "preview": "Owner, 2026-09-21, ruling on the #596 glossary: *\"QA sidecar validation than\ndocumentaion is absent on any of containing swimlines of a task. bean up too\nfix. dispatch agent. name,documentation --> glossary.\"*\n\n## The finding that produced this\n\nIssue #596 names a BPMN swimlane as a glossary source — *\"a bpmn diagram\nswimlane has title/description\"*. **It has a title. It has no description.**\n\n| a",
       "file": "beans/defs/folio-assistant-sqtq--swimlanes-have-no-definition-157-task-containing-l.md"
     },
@@ -4659,6 +4659,20 @@
       "updatedAt": "2026-09-20T13:56:16Z",
       "preview": "Found 2026-09-20 by being caught out by it, on bean `7yvd`.\n\n## What happened\n\n`bun test` was red locally for a known, unrelated reason — the stale\ngitignored `scripts/__pycache__` of bean `koth`. Six new BPMN diagrams then\nintroduced a SECOND failure in the same gate\n(`every activity names a skill or declares why it has none`, 17 activities).\n\n`bun run gates` reported:\n\n```\n✗ 2 of 55 failed:\n  · ",
       "file": "beans/defs/folio-assistant-ucb9--bun-run-gates-says-which-gate-failed-never-which-t.md"
+    },
+    {
+      "id": "folio-assistant-ug4r",
+      "title": "A lane deliberately bound to NO role is indistinguishable from one nobody got round to",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:17:46Z",
+      "updatedAt": "2026-09-21T19:18:11Z",
+      "preview": "Found 2026-09-21 working bean `sqtq`, by nearly making the mistake it\ndescribes.\n\n## What happened\n\n157 task-containing lanes, and exactly one resolves to no role: `Actor`, in\n`cat-bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s\n§\"Adding a role\", worked out the `actorKinds` and the `skills`, and was about\nto add it when the end of the file said:\n\n> THE FIFTH LANE IS DELIBERATEL",
+      "file": "beans/defs/folio-assistant-ug4r--a-lane-deliberately-bound-to-no-role-is-indistingu.md"
     },
     {
       "id": "folio-assistant-ugid",
