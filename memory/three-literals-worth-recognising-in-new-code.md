@@ -18,5 +18,5 @@ Each shipped once:
 2. **Workflow descriptions from a hardcoded map of twelve `qou` filenames**,
    consulted *before* the workflow's own `name:`. Now always the `name:`.
 3. **The simulator directory as the literal `folio-assistant/simulators`.**
-   Now `harness.config.json`, and the fallback is the folio-root `simulators`
+   Now `<name>.config.json`, and the fallback is the folio-root `simulators`
    — the platform has no such directory since 2026-09-19.
