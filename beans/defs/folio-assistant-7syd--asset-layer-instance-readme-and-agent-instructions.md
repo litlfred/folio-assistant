@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7syd
 title: 'ASSET LAYER: instance-readme and agent-instructions declare layer context, and the read-as-a-file trigger is tested'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T05:50:07Z
-updated_at: 2026-09-21T06:44:30Z
+updated_at: 2026-09-21T06:55:24Z
 parent: folio-assistant-zzmr
 ---
 
