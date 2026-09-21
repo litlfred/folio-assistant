@@ -364,25 +364,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790028752">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790028922">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790028752">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790028922">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790028752">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790028922">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790028752">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790028922">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -399,7 +399,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790028752" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790028922" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -759,11 +759,46 @@ the <strong>namespace</strong> document — in a loop over all three layers, and
 published the <strong>graph</strong>. The generator ran, the document was correct, and its
 <code class="language-plaintext highlighter-rouge">@id</code> resolved to nothing. Bean <code class="language-plaintext highlighter-rouge">blv9</code>.</p>
 
-<p><strong>So the test asserts the WORKFLOW, not the script.</strong> A build that runs the
+<p><strong>So the test asserts the WORKFLOW, not the script.</strong> A build that runs a
 generator and writes it somewhere else leaves the <code class="language-plaintext highlighter-rouge">@id</code> just as dead as one
 that never runs it, and a script name alone cannot tell those apart —
 <code class="language-plaintext highlighter-rouge">scripts/tests/bootstrap-graph.test.ts</code> matches on the <code class="language-plaintext highlighter-rouge">--out</code> path in
 <code class="language-plaintext highlighter-rouge">.github/workflows/docs-site.yml</code> for that reason.</p>
+
+<p>It matched on the script name until bean <code class="language-plaintext highlighter-rouge">dyd3</code>, while this paragraph said
+otherwise, and the cost landed exactly where you would expect: the fix below
+changed the publisher, and a name-matching test would have gone red on the
+change that FIXED the defect it was guarding. It now derives the path from the
+<code class="language-plaintext highlighter-rouge">@id</code> rather than writing it out, so the two sides cannot drift into agreeing
+about different URLs.</p>
+<h2 id="one-publisher-and-it-is-kg-export">
+  
+  
+    <a href="#one-publisher-and-it-is-kg-export" class="anchor-heading" aria-labelledby="one-publisher-and-it-is-kg-export"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ONE publisher, and it is <code class="language-plaintext highlighter-rouge">kg-export</code>
+  
+  
+</h2>
+    
+
+<p>Two generators wrote this document until <code class="language-plaintext highlighter-rouge">dyd3</code>. <code class="language-plaintext highlighter-rouge">gen-bootstrap-graph.ts</code>
+wrote it here; <code class="language-plaintext highlighter-rouge">kg-export --instance ./bootstrap</code> wrote a second one at
+<code class="language-plaintext highlighter-rouge">&lt;base&gt;/bootstrap.jsonld</code>. <strong>Measured 2026-09-21: 88 nodes each, 85 of them
+doc-relative</strong> — so 85 subjects existed under two identities that no consumer
+will ever merge, with only the 3 absolute <code class="language-plaintext highlighter-rouge">cat-harness/ns#graphKind/*</code> IRIs
+shared.</p>
+
+<p><strong>Collapsing the paths is not what settles it</strong>, and that was measured too:
+pointed at one URL the two documents still disagree on <strong>74 of the 88 nodes</strong>
+and on six top-level fields, so the site would serve whichever step ran last.
+Two publishers at one URL is last-writer-wins, which is worse than two URLs
+because it is invisible.</p>
+
+<p><code class="language-plaintext highlighter-rouge">kg-export</code> is the one kept, because its output is the target of every
+<code class="language-plaintext highlighter-rouge">skillHome</code> link cat-harness mints. <code class="language-plaintext highlighter-rouge">gen-bootstrap-graph.ts</code> stays as a
+generator and a test subject; it publishes nothing. A second test asserts
+the <strong>count</strong> — exactly one publisher per workflow — because the retired
+generator still exists and still works, so re-adding it is the live failure
+mode, and a path assertion cannot see it.</p>
 <h2 id="this-path-is-an-instance-of-a-general-rule-not-a-one-off">
   
   
@@ -823,12 +858,20 @@ for a byte gate to compare against.</p>
 recording because it was a good argument: a cold reader with nothing installed
 cannot run <code class="language-plaintext highlighter-rouge">bun install</code>, let alone <code class="language-plaintext highlighter-rouge">kg:export</code>, so a graph that only appears
 after a build is a graph that reader never sees — and README step 2 was cited
-as telling them to load it. <strong>No prose file under <code class="language-plaintext highlighter-rouge">bootstrap/</code> mentions
-this document at all.</strong> The README sends that reader to
+as telling them to load it. <strong>No prose file under <code class="language-plaintext highlighter-rouge">bootstrap/</code> tells a reader
+to load this document.</strong> The README sends that reader to
 <code class="language-plaintext highlighter-rouge">workflows/initialize-harness.bpmn</code> and
 <code class="language-plaintext highlighter-rouge">skills/bootstrap-kg-navigation.md</code>. The pair of tests defending
 “committed” and “current” therefore defended an instruction that does not
 exist, while the <code class="language-plaintext highlighter-rouge">@id</code> went unguarded.</p>
+
+<p>That sentence read <em>“no prose file under <code class="language-plaintext highlighter-rouge">bootstrap/</code> mentions this document
+at all”</em> until <code class="language-plaintext highlighter-rouge">dyd3</code>, and it had stopped being true: <code class="language-plaintext highlighter-rouge">bootstrap/render/</code>
+landed with bean <code class="language-plaintext highlighter-rouge">hfkl</code>, and <strong>this file names the document throughout</strong>. The
+claim it was making — that the cited cold-start route does not exist — is
+unaffected, because naming a path in a publication contract is not instructing
+a reader to fetch it. Narrowed rather than deleted, since the narrow version
+is the one the argument needs.</p>
 
 <p><strong>Nothing was dropped with the gate.</strong> Every property it protected —
 purity, id ordering, no absolute build paths, skills derived from disk, graph
@@ -1057,7 +1100,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35661375639"><code>6f64ba1</code></a> &middot; 2026-09-21T22:12:29Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35661490494"><code>645dd7d</code></a> &middot; 2026-09-21T22:15:16Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

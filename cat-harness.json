@@ -251,15 +251,19 @@
     "counts": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#counts",
       "@type": "@json"
+    },
+    "omitted": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#omitted",
+      "@container": "@set"
     }
   },
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T22:13:14.395Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6f64ba148f9522416baaa22445e05f59ec5c61b5",
-  "sourceCommitSha": "6f64ba148f9522416baaa22445e05f59ec5c61b5",
-  "sourceCommitAt": "2026-09-22T00:11:33+02:00",
+  "generatedAt": "2026-09-21T22:15:47.990Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/645dd7dd9123dc4ae9adfb55c03a34e6894ce0be",
+  "sourceCommitSha": "645dd7dd9123dc4ae9adfb55c03a34e6894ce0be",
+  "sourceCommitAt": "2026-09-22T00:12:55+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 222,
@@ -3709,7 +3713,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/bootstrap-render"
       ],
       "instructionsPath": "../bootstrap/render/bootstrap-graph-publication.md",
-      "instructionLines": 103,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -26900,7 +26904,7 @@
       },
       "requirements": {},
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
       ]
     },
     {
@@ -28968,7 +28972,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
       ]
     },
     {
@@ -32936,8 +32940,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "6f64ba148f9522416baaa22445e05f59ec5c61b5",
+    "sha": "645dd7dd9123dc4ae9adfb55c03a34e6894ce0be",
     "pr": "main",
-    "run": "35661375639"
+    "run": "35661490494"
   }
 }
