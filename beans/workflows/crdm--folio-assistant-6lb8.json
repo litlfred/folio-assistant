@@ -6,7 +6,7 @@
   "subject": "folio-assistant-6lb8",
   "bean": "folio-assistant-6lb8",
   "tokens": [
-    "BA_ChooseKg"
+    "A_AnnounceBranch"
   ],
   "arrivals": {},
   "history": [
@@ -69,6 +69,18 @@
       "node": "A_OfferKg",
       "actor": "claude",
       "note": "Knowledge-graph destinations offered for the agreed set, per kg-contribution-offer: one question for the SET, destinations DERIVED from the instance's declared graphs rather than typed from memory, `none` listed as a first-class answer, default stated. Offerable graphs read from cat-harness.json at the time of asking: cat-harness (skills and BPMN), schemas, tools, beans, fsh-guts, folio. Excluded as incoming/derived/record-of-what-happened: uploads, qa, health, translation-sources, issue-marks, memory, interaction, library. Stated in the offer: much of the agreed set ALREADY landed as KG content — three BPMN processes and the board skills (sd8x), and six schemas (board-positions, window-stack, panel-chrome, reader-filter, semantic-zoom, safe-url) — so the live question is only about what is not yet captured, which is the requirement set R1-R17 itself. Awaiting BA_ChooseKg."
+    },
+    {
+      "at": "2026-09-21T18:45:00.000Z",
+      "node": "BA_ChooseKg",
+      "actor": "litlfred",
+      "note": "DESTINATION CHOSEN: the owning instance's docs/. Verbatim: \"this is a memory asset as part of design, so it goes into docs/. update skills for documentation filing. fsh-guts can be thrown away/lost... this was an asset as part of building a feature (or accessing data, or other skill realtaed to manament/rendering of that type of content) but it is not the content we want displayed itself.\" And, sharpening it: \"if it is realated to some harness/feature/tool that detailed infromation/design/planning/etc go into that harness' docs/. docs/ can also include information about how to access data sources related to the content described or provide more detailed information that is beyond what a human/agent needs to know in order to perform a task if they are competentnt in the given skill.\" NONE OF THE THREE OFFERED OPTIONS WAS THE ANSWER, and that is the agent's defect rather than a gap in the process: kg-contribution-offer says the destinations are DERIVED from the declared graphs, and the derivation DROPPED `docs`, which cat-harness.json declares. Deriving the list is not enough if the derivation loses a declared graph."
+    },
+    {
+      "at": "2026-09-21T18:45:30.000Z",
+      "node": "A_RecordKg",
+      "actor": "claude",
+      "note": "Placement run for the chosen kind, per kg-contribution-offer step 1. Instance: cat-harness, because the board's schema and behaviour live there by the requester's own layering and the ruling says a feature's design record goes in THAT harness's docs/. Graph: docs. Section: architecture/, per placement's filing table. Written as cat-harness/docs/architecture/folio-board-requirements.md, nav_order 8 under parent Architecture. Bean cekz carries the authoring work, parented to 6lb8. FINDING RECORDED RATHER THAN RECONSTRUCTED: R15 and R16 are referenced by beans 51wf and zsah and defined in no comment on #602; the page states them as undefined with the inferred meaning marked as inference, because invented text reads exactly like agreed text. Skills updated per the instruction: kg-contribution-offer (docs as a destination, the identifying question, whose docs/, the competence line, why not fsh-guts), placement (instance-scoped docs/, the filing table, three rules for a design record), and crdm-requirements-workflow Phase 5 and 6 so the step is in the PROCESS rather than only in a skill."
     }
   ],
   "status": "running",
