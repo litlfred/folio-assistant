@@ -2714,6 +2714,33 @@
     }
 
     var tools = el("div", { class: "fa-sticky-tools" });
+
+    /* THREE ON THE FACE, ONE THAT HOLDS THE REST — bean `qefk`, the owner:
+     * *"the todos controls are too clunky / take up too much real estate."*
+     * Asked how far to go and answered **"3+1"**.
+     *
+     * The split is by WHAT THE GESTURE DOES, not by how often it is used:
+     *
+     *   face      Pin, Discard, and Move once the card is floating
+     *             — the things you do to a card ON THE BOARD
+     *   behind    View, Edit — the things that LEAVE for the forge
+     *
+     * That keeps `pb04` intact. Its rule was that View and Edit are two acts
+     * and both must be present — *"a reader checking what a card says should
+     * not land in a text box, and one who wants to fix it should not have to
+     * find the button"*. Present is what it asked for; competing with a
+     * one-line summary is not. Both are still here, still keyboard-reachable,
+     * one keystroke further away.
+     *
+     * AND IT IS A `<details>`, not a scripted menu. The disclosure, the
+     * keyboard path, the Escape behaviour and the accessible name are the
+     * browser's; a hand-rolled popup would be four affordances to reimplement
+     * and four ways to get them wrong. It also degrades to "everything
+     * visible" with no JavaScript, which is `R4`'s floor rather than a
+     * convenience.
+     */
+    var sourceLinks = [];
+
     // VIEW *AND* EDIT — two controls, because they are two acts. Bean `pb04`,
     // the owner: *"rendeding shows edit src icon (and also need view icon)"*.
     // `/blob/` is reading and `/edit/` opens GitHub's editor: a reader
@@ -2728,7 +2755,7 @@
     // repository it 404s for exactly the reader who cannot edit, which reads
     // as "this page is broken" rather than "you cannot do this".
     if (todo.viewHref) {
-      tools.appendChild(el("a", {
+      sourceLinks.push(el("a", {
         class: "fa-node-edit fa-sticky-view",
         href: safeHref(todo.viewHref),
         title: "View this todo's source on GitHub",
@@ -2736,13 +2763,15 @@
       }, "⎘ View"));
     }
     if (todo.editHref) {
-      tools.appendChild(el("a", {
+      sourceLinks.push(el("a", {
         class: "fa-node-edit fa-sticky-edit",
         href: safeHref(todo.editHref),
         title: "Edit this todo's markdown on GitHub",
         "aria-label": "Edit " + todo.summary,
       }, "✎ Edit"));
     }
+
+
     // An INLINE sticky is already beside the content it is about, so Pin and
     // Close have nothing to do: pinning it would move it AWAY from the thing
     // it annotates, and closing it would hide a block-level annotation with no
@@ -2769,6 +2798,42 @@
       discard.innerHTML = CRUMPLED_GLYPH;
       discard.addEventListener("click", function () { onDiscard(todo); });
       tools.appendChild(discard);
+    }
+
+    /* THE ONE THAT HOLDS THE REST — appended LAST, so the face reads
+     * Pin, Discard, [Move], ⋯ and the drawer is where a row ends rather than
+     * where it starts.
+     *
+     * Built only when there is something to hold: a `⋯` opening an empty
+     * drawer is `pb04`'s failure in a new costume, an affordance that
+     * promises and delivers nothing. With no forge both links are absent and
+     * so is this.
+     *
+     * AND NOT ON AN INLINE STICKY. A compact card carries no Pin and no
+     * Discard, so collapsing its only two controls would leave a card whose
+     * entire chrome is a `⋯` — more clicks for less, which is the opposite
+     * of what `qefk` asked for. The drawer exists to make room for board
+     * gestures; where there are none it earns nothing.
+     */
+    if (sourceLinks.length) {
+      if (compact) {
+        for (var ci = 0; ci < sourceLinks.length; ci++) tools.appendChild(sourceLinks[ci]);
+      } else {
+        var more = el("details", { class: "fa-sticky-more" });
+        more.appendChild(el("summary", {
+          class: "fa-sticky-more-summary",
+          // NAMES THE CONTENTS, not the shape. "More" tells a screen-reader
+          // user nothing about whether it is worth opening; the subject and
+          // the count do.
+          "aria-label": "Source links for " + todo.summary + " — " +
+            sourceLinks.length + (sourceLinks.length === 1 ? " link" : " links"),
+          title: "View and edit the source",
+        }, "⋯"));
+        var drawer = el("div", { class: "fa-sticky-more-body" });
+        for (var di = 0; di < sourceLinks.length; di++) drawer.appendChild(sourceLinks[di]);
+        more.appendChild(drawer);
+        tools.appendChild(more);
+      }
     }
 
     head.appendChild(tools);
@@ -2994,7 +3059,12 @@
           setMoveMode(card, on, live);
           moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
         });
-        tools.insertBefore(moveBtn, tools.firstChild);
+        // Before the drawer, after the other board gestures: Move is a board
+        // gesture and belongs on the face (`qefk`'s "3+1"). `firstChild` put
+        // it ahead of Pin, which reordered the row every time a card floated.
+        var drawerEl = tools.querySelector(".fa-sticky-more");
+        if (drawerEl) tools.insertBefore(moveBtn, drawerEl);
+        else tools.appendChild(moveBtn);
       }
 
       wireMove(card, card.querySelector(".fa-sticky-head") || card, live);

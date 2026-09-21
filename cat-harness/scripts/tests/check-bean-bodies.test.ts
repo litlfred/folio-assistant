@@ -21,9 +21,13 @@
  * @module scripts/tests/check-bean-bodies.test
  */
 import { describe, expect, test } from "bun:test";
+import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import {
   BLOCKER,
+  checkBeanBodies,
   SHADOW_MIN_WORDS,
   checklistItems,
   insideQuotation,
@@ -232,5 +236,73 @@ describe("insideQuotation — what marks a quotation, and what does not", () => 
   test("emphasis is not attribution", () => {
     const line = "*blocked on `hqku`* — its own words";
     expect(insideQuotation(line, at(line))).toBe(false);
+  });
+});
+
+// ── The closed-bean question `sfhr` left open. Bean `sfhr`, issue #639. ─────
+
+describe("closed beans are COUNTED, never failed", () => {
+  const store = (beans: { id: string; status: string; archived?: boolean; body: string }[]) => {
+    const root = mkdtempSync(join(tmpdir(), "beanbodies-closed-"));
+    mkdirSync(join(root, "beans", "defs"), { recursive: true });
+    writeFileSync(
+      join(root, "beans", "beans.json"),
+      JSON.stringify({
+        name: "fixture",
+        directories: [{ id: "defs", path: "defs", graphs: ["bean-defs"], description: "fixture beans" }],
+      }),
+    );
+    for (const b of beans) {
+      const dir = b.archived ? join(root, "beans", "defs", "archive") : join(root, "beans", "defs");
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(
+        join(dir, `${b.id}.md`),
+        `---\n# ${b.id}\ntitle: '${b.id}'\nstatus: ${b.status}\ntype: task\n---\n\n${b.body}\n`,
+      );
+    }
+    return root;
+  };
+
+  /**
+   * The shape: a canonical item OPEN, and a later copy of it TICKED.
+   *
+   * Long enough to clear `SHADOW_MIN_WORDS` — a shorter item is ignored by the
+   * rule on purpose, and a fixture below that floor tests nothing.
+   */
+  const ITEM = "the endpoint returns a declared content type for every locale";
+  const SHADOW = `## Done when\n\n- [ ] ${ITEM}\n\n## Progress\n\n- [x] ${ITEM}\n`;
+
+  test("a completed bean with the shape is counted, and does not fail", () => {
+    const r = checkBeanBodies(store([{ id: "aaaa", status: "completed", body: SHADOW }]));
+    expect(r.closedWithShadow).toBe(1);
+    expect(r.problems).toEqual([]);
+    expect(r.examined).toBe(0); // it is not among the beans scanned
+  });
+
+  test("an OPEN bean with the same body still fails — the rule is unchanged", () => {
+    // The direction that matters: counting the closed ones must not weaken
+    // the check that was already shipped.
+    const r = checkBeanBodies(store([{ id: "bbbb", status: "in-progress", body: SHADOW }]));
+    expect(r.problems.map((p) => p.kind)).toContain("shadow-checklist");
+    expect(r.closedWithShadow).toBe(0);
+  });
+
+  test("an archived bean counts too — archived is closed, not invisible", () => {
+    const r = checkBeanBodies(store([{ id: "cccc", status: "completed", archived: true, body: SHADOW }]));
+    expect(r.closedWithShadow).toBe(1);
+  });
+
+  test("a closed bean WITHOUT the shape is not counted", () => {
+    const clean = `## Done when\n\n- [x] ${ITEM}\n`;
+    expect(checkBeanBodies(store([{ id: "dddd", status: "completed", body: clean }])).closedWithShadow).toBe(0);
+  });
+
+  test("an unreadable store reports 0 but also `store: false` — not a clean count", () => {
+    // `closedWithShadow: 0` alone would read as "none there". The caller must
+    // consult `store` first, and the report says "no bean store" rather than
+    // printing a zero.
+    const r = checkBeanBodies(mkdtempSync(join(tmpdir(), "beanbodies-nostore-")));
+    expect(r.store).toBe(false);
+    expect(r.closedWithShadow).toBe(0);
   });
 });
