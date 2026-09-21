@@ -229,6 +229,20 @@
       "file": "beans/defs/folio-assistant-1feu--staging-policy-a-merged-prs-preview-goes-away-with.md"
     },
     {
+      "id": "folio-assistant-1hkj",
+      "title": "MODULE-SCOPE FILESYSTEM WORK: importing any of 39 modules can throw, and the error names a symptom far from the cause",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T13:12:36Z",
+      "updatedAt": "2026-09-21T13:38:53Z",
+      "preview": "Carved out of 95s1 (issue #706, PR #707), where it was found and deliberately not taken.\n\n## The shape, measured on main 2026-09-21\n\nThirty-nine modules resolve the repository root at MODULE SCOPE:\n\n    const REPO_ROOT = findContentRepoRoot();\n    const FOLIO_DIR = folioDir(REPO_ROOT);\n\n**39 files, 53 call sites** — 25 in `content/pipeline/`, 11 in `scripts/`, 3 in `adapters/`.\n\n## Why it matters,",
+      "file": "beans/defs/folio-assistant-1hkj--module-scope-filesystem-work-importing-any-of-39-m.md"
+    },
+    {
       "id": "folio-assistant-1hvo",
       "title": "THEMING: a cat-harness/theming/ subgraph, broken up thematically",
       "status": "completed",
@@ -3087,14 +3101,14 @@
     {
       "id": "folio-assistant-lps0",
       "title": "KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:59:22Z",
-      "updatedAt": "2026-09-20T18:59:22Z",
+      "updatedAt": "2026-09-21T12:37:26Z",
       "preview": "`kg-audit.ts` walks a hardcoded `KG_ROOT = join(root, \"skills\")` when it\ncollects skill subjects (`skillFiles()`, line ~578). **Every skill outside\n`skills/` is therefore unaudited** — not reported as unknown, not reported at\nall. It is the `dh4f` shape in the tool whose job is finding that shape.\n\n## Measured, 2026-09-20\n\nThe instance declares several `cat-harness` directories that hold skills\nDI",
       "file": "beans/defs/folio-assistant-lps0--kg-audit-skillfiles-walks-a-hardcoded-skills-so-ev.md"
     },
