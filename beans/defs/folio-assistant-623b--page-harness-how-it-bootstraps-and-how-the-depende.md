@@ -1,11 +1,11 @@
 ---
 # folio-assistant-623b
 title: 'PAGE: Harness — how it bootstraps, and how the dependency tree is walked from the lowest instance up'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-21T16:21:34Z
-updated_at: 2026-09-21T16:21:34Z
+updated_at: 2026-09-21T19:08:34Z
 parent: folio-assistant-2upx
 ---
 
