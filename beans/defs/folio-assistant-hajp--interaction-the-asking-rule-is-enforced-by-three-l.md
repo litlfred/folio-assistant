@@ -172,3 +172,55 @@ Which way on the gate?
 *Issue link, recorded 2026-09-21.* **[#645](https://github.com/litlfred/folio-assistant/issues/645)** — the decision-record metrics.
 
 Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.
+
+---
+
+## 2026-09-21 — the trigger was read, and it cannot be read
+
+The open box says **"REVISIT GATING at twelve decision records. `bun run
+health` → `bean-decision-records`; it read 7 on 2026-09-20."** Both halves fail
+on inspection.
+
+### The command it names no longer reports that number
+
+`bean-decision-records` is folded into the `bean-store` check, which reports
+*"decision records with fewer than two options"* — a thinness ratio, not a
+count. So the condition points at an output that cannot answer it.
+
+### And FOUR numbers are in play for one trigger
+
+| reading | today |
+|---|---|
+| beans with an `## Options` heading (LOOSE) | **15** |
+| beans with a RENDERED decision via `renderDecision` | **1** |
+| what this bean claims it read on 2026-09-20 | 7 |
+| what `checks.ts` records for the same day | 2 |
+
+The trigger names none of them precisely, and the two live readings fall on
+**opposite sides of twelve**.
+
+### The strict count is 1, and it is this bean
+
+`checks.test.ts` settles which reading the condition wanted, in as many words:
+
+> an `## Options` heading is NOT a rendered decision — the gating condition it
+> was read against wanted decisions put THROUGH `DecisionRequestSchema`
+
+By that reading: **1 of 12**, and the one is `hajp`'s own record. In the day and
+a half since, `renderDecision` has been used by nobody but its author.
+
+### Why that is the finding rather than a detail
+
+The deferral was granted for a stated reason, recorded above: *"decision-request.ts
+was written in one sitting against four questions its own author had got wrong
+— a sample of one author"*. Twelve records were to buy evidence from OTHER
+authors that the mechanism works.
+
+**No such evidence has accumulated.** And the loose count, now at 15, would
+make it look as though it had — which is the failure mode this store already
+has a name for: a condition that cannot be evaluated is indistinguishable from
+a condition not yet met.
+
+*Measured, not decided. The gating question goes back to the owner with these
+numbers rather than being settled by whichever reading happens to be
+convenient.*
