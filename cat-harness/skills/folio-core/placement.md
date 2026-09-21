@@ -54,7 +54,7 @@ common mistake:
 | **the folio's config** | the value the mechanism reads | it varies per folio but platform code needs it |
 
 A value that varies per folio and is consumed by platform code is a **config
-field** — `harness.config.json`, `harness.json`, `lakefile.toml` — never a
+field** — `<name>.config.json`, `<name>.json`, `lakefile.toml` — never a
 literal in a script and never a file the platform has to go and find. The
 simulator directory was the literal `folio-assistant/simulators` until it
 became a config field; the Lake prefix was `QOU.` until it was read from
@@ -62,7 +62,7 @@ became a config field; the Lake prefix was `QOU.` until it was read from
 because a wrong namespace is worse than none.
 
 **Do not infer the instance from the directory you are standing in.** Read the
-declaration: `harness.json` at the repository root carries `name`, `stub` and
+declaration at the repository root, carrying `name`, `stub` and
 `directories`. `basename($PWD)` is not an identity — a repo cloned into a
 differently-named directory resolves to nothing, and reports no config rather
 than an error.
@@ -70,7 +70,7 @@ than an error.
 ## Step 2 — which declared graph, and where does that instance put it?
 
 **A node's location is not a path you memorise.** Every instance declares the
-directories it scans in `harness.json`, and each entry names the **kind of
+directories it scans in the declaration, and each entry names the **kind of
 graph** it holds — `cat-harness` (skills, roles, workflows, decisions,
 requirements, permissions), `schemas`, `tools`, `qa`, `beans`, `folio` and the
 rest. The vocabulary is open.
@@ -172,7 +172,7 @@ one, and register the skill in its package manifest.
 
 ### The artefact stub — resolve it, never compose it
 
-`harness.json` carries `stub`, the filename stem of **every artefact this
+The declaration carries `stub`, the filename stem of **every artefact this
 instance publishes**. `artefactStub()` is the one function that answers it
 (`stub` when declared, otherwise `name`), and `renderingPath()` / `siteDir()`
 derive the published paths from it:
@@ -263,7 +263,7 @@ content object:
 
 1. **Instance** — platform, folio, or the folio's config? Does anything in it
    name one folio?
-2. **Graph** — which declared entry, resolved from `harness.json` by **id**?
+2. **Graph** — which declared entry, resolved from the declaration by **id**?
    Not a path you remember.
 3. **Kind** — which side of the separating question in Step 3, and can you say
    why in one sentence?

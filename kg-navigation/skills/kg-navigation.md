@@ -24,7 +24,7 @@ moment the layout moves."* One of them had already moved.
 ## The one fact everything else follows from
 
 **Skills are content in a declared graph, not files in a directory you
-memorise.** An instance says where its graph is, in `harness.json` at its
+memorise.** An instance says where its graph is, in its declaration at its
 repository root. It may put it anywhere. In *this* instance the entry reads:
 
 ```json
@@ -67,7 +67,7 @@ and each running process's position beside its bean.
 **What `skill_list` serves is a registry, not the declaration.** `LOCAL_PACKAGES`
 in `src/tools/skill-fetch.ts` maps seven package names to seven paths, resolved
 against the server's own location. It is accurate today and it is a second
-answer to a question `harness.json` already answers — so a directory the
+answer to a question the declaration already answers — so a directory the
 instance declares and the registry omits is invisible to `skill_fetch`. That
 has bitten: `content-lifecycle` was absent from the table until 2026-09-18
 while **52** `<folio:skill ref>` activities across the workflow diagrams named
@@ -88,7 +88,7 @@ of something else.
 **The harness is designed to work with nothing but files.** Same graph, same
 content, no server:
 
-1. Read `harness.json` at the repository root.
+1. Read the declaration at the repository root.
 2. Take every `directories[]` entry whose `graphs` includes `cat-harness`
    (accepting `kg` as the deprecated spelling).
 3. Read the `.md` files under each — one skill per file, the id being the
