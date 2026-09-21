@@ -2,13 +2,14 @@
 /**
  * Every bean's front matter parses as YAML — the check `beans` cannot provide.
  *
- * Bean `t7ao`. Found by breaking it, not hypothetically.
+ * Bean `t7ao`, found 2026-09-21 by breaking it.
  *
- * ## What happens without this
+ * ## The failure, measured
  *
  * `224e0beac8` committed a bean whose line 8 was a literal `\1` — an
- * unsubstituted sed backreference where `updated_at:` belonged. `bun run gates
- * --all` was run on that tree: **92 gates, all green.** It was pushed.
+ * unsubstituted sed backreference where `updated_at:` belonged.
+ * `bun run gates --all` was run on that tree: **92 gates, all green.** It was
+ * pushed.
  *
  * The next `beans list` in a fresh shell:
  *
@@ -17,253 +18,278 @@
  * parsing front matter: yaml: line 8: could not find expected ':'
  * ```
  *
- * Not "that one bean is unreadable" — **no beans at all**. `list`, `roadmap`
- * and `prime` all fail identically, because the CLI loads the store as a unit.
- * `beans prime` is the first command in this repo's cold start and the first
- * line of `AGENTS.md`, so one malformed file means every agent starting after
- * it gets no work plan, from the one command whose whole job is to hand them
- * one.
+ * Not "that one bean is unreadable" — **no beans at all**. The CLI loads the
+ * store as a unit, so `list`, `roadmap` and `prime` all fail together.
  *
- * Reproduced 2026-09-21 before writing this: one planted bean with a literal
- * `\1` on line 7 took `beans list` down entirely, while `check:bean-bodies`
- * exited 0 with "✓ no NEW defect".
+ * ## Why that is worse than an ordinary broken file
  *
- * ## Why the existing gate does not catch it
+ * `beans prime` is the FIRST command in this repository's cold start, named in
+ * the first line of `AGENTS.md`. One malformed bean means every agent starting
+ * after it gets no work plan, from the one command whose whole job is to hand
+ * them one. The failure is total, immediate, and attributable to a file whose
+ * author has already moved on.
  *
- * `check-bean-bodies` reads titles, bodies, checklists and blockers, and it
- * does inspect front matter — `isFoldedTitle` is a front-matter SHAPE defect.
- * So the gap is not that front matter goes unexamined. It is that it is
- * examined BY REGEX, and a regex over a broken document does not notice the
- * document is broken: `scalar()` simply finds no match and returns empty,
- * which is indistinguishable from an absent optional key.
+ * ## Why `check-bean-bodies` does not already catch it
  *
- * That is `xom7` — a check that cannot fail is indistinguishable from one that
+ * It reads titles, bodies, checklists and blockers, and it does examine front
+ * matter — `isFoldedTitle` is a front-matter SHAPE defect. So the gap is not
+ * that front matter went unexamined. It is that it was examined **by regex**,
+ * and a regex over a broken document does not notice the document is broken.
+ *
+ * That is `xom7`: a check that cannot fail is indistinguishable from one that
  * passes. The store was unreadable and the report said 92/92.
  *
- * ## The second gap, found while writing this
+ * ## Why this parses when `bean-store-read` deliberately does not
  *
- * `readBeanFiles` splits the `---` fences with a regex and, on no match,
- * `continue`s: *"A file with no front matter is not a bean; `beans check` owns
- * that."* That is right for a stray README and wrong for a bean whose fence was
- * mangled — the file vanishes from every consumer rather than being reported.
- * So this checks the FENCES too, and a `.md` in the bean directory that carries
- * no parseable front matter is a finding rather than a skip. The one exception
- * is spelled out in {@link IGNORED}: a file the store itself documents as not
- * being a bean.
+ * `bean-store-read.ts` keeps front matter VERBATIM on purpose — a YAML loader
+ * resolves the very folds `isFoldedTitle` exists to see. Both are right,
+ * because they ask different questions. That module asks *what does this
+ * front matter say*; this one asks *is it front matter at all*. So this reads
+ * the same raw block that module already hands out, and parses a COPY of it.
  *
- * ## Three states, and the third fails
+ * ## TWO conditions, and conflating them would be wrong
  *
- * `parses`, `does not parse`, and `could not be read`. The third exits 2 and
- * says it is not a pass, because "could not determine" is never rendered as
- * clean here — the whole defect above is one shape of that error.
+ * The `yaml` package rejects a duplicate map key; the Go loader inside `beans`
+ * accepts it and takes one of the values. So "this file is bad" splits into
+ * two findings with different consequences, and the discriminator is whether
+ * a TOLERANT parse (`uniqueKeys: false`) still refuses it:
  *
- *     bun run cat-harness/scripts/check-bean-front-matter.ts
+ * | condition | tolerant parse | what it costs |
+ * |---|---|---|
+ * | `unparseable` | refuses | the whole store, for every reader, now |
+ * | `duplicate-key` | accepts | the file says two things and the winner is the reader's parser |
  *
- * @module scripts/check-bean-front-matter
+ * Only the first is the emergency this bean was filed for. The second is a
+ * real defect — `1hvo` carries two different `title:` values, so what the bean
+ * is CALLED depends on who loads it — but the store is up, and gating the
+ * repository on somebody else's botched conflict resolution would stop work
+ * that has nothing to do with it.
+ *
+ * ## No sidecar, and a baseline only for the second
+ *
+ * No sidecar: a `qa-results/v1` file records history for a backlog somebody is
+ * working down, and `unparseable` must never last long enough to have any.
+ *
+ * `unparseable` is NEVER baselined, for the same reason — a baseline for it
+ * would be a way to ship a store nobody can load.
+ *
+ * `duplicate-key` IS baselined, at the two the store already carries, so a NEW
+ * one fails while the existing two are listed rather than demanded. That is
+ * `check-bean-bodies`'s pattern and its stated reason: *"Outstanding defects
+ * are repaired by the bean's OWNER, not by this check and not by whoever ran
+ * it."* Both belong to other sessions, and one of them (`7u3g`) is `scrapped`,
+ * where changing anything risks reading as resolving a sibling's bean.
+ *
+ * Exit: 0 every bean parses (or no store), 1 one does not, 2 could not check.
+ *
+ * @module folio-assistant/scripts/check-bean-front-matter
  */
-import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
 
-import { parseDocument } from "yaml";
+import { resolve } from "node:path";
+
+import { parse as parseYaml } from "yaml";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
-import { beanDefsDir } from "./bean-store-read.ts";
+import { beanDefsDir, readBeanFiles } from "./bean-store-read.ts";
 
 /**
- * Names in the bean directory that are deliberately not beans.
+ * The two beans whose front matter carries a duplicate key today.
  *
- * Kept as an explicit list rather than a pattern: a pattern would quietly
- * absorb the next malformed file that happened to match it, which is the
- * failure this whole module exists for.
+ * Both are botched conflict resolutions by earlier sessions: `1hvo` has two
+ * `title:` lines (a merge whose own message says it "kept both halves"), and
+ * `7u3g` has two `updated_at:` lines — which its own body confesses to,
+ * having fixed the duplicated BLOCK and left the duplicated key.
+ *
+ * Listed rather than repaired here, and listed rather than demanded: each is
+ * its owner's to fix, and repairing one means CHOOSING which value was meant,
+ * which is a judgement about their work. Remove an id from this set when its
+ * bean is repaired — the check says so when an entry no longer matches, so a
+ * stale baseline cannot quietly excuse a fresh defect under the same id.
  */
-const IGNORED = new Set(["README.md"]);
+const DUPLICATE_KEY_BASELINE = new Set(["folio-assistant-1hvo", "folio-assistant-7u3g"]);
 
-/** What one file turned out to be. `reason` is present unless it parsed. */
-export interface FrontMatterResult {
-  /** Path relative to the repository root, for a report a person can act on. */
-  file: string;
-  state: "parses" | "does-not-parse" | "duplicate-keys" | "could-not-read";
-  /** Why, when it did not parse — carrying the parser's line where it has one. */
-  reason?: string;
+/** What a loader objected to, and how much it costs. */
+export type DefectKind =
+  /** Even a tolerant parse refuses it: the store is down for everybody. */
+  | "unparseable"
+  /** Parses under `beans`' own loader, but a key is given twice. */
+  | "duplicate-key";
+
+/** One bean whose front matter a YAML loader objected to. */
+export interface FrontMatterDefect {
+  readonly kind: DefectKind;
+  /** The bean's id, as its `# <id>` line gives it. */
+  readonly id: string;
+  /** Basename, which is what `beans` itself names in its error. */
+  readonly file: string;
+  /**
+   * 1-based line IN THE FILE, not in the front-matter block.
+   *
+   * The parser counts from the first line of the block it was handed, and the
+   * block starts one line after the opening `---`. Verified against the real
+   * `sqtq` failure: the parser said line 7, `beans` said line 8, and line 8 of
+   * the file is where the `\1` was. Reporting the parser's number would send a
+   * reader to the wrong line of the file they are about to open.
+   */
+  readonly line: number | null;
+  /** The loader's own first line of complaint. */
+  readonly message: string;
+  /** True for a `duplicate-key` already in {@link DUPLICATE_KEY_BASELINE}. */
+  readonly baselined: boolean;
 }
 
-/**
- * Check every `.md` under `dir` (and its `archive/`, which the store reader
- * also walks).
- *
- * Takes a DIRECTORY rather than resolving one, so a test can point it at a
- * fixture holding a deliberately broken bean. A gate for this defect that has
- * never seen the defect is the defect.
- */
-export function checkFrontMatter(dir: string): FrontMatterResult[] {
-  const out: FrontMatterResult[] = [];
-  const sources = [dir];
-  const archive = join(dir, "archive");
-  if (existsSync(archive)) sources.push(archive);
+export interface FrontMatterReport {
+  /** `null` when there is no store at all — not the same as an empty one. */
+  readonly beans: number | null;
+  readonly defects: FrontMatterDefect[];
+  /** Baseline ids that matched nothing — repaired, so the entry should go. */
+  readonly staleBaseline: string[];
+}
 
-  for (const src of sources) {
-    let names: string[];
+/** `linePos` is the `yaml` package's; every field is optional in its types. */
+function lineOf(err: unknown): number | null {
+  const pos = (err as { linePos?: { line?: number }[] } | null)?.linePos;
+  const line = Array.isArray(pos) ? pos[0]?.line : undefined;
+  // +1 for the opening `---`, which is not part of the parsed block.
+  return typeof line === "number" ? line + 1 : null;
+}
+
+function firstLine(err: unknown): string {
+  return (err instanceof Error ? err.message : String(err)).split("\n")[0]!;
+}
+
+export function checkBeanFrontMatter(root: string): FrontMatterReport {
+  const files = readBeanFiles(root);
+  if (files === null) return { beans: null, defects: [], staleBaseline: [] };
+
+  const defects: FrontMatterDefect[] = [];
+  const seen = new Set<string>();
+  for (const b of files) {
     try {
-      names = readdirSync(src).sort();
-    } catch (e) {
-      out.push({
-        file: src,
-        state: "could-not-read",
-        reason: `could not list the directory: ${e instanceof Error ? e.message : e}`,
-      });
+      parseYaml(b.frontMatter);
       continue;
-    }
-    for (const name of names) {
-      if (!name.endsWith(".md") || IGNORED.has(name)) continue;
-      const full = join(src, name);
-      let text: string;
+    } catch (strict) {
+      // The discriminator: would the loader `beans` itself uses accept this?
+      // `uniqueKeys: false` is that loader's tolerance for a repeated key, and
+      // nothing else — genuinely broken YAML still throws.
       try {
-        text = readFileSync(full, "utf-8");
-      } catch (e) {
-        out.push({
-          file: full,
-          state: "could-not-read",
-          reason: e instanceof Error ? e.message : String(e),
+        parseYaml(b.frontMatter, { uniqueKeys: false });
+        seen.add(b.id);
+        defects.push({
+          kind: "duplicate-key",
+          id: b.id,
+          file: b.file,
+          line: lineOf(strict),
+          message: firstLine(strict),
+          baselined: DUPLICATE_KEY_BASELINE.has(b.id),
         });
-        continue;
-      }
-
-      // The same fence split `readBeanFiles` uses — deliberately, so this
-      // gate's verdict is about the file THAT READER will see. A different
-      // split here could pass a file the store then chokes on.
-      const m = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/.exec(text);
-      if (!m) {
-        out.push({
-          file: full,
-          state: "does-not-parse",
-          reason:
-            "no `---` front-matter fences. `readBeanFiles` SKIPS such a file " +
-            "as 'not a bean', so it disappears from every consumer rather " +
-            "than being reported",
+      } catch (tolerant) {
+        defects.push({
+          kind: "unparseable",
+          id: b.id,
+          file: b.file,
+          line: lineOf(tolerant),
+          message: firstLine(tolerant),
+          baselined: false,
         });
-        continue;
       }
-
-      // TWO PARSES, because there are two different defects and only one of
-      // them takes the store down.
-      //
-      // Permissive first: this is the question `beans` asks, and its answer is
-      // the fatal one. Measured 2026-09-21 — `beans list` loads this store
-      // happily while two of its beans carry duplicate keys, so a gate that
-      // failed on duplicates would be STRICTER THAN THE THING IT GUARDS and
-      // would have gone red on day one over beans belonging to other people.
-      // `uniqueKeys: false` EXPLICITLY. The library's default is `true`, so
-      // omitting it reports duplicates as errors — the first attempt here did
-      // exactly that and called two loadable beans unparseable.
-      const doc = parseDocument(m[1]!, { uniqueKeys: false });
-      if (doc.errors.length > 0) {
-        const e = doc.errors[0]!;
-        // `linePos` is 1-based within the FRONT MATTER, so +1 for the opening
-        // fence puts it on the line a person opens the file to.
-        const line = e.linePos?.[0]?.line;
-        const where = line === undefined ? "" : ` (line ${line + 1})`;
-        out.push({ file: full, state: "does-not-parse", reason: `${e.message}${where}` });
-        continue;
-      }
-
-      // Then strictly, for a defect that is real but not fatal. A duplicate
-      // key means the two readers of this store DISAGREE: `scalar()` in
-      // `bean-store-read.ts` regexes out the FIRST match, YAML takes the LAST.
-      // Measured on `1hvo`, whose two `title:` lines differ in their text — so
-      // `check-bean-bodies` and `beans` show different titles for one bean.
-      // Reported, never failed: these are pre-existing and belong to their
-      // beans' owners, the same rule `check-bean-bodies` states for its own
-      // outstanding findings.
-      const strict = parseDocument(m[1]!, { uniqueKeys: true });
-      if (strict.errors.length > 0) {
-        const e = strict.errors[0]!;
-        const line = e.linePos?.[0]?.line;
-        const where = line === undefined ? "" : ` (line ${line + 1})`;
-        out.push({
-          file: full,
-          state: "duplicate-keys",
-          reason: `${e.message.split("\n")[0]}${where}`,
-        });
-        continue;
-      }
-      out.push({ file: full, state: "parses" });
     }
   }
-  return out;
+
+  const staleBaseline = [...DUPLICATE_KEY_BASELINE].filter((id) => !seen.has(id)).sort();
+  return { beans: files.length, defects, staleBaseline };
 }
 
-function main(): number {
-  // From the SCRIPT's location, not the cwd. `repoRootFor(process.cwd())`
-  // answered `/home/user` when this was run from the repository root, so
-  // `beanDefsDir` resolved to `/home/user/beans/defs`, which does not exist —
-  // and the first draft of this file reported "nothing checked" and exited 0
-  // over a store holding a deliberately planted broken bean. The gate had the
-  // exact defect it exists to detect. `check-bean-bodies` already resolves it
-  // this way; copying that was the fix.
+function main(): void {
+  // ANCHORED ON THIS MODULE, never on the CWD — `check-bean-bodies` does the
+  // same and the reason is `a6kl`. Written as `repoRootFor(process.cwd())`
+  // first, it answered `/home/user`, found no store, and exited 0 with "no
+  // store in this repository" over a repository holding 198 beans. A gate
+  // that reports clean because it looked in the wrong place is the `dh4f`
+  // defect, and this one would have shipped wearing its own fix's clothes.
   const root = repoRootFor(resolve(import.meta.dir, ".."));
-  const dir = beanDefsDir(root);
-
-  if (dir === null) {
-    // NOT DECLARED is a determined answer: an instance may legitimately carry
-    // no bean store, and there is nothing here to check.
-    console.log("  · no bean-defs directory is declared here — nothing to check");
-    return 0;
-  }
-  if (!existsSync(dir)) {
-    // DECLARED BUT ABSENT is the `dh4f` defect and a different answer
-    // entirely: a consumer scans nothing and reports a clean run over it.
-    // Collapsing this into the branch above is what the first draft did.
-    console.error(`\n✗ the bean-defs directory is declared at ${relative(root, dir)} and is not there`);
-    console.error("  This is NOT a pass. A declared-but-absent directory is scanned by nothing.");
-    return 2;
-  }
-
-  const results = checkFrontMatter(dir);
-  const bad = results.filter((r) => r.state === "does-not-parse");
-  const dupes = results.filter((r) => r.state === "duplicate-keys");
-  const unknown = results.filter((r) => r.state === "could-not-read");
-  const ok = results.length - bad.length - unknown.length;
-
-  if (unknown.length > 0) {
-    console.error(`\n✗ ${unknown.length} file(s) could not be read:`);
-    for (const r of unknown) console.error(`    ${relative(root, r.file)} — ${r.reason}`);
-    console.error("\n  This is NOT a pass. Treat it as unknown.");
-    return 2;
-  }
-
-  if (bad.length > 0) {
-    console.error(`\n✗ ${bad.length} bean(s) whose front matter does not parse:`);
-    for (const r of bad) console.error(`    ${relative(root, r.file)}\n      ${r.reason}`);
-    console.error(
-      "\n  ONE of these takes the WHOLE store down: `beans list`, `roadmap` and\n" +
-        "  `prime` all load it as a unit, so every agent starting after this is\n" +
-        "  committed gets no work plan. Bean `t7ao`.",
-    );
-    return 1;
-  }
-
-  if (dupes.length > 0) {
-    // Counted, not failed — and SAID, because a duplicate key makes the two
-    // readers of this store disagree about a bean's value.
-    console.log(`  ~ ${dupes.length} bean(s) carry a DUPLICATE KEY — counted, not failed:`);
-    for (const r of dupes) console.log(`      ${relative(root, r.file)} — ${r.reason}`);
-    console.log(
-      "    The store still loads, so this is not `t7ao`'s defect. But `scalar()`\n" +
-        "    takes the FIRST such key and YAML takes the LAST, so the regex reader\n" +
-        "    and `beans` can show different values for one bean. Repaired by their\n" +
-        "    owners, as `check-bean-bodies` says of its own outstanding findings.",
-    );
-  }
-  console.log(`  ✓ ${ok} bean(s): every front matter parses as YAML`);
-  return 0;
-}
-
-if (import.meta.main) {
+  let report: FrontMatterReport;
   try {
-    process.exit(main());
-  } catch (e) {
-    console.error(`Could not check bean front matter: ${e instanceof Error ? e.message : e}`);
-    console.error("This is NOT a pass. Treat it as unknown.");
+    report = checkBeanFrontMatter(root);
+  } catch (err) {
+    // COULD NOT CHECK is its own exit, never a pass. An unreadable store is
+    // exactly the condition this gate exists for, so reporting it as clean
+    // would be the defect wearing the fix's clothes.
+    console.error(`::error::check-bean-front-matter: could not read the store — ${String(err)}`);
     process.exit(2);
   }
+
+  if (report.beans === null) {
+    console.log("Bean front matter — no store in this repository, nothing to check");
+    process.exit(0);
+  }
+
+  // ZERO BEANS IS A FINDING. A store that exists and yields nothing makes the
+  // count below vacuous, and a vacuous pass reads exactly like a real one
+  // (`6tkl`). `readBeanFiles` skips a file with no front matter, so an empty
+  // result over a non-empty directory means every file failed to look like a
+  // bean — which is worse than one that fails to parse.
+  if (report.beans === 0) {
+    console.error(
+      `::error::check-bean-front-matter: the store at ${beanDefsDir(root) ?? "(unresolved)"} ` +
+        "yielded no beans — every count here would be vacuous",
+    );
+    process.exit(1);
+  }
+
+  console.log(`Bean front matter (${report.beans} bean(s), including the archive)`);
+
+  const unparseable = report.defects.filter((d) => d.kind === "unparseable");
+  const newDuplicates = report.defects.filter((d) => d.kind === "duplicate-key" && !d.baselined);
+  const outstanding = report.defects.filter((d) => d.kind === "duplicate-key" && d.baselined);
+
+  const at = (d: FrontMatterDefect): string => (d.line === null ? "" : `:${d.line}`);
+
+  if (unparseable.length === 0 && newDuplicates.length === 0) {
+    console.log(
+      "  ✓ no NEW defect — every bean's front matter loads, so `beans list`, `roadmap` " +
+        "and `prime` can read the store",
+    );
+  }
+
+  for (const d of unparseable) {
+    console.error(`  ✗ ${d.file}${at(d)} [${d.id}] UNPARSEABLE: ${d.message}`);
+  }
+  for (const d of newDuplicates) {
+    console.error(`  ✗ ${d.file}${at(d)} [${d.id}] duplicate key: ${d.message}`);
+  }
+  for (const d of outstanding) {
+    console.log(`  · outstanding ${d.id} [duplicate-key]: ${d.message} — ${d.file}${at(d)}`);
+  }
+  for (const id of report.staleBaseline) {
+    console.log(
+      `  · baseline entry ${id} no longer matches — repaired; remove it from ` +
+        "DUPLICATE_KEY_BASELINE in this file",
+    );
+  }
+
+  if (unparseable.length > 0) {
+    console.error(
+      `\n${unparseable.length} bean(s) NO loader will read. \`beans\` loads the store as a ` +
+        "unit, so until this is fixed `list`, `roadmap` and `prime` return NOTHING for " +
+        "every reader — including the cold start named in the first line of AGENTS.md.",
+    );
+  }
+  if (newDuplicates.length > 0) {
+    console.error(
+      `\n${newDuplicates.length} bean(s) give a key twice. The store still loads, but the ` +
+        "file says two things and which one wins is the reader's parser. Fix the file, or " +
+        "add its id to DUPLICATE_KEY_BASELINE with the reason.",
+    );
+  }
+  if (outstanding.length > 0) {
+    console.log(
+      "\n  Outstanding duplicates are repaired by the bean's OWNER, not by this check and " +
+        "not by whoever ran it — repairing one means choosing which value was meant.",
+    );
+  }
+
+  process.exit(unparseable.length > 0 || newDuplicates.length > 0 ? 1 : 0);
 }
+
+if (import.meta.main) main();

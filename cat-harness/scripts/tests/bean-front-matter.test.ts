@@ -1,162 +1,169 @@
 /**
- * The front-matter gate, fed the defect it exists for.
- *
- * Bean `t7ao`'s third box is explicit: *"a test that FEEDS IT A BROKEN BEAN and
- * asserts it fails. A gate for this defect that has never seen the defect is
- * the defect."* The live store is loadable and therefore proves nothing here,
- * which is why every case below is a fixture.
- *
- * ## What each case is guarding
- *
- * The fatal case is the one `t7ao` is about: front matter that does not parse
- * takes the WHOLE store down, because `beans` loads it as a unit. The others
- * exist because the first draft of the gate got each of them wrong:
- *
- * - **Duplicate keys must NOT be fatal.** `yaml`'s `uniqueKeys` defaults to
- *   `true`, so the first draft reported two loadable beans as unparseable — a
- *   gate stricter than the thing it guards, which would have gone red on day
- *   one over other people's beans.
- * - **A missing fence is a finding, not a skip.** `readBeanFiles` `continue`s
- *   past a file with no front matter as "not a bean", which is right for a
- *   README and wrong for a bean whose fence was mangled: it vanishes from
- *   every consumer instead of being reported.
- * - **An unreadable directory is its own state.** Not a pass.
+ * The front-matter gate fails on the defect it was built for.
  *
  * @module scripts/tests/bean-front-matter.test
+ *
+ * Bean `t7ao`'s own Done-when asks for this in as many words: *"a test that
+ * FEEDS IT A BROKEN BEAN and asserts it fails. A gate for this defect that has
+ * never seen the defect is the defect."*
+ *
+ * The fixture is the REAL failure, not an invented one. `224e0beac8` committed
+ * a bean whose line 8 was a literal `\1` — an unsubstituted sed backreference
+ * where `updated_at:` belonged — and `bun run gates --all` passed 92 gates over
+ * it before `beans list` failed for every reader in the next shell. That exact
+ * byte sequence is what `BROKEN_FRONT_MATTER` below reproduces.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
 import { tmpdir } from "node:os";
+import { join } from "node:path";
 
-import { checkFrontMatter } from "../check-bean-front-matter.ts";
+import { checkBeanFrontMatter } from "../check-bean-front-matter.ts";
 
-const GOOD = `---
-# folio-assistant-good
-title: a well-formed bean
-status: todo
-type: task
-created_at: 2026-09-21T20:00:00Z
-updated_at: 2026-09-21T20:00:00Z
----
+/** `sqtq` as committed in `224e0beac8`, line for line. */
+const BROKEN_FRONT_MATTER = [
+  "---",
+  "# folio-assistant-sqtq",
+  "title: 'SWIMLANES HAVE NO DEFINITION'",
+  "status: todo",
+  "type: bug",
+  "priority: normal",
+  "created_at: 2026-09-21T18:32:14Z",
+  "\\1",
+  "parent: folio-assistant-1xhc",
+  "---",
+  "",
+  "A body, so this is not also an empty-body finding.",
+  "",
+].join("\n");
 
-Body.
-`;
+const GOOD_FRONT_MATTER = [
+  "---",
+  "# folio-assistant-aaaa",
+  "title: A well-formed bean",
+  "status: todo",
+  "type: task",
+  "created_at: 2026-09-21T00:00:00Z",
+  "---",
+  "",
+  "A body.",
+  "",
+].join("\n");
 
-/** The exact shape that took the store down: an unsubstituted sed backreference. */
-const BROKEN = `---
-# folio-assistant-broken
-title: the bean that broke everything
-status: todo
-type: task
-\\1
-parent: folio-assistant-1xhc
----
+/** Two `title:` lines — what `1hvo` carries, and what `beans` itself accepts. */
+const DUPLICATE_KEY = [
+  "---",
+  "# folio-assistant-bbbb",
+  "title: 'One title'",
+  "title: 'A different title'",
+  "status: todo",
+  "type: task",
+  "created_at: 2026-09-21T00:00:00Z",
+  "---",
+  "",
+  "A body.",
+  "",
+].join("\n");
 
-Body.
-`;
-
-/** Loadable by \`beans\`, but the two readers disagree about the title. */
-const DUPLICATE = `---
-# folio-assistant-dupe
-title: the first title, which scalar() returns
-title: the second title, which YAML returns
-status: todo
-type: task
----
-
-Body.
-`;
-
-function fixture(files: Record<string, string>): string {
-  const dir = mkdtempSync(join(tmpdir(), "bean-fm-"));
-  for (const [name, body] of Object.entries(files)) writeFileSync(join(dir, name), body);
-  return dir;
+function storeWith(files: Record<string, string>): string {
+  const root = mkdtempSync(join(tmpdir(), "bean-fm-"));
+  const defs = join(root, "beans", "defs");
+  mkdirSync(defs, { recursive: true });
+  for (const [name, text] of Object.entries(files)) writeFileSync(join(defs, name), text);
+  return root;
 }
 
-const state = (rs: ReturnType<typeof checkFrontMatter>, name: string): string | undefined =>
-  rs.find((r) => r.file.endsWith(name))?.state;
-
-describe("the defect this gate exists for", () => {
-  test("a bean whose front matter does not parse is REPORTED, with a reason", () => {
-    const dir = fixture({ "good.md": GOOD, "broken.md": BROKEN });
+describe("check-bean-front-matter", () => {
+  test("a clean store reports no defect", () => {
+    const root = storeWith({ "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER });
     try {
-      const rs = checkFrontMatter(dir);
-      expect(state(rs, "broken.md")).toBe("does-not-parse");
-      // The reason must be actionable: a person has to know where to look.
-      const r = rs.find((x) => x.file.endsWith("broken.md"))!;
-      expect(r.reason).toBeDefined();
-      expect(r.reason!.length).toBeGreaterThan(0);
-      // And the healthy bean beside it is unaffected — one bad file does not
-      // make the gate give up on the rest, which is precisely what `beans`
-      // does and why this gate has to exist separately.
-      expect(state(rs, "good.md")).toBe("parses");
+      const r = checkBeanFrontMatter(root);
+      expect(r.beans).toBe(1);
+      expect(r.defects).toEqual([]);
     } finally {
-      rmSync(dir, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true });
     }
   });
 
-  test("the whole store being loadable is NOT evidence — a clean fixture passes", () => {
-    const dir = fixture({ "good.md": GOOD });
+  test("THE REAL BROKEN BEAN is caught, as unparseable", () => {
+    const root = storeWith({
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+      "folio-assistant-sqtq--broken.md": BROKEN_FRONT_MATTER,
+    });
     try {
-      expect(checkFrontMatter(dir).every((r) => r.state === "parses")).toBe(true);
+      const r = checkBeanFrontMatter(root);
+      const bad = r.defects.filter((d) => d.kind === "unparseable");
+      expect(bad).toHaveLength(1);
+      expect(bad[0]!.id).toBe("folio-assistant-sqtq");
+      // The line a person opens the file to, not the parser's block-relative
+      // one. `beans` itself said line 8, and line 8 is where the `\1` sits.
+      expect(bad[0]!.line).toBe(8);
+      expect(bad[0]!.baselined).toBe(false);
     } finally {
-      rmSync(dir, { recursive: true, force: true });
-    }
-  });
-});
-
-describe("what must NOT be fatal", () => {
-  test("duplicate keys are their own state, not `does-not-parse`", () => {
-    // `beans list` loads a store containing exactly this, measured on the live
-    // corpus 2026-09-21. A gate that called it unparseable would be stricter
-    // than the tool it guards.
-    const dir = fixture({ "dupe.md": DUPLICATE });
-    try {
-      expect(state(checkFrontMatter(dir), "dupe.md")).toBe("duplicate-keys");
-    } finally {
-      rmSync(dir, { recursive: true, force: true });
-    }
-  });
-});
-
-describe("the states that are easy to collapse", () => {
-  test("a file with NO fences is a finding, not a silent skip", () => {
-    const dir = fixture({ "nofence.md": "# just a heading\n\nno front matter at all\n" });
-    try {
-      const rs = checkFrontMatter(dir);
-      expect(state(rs, "nofence.md")).toBe("does-not-parse");
-      expect(rs.find((r) => r.file.endsWith("nofence.md"))!.reason).toContain("SKIPS");
-    } finally {
-      rmSync(dir, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true });
     }
   });
 
-  test("README.md is the one documented exception and is ignored", () => {
-    const dir = fixture({ "README.md": "# not a bean\n", "good.md": GOOD });
+  test("one broken bean does not hide the others — the good one still counts", () => {
+    const root = storeWith({
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+      "folio-assistant-sqtq--broken.md": BROKEN_FRONT_MATTER,
+    });
     try {
-      const rs = checkFrontMatter(dir);
-      expect(rs.some((r) => r.file.endsWith("README.md"))).toBe(false);
-      expect(rs).toHaveLength(1);
+      // The whole point of the bean: `beans` loads the store as a unit and
+      // returns NOTHING. This check must read past the bad file, or it would
+      // reproduce the failure it exists to report.
+      expect(checkBeanFrontMatter(root).beans).toBe(2);
     } finally {
-      rmSync(dir, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true });
     }
   });
 
-  test("an unreadable directory is `could-not-read`, never a pass", () => {
-    const rs = checkFrontMatter(join(tmpdir(), "bean-fm-does-not-exist-" + Date.now()));
-    expect(rs).toHaveLength(1);
-    expect(rs[0]!.state).toBe("could-not-read");
+  test("a duplicate key is its own kind, not 'unparseable'", () => {
+    const root = storeWith({ "folio-assistant-bbbb--dup.md": DUPLICATE_KEY });
+    try {
+      const r = checkBeanFrontMatter(root);
+      expect(r.defects).toHaveLength(1);
+      // Conflating the two would gate the repository on a store that loads
+      // perfectly well under the loader `beans` actually uses.
+      expect(r.defects[0]!.kind).toBe("duplicate-key");
+      expect(r.defects[0]!.baselined).toBe(false);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
-  test("the archive/ subdirectory is walked, as the store reader walks it", () => {
-    const dir = fixture({ "good.md": GOOD });
+  test("no store is null, never an empty one", () => {
+    const root = mkdtempSync(join(tmpdir(), "bean-fm-none-"));
     try {
-      mkdirSync(join(dir, "archive"));
-      writeFileSync(join(dir, "archive", "broken.md"), BROKEN);
-      expect(state(checkFrontMatter(dir), join("archive", "broken.md"))).toBe("does-not-parse");
+      // `null` and `0` are different answers, and a caller that renders them
+      // the same reports a clean run over a repository it never looked at.
+      expect(checkBeanFrontMatter(root).beans).toBeNull();
     } finally {
-      rmSync(dir, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true });
     }
+  });
+
+  test("the baseline is reported stale when its bean is absent", () => {
+    const root = storeWith({ "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER });
+    try {
+      // Both baselined ids are absent from this fixture, so both are stale —
+      // which is how a repaired bean gets its entry removed rather than
+      // silently excusing a fresh defect under the same id.
+      expect(checkBeanFrontMatter(root).staleBaseline).toEqual([
+        "folio-assistant-1hvo",
+        "folio-assistant-7u3g",
+      ]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the repository's own store loads — no unparseable bean on this branch", () => {
+    const repo = join(import.meta.dir, "..", "..", "..");
+    const r = checkBeanFrontMatter(repo);
+    expect(r.beans).not.toBeNull();
+    expect(r.beans).toBeGreaterThan(0);
+    expect(r.defects.filter((d) => d.kind === "unparseable")).toEqual([]);
   });
 });
