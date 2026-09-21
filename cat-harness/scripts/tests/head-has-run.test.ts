@@ -18,7 +18,15 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { isPushed, resolveCommit, runsForHead } from "../check-head-has-run.js";
+import {
+  isPushed,
+  mergeStateForHead,
+  noRunAdvice,
+  prNumberForHead,
+  resolveCommit,
+  runsForHead,
+  type GitRunner,
+} from "../check-head-has-run.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const REPO = repoRootFor(resolve(import.meta.dir, "..", ".."));
@@ -139,5 +147,113 @@ describe("pushed or not, because the two need different advice", () => {
     g("config", "user.name", "t");
     g("commit", "-q", "--allow-empty", "-m", "only commit");
     expect(isPushed(root, resolveCommit(root, "HEAD")!)).toBe(false);
+  });
+});
+
+/**
+ * Bean `sddf` — WHY a head has no run, and the branch that used to be wrong.
+ *
+ * The old no-run message asserted *"It IS pushed, so this is bean `3pqn`: the
+ * event was dropped"* and told the reader to dispatch the workflow. Two
+ * sentences later the same message admitted a PR with zero checks *"looks
+ * exactly like one whose checks have not started"* — a cause stated as fact
+ * beside the admission that the evidence cannot establish it.
+ *
+ * Worse, the advice is now known to be unsafe: a dispatch resolves
+ * `refs/heads/<branch>`, not the merge ref, so on a conflicted PR it is a green
+ * signal for a tree that will never exist. `yv4z` measured that on PR #813 and
+ * `prepare-merge` §Guardrails gained a step 0 for it; this script did not.
+ *
+ * `noRunAdvice` is a pure function precisely so these branches can be run. The
+ * conflicted one could not be reached at all while it lived inline — it needs a
+ * live forge holding a PR that is open and conflicted at the same moment.
+ */
+const HEADS = [
+  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\trefs/pull/11/head",
+  "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\trefs/pull/22/head",
+].join("\n");
+
+/** A forge where PR 11 is mergeable and PR 22 is not. */
+const fakeGit =
+  (heads = HEADS, mergeable = new Set(["11"])): GitRunner =>
+  (args) => {
+    const ref = args[args.length - 1] ?? "";
+    if (ref === "refs/pull/*/head") return heads;
+    const n = /refs\/pull\/(\d+)\/merge/.exec(ref)?.[1];
+    return n && mergeable.has(n) ? `cafe\t${ref}\n` : "";
+  };
+
+describe("sddf — the merge ref is the discriminator, not the clock", () => {
+  test("a sha that is a PR head is found, with its number", () => {
+    expect(prNumberForHead(".", "a".repeat(40), fakeGit())).toBe(11);
+    expect(prNumberForHead(".", "b".repeat(40), fakeGit())).toBe(22);
+  });
+
+  test("a sha that is no PR's head is `not-a-pr-head` — nothing was ever owed", () => {
+    expect(prNumberForHead(".", "c".repeat(40), fakeGit())).toBeUndefined();
+    expect(mergeStateForHead(".", "c".repeat(40), fakeGit())).toBe("not-a-pr-head");
+  });
+
+  test("a merge ref present means a run is OWED", () => {
+    expect(mergeStateForHead(".", "a".repeat(40), fakeGit())).toBe("mergeable");
+  });
+
+  test("NO merge ref means conflicted — this head will never get a run", () => {
+    // The measurement, PR #813: conflicted -> no merge ref for 433s and no
+    // `pull_request` run; resolved -> merge ref within 15s and runs in 7s.
+    expect(mergeStateForHead(".", "b".repeat(40), fakeGit())).toBe("conflicted");
+  });
+
+  test("a FAILING probe is `unknown`, never `conflicted`", () => {
+    // The third state, and the one this whole file exists for: a read that did
+    // not happen is not an answer. Reporting it as `conflicted` would send
+    // somebody to resolve a conflict that may not exist.
+    const throws: GitRunner = (args) => {
+      if (args[args.length - 1] === "refs/pull/*/head") return HEADS;
+      throw new Error("ls-remote failed");
+    };
+    expect(mergeStateForHead(".", "a".repeat(40), throws)).toBe("unknown");
+  });
+});
+
+/**
+ * Wrapped prose, compared without its wrapping. Asserting on a literal
+ * substring breaks the moment somebody re-flows a paragraph, which would make
+ * this suite punish an editorial change and teach the next person to loosen
+ * the assertion rather than keep it.
+ */
+const flat = (s: string): string => s.replace(/\s+/g, " ");
+
+describe("sddf — the advice, per state", () => {
+  test("CONFLICTED never says dispatch, and never says dropped", () => {
+    const msg = flat(noRunAdvice("conflicted"));
+    // The two defects, asserted as absences.
+    expect(msg).not.toContain("the event was dropped");
+    expect(msg).toContain("Do NOT dispatch");
+    // And it must say what to do instead, or it is only a refusal.
+    expect(msg).toContain("MERGE THE BASE BRANCH IN");
+    expect(msg).toContain("a tree that will never exist");
+  });
+
+  test("MERGEABLE is the only state where dispatching is offered", () => {
+    const msg = flat(noRunAdvice("mergeable"));
+    expect(msg).toContain("safe HERE");
+    // Still no confident cause: `3pqn` is named as the open question it is.
+    expect(msg).toContain("NOT established");
+    // And the clock is explicitly disclaimed, because `yv4z` proposed one.
+    expect(msg).toContain("Latency is no guide");
+  });
+
+  test("NO state claims a cause it cannot establish", () => {
+    for (const m of ["conflicted", "mergeable", "not-a-pr-head", "unknown"] as const) {
+      expect(flat(noRunAdvice(m))).not.toContain("the event was dropped");
+    }
+  });
+
+  test("UNKNOWN warns against dispatching rather than recommending it", () => {
+    const msg = flat(noRunAdvice("unknown"));
+    expect(msg).toContain("by hand");
+    expect(msg).toContain("a tree that will never exist");
+    expect(msg).not.toContain("safe HERE");
   });
 });
