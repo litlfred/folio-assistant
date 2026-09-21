@@ -145,7 +145,7 @@ function main(): number {
       console.error(
         `check:voices — voice id "${voice.id}" is declared by two instances: ` +
           `${relative(REPO_ROOT, prior) || "."} and ${relative(REPO_ROOT, root) || "."}.\n` +
-          `  A voice id is how a citation resolves and how \`harness.config.json\` ` +
+          `  A voice id is how a citation resolves and how \`<name>.config.json\` ` +
           `activates one, so it has to name exactly one voice. Rename one of them.`,
       );
       return 1;
