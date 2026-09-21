@@ -1,28 +1,28 @@
 {
   "$schema": "folio-qa-graph/v1",
-  "files": 604,
+  "files": 624,
   "families": [
     {
       "schema": "kg-qa/v1",
-      "files": 328,
+      "files": 334,
       "rollUpField": "totals",
       "buckets": {
-        "pass": 1522,
-        "fail": 89,
+        "pass": 1545,
+        "fail": 90,
         "n/a": 435,
         "unknown": 0
       }
     },
     {
       "schema": "qa-witness/v1",
-      "files": 134,
+      "files": 137,
       "rollUpField": "counts",
       "buckets": {
-        "fail": 0,
-        "warn": 0,
-        "pass": 2656,
+        "fail": 1,
+        "warn": 12,
+        "pass": 2671,
         "na": 3052,
-        "unknown": 0
+        "unknown": 8
       }
     },
     {
@@ -32,7 +32,12 @@
     },
     {
       "schema": "folio-qa-index/v1",
-      "files": 11,
+      "files": 13,
+      "rollUpField": null
+    },
+    {
+      "schema": "translation-qa/v1",
+      "files": 9,
       "rollUpField": null
     },
     {

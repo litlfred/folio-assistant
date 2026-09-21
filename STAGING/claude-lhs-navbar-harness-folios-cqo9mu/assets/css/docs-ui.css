@@ -1240,6 +1240,144 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-qa-sev-minor { opacity: 0.7; }
 .fa-qa-locale { opacity: 0.85; }
 
+/* Which block a rolled-up criterion belongs to. Dimmer than the verdict chip
+   and free to wrap, because a block label is prose-length where a locale is two
+   characters -- `white-space: nowrap` on the shared chip rule would push a long
+   one off the row instead of letting the line break. */
+.fa-qa-block {
+  opacity: 0.7;
+  white-space: normal;
+  max-width: 22em;
+  overflow-wrap: anywhere;
+}
+
+/* ── The translation badge row ─────────────────────────────────────────────
+ *
+ * Every colour here was an INLINE LITERAL in `mountTranslationBadges` until
+ * bean `n7vv`: a dark-green `Swept 8/289` chip and a dark-brown `2/6 languages`
+ * chip, sitting on the page's light main content beside a `TR` chip that had
+ * been themed properly. Contrast inside each chip was fine, so this was never
+ * the `rptk` failure — it was two of the three controls in one row ignoring the
+ * colour scheme, which `mountPageLanguageBar` above was converted away from for
+ * exactly this reason and these were left behind.
+ *
+ * Same shape as that conversion: DARK is the default block, light overrides
+ * under `:root[data-fa-scheme="light"]`, and every pair carries the ratio it
+ * MEASURES at rather than one somebody remembered.
+ *
+ * **Every pair clears its threshold, and the thresholds are different.** Text
+ * on its own fill is held at 4.5:1 (WCAG AA for body-size text); a border is a
+ * shape rather than a glyph, so it is held at 3:1. The dark `idle` border was
+ * `#64748b` and measured 2.92:1 — under the bar it was written to meet, which
+ * is the kind of miss a comment stating the standard will not catch on its own.
+ * `translation-badges.e2e.ts` now asserts both thresholds against what the
+ * BROWSER resolves, in both schemes, so a token edited without re-measuring
+ * fails rather than drifting.
+ *
+ * **Colour is reinforcement, never the message.** Each badge already says its
+ * state in words — `2/6 languages`, `Swept 8/289`, `QA: not run` — so a reader
+ * who cannot separate the three fills loses nothing, which is the same rule the
+ * QA glyph set follows two blocks down.
+ */
+.fa-translation-badges {
+  /* DARK scheme. `page` below is just-the-docs' dark main background,
+     #27262b, and is what the `-on-page` ratios are measured against. */
+  --fa-trbadge-ok-bg: #14532d;
+  --fa-trbadge-ok-border: #34d399;     /* 4.74:1 on its bg, 7.81:1 on the page */
+  --fa-trbadge-ok-fg: #d1fae5;         /* 8.03:1 on its bg                     */
+  --fa-trbadge-partial-bg: #78350f;
+  --fa-trbadge-partial-border: #fbbf24; /* 5.43:1 on its bg, 9.00:1 on the page */
+  --fa-trbadge-partial-fg: #fef3c7;     /* 8.15:1 on its bg                     */
+  --fa-trbadge-idle-bg: #252d38;
+  --fa-trbadge-idle-border: #7286a0;   /* 3.73:1 on its bg, 4.03:1 on the page */
+  --fa-trbadge-idle-fg: #cbd5e1;       /* 9.36:1 on its bg                     */
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0.3em 0 0.6em;
+  flex-wrap: wrap;
+}
+
+:root[data-fa-scheme="light"] .fa-translation-badges {
+  /* LIGHT scheme, re-measured against #ffffff. A tinted fill rather than the
+     dark one recoloured: a saturated chip that reads as a surface on a dark
+     page reads as an alert on a light one. */
+  --fa-trbadge-ok-bg: #e7f6ec;
+  --fa-trbadge-ok-border: #1b5e20;     /* 7.04:1 on its bg, 7.87:1 on the page */
+  --fa-trbadge-ok-fg: #14532d;         /* 8.15:1 on its bg                     */
+  --fa-trbadge-partial-bg: #fdf3e2;
+  --fa-trbadge-partial-border: #8a6100; /* 5.04:1 on its bg, 5.54:1 on the page */
+  --fa-trbadge-partial-fg: #6b3d0a;     /* 8.31:1 on its bg                     */
+  --fa-trbadge-idle-bg: #eef1f5;
+  --fa-trbadge-idle-border: #64748b;   /* 4.20:1 on its bg, 4.76:1 on the page */
+  --fa-trbadge-idle-fg: #3d4654;       /* 8.42:1 on its bg                     */
+}
+
+/* The box the coverage and sweep badges share. Neither opens anything, so
+   both stay `span`s with `cursor: default` — the same distinction
+   `span.fa-qa-badge` draws, where `help` on something clickable would be a
+   lie about what pressing it does. */
+.fa-translation-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  cursor: default;
+}
+
+.fa-translation-badge.is-ok {
+  background: var(--fa-trbadge-ok-bg);
+  border-color: var(--fa-trbadge-ok-border);
+  color: var(--fa-trbadge-ok-fg);
+}
+.fa-translation-badge.is-partial {
+  background: var(--fa-trbadge-partial-bg);
+  border-color: var(--fa-trbadge-partial-border);
+  color: var(--fa-trbadge-partial-fg);
+}
+.fa-translation-badge.is-idle {
+  background: var(--fa-trbadge-idle-bg);
+  border-color: var(--fa-trbadge-idle-border);
+  color: var(--fa-trbadge-idle-fg);
+}
+
+/* The unverified-translation notice. It is the `partial` pair at panel size,
+   not a fourth palette: it says the same thing the amber badge says, at more
+   length, and a second set of oranges would be two answers to one question.
+   Tokens resolve from `:root` here because this banner is inserted at the top
+   of the main content rather than inside the badge row. */
+:root {
+  --fa-trwarn-bg: #78350f;
+  --fa-trwarn-border: #fbbf24;         /* 5.43:1 on its bg */
+  --fa-trwarn-fg: #fef3c7;             /* 8.15:1 on its bg */
+}
+:root[data-fa-scheme="light"] {
+  --fa-trwarn-bg: #fdf3e2;
+  --fa-trwarn-border: #8a6100;         /* 5.04:1 on its bg */
+  --fa-trwarn-fg: #6b3d0a;             /* 8.31:1 on its bg */
+}
+
+.fa-translation-warning {
+  background: var(--fa-trwarn-bg);
+  border: 1px solid var(--fa-trwarn-border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 1em 0;
+  color: var(--fa-trwarn-fg);
+  font-size: 0.9rem;
+}
+
+/* The page-level QA row, before `mountTranslationBadges` lifts it into the
+   badge row under the title. It is a row of its own until then, so it carries
+   the same top margin the badge row has rather than sitting flush against the
+   heading -- and it must still look deliberate if that script never runs. */
+.fa-page-qa-badges { margin: 0.3em 0 0.6em; }
+
 .fa-qa-crit-body { padding: 0.2em 0 0.8em 1.45em; }
 
 .fa-qa-witness {
