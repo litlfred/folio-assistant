@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/skills/quality-control/input.schema.json",
+  "title": "Quality Control Input",
+  "description": "Input schema for quality control checks across content lifecycle.",
+  "type": "object",
+  "required": [
+    "checkType",
+    "targetPath"
+  ],
+  "properties": {
+    "checkType": {
+      "type": "string",
+      "enum": [
+        "qa-report",
+        "publication-checklist",
+        "conformance-validation",
+        "functionality-test",
+        "cross-component-consistency"
+      ],
+      "description": "Type of QC check to perform."
+    },
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content being checked."
+    },
+    "checklistSections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "global"
+        ]
+      },
+      "description": "Publication checklist sections to review."
+    }
+  },
+  "staging": {
+    "branch": "claude/lhs-navbar-harness-folios-cqo9mu",
+    "sha": "b3ce6596603c17b65e40a42ff161842fb59efdef",
+    "pr": "820/merge",
+    "run": "35662524717"
+  }
+}
