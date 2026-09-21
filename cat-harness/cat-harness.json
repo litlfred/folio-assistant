@@ -210,9 +210,9 @@
       }
     },
     {
-      "id": "landing-cat-bootstrap-laptop",
-      "src": "docs/assets/img/harness/landing-cat-bootstrap-laptop.webp",
-      "role": "landing-cat-bootstrap",
+      "id": "landing-bootstrap-laptop",
+      "src": "docs/assets/img/harness/landing-bootstrap-laptop.webp",
+      "role": "landing-bootstrap",
       "layout": "laptop",
       "width": 1536,
       "height": 1024,
@@ -226,9 +226,9 @@
       }
     },
     {
-      "id": "landing-cat-bootstrap-mobile",
-      "src": "docs/assets/img/harness/landing-cat-bootstrap-mobile.webp",
-      "role": "landing-cat-bootstrap",
+      "id": "landing-bootstrap-mobile",
+      "src": "docs/assets/img/harness/landing-bootstrap-mobile.webp",
+      "role": "landing-bootstrap",
       "layout": "mobile",
       "width": 941,
       "height": 1672,
@@ -242,9 +242,9 @@
       }
     },
     {
-      "id": "landing-cat-bootstrap-card",
-      "src": "docs/assets/img/harness/landing-cat-bootstrap-card.webp",
-      "role": "landing-cat-bootstrap",
+      "id": "landing-bootstrap-card",
+      "src": "docs/assets/img/harness/landing-bootstrap-card.webp",
+      "role": "landing-bootstrap",
       "layout": "card",
       "width": 1254,
       "height": 1254,
@@ -322,7 +322,7 @@
       "src": "AGENTS.md",
       "role": "agent-instructions",
       "title": "AGENTS.md \u2014 cat-harness",
-      "description": "The cold-start file for an agent working IN this layer, and it is THIS LAYER'S own as of 2026-09-20 (issue #592). It was declared `scope: \"repository\"`, so it resolved to the repository root's AGENTS.md \u2014 one file answering both \"what binds everywhere\" and \"what binds in the harness layer\", which is the conflation `readmeFinding` calls MAJOR for a non-root instance and could not report, because the asset DID resolve. It resolved to the wrong file's job. No `source`: this file is authored here. The root's carries the cat-bootstrap provenance, because the root's is the file cat-bootstrap copies at initialisation."
+      "description": "The cold-start file for an agent working IN this layer, and it is THIS LAYER'S own as of 2026-09-20 (issue #592). It was declared `scope: \"repository\"`, so it resolved to the repository root's AGENTS.md \u2014 one file answering both \"what binds everywhere\" and \"what binds in the harness layer\", which is the conflation `readmeFinding` calls MAJOR for a non-root instance and could not report, because the asset DID resolve. It resolved to the wrong file's job. No `source`: this file is authored here. The root's carries the bootstrap provenance, because the root's is the file bootstrap copies at initialisation."
     },
     {
       "id": "instance-readme",
@@ -332,11 +332,11 @@
       "description": "What this LAYER is, for a reader \u2014 as distinct from what the repository is, which is the root's README. Split from it on 2026-09-20 (issue #592); before that this instance had no README of its own and claimed the repository's. It does not list this instance's directories: `harness.json` is that list, and a second copy in prose is free to disagree with it the day a directory moves."
     },
     {
-      "id": "cat-bootstrap-initialization",
-      "src": "docs/cat-bootstrap/initialization.md",
-      "role": "cat-bootstrap-initialization",
+      "id": "bootstrap-initialization",
+      "src": "docs/bootstrap/initialization.md",
+      "role": "bootstrap-initialization",
       "title": "Initializing into folio-assistant",
-      "description": "What cat-bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours, composed by `initializationDoc()` rather than spelled, so cat-bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not. The path is INSTANCE-relative here, not `<stub>/docs/...`: this instance has its own directory (`cat-harness/`), so `siteDir` is plain `docs`, and the stub names published artefacts rather than a directory. Whether cat-bootstrap can still find it from one reference is open \u2014 see bean `wggr`."
+      "description": "What bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours, composed by `initializationDoc()` rather than spelled, so bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not. The path is INSTANCE-relative here, not `<stub>/docs/...`: this instance has its own directory (`cat-harness/`), so `siteDir` is plain `docs`, and the stub names published artefacts rather than a directory. Whether bootstrap can still find it from one reference is open \u2014 see bean `wggr`."
     }
   ],
   "_stub_comment": "RENAMED from `folio-assistant` on 2026-09-21, on the owner's ruling, closing the collision issue #649 raised and bean `x3bd` flagged as settle-before-you-move. `artefactStub(d) = d.stub ?? d.name`, so this field is the ONLY stub declared anywhere in the tree \u2014 every other instance falls through to its `name`. While it read `folio-assistant` it was the string the REPOSITORY ROOT instance also carries as its `name`, so both resolved to `<base>/folio-assistant.jsonld`: two vocabularies, one path, and a reader dereferencing it got whichever layer answered. It is kept as an explicit field rather than deleted so the rename is visible where the collision was, and because `x3bd` records that this string names published artefacts (`.jsonld`, `.schema.json`, the viewer directory) rather than being cosmetic.",
@@ -409,9 +409,9 @@
       }
     },
     {
-      "_comment": "CAT-BOOTSTRAP'S RENDER SUBGRAPH, declared here for the same reason its sibling above is: `resolveSkillDirs` walks THIS instance's declaration plus its dependencies, and cat-bootstrap is not a declared dependency of cat-harness \u2014 it is composed under it. So a directory declared only in `cat-bootstrap/harness.json` is invisible to `skill_fetch` from this root, which is how cat-bootstrap's own skills came to be declared twice BY DECISION (see the entry above). WITHOUT IT the two skills that constitute cat-bootstrap's rendering exemption are unfetchable from the root \u2014 and an exemption whose substitute cannot be reached is the hole `renderExemption.owes` exists to close. Bean `hfkl`. A SEPARATE id from `cat-bootstrap`, because overrides match on id and reusing it would replace the skills with these.",
-      "id": "cat-bootstrap-render",
-      "path": "cat-bootstrap/render/",
+      "_comment": "CAT-BOOTSTRAP'S RENDER SUBGRAPH, declared here for the same reason its sibling above is: `resolveSkillDirs` walks THIS instance's declaration plus its dependencies, and bootstrap is not a declared dependency of cat-harness \u2014 it is composed under it. So a directory declared only in `bootstrap/harness.json` is invisible to `skill_fetch` from this root, which is how bootstrap's own skills came to be declared twice BY DECISION (see the entry above). WITHOUT IT the two skills that constitute bootstrap's rendering exemption are unfetchable from the root \u2014 and an exemption whose substitute cannot be reached is the hole `renderExemption.owes` exists to close. Bean `hfkl`. A SEPARATE id from `bootstrap`, because overrides match on id and reusing it would replace the skills with these.",
+      "id": "bootstrap-render",
+      "path": "bootstrap/render/",
       "dependents": "skip",
       "scope": "repository",
       "graphKinds": [
@@ -464,7 +464,7 @@
       "theme": "analyst",
       "path": "methodologies/crdm/",
       "dependents": "skip",
-      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in skills/workflows/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `cat-bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
+      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in skills/workflows/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
       "graphKinds": [
         "skills"
       ]
@@ -742,7 +742,7 @@
       "path": "folio-assistant-core/schemas/",
       "scope": "repository",
       "dependents": "skip",
-      "description": "The CONTENT layer's schema nodes, staged as a top-level directory ahead of the split (#223). Owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' A NAMED SUBGRAPH and not a second `schemas` entry: overrides match on the entry's id, so reusing `schemas` would REPLACE this instance's schema graph rather than add to it -- the same trap the `cat-harness-src` entry above documents from the other side. REPOSITORY-scoped, like `cat-bootstrap/skills/`: it sits at the top of the checkout, not inside this instance, and is deliberately never overlaid by a dependency. This entry is the mirror of `folio-assistant-core/harness.json`'s own, and it has to be stated twice only because `resolveSkillDirs` has no caller -- when that is wired, THIS entry is the one to delete.",
+      "description": "The CONTENT layer's schema nodes, staged as a top-level directory ahead of the split (#223). Owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' A NAMED SUBGRAPH and not a second `schemas` entry: overrides match on the entry's id, so reusing `schemas` would REPLACE this instance's schema graph rather than add to it -- the same trap the `cat-harness-src` entry above documents from the other side. REPOSITORY-scoped, like `bootstrap/skills/`: it sits at the top of the checkout, not inside this instance, and is deliberately never overlaid by a dependency. This entry is the mirror of `folio-assistant-core/harness.json`'s own, and it has to be stated twice only because `resolveSkillDirs` has no caller -- when that is wired, THIS entry is the one to delete.",
       "graphKinds": [
         "schemas",
         "cat-harness"
@@ -816,17 +816,17 @@
       }
     },
     {
-      "id": "cat-bootstrap-tools-schemas",
-      "path": "cat-bootstrap-tools/schemas/",
+      "id": "bootstrap-tools-schemas",
+      "path": "bootstrap-tools/schemas/",
       "scope": "repository",
       "dependents": "skip",
-      "description": "The Zod that cat-bootstrap's two published JSON Schemas are GENERATED from. Declared here AND in cat-bootstrap-tools/harness.json, for the reason the sibling detangle/kg-navigation/large-datasets entries give: a directory declared only in an instance that is not a DEPENDENCY of this one is invisible from this root, because resolution walks this declaration plus its dependencies and cat-bootstrap-tools is composed under the repository rather than depended on. Without this entry the schema graph reads 113 modules across four instances and cat-bootstrap-tools contributes nothing \u2014 which is exactly the state this instance was created to end, since cat-bootstrap itself contributed 0 of 113. The duplicate goes when the composition is wired, with the others.",
+      "description": "The Zod that bootstrap's two published JSON Schemas are GENERATED from. Declared here AND in bootstrap-tools/harness.json, for the reason the sibling detangle/kg-navigation/large-datasets entries give: a directory declared only in an instance that is not a DEPENDENCY of this one is invisible from this root, because resolution walks this declaration plus its dependencies and bootstrap-tools is composed under the repository rather than depended on. Without this entry the schema graph reads 113 modules across four instances and bootstrap-tools contributes nothing \u2014 which is exactly the state this instance was created to end, since bootstrap itself contributed 0 of 113. The duplicate goes when the composition is wired, with the others.",
       "graphKinds": [
         "schemas",
         "cat-harness"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/cat-bootstrap-tools/index.html",
+        "visualiser": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html",
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "schema-management"
       }
@@ -834,7 +834,7 @@
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",
   "needs": [
-    "cat-bootstrap"
+    "bootstrap"
   ],
-  "_cat_bootstrap_comment": "NO `cat-bootstrap` DIRECTORY IS DECLARED HERE, and that is the owner's ruling of 2026-09-21 (\"neither\") on bean `pve3`, not an omission. This file used to declare `cat-bootstrap/skills/` with `scope: \"repository\"`, which resolves against the REPOSITORY root rather than this instance \u2014 so cat-bootstrap's skills and roles landed in folio-assistant's graph while the entry lived here. It did NOT declare `cat-bootstrap/workflows/`, deliberately, because #432 measured bootstrap's process leaking into the root graph 88 times. The root therefore carried HALF of cat-bootstrap, and the two symptoms were one asymmetry: a `lanes` entry on a cat-bootstrap role minted `bindsLane -> role/<Lane>` pointing at a lane node only cat-bootstrap's own export mints (four dangling links, measured 2026-09-21 by restoring `lanes` and watching `kg-export.test.ts` refuse it), and cat-bootstrap's `kg-navigation` collided by name with `skills/folio-core/kg-navigation` in the published docs (bean `v3se`). `pve3` put the choice as BOTH halves or NEITHER; both would undo #432's isolation and put a process the root does not own into its published graph. Under NEITHER, cat-bootstrap's skills are published through `cat-bootstrap.jsonld` and its own instance page, which is where an instance's own graph belongs. The old entry's rationale is preserved in the bean rather than here, because a rationale for a declaration that no longer exists reads as a declaration to a skimming reader."
+  "_cat_bootstrap_comment": "NO `bootstrap` DIRECTORY IS DECLARED HERE, and that is the owner's ruling of 2026-09-21 (\"neither\") on bean `pve3`, not an omission. This file used to declare `bootstrap/skills/` with `scope: \"repository\"`, which resolves against the REPOSITORY root rather than this instance \u2014 so bootstrap's skills and roles landed in folio-assistant's graph while the entry lived here. It did NOT declare `bootstrap/workflows/`, deliberately, because #432 measured bootstrap's process leaking into the root graph 88 times. The root therefore carried HALF of bootstrap, and the two symptoms were one asymmetry: a `lanes` entry on a bootstrap role minted `bindsLane -> role/<Lane>` pointing at a lane node only bootstrap's own export mints (four dangling links, measured 2026-09-21 by restoring `lanes` and watching `kg-export.test.ts` refuse it), and bootstrap's `kg-navigation` collided by name with `skills/folio-core/kg-navigation` in the published docs (bean `v3se`). `pve3` put the choice as BOTH halves or NEITHER; both would undo #432's isolation and put a process the root does not own into its published graph. Under NEITHER, bootstrap's skills are published through `bootstrap.jsonld` and its own instance page, which is where an instance's own graph belongs. The old entry's rationale is preserved in the bean rather than here, because a rationale for a declaration that no longer exists reads as a declaration to a skimming reader."
 }

@@ -25,7 +25,7 @@ instance a reader cannot enter."*
 |---|---|---|---|
 | `cat-harness` | **yes** (292 md) | **yes** | **NO** |
 | `agent-skills` | no | no | yes |
-| `cat-bootstrap` | no | no | yes |
+| `bootstrap` | no | no | yes |
 | `detangle` | no | no | yes |
 | `folio-assist-sci` | no | no | yes |
 | `folio-assistant-core` | no | no | yes |
@@ -79,7 +79,7 @@ change to a `dependents` value is a change every concurrent branch pays for.
   been shown to lack documentation — it has been shown to be unreadable.
 - **An opt-out carries a REASON**, never a bare true, and the value IS the
   reason — the rule `SubgraphCoverageSchema.exempt` already states. An
-  instance that genuinely needs none (`cat-bootstrap`? it is already exempt
+  instance that genuinely needs none (`bootstrap`? it is already exempt
   from `visualiser` by layer) says why.
 - **Do not gate on day one.** Ten of eleven would fire immediately, and the
   repository's own rule is that a check firing on every one of its subjects is
@@ -111,7 +111,7 @@ quoted, nine hours later:
 
 | | then | now |
 |---|---|---|
-| instances | 11 | **12** (`cat-bootstrap-tools` added) |
+| instances | 11 | **12** (`bootstrap-tools` added) |
 | with `docs/` of their own | 1 (`cat-harness`) | **2** (`cat-harness`, `who-iris`) |
 | the checker calls README-less | 1 (`cat-harness`) | **0** |
 

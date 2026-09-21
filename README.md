@@ -42,7 +42,7 @@ not, do not.
 
 | | |
 |---|---|
-| **1. What the harness is, from nothing** | [`cat-bootstrap/README.md`](cat-bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
+| **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
 | **2. How to find the graph, and the skills in it** | [`kg-navigation`](kg-navigation/skills/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `harness.json` and read the directory it names. |
 | **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |
 | **4. It is active, so** | Work out your role, process and task from the BPMN under [`skills/workflows/`](cat-harness/skills/workflows/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |
@@ -68,8 +68,8 @@ rename a directory and the links follow.
 |----------|------|--------------|--------------|
 | `folio-assistant` | . | [AGENTS.md](AGENTS.md) | [README](README.md) |
 | `agent-skills` | agent-skills | [AGENTS.md](./agent-skills/AGENTS.md) | [README](./agent-skills/README.md) |
-| `cat-bootstrap` | cat-bootstrap | [AGENTS.md](./cat-bootstrap/AGENTS.md) | [README](./cat-bootstrap/README.md) |
-| `cat-bootstrap-tools` | cat-bootstrap-tools | [AGENTS.md](./cat-bootstrap-tools/AGENTS.md) | [README](./cat-bootstrap-tools/README.md) |
+| `bootstrap` | bootstrap | [AGENTS.md](./bootstrap/AGENTS.md) | [README](./bootstrap/README.md) |
+| `bootstrap-tools` | bootstrap-tools | [AGENTS.md](./bootstrap-tools/AGENTS.md) | [README](./bootstrap-tools/README.md) |
 | `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) · [docs](docs/) |
 | `detangle` | detangle | [AGENTS.md](./detangle/AGENTS.md) | [README](./detangle/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
@@ -90,7 +90,7 @@ rename a directory and the links follow.
 
 ## Bootstrapping — setting up a repository to write in
 
-**`cat-bootstrap litlfred/cat-harness`** means *set this repository up the same way
+**`bootstrap litlfred/cat-harness`** means *set this repository up the same way
 that one is set up.*
 
 A repository that has been bootstrapped carries a small file saying what kind
@@ -103,11 +103,11 @@ which editorial style are all read from **that** repository's setup file, so
 there is nothing else to ask.
 
 An agent pointed at a repository that is not set up yet starts at
-**[`cat-bootstrap/README.md`](cat-bootstrap/README.md)**, which is written for someone
+**[`bootstrap/README.md`](bootstrap/README.md)**, which is written for someone
 who knows none of the above.
 
 Why it is built this way, and the questions still open:
-[proposals/cat-bootstrap](fsh-guts/proposals/cat-bootstrap.md) — in `fsh-guts/`, which
+[proposals/bootstrap](fsh-guts/proposals/bootstrap.md) — in `fsh-guts/`, which
 is kept and addressable but deliberately not published as a page, so that is a
 repository link rather than a site one.
 

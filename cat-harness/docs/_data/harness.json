@@ -120,15 +120,15 @@
       "hidden": false
     },
     {
-      "id": "cat-bootstrap-tools-schemas",
-      "directory": "cat-bootstrap-tools-schemas",
-      "title": "cat-bootstrap-tools-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/cat-bootstrap-tools/index.html",
+      "id": "bootstrap-tools-schemas",
+      "directory": "bootstrap-tools-schemas",
+      "title": "bootstrap-tools-schemas",
+      "ref": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html",
       "surfaces": [
         "navbar",
         "board"
       ],
-      "href": "/cat-harness/schemas/cat-bootstrap-tools/",
+      "href": "/cat-harness/schemas/bootstrap-tools/",
       "hidden": false
     },
     {
@@ -334,17 +334,17 @@
       ]
     },
     {
-      "name": "cat-bootstrap-tools",
-      "title": "cat-bootstrap-tools",
-      "label": "cat-bootstrap-tools",
-      "description": "Zod for the shapes cat-bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
+      "name": "bootstrap-tools",
+      "title": "bootstrap-tools",
+      "label": "bootstrap-tools",
+      "description": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
       "footer": false,
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
-      "href": "/cat-harness/schemas/cat-bootstrap-tools/",
+      "href": "/cat-harness/schemas/bootstrap-tools/",
       "hrefKind": "viewer",
       "stats": [
         {
@@ -366,13 +366,13 @@
       "visualisations": [
         {
           "kind": "schemas",
-          "path": "/cat-harness/schemas/cat-bootstrap-tools/"
+          "path": "/cat-harness/schemas/bootstrap-tools/"
         }
       ],
       "findings": [
-        "cat-bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
-        "cat-bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-bootstrap-tools/) rather than the instance's own themed root.",
-        "cat-bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
+        "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/bootstrap-tools/) rather than the instance's own themed root.",
+        "bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
     },
     {
@@ -793,7 +793,7 @@
       "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
       "footer": false,
       "needs": [
-        "cat-bootstrap"
+        "bootstrap"
       ],
       "icon": {
         "src": "/assets/img/icons/cat-mark.svg",
@@ -904,9 +904,9 @@
       ]
     },
     {
-      "name": "cat-bootstrap",
-      "title": "cat-bootstrap",
-      "label": "cat-bootstrap",
+      "name": "bootstrap",
+      "title": "bootstrap",
+      "label": "bootstrap",
       "description": "The graph an agent reads before it knows what this repository is.",
       "footer": true,
       "needs": [],
@@ -944,7 +944,7 @@
         }
       ],
       "findings": [
-        "cat-bootstrap: declares 3 graph(s) with no published viewer — scenarios, skills, workflows. Declared and not rendered is a gap, not a dead link."
+        "bootstrap: declares 3 graph(s) with no published viewer — scenarios, skills, workflows. Declared and not rendered is a gap, not a dead link."
       ]
     }
   ]

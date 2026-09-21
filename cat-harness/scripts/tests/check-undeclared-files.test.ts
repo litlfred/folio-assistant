@@ -269,14 +269,14 @@ describe("this repository, as it stands", () => {
     expect(() => undeclaredAtRoot(REPO)).not.toThrow();
   });
 
-  test("cat-harness and cat-bootstrap are accounted for as instances", () => {
+  test("cat-harness and bootstrap are accounted for as instances", () => {
     const accounted = accountedRootPaths(REPO);
     // The diagnostic matters more than the assertion: when this fails, the
     // first question is "what did it actually look at", and a bare `undefined`
     // does not answer it.
     const seen = [...accounted.keys()].sort().join(", ");
     expect(accounted.get("cat-harness"), `REPO=${REPO}; saw: ${seen}`).toContain("declares itself");
-    expect(accounted.get("cat-bootstrap"), `REPO=${REPO}; saw: ${seen}`).toContain("declares itself");
+    expect(accounted.get("bootstrap"), `REPO=${REPO}; saw: ${seen}`).toContain("declares itself");
   });
 
   test("beans/ and todos/ are accounted for by declaration, not by a list", () => {
@@ -318,9 +318,9 @@ describe("an instance's own declaration outranks another instance naming it", ()
   /**
    * The exact live shape, and the defect it exposed.
    *
-   * `cat-harness/harness.json` declares `cat-bootstrap/skills/` at REPOSITORY scope,
-   * whose first path segment is `cat-bootstrap` — which is itself an instance. A
-   * single-pass implementation marked `cat-bootstrap` "an instance", then walked
+   * `cat-harness/harness.json` declares `bootstrap/skills/` at REPOSITORY scope,
+   * whose first path segment is `bootstrap` — which is itself an instance. A
+   * single-pass implementation marked `bootstrap` "an instance", then walked
    * cat-harness's declarations and OVERWROTE it with "declared by". Which value
    * survived depended on the order `readdirSync` returned the two directories.
    *
@@ -359,11 +359,11 @@ describe("an instance's own declaration outranks another instance naming it", ()
     }
   });
 
-  test("on the REAL repository, cat-bootstrap reads as an instance", () => {
-    // The live case. cat-harness declares cat-bootstrap/skills/ at repository
+  test("on the REAL repository, bootstrap reads as an instance", () => {
+    // The live case. cat-harness declares bootstrap/skills/ at repository
     // scope, so this is the pair above, with real names.
     const REPO = resolve(import.meta.dir, "..", "..", "..");
-    expect(accountedRootPaths(REPO).get("cat-bootstrap")).toContain("declares itself");
+    expect(accountedRootPaths(REPO).get("bootstrap")).toContain("declares itself");
   });
 });
 

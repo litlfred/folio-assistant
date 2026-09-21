@@ -117,7 +117,7 @@ describe("carrier 2 — asset sources", () => {
 
   it("this repository's own unpinned source is found", () => {
     // The real one, and the reason this gate is not a check over nothing: the
-    // root's `agent-instructions` names cat-bootstrap's file with no ref.
+    // root's `agent-instructions` names bootstrap's file with no ref.
     const repo = resolve(import.meta.dir, "..", "..", "..");
     const wheres = assetSourceRefs(repo).findings.map((f) => f.where);
     expect(wheres.some((w) => w.includes("agent-instructions"))).toBe(true);

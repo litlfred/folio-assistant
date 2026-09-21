@@ -25,11 +25,11 @@
  *
  * ## "Above bootstrap" is read from the DECLARATION, not from a name
  *
- * `cat-bootstrap` is exempt: its own `renderExemption` says why in its own
- * words — *"cat-bootstrap IS the navbar footer… it produces nothing a human
+ * `bootstrap` is exempt: its own `renderExemption` says why in its own
+ * words — *"bootstrap IS the navbar footer… it produces nothing a human
  * browses"* — and a layer that renders nothing has nothing to put on a board.
  * So the test is {@link isExemptFrom}`(decl, "visualiser")`, the same rule the
- * navbar tiles sort by, rather than a check for the string `cat-bootstrap`.
+ * navbar tiles sort by, rather than a check for the string `bootstrap`.
  * A checker that names one instance states a rule true only for the instance
  * somebody remembered (bean `hfkl`).
  *

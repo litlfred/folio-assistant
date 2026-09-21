@@ -373,15 +373,15 @@
     {
       "id": "folio-assistant-23bc",
       "title": "LIGHT MODE: .fa-qr-toggle and the .fa-tiles panel have no light-scheme tokens",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:11:38Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
-      "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 6. Owner: 'class=\"fa-qr-toggle fa-tiles-toggle\" does not respect light mode.' Same defect .fa-page-lang-bar records at docs-ui.css:1039.",
+      "updatedAt": "2026-09-21T19:10:08Z",
+      "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 6. Owner: 'class=\"fa-qr-toggle fa-tiles-toggle\" does not respect light mode.' Same defect .fa-page-lang-bar records at docs-ui.css:1039.\n\n\n## Measured 2026-09-21 — the toggle is innocent, and one literal is the defect\n\nThe report names `class=\"fa-qr-toggle fa-tiles-toggle\"`, and **that element is\nnot the problem**: it is `background",
       "file": "beans/defs/folio-assistant-23bc--light-mode-fa-qr-toggle-and-the-fa-tiles-panel-hav.md"
     },
     {
@@ -540,7 +540,7 @@
     },
     {
       "id": "folio-assistant-3jhq",
-      "title": "TWO PATHS FOR ONE BOOTSTRAP GRAPH: docs-site publishes cat-bootstrap.jsonld at the site root, feature-staging at cat-bootstrap/cat-bootstrap.jsonld",
+      "title": "TWO PATHS FOR ONE BOOTSTRAP GRAPH: docs-site publishes bootstrap.jsonld at the site root, feature-staging at bootstrap/bootstrap.jsonld",
       "status": "completed",
       "type": "task",
       "priority": "normal",
@@ -549,7 +549,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-21T14:16:21Z",
       "updatedAt": "2026-09-21T18:27:11Z",
-      "preview": "Noticed while measuring issue #720, and deliberately kept out of that fix.\n\n## What was measured, 2026-09-21\n\n| workflow | command | published at |\n|---|---|---|\n| `docs-site.yml` | `kg-export.ts --instance ./cat-bootstrap` | `<base>/cat-bootstrap.jsonld` |\n| `feature-staging.yml` | `gen-cat-bootstrap-graph.ts --base-url \"$BASE\"` | `<base>/cat-bootstrap/cat-bootstrap.jsonld` |\n\nTwo DIFFERENT scrip",
+      "preview": "Noticed while measuring issue #720, and deliberately kept out of that fix.\n\n## What was measured, 2026-09-21\n\n| workflow | command | published at |\n|---|---|---|\n| `docs-site.yml` | `kg-export.ts --instance ./bootstrap` | `<base>/bootstrap.jsonld` |\n| `feature-staging.yml` | `gen-bootstrap-graph.ts --base-url \"$BASE\"` | `<base>/bootstrap/bootstrap.jsonld` |\n\nTwo DIFFERENT scripts, two DIFFERENT pa",
       "file": "beans/defs/folio-assistant-3jhq--two-paths-for-one-bootstrap-graph-docs-site-publis.md"
     },
     {
@@ -563,7 +563,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T09:10:53Z",
       "updatedAt": "2026-09-20T09:35:46Z",
-      "preview": "## Measured\n\n`cat-bootstrap/cat-bootstrap.jsonld`: **49 nodes / 807 lines → 34 nodes / 687 lines.**\nGraphKind nodes **16 → 1**. `check:instance-render` now reports bootstrap as\n`1 declared, 1 published`.\n\n## Two of the four \"removals\" were wrong, and reading said so\n\n**Duplicate Role nodes — NOT a defect.** Six nodes for three roles looked like\nthe `blv9` shape. `kg-export.ts` documents the opposi",
+      "preview": "## Measured\n\n`bootstrap/bootstrap.jsonld`: **49 nodes / 807 lines → 34 nodes / 687 lines.**\nGraphKind nodes **16 → 1**. `check:instance-render` now reports bootstrap as\n`1 declared, 1 published`.\n\n## Two of the four \"removals\" were wrong, and reading said so\n\n**Duplicate Role nodes — NOT a defect.** Six nodes for three roles looked like\nthe `blv9` shape. `kg-export.ts` documents the opposite: lane",
       "file": "beans/defs/folio-assistant-3jj9--bootstrap-shrink-to-what-it-owns-and-add-the-discu.md"
     },
     {
@@ -703,7 +703,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-21T13:11:53Z",
       "updatedAt": "2026-09-21T13:40:00Z",
-      "preview": "## What\n\n`docs-site.yml` fails on `main`. The site has not published since **11:31 on\n2026-09-21**, the commit (`f4366814cc`, bean `pve3`, issue #686) that made\n`kg-export` multi-instance and added a second export step:\n\n```\nbun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out \"./_site/cat-bootstrap.jsonld\"\n```\n\nThat step exits 1:\n\n```\n1 source(s) could not be read:\n  ✗ no can",
+      "preview": "## What\n\n`docs-site.yml` fails on `main`. The site has not published since **11:31 on\n2026-09-21**, the commit (`f4366814cc`, bean `pve3`, issue #686) that made\n`kg-export` multi-instance and added a second export step:\n\n```\nbun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out \"./_site/bootstrap.jsonld\"\n```\n\nThat step exits 1:\n\n```\n1 source(s) could not be read:\n  ✗ no canonicalUr",
       "file": "beans/defs/folio-assistant-40fl--docs-site-is-red-on-main-a-foreign-instances-expor.md"
     },
     {
@@ -775,6 +775,20 @@
       "updatedAt": "2026-09-20T09:21:09Z",
       "preview": "Owner, 2026-09-20: '4 bean up. for now give requrements/constraings/issues/pros/cons/otpons here only for analysis/discussion./ not durable.'\n\nSo this bean is the TRACKING ITEM and deliberately not the analysis. The requirements, constraints, pros, cons and options were given in chat for discussion and are explicitly NOT to be written into the repository yet. Recording that instruction here matter",
       "file": "beans/defs/folio-assistant-4pm8--pagefind-evaluate-as-the-search-engine-for-the-lar.md"
+    },
+    {
+      "id": "folio-assistant-4v62",
+      "title": "QUOTATION GUARD SCOPE: a table cell is not a quotation, and the corpus is what says so",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T17:33:34Z",
+      "updatedAt": "2026-09-21T17:33:45Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/696 — this closes\n`k59d`'s one remaining agent-ownable Done-when:\n\n> The quotation guard covers a markdown table cell, or the guard's stated\n> scope says it does not and why — a workaround in one bean is not a fix\n\n## Measured before deciding, and the measurement went against my first instinct\n\n`insideQuotation` in `check-bean-bodies.ts` re",
+      "file": "beans/defs/folio-assistant-4v62--quotation-guard-scope-a-table-cell-is-not-a-quotat.md"
     },
     {
       "id": "folio-assistant-4wzf",
@@ -1017,14 +1031,14 @@
     {
       "id": "folio-assistant-623b",
       "title": "PAGE: Harness — how it bootstraps, and how the dependency tree is walked from the lowest instance up",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:21:34Z",
-      "updatedAt": "2026-09-21T19:08:34Z",
+      "updatedAt": "2026-09-21T19:50:29Z",
       "preview": "Owner, 2026-09-21: a page covering how the Harness bootstraps, and how agents are steered by Processes (BPMN), Actors, Roles, Skills and Tasks.\n\n**The mechanism to document:** the dependency tree of the harness is walked starting from the LOWEST (bootstrap) in an ORDERED dependency hierarchy. The harness is declared in the KG. The page MUST explain how bootstrap plus zero or more harnesses can be ",
       "file": "beans/defs/folio-assistant-623b--page-harness-how-it-bootstraps-and-how-the-depende.md"
     },
@@ -1181,7 +1195,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T13:35:24Z",
       "updatedAt": "2026-09-20T16:25:08Z",
-      "preview": "Found 2026-09-20 while working `pb04`, not looked for.\n\n## Measured\n\n`cat-harness/scripts/check-declared-assets.ts`:\n\n```ts\nexport const DECLARED_INSTANCES = [\"cat-harness\", \"bootstrap\"] as const;\n```\n\nFour directories in this repository now carry a `harness.json`:\n\n| declaration | name | declares assets? |\n|---|---|---|\n| `cat-harness/harness.json` | `folio-assistant` | yes — checked |\n| `cat-boo",
+      "preview": "Found 2026-09-20 while working `pb04`, not looked for.\n\n## Measured\n\n`cat-harness/scripts/check-declared-assets.ts`:\n\n```ts\nexport const DECLARED_INSTANCES = [\"cat-harness\", \"bootstrap\"] as const;\n```\n\nFour directories in this repository now carry a `harness.json`:\n\n| declaration | name | declares assets? |\n|---|---|---|\n| `cat-harness/harness.json` | `folio-assistant` | yes — checked |\n| `bootstr",
       "file": "beans/defs/folio-assistant-6tkl--stale-list-check-declared-assets-hardcodes-two-ins.md"
     },
     {
@@ -1363,7 +1377,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-21T05:50:07Z",
       "updatedAt": "2026-09-21T07:04:18Z",
-      "preview": "Carved out of `ie9l` when issue #592 was closed (2026-09-21, owner's word).\nTwo of `ie9l`'s six `Done when` boxes, together because `ie9l` itself showed\nthey are one thing.\n\nOwner, on `ie9l`:\n\n> whwn cat-harness boostrap init takes over it creates README.md if it does\n> not exist and add link and overall harness install statue.\n\n**Neither box was started.** Nothing in `cat-bootstrap`'s initialisat",
+      "preview": "Carved out of `ie9l` when issue #592 was closed (2026-09-21, owner's word).\nTwo of `ie9l`'s six `Done when` boxes, together because `ie9l` itself showed\nthey are one thing.\n\nOwner, on `ie9l`:\n\n> whwn cat-harness boostrap init takes over it creates README.md if it does\n> not exist and add link and overall harness install statue.\n\n**Neither box was started.** Nothing in `bootstrap`'s initialisation\n",
       "file": "beans/defs/folio-assistant-7sfm--init-bootstrap-creates-a-root-readme-with-install.md"
     },
     {
@@ -1382,7 +1396,7 @@
     },
     {
       "id": "folio-assistant-7u3g",
-      "title": "cat-bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows",
+      "title": "bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows",
       "status": "scrapped",
       "type": "task",
       "priority": "normal",
@@ -1391,7 +1405,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T14:47:57Z",
       "updatedAt": "2026-09-20T15:26:13Z",
-      "preview": "Found 2026-09-20 while sampling the unbound skills for bean `y1w9`. Not what\nthat sample went looking for, which is the point of sampling.\n\n## The gap\n\n`cat-bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it\nand the audit reads its skills. `workflowDirs` then composes\n`<kgdir>/workflows` — i.e. **`cat-bootstrap/skills/workflows/`**, which does not\nexist. The diagrams are",
+      "preview": "Found 2026-09-20 while sampling the unbound skills for bean `y1w9`. Not what\nthat sample went looking for, which is the point of sampling.\n\n## The gap\n\n`bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it\nand the audit reads its skills. `workflowDirs` then composes\n`<kgdir>/workflows` — i.e. **`bootstrap/skills/workflows/`**, which does not\nexist. The diagrams are at **`b",
       "file": "beans/defs/folio-assistant-7u3g--bootstrapworkflows-is-scanned-by-nothing-workflowd.md"
     },
     {
@@ -1523,14 +1537,14 @@
     {
       "id": "folio-assistant-88mg",
       "title": "CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:21:35Z",
-      "updatedAt": "2026-09-21T16:21:35Z",
+      "updatedAt": "2026-09-21T19:50:20Z",
       "preview": "Owner, 2026-09-21: a thorough analysis of the existing documentation AND skills, consolidated, in ONE voice. All of the documentation eventually; **bootstrap and cat-harness first**.\n\n**Two structural asks:**\n- **Reuse content between `skills/` and `docs/`** so both consolidate, with the docs pointing at the skill for rendering where the skill was written correctly.\n- **Some documentation will nee",
       "file": "beans/defs/folio-assistant-88mg--consolidation-one-voice-over-bootstrap-and-cat-har.md"
     },
@@ -1718,7 +1732,7 @@
     },
     {
       "id": "folio-assistant-9poj",
-      "title": "cat-bootstrap is greyed out because it has no href, not because it is a dependency",
+      "title": "bootstrap is greyed out because it has no href, not because it is a dependency",
       "status": "todo",
       "type": "bug",
       "priority": "high",
@@ -1728,7 +1742,7 @@
       "createdAt": "2026-09-21T17:28:40Z",
       "updatedAt": "2026-09-21T17:31:42Z",
       "preview": "Owner, 2026-09-21: \"Boostrap should be clicable. even though it doesnt render itself, cat-bootrap does take over (double ccheck) render responsibles of bootrstraps json(ld) and documentation (bootrsap does not have docs/ b/c that a cat-harness concept)\" and \"i dont know why the dependecioes are gerey-ed out.\"\n\nCORPUS CHECK — the premise is wrong in the reader's favour, and the real cause is worse.",
-      "file": "beans/defs/folio-assistant-9poj--cat-bootstrap-is-greyed-out-because-it-has-no-href.md"
+      "file": "beans/defs/folio-assistant-9poj--bootstrap-is-greyed-out-because-it-has-no-href.md"
     },
     {
       "id": "folio-assistant-9x17",
@@ -2151,6 +2165,20 @@
       "file": "beans/defs/folio-assistant-ce65--tool-nodes-exist-for-11-of-138-skills-audit-which.md"
     },
     {
+      "id": "folio-assistant-cekz",
+      "title": "DESIGN RECORD: file the folio board's R1-R17 into docs/architecture, per the owner's docs-filing ruling",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:38:14Z",
+      "updatedAt": "2026-09-21T18:46:28Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — CRDM\n`BA_ChooseKg`, the step after sign-off.\n\n## The owner's ruling, verbatim\n\n> this is a memory asset as part of design, so it goes into docs/. update\n> skills for documentation filing. fsh-guts can be thrown away/lost... this was\n> an asset as part of building a feature (or accessing data, or other skill\n> realtaed to manament/rend",
+      "file": "beans/defs/folio-assistant-cekz--design-record-file-the-folio-boards-r1-r17-into-do.md"
+    },
+    {
       "id": "folio-assistant-cflw",
       "title": "Generated artefacts collide: 218 sidecars rewritten by one auditor edit",
       "status": "in-progress",
@@ -2194,7 +2222,7 @@
     },
     {
       "id": "folio-assistant-cjtm",
-      "title": "SKILL: creating a new instance KIND — naming, prefixes, and repointing cat-bootstrap/README.md",
+      "title": "SKILL: creating a new instance KIND — naming, prefixes, and repointing bootstrap/README.md",
       "status": "completed",
       "type": "task",
       "priority": "normal",
@@ -2426,7 +2454,7 @@
     },
     {
       "id": "folio-assistant-dyd3",
-      "title": "ONE GRAPH, TWO @ids: cat-bootstrap is published at two paths with 84 subjects under two identities",
+      "title": "ONE GRAPH, TWO @ids: bootstrap is published at two paths with 84 subjects under two identities",
       "status": "todo",
       "type": "task",
       "priority": "",
@@ -2435,8 +2463,8 @@
       "blockedBy": [],
       "createdAt": "2026-09-21T18:27:04Z",
       "updatedAt": "2026-09-21T18:27:04Z",
-      "preview": "Split out of `3jhq` on the owner's ruling (\"fix staging only; bean the\nduplication\"), with the evidence already gathered.\n\n## Measured 2026-09-21, not assumed\n\n`docs-site.yml` publishes the cat-bootstrap graph **twice**:\n\n| path | written by | top-level fields |\n|---|---|---|\n| `<base>/cat-bootstrap.jsonld` | `kg-export --instance ./cat-bootstrap` | `generatedAt`, `sourceCommit*` |\n| `<base>/cat-b",
-      "file": "beans/defs/folio-assistant-dyd3--one-graph-two-ids-cat-bootstrap-is-published-at-tw.md"
+      "preview": "Split out of `3jhq` on the owner's ruling (\"fix staging only; bean the\nduplication\"), with the evidence already gathered.\n\n## Measured 2026-09-21, not assumed\n\n`docs-site.yml` publishes the bootstrap graph **twice**:\n\n| path | written by | top-level fields |\n|---|---|---|\n| `<base>/bootstrap.jsonld` | `kg-export --instance ./bootstrap` | `generatedAt`, `sourceCommit*` |\n| `<base>/bootstrap/bootstr",
+      "file": "beans/defs/folio-assistant-dyd3--one-graph-two-ids-bootstrap-is-published-at-tw.md"
     },
     {
       "id": "folio-assistant-dzl3",
@@ -2943,6 +2971,20 @@
       "file": "beans/defs/folio-assistant-huiu--dublin-core-a-ts-record-type-in-cat-harness-fully.md"
     },
     {
+      "id": "folio-assistant-hw9g",
+      "title": "MOUNTED PAGES HAVE NO LHS RAIL: a collapsed icon-width harness nav for every mounted instance, opening on hover or click",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T18:40:00Z",
+      "updatedAt": "2026-09-21T19:05:00Z",
+      "preview": "## What\n\nOwner, 2026-09-21, looking at the published `/who-iris/`:\n\n> *\"i see no LHS navbar. It still should be there in this harness, but it can\n> start collapsed (so only icon width wide), hovering/clicking on it will\n> open\"*\n\nand earlier, on the same subject:\n\n> *\"f-a navbar should still be on the left, with who-iris and then link to docs\n> on side in navbar\"*\n\n## Measured, not assumed\n\nOn the",
+      "file": "beans/defs/folio-assistant-hw9g--mounted-pages-have-no-lhs-rail-a-collapsed-icon-wi.md"
+    },
+    {
       "id": "folio-assistant-hylg",
       "title": "Workflow interpreter descends into call activities — subprocesses give increasing context",
       "status": "in-progress",
@@ -3185,6 +3227,20 @@
       "file": "beans/defs/folio-assistant-jqv4--tool-paths-9-of-44-invokeshell-values-named-a-comm.md"
     },
     {
+      "id": "folio-assistant-jut3",
+      "title": "SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:10:00Z",
+      "updatedAt": "2026-09-21T19:10:00Z",
+      "preview": "## The owner's words, verbatim\n\nParaphrase would lose the sequencing and the scope, both of which constrain the\ndesign:\n\n> i want the smart-* mockups not to mount the existing rendered .html but use\n> the IG Publisher+postporcessed json/jsonld +metadataindexing to reproduce the\n> generated html in the justthedoc pipeline.\n>\n> i want the input/page(s)/ content to be rendered viajustthedocs pipeline",
+      "file": "beans/defs/folio-assistant-jut3--smart-via-just-the-docs-stop-mounting-ig-publisher.md"
+    },
+    {
       "id": "folio-assistant-k59d",
       "title": "MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them",
       "status": "in-progress",
@@ -3201,14 +3257,14 @@
     {
       "id": "folio-assistant-ke0o",
       "title": "VOICE + SKILL: a Technical Documentation voice written as an SDO writes, with RFC 2119 requirement levels",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:21:34Z",
-      "updatedAt": "2026-09-21T16:21:34Z",
+      "updatedAt": "2026-09-21T19:50:29Z",
       "preview": "Two paired artefacts, because a voice with no skill is unenforceable and a skill with no voice has no house style.\n\n**The voice.** Applies to standards, software and knowledge-asset documentation, for BOTH drafting and review QA. Written as W3C or IHE writes. Glossary Terms are Capitalized throughout. Requirement levels follow RFC 2119 and are used with their RFC meanings, not colloquially.\n\n**RFC",
       "file": "beans/defs/folio-assistant-ke0o--voice-skill-a-technical-documentation-voice-writte.md"
     },
@@ -3649,7 +3705,7 @@
     {
       "id": "folio-assistant-nrtx",
       "title": "COVERS: show the item covers with the WHO emblem masked, and make the mask survive re-rendering",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -4009,7 +4065,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T04:02:49Z",
       "updatedAt": "2026-09-20T04:03:21Z",
-      "preview": "## Measured 2026-09-20\n\nThe root `harness.json` declares `bootstrap` → `cat-bootstrap/skills/`, so\nfolio-assistant's graph carries **bootstrap's skills and roles**. It does NOT\ndeclare `cat-bootstrap/workflows/`, so it does not carry **bootstrap's process** —\nthat isolation was deliberate (#432, where bootstrap's process was leaking into\nthe root graph 88 times).\n\nSo the root carries half of boots",
+      "preview": "## Measured 2026-09-20\n\nThe root `harness.json` declares `bootstrap` → `bootstrap/skills/`, so\nfolio-assistant's graph carries **bootstrap's skills and roles**. It does NOT\ndeclare `bootstrap/workflows/`, so it does not carry **bootstrap's process** —\nthat isolation was deliberate (#432, where bootstrap's process was leaking into\nthe root graph 88 times).\n\nSo the root carries half of bootstrap. Th",
       "file": "beans/defs/folio-assistant-pve3--the-root-declares-half-of-bootstrap-its-skills-but.md"
     },
     {
@@ -4182,7 +4238,7 @@
     },
     {
       "id": "folio-assistant-r1vw",
-      "title": "Package ids come from the DIRECTORY basename, so cat-bootstrap/skills/ mints package/skills and collides",
+      "title": "Package ids come from the DIRECTORY basename, so bootstrap/skills/ mints package/skills and collides",
       "status": "completed",
       "type": "task",
       "priority": "",
@@ -4241,14 +4297,14 @@
     {
       "id": "folio-assistant-rapm",
       "title": "PAGE: Knowledge Graph — the subgraph taxonomy, which way the arrows flow, and how each is used",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:21:34Z",
-      "updatedAt": "2026-09-21T18:12:11Z",
+      "updatedAt": "2026-09-21T19:50:29Z",
       "preview": "Owner's structure, 2026-09-21, captured as given:\n\n- **Schema subgraph** — everything has JSON-LD / JSON Schema definitions describing all managed content. Comes EMPTY except for what is self-describing; harnesses add knowledge content assets.\n- **Content subgraph** — instances of knowledge assets, with Schemas and Skills.\n  - **Scenarios subgraph** (a kind of Content) — Actors (Machine, Human, Ag",
       "file": "beans/defs/folio-assistant-rapm--page-knowledge-graph-the-subgraph-taxonomy-which-w.md"
     },
@@ -4676,7 +4732,7 @@
     },
     {
       "id": "folio-assistant-u1iu",
-      "title": "DOCS SITE RED 7 RUNS: the foreign-instance export takes its base from the instance, and cat-bootstrap declares none",
+      "title": "DOCS SITE RED 7 RUNS: the foreign-instance export takes its base from the instance, and bootstrap declares none",
       "status": "completed",
       "type": "bug",
       "priority": "normal",
@@ -4685,7 +4741,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-21T14:03:27Z",
       "updatedAt": "2026-09-21T16:42:02Z",
-      "preview": "Issue #720. Session: https://claude.ai/code/session_0136QLqnczLRAvFcqQKT588A\n\n## Measured before starting, 2026-09-21\n\n| | |\n|---|---|\n| Docs site on `main` | green at run 352 (#699, 11:49), **red 353–359** |\n| break arrived with | **#688** (12:01) — NOT the harness.json excision (#695, 12:19), which merged into an already-red workflow |\n| failing command | `kg-export.ts --instance ./cat-bootstrap",
+      "preview": "Issue #720. Session: https://claude.ai/code/session_0136QLqnczLRAvFcqQKT588A\n\n## Measured before starting, 2026-09-21\n\n| | |\n|---|---|\n| Docs site on `main` | green at run 352 (#699, 11:49), **red 353–359** |\n| break arrived with | **#688** (12:01) — NOT the harness.json excision (#695, 12:19), which merged into an already-red workflow |\n| failing command | `kg-export.ts --instance ./bootstrap` |\n",
       "file": "beans/defs/folio-assistant-u1iu--docs-site-red-7-runs-the-foreign-instance-export-t.md"
     },
     {
@@ -4789,14 +4845,14 @@
     {
       "id": "folio-assistant-uwka",
       "title": "PAGE: Managing Agent Context — overlays, and the several ways contextual information is generated",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:21:34Z",
-      "updatedAt": "2026-09-21T16:50:33Z",
+      "updatedAt": "2026-09-21T19:50:29Z",
       "preview": "Owner, 2026-09-21: a new page in the cat-harness docs explaining the concept of OVERLAYS.\n\nIt applies to contextual information that is generated in several different ways — agent directives, `memory.md`, and others. Overlaying a context is what lets testing run repeatably across different contexts, which is the Context subgraph's reason for existing.\n\nRelates to `3q47` (deterministically set an a",
       "file": "beans/defs/folio-assistant-uwka--page-managing-agent-context-overlays-and-the-sever.md"
     },
@@ -4855,7 +4911,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T03:26:21Z",
       "updatedAt": "2026-09-20T13:49:14Z",
-      "preview": "## Measured 2026-09-20, from `gen-skill-docs` output\n\n```\n↪ kg-navigation (dup — kept Platform core (folio-core))\n```\n\nTwo different skills carry the name `kg-navigation`:\n\n| | assumes |\n|---|---|\n| `cat-bootstrap/skills/kg-navigation.md` | **nothing** — no MCP, no harness, no tools |\n| `skills/folio-core/kg-navigation.md` | the harness is installed |\n\nThe generator keeps folio-core's and **silent",
+      "preview": "## Measured 2026-09-20, from `gen-skill-docs` output\n\n```\n↪ kg-navigation (dup — kept Platform core (folio-core))\n```\n\nTwo different skills carry the name `kg-navigation`:\n\n| | assumes |\n|---|---|\n| `bootstrap/skills/kg-navigation.md` | **nothing** — no MCP, no harness, no tools |\n| `skills/folio-core/kg-navigation.md` | the harness is installed |\n\nThe generator keeps folio-core's and **silently d",
       "file": "beans/defs/folio-assistant-v3se--two-skills-named-kg-navigation-bootstraps-is-silen.md"
     },
     {

@@ -29,7 +29,7 @@ renders the graph, serves an interface over it, and supplies the Skills,
 Workflows and Tools an Agent works the graph with. The KGraph says what is
 true; the Harness is how anybody reaches it.
 
-A checkout holds several. They stack, bottom to top — `cat-bootstrap`, then
+A checkout holds several. They stack, bottom to top — `bootstrap`, then
 `cat-harness`, then `folio-assistant-core`, then `folio-assistant` — and each
 inherits what the ones below it declare. That stacking is the subject of this
 page, along with the two things a Harness owes anything it takes charge of.
@@ -97,7 +97,7 @@ last precisely so that it can.
 The order is **declared, not computed**, in each instance's `needs` array:
 
 ```json
-{ "name": "folio-assistant-core", "needs": ["cat-bootstrap", "cat-harness"] }
+{ "name": "folio-assistant-core", "needs": ["bootstrap", "cat-harness"] }
 ```
 
 It is declared for a measured reason. The layering was real before it was
@@ -135,7 +135,7 @@ time" are three questions with three answers.
 
 ### The bootstrap is the exception, and the floor rises
 
-`cat-bootstrap` sits at the bottom and does not render. It is the navigation
+`bootstrap` sits at the bottom and does not render. It is the navigation
 footer; what it owes instead is its own `.json` and `.jsonld` — *"that is its
 existence"*. The rendering obligation is a **floor that rises**: it starts at
 `cat-harness`, which is obliged because it supplies the layers above it with
@@ -180,7 +180,7 @@ it. `coverage.exempt` carries three keys — `visualiser`, `docs`, `skill` — a
 deliberately not a fourth, and the coverage check ranks a missing serialisation
 as an unmet obligation with no by-kind test at all.
 
-The reason is `cat-bootstrap`. It is excused a visualiser precisely because its
+The reason is `bootstrap`. It is excused a visualiser precisely because its
 `json` and `jsonld` *are its existence* — so the thing it is excused **into**
 cannot itself be excusable, or the exemption would excuse everything. **The
 visualiser is the courtesy; the serialisation is the existence claim.**

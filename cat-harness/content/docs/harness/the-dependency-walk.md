@@ -9,7 +9,7 @@ last precisely so that it can.
 The order is **declared, not computed**, in each instance's `needs` array:
 
 ```json
-{ "name": "folio-assistant-core", "needs": ["cat-bootstrap", "cat-harness"] }
+{ "name": "folio-assistant-core", "needs": ["bootstrap", "cat-harness"] }
 ```
 
 It is declared for a measured reason. The layering was real before it was
@@ -47,7 +47,7 @@ time" are three questions with three answers.
 
 ### The bootstrap is the exception, and the floor rises
 
-`cat-bootstrap` sits at the bottom and does not render. It is the navigation
+`bootstrap` sits at the bottom and does not render. It is the navigation
 footer; what it owes instead is its own `.json` and `.jsonld` — *"that is its
 existence"*. The rendering obligation is a **floor that rises**: it starts at
 `cat-harness`, which is obliged because it supplies the layers above it with

@@ -277,14 +277,14 @@ jobs:
       - name: no undeclared files at the repository root
         run: bun run check:undeclared-files:check
 
-      # `cat-bootstrap/cat-bootstrap.jsonld` HAD a staleness gate here, because it was
+      # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
       # committed. It no longer is — it is built at render time into the
       # published site by `docs-site.yml` — so there is no committed copy to
       # go stale and nothing for a byte gate to compare against.
       #
       # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
       # assuming: the gate compared bytes, while every property it was
-      # protecting is asserted directly in `scripts/tests/cat-bootstrap-graph.test.ts`
+      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
       # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
       # build paths, skills derived from disk, graph kinds a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
@@ -477,8 +477,8 @@ jobs:
       - name: namespace vocabulary is complete
         run: bun run ns:check
 
-      # `cat-bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `cat-bootstrap-tools`, because bootstrap promises an Initiator it needs
+      # `bootstrap`'s two JSON Schemas are GENERATED from Zod in
+      # `bootstrap-tools`, because bootstrap promises an Initiator it needs
       # no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked

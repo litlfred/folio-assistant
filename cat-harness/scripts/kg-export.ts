@@ -146,13 +146,13 @@ const SKILL_IO_DIR = "schemas/skills";
  *
  * It walked the filesystem — every directory under the root to depth 4, minus
  * a skip list of *names*. That was right while this repository was the only
- * instance in the tree. `cat-bootstrap/` is now a second one, with its own
+ * instance in the tree. `bootstrap/` is now a second one, with its own
  * declaration, and the walk does not know that: measured 2026-09-19 on `main`,
  * `_kg/folio-assistant.jsonld` contained **88** references to
  * `Process_CatBootstrap`. CatBootstrap's process was being published as part of
  * folio-assistant's graph.
  *
- * The repair that suggests itself is `skip.add("cat-bootstrap")` — a directory
+ * The repair that suggests itself is `skip.add("bootstrap")` — a directory
  * name written in code, which is the defect `check:declared-paths` exists to
  * refuse, and which would need another line for every instance ever added.
  * Reading the declaration needs none: an instance's diagrams are the ones it
@@ -783,7 +783,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
       // `isSkillMd`, not a bare `.md` test. This carried its OWN copy of the
       // predicate — a third definition of "is this a skill" in a module whose
       // own header is about two definitions disagreeing — and it admitted
-      // `cat-bootstrap/README.md` as a skill named `README` the moment a second
+      // `bootstrap/README.md` as a skill named `README` the moment a second
       // knowledge-graph root existed. `skill-coverage.test.ts` caught it,
       // which is the only reason this is a comment rather than a published
       // graph node nobody could explain.
@@ -991,7 +991,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
  *
  * The id was `dir.split("/").pop()`, and eleven of the twelve packages here
  * hid that, because their directory is named after the package. The twelfth
- * is `cat-bootstrap/skills/`, whose manifest declares `"name": "cat-bootstrap"`
+ * is `bootstrap/skills/`, whose manifest declares `"name": "bootstrap"`
  * and whose node was `package/skills`, **named `skills`** — the manifest's own
  * name was never read.
  *
@@ -999,7 +999,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
  * and the `seen` set below silently dropped whichever came second while its
  * skills kept emitting `inPackage -> package/skills`. So `corpus-grep`, a
  * cat-harness skill in a directory with no manifest at all, was published as a
- * member of cat-bootstrap's package. Nothing reported it: both sides resolved,
+ * member of bootstrap's package. Nothing reported it: both sides resolved,
  * no link dangled, and the audit's `skill-servable` criterion was SATISFIED by
  * the collision — a skill served by a package it was never listed in.
  *
@@ -1151,10 +1151,10 @@ function stampSubgraph(graph: Node[], doc: string, instanceRoot: string = ROOT):
   //
   // It read `ROOT` on both lines until 2026-09-21, so exporting ANOTHER
   // instance stamped its nodes with THIS instance's directory ids wherever the
-  // two share a relative path. `cat-bootstrap/skills/roles/` and
-  // `cat-harness/skills/roles/` are both `skills/roles`, so cat-bootstrap's
+  // two share a relative path. `bootstrap/skills/roles/` and
+  // `cat-harness/skills/roles/` are both `skills/roles`, so bootstrap's
   // own directory node came out carrying `inSubgraph ->
-  // cat-bootstrap.jsonld#directory/cat-harness-roles` — an id from the other
+  // bootstrap.jsonld#directory/cat-harness-roles` — an id from the other
   // instance, in a document that does not define it, which the dangling-link
   // check caught as soon as the second `skills/roles/` was declared.
   //
@@ -1262,13 +1262,13 @@ async function collectProcesses(
   // CI — so it would leak a runner's filesystem layout into a public document
   // and change on every build.
   //
-  // It said "a COMMITTED artefact (`cat-bootstrap/cat-bootstrap.jsonld`) ... so its
+  // It said "a COMMITTED artefact (`bootstrap/bootstrap.jsonld`) ... so its
   // staleness gate would fail on a tree nobody touched". **That file is not
   // committed and has no staleness gate.** `.gitignore:108` ignores it
   // deliberately — it was committed once, on a rationale citing a README step
-  // that no prose file under `cat-bootstrap/` actually contains, and it was 52 %
-  // of `cat-bootstrap/` by line count. `docs-site.yml:274` builds it into
-  // `_site/cat-bootstrap/cat-bootstrap.jsonld` at render time instead.
+  // that no prose file under `bootstrap/` actually contains, and it was 52 %
+  // of `bootstrap/` by line count. `docs-site.yml:274` builds it into
+  // `_site/bootstrap/bootstrap.jsonld` at render time instead.
   //
   // The CHOICE was right and its stated reason was not, which is the worse
   // failure of the two: a reader checking the claim finds no gate, concludes
@@ -1472,13 +1472,13 @@ async function collectProcesses(
  * ## Why a Tool may name a skill this document does not contain
  *
  * `gn4l`: the Tool nodes for `discussion` and `log-message` live in
- * cat-harness because a Tool is cat-harness's vocabulary and cat-bootstrap may
+ * cat-harness because a Tool is cat-harness's vocabulary and bootstrap may
  * not import it — recorded there as *a limitation rather than a decision*,
  * with the nodes moving unchanged once tool collection stops being
- * import-bound. The SKILLS live in cat-bootstrap so an Initiator can read them
+ * import-bound. The SKILLS live in bootstrap so an Initiator can read them
  * with nothing installed. So the edge crosses instances by construction.
  *
- * While cat-harness declared `cat-bootstrap/skills/` the crossing was hidden:
+ * While cat-harness declared `bootstrap/skills/` the crossing was hidden:
  * both ends landed in one document. The owner's `pve3` ruling of 2026-09-21
  * ("neither") removed that declaration, and a link minted into THIS document
  * then pointed at a node no document contains.
@@ -1634,7 +1634,7 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // EVERY declared `kg` root, not the literal `skills/` and not the first one
   // that answers. `kgRoots` is explicit that taking the first is the `dh4f`
   // defect arriving through the helper written to prevent it: a topical
-  // layout (`cat-bootstrap/`, `crdm/`) would report a clean run over the roots
+  // layout (`bootstrap/`, `crdm/`) would report a clean run over the roots
   // this never visited. First declaration of a role id wins, so a later root
   // cannot silently redefine one.
   const roles: RoleDef[] = [];
@@ -1672,14 +1672,14 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   // ── EMIT ONLY WHAT THIS INSTANCE DECLARES.
   //
   // `defaultGraphKinds` is the UNIVERSAL registry — every kind any layer
-  // defines. Emitting all of it into every instance's graph made `cat-bootstrap`,
+  // defines. Emitting all of it into every instance's graph made `bootstrap`,
   // whose whole premise is that it knows nothing yet, publish 16 GraphKind
   // nodes when its declaration names exactly ONE (`cat-harness`, across both
   // its directories). It advertised `folio`, `voices` and `library` — core's —
   // and `beans` and `todos` — cat-harness's — none of which it can reach.
   //
   // The comment below already recorded the layering ("`voices` and `library`
-  // are core's") without acting on it; this is the missing half. A cat-bootstrap
+  // are core's") without acting on it; this is the missing half. A bootstrap
   // that names a vocabulary it cannot resolve is the same defect as a `@type`
   // that does not dereference (`blv9`), one level up: the node is there, and
   // nothing behind it is.
@@ -1701,7 +1701,7 @@ function collectGraphKinds(root: string = ROOT): Node[] {
     return {
       // The instance sits in the SAME namespace as the class it instantiates,
       // which is not always the harness's: `cat-harness` and `schemas` are
-      // cat-bootstrap's kinds, `voices` and `library` are core's. Derived from the
+      // bootstrap's kinds, `voices` and `library` are core's. Derived from the
       // kind's own `type` rather than chosen here, so the two cannot drift.
       "@id": `${graphKindNamespace(name)}graphKind/${name}`,
       "@type": termIri("GraphKind"),
@@ -1845,7 +1845,7 @@ export const COLLECTOR_SCOPE = {
 } as const;
 
 /**
- * The nodes ANY declared instance contributes — cat-bootstrap included.
+ * The nodes ANY declared instance contributes — bootstrap included.
  *
  * ## Why this exists rather than a `--root` flag
  *
@@ -1887,7 +1887,7 @@ export async function collectInstanceNodes(
   //
   // `collectSkills` puts `inPackage` on every skill, and the package nodes are
   // minted by `collectPackages` — which is instance-bound and therefore NOT
-  // run here. Left in place that is 7 dangling links in cat-bootstrap's
+  // run here. Left in place that is 7 dangling links in bootstrap's
   // export, measured: every skill pointing at `#package/skills` or
   // `#package/render`, neither of which this document can contain.
   //
@@ -2003,7 +2003,7 @@ export interface ExportOptions {
    *
    * It stops being invisible the moment one graph must REFERENCE another —
    * bean `pve3`, where a Tool in cat-harness satisfies a skill published in
-   * cat-bootstrap's graph and the link has to name cat-bootstrap's document.
+   * bootstrap's graph and the link has to name bootstrap's document.
    */
   instanceRoot?: string;
 }
@@ -2147,9 +2147,9 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // This is the same argument the `stub` line above already makes about
   // `package.json`, and not applying it here is what took `docs-site.yml` red
   // on `main` for every push between 11:31 and 14:0x on 2026-09-21 (bean
-  // `40fl`). `cat-bootstrap` declares no `canonicalUrl` DELIBERATELY — it has
+  // `40fl`). `bootstrap` declares no `canonicalUrl` DELIBERATELY — it has
   // no site of its own, as its own declaration says at length — but its graph
-  // is published into THIS site, at `<base>/cat-bootstrap.jsonld`, by the very
+  // is published into THIS site, at `<base>/bootstrap.jsonld`, by the very
   // step that was failing. So "the exported instance declares no base" was
   // never the same question as "this document has no base".
   //
@@ -2165,7 +2165,7 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // and reported as no problem at all. Measured, not reasoned: that is what
   // the command printed before this line existed.
   //
-  // `cat-bootstrap` inherits because it IS published here, by the deploy step
+  // `bootstrap` inherits because it IS published here, by the deploy step
   // one function away. `/tmp/outside` is not, so the honest answer there is
   // the third state the next block already implements — a document-relative
   // `@id` plus a reported problem — because a base for it would be a guess
@@ -2261,10 +2261,10 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
 
   // ANOTHER instance's document is built from the GENERIC collectors only.
   //
-  // `opts.instanceRoot` already gave this export cat-bootstrap's identity —
+  // `opts.instanceRoot` already gave this export bootstrap's identity —
   // its stub, its docIri. Running the list below unchanged would then fill
   // that document with THIS instance's content: cat-harness's 222 skills and
-  // 55 processes published as `cat-bootstrap.jsonld`. A graph that is wrong
+  // 55 processes published as `bootstrap.jsonld`. A graph that is wrong
   // about whose it is, under a name a consumer trusts.
   //
   // `COLLECTOR_SCOPE` already states which collectors are instance-bound and
@@ -2273,7 +2273,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   // the seam being used for the first time by something other than a test.
   const foreign = opts.instanceRoot !== undefined && resolve(opts.instanceRoot) !== resolve(ROOT);
   // Audited over the instance being exported, not over this one. For a
-  // foreign instance that is honestly empty (cat-bootstrap declares no
+  // foreign instance that is honestly empty (bootstrap declares no
   // `schemas/`), where a hand-built empty object would be asserting the same
   // thing without having looked.
   const schemaAudit = auditSchemaNodes(foreign ? opts.instanceRoot! : ROOT);
@@ -2435,9 +2435,9 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   //
   // The stem was the constant `"kg-export"`, so EVERY instance's export wrote
   // the same committed file and the last writer won. Measured 2026-09-21: one
-  // `--instance ./cat-bootstrap` run replaced this instance's committed result
+  // `--instance ./bootstrap` run replaced this instance's committed result
   // wholesale — `subject.id` flipped from `cat-harness.jsonld` to
-  // `cat-bootstrap.jsonld` and the findings with it, in a file whose whole
+  // `bootstrap.jsonld` and the findings with it, in a file whose whole
   // purpose is saying what was found about WHICH graph.
   //
   // Invisible while one document was ever built, and it stayed invisible in CI

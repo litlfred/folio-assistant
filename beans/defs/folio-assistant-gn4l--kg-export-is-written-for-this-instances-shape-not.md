@@ -36,7 +36,7 @@ the first is what another instance needs.
 
 ## Why this blocks bootstrap
 
-`cat-bootstrap/README.md` step 2 says *"Load `cat-bootstrap/cat-bootstrap.jsonld`"*. That
+`bootstrap/README.md` step 2 says *"Load `bootstrap/bootstrap.jsonld`"*. That
 file should be GENERATED — `.jsonld` is generated everywhere else here and CI
 gates the siblings — but nothing can generate it for an instance that is not
 this repository.
@@ -71,21 +71,21 @@ _2026-09-19_ — THE SEAM IS DRAWN, and it is drawn by WHAT EACH COLLECTOR READS
 ## The last box, closed 2026-09-21 — and it was FORCED rather than chosen
 
 `pve3`'s "neither" ruling made this bean's remaining work compulsory. Once
-cat-harness stopped declaring `cat-bootstrap/skills/`, a Tool here that
-satisfies a skill there had to name cat-bootstrap's document — and a link to a
+cat-harness stopped declaring `bootstrap/skills/`, a Tool here that
+satisfies a skill there had to name bootstrap's document — and a link to a
 document nothing publishes is a 404 with an `@id` in front of it.
 
 ### What was missing was narrower than this bean's prose suggests
 
 `collectInstanceNodes` has worked since 2026-09-19 — measured again today,
-cat-bootstrap 85 nodes against cat-harness's 1861, genuinely different graphs.
+bootstrap 85 nodes against cat-harness's 1861, genuinely different graphs.
 **Identity had not followed it.** `exportIdentity` read `ROOT`
 unconditionally, so any instance's nodes were minted into THIS instance's
 document IRI.
 
 - `ExportOptions.instanceRoot`, honoured by `exportIdentity` and `buildExport`
 - `kg-export.ts --instance <root>`
-- `docs-site.yml` publishes `cat-bootstrap.jsonld` + its `.json` alias, and
+- `docs-site.yml` publishes `bootstrap.jsonld` + its `.json` alias, and
   `publishedPaths()` in `kg-export.test.ts` lists both, so removing the deploy
   step is a test failure rather than a silent 404
 
@@ -94,7 +94,7 @@ document IRI.
 Identity and collectors are separately parameterised, so honouring
 `instanceRoot` for the identity alone produces **a document wrong about whose
 it is, under a name a consumer trusts.** Measured by removing the branch:
-cat-bootstrap's document came back with **2079 nodes** — this instance's
+bootstrap's document came back with **2079 nodes** — this instance's
 skills and processes — instead of 85, with `@id`, stub and published path all
 correct. Every other signal called it healthy.
 

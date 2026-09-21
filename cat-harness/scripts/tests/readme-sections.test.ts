@@ -265,7 +265,7 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
     // walks out of the repository: the first draft rendered a one-row table
     // listing this repository as its own child.
     expect(out.markdown).toContain("| `cat-harness` |");
-    expect(out.markdown).toContain("| `cat-bootstrap` |");
+    expect(out.markdown).toContain("| `bootstrap` |");
   });
 
   it("a declared `scope: \"repository\"` directory is linked at the REPOSITORY root", () => {

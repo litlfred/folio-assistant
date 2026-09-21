@@ -278,12 +278,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
 
-## CatBootstrap rendering (cat-bootstrap/render)
+## CatBootstrap rendering (bootstrap/render)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [Emitting cat-bootstrap's own graph](cat-bootstrap-graph-emission.html) | `cat-bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** cat-bootstrap |
-| [Publishing cat-bootstrap's graph](cat-bootstrap-graph-publication.html) | `cat-bootstrap-graph-publication` | — |  |
+| [Emitting bootstrap's own graph](bootstrap-graph-emission.html) | `bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** bootstrap |
+| [Publishing bootstrap's graph](bootstrap-graph-publication.html) | `bootstrap-graph-publication` | — |  |
 
 ## RACI involvement model (methodologies/raci)
 

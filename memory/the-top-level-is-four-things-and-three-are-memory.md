@@ -2,7 +2,7 @@
 $schema: folio-memory/v1
 id: the-top-level-is-four-things-and-three-are-memory
 label: stable
-summary: "top level = cat-bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory"
+summary: "top level = bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory"
 createdAt: 2026-09-20
 roles:
   - platform-boundary-guard
@@ -11,7 +11,7 @@ agents:
   - platform-boundary-guard
 ---
 Owner, 2026-09-20: the top level is *"the contents of repos"* except
-`cat-bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
+`bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
 of cat-harness. keep it here (like beans and todos/) as this instance's own
 working memory."*
 
@@ -23,5 +23,5 @@ consequence.
 
 **Tooling and store separate.** All three kinds are introduced by cat-harness;
 the stores stay top-level. So "beans is a cat-harness concept" and "`beans/` is
-not inside `cat-harness/`" are both true. `cat-bootstrap/` introduces none — it is
+not inside `cat-harness/`" are both true. `bootstrap/` introduces none — it is
 read before any harness resolves. `scope: "repository"` means exactly these four.

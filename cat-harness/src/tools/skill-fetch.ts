@@ -151,17 +151,17 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // `readDeclaration(root)` gave the ROOT's name to every directly-held set
     // regardless of which instance contributed it, which is correct only while
     // exactly one such directory is ever discovered. The moment a second one
-    // is — `cat-bootstrap/skills/`, once `ownDirectories` resolved its declared
+    // is — `bootstrap/skills/`, once `ownDirectories` resolved its declared
     // repository scope — both are assigned the same key and the later wins.
-    // Not an error, not a collision report: cat-bootstrap's skills would have
+    // Not an error, not a collision report: bootstrap's skills would have
     // been found and then silently dropped, which is the same `dh4f` shape one
     // layer up from the one that hid them in the first place.
     //
     // `findInstanceRoot` walks to the nearest enclosing declaration, so the
     // name is a property of where the skills live rather than of who asked:
     // `src/skills/` → `cat-harness/harness.json` → `folio-assistant`,
-    // unchanged and measured; `cat-bootstrap/skills/` → `cat-bootstrap/harness.json`
-    // → `cat-bootstrap`. A directory under no declaration at all is skipped rather
+    // unchanged and measured; `bootstrap/skills/` → `bootstrap/harness.json`
+    // → `bootstrap`. A directory under no declaration at all is skipped rather
     // than guessed at.
     //
     // ...AND THE INSTANCE NAME IS TAKEN BY THE `skills` DIRECTORY ALONE.
@@ -179,7 +179,7 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // package — there is no other name for it — so it takes the instance name;
     // any other directly-held directory takes its own basename, which is what
     // a person calls it anyway. `src/skills/` stays `folio-assistant` and
-    // `cat-bootstrap/skills/` stays `cat-bootstrap`, both measured unchanged;
+    // `bootstrap/skills/` stays `bootstrap`, both measured unchanged;
     // `theming/` becomes `theming`.
     //
     // Two `skills`-named directly-held directories in ONE instance would still
@@ -206,7 +206,7 @@ export function discoverLocalPackages(root: string): Record<string, string> {
  *
  * 1. A directory basenamed **`skills`** is the instance's own package — there
  *    is no other name for it — so it takes the instance's name. `src/skills/`
- *    stays `folio-assistant`; `cat-bootstrap/skills/` stays `cat-bootstrap`.
+ *    stays `folio-assistant`; `bootstrap/skills/` stays `bootstrap`.
  * 2. Otherwise, if it is the instance's **only** directly-held directory, it
  *    takes the instance's name, because there is nothing to disambiguate it
  *    from and the instance's name is the better one.

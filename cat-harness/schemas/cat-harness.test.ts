@@ -1021,8 +1021,8 @@ describe("instanceRootsIn — discovered, never listed", () => {
     expect(found).toEqual([
       ".",
       "agent-skills",
-      "cat-bootstrap",
-      "cat-bootstrap-tools",
+      "bootstrap",
+      "bootstrap-tools",
       "cat-harness",
       "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`

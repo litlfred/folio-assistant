@@ -86,7 +86,7 @@ dynamically** on display size and usability, best-fit among three:
 cropped for, which is not a coincidence — a layout with no crop for it has
 nothing to render on.
 
-## Where the requirement starts — cat-bootstrap is the exception
+## Where the requirement starts — bootstrap is the exception
 
 [The minimum `cat-harness`](cat-harness-minimum.html) carries a one-line
 admission test from the owner's own #223 revision:
@@ -99,19 +99,19 @@ requirement is a *floor that rises*, not a rule applied uniformly.
 
 | layer | visualiser / workflow visualiser | its own `.json` / `.jsonld` |
 |---|---|---|
-| `cat-bootstrap` | **exempt** — it is the navbar **footer** | **required** |
+| `bootstrap` | **exempt** — it is the navbar **footer** | **required** |
 | `cat-harness` | required | required |
 | everything above | required | required |
 
 **CatBootstrap is the exception, and what it owes instead is its graph.** In the
 owner's words, its `.json`/`.jsonld` *"is its existence"* — a layer that cannot
-emit its own graph has not shown it is a graph. So cat-bootstrap is not simply
+emit its own graph has not shown it is a graph. So bootstrap is not simply
 dropped from the requirement: it trades the visualiser for a criterion it
 cannot fail quietly.
 
 ### The exemption is declared data, not a special case in a checker
 
-`cat-bootstrap/cat-bootstrap.json` carries a `renderExemption` — `of`, `reason` and
+`bootstrap/bootstrap.json` carries a `renderExemption` — `of`, `reason` and
 `owes` — and `2krx`'s axis reads it through `isExemptFrom` rather than testing
 an instance name. A name literal would state a rule true only for the instance
 somebody remembered, and a vendored or renamed bootstrap would silently
@@ -119,7 +119,7 @@ reacquire the obligation it was excused from.
 
 **`owes` is required by the schema**, because an exemption with no substitute
 is a hole and a list of holes is the silence list `2krx` says an opt-out must
-not become. cat-bootstrap's names the two skills that govern its emission, and
+not become. bootstrap's names the two skills that govern its emission, and
 a test asserts the files it names exist.
 
 **The guard against spreading is global, not local.** The declaration is local
@@ -127,13 +127,13 @@ because only the instance knows why; `renderExemptionProblems` takes every
 instance in the repository, because *"only the bottom layer may claim this"* is
 a fact about the stack that a per-instance check structurally cannot see. A
 second claimant fails `check:instance-render`. At most one, not exactly one — a
-repository that vendors no cat-bootstrap has nothing to exempt, and failing it
+repository that vendors no bootstrap has nothing to exempt, and failing it
 for that would be asking it to declare something to stay green.
 
-What it owes lives in **`cat-bootstrap/render/`**, a declared subgraph holding
-[`cat-bootstrap-graph-emission`](https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/render/cat-bootstrap-graph-emission.md)
+What it owes lives in **`bootstrap/render/`**, a declared subgraph holding
+[`bootstrap-graph-emission`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/render/bootstrap-graph-emission.md)
 and
-[`cat-bootstrap-graph-publication`](https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/render/cat-bootstrap-graph-publication.md).
+[`bootstrap-graph-publication`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/render/bootstrap-graph-publication.md).
 Until that directory existed the emission discipline lived in a code comment in
 `kg-export.ts` and a YAML comment in `docs-site.yml` — which is why it was
 rediscovered rather than read, and why one of those comments still called the
@@ -146,11 +146,11 @@ nothing itself is asking of them what it did not do. Concretely that means a
 minimal just-the-docs rendering in `cat-harness/folio/` describing what a folio
 is, and `cat-harness/folio/render/` for the rendering skills and tools.
 
-This is the **same shape** the workflow split already has — cat-bootstrap keeps the
+This is the **same shape** the workflow split already has — bootstrap keeps the
 bare minimum, `cat-harness/workflows` elaborates — so it is a second instance
 of one rule rather than a new one.
 
-*Tracked: `hfkl` (cat-bootstrap's exemption and its `render/` subgraph — **done**), `ohx6`
+*Tracked: `hfkl` (bootstrap's exemption and its `render/` subgraph — **done**), `ohx6`
 (`cat-harness/folio/`), `1hvo` (`cat-harness/skills/theming/`), `7po1` (the workflow
 split this parallels).*
 
@@ -173,7 +173,7 @@ expensive to get wrong:
 
 ## KG-DS is the Knowledge Graph Data Store, and its machine is **git**
 
-Not a new concept: `cat-bootstrap/skills/roles/roles.json` has declared a role with
+Not a new concept: `bootstrap/skills/roles/roles.json` has declared a role with
 exactly this id and title all along. Its description names the machine:
 
 > A git repository, reached either through the git CLI or through a forge's

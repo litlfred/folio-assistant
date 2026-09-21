@@ -69,10 +69,10 @@ describe("discovery, not a hardcoded list", () => {
     const root = mkdtempSync(join(tmpdir(), "entry-find-"));
     writeFileSync(join(root, "AGENTS.md"), "# A\n");
     writeFileSync(join(root, "CLAUDE.md"), "# C\n");
-    mkdirSync(join(root, "cat-bootstrap"));
-    writeFileSync(join(root, "cat-bootstrap", "AGENTS.md"), "# B\n");
+    mkdirSync(join(root, "bootstrap"));
+    writeFileSync(join(root, "bootstrap", "AGENTS.md"), "# B\n");
     const found = findEntryFiles(root).map((f) => f.slice(root.length + 1));
-    expect(found).toEqual(["AGENTS.md", "CLAUDE.md", "cat-bootstrap/AGENTS.md"]);
+    expect(found).toEqual(["AGENTS.md", "CLAUDE.md", "bootstrap/AGENTS.md"]);
   });
 
   test("node_modules and dot-directories are not walked", () => {

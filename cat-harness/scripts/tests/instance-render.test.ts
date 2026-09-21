@@ -151,8 +151,8 @@ describe("this repository's own instances", () => {
     expect(found).toEqual([
       "folio-assistant",
       "agent-skills",
-      "cat-bootstrap",
-      "cat-bootstrap-tools",
+      "bootstrap",
+      "bootstrap-tools",
       "cat-harness",
       "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`

@@ -622,7 +622,7 @@ export function corpus(repo: string): { file: string; corpus: Corpus }[] {
     if (existsSync(join(repo, f))) out.push({ file: f, corpus: "entry" });
   }
   // ASKED, not composed. The first draft listed `cat-harness/skills`,
-  // `cat-harness/methodologies` and `cat-bootstrap/skills`, and
+  // `cat-harness/methodologies` and `bootstrap/skills`, and
   // `check:declared-paths` refused it — correctly, and with some irony for a
   // check whose whole subject is a path that moved. A topical split of the
   // knowledge graph is exactly the relocation this check would then have

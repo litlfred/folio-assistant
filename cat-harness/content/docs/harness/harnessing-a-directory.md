@@ -30,7 +30,7 @@ it. `coverage.exempt` carries three keys — `visualiser`, `docs`, `skill` — a
 deliberately not a fourth, and the coverage check ranks a missing serialisation
 as an unmet obligation with no by-kind test at all.
 
-The reason is `cat-bootstrap`. It is excused a visualiser precisely because its
+The reason is `bootstrap`. It is excused a visualiser precisely because its
 `json` and `jsonld` *are its existence* — so the thing it is excused **into**
 cannot itself be excusable, or the exemption would excuse everything. **The
 visualiser is the courtesy; the serialisation is the existence claim.**

@@ -33,7 +33,7 @@ const ROOT = join(import.meta.dir, "../..");
  * missed **19** real skills, among them `bpmn-authoring` and `l2-dak-authoring`
  * (named by `<folio:skill ref>` in the diagrams this very test checks),
  * `bpmn-processes` and `process-state` the moment they moved into
- * `skills/workflow/`, and both of cat-bootstrap's. A list somebody must remember
+ * `skills/workflow/`, and both of bootstrap's. A list somebody must remember
  * to extend is not a single answer; it is a copy that happens to match today,
  * and this one had stopped matching.
  *

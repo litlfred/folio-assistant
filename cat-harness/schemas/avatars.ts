@@ -4,7 +4,7 @@
  *
  * Owner, 2026-09-19: *"each content type should have an avatar in and out of
  * trash. dark and light mode"*, and then: *"all kinds need an avatary.
- * cat-bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
+ * bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
  *
  * ## The glyph is a MASK, not an image or an inline `<svg>`
  *
@@ -64,7 +64,7 @@ export interface Avatar {
 export const AVATARS: Readonly<Record<string, Avatar>> = {
   // ── The layer identities the owner named ───────────────────────────
   //
-  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*.
+  // Owner: *"bootstrap has avatar, so does cat-harness, folio-asst"*.
   //
   // THIS TABLE SERVES TWO KEY SPACES, and the entries below are the second
   // one. `kind-fan` and `gen-avatars-css` key by GRAPH KIND; `harness-tiles`
@@ -77,9 +77,9 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // assert.
   //
   // THE COMMENT HERE WAS STALE AND COST THE INSTANCE ITS FACE. It read: *"the
-  // split (#223) has not happened, so `cat-bootstrap` and `folio-assist-core`
+  // split (#223) has not happened, so `bootstrap` and `folio-assist-core`
   // exist as layers in the namespace and as nothing in `harness.json`"*. Both
-  // halves were false by 2026-09-21 — `cat-bootstrap/harness.json` and
+  // halves were false by 2026-09-21 — `bootstrap/harness.json` and
   // `folio-assistant-core/harness.json` both exist and both declare a `name`
   // — and the second is not even the name that was adopted. Measured on
   // 2026-09-21: `avatarFor("folio-assistant-core")` returned GENERIC, the
@@ -87,7 +87,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // of paper below sat in the table under a spelling nothing carries. A key
   // nobody can reach is worse than a missing one: the coverage check counted
   // it as declared. Bean `hso8`, whose rename this completes.
-  "cat-bootstrap": {
+  "bootstrap": {
     // A seed with a shoot: the graph an agent reads before it knows anything.
     glyph: "M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z",
     tone: 96,

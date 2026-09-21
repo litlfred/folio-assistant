@@ -454,7 +454,7 @@ export const RULES: Rule[] = [
       // Guards the page template all four viewer generators build as one
       // string literal; the generators are core, so its gate is too.
       "scripts/check-viewer-backticks.ts",
-      // Zod in `cat-bootstrap-tools` → JSON Schema in `cat-bootstrap`. CORE for a
+      // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
       "scripts/gen-bootstrap-schemas.ts",
@@ -796,7 +796,7 @@ export const RULES: Rule[] = [
       // folio authors no decision requests.
       "schemas/decision-request.ts",
       // Translation is cat-harness's, stated directly: "ui stuff like
-      // translations (skills, tooling) are not in cat-bootstrap, it is in
+      // translations (skills, tooling) are not in bootstrap, it is in
       // cat-harness/". These three are the gettext machinery and the registry
       // that binds a content type to its extractors — the tools that DO the
       // translating, not the translated content.
@@ -889,7 +889,7 @@ export const RULES: Rule[] = [
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
-      "scripts/gen-cat-bootstrap-graph.ts", // writes cat-bootstrap/cat-bootstrap.jsonld
+      "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld
       "scripts/gen-python-deps.ts",         // writes requirements.txt
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs

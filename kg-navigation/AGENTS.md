@@ -15,7 +15,7 @@ which is the exact failure this layer is about.
 
 | where | precondition |
 |---|---|
-| [`cat-bootstrap/skills/cat-bootstrap-kg-navigation.md`](../cat-bootstrap/skills/cat-bootstrap-kg-navigation.md) | **nothing installed** — no MCP server, no `skill_fetch`, no `beans`, no build |
+| [`bootstrap/skills/bootstrap-kg-navigation.md`](../bootstrap/skills/bootstrap-kg-navigation.md) | **nothing installed** — no MCP server, no `skill_fetch`, no `beans`, no build |
 | [`skills/kg-navigation.md`](skills/kg-navigation.md) | the tooling is reachable — the MCP pair, and the filesystem fallback |
 
 They answer the same question **under different preconditions**, so neither is
