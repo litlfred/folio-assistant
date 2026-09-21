@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(4)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(96)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(4) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(96) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(4) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(96) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(96) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Writing a document | folio-assistant</title>
+<title>Instance kinds | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Writing a document" />
-<meta property="og:locale" content="en" />
+<meta property="og:title" content="Instance kinds" />
+<meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Writing a document" />
+<meta property="twitter:title" content="Instance kinds" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -860,8 +860,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/guides/">Authoring guides</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Writing a document</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Instance kinds</span></li>
   </ol>
 </nav>
 
@@ -869,401 +869,542 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="writing-a-document-with-folio-assistant">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/instance-kinds.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/instance-kinds.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/instance-kinds.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="instance-kinds--naming-one-and-what-a-new-kind-must-declare">
   
   
-    <a href="#writing-a-document-with-folio-assistant" class="anchor-heading" aria-labelledby="writing-a-document-with-folio-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Writing a document with folio-assistant
+    <a href="#instance-kinds--naming-one-and-what-a-new-kind-must-declare" class="anchor-heading" aria-labelledby="instance-kinds--naming-one-and-what-a-new-kind-must-declare"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Instance kinds — naming one, and what a new kind must declare
   
   
 </h1>
     
 
-<details open="">
-  <summary class="text-delta">On this page</summary>
-<ol id="markdown-toc">
-  <li><a href="#what-a-document-folio-is" id="markdown-toc-what-a-document-folio-is">What a document folio is</a></li>
-  <li><a href="#1--scaffold-the-folio" id="markdown-toc-1--scaffold-the-folio">1 · Scaffold the folio</a></li>
-  <li><a href="#2--the-content-model" id="markdown-toc-2--the-content-model">2 · The content model</a>    <ol>
-      <li><a href="#the-kinds-you-may-use" id="markdown-toc-the-kinds-you-may-use">The kinds you may use</a></li>
-      <li><a href="#uses-matters-more-here-than-in-a-paper" id="markdown-toc-uses-matters-more-here-than-in-a-paper"><code class="language-plaintext highlighter-rouge">uses[]</code> matters more here than in a paper</a></li>
-    </ol>
-  </li>
-  <li><a href="#3--author-with-the-agent" id="markdown-toc-3--author-with-the-agent">3 · Author with the agent</a>    <ol>
-      <li><a href="#carrying-a-recommendation" id="markdown-toc-carrying-a-recommendation">Carrying a recommendation</a></li>
-    </ol>
-  </li>
-  <li><a href="#4--validate" id="markdown-toc-4--validate">4 · Validate</a></li>
-  <li><a href="#5--render" id="markdown-toc-5--render">5 · Render</a>    <ol>
-      <li><a href="#not-implemented" id="markdown-toc-not-implemented">Not implemented</a></li>
-    </ol>
-  </li>
-  <li><a href="#moving-between-content-types" id="markdown-toc-moving-between-content-types">Moving between content types</a></li>
-  <li><a href="#where-things-are" id="markdown-toc-where-things-are">Where things are</a></li>
-</ol>
-
-</details>
-
-<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-writing-a-document"><code class="language-plaintext highlighter-rouge">content/docs/guides-writing-a-document/</code></a> — each section below links to its own source.</em></p>
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/overview.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/overview.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="overview.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/overview.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p>Policy guidance, a standard, a report, a handbook — structured prose, authored
-with an LLM, published without a TeX installation.</p><hr />
-<h2 id="what-a-document-folio-is" data-fa-label="sec:guides-writing-a-document-what-a-document-folio-is">
-  
-  
-    <a href="#what-a-document-folio-is" class="anchor-heading" aria-labelledby="what-a-document-folio-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a document folio is
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-document.bpmn" class="fa-node-edit" title="Edit skills/workflows/authoring-a-document.bpmn">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="what-a-document-folio-is.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/what-a-document-folio-is.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="what-a-document-folio-is.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/what-a-document-folio-is.kg.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p>
-
-<p>Everything a paper folio is, minus the formal layer. The same tree of chapters
-and sections over typed <strong>blocks</strong>, the same editorial <code class="language-plaintext highlighter-rouge">uses[]</code> graph, the same
-QA sidecars, the same HCI validation gate, the same publication pipeline.</p>
-
-<p>What it does not have is the seven block kinds whose assertion is a formal
-mathematical claim — and therefore neither of the two toolchains that serve
-them. No Lean. No LaTeX.</p>
-
-<blockquote>
-  <p><strong>A paper is a document plus Lean-bearing blocks.</strong> That is not a metaphor:
-<code class="language-plaintext highlighter-rouge">PaperContentAdapter</code> extends <code class="language-plaintext highlighter-rouge">DocumentContentAdapter</code> in code, and adds the
-Lean lifecycle and the LaTeX renderer on top. If you find yourself wanting a
-feature “the paper adapter has”, check first — you probably already have it.</p>
-</blockquote>
-
-<div class="bpmn-figure" id="figure-what-a-document-folio-is">
-  <img src="../assets/img/workflows/authoring-a-document.svg" alt="BPMN swimlane diagram of document authoring, plan to published." />
-</div>
-
-<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn">BPMN 2.0 source</a></p><hr />
-<h2 data-fa-label="sec:guides-writing-a-document-1-scaffold-the-folio" id="1--scaffold-the-folio">
-  
-  
-    <a href="#1--scaffold-the-folio" class="anchor-heading" aria-labelledby="1--scaffold-the-folio"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1 · Scaffold the folio
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/1-scaffold-the-folio.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/1-scaffold-the-folio.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="1-scaffold-the-folio.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/1-scaffold-the-folio.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p>In a new, empty repository:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
-git submodule add https://github.com/litlfred/folio-assistant.git folio-assistant
-<span class="o">(</span><span class="nb">cd </span>folio-assistant <span class="o">&amp;&amp;</span> bun <span class="nb">install</span><span class="o">)</span>
-
-bun run folio-assistant/scripts/init-folio.ts <span class="se">\</span>
-    <span class="nt">--type</span> document <span class="se">\</span>
-    <span class="nt">--title</span> <span class="s2">"Cold Chain Guidance"</span> <span class="se">\</span>
-    <span class="nt">--author</span> <span class="s2">"A. Author"</span>
-</code></pre></div></div>
-
-<p>Or, if your agent already has a folio-assistant server connected, ask it:</p>
-
-<blockquote>
-  <p><em>initialize a new document folio here using litlfred/folio-assistant, titled
-“Cold Chain Guidance”, author A. Author</em></p>
-</blockquote>
-
-<p>Either way you get <code class="language-plaintext highlighter-rouge">content/</code>, <code class="language-plaintext highlighter-rouge">uploads/</code>, <code class="language-plaintext highlighter-rouge">library/</code>, the manifests for one
-document with one chapter and one block, <code class="language-plaintext highlighter-rouge">harness.config.json</code>, the builder shim,
-<code class="language-plaintext highlighter-rouge">AGENTS.md</code> with <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> / <code class="language-plaintext highlighter-rouge">GEMINI.md</code> stubs, <code class="language-plaintext highlighter-rouge">.mcp.json</code>, and the beans
-work plan. See the
-<a href="https://github.com/litlfred/folio-assistant#start-a-new-folio">README quickstart</a>
-for the full file list.</p>
-
-<p>The starter block is a placeholder that says so. Replace it.</p><hr />
-<h2 data-fa-label="sec:guides-writing-a-document-2-the-content-model" id="2--the-content-model">
-  
-  
-    <a href="#2--the-content-model" class="anchor-heading" aria-labelledby="2--the-content-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2 · The content model
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/2-the-content-model.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/2-the-content-model.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="2-the-content-model.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/2-the-content-model.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content/cold-chain-guidance/
-  cold-chain-guidance.ts        the document manifest — chapters, in reading order
-  introduction/
-    introduction.ts             the chapter manifest — sections, in reading order
-    overview.ts                 a block manifest: kind, label, title, uses[]
-    overview.md                 that block's prose
-    overview.qa.json            QA sidecar — machine-written, never hand-edited
-</code></pre></div></div>
-
-<p>Three ordered lists hold the whole structure, and <strong>a block reaches the output
-only if some section’s <code class="language-plaintext highlighter-rouge">blocks[]</code> names it</strong>. This is the single most common way
-authored work disappears: the <code class="language-plaintext highlighter-rouge">.ts</code> and <code class="language-plaintext highlighter-rouge">.md</code> are written, committed and
-reviewed, and the block renders nowhere because nothing lists it.</p>
-<h3 id="the-kinds-you-may-use" data-fa-label="sec:guides-writing-a-document-the-kinds-you-may-use">
-  
-  
-    <a href="#the-kinds-you-may-use" class="anchor-heading" aria-labelledby="the-kinds-you-may-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The kinds you may use
-  
-  
-</h3>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/the-kinds-you-may-use.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/the-kinds-you-may-use.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-kinds-you-may-use.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/the-kinds-you-may-use.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p><code class="language-plaintext highlighter-rouge">prose</code>, <code class="language-plaintext highlighter-rouge">example</code>, <code class="language-plaintext highlighter-rouge">remark</code>, <code class="language-plaintext highlighter-rouge">algorithm</code>, <code class="language-plaintext highlighter-rouge">simulator</code>, <code class="language-plaintext highlighter-rouge">equation</code>, <code class="language-plaintext highlighter-rouge">diagram</code>,
-<code class="language-plaintext highlighter-rouge">table</code>.</p>
-
-<p>Not <code class="language-plaintext highlighter-rouge">definition</code>, <code class="language-plaintext highlighter-rouge">theorem</code>, <code class="language-plaintext highlighter-rouge">lemma</code>, <code class="language-plaintext highlighter-rouge">proposition</code>, <code class="language-plaintext highlighter-rouge">corollary</code>, <code class="language-plaintext highlighter-rouge">conjecture</code>
-or <code class="language-plaintext highlighter-rouge">proof</code>. <code class="language-plaintext highlighter-rouge">content_profile_check</code> rejects them, and runs on every
-<code class="language-plaintext highlighter-rouge">content_validate</code> — so the failure arrives while you are writing rather than
-when you try to publish.</p>
-<h3 id="uses-matters-more-here-than-in-a-paper" data-fa-label="sec:guides-writing-a-document-uses-matters-more-here-than-in-a-paper">
-  
-  
-    <a href="#uses-matters-more-here-than-in-a-paper" class="anchor-heading" aria-labelledby="uses-matters-more-here-than-in-a-paper"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">uses[]</code> matters more here than in a paper
-  
-  
-</h3>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="uses-matters-more-here-than-in-a-paper.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p><code class="language-plaintext highlighter-rouge">uses[]</code> lists the blocks a <strong>reader</strong> must already have read to follow this
-one. It is an editorial judgement — nothing derives it, and nothing should.</p>
-
-<p>In a paper folio there is a second, machine-derived dependency graph beside it
-(from <code class="language-plaintext highlighter-rouge">lean.ref</code>). In a document folio there is not. So <code class="language-plaintext highlighter-rouge">uses[]</code> is the <em>only</em>
-dependency signal the corpus carries, and every ordering metric, every “what
-else changes if this changes?” question, and the reading-order review all read
-it. List direct neighbours only.</p><hr />
-<h2 data-fa-label="sec:guides-writing-a-document-3-author-with-the-agent" id="3--author-with-the-agent">
-  
-  
-    <a href="#3--author-with-the-agent" class="anchor-heading" aria-labelledby="3--author-with-the-agent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3 · Author with the agent
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/3-author-with-the-agent.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/3-author-with-the-agent.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="3-author-with-the-agent.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/3-author-with-the-agent.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p>Ask in plain language. The agent loads the skills it needs over MCP.</p>
-
-<blockquote>
-  <p><em>add a chapter on cold-chain monitoring</em></p>
-</blockquote>
-
-<p><code class="language-plaintext highlighter-rouge">document-structure</code> — creates the directory, writes the chapter manifest, adds
-the entry to <code class="language-plaintext highlighter-rouge">chapters[]</code> in the right position.</p>
-
-<blockquote>
-  <p><em>add a section on temperature excursions, with a recommendation that facilities
-audit the cold chain quarterly</em></p>
-</blockquote>
-
-<p><code class="language-plaintext highlighter-rouge">document-authoring</code> for the section and its blocks; <code class="language-plaintext highlighter-rouge">normative-statements</code> for
-the recommendation.</p>
-
-<blockquote>
-  <p><em>what does the audit recommendation depend on?</em></p>
-</blockquote>
-
-<p>Reads <code class="language-plaintext highlighter-rouge">uses[]</code> and the content graph.</p>
-<h3 id="carrying-a-recommendation" data-fa-label="sec:guides-writing-a-document-carrying-a-recommendation">
-  
-  
-    <a href="#carrying-a-recommendation" class="anchor-heading" aria-labelledby="carrying-a-recommendation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Carrying a recommendation
-  
-  
-</h3>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/carrying-a-recommendation.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/carrying-a-recommendation.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="carrying-a-recommendation.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/carrying-a-recommendation.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p>A normative statement is the block readers cite and implementers trace to. It
-wants a label, a stable identity and a place in the dependency graph.</p>
-
-<p>There is <strong>no first-class <code class="language-plaintext highlighter-rouge">recommendation</code> block kind</strong> yet. The carrier today
-is a <code class="language-plaintext highlighter-rouge">prose</code> block with a label and a title:</p>
-
-<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">default</span> <span class="nx">prose</span><span class="p">({</span>
-  <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rec:cold-chain-audit</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Audit the cold chain quarterly</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">uses</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">rec:scope</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">prose:cold-chain-terms</span><span class="dl">"</span><span class="p">],</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<p>Rules that make this work rather than merely compile:</p>
-
-<ul>
-  <li><strong>One statement per block.</strong> A block holding three cannot be cited, reviewed,
-superseded or traced individually.</li>
-  <li><strong>State the strength in the prose</strong> (<em>must</em>, <em>should</em>, the issuing body’s own
-grading). Nothing in the block structure encodes it.</li>
-  <li><strong>Keep the published number out of the label.</strong> Numbers are renumbered
-between editions; the label has to survive that. Put it in the title.</li>
-  <li><strong>Do not use <code class="language-plaintext highlighter-rouge">definition</code>.</strong> Its <code class="language-plaintext highlighter-rouge">lean</code> field is required, so it will not
-validate here at all. Earlier guidance in <code class="language-plaintext highlighter-rouge">document-intake</code> suggested that
-mapping — it predates this content type.</li>
-</ul>
-
-<p>The full convention, and what it is missing, is in the
-<a href="../reference/skill-instructions/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a>
-skill.</p><hr />
-<h2 data-fa-label="sec:guides-writing-a-document-4-validate" id="4--validate">
-  
-  
-    <a href="#4--validate" class="anchor-heading" aria-labelledby="4--validate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4 · Validate
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/4-validate.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/4-validate.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="4-validate.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/4-validate.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content_validate          schema + constraints + profile conformance
-content_profile_check     profile conformance alone, over the whole folio
-qa_sweep                  the QA axes, per block
-</code></pre></div></div>
-
-<p>Profile conformance is the check a paper folio does not have. It catches two
-things schema validation structurally cannot, because a <code class="language-plaintext highlighter-rouge">theorem</code> is a valid
-<code class="language-plaintext highlighter-rouge">theorem</code> whatever folio it sits in:</p>
-
-<ol>
-  <li>a block whose kind is outside the declared profile; and</li>
-  <li>a <code class="language-plaintext highlighter-rouge">lean</code> field or a <code class="language-plaintext highlighter-rouge">.lean</code> sibling on a kind the profile otherwise allows —
-<code class="language-plaintext highlighter-rouge">remark</code>, <code class="language-plaintext highlighter-rouge">example</code>, <code class="language-plaintext highlighter-rouge">algorithm</code> and <code class="language-plaintext highlighter-rouge">simulator</code> all <em>declare</em> an optional
-<code class="language-plaintext highlighter-rouge">lean</code>, so the type permits what the profile forbids.</li>
-</ol>
-
-<p>Both name the file and the remedy, including “declare <code class="language-plaintext highlighter-rouge">contentType: "paper"</code>”
-when that is what you actually meant.</p><hr />
-<h2 data-fa-label="sec:guides-writing-a-document-5-render" id="5--render">
-  
-  
-    <a href="#5--render" class="anchor-heading" aria-labelledby="5--render"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5 · Render
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/5-render.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/5-render.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="5-render.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/5-render.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content/**  →  document_render_md   →  build/&lt;slug&gt;.md
-                                    →  document_render_html  →  build/&lt;slug&gt;.html
-                                    →  document_render_pdf   →  build/&lt;slug&gt;.pdf
-</code></pre></div></div>
-
-<p><strong>Read the Markdown first.</strong> It is the only place the whole document appears in
-reading order in one file, and ordering problems are invisible block-by-block.
-Look for sections that came out empty, blocks in an order that does not read,
-and the <code class="language-plaintext highlighter-rouge">&gt; **Missing block:**</code> marker.</p>
-
-<p>HTML needs only <code class="language-plaintext highlighter-rouge">pandoc</code>. PDF additionally needs one TeX-free engine —
-<code class="language-plaintext highlighter-rouge">weasyprint</code> (recommended), <code class="language-plaintext highlighter-rouge">prince</code>, or <code class="language-plaintext highlighter-rouge">wkhtmltopdf</code>:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>pandoc
-pip <span class="nb">install </span>weasyprint
-</code></pre></div></div>
-
-<p>If none is installed, <code class="language-plaintext highlighter-rouge">document_render_pdf</code> says which are missing and stops.
-It does <strong>not</strong> fall back to <code class="language-plaintext highlighter-rouge">latexmk</code>, even where TeX is present: a PDF that
-silently came out of LaTeX would misreport what the folio needs to build, and
-the next person on a clean machine pays for that.</p>
-
-<p>Both renderers take a <code class="language-plaintext highlighter-rouge">css</code> path relative to the repo root. Keep the stylesheet
-in the folio — a house style is content — and put the print rules (<code class="language-plaintext highlighter-rouge">@page</code>,
-page breaks, running heads) in the same file as the screen rules, so the two
-outputs cannot drift.</p>
-<h3 id="not-implemented" data-fa-label="sec:guides-writing-a-document-not-implemented">
-  
-  
-    <a href="#not-implemented" class="anchor-heading" aria-labelledby="not-implemented"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Not implemented
-  
-  
-</h3>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/not-implemented.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/not-implemented.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="not-implemented.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/not-implemented.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p>No citations, no bibliography, no glossary, no automatic cross-reference
-numbering. <code class="language-plaintext highlighter-rouge">\cite{…}</code> passes through <strong>verbatim</strong>, visible in the output rather
-than silently dropped, so a folio that needs references today should write them
-as Markdown links or footnotes.</p>
-
-<p>Cross-references do work: every labelled block emits an HTML anchor, so
-<code class="language-plaintext highlighter-rouge">[see the scope statement](#rec:scope)</code> resolves in both HTML and PDF. Use the
-block’s <code class="language-plaintext highlighter-rouge">label</code>, never a heading-derived anchor — the heading anchor changes
-whenever the title is edited, which is exactly when the link most needs to keep
-working.</p><hr />
-<h2 id="moving-between-content-types" data-fa-label="sec:guides-writing-a-document-moving-between-content-types">
-  
-  
-    <a href="#moving-between-content-types" class="anchor-heading" aria-labelledby="moving-between-content-types"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Moving between content types
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/moving-between-content-types.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/moving-between-content-types.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="moving-between-content-types.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/moving-between-content-types.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p><code class="language-plaintext highlighter-rouge">harness.config.json</code>’s <code class="language-plaintext highlighter-rouge">contentType</code> is the switch.</p>
-
-<p><strong>document → paper</strong> is a one-line change. You are adding toolchains, not
-removing content.</p>
-
-<p><strong>paper → document</strong> additionally means removing every math block and every
-<code class="language-plaintext highlighter-rouge">lean</code> field. Run <code class="language-plaintext highlighter-rouge">content_profile_check</code> after flipping the switch and it
-lists exactly what is in the way.</p><hr />
-<h2 id="where-things-are" data-fa-label="sec:guides-writing-a-document-where-things-are">
-  
-  
-    <a href="#where-things-are" class="anchor-heading" aria-labelledby="where-things-are"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where things are
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/where-things-are.md" class="fa-node-edit" title="Edit content/docs/guides-writing-a-document/where-things-are.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="where-things-are.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/where-things-are.block.json" data-qa-index="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/qa/guides-writing-a-document/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
+<p>Two different things are called a “kind” here, and a reader who conflates them
+adds the wrong one:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
       <th> </th>
-      <th> </th>
+      <th>what it is</th>
+      <th>where it is declared</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Skills</td>
-      <td><a href="../reference/skill-instructions/document-authoring.html"><code class="language-plaintext highlighter-rouge">document-authoring</code></a> · <a href="../reference/skill-instructions/document-structure.html"><code class="language-plaintext highlighter-rouge">document-structure</code></a> · <a href="../reference/skill-instructions/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a> · <a href="../reference/skill-instructions/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a></td>
+      <td><strong>instance kind</strong></td>
+      <td>what a repository <em>is</em> — <code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">cat-bootstrap</code>, <code class="language-plaintext highlighter-rouge">who-iris</code>. It has a name, a prefix family, a <code class="language-plaintext highlighter-rouge">harness.json</code>, and files it inherits from whatever it was bootstrapped off</td>
+      <td>a <code class="language-plaintext highlighter-rouge">harness.json</code> at the instance root</td>
     </tr>
     <tr>
-      <td>Typed contracts</td>
-      <td><a href="../reference/skills/">schema reference</a></td>
-    </tr>
-    <tr>
-      <td>Skill package</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/folio-document-adapter/package-manifest.json</code></td>
-    </tr>
-    <tr>
-      <td>Adapter</td>
-      <td><code class="language-plaintext highlighter-rouge">adapters/document/</code></td>
-    </tr>
-    <tr>
-      <td>Vocabulary</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/block-kinds.ts</code> — <code class="language-plaintext highlighter-rouge">DOCUMENT_BLOCK_KINDS</code>, <code class="language-plaintext highlighter-rouge">MATH_BLOCK_KINDS</code></td>
-    </tr>
-    <tr>
-      <td>Process</td>
-      <td><a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a></td>
+      <td><strong>graph kind</strong></td>
+      <td>what a declared DIRECTORY holds — <code class="language-plaintext highlighter-rouge">tools</code>, <code class="language-plaintext highlighter-rouge">docs</code>, <code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">library</code>. A value in the graph-kind registry, with <code class="language-plaintext highlighter-rouge">renderable</code>, <code class="language-plaintext highlighter-rouge">holds</code> and a summary</td>
+      <td><code class="language-plaintext highlighter-rouge">defaultGraphKinds</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>, or a registration from a layer that owns it</td>
     </tr>
   </tbody>
 </table></div>
+
+<p>An instance kind gets a <strong>name</strong>. A graph kind gets a <strong>declaration</strong>. This
+skill covers both, and §”Most new things are not a new graph kind” first,
+because that is the question people get wrong.</p><hr />
+<h2 id="most-new-things-are-not-a-new-graph-kind">
+  
+  
+    <a href="#most-new-things-are-not-a-new-graph-kind" class="anchor-heading" aria-labelledby="most-new-things-are-not-a-new-graph-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Most new things are not a new graph kind
+  
+  
+</h2>
+    
+
+<p><strong>Before adding a value to the registry, answer this:</strong></p>
+
+<blockquote>
+  <p>Is there a NODE SHAPE here that no existing kind describes — or is there a
+new thing you want to DO with nodes that already have a kind?</p>
+</blockquote>
+
+<p>A new verb is not a new kind. Only a new noun is.</p>
+<h3 id="the-worked-example-and-it-is-the-one-this-skill-was-written-for">
+  
+  
+    <a href="#the-worked-example-and-it-is-the-one-this-skill-was-written-for" class="anchor-heading" aria-labelledby="the-worked-example-and-it-is-the-one-this-skill-was-written-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked example, and it is the one this skill was written for
+  
+  
+</h3>
+    
+
+<p>Three beans (<code class="language-plaintext highlighter-rouge">jbx2</code>, <code class="language-plaintext highlighter-rouge">v1hw</code>, and whatever <code class="language-plaintext highlighter-rouge">docs/</code> and <code class="language-plaintext highlighter-rouge">folio/</code> get) ask for
+<strong>visualisers</strong>, and the bean that commissioned this skill assumed a
+<code class="language-plaintext highlighter-rouge">visualiser</code> graph kind would be needed — that it would be <em>“the first kind
+where the answer is not obvious: it RENDERS, and what it renders is another
+graph’s content rather than its own.”</em></p>
+
+<p>Measured 2026-09-21, the question does not arise:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">coverage.visualiser</code> is a rendered PATH, not a kind.</strong> Every value in the
+corpus has the shape <code class="language-plaintext highlighter-rouge">cat-harness/docs/cat-harness/&lt;graph&gt;/&lt;instance&gt;/index.html</code>.
+It names an artefact, the way <code class="language-plaintext highlighter-rouge">coverage.docs</code> names a page.</li>
+  <li><strong>The owner’s own placement rule says Tool.</strong> <code class="language-plaintext highlighter-rouge">v1hw</code>: <em>“the visualiser lives
+as a tool in the harness that DEFINES the schema, declared in
+<code class="language-plaintext highlighter-rouge">skills</code>/<code class="language-plaintext highlighter-rouge">tools</code>.”</em> Not beside the data, and not in whichever layer happens
+to render it.</li>
+</ul>
+
+<p>So a visualiser is a <strong>Tool node</strong> in the existing <code class="language-plaintext highlighter-rouge">tools</code> graph that emits a
+<strong>page</strong> in the existing <code class="language-plaintext highlighter-rouge">docs</code> or <code class="language-plaintext highlighter-rouge">folio</code> graph. Two kinds that already exist,
+composed. Nothing to register.</p>
+
+<p><strong>Why this is worth a section rather than a sentence.</strong> A registry value is
+cheap to add and expensive to remove: every consumer that switches on a kind
+gains a case, <code class="language-plaintext highlighter-rouge">check:graph-kind-work</code> gains a row, and the JSON-LD vocabulary
+gains a term that downstream instances inherit whether or not they ever hold
+one. The failure is silent — nothing breaks, the vocabulary just stops meaning
+anything, because a kind that describes an activity rather than a shape cannot
+tell a consumer what it will find in the directory.</p>
+<h3 id="when-it-genuinely-is-a-new-kind">
+  
+  
+    <a href="#when-it-genuinely-is-a-new-kind" class="anchor-heading" aria-labelledby="when-it-genuinely-is-a-new-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When it genuinely IS a new kind
+  
+  
+</h3>
+    
+
+<p>All three, not a majority:</p>
+
+<ol>
+  <li><strong>A directory will hold it.</strong> A kind is what a declared directory holds. If
+nothing gets declared, there is no kind — you have a file format.</li>
+  <li><strong>A consumer must branch on it.</strong> Something reads the directory and would
+behave wrongly if it treated the contents as an existing kind.</li>
+  <li><strong>You can answer <code class="language-plaintext highlighter-rouge">renderable</code> and <code class="language-plaintext highlighter-rouge">holds</code> without hedging.</strong> See below. If
+either answer is <em>“it depends what it is used for”</em>, the shape is not
+settled and the kind is premature.</li>
+</ol><hr />
+<h2 id="naming-an-instance--the-prefix-families">
+  
+  
+    <a href="#naming-an-instance--the-prefix-families" class="anchor-heading" aria-labelledby="naming-an-instance--the-prefix-families"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming an instance — the prefix families
+  
+  
+</h2>
+    
+
+<p>A prefix names the <strong>layer</strong> or the <strong>owner</strong> an instance belongs to.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>prefix</th>
+      <th>what it marks</th>
+      <th>instances here</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-</code></td>
+      <td>the agentic-harness layer</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">cat-bootstrap</code>, <code class="language-plaintext highlighter-rouge">cat-bootstrap-tools</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-</code></td>
+      <td>the content/core layer</td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code>, <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">who-</code></td>
+      <td>WHO material</td>
+      <td><code class="language-plaintext highlighter-rouge">who-iris</code>, <code class="language-plaintext highlighter-rouge">who-style-guide</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">litlfred-</code></td>
+      <td>the owner’s own</td>
+      <td>— none yet</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Four of the eleven instances here carry no prefix at all</strong> — <code class="language-plaintext highlighter-rouge">agent-skills</code>,
+<code class="language-plaintext highlighter-rouge">detangle</code>, <code class="language-plaintext highlighter-rouge">kg-navigation</code>, <code class="language-plaintext highlighter-rouge">large-datasets</code> (measured 2026-09-21,
+<code class="language-plaintext highlighter-rouge">ls -d */harness.json</code>). That is the state of the corpus, not a backlog: an
+unprefixed name is undecided, not wrong, and this skill does not make it a
+finding. Do not sweep them into a family to make the table tidy; a rename is
+the one act with consequences that cannot be undone later (§”And the owner may
+decline the convention”).</p>
+
+<p><strong>The <code class="language-plaintext highlighter-rouge">cat-</code> prefix reaches the harness layer and stops there.</strong> It does not
+extend to <code class="language-plaintext highlighter-rouge">folio-assistant-*</code>. That ruling settled a live merge conflict —
+<code class="language-plaintext highlighter-rouge">main</code> had renamed the core instance <code class="language-plaintext highlighter-rouge">folio-assist-core</code> while a branch carried
+<code class="language-plaintext highlighter-rouge">folio-assistant-core</code> — which is why it is written down rather than left to be
+re-derived.</p>
+<h3 id="the-default-is-to-keep-the-kinds-name">
+  
+  
+    <a href="#the-default-is-to-keep-the-kinds-name" class="anchor-heading" aria-labelledby="the-default-is-to-keep-the-kinds-name"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The default is to keep the kind’s name
+  
+  
+</h3>
+    
+
+<p>A new instance of a kind <strong>inherits that kind’s name</strong> unless somebody chooses
+otherwise. That is the default, not the rule.</p>
+<h3 id="and-the-owner-may-decline-the-convention">
+  
+  
+    <a href="#and-the-owner-may-decline-the-convention" class="anchor-heading" aria-labelledby="and-the-owner-may-decline-the-convention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> And the owner may decline the convention
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">qou</code> would be <code class="language-plaintext highlighter-rouge">litlfred-qou</code> or <code class="language-plaintext highlighter-rouge">folio-assistant-qou</code> by the table above, and
+it is neither, by the owner’s decision.</p>
+
+<blockquote>
+  <p><strong>Do not “fix” <code class="language-plaintext highlighter-rouge">qou</code>.</strong> It is the worked example of a documented override,
+not an instance that was missed. The same goes for <code class="language-plaintext highlighter-rouge">folio-assist-sci</code>, which
+has never been raised — a name that does not match the table is a decision
+until somebody says otherwise, and renaming an instance changes what every
+artefact written into it inherits, which is the one thing that cannot be
+fixed later (<code class="language-plaintext highlighter-rouge">cat-bootstrap/README.md</code>, §2).</p>
+</blockquote>
+
+<p>A skill that presented the convention as mandatory would have renamed <code class="language-plaintext highlighter-rouge">qou</code>.
+A default with a documented override is a different thing from a rule, and the
+difference is the whole content of this section.</p><hr />
+<h2 id="what-a-new-graph-kind-must-declare">
+  
+  
+    <a href="#what-a-new-graph-kind-must-declare" class="anchor-heading" aria-labelledby="what-a-new-graph-kind-must-declare"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a new graph kind must declare
+  
+  
+</h2>
+    
+
+<p>The shape is <code class="language-plaintext highlighter-rouge">GraphKindDef</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>. Read it there for the
+authoritative field list; what follows is what an author has to <em>decide</em>.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>required</th>
+      <th>the question</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">type</code></td>
+      <td>yes</td>
+      <td>the <code class="language-plaintext highlighter-rouge">@type</code> IRI it projects to — <code class="language-plaintext highlighter-rouge">termIri("SomethingGraph")</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">renderable</code></td>
+      <td>yes</td>
+      <td>does a graph of this kind become a website?</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">holds</code></td>
+      <td>yes</td>
+      <td>what does a running process do with it?</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">recordsWork</code></td>
+      <td>for <code class="language-plaintext highlighter-rouge">state</code> kinds</td>
+      <td>is this something somebody is partway through, that an arriving agent could pick up?</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">summary</code></td>
+      <td>yes</td>
+      <td>one paragraph a consumer can act on</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">skill</code></td>
+      <td>optional, and absent means absent</td>
+      <td>which skill says how to READ it</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="holds-has-four-values-not-three">
+  
+  
+    <a href="#holds-has-four-values-not-three" class="anchor-heading" aria-labelledby="holds-has-four-values-not-three"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">holds</code> has FOUR values, not three
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">content</code> · <code class="language-plaintext highlighter-rouge">context</code> · <code class="language-plaintext highlighter-rouge">state</code> · <code class="language-plaintext highlighter-rouge">derived</code>.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>value</th>
+      <th>a running process…</th>
+      <th>example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">content</code></td>
+      <td>PRODUCES it; it is the subject</td>
+      <td><code class="language-plaintext highlighter-rouge">schemas</code>, <code class="language-plaintext highlighter-rouge">docs</code>, <code class="language-plaintext highlighter-rouge">cat-harness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">context</code></td>
+      <td>READS it and never writes it — a step that writes is a <strong>defect</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">memory</code>, <code class="language-plaintext highlighter-rouge">interaction</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">state</code></td>
+      <td>WRITES it as it runs</td>
+      <td><code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">workflow-state</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">derived</code></td>
+      <td>produces it <strong>from a source</strong>, and would regenerate rather than re-author it</td>
+      <td><code class="language-plaintext highlighter-rouge">library</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">derived</code> is the newest and the one most often missed: it was added 2026-09-20
+(bean <code class="language-plaintext highlighter-rouge">hqku</code>) when <code class="language-plaintext highlighter-rouge">library/</code> turned out to be neither content nor context —
+<em>not</em> <code class="language-plaintext highlighter-rouge">context</code>, because <code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code> writes it and <code class="language-plaintext highlighter-rouge">context</code>
+makes that a defect; <em>not</em> <code class="language-plaintext highlighter-rouge">content</code>, because a QA finding against a derived
+section is a finding against its <strong>generator</strong>, and sends a reviewer to the
+wrong file.</p>
+
+<p><strong>There is no “could not determine” on this axis, and that is deliberate.</strong> A
+third state is right when a CHECK looked and could not tell, and wrong when an
+AUTHOR is registering a kind they are defining. Whoever adds a kind knows what
+a process does with it. The full classification of every existing kind, with
+its reason, and the two supporting questions for a hard case, are in
+<a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a>.</p>
+<h3 id="recordswork-is-narrower-than-holds-state">
+  
+  
+    <a href="#recordswork-is-narrower-than-holds-state" class="anchor-heading" aria-labelledby="recordswork-is-narrower-than-holds-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">recordsWork</code> is narrower than <code class="language-plaintext highlighter-rouge">holds: "state"</code>
+  
+  
+</h3>
+    
+
+<p>It asks whether the graph records <strong>work somebody is partway through</strong>, not
+merely whether something writes to it. The distinction was measured rather than
+assumed: reading it as “declares any state graph” made the repository root and
+<code class="language-plaintext highlighter-rouge">who-iris</code> ACTIVE on <code class="language-plaintext highlighter-rouge">uploads</code> alone, and an ingestion queue is live state that
+nobody is partway through. An agent told <em>“this KG is active”</em> on that basis
+arrives looking for something to prioritise and finds unprocessed files.</p>
+
+<p><code class="language-plaintext highlighter-rouge">check:graph-kind-work</code> requires it for every <code class="language-plaintext highlighter-rouge">state</code> kind, so a new state kind
+cannot ship undecided.</p><hr />
+<h2 id="where-a-kind-may-live--a-layer-owns-the-kinds-it-can-render">
+  
+  
+    <a href="#where-a-kind-may-live--a-layer-owns-the-kinds-it-can-render" class="anchor-heading" aria-labelledby="where-a-kind-may-live--a-layer-owns-the-kinds-it-can-render"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a kind may live — a layer owns the kinds it can render
+  
+  
+</h2>
+    
+
+<p>Two kinds in this repository are renderable, and they live in different places
+for a reason worth copying.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>kind</th>
+      <th>declared where</th>
+      <th>why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio</code></td>
+      <td><strong>registered by core</strong>, on import (<code class="language-plaintext highlighter-rouge">schemas/folio-graph-kind.ts</code>)</td>
+      <td>the harness cannot serve it — block viewers, LaTeX, QA badges, translation overlays</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">docs</code></td>
+      <td><strong>in the harness’s own table</strong> (<code class="language-plaintext highlighter-rouge">defaultGraphKinds</code>)</td>
+      <td>the harness ships a plain just-the-docs renderer and can serve it</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The rule in its true form is <strong>a layer owns the kinds it can render</strong> — not
+“the harness owns no renderable kind”, which was the earlier phrasing and
+stopped being true the day the harness shipped a renderer.</p>
+
+<p><strong>Registration on import is for a kind that may legitimately be ABSENT.</strong> A
+first attempt registered <code class="language-plaintext highlighter-rouge">docs</code> on import too, mirroring <code class="language-plaintext highlighter-rouge">folio</code>, so that the
+sentence <em>“the harness’s own vocabulary contains no renderable kind”</em> could stay
+literally true. That preserved a sentence at the cost of the design: <code class="language-plaintext highlighter-rouge">folio</code> is
+CONTRIBUTED by a dependency and may not be there, whereas <code class="language-plaintext highlighter-rouge">docs</code> ships with the
+harness and can never be absent — twenty consumers would have needed an import
+for a kind that is always present. The test was updated instead. <strong>That is what
+it means for a premise to have changed rather than for a principle to have been
+broken</strong>, and it is the check to run on your own new kind: <em>can this kind be
+absent?</em> If no, it belongs in the table.</p>
+
+<p><strong>The boundary <code class="language-plaintext highlighter-rouge">docs</code> must not cross</strong> is the SUBJECT, not the feature list.
+The moment a <code class="language-plaintext highlighter-rouge">docs</code> page needs a block viewer, a LaTeX pass, a QA badge or a
+translation overlay, it is describing authored CONTENT and is a <code class="language-plaintext highlighter-rouge">folio</code>.</p><hr />
+<h2 id="what-a-new-instance-inherits-and-which-of-it-is-yours-to-edit">
+  
+  
+    <a href="#what-a-new-instance-inherits-and-which-of-it-is-yours-to-edit" class="anchor-heading" aria-labelledby="what-a-new-instance-inherits-and-which-of-it-is-yours-to-edit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a new instance inherits, and which of it is yours to edit
+  
+  
+</h2>
+    
+
+<p>A new instance kind is bootstrapped from an existing one, and it arrives
+carrying that instance’s files. Some of them are <strong>yours</strong>, and nothing
+currently tells a new owner which.</p>
+<h3 id="cat-bootstrapreadmemd-is-the-first-one">
+  
+  
+    <a href="#cat-bootstrapreadmemd-is-the-first-one" class="anchor-heading" aria-labelledby="cat-bootstrapreadmemd-is-the-first-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">cat-bootstrap/README.md</code> is the first one
+  
+  
+</h3>
+    
+
+<p>It is the page an Initiator reads before it knows anything — <em>“you have been
+pointed at a repository, you know nothing about it”</em> — and it is written for
+<strong>this</strong> repository. Measured 2026-09-21: it resolves <strong>13 links into
+<code class="language-plaintext highlighter-rouge">../cat-harness/</code></strong>, across <strong>6 distinct files</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>target</th>
+      <th>links</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/dak-blocks.ts</code></td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/role-graph.ts</code></td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/cat-harness.ts</code></td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/skill-package.ts</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/tool.ts</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">../cat-harness/skills/workflows</code></td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Every one of those is a <strong>term definition</strong> — what a role is, what a DAK block
+is, what a harness declaration is. Bootstrap a new instance kind that is not
+built on <code class="language-plaintext highlighter-rouge">cat-harness</code> and its first reader gets a page whose every definition
+points into a harness they are not using.</p>
+
+<p><strong>So repointing it is expected, not a modification of platform code.</strong> Point
+the links at whatever layer defines <em>your</em> vocabulary, or at your own
+instance kind’s schemas. Keep the user-scenario structure — persona, user
+scenario, business process, functional requirement — because that is the
+formalism the page is written in and the bootstrap process reads it; change
+only where the terms resolve.</p>
+
+<blockquote>
+  <p><strong>This is the general shape, not a special case.</strong> Any inherited file whose
+content is a POINTER — a README, an <code class="language-plaintext highlighter-rouge">AGENTS.md</code> stub, a <code class="language-plaintext highlighter-rouge">.mcp.json</code>, a
+builder shim — belongs to the new owner. Any inherited file that is a
+MECHANISM belongs to the layer that ships it, and changing it there is a
+platform change with all the gates that implies.</p>
+</blockquote><hr />
+<h2 id="before-you-push">
+  
+  
+    <a href="#before-you-push" class="anchor-heading" aria-labelledby="before-you-push"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you push
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>what you changed</th>
+      <th>run</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>added a graph kind</td>
+      <td><code class="language-plaintext highlighter-rouge">bun run check:graph-kind-work</code>, <code class="language-plaintext highlighter-rouge">bun run check:harness-dirs</code></td>
+    </tr>
+    <tr>
+      <td>added or renamed an instance</td>
+      <td><code class="language-plaintext highlighter-rouge">bun run check:instance-config</code>, <code class="language-plaintext highlighter-rouge">bun run check:subgraph-coverage</code></td>
+    </tr>
+    <tr>
+      <td>edited this or any skill</td>
+      <td><code class="language-plaintext highlighter-rouge">bun run check:skills</code></td>
+    </tr>
+    <tr>
+      <td>anything</td>
+      <td><code class="language-plaintext highlighter-rouge">bun run gates</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">bun run gates</code> is the one to run, and it is stronger than “a list someone
+maintains” in two distinct ways worth knowing before you trust it (bean <code class="language-plaintext highlighter-rouge">j2w4</code>):</p>
+
+<ol>
+  <li><strong>Its gate list is derived</strong>, from <code class="language-plaintext highlighter-rouge">.github/workflows/code-quality-gates.yml</code>,
+so it cannot drift from that workflow.</li>
+  <li><strong>Every OTHER workflow is scanned too</strong>, and any <code class="language-plaintext highlighter-rouge">bun</code> step CI runs that the
+local set does not is reported on every run — unless it carries a declared
+exemption with a <strong>reason</strong> (<code class="language-plaintext highlighter-rouge">covered-by</code>, <code class="language-plaintext highlighter-rouge">ci-only</code>, <code class="language-plaintext highlighter-rouge">no-folio</code>). <em>“It is
+slow”</em> and <em>“it usually passes”</em> are not reasons.</li>
+</ol>
+
+<p>The second half is what makes the first safe to rely on, and it was added
+because a CI failure went red on a gate the local runner had just passed. A
+hand-picked subset of the gate set is not the gate set.</p>
+<h2 id="related">
+  
+  
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/harness-requirements.html"><code class="language-plaintext highlighter-rouge">harness-requirements</code></a> — what an instance OWES for
+every directory it declares. This skill is how to make one; that one is what
+it then owes.</li>
+  <li><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a> —
+the <code class="language-plaintext highlighter-rouge">holds</code> axis in full, with every existing kind classified and its reason.</li>
+  <li><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — the declaration schema,
+path resolution, and the dot-prefix guard.</li>
+</ul>
 
           
 
