@@ -45,7 +45,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { siteDirFor } from "../schemas/cat-harness.ts";
+import { artefactStubFor, siteDirFor } from "../schemas/cat-harness.ts";
 
 /** This file's own repo root: it resolves assets from three different
  * local variables, so the site root gets one name here too. */
@@ -58,14 +58,24 @@ const REPO_A11Y = join(dirname(fileURLToPath(import.meta.url)), "..");
 // path is the point: a viewer that resolved its document correctly in a flat
 // fixture and wrongly in the deployed tree is exactly the failure a stand-in
 // hides.
+/**
+ * The published artefact name, RESOLVED from the declaration.
+ *
+ * These were `folio-assistant` literals until the 2026-09-21 stub rename
+ * (issue #649), which is the same repair made in `kg-viewer.e2e.ts` and for
+ * the same reason: the exporter writes `_kg/<stub>.jsonld`, so a literal here
+ * sends the suite looking for a file nothing produces.
+ */
+const STUB = artefactStubFor(REPO_A11Y);
+
 for (const [file, script] of [
-  ["_kg/folio-assistant.jsonld", "cat-harness/scripts/kg-export.ts"],
-  ["_kg/folio-assistant/index.html", "cat-harness/scripts/kg-viewer.ts"],
+  [`_kg/${STUB}.jsonld`, "cat-harness/scripts/kg-export.ts"],
+  [`_kg/${STUB}/index.html`, "cat-harness/scripts/kg-viewer.ts"],
 ] as const) {
   if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
 }
 
-const PAGE = "/_kg/folio-assistant/index.html";
+const PAGE = `/_kg/${STUB}/index.html`;
 
 /** WCAG 2.0/2.1/2.2 A and AA. Level AAA is not the bar being claimed. */
 const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
