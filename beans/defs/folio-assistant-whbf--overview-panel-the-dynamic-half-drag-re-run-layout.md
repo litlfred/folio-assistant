@@ -51,3 +51,62 @@ commit.
 
 Whatever lands, a reader can return to the static arrangement, and the
 undrawn-edge count survives every mode.
+
+
+## RE-SCOPED 2026-09-21 — the premise was stale twice, and measuring it produced `qttr`
+
+This bean was opened to build the dynamic half on the assumption that the
+static half was right and interaction was what was missing. Both halves of
+that are out of date, and the second one was a defect.
+
+### 1. The ring is gone
+
+The list above says *"the ring is one arrangement; a layered DAG and a grouped
+cluster answer different questions"*. The owner rejected the ring on
+2026-09-20 — *"no, thats not what i wanted. i wanted UML like diagram for
+schema declration"* — and it was replaced by the layered relationship diagram,
+not extended. **The layered DAG this bean offers as an alternative is what
+ships today**, so "switching layout" means something different now: the
+candidates are a grouped-by-module cluster and whatever else, not a return to
+the ring.
+
+### 2. The static picture was not right — it was illegible
+
+Measured across all 67 modules at a 1280px viewport before starting: the
+widest, `dak-blocks.ts`, rendered its 10px font at **1.6px**, and **12 of 67**
+were below a 5px effective glyph. `diaLayout` put each layer in one row with
+no width budget, and the viewBox silently scaled the picture down to fit.
+
+That is bean `qttr` ([#653](https://github.com/litlfred/folio-assistant/issues/653)),
+opened and fixed rather than folded in here, because **wrapping needs no
+interaction**: it stays printable, stays reproducible, and gives a reader the
+picture for free on opening the panel, which is the panel's whole point.
+
+### What that leaves for THIS bean
+
+| item | status after `qttr` |
+|---|---|
+| zoom and pan | **weakened.** Every module is now legible at roughly 1:1 at 1280, 768 and 390px — 0 of 69 below a 5px glyph. Zoom would be for a reader who wants LESS detail, which the module filter already gives |
+| alternate layouts | **still open**, and better posed: layered vs grouped-by-module, not layered vs ring |
+| dragging | **argued against**, below |
+| live filtering from the facets | **still open and unchanged** |
+
+### Dragging fights this bean's own "done when"
+
+The closing line requires *"a reader can return to the static arrangement"*. A
+dragged position is by definition not reproducible, so every dragged picture
+needs a reset the reader must know to use, and a reader who drags and reloads
+loses the arrangement they had learned. The cost is also the highest of the
+four — hit-testing, pointer capture and a position store, all hand-rolled,
+since the no-CDN rule excludes a layout library.
+
+**Recommendation: scrap dragging from this bean, keep the other three.** Not
+done unilaterally — a ruling, per this bean's own framing of the trade.
+
+### What still holds from the original, unchanged
+
+The three constraints under *"What the static half established"* all survived
+`qttr` and were respected by it: adaptive granularity, the counted-and-reported
+undrawn edges, and reproducibility. `qttr` added a fourth of the same kind —
+an edge label that has nowhere clear to sit is counted and said in the caption
+rather than silently overstruck.
