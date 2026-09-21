@@ -32,7 +32,7 @@ so `milnorlink` went to the science instance. This link went on pointing at
 `cat-harness/library/` for a day and nothing reported it — `check:subgraphs`
 only began walking this directory once `main` added its zero-dangling
 assertion, which is what finally surfaced it. Every rule in
-[`voices/milnor.json`](../../voices/milnor.json) quotes a page. 8899 words, 496
+[`milnor`'s voice skill](../../../folio-assistant-sci/skills/voices/milnor/voice.json) quotes a page. 8899 words, 496
 sentences; measured 2026-09-19.
 
 ### What the measurement found, including where WE are wrong
@@ -78,7 +78,7 @@ percentile 29, longest 52.
 
 Each scores **0, 1 or 2**. Sixteen is the only passing total, so a 1 is a
 finding: "acceptable" is not the bar. Every row's evidence is in
-`voices/milnor.json` with its page.
+the `milnor` voice skill with its page.
 
 | | hallmark | 0 | 1 | 2 |
 |---|---|---|---|---|

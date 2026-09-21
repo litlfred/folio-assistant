@@ -58,10 +58,11 @@
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolveHarnessConfigPath } from "./harness-config";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 import { z } from "zod";
 
 import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
+import { directoryForGraph } from "./cat-harness.js";
 
 /** Which aspect of the prose (or of its presentation) a rule governs. */
 export const VOICE_RULE_CATEGORIES = [
@@ -323,7 +324,22 @@ export type VoiceSupersession = z.infer<typeof VoiceSupersessionSchema>;
 
 /** A named voice profile. */
 export const VoiceProfileSchema = z.object({
-  $schema: z.literal("folio-voice/v1"),
+  /**
+   * EITHER tag, because a voice skill IS a profile plus the skill half.
+   *
+   * `folio-voice/v1` is the bare profile; `folio-voice-skill/v1` adds
+   * `instructions` and the per-rule authoring flags, and every field THIS
+   * schema names means the same thing in both. A consumer that needs the skill
+   * half parses with `VoiceSkillSchema`, which pins its own tag strictly; a
+   * consumer that needs the rules — which is most of them — reads either and
+   * does not care.
+   *
+   * Two tags rather than a rename because the corpus migrates over time. A
+   * downstream folio still shipping bare profiles must keep loading after an
+   * upgrade it did not ask for, which is the same read-both/write-new rule
+   * `qa-paths.ts` states one graph over.
+   */
+  $schema: z.union([z.literal("folio-voice/v1"), z.literal("folio-voice-skill/v1")]),
   id: z.string().regex(/^[a-z0-9-]+$/, "a voice id is lower-case kebab"),
   ...kgNodeLabelShape,
   title: z.string().min(1),
@@ -421,8 +437,58 @@ export class VoiceLoadError extends Error {
   }
 }
 
-/** The directory a voice graph lives in, relative to an instance root. */
-export const VOICES_DIR = "voices";
+/**
+ * The directory a voice graph lives in, relative to an instance root.
+ *
+ * **Asked of the declaration, not composed.** Every instance that ships voices
+ * declares a `voices` graph in its own `<name>.config.json`, and that entry is
+ * the answer — the same rule `po-resolve.ts` follows for `translation-sources`
+ * and for the same reason: the layout moved once already (2026-09-21, from
+ * `voices/` to `skills/voices/`, because a voice IS a skill) and a composed
+ * path would have gone stale in every reader at once.
+ */
+export function voicesDirFor(instanceRoot: string): string | undefined {
+  return directoryForGraph(instanceRoot, "voices");
+}
+
+/**
+ * The convention for an instance that declares nothing.
+ *
+ * declared-path-literal: the fallback, stated at the call site so the choice is
+ * visible. It names the CURRENT layout, so an undeclared instance and a
+ * declared one land in the same place rather than the reader silently serving
+ * the pre-migration one.
+ */
+export const VOICES_DIR = "skills/voices";
+
+/**
+ * Every voice file under one voices directory, whichever layout it uses.
+ *
+ * TWO shapes are read, because the migration is a fact about a corpus rather
+ * than an instant:
+ *
+ *  - `skills/voices/<id>/voice.json` — a voice SKILL, rules beside the
+ *    `SKILL.md` that says how to use them. What this repository ships.
+ *  - `skills/voices/<id>.json` — a bare profile, the shape before the move,
+ *    still valid and still loaded so a downstream folio is not broken by an
+ *    upgrade it did not ask for.
+ *
+ * Read both, prefer neither — they cannot collide, because a directory and a
+ * file cannot share a name. The same read-both/write-new asymmetry `qa-paths.ts`
+ * argues for, one graph over.
+ */
+function voiceFilesIn(dir: string): { id: string; path: string }[] {
+  const out: { id: string; path: string }[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+    if (e.isDirectory()) {
+      const inner = join(dir, e.name, "voice.json");
+      if (existsSync(inner)) out.push({ id: e.name, path: inner });
+    } else if (e.isFile() && e.name.endsWith(".json")) {
+      out.push({ id: e.name.replace(/\.json$/, ""), path: join(dir, e.name) });
+    }
+  }
+  return out;
+}
 
 /**
  * Load every voice profile an instance ships.
@@ -439,33 +505,42 @@ export const VOICES_DIR = "voices";
  * because the second is a legitimate state and the first is a defect.
  */
 export function loadVoices(instanceRoot: string): VoiceProfile[] {
-  const dir = resolve(instanceRoot, VOICES_DIR);
+  const dir = voicesDirFor(instanceRoot) ?? resolve(instanceRoot, VOICES_DIR);
   if (!existsSync(dir)) return [];
   const out: VoiceProfile[] = [];
-  for (const f of readdirSync(dir).sort()) {
-    if (!f.endsWith(".json")) continue;
-    const path = join(dir, f);
+  for (const { id, path } of voiceFilesIn(dir)) {
+    const f = relative(dir, path);
     let raw: unknown;
     try {
       raw = JSON.parse(readFileSync(path, "utf-8"));
     } catch (e) {
       throw new VoiceLoadError(f, `not valid JSON — ${(e as Error).message}`);
     }
-    const parsed = VoiceProfileSchema.safeParse(raw);
+    // A voice SKILL is a superset of a profile — it adds `instructions` and
+    // the per-rule authoring flags. Parsed as a profile here because that is
+    // what every consumer of this function needs; `schemas/voice-skill.ts`
+    // parses the whole thing where the skill half matters. `passthrough` so
+    // the added keys survive rather than being stripped into a lie about the
+    // file's contents.
+    const parsed = VoiceProfileSchema.passthrough().safeParse(raw);
     if (!parsed.success) {
       throw new VoiceLoadError(f, parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; "));
     }
-    if (parsed.data.id !== f.replace(/\.json$/, "")) {
-      throw new VoiceLoadError(f, `declares id "${parsed.data.id}" — the filename must match the id`);
+    if (parsed.data.id !== id) {
+      throw new VoiceLoadError(
+        f,
+        `declares id "${parsed.data.id}" — the ${path.endsWith("voice.json") ? "directory" : "filename"} must match the id`,
+      );
     }
-    out.push(parsed.data);
+    out.push(parsed.data as VoiceProfile);
   }
   return out;
 }
 
 /** Whether this instance ships a voice graph at all — the third state. */
 export function voicesPresent(instanceRoot: string): boolean {
-  return existsSync(resolve(instanceRoot, VOICES_DIR));
+  const dir = voicesDirFor(instanceRoot) ?? resolve(instanceRoot, VOICES_DIR);
+  return existsSync(dir);
 }
 
 /**

@@ -32,6 +32,15 @@
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "library-ingestion"
       }
+    },
+    {
+      "id": "voices",
+      "path": "skills/voices/",
+      "dependents": "reproduce",
+      "description": "The `milnor` voice skill — a mathematics-exposition voice derived from the exemplar paper, as `voice.json` (12 rules, each citing what it was read from) beside `SKILL.md`. It lived in the PLATFORM until 2026-09-21, which meant cat-harness shipped voice CONTENT while claiming to hold none; the owner settled that it belongs to the science layer, the instance that derived it. Under `skills/` because a voice is a skill.",
+      "graphs": [
+        "voices"
+      ]
     }
   ]
 }

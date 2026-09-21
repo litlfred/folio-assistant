@@ -1,10 +1,12 @@
 {
-  "$schema": "folio-voice/v1",
+  "$schema": "folio-voice-skill/v1",
   "id": "milnor",
   "title": "Milnor exposition standard",
   "description": "Eight hallmarks of mathematical exposition, scored 0-2 each with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (Annals of Mathematics 59(2), 1954, pp. 177-195). Not a house standard named after him any more: every rule now cites a page of the paper, and three of them exist because the paper CONTRADICTS what this platform's own house voice asserts. 8899 words, 496 sentences, measured 2026-09-19.",
-  "provenance": "house",
-  "overlaySeverity": "minor",
+  "instructions": {
+    "file": "SKILL.md",
+    "summary": "Write and review in the Milnor exposition standard voice — 12 rules, each citing the publication it was read from."
+  },
   "sources": [
     {
       "title": "Link Groups (John Milnor, Annals of Mathematics, Second Series, 59(2), March 1954, pp. 177-195)",
@@ -14,12 +16,8 @@
       "year": 1954
     }
   ],
-  "appliesTo": [
-    "prose",
-    "remark",
-    "example",
-    "algorithm"
-  ],
+  "provenance": "house",
+  "overlaySeverity": "minor",
   "rules": [
     {
       "id": "milnor-h1-economy",
@@ -186,10 +184,17 @@
       "category": "structure",
       "severity": "major",
       "source": {
+        "instance": "cat-harness",
         "kgRef": "content/pipeline/qa-criteria-registry.ts",
         "quote": "Companion to expo-milnor-clarity: no content is repeated / duplicated within the block. Resolve discipline is STRICTER than clarity — a repeat may be deleted ONLY when the two occurrences are semantically identical (content unchanged); if the content DIFFERS you may NOT delete, and never delete math content (diagram / equation / derivation)."
       },
       "judgementOnly": true
     }
+  ],
+  "appliesTo": [
+    "prose",
+    "remark",
+    "example",
+    "algorithm"
   ]
 }

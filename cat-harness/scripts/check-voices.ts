@@ -22,6 +22,7 @@ import { explainFailure, resolveLibraryRef } from "../../folio-assistant-core/sc
 import { join, relative, resolve } from "node:path";
 
 import { loadVoices, unionRules, voicesPresent } from "../schemas/voices";
+import { instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 /** The checkout, one level out: a cross-instance citation is resolved against sibling instances. */
@@ -100,6 +101,23 @@ function resolveCitation(
   // the wrong corpus, reported as a confident resolution.
   const r = resolveLibraryRef(src, citingRoot, REPO_ROOT);
   return r.ok ? { ok: true, path: r.path } : { ok: false, why: explainFailure(r.failure) };
+}
+
+/**
+ * The root of the instance a citation names, or the voice's own when it names
+ * none.
+ *
+ * `undefined` means the name resolves to no instance in this repository, which
+ * is a DIFFERENT finding from "the file is not there" and is reported as one:
+ * a typo in the instance name and a moved file are fixed in different places.
+ */
+function instanceRootFor(instance: string | undefined, ownRoot: string): string | undefined {
+  if (instance === undefined) return ownRoot;
+  const repo = repoRootFor(ownRoot);
+  for (const root of instanceRootsIn(repo)) {
+    if (readDeclaration(root)?.name === instance) return root;
+  }
+  return undefined;
 }
 
 function main(): number {
@@ -212,8 +230,22 @@ function main(): number {
     } else if (src.kgRef) {
       // A `#anchor` is a section within the file; check the file.
       const file = src.kgRef.split("#")[0]!;
-      if (!existsSync(join(rootOf.get(voice)!, file))) {
-        problems.push(`${where}: cites kgRef ${file}, which does not exist in this instance`);
+      // Resolved through the CITED instance, exactly as the library branch
+      // above does. It did not until 2026-09-21, and the asymmetry was
+      // invisible while every kgRef happened to be instance-local: a voice
+      // citing a file in another instance could not pass however correctly it
+      // declared where that file was. It surfaced the moment `milnor` moved to
+      // folio-assistant-sci carrying one rule that cites a cat-harness module
+      // — the rule was right, the checker was not.
+      const citedRoot = instanceRootFor(citedInstance, rootOf.get(voice)!);
+      if (citedRoot === undefined) {
+        problems.push(
+          `${where}: cites kgRef ${file} in instance "${citedInstance}", which is not an ` +
+            `instance of this repository`,
+        );
+      } else if (!existsSync(join(citedRoot, file))) {
+        const from = citedInstance ? `${citedInstance}:` : "";
+        problems.push(`${where}: cites kgRef ${from}${file}, which does not exist there`);
       }
     }
   }
